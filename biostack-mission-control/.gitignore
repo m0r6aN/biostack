@@ -1,0 +1,106 @@
+# Comprehensive .gitignore for BioStack Mission Control (.NET + Next.js monorepo)
+# See https://git-scm.com/docs/gitignore
+
+# Delegate to sub-project .gitignores (preserves their specificity)
+backend/*
+!backend/.gitignore
+frontend/*
+!frontend/.gitignore
+
+# Root-level .NET (fallback + extras)
+/[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.sln.docstates
+.vs/
+**/.nuget/
+/packages/
+TestResults/
+*.nupkg
+
+# Root-level Node/Next.js (fallback)
+**/node_modules/
+**/.next/
+**/out/
+**/.pnp*
+**/coverage/
+**/.turbo/
+
+# Docker
+.dockerignore
+**/*.dockerignore
+.Dockerfile*
+**/*Dockerfile*
+
+# Environment/Secrets
+.env*
+!*.env.example
+appsettings*.json  # .NET sensitive configs
+secrets*.json
+
+# IDE/Editors (comprehensive)
+.vscode/
+.vscode-test/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+.vs/
+ Rider/
+
+# OS/Generated
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Logs/Debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Data/DB (sensitive/large)
+*.db
+*.db-shm
+*.db-wal
+backend/data/
+*.sqlite*
+dumps/
+backups/
+
+# Build/Test artifacts
+**/*.tsbuildinfo
+next-env.d.ts
+.nyc_output
+
+# Generated docs (not source-of-truth)
+*_SUMMARY.md
+QUICKSTART.md
+IMPLEMENTATION_CHECKLIST.md
+FILES_CREATED.txt
+AGENTS.md
+CLAUDE.md
+
+# Misc
+*.pem
+*.key
+*.cert
+.vercel
+/storybook-static
+
+# Global temp
+tmp/
+temp/
+cache/
+
