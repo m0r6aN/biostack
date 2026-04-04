@@ -30,7 +30,7 @@ services:
         - NEXT_PUBLIC_API_URL=http://localhost:5000
     container_name: biostack-ui
     ports:
-      - "3000:3000"
+      - "3033:3000"
     environment:
       - NEXT_PUBLIC_API_URL=http://biostack-api:5000
     depends_on:
