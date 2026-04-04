@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  biostack-api-dev:
+    image: mcr.microsoft.com/dotnet/sdk:10.0
+    container_name: biostack-api-dev
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    volumes:
+      - ./backend:/app
+      - biostack-dev-data:/app/data
+    working_dir: /app
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/biostack.db
+      - Jwt__Secret=${Jwt__Secret:-CHANGE_ME_MINIMUM_32_CHARACTER_RANDOM_STRING}
+      - Jwt__Issuer=${Jwt__Issuer:-biostack}
+      - Jwt__Audience=${Jwt__Audience:-biostack-ui}
+      - Jwt__ExpiryMinutes=${Jwt__ExpiryMinutes:-60}
+      - Auth__CallbackSecret=${Auth__CallbackSecret:-CHANGE_ME_SHARED_SECRET}
+    command: dotnet watch run --project src/BioStack.Api/BioStack.Api.csproj --urls http://+:5000
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  biostack-ui-dev:
+    image: node:22-alpine
+    container_name: biostack-ui-dev
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    working_dir: /app
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - AUTH_SECRET=${AUTH_SECRET:-CHANGE_ME_NEXTAUTH_SECRET}
+      - AUTH_URL=${AUTH_URL:-http://localhost:3030}
+      - AUTH_CALLBACK_SECRET=${AUTH_CALLBACK_SECRET:-CHANGE_ME_SHARED_SECRET}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID:-}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET:-}
+      - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID:-}
+      - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET:-}
+      - APPLE_CLIENT_ID=${APPLE_CLIENT_ID:-}
+      - APPLE_CLIENT_SECRET=${APPLE_CLIENT_SECRET:-}
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      biostack-api-dev:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  biostack-dev-data:
+    driver: local
