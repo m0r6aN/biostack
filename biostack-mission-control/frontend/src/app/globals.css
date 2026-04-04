@@ -1,0 +1,217 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* BioStack Mission Control Color System */
+  --color-bg-primary:   #0B0F14;
+  --color-bg-secondary: #0F141B;
+  --color-bg-elevated:  #121923;
+  --color-bg-panel:     #172033;
+
+  --color-accent-green: #22C55E;
+  --color-accent-blue:  #3B82F6;
+  --color-accent-amber: #F59E0B;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Selection */
+::selection {
+  background: rgba(34, 197, 94, 0.3);
+  color: white;
+}
+
+/* Range slider styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-track {
+  background: rgba(255, 255, 255, 0.08);
+  height: 4px;
+  border-radius: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #22C55E;
+  margin-top: -6px;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+}
+
+/* Focus ring utility */
+.focus-glow:focus {
+  outline: none;
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.2), 0 0 12px rgba(34, 197, 94, 0.1);
+}
+
+.focus-glow-blue:focus {
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2), 0 0 12px rgba(59, 130, 246, 0.1);
+}
+
+/* ============================================================
+   Glass surface utilities
+   Usage: nav=light, header-cards=medium, hero-panels=strong
+   ============================================================ */
+.glass-light {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-medium {
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ============================================================
+   Shadow utilities
+   ============================================================ */
+.shadow-brand-card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+}
+
+.shadow-brand-glow {
+  box-shadow:
+    0 0 0 1px rgba(34, 197, 94, 0.14),
+    0 8px 24px rgba(0, 0, 0, 0.42);
+}
+
+.shadow-brand-glow-strong {
+  box-shadow:
+    0 0 0 1px rgba(34, 197, 94, 0.22),
+    0 0 24px rgba(34, 197, 94, 0.18);
+}
+
+/* ============================================================
+   BioStack logo animations
+   ============================================================ */
+
+/* Signal pulse — used on hero, analysis active states, animated logo */
+@keyframes biostackPulse {
+  0%, 100% {
+    opacity: 0.82;
+    filter:
+      drop-shadow(0 0 6px rgba(34, 197, 94, 0.28))
+      drop-shadow(0 0 14px rgba(34, 197, 94, 0.18));
+  }
+  50% {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 8px rgba(34, 197, 94, 0.42))
+      drop-shadow(0 0 22px rgba(34, 197, 94, 0.24));
+  }
+}
+
+/* Layer activation — each plate illuminates in sequence (bottom → top) */
+@keyframes biostackPlateLoad {
+  0%, 55%, 100% { opacity: 0.25; }
+  20%           { opacity: 0.95; }
+}
+
+/* ============================================================
+   BioStack logo CSS classes
+   ============================================================ */
+
+/* Hover treatment — subtle lift, glow sharpens */
+.biostack-hover {
+  transition:
+    transform  160ms ease,
+    filter     160ms ease,
+    opacity    160ms ease;
+}
+
+.biostack-hover:hover {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 2px 8px rgba(34, 197, 94, 0.14));
+}
+
+/* Signal pulse animation */
+.biostack-signal {
+  animation: biostackPulse 2400ms ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Base glow (static, no animation) */
+.biostack-glow-static {
+  filter:
+    drop-shadow(0 0 6px rgba(34, 197, 94, 0.28))
+    drop-shadow(0 0 14px rgba(34, 197, 94, 0.18));
+}
+
+/* Loading: layer activation sequence */
+.biostack-loading .biostack-plate-3 {
+  animation: biostackPlateLoad 1200ms ease-in-out 0ms infinite;
+}
+.biostack-loading .biostack-plate-2 {
+  animation: biostackPlateLoad 1200ms ease-in-out 300ms infinite;
+}
+.biostack-loading .biostack-plate-1 {
+  animation: biostackPlateLoad 1200ms ease-in-out 600ms infinite;
+}
+.biostack-loading .biostack-signal-path {
+  animation: biostackPulse 2400ms ease-in-out 900ms infinite;
+}
+
+/* ============================================================
+   Reduced-motion — non-negotiable
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .biostack-signal,
+  .biostack-hover,
+  .biostack-loading .biostack-plate-1,
+  .biostack-loading .biostack-plate-2,
+  .biostack-loading .biostack-plate-3,
+  .biostack-loading .biostack-signal-path {
+    animation: none !important;
+    transition: none !important;
+  }
+}
