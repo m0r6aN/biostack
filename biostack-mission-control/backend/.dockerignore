@@ -1,0 +1,15 @@
+**/.git
+**/.vscode
+**/.idea
+**/bin
+**/obj
+**/.config
+publish/
+publish-test/
+*.db
+*.db-shm
+*.db-wal
+.env
+.env.local
+.gitignore
+Dockerfile

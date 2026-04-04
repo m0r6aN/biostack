@@ -1,0 +1,111 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# ============================================================
+# Dependencies
+# ============================================================
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# ============================================================
+# Next.js
+# ============================================================
+/.next/
+/.next.bak/
+/out/
+
+# ============================================================
+# Build outputs
+# ============================================================
+/build
+/dist
+
+# ============================================================
+# Testing
+# ============================================================
+/coverage
+/.nyc_output
+
+# ============================================================
+# Environment & secrets
+# ============================================================
+.env
+.env.*
+!.env.example
+!.env.test
+
+# ============================================================
+# Logs
+# ============================================================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# ============================================================
+# TypeScript
+# ============================================================
+*.tsbuildinfo
+next-env.d.ts
+
+# ============================================================
+# OS-generated files
+# ============================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ============================================================
+# Editors & IDEs
+# ============================================================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ============================================================
+# Vercel
+# ============================================================
+.vercel
+
+# ============================================================
+# Misc
+# ============================================================
+*.pem
+*.p12
+*.key
+*.cert
+
+# Storybook
+/storybook-static
+
+# Turbo
+.turbo
+
+# Local dev overrides
+*.local
+
+# Generated docs / summaries (not source-of-truth)
+PROJECT_SUMMARY.md
+QUICK_START.md
+FILES_CREATED.txt
