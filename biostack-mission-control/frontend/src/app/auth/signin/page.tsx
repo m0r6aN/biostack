@@ -1,9 +1,10 @@
 'use client';
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
-import { signIn } from 'next-auth/react';
+import { getProviders, signIn } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 
-const providers = [
+const providerCatalog = [
   {
     id: 'google',
     label: 'Continue with Google',
@@ -46,6 +47,31 @@ const providers = [
 ] as const;
 
 export default function SignInPage() {
+  const [enabledProviders, setEnabledProviders] = useState<typeof providerCatalog>([]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    getProviders()
+      .then((providers) => {
+        if (!mounted || !providers) {
+          return;
+        }
+
+        const enabled = providerCatalog.filter((provider) => providers[provider.id]);
+        setEnabledProviders(enabled);
+      })
+      .catch(() => {
+        if (mounted) {
+          setEnabledProviders([]);
+        }
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0B0F14] px-4">
       {/* Ambient glow */}
@@ -72,7 +98,7 @@ export default function SignInPage() {
           </div>
 
           <div className="space-y-3">
-            {providers.map((provider) => (
+            {enabledProviders.map((provider) => (
               <button
                 key={provider.id}
                 onClick={() => signIn(provider.id, { callbackUrl: '/mission-control' })}
@@ -90,6 +116,12 @@ export default function SignInPage() {
                 </svg>
               </button>
             ))}
+
+            {enabledProviders.length === 0 && (
+              <div className="rounded-2xl border border-amber-400/20 bg-amber-500/8 px-4 py-3 text-sm text-amber-100/80">
+                Sign-in providers are not configured yet. The public calculators and marketing pages are still available.
+              </div>
+            )}
           </div>
 
           <p className="mt-8 text-center text-[11px] text-white/20 leading-relaxed">

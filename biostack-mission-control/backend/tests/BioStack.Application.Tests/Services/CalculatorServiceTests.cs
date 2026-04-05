@@ -16,8 +16,9 @@ public class CalculatorServiceTests
         var result = _service.CalculateReconstitution(request);
 
         Assert.Equal(5m, result.Input);
-        Assert.Equal(20m, result.Output);
-        Assert.Equal("mcg/unit (0.01mL)", result.Unit);
+        Assert.Equal(2000m, result.Output);
+        Assert.Equal("mcg/mL", result.Unit);
+        Assert.Equal("Concentration = (Peptide mg * 1000) / Diluent mL", result.Formula);
         Assert.Contains("This is a mathematical calculation only", result.Disclaimer);
     }
 
@@ -81,6 +82,28 @@ public class CalculatorServiceTests
         Assert.Equal(1000000m, result.Output);
         Assert.Equal("mcg", result.Unit);
         Assert.Contains("This is a mathematical calculation only", result.Disclaimer);
+    }
+
+    [Fact]
+    public void CalculateConversion_WithoutExplicitFactor_UsesKnownUnitMapping()
+    {
+        var request = new ConversionRequest(2m, "mg", "mcg", null);
+
+        var result = _service.CalculateConversion(request);
+
+        Assert.Equal(2m, result.Input);
+        Assert.Equal(2000m, result.Output);
+        Assert.Equal("mcg", result.Unit);
+        Assert.Contains("mg to mcg", result.Formula);
+    }
+
+    [Fact]
+    public void CalculateConversion_WithoutKnownFactor_ThrowsArgumentException()
+    {
+        var request = new ConversionRequest(1m, "iu", "mg", null);
+
+        var ex = Assert.Throws<ArgumentException>(() => _service.CalculateConversion(request));
+        Assert.Contains("No known conversion factor", ex.Message);
     }
 
     [Fact]

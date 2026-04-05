@@ -16,11 +16,30 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
 });
 
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>()
+    ?.Where(origin => !string.IsNullOrWhiteSpace(origin))
+    .Select(origin => origin.Trim())
+    .ToArray()
+    ?? Array.Empty<string>();
+
+if (allowedOrigins.Length == 0)
+{
+    allowedOrigins =
+    [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3033",
+        "http://localhost:3030"
+    ];
+}
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost", policy =>
+    options.AddPolicy("ConfiguredOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "http://localhost:3001", "http://localhost:3033", "http://localhost:3030")
+        policy.WithOrigins(allowedOrigins)
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
@@ -97,7 +116,7 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-app.UseCors("AllowLocalhost");
+app.UseCors("ConfiguredOrigins");
 app.UseAuthentication();
 app.UseAuthorization();
 

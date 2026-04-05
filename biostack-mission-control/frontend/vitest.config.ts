@@ -18,6 +18,12 @@ export default defineConfig({
         'src/app/**',           // Next.js pages — tested via E2E
         '**/*.d.ts',
       ],
+      thresholds: {
+        lines: 50,
+        functions: 50,
+        branches: 40,
+        statements: 50,
+      },
     },
   },
   resolve: {

@@ -1,0 +1,6 @@
+MSBUILD : error MSB1008: Only one project can be specified.
+    Full command line: 'C:\Program Files\dotnet\sdk\10.0.102\MSBuild.dll -maxcpucount --verbosity:m -tlp:default=auto --property:VSTestCollect="XPlat" --property:NuGetInteractive=false --property:VSTestArtifactsProcessingMode=collect --property:VSTestSessionCorrelationId=45256_a437bbd9-32e4-4ec2-803b-aa3feed0f255 --restoreProperty:VSTestCollect="XPlat" --restoreProperty:NuGetInteractive=false --restoreProperty:VSTestArtifactsProcessingMode=collect --restoreProperty:VSTestSessionCorrelationId=45256_a437bbd9-32e4-4ec2-803b-aa3feed0f255 --restoreProperty:EnableDefaultCompileItems=false --restoreProperty:EnableDefaultEmbeddedResourceItems=false --restoreProperty:EnableDefaultNoneItems=false --target:VSTest -nodereuse:false -nologo backend\BioStack.sln Code Coverage -restore -distributedlogger:Microsoft.DotNet.Cli.Commands.MSBuild.MSBuildLogger,C:\Program Files\dotnet\sdk\10.0.102\dotnet.dll*Microsoft.DotNet.Cli.Commands.MSBuild.MSBuildForwardingLogger,C:\Program Files\dotnet\sdk\10.0.102\dotnet.dll'
+  Switches appended by response files:
+Switch: Code
+
+For switch syntax, type "MSBuild -help"

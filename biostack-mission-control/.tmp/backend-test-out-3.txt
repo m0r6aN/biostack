@@ -1,0 +1,9 @@
+  Determining projects to restore...
+C:\Program Files\dotnet\sdk\10.0.102\NuGet.targets(780,5): error : Value cannot be null. (Parameter 'path1') [d:\Repos\BioStack\biostack-mission-control\backend\src\BioStack.Infrastructure\BioStack.Infrastructure.csproj]
+C:\Program Files\dotnet\sdk\10.0.102\NuGet.targets(780,5): error : Value cannot be null. (Parameter 'path1') [d:\Repos\BioStack\biostack-mission-control\backend\src\BioStack.Domain\BioStack.Domain.csproj]
+C:\Program Files\dotnet\sdk\10.0.102\NuGet.targets(780,5): error : Value cannot be null. (Parameter 'path1') [d:\Repos\BioStack\biostack-mission-control\backend\src\BioStack.Contracts\BioStack.Contracts.csproj]
+C:\Program Files\dotnet\sdk\10.0.102\NuGet.targets(780,5): error : Value cannot be null. (Parameter 'path1') [d:\Repos\BioStack\biostack-mission-control\backend\tests\BioStack.Application.Tests\BioStack.Application.Tests.csproj]
+C:\Program Files\dotnet\sdk\10.0.102\NuGet.targets(780,5): error : Value cannot be null. (Parameter 'path1') [d:\Repos\BioStack\biostack-mission-control\backend\tests\BioStack.Api.Tests\BioStack.Api.Tests.csproj]
+C:\Program Files\dotnet\sdk\10.0.102\NuGet.targets(780,5): error : Value cannot be null. (Parameter 'path1') [d:\Repos\BioStack\biostack-mission-control\backend\tests\BioStack.Domain.Tests\BioStack.Domain.Tests.csproj]
+C:\Program Files\dotnet\sdk\10.0.102\NuGet.targets(780,5): error : Value cannot be null. (Parameter 'path1') [d:\Repos\BioStack\biostack-mission-control\backend\src\BioStack.Application\BioStack.Application.csproj]
+C:\Program Files\dotnet\sdk\10.0.102\NuGet.targets(780,5): error : Value cannot be null. (Parameter 'path1') [d:\Repos\BioStack\biostack-mission-control\backend\src\BioStack.Api\BioStack.Api.csproj]

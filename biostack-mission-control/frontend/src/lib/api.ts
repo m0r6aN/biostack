@@ -24,7 +24,7 @@ import {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-class ApiClient {
+export class ApiClient {
   private baseUrl: string;
   private accessToken: string | null = null;
 

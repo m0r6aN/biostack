@@ -1,0 +1,38 @@
+Traceback (most recent call last):
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\knack/cli.py", line 233, in invoke
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/commands/__init__.py", line 666, in execute
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/commands/__init__.py", line 734, in _run_jobs_serially
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/commands/__init__.py", line 703, in _run_job
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/commands/__init__.py", line 336, in __call__
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/commands/command_operation.py", line 362, in handler
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/commands/arm.py", line 432, in show_exception_handler
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/commands/command_operation.py", line 360, in handler
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/command_modules/profile/custom.py", line 70, in show_subscription
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/_profile.py", line 644, in get_subscription
+knack.util.CLIError: Please run 'az login' to setup account.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/__main__.py", line 41, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/__main__.py", line 27, in cli_main
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\knack/cli.py", line 245, in invoke
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/__init__.py", line 129, in exception_handler
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/util.py", line 59, in handle_exception
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\msrest/__init__.py", line 28, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\msrest/configuration.py", line 38, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\msrest/universal_http/__init__.py", line 53, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\msrest/exceptions.py", line 31, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/core/__init__.py", line 31, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/core/_pipeline_client.py", line 31, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/core/pipeline/__init__.py", line 180, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/core/pipeline/_base.py", line 34, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/core/pipeline/policies/__init__.py", line 28, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/core/pipeline/policies/_authentication.py", line 10, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/core/pipeline/transport/__init__.py", line 28, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/core/pipeline/transport/_base_async.py", line 27, in <module>
+  File "asyncio\__init__.py", line 43, in <module>
+  File "asyncio\windows_events.py", line 8, in <module>
+OSError: [WinError 10106] The requested service provider could not be loaded or initialized

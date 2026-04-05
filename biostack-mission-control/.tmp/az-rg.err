@@ -1,0 +1,72 @@
+ERROR: Error loading command module 'acr': [WinError 10106] The requested service provider could not be loaded or initialized
+ERROR: Error loading command module 'acs': name 'base_events' is not defined
+ERROR: Error loading command module 'appservice': name 'base_events' is not defined
+ERROR: Error loading command module 'aro': name 'base_events' is not defined
+ERROR: Error loading command module 'batch': name 'base_events' is not defined
+ERROR: Error loading command module 'billing': name 'base_events' is not defined
+ERROR: Error loading command module 'cdn': name 'base_events' is not defined
+ERROR: Error loading command module 'compute_recommender': name 'base_events' is not defined
+ERROR: Error loading command module 'computefleet': name 'base_events' is not defined
+ERROR: Error loading command module 'consumption': name 'base_events' is not defined
+ERROR: Error loading command module 'container': name 'base_events' is not defined
+ERROR: Error loading command module 'containerapp': name 'base_events' is not defined
+ERROR: Error loading command module 'cosmosdb': name 'base_events' is not defined
+ERROR: Error loading command module 'databoxedge': name 'base_events' is not defined
+ERROR: Error loading command module 'eventhubs': name 'base_events' is not defined
+ERROR: Error loading command module 'hdinsight': name 'base_events' is not defined
+ERROR: Error loading command module 'iot': name 'base_events' is not defined
+ERROR: Error loading command module 'lab': name 'base_events' is not defined
+ERROR: Error loading command module 'managedservices': name 'base_events' is not defined
+ERROR: Error loading command module 'monitor': name 'base_events' is not defined
+ERROR: Error loading command module 'mysql': name 'base_events' is not defined
+ERROR: Error loading command module 'netappfiles': name 'base_events' is not defined
+ERROR: Error loading command module 'network': name 'base_events' is not defined
+ERROR: Error loading command module 'policyinsights': name 'base_events' is not defined
+ERROR: Error loading command module 'privatedns': name 'base_events' is not defined
+ERROR: Error loading command module 'rdbms': name 'base_events' is not defined
+ERROR: Error loading command module 'relay': name 'base_events' is not defined
+ERROR: Error loading command module 'resource': name 'base_events' is not defined
+ERROR: Error loading command module 'search': name 'base_events' is not defined
+ERROR: Error loading command module 'security': name 'base_events' is not defined
+ERROR: Error loading command module 'servicebus': name 'base_events' is not defined
+ERROR: Error loading command module 'serviceconnector': name 'base_events' is not defined
+ERROR: Error loading command module 'servicefabric': name 'base_events' is not defined
+ERROR: Error loading command module 'sql': name 'base_events' is not defined
+ERROR: Error loading command module 'sqlvm': name 'base_events' is not defined
+ERROR: Error loading command module 'storage': name 'base_events' is not defined
+ERROR: Error loading command module 'vm': name 'base_events' is not defined
+Traceback (most recent call last):
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\knack/cli.py", line 233, in invoke
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/commands/__init__.py", line 591, in execute
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\knack/parser.py", line 261, in parse_args
+  File "argparse.py", line 1904, in parse_args
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/parser.py", line 281, in parse_known_args
+  File "argparse.py", line 1914, in parse_known_args
+  File "argparse.py", line 1943, in _parse_known_args2
+  File "argparse.py", line 2165, in _parse_known_args
+  File "argparse.py", line 2141, in consume_positionals
+  File "argparse.py", line 2003, in take_action
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/parser.py", line 272, in _get_values
+  File "argparse.py", line 2523, in _get_values
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/parser.py", line 334, in _check_value
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/azclierror.py", line 70, in print_error
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/azlogging.py", line 214, in __init__
+  File "unittest\mock.py", line 26, in <module>
+  File "asyncio\__init__.py", line 25, in <module>
+NameError: name 'base_events' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/__main__.py", line 41, in <module>
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/__main__.py", line 27, in cli_main
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\knack/cli.py", line 245, in invoke
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/__init__.py", line 129, in exception_handler
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/util.py", line 170, in handle_exception
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/azclierror.py", line 70, in print_error
+  File "D:\a\_work\1\s\build_scripts\windows\artifacts\cli\Lib\site-packages\azure/cli/core/azlogging.py", line 214, in __init__
+  File "unittest\mock.py", line 26, in <module>
+  File "asyncio\__init__.py", line 25, in <module>
+NameError: name 'base_events' is not defined

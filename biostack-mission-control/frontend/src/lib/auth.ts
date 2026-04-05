@@ -6,6 +6,43 @@ import Google from 'next-auth/providers/google';
 
 const apiUrl          = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 const callbackSecret  = process.env.AUTH_CALLBACK_SECRET || '';
+const providers = [];
+
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  providers.push(
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    })
+  );
+}
+
+if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+  providers.push(
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    })
+  );
+}
+
+if (process.env.DISCORD_CLIENT_ID && process.env.DISCORD_CLIENT_SECRET) {
+  providers.push(
+    Discord({
+      clientId: process.env.DISCORD_CLIENT_ID,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+    })
+  );
+}
+
+if (process.env.APPLE_CLIENT_ID && process.env.APPLE_CLIENT_SECRET) {
+  providers.push(
+    Apple({
+      clientId: process.env.APPLE_CLIENT_ID,
+      clientSecret: process.env.APPLE_CLIENT_SECRET,
+    })
+  );
+}
 
 /**
  * After every OAuth sign-in we POST the user's resolved identity to the .NET backend.
@@ -37,24 +74,7 @@ async function syncUserWithBackend(provider: string, providerAccountId: string, 
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    Google({
-      clientId:     process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-    GitHub({
-      clientId:     process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-    }),
-    Discord({
-      clientId:     process.env.DISCORD_CLIENT_ID!,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
-    }),
-    Apple({
-      clientId:     process.env.APPLE_CLIENT_ID!,
-      clientSecret: process.env.APPLE_CLIENT_SECRET!,
-    }),
-  ],
+  providers,
 
   session: { strategy: 'jwt' },
 
