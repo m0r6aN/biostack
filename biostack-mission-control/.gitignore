@@ -3,6 +3,11 @@
 
 *.pbd
 *.CLAUDE
+*.dll
+*.so
+*.dylib
+*.a
+*.exe
 
 # Root-level .NET (fallback + extras)
 /[Dd]ebug/
