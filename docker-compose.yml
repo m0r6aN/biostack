@@ -1,0 +1,67 @@
+services:
+  biostack-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: biostack-api
+    ports:
+      - "5000:5000"
+    volumes:
+      - biostack-data:/app/data
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/biostack.db
+      - Jwt__Secret=${Jwt__Secret:-CHANGE_ME_MINIMUM_32_CHARACTER_RANDOM_STRING}
+      - Auth__CallbackSecret=${Auth__CallbackSecret:-CHANGE_ME_SHARED_SECRET}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 3s
+      start_period: 10s
+      retries: 3
+    restart: unless-stopped
+
+  biostack-ui:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:5000}
+    container_name: biostack-ui
+    ports:
+      - "3043:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:5000}
+      - API_INTERNAL_URL=${API_INTERNAL_URL:-http://biostack-api:5000}
+      - AUTH_SECRET=${AUTH_SECRET:-CHANGE_ME_NEXTAUTH_SECRET_MIN_32_CHARS}
+      - AUTH_URL=${AUTH_URL:-http://localhost:3043}
+      - AUTH_TRUST_HOST=${AUTH_TRUST_HOST:-true}
+      - AUTH_CALLBACK_SECRET=${AUTH_CALLBACK_SECRET:-CHANGE_ME_SHARED_SECRET}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID:-}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET:-}
+      - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID:-}
+      - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET:-}
+      - APPLE_CLIENT_ID=${APPLE_CLIENT_ID:-}
+      - APPLE_CLIENT_SECRET=${APPLE_CLIENT_SECRET:-}
+      - FACEBOOK_CLIENT_ID=${FACEBOOK_CLIENT_ID:-}
+      - FACEBOOK_CLIENT_SECRET=${FACEBOOK_CLIENT_SECRET:-}
+      - INSTAGRAM_CLIENT_ID=${INSTAGRAM_CLIENT_ID:-}
+      - INSTAGRAM_CLIENT_SECRET=${INSTAGRAM_CLIENT_SECRET:-}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:3000 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+    depends_on:
+      biostack-api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  biostack-data:
+    driver: local
+

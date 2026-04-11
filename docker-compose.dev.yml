@@ -1,0 +1,60 @@
+services:
+  biostack-api-dev:
+    image: mcr.microsoft.com/dotnet/sdk:10.0-alpine
+    container_name: biostack-api-dev
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    volumes:
+      - ./backend:/app
+      - biostack-dev-data:/app/data
+    working_dir: /app
+    env_file:
+      - .env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/biostack.db
+    command: sh -c "apk add --no-cache curl && dotnet watch run --project src/BioStack.Api/BioStack.Api.csproj --urls http://+:5000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  biostack-ui-dev:
+    image: node:22-alpine
+    container_name: biostack-ui-dev
+    ports:
+      - "3043:3043"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    working_dir: /app
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: sh -c "npm install && npm run dev"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3043 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      biostack-api-dev:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  biostack-dev-data:
+    driver: local
+

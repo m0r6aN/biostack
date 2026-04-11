@@ -1,0 +1,71 @@
+name: Deploy to Azure Container Apps
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # required for OIDC login
+  contents: read
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── Azure login via OIDC (no long-lived secrets) ───────────────────────
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # ── Authenticate Docker to ACR ─────────────────────────────────────────
+      - name: Log in to ACR
+        run: az acr login --name ${{ secrets.ACR_NAME }}
+
+      # ── Build & push API image ─────────────────────────────────────────────
+      - name: Build & push API
+        run: |
+          IMAGE=${{ secrets.ACR_LOGIN_SERVER }}/biostack-api
+          docker build \
+            --file biostack-mission-control/backend/Dockerfile \
+            --tag $IMAGE:${{ github.sha }} \
+            --tag $IMAGE:latest \
+            biostack-mission-control/backend
+          docker push $IMAGE:${{ github.sha }}
+          docker push $IMAGE:latest
+
+      # ── Build & push frontend image ────────────────────────────────────────
+      - name: Build & push frontend
+        run: |
+          IMAGE=${{ secrets.ACR_LOGIN_SERVER }}/biostack-web
+          docker build \
+            --file biostack-mission-control/frontend/Dockerfile \
+            --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
+            --tag $IMAGE:${{ github.sha }} \
+            --tag $IMAGE:latest \
+            biostack-mission-control/frontend
+          docker push $IMAGE:${{ github.sha }}
+          docker push $IMAGE:latest
+
+      # ── Update container apps to new images ────────────────────────────────
+      - name: Update API container app
+        run: |
+          az containerapp update \
+            --name ${{ secrets.API_APP_NAME }} \
+            --resource-group ${{ secrets.RESOURCE_GROUP }} \
+            --image ${{ secrets.ACR_LOGIN_SERVER }}/biostack-api:${{ github.sha }}
+
+      - name: Update frontend container app
+        run: |
+          az containerapp update \
+            --name ${{ secrets.WEB_APP_NAME }} \
+            --resource-group ${{ secrets.RESOURCE_GROUP }} \
+            --image ${{ secrets.ACR_LOGIN_SERVER }}/biostack-web:${{ github.sha }}
