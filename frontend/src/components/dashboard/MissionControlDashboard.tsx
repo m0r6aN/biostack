@@ -9,6 +9,7 @@ import {
   CurrentStackIntelligence,
   GoalDefinition,
   InteractionFlag,
+  ProtocolRun,
   TimelineEvent,
 } from '@/lib/types';
 import { Header } from '@/components/Header';
@@ -21,6 +22,7 @@ import { ActiveGoalsCard } from '@/components/dashboard/ActiveGoalsCard';
 import { LatestCheckInCard } from '@/components/dashboard/LatestCheckInCard';
 import { TimelineSnapshot } from '@/components/dashboard/TimelineSnapshot';
 import { OverlapFlagsBanner } from '@/components/dashboard/OverlapFlagsBanner';
+import { ActiveProtocolRunCard } from '@/components/dashboard/ActiveProtocolRunCard';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
 
 export function MissionControlDashboard() {
@@ -30,6 +32,7 @@ export function MissionControlDashboard() {
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
   const [overlaps, setOverlaps] = useState<InteractionFlag[]>([]);
   const [currentStack, setCurrentStack] = useState<CurrentStackIntelligence | null>(null);
+  const [activeRun, setActiveRun] = useState<ProtocolRun | null>(null);
   const [profileGoals, setProfileGoals] = useState<GoalDefinition[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -68,12 +71,13 @@ export function MissionControlDashboard() {
       setLoading(true);
       setError(null);
 
-      const [comp, chk, tl, goals, stack] = await Promise.all([
+      const [comp, chk, tl, goals, stack, run] = await Promise.all([
         apiClient.getCompounds(currentProfileId),
         apiClient.getCheckIns(currentProfileId),
         apiClient.getTimeline(currentProfileId),
         apiClient.getProfileGoals(currentProfileId),
         apiClient.getCurrentStackIntelligence(currentProfileId),
+        apiClient.getActiveProtocolRun(currentProfileId),
       ]);
 
       setCompounds(comp);
@@ -81,6 +85,7 @@ export function MissionControlDashboard() {
       setTimeline(tl);
       setProfileGoals(goals);
       setCurrentStack(stack);
+      setActiveRun(run);
 
       const activeCompoundNames = comp
         .filter((compound) => compound.status === 'Active')
@@ -154,6 +159,7 @@ export function MissionControlDashboard() {
               />
             </div>
 
+            <ActiveProtocolRunCard run={activeRun} />
             {overlaps.length > 0 && <OverlapFlagsBanner flags={overlaps} />}
             {profileGoals.length > 0 && (
               <ActiveGoalsCard goals={profileGoals} profileId={currentProfileId} />

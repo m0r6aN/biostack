@@ -58,6 +58,7 @@ export interface CompoundRecord {
 export interface CheckIn {
   id: string;
   personId: string;
+  protocolRunId: string | null;
   date: string;
   weight: number;
   sleepQuality: number;
@@ -131,13 +132,59 @@ export interface SimulationResult {
 
 export interface ProtocolActualComparison {
   simulation: SimulationResult;
+  run: ProtocolRun | null;
+  runSummary: ProtocolRunSummary | null;
+  observations: ProtocolRunObservation[];
   actualTrends: Array<{
     metric: string;
     beforeAverage: number | null;
     afterAverage: number | null;
     direction: string;
   }>;
+  insights: ProtocolRunInsight[];
   highlights: string[];
+}
+
+export interface ProtocolRun {
+  id: string;
+  protocolId: string;
+  personId: string;
+  protocolName: string;
+  protocolVersion: number;
+  startedAtUtc: string;
+  endedAtUtc: string | null;
+  status: 'active' | 'completed' | 'abandoned';
+  notes: string;
+}
+
+export interface ProtocolRunInsight {
+  type: 'alignment' | 'divergence' | 'neutral';
+  message: string;
+  relatedSignals: string[];
+}
+
+export interface ProtocolRunSignalSummary {
+  metric: string;
+  direction: string;
+  magnitude: string;
+}
+
+export interface ProtocolRunSummary {
+  run: ProtocolRun;
+  daysActive: number;
+  signals: ProtocolRunSignalSummary[];
+  alignedCount: number;
+  divergingCount: number;
+}
+
+export interface ProtocolRunObservation {
+  checkInId: string;
+  date: string;
+  day: number;
+  energy: number;
+  sleepQuality: number;
+  appetite: number;
+  recovery: number;
 }
 
 export interface ProtocolItem {
@@ -154,12 +201,43 @@ export interface Protocol {
   personId: string;
   name: string;
   version: number;
+  parentProtocolId: string | null;
+  originProtocolId: string | null;
+  evolvedFromRunId: string | null;
+  isDraft: boolean;
+  evolutionContext: string;
+  isCurrentVersion: boolean;
+  priorVersions: ProtocolVersionSummary[];
   createdAtUtc: string;
   updatedAtUtc: string;
   items: ProtocolItem[];
   stackScore: StackScore;
   simulation: SimulationResult;
+  activeRun: ProtocolRun | null;
+  versionDiff: ProtocolVersionDiff | null;
   actualComparison: ProtocolActualComparison | null;
+}
+
+export interface ProtocolVersionSummary {
+  id: string;
+  name: string;
+  version: number;
+  isDraft: boolean;
+  createdAtUtc: string;
+}
+
+export interface ProtocolVersionDiff {
+  fromProtocolId: string;
+  toProtocolId: string;
+  changes: ProtocolVersionChange[];
+}
+
+export interface ProtocolVersionChange {
+  changeType: 'added' | 'removed' | 'edited' | 'unchanged';
+  scope: 'compound' | 'schedule' | 'structure' | string;
+  subject: string;
+  before: string;
+  after: string;
 }
 
 export interface CurrentStackIntelligence {

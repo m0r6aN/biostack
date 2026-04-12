@@ -11,15 +11,18 @@ public sealed class CheckInService : ICheckInService
     private readonly ICheckInRepository _checkInRepository;
     private readonly IPersonProfileRepository _profileRepository;
     private readonly ITimelineEventRepository _timelineRepository;
+    private readonly IProtocolRunRepository _protocolRunRepository;
 
     public CheckInService(
         ICheckInRepository checkInRepository,
         IPersonProfileRepository profileRepository,
-        ITimelineEventRepository timelineRepository)
+        ITimelineEventRepository timelineRepository,
+        IProtocolRunRepository protocolRunRepository)
     {
         _checkInRepository = checkInRepository;
         _profileRepository = profileRepository;
         _timelineRepository = timelineRepository;
+        _protocolRunRepository = protocolRunRepository;
     }
 
     public async Task<CheckInResponse> CreateCheckInAsync(Guid personId, CreateCheckInRequest request, CancellationToken cancellationToken = default)
@@ -28,10 +31,13 @@ public sealed class CheckInService : ICheckInService
         if (profile is null)
             throw new InvalidOperationException($"Profile with ID {personId} not found");
 
+        var activeRun = await _protocolRunRepository.GetActiveByPersonIdAsync(personId, cancellationToken);
+
         var checkIn = new CheckIn
         {
             Id = Guid.NewGuid(),
             PersonId = personId,
+            ProtocolRunId = activeRun?.Id,
             Date = request.Date,
             Weight = request.Weight,
             SleepQuality = request.SleepQuality,
@@ -86,6 +92,7 @@ public sealed class CheckInService : ICheckInService
         return new CheckInResponse(
             checkIn.Id,
             checkIn.PersonId,
+            checkIn.ProtocolRunId,
             checkIn.Date,
             checkIn.Weight,
             checkIn.SleepQuality,

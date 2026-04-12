@@ -15,6 +15,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<CompoundRecord> CompoundRecords { get; set; }
     public DbSet<CheckIn> CheckIns { get; set; }
     public DbSet<Protocol> Protocols { get; set; }
+    public DbSet<ProtocolRun> ProtocolRuns { get; set; }
     public DbSet<ProtocolItem> ProtocolItems { get; set; }
     public DbSet<ProtocolPhase> ProtocolPhases { get; set; }
     public DbSet<TimelineEvent> TimelineEvents { get; set; }
@@ -63,6 +64,10 @@ public sealed class BioStackDbContext : DbContext
                 .WithOne(protocol => protocol.PersonProfile)
                 .HasForeignKey(protocol => protocol.PersonId)
                 .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany(p => p.ProtocolRuns)
+                .WithOne(run => run.PersonProfile)
+                .HasForeignKey(run => run.PersonId)
+                .OnDelete(DeleteBehavior.Cascade);
             entity.HasMany(p => p.ProtocolPhases)
                 .WithOne(pp => pp.PersonProfile)
                 .HasForeignKey(pp => pp.PersonId)
@@ -98,7 +103,12 @@ public sealed class BioStackDbContext : DbContext
             entity.HasOne(c => c.PersonProfile)
                 .WithMany(p => p.CheckIns)
                 .HasForeignKey(c => c.PersonId);
+            entity.HasOne(c => c.ProtocolRun)
+                .WithMany(run => run.CheckIns)
+                .HasForeignKey(c => c.ProtocolRunId)
+                .OnDelete(DeleteBehavior.SetNull);
             entity.HasIndex(c => c.PersonId);
+            entity.HasIndex(c => c.ProtocolRunId);
             entity.HasIndex(c => c.Date);
         });
 
@@ -108,14 +118,47 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(protocol => protocol.PersonId).IsRequired();
             entity.Property(protocol => protocol.Name).HasMaxLength(255).IsRequired();
             entity.Property(protocol => protocol.Version).HasDefaultValue(1);
+            entity.Property(protocol => protocol.EvolutionContext).HasMaxLength(4000);
             entity.HasOne(protocol => protocol.PersonProfile)
                 .WithMany(profile => profile.Protocols)
                 .HasForeignKey(protocol => protocol.PersonId);
+            entity.HasOne(protocol => protocol.ParentProtocol)
+                .WithMany(parent => parent.ChildVersions)
+                .HasForeignKey(protocol => protocol.ParentProtocolId)
+                .OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne(protocol => protocol.OriginProtocol)
+                .WithMany()
+                .HasForeignKey(protocol => protocol.OriginProtocolId)
+                .OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne(protocol => protocol.EvolvedFromRun)
+                .WithMany()
+                .HasForeignKey(protocol => protocol.EvolvedFromRunId)
+                .OnDelete(DeleteBehavior.SetNull);
             entity.HasMany(protocol => protocol.Items)
                 .WithOne(item => item.Protocol)
                 .HasForeignKey(item => item.ProtocolId)
                 .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany(protocol => protocol.Runs)
+                .WithOne(run => run.Protocol)
+                .HasForeignKey(run => run.ProtocolId)
+                .OnDelete(DeleteBehavior.Cascade);
             entity.HasIndex(protocol => protocol.PersonId);
+            entity.HasIndex(protocol => protocol.ParentProtocolId);
+            entity.HasIndex(protocol => protocol.OriginProtocolId);
+            entity.HasIndex(protocol => protocol.EvolvedFromRunId);
+            entity.HasIndex(protocol => new { protocol.PersonId, protocol.OriginProtocolId, protocol.Version });
+        });
+
+        modelBuilder.Entity<ProtocolRun>(entity =>
+        {
+            entity.HasKey(run => run.Id);
+            entity.Property(run => run.ProtocolId).IsRequired();
+            entity.Property(run => run.PersonId).IsRequired();
+            entity.Property(run => run.Status).HasConversion<int>();
+            entity.Property(run => run.Notes).HasMaxLength(2000);
+            entity.HasIndex(run => run.PersonId);
+            entity.HasIndex(run => run.ProtocolId);
+            entity.HasIndex(run => new { run.PersonId, run.Status });
         });
 
         modelBuilder.Entity<ProtocolItem>(entity =>
@@ -124,6 +167,13 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(item => item.ProtocolId).IsRequired();
             entity.Property(item => item.CompoundRecordId).IsRequired();
             entity.Property(item => item.Notes).HasMaxLength(2000);
+            entity.Property(item => item.CompoundNameSnapshot).HasMaxLength(255);
+            entity.Property(item => item.CompoundCategorySnapshot).HasMaxLength(100);
+            entity.Property(item => item.CompoundStatusSnapshot).HasMaxLength(100);
+            entity.Property(item => item.CompoundNotesSnapshot).HasMaxLength(2000);
+            entity.Property(item => item.CompoundGoalSnapshot).HasMaxLength(255);
+            entity.Property(item => item.CompoundSourceSnapshot).HasMaxLength(255);
+            entity.Property(item => item.CompoundPricePaidSnapshot).HasPrecision(18, 2);
             entity.HasOne(item => item.CompoundRecord)
                 .WithMany()
                 .HasForeignKey(item => item.CompoundRecordId)

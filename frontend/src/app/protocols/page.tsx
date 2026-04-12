@@ -144,13 +144,23 @@ export default function ProtocolsPage() {
                         <div>
                           <h3 className="font-bold text-white">{protocol.name}</h3>
                           <p className="mt-1 text-sm text-white/45">
-                            {protocol.items.length} compound{protocol.items.length === 1 ? '' : 's'} · v{protocol.version}
+                            {protocol.items.length} compound{protocol.items.length === 1 ? '' : 's'} · v{protocol.version} · {protocol.isCurrentVersion ? 'current version' : 'prior version'}
                           </p>
                         </div>
-                        <span className="rounded-lg border border-emerald-400/20 bg-emerald-500/10 px-2.5 py-1 text-sm font-semibold text-emerald-200">
-                          {protocol.stackScore.score}
-                        </span>
+                        <div className="flex flex-col items-end gap-2">
+                          <span className="rounded-lg border border-emerald-400/20 bg-emerald-500/10 px-2.5 py-1 text-sm font-semibold text-emerald-200">
+                            {protocol.stackScore.score}
+                          </span>
+                          {protocol.isDraft && (
+                            <span className="rounded-lg border border-sky-400/20 bg-sky-500/10 px-2 py-1 text-xs font-semibold text-sky-200">
+                              draft
+                            </span>
+                          )}
+                        </div>
                       </div>
+                      {protocol.evolvedFromRunId && (
+                        <p className="mt-3 text-xs text-white/40">Derived from an observed run. Compare changes before tracking.</p>
+                      )}
                       <div className="mt-4 flex flex-wrap gap-2">
                         {protocol.stackScore.chips.slice(0, 3).map((chip) => (
                           <span key={chip} className="rounded-lg border border-white/[0.08] px-2 py-1 text-xs text-white/50">{chip}</span>

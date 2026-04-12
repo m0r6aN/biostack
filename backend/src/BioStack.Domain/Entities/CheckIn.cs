@@ -4,6 +4,7 @@ public sealed class CheckIn
 {
     public Guid Id { get; set; }
     public Guid PersonId { get; set; }
+    public Guid? ProtocolRunId { get; set; }
     public DateTime Date { get; set; } = DateTime.UtcNow;
     public decimal Weight { get; set; }
     public int SleepQuality { get; set; }
@@ -26,4 +27,5 @@ public sealed class CheckIn
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
     public PersonProfile? PersonProfile { get; set; }
+    public ProtocolRun? ProtocolRun { get; set; }
 }

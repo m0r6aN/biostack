@@ -21,6 +21,7 @@ public sealed class PersonProfile
     public ICollection<CompoundRecord> Compounds { get; set; } = new List<CompoundRecord>();
     public ICollection<CheckIn> CheckIns { get; set; } = new List<CheckIn>();
     public ICollection<Protocol> Protocols { get; set; } = new List<Protocol>();
+    public ICollection<ProtocolRun> ProtocolRuns { get; set; } = new List<ProtocolRun>();
     public ICollection<ProtocolPhase> ProtocolPhases { get; set; } = new List<ProtocolPhase>();
     public ICollection<TimelineEvent> TimelineEvents { get; set; } = new List<TimelineEvent>();
 }
