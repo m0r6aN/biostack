@@ -45,6 +45,17 @@ function IconCheckins() {
   );
 }
 
+function IconProtocols() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <path d="M3 2.5h10v11H3z" />
+      <path d="M5.5 5h5" />
+      <path d="M5.5 8h5" />
+      <path d="M5.5 11h3" />
+    </svg>
+  );
+}
+
 function IconTimeline() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
@@ -98,6 +109,7 @@ const navItems = [
   { label: 'Dashboard',   href: '/mission-control', icon: <IconDashboard />,   adminOnly: false },
   { label: 'Profiles',    href: '/profiles',    icon: <IconProfiles />,    adminOnly: false },
   { label: 'Compounds',   href: '/compounds',   icon: <IconCompounds />,   adminOnly: false },
+  { label: 'Protocols',   href: '/protocols',   icon: <IconProtocols />,   adminOnly: false },
   { label: 'Check-ins',   href: '/checkins',    icon: <IconCheckins />,    adminOnly: false },
   { label: 'Timeline',    href: '/timeline',    icon: <IconTimeline />,    adminOnly: false },
   { label: 'Calculators', href: '/calculators', icon: <IconCalculators />, adminOnly: false },

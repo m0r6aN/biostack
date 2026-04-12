@@ -14,6 +14,8 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<PersonProfile> PersonProfiles { get; set; }
     public DbSet<CompoundRecord> CompoundRecords { get; set; }
     public DbSet<CheckIn> CheckIns { get; set; }
+    public DbSet<Protocol> Protocols { get; set; }
+    public DbSet<ProtocolItem> ProtocolItems { get; set; }
     public DbSet<ProtocolPhase> ProtocolPhases { get; set; }
     public DbSet<TimelineEvent> TimelineEvents { get; set; }
     public DbSet<InteractionFlag> InteractionFlags { get; set; }
@@ -57,6 +59,10 @@ public sealed class BioStackDbContext : DbContext
                 .WithOne(c => c.PersonProfile)
                 .HasForeignKey(c => c.PersonId)
                 .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany(p => p.Protocols)
+                .WithOne(protocol => protocol.PersonProfile)
+                .HasForeignKey(protocol => protocol.PersonId)
+                .OnDelete(DeleteBehavior.Cascade);
             entity.HasMany(p => p.ProtocolPhases)
                 .WithOne(pp => pp.PersonProfile)
                 .HasForeignKey(pp => pp.PersonId)
@@ -94,6 +100,36 @@ public sealed class BioStackDbContext : DbContext
                 .HasForeignKey(c => c.PersonId);
             entity.HasIndex(c => c.PersonId);
             entity.HasIndex(c => c.Date);
+        });
+
+        modelBuilder.Entity<Protocol>(entity =>
+        {
+            entity.HasKey(protocol => protocol.Id);
+            entity.Property(protocol => protocol.PersonId).IsRequired();
+            entity.Property(protocol => protocol.Name).HasMaxLength(255).IsRequired();
+            entity.Property(protocol => protocol.Version).HasDefaultValue(1);
+            entity.HasOne(protocol => protocol.PersonProfile)
+                .WithMany(profile => profile.Protocols)
+                .HasForeignKey(protocol => protocol.PersonId);
+            entity.HasMany(protocol => protocol.Items)
+                .WithOne(item => item.Protocol)
+                .HasForeignKey(item => item.ProtocolId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(protocol => protocol.PersonId);
+        });
+
+        modelBuilder.Entity<ProtocolItem>(entity =>
+        {
+            entity.HasKey(item => item.Id);
+            entity.Property(item => item.ProtocolId).IsRequired();
+            entity.Property(item => item.CompoundRecordId).IsRequired();
+            entity.Property(item => item.Notes).HasMaxLength(2000);
+            entity.HasOne(item => item.CompoundRecord)
+                .WithMany()
+                .HasForeignKey(item => item.CompoundRecordId)
+                .OnDelete(DeleteBehavior.Restrict);
+            entity.HasIndex(item => item.ProtocolId);
+            entity.HasIndex(item => item.CompoundRecordId);
         });
 
         modelBuilder.Entity<ProtocolPhase>(entity =>
