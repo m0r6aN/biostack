@@ -1,8 +1,9 @@
-import { ProtocolPatternSnapshot, ProtocolReview, ProtocolReviewTimelineEvent } from '@/lib/types';
+import { ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolReviewTimelineEvent } from '@/lib/types';
 
 interface ProtocolIntelligenceReviewProps {
   review: ProtocolReview | null;
   patterns?: ProtocolPatternSnapshot | null;
+  drift?: ProtocolDriftSnapshot | null;
 }
 
 const sectionStyles: Record<string, string> = {
@@ -13,7 +14,7 @@ const sectionStyles: Record<string, string> = {
   gap: 'border-white/[0.1] bg-white/[0.035] text-white/65',
 };
 
-export function ProtocolIntelligenceReview({ review, patterns }: ProtocolIntelligenceReviewProps) {
+export function ProtocolIntelligenceReview({ review, patterns, drift }: ProtocolIntelligenceReviewProps) {
   if (!review) {
     return (
       <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
@@ -107,7 +108,8 @@ export function ProtocolIntelligenceReview({ review, patterns }: ProtocolIntelli
           <h3 className="font-semibold text-white">Longitudinal timeline</h3>
           <div className="mt-3 max-h-[520px] space-y-3 overflow-y-auto pr-2">
             {review.timeline.map((event, index) => {
-              const detail = timelineDetail(event, patterns);
+              const detail = timelineDetail(event, patterns, drift);
+              const tags = timelineTags(event, drift);
               return (
               <div key={`${event.eventType}-${event.occurredAtUtc}-${index}`} className="grid grid-cols-[92px_1fr] gap-3">
                 <time className="pt-1 text-xs text-white/35">{formatDate(event.occurredAtUtc)}</time>
@@ -115,6 +117,15 @@ export function ProtocolIntelligenceReview({ review, patterns }: ProtocolIntelli
                   <span className={`absolute -left-1.5 top-1.5 h-3 w-3 rounded-full ${eventDotClass(event.eventType)}`} />
                   <p className="text-sm font-semibold text-white">{event.label}</p>
                   <p className="mt-1 text-xs leading-5 text-white/50">{detail}</p>
+                  {tags.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {tags.map((tag) => (
+                        <span key={tag} className="rounded-lg border border-white/[0.08] px-2 py-1 text-[11px] text-white/40">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )})}
@@ -133,14 +144,17 @@ export function ProtocolIntelligenceReview({ review, patterns }: ProtocolIntelli
   );
 }
 
-function timelineDetail(event: ProtocolReviewTimelineEvent, patterns?: ProtocolPatternSnapshot | null) {
+function timelineDetail(
+  event: ProtocolReviewTimelineEvent,
+  patterns?: ProtocolPatternSnapshot | null,
+  drift?: ProtocolDriftSnapshot | null
+) {
   const comparison = patterns?.currentRunComparison;
-  if (!comparison || !event.runId) {
-    return event.detail;
-  }
-
-  const annotation = annotationForEvent(event.eventType, comparison.matchingSignals, comparison.divergentSignals);
-  return annotation ? `${event.detail} Pattern memory: ${annotation}.` : event.detail;
+  const annotation = comparison && event.runId
+    ? annotationForEvent(event.eventType, comparison.matchingSignals, comparison.divergentSignals)
+    : null;
+  const driftPhrase = driftDetailPhrase(event.eventType, drift);
+  return [event.detail, annotation ? `Pattern memory: ${annotation}.` : null, driftPhrase].filter(Boolean).join(' ');
 }
 
 function annotationForEvent(eventType: string, matchingSignals: string[], divergentSignals: string[]) {
@@ -161,6 +175,47 @@ function annotationForEvent(eventType: string, matchingSignals: string[], diverg
   }
 
   return null;
+}
+
+function driftDetailPhrase(eventType: string, drift?: ProtocolDriftSnapshot | null) {
+  if (!drift || drift.signals.length === 0) {
+    return null;
+  }
+
+  if ((eventType === 'check_in' || eventType === 'computation') && drift.signals.some((signal) => signal.description.includes('outside historical timing range'))) {
+    return 'Drift tag: outside typical timing.';
+  }
+
+  if (drift.signals.some((signal) => signal.type === 'sequence_break')) {
+    return 'Drift tag: sequence break.';
+  }
+
+  if (drift.driftState === 'mild' || drift.driftState === 'moderate') {
+    return 'Drift tag: drift accumulating.';
+  }
+
+  return null;
+}
+
+function timelineTags(event: ProtocolReviewTimelineEvent, drift?: ProtocolDriftSnapshot | null) {
+  if (!drift || !event.runId) {
+    return [];
+  }
+
+  const tags: string[] = [];
+  if ((event.eventType === 'check_in' || event.eventType === 'computation') && drift.signals.some((signal) => signal.type.endsWith('_timing'))) {
+    tags.push('outside typical timing');
+  }
+
+  if (drift.signals.some((signal) => signal.type === 'sequence_break')) {
+    tags.push('sequence break');
+  }
+
+  if ((drift.driftState === 'mild' || drift.driftState === 'moderate') && tags.length < 2) {
+    tags.push('drift accumulating');
+  }
+
+  return tags;
 }
 
 function ReviewStat({ label, value }: { label: string; value: number }) {

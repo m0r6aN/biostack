@@ -8,6 +8,7 @@ public sealed record MissionControlResponse(
     MissionControlCheckInSignalResponse LatestCheckInSignal,
     List<MissionControlObservationSignalResponse> ObservationSignals,
     ProtocolPatternSnapshot? PatternSnapshot,
+    ProtocolDriftSnapshot? DriftSnapshot,
     List<ProtocolReviewTimelineEventResponse> CohesionTimeline
 );
 

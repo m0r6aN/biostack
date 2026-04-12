@@ -21,6 +21,7 @@ import {
     MissionControl,
     Protocol,
     ProtocolComputationRecord,
+    ProtocolDriftSnapshot,
     ProtocolPatternSnapshot,
     ProtocolReview,
     ProtocolReviewCompletedEvent,
@@ -190,6 +191,10 @@ export class ApiClient {
 
   async getProtocolPatterns(protocolId: string): Promise<ProtocolPatternSnapshot> {
     return this.request<ProtocolPatternSnapshot>(`/api/v1/protocols/${protocolId}/patterns`);
+  }
+
+  async getProtocolDrift(protocolId: string): Promise<ProtocolDriftSnapshot> {
+    return this.request<ProtocolDriftSnapshot>(`/api/v1/protocols/${protocolId}/drift`);
   }
 
   async completeProtocolReview(

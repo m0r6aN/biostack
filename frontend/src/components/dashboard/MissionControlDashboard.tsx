@@ -25,6 +25,7 @@ import { OverlapFlagsBanner } from '@/components/dashboard/OverlapFlagsBanner';
 import { CohesionTimelinePanel } from '@/components/dashboard/CohesionTimelinePanel';
 import { MissionControlOverview } from '@/components/dashboard/MissionControlOverview';
 import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
+import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
 
 export function MissionControlDashboard() {
@@ -163,6 +164,7 @@ export function MissionControlDashboard() {
 
             <MissionControlOverview mission={mission} />
             <PatternMemoryPanel snapshot={mission?.patternSnapshot ?? null} />
+            <DriftRegimePanel drift={mission?.driftSnapshot ?? null} patterns={mission?.patternSnapshot ?? null} />
             {overlaps.length > 0 && <OverlapFlagsBanner flags={overlaps} />}
             {profileGoals.length > 0 && (
               <ActiveGoalsCard goals={profileGoals} profileId={currentProfileId} />

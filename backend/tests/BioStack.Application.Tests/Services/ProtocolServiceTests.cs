@@ -580,6 +580,207 @@ public class ProtocolServiceTests
         Assert.Contains(snapshot.SequencePatterns, pattern => pattern.Sequence.SequenceEqual(new[] { "RunStart", "Computation", "TrendShift", "ReviewCompleted" }));
     }
 
+    [Fact]
+    public async Task GetDriftSnapshotAsync_WithInsufficientHistory_ReturnsNoBaseline()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Drift", DateTime.UtcNow.AddDays(-10));
+        var historical = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-8));
+        var active = CreateActiveRun(personId, protocol, DateTime.UtcNow.AddDays(-1));
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { historical, active }, new List<CheckIn>(), active);
+
+        var snapshot = await service.GetDriftSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("none", snapshot.DriftState);
+        Assert.Equal("insufficient_history", snapshot.BaselineSource);
+        Assert.Equal("stable", snapshot.RegimeClassification?.State);
+    }
+
+    [Fact]
+    public async Task GetDriftSnapshotAsync_WithStableRun_ReturnsNoDrift()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture();
+        var checkIns = historicalRuns.SelectMany(run => StableCheckIns(personId, run, 1, 2))
+            .Concat(StableCheckIns(personId, activeRun, 1, 2))
+            .ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, historicalRuns.Append(activeRun).ToList(), checkIns, activeRun);
+
+        var snapshot = await service.GetDriftSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("none", snapshot.DriftState);
+        Assert.Equal("historical_runs", snapshot.BaselineSource);
+        Assert.Empty(snapshot.Signals);
+        Assert.Equal("stable", snapshot.RegimeClassification?.State);
+    }
+
+    [Fact]
+    public async Task GetDriftSnapshotAsync_WithLateFirstCheckIn_ReturnsMildDrift()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture();
+        var checkIns = historicalRuns.SelectMany(run => StableCheckIns(personId, run, 1, 2))
+            .Append(CreateCheckIn(personId, activeRun.Id, activeRun.StartedAtUtc.AddDays(3), energy: 5, recovery: 5, sleep: 5, appetite: 5))
+            .ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, historicalRuns.Append(activeRun).ToList(), checkIns, activeRun);
+
+        var snapshot = await service.GetDriftSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("mild", snapshot.DriftState);
+        Assert.Contains(snapshot.Signals, signal => signal.Type == "checkin_timing" && signal.Severity == "mild");
+    }
+
+    [Fact]
+    public async Task GetDriftSnapshotAsync_WithRepeatedTimingDrift_ReturnsModerateDrift()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture(historicalDurationDays: 10, activeStartedDaysAgo: 4);
+        var checkIns = historicalRuns.SelectMany(run => StableCheckIns(personId, run, 1, 2))
+            .Concat(new[]
+            {
+                CreateCheckIn(personId, activeRun.Id, activeRun.StartedAtUtc.AddDays(2), energy: 5, recovery: 5, sleep: 5, appetite: 5),
+                CreateCheckIn(personId, activeRun.Id, activeRun.StartedAtUtc.AddDays(4), energy: 5, recovery: 5, sleep: 5, appetite: 5)
+            })
+            .ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, historicalRuns.Append(activeRun).ToList(), checkIns, activeRun);
+
+        var snapshot = await service.GetDriftSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("moderate", snapshot.DriftState);
+        Assert.Contains(snapshot.Signals, signal => signal.Type == "checkin_timing" && signal.Severity == "moderate");
+    }
+
+    [Fact]
+    public async Task GetDriftSnapshotAsync_WithMissingRecurringSequence_DetectsSequenceBreak()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture();
+        var checkIns = historicalRuns.SelectMany(run => PatternCheckIns(personId, run, 1, 2))
+            .Concat(PatternCheckIns(personId, activeRun, 1, 2))
+            .ToList();
+        var computations = historicalRuns.Select(run => CreateComputation(protocol, run, run.StartedAtUtc.AddDays(1))).ToList();
+        var reviews = historicalRuns.Select(run => CreateReviewCompleted(protocol, run, run.EndedAtUtc!.Value.AddDays(1))).ToList();
+        var service = CreateMissionControlService(
+            personId,
+            new List<Protocol> { protocol },
+            historicalRuns.Append(activeRun).ToList(),
+            checkIns,
+            activeRun,
+            computations: computations,
+            reviewCompletedEvents: reviews);
+
+        var snapshot = await service.GetDriftSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Contains(snapshot.Signals, signal => signal.Type == "sequence_break");
+    }
+
+    [Fact]
+    public async Task GetDriftSnapshotAsync_WithMultipleSignals_ClassifiesRegimeShift()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture(historicalDurationDays: 10, activeStartedDaysAgo: 4);
+        var checkIns = historicalRuns.SelectMany(run => PatternCheckIns(personId, run, 1, 2))
+            .Concat(new[]
+            {
+                CreateCheckIn(personId, activeRun.Id, activeRun.StartedAtUtc.AddDays(3), energy: 5, recovery: 5, sleep: 5, appetite: 5),
+                CreateCheckIn(personId, activeRun.Id, activeRun.StartedAtUtc.AddDays(4), energy: 8, recovery: 5, sleep: 5, appetite: 5)
+            })
+            .ToList();
+        var computations = historicalRuns.Select(run => CreateComputation(protocol, run, run.StartedAtUtc.AddDays(1)))
+            .Append(CreateComputation(protocol, activeRun, activeRun.StartedAtUtc.AddDays(3)))
+            .ToList();
+        var reviews = historicalRuns.Select(run => CreateReviewCompleted(protocol, run, run.EndedAtUtc!.Value.AddDays(1))).ToList();
+        var service = CreateMissionControlService(
+            personId,
+            new List<Protocol> { protocol },
+            historicalRuns.Append(activeRun).ToList(),
+            checkIns,
+            activeRun,
+            computations: computations,
+            reviewCompletedEvents: reviews);
+
+        var snapshot = await service.GetDriftSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("regime_shift", snapshot.DriftState);
+        Assert.Equal("shifted", snapshot.RegimeClassification?.State);
+    }
+
+    [Fact]
+    public async Task GetDriftSnapshotAsync_WithSparseCurrentData_ReducesSeverity()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture(activeStartedDaysAgo: 0);
+        var checkIns = historicalRuns.SelectMany(run => PatternCheckIns(personId, run, 1, 2)).ToList();
+        var computations = historicalRuns.Select(run => CreateComputation(protocol, run, run.StartedAtUtc.AddDays(1))).ToList();
+        var reviews = historicalRuns.Select(run => CreateReviewCompleted(protocol, run, run.EndedAtUtc!.Value.AddDays(1))).ToList();
+        var service = CreateMissionControlService(
+            personId,
+            new List<Protocol> { protocol },
+            historicalRuns.Append(activeRun).ToList(),
+            checkIns,
+            activeRun,
+            computations: computations,
+            reviewCompletedEvents: reviews);
+
+        var snapshot = await service.GetDriftSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("mild", snapshot.DriftState);
+        Assert.NotEqual("shifted", snapshot.RegimeClassification?.State);
+    }
+
+    [Fact]
+    public async Task GetDriftSnapshotAsync_WithComputationTimingDrift_DetectsSignal()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture();
+        var computations = historicalRuns.Select(run => CreateComputation(protocol, run, run.StartedAtUtc.AddDays(1)))
+            .Append(CreateComputation(protocol, activeRun, activeRun.StartedAtUtc.AddDays(3)))
+            .ToList();
+        var service = CreateMissionControlService(
+            personId,
+            new List<Protocol> { protocol },
+            historicalRuns.Append(activeRun).ToList(),
+            new List<CheckIn>(),
+            activeRun,
+            computations: computations);
+
+        var snapshot = await service.GetDriftSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Contains(snapshot.Signals, signal => signal.Type == "computation_timing");
+    }
+
+    [Fact]
+    public async Task GetDriftSnapshotAsync_WithReviewTimingDrift_DetectsSignal()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Review drift", DateTime.UtcNow.AddDays(-30));
+        var run1 = CreateRunWithDuration(personId, protocol, DateTime.UtcNow.AddDays(-24), 4);
+        var run2 = CreateRunWithDuration(personId, protocol, DateTime.UtcNow.AddDays(-16), 4);
+        var current = CreateRunWithDuration(personId, protocol, DateTime.UtcNow.AddDays(-8), 4);
+        var reviews = new List<ProtocolReviewCompletedEvent>
+        {
+            CreateReviewCompleted(protocol, run1, run1.EndedAtUtc!.Value.AddDays(1)),
+            CreateReviewCompleted(protocol, run2, run2.EndedAtUtc!.Value.AddDays(1)),
+            CreateReviewCompleted(protocol, current, current.EndedAtUtc!.Value.AddDays(4))
+        };
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run1, run2, current }, new List<CheckIn>(), reviewCompletedEvents: reviews);
+
+        var snapshot = await service.GetDriftSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Contains(snapshot.Signals, signal => signal.Type == "review_timing");
+    }
+
+    [Fact]
+    public async Task GetDriftSnapshotAsync_WithSignalDensityDrift_DetectsSignal()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture(historicalDurationDays: 10, activeStartedDaysAgo: 2);
+        var checkIns = historicalRuns.SelectMany(run => PatternCheckIns(personId, run, 1, 2))
+            .Concat(new[]
+            {
+                CreateCheckIn(personId, activeRun.Id, activeRun.StartedAtUtc.AddDays(1), energy: 4, recovery: 4, sleep: 4, appetite: 4),
+                CreateCheckIn(personId, activeRun.Id, activeRun.StartedAtUtc.AddDays(2), energy: 8, recovery: 8, sleep: 8, appetite: 8)
+            })
+            .ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, historicalRuns.Append(activeRun).ToList(), checkIns, activeRun);
+
+        var snapshot = await service.GetDriftSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Contains(snapshot.Signals, signal => signal.Type == "signal_density");
+    }
+
     private static ProtocolService CreateService(
         IProtocolRepository protocolRepository,
         IProtocolRunRepository runRepository,
@@ -703,6 +904,11 @@ public class ProtocolServiceTests
 
     private static ProtocolRun CreateRun(Guid personId, Protocol protocol, DateTime startedAt)
     {
+        return CreateRunWithDuration(personId, protocol, startedAt, 4);
+    }
+
+    private static ProtocolRun CreateRunWithDuration(Guid personId, Protocol protocol, DateTime startedAt, int durationDays)
+    {
         return new ProtocolRun
         {
             Id = Guid.NewGuid(),
@@ -710,7 +916,7 @@ public class ProtocolServiceTests
             ProtocolId = protocol.Id,
             Protocol = protocol,
             StartedAtUtc = startedAt,
-            EndedAtUtc = startedAt.AddDays(4),
+            EndedAtUtc = startedAt.AddDays(durationDays),
             Status = ProtocolRunStatus.Completed
         };
     }
@@ -735,6 +941,31 @@ public class ProtocolServiceTests
             CreateCheckIn(personId, run.Id, run.StartedAtUtc.AddDays(firstDay), energy: 5, recovery: 5, sleep: 5, appetite: 5),
             CreateCheckIn(personId, run.Id, run.StartedAtUtc.AddDays(secondDay), energy: 8, recovery: 7, sleep: 5, appetite: 5)
         };
+    }
+
+    private static List<CheckIn> StableCheckIns(Guid personId, ProtocolRun run, int firstDay, int secondDay)
+    {
+        return new List<CheckIn>
+        {
+            CreateCheckIn(personId, run.Id, run.StartedAtUtc.AddDays(firstDay), energy: 5, recovery: 5, sleep: 5, appetite: 5),
+            CreateCheckIn(personId, run.Id, run.StartedAtUtc.AddDays(secondDay), energy: 5, recovery: 5, sleep: 5, appetite: 5)
+        };
+    }
+
+    private static (Guid PersonId, Protocol Protocol, List<ProtocolRun> HistoricalRuns, ProtocolRun ActiveRun) CreateDriftFixture(
+        int historicalDurationDays = 4,
+        int activeStartedDaysAgo = 2)
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Drift", DateTime.UtcNow.AddDays(-30));
+        var historicalRuns = new List<ProtocolRun>
+        {
+            CreateRunWithDuration(personId, protocol, DateTime.UtcNow.AddDays(-24), historicalDurationDays),
+            CreateRunWithDuration(personId, protocol, DateTime.UtcNow.AddDays(-14), historicalDurationDays)
+        };
+        var activeRun = CreateActiveRun(personId, protocol, DateTime.UtcNow.AddDays(-activeStartedDaysAgo));
+
+        return (personId, protocol, historicalRuns, activeRun);
     }
 
     private static ProtocolComputationRecord CreateComputation(Protocol protocol, ProtocolRun run, DateTime timestamp)
