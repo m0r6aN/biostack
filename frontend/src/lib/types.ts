@@ -198,6 +198,45 @@ export interface ProtocolReviewTimelineEvent {
   detail: string;
 }
 
+export interface MissionControl {
+  activeRun: ProtocolRun | null;
+  latestClosedRun: ProtocolRun | null;
+  latestReviewSummary: MissionControlReviewSummary | null;
+  recentEvolution: MissionControlEvolution | null;
+  latestCheckInSignal: MissionControlCheckInSignal;
+  cohesionTimeline: ProtocolReviewTimelineEvent[];
+}
+
+export interface MissionControlReviewSummary {
+  protocolId: string;
+  lineageRootProtocolId: string;
+  lineageName: string;
+  cue: string;
+  signalType: string;
+  versionCount: number;
+  runCount: number;
+  checkInCount: number;
+}
+
+export interface MissionControlEvolution {
+  protocolId: string;
+  parentProtocolId: string | null;
+  evolvedFromRunId: string | null;
+  label: string;
+  summary: string;
+  occurredAtUtc: string;
+  changes: ProtocolVersionChange[];
+}
+
+export interface MissionControlCheckInSignal {
+  checkInId: string | null;
+  protocolRunId: string | null;
+  date: string | null;
+  cue: string;
+  attachedCheckInCount: number;
+  hasObservationGap: boolean;
+}
+
 export interface ProtocolRun {
   id: string;
   protocolId: string;
