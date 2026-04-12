@@ -122,6 +122,92 @@ public class ProtocolServiceTests
         Assert.Contains("completed or abandoned", ex.Message);
     }
 
+    [Fact]
+    public async Task GetProtocolReviewAsync_ReturnsDeterministicLineageSectionsWithoutMutatingHistory()
+    {
+        var personId = Guid.NewGuid();
+        var compoundId = Guid.NewGuid();
+        var version1 = CreateProtocolVersion(personId, Guid.NewGuid(), compoundId, 1, null, "Recovery baseline", new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+        var version2 = CreateProtocolVersion(personId, Guid.NewGuid(), compoundId, 2, version1.Id, "Recovery schedule changed", new DateTime(2026, 2, 1, 0, 0, 0, DateTimeKind.Utc));
+        version2.EvolvedFromRunId = Guid.NewGuid();
+        version2.OriginProtocolId = version1.Id;
+
+        var run1 = CreateRun(personId, version1, new DateTime(2026, 1, 10, 0, 0, 0, DateTimeKind.Utc));
+        var run2 = CreateRun(personId, version2, new DateTime(2026, 2, 10, 0, 0, 0, DateTimeKind.Utc));
+        version2.EvolvedFromRunId = run1.Id;
+
+        var checkIns = new List<CheckIn>
+        {
+            CreateCheckIn(personId, null, new DateTime(2026, 1, 8, 0, 0, 0, DateTimeKind.Utc), energy: 5, recovery: 4, sleep: 6, appetite: 5),
+            CreateCheckIn(personId, run1.Id, new DateTime(2026, 1, 10, 0, 0, 0, DateTimeKind.Utc), energy: 6, recovery: 5, sleep: 6, appetite: 5),
+            CreateCheckIn(personId, run1.Id, new DateTime(2026, 1, 12, 0, 0, 0, DateTimeKind.Utc), energy: 7, recovery: 7, sleep: 6, appetite: 5),
+            CreateCheckIn(personId, null, new DateTime(2026, 2, 8, 0, 0, 0, DateTimeKind.Utc), energy: 5, recovery: 7, sleep: 6, appetite: 5),
+            CreateCheckIn(personId, run2.Id, new DateTime(2026, 2, 10, 0, 0, 0, DateTimeKind.Utc), energy: 7, recovery: 7, sleep: 6, appetite: 5),
+            CreateCheckIn(personId, run2.Id, new DateTime(2026, 2, 12, 0, 0, 0, DateTimeKind.Utc), energy: 8, recovery: 4, sleep: 6, appetite: 5)
+        };
+
+        var protocolRepository = new Mock<IProtocolRepository>();
+        protocolRepository.Setup(repository => repository.GetWithItemsAsync(version2.Id, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(version2);
+        protocolRepository.Setup(repository => repository.GetLineageAsync(version2, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<Protocol> { version1, version2 });
+
+        var runRepository = new Mock<IProtocolRunRepository>();
+        runRepository.Setup(repository => repository.GetByProtocolIdsAsync(It.IsAny<IEnumerable<Guid>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<ProtocolRun> { run1, run2 });
+
+        var checkInRepository = new Mock<ICheckInRepository>();
+        checkInRepository.Setup(repository => repository.GetByPersonIdAsync(personId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(checkIns);
+
+        var service = CreateService(protocolRepository.Object, runRepository.Object, checkInRepository.Object);
+
+        var review = await service.GetProtocolReviewAsync(version2.Id, CancellationToken.None);
+
+        Assert.Equal(version1.Id, review.LineageRootProtocolId);
+        Assert.Equal(2, review.Versions.Count);
+        Assert.Equal(2, review.Versions.Sum(version => version.Runs.Count));
+        Assert.Contains(review.Sections, section => section.Type == "alignment" && section.Summary.Contains("Energy trend moved up", StringComparison.Ordinal));
+        Assert.Contains(review.Sections, section => section.Type == "divergence" && section.Summary.Contains("Recovery observations moved", StringComparison.Ordinal));
+        Assert.Contains(review.Sections, section => section.Type == "neutral" && section.Summary.Contains("flat", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(review.Timeline, entry => entry.EventType == "evolution" && entry.RunId == run1.Id);
+        Assert.Contains(review.Timeline, entry => entry.EventType == "check_in" && entry.CheckInId == checkIns[1].Id);
+        Assert.Equal("Recovery baseline", version1.Items.Single().CompoundNotesSnapshot);
+    }
+
+    [Fact]
+    public async Task GetProtocolReviewAsync_WithSparseRuns_ReportsObservationGaps()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Sparse", DateTime.UtcNow.AddDays(-5));
+        var run = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-3));
+        var checkIns = new List<CheckIn>
+        {
+            CreateCheckIn(personId, run.Id, DateTime.UtcNow.AddDays(-2), energy: 5, recovery: 5, sleep: 5, appetite: 5)
+        };
+
+        var protocolRepository = new Mock<IProtocolRepository>();
+        protocolRepository.Setup(repository => repository.GetWithItemsAsync(protocol.Id, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(protocol);
+        protocolRepository.Setup(repository => repository.GetLineageAsync(protocol, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<Protocol> { protocol });
+
+        var runRepository = new Mock<IProtocolRunRepository>();
+        runRepository.Setup(repository => repository.GetByProtocolIdsAsync(It.IsAny<IEnumerable<Guid>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<ProtocolRun> { run });
+
+        var checkInRepository = new Mock<ICheckInRepository>();
+        checkInRepository.Setup(repository => repository.GetByPersonIdAsync(personId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(checkIns);
+
+        var service = CreateService(protocolRepository.Object, runRepository.Object, checkInRepository.Object);
+
+        var review = await service.GetProtocolReviewAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Contains(review.Sections, section => section.Type == "gap" && section.Evidence.Any(evidence => evidence.Contains("insufficient attached check-ins", StringComparison.OrdinalIgnoreCase)));
+        Assert.Contains(review.SafetyNotes, note => note.Contains("observational", StringComparison.OrdinalIgnoreCase));
+    }
+
     private static ProtocolService CreateService(
         IProtocolRepository protocolRepository,
         IProtocolRunRepository runRepository,
@@ -134,5 +220,67 @@ public class ProtocolServiceTests
             checkInRepository,
             runRepository,
             new Mock<IKnowledgeSource>().Object);
+    }
+
+    private static Protocol CreateProtocolVersion(Guid personId, Guid protocolId, Guid compoundId, int version, Guid? parentProtocolId, string notes, DateTime createdAt)
+    {
+        var protocol = new Protocol
+        {
+            Id = protocolId,
+            PersonId = personId,
+            Name = $"Protocol v{version}",
+            Version = version,
+            ParentProtocolId = parentProtocolId,
+            OriginProtocolId = parentProtocolId is null ? null : parentProtocolId,
+            CreatedAtUtc = createdAt,
+            UpdatedAtUtc = createdAt,
+            Items = new List<ProtocolItem>
+            {
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    ProtocolId = protocolId,
+                    CompoundRecordId = compoundId,
+                    CompoundNameSnapshot = "Test compound",
+                    CompoundCategorySnapshot = CompoundCategory.Peptide.ToString(),
+                    CompoundStatusSnapshot = CompoundStatus.Active.ToString(),
+                    CompoundStartDateSnapshot = createdAt,
+                    CompoundNotesSnapshot = notes
+                }
+            }
+        };
+        protocol.Items.First().Protocol = protocol;
+
+        return protocol;
+    }
+
+    private static ProtocolRun CreateRun(Guid personId, Protocol protocol, DateTime startedAt)
+    {
+        return new ProtocolRun
+        {
+            Id = Guid.NewGuid(),
+            PersonId = personId,
+            ProtocolId = protocol.Id,
+            Protocol = protocol,
+            StartedAtUtc = startedAt,
+            EndedAtUtc = startedAt.AddDays(4),
+            Status = ProtocolRunStatus.Completed
+        };
+    }
+
+    private static CheckIn CreateCheckIn(Guid personId, Guid? runId, DateTime date, int energy, int recovery, int sleep, int appetite)
+    {
+        return new CheckIn
+        {
+            Id = Guid.NewGuid(),
+            PersonId = personId,
+            ProtocolRunId = runId,
+            Date = date,
+            Weight = 180,
+            Energy = energy,
+            Recovery = recovery,
+            SleepQuality = sleep,
+            Appetite = appetite
+        };
     }
 }

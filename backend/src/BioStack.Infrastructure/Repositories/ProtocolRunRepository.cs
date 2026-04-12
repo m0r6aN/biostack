@@ -34,6 +34,17 @@ public sealed class ProtocolRunRepository : Repository<ProtocolRun>, IProtocolRu
             .FirstOrDefaultAsync(cancellationToken);
     }
 
+    public async Task<IEnumerable<ProtocolRun>> GetByProtocolIdsAsync(IEnumerable<Guid> protocolIds, CancellationToken cancellationToken = default)
+    {
+        var ids = protocolIds.ToList();
+
+        return await _dbSet
+            .Include(run => run.Protocol)
+            .Where(run => ids.Contains(run.ProtocolId))
+            .OrderBy(run => run.StartedAtUtc)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<ProtocolRun?> GetWithProtocolAsync(Guid runId, CancellationToken cancellationToken = default)
     {
         return await _dbSet
@@ -49,5 +60,6 @@ public interface IProtocolRunRepository : IRepository<ProtocolRun>
     Task<ProtocolRun?> GetActiveByPersonIdAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<ProtocolRun?> GetActiveByProtocolIdAsync(Guid protocolId, CancellationToken cancellationToken = default);
     Task<ProtocolRun?> GetLatestByProtocolIdAsync(Guid protocolId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<ProtocolRun>> GetByProtocolIdsAsync(IEnumerable<Guid> protocolIds, CancellationToken cancellationToken = default);
     Task<ProtocolRun?> GetWithProtocolAsync(Guid runId, CancellationToken cancellationToken = default);
 }

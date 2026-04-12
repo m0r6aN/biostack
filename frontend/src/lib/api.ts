@@ -19,6 +19,7 @@ import {
     ProfileGoal,
     CurrentStackIntelligence,
     Protocol,
+    ProtocolReview,
     ProtocolRun,
     ProtocolPhase,
     ReconstitutionRequest,
@@ -177,6 +178,10 @@ export class ApiClient {
 
   async getProtocol(protocolId: string): Promise<Protocol> {
     return this.request<Protocol>(`/api/v1/protocols/${protocolId}`);
+  }
+
+  async getProtocolReview(protocolId: string): Promise<ProtocolReview> {
+    return this.request<ProtocolReview>(`/api/v1/protocols/${protocolId}/review`);
   }
 
   async saveCurrentStackAsProtocol(profileId: string, name: string): Promise<Protocol> {

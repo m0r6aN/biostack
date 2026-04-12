@@ -8,10 +8,11 @@ import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { ProtocolComparison } from '@/components/protocols/ProtocolComparison';
+import { ProtocolIntelligenceReview } from '@/components/protocols/ProtocolIntelligenceReview';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { apiClient } from '@/lib/api';
-import { Protocol } from '@/lib/types';
+import { Protocol, ProtocolReview } from '@/lib/types';
 
 interface ProtocolDetailPageProps {
   params: Promise<{ id: string }>;
@@ -21,6 +22,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
   const { id } = use(params);
   const router = useRouter();
   const [protocol, setProtocol] = useState<Protocol | null>(null);
+  const [review, setReview] = useState<ProtocolReview | null>(null);
   const [loading, setLoading] = useState(true);
   const [starting, setStarting] = useState(false);
   const [ending, setEnding] = useState(false);
@@ -36,7 +38,12 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
     try {
       setLoading(true);
       setError(null);
-      setProtocol(await apiClient.getProtocol(id));
+      const [protocolData, reviewData] = await Promise.all([
+        apiClient.getProtocol(id),
+        apiClient.getProtocolReview(id),
+      ]);
+      setProtocol(protocolData);
+      setReview(reviewData);
     } catch (err) {
       setError('Failed to load protocol');
     } finally {
@@ -49,7 +56,12 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setStarting(true);
       setError(null);
       await apiClient.startProtocolRun(id);
-      setProtocol(await apiClient.getProtocol(id));
+      const [protocolData, reviewData] = await Promise.all([
+        apiClient.getProtocol(id),
+        apiClient.getProtocolReview(id),
+      ]);
+      setProtocol(protocolData);
+      setReview(reviewData);
       setToast('Protocol run started');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -68,7 +80,12 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setEnding(true);
       setError(null);
       await apiClient.completeProtocolRun(protocol.activeRun.id);
-      setProtocol(await apiClient.getProtocol(id));
+      const [protocolData, reviewData] = await Promise.all([
+        apiClient.getProtocol(id),
+        apiClient.getProtocolReview(id),
+      ]);
+      setProtocol(protocolData);
+      setReview(reviewData);
       setToast('Run marked completed');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -87,7 +104,12 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setEnding(true);
       setError(null);
       await apiClient.abandonProtocolRun(protocol.activeRun.id);
-      setProtocol(await apiClient.getProtocol(id));
+      const [protocolData, reviewData] = await Promise.all([
+        apiClient.getProtocol(id),
+        apiClient.getProtocolReview(id),
+      ]);
+      setProtocol(protocolData);
+      setReview(reviewData);
       setToast('Run marked abandoned');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -255,6 +277,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
 
             <SimulationTimeline simulation={protocol.simulation} />
             <ProtocolComparison comparison={protocol.actualComparison} />
+            <ProtocolIntelligenceReview review={review} />
           </>
         ) : (
           <EmptyState title="Protocol Not Found" description="This protocol could not be loaded." icon="🧬" />

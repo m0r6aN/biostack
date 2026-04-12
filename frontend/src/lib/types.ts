@@ -145,6 +145,59 @@ export interface ProtocolActualComparison {
   highlights: string[];
 }
 
+export interface ProtocolReview {
+  lineageRootProtocolId: string;
+  requestedProtocolId: string;
+  lineageName: string;
+  versions: ProtocolReviewVersion[];
+  sections: ProtocolReviewSection[];
+  timeline: ProtocolReviewTimelineEvent[];
+  safetyNotes: string[];
+}
+
+export interface ProtocolReviewVersion {
+  protocolId: string;
+  name: string;
+  version: number;
+  isDraft: boolean;
+  parentProtocolId: string | null;
+  evolvedFromRunId: string | null;
+  evolutionContext: string;
+  createdAtUtc: string;
+  versionDiff: ProtocolVersionDiff | null;
+  runs: ProtocolReviewRun[];
+}
+
+export interface ProtocolReviewRun {
+  run: ProtocolRun;
+  summary: ProtocolRunSummary;
+  observations: ProtocolRunObservation[];
+  trends: Array<{
+    metric: string;
+    beforeAverage: number | null;
+    afterAverage: number | null;
+    direction: string;
+  }>;
+  insights: ProtocolRunInsight[];
+}
+
+export interface ProtocolReviewSection {
+  type: 'alignment' | 'divergence' | 'neutral' | 'change' | 'gap' | string;
+  title: string;
+  summary: string;
+  evidence: string[];
+}
+
+export interface ProtocolReviewTimelineEvent {
+  occurredAtUtc: string;
+  eventType: string;
+  label: string;
+  protocolId: string | null;
+  runId: string | null;
+  checkInId: string | null;
+  detail: string;
+}
+
 export interface ProtocolRun {
   id: string;
   protocolId: string;

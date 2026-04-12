@@ -100,6 +100,82 @@ public sealed class ProtocolService : IProtocolService
         return await MapProtocolAsync(protocol, includeComparison: true, cancellationToken);
     }
 
+    public async Task<ProtocolReviewResponse> GetProtocolReviewAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var protocol = await _protocolRepository.GetWithItemsAsync(id, cancellationToken);
+        if (protocol is null)
+            throw new InvalidOperationException($"Protocol with ID {id} not found");
+
+        var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
+            .OrderBy(version => version.Version)
+            .ThenBy(version => version.CreatedAtUtc)
+            .ToList();
+        if (lineage.Count == 0)
+        {
+            lineage.Add(protocol);
+        }
+
+        var runs = (await _protocolRunRepository.GetByProtocolIdsAsync(lineage.Select(version => version.Id), cancellationToken))
+            .GroupBy(run => run.ProtocolId)
+            .ToDictionary(group => group.Key, group => group.OrderBy(run => run.StartedAtUtc).ToList());
+        var reviewVersions = new List<ProtocolReviewVersionResponse>();
+
+        foreach (var version in lineage)
+        {
+            var compounds = version.Items.Select(SnapshotCompoundFromItem).ToList();
+            var simulation = Simulate(await LoadKnowledgeEntriesAsync(compounds, cancellationToken));
+            var versionRuns = new List<ProtocolReviewRunResponse>();
+
+            foreach (var run in runs.GetValueOrDefault(version.Id, new List<ProtocolRun>()))
+            {
+                run.Protocol ??= version;
+                var comparison = await CompareActualAsync(version.PersonId, compounds, simulation, run, version, cancellationToken);
+                if (comparison.Run is null || comparison.RunSummary is null)
+                {
+                    continue;
+                }
+
+                versionRuns.Add(new ProtocolReviewRunResponse(
+                    comparison.Run,
+                    comparison.RunSummary,
+                    comparison.Observations,
+                    comparison.ActualTrends,
+                    comparison.Insights));
+            }
+
+            var parent = version.ParentProtocolId is null
+                ? null
+                : lineage.FirstOrDefault(candidate => candidate.Id == version.ParentProtocolId);
+
+            reviewVersions.Add(new ProtocolReviewVersionResponse(
+                version.Id,
+                version.Name,
+                version.Version,
+                version.IsDraft,
+                version.ParentProtocolId,
+                version.EvolvedFromRunId,
+                version.EvolutionContext,
+                version.CreatedAtUtc,
+                parent is null ? null : BuildVersionDiff(parent, version),
+                versionRuns));
+        }
+
+        var root = lineage.First();
+        return new ProtocolReviewResponse(
+            root.Id,
+            protocol.Id,
+            root.Name,
+            reviewVersions,
+            BuildReviewSections(reviewVersions),
+            BuildReviewTimeline(reviewVersions),
+            new List<string>
+            {
+                "Protocol Intelligence Review is observational and rule-based.",
+                "Signals describe attached check-ins and structural lineage only.",
+                "No section provides medical advice, dosage guidance, efficacy claims, or compound ranking."
+            });
+    }
+
     public async Task<ProtocolRunResponse> StartRunAsync(Guid protocolId, CancellationToken cancellationToken = default)
     {
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
@@ -498,6 +574,279 @@ public sealed class ProtocolService : IProtocolService
             insights.Count(insight => insight.Type == "divergence"));
     }
 
+    private static List<ProtocolReviewSectionResponse> BuildReviewSections(List<ProtocolReviewVersionResponse> versions)
+    {
+        var sections = new List<ProtocolReviewSectionResponse>();
+        var runContexts = versions
+            .SelectMany(version => version.Runs.Select(run => new ReviewRunContext(version, run)))
+            .ToList();
+
+        sections.AddRange(BuildRecurringTrendSections(runContexts));
+        sections.AddRange(BuildDivergenceSections(versions));
+        sections.Add(BuildNeutralSection(runContexts));
+        sections.Add(BuildChangeSection(versions));
+        sections.Add(BuildDataGapSection(versions));
+
+        return sections
+            .Where(section => section.Evidence.Count > 0 || section.Type is "neutral" or "gap")
+            .ToList();
+    }
+
+    private static IEnumerable<ProtocolReviewSectionResponse> BuildRecurringTrendSections(List<ReviewRunContext> runContexts)
+    {
+        return runContexts
+            .SelectMany(context => context.Run.Trends
+                .Where(trend => TrendHasObservationData(trend) && trend.Direction is "up" or "down" or "flat")
+                .Select(trend => new { context.Version, context.Run, Trend = trend }))
+            .GroupBy(item => new { item.Trend.Metric, item.Trend.Direction })
+            .Where(group => group.Count() >= 2)
+            .OrderBy(group => group.Key.Metric)
+            .Take(4)
+            .Select(group => new ProtocolReviewSectionResponse(
+                group.Key.Direction == "flat" ? "neutral" : "alignment",
+                group.Key.Direction == "flat"
+                    ? $"Repeated stable {group.Key.Metric.ToLowerInvariant()} signal"
+                    : $"Repeated {group.Key.Metric.ToLowerInvariant()} movement",
+                group.Key.Direction == "flat"
+                    ? $"{group.Key.Metric} stayed flat in {group.Count()} runs across the lineage."
+                    : $"{group.Key.Metric} trend moved {DescribeDirection(group.Key.Direction)} in {group.Count()} runs across the lineage.",
+                group.Select(item => FormatTrendEvidence(item.Version, item.Run.Run, item.Trend)).Take(4).ToList()));
+    }
+
+    private static IEnumerable<ProtocolReviewSectionResponse> BuildDivergenceSections(List<ProtocolReviewVersionResponse> versions)
+    {
+        var sections = new List<ProtocolReviewSectionResponse>();
+        foreach (var version in versions.Where(version => version.VersionDiff is not null && version.Runs.Count > 0))
+        {
+            var prior = versions.LastOrDefault(candidate => candidate.Version < version.Version && candidate.Runs.Count > 0);
+            if (prior is null)
+            {
+                continue;
+            }
+
+            var priorRun = prior.Runs.Last();
+            var currentRun = version.Runs.First();
+            foreach (var priorTrend in priorRun.Trends.Where(TrendHasObservationData))
+            {
+                var currentTrend = currentRun.Trends.FirstOrDefault(trend => trend.Metric == priorTrend.Metric);
+                if (currentTrend is null || !TrendHasObservationData(currentTrend) || currentTrend.Direction == priorTrend.Direction)
+                {
+                    continue;
+                }
+
+                var changeScope = version.VersionDiff!.Changes.Any(change => change.Scope == "schedule")
+                    ? "schedule structure"
+                    : version.VersionDiff.Changes.Any(change => change.Scope == "compound")
+                        ? "compound structure"
+                        : "protocol structure";
+
+                sections.Add(new ProtocolReviewSectionResponse(
+                    "divergence",
+                    $"{priorTrend.Metric} diverged after v{version.Version} changes",
+                    $"{priorTrend.Metric} observations moved {DescribeDirection(priorTrend.Direction)} in v{prior.Version} and {DescribeDirection(currentTrend.Direction)} after {changeScope} changed in v{version.Version}.",
+                    new List<string>
+                    {
+                        FormatChangeEvidence(version),
+                        FormatTrendEvidence(prior, priorRun.Run, priorTrend),
+                        FormatTrendEvidence(version, currentRun.Run, currentTrend)
+                    }));
+            }
+        }
+
+        return sections.Take(4);
+    }
+
+    private static ProtocolReviewSectionResponse BuildNeutralSection(List<ReviewRunContext> runContexts)
+    {
+        var stable = runContexts
+            .SelectMany(context => context.Run.Trends
+                .Where(trend => TrendHasObservationData(trend) && trend.Direction == "flat")
+                .Select(trend => FormatTrendEvidence(context.Version, context.Run.Run, trend)))
+            .Distinct()
+            .Take(4)
+            .ToList();
+
+        if (stable.Count > 0)
+        {
+            return new ProtocolReviewSectionResponse(
+                "neutral",
+                "Neutral or stable signals",
+                "Some tracked metrics stayed flat within attached run observations.",
+                stable);
+        }
+
+        return new ProtocolReviewSectionResponse(
+            "neutral",
+            "No clear stable pattern detected",
+            "Attached observations did not produce a repeated flat signal across runs.",
+            new List<string>());
+    }
+
+    private static ProtocolReviewSectionResponse BuildChangeSection(List<ProtocolReviewVersionResponse> versions)
+    {
+        var evidence = versions
+            .Where(version => version.VersionDiff is not null)
+            .Select(FormatChangeEvidence)
+            .Distinct()
+            .Take(6)
+            .ToList();
+
+        return new ProtocolReviewSectionResponse(
+            "change",
+            "Notable changes between versions",
+            evidence.Count == 0
+                ? "No version-to-version structural changes are available for this lineage yet."
+                : "Version changes are listed as lineage facts, not recommendations.",
+            evidence);
+    }
+
+    private static ProtocolReviewSectionResponse BuildDataGapSection(List<ProtocolReviewVersionResponse> versions)
+    {
+        var evidence = new List<string>();
+        foreach (var version in versions)
+        {
+            if (version.Runs.Count == 0)
+            {
+                evidence.Add($"v{version.Version}: no protocol runs are available for review.");
+                continue;
+            }
+
+            foreach (var run in version.Runs.Where(run => run.Observations.Count < 2))
+            {
+                evidence.Add($"v{version.Version} run {ShortId(run.Run.Id)}: insufficient attached check-ins to compare run trends.");
+            }
+        }
+
+        foreach (var metric in new[] { "Energy", "Recovery", "Sleep", "Appetite" })
+        {
+            var versionsWithMetricData = versions.Count(version => version.Runs.Any(run =>
+                run.Trends.Any(trend => trend.Metric == metric && TrendHasObservationData(trend))));
+            if (versions.Count > 1 && versionsWithMetricData < 2)
+            {
+                evidence.Add($"Insufficient observations to compare {metric.ToLowerInvariant()}-related outcomes across versions.");
+            }
+        }
+
+        return new ProtocolReviewSectionResponse(
+            "gap",
+            "Observation gaps",
+            evidence.Count == 0
+                ? "No major observation gaps were detected for the available runs."
+                : "Gaps identify where BioStack cannot compare observations without adding interpretation.",
+            evidence.Distinct().Take(8).ToList());
+    }
+
+    private static List<ProtocolReviewTimelineEventResponse> BuildReviewTimeline(List<ProtocolReviewVersionResponse> versions)
+    {
+        var events = new List<ProtocolReviewTimelineEventResponse>();
+        foreach (var version in versions)
+        {
+            events.Add(new ProtocolReviewTimelineEventResponse(
+                version.CreatedAtUtc,
+                "version_created",
+                $"v{version.Version} created",
+                version.ProtocolId,
+                null,
+                null,
+                version.IsDraft ? "Protocol draft snapshot created." : "Protocol snapshot created."));
+
+            if (version.EvolvedFromRunId is not null)
+            {
+                events.Add(new ProtocolReviewTimelineEventResponse(
+                    version.CreatedAtUtc,
+                    "evolution",
+                    $"v{version.Version} evolved from run",
+                    version.ProtocolId,
+                    version.EvolvedFromRunId,
+                    null,
+                    "Observed after prior run; historical source remains unchanged."));
+            }
+
+            foreach (var run in version.Runs)
+            {
+                events.Add(new ProtocolReviewTimelineEventResponse(
+                    run.Run.StartedAtUtc,
+                    "run_started",
+                    $"v{version.Version} run started",
+                    version.ProtocolId,
+                    run.Run.Id,
+                    null,
+                    $"{run.Observations.Count} attached check-in{(run.Observations.Count == 1 ? string.Empty : "s")} in this run."));
+
+                if (run.Run.EndedAtUtc is not null)
+                {
+                    events.Add(new ProtocolReviewTimelineEventResponse(
+                        run.Run.EndedAtUtc.Value,
+                        $"run_{run.Run.Status}",
+                        $"v{version.Version} run {run.Run.Status}",
+                        version.ProtocolId,
+                        run.Run.Id,
+                        null,
+                        "Run boundary preserved for review."));
+                }
+
+                events.AddRange(run.Observations.Select(observation => new ProtocolReviewTimelineEventResponse(
+                    observation.Date,
+                    "check_in",
+                    $"v{version.Version} day {observation.Day} check-in",
+                    version.ProtocolId,
+                    run.Run.Id,
+                    observation.CheckInId,
+                    $"Energy {observation.Energy}/10, Sleep {observation.SleepQuality}/10, Appetite {observation.Appetite}/10, Recovery {observation.Recovery}/10.")));
+            }
+        }
+
+        return events
+            .OrderBy(@event => @event.OccurredAtUtc)
+            .ThenBy(@event => @event.EventType)
+            .ToList();
+    }
+
+    private static bool TrendHasObservationData(ActualTrendResponse trend)
+    {
+        return trend.BeforeAverage is not null && trend.AfterAverage is not null && trend.Direction != "not enough data";
+    }
+
+    private static string DescribeDirection(string direction)
+    {
+        return direction switch
+        {
+            "up" => "up",
+            "down" => "down",
+            "flat" => "flat",
+            _ => direction
+        };
+    }
+
+    private static string FormatTrendEvidence(ProtocolReviewVersionResponse version, ProtocolRunResponse run, ActualTrendResponse trend)
+    {
+        return $"v{version.Version} run {ShortId(run.Id)}: {trend.Metric} before {FormatAverage(trend.BeforeAverage)}, after {FormatAverage(trend.AfterAverage)}, direction {trend.Direction}.";
+    }
+
+    private static string FormatChangeEvidence(ProtocolReviewVersionResponse version)
+    {
+        var changes = version.VersionDiff?.Changes
+            .Take(3)
+            .Select(change => $"{change.ChangeType} {change.Scope}: {change.Subject}")
+            .ToList() ?? new List<string>();
+
+        return changes.Count == 0
+            ? $"v{version.Version}: no deterministic structural change detected."
+            : $"v{version.Version}: {string.Join("; ", changes)}.";
+    }
+
+    private static string FormatAverage(decimal? average)
+    {
+        return average?.ToString("0.#") ?? "n/a";
+    }
+
+    private static string ShortId(Guid id)
+    {
+        return id.ToString("N")[..8];
+    }
+
+    private sealed record ReviewRunContext(ProtocolReviewVersionResponse Version, ProtocolReviewRunResponse Run);
+
     private static List<ProtocolRunInsightResponse> BuildRunInsights(
         SimulationResultResponse simulation,
         List<ProtocolRunObservationResponse> observations)
@@ -874,6 +1223,7 @@ public interface IProtocolService
     Task<ProtocolResponse> SaveCurrentStackAsync(Guid personId, SaveProtocolRequest request, CancellationToken cancellationToken = default);
     Task<IEnumerable<ProtocolResponse>> GetProtocolsByProfileAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<ProtocolResponse> GetProtocolAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<ProtocolReviewResponse> GetProtocolReviewAsync(Guid id, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> StartRunAsync(Guid protocolId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse?> GetActiveRunAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> CompleteRunAsync(Guid runId, CancellationToken cancellationToken = default);
