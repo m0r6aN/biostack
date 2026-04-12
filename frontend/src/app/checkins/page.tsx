@@ -124,8 +124,8 @@ export default function CheckInsPage() {
           <LoadingSkeleton />
         ) : checkIns.length === 0 ? (
           <EmptyState
-            title="No Check-ins Yet"
-            description="Start recording check-ins to track your progress"
+            title="Your protocol has no observations yet"
+            description="Record the first check-in so runs have reality to compare against."
             icon="📊"
             action={{
               label: 'Record First Check-in',

@@ -129,8 +129,12 @@ export default function ProtocolsPage() {
             <section>
               <h2 className="mb-4 text-lg font-semibold text-white">Saved Protocols</h2>
               {protocols.length === 0 ? (
-                <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-6">
-                  <p className="text-sm text-white/45">No saved protocols yet.</p>
+                <div className="rounded-lg border border-emerald-400/15 bg-[#121923]/90 p-6">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-200/55">Start your first protocol</p>
+                  <h3 className="mt-2 text-xl font-bold text-white">Save the current stack when it is ready to observe.</h3>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-white/50">
+                    Name the active stack above, review the simulation, then save it as the first lineage snapshot.
+                  </p>
                 </div>
               ) : (
                 <div className="grid gap-4 md:grid-cols-2">

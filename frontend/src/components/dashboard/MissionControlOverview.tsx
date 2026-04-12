@@ -13,6 +13,7 @@ export function MissionControlOverview({ mission }: MissionControlOverviewProps)
   const review = mission?.latestReviewSummary;
   const evolution = mission?.recentEvolution;
   const checkInSignal = mission?.latestCheckInSignal;
+  const observationSignals = mission?.observationSignals ?? [];
 
   return (
     <section className="rounded-lg border border-emerald-400/15 bg-[#0f171f] p-5">
@@ -74,6 +75,25 @@ export function MissionControlOverview({ mission }: MissionControlOverviewProps)
           href={evolution ? `/protocols/${evolution.protocolId}` : '/protocols'}
         />
       </div>
+
+      {observationSignals.length > 0 && (
+        <div className="mt-5 rounded-lg border border-white/[0.07] bg-white/[0.025] p-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35">Observation signals</p>
+          <div className="mt-3 grid gap-2 md:grid-cols-2">
+            {observationSignals.map((signal, index) => (
+              <div key={`${signal.type}-${signal.metric ?? 'none'}-${index}`} className="rounded-lg border border-white/[0.06] bg-black/10 p-3">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-sm font-semibold text-white">{signalLabel(signal.type, signal.metric)}</p>
+                  <span className={`rounded-lg border px-2 py-1 text-xs font-semibold ${severityClass(signal.severity)}`}>
+                    {signal.severity}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs leading-5 text-white/50">{signal.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -103,4 +123,16 @@ function OverviewCell({
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(new Date(value));
+}
+
+function signalLabel(type: string, metric: string | null) {
+  if (type === 'gap') return 'Observation gap';
+  if (type === 'trend_shift') return `${metric ?? 'Metric'} trend shift`;
+  return type.replaceAll('_', ' ');
+}
+
+function severityClass(severity: string) {
+  if (severity === 'high') return 'border-red-400/25 bg-red-500/10 text-red-200';
+  if (severity === 'medium') return 'border-amber-400/25 bg-amber-500/10 text-amber-100';
+  return 'border-sky-400/25 bg-sky-500/10 text-sky-100';
 }

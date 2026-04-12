@@ -45,5 +45,7 @@ public sealed record ProtocolReviewTimelineEventResponse(
     Guid? ProtocolId,
     Guid? RunId,
     Guid? CheckInId,
+    Guid? ComputationId,
+    Guid? ReviewCompletedEventId,
     string Detail
 );
