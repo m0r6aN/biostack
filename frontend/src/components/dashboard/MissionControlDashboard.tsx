@@ -24,6 +24,7 @@ import { TimelineSnapshot } from '@/components/dashboard/TimelineSnapshot';
 import { OverlapFlagsBanner } from '@/components/dashboard/OverlapFlagsBanner';
 import { CohesionTimelinePanel } from '@/components/dashboard/CohesionTimelinePanel';
 import { MissionControlOverview } from '@/components/dashboard/MissionControlOverview';
+import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
 
 export function MissionControlDashboard() {
@@ -161,6 +162,7 @@ export function MissionControlDashboard() {
             </div>
 
             <MissionControlOverview mission={mission} />
+            <PatternMemoryPanel snapshot={mission?.patternSnapshot ?? null} />
             {overlaps.length > 0 && <OverlapFlagsBanner flags={overlaps} />}
             {profileGoals.length > 0 && (
               <ActiveGoalsCard goals={profileGoals} profileId={currentProfileId} />

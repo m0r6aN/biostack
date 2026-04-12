@@ -7,6 +7,7 @@ public sealed record MissionControlResponse(
     MissionControlEvolutionResponse? RecentEvolution,
     MissionControlCheckInSignalResponse LatestCheckInSignal,
     List<MissionControlObservationSignalResponse> ObservationSignals,
+    ProtocolPatternSnapshot? PatternSnapshot,
     List<ProtocolReviewTimelineEventResponse> CohesionTimeline
 );
 

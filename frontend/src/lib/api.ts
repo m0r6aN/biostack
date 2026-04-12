@@ -21,6 +21,7 @@ import {
     MissionControl,
     Protocol,
     ProtocolComputationRecord,
+    ProtocolPatternSnapshot,
     ProtocolReview,
     ProtocolReviewCompletedEvent,
     ProtocolRun,
@@ -185,6 +186,10 @@ export class ApiClient {
 
   async getProtocolReview(protocolId: string): Promise<ProtocolReview> {
     return this.request<ProtocolReview>(`/api/v1/protocols/${protocolId}/review`);
+  }
+
+  async getProtocolPatterns(protocolId: string): Promise<ProtocolPatternSnapshot> {
+    return this.request<ProtocolPatternSnapshot>(`/api/v1/protocols/${protocolId}/patterns`);
   }
 
   async completeProtocolReview(
