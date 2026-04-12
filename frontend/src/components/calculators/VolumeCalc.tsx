@@ -6,9 +6,10 @@ import { useState } from 'react';
 
 interface VolumeCalcProps {
   onCalculate: (request: VolumeRequest) => Promise<CalculatorResult>;
+  onResult?: (kind: string, inputs: Record<string, string>, result: CalculatorResult) => void;
 }
 
-export function VolumeCalc({ onCalculate }: VolumeCalcProps) {
+export function VolumeCalc({ onCalculate, onResult }: VolumeCalcProps) {
   const [inputs, setInputs] = useState({
     desiredDoseMcg: 100,
     concentrationMcgPerMl: 100,
@@ -23,6 +24,10 @@ export function VolumeCalc({ onCalculate }: VolumeCalcProps) {
       setError(null);
       const res = await onCalculate(inputs);
       setResult(res);
+      onResult?.('volume', {
+        desiredDoseMcg: String(inputs.desiredDoseMcg),
+        concentrationMcgPerMl: String(inputs.concentrationMcgPerMl),
+      }, res);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Calculation failed');
     } finally {

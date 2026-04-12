@@ -14,6 +14,9 @@ public sealed record CompoundResponse(
     SourceType SourceType,
     DateTime CreatedAtUtc,
     DateTime UpdatedAtUtc,
+    bool IsCanonical,
+    Guid? KnowledgeEntryId,
+    string CanonicalName,
     string Goal = "",
     string Source = "",
     decimal? PricePaid = null

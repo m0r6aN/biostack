@@ -44,6 +44,9 @@ export interface CompoundRecord {
   id: string;
   personId: string;
   name: string;
+  knowledgeEntryId?: string | null;
+  canonicalName?: string;
+  isCanonical?: boolean;
   category: string;
   startDate: string;
   endDate: string | null;
@@ -53,6 +56,7 @@ export interface CompoundRecord {
   goal?: string;
   source?: string;
   pricePaid?: number;
+  calculatorResultId?: string | null;
 }
 
 export interface CheckIn {
@@ -130,6 +134,7 @@ export interface TimelineEvent {
 }
 
 export interface KnowledgeEntry {
+  id?: string;
   canonicalName: string;
   aliases: string[];
   classification: string;
@@ -143,16 +148,33 @@ export interface KnowledgeEntry {
   pairsWellWith: string[];
   avoidWith: string[];
   compatibleBlends: string[];
+  vialCompatibility?: string;
   recommendedDosage: string;
+  standardDosageRange?: string;
+  maxReportedDose?: string;
   frequency: string;
   preferredTimeOfDay: string;
   weeklyDosageSchedule: string[];
+  incrementalEscalationSteps?: string[];
+  tieredDosing?: {
+    beginner?: DoseTier;
+    moderate?: DoseTier;
+    advanced?: DoseTier;
+  } | null;
   drugInteractions: string[];
   optimizationProtein: string;
   optimizationCarbs: string;
-  optimizationSupplements: string;
+  optimizationSupplements: string[] | string;
   optimizationSleep: string;
   optimizationExercise: string;
+}
+
+export interface DoseTier {
+  startDose: string;
+  escalation: string;
+  maxDose: string;
+  weeklySchedule: string[];
+  safetyNotes: string;
 }
 
 export interface InteractionFlag {
@@ -169,6 +191,86 @@ export interface CalculatorResult {
   unit: string;
   formula: string;
   disclaimer: string;
+}
+
+export interface CalculatorResultRecord {
+  id: string;
+  personId: string;
+  compoundRecordId: string | null;
+  calculatorKind: string;
+  inputs: Record<string, string>;
+  outputs: Record<string, string>;
+  unit: string;
+  formula: string;
+  displaySummary: string;
+  createdAtUtc: string;
+  updatedAtUtc: string;
+}
+
+export interface SaveCalculatorResultRequest {
+  calculatorKind: string;
+  inputs: Record<string, string>;
+  outputs: Record<string, string>;
+  unit: string;
+  formula: string;
+  displaySummary: string;
+  compoundRecordId?: string | null;
+}
+
+export interface SchedulePreview {
+  label: string;
+  source: string;
+  frequency: string;
+  preferredTimeOfDay: string;
+  weeklyDosageSchedule: string[];
+  incrementalEscalationSteps: string[];
+  tieredDosingNotes: string[];
+  standardDosageRange: string;
+  maxReportedDose: string;
+}
+
+export interface StackCompoundIntelligence {
+  compoundRecordId: string;
+  name: string;
+  status: string;
+  startDate: string | null;
+  endDate: string | null;
+  isCanonical: boolean;
+  knowledgeEntryId: string | null;
+  canonicalName: string;
+  pathways: string[];
+  evidenceTier: string;
+  schedulePreview: SchedulePreview | null;
+}
+
+export interface StackSignal {
+  kind: string;
+  severity: 'positive' | 'caution' | 'neutral' | string;
+  title: string;
+  detail: string;
+  compoundNames: string[];
+  source: string;
+}
+
+export interface PathwayOverlap {
+  pathway: string;
+  compoundNames: string[];
+}
+
+export interface EvidenceTierSummary {
+  evidenceTier: string;
+  count: number;
+  compoundNames: string[];
+}
+
+export interface CurrentStackIntelligence {
+  personId: string;
+  activeCompounds: StackCompoundIntelligence[];
+  signals: StackSignal[];
+  sharedPathwayOverlap: PathwayOverlap[];
+  evidenceTierSummary: EvidenceTierSummary[];
+  unresolvedCompounds: StackCompoundIntelligence[];
+  framing: string;
 }
 
 export interface ReconstitutionRequest {

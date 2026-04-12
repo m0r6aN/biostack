@@ -26,6 +26,11 @@ export function CompoundIntelligenceCard({
   const currentProfile = profiles.find(p => p.id === currentProfileId);
   const recommendationTags = getContextTagsForKnowledgeEntry(entry);
   const recommendations = getRecommendationsForKnowledgeEntry(entry, 3, recommendationSurface);
+  const optimizationSupplements = Array.isArray(entry.optimizationSupplements)
+    ? entry.optimizationSupplements
+    : entry.optimizationSupplements
+      ? [entry.optimizationSupplements]
+      : [];
 
   return (
     <GlassCard variant="default" className="p-6 relative overflow-hidden">
@@ -80,7 +85,7 @@ export function CompoundIntelligenceCard({
                 <div className="text-xs">
                   <p className="text-white/30 uppercase tracking-tighter mb-1">Personalized Adjustments</p>
                   <p className="text-emerald-300/80 italic">
-                    {currentProfile.weight > 90 ? 'Higher end of dosage range recommended.' : 'Standard dosage range applicable.'}
+                    {currentProfile.weight > 90 ? 'Weight may be useful context when reviewing the listed reference range.' : 'Knowledge-base range shown for reference.'}
                   </p>
                 </div>
               )}
@@ -137,10 +142,10 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        {/* Protocol Guidance */}
+        {/* Knowledge-base reference */}
         {(entry.recommendedDosage || entry.frequency || entry.preferredTimeOfDay || entry.weeklyDosageSchedule.length > 0) && (
           <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 border-b border-white/5 pb-1">Protocol Guidance</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/40 border-b border-white/5 pb-1">Knowledge-base reference</p>
             <div className="grid grid-cols-3 gap-2 text-center">
               {entry.recommendedDosage && (
                 <div className="p-2 rounded bg-white/5">
@@ -178,7 +183,7 @@ export function CompoundIntelligenceCard({
         )}
 
         {/* Optimization Recommendations */}
-        {(entry.optimizationProtein || entry.optimizationCarbs || entry.optimizationSupplements || entry.optimizationSleep || entry.optimizationExercise) && (
+        {(entry.optimizationProtein || entry.optimizationCarbs || optimizationSupplements.length > 0 || entry.optimizationSleep || entry.optimizationExercise) && (
           <div className="space-y-3">
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 border-b border-white/5 pb-1">Optimization Guidelines</p>
             <div className="grid grid-cols-1 gap-2">
@@ -194,10 +199,10 @@ export function CompoundIntelligenceCard({
                   <span className="text-white/80">{entry.optimizationCarbs}</span>
                 </div>
               )}
-              {entry.optimizationSupplements && (
+              {optimizationSupplements.length > 0 && (
                 <div className="flex justify-between text-sm py-1 border-b border-white/[0.03]">
                   <span className="text-white/40">Supplements</span>
-                  <span className="text-white/80">{entry.optimizationSupplements}</span>
+                  <span className="text-white/80">{optimizationSupplements.join(', ')}</span>
                 </div>
               )}
               {entry.optimizationExercise && (

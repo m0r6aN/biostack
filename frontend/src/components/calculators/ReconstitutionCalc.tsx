@@ -6,9 +6,10 @@ import { useState } from 'react';
 
 interface ReconstitutionCalcProps {
   onCalculate: (request: ReconstitutionRequest) => Promise<CalculatorResult>;
+  onResult?: (kind: string, inputs: Record<string, string>, result: CalculatorResult) => void;
 }
 
-export function ReconstitutionCalc({ onCalculate }: ReconstitutionCalcProps) {
+export function ReconstitutionCalc({ onCalculate, onResult }: ReconstitutionCalcProps) {
   const [inputs, setInputs] = useState({
     peptideAmountMg: 10,
     diluentVolumeMl: 1,
@@ -23,6 +24,10 @@ export function ReconstitutionCalc({ onCalculate }: ReconstitutionCalcProps) {
       setError(null);
       const res = await onCalculate(inputs);
       setResult(res);
+      onResult?.('reconstitution', {
+        peptideAmountMg: String(inputs.peptideAmountMg),
+        diluentVolumeMl: String(inputs.diluentVolumeMl),
+      }, res);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Calculation failed');
     } finally {

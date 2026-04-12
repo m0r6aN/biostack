@@ -3,6 +3,7 @@ namespace BioStack.Application.Services;
 using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Repositories;
+using BioStack.Infrastructure.Knowledge;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 
@@ -11,15 +12,21 @@ public sealed class CompoundService : ICompoundService
     private readonly ICompoundRecordRepository _compoundRepository;
     private readonly IPersonProfileRepository _profileRepository;
     private readonly ITimelineEventRepository _timelineRepository;
+    private readonly ICalculatorResultRecordRepository _calculatorResultRepository;
+    private readonly IKnowledgeSource _knowledgeSource;
 
     public CompoundService(
         ICompoundRecordRepository compoundRepository,
         IPersonProfileRepository profileRepository,
-        ITimelineEventRepository timelineRepository)
+        ITimelineEventRepository timelineRepository,
+        ICalculatorResultRecordRepository calculatorResultRepository,
+        IKnowledgeSource knowledgeSource)
     {
         _compoundRepository = compoundRepository;
         _profileRepository = profileRepository;
         _timelineRepository = timelineRepository;
+        _calculatorResultRepository = calculatorResultRepository;
+        _knowledgeSource = knowledgeSource;
     }
 
     public async Task<CompoundResponse> CreateCompoundAsync(Guid personId, CreateCompoundRequest request, CancellationToken cancellationToken = default)
@@ -46,6 +53,15 @@ public sealed class CompoundService : ICompoundService
             UpdatedAtUtc = DateTime.UtcNow
         };
 
+        var knowledgeEntry = await ResolveKnowledgeEntryAsync(request.KnowledgeEntryId, request.Name, cancellationToken);
+        if (knowledgeEntry is not null)
+        {
+            compound.KnowledgeEntryId = knowledgeEntry.Id;
+            compound.CanonicalName = knowledgeEntry.CanonicalName;
+            compound.Name = knowledgeEntry.CanonicalName;
+            compound.Category = knowledgeEntry.Classification;
+        }
+
         await _compoundRepository.AddAsync(compound, cancellationToken);
 
         if (request.StartDate.HasValue)
@@ -62,6 +78,17 @@ public sealed class CompoundService : ICompoundService
                 RelatedEntityType = "CompoundRecord"
             };
             await _timelineRepository.AddAsync(startEvent, cancellationToken);
+        }
+
+        if (request.CalculatorResultId.HasValue)
+        {
+            var calculatorResult = await _calculatorResultRepository.GetByIdAsync(request.CalculatorResultId.Value, cancellationToken);
+            if (calculatorResult is not null && calculatorResult.PersonId == personId)
+            {
+                calculatorResult.CompoundRecordId = compound.Id;
+                calculatorResult.UpdatedAtUtc = DateTime.UtcNow;
+                await _calculatorResultRepository.UpdateAsync(calculatorResult, cancellationToken);
+            }
         }
 
         await _compoundRepository.SaveChangesAsync(cancellationToken);
@@ -93,6 +120,20 @@ public sealed class CompoundService : ICompoundService
         compound.PricePaid = request.PricePaid;
         compound.UpdatedAtUtc = DateTime.UtcNow;
 
+        var knowledgeEntry = await ResolveKnowledgeEntryAsync(request.KnowledgeEntryId, request.Name, cancellationToken);
+        if (knowledgeEntry is not null)
+        {
+            compound.KnowledgeEntryId = knowledgeEntry.Id;
+            compound.CanonicalName = knowledgeEntry.CanonicalName;
+            compound.Name = knowledgeEntry.CanonicalName;
+            compound.Category = knowledgeEntry.Classification;
+        }
+        else
+        {
+            compound.KnowledgeEntryId = null;
+            compound.CanonicalName = string.Empty;
+        }
+
         await _compoundRepository.UpdateAsync(compound, cancellationToken);
         await _compoundRepository.SaveChangesAsync(cancellationToken);
 
@@ -109,8 +150,39 @@ public sealed class CompoundService : ICompoundService
         await _compoundRepository.SaveChangesAsync(cancellationToken);
     }
 
+    private async Task<KnowledgeEntry?> ResolveKnowledgeEntryAsync(Guid? knowledgeEntryId, string name, CancellationToken cancellationToken)
+    {
+        var entries = await _knowledgeSource.GetAllCompoundsAsync(cancellationToken);
+
+        if (knowledgeEntryId.HasValue)
+        {
+            var byId = entries.FirstOrDefault(entry => entry.Id == knowledgeEntryId.Value);
+            if (byId is not null)
+            {
+                return byId;
+            }
+        }
+
+        return entries.FirstOrDefault(entry => IsKnowledgeMatch(entry, name));
+    }
+
+    private static bool IsKnowledgeMatch(KnowledgeEntry entry, string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return false;
+        }
+
+        return string.Equals(entry.CanonicalName, name, StringComparison.OrdinalIgnoreCase) ||
+            entry.Aliases.Any(alias => string.Equals(alias, name, StringComparison.OrdinalIgnoreCase));
+    }
+
     private static CompoundResponse MapToResponse(CompoundRecord compound)
     {
+        var canonicalName = !string.IsNullOrWhiteSpace(compound.CanonicalName)
+            ? compound.CanonicalName
+            : compound.KnowledgeEntry?.CanonicalName ?? string.Empty;
+
         return new CompoundResponse(
             compound.Id,
             compound.PersonId,
@@ -123,6 +195,9 @@ public sealed class CompoundService : ICompoundService
             compound.SourceType,
             compound.CreatedAtUtc,
             compound.UpdatedAtUtc,
+            compound.KnowledgeEntryId.HasValue,
+            compound.KnowledgeEntryId,
+            canonicalName,
             compound.Goal,
             compound.Source,
             compound.PricePaid

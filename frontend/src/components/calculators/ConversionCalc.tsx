@@ -6,11 +6,12 @@ import { useState } from 'react';
 
 interface ConversionCalcProps {
   onCalculate: (request: ConversionRequest) => Promise<CalculatorResult>;
+  onResult?: (kind: string, inputs: Record<string, string>, result: CalculatorResult) => void;
 }
 
 const units = ['mg', 'mcg', 'IU', 'g'];
 
-export function ConversionCalc({ onCalculate }: ConversionCalcProps) {
+export function ConversionCalc({ onCalculate, onResult }: ConversionCalcProps) {
   const [inputs, setInputs] = useState({
     amount: 1000,
     fromUnit: 'mcg',
@@ -26,6 +27,11 @@ export function ConversionCalc({ onCalculate }: ConversionCalcProps) {
       setError(null);
       const res = await onCalculate({ ...inputs, conversionFactor: 0 });
       setResult(res);
+      onResult?.('conversion', {
+        amount: String(inputs.amount),
+        fromUnit: inputs.fromUnit,
+        toUnit: inputs.toUnit,
+      }, res);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Calculation failed');
     } finally {

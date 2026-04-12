@@ -19,6 +19,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<InteractionFlag> InteractionFlags { get; set; }
     public DbSet<KnowledgeEntry> KnowledgeEntries { get; set; }
     public DbSet<LeadCapture> LeadCaptures { get; set; }
+    public DbSet<CalculatorResultRecord> CalculatorResultRecords { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -72,6 +73,7 @@ public sealed class BioStackDbContext : DbContext
             entity.HasKey(c => c.Id);
             entity.Property(c => c.PersonId).IsRequired();
             entity.Property(c => c.Name).HasMaxLength(255).IsRequired();
+            entity.Property(c => c.CanonicalName).HasMaxLength(255);
             entity.Property(c => c.Goal).HasMaxLength(255);
             entity.Property(c => c.Source).HasMaxLength(255);
             entity.Property(c => c.PricePaid).HasPrecision(18, 2);
@@ -79,7 +81,12 @@ public sealed class BioStackDbContext : DbContext
             entity.HasOne(c => c.PersonProfile)
                 .WithMany(p => p.Compounds)
                 .HasForeignKey(c => c.PersonId);
+            entity.HasOne(c => c.KnowledgeEntry)
+                .WithMany()
+                .HasForeignKey(c => c.KnowledgeEntryId)
+                .OnDelete(DeleteBehavior.SetNull);
             entity.HasIndex(c => c.PersonId);
+            entity.HasIndex(c => c.KnowledgeEntryId);
         });
 
         modelBuilder.Entity<CheckIn>(entity =>
@@ -182,6 +189,28 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(l => l.Email).HasMaxLength(255).IsRequired();
             entity.Property(l => l.Source).HasMaxLength(255).IsRequired();
             entity.HasIndex(l => new { l.Email, l.Source }).IsUnique();
+        });
+
+        modelBuilder.Entity<CalculatorResultRecord>(entity =>
+        {
+            entity.HasKey(c => c.Id);
+            entity.Property(c => c.PersonId).IsRequired();
+            entity.Property(c => c.CalculatorKind).HasMaxLength(100).IsRequired();
+            entity.Property(c => c.InputsJson).HasMaxLength(4000);
+            entity.Property(c => c.OutputsJson).HasMaxLength(4000);
+            entity.Property(c => c.Unit).HasMaxLength(50);
+            entity.Property(c => c.Formula).HasMaxLength(1000);
+            entity.Property(c => c.DisplaySummary).HasMaxLength(1000);
+            entity.HasOne(c => c.PersonProfile)
+                .WithMany()
+                .HasForeignKey(c => c.PersonId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(c => c.CompoundRecord)
+                .WithMany()
+                .HasForeignKey(c => c.CompoundRecordId)
+                .OnDelete(DeleteBehavior.SetNull);
+            entity.HasIndex(c => c.PersonId);
+            entity.HasIndex(c => c.CompoundRecordId);
         });
     }
 }

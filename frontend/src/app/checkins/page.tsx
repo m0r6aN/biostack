@@ -6,15 +6,17 @@ import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { CheckInForm } from '@/components/checkins/CheckInForm';
 import { CheckInHistory } from '@/components/checkins/CheckInHistory';
-import { TrendChart } from '@/components/checkins/TrendChart';
+import { TrendChart, TrendMarker } from '@/components/checkins/TrendChart';
 import { apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
-import { CheckIn, GoalDefinition } from '@/lib/types';
+import { CheckIn, CompoundRecord, GoalDefinition, ProtocolPhase } from '@/lib/types';
 import { useEffect, useState } from 'react';
 
 export default function CheckInsPage() {
   const { currentProfileId } = useProfile();
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
+  const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
+  const [phases, setPhases] = useState<ProtocolPhase[]>([]);
   const [profileGoals, setProfileGoals] = useState<GoalDefinition[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,12 +32,16 @@ export default function CheckInsPage() {
   const loadCheckIns = async () => {
     try {
       setLoading(true);
-      const [checkInData, goalsData] = await Promise.all([
+      const [checkInData, goalsData, compoundData, phaseData] = await Promise.all([
         apiClient.getCheckIns(currentProfileId!),
-        apiClient.getProfileGoals(currentProfileId!)
+        apiClient.getProfileGoals(currentProfileId!),
+        apiClient.getCompounds(currentProfileId!),
+        apiClient.getProtocolPhases(currentProfileId!)
       ]);
       setCheckIns(checkInData);
       setProfileGoals(goalsData);
+      setCompounds(compoundData);
+      setPhases(phaseData);
     } catch (err) {
       setError('Failed to load check-ins');
     } finally {
@@ -134,27 +140,34 @@ export default function CheckInsPage() {
           />
         ) : (
           <>
+            <div className="rounded-2xl border border-white/[0.08] bg-[#121923]/90 p-4 text-sm text-white/55">
+              Trend overlays mark compound start/stop dates and protocol phase boundaries for visual correlation only.
+            </div>
             {/* Trend Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <TrendChart
                 checkIns={checkIns}
                 metric="weight"
                 title="Weight Trend"
+                markers={buildTrendMarkers(compounds, phases)}
               />
               <TrendChart
                 checkIns={checkIns}
                 metric="energy"
                 title="Energy Levels"
+                markers={buildTrendMarkers(compounds, phases)}
               />
               <TrendChart
                 checkIns={checkIns}
                 metric="sleepQuality"
                 title="Sleep Quality"
+                markers={buildTrendMarkers(compounds, phases)}
               />
               <TrendChart
                 checkIns={checkIns}
                 metric="recovery"
                 title="Recovery Status"
+                markers={buildTrendMarkers(compounds, phases)}
               />
             </div>
 
@@ -168,4 +181,23 @@ export default function CheckInsPage() {
       </div>
     </div>
   );
+}
+
+function buildTrendMarkers(compounds: CompoundRecord[], phases: ProtocolPhase[]): TrendMarker[] {
+  const compoundMarkers = compounds.flatMap((compound) => {
+    const name = compound.canonicalName || compound.name;
+    return [
+      compound.startDate ? { date: compound.startDate, label: `${name} start`, type: 'compound' as const } : null,
+      compound.endDate ? { date: compound.endDate, label: `${name} stop`, type: 'compound' as const } : null,
+    ].filter((marker): marker is TrendMarker => marker !== null);
+  });
+
+  const phaseMarkers = phases.flatMap((phase) => [
+    phase.startDate ? { date: phase.startDate, label: `${phase.name} start`, type: 'phase' as const } : null,
+    phase.endDate ? { date: phase.endDate, label: `${phase.name} end`, type: 'phase' as const } : null,
+  ]).filter((marker): marker is TrendMarker => marker !== null);
+
+  return [...compoundMarkers, ...phaseMarkers]
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    .slice(-10);
 }

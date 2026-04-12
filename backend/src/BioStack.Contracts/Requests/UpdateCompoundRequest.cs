@@ -10,6 +10,7 @@ public sealed record UpdateCompoundRequest(
     CompoundStatus Status,
     string Notes,
     SourceType SourceType,
+    Guid? KnowledgeEntryId = null,
     string Goal = "",
     string Source = "",
     decimal? PricePaid = null

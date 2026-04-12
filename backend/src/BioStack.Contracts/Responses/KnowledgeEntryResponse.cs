@@ -4,6 +4,7 @@ using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 
 public sealed record KnowledgeEntryResponse(
+    Guid Id,
     string CanonicalName,
     List<string> Aliases,
     CompoundCategory Classification,

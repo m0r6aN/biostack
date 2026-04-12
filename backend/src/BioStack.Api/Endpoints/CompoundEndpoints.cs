@@ -21,6 +21,17 @@ public static class CompoundEndpoints
 
         group.MapDelete("/{id}", DeleteCompound)
             .WithName("DeleteCompound");
+
+        group.MapGet("/current-stack-intelligence", GetCurrentStackIntelligence)
+            .WithName("GetCurrentStackIntelligence");
+
+        app.MapPut("/api/v1/compounds/{id}", UpdateCompound)
+            .WithTags("Compounds")
+            .WithName("UpdateCompoundLegacy");
+
+        app.MapDelete("/api/v1/compounds/{id}", DeleteCompound)
+            .WithTags("Compounds")
+            .WithName("DeleteCompoundLegacy");
     }
 
     private static async Task<IResult> GetCompounds(Guid profileId, ICompoundService compoundService, CancellationToken ct)
@@ -61,6 +72,19 @@ public static class CompoundEndpoints
         {
             await compoundService.DeleteCompoundAsync(id, ct);
             return Results.NoContent();
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
+    }
+
+    private static async Task<IResult> GetCurrentStackIntelligence(Guid profileId, ICurrentStackIntelligenceService stackIntelligenceService, CancellationToken ct)
+    {
+        try
+        {
+            var intelligence = await stackIntelligenceService.GetCurrentStackAsync(profileId, ct);
+            return Results.Ok(intelligence);
         }
         catch (InvalidOperationException)
         {

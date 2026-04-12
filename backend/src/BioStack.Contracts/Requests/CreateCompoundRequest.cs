@@ -10,7 +10,9 @@ public sealed record CreateCompoundRequest(
     CompoundStatus Status,
     string Notes,
     SourceType SourceType,
+    Guid? KnowledgeEntryId = null,
     string Goal = "",
     string Source = "",
-    decimal? PricePaid = null
+    decimal? PricePaid = null,
+    Guid? CalculatorResultId = null
 );

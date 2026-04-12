@@ -34,6 +34,7 @@ public sealed class KnowledgeService : IKnowledgeService
     private static KnowledgeEntryResponse MapToResponse(KnowledgeEntry entry)
     {
         return new KnowledgeEntryResponse(
+            entry.Id,
             entry.CanonicalName,
             entry.Aliases,
             entry.Classification,

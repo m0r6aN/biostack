@@ -6,6 +6,7 @@ import { apiClient } from '@/lib/api';
 import {
   CheckIn,
   CompoundRecord,
+  CurrentStackIntelligence,
   GoalDefinition,
   InteractionFlag,
   TimelineEvent,
@@ -23,6 +24,7 @@ import { LatestCheckInCard } from '@/components/dashboard/LatestCheckInCard';
 import { TimelineSnapshot } from '@/components/dashboard/TimelineSnapshot';
 import { OverlapFlagsBanner } from '@/components/dashboard/OverlapFlagsBanner';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
+import { StackIntelligencePanel } from '@/components/dashboard/StackIntelligencePanel';
 
 export function MissionControlDashboard() {
   const { currentProfileId, profiles, setProfiles } = useProfile();
@@ -31,6 +33,7 @@ export function MissionControlDashboard() {
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
   const [overlaps, setOverlaps] = useState<InteractionFlag[]>([]);
+  const [stackIntelligence, setStackIntelligence] = useState<CurrentStackIntelligence | null>(null);
   const [profileGoals, setProfileGoals] = useState<GoalDefinition[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,17 +72,19 @@ export function MissionControlDashboard() {
       setLoading(true);
       setError(null);
 
-      const [comp, chk, tl, goals] = await Promise.all([
+      const [comp, chk, tl, goals, intelligence] = await Promise.all([
         apiClient.getCompounds(currentProfileId),
         apiClient.getCheckIns(currentProfileId),
         apiClient.getTimeline(currentProfileId),
         apiClient.getProfileGoals(currentProfileId),
+        apiClient.getCurrentStackIntelligence(currentProfileId),
       ]);
 
       setCompounds(comp);
       setCheckIns(chk);
       setTimeline(tl);
       setProfileGoals(goals);
+      setStackIntelligence(intelligence);
 
       const activeCompoundNames = comp
         .filter((compound) => compound.status === 'Active')
@@ -141,10 +146,10 @@ export function MissionControlDashboard() {
               <StatCard title="Active Compounds" value={activeCompounds} icon="🧪" color="emerald" />
               <StatCard title="Total Check-ins" value={checkIns.length} icon="📊" color="blue" />
               <StatCard
-                title="Pathway Flags"
-                value={overlaps.length}
-                icon="⚠️"
-                color={overlaps.length > 0 ? 'amber' : 'default'}
+                title="Stack Signals"
+                value={stackIntelligence?.signals.length ?? overlaps.length}
+                icon="⚠"
+                color={(stackIntelligence?.signals.length ?? overlaps.length) > 0 ? 'amber' : 'default'}
               />
               <StatCard
                 title="Current Weight"
@@ -155,6 +160,7 @@ export function MissionControlDashboard() {
             </div>
 
             {overlaps.length > 0 && <OverlapFlagsBanner flags={overlaps} />}
+            <StackIntelligencePanel intelligence={stackIntelligence} />
             {profileGoals.length > 0 && (
               <ActiveGoalsCard goals={profileGoals} profileId={currentProfileId} />
             )}

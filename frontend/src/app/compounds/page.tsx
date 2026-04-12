@@ -54,7 +54,7 @@ export default function CompoundsPage() {
     setSelectedCompound(compound);
     setLoadingKnowledge(true);
     try {
-      const entry = await apiClient.getKnowledgeEntry(compound.name);
+      const entry = await apiClient.getKnowledgeEntry(compound.canonicalName || compound.name);
       setKnowledgeEntry(entry);
     } catch (err) {
       setKnowledgeEntry(null);
@@ -143,6 +143,12 @@ export default function CompoundsPage() {
                     <h3 className="font-semibold text-white mb-2">{selectedCompound.name}</h3>
                     <div className="space-y-2 text-sm text-white/65">
                       <p><span className="text-white/40">Category:</span> {selectedCompound.category}</p>
+                      <p>
+                        <span className="text-white/40">Knowledge link:</span>{' '}
+                        {selectedCompound.isCanonical
+                          ? selectedCompound.canonicalName || 'Canonical'
+                          : 'Manual / unresolved'}
+                      </p>
                       {selectedCompound.goal && <p><span className="text-white/40">Goal:</span> {selectedCompound.goal}</p>}
                       {selectedCompound.source && <p><span className="text-white/40">Source:</span> {selectedCompound.source}</p>}
                       {selectedCompound.pricePaid && <p><span className="text-white/40">Price:</span> ${selectedCompound.pricePaid}</p>}
@@ -159,7 +165,22 @@ export default function CompoundsPage() {
                       Loading knowledge...
                     </div>
                   ) : knowledgeEntry ? (
-                    <CompoundIntelligenceCard entry={knowledgeEntry} />
+                    <>
+                      <div className="p-4 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+                        <h3 className="font-semibold text-white mb-3">Reference schedule from knowledge base</h3>
+                        <div className="space-y-2 text-sm text-white/65">
+                          {knowledgeEntry.frequency && <p><span className="text-white/40">Frequency:</span> {knowledgeEntry.frequency}</p>}
+                          {knowledgeEntry.preferredTimeOfDay && <p><span className="text-white/40">Timing:</span> {knowledgeEntry.preferredTimeOfDay}</p>}
+                          {knowledgeEntry.weeklyDosageSchedule?.slice(0, 3).map((item) => (
+                            <p key={item}>{item}</p>
+                          ))}
+                          {knowledgeEntry.incrementalEscalationSteps?.[0] && (
+                            <p><span className="text-white/40">Escalation reference:</span> {knowledgeEntry.incrementalEscalationSteps[0]}</p>
+                          )}
+                        </div>
+                      </div>
+                      <CompoundIntelligenceCard entry={knowledgeEntry} />
+                    </>
                   ) : (
                     <div className="p-4 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.35)] text-center text-sm text-white/50">
                       No knowledge entry available

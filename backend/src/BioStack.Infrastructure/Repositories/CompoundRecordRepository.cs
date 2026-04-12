@@ -14,6 +14,7 @@ public sealed class CompoundRecordRepository : Repository<CompoundRecord>, IComp
     {
         return await _dbSet
             .Where(c => c.PersonId == personId)
+            .Include(c => c.KnowledgeEntry)
             .ToListAsync(cancellationToken);
     }
 }

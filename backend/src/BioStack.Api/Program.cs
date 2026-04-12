@@ -101,6 +101,7 @@ builder.Services.AddScoped<IProtocolPhaseRepository, ProtocolPhaseRepository>();
 builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
+builder.Services.AddScoped<ICalculatorResultRecordRepository, CalculatorResultRecordRepository>();
 
 // ── Domain services ─────────────────────────────────────────────────────────
 builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
@@ -111,9 +112,12 @@ builder.Services.AddScoped<ICheckInService, CheckInService>();
 builder.Services.AddScoped<IProtocolPhaseService, ProtocolPhaseService>();
 builder.Services.AddScoped<ITimelineService, TimelineService>();
 builder.Services.AddScoped<ICalculatorService, CalculatorService>();
+builder.Services.AddScoped<ICalculatorResultRecordService, CalculatorResultRecordService>();
 builder.Services.AddScoped<IKnowledgeService, KnowledgeService>();
 builder.Services.AddScoped<IOverlapService, OverlapService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<ISchedulePreviewService, SchedulePreviewService>();
+builder.Services.AddScoped<ICurrentStackIntelligenceService, CurrentStackIntelligenceService>();
 
 // ── OpenAPI ──────────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi(options =>

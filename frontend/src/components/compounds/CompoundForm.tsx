@@ -1,7 +1,7 @@
 'use client';
 
 import { apiClient } from '@/lib/api';
-import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
+import { CalculatorResultRecord, CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { useEffect, useMemo, useState } from 'react';
 
 interface CompoundFormProps {
@@ -12,8 +12,10 @@ interface CompoundFormProps {
 
 export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProps) {
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeEntry[]>([]);
+  const [savedCalculations, setSavedCalculations] = useState<CalculatorResultRecord[]>([]);
   const [formData, setFormData] = useState({
     name: '',
+    knowledgeEntryId: null as string | null,
     category: '',
     goal: '',
     source: '',
@@ -23,6 +25,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
     status: 'Active' as const,
     notes: '',
     sourceType: 'Manual',
+    calculatorResultId: '',
   });
 
   useEffect(() => {
@@ -36,6 +39,19 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
     };
     fetchKnowledge();
   }, []);
+
+  useEffect(() => {
+    const fetchSavedCalculations = async () => {
+      try {
+        const results = await apiClient.getSavedCalculatorResults(personId);
+        setSavedCalculations(results.filter((result) => !result.compoundRecordId));
+      } catch {
+        setSavedCalculations([]);
+      }
+    };
+
+    fetchSavedCalculations();
+  }, [personId]);
 
   const filteredGoals = useMemo(() => {
     if (!formData.category) return [];
@@ -58,15 +74,26 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const matchedKnowledge = knowledgeBase.find((entry) =>
+        entry.canonicalName.toLowerCase() === formData.name.trim().toLowerCase() ||
+        entry.aliases.some((alias) => alias.toLowerCase() === formData.name.trim().toLowerCase())
+      );
+
       await onSubmit({
         ...formData,
+        name: matchedKnowledge?.canonicalName ?? formData.name,
+        knowledgeEntryId: matchedKnowledge?.id ?? formData.knowledgeEntryId,
+        canonicalName: matchedKnowledge?.canonicalName ?? '',
+        isCanonical: Boolean(matchedKnowledge || formData.knowledgeEntryId),
         personId,
         pricePaid: formData.pricePaid ? Number(formData.pricePaid) : undefined,
         endDate: formData.endDate || null,
+        calculatorResultId: formData.calculatorResultId || null,
       } as any);
       
       setFormData({
         name: '',
+        knowledgeEntryId: null,
         category: '',
         goal: '',
         source: '',
@@ -76,6 +103,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
         status: 'Active',
         notes: '',
         sourceType: 'Manual',
+        calculatorResultId: '',
       });
     } catch (err) {
       console.error('Form submission error:', err);
@@ -90,7 +118,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           <label className="block text-sm font-medium text-white/70 mb-2">1. Select a Category</label>
           <select
             value={formData.category}
-            onChange={(e) => setFormData({ ...formData, category: e.target.value, goal: '', name: '' })}
+            onChange={(e) => setFormData({ ...formData, category: e.target.value, goal: '', name: '', knowledgeEntryId: null })}
             required
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
           >
@@ -109,7 +137,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           <label className="block text-sm font-medium text-white/70 mb-2">2. Select a Goal</label>
           <select
             value={formData.goal}
-            onChange={(e) => setFormData({ ...formData, goal: e.target.value, name: '' })}
+            onChange={(e) => setFormData({ ...formData, goal: e.target.value, name: '', knowledgeEntryId: null })}
             disabled={!formData.category}
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white disabled:opacity-50 focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
           >
@@ -125,7 +153,14 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           <label className="block text-sm font-medium text-white/70 mb-2">3. Select a Compound</label>
           <select
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={(e) => {
+              const selected = knowledgeBase.find((entry) => entry.canonicalName === e.target.value);
+              setFormData({
+                ...formData,
+                name: e.target.value,
+                knowledgeEntryId: selected?.id ?? null,
+              });
+            }}
             disabled={!formData.category}
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white disabled:opacity-50 focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
           >
@@ -142,11 +177,13 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           <input
             type="text"
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value, knowledgeEntryId: null })}
             placeholder="Search or enter custom compound name..."
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
           />
-          <p className="mt-1 text-[10px] text-white/30 italic px-1">Tip: Use this if you can't find your compound in the list above.</p>
+          <p className="mt-1 text-[10px] text-white/30 italic px-1">
+            Exact aliases from the knowledge base are linked automatically. Custom entries stay manual.
+          </p>
         </div>
 
         {/* 5. Optional: Source and Price */}
@@ -176,6 +213,27 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
             </div>
           </div>
         </div>
+
+        {savedCalculations.length > 0 && (
+          <div>
+            <label className="block text-sm font-medium text-white/70 mb-2">Attach Saved Calculation</label>
+            <select
+              value={formData.calculatorResultId}
+              onChange={(e) => setFormData({ ...formData, calculatorResultId: e.target.value })}
+              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
+            >
+              <option value="">No calculation attached</option>
+              {savedCalculations.map((result) => (
+                <option key={result.id} value={result.id}>
+                  {result.displaySummary}
+                </option>
+              ))}
+            </select>
+            <p className="mt-1 text-[10px] text-white/30 italic px-1">
+              Saved reference calculations can be attached as compound metadata.
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="h-px bg-white/5 my-2" />

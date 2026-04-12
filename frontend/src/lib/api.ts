@@ -7,8 +7,10 @@ import {
 import { normalizeTimelineEvent } from './timeline';
 import {
     CalculatorResult,
+    CalculatorResultRecord,
     CheckIn,
     CompoundRecord,
+    CurrentStackIntelligence,
     ConversionRequest,
     CreateCheckInRequest,
     CreateProfileRequest,
@@ -19,6 +21,7 @@ import {
     ProfileGoal,
     ProtocolPhase,
     ReconstitutionRequest,
+    SaveCalculatorResultRequest,
     TimelineEvent,
     VolumeRequest,
 } from './types';
@@ -119,18 +122,33 @@ export class ApiClient {
 
   async updateCompound(
     compoundId: string,
-    compound: Partial<CompoundRecord>
+    compound: Partial<CompoundRecord>,
+    profileId?: string
   ): Promise<CompoundRecord> {
-    return this.request(`/api/v1/compounds/${compoundId}`, {
+    const endpoint = profileId
+      ? `/api/v1/profiles/${profileId}/compounds/${compoundId}`
+      : `/api/v1/compounds/${compoundId}`;
+
+    return this.request(endpoint, {
       method: 'PUT',
       body: JSON.stringify(compound),
     });
   }
 
-  async deleteCompound(compoundId: string): Promise<void> {
-    return this.request(`/api/v1/compounds/${compoundId}`, {
+  async deleteCompound(compoundId: string, profileId?: string): Promise<void> {
+    const endpoint = profileId
+      ? `/api/v1/profiles/${profileId}/compounds/${compoundId}`
+      : `/api/v1/compounds/${compoundId}`;
+
+    return this.request(endpoint, {
       method: 'DELETE',
     });
+  }
+
+  async getCurrentStackIntelligence(profileId: string): Promise<CurrentStackIntelligence> {
+    return this.request<CurrentStackIntelligence>(
+      `/api/v1/profiles/${profileId}/compounds/current-stack-intelligence`
+    );
   }
 
   // Check-ins
@@ -227,6 +245,36 @@ export class ApiClient {
       method: 'POST',
       body: JSON.stringify(payload),
     });
+  }
+
+  async getSavedCalculatorResults(profileId: string): Promise<CalculatorResultRecord[]> {
+    return this.request<CalculatorResultRecord[]>(
+      `/api/v1/calculators/profiles/${profileId}/results`
+    );
+  }
+
+  async saveCalculatorResult(
+    profileId: string,
+    request: SaveCalculatorResultRequest
+  ): Promise<CalculatorResultRecord> {
+    return this.request(`/api/v1/calculators/profiles/${profileId}/results`, {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+  }
+
+  async attachCalculatorResult(
+    profileId: string,
+    resultId: string,
+    compoundRecordId: string
+  ): Promise<CalculatorResultRecord> {
+    return this.request(
+      `/api/v1/calculators/profiles/${profileId}/results/${resultId}/attach`,
+      {
+        method: 'POST',
+        body: JSON.stringify({ compoundRecordId }),
+      }
+    );
   }
 
   async captureLead(email: string, source: string): Promise<void> {

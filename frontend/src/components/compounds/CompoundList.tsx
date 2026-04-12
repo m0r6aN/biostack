@@ -22,6 +22,13 @@ export function CompoundList({ compounds, onSelect }: CompoundListProps) {
             <div className="flex-1">
               <h4 className="font-semibold text-white">{compound.name}</h4>
               <div className="flex items-center gap-2 mt-1">
+                <span className={`text-[11px] rounded-md border px-2 py-0.5 ${
+                  compound.isCanonical
+                    ? 'border-emerald-400/20 bg-emerald-500/10 text-emerald-300'
+                    : 'border-white/[0.08] bg-white/[0.03] text-white/40'
+                }`}>
+                  {compound.isCanonical ? 'Canonical' : 'Manual'}
+                </span>
                 <span className="text-xs text-white/40">{compound.category}</span>
                 {compound.goal && (
                   <>
