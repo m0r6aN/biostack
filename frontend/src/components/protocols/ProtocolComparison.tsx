@@ -6,7 +6,13 @@ interface ProtocolComparisonProps {
 
 export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
   if (!comparison) {
-    return null;
+    return (
+      <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Observed vs Projected</p>
+        <h3 className="mt-2 text-xl font-bold text-white">Comparison pending</h3>
+        <p className="mt-2 text-sm text-white/45">Comparison becomes available after this protocol has a run state.</p>
+      </div>
+    );
   }
 
   const summary = comparison.runSummary;
@@ -23,6 +29,12 @@ export function ProtocolComparison({ comparison }: ProtocolComparisonProps) {
       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Observed vs Projected</p>
       <h3 className="mt-2 text-xl font-bold text-white">Run intelligence</h3>
       <p className="mt-2 text-sm text-white/45">Observed correlation only. BioStack does not assign causation.</p>
+
+      {comparison.run && comparison.observations.length === 0 && (
+        <div className="mt-5 rounded-lg border border-sky-400/15 bg-sky-500/[0.06] px-4 py-3 text-sm text-sky-100/75">
+          No check-ins attached to this run yet.
+        </div>
+      )}
 
       {summary && (
         <div className="mt-5 grid gap-4 rounded-lg border border-emerald-400/15 bg-emerald-500/[0.04] p-4 lg:grid-cols-[220px_1fr_160px]">

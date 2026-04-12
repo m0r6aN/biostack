@@ -14,7 +14,13 @@ const sectionStyles: Record<string, string> = {
 
 export function ProtocolIntelligenceReview({ review }: ProtocolIntelligenceReviewProps) {
   if (!review) {
-    return null;
+    return (
+      <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Intelligence Review</p>
+        <h2 className="mt-2 text-2xl font-black text-white">Review pending</h2>
+        <p className="mt-2 max-w-2xl text-sm text-white/50">Review available after this lineage has run history.</p>
+      </section>
+    );
   }
 
   const runCount = review.versions.reduce((total, version) => total + version.runs.length, 0);

@@ -22,6 +22,9 @@ public static class ProtocolEndpoints
         profileGroup.MapGet("/active-run", GetActiveRun)
             .WithName("GetActiveProtocolRun");
 
+        profileGroup.MapGet("/mission-control", GetMissionControl)
+            .WithName("GetProtocolMissionControl");
+
         var protocolGroup = app.MapGroup("/api/v1/protocols")
             .WithTags("Protocols");
 
@@ -60,6 +63,12 @@ public static class ProtocolEndpoints
     {
         var run = await protocolService.GetActiveRunAsync(profileId, ct);
         return run is null ? Results.NoContent() : Results.Ok(run);
+    }
+
+    private static async Task<IResult> GetMissionControl(Guid profileId, IProtocolService protocolService, CancellationToken ct)
+    {
+        var missionControl = await protocolService.GetMissionControlAsync(profileId, ct);
+        return Results.Ok(missionControl);
     }
 
     private static async Task<IResult> SaveCurrentStack(Guid profileId, SaveProtocolRequest request, IProtocolService protocolService, CancellationToken ct)

@@ -41,6 +41,16 @@ public sealed class ProtocolRepository : Repository<Protocol>, IProtocolReposito
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<Protocol?> GetLatestEvolvedByPersonIdAsync(Guid personId, CancellationToken cancellationToken = default)
+    {
+        return await _dbSet
+            .Include(protocol => protocol.Items)
+                .ThenInclude(item => item.CompoundRecord)
+            .Where(protocol => protocol.PersonId == personId && protocol.EvolvedFromRunId != null)
+            .OrderByDescending(protocol => protocol.CreatedAtUtc)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
     public async Task<int> GetMaxVersionInLineageAsync(Protocol protocol, CancellationToken cancellationToken = default)
     {
         var rootId = protocol.OriginProtocolId ?? protocol.Id;
@@ -56,5 +66,6 @@ public interface IProtocolRepository : IRepository<Protocol>
     Task<IEnumerable<Protocol>> GetByPersonIdAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<Protocol?> GetWithItemsAsync(Guid id, CancellationToken cancellationToken = default);
     Task<IEnumerable<Protocol>> GetLineageAsync(Protocol protocol, CancellationToken cancellationToken = default);
+    Task<Protocol?> GetLatestEvolvedByPersonIdAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<int> GetMaxVersionInLineageAsync(Protocol protocol, CancellationToken cancellationToken = default);
 }

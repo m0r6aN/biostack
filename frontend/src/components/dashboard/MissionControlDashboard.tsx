@@ -9,7 +9,7 @@ import {
   CurrentStackIntelligence,
   GoalDefinition,
   InteractionFlag,
-  ProtocolRun,
+  MissionControl,
   TimelineEvent,
 } from '@/lib/types';
 import { Header } from '@/components/Header';
@@ -22,7 +22,8 @@ import { ActiveGoalsCard } from '@/components/dashboard/ActiveGoalsCard';
 import { LatestCheckInCard } from '@/components/dashboard/LatestCheckInCard';
 import { TimelineSnapshot } from '@/components/dashboard/TimelineSnapshot';
 import { OverlapFlagsBanner } from '@/components/dashboard/OverlapFlagsBanner';
-import { ActiveProtocolRunCard } from '@/components/dashboard/ActiveProtocolRunCard';
+import { CohesionTimelinePanel } from '@/components/dashboard/CohesionTimelinePanel';
+import { MissionControlOverview } from '@/components/dashboard/MissionControlOverview';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
 
 export function MissionControlDashboard() {
@@ -32,7 +33,7 @@ export function MissionControlDashboard() {
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
   const [overlaps, setOverlaps] = useState<InteractionFlag[]>([]);
   const [currentStack, setCurrentStack] = useState<CurrentStackIntelligence | null>(null);
-  const [activeRun, setActiveRun] = useState<ProtocolRun | null>(null);
+  const [mission, setMission] = useState<MissionControl | null>(null);
   const [profileGoals, setProfileGoals] = useState<GoalDefinition[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -71,13 +72,13 @@ export function MissionControlDashboard() {
       setLoading(true);
       setError(null);
 
-      const [comp, chk, tl, goals, stack, run] = await Promise.all([
+      const [comp, chk, tl, goals, stack, missionData] = await Promise.all([
         apiClient.getCompounds(currentProfileId),
         apiClient.getCheckIns(currentProfileId),
         apiClient.getTimeline(currentProfileId),
         apiClient.getProfileGoals(currentProfileId),
         apiClient.getCurrentStackIntelligence(currentProfileId),
-        apiClient.getActiveProtocolRun(currentProfileId),
+        apiClient.getProtocolMissionControl(currentProfileId),
       ]);
 
       setCompounds(comp);
@@ -85,7 +86,7 @@ export function MissionControlDashboard() {
       setTimeline(tl);
       setProfileGoals(goals);
       setCurrentStack(stack);
-      setActiveRun(run);
+      setMission(missionData);
 
       const activeCompoundNames = comp
         .filter((compound) => compound.status === 'Active')
@@ -119,7 +120,7 @@ export function MissionControlDashboard() {
     );
   }
 
-  const latestCheckIn = checkIns.length > 0 ? checkIns[checkIns.length - 1] : null;
+  const latestCheckIn = checkIns.length > 0 ? checkIns[0] : null;
   const activeCompounds = compounds.filter((compound) => compound.status === 'Active').length;
 
   if (error) {
@@ -159,7 +160,7 @@ export function MissionControlDashboard() {
               />
             </div>
 
-            <ActiveProtocolRunCard run={activeRun} />
+            <MissionControlOverview mission={mission} />
             {overlaps.length > 0 && <OverlapFlagsBanner flags={overlaps} />}
             {profileGoals.length > 0 && (
               <ActiveGoalsCard goals={profileGoals} profileId={currentProfileId} />
@@ -172,6 +173,7 @@ export function MissionControlDashboard() {
               <LatestCheckInCard checkIn={latestCheckIn} />
             </div>
 
+            <CohesionTimelinePanel events={mission?.cohesionTimeline ?? []} />
             <TimelineSnapshot events={timeline} />
           </>
         )}

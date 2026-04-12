@@ -216,6 +216,44 @@ public sealed class ProtocolService : IProtocolService
         return run is null ? null : MapRun(run);
     }
 
+    public async Task<MissionControlResponse> GetMissionControlAsync(Guid personId, CancellationToken cancellationToken = default)
+    {
+        var protocols = (await _protocolRepository.GetByPersonIdAsync(personId, cancellationToken)).ToList();
+        var activeRun = await _protocolRunRepository.GetActiveByPersonIdAsync(personId, cancellationToken);
+        var runs = protocols.Count == 0
+            ? new List<ProtocolRun>()
+            : (await _protocolRunRepository.GetByProtocolIdsAsync(protocols.Select(protocol => protocol.Id), cancellationToken)).ToList();
+        var latestClosedRun = runs
+            .Where(run => run.Status is ProtocolRunStatus.Completed or ProtocolRunStatus.Abandoned)
+            .OrderByDescending(run => run.EndedAtUtc ?? run.StartedAtUtc)
+            .FirstOrDefault();
+        var latestEvolved = await _protocolRepository.GetLatestEvolvedByPersonIdAsync(personId, cancellationToken);
+        var checkIns = (await _checkInRepository.GetByPersonIdAsync(personId, cancellationToken))
+            .OrderByDescending(checkIn => checkIn.Date)
+            .ToList();
+        var latestCheckIn = checkIns.FirstOrDefault();
+
+        var reviewProtocolId = activeRun?.ProtocolId
+            ?? latestEvolved?.Id
+            ?? latestClosedRun?.ProtocolId
+            ?? protocols.OrderByDescending(protocol => protocol.CreatedAtUtc).FirstOrDefault()?.Id;
+        ProtocolReviewResponse? review = reviewProtocolId is null
+            ? null
+            : await GetProtocolReviewAsync(reviewProtocolId.Value, cancellationToken);
+
+        return new MissionControlResponse(
+            activeRun is null ? null : MapRun(activeRun),
+            latestClosedRun is null ? null : MapRun(latestClosedRun),
+            review is null ? null : BuildMissionReviewSummary(review),
+            latestEvolved is null ? null : BuildMissionEvolution(latestEvolved, protocols),
+            BuildCheckInSignal(latestCheckIn, activeRun, runs, checkIns),
+            review?.Timeline
+                .OrderByDescending(@event => @event.OccurredAtUtc)
+                .Take(8)
+                .OrderBy(@event => @event.OccurredAtUtc)
+                .ToList() ?? new List<ProtocolReviewTimelineEventResponse>());
+    }
+
     public async Task<ProtocolRunResponse> CompleteRunAsync(Guid runId, CancellationToken cancellationToken = default)
     {
         var run = await _protocolRunRepository.GetWithProtocolAsync(runId, cancellationToken);
@@ -802,6 +840,97 @@ public sealed class ProtocolService : IProtocolService
             .ToList();
     }
 
+    private static MissionControlReviewSummaryResponse BuildMissionReviewSummary(ProtocolReviewResponse review)
+    {
+        var runCount = review.Versions.Sum(version => version.Runs.Count);
+        var checkInCount = review.Versions.Sum(version => version.Runs.Sum(run => run.Observations.Count));
+        var primarySection = review.Sections.FirstOrDefault(section => section.Type != "gap")
+            ?? review.Sections.FirstOrDefault();
+        var cue = primarySection?.Summary
+            ?? (runCount < 2
+                ? "Review available after multiple runs in this lineage."
+                : "Review is available for this lineage.");
+
+        return new MissionControlReviewSummaryResponse(
+            review.RequestedProtocolId,
+            review.LineageRootProtocolId,
+            review.LineageName,
+            cue,
+            primarySection?.Type ?? "gap",
+            review.Versions.Count,
+            runCount,
+            checkInCount);
+    }
+
+    private static MissionControlEvolutionResponse BuildMissionEvolution(Protocol latestEvolved, List<Protocol> protocols)
+    {
+        var parent = latestEvolved.ParentProtocolId is null
+            ? null
+            : protocols.FirstOrDefault(protocol => protocol.Id == latestEvolved.ParentProtocolId);
+        var diff = parent is null ? null : BuildVersionDiff(parent, latestEvolved);
+        var changes = diff?.Changes.Take(4).ToList() ?? new List<ProtocolVersionChangeResponse>();
+        var summary = changes.Count == 0
+            ? "No deterministic structural change detected."
+            : string.Join("; ", changes.Take(2).Select(change => $"{change.ChangeType} {change.Scope}: {change.Subject}"));
+
+        return new MissionControlEvolutionResponse(
+            latestEvolved.Id,
+            latestEvolved.ParentProtocolId,
+            latestEvolved.EvolvedFromRunId,
+            $"v{latestEvolved.Version} draft evolved",
+            summary,
+            latestEvolved.CreatedAtUtc,
+            changes);
+    }
+
+    private static MissionControlCheckInSignalResponse BuildCheckInSignal(
+        CheckIn? latestCheckIn,
+        ProtocolRun? activeRun,
+        List<ProtocolRun> runs,
+        List<CheckIn> checkIns)
+    {
+        var referenceRun = activeRun ?? runs
+            .OrderByDescending(run => run.EndedAtUtc ?? run.StartedAtUtc)
+            .FirstOrDefault();
+        var attachedCount = referenceRun is null
+            ? 0
+            : checkIns.Count(checkIn => checkIn.ProtocolRunId == referenceRun.Id);
+
+        if (referenceRun is not null && attachedCount == 0)
+        {
+            return new MissionControlCheckInSignalResponse(
+                latestCheckIn?.Id,
+                referenceRun.Id,
+                latestCheckIn?.Date,
+                $"No check-ins attached to {referenceRun.Protocol?.Name ?? "this run"} v{referenceRun.Protocol?.Version ?? 1} yet.",
+                0,
+                true);
+        }
+
+        if (latestCheckIn is null)
+        {
+            return new MissionControlCheckInSignalResponse(
+                null,
+                referenceRun?.Id,
+                null,
+                "No check-ins captured yet.",
+                0,
+                true);
+        }
+
+        return new MissionControlCheckInSignalResponse(
+            latestCheckIn.Id,
+            referenceRun?.Id ?? latestCheckIn.ProtocolRunId,
+            latestCheckIn.Date,
+            latestCheckIn.ProtocolRunId is null
+                ? "Latest check-in is not attached to a protocol run."
+                : latestCheckIn.ProtocolRunId == referenceRun?.Id
+                    ? "Latest check-in is attached to the current observation loop."
+                    : $"{attachedCount} check-in{(attachedCount == 1 ? string.Empty : "s")} attached to this run; latest check-in belongs elsewhere.",
+            attachedCount,
+            latestCheckIn.ProtocolRunId is null);
+    }
+
     private static bool TrendHasObservationData(ActualTrendResponse trend)
     {
         return trend.BeforeAverage is not null && trend.AfterAverage is not null && trend.Direction != "not enough data";
@@ -1226,6 +1355,7 @@ public interface IProtocolService
     Task<ProtocolReviewResponse> GetProtocolReviewAsync(Guid id, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> StartRunAsync(Guid protocolId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse?> GetActiveRunAsync(Guid personId, CancellationToken cancellationToken = default);
+    Task<MissionControlResponse> GetMissionControlAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> CompleteRunAsync(Guid runId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> AbandonRunAsync(Guid runId, CancellationToken cancellationToken = default);
     Task<ProtocolResponse> EvolveFromRunAsync(Guid runId, EvolveProtocolFromRunRequest request, CancellationToken cancellationToken = default);

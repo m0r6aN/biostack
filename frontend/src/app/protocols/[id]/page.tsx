@@ -8,6 +8,7 @@ import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { ProtocolComparison } from '@/components/protocols/ProtocolComparison';
+import { ProtocolContinuityStrip } from '@/components/protocols/ProtocolContinuityStrip';
 import { ProtocolIntelligenceReview } from '@/components/protocols/ProtocolIntelligenceReview';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
@@ -204,6 +205,8 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
           <LoadingSkeleton />
         ) : protocol ? (
           <>
+            <ProtocolContinuityStrip protocol={protocol} review={review} />
+
             <section className="grid gap-4 lg:grid-cols-[1fr_360px]">
               <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Lineage</p>
@@ -246,7 +249,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
               )}
             </section>
 
-            <section className="grid gap-6 lg:grid-cols-[360px_1fr]">
+            <section id="run" className="grid scroll-mt-6 gap-6 lg:grid-cols-[360px_1fr]">
               <StackScoreCard score={protocol.stackScore} />
               <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Compounds</p>
@@ -275,9 +278,15 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
               </div>
             </section>
 
-            <SimulationTimeline simulation={protocol.simulation} />
-            <ProtocolComparison comparison={protocol.actualComparison} />
-            <ProtocolIntelligenceReview review={review} />
+            <section id="simulation" className="scroll-mt-6">
+              <SimulationTimeline simulation={protocol.simulation} />
+            </section>
+            <section id="comparison" className="scroll-mt-6">
+              <ProtocolComparison comparison={protocol.actualComparison} />
+            </section>
+            <section id="review" className="scroll-mt-6">
+              <ProtocolIntelligenceReview review={review} />
+            </section>
           </>
         ) : (
           <EmptyState title="Protocol Not Found" description="This protocol could not be loaded." icon="🧬" />

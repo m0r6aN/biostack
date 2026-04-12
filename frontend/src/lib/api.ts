@@ -18,6 +18,7 @@ import {
     PersonProfile,
     ProfileGoal,
     CurrentStackIntelligence,
+    MissionControl,
     Protocol,
     ProtocolReview,
     ProtocolRun,
@@ -219,6 +220,10 @@ export class ApiClient {
   async getActiveProtocolRun(profileId: string): Promise<ProtocolRun | null> {
     const run = await this.request<ProtocolRun | undefined>(`/api/v1/profiles/${profileId}/protocols/active-run`);
     return run ?? null;
+  }
+
+  async getProtocolMissionControl(profileId: string): Promise<MissionControl> {
+    return this.request<MissionControl>(`/api/v1/profiles/${profileId}/protocols/mission-control`);
   }
 
   async getCurrentStackIntelligence(profileId: string): Promise<CurrentStackIntelligence> {
