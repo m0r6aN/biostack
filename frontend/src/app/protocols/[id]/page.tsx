@@ -28,6 +28,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
   const [starting, setStarting] = useState(false);
   const [ending, setEnding] = useState(false);
   const [evolving, setEvolving] = useState(false);
+  const [completingReview, setCompletingReview] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -135,6 +136,30 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setError('Failed to create protocol draft from run observations');
     } finally {
       setEvolving(false);
+    }
+  }
+
+  async function completeReview() {
+    if (!protocol) {
+      return;
+    }
+
+    try {
+      setCompletingReview(true);
+      setError(null);
+      await apiClient.completeProtocolReview(
+        protocol.id,
+        protocol.actualComparison?.run?.id ?? protocol.activeRun?.id ?? null,
+        'Protocol review completed from detail view.'
+      );
+      const reviewData = await apiClient.getProtocolReview(id);
+      setReview(reviewData);
+      setToast('Review completed');
+      window.setTimeout(() => setToast(null), 2600);
+    } catch (err) {
+      setError('Failed to complete review');
+    } finally {
+      setCompletingReview(false);
     }
   }
 
@@ -285,6 +310,15 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
               <ProtocolComparison comparison={protocol.actualComparison} />
             </section>
             <section id="review" className="scroll-mt-6">
+              <div className="mb-3 flex justify-end">
+                <button
+                  onClick={completeReview}
+                  disabled={completingReview || !review}
+                  className="rounded-lg border border-lime-400/25 bg-lime-500/10 px-4 py-2 text-sm font-semibold text-lime-100 hover:border-lime-300/45 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {completingReview ? 'Completing review' : 'Complete review'}
+                </button>
+              </div>
               <ProtocolIntelligenceReview review={review} />
             </section>
           </>

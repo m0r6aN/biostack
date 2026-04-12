@@ -12,7 +12,7 @@ export function CohesionTimelinePanel({ events }: CohesionTimelinePanelProps) {
     return (
       <section className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Closed Loop Timeline</p>
-        <p className="mt-3 text-sm text-white/45">Version changes, run boundaries, and attached check-ins will appear here.</p>
+        <p className="mt-3 text-sm text-white/45">Runs, check-ins, calculator math, reviews, and evolution events will appear here.</p>
       </section>
     );
   }
@@ -50,6 +50,8 @@ function formatDate(value: string) {
 
 function eventDotClass(eventType: string) {
   if (eventType === 'check_in') return 'bg-sky-300';
+  if (eventType === 'computation') return 'bg-amber-300';
+  if (eventType === 'review_completed') return 'bg-lime-300';
   if (eventType === 'evolution' || eventType === 'version_created') return 'bg-fuchsia-300';
   if (eventType.startsWith('run_')) return 'bg-emerald-300';
   return 'bg-white/45';

@@ -17,6 +17,8 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<Protocol> Protocols { get; set; }
     public DbSet<ProtocolRun> ProtocolRuns { get; set; }
     public DbSet<ProtocolItem> ProtocolItems { get; set; }
+    public DbSet<ProtocolComputationRecord> ProtocolComputationRecords { get; set; }
+    public DbSet<ProtocolReviewCompletedEvent> ProtocolReviewCompletedEvents { get; set; }
     public DbSet<ProtocolPhase> ProtocolPhases { get; set; }
     public DbSet<TimelineEvent> TimelineEvents { get; set; }
     public DbSet<InteractionFlag> InteractionFlags { get; set; }
@@ -142,6 +144,14 @@ public sealed class BioStackDbContext : DbContext
                 .WithOne(run => run.Protocol)
                 .HasForeignKey(run => run.ProtocolId)
                 .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany<ProtocolComputationRecord>()
+                .WithOne(record => record.Protocol)
+                .HasForeignKey(record => record.ProtocolId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany<ProtocolReviewCompletedEvent>()
+                .WithOne(@event => @event.Protocol)
+                .HasForeignKey(@event => @event.ProtocolId)
+                .OnDelete(DeleteBehavior.Cascade);
             entity.HasIndex(protocol => protocol.PersonId);
             entity.HasIndex(protocol => protocol.ParentProtocolId);
             entity.HasIndex(protocol => protocol.OriginProtocolId);
@@ -159,6 +169,36 @@ public sealed class BioStackDbContext : DbContext
             entity.HasIndex(run => run.PersonId);
             entity.HasIndex(run => run.ProtocolId);
             entity.HasIndex(run => new { run.PersonId, run.Status });
+        });
+
+        modelBuilder.Entity<ProtocolComputationRecord>(entity =>
+        {
+            entity.HasKey(record => record.Id);
+            entity.Property(record => record.ProtocolId).IsRequired();
+            entity.Property(record => record.Type).HasMaxLength(100).IsRequired();
+            entity.Property(record => record.InputSnapshot).HasMaxLength(4000);
+            entity.Property(record => record.OutputResult).HasMaxLength(4000);
+            entity.HasOne(record => record.ProtocolRun)
+                .WithMany()
+                .HasForeignKey(record => record.ProtocolRunId)
+                .OnDelete(DeleteBehavior.SetNull);
+            entity.HasIndex(record => record.ProtocolId);
+            entity.HasIndex(record => record.ProtocolRunId);
+            entity.HasIndex(record => record.TimestampUtc);
+        });
+
+        modelBuilder.Entity<ProtocolReviewCompletedEvent>(entity =>
+        {
+            entity.HasKey(@event => @event.Id);
+            entity.Property(@event => @event.ProtocolId).IsRequired();
+            entity.Property(@event => @event.Notes).HasMaxLength(2000);
+            entity.HasOne(@event => @event.ProtocolRun)
+                .WithMany()
+                .HasForeignKey(@event => @event.ProtocolRunId)
+                .OnDelete(DeleteBehavior.SetNull);
+            entity.HasIndex(@event => @event.ProtocolId);
+            entity.HasIndex(@event => @event.ProtocolRunId);
+            entity.HasIndex(@event => @event.CompletedAtUtc);
         });
 
         modelBuilder.Entity<ProtocolItem>(entity =>

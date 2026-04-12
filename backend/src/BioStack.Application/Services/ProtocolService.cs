@@ -14,6 +14,8 @@ public sealed class ProtocolService : IProtocolService
     private readonly ICompoundRecordRepository _compoundRepository;
     private readonly ICheckInRepository _checkInRepository;
     private readonly IProtocolRunRepository _protocolRunRepository;
+    private readonly IProtocolComputationRecordRepository _computationRepository;
+    private readonly IProtocolReviewCompletedEventRepository _reviewCompletedEventRepository;
     private readonly IKnowledgeSource _knowledgeSource;
 
     public ProtocolService(
@@ -22,6 +24,8 @@ public sealed class ProtocolService : IProtocolService
         ICompoundRecordRepository compoundRepository,
         ICheckInRepository checkInRepository,
         IProtocolRunRepository protocolRunRepository,
+        IProtocolComputationRecordRepository computationRepository,
+        IProtocolReviewCompletedEventRepository reviewCompletedEventRepository,
         IKnowledgeSource knowledgeSource)
     {
         _protocolRepository = protocolRepository;
@@ -29,6 +33,8 @@ public sealed class ProtocolService : IProtocolService
         _compoundRepository = compoundRepository;
         _checkInRepository = checkInRepository;
         _protocolRunRepository = protocolRunRepository;
+        _computationRepository = computationRepository;
+        _reviewCompletedEventRepository = reviewCompletedEventRepository;
         _knowledgeSource = knowledgeSource;
     }
 
@@ -118,6 +124,12 @@ public sealed class ProtocolService : IProtocolService
         var runs = (await _protocolRunRepository.GetByProtocolIdsAsync(lineage.Select(version => version.Id), cancellationToken))
             .GroupBy(run => run.ProtocolId)
             .ToDictionary(group => group.Key, group => group.OrderBy(run => run.StartedAtUtc).ToList());
+        var computations = (await _computationRepository.GetByProtocolIdsAsync(lineage.Select(version => version.Id), cancellationToken))
+            .GroupBy(record => record.ProtocolId)
+            .ToDictionary(group => group.Key, group => group.OrderBy(record => record.TimestampUtc).ToList());
+        var reviewCompletedEvents = (await _reviewCompletedEventRepository.GetByProtocolIdsAsync(lineage.Select(version => version.Id), cancellationToken))
+            .GroupBy(@event => @event.ProtocolId)
+            .ToDictionary(group => group.Key, group => group.OrderBy(@event => @event.CompletedAtUtc).ToList());
         var reviewVersions = new List<ProtocolReviewVersionResponse>();
 
         foreach (var version in lineage)
@@ -167,7 +179,7 @@ public sealed class ProtocolService : IProtocolService
             root.Name,
             reviewVersions,
             BuildReviewSections(reviewVersions),
-            BuildReviewTimeline(reviewVersions),
+            BuildReviewTimeline(reviewVersions, computations, reviewCompletedEvents),
             new List<string>
             {
                 "Protocol Intelligence Review is observational and rule-based.",
@@ -232,6 +244,11 @@ public sealed class ProtocolService : IProtocolService
             .OrderByDescending(checkIn => checkIn.Date)
             .ToList();
         var latestCheckIn = checkIns.FirstOrDefault();
+        var latestReviewCompleted = protocols.Count == 0
+            ? null
+            : (await _reviewCompletedEventRepository.GetByProtocolIdsAsync(protocols.Select(protocol => protocol.Id), cancellationToken))
+                .OrderByDescending(@event => @event.CompletedAtUtc)
+                .FirstOrDefault();
 
         var reviewProtocolId = activeRun?.ProtocolId
             ?? latestEvolved?.Id
@@ -240,13 +257,16 @@ public sealed class ProtocolService : IProtocolService
         ProtocolReviewResponse? review = reviewProtocolId is null
             ? null
             : await GetProtocolReviewAsync(reviewProtocolId.Value, cancellationToken);
+        var pendingReview = HasPendingReview(latestClosedRun, latestEvolved, latestReviewCompleted);
+        var observationSignals = BuildObservationSignals(activeRun, runs, checkIns);
 
         return new MissionControlResponse(
             activeRun is null ? null : MapRun(activeRun),
             latestClosedRun is null ? null : MapRun(latestClosedRun),
-            review is null ? null : BuildMissionReviewSummary(review),
+            review is null || !pendingReview ? null : BuildMissionReviewSummary(review),
             latestEvolved is null ? null : BuildMissionEvolution(latestEvolved, protocols),
             BuildCheckInSignal(latestCheckIn, activeRun, runs, checkIns),
+            observationSignals,
             review?.Timeline
                 .OrderByDescending(@event => @event.OccurredAtUtc)
                 .Take(8)
@@ -289,6 +309,67 @@ public sealed class ProtocolService : IProtocolService
         }
 
         return MapRun(run);
+    }
+
+    public async Task<ProtocolComputationRecordResponse> RecordComputationAsync(Guid protocolId, CreateProtocolComputationRequest request, CancellationToken cancellationToken = default)
+    {
+        var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
+        if (protocol is null)
+            throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+
+        if (string.IsNullOrWhiteSpace(request.Type))
+            throw new InvalidOperationException("Computation type is required.");
+
+        if (request.RunId is not null)
+        {
+            var run = await _protocolRunRepository.GetWithProtocolAsync(request.RunId.Value, cancellationToken);
+            if (run is null || run.ProtocolId != protocol.Id)
+                throw new InvalidOperationException("Computation run must belong to the target protocol.");
+        }
+
+        var record = new ProtocolComputationRecord
+        {
+            Id = Guid.NewGuid(),
+            ProtocolId = protocol.Id,
+            ProtocolRunId = request.RunId,
+            Type = request.Type.Trim(),
+            InputSnapshot = request.InputSnapshot,
+            OutputResult = request.OutputResult,
+            TimestampUtc = DateTime.UtcNow
+        };
+
+        await _computationRepository.AddAsync(record, cancellationToken);
+        await _computationRepository.SaveChangesAsync(cancellationToken);
+
+        return MapComputation(record);
+    }
+
+    public async Task<ProtocolReviewCompletedEventResponse> CompleteReviewAsync(Guid protocolId, CompleteProtocolReviewRequest request, CancellationToken cancellationToken = default)
+    {
+        var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
+        if (protocol is null)
+            throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+
+        if (request.RunId is not null)
+        {
+            var run = await _protocolRunRepository.GetWithProtocolAsync(request.RunId.Value, cancellationToken);
+            if (run is null || run.ProtocolId != protocol.Id)
+                throw new InvalidOperationException("Review run must belong to the target protocol.");
+        }
+
+        var @event = new ProtocolReviewCompletedEvent
+        {
+            Id = Guid.NewGuid(),
+            ProtocolId = protocol.Id,
+            ProtocolRunId = request.RunId,
+            CompletedAtUtc = DateTime.UtcNow,
+            Notes = request.Notes?.Trim() ?? string.Empty
+        };
+
+        await _reviewCompletedEventRepository.AddAsync(@event, cancellationToken);
+        await _reviewCompletedEventRepository.SaveChangesAsync(cancellationToken);
+
+        return MapReviewCompletedEvent(@event);
     }
 
     public async Task<ProtocolResponse> EvolveFromRunAsync(Guid runId, EvolveProtocolFromRunRequest request, CancellationToken cancellationToken = default)
@@ -774,7 +855,10 @@ public sealed class ProtocolService : IProtocolService
             evidence.Distinct().Take(8).ToList());
     }
 
-    private static List<ProtocolReviewTimelineEventResponse> BuildReviewTimeline(List<ProtocolReviewVersionResponse> versions)
+    private static List<ProtocolReviewTimelineEventResponse> BuildReviewTimeline(
+        List<ProtocolReviewVersionResponse> versions,
+        Dictionary<Guid, List<ProtocolComputationRecord>> computations,
+        Dictionary<Guid, List<ProtocolReviewCompletedEvent>> reviewCompletedEvents)
     {
         var events = new List<ProtocolReviewTimelineEventResponse>();
         foreach (var version in versions)
@@ -784,6 +868,8 @@ public sealed class ProtocolService : IProtocolService
                 "version_created",
                 $"v{version.Version} created",
                 version.ProtocolId,
+                null,
+                null,
                 null,
                 null,
                 version.IsDraft ? "Protocol draft snapshot created." : "Protocol snapshot created."));
@@ -797,7 +883,37 @@ public sealed class ProtocolService : IProtocolService
                     version.ProtocolId,
                     version.EvolvedFromRunId,
                     null,
+                    null,
+                    null,
                     "Observed after prior run; historical source remains unchanged."));
+            }
+
+            foreach (var computation in computations.GetValueOrDefault(version.ProtocolId, new List<ProtocolComputationRecord>()))
+            {
+                events.Add(new ProtocolReviewTimelineEventResponse(
+                    computation.TimestampUtc,
+                    "computation",
+                    ComputationLabel(computation.Type),
+                    version.ProtocolId,
+                    computation.ProtocolRunId,
+                    null,
+                    computation.Id,
+                    null,
+                    ComputationDetail(computation)));
+            }
+
+            foreach (var completed in reviewCompletedEvents.GetValueOrDefault(version.ProtocolId, new List<ProtocolReviewCompletedEvent>()))
+            {
+                events.Add(new ProtocolReviewTimelineEventResponse(
+                    completed.CompletedAtUtc,
+                    "review_completed",
+                    "Review completed",
+                    version.ProtocolId,
+                    completed.ProtocolRunId,
+                    null,
+                    null,
+                    completed.Id,
+                    string.IsNullOrWhiteSpace(completed.Notes) ? "Review state transition recorded." : completed.Notes));
             }
 
             foreach (var run in version.Runs)
@@ -808,6 +924,8 @@ public sealed class ProtocolService : IProtocolService
                     $"v{version.Version} run started",
                     version.ProtocolId,
                     run.Run.Id,
+                    null,
+                    null,
                     null,
                     $"{run.Observations.Count} attached check-in{(run.Observations.Count == 1 ? string.Empty : "s")} in this run."));
 
@@ -820,6 +938,8 @@ public sealed class ProtocolService : IProtocolService
                         version.ProtocolId,
                         run.Run.Id,
                         null,
+                        null,
+                        null,
                         "Run boundary preserved for review."));
                 }
 
@@ -830,6 +950,8 @@ public sealed class ProtocolService : IProtocolService
                     version.ProtocolId,
                     run.Run.Id,
                     observation.CheckInId,
+                    null,
+                    null,
                     $"Energy {observation.Energy}/10, Sleep {observation.SleepQuality}/10, Appetite {observation.Appetite}/10, Recovery {observation.Recovery}/10.")));
             }
         }
@@ -883,6 +1005,107 @@ public sealed class ProtocolService : IProtocolService
             changes);
     }
 
+    private static bool HasPendingReview(
+        ProtocolRun? latestClosedRun,
+        Protocol? latestEvolved,
+        ProtocolReviewCompletedEvent? latestReviewCompleted)
+    {
+        var latestStateChange = new[]
+            {
+                latestClosedRun?.EndedAtUtc ?? latestClosedRun?.StartedAtUtc,
+                latestEvolved?.CreatedAtUtc
+            }
+            .Where(value => value.HasValue)
+            .Select(value => value!.Value)
+            .DefaultIfEmpty(DateTime.MinValue)
+            .Max();
+
+        return latestStateChange > DateTime.MinValue &&
+            (latestReviewCompleted is null || latestReviewCompleted.CompletedAtUtc < latestStateChange);
+    }
+
+    private static List<MissionControlObservationSignalResponse> BuildObservationSignals(
+        ProtocolRun? activeRun,
+        List<ProtocolRun> runs,
+        List<CheckIn> checkIns)
+    {
+        var signals = new List<MissionControlObservationSignalResponse>();
+        var orderedCheckIns = checkIns.OrderBy(checkIn => checkIn.Date).ToList();
+        var referenceRun = activeRun ?? runs
+            .OrderByDescending(run => run.EndedAtUtc ?? run.StartedAtUtc)
+            .FirstOrDefault();
+
+        if (referenceRun is not null)
+        {
+            var attached = orderedCheckIns
+                .Where(checkIn => checkIn.ProtocolRunId == referenceRun.Id)
+                .OrderBy(checkIn => checkIn.Date)
+                .ToList();
+            var lastObservation = attached.LastOrDefault()?.Date ?? referenceRun.StartedAtUtc;
+            var daysSince = Math.Floor((DateTime.UtcNow.Date - lastObservation.Date).TotalDays);
+
+            if (attached.Count == 0)
+            {
+                signals.Add(new MissionControlObservationSignalResponse(
+                    "gap",
+                    "medium",
+                    null,
+                    "No check-ins are attached to the current protocol loop."));
+            }
+            else if (daysSince >= 3)
+            {
+                signals.Add(new MissionControlObservationSignalResponse(
+                    "gap",
+                    daysSince >= 7 ? "high" : "medium",
+                    null,
+                    $"Last attached check-in was {daysSince:0} day{(daysSince == 1 ? string.Empty : "s")} ago."));
+            }
+        }
+        else if (orderedCheckIns.Count == 0)
+        {
+            signals.Add(new MissionControlObservationSignalResponse(
+                "gap",
+                "low",
+                null,
+                "No observations have been captured yet."));
+        }
+
+        signals.AddRange(BuildTrendShiftSignals(orderedCheckIns));
+
+        return signals
+            .GroupBy(signal => $"{signal.Type}:{signal.Metric}:{signal.Detail}", StringComparer.OrdinalIgnoreCase)
+            .Select(group => group.First())
+            .Take(6)
+            .ToList();
+    }
+
+    private static IEnumerable<MissionControlObservationSignalResponse> BuildTrendShiftSignals(List<CheckIn> checkIns)
+    {
+        if (checkIns.Count < 4)
+        {
+            yield break;
+        }
+
+        foreach (var metric in new[] { "weight", "energy", "recovery", "sleep", "appetite" })
+        {
+            var values = checkIns.Select(checkIn => MetricValue(metric, checkIn)).ToList();
+            var prior = values.Take(values.Count - 1).ToList();
+            var last = values.Last();
+            var priorAverage = prior.Average();
+            var meanDeviation = prior.Average(value => Math.Abs(value - priorAverage));
+            var threshold = metric == "weight" ? Math.Max(3m, meanDeviation * 2m) : Math.Max(2m, meanDeviation * 2m);
+
+            if (Math.Abs(last - priorAverage) >= threshold)
+            {
+                yield return new MissionControlObservationSignalResponse(
+                    "trend_shift",
+                    Math.Abs(last - priorAverage) >= threshold * 1.5m ? "high" : "medium",
+                    metric,
+                    $"{FormatMetricName(metric)} moved outside the recent observation band.");
+            }
+        }
+    }
+
     private static MissionControlCheckInSignalResponse BuildCheckInSignal(
         CheckIn? latestCheckIn,
         ProtocolRun? activeRun,
@@ -929,6 +1152,52 @@ public sealed class ProtocolService : IProtocolService
                     : $"{attachedCount} check-in{(attachedCount == 1 ? string.Empty : "s")} attached to this run; latest check-in belongs elsewhere.",
             attachedCount,
             latestCheckIn.ProtocolRunId is null);
+    }
+
+    private static string ComputationLabel(string type)
+    {
+        return NormalizeComputationType(type) switch
+        {
+            "reconstitution" => "Reconstitution calculated",
+            "volume" => "Dosage adjusted (math only)",
+            "dosage" => "Dosage adjusted (math only)",
+            "conversion" => "Unit conversion calculated",
+            _ => "Protocol computation recorded"
+        };
+    }
+
+    private static string ComputationDetail(ProtocolComputationRecord computation)
+    {
+        return string.IsNullOrWhiteSpace(computation.OutputResult)
+            ? "Mathematical trace recorded for this protocol."
+            : computation.OutputResult;
+    }
+
+    private static string NormalizeComputationType(string type)
+    {
+        return type.Trim().ToLowerInvariant().Replace("_", "-");
+    }
+
+    private static decimal MetricValue(string metric, CheckIn checkIn)
+    {
+        return metric switch
+        {
+            "weight" => checkIn.Weight,
+            "energy" => checkIn.Energy,
+            "recovery" => checkIn.Recovery,
+            "sleep" => checkIn.SleepQuality,
+            "appetite" => checkIn.Appetite,
+            _ => 0
+        };
+    }
+
+    private static string FormatMetricName(string metric)
+    {
+        return metric switch
+        {
+            "sleep" => "Sleep",
+            _ => char.ToUpperInvariant(metric[0]) + metric[1..]
+        };
     }
 
     private static bool TrendHasObservationData(ActualTrendResponse trend)
@@ -1326,6 +1595,28 @@ public sealed class ProtocolService : IProtocolService
         );
     }
 
+    private static ProtocolComputationRecordResponse MapComputation(ProtocolComputationRecord record)
+    {
+        return new ProtocolComputationRecordResponse(
+            record.Id,
+            record.ProtocolId,
+            record.ProtocolRunId,
+            record.Type,
+            record.InputSnapshot,
+            record.OutputResult,
+            record.TimestampUtc);
+    }
+
+    private static ProtocolReviewCompletedEventResponse MapReviewCompletedEvent(ProtocolReviewCompletedEvent @event)
+    {
+        return new ProtocolReviewCompletedEventResponse(
+            @event.Id,
+            @event.ProtocolId,
+            @event.ProtocolRunId,
+            @event.CompletedAtUtc,
+            @event.Notes);
+    }
+
     private static CompoundResponse MapCompound(CompoundRecord compound)
     {
         return new CompoundResponse(
@@ -1358,6 +1649,8 @@ public interface IProtocolService
     Task<MissionControlResponse> GetMissionControlAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> CompleteRunAsync(Guid runId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> AbandonRunAsync(Guid runId, CancellationToken cancellationToken = default);
+    Task<ProtocolComputationRecordResponse> RecordComputationAsync(Guid protocolId, CreateProtocolComputationRequest request, CancellationToken cancellationToken = default);
+    Task<ProtocolReviewCompletedEventResponse> CompleteReviewAsync(Guid protocolId, CompleteProtocolReviewRequest request, CancellationToken cancellationToken = default);
     Task<ProtocolResponse> EvolveFromRunAsync(Guid runId, EvolveProtocolFromRunRequest request, CancellationToken cancellationToken = default);
     Task<CurrentStackIntelligenceResponse> GetCurrentStackIntelligenceAsync(Guid personId, CancellationToken cancellationToken = default);
 }

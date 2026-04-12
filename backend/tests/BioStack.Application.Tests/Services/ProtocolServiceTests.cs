@@ -208,10 +208,189 @@ public class ProtocolServiceTests
         Assert.Contains(review.SafetyNotes, note => note.Contains("observational", StringComparison.OrdinalIgnoreCase));
     }
 
+    [Fact]
+    public async Task GetMissionControlAsync_WithNoRuns_ReturnsEmptyLoopSignals()
+    {
+        var personId = Guid.NewGuid();
+        var protocolRepository = new Mock<IProtocolRepository>();
+        protocolRepository.Setup(repository => repository.GetByPersonIdAsync(personId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<Protocol>());
+
+        var runRepository = new Mock<IProtocolRunRepository>();
+        runRepository.Setup(repository => repository.GetActiveByPersonIdAsync(personId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync((ProtocolRun?)null);
+
+        var checkInRepository = new Mock<ICheckInRepository>();
+        checkInRepository.Setup(repository => repository.GetByPersonIdAsync(personId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<CheckIn>());
+
+        var service = CreateService(protocolRepository.Object, runRepository.Object, checkInRepository.Object);
+
+        var mission = await service.GetMissionControlAsync(personId, CancellationToken.None);
+
+        Assert.Null(mission.ActiveRun);
+        Assert.Null(mission.LatestClosedRun);
+        Assert.Null(mission.LatestReviewSummary);
+        Assert.Contains(mission.ObservationSignals, signal => signal.Type == "gap" && signal.Severity == "low");
+    }
+
+    [Fact]
+    public async Task GetMissionControlAsync_WithActiveRunOnly_ReportsAttachedObservationGap()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Active", DateTime.UtcNow.AddDays(-2));
+        var run = new ProtocolRun
+        {
+            Id = Guid.NewGuid(),
+            PersonId = personId,
+            ProtocolId = protocol.Id,
+            Protocol = protocol,
+            StartedAtUtc = DateTime.UtcNow.AddDays(-2),
+            Status = ProtocolRunStatus.Active
+        };
+
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run }, new List<CheckIn>(), activeRun: run);
+
+        var mission = await service.GetMissionControlAsync(personId, CancellationToken.None);
+
+        Assert.Equal(run.Id, mission.ActiveRun?.Id);
+        Assert.Null(mission.LatestReviewSummary);
+        Assert.True(mission.LatestCheckInSignal.HasObservationGap);
+        Assert.Contains(mission.ObservationSignals, signal => signal.Type == "gap" && signal.Severity == "medium");
+    }
+
+    [Fact]
+    public async Task GetMissionControlAsync_WithClosedRunAndNoReviewCompletion_ReturnsPendingReview()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Closed", DateTime.UtcNow.AddDays(-10));
+        var run = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-5));
+        var checkIns = new List<CheckIn>
+        {
+            CreateCheckIn(personId, run.Id, run.StartedAtUtc.AddDays(1), energy: 5, recovery: 5, sleep: 5, appetite: 5),
+            CreateCheckIn(personId, run.Id, run.StartedAtUtc.AddDays(2), energy: 6, recovery: 6, sleep: 5, appetite: 5)
+        };
+
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run }, checkIns);
+
+        var mission = await service.GetMissionControlAsync(personId, CancellationToken.None);
+
+        Assert.Equal(run.Id, mission.LatestClosedRun?.Id);
+        Assert.NotNull(mission.LatestReviewSummary);
+        Assert.Equal(protocol.Id, mission.LatestReviewSummary?.ProtocolId);
+    }
+
+    [Fact]
+    public async Task GetMissionControlAsync_WithCompletedReview_ClearsPendingReviewCue()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Closed", DateTime.UtcNow.AddDays(-10));
+        var run = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-5));
+        var completedReview = new ProtocolReviewCompletedEvent
+        {
+            Id = Guid.NewGuid(),
+            ProtocolId = protocol.Id,
+            ProtocolRunId = run.Id,
+            CompletedAtUtc = run.EndedAtUtc!.Value.AddMinutes(1)
+        };
+
+        var service = CreateMissionControlService(
+            personId,
+            new List<Protocol> { protocol },
+            new List<ProtocolRun> { run },
+            new List<CheckIn>(),
+            reviewCompletedEvents: new List<ProtocolReviewCompletedEvent> { completedReview });
+
+        var mission = await service.GetMissionControlAsync(personId, CancellationToken.None);
+
+        Assert.Null(mission.LatestReviewSummary);
+        Assert.Contains(mission.CohesionTimeline, @event => @event.EventType == "review_completed" && @event.ReviewCompletedEventId == completedReview.Id);
+    }
+
+    [Fact]
+    public async Task GetMissionControlAsync_WithEvolvedProtocolAndParent_ReturnsRecentEvolution()
+    {
+        var personId = Guid.NewGuid();
+        var parent = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Parent", DateTime.UtcNow.AddDays(-12));
+        var run = CreateRun(personId, parent, DateTime.UtcNow.AddDays(-8));
+        var evolved = CreateProtocolVersion(personId, Guid.NewGuid(), parent.Items.Single().CompoundRecordId, 2, parent.Id, "Child", DateTime.UtcNow.AddDays(-1));
+        evolved.OriginProtocolId = parent.Id;
+        evolved.EvolvedFromRunId = run.Id;
+
+        var service = CreateMissionControlService(
+            personId,
+            new List<Protocol> { evolved, parent },
+            new List<ProtocolRun> { run },
+            new List<CheckIn>(),
+            latestEvolved: evolved);
+
+        var mission = await service.GetMissionControlAsync(personId, CancellationToken.None);
+
+        Assert.Equal(evolved.Id, mission.RecentEvolution?.ProtocolId);
+        Assert.Equal(parent.Id, mission.RecentEvolution?.ParentProtocolId);
+        Assert.Contains(mission.CohesionTimeline, @event => @event.EventType == "evolution" && @event.RunId == run.Id);
+    }
+
+    [Fact]
+    public async Task GetMissionControlAsync_WithRecentAttachedObservation_DoesNotReportGap()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Observed", DateTime.UtcNow.AddDays(-2));
+        var run = new ProtocolRun
+        {
+            Id = Guid.NewGuid(),
+            PersonId = personId,
+            ProtocolId = protocol.Id,
+            Protocol = protocol,
+            StartedAtUtc = DateTime.UtcNow.AddDays(-2),
+            Status = ProtocolRunStatus.Active
+        };
+        var checkIns = new List<CheckIn>
+        {
+            CreateCheckIn(personId, run.Id, DateTime.UtcNow, energy: 5, recovery: 5, sleep: 5, appetite: 5)
+        };
+
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run }, checkIns, activeRun: run);
+
+        var mission = await service.GetMissionControlAsync(personId, CancellationToken.None);
+
+        Assert.False(mission.LatestCheckInSignal.HasObservationGap);
+        Assert.DoesNotContain(mission.ObservationSignals, signal => signal.Type == "gap");
+    }
+
+    [Fact]
+    public async Task GetMissionControlAsync_WithComputationRecord_OverlaysMathInTimeline()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Math", DateTime.UtcNow.AddDays(-5));
+        var computation = new ProtocolComputationRecord
+        {
+            Id = Guid.NewGuid(),
+            ProtocolId = protocol.Id,
+            Type = "reconstitution",
+            InputSnapshot = "{}",
+            OutputResult = "1000 mcg/mL",
+            TimestampUtc = DateTime.UtcNow.AddDays(-1)
+        };
+
+        var service = CreateMissionControlService(
+            personId,
+            new List<Protocol> { protocol },
+            new List<ProtocolRun>(),
+            new List<CheckIn>(),
+            computations: new List<ProtocolComputationRecord> { computation });
+
+        var mission = await service.GetMissionControlAsync(personId, CancellationToken.None);
+
+        Assert.Contains(mission.CohesionTimeline, @event => @event.EventType == "computation" && @event.ComputationId == computation.Id);
+    }
+
     private static ProtocolService CreateService(
         IProtocolRepository protocolRepository,
         IProtocolRunRepository runRepository,
-        ICheckInRepository checkInRepository)
+        ICheckInRepository checkInRepository,
+        IProtocolComputationRecordRepository? computationRepository = null,
+        IProtocolReviewCompletedEventRepository? reviewCompletedEventRepository = null)
     {
         return new ProtocolService(
             protocolRepository,
@@ -219,7 +398,80 @@ public class ProtocolServiceTests
             new Mock<ICompoundRecordRepository>().Object,
             checkInRepository,
             runRepository,
+            computationRepository ?? EmptyComputationRepository(),
+            reviewCompletedEventRepository ?? EmptyReviewCompletedEventRepository(),
             new Mock<IKnowledgeSource>().Object);
+    }
+
+    private static IProtocolComputationRecordRepository EmptyComputationRepository()
+    {
+        var repository = new Mock<IProtocolComputationRecordRepository>();
+        repository.Setup(item => item.GetByProtocolIdsAsync(It.IsAny<IEnumerable<Guid>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<ProtocolComputationRecord>());
+        return repository.Object;
+    }
+
+    private static IProtocolReviewCompletedEventRepository EmptyReviewCompletedEventRepository()
+    {
+        var repository = new Mock<IProtocolReviewCompletedEventRepository>();
+        repository.Setup(item => item.GetByProtocolIdsAsync(It.IsAny<IEnumerable<Guid>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<ProtocolReviewCompletedEvent>());
+        return repository.Object;
+    }
+
+    private static ProtocolService CreateMissionControlService(
+        Guid personId,
+        List<Protocol> protocols,
+        List<ProtocolRun> runs,
+        List<CheckIn> checkIns,
+        ProtocolRun? activeRun = null,
+        Protocol? latestEvolved = null,
+        List<ProtocolComputationRecord>? computations = null,
+        List<ProtocolReviewCompletedEvent>? reviewCompletedEvents = null)
+    {
+        var protocolRepository = new Mock<IProtocolRepository>();
+        protocolRepository.Setup(repository => repository.GetByPersonIdAsync(personId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(protocols);
+        protocolRepository.Setup(repository => repository.GetLatestEvolvedByPersonIdAsync(personId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(latestEvolved);
+        protocolRepository.Setup(repository => repository.GetWithItemsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((Guid id, CancellationToken _) => protocols.FirstOrDefault(protocol => protocol.Id == id));
+        protocolRepository.Setup(repository => repository.GetLineageAsync(It.IsAny<Protocol>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((Protocol protocol, CancellationToken _) =>
+            {
+                var rootId = protocol.OriginProtocolId ?? protocol.Id;
+                return protocols
+                    .Where(candidate => candidate.Id == rootId || candidate.OriginProtocolId == rootId)
+                    .OrderBy(candidate => candidate.Version)
+                    .ToList();
+            });
+
+        var runRepository = new Mock<IProtocolRunRepository>();
+        runRepository.Setup(repository => repository.GetActiveByPersonIdAsync(personId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(activeRun);
+        runRepository.Setup(repository => repository.GetByProtocolIdsAsync(It.IsAny<IEnumerable<Guid>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((IEnumerable<Guid> ids, CancellationToken _) => runs.Where(run => ids.Contains(run.ProtocolId)).ToList());
+        runRepository.Setup(repository => repository.GetLatestByProtocolIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((Guid id, CancellationToken _) => runs.Where(run => run.ProtocolId == id).OrderByDescending(run => run.StartedAtUtc).FirstOrDefault());
+
+        var checkInRepository = new Mock<ICheckInRepository>();
+        checkInRepository.Setup(repository => repository.GetByPersonIdAsync(personId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(checkIns);
+
+        var computationRepository = new Mock<IProtocolComputationRecordRepository>();
+        computationRepository.Setup(repository => repository.GetByProtocolIdsAsync(It.IsAny<IEnumerable<Guid>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((IEnumerable<Guid> ids, CancellationToken _) => (computations ?? new List<ProtocolComputationRecord>()).Where(record => ids.Contains(record.ProtocolId)).ToList());
+
+        var reviewCompletedEventRepository = new Mock<IProtocolReviewCompletedEventRepository>();
+        reviewCompletedEventRepository.Setup(repository => repository.GetByProtocolIdsAsync(It.IsAny<IEnumerable<Guid>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((IEnumerable<Guid> ids, CancellationToken _) => (reviewCompletedEvents ?? new List<ProtocolReviewCompletedEvent>()).Where(@event => ids.Contains(@event.ProtocolId)).ToList());
+
+        return CreateService(
+            protocolRepository.Object,
+            runRepository.Object,
+            checkInRepository.Object,
+            computationRepository.Object,
+            reviewCompletedEventRepository.Object);
     }
 
     private static Protocol CreateProtocolVersion(Guid personId, Guid protocolId, Guid compoundId, int version, Guid? parentProtocolId, string notes, DateTime createdAt)

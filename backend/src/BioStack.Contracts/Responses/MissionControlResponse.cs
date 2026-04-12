@@ -6,6 +6,7 @@ public sealed record MissionControlResponse(
     MissionControlReviewSummaryResponse? LatestReviewSummary,
     MissionControlEvolutionResponse? RecentEvolution,
     MissionControlCheckInSignalResponse LatestCheckInSignal,
+    List<MissionControlObservationSignalResponse> ObservationSignals,
     List<ProtocolReviewTimelineEventResponse> CohesionTimeline
 );
 
@@ -37,4 +38,11 @@ public sealed record MissionControlCheckInSignalResponse(
     string Cue,
     int AttachedCheckInCount,
     bool HasObservationGap
+);
+
+public sealed record MissionControlObservationSignalResponse(
+    string Type,
+    string Severity,
+    string? Metric,
+    string Detail
 );

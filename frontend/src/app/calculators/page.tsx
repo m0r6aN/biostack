@@ -1,16 +1,60 @@
 'use client';
 
 import { apiClient } from '@/lib/api';
-import { CalculatorResult, ReconstitutionRequest, VolumeRequest, ConversionRequest } from '@/lib/types';
+import { CalculatorResult, Protocol } from '@/lib/types';
 import { SafetyDisclaimer } from '@/components/SafetyDisclaimer';
 import { ReconstitutionCalc } from '@/components/calculators/ReconstitutionCalc';
 import { VolumeCalc } from '@/components/calculators/VolumeCalc';
 import { ConversionCalc } from '@/components/calculators/ConversionCalc';
-import { useState } from 'react';
+import { useProfile } from '@/lib/context';
+import { useEffect, useState } from 'react';
 import { Header } from '@/components/Header';
 
 export default function CalculatorsPage() {
   const [activeTab, setActiveTab] = useState<'reconstitution' | 'volume' | 'conversion'>('reconstitution');
+  const { currentProfileId } = useProfile();
+  const [protocols, setProtocols] = useState<Protocol[]>([]);
+  const [selectedProtocolId, setSelectedProtocolId] = useState('');
+  const [attachedMessage, setAttachedMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!currentProfileId) {
+      setProtocols([]);
+      setSelectedProtocolId('');
+      return;
+    }
+
+    apiClient.getProtocols(currentProfileId)
+      .then((items) => {
+        setProtocols(items);
+        setSelectedProtocolId((current) => current || items[0]?.id || '');
+      })
+      .catch(() => {
+        setProtocols([]);
+        setSelectedProtocolId('');
+      });
+  }, [currentProfileId]);
+
+  async function calculateAndMaybeAttach<TInput>(
+    type: 'reconstitution' | 'volume' | 'conversion',
+    input: TInput,
+    calculate: (request: TInput) => Promise<CalculatorResult>
+  ) {
+    const result = await calculate(input);
+    if (selectedProtocolId) {
+      const protocol = protocols.find((item) => item.id === selectedProtocolId);
+      await apiClient.recordProtocolComputation(selectedProtocolId, {
+        runId: protocol?.activeRun?.id ?? null,
+        type,
+        inputSnapshot: JSON.stringify(input),
+        outputResult: `${result.output} ${result.unit} using ${result.formula}`,
+      });
+      setAttachedMessage(`${computationLabel(type)} attached to ${protocol?.name ?? 'protocol'}.`);
+      window.setTimeout(() => setAttachedMessage(null), 2800);
+    }
+
+    return result;
+  }
 
   return (
     <div className="w-full">
@@ -18,6 +62,40 @@ export default function CalculatorsPage() {
 
       <div className="p-8 max-w-4xl">
         <SafetyDisclaimer type="calculation" />
+
+        <section className="mt-6 rounded-lg border border-white/[0.08] bg-[#121923]/90 p-4">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Protocol Binding</p>
+              <p className="mt-1 text-sm text-white/50">
+                {protocols.length > 0
+                  ? 'Attach calculator math to protocol lineage.'
+                  : 'Save a protocol to attach calculator math to its lineage.'}
+              </p>
+            </div>
+            <select
+              value={selectedProtocolId}
+              onChange={(event) => setSelectedProtocolId(event.target.value)}
+              disabled={protocols.length === 0}
+              className="min-w-0 rounded-lg border border-white/[0.1] bg-[#0F141B] px-3 py-2 text-sm text-white outline-none disabled:cursor-not-allowed disabled:opacity-50 md:min-w-72"
+            >
+              {protocols.length === 0 ? (
+                <option value="">No protocols available</option>
+              ) : (
+                protocols.map((protocol) => (
+                  <option key={protocol.id} value={protocol.id}>
+                    {protocol.name} v{protocol.version}{protocol.activeRun ? ' · active run' : ''}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+          {attachedMessage && (
+            <p className="mt-3 rounded-lg border border-emerald-400/20 bg-emerald-500/10 px-3 py-2 text-sm font-semibold text-emerald-100">
+              {attachedMessage}
+            </p>
+          )}
+        </section>
 
         {/* Tabs */}
         <div className="mt-6 flex gap-2 border-b border-white/[0.06] mb-6">
@@ -44,19 +122,19 @@ export default function CalculatorsPage() {
         <div className="space-y-6">
           {activeTab === 'reconstitution' && (
             <ReconstitutionCalc
-              onCalculate={(req) => apiClient.calculateReconstitution(req)}
+              onCalculate={(req) => calculateAndMaybeAttach('reconstitution', req, (request) => apiClient.calculateReconstitution(request))}
             />
           )}
 
           {activeTab === 'volume' && (
             <VolumeCalc
-              onCalculate={(req) => apiClient.calculateVolume(req)}
+              onCalculate={(req) => calculateAndMaybeAttach('volume', req, (request) => apiClient.calculateVolume(request))}
             />
           )}
 
           {activeTab === 'conversion' && (
             <ConversionCalc
-              onCalculate={(req) => apiClient.calculateConversion(req)}
+              onCalculate={(req) => calculateAndMaybeAttach('conversion', req, (request) => apiClient.calculateConversion(request))}
             />
           )}
         </div>
@@ -71,4 +149,10 @@ export default function CalculatorsPage() {
       </div>
     </div>
   );
+}
+
+function computationLabel(type: 'reconstitution' | 'volume' | 'conversion') {
+  if (type === 'reconstitution') return 'Reconstitution calculation';
+  if (type === 'volume') return 'Dosage math';
+  return 'Unit conversion';
 }

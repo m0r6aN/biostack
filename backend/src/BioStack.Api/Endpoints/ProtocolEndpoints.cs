@@ -34,6 +34,12 @@ public static class ProtocolEndpoints
         protocolGroup.MapGet("/{id}/review", GetProtocolReview)
             .WithName("GetProtocolReview");
 
+        protocolGroup.MapPost("/{id}/review/complete", CompleteReview)
+            .WithName("CompleteProtocolReview");
+
+        protocolGroup.MapPost("/{id}/computations", RecordComputation)
+            .WithName("RecordProtocolComputation");
+
         protocolGroup.MapPost("/{id}/runs", StartRun)
             .WithName("StartProtocolRun");
 
@@ -107,6 +113,36 @@ public static class ProtocolEndpoints
         {
             var review = await protocolService.GetProtocolReviewAsync(id, ct);
             return Results.Ok(review);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
+    }
+
+    private static async Task<IResult> CompleteReview(Guid id, CompleteProtocolReviewRequest request, IProtocolService protocolService, CancellationToken ct)
+    {
+        try
+        {
+            var completed = await protocolService.CompleteReviewAsync(id, request, ct);
+            return Results.Created($"/api/v1/protocols/{id}/review/completions/{completed.Id}", completed);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
+    }
+
+    private static async Task<IResult> RecordComputation(Guid id, CreateProtocolComputationRequest request, IProtocolService protocolService, CancellationToken ct)
+    {
+        try
+        {
+            var computation = await protocolService.RecordComputationAsync(id, request, ct);
+            return Results.Created($"/api/v1/protocols/{id}/computations/{computation.Id}", computation);
+        }
+        catch (InvalidOperationException ex) when (ex.Message.Contains("type", StringComparison.OrdinalIgnoreCase))
+        {
+            return Results.BadRequest(new { error = ex.Message });
         }
         catch (InvalidOperationException)
         {

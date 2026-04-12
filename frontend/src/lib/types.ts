@@ -195,6 +195,8 @@ export interface ProtocolReviewTimelineEvent {
   protocolId: string | null;
   runId: string | null;
   checkInId: string | null;
+  computationId: string | null;
+  reviewCompletedEventId: string | null;
   detail: string;
 }
 
@@ -204,6 +206,7 @@ export interface MissionControl {
   latestReviewSummary: MissionControlReviewSummary | null;
   recentEvolution: MissionControlEvolution | null;
   latestCheckInSignal: MissionControlCheckInSignal;
+  observationSignals: MissionControlObservationSignal[];
   cohesionTimeline: ProtocolReviewTimelineEvent[];
 }
 
@@ -235,6 +238,31 @@ export interface MissionControlCheckInSignal {
   cue: string;
   attachedCheckInCount: number;
   hasObservationGap: boolean;
+}
+
+export interface MissionControlObservationSignal {
+  type: 'gap' | 'trend_shift' | string;
+  severity: 'low' | 'medium' | 'high' | string;
+  metric: string | null;
+  detail: string;
+}
+
+export interface ProtocolComputationRecord {
+  id: string;
+  protocolId: string;
+  runId: string | null;
+  type: string;
+  inputSnapshot: string;
+  outputResult: string;
+  timestampUtc: string;
+}
+
+export interface ProtocolReviewCompletedEvent {
+  id: string;
+  protocolId: string;
+  runId: string | null;
+  completedAtUtc: string;
+  notes: string;
 }
 
 export interface ProtocolRun {
