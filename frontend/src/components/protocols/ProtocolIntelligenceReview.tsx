@@ -1,7 +1,8 @@
-import { ProtocolReview } from '@/lib/types';
+import { ProtocolPatternSnapshot, ProtocolReview, ProtocolReviewTimelineEvent } from '@/lib/types';
 
 interface ProtocolIntelligenceReviewProps {
   review: ProtocolReview | null;
+  patterns?: ProtocolPatternSnapshot | null;
 }
 
 const sectionStyles: Record<string, string> = {
@@ -12,7 +13,7 @@ const sectionStyles: Record<string, string> = {
   gap: 'border-white/[0.1] bg-white/[0.035] text-white/65',
 };
 
-export function ProtocolIntelligenceReview({ review }: ProtocolIntelligenceReviewProps) {
+export function ProtocolIntelligenceReview({ review, patterns }: ProtocolIntelligenceReviewProps) {
   if (!review) {
     return (
       <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
@@ -105,16 +106,18 @@ export function ProtocolIntelligenceReview({ review }: ProtocolIntelligenceRevie
         <div>
           <h3 className="font-semibold text-white">Longitudinal timeline</h3>
           <div className="mt-3 max-h-[520px] space-y-3 overflow-y-auto pr-2">
-            {review.timeline.map((event, index) => (
+            {review.timeline.map((event, index) => {
+              const detail = timelineDetail(event, patterns);
+              return (
               <div key={`${event.eventType}-${event.occurredAtUtc}-${index}`} className="grid grid-cols-[92px_1fr] gap-3">
                 <time className="pt-1 text-xs text-white/35">{formatDate(event.occurredAtUtc)}</time>
                 <div className="relative border-l border-white/[0.08] pl-4">
                   <span className={`absolute -left-1.5 top-1.5 h-3 w-3 rounded-full ${eventDotClass(event.eventType)}`} />
                   <p className="text-sm font-semibold text-white">{event.label}</p>
-                  <p className="mt-1 text-xs leading-5 text-white/50">{event.detail}</p>
+                  <p className="mt-1 text-xs leading-5 text-white/50">{detail}</p>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
       </div>
@@ -128,6 +131,36 @@ export function ProtocolIntelligenceReview({ review }: ProtocolIntelligenceRevie
       </div>
     </section>
   );
+}
+
+function timelineDetail(event: ProtocolReviewTimelineEvent, patterns?: ProtocolPatternSnapshot | null) {
+  const comparison = patterns?.currentRunComparison;
+  if (!comparison || !event.runId) {
+    return event.detail;
+  }
+
+  const annotation = annotationForEvent(event.eventType, comparison.matchingSignals, comparison.divergentSignals);
+  return annotation ? `${event.detail} Pattern memory: ${annotation}.` : event.detail;
+}
+
+function annotationForEvent(eventType: string, matchingSignals: string[], divergentSignals: string[]) {
+  if (eventType === 'check_in' && matchingSignals.some((signal) => signal.includes('Check-in timing aligns'))) {
+    return 'matches prior pattern';
+  }
+
+  if ((eventType === 'check_in' || eventType === 'computation') && divergentSignals.some((signal) => signal.includes('later'))) {
+    return 'later than usual';
+  }
+
+  if ((eventType === 'check_in' || eventType === 'computation') && divergentSignals.some((signal) => signal.includes('earlier'))) {
+    return 'earlier than typical';
+  }
+
+  if (eventType === 'computation' && matchingSignals.some((signal) => signal.includes('Computation timing'))) {
+    return 'matches prior pattern';
+  }
+
+  return null;
 }
 
 function ReviewStat({ label, value }: { label: string; value: number }) {

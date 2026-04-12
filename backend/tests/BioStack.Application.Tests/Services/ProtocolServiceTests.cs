@@ -385,6 +385,201 @@ public class ProtocolServiceTests
         Assert.Contains(mission.CohesionTimeline, @event => @event.EventType == "computation" && @event.ComputationId == computation.Id);
     }
 
+    [Fact]
+    public async Task GetPatternSnapshotAsync_WithNoRuns_ReturnsNoPattern()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "No runs", DateTime.UtcNow.AddDays(-10));
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun>(), new List<CheckIn>());
+
+        var snapshot = await service.GetPatternSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal(0, snapshot.HistoricalRunCount);
+        Assert.Equal("none", snapshot.PatternConfidence);
+        Assert.Empty(snapshot.MetricPatterns);
+        Assert.Null(snapshot.CurrentRunComparison);
+    }
+
+    [Fact]
+    public async Task GetPatternSnapshotAsync_WithOneRun_ReturnsInsufficientPattern()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "One run", DateTime.UtcNow.AddDays(-10));
+        var run = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-8));
+        var checkIns = PatternCheckIns(personId, run, 1, 2);
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run }, checkIns);
+
+        var snapshot = await service.GetPatternSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal(1, snapshot.HistoricalRunCount);
+        Assert.Equal("none", snapshot.PatternConfidence);
+        Assert.Empty(snapshot.MetricPatterns);
+    }
+
+    [Fact]
+    public async Task GetPatternSnapshotAsync_WithTwoRuns_ReturnsLowConfidence()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Two runs", DateTime.UtcNow.AddDays(-20));
+        var run1 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-18));
+        var run2 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-10));
+        var checkIns = PatternCheckIns(personId, run1, 1, 2).Concat(PatternCheckIns(personId, run2, 1, 2)).ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run1, run2 }, checkIns);
+
+        var snapshot = await service.GetPatternSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal(2, snapshot.HistoricalRunCount);
+        Assert.Equal("low", snapshot.PatternConfidence);
+        Assert.Contains(snapshot.MetricPatterns, pattern => pattern.Metric == "First check-in");
+    }
+
+    [Fact]
+    public async Task GetPatternSnapshotAsync_WithThreeConsistentRuns_ReturnsModerateConfidence()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Three runs", DateTime.UtcNow.AddDays(-35));
+        var runs = new List<ProtocolRun>
+        {
+            CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-30)),
+            CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-20)),
+            CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-10))
+        };
+        var checkIns = runs.SelectMany(run => PatternCheckIns(personId, run, 1, 2)).ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, runs, checkIns);
+
+        var snapshot = await service.GetPatternSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("moderate", snapshot.PatternConfidence);
+        Assert.Contains(snapshot.MetricPatterns, pattern => pattern.Metric == "Check-in cadence");
+    }
+
+    [Fact]
+    public async Task GetPatternSnapshotAsync_WithCurrentRunMatchingPattern_ReturnsMatchingComparison()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Matching", DateTime.UtcNow.AddDays(-25));
+        var run1 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-22));
+        var run2 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-14));
+        var activeRun = CreateActiveRun(personId, protocol, DateTime.UtcNow.AddDays(-2));
+        var checkIns = PatternCheckIns(personId, run1, 1, 2)
+            .Concat(PatternCheckIns(personId, run2, 1, 2))
+            .Append(CreateCheckIn(personId, activeRun.Id, activeRun.StartedAtUtc.AddDays(1), energy: 5, recovery: 5, sleep: 5, appetite: 5))
+            .ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run1, run2, activeRun }, checkIns, activeRun);
+
+        var snapshot = await service.GetPatternSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("moderate", snapshot.CurrentRunComparison?.Similarity);
+        Assert.Contains(snapshot.CurrentRunComparison!.MatchingSignals, signal => signal == "Check-in timing aligns with prior runs");
+    }
+
+    [Fact]
+    public async Task GetPatternSnapshotAsync_WithCurrentRunDivergingFromPattern_ReturnsDivergentComparison()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Diverging", DateTime.UtcNow.AddDays(-25));
+        var run1 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-22));
+        var run2 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-14));
+        var activeRun = CreateActiveRun(personId, protocol, DateTime.UtcNow.AddDays(-4));
+        var checkIns = PatternCheckIns(personId, run1, 1, 2)
+            .Concat(PatternCheckIns(personId, run2, 1, 2))
+            .ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run1, run2, activeRun }, checkIns, activeRun);
+
+        var snapshot = await service.GetPatternSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("low", snapshot.CurrentRunComparison?.Similarity);
+        Assert.Contains(snapshot.CurrentRunComparison!.DivergentSignals, signal => signal == "Current run is later than prior runs to first observation");
+    }
+
+    [Fact]
+    public async Task GetPatternSnapshotAsync_WithSparseData_DowngradesConfidence()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Sparse", DateTime.UtcNow.AddDays(-35));
+        var runs = new List<ProtocolRun>
+        {
+            CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-30)),
+            CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-20)),
+            CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-10))
+        };
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, runs, new List<CheckIn>());
+
+        var snapshot = await service.GetPatternSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("low", snapshot.PatternConfidence);
+        Assert.Contains(snapshot.MetricPatterns, pattern => pattern.Metric == "Run duration");
+    }
+
+    [Fact]
+    public async Task GetPatternSnapshotAsync_IncludesComputationsInPatterns()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Computations", DateTime.UtcNow.AddDays(-20));
+        var run1 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-18));
+        var run2 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-10));
+        var computations = new List<ProtocolComputationRecord>
+        {
+            CreateComputation(protocol, run1, run1.StartedAtUtc.AddDays(1)),
+            CreateComputation(protocol, run2, run2.StartedAtUtc.AddDays(1))
+        };
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run1, run2 }, new List<CheckIn>(), computations: computations);
+
+        var snapshot = await service.GetPatternSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Contains(snapshot.EventPatterns, pattern => pattern.EventType == "Computation");
+    }
+
+    [Fact]
+    public async Task GetPatternSnapshotAsync_IncludesReviewEventsInPatterns()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Reviews", DateTime.UtcNow.AddDays(-20));
+        var run1 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-18));
+        var run2 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-10));
+        var reviewEvents = new List<ProtocolReviewCompletedEvent>
+        {
+            CreateReviewCompleted(protocol, run1, run1.EndedAtUtc!.Value.AddDays(1)),
+            CreateReviewCompleted(protocol, run2, run2.EndedAtUtc!.Value.AddDays(1))
+        };
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run1, run2 }, new List<CheckIn>(), reviewCompletedEvents: reviewEvents);
+
+        var snapshot = await service.GetPatternSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Contains(snapshot.EventPatterns, pattern => pattern.EventType == "Review completed");
+    }
+
+    [Fact]
+    public async Task GetPatternSnapshotAsync_DetectsRecurringSequences()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Sequences", DateTime.UtcNow.AddDays(-20));
+        var run1 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-18));
+        var run2 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-10));
+        var checkIns = PatternCheckIns(personId, run1, 1, 2).Concat(PatternCheckIns(personId, run2, 1, 2)).ToList();
+        var computations = new List<ProtocolComputationRecord>
+        {
+            CreateComputation(protocol, run1, run1.StartedAtUtc.AddDays(1)),
+            CreateComputation(protocol, run2, run2.StartedAtUtc.AddDays(1))
+        };
+        var reviewEvents = new List<ProtocolReviewCompletedEvent>
+        {
+            CreateReviewCompleted(protocol, run1, run1.EndedAtUtc!.Value.AddDays(1)),
+            CreateReviewCompleted(protocol, run2, run2.EndedAtUtc!.Value.AddDays(1))
+        };
+        var service = CreateMissionControlService(
+            personId,
+            new List<Protocol> { protocol },
+            new List<ProtocolRun> { run1, run2 },
+            checkIns,
+            computations: computations,
+            reviewCompletedEvents: reviewEvents);
+
+        var snapshot = await service.GetPatternSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Contains(snapshot.SequencePatterns, pattern => pattern.Sequence.SequenceEqual(new[] { "RunStart", "Computation", "TrendShift", "ReviewCompleted" }));
+    }
+
     private static ProtocolService CreateService(
         IProtocolRepository protocolRepository,
         IProtocolRunRepository runRepository,
@@ -517,6 +712,54 @@ public class ProtocolServiceTests
             StartedAtUtc = startedAt,
             EndedAtUtc = startedAt.AddDays(4),
             Status = ProtocolRunStatus.Completed
+        };
+    }
+
+    private static ProtocolRun CreateActiveRun(Guid personId, Protocol protocol, DateTime startedAt)
+    {
+        return new ProtocolRun
+        {
+            Id = Guid.NewGuid(),
+            PersonId = personId,
+            ProtocolId = protocol.Id,
+            Protocol = protocol,
+            StartedAtUtc = startedAt,
+            Status = ProtocolRunStatus.Active
+        };
+    }
+
+    private static List<CheckIn> PatternCheckIns(Guid personId, ProtocolRun run, int firstDay, int secondDay)
+    {
+        return new List<CheckIn>
+        {
+            CreateCheckIn(personId, run.Id, run.StartedAtUtc.AddDays(firstDay), energy: 5, recovery: 5, sleep: 5, appetite: 5),
+            CreateCheckIn(personId, run.Id, run.StartedAtUtc.AddDays(secondDay), energy: 8, recovery: 7, sleep: 5, appetite: 5)
+        };
+    }
+
+    private static ProtocolComputationRecord CreateComputation(Protocol protocol, ProtocolRun run, DateTime timestamp)
+    {
+        return new ProtocolComputationRecord
+        {
+            Id = Guid.NewGuid(),
+            ProtocolId = protocol.Id,
+            ProtocolRunId = run.Id,
+            Type = "reconstitution",
+            InputSnapshot = "{}",
+            OutputResult = "1000 mcg/mL",
+            TimestampUtc = timestamp
+        };
+    }
+
+    private static ProtocolReviewCompletedEvent CreateReviewCompleted(Protocol protocol, ProtocolRun run, DateTime completedAt)
+    {
+        return new ProtocolReviewCompletedEvent
+        {
+            Id = Guid.NewGuid(),
+            ProtocolId = protocol.Id,
+            ProtocolRunId = run.Id,
+            CompletedAtUtc = completedAt,
+            Notes = "Review recorded."
         };
     }
 

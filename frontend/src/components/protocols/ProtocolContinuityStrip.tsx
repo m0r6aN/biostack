@@ -1,14 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { Protocol, ProtocolReview } from '@/lib/types';
+import { Protocol, ProtocolPatternSnapshot, ProtocolReview } from '@/lib/types';
 
 interface ProtocolContinuityStripProps {
   protocol: Protocol;
   review: ProtocolReview | null;
+  patterns?: ProtocolPatternSnapshot | null;
 }
 
-export function ProtocolContinuityStrip({ protocol, review }: ProtocolContinuityStripProps) {
+export function ProtocolContinuityStrip({ protocol, review, patterns }: ProtocolContinuityStripProps) {
   const prior = protocol.priorVersions[0] ?? null;
   const latestSection = review?.sections.find((section) => section.type !== 'gap') ?? review?.sections[0] ?? null;
   const latestRun = review?.versions
@@ -35,7 +36,7 @@ export function ProtocolContinuityStrip({ protocol, review }: ProtocolContinuity
         </div>
       </div>
 
-      <div className="mt-4 grid gap-2 md:grid-cols-5">
+      <div className="mt-4 grid gap-2 md:grid-cols-6">
         <ContinuityCell label="Current" value={`v${protocol.version}`} detail={protocol.isCurrentVersion ? 'Current version' : 'Prior version'} />
         <ContinuityCell
           label="Parent"
@@ -58,6 +59,11 @@ export function ProtocolContinuityStrip({ protocol, review }: ProtocolContinuity
           value={changes.length > 0 ? `${changes.length} item${changes.length === 1 ? '' : 's'}` : 'No diff'}
           detail={changes[0] ? `${changes[0].changeType} ${changes[0].subject}` : 'No deterministic change detected.'}
         />
+        <ContinuityCell
+          label="Patterns"
+          value={`${patterns?.historicalRunCount ?? 0} run${patterns?.historicalRunCount === 1 ? '' : 's'}`}
+          detail={patternDetail(patterns)}
+        />
       </div>
 
       {protocol.evolvedFromRunId && (
@@ -67,6 +73,16 @@ export function ProtocolContinuityStrip({ protocol, review }: ProtocolContinuity
       )}
     </section>
   );
+}
+
+function patternDetail(patterns?: ProtocolPatternSnapshot | null) {
+  if (!patterns || patterns.historicalRunCount < 2) {
+    return 'Insufficient completed run history.';
+  }
+
+  const cadence = patterns.metricPatterns.find((pattern) => pattern.metric === 'Check-in cadence');
+  const deviation = patterns.currentRunComparison?.divergentSignals[0] ?? patterns.currentRunComparison?.matchingSignals[0];
+  return deviation ?? cadence?.observation ?? `${patterns.patternConfidence} confidence historical recall.`;
 }
 
 function ContinuityCell({

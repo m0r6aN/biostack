@@ -200,6 +200,37 @@ export interface ProtocolReviewTimelineEvent {
   detail: string;
 }
 
+export interface ProtocolPatternSnapshot {
+  protocolId: string;
+  historicalRunCount: number;
+  patternConfidence: 'none' | 'low' | 'moderate' | string;
+  metricPatterns: MetricPatternSummary[];
+  eventPatterns: EventPatternSummary[];
+  sequencePatterns: SequencePatternSummary[];
+  currentRunComparison: PatternComparisonSummary | null;
+}
+
+export interface MetricPatternSummary {
+  metric: string;
+  observation: string;
+}
+
+export interface EventPatternSummary {
+  eventType: string;
+  timingPattern: string;
+}
+
+export interface SequencePatternSummary {
+  sequence: string[];
+  description: string;
+}
+
+export interface PatternComparisonSummary {
+  similarity: 'none' | 'low' | 'moderate' | 'high' | string;
+  matchingSignals: string[];
+  divergentSignals: string[];
+}
+
 export interface MissionControl {
   activeRun: ProtocolRun | null;
   latestClosedRun: ProtocolRun | null;
@@ -207,6 +238,7 @@ export interface MissionControl {
   recentEvolution: MissionControlEvolution | null;
   latestCheckInSignal: MissionControlCheckInSignal;
   observationSignals: MissionControlObservationSignal[];
+  patternSnapshot: ProtocolPatternSnapshot | null;
   cohesionTimeline: ProtocolReviewTimelineEvent[];
 }
 

@@ -188,6 +188,75 @@ public sealed class ProtocolService : IProtocolService
             });
     }
 
+    public async Task<ProtocolPatternSnapshot> GetPatternSnapshotAsync(Guid protocolId, CancellationToken cancellationToken = default)
+    {
+        var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
+        if (protocol is null)
+            throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+
+        var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
+            .OrderBy(version => version.Version)
+            .ThenBy(version => version.CreatedAtUtc)
+            .ToList();
+        if (lineage.Count == 0)
+        {
+            lineage.Add(protocol);
+        }
+
+        var protocolIds = lineage.Select(version => version.Id).ToList();
+        var runs = (await _protocolRunRepository.GetByProtocolIdsAsync(protocolIds, cancellationToken))
+            .OrderBy(run => run.StartedAtUtc)
+            .ToList();
+        var completedRuns = runs
+            .Where(run => run.Status == ProtocolRunStatus.Completed)
+            .OrderBy(run => run.StartedAtUtc)
+            .ToList();
+        var checkIns = (await _checkInRepository.GetByPersonIdAsync(protocol.PersonId, cancellationToken))
+            .OrderBy(checkIn => checkIn.Date)
+            .ToList();
+        var computations = (await _computationRepository.GetByProtocolIdsAsync(protocolIds, cancellationToken))
+            .OrderBy(record => record.TimestampUtc)
+            .ToList();
+        var reviewCompletedEvents = (await _reviewCompletedEventRepository.GetByProtocolIdsAsync(protocolIds, cancellationToken))
+            .OrderBy(@event => @event.CompletedAtUtc)
+            .ToList();
+        var contexts = completedRuns
+            .Select(run => BuildPatternRunContext(run, checkIns, computations, reviewCompletedEvents))
+            .ToList();
+
+        if (completedRuns.Count == 0)
+        {
+            return new ProtocolPatternSnapshot
+            {
+                ProtocolId = protocol.Id,
+                HistoricalRunCount = 0,
+                PatternConfidence = "none"
+            };
+        }
+
+        var metricPatterns = completedRuns.Count < 2 ? new List<MetricPatternSummary>() : BuildMetricPatterns(contexts);
+        var eventPatterns = completedRuns.Count < 2 ? new List<EventPatternSummary>() : BuildEventPatterns(contexts);
+        var sequencePatterns = completedRuns.Count < 2 ? new List<SequencePatternSummary>() : BuildSequencePatterns(contexts);
+        var confidence = DeterminePatternConfidence(completedRuns.Count, contexts, metricPatterns, eventPatterns, sequencePatterns);
+        var activeRun = runs
+            .Where(run => run.Status == ProtocolRunStatus.Active)
+            .OrderByDescending(run => run.StartedAtUtc)
+            .FirstOrDefault();
+
+        return new ProtocolPatternSnapshot
+        {
+            ProtocolId = protocol.Id,
+            HistoricalRunCount = completedRuns.Count,
+            PatternConfidence = confidence,
+            MetricPatterns = metricPatterns,
+            EventPatterns = eventPatterns,
+            SequencePatterns = sequencePatterns,
+            CurrentRunComparison = activeRun is null || completedRuns.Count < 2
+                ? null
+                : BuildCurrentRunComparison(activeRun, contexts, checkIns, computations)
+        };
+    }
+
     public async Task<ProtocolRunResponse> StartRunAsync(Guid protocolId, CancellationToken cancellationToken = default)
     {
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
@@ -257,6 +326,10 @@ public sealed class ProtocolService : IProtocolService
         ProtocolReviewResponse? review = reviewProtocolId is null
             ? null
             : await GetProtocolReviewAsync(reviewProtocolId.Value, cancellationToken);
+        var patternProtocolId = activeRun?.ProtocolId ?? reviewProtocolId;
+        var patternSnapshot = patternProtocolId is null
+            ? null
+            : await GetPatternSnapshotAsync(patternProtocolId.Value, cancellationToken);
         var pendingReview = HasPendingReview(latestClosedRun, latestEvolved, latestReviewCompleted);
         var observationSignals = BuildObservationSignals(activeRun, runs, checkIns);
 
@@ -267,7 +340,9 @@ public sealed class ProtocolService : IProtocolService
             latestEvolved is null ? null : BuildMissionEvolution(latestEvolved, protocols),
             BuildCheckInSignal(latestCheckIn, activeRun, runs, checkIns),
             observationSignals,
+            patternSnapshot,
             review?.Timeline
+                .Select(@event => AnnotateTimelineEvent(@event, patternSnapshot))
                 .OrderByDescending(@event => @event.OccurredAtUtc)
                 .Take(8)
                 .OrderBy(@event => @event.OccurredAtUtc)
@@ -962,6 +1037,322 @@ public sealed class ProtocolService : IProtocolService
             .ToList();
     }
 
+    private static PatternRunContext BuildPatternRunContext(
+        ProtocolRun run,
+        List<CheckIn> checkIns,
+        List<ProtocolComputationRecord> computations,
+        List<ProtocolReviewCompletedEvent> reviewCompletedEvents)
+    {
+        var attachedCheckIns = checkIns
+            .Where(checkIn => checkIn.ProtocolRunId == run.Id)
+            .OrderBy(checkIn => checkIn.Date)
+            .ToList();
+        var runEnd = run.EndedAtUtc ?? run.StartedAtUtc;
+        var runComputations = computations
+            .Where(record => record.ProtocolRunId == run.Id ||
+                (record.ProtocolRunId is null && record.ProtocolId == run.ProtocolId && record.TimestampUtc >= run.StartedAtUtc && record.TimestampUtc <= runEnd))
+            .OrderBy(record => record.TimestampUtc)
+            .ToList();
+        var runReviews = reviewCompletedEvents
+            .Where(@event => @event.ProtocolRunId == run.Id ||
+                (@event.ProtocolRunId is null && @event.ProtocolId == run.ProtocolId && @event.CompletedAtUtc >= runEnd))
+            .OrderBy(@event => @event.CompletedAtUtc)
+            .ToList();
+        var sequence = new List<string> { "RunStart" };
+        if (runComputations.Count > 0)
+        {
+            sequence.Add("Computation");
+        }
+
+        if (HasRunTrendShift(attachedCheckIns))
+        {
+            sequence.Add("TrendShift");
+        }
+
+        if (runReviews.Count > 0)
+        {
+            sequence.Add("ReviewCompleted");
+        }
+
+        return new PatternRunContext(
+            run,
+            attachedCheckIns,
+            runComputations,
+            runReviews,
+            attachedCheckIns.FirstOrDefault() is null ? null : attachedCheckIns.First().Date - run.StartedAtUtc,
+            BuildCheckInIntervals(attachedCheckIns),
+            run.EndedAtUtc is null ? null : run.EndedAtUtc.Value - run.StartedAtUtc,
+            runComputations.FirstOrDefault() is null ? null : runComputations.First().TimestampUtc - run.StartedAtUtc,
+            run.EndedAtUtc is null || runReviews.FirstOrDefault() is null ? null : runReviews.First().CompletedAtUtc - run.EndedAtUtc.Value,
+            sequence);
+    }
+
+    private static List<MetricPatternSummary> BuildMetricPatterns(List<PatternRunContext> contexts)
+    {
+        var patterns = new List<MetricPatternSummary>();
+        var firstCheckIns = PresentTimeSpans(contexts.Select(context => context.FirstCheckInOffset));
+        if (firstCheckIns.Count >= 2)
+        {
+            patterns.Add(new MetricPatternSummary
+            {
+                Metric = "First check-in",
+                Observation = $"Check-ins typically begin within {FormatRange(firstCheckIns)} of run start."
+            });
+        }
+
+        var intervals = contexts.SelectMany(context => context.CheckInIntervals).ToList();
+        if (intervals.Count >= 2)
+        {
+            patterns.Add(new MetricPatternSummary
+            {
+                Metric = "Check-in cadence",
+                Observation = $"Attached check-ins recur about every {FormatTypical(AverageTimeSpan(intervals))} in prior runs."
+            });
+        }
+
+        var durations = PresentTimeSpans(contexts.Select(context => context.Duration));
+        if (durations.Count >= 2)
+        {
+            patterns.Add(new MetricPatternSummary
+            {
+                Metric = "Run duration",
+                Observation = $"Completed runs lasted {FormatRange(durations)}, with a typical duration near {FormatTypical(AverageTimeSpan(durations))}."
+            });
+        }
+
+        return patterns;
+    }
+
+    private static List<EventPatternSummary> BuildEventPatterns(List<PatternRunContext> contexts)
+    {
+        var patterns = new List<EventPatternSummary>();
+        var computations = PresentTimeSpans(contexts.Select(context => context.FirstComputationOffset));
+        if (computations.Count >= 2)
+        {
+            patterns.Add(new EventPatternSummary
+            {
+                EventType = "Computation",
+                TimingPattern = $"Computations appear within {FormatRange(computations)} of run start in prior runs."
+            });
+        }
+
+        var reviews = PresentTimeSpans(contexts.Select(context => context.ReviewCompletionOffset));
+        if (reviews.Count >= 2)
+        {
+            patterns.Add(new EventPatternSummary
+            {
+                EventType = "Review completed",
+                TimingPattern = $"Review completion appears within {FormatRange(reviews)} after run end."
+            });
+        }
+
+        return patterns;
+    }
+
+    private static List<SequencePatternSummary> BuildSequencePatterns(List<PatternRunContext> contexts)
+    {
+        return contexts
+            .GroupBy(context => string.Join(">", context.Sequence), StringComparer.Ordinal)
+            .Where(group => group.Count() >= 2 && group.First().Sequence.Count > 1)
+            .Select(group => new SequencePatternSummary
+            {
+                Sequence = group.First().Sequence,
+                Description = $"Observed in {group.Count()} completed runs."
+            })
+            .Take(4)
+            .ToList();
+    }
+
+    private static string DeterminePatternConfidence(
+        int completedRunCount,
+        List<PatternRunContext> contexts,
+        List<MetricPatternSummary> metricPatterns,
+        List<EventPatternSummary> eventPatterns,
+        List<SequencePatternSummary> sequencePatterns)
+    {
+        if (completedRunCount < 2)
+        {
+            return "none";
+        }
+
+        if (completedRunCount == 2)
+        {
+            return "low";
+        }
+
+        var patternCount = metricPatterns.Count + eventPatterns.Count + sequencePatterns.Count;
+        var observedRunCount = contexts.Count(context => context.AttachedCheckIns.Count >= 2);
+        return patternCount > 0 && observedRunCount >= 2 ? "moderate" : "low";
+    }
+
+    private static PatternComparisonSummary BuildCurrentRunComparison(
+        ProtocolRun activeRun,
+        List<PatternRunContext> historicalContexts,
+        List<CheckIn> checkIns,
+        List<ProtocolComputationRecord> computations)
+    {
+        var matching = new List<string>();
+        var divergent = new List<string>();
+        var activeCheckIns = checkIns
+            .Where(checkIn => checkIn.ProtocolRunId == activeRun.Id)
+            .OrderBy(checkIn => checkIn.Date)
+            .ToList();
+        var historicalFirstOffsets = PresentTimeSpans(historicalContexts.Select(context => context.FirstCheckInOffset));
+        if (historicalFirstOffsets.Count >= 2)
+        {
+            var typicalFirst = AverageTimeSpan(historicalFirstOffsets);
+            var tolerance = TimeSpan.FromTicks(Math.Max(TimeSpan.FromHours(12).Ticks, typicalFirst.Ticks / 2));
+            var activeFirst = activeCheckIns.FirstOrDefault();
+            if (activeFirst is not null)
+            {
+                var currentOffset = activeFirst.Date - activeRun.StartedAtUtc;
+                if (Math.Abs((currentOffset - typicalFirst).Ticks) <= tolerance.Ticks)
+                {
+                    matching.Add("Check-in timing aligns with prior runs");
+                }
+                else if (currentOffset > typicalFirst)
+                {
+                    divergent.Add("First check-in later than typical");
+                }
+                else
+                {
+                    divergent.Add("First check-in earlier than typical");
+                }
+            }
+            else if (DateTime.UtcNow - activeRun.StartedAtUtc > typicalFirst + tolerance)
+            {
+                divergent.Add("Current run is later than prior runs to first observation");
+            }
+        }
+
+        var historicalComputationOffsets = PresentTimeSpans(historicalContexts.Select(context => context.FirstComputationOffset));
+        if (historicalComputationOffsets.Count >= 2)
+        {
+            var typicalComputation = AverageTimeSpan(historicalComputationOffsets);
+            var tolerance = TimeSpan.FromTicks(Math.Max(TimeSpan.FromHours(12).Ticks, typicalComputation.Ticks / 2));
+            var activeComputation = computations
+                .Where(record => record.ProtocolRunId == activeRun.Id)
+                .OrderBy(record => record.TimestampUtc)
+                .FirstOrDefault();
+            if (activeComputation is not null)
+            {
+                var currentOffset = activeComputation.TimestampUtc - activeRun.StartedAtUtc;
+                if (Math.Abs((currentOffset - typicalComputation).Ticks) <= tolerance.Ticks)
+                {
+                    matching.Add("Computation timing matches prior pattern");
+                }
+                else if (currentOffset > typicalComputation)
+                {
+                    divergent.Add("Computation appears later than usual");
+                }
+                else
+                {
+                    divergent.Add("Computation appears earlier than typical");
+                }
+            }
+        }
+
+        var similarity = matching.Count == 0 && divergent.Count == 0
+            ? "none"
+            : matching.Count > 0 && divergent.Count == 0 ? "moderate" : "low";
+
+        return new PatternComparisonSummary
+        {
+            Similarity = similarity,
+            MatchingSignals = matching,
+            DivergentSignals = divergent
+        };
+    }
+
+    private static ProtocolReviewTimelineEventResponse AnnotateTimelineEvent(
+        ProtocolReviewTimelineEventResponse @event,
+        ProtocolPatternSnapshot? patternSnapshot)
+    {
+        var comparison = patternSnapshot?.CurrentRunComparison;
+        if (comparison is null || @event.RunId is null)
+        {
+            return @event;
+        }
+
+        var annotation = @event.EventType switch
+        {
+            "check_in" when comparison.MatchingSignals.Any(signal => signal.Contains("Check-in timing aligns", StringComparison.OrdinalIgnoreCase)) => "matches prior pattern",
+            "check_in" when comparison.DivergentSignals.Any(signal => signal.Contains("later", StringComparison.OrdinalIgnoreCase)) => "later than usual",
+            "check_in" when comparison.DivergentSignals.Any(signal => signal.Contains("earlier", StringComparison.OrdinalIgnoreCase)) => "earlier than typical",
+            "computation" when comparison.MatchingSignals.Any(signal => signal.Contains("Computation timing", StringComparison.OrdinalIgnoreCase)) => "matches prior pattern",
+            "computation" when comparison.DivergentSignals.Any(signal => signal.Contains("later", StringComparison.OrdinalIgnoreCase)) => "later than usual",
+            "computation" when comparison.DivergentSignals.Any(signal => signal.Contains("earlier", StringComparison.OrdinalIgnoreCase)) => "earlier than typical",
+            _ => null
+        };
+
+        if (annotation is null || @event.Detail.Contains(annotation, StringComparison.OrdinalIgnoreCase))
+        {
+            return @event;
+        }
+
+        return @event with { Detail = $"{@event.Detail} Pattern memory: {annotation}." };
+    }
+
+    private static List<TimeSpan> BuildCheckInIntervals(List<CheckIn> attachedCheckIns)
+    {
+        var intervals = new List<TimeSpan>();
+        for (var index = 1; index < attachedCheckIns.Count; index++)
+        {
+            intervals.Add(attachedCheckIns[index].Date - attachedCheckIns[index - 1].Date);
+        }
+
+        return intervals;
+    }
+
+    private static bool HasRunTrendShift(List<CheckIn> attachedCheckIns)
+    {
+        if (attachedCheckIns.Count < 2)
+        {
+            return false;
+        }
+
+        return new[] { "energy", "recovery", "sleep", "appetite" }
+            .Any(metric =>
+            {
+                var values = attachedCheckIns.Select(checkIn => MetricValue(metric, checkIn)).ToList();
+                return values.Max() - values.Min() >= 2;
+            });
+    }
+
+    private static TimeSpan AverageTimeSpan(List<TimeSpan> values)
+    {
+        return TimeSpan.FromTicks((long)values.Average(value => value.Ticks));
+    }
+
+    private static List<TimeSpan> PresentTimeSpans(IEnumerable<TimeSpan?> values)
+    {
+        return values
+            .Where(value => value.HasValue)
+            .Select(value => value!.Value)
+            .ToList();
+    }
+
+    private static string FormatRange(List<TimeSpan> values)
+    {
+        var min = values.Min();
+        var max = values.Max();
+        return FormatTypical(min) == FormatTypical(max)
+            ? FormatTypical(min)
+            : $"{FormatTypical(min)}-{FormatTypical(max)}";
+    }
+
+    private static string FormatTypical(TimeSpan value)
+    {
+        if (value.TotalHours < 48)
+        {
+            var hours = Math.Max(1, (int)Math.Round(value.TotalHours));
+            return $"{hours} hour{(hours == 1 ? string.Empty : "s")}";
+        }
+
+        var days = Math.Max(1, (int)Math.Round(value.TotalDays));
+        return $"{days} day{(days == 1 ? string.Empty : "s")}";
+    }
+
     private static MissionControlReviewSummaryResponse BuildMissionReviewSummary(ProtocolReviewResponse review)
     {
         var runCount = review.Versions.Sum(version => version.Runs.Count);
@@ -1242,6 +1633,18 @@ public sealed class ProtocolService : IProtocolService
     {
         return id.ToString("N")[..8];
     }
+
+    private sealed record PatternRunContext(
+        ProtocolRun Run,
+        List<CheckIn> AttachedCheckIns,
+        List<ProtocolComputationRecord> Computations,
+        List<ProtocolReviewCompletedEvent> ReviewCompletedEvents,
+        TimeSpan? FirstCheckInOffset,
+        List<TimeSpan> CheckInIntervals,
+        TimeSpan? Duration,
+        TimeSpan? FirstComputationOffset,
+        TimeSpan? ReviewCompletionOffset,
+        List<string> Sequence);
 
     private sealed record ReviewRunContext(ProtocolReviewVersionResponse Version, ProtocolReviewRunResponse Run);
 
@@ -1644,6 +2047,7 @@ public interface IProtocolService
     Task<IEnumerable<ProtocolResponse>> GetProtocolsByProfileAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<ProtocolResponse> GetProtocolAsync(Guid id, CancellationToken cancellationToken = default);
     Task<ProtocolReviewResponse> GetProtocolReviewAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<ProtocolPatternSnapshot> GetPatternSnapshotAsync(Guid protocolId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> StartRunAsync(Guid protocolId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse?> GetActiveRunAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<MissionControlResponse> GetMissionControlAsync(Guid personId, CancellationToken cancellationToken = default);

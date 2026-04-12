@@ -34,6 +34,9 @@ public static class ProtocolEndpoints
         protocolGroup.MapGet("/{id}/review", GetProtocolReview)
             .WithName("GetProtocolReview");
 
+        protocolGroup.MapGet("/{id}/patterns", GetProtocolPatterns)
+            .WithName("GetProtocolPatterns");
+
         protocolGroup.MapPost("/{id}/review/complete", CompleteReview)
             .WithName("CompleteProtocolReview");
 
@@ -113,6 +116,19 @@ public static class ProtocolEndpoints
         {
             var review = await protocolService.GetProtocolReviewAsync(id, ct);
             return Results.Ok(review);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
+    }
+
+    private static async Task<IResult> GetProtocolPatterns(Guid id, IProtocolService protocolService, CancellationToken ct)
+    {
+        try
+        {
+            var snapshot = await protocolService.GetPatternSnapshotAsync(id, ct);
+            return Results.Ok(snapshot);
         }
         catch (InvalidOperationException)
         {
