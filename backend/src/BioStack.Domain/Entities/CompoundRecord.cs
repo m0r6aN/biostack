@@ -1,6 +1,6 @@
 namespace BioStack.Domain.Entities;
 
-using Entities.Enums;
+using BioStack.Domain.Enums;
 
 public sealed class CompoundRecord
 {
