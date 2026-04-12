@@ -60,6 +60,9 @@ export default function AdminPage() {
     setIsIngesting(true);
     setMessage(null);
 
+    // Re-acquire token in case the page was open before the API came up.
+    await acquireToken();
+
     let entries: unknown[];
 
     try {
