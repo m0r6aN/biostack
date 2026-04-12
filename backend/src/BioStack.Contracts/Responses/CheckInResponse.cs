@@ -3,6 +3,7 @@ namespace BioStack.Contracts.Responses;
 public sealed record CheckInResponse(
     Guid Id,
     Guid PersonId,
+    Guid? ProtocolRunId,
     DateTime Date,
     decimal Weight,
     int SleepQuality,

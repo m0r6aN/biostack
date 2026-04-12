@@ -98,6 +98,7 @@ builder.Services.AddScoped<IPersonProfileRepository, PersonProfileRepository>();
 builder.Services.AddScoped<ICompoundRecordRepository, CompoundRecordRepository>();
 builder.Services.AddScoped<ICheckInRepository, CheckInRepository>();
 builder.Services.AddScoped<IProtocolRepository, ProtocolRepository>();
+builder.Services.AddScoped<IProtocolRunRepository, ProtocolRunRepository>();
 builder.Services.AddScoped<IProtocolPhaseRepository, ProtocolPhaseRepository>();
 builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();

@@ -19,6 +19,7 @@ import {
     ProfileGoal,
     CurrentStackIntelligence,
     Protocol,
+    ProtocolRun,
     ProtocolPhase,
     ReconstitutionRequest,
     TimelineEvent,
@@ -183,6 +184,36 @@ export class ApiClient {
       method: 'POST',
       body: JSON.stringify({ name }),
     });
+  }
+
+  async startProtocolRun(protocolId: string): Promise<ProtocolRun> {
+    return this.request<ProtocolRun>(`/api/v1/protocols/${protocolId}/runs`, {
+      method: 'POST',
+    });
+  }
+
+  async completeProtocolRun(runId: string): Promise<ProtocolRun> {
+    return this.request<ProtocolRun>(`/api/v1/protocols/runs/${runId}/complete`, {
+      method: 'POST',
+    });
+  }
+
+  async abandonProtocolRun(runId: string): Promise<ProtocolRun> {
+    return this.request<ProtocolRun>(`/api/v1/protocols/runs/${runId}/abandon`, {
+      method: 'POST',
+    });
+  }
+
+  async evolveProtocolFromRun(runId: string, name?: string): Promise<Protocol> {
+    return this.request<Protocol>(`/api/v1/protocols/runs/${runId}/evolve`, {
+      method: 'POST',
+      body: JSON.stringify({ name }),
+    });
+  }
+
+  async getActiveProtocolRun(profileId: string): Promise<ProtocolRun | null> {
+    const run = await this.request<ProtocolRun | undefined>(`/api/v1/profiles/${profileId}/protocols/active-run`);
+    return run ?? null;
   }
 
   async getCurrentStackIntelligence(profileId: string): Promise<CurrentStackIntelligence> {
