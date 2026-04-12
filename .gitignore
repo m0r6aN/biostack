@@ -22,6 +22,7 @@
 /packages/
 TestResults/
 *.nupkg
+.msbuild-temp/
 
 # Root-level Node/Next.js (fallback)
 **/node_modules/
@@ -105,4 +106,3 @@ CLAUDE.md
 tmp/
 temp/
 cache/
-

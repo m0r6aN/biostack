@@ -17,6 +17,8 @@ import {
     KnowledgeEntry,
     PersonProfile,
     ProfileGoal,
+    CurrentStackIntelligence,
+    Protocol,
     ProtocolPhase,
     ReconstitutionRequest,
     TimelineEvent,
@@ -165,6 +167,28 @@ export class ApiClient {
       method: 'POST',
       body: JSON.stringify(phase),
     });
+  }
+
+  // Protocols
+  async getProtocols(profileId: string): Promise<Protocol[]> {
+    return this.request<Protocol[]>(`/api/v1/profiles/${profileId}/protocols`);
+  }
+
+  async getProtocol(protocolId: string): Promise<Protocol> {
+    return this.request<Protocol>(`/api/v1/protocols/${protocolId}`);
+  }
+
+  async saveCurrentStackAsProtocol(profileId: string, name: string): Promise<Protocol> {
+    return this.request<Protocol>(`/api/v1/profiles/${profileId}/protocols`, {
+      method: 'POST',
+      body: JSON.stringify({ name }),
+    });
+  }
+
+  async getCurrentStackIntelligence(profileId: string): Promise<CurrentStackIntelligence> {
+    return this.request<CurrentStackIntelligence>(
+      `/api/v1/profiles/${profileId}/protocols/current-stack-intelligence`
+    );
   }
 
   // Timeline

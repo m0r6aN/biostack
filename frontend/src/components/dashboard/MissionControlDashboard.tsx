@@ -6,12 +6,11 @@ import { apiClient } from '@/lib/api';
 import {
   CheckIn,
   CompoundRecord,
+  CurrentStackIntelligence,
   GoalDefinition,
   InteractionFlag,
   TimelineEvent,
 } from '@/lib/types';
-import { useSettings } from '@/lib/settings';
-import { formatWeight } from '@/lib/utils';
 import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { ErrorState } from '@/components/ErrorState';
@@ -25,12 +24,12 @@ import { OverlapFlagsBanner } from '@/components/dashboard/OverlapFlagsBanner';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
 
 export function MissionControlDashboard() {
-  const { currentProfileId, profiles, setProfiles } = useProfile();
-  const { settings } = useSettings();
+  const { currentProfileId, setProfiles } = useProfile();
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
   const [overlaps, setOverlaps] = useState<InteractionFlag[]>([]);
+  const [currentStack, setCurrentStack] = useState<CurrentStackIntelligence | null>(null);
   const [profileGoals, setProfileGoals] = useState<GoalDefinition[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,17 +68,19 @@ export function MissionControlDashboard() {
       setLoading(true);
       setError(null);
 
-      const [comp, chk, tl, goals] = await Promise.all([
+      const [comp, chk, tl, goals, stack] = await Promise.all([
         apiClient.getCompounds(currentProfileId),
         apiClient.getCheckIns(currentProfileId),
         apiClient.getTimeline(currentProfileId),
         apiClient.getProfileGoals(currentProfileId),
+        apiClient.getCurrentStackIntelligence(currentProfileId),
       ]);
 
       setCompounds(comp);
       setCheckIns(chk);
       setTimeline(tl);
       setProfileGoals(goals);
+      setCurrentStack(stack);
 
       const activeCompoundNames = comp
         .filter((compound) => compound.status === 'Active')
@@ -113,7 +114,6 @@ export function MissionControlDashboard() {
     );
   }
 
-  const currentProfile = profiles.find((profile) => profile.id === currentProfileId);
   const latestCheckIn = checkIns.length > 0 ? checkIns[checkIns.length - 1] : null;
   const activeCompounds = compounds.filter((compound) => compound.status === 'Active').length;
 
@@ -147,10 +147,10 @@ export function MissionControlDashboard() {
                 color={overlaps.length > 0 ? 'amber' : 'default'}
               />
               <StatCard
-                title="Current Weight"
-                value={currentProfile ? formatWeight(currentProfile.weight, settings.weightUnit) : '—'}
-                icon="⚖️"
-                color="default"
+                title="Stack Score"
+                value={currentStack ? currentStack.stackScore.score : '—'}
+                icon="🎯"
+                color={currentStack && currentStack.stackScore.score < 60 ? 'amber' : 'emerald'}
               />
             </div>
 

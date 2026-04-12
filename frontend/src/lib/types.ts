@@ -110,6 +110,63 @@ export interface ProtocolPhase {
   notes: string;
 }
 
+export interface StackScore {
+  score: number;
+  breakdown: {
+    synergy: number;
+    redundancy: number;
+    conflicts: number;
+    evidence: number;
+  };
+  chips: string[];
+}
+
+export interface SimulationResult {
+  timeline: Array<{
+    dayRange: string;
+    signals: string[];
+  }>;
+  insights: string[];
+}
+
+export interface ProtocolActualComparison {
+  simulation: SimulationResult;
+  actualTrends: Array<{
+    metric: string;
+    beforeAverage: number | null;
+    afterAverage: number | null;
+    direction: string;
+  }>;
+  highlights: string[];
+}
+
+export interface ProtocolItem {
+  id: string;
+  protocolId: string;
+  compoundRecordId: string;
+  calculatorResultId: string | null;
+  notes: string;
+  compound: CompoundRecord | null;
+}
+
+export interface Protocol {
+  id: string;
+  personId: string;
+  name: string;
+  version: number;
+  createdAtUtc: string;
+  updatedAtUtc: string;
+  items: ProtocolItem[];
+  stackScore: StackScore;
+  simulation: SimulationResult;
+  actualComparison: ProtocolActualComparison | null;
+}
+
+export interface CurrentStackIntelligence {
+  stackScore: StackScore;
+  simulation: SimulationResult;
+}
+
 export type TimelineEventType =
   | 'compound_added'
   | 'compound_ended'
