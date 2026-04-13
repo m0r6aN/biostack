@@ -1,5 +1,8 @@
 using System.Text;
+using System.Threading.RateLimiting;
+using BioStack.Api.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
@@ -11,6 +14,9 @@ using BioStack.Api.Endpoints;
 using BioStack.Api;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -41,16 +47,82 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(allowedOrigins)
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .AllowCredentials();
     });
 });
 
-// ── JWT Authentication ──────────────────────────────────────────────────────
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddPolicy("auth-start", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 5,
+                Window = TimeSpan.FromMinutes(10),
+                QueueLimit = 0,
+            }));
+
+    options.AddPolicy("auth-verify", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 10,
+                Window = TimeSpan.FromMinutes(10),
+                QueueLimit = 0,
+            }));
+});
+
+// ── First-party cookie sessions + legacy bearer support ─────────────────────
 var jwtSecret = builder.Configuration["Jwt:Secret"]
     ?? throw new InvalidOperationException("Jwt:Secret must be set in configuration or environment.");
 
 builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddAuthentication(options =>
+    {
+        options.DefaultScheme = "BioStackAuth";
+        options.DefaultChallengeScheme = "BioStackAuth";
+    })
+    .AddPolicyScheme("BioStackAuth", "BioStack auth", options =>
+    {
+        options.ForwardDefaultSelector = context =>
+            context.Request.Headers.Authorization.ToString().StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)
+                ? JwtBearerDefaults.AuthenticationScheme
+                : CookieAuthenticationDefaults.AuthenticationScheme;
+    })
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+    {
+        options.Cookie.Name = "biostack_session";
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SameSite = SameSiteMode.Lax;
+        options.Cookie.SecurePolicy = builder.Environment.IsDevelopment()
+            ? CookieSecurePolicy.SameAsRequest
+            : CookieSecurePolicy.Always;
+        options.SlidingExpiration = false;
+        options.Events.OnValidatePrincipal = async context =>
+        {
+            var sessionToken = context.Principal?.FindFirst("session_token")?.Value;
+            if (string.IsNullOrWhiteSpace(sessionToken))
+            {
+                context.RejectPrincipal();
+                return;
+            }
+
+            var db = context.HttpContext.RequestServices.GetRequiredService<BioStackDbContext>();
+            var tokenHash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(sessionToken)));
+            var session = await db.Sessions.FirstOrDefaultAsync(s =>
+                s.TokenHash == tokenHash &&
+                s.RevokedAtUtc == null &&
+                s.ExpiresAtUtc > DateTime.UtcNow);
+
+            if (session is null)
+            {
+                context.RejectPrincipal();
+            }
+        };
+    })
     .AddJwtBearer(options =>
     {
         // .NET 8+ uses JsonWebTokenHandler which ignores DefaultInboundClaimTypeMap.
@@ -105,6 +177,9 @@ builder.Services.AddScoped<IProtocolPhaseRepository, ProtocolPhaseRepository>();
 builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
+builder.Services.AddSingleton<InMemoryMagicLinkDelivery>();
+builder.Services.AddSingleton<IMagicLinkDelivery>(sp => sp.GetRequiredService<InMemoryMagicLinkDelivery>());
+builder.Services.AddSingleton<IDevMagicLinkInbox>(sp => sp.GetRequiredService<InMemoryMagicLinkDelivery>());
 
 // ── Domain services ─────────────────────────────────────────────────────────
 builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
@@ -137,28 +212,9 @@ builder.Services.AddHealthChecks();
 var app = builder.Build();
 
 app.UseCors("ConfiguredOrigins");
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
-
-// Callback-secret middleware — blocks /oauth-callback unless the correct shared secret is present.
-app.Use(async (ctx, next) =>
-{
-    if (ctx.Request.Path.StartsWithSegments("/api/v1/auth/oauth-callback"))
-    {
-        var expectedSecret = ctx.RequestServices.GetRequiredService<IConfiguration>()["Auth:CallbackSecret"];
-        if (!string.IsNullOrEmpty(expectedSecret))
-        {
-            var provided = ctx.Request.Headers["X-Callback-Secret"].FirstOrDefault();
-            if (provided != expectedSecret)
-            {
-                ctx.Response.StatusCode = 401;
-                await ctx.Response.WriteAsync("Unauthorized");
-                return;
-            }
-        }
-    }
-    await next(ctx);
-});
 
 app.MapOpenApi();
 app.MapScalarApiReference(options =>

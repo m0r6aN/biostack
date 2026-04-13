@@ -1,76 +1,14 @@
 'use client';
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
-import { getProviders, signIn } from 'next-auth/react';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { FormEvent, Suspense, useEffect, useMemo, useState } from 'react';
 
-export const providerCatalog = [
-  {
-    id: 'google',
-    label: 'Continue with Google',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'github',
-    label: 'Continue with GitHub',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12c0-5.523-4.477-10-10-10z"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'discord',
-    label: 'Continue with Discord',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.08.114 18.1.133 18.116a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'facebook',
-    label: 'Continue with Facebook',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-        <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.6 1.6-1.6h1.7V4.8c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.4-4.1 4.1V11H8v3h2.3v8h3.2z" />
-      </svg>
-    ),
-  },
-  {
-    id: 'instagram',
-    label: 'Continue with Instagram',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-  {
-    id: 'apple',
-    label: 'Continue with Apple',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-        <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
-      </svg>
-    ),
-  },
-] as const;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-function resolveContinueHref(callbackUrl: string | null) {
+function resolveRedirectPath(callbackUrl: string | null) {
   if (!callbackUrl) {
-    return '/profiles';
+    return '/mission-control';
   }
 
   if (callbackUrl.startsWith('/')) {
@@ -79,112 +17,153 @@ function resolveContinueHref(callbackUrl: string | null) {
 
   try {
     const parsed = new URL(callbackUrl);
-    return `${parsed.pathname}${parsed.search}${parsed.hash}` || '/profiles';
+    return `${parsed.pathname}${parsed.search}${parsed.hash}` || '/mission-control';
   } catch {
-    return '/profiles';
+    return '/mission-control';
   }
 }
 
-export default function SignInPage() {
-  const [enabledProviders, setEnabledProviders] = useState<Array<(typeof providerCatalog)[number]>>([]);
-  const [providersLoaded, setProvidersLoaded] = useState(false);
+function maskEmail(email: string) {
+  const [name, domain] = email.split('@');
+  if (!name || !domain) {
+    return email;
+  }
+
+  const visible = name.length <= 2 ? name[0] : `${name[0]}${name[name.length - 1]}`;
+  return `${visible}${'*'.repeat(Math.max(2, name.length - visible.length))}@${domain}`;
+}
+
+function SignInPageContent() {
   const searchParams = useSearchParams();
-  const callbackUrl = resolveContinueHref(searchParams.get('callbackUrl'));
+  const redirectPath = useMemo(() => resolveRedirectPath(searchParams.get('callbackUrl')), [searchParams]);
+  const error = searchParams.get('error');
+  const [email, setEmail] = useState('');
+  const [submittedEmail, setSubmittedEmail] = useState('');
+  const [isSending, setIsSending] = useState(false);
+  const [cooldownUntil, setCooldownUntil] = useState(0);
+  const [now, setNow] = useState(Date.now());
+
+  const isInboxStep = Boolean(submittedEmail);
+  const cooldownMs = Math.max(0, cooldownUntil - now);
+  const cooldownSeconds = Math.ceil(cooldownMs / 1000);
 
   useEffect(() => {
-    let mounted = true;
+    if (!cooldownUntil) {
+      return;
+    }
 
-    getProviders()
-      .then((providers) => {
-        if (!mounted) {
-          return;
-        }
+    const id = window.setInterval(() => {
+      const nextNow = Date.now();
+      setNow(nextNow);
+      if (nextNow >= cooldownUntil) {
+        setCooldownUntil(0);
+      }
+    }, 1000);
 
-        const enabled = providerCatalog.filter((provider) => providers?.[provider.id]);
-        setEnabledProviders(enabled);
-        setProvidersLoaded(true);
-      })
-      .catch(() => {
-        if (mounted) {
-          setEnabledProviders([]);
-          setProvidersLoaded(true);
-        }
+    return () => window.clearInterval(id);
+  }, [cooldownUntil]);
+
+  async function startAuth(nextEmail = email) {
+    const normalized = nextEmail.trim().toLowerCase();
+    if (!normalized || cooldownMs > 0) {
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      await fetch(`${API_URL}/api/v1/auth/start`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contact: normalized, channel: 'email', redirectPath }),
       });
+      setSubmittedEmail(normalized);
+      setCooldownUntil(Date.now() + 30000);
+    } finally {
+      setIsSending(false);
+    }
+  }
 
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void startAuth();
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0B0F14] px-4">
-      {/* Ambient glow */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-[20%] right-[5%] w-[70vw] h-[60vh] rounded-full bg-emerald-500/[0.05] blur-[140px]" />
-        <div className="absolute top-[40%] -left-[10%] w-[50vw] h-[50vh] rounded-full bg-blue-600/[0.04] blur-[120px]" />
-      </div>
-
-      <div className="relative w-full max-w-md z-10">
-        {/* Card */}
-        <div className="rounded-3xl border border-white/[0.07] bg-white/[0.03] backdrop-blur-2xl shadow-2xl p-8">
-          {/* Logo */}
-          <div className="flex justify-center mb-8">
-            <BioStackLogo variant="stacked" theme="dark" size="lg" />
-          </div>
-
-          <div className="text-center mb-8">
-            <h1 className="text-xl font-bold text-white/90 tracking-tight">
-              {enabledProviders.length > 0 ? 'Welcome to Mission Control' : 'Continue to Mission Control'}
-            </h1>
-            <p className="text-sm text-white/35 mt-2">
-              {enabledProviders.length > 0
-                ? 'Sign in with your preferred provider to continue'
-                : 'No sign-in provider is configured here yet. You can keep going in local mode.'}
-            </p>
-          </div>
-
-          <div className="space-y-3">
-            {enabledProviders.map((provider) => (
-              <button
-                key={provider.id}
-                onClick={() => signIn(provider.id, { callbackUrl })}
-                className="group w-full flex items-center gap-4 px-5 py-3.5 rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all duration-200 text-white/70 hover:text-white/90 text-sm font-semibold"
-              >
-                <span className="shrink-0 text-white/60 group-hover:text-white/80 transition-colors">
-                  {provider.icon}
-                </span>
-                <span className="flex-1 text-left">{provider.label}</span>
-                <svg
-                  className="w-4 h-4 text-white/20 group-hover:text-white/40 transition-colors"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            ))}
-
-            {providersLoaded && enabledProviders.length === 0 && (
-              <>
-                <div className="rounded-2xl border border-amber-400/20 bg-amber-500/8 px-4 py-3 text-sm text-amber-100/80">
-                  Sign-in providers are not configured yet. You can still continue locally and use BioStack on this device.
-                </div>
-                <Link
-                  href={callbackUrl}
-                  className="flex w-full items-center justify-center rounded-2xl border border-emerald-400/20 bg-emerald-500/12 px-5 py-3.5 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-300/30 hover:bg-emerald-500/16"
-                >
-                  Continue in Local Mode
-                </Link>
-              </>
-            )}
-          </div>
-
-          <p className="mt-8 text-center text-[11px] text-white/20 leading-relaxed">
-            Your data is stored locally. Authentication only identifies you across sessions.
-            <br />
-            We never share your personal data.
-          </p>
+    <main className="min-h-screen bg-[#0B0F14] px-4 py-8 text-white/90">
+      <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-md flex-col justify-center">
+        <div className="mb-8 flex justify-center">
+          <BioStackLogo variant="stacked" theme="dark" size="lg" />
         </div>
+
+        <section className="rounded-lg border border-white/[0.07] bg-white/[0.035] p-6 shadow-2xl sm:p-8">
+          {!isInboxStep ? (
+            <>
+              <div className="mb-7 text-center">
+                <h1 className="text-2xl font-bold tracking-tight text-white">Sign in to BioStack</h1>
+                <p className="mt-2 text-sm leading-6 text-white/45">
+                  Use your email. We will send a private sign-in link.
+                </p>
+              </div>
+
+              {error && (
+                <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
+                  That sign-in link is expired or already used. Send yourself a new one.
+                </div>
+              )}
+
+              <form onSubmit={onSubmit} className="space-y-4">
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-white/70">Email</span>
+                  <input
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    required
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    className="min-h-12 w-full rounded-lg border border-white/10 bg-black/25 px-4 text-base text-white outline-none transition-colors placeholder:text-white/25 focus:border-emerald-300/50"
+                    placeholder="you@example.com"
+                  />
+                </label>
+                <button
+                  type="submit"
+                  disabled={isSending}
+                  className="min-h-12 w-full rounded-lg bg-emerald-400 px-5 text-sm font-bold text-[#07110c] transition-colors hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-65"
+                >
+                  {isSending ? 'Sending...' : 'Continue'}
+                </button>
+              </form>
+            </>
+          ) : (
+            <div className="text-center">
+              <h1 className="text-2xl font-bold tracking-tight text-white">Check your inbox</h1>
+              <p className="mt-3 text-sm leading-6 text-white/50">
+                We sent a sign-in link to <span className="font-semibold text-white/80">{maskEmail(submittedEmail)}</span>.
+              </p>
+              <p className="mt-4 text-sm text-white/35">Open the link on this device to continue.</p>
+
+              <button
+                type="button"
+                disabled={isSending || cooldownMs > 0}
+                onClick={() => void startAuth(submittedEmail)}
+                className="mt-7 min-h-12 w-full rounded-lg border border-white/10 bg-white/[0.04] px-5 text-sm font-semibold text-white/75 transition-colors hover:bg-white/[0.07] disabled:cursor-not-allowed disabled:opacity-55"
+              >
+                {cooldownMs > 0 ? `Resend in ${cooldownSeconds}s` : 'Resend link'}
+              </button>
+            </div>
+          )}
+        </section>
       </div>
-    </div>
+    </main>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-[#0B0F14]" />}>
+      <SignInPageContent />
+    </Suspense>
   );
 }

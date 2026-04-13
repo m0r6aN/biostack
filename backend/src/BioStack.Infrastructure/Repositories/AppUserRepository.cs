@@ -17,6 +17,10 @@ public sealed class AppUserRepository : IAppUserRepository
     public async Task<AppUser?> GetByIdAsync(Guid id, CancellationToken ct = default)
         => await _context.AppUsers.FindAsync(new object[] { id }, ct);
 
+    public async Task<AppUser?> FindByEmailAsync(string email, CancellationToken ct = default)
+        => await _context.AppUsers
+            .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower(), ct);
+
     public async Task<AppUser> UpsertAsync(AppUser user, CancellationToken ct = default)
     {
         var existing = await FindByProviderAsync(user.Provider, user.ProviderKey, ct);
@@ -42,6 +46,7 @@ public sealed class AppUserRepository : IAppUserRepository
 public interface IAppUserRepository
 {
     Task<AppUser?> FindByProviderAsync(string provider, string providerKey, CancellationToken ct = default);
+    Task<AppUser?> FindByEmailAsync(string email, CancellationToken ct = default);
     Task<AppUser?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<AppUser>  UpsertAsync(AppUser user, CancellationToken ct = default);
 }

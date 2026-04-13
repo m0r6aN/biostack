@@ -9,22 +9,8 @@ param(
     [string]$BaseName,
 
     [Parameter(Mandatory = $true)]
-    [string]$AuthSecret,
-
-    [Parameter(Mandatory = $true)]
     [string]$JwtSecret,
 
-    [Parameter(Mandatory = $true)]
-    [string]$CallbackSecret,
-
-    [string]$GoogleClientId = "",
-    [string]$GoogleClientSecret = "",
-    [string]$GitHubClientId = "",
-    [string]$GitHubClientSecret = "",
-    [string]$DiscordClientId = "",
-    [string]$DiscordClientSecret = "",
-    [string]$AppleClientId = "",
-    [string]$AppleClientSecret = "",
     [string]$DatabaseProvider = "sqlite",
     [string]$PostgresConnectionString = "",
     [string]$WebUrlOverride = "",
@@ -91,8 +77,7 @@ $apiUrl = "https://$apiFqdn"
 $publicApiUrl = if ([string]::IsNullOrWhiteSpace($ApiUrlOverride)) { $apiUrl } else { $ApiUrlOverride }
 
 $apiSecrets = @(
-    "jwt-secret=$JwtSecret",
-    "callback-secret=$CallbackSecret"
+    "jwt-secret=$JwtSecret"
 )
 
 $apiEnvVars = @(
@@ -101,7 +86,8 @@ $apiEnvVars = @(
     "Jwt__Issuer=biostack",
     "Jwt__Audience=biostack-ui",
     "Cors__AllowedOrigins__0=https://placeholder",
-    "Auth__CallbackSecret=secretref:callback-secret",
+    "PublicApiUrl=$publicApiUrl",
+    "FrontendUrl=https://placeholder",
     "Jwt__Secret=secretref:jwt-secret"
 )
 
@@ -152,53 +138,23 @@ if ($LASTEXITCODE -ne 0) { throw "Failed to resolve web FQDN." }
 $webUrl = "https://$webFqdn"
 $publicWebUrl = if ([string]::IsNullOrWhiteSpace($WebUrlOverride)) { $webUrl } else { $WebUrlOverride }
 
-$webSecrets = @(
-    "auth-secret=$AuthSecret",
-    "callback-secret=$CallbackSecret"
-)
+$webSecrets = @()
 
 $webEnvVars = @(
     "NODE_ENV=production",
-    "NEXT_PUBLIC_API_URL=$publicApiUrl",
-    "API_INTERNAL_URL=$publicApiUrl",
-    "AUTH_URL=$publicWebUrl",
-    "AUTH_TRUST_HOST=true",
-    "AUTH_SECRET=secretref:auth-secret",
-    "AUTH_CALLBACK_SECRET=secretref:callback-secret"
+    "NEXT_PUBLIC_API_URL=$publicApiUrl"
 )
 
-if (-not [string]::IsNullOrWhiteSpace($GoogleClientId) -and -not [string]::IsNullOrWhiteSpace($GoogleClientSecret)) {
-    $webSecrets += "google-client-secret=$GoogleClientSecret"
-    $webEnvVars += "GOOGLE_CLIENT_ID=$GoogleClientId"
-    $webEnvVars += "GOOGLE_CLIENT_SECRET=secretref:google-client-secret"
+if ($webSecrets.Count -gt 0) {
+    $webSecretArgs = @(
+        "containerapp", "secret", "set",
+        "--name", $webAppName,
+        "--resource-group", $ResourceGroup,
+        "--secrets"
+    ) + $webSecrets
+
+    Invoke-Az -Arguments $webSecretArgs
 }
-
-if (-not [string]::IsNullOrWhiteSpace($GitHubClientId) -and -not [string]::IsNullOrWhiteSpace($GitHubClientSecret)) {
-    $webSecrets += "github-client-secret=$GitHubClientSecret"
-    $webEnvVars += "GITHUB_CLIENT_ID=$GitHubClientId"
-    $webEnvVars += "GITHUB_CLIENT_SECRET=secretref:github-client-secret"
-}
-
-if (-not [string]::IsNullOrWhiteSpace($DiscordClientId) -and -not [string]::IsNullOrWhiteSpace($DiscordClientSecret)) {
-    $webSecrets += "discord-client-secret=$DiscordClientSecret"
-    $webEnvVars += "DISCORD_CLIENT_ID=$DiscordClientId"
-    $webEnvVars += "DISCORD_CLIENT_SECRET=secretref:discord-client-secret"
-}
-
-if (-not [string]::IsNullOrWhiteSpace($AppleClientId) -and -not [string]::IsNullOrWhiteSpace($AppleClientSecret)) {
-    $webSecrets += "apple-client-secret=$AppleClientSecret"
-    $webEnvVars += "APPLE_CLIENT_ID=$AppleClientId"
-    $webEnvVars += "APPLE_CLIENT_SECRET=secretref:apple-client-secret"
-}
-
-$webSecretArgs = @(
-    "containerapp", "secret", "set",
-    "--name", $webAppName,
-    "--resource-group", $ResourceGroup,
-    "--secrets"
-) + $webSecrets
-
-Invoke-Az -Arguments $webSecretArgs
 
 $webUpdateArgs = @(
     "containerapp", "update",
@@ -218,7 +174,8 @@ $apiFinalEnvVars = @(
     "Jwt__Issuer=biostack",
     "Jwt__Audience=biostack-ui",
     "Cors__AllowedOrigins__0=$publicWebUrl",
-    "Auth__CallbackSecret=secretref:callback-secret",
+    "PublicApiUrl=$publicApiUrl",
+    "FrontendUrl=$publicWebUrl",
     "Jwt__Secret=secretref:jwt-secret"
 )
 
@@ -247,4 +204,4 @@ Write-Host "Deployment complete." -ForegroundColor Green
 Write-Host "Frontend: $publicWebUrl"
 Write-Host "API:      $publicApiUrl"
 Write-Host ""
-Write-Host "Next step: update OAuth provider callback URLs to use $publicWebUrl/api/auth/callback/{provider}"
+Write-Host "Passwordless email auth is configured. Use /dev/auth/inbox only in local development."

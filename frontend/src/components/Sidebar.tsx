@@ -1,8 +1,8 @@
 'use client';
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
+import { useAuth } from '@/lib/AuthProvider';
 import { cn } from '@/lib/utils';
-import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -125,9 +125,9 @@ import { useProfile } from '@/lib/context';
 export function Sidebar() {
   const pathname = usePathname();
   const { isSidebarOpen, setSidebarOpen } = useProfile();
-  const { data: session } = useSession();
+  const { user, logout } = useAuth();
 
-  const isAdmin = session?.user?.role === 1;
+  const isAdmin = user?.role === 1;
 
   const visibleNavItems = navItems.filter(
     (item) => !item.adminOnly || isAdmin
@@ -219,26 +219,26 @@ export function Sidebar() {
 
         {/* ── User zone ──────────────────────────────────────────────────────── */}
         <div className="px-4 pb-4">
-          {session?.user && (
+          {user && (
             <div className="p-3 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center gap-3 mb-3">
               {/* Avatar */}
-              {session.user.image ? (
+              {user.avatarUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={session.user.image}
-                  alt={session.user.name ?? 'User'}
+                  src={user.avatarUrl}
+                  alt={user.displayName || user.email || 'User'}
                   className="w-8 h-8 rounded-full border border-white/10 shrink-0"
                 />
               ) : (
                 <div className="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-400/20 flex items-center justify-center shrink-0">
                   <span className="text-emerald-400 text-xs font-bold">
-                    {(session.user.name ?? session.user.email ?? 'U')[0].toUpperCase()}
+                    {(user.displayName || user.email || 'U')[0].toUpperCase()}
                   </span>
                 </div>
               )}
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-semibold text-white/70 leading-none truncate">
-                  {session.user.name ?? session.user.email}
+                  {user.displayName || user.email}
                 </p>
                 {isAdmin && (
                   <span className="inline-block mt-1 text-[9px] font-bold tracking-widest text-amber-400/80 uppercase">
@@ -247,7 +247,7 @@ export function Sidebar() {
                 )}
               </div>
               <button
-                onClick={() => signOut({ callbackUrl: '/auth/signin' })}
+                onClick={() => void logout()}
                 title="Sign out"
                 className="shrink-0 p-1.5 rounded-xl hover:bg-white/5 text-white/25 hover:text-white/50 transition-colors"
               >

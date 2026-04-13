@@ -1,39 +1,42 @@
 import SignInPage from '@/app/auth/signin/page';
-import { render, screen, waitFor } from '@testing-library/react';
-import type { ComponentProps } from 'react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-const getProvidersMock = vi.fn();
+const fetchMock = vi.fn();
 
-vi.mock('next/link', () => ({
-  default: ({ href, children, ...props }: ComponentProps<'a'>) => (
-    <a href={href} {...props}>
-      {children}
-    </a>
-  ),
-}));
+vi.stubGlobal('fetch', fetchMock);
 
 vi.mock('next/navigation', () => ({
   useSearchParams: () => new URLSearchParams('callbackUrl=http%3A%2F%2Flocalhost%3A3043%2Fprofiles'),
 }));
 
-vi.mock('next-auth/react', () => ({
-  getProviders: (...args: unknown[]) => getProvidersMock(...args),
-  signIn: vi.fn(),
-}));
-
 describe('SignInPage', () => {
-  it('offers a local-mode continuation when no providers are configured', async () => {
-    getProvidersMock.mockResolvedValue({});
+  it('starts passwordless email auth and moves to the inbox step', async () => {
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({}) });
 
     render(<SignInPage />);
 
+    fireEvent.change(screen.getByLabelText('Email'), {
+      target: { value: 'User@Example.com' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
     await waitFor(() => {
-      expect(
-        screen.getByText('Sign-in providers are not configured yet. You can still continue locally and use BioStack on this device.')
-      ).toBeInTheDocument();
+      expect(fetchMock).toHaveBeenCalledWith(
+        'http://localhost:5000/api/v1/auth/start',
+        expect.objectContaining({
+          method: 'POST',
+          credentials: 'include',
+          body: JSON.stringify({
+            contact: 'user@example.com',
+            channel: 'email',
+            redirectPath: '/profiles',
+          }),
+        })
+      );
     });
 
-    expect(screen.getByRole('link', { name: 'Continue in Local Mode' })).toHaveAttribute('href', '/profiles');
+    expect(screen.getByText('Check your inbox')).toBeInTheDocument();
+    expect(screen.getByText('ur**@example.com')).toBeInTheDocument();
   });
 });
