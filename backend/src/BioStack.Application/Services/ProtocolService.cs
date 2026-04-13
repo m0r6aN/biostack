@@ -257,6 +257,95 @@ public sealed class ProtocolService : IProtocolService
         };
     }
 
+    public async Task<ProtocolDriftSnapshot> GetDriftSnapshotAsync(Guid protocolId, CancellationToken cancellationToken = default)
+    {
+        var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
+        if (protocol is null)
+            throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+
+        var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
+            .OrderBy(version => version.Version)
+            .ThenBy(version => version.CreatedAtUtc)
+            .ToList();
+        if (lineage.Count == 0)
+        {
+            lineage.Add(protocol);
+        }
+
+        var protocolIds = lineage.Select(version => version.Id).ToList();
+        var runs = (await _protocolRunRepository.GetByProtocolIdsAsync(protocolIds, cancellationToken))
+            .OrderBy(run => run.StartedAtUtc)
+            .ToList();
+        var checkIns = (await _checkInRepository.GetByPersonIdAsync(protocol.PersonId, cancellationToken))
+            .OrderBy(checkIn => checkIn.Date)
+            .ToList();
+        var computations = (await _computationRepository.GetByProtocolIdsAsync(protocolIds, cancellationToken))
+            .OrderBy(record => record.TimestampUtc)
+            .ToList();
+        var reviewCompletedEvents = (await _reviewCompletedEventRepository.GetByProtocolIdsAsync(protocolIds, cancellationToken))
+            .OrderBy(@event => @event.CompletedAtUtc)
+            .ToList();
+
+        var targetRun = runs
+            .Where(run => run.Status == ProtocolRunStatus.Active)
+            .OrderByDescending(run => run.StartedAtUtc)
+            .FirstOrDefault()
+            ?? runs
+                .OrderByDescending(run => run.EndedAtUtc ?? run.StartedAtUtc)
+                .FirstOrDefault();
+        var historicalRuns = runs
+            .Where(run => run.Status == ProtocolRunStatus.Completed && run.Id != targetRun?.Id)
+            .OrderBy(run => run.StartedAtUtc)
+            .ToList();
+
+        if (historicalRuns.Count < 2)
+        {
+            return new ProtocolDriftSnapshot
+            {
+                ProtocolId = protocol.Id,
+                DriftState = "none",
+                BaselineSource = "insufficient_history",
+                RegimeClassification = new RegimeClassificationSummary { State = "stable" }
+            };
+        }
+
+        if (targetRun is null)
+        {
+            return new ProtocolDriftSnapshot
+            {
+                ProtocolId = protocol.Id,
+                DriftState = "none",
+                BaselineSource = "historical_runs",
+                RegimeClassification = new RegimeClassificationSummary { State = "stable" }
+            };
+        }
+
+        var historicalContexts = historicalRuns
+            .Select(run => BuildPatternRunContext(run, checkIns, computations, reviewCompletedEvents))
+            .ToList();
+        var targetContext = BuildPatternRunContext(targetRun, checkIns, computations, reviewCompletedEvents);
+        var patternSnapshot = await GetPatternSnapshotAsync(protocolId, cancellationToken);
+        var observationSignals = BuildObservationSignals(targetRun.Status == ProtocolRunStatus.Active ? targetRun : null, runs, checkIns).ToList();
+        var signals = BuildDriftSignals(targetContext, historicalContexts, observationSignals);
+        var driftState = ClassifyDrift(signals, patternSnapshot, targetContext.AttachedCheckIns.Count < 2);
+
+        return new ProtocolDriftSnapshot
+        {
+            ProtocolId = protocol.Id,
+            DriftState = driftState,
+            BaselineSource = "historical_runs",
+            Signals = signals,
+            RegimeClassification = new RegimeClassificationSummary
+            {
+                State = MapRegimeState(driftState),
+                ContributingFactors = signals
+                    .Select(signal => signal.Type)
+                    .Distinct(StringComparer.Ordinal)
+                    .ToList()
+            }
+        };
+    }
+
     public async Task<ProtocolRunResponse> StartRunAsync(Guid protocolId, CancellationToken cancellationToken = default)
     {
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
@@ -330,6 +419,9 @@ public sealed class ProtocolService : IProtocolService
         var patternSnapshot = patternProtocolId is null
             ? null
             : await GetPatternSnapshotAsync(patternProtocolId.Value, cancellationToken);
+        var driftSnapshot = patternProtocolId is null
+            ? null
+            : await GetDriftSnapshotAsync(patternProtocolId.Value, cancellationToken);
         var pendingReview = HasPendingReview(latestClosedRun, latestEvolved, latestReviewCompleted);
         var observationSignals = BuildObservationSignals(activeRun, runs, checkIns);
 
@@ -341,6 +433,7 @@ public sealed class ProtocolService : IProtocolService
             BuildCheckInSignal(latestCheckIn, activeRun, runs, checkIns),
             observationSignals,
             patternSnapshot,
+            driftSnapshot,
             review?.Timeline
                 .Select(@event => AnnotateTimelineEvent(@event, patternSnapshot))
                 .OrderByDescending(@event => @event.OccurredAtUtc)
@@ -1264,6 +1357,275 @@ public sealed class ProtocolService : IProtocolService
         };
     }
 
+    private static List<DriftSignalSummary> BuildDriftSignals(
+        PatternRunContext current,
+        List<PatternRunContext> historical,
+        List<MissionControlObservationSignalResponse> observationSignals)
+    {
+        var signals = new List<DriftSignalSummary>();
+        AddCheckInTimingDrift(signals, current, historical);
+        AddRunDurationDrift(signals, current, historical);
+        AddComputationTimingDrift(signals, current, historical);
+        AddReviewTimingDrift(signals, current, historical);
+        AddSequenceDrift(signals, current, historical);
+        AddSignalDensityDrift(signals, current, historical, observationSignals);
+
+        return signals
+            .GroupBy(signal => signal.Type, StringComparer.Ordinal)
+            .Select(group => group
+                .OrderByDescending(signal => signal.Severity == "moderate")
+                .ThenBy(signal => signal.Description, StringComparer.Ordinal)
+                .First())
+            .OrderBy(signal => signal.Type, StringComparer.Ordinal)
+            .ToList();
+    }
+
+    private static void AddCheckInTimingDrift(
+        List<DriftSignalSummary> signals,
+        PatternRunContext current,
+        List<PatternRunContext> historical)
+    {
+        var historicalFirst = PresentTimeSpans(historical.Select(context => context.FirstCheckInOffset));
+        var currentFirst = current.FirstCheckInOffset;
+        var firstLate = currentFirst is not null && historicalFirst.Count >= 2 && currentFirst.Value > historicalFirst.Max();
+        var missingFirst = currentFirst is null && historicalFirst.Count >= 2 && DateTime.UtcNow - current.Run.StartedAtUtc > historicalFirst.Max();
+
+        var historicalAverageIntervals = historical
+            .Select(context => context.CheckInIntervals.Count == 0 ? (TimeSpan?)null : AverageTimeSpan(context.CheckInIntervals))
+            .Where(value => value is not null)
+            .Select(value => value!.Value)
+            .ToList();
+        var currentAverageInterval = current.CheckInIntervals.Count == 0 ? (TimeSpan?)null : AverageTimeSpan(current.CheckInIntervals);
+        var intervalLate = currentAverageInterval is not null && historicalAverageIntervals.Count >= 2 && currentAverageInterval.Value > historicalAverageIntervals.Max();
+
+        if (firstLate && intervalLate)
+        {
+            signals.Add(new DriftSignalSummary
+            {
+                Type = "checkin_timing",
+                Severity = "moderate",
+                Description = "Check-in cadence later than historical pattern"
+            });
+        }
+        else if (firstLate || missingFirst)
+        {
+            signals.Add(new DriftSignalSummary
+            {
+                Type = "checkin_timing",
+                Severity = "mild",
+                Description = "First check-in later than historical range"
+            });
+        }
+        else if (intervalLate)
+        {
+            signals.Add(new DriftSignalSummary
+            {
+                Type = "checkin_timing",
+                Severity = "mild",
+                Description = "Average check-in interval exceeds historical range"
+            });
+        }
+    }
+
+    private static void AddRunDurationDrift(
+        List<DriftSignalSummary> signals,
+        PatternRunContext current,
+        List<PatternRunContext> historical)
+    {
+        var historicalDurations = PresentTimeSpans(historical.Select(context => context.Duration));
+        if (historicalDurations.Count < 2)
+        {
+            return;
+        }
+
+        var currentDuration = current.Duration ?? DateTime.UtcNow - current.Run.StartedAtUtc;
+        if (currentDuration > historicalDurations.Max())
+        {
+            signals.Add(new DriftSignalSummary
+            {
+                Type = "run_duration",
+                Severity = "moderate",
+                Description = "Current run duration exceeds historical range"
+            });
+        }
+    }
+
+    private static void AddComputationTimingDrift(
+        List<DriftSignalSummary> signals,
+        PatternRunContext current,
+        List<PatternRunContext> historical)
+    {
+        var historicalComputationOffsets = PresentTimeSpans(historical.Select(context => context.FirstComputationOffset));
+        if (historicalComputationOffsets.Count >= 2 && current.FirstComputationOffset is not null)
+        {
+            if (current.FirstComputationOffset.Value < historicalComputationOffsets.Min() ||
+                current.FirstComputationOffset.Value > historicalComputationOffsets.Max())
+            {
+                signals.Add(new DriftSignalSummary
+                {
+                    Type = "computation_timing",
+                    Severity = "mild",
+                    Description = "Computation occurred outside historical timing range"
+                });
+            }
+        }
+
+        var historicalComputationCounts = historical.Select(context => context.Computations.Count).ToList();
+        if (historicalComputationCounts.Count >= 2 &&
+            current.Computations.Count >= 2 &&
+            current.Computations.Count > historicalComputationCounts.Max())
+        {
+            signals.Add(new DriftSignalSummary
+            {
+                Type = "computation_timing",
+                Severity = "moderate",
+                Description = "Repeated computation behavior exceeds historical range"
+            });
+        }
+    }
+
+    private static void AddReviewTimingDrift(
+        List<DriftSignalSummary> signals,
+        PatternRunContext current,
+        List<PatternRunContext> historical)
+    {
+        var historicalReviewOffsets = PresentTimeSpans(historical.Select(context => context.ReviewCompletionOffset));
+        if (historicalReviewOffsets.Count < 2 || current.Run.EndedAtUtc is null)
+        {
+            return;
+        }
+
+        if (current.ReviewCompletionOffset is null)
+        {
+            if (DateTime.UtcNow - current.Run.EndedAtUtc.Value > historicalReviewOffsets.Max())
+            {
+                signals.Add(new DriftSignalSummary
+                {
+                    Type = "review_timing",
+                    Severity = "mild",
+                    Description = "Review not completed within historical timing range"
+                });
+            }
+
+            return;
+        }
+
+        if (current.ReviewCompletionOffset.Value > historicalReviewOffsets.Max())
+        {
+            signals.Add(new DriftSignalSummary
+            {
+                Type = "review_timing",
+                Severity = "moderate",
+                Description = "Review completion later than historical range"
+            });
+        }
+    }
+
+    private static void AddSequenceDrift(
+        List<DriftSignalSummary> signals,
+        PatternRunContext current,
+        List<PatternRunContext> historical)
+    {
+        var recurringSequences = historical
+            .GroupBy(context => string.Join(">", context.Sequence), StringComparer.Ordinal)
+            .Where(group => group.Count() >= 2 && group.First().Sequence.Count > 1)
+            .Select(group => group.First().Sequence)
+            .ToList();
+
+        if (recurringSequences.Count == 0)
+        {
+            return;
+        }
+
+        var currentSequence = string.Join(">", current.Sequence);
+        if (!recurringSequences.Any(sequence => string.Equals(string.Join(">", sequence), currentSequence, StringComparison.Ordinal)))
+        {
+            signals.Add(new DriftSignalSummary
+            {
+                Type = "sequence_break",
+                Severity = "moderate",
+                Description = "Recurring sequence not observed"
+            });
+        }
+    }
+
+    private static void AddSignalDensityDrift(
+        List<DriftSignalSummary> signals,
+        PatternRunContext current,
+        List<PatternRunContext> historical,
+        List<MissionControlObservationSignalResponse> observationSignals)
+    {
+        var historicalCheckInCounts = historical.Select(context => context.AttachedCheckIns.Count).ToList();
+        if (historicalCheckInCounts.Count >= 2 &&
+            current.AttachedCheckIns.Count < historicalCheckInCounts.Min() &&
+            observationSignals.Any(signal => signal.Type == "gap"))
+        {
+            signals.Add(new DriftSignalSummary
+            {
+                Type = "signal_density",
+                Severity = "mild",
+                Description = "Observation gaps increased relative to historical runs"
+            });
+        }
+
+        var historicalTrendShiftCounts = historical.Select(context => TrendShiftMetricCount(context.AttachedCheckIns)).ToList();
+        var currentTrendShiftCount = TrendShiftMetricCount(current.AttachedCheckIns);
+        if (historicalTrendShiftCounts.Count >= 2 &&
+            currentTrendShiftCount > historicalTrendShiftCounts.Max())
+        {
+            signals.Add(new DriftSignalSummary
+            {
+                Type = "signal_density",
+                Severity = "moderate",
+                Description = "Trend-shift signal density exceeds historical range"
+            });
+        }
+    }
+
+    private static string ClassifyDrift(
+        List<DriftSignalSummary> signals,
+        ProtocolPatternSnapshot patternSnapshot,
+        bool sparseCurrentData)
+    {
+        if (signals.Count == 0)
+        {
+            return "none";
+        }
+
+        if (sparseCurrentData && signals.All(signal => signal.Type is "sequence_break" or "signal_density"))
+        {
+            return "mild";
+        }
+
+        var dimensions = signals.Select(signal => signal.Type).Distinct(StringComparer.Ordinal).Count();
+        var hasStrongPersistentDeviation = signals.Count == 1 && signals[0].Severity == "moderate";
+        var similarityDegraded = patternSnapshot.CurrentRunComparison?.Similarity == "low" ||
+            patternSnapshot.CurrentRunComparison?.DivergentSignals.Count >= 2;
+        var recurringSequenceMissing = signals.Any(signal => signal.Type == "sequence_break");
+
+        if (dimensions >= 2 && (similarityDegraded || recurringSequenceMissing))
+        {
+            return "regime_shift";
+        }
+
+        if (signals.Count >= 3 || dimensions >= 2 || hasStrongPersistentDeviation)
+        {
+            return "moderate";
+        }
+
+        return "mild";
+    }
+
+    private static string MapRegimeState(string driftState)
+    {
+        return driftState switch
+        {
+            "regime_shift" => "shifted",
+            "mild" or "moderate" => "drifting",
+            _ => "stable"
+        };
+    }
+
     private static ProtocolReviewTimelineEventResponse AnnotateTimelineEvent(
         ProtocolReviewTimelineEventResponse @event,
         ProtocolPatternSnapshot? patternSnapshot)
@@ -1313,6 +1675,21 @@ public sealed class ProtocolService : IProtocolService
 
         return new[] { "energy", "recovery", "sleep", "appetite" }
             .Any(metric =>
+            {
+                var values = attachedCheckIns.Select(checkIn => MetricValue(metric, checkIn)).ToList();
+                return values.Max() - values.Min() >= 2;
+            });
+    }
+
+    private static int TrendShiftMetricCount(List<CheckIn> attachedCheckIns)
+    {
+        if (attachedCheckIns.Count < 2)
+        {
+            return 0;
+        }
+
+        return new[] { "energy", "recovery", "sleep", "appetite" }
+            .Count(metric =>
             {
                 var values = attachedCheckIns.Select(checkIn => MetricValue(metric, checkIn)).ToList();
                 return values.Max() - values.Min() >= 2;
@@ -2048,6 +2425,7 @@ public interface IProtocolService
     Task<ProtocolResponse> GetProtocolAsync(Guid id, CancellationToken cancellationToken = default);
     Task<ProtocolReviewResponse> GetProtocolReviewAsync(Guid id, CancellationToken cancellationToken = default);
     Task<ProtocolPatternSnapshot> GetPatternSnapshotAsync(Guid protocolId, CancellationToken cancellationToken = default);
+    Task<ProtocolDriftSnapshot> GetDriftSnapshotAsync(Guid protocolId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> StartRunAsync(Guid protocolId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse?> GetActiveRunAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<MissionControlResponse> GetMissionControlAsync(Guid personId, CancellationToken cancellationToken = default);

@@ -231,6 +231,25 @@ export interface PatternComparisonSummary {
   divergentSignals: string[];
 }
 
+export interface ProtocolDriftSnapshot {
+  protocolId: string;
+  driftState: 'none' | 'mild' | 'moderate' | 'regime_shift' | string;
+  baselineSource: 'insufficient_history' | 'historical_runs' | string;
+  signals: DriftSignalSummary[];
+  regimeClassification: RegimeClassificationSummary | null;
+}
+
+export interface DriftSignalSummary {
+  type: 'checkin_timing' | 'run_duration' | 'computation_timing' | 'review_timing' | 'sequence_break' | 'signal_density' | string;
+  severity: 'mild' | 'moderate' | string;
+  description: string;
+}
+
+export interface RegimeClassificationSummary {
+  state: 'stable' | 'drifting' | 'shifted' | string;
+  contributingFactors: string[];
+}
+
 export interface MissionControl {
   activeRun: ProtocolRun | null;
   latestClosedRun: ProtocolRun | null;
@@ -239,6 +258,7 @@ export interface MissionControl {
   latestCheckInSignal: MissionControlCheckInSignal;
   observationSignals: MissionControlObservationSignal[];
   patternSnapshot: ProtocolPatternSnapshot | null;
+  driftSnapshot: ProtocolDriftSnapshot | null;
   cohesionTimeline: ProtocolReviewTimelineEvent[];
 }
 
