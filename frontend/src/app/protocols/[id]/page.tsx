@@ -12,10 +12,11 @@ import { ProtocolContinuityStrip } from '@/components/protocols/ProtocolContinui
 import { ProtocolIntelligenceReview } from '@/components/protocols/ProtocolIntelligenceReview';
 import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
 import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
+import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { apiClient } from '@/lib/api';
-import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview } from '@/lib/types';
+import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
 
 interface ProtocolDetailPageProps {
   params: Promise<{ id: string }>;
@@ -28,6 +29,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
   const [review, setReview] = useState<ProtocolReview | null>(null);
   const [patterns, setPatterns] = useState<ProtocolPatternSnapshot | null>(null);
   const [drift, setDrift] = useState<ProtocolDriftSnapshot | null>(null);
+  const [sequence, setSequence] = useState<ProtocolSequenceExpectationSnapshot | null>(null);
   const [loading, setLoading] = useState(true);
   const [starting, setStarting] = useState(false);
   const [ending, setEnding] = useState(false);
@@ -44,16 +46,18 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
     try {
       setLoading(true);
       setError(null);
-      const [protocolData, reviewData, patternData, driftData] = await Promise.all([
+      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
         apiClient.getProtocol(id),
         apiClient.getProtocolReview(id),
         apiClient.getProtocolPatterns(id),
         apiClient.getProtocolDrift(id),
+        apiClient.getProtocolSequenceExpectation(id),
       ]);
       setProtocol(protocolData);
       setReview(reviewData);
       setPatterns(patternData);
       setDrift(driftData);
+      setSequence(sequenceData);
     } catch (err) {
       setError('Failed to load protocol');
     } finally {
@@ -66,16 +70,18 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setStarting(true);
       setError(null);
       await apiClient.startProtocolRun(id);
-      const [protocolData, reviewData, patternData, driftData] = await Promise.all([
+      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
         apiClient.getProtocol(id),
         apiClient.getProtocolReview(id),
         apiClient.getProtocolPatterns(id),
         apiClient.getProtocolDrift(id),
+        apiClient.getProtocolSequenceExpectation(id),
       ]);
       setProtocol(protocolData);
       setReview(reviewData);
       setPatterns(patternData);
       setDrift(driftData);
+      setSequence(sequenceData);
       setToast('Protocol run started');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -94,16 +100,18 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setEnding(true);
       setError(null);
       await apiClient.completeProtocolRun(protocol.activeRun.id);
-      const [protocolData, reviewData, patternData, driftData] = await Promise.all([
+      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
         apiClient.getProtocol(id),
         apiClient.getProtocolReview(id),
         apiClient.getProtocolPatterns(id),
         apiClient.getProtocolDrift(id),
+        apiClient.getProtocolSequenceExpectation(id),
       ]);
       setProtocol(protocolData);
       setReview(reviewData);
       setPatterns(patternData);
       setDrift(driftData);
+      setSequence(sequenceData);
       setToast('Run marked completed');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -122,16 +130,18 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setEnding(true);
       setError(null);
       await apiClient.abandonProtocolRun(protocol.activeRun.id);
-      const [protocolData, reviewData, patternData, driftData] = await Promise.all([
+      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
         apiClient.getProtocol(id),
         apiClient.getProtocolReview(id),
         apiClient.getProtocolPatterns(id),
         apiClient.getProtocolDrift(id),
+        apiClient.getProtocolSequenceExpectation(id),
       ]);
       setProtocol(protocolData);
       setReview(reviewData);
       setPatterns(patternData);
       setDrift(driftData);
+      setSequence(sequenceData);
       setToast('Run marked abandoned');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -172,14 +182,16 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
         protocol.actualComparison?.run?.id ?? protocol.activeRun?.id ?? null,
         'Protocol review completed from detail view.'
       );
-      const [reviewData, patternData, driftData] = await Promise.all([
+      const [reviewData, patternData, driftData, sequenceData] = await Promise.all([
         apiClient.getProtocolReview(id),
         apiClient.getProtocolPatterns(id),
         apiClient.getProtocolDrift(id),
+        apiClient.getProtocolSequenceExpectation(id),
       ]);
       setReview(reviewData);
       setPatterns(patternData);
       setDrift(driftData);
+      setSequence(sequenceData);
       setToast('Review completed');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -256,9 +268,12 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
           <LoadingSkeleton />
         ) : protocol ? (
           <>
-            <ProtocolContinuityStrip protocol={protocol} review={review} patterns={patterns} />
-            <PatternMemoryPanel snapshot={patterns} compact />
-            <DriftRegimePanel drift={drift} patterns={patterns} compact />
+            <ProtocolContinuityStrip protocol={protocol} review={review} patterns={patterns} drift={drift} sequence={sequence} />
+            <div className="grid gap-4 lg:grid-cols-3">
+              <PatternMemoryPanel snapshot={patterns} compact />
+              <DriftRegimePanel drift={drift} patterns={patterns} compact />
+              <SequenceExpectationPanel snapshot={sequence} compact />
+            </div>
 
             <section className="grid gap-4 lg:grid-cols-[1fr_360px]">
               <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
@@ -347,7 +362,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
                   {completingReview ? 'Completing review' : 'Complete review'}
                 </button>
               </div>
-              <ProtocolIntelligenceReview review={review} patterns={patterns} drift={drift} />
+              <ProtocolIntelligenceReview review={review} patterns={patterns} drift={drift} sequence={sequence} />
             </section>
           </>
         ) : (

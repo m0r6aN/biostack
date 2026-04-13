@@ -1,9 +1,10 @@
-import { ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolReviewTimelineEvent } from '@/lib/types';
+import { ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolReviewTimelineEvent, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
 
 interface ProtocolIntelligenceReviewProps {
   review: ProtocolReview | null;
   patterns?: ProtocolPatternSnapshot | null;
   drift?: ProtocolDriftSnapshot | null;
+  sequence?: ProtocolSequenceExpectationSnapshot | null;
 }
 
 const sectionStyles: Record<string, string> = {
@@ -14,7 +15,7 @@ const sectionStyles: Record<string, string> = {
   gap: 'border-white/[0.1] bg-white/[0.035] text-white/65',
 };
 
-export function ProtocolIntelligenceReview({ review, patterns, drift }: ProtocolIntelligenceReviewProps) {
+export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }: ProtocolIntelligenceReviewProps) {
   if (!review) {
     return (
       <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
@@ -108,8 +109,8 @@ export function ProtocolIntelligenceReview({ review, patterns, drift }: Protocol
           <h3 className="font-semibold text-white">Longitudinal timeline</h3>
           <div className="mt-3 max-h-[520px] space-y-3 overflow-y-auto pr-2">
             {review.timeline.map((event, index) => {
-              const detail = timelineDetail(event, patterns, drift);
-              const tags = timelineTags(event, drift);
+              const detail = timelineDetail(event, patterns, drift, sequence);
+              const tags = timelineTags(event, drift, sequence);
               return (
               <div key={`${event.eventType}-${event.occurredAtUtc}-${index}`} className="grid grid-cols-[92px_1fr] gap-3">
                 <time className="pt-1 text-xs text-white/35">{formatDate(event.occurredAtUtc)}</time>
@@ -147,14 +148,16 @@ export function ProtocolIntelligenceReview({ review, patterns, drift }: Protocol
 function timelineDetail(
   event: ProtocolReviewTimelineEvent,
   patterns?: ProtocolPatternSnapshot | null,
-  drift?: ProtocolDriftSnapshot | null
+  drift?: ProtocolDriftSnapshot | null,
+  sequence?: ProtocolSequenceExpectationSnapshot | null
 ) {
   const comparison = patterns?.currentRunComparison;
   const annotation = comparison && event.runId
     ? annotationForEvent(event.eventType, comparison.matchingSignals, comparison.divergentSignals)
     : null;
   const driftPhrase = driftDetailPhrase(event.eventType, drift);
-  return [event.detail, annotation ? `Pattern memory: ${annotation}.` : null, driftPhrase].filter(Boolean).join(' ');
+  const sequencePhrase = sequenceDetailPhrase(event.eventType, sequence);
+  return [event.detail, annotation ? `Pattern memory: ${annotation}.` : null, driftPhrase, sequencePhrase].filter(Boolean).join(' ');
 }
 
 function annotationForEvent(eventType: string, matchingSignals: string[], divergentSignals: string[]) {
@@ -197,12 +200,30 @@ function driftDetailPhrase(eventType: string, drift?: ProtocolDriftSnapshot | nu
   return null;
 }
 
-function timelineTags(event: ProtocolReviewTimelineEvent, drift?: ProtocolDriftSnapshot | null) {
-  if (!drift || !event.runId) {
-    return [];
+function sequenceDetailPhrase(eventType: string, sequence?: ProtocolSequenceExpectationSnapshot | null) {
+  if (!sequence?.expectedNextEvent) {
+    return null;
   }
 
-  const tags: string[] = [];
+  if (mapsToSequenceEvent(eventType) === sequence.expectedNextEvent.eventType) {
+    return sequence.currentStatus?.state === 'aligned'
+      ? 'Sequence expectation: occurred within common sequence window.'
+      : 'Sequence expectation: usual next event from prior runs.';
+  }
+
+  if (sequence.currentStatus?.state === 'diverging') {
+    return 'Sequence expectation: sequence diverging from prior runs.';
+  }
+
+  return null;
+}
+
+function timelineTags(event: ProtocolReviewTimelineEvent, drift?: ProtocolDriftSnapshot | null, sequence?: ProtocolSequenceExpectationSnapshot | null) {
+  if (!drift || !event.runId) {
+    return sequenceTag(event, sequence);
+  }
+
+  const tags: string[] = sequenceTag(event, sequence);
   if ((event.eventType === 'check_in' || event.eventType === 'computation') && drift.signals.some((signal) => signal.type.endsWith('_timing'))) {
     tags.push('outside typical timing');
   }
@@ -216,6 +237,29 @@ function timelineTags(event: ProtocolReviewTimelineEvent, drift?: ProtocolDriftS
   }
 
   return tags;
+}
+
+function sequenceTag(event: ProtocolReviewTimelineEvent, sequence?: ProtocolSequenceExpectationSnapshot | null) {
+  if (!sequence?.expectedNextEvent || !event.runId) {
+    return [];
+  }
+
+  if (mapsToSequenceEvent(event.eventType) === sequence.expectedNextEvent.eventType) {
+    return sequence.currentStatus?.state === 'aligned'
+      ? ['occurred within common sequence window']
+      : ['usual next event from prior runs'];
+  }
+
+  return sequence.currentStatus?.state === 'diverging' ? ['sequence diverging from prior runs'] : [];
+}
+
+function mapsToSequenceEvent(eventType: string) {
+  if (eventType === 'check_in') return 'FirstCheckIn';
+  if (eventType === 'computation') return 'ComputationRecorded';
+  if (eventType === 'review_completed') return 'ReviewCompleted';
+  if (eventType === 'evolution') return 'EvolutionEvent';
+  if (eventType.startsWith('run_')) return 'RunClosed';
+  return null;
 }
 
 function ReviewStat({ label, value }: { label: string; value: number }) {

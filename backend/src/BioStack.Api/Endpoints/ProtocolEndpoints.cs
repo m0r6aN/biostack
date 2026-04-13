@@ -40,6 +40,9 @@ public static class ProtocolEndpoints
         protocolGroup.MapGet("/{id}/drift", GetProtocolDrift)
             .WithName("GetProtocolDrift");
 
+        protocolGroup.MapGet("/{id}/sequence-expectation", GetProtocolSequenceExpectation)
+            .WithName("GetProtocolSequenceExpectation");
+
         protocolGroup.MapPost("/{id}/review/complete", CompleteReview)
             .WithName("CompleteProtocolReview");
 
@@ -144,6 +147,19 @@ public static class ProtocolEndpoints
         try
         {
             var snapshot = await protocolService.GetDriftSnapshotAsync(id, ct);
+            return Results.Ok(snapshot);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
+    }
+
+    private static async Task<IResult> GetProtocolSequenceExpectation(Guid id, IProtocolService protocolService, CancellationToken ct)
+    {
+        try
+        {
+            var snapshot = await protocolService.GetSequenceExpectationSnapshotAsync(id, ct);
             return Results.Ok(snapshot);
         }
         catch (InvalidOperationException)
