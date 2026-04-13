@@ -346,6 +346,110 @@ public sealed class ProtocolService : IProtocolService
         };
     }
 
+    public async Task<ProtocolSequenceExpectationSnapshot> GetSequenceExpectationSnapshotAsync(Guid protocolId, CancellationToken cancellationToken = default)
+    {
+        var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
+        if (protocol is null)
+            throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+
+        var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
+            .OrderBy(version => version.Version)
+            .ThenBy(version => version.CreatedAtUtc)
+            .ToList();
+        if (lineage.Count == 0)
+        {
+            lineage.Add(protocol);
+        }
+
+        var protocolIds = lineage.Select(version => version.Id).ToList();
+        var runs = (await _protocolRunRepository.GetByProtocolIdsAsync(protocolIds, cancellationToken))
+            .OrderBy(run => run.StartedAtUtc)
+            .ToList();
+        var completedRuns = runs
+            .Where(run => run.Status == ProtocolRunStatus.Completed)
+            .OrderBy(run => run.StartedAtUtc)
+            .ToList();
+        var checkIns = (await _checkInRepository.GetByPersonIdAsync(protocol.PersonId, cancellationToken))
+            .OrderBy(checkIn => checkIn.Date)
+            .ToList();
+        var computations = (await _computationRepository.GetByProtocolIdsAsync(protocolIds, cancellationToken))
+            .OrderBy(record => record.TimestampUtc)
+            .ToList();
+        var reviewCompletedEvents = (await _reviewCompletedEventRepository.GetByProtocolIdsAsync(protocolIds, cancellationToken))
+            .OrderBy(@event => @event.CompletedAtUtc)
+            .ToList();
+
+        if (completedRuns.Count < 2)
+        {
+            return new ProtocolSequenceExpectationSnapshot
+            {
+                ProtocolId = protocol.Id,
+                HistoricalRunCount = completedRuns.Count,
+                CurrentStatus = new CurrentSequenceStatusSummary
+                {
+                    State = "unknown",
+                    Notes = new List<string> { "Sequence patterns will appear after multiple completed runs." }
+                }
+            };
+        }
+
+        var historicalSequences = completedRuns
+            .Select(run => BuildSequenceRunContext(run, checkIns, computations, reviewCompletedEvents, lineage))
+            .ToList();
+        var commonTransitions = BuildCommonSequenceTransitions(historicalSequences);
+        if (commonTransitions.Count == 0)
+        {
+            return new ProtocolSequenceExpectationSnapshot
+            {
+                ProtocolId = protocol.Id,
+                HistoricalRunCount = completedRuns.Count,
+                BaselineSource = "insufficient_history",
+                CurrentStatus = new CurrentSequenceStatusSummary
+                {
+                    State = "unknown",
+                    Notes = new List<string> { "Completed runs do not yet share repeated next-event transitions." }
+                }
+            };
+        }
+
+        var targetRun = runs
+            .Where(run => run.Status == ProtocolRunStatus.Active)
+            .OrderByDescending(run => run.StartedAtUtc)
+            .FirstOrDefault()
+            ?? runs
+                .OrderByDescending(run => run.EndedAtUtc ?? run.StartedAtUtc)
+                .FirstOrDefault();
+        var currentSequence = targetRun is null
+            ? null
+            : BuildSequenceRunContext(targetRun, checkIns, computations, reviewCompletedEvents, lineage);
+        var expectation = currentSequence is null
+            ? null
+            : ResolveExpectedNextEvent(currentSequence, commonTransitions, completedRuns.Count);
+
+        return new ProtocolSequenceExpectationSnapshot
+        {
+            ProtocolId = protocol.Id,
+            BaselineSource = "historical_runs",
+            HistoricalRunCount = completedRuns.Count,
+            ExpectedNextEvent = expectation?.ExpectedNextEvent,
+            CommonTransitions = commonTransitions
+                .Select(transition => new ExpectedTransitionSummary
+                {
+                    FromState = transition.FromState,
+                    ToEventType = transition.ToEventType,
+                    TimingPattern = $"Usually observed within {FormatRange(transition.Offsets)} of {FormatSequenceEventName(transition.FromState).ToLowerInvariant()}.",
+                    ObservedCount = transition.ObservedCount
+                })
+                .Take(4)
+                .ToList(),
+            CurrentStatus = expectation?.CurrentStatus ?? new CurrentSequenceStatusSummary
+            {
+                State = "unknown",
+                Notes = new List<string> { "Current protocol state does not match a repeated historical transition." }
+            }
+        };
+    }
+
     public async Task<ProtocolRunResponse> StartRunAsync(Guid protocolId, CancellationToken cancellationToken = default)
     {
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
@@ -422,6 +526,9 @@ public sealed class ProtocolService : IProtocolService
         var driftSnapshot = patternProtocolId is null
             ? null
             : await GetDriftSnapshotAsync(patternProtocolId.Value, cancellationToken);
+        var sequenceExpectationSnapshot = patternProtocolId is null
+            ? null
+            : await GetSequenceExpectationSnapshotAsync(patternProtocolId.Value, cancellationToken);
         var pendingReview = HasPendingReview(latestClosedRun, latestEvolved, latestReviewCompleted);
         var observationSignals = BuildObservationSignals(activeRun, runs, checkIns);
 
@@ -434,8 +541,9 @@ public sealed class ProtocolService : IProtocolService
             observationSignals,
             patternSnapshot,
             driftSnapshot,
+            sequenceExpectationSnapshot,
             review?.Timeline
-                .Select(@event => AnnotateTimelineEvent(@event, patternSnapshot))
+                .Select(@event => AnnotateTimelineEvent(@event, patternSnapshot, sequenceExpectationSnapshot))
                 .OrderByDescending(@event => @event.OccurredAtUtc)
                 .Take(8)
                 .OrderBy(@event => @event.OccurredAtUtc)
@@ -1626,17 +1734,212 @@ public sealed class ProtocolService : IProtocolService
         };
     }
 
+    private static SequenceRunContext BuildSequenceRunContext(
+        ProtocolRun run,
+        List<CheckIn> checkIns,
+        List<ProtocolComputationRecord> computations,
+        List<ProtocolReviewCompletedEvent> reviewCompletedEvents,
+        List<Protocol> lineage)
+    {
+        var runEnd = run.EndedAtUtc ?? run.StartedAtUtc;
+        var events = new List<SequenceEvent>
+        {
+            new("RunStarted", run.StartedAtUtc)
+        };
+
+        var firstCheckIn = checkIns
+            .Where(checkIn => checkIn.ProtocolRunId == run.Id)
+            .OrderBy(checkIn => checkIn.Date)
+            .FirstOrDefault();
+        if (firstCheckIn is not null)
+        {
+            events.Add(new SequenceEvent("FirstCheckIn", firstCheckIn.Date));
+        }
+
+        var firstComputation = computations
+            .Where(record => record.ProtocolRunId == run.Id ||
+                (record.ProtocolRunId is null && record.ProtocolId == run.ProtocolId && record.TimestampUtc >= run.StartedAtUtc && record.TimestampUtc <= runEnd))
+            .OrderBy(record => record.TimestampUtc)
+            .FirstOrDefault();
+        if (firstComputation is not null)
+        {
+            events.Add(new SequenceEvent("ComputationRecorded", firstComputation.TimestampUtc));
+        }
+
+        if (run.EndedAtUtc is not null)
+        {
+            events.Add(new SequenceEvent("RunClosed", run.EndedAtUtc.Value));
+        }
+
+        var firstReview = reviewCompletedEvents
+            .Where(@event => @event.ProtocolRunId == run.Id ||
+                (@event.ProtocolRunId is null && @event.ProtocolId == run.ProtocolId && @event.CompletedAtUtc >= runEnd))
+            .OrderBy(@event => @event.CompletedAtUtc)
+            .FirstOrDefault();
+        if (firstReview is not null)
+        {
+            events.Add(new SequenceEvent("ReviewCompleted", firstReview.CompletedAtUtc));
+        }
+
+        var evolution = lineage
+            .Where(candidate => candidate.EvolvedFromRunId == run.Id)
+            .OrderBy(candidate => candidate.CreatedAtUtc)
+            .FirstOrDefault();
+        if (evolution is not null)
+        {
+            events.Add(new SequenceEvent("EvolutionEvent", evolution.CreatedAtUtc));
+        }
+
+        return new SequenceRunContext(run, events.OrderBy(@event => @event.OccurredAtUtc).ToList());
+    }
+
+    private static List<SequenceTransitionPattern> BuildCommonSequenceTransitions(List<SequenceRunContext> contexts)
+    {
+        return contexts
+            .SelectMany(context => BuildSequenceTransitions(context.Events))
+            .GroupBy(transition => $"{transition.From.EventType}>{transition.To.EventType}", StringComparer.Ordinal)
+            .Where(group => group.Count() >= 2)
+            .Select(group => new SequenceTransitionPattern(
+                group.First().From.EventType,
+                group.First().To.EventType,
+                group.Select(transition => transition.To.OccurredAtUtc - transition.From.OccurredAtUtc).ToList(),
+                group.Count()))
+            .OrderByDescending(pattern => pattern.ObservedCount)
+            .ThenBy(pattern => pattern.FromState, StringComparer.Ordinal)
+            .ThenBy(pattern => pattern.ToEventType, StringComparer.Ordinal)
+            .ToList();
+    }
+
+    private static IEnumerable<(SequenceEvent From, SequenceEvent To)> BuildSequenceTransitions(List<SequenceEvent> events)
+    {
+        for (var index = 1; index < events.Count; index++)
+        {
+            yield return (events[index - 1], events[index]);
+        }
+    }
+
+    private static SequenceExpectationResolution? ResolveExpectedNextEvent(
+        SequenceRunContext current,
+        List<SequenceTransitionPattern> commonTransitions,
+        int historicalRunCount)
+    {
+        var orderedEvents = current.Events.OrderBy(@event => @event.OccurredAtUtc).ToList();
+        for (var index = orderedEvents.Count - 1; index >= 0; index--)
+        {
+            var anchor = orderedEvents[index];
+            var transition = SelectCommonTransition(anchor.EventType, commonTransitions);
+            if (transition is null)
+            {
+                continue;
+            }
+
+            var nextActual = orderedEvents.Skip(index + 1).FirstOrDefault();
+            var expected = new ExpectedNextEventSummary
+            {
+                EventType = transition.ToEventType,
+                Description = $"Based on prior runs, the next commonly observed event from {FormatSequenceEventName(anchor.EventType).ToLowerInvariant()} is {FormatSequenceEventName(transition.ToEventType).ToLowerInvariant()}.",
+                TimingWindow = $"Usually observed within {FormatRange(transition.Offsets)} of {FormatSequenceEventName(anchor.EventType).ToLowerInvariant()}.",
+                Confidence = SequenceConfidence(historicalRunCount, transition, commonTransitions)
+            };
+
+            if (nextActual is null)
+            {
+                var elapsed = DateTime.UtcNow - anchor.OccurredAtUtc;
+                var state = elapsed <= transition.Offsets.Max() ? "pending" : "late";
+                var note = state == "pending"
+                    ? $"The next commonly observed event has not yet occurred and remains inside the common sequence window."
+                    : $"The next commonly observed event has not yet occurred and the current run is beyond the common sequence window.";
+
+                return new SequenceExpectationResolution(
+                    expected,
+                    new CurrentSequenceStatusSummary
+                    {
+                        State = state,
+                        Notes = new List<string> { note }
+                    });
+            }
+
+            if (string.Equals(nextActual.EventType, transition.ToEventType, StringComparison.Ordinal))
+            {
+                var timingState = nextActual.OccurredAtUtc - anchor.OccurredAtUtc <= transition.Offsets.Max()
+                    ? "occurred within common sequence window"
+                    : "occurred outside common sequence window";
+                return new SequenceExpectationResolution(
+                    expected,
+                    new CurrentSequenceStatusSummary
+                    {
+                        State = timingState.StartsWith("occurred within", StringComparison.Ordinal) ? "aligned" : "late",
+                        Notes = new List<string> { $"{FormatSequenceEventName(nextActual.EventType)} {timingState}." }
+                    });
+            }
+
+            return new SequenceExpectationResolution(
+                expected,
+                new CurrentSequenceStatusSummary
+                {
+                    State = "diverging",
+                    Notes = new List<string>
+                    {
+                        $"{FormatSequenceEventName(nextActual.EventType)} occurred where prior runs commonly showed {FormatSequenceEventName(transition.ToEventType).ToLowerInvariant()}."
+                    }
+                });
+        }
+
+        return null;
+    }
+
+    private static SequenceTransitionPattern? SelectCommonTransition(string fromState, List<SequenceTransitionPattern> commonTransitions)
+    {
+        return commonTransitions
+            .Where(transition => transition.FromState == fromState)
+            .OrderByDescending(transition => transition.ObservedCount)
+            .ThenBy(transition => AverageTimeSpan(transition.Offsets))
+            .FirstOrDefault();
+    }
+
+    private static string SequenceConfidence(int historicalRunCount, SequenceTransitionPattern transition, List<SequenceTransitionPattern> commonTransitions)
+    {
+        var pathsFromState = commonTransitions.Count(candidate => candidate.FromState == transition.FromState);
+        if (historicalRunCount < 2 || transition.ObservedCount < 2)
+        {
+            return "none";
+        }
+
+        if (historicalRunCount < 3 || transition.ObservedCount == 2 || pathsFromState > 1)
+        {
+            return "low";
+        }
+
+        return "moderate";
+    }
+
+    private static string FormatSequenceEventName(string eventType)
+    {
+        return eventType switch
+        {
+            "RunStarted" => "run start",
+            "FirstCheckIn" => "first check-in",
+            "ComputationRecorded" => "computation recorded",
+            "RunClosed" => "run close",
+            "ReviewCompleted" => "review completion",
+            "EvolutionEvent" => "evolution event",
+            _ => eventType
+        };
+    }
+
     private static ProtocolReviewTimelineEventResponse AnnotateTimelineEvent(
         ProtocolReviewTimelineEventResponse @event,
-        ProtocolPatternSnapshot? patternSnapshot)
+        ProtocolPatternSnapshot? patternSnapshot,
+        ProtocolSequenceExpectationSnapshot? sequenceExpectationSnapshot)
     {
         var comparison = patternSnapshot?.CurrentRunComparison;
-        if (comparison is null || @event.RunId is null)
+        var sequenceAnnotation = SequenceAnnotationForTimeline(@event, sequenceExpectationSnapshot);
+        if ((comparison is null || @event.RunId is null) && sequenceAnnotation is null)
         {
             return @event;
         }
 
-        var annotation = @event.EventType switch
+        var annotation = comparison is null ? null : @event.EventType switch
         {
             "check_in" when comparison.MatchingSignals.Any(signal => signal.Contains("Check-in timing aligns", StringComparison.OrdinalIgnoreCase)) => "matches prior pattern",
             "check_in" when comparison.DivergentSignals.Any(signal => signal.Contains("later", StringComparison.OrdinalIgnoreCase)) => "later than usual",
@@ -1647,12 +1950,50 @@ public sealed class ProtocolService : IProtocolService
             _ => null
         };
 
-        if (annotation is null || @event.Detail.Contains(annotation, StringComparison.OrdinalIgnoreCase))
+        var annotations = new[] { annotation, sequenceAnnotation }
+            .Where(value => !string.IsNullOrWhiteSpace(value) && !@event.Detail.Contains(value!, StringComparison.OrdinalIgnoreCase))
+            .Select(value => value!)
+            .ToList();
+        if (annotations.Count == 0)
         {
             return @event;
         }
 
-        return @event with { Detail = $"{@event.Detail} Pattern memory: {annotation}." };
+        return @event with { Detail = $"{@event.Detail} {string.Join(" ", annotations)}" };
+    }
+
+    private static string? SequenceAnnotationForTimeline(
+        ProtocolReviewTimelineEventResponse @event,
+        ProtocolSequenceExpectationSnapshot? sequenceExpectationSnapshot)
+    {
+        if (sequenceExpectationSnapshot?.ExpectedNextEvent is null || @event.RunId is null)
+        {
+            return null;
+        }
+
+        var eventType = @event.EventType switch
+        {
+            "check_in" => "FirstCheckIn",
+            "computation" => "ComputationRecorded",
+            "review_completed" => "ReviewCompleted",
+            "evolution" => "EvolutionEvent",
+            "run_completed" or "run_abandoned" => "RunClosed",
+            _ => null
+        };
+
+        if (eventType == sequenceExpectationSnapshot.ExpectedNextEvent.EventType)
+        {
+            return sequenceExpectationSnapshot.CurrentStatus?.State switch
+            {
+                "aligned" => "Sequence expectation: occurred within common sequence window.",
+                "late" => "Sequence expectation: occurred outside common sequence window.",
+                _ => "Sequence expectation: usual next event from prior runs."
+            };
+        }
+
+        return sequenceExpectationSnapshot.CurrentStatus?.State == "diverging"
+            ? "Sequence expectation: sequence diverging from prior runs."
+            : null;
     }
 
     private static List<TimeSpan> BuildCheckInIntervals(List<CheckIn> attachedCheckIns)
@@ -2022,6 +2363,14 @@ public sealed class ProtocolService : IProtocolService
         TimeSpan? FirstComputationOffset,
         TimeSpan? ReviewCompletionOffset,
         List<string> Sequence);
+
+    private sealed record SequenceEvent(string EventType, DateTime OccurredAtUtc);
+
+    private sealed record SequenceRunContext(ProtocolRun Run, List<SequenceEvent> Events);
+
+    private sealed record SequenceTransitionPattern(string FromState, string ToEventType, List<TimeSpan> Offsets, int ObservedCount);
+
+    private sealed record SequenceExpectationResolution(ExpectedNextEventSummary ExpectedNextEvent, CurrentSequenceStatusSummary CurrentStatus);
 
     private sealed record ReviewRunContext(ProtocolReviewVersionResponse Version, ProtocolReviewRunResponse Run);
 
@@ -2426,6 +2775,7 @@ public interface IProtocolService
     Task<ProtocolReviewResponse> GetProtocolReviewAsync(Guid id, CancellationToken cancellationToken = default);
     Task<ProtocolPatternSnapshot> GetPatternSnapshotAsync(Guid protocolId, CancellationToken cancellationToken = default);
     Task<ProtocolDriftSnapshot> GetDriftSnapshotAsync(Guid protocolId, CancellationToken cancellationToken = default);
+    Task<ProtocolSequenceExpectationSnapshot> GetSequenceExpectationSnapshotAsync(Guid protocolId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse> StartRunAsync(Guid protocolId, CancellationToken cancellationToken = default);
     Task<ProtocolRunResponse?> GetActiveRunAsync(Guid personId, CancellationToken cancellationToken = default);
     Task<MissionControlResponse> GetMissionControlAsync(Guid personId, CancellationToken cancellationToken = default);

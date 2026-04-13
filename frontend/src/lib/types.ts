@@ -239,6 +239,34 @@ export interface ProtocolDriftSnapshot {
   regimeClassification: RegimeClassificationSummary | null;
 }
 
+export interface ProtocolSequenceExpectationSnapshot {
+  protocolId: string;
+  baselineSource: 'insufficient_history' | 'historical_runs' | string;
+  historicalRunCount: number;
+  expectedNextEvent: ExpectedNextEventSummary | null;
+  commonTransitions: ExpectedTransitionSummary[];
+  currentStatus: CurrentSequenceStatusSummary | null;
+}
+
+export interface ExpectedNextEventSummary {
+  eventType: string;
+  description: string;
+  timingWindow: string;
+  confidence: 'none' | 'low' | 'moderate' | string;
+}
+
+export interface ExpectedTransitionSummary {
+  fromState: string;
+  toEventType: string;
+  timingPattern: string;
+  observedCount: number;
+}
+
+export interface CurrentSequenceStatusSummary {
+  state: 'unknown' | 'aligned' | 'pending' | 'late' | 'diverging' | string;
+  notes: string[];
+}
+
 export interface DriftSignalSummary {
   type: 'checkin_timing' | 'run_duration' | 'computation_timing' | 'review_timing' | 'sequence_break' | 'signal_density' | string;
   severity: 'mild' | 'moderate' | string;
@@ -259,6 +287,7 @@ export interface MissionControl {
   observationSignals: MissionControlObservationSignal[];
   patternSnapshot: ProtocolPatternSnapshot | null;
   driftSnapshot: ProtocolDriftSnapshot | null;
+  sequenceExpectationSnapshot: ProtocolSequenceExpectationSnapshot | null;
   cohesionTimeline: ProtocolReviewTimelineEvent[];
 }
 

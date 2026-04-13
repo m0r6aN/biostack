@@ -26,6 +26,8 @@ import { CohesionTimelinePanel } from '@/components/dashboard/CohesionTimelinePa
 import { MissionControlOverview } from '@/components/dashboard/MissionControlOverview';
 import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
 import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
+import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
+import { ObservationSignalsPanel } from '@/components/dashboard/ObservationSignalsPanel';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
 
 export function MissionControlDashboard() {
@@ -163,8 +165,12 @@ export function MissionControlDashboard() {
             </div>
 
             <MissionControlOverview mission={mission} />
-            <PatternMemoryPanel snapshot={mission?.patternSnapshot ?? null} />
-            <DriftRegimePanel drift={mission?.driftSnapshot ?? null} patterns={mission?.patternSnapshot ?? null} />
+            <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+              <PatternMemoryPanel snapshot={mission?.patternSnapshot ?? null} />
+              <DriftRegimePanel drift={mission?.driftSnapshot ?? null} patterns={mission?.patternSnapshot ?? null} />
+              <SequenceExpectationPanel snapshot={mission?.sequenceExpectationSnapshot ?? null} />
+              <ObservationSignalsPanel signals={mission?.observationSignals ?? []} />
+            </div>
             {overlaps.length > 0 && <OverlapFlagsBanner flags={overlaps} />}
             {profileGoals.length > 0 && (
               <ActiveGoalsCard goals={profileGoals} profileId={currentProfileId} />
@@ -177,7 +183,7 @@ export function MissionControlDashboard() {
               <LatestCheckInCard checkIn={latestCheckIn} />
             </div>
 
-            <CohesionTimelinePanel events={mission?.cohesionTimeline ?? []} />
+            <CohesionTimelinePanel events={mission?.cohesionTimeline ?? []} sequence={mission?.sequenceExpectationSnapshot ?? null} />
             <TimelineSnapshot events={timeline} />
           </>
         )}

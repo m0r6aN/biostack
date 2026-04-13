@@ -1,15 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { Protocol, ProtocolPatternSnapshot, ProtocolReview } from '@/lib/types';
+import { Protocol, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot, ProtocolDriftSnapshot } from '@/lib/types';
 
 interface ProtocolContinuityStripProps {
   protocol: Protocol;
   review: ProtocolReview | null;
   patterns?: ProtocolPatternSnapshot | null;
+  drift?: ProtocolDriftSnapshot | null;
+  sequence?: ProtocolSequenceExpectationSnapshot | null;
 }
 
-export function ProtocolContinuityStrip({ protocol, review, patterns }: ProtocolContinuityStripProps) {
+export function ProtocolContinuityStrip({ protocol, review, patterns, drift, sequence }: ProtocolContinuityStripProps) {
   const prior = protocol.priorVersions[0] ?? null;
   const latestSection = review?.sections.find((section) => section.type !== 'gap') ?? review?.sections[0] ?? null;
   const latestRun = review?.versions
@@ -36,7 +38,10 @@ export function ProtocolContinuityStrip({ protocol, review, patterns }: Protocol
         </div>
       </div>
 
-      <div className="mt-4 grid gap-2 md:grid-cols-6">
+      <div className="mt-4 grid gap-4 xl:grid-cols-3">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">Lineage</p>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
         <ContinuityCell label="Current" value={`v${protocol.version}`} detail={protocol.isCurrentVersion ? 'Current version' : 'Prior version'} />
         <ContinuityCell
           label="Parent"
@@ -44,6 +49,11 @@ export function ProtocolContinuityStrip({ protocol, review, patterns }: Protocol
           detail={prior ? prior.name : 'Root snapshot'}
           href={prior ? `/protocols/${prior.id}` : undefined}
         />
+          </div>
+        </div>
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">State</p>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
         <ContinuityCell
           label="Run"
           value={run ? run.status : 'No run'}
@@ -51,9 +61,19 @@ export function ProtocolContinuityStrip({ protocol, review, patterns }: Protocol
         />
         <ContinuityCell
           label="Review"
-          value={latestSection?.type ?? 'Pending'}
+          value={latestSection?.type ?? 'Required'}
           detail={latestSection?.summary ?? 'Review available after multiple runs.'}
         />
+          <ContinuityCell
+            label="Regime"
+            value={drift?.regimeClassification?.state ?? 'stable'}
+            detail={drift?.signals[0]?.description ?? 'No drift signals detected.'}
+          />
+          </div>
+        </div>
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">Intelligence</p>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
         <ContinuityCell
           label="Changed"
           value={changes.length > 0 ? `${changes.length} item${changes.length === 1 ? '' : 's'}` : 'No diff'}
@@ -64,6 +84,18 @@ export function ProtocolContinuityStrip({ protocol, review, patterns }: Protocol
           value={`${patterns?.historicalRunCount ?? 0} run${patterns?.historicalRunCount === 1 ? '' : 's'}`}
           detail={patternDetail(patterns)}
         />
+        <ContinuityCell
+          label="Sequence"
+          value={sequence?.expectedNextEvent ? formatSequenceEvent(sequence.expectedNextEvent.eventType) : 'No pattern'}
+          detail={sequence?.expectedNextEvent?.timingWindow ?? 'Sequence patterns will appear after multiple runs.'}
+        />
+        <ContinuityCell
+          label="Deviation"
+          value={sequence?.currentStatus?.state ?? patterns?.currentRunComparison?.similarity ?? 'unknown'}
+          detail={sequence?.currentStatus?.notes[0] ?? patterns?.currentRunComparison?.divergentSignals[0] ?? 'Current state comparison pending.'}
+        />
+          </div>
+        </div>
       </div>
 
       {protocol.evolvedFromRunId && (
@@ -73,6 +105,16 @@ export function ProtocolContinuityStrip({ protocol, review, patterns }: Protocol
       )}
     </section>
   );
+}
+
+function formatSequenceEvent(value: string) {
+  return value
+    .replace('RunStarted', 'run start')
+    .replace('FirstCheckIn', 'first check-in')
+    .replace('ComputationRecorded', 'computation')
+    .replace('RunClosed', 'run close')
+    .replace('ReviewCompleted', 'review completion')
+    .replace('EvolutionEvent', 'evolution event');
 }
 
 function patternDetail(patterns?: ProtocolPatternSnapshot | null) {

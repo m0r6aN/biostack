@@ -781,6 +781,189 @@ public class ProtocolServiceTests
         Assert.Contains(snapshot.Signals, signal => signal.Type == "signal_density");
     }
 
+    [Fact]
+    public async Task GetSequenceExpectationSnapshotAsync_WithInsufficientHistory_ReturnsNoExpectedNextEvent()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Sequence", DateTime.UtcNow.AddDays(-10));
+        var run = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-8));
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run }, new List<CheckIn>());
+
+        var snapshot = await service.GetSequenceExpectationSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("insufficient_history", snapshot.BaselineSource);
+        Assert.Null(snapshot.ExpectedNextEvent);
+        Assert.Empty(snapshot.CommonTransitions);
+        Assert.Equal("unknown", snapshot.CurrentStatus?.State);
+    }
+
+    [Fact]
+    public async Task GetSequenceExpectationSnapshotAsync_DetectsRepeatedRunStartToFirstCheckIn()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Sequence", DateTime.UtcNow.AddDays(-20));
+        var run1 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-18));
+        var run2 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-10));
+        var checkIns = StableCheckIns(personId, run1, 1, 2).Concat(StableCheckIns(personId, run2, 1, 2)).ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run1, run2 }, checkIns);
+
+        var snapshot = await service.GetSequenceExpectationSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Contains(snapshot.CommonTransitions, transition => transition.FromState == "RunStarted" && transition.ToEventType == "FirstCheckIn" && transition.ObservedCount == 2);
+    }
+
+    [Fact]
+    public async Task GetSequenceExpectationSnapshotAsync_DetectsRepeatedRunClosedToReviewCompleted()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Sequence", DateTime.UtcNow.AddDays(-20));
+        var run1 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-18));
+        var run2 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-10));
+        var reviews = new List<ProtocolReviewCompletedEvent>
+        {
+            CreateReviewCompleted(protocol, run1, run1.EndedAtUtc!.Value.AddDays(1)),
+            CreateReviewCompleted(protocol, run2, run2.EndedAtUtc!.Value.AddDays(1))
+        };
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run1, run2 }, new List<CheckIn>(), reviewCompletedEvents: reviews);
+
+        var snapshot = await service.GetSequenceExpectationSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Contains(snapshot.CommonTransitions, transition => transition.FromState == "RunClosed" && transition.ToEventType == "ReviewCompleted" && transition.ObservedCount == 2);
+    }
+
+    [Fact]
+    public async Task GetSequenceExpectationSnapshotAsync_WithActiveRunBeforeFirstCheckIn_ReturnsFirstCheckIn()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture(activeStartedDaysAgo: 0);
+        var checkIns = historicalRuns.SelectMany(run => StableCheckIns(personId, run, 1, 2)).ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, historicalRuns.Append(activeRun).ToList(), checkIns, activeRun);
+
+        var snapshot = await service.GetSequenceExpectationSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("FirstCheckIn", snapshot.ExpectedNextEvent?.EventType);
+        Assert.Equal("pending", snapshot.CurrentStatus?.State);
+    }
+
+    [Fact]
+    public async Task GetSequenceExpectationSnapshotAsync_WithClosedRunPendingReview_ReturnsReviewCompletion()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Sequence", DateTime.UtcNow.AddDays(-30));
+        var run1 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-24));
+        var run2 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-16));
+        var current = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-4));
+        var reviews = new List<ProtocolReviewCompletedEvent>
+        {
+            CreateReviewCompleted(protocol, run1, run1.EndedAtUtc!.Value.AddDays(1)),
+            CreateReviewCompleted(protocol, run2, run2.EndedAtUtc!.Value.AddDays(1))
+        };
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run1, run2, current }, new List<CheckIn>(), reviewCompletedEvents: reviews);
+
+        var snapshot = await service.GetSequenceExpectationSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("ReviewCompleted", snapshot.ExpectedNextEvent?.EventType);
+    }
+
+    [Fact]
+    public async Task GetSequenceExpectationSnapshotAsync_WithinTimingWindow_ReturnsPending()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture(activeStartedDaysAgo: 1);
+        var checkIns = historicalRuns.SelectMany(run => StableCheckIns(personId, run, 2, 3)).ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, historicalRuns.Append(activeRun).ToList(), checkIns, activeRun);
+
+        var snapshot = await service.GetSequenceExpectationSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("pending", snapshot.CurrentStatus?.State);
+    }
+
+    [Fact]
+    public async Task GetSequenceExpectationSnapshotAsync_BeyondTimingWindow_ReturnsLate()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture(activeStartedDaysAgo: 3);
+        var checkIns = historicalRuns.SelectMany(run => StableCheckIns(personId, run, 1, 2)).ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, historicalRuns.Append(activeRun).ToList(), checkIns, activeRun);
+
+        var snapshot = await service.GetSequenceExpectationSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("late", snapshot.CurrentStatus?.State);
+    }
+
+    [Fact]
+    public async Task GetSequenceExpectationSnapshotAsync_WithAlternateEventPath_ReturnsDiverging()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture(activeStartedDaysAgo: 1);
+        var checkIns = historicalRuns.SelectMany(run => StableCheckIns(personId, run, 1, 2)).ToList();
+        var computations = new List<ProtocolComputationRecord>
+        {
+            CreateComputation(protocol, activeRun, activeRun.StartedAtUtc.AddHours(12))
+        };
+        var service = CreateMissionControlService(
+            personId,
+            new List<Protocol> { protocol },
+            historicalRuns.Append(activeRun).ToList(),
+            checkIns,
+            activeRun,
+            computations: computations);
+
+        var snapshot = await service.GetSequenceExpectationSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("diverging", snapshot.CurrentStatus?.State);
+    }
+
+    [Fact]
+    public async Task GetSequenceExpectationSnapshotAsync_WithSparseHistory_LowersConfidence()
+    {
+        var personId = Guid.NewGuid();
+        var protocol = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Sequence", DateTime.UtcNow.AddDays(-20));
+        var run1 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-18));
+        var run2 = CreateRun(personId, protocol, DateTime.UtcNow.AddDays(-10));
+        var active = CreateActiveRun(personId, protocol, DateTime.UtcNow.AddDays(-1));
+        var checkIns = StableCheckIns(personId, run1, 1, 2).Concat(StableCheckIns(personId, run2, 1, 2)).ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, new List<ProtocolRun> { run1, run2, active }, checkIns, active);
+
+        var snapshot = await service.GetSequenceExpectationSnapshotAsync(protocol.Id, CancellationToken.None);
+
+        Assert.Equal("low", snapshot.ExpectedNextEvent?.Confidence);
+    }
+
+    [Fact]
+    public async Task GetSequenceExpectationSnapshotAsync_WithCommonEvolutionEvent_ReturnsEvolutionNext()
+    {
+        var personId = Guid.NewGuid();
+        var root = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 1, null, "Root", DateTime.UtcNow.AddDays(-40));
+        var run1 = CreateRun(personId, root, DateTime.UtcNow.AddDays(-34));
+        var run2 = CreateRun(personId, root, DateTime.UtcNow.AddDays(-24));
+        var current = CreateRun(personId, root, DateTime.UtcNow.AddDays(-8));
+        var child1 = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 2, root.Id, "Evolved", run1.EndedAtUtc!.Value.AddDays(2));
+        child1.EvolvedFromRunId = run1.Id;
+        var child2 = CreateProtocolVersion(personId, Guid.NewGuid(), Guid.NewGuid(), 3, root.Id, "Evolved", run2.EndedAtUtc!.Value.AddDays(2));
+        child2.EvolvedFromRunId = run2.Id;
+        var reviews = new List<ProtocolReviewCompletedEvent>
+        {
+            CreateReviewCompleted(root, run1, run1.EndedAtUtc!.Value.AddDays(1)),
+            CreateReviewCompleted(root, run2, run2.EndedAtUtc!.Value.AddDays(1)),
+            CreateReviewCompleted(root, current, current.EndedAtUtc!.Value.AddDays(1))
+        };
+        var service = CreateMissionControlService(personId, new List<Protocol> { root, child1, child2 }, new List<ProtocolRun> { run1, run2, current }, new List<CheckIn>(), reviewCompletedEvents: reviews);
+
+        var snapshot = await service.GetSequenceExpectationSnapshotAsync(root.Id, CancellationToken.None);
+
+        Assert.Equal("EvolutionEvent", snapshot.ExpectedNextEvent?.EventType);
+    }
+
+    [Fact]
+    public async Task GetMissionControlAsync_IncludesSequenceExpectationWhenEligible()
+    {
+        var (personId, protocol, historicalRuns, activeRun) = CreateDriftFixture(activeStartedDaysAgo: 0);
+        var checkIns = historicalRuns.SelectMany(run => StableCheckIns(personId, run, 1, 2)).ToList();
+        var service = CreateMissionControlService(personId, new List<Protocol> { protocol }, historicalRuns.Append(activeRun).ToList(), checkIns, activeRun);
+
+        var mission = await service.GetMissionControlAsync(personId, CancellationToken.None);
+
+        Assert.NotNull(mission.SequenceExpectationSnapshot);
+        Assert.Equal("FirstCheckIn", mission.SequenceExpectationSnapshot?.ExpectedNextEvent?.EventType);
+    }
+
     private static ProtocolService CreateService(
         IProtocolRepository protocolRepository,
         IProtocolRunRepository runRepository,

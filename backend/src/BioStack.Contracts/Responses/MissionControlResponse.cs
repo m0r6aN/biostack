@@ -9,6 +9,7 @@ public sealed record MissionControlResponse(
     List<MissionControlObservationSignalResponse> ObservationSignals,
     ProtocolPatternSnapshot? PatternSnapshot,
     ProtocolDriftSnapshot? DriftSnapshot,
+    ProtocolSequenceExpectationSnapshot? SequenceExpectationSnapshot,
     List<ProtocolReviewTimelineEventResponse> CohesionTimeline
 );
 

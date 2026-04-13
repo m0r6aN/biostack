@@ -23,6 +23,7 @@ import {
     ProtocolComputationRecord,
     ProtocolDriftSnapshot,
     ProtocolPatternSnapshot,
+    ProtocolSequenceExpectationSnapshot,
     ProtocolReview,
     ProtocolReviewCompletedEvent,
     ProtocolRun,
@@ -195,6 +196,10 @@ export class ApiClient {
 
   async getProtocolDrift(protocolId: string): Promise<ProtocolDriftSnapshot> {
     return this.request<ProtocolDriftSnapshot>(`/api/v1/protocols/${protocolId}/drift`);
+  }
+
+  async getProtocolSequenceExpectation(protocolId: string): Promise<ProtocolSequenceExpectationSnapshot> {
+    return this.request<ProtocolSequenceExpectationSnapshot>(`/api/v1/protocols/${protocolId}/sequence-expectation`);
   }
 
   async completeProtocolReview(
