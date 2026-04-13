@@ -1,6 +1,5 @@
 import { AppShell } from '@/components/AppShell';
 import { AuthProvider } from '@/lib/AuthProvider';
-import { auth, authProvidersConfigured } from '@/lib/auth';
 import { ProfileProvider } from '@/lib/context';
 import { SettingsProvider } from '@/lib/settings';
 import type { Metadata } from 'next';
@@ -16,8 +15,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <body className="bg-[#0B0F14] text-white/90 font-sans">
@@ -28,10 +25,10 @@ export default async function RootLayout({
           <div className="absolute -bottom-[10%] right-[20%] w-[45vw] h-[45vh] rounded-full bg-violet-600/[0.035] blur-[110px]" />
         </div>
 
-        <AuthProvider session={session}>
+        <AuthProvider>
           <SettingsProvider>
             <ProfileProvider>
-              <AppShell authProvidersConfigured={authProvidersConfigured}>{children}</AppShell>
+              <AppShell>{children}</AppShell>
             </ProfileProvider>
           </SettingsProvider>
         </AuthProvider>

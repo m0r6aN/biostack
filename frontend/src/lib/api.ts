@@ -37,15 +37,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 export class ApiClient {
   private baseUrl: string;
-  private accessToken: string | null = null;
-
   constructor(baseUrl: string = API_URL) {
     this.baseUrl = baseUrl;
-  }
-
-  /** Call this from client components after reading useSession() */
-  setAccessToken(token: string | null) {
-    this.accessToken = token;
   }
 
   private async request<T>(
@@ -58,11 +51,7 @@ export class ApiClient {
       ...(options.headers as Record<string, string>),
     };
 
-    if (this.accessToken) {
-      headers['Authorization'] = `Bearer ${this.accessToken}`;
-    }
-
-    const response = await fetch(url, { ...options, headers });
+    const response = await fetch(url, { ...options, headers, credentials: 'include' });
 
     if (!response.ok) {
       throw new Error(`API Error: ${response.status} ${response.statusText}`);

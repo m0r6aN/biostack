@@ -3,25 +3,24 @@ namespace BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 
 /// <summary>
-/// Represents an authenticated user, identified by their OAuth provider identity.
-/// The role is deliberately not exposed via any public API — Admin status is
-/// communicated to the frontend only through the JWT claims we issue.
+/// Represents an authenticated user. Legacy provider fields are preserved for
+/// existing rows, but new sign-ins are backed by first-party auth identities.
 /// </summary>
 public sealed class AppUser
 {
     public Guid Id { get; set; }
 
-    /// <summary>e.g. "google|117263485..."  or "github|1234567"</summary>
+    /// <summary>Legacy provider key. Email auth stores the normalized address.</summary>
     public string ProviderKey { get; set; } = string.Empty;
 
-    /// <summary>e.g. "google", "github", "facebook", "apple"</summary>
+    /// <summary>Legacy provider. New email auth rows use "email".</summary>
     public string Provider { get; set; } = string.Empty;
 
     public string Email { get; set; } = string.Empty;
 
     public string DisplayName { get; set; } = string.Empty;
 
-    /// <summary>URL to the OAuth provider's profile picture.</summary>
+    /// <summary>Optional profile picture URL retained for existing users.</summary>
     public string? AvatarUrl { get; set; }
 
     public UserRole Role { get; set; } = UserRole.User;
@@ -31,4 +30,6 @@ public sealed class AppUser
 
     // Profiles owned by this user
     public ICollection<PersonProfile> Profiles { get; set; } = new List<PersonProfile>();
+    public ICollection<AuthIdentity> AuthIdentities { get; set; } = new List<AuthIdentity>();
+    public ICollection<Session> Sessions { get; set; } = new List<Session>();
 }

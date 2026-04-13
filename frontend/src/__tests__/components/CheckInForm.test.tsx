@@ -32,9 +32,10 @@ describe('CheckInForm', () => {
       mockUseSettings.mockReturnValue({ settings: { weightUnit: 'metric' } });
     });
 
-    it('shows "Weight (kg)" label', () => {
+    it('shows metric weight controls', () => {
       render(<CheckInForm personId="p1" onSubmit={vi.fn()} />);
-      expect(screen.getByText('Weight (kg)')).toBeInTheDocument();
+      expect(screen.getByText('Weight')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'kg' })).toBeInTheDocument();
     });
 
     it('submits weight value as-is (no conversion)', async () => {
@@ -60,9 +61,10 @@ describe('CheckInForm', () => {
       mockUseSettings.mockReturnValue({ settings: { weightUnit: 'imperial' } });
     });
 
-    it('shows "Weight (lbs)" label', () => {
+    it('shows imperial weight controls', () => {
       render(<CheckInForm personId="p1" onSubmit={vi.fn()} />);
-      expect(screen.getByText('Weight (lbs)')).toBeInTheDocument();
+      expect(screen.getByText('Weight')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'lbs' })).toBeInTheDocument();
     });
 
     it('converts lbs to kg before calling onSubmit', async () => {
@@ -88,12 +90,12 @@ describe('CheckInForm', () => {
   it('shows the submit button', () => {
     mockUseSettings.mockReturnValue({ settings: { weightUnit: 'metric' } });
     render(<CheckInForm personId="p1" onSubmit={vi.fn()} />);
-    expect(screen.getByRole('button', { name: /record check-in/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /commit daily record/i })).toBeInTheDocument();
   });
 
   it('disables the button when isLoading=true', () => {
     mockUseSettings.mockReturnValue({ settings: { weightUnit: 'metric' } });
     render(<CheckInForm personId="p1" onSubmit={vi.fn()} isLoading />);
-    expect(screen.getByRole('button', { name: /saving/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /synchronizing/i })).toBeDisabled();
   });
 });

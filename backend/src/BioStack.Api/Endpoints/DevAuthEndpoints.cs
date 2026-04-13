@@ -1,6 +1,7 @@
 namespace BioStack.Api.Endpoints;
 
 using BioStack.Application.Services;
+using BioStack.Api.Auth;
 using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 
@@ -12,8 +13,7 @@ public static class DevAuthEndpoints
 {
     public static void MapDevAuthEndpoints(this IEndpointRouteBuilder app)
     {
-        // Returns a signed admin JWT without requiring OAuth.
-        // Useful for local development when no OAuth providers are configured.
+        // Returns a signed admin JWT for local admin API work.
         app.MapPost("/api/v1/auth/dev-token", (IJwtTokenService jwt) =>
         {
             var devAdmin = new AppUser
@@ -29,5 +29,8 @@ public static class DevAuthEndpoints
             var token = jwt.GenerateToken(devAdmin);
             return Results.Ok(new { token });
         });
+
+        app.MapGet("/dev/auth/inbox", (IDevMagicLinkInbox inbox) =>
+            Results.Ok(inbox.Latest()));
     }
 }

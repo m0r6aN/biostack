@@ -11,6 +11,9 @@ public sealed class BioStackDbContext : DbContext
     }
 
     public DbSet<AppUser> AppUsers { get; set; }
+    public DbSet<AuthIdentity> AuthIdentities { get; set; }
+    public DbSet<AuthChallenge> AuthChallenges { get; set; }
+    public DbSet<Session> Sessions { get; set; }
     public DbSet<PersonProfile> PersonProfiles { get; set; }
     public DbSet<CompoundRecord> CompoundRecords { get; set; }
     public DbSet<CheckIn> CheckIns { get; set; }
@@ -44,6 +47,51 @@ public sealed class BioStackDbContext : DbContext
                 .WithOne(p => p.Owner)
                 .HasForeignKey(p => p.OwnerId)
                 .OnDelete(DeleteBehavior.SetNull);
+            entity.HasMany(u => u.AuthIdentities)
+                .WithOne(i => i.User)
+                .HasForeignKey(i => i.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany(u => u.Sessions)
+                .WithOne(s => s.User)
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<AuthIdentity>(entity =>
+        {
+            entity.HasKey(i => i.Id);
+            entity.Property(i => i.Type).HasMaxLength(50).IsRequired();
+            entity.Property(i => i.ValueNormalized).HasMaxLength(255).IsRequired();
+            entity.HasIndex(i => new { i.Type, i.ValueNormalized }).IsUnique();
+            entity.HasIndex(i => i.UserId);
+        });
+
+        modelBuilder.Entity<AuthChallenge>(entity =>
+        {
+            entity.HasKey(c => c.Id);
+            entity.Property(c => c.Channel).HasMaxLength(50).IsRequired();
+            entity.Property(c => c.ChallengeType).HasMaxLength(50).IsRequired();
+            entity.Property(c => c.TokenHash).HasMaxLength(128).IsRequired();
+            entity.Property(c => c.IpAddress).HasMaxLength(128);
+            entity.Property(c => c.RedirectPath).HasMaxLength(512).IsRequired();
+            entity.HasOne(c => c.Identity)
+                .WithMany(i => i.Challenges)
+                .HasForeignKey(c => c.IdentityId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(c => c.TokenHash).IsUnique();
+            entity.HasIndex(c => c.IdentityId);
+            entity.HasIndex(c => c.ExpiresAtUtc);
+        });
+
+        modelBuilder.Entity<Session>(entity =>
+        {
+            entity.HasKey(s => s.Id);
+            entity.Property(s => s.TokenHash).HasMaxLength(128).IsRequired();
+            entity.Property(s => s.IpAddress).HasMaxLength(128);
+            entity.Property(s => s.UserAgent).HasMaxLength(512);
+            entity.HasIndex(s => s.TokenHash).IsUnique();
+            entity.HasIndex(s => s.UserId);
+            entity.HasIndex(s => s.ExpiresAtUtc);
         });
 
         modelBuilder.Entity<PersonProfile>(entity =>

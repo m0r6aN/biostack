@@ -13,33 +13,29 @@ vi.mock('@/components/Sidebar', () => ({
 }));
 
 describe('AppShell', () => {
-  it('shows a quiet local-mode notice on app routes when providers are not configured', () => {
+  it('renders app chrome on app routes', () => {
     usePathnameMock.mockReturnValue('/mission-control');
 
     render(
-      <AppShell authProvidersConfigured={false}>
+      <AppShell>
         <div>Dashboard content</div>
       </AppShell>
     );
 
-    expect(screen.getByText('Local mode')).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'OAuth providers are not configured yet. Profiles and protocol data stay usable on this device until sign-in is enabled.'
-      )
-    ).toBeInTheDocument();
+    expect(screen.getByText('Sidebar')).toBeInTheDocument();
     expect(screen.getByText('Dashboard content')).toBeInTheDocument();
   });
 
-  it('does not show the notice when providers are configured', () => {
-    usePathnameMock.mockReturnValue('/profiles');
+  it('does not render app chrome on public routes', () => {
+    usePathnameMock.mockReturnValue('/pricing');
 
     render(
-      <AppShell authProvidersConfigured>
-        <div>Profiles content</div>
+      <AppShell>
+        <div>Pricing content</div>
       </AppShell>
     );
 
-    expect(screen.queryByText('Local mode')).not.toBeInTheDocument();
+    expect(screen.queryByText('Sidebar')).not.toBeInTheDocument();
+    expect(screen.getByText('Pricing content')).toBeInTheDocument();
   });
 });

@@ -13,21 +13,20 @@ describe('ApiClient', () => {
     client = new ApiClient('https://api.example.test');
   });
 
-  it('adds the bearer token when one is set', async () => {
+  it('sends cookie credentials with API requests', async () => {
     fetchMock.mockResolvedValue({
       ok: true,
       status: 200,
       json: async () => [],
     });
 
-    client.setAccessToken('test-token');
     await client.getProfiles();
 
     expect(fetchMock).toHaveBeenCalledWith(
       'https://api.example.test/api/v1/profiles',
       expect.objectContaining({
+        credentials: 'include',
         headers: expect.objectContaining({
-          Authorization: 'Bearer test-token',
           'Content-Type': 'application/json',
         }),
       })
@@ -138,7 +137,7 @@ describe('ApiClient', () => {
       statusText: 'Unavailable',
     });
 
-    localStorage.setItem('biostack_mock_goals_profile-1', JSON.stringify([GOAL_DEFINITIONS[0].id]));
+    localStorage.setItem('biostack_profile_goals', JSON.stringify({ 'profile-1': [GOAL_DEFINITIONS[0].id] }));
 
     const goals = await client.getProfileGoals('profile-1');
 
@@ -154,8 +153,8 @@ describe('ApiClient', () => {
 
     await client.setProfileGoals('profile-1', [GOAL_DEFINITIONS[1].id]);
 
-    expect(localStorage.getItem('biostack_mock_goals_profile-1')).toBe(
-      JSON.stringify([GOAL_DEFINITIONS[1].id])
+    expect(localStorage.getItem('biostack_profile_goals')).toBe(
+      JSON.stringify({ 'profile-1': [GOAL_DEFINITIONS[1].id] })
     );
   });
 
