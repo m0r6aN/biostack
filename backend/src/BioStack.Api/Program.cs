@@ -178,7 +178,11 @@ builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
 builder.Services.AddSingleton<InMemoryMagicLinkDelivery>();
-if (!string.IsNullOrWhiteSpace(builder.Configuration["Smtp:Host"]))
+if (!string.IsNullOrWhiteSpace(builder.Configuration["AzureCommunicationEmail:ConnectionString"]))
+{
+    builder.Services.AddSingleton<IMagicLinkDelivery, AzureCommunicationEmailMagicLinkDelivery>();
+}
+else if (!string.IsNullOrWhiteSpace(builder.Configuration["Smtp:Host"]))
 {
     builder.Services.AddSingleton<IMagicLinkDelivery, SmtpMagicLinkDelivery>();
 }

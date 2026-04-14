@@ -8,7 +8,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 function resolveRedirectPath(callbackUrl: string | null) {
   if (!callbackUrl) {
-    return '/mission-control';
+    return '/protocol-console';
   }
 
   if (callbackUrl.startsWith('/')) {
@@ -17,9 +17,9 @@ function resolveRedirectPath(callbackUrl: string | null) {
 
   try {
     const parsed = new URL(callbackUrl);
-    return `${parsed.pathname}${parsed.search}${parsed.hash}` || '/mission-control';
+    return `${parsed.pathname}${parsed.search}${parsed.hash}` || '/protocol-console';
   } catch {
-    return '/mission-control';
+    return '/protocol-console';
   }
 }
 

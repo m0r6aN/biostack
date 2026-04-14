@@ -102,7 +102,7 @@ export default function AdminPage() {
       <Header title="System Administration" subtitle="Infrastructure & Knowledge Management" />
 
       <main className="flex-1 p-6 space-y-6 max-w-5xl mx-auto w-full">
-        {/* Stats Dashboard */}
+        {/* Stats overview */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <StatMiniCard label="Profiles" value={stats?.profiles ?? 0} color="blue" />
           <StatMiniCard label="Knowledge" value={stats?.knowledgeEntries ?? 0} color="emerald" />

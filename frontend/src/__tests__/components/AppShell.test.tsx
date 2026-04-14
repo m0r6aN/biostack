@@ -14,16 +14,16 @@ vi.mock('@/components/Sidebar', () => ({
 
 describe('AppShell', () => {
   it('renders app chrome on app routes', () => {
-    usePathnameMock.mockReturnValue('/mission-control');
+    usePathnameMock.mockReturnValue('/protocol-console');
 
     render(
       <AppShell>
-        <div>Dashboard content</div>
+        <div>Protocol Console content</div>
       </AppShell>
     );
 
     expect(screen.getByText('Sidebar')).toBeInTheDocument();
-    expect(screen.getByText('Dashboard content')).toBeInTheDocument();
+    expect(screen.getByText('Protocol Console content')).toBeInTheDocument();
   });
 
   it('does not render app chrome on public routes', () => {

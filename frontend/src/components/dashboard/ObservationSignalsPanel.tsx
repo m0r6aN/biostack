@@ -1,11 +1,11 @@
-import { MissionControlObservationSignal } from '@/lib/types';
+import { ProtocolConsoleObservationSignal } from '@/lib/types';
 
 interface ObservationSignalsPanelProps {
-  signals: MissionControlObservationSignal[];
+  signals: ProtocolConsoleObservationSignal[];
 }
 
 export function ObservationSignalsPanel({ signals }: ObservationSignalsPanelProps) {
-  const grouped = signals.reduce<Record<string, MissionControlObservationSignal[]>>((groups, signal) => {
+  const grouped = signals.reduce<Record<string, ProtocolConsoleObservationSignal[]>>((groups, signal) => {
     const key = signal.type;
     groups[key] = [...(groups[key] ?? []), signal];
     return groups;

@@ -92,7 +92,7 @@ describe('OnboardingExperience', () => {
       code: 'Enter',
     });
 
-    fireEvent.click(screen.getByRole('button', { name: 'Add to My Stack' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Add to My Protocol' }));
 
     expect(await screen.findByText('These may be doing the same job')).toBeInTheDocument();
     expect(screen.getByText('You might not need both')).toBeInTheDocument();

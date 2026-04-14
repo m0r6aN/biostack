@@ -111,6 +111,38 @@ public sealed class DatabaseKnowledgeSourceTests : IDisposable
         Assert.Equal(new[] { "Vitamin C" }, updated.OptimizationSupplements);
     }
 
+    [Theory]
+    [InlineData("first alias")]
+    [InlineData("middle alias")]
+    [InlineData("last alias")]
+    [InlineData("CANONICAL ALIAS TEST")]
+    public async Task GetCompoundAsync_FindsEntriesByCanonicalNameOrAlias(string lookup)
+    {
+        var entryId = Guid.NewGuid();
+
+        using (var seedContext = CreateDbContext())
+        {
+            seedContext.KnowledgeEntries.Add(new KnowledgeEntry
+            {
+                Id = entryId,
+                CanonicalName = "Canonical Alias Test",
+                Aliases = new List<string> { "First Alias", "Middle Alias", "Last Alias" },
+                Classification = CompoundCategory.Peptide,
+                EvidenceTier = EvidenceTier.Moderate
+            });
+
+            await seedContext.SaveChangesAsync();
+        }
+
+        using var lookupContext = CreateDbContext();
+        var source = new DatabaseKnowledgeSource(lookupContext);
+
+        var entry = await source.GetCompoundAsync(lookup);
+
+        Assert.NotNull(entry);
+        Assert.Equal(entryId, entry.Id);
+    }
+
     public void Dispose()
     {
         _connection.Dispose();

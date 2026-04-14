@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 
 // ─── Custom SVG icons ─────────────────────────────────────────────────────────
 
-function IconDashboard() {
+function IconProtocolConsole() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
       <rect x="2" y="2" width="5" height="5" rx="1.25" />
@@ -106,7 +106,7 @@ function IconAdmin() {
 // ─── Nav items ────────────────────────────────────────────────────────────────
 
 const navItems = [
-  { label: 'Dashboard',   href: '/mission-control', icon: <IconDashboard />,   adminOnly: false },
+  { label: 'Protocol Console', href: '/protocol-console', icon: <IconProtocolConsole />, adminOnly: false },
   { label: 'Profiles',    href: '/profiles',    icon: <IconProfiles />,    adminOnly: false },
   { label: 'Compounds',   href: '/compounds',   icon: <IconCompounds />,   adminOnly: false },
   { label: 'Protocols',   href: '/protocols',   icon: <IconProtocols />,   adminOnly: false },
@@ -151,7 +151,7 @@ export function Sidebar() {
       >
         {/* ── Brand zone ────────────────────────────────────────────────────── */}
         <div className="px-5 py-5 border-b border-white/[0.05] flex items-center justify-between">
-          <Link href="/mission-control" onClick={() => setSidebarOpen(false)} aria-label="BioStack Mission Control — home">
+          <Link href="/protocol-console" onClick={() => setSidebarOpen(false)} aria-label="BioStack Protocol Console home">
             <BioStackLogo variant="horizontal" theme="dark" size="md" hoverable />
           </Link>
 
@@ -167,7 +167,7 @@ export function Sidebar() {
         </div>
         <div className="px-6 py-2">
           <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.3em] pl-0.5">
-            Mission Control Center
+            Protocol Console
           </p>
         </div>
 
@@ -176,8 +176,8 @@ export function Sidebar() {
           <div className="space-y-1">
             {visibleNavItems.map((item) => {
               const isActive =
-                item.href === '/mission-control'
-                  ? pathname.startsWith('/mission-control')
+                item.href === '/protocol-console'
+                  ? pathname.startsWith('/protocol-console') || pathname.startsWith('/mission-control')
                   : pathname.startsWith(item.href);
 
               return (

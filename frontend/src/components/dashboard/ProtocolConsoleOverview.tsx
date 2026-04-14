@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { MissionControl } from '@/lib/types';
+import { ProtocolConsolePayload } from '@/lib/types';
 
-interface MissionControlOverviewProps {
-  mission: MissionControl | null;
+interface ProtocolConsoleOverviewProps {
+  mission: ProtocolConsolePayload | null;
 }
 
-export function MissionControlOverview({ mission }: MissionControlOverviewProps) {
+export function ProtocolConsoleOverview({ mission }: ProtocolConsoleOverviewProps) {
   const activeRun = mission?.activeRun;
   const latestClosedRun = mission?.latestClosedRun;
   const review = mission?.latestReviewSummary;

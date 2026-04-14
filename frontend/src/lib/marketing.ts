@@ -50,7 +50,7 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'What is Pathway Overlap detection?',
     answer:
-      'Pathway Overlap detection analyzes your stack and identifies when two or more compounds share the same biological pathways. BioStack surfaces flags and evidence confidence levels so you can investigate further.',
+      'Pathway Overlap detection analyzes your protocol and identifies when two or more compounds share the same biological pathways. BioStack surfaces flags and evidence confidence levels so you can investigate further.',
   },
   {
     question: 'Where is my data stored?',
@@ -75,10 +75,10 @@ export const pricingTiers: PricingTier[] = [
     monthly: '$0',
     annual: '$0/year',
     annualEffective: '$0/mo',
-    description: 'For getting organized.',
+    description: 'Getting organized.',
     detail:
       'A simple place to track what you’re taking and stop relying on notes, memory, or scattered apps.',
-    ctaLabel: 'Start Free',
+    ctaLabel: 'Build My Protocol',
     href: '/onboarding',
     highlights: [
       'Track up to 5 active compounds',
@@ -92,7 +92,7 @@ export const pricingTiers: PricingTier[] = [
     monthly: '$12/mo',
     annual: '$96/year',
     annualEffective: '$8/mo effective',
-    description: 'For people actively running a stack.',
+    description: 'For people actively running protocols - not just tracking them.',
     detail:
       'Everything you need to track compounds, log results, and understand how your protocol fits together.',
     ctaLabel: 'Choose Operator',
@@ -111,7 +111,7 @@ export const pricingTiers: PricingTier[] = [
     monthly: '$29/mo',
     annual: '$228/year',
     annualEffective: '$19/mo effective',
-    description: 'For deeper analysis and pattern detection.',
+    description: 'For deeper analysis and pattern optimization.',
     detail:
       'Advanced insight tools for people managing more complex protocols over time.',
     ctaLabel: 'See Commander',
@@ -128,7 +128,7 @@ export const pricingTiers: PricingTier[] = [
 
 export const landingFeatures = [
   'Compound tracking with precision structure',
-  'Pathway overlap intelligence across your active stack',
+  'Pathway overlap intelligence across your active protocol',
   'Reconstitution, volume, and unit conversion math',
   'Evidence-tiered knowledge base entries',
   'Daily check-ins that turn subjectivity into analyzable signal',
