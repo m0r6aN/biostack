@@ -3,9 +3,11 @@ namespace BioStack.Api.Tests.Integration;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using BioStack.Api;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
+using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -22,6 +24,11 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
     private WebApplicationFactory<Program> _factory = null!;
     private HttpClient _client = null!;
     private string _dbPath = string.Empty;
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new JsonStringEnumConverter() },
+    };
 
     public Task InitializeAsync()
     {
@@ -138,6 +145,110 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         var reused = await _client.GetAsync(pathAndQuery);
         Assert.Equal(HttpStatusCode.Redirect, reused.StatusCode);
         Assert.Contains("error=invalid-link", reused.Headers.Location?.ToString());
+    }
+
+    [Fact]
+    public async Task MagicLink_NewUserCanLoginCreateProfileSaveCompoundAndRecordCalculation()
+    {
+        await StartAsync("new-user@example.com", "/profiles");
+        var link = await LatestMagicLinkAsync();
+
+        var verified = await _client.GetAsync(ReadPathAndQuery(link));
+
+        Assert.Equal(HttpStatusCode.Redirect, verified.StatusCode);
+        Assert.Equal("http://localhost:3043/profiles", verified.Headers.Location?.ToString());
+
+        var session = await _client.GetFromJsonAsync<AuthSessionResponse>("/api/v1/auth/session");
+        Assert.NotNull(session);
+        Assert.True(session.Authenticated);
+        Assert.Equal("new-user@example.com", session.User?.Email);
+
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            var user = await db.AppUsers.SingleAsync(u => u.Email == "new-user@example.com");
+            var identity = await db.AuthIdentities.SingleAsync(i => i.UserId == user.Id);
+            var activeSession = await db.Sessions.SingleAsync(s => s.UserId == user.Id && s.RevokedAtUtc == null);
+
+            Assert.Equal("email", user.Provider);
+            Assert.Equal("new-user@example.com", user.ProviderKey);
+            Assert.True(identity.IsVerified);
+            Assert.True(activeSession.ExpiresAtUtc > DateTime.UtcNow);
+        }
+
+        var profileResponse = await _client.PostAsJsonAsync("/api/v1/profiles", new CreateProfileRequest(
+            "Magic Link User",
+            Sex.Unspecified,
+            82.5m,
+            34,
+            "Validate first-run flow",
+            "Created after passwordless sign-in"));
+
+        Assert.Equal(HttpStatusCode.Created, profileResponse.StatusCode);
+        var profile = await profileResponse.Content.ReadFromJsonAsync<ProfileResponse>(JsonOptions);
+        Assert.NotNull(profile);
+        Assert.Equal("Magic Link User", profile.DisplayName);
+
+        var compoundResponse = await _client.PostAsJsonAsync($"/api/v1/profiles/{profile.Id}/compounds", new CreateCompoundRequest(
+            "BPC-157",
+            CompoundCategory.Peptide,
+            DateTime.UtcNow.Date,
+            null,
+            CompoundStatus.Active,
+            "First saved compound",
+            SourceType.Manual,
+            "Recovery",
+            "Manual entry",
+            49.99m));
+
+        Assert.Equal(HttpStatusCode.Created, compoundResponse.StatusCode);
+        var compound = await compoundResponse.Content.ReadFromJsonAsync<CompoundResponse>(JsonOptions);
+        Assert.NotNull(compound);
+        Assert.Equal(profile.Id, compound.PersonId);
+        Assert.Equal("BPC-157", compound.Name);
+
+        var compounds = await _client.GetFromJsonAsync<CompoundResponse[]>($"/api/v1/profiles/{profile.Id}/compounds", JsonOptions);
+        Assert.NotNull(compounds);
+        Assert.Contains(compounds, saved => saved.Id == compound.Id);
+
+        var calculationResponse = await _client.PostAsJsonAsync("/api/v1/calculators/reconstitution", new ReconstitutionRequest(5m, 2.5m));
+        Assert.Equal(HttpStatusCode.OK, calculationResponse.StatusCode);
+        var calculation = await calculationResponse.Content.ReadFromJsonAsync<CalculatorResultResponse>(JsonOptions);
+        Assert.NotNull(calculation);
+        Assert.Equal(2000m, calculation.Output);
+        Assert.Equal("mcg/mL", calculation.Unit);
+
+        var protocolResponse = await _client.PostAsJsonAsync($"/api/v1/profiles/{profile.Id}/protocols", new SaveProtocolRequest("First active stack"));
+        if (protocolResponse.StatusCode != HttpStatusCode.Created)
+        {
+            var body = await protocolResponse.Content.ReadAsStringAsync();
+            using var scope = _factory.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            var profileExists = await db.PersonProfiles.AnyAsync(saved => saved.Id == profile.Id);
+            var activeCompounds = await db.CompoundRecords.CountAsync(saved => saved.PersonId == profile.Id && saved.Status == CompoundStatus.Active);
+            var protocols = await db.Protocols.CountAsync(saved => saved.PersonId == profile.Id);
+
+            Assert.Fail(
+                $"Expected protocol save to return 201 Created, got {(int)protocolResponse.StatusCode} {protocolResponse.StatusCode}. " +
+                $"Body: {body}. Profile exists: {profileExists}. Active compounds: {activeCompounds}. Protocols saved: {protocols}.");
+        }
+
+        var protocol = await protocolResponse.Content.ReadFromJsonAsync<ProtocolResponse>(JsonOptions);
+        Assert.NotNull(protocol);
+        Assert.Equal(profile.Id, protocol.PersonId);
+        Assert.Contains(protocol.Items, item => item.CompoundRecordId == compound.Id);
+
+        var computationResponse = await _client.PostAsJsonAsync($"/api/v1/protocols/{protocol.Id}/computations", new CreateProtocolComputationRequest(
+            null,
+            "reconstitution",
+            """{"peptideAmountMg":5,"diluentVolumeMl":2.5}""",
+            """{"output":2000,"unit":"mcg/mL"}"""));
+
+        Assert.Equal(HttpStatusCode.Created, computationResponse.StatusCode);
+        var computation = await computationResponse.Content.ReadFromJsonAsync<ProtocolComputationRecordResponse>(JsonOptions);
+        Assert.NotNull(computation);
+        Assert.Equal(protocol.Id, computation.ProtocolId);
+        Assert.Equal("reconstitution", computation.Type);
     }
 
     [Fact]

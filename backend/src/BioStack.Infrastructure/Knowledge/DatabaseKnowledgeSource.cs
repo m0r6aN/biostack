@@ -15,13 +15,30 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
 
     public async Task<KnowledgeEntry?> GetCompoundAsync(string name, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.KnowledgeEntries
+        var normalizedName = name.Trim();
+        if (string.IsNullOrWhiteSpace(normalizedName))
+        {
+            return null;
+        }
+
+        var normalizedCanonicalName = normalizedName.ToLowerInvariant();
+        var canonicalMatch = await _dbContext.KnowledgeEntries
             .AsNoTracking()
-            .FirstOrDefaultAsync(k => 
-                k.CanonicalName.ToLower() == name.ToLower() ||
-                EF.Functions.Like(EF.Property<string>(k, "Aliases"), $"%|{name}|%") ||
-                k.Aliases.FirstOrDefault() == name, // Fallback for simple matches
+            .FirstOrDefaultAsync(k =>
+                k.CanonicalName.ToLower() == normalizedCanonicalName,
                 cancellationToken);
+
+        if (canonicalMatch is not null)
+        {
+            return canonicalMatch;
+        }
+
+        var entries = await _dbContext.KnowledgeEntries
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return entries.FirstOrDefault(k =>
+            k.Aliases.Any(alias => string.Equals(alias.Trim(), normalizedName, StringComparison.OrdinalIgnoreCase)));
     }
 
     public async Task<List<KnowledgeEntry>> GetAllCompoundsAsync(CancellationToken cancellationToken = default)
@@ -33,10 +50,20 @@ public sealed class DatabaseKnowledgeSource : IKnowledgeSource
 
     public async Task<List<KnowledgeEntry>> SearchCompoundsByPathwayAsync(string pathway, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.KnowledgeEntries
+        var normalizedPathway = pathway.Trim();
+        if (string.IsNullOrWhiteSpace(normalizedPathway))
+        {
+            return new List<KnowledgeEntry>();
+        }
+
+        var entries = await _dbContext.KnowledgeEntries
             .AsNoTracking()
-            .Where(k => EF.Functions.Like(EF.Property<string>(k, "Pathways"), $"%|{pathway}|%"))
             .ToListAsync(cancellationToken);
+
+        return entries
+            .Where(k => k.Pathways.Any(candidate =>
+                string.Equals(candidate.Trim(), normalizedPathway, StringComparison.OrdinalIgnoreCase)))
+            .ToList();
     }
 
     public async Task UpsertCompoundAsync(KnowledgeEntry entry, CancellationToken cancellationToken = default)

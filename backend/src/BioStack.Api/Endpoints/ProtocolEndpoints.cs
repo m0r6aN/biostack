@@ -10,10 +10,10 @@ public static class ProtocolEndpoints
         var profileGroup = app.MapGroup("/api/v1/profiles/{profileId}/protocols")
             .WithTags("Protocols");
 
-        profileGroup.MapGet("/", GetProtocols)
+        profileGroup.MapGet("", GetProtocols)
             .WithName("GetProtocols");
 
-        profileGroup.MapPost("/", SaveCurrentStack)
+        profileGroup.MapPost("", SaveCurrentStack)
             .WithName("SaveCurrentStackAsProtocol");
 
         profileGroup.MapGet("/current-stack-intelligence", GetCurrentStackIntelligence)
