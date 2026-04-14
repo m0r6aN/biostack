@@ -34,7 +34,18 @@ function Invoke-Az {
     )
 
     $azCmd = Require-AzCli
-    Write-Host ("az " + ($Arguments -join " ")) -ForegroundColor Cyan
+    $displayArguments = @($Arguments)
+    $secretsIndex = [Array]::IndexOf($displayArguments, "--secrets")
+    if ($secretsIndex -ge 0) {
+        for ($i = $secretsIndex + 1; $i -lt $displayArguments.Count; $i++) {
+            if ($displayArguments[$i] -like "*=*") {
+                $name = $displayArguments[$i].Split("=", 2)[0]
+                $displayArguments[$i] = "$name=<redacted>"
+            }
+        }
+    }
+
+    Write-Host ("az " + ($displayArguments -join " ")) -ForegroundColor Cyan
     & $azCmd @Arguments
     if ($LASTEXITCODE -ne 0) {
         throw "Azure CLI command failed: az $($Arguments -join ' ')"

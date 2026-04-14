@@ -35,10 +35,10 @@ jobs:
         run: |
           IMAGE=${{ secrets.ACR_LOGIN_SERVER }}/biostack-api
           docker build \
-            --file biostack-mission-control/backend/Dockerfile \
+            --file backend/Dockerfile \
             --tag $IMAGE:${{ github.sha }} \
             --tag $IMAGE:latest \
-            biostack-mission-control/backend
+            backend
           docker push $IMAGE:${{ github.sha }}
           docker push $IMAGE:latest
 
@@ -47,11 +47,11 @@ jobs:
         run: |
           IMAGE=${{ secrets.ACR_LOGIN_SERVER }}/biostack-web
           docker build \
-            --file biostack-mission-control/frontend/Dockerfile \
+            --file frontend/Dockerfile \
             --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
             --tag $IMAGE:${{ github.sha }} \
             --tag $IMAGE:latest \
-            biostack-mission-control/frontend
+            frontend
           docker push $IMAGE:${{ github.sha }}
           docker push $IMAGE:latest
 
