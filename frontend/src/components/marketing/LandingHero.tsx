@@ -13,19 +13,15 @@ export function LandingHero() {
           </p>
 
           <p className="mt-7 text-base font-semibold leading-7 text-white sm:text-lg">
-            Stop guessing what your protocol is actually doing.
+            Stop guessing where to start - or what your stack is actually doing.
           </p>
 
           <h1 className="mt-4 text-4xl font-semibold leading-[0.96] tracking-tight text-white sm:text-5xl lg:text-5xl xl:text-6xl">
             BioStack Protocol Console
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-white/62 sm:text-lg sm:leading-8">
-            Start simple. Get it right. Then go deeper when you&apos;re ready. Track compounds,
-            avoid overlap, and turn daily signal into clarity.
-          </p>
-
-          <p className="mt-5 text-sm font-medium text-emerald-200/80">
-            Starts simple. Gets sharper as you track.
+            Add what you&apos;re using - or thinking about using. BioStack shows how it fits,
+            what overlaps, and what actually works together.
           </p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-[max-content_max-content]">
@@ -34,19 +30,23 @@ export function LandingHero() {
               className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
             >
               <span className="block">Build My Protocol</span>
-              <span className="mt-1 block text-xs font-medium text-slate-950/70">Start simple. No setup friction.</span>
+              <span className="mt-1 block text-xs font-medium text-slate-950/70">Start with one compound or build a full stack.</span>
             </Link>
             <Link
               href="/onboarding?mode=existing"
               className="rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24"
             >
               <span className="block">Map My Current Stack</span>
-              <span className="mt-1 block text-xs font-medium text-white/48">For existing protocols and deeper tracking.</span>
+              <span className="mt-1 block text-xs font-medium text-white/48">See how your current compounds fit together.</span>
             </Link>
           </div>
 
-          <p className="mt-4 max-w-xl text-sm leading-6 text-white/52">
-            Most protocols fail from overlap, drift, and conflicting guidance - not intent.
+          <p className="mt-4 max-w-xl text-sm font-medium leading-6 text-emerald-200/78">
+            Some compounds overlap. Some work better together. BioStack shows the difference.
+          </p>
+
+          <p className="mt-3 max-w-xl text-sm leading-6 text-white/52">
+            Conflicting advice, overlapping compounds, and guesswork make this harder than it should be.
           </p>
 
           <Link

@@ -15,75 +15,75 @@ const modeOptions = [
 
 const DEFAULT_COMPOUND_NAMES = ['BPC-157', 'TB-500', 'Creatine'] as const;
 
-const compoundSlots = [
-  { x: 18, y: 20 },
-  { x: 76, y: 22 },
-  { x: 42, y: 78 },
-] as const;
-
-const connections = [
-  [0, 1],
-  [0, 2],
-  [1, 2],
-] as const;
-
 export interface StackIntelligencePanelContent {
   subtext: string;
   insightLabel: string;
-  nodes: Array<{ label: string; x: number; y: number; bubbleClassName: string }>;
+  summary: string;
+  relationshipGroups: Array<{
+    type: 'Overlap' | 'Synergy' | 'Support';
+    label: string;
+    detail: string;
+  }>;
   insights: string[];
 }
 
-export const panelContent: Record<
-  PanelMode,
-  StackIntelligencePanelContent
-> = {
+export const panelContent: Record<PanelMode, StackIntelligencePanelContent> = {
   simple: {
     subtext:
-      'Live protocol state with compounds added, guidance structured, overlap surfaced, and the next tracking step ready.',
-    insightLabel: 'Detected overlap',
-    nodes: [
+      'See how your compounds relate - where they overlap, where they support each other, and what to do next.',
+    insightLabel: 'Relationship summary: overlap + synergy',
+    summary:
+      'BPC-157 and TB-500 share tissue-repair focus, and are often used together for recovery support.',
+    relationshipGroups: [
       {
-        label: 'Shared tissue-repair pathway',
-        x: 49,
-        y: 44,
-        bubbleClassName: '-translate-x-[22%] -translate-y-[145%]',
+        type: 'Overlap',
+        label: 'BPC-157 + TB-500',
+        detail: 'Shared tissue-repair focus',
       },
       {
-        label: 'Correlation ready',
-        x: 41,
-        y: 60,
-        bubbleClassName: '-translate-x-[8%] translate-y-4',
+        type: 'Synergy',
+        label: 'BPC-157 + TB-500',
+        detail: 'Common recovery stack pairing',
+      },
+      {
+        type: 'Support',
+        label: 'Creatine',
+        detail: 'Recovery and performance baseline',
       },
     ],
     insights: [
-      'BPC-157 + TB-500 flagged for overlapping tissue-repair pathways.',
-      'Typical range and common frequency are separated from evidence strength.',
-      'Timeline snippet ready: recovery + sleep signal, 7-day review.',
+      'Overlap does not automatically mean bad. It means the shared role is worth understanding.',
+      'Synergy shows where compounds may make more sense together than alone.',
+      'Support compounds can help the goal without duplicating the same pathway.',
     ],
   },
   technical: {
     subtext:
-      'BioStack ties protocol inputs to typical ranges, evidence confidence, pathway structure, and observable signal over time.',
-    insightLabel: 'Detected signal',
-    nodes: [
+      'BioStack ties your inputs to relationship type, evidence confidence, pathway structure, and observable signal over time.',
+    insightLabel: 'Relationship summary: overlap + support',
+    summary:
+      'The same pair can share a pathway and still be used together when the recovery goal calls for that relationship.',
+    relationshipGroups: [
       {
-        label: 'Moderate evidence',
-        x: 49,
-        y: 44,
-        bubbleClassName: '-translate-x-[12%] -translate-y-[140%]',
+        type: 'Overlap',
+        label: 'BPC-157 + TB-500',
+        detail: 'Tissue-repair pathway alignment',
       },
       {
-        label: 'Signal baseline',
-        x: 41,
-        y: 60,
-        bubbleClassName: '-translate-x-[6%] translate-y-4',
+        type: 'Synergy',
+        label: 'BPC-157 + TB-500',
+        detail: 'Recovery context may justify pairing',
+      },
+      {
+        type: 'Support',
+        label: 'Creatine',
+        detail: 'Non-overlapping baseline signal',
       },
     ],
     insights: [
-      '2 overlapping pathways detected',
       'Evidence tier: Limited -> Moderate',
       'Recovery, sleep, and joint signal ready for timeline correlation',
+      'Next step: track whether the pairing matches your goal over time',
     ],
   },
 };
@@ -106,7 +106,7 @@ function buildCompounds(compoundNames: string[] = []) {
     seen.add(key);
     orderedNames.push(trimmed);
 
-    if (orderedNames.length === compoundSlots.length) {
+    if (orderedNames.length === DEFAULT_COMPOUND_NAMES.length) {
       break;
     }
   }
@@ -118,16 +118,14 @@ function buildCompounds(compoundNames: string[] = []) {
     }
 
     orderedNames.push(fallback);
-    if (orderedNames.length === compoundSlots.length) {
+    if (orderedNames.length === DEFAULT_COMPOUND_NAMES.length) {
       break;
     }
   }
 
-  return compoundSlots.map((slot, index) => ({
+  return orderedNames.slice(0, DEFAULT_COMPOUND_NAMES.length).map((name, index) => ({
     id: `compound-${index}`,
-    name: orderedNames[index],
-    x: slot.x,
-    y: slot.y,
+    name,
   }));
 }
 
@@ -151,9 +149,21 @@ function mergePanelContent(
   return {
     ...base,
     ...override,
-    nodes: override.nodes ?? base.nodes,
+    relationshipGroups: override.relationshipGroups ?? base.relationshipGroups,
     insights: override.insights ?? base.insights,
   };
+}
+
+function relationshipTone(type: StackIntelligencePanelContent['relationshipGroups'][number]['type']) {
+  if (type === 'Overlap') {
+    return 'border-amber-300/20 bg-amber-300/[0.055] text-amber-100/85';
+  }
+
+  if (type === 'Synergy') {
+    return 'border-emerald-300/20 bg-emerald-300/[0.06] text-emerald-100/85';
+  }
+
+  return 'border-sky-300/20 bg-sky-300/[0.055] text-sky-100/85';
 }
 
 export function StackIntelligencePanel({
@@ -192,11 +202,11 @@ export function StackIntelligencePanel({
   return (
     <div
       className={cn(
-        'relative rounded-2xl bg-[linear-gradient(135deg,rgba(16,185,129,0.4),rgba(255,255,255,0.08),rgba(59,130,246,0.38))] p-px shadow-[0_24px_90px_rgba(0,0,0,0.45)]',
+        'relative rounded-lg bg-[linear-gradient(135deg,rgba(16,185,129,0.4),rgba(255,255,255,0.08),rgba(59,130,246,0.38))] p-px shadow-[0_24px_90px_rgba(0,0,0,0.45)]',
         className
       )}
     >
-      <div className="relative overflow-hidden rounded-[15px] bg-[#0B0F14] p-5 sm:p-5">
+      <div className="relative overflow-hidden rounded-lg bg-[#0B0F14] p-4 sm:p-5">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(16,185,129,0.16),transparent_34%),radial-gradient(circle_at_82%_20%,rgba(59,130,246,0.16),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_42%)]" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
 
@@ -206,11 +216,11 @@ export function StackIntelligencePanel({
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-emerald-300/72">
                 {eyebrowLabel}
               </p>
-              <div className="mt-2 min-h-[68px] max-w-md">
+              <div className="mt-2 max-w-md">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.p
                     key={mode}
-                    className="text-sm leading-5 text-white/58"
+                    className="text-sm leading-5 text-white/62"
                     initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
@@ -263,130 +273,46 @@ export function StackIntelligencePanel({
           </div>
 
           <div className="relative mt-3 flex flex-wrap gap-x-3 gap-y-1 rounded-lg border border-white/8 bg-black/20 px-3 py-2 text-[11px] font-medium text-white/42">
-            <span>Tracking started</span>
+            <span>Compounds added</span>
             <span className="text-white/18">/</span>
-            <span>Baseline captured</span>
+            <span>Relationships mapped</span>
             <span className="text-white/18">/</span>
-            <span>Day 7 review pending</span>
+            <span>Next step ready</span>
           </div>
 
           <div className="relative mt-3 grid gap-3 rounded-lg border border-white/8 bg-white/[0.025] p-3 sm:grid-cols-[0.9fr_1.15fr_0.95fr]">
             {[
-              ['Compounds', '3 active'],
+              ['Compounds', displayedCompounds.map((compound) => compound.name).join(', ')],
               ['Evidence tier', mode === 'technical' ? 'Limited -> Moderate' : 'Review ready'],
               ['Timeline', 'Day 0 baseline'],
             ].map(([label, value]) => (
               <div key={label} className="rounded-lg border border-white/7 bg-black/20 px-3 py-2">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">{label}</p>
-                <p className="mt-1 text-sm font-semibold text-white/82">{value}</p>
+                <p className="mt-1 text-sm font-semibold leading-5 text-white/82">{value}</p>
               </div>
             ))}
           </div>
 
-          <div className="relative mt-3 grid gap-3 md:grid-cols-[0.92fr_1.08fr]">
-            <div className="rounded-lg border border-white/8 bg-black/20 p-3">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200/70">
-                Guidance layer
-              </p>
-              <div className="mt-3 space-y-2 text-sm leading-5 text-white/72">
-                <p><span className="text-white/38">Typical range:</span> 0.25mg - 4mg weekly</p>
-                <p><span className="text-white/38">Common pattern:</span> 1-3 doses/week</p>
-                <p><span className="text-white/38">Evidence tier:</span> Limited -&gt; Moderate</p>
-              </div>
-            </div>
-
-            <div className="rounded-lg border border-emerald-300/14 bg-emerald-500/[0.045] p-3">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200/70">
-                Context layer
-              </p>
-              <p className="mt-3 text-sm leading-6 text-white/66">
-                Adjusted (your profile): more precise with age, weight, goals, and tracking.
-              </p>
-            </div>
-          </div>
-
-          <div className="relative mt-3 h-[142px] sm:h-[156px]">
-            <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden="true">
-              <defs>
-                <linearGradient id="stack-line-gradient" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="rgba(52,211,153,0.9)" />
-                  <stop offset="100%" stopColor="rgba(96,165,250,0.85)" />
-                </linearGradient>
-              </defs>
-
-              {connections.map(([fromIndex, toIndex], index) => {
-                const from = displayedCompounds[fromIndex];
-                const to = displayedCompounds[toIndex];
-
-                return (
-                  <motion.line
-                    key={`${from.id}-${to.id}`}
-                    x1={from.x}
-                    y1={from.y}
-                    x2={to.x}
-                    y2={to.y}
-                    stroke="url(#stack-line-gradient)"
-                    strokeWidth="1.25"
-                    strokeLinecap="round"
-                    initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-                    animate={reduceMotion ? { pathLength: 1, opacity: 0.45 } : { pathLength: [0, 1, 1, 0], opacity: [0, 0.55, 0.48, 0] }}
-                    transition={reduceMotion ? { duration: 0 } : { duration: LOOP_DURATION, delay: 0.55 + index * 0.12, times: [0, 0.26, 0.78, 1], repeat: Infinity, ease: 'easeInOut' }}
-                  />
-                );
-              })}
-            </svg>
-
-            {displayedCompounds.map((compound, index) => (
+          <div className="relative mt-3 grid gap-2.5">
+            {activeContent.relationshipGroups.map((relationship) => (
               <motion.div
-                key={compound.id}
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${compound.x}%`, top: `${compound.y}%` }}
-                initial={reduceMotion ? false : { opacity: 0, scale: 0.92, y: 10 }}
-                animate={reduceMotion ? { opacity: 1, scale: 1, y: 0 } : { opacity: [0, 1, 1, 0], scale: [0.92, 1, 1, 0.98], y: [10, 0, 0, -4] }}
-                transition={reduceMotion ? { duration: 0 } : { duration: LOOP_DURATION, delay: index * 0.1, times: [0, 0.16, 0.82, 1], repeat: Infinity, ease: 'easeOut' }}
+                key={`${mode}-${relationship.type}`}
+                className="grid gap-3 rounded-lg border border-white/8 bg-black/20 p-3 sm:grid-cols-[116px_1fr]"
+                initial={false}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.2, ease: 'easeOut' }}
               >
-                <div className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-2 text-xs font-medium tracking-[0.08em] text-white shadow-[0_0_18px_rgba(34,197,94,0.14)] backdrop-blur-xl sm:px-4">
-                  {compound.name}
-                </div>
-              </motion.div>
-            ))}
-
-            {activeContent.nodes.map((node, index) => (
-              <motion.div
-                key={`${mode}-${node.label}`}
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                initial={reduceMotion ? false : { opacity: 0, scale: 0.7 }}
-                animate={
-                  reduceMotion
-                    ? { opacity: 1, scale: 1 }
-                    : { opacity: [0, 0, 1, 1, 0], scale: [0.7, 0.7, 1, 1.08, 0.94] }
-                }
-                transition={
-                  reduceMotion
-                    ? { duration: 0 }
-                    : {
-                        duration: LOOP_DURATION,
-                        delay: 1.55 + index * 0.28,
-                        times: [0, 0.28, 0.44, 0.76, 1],
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                      }
-                }
-              >
-                <motion.div
-                  className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/18 blur-xl"
-                  animate={reduceMotion ? { opacity: 0.55, scale: 1 } : { opacity: [0.22, 0.55, 0.22], scale: [0.85, 1.2, 0.85] }}
-                  transition={reduceMotion ? { duration: 0 } : { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-                />
-                <div className="relative h-3 w-3 rounded-full border border-emerald-300/75 bg-emerald-300 shadow-[0_0_18px_rgba(52,211,153,0.8)]" />
                 <div
                   className={cn(
-                    'absolute min-w-[126px] max-w-[152px] rounded-2xl border border-white/10 bg-[#111922]/94 px-3 py-1.5 text-center text-[10px] font-medium leading-4 text-white/84 shadow-lg backdrop-blur-xl',
-                    node.bubbleClassName
+                    'inline-flex w-fit items-center rounded-md border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]',
+                    relationshipTone(relationship.type)
                   )}
                 >
-                  {node.label}
+                  {relationship.type}
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-white/88">{relationship.label}</p>
+                  <p className="mt-1 text-sm leading-5 text-white/58">{relationship.detail}</p>
                 </div>
               </motion.div>
             ))}
@@ -394,27 +320,29 @@ export function StackIntelligencePanel({
 
           <div className="relative mt-3 rounded-lg border border-white/8 bg-white/[0.03] px-4 py-3.5">
             <div className="flex items-start gap-3">
-              <div className="mt-1 h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_14px_rgba(52,211,153,0.8)]" />
+              <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-emerald-300 shadow-[0_0_14px_rgba(52,211,153,0.8)]" />
               <div className="min-w-0 flex-1">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200/72">
                   {activeContent.insightLabel}
                 </p>
-                <div className="relative mt-1 min-h-[46px] overflow-hidden">
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.p
-                      key={`${mode}-${insightIndex}`}
-                      className="absolute inset-0 text-sm font-medium leading-6 text-white/88"
-                      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
-                      transition={{ duration: reduceMotion ? 0 : 0.24, ease: 'easeOut' }}
-                    >
-                      {activeContent.insights[insightIndex]}
-                    </motion.p>
-                  </AnimatePresence>
-                </div>
+                <p className="mt-1 text-sm font-medium leading-6 text-white/88">{activeContent.summary}</p>
               </div>
             </div>
+          </div>
+
+          <div className="relative mt-3 rounded-lg border border-white/8 bg-white/[0.025] px-4 py-3">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.p
+                key={`${mode}-${insightIndex}`}
+                className="text-sm leading-6 text-white/66"
+                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+                transition={{ duration: reduceMotion ? 0 : 0.24, ease: 'easeOut' }}
+              >
+                {activeContent.insights[insightIndex]}
+              </motion.p>
+            </AnimatePresence>
           </div>
 
           <div className="relative mt-3 rounded-lg border border-emerald-300/14 bg-emerald-500/[0.055] px-4 py-3">
