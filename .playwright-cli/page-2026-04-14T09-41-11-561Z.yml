@@ -1,0 +1,46 @@
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e4]:
+    - link "Back to home" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - img [ref=e6]
+      - text: Back to home
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - img [ref=e11]
+        - heading "Create Your Account" [level=3] [ref=e13]
+        - paragraph [ref=e14]: Start optimizing your health for free
+      - generic [ref=e15]:
+        - generic [ref=e16]:
+          - generic [ref=e17]:
+            - text: Full Name
+            - textbox "Full Name" [ref=e18]:
+              - /placeholder: John Doe
+          - generic [ref=e19]:
+            - text: Email
+            - textbox "Email" [ref=e20]:
+              - /placeholder: you@example.com
+          - generic [ref=e21]:
+            - generic [ref=e23]: Password
+            - textbox "Password" [ref=e24]:
+              - /placeholder: ••••••••
+          - generic [ref=e25]:
+            - checkbox "I agree to the Privacy Policy and Terms of Service" [ref=e26] [cursor=pointer]
+            - checkbox
+            - generic [ref=e27]:
+              - text: I agree to the
+              - link "Privacy Policy" [ref=e28] [cursor=pointer]:
+                - /url: /privacy
+              - text: and
+              - link "Terms of Service" [ref=e29] [cursor=pointer]:
+                - /url: /terms
+          - button "Create Account" [ref=e30] [cursor=pointer]
+        - generic [ref=e35]: Or continue with
+        - button "Continue with Google" [ref=e36] [cursor=pointer]:
+          - img
+          - text: Continue with Google
+        - generic [ref=e37]:
+          - text: Already have an account?
+          - button "Sign in" [ref=e38] [cursor=pointer]

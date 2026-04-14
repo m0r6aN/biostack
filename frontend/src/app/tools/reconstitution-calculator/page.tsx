@@ -6,12 +6,13 @@ export default function ReconstitutionCalculatorPage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'Use the BioStack Reconstitution Calculator',
-    description: 'Calculate concentration from powder amount and diluent volume.',
+    name: 'Use the BioStack Reconstitution and Dosing Calculator',
+    description: 'Calculate concentration, dose volume, and daily or weekly dose splits.',
     step: [
-      { '@type': 'HowToStep', text: 'Enter the powder amount in milligrams.' },
+      { '@type': 'HowToStep', text: 'Enter the powder amount and unit.' },
       { '@type': 'HowToStep', text: 'Enter the diluent volume in milliliters.' },
-      { '@type': 'HowToStep', text: 'Review the resulting concentration and formula output.' },
+      { '@type': 'HowToStep', text: 'Enter the desired dose and choose whether it is per dose, daily total, or weekly total.' },
+      { '@type': 'HowToStep', text: 'Review concentration, draw volume, syringe units, and split totals.' },
     ],
   };
 

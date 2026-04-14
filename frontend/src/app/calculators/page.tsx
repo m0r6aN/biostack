@@ -1,21 +1,20 @@
 'use client';
 
 import { apiClient } from '@/lib/api';
-import { CalculatorResult, Protocol } from '@/lib/types';
+import { Protocol } from '@/lib/types';
 import { SafetyDisclaimer } from '@/components/SafetyDisclaimer';
-import { ReconstitutionCalc } from '@/components/calculators/ReconstitutionCalc';
-import { VolumeCalc } from '@/components/calculators/VolumeCalc';
-import { ConversionCalc } from '@/components/calculators/ConversionCalc';
+import { UnifiedDosingCalculator } from '@/components/calculators/UnifiedDosingCalculator';
+import { formatDose, formatNumber, type UnifiedDosingInput, type UnifiedDosingResult } from '@/lib/dosingCalculator';
 import { useProfile } from '@/lib/context';
 import { useEffect, useState } from 'react';
 import { Header } from '@/components/Header';
 
 export default function CalculatorsPage() {
-  const [activeTab, setActiveTab] = useState<'reconstitution' | 'volume' | 'conversion'>('reconstitution');
   const { currentProfileId } = useProfile();
   const [protocols, setProtocols] = useState<Protocol[]>([]);
   const [selectedProtocolId, setSelectedProtocolId] = useState('');
   const [attachedMessage, setAttachedMessage] = useState<string | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
 
   useEffect(() => {
     if (!currentProfileId) {
@@ -35,30 +34,28 @@ export default function CalculatorsPage() {
       });
   }, [currentProfileId]);
 
-  async function calculateAndMaybeAttach<TInput>(
-    type: 'reconstitution' | 'volume' | 'conversion',
-    input: TInput,
-    calculate: (request: TInput) => Promise<CalculatorResult>
-  ) {
-    const result = await calculate(input);
+  async function attachCalculation(input: UnifiedDosingInput, result: UnifiedDosingResult) {
     if (selectedProtocolId) {
       const protocol = protocols.find((item) => item.id === selectedProtocolId);
-      await apiClient.recordProtocolComputation(selectedProtocolId, {
-        runId: protocol?.activeRun?.id ?? null,
-        type,
-        inputSnapshot: JSON.stringify(input),
-        outputResult: `${result.output} ${result.unit} using ${result.formula}`,
-      });
-      setAttachedMessage(`${computationLabel(type)} attached to ${protocol?.name ?? 'protocol'}.`);
-      window.setTimeout(() => setAttachedMessage(null), 2800);
+      setIsRecording(true);
+      try {
+        await apiClient.recordProtocolComputation(selectedProtocolId, {
+          runId: protocol?.activeRun?.id ?? null,
+          type: 'dosage',
+          inputSnapshot: JSON.stringify(input),
+          outputResult: `${formatDose(result.dosePerAdministrationMcg)} per dose, ${formatNumber(result.volumePerAdministrationMl, 4)} mL draw, ${formatNumber(result.concentrationMcgPerMl)} mcg/mL concentration`,
+        });
+        setAttachedMessage(`Dosing calculation attached to ${protocol?.name ?? 'protocol'}.`);
+        window.setTimeout(() => setAttachedMessage(null), 2800);
+      } finally {
+        setIsRecording(false);
+      }
     }
-
-    return result;
   }
 
   return (
     <div className="w-full">
-      <Header title="Calculators" subtitle="Dosage · Reconstitution · Conversion" />
+      <Header title="Calculators" subtitle="Reconstitution · Dosing · Conversion" />
 
       <div className="p-8 max-w-4xl">
         <SafetyDisclaimer type="calculation" />
@@ -97,62 +94,22 @@ export default function CalculatorsPage() {
           )}
         </section>
 
-        {/* Tabs */}
-        <div className="mt-6 flex gap-2 border-b border-white/[0.06] mb-6">
-          {[
-            { id: 'reconstitution', label: 'Reconstitution' },
-            { id: 'volume', label: 'Volume' },
-            { id: 'conversion', label: 'Conversion' },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`px-4 py-2 font-medium text-sm border-b-2 transition-all ${
-                activeTab === tab.id
-                  ? 'border-emerald-400 text-emerald-300'
-                  : 'border-transparent text-white/45 hover:text-white/70'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Tab Content */}
-        <div className="space-y-6">
-          {activeTab === 'reconstitution' && (
-            <ReconstitutionCalc
-              onCalculate={(req) => calculateAndMaybeAttach('reconstitution', req, (request) => apiClient.calculateReconstitution(request))}
-            />
-          )}
-
-          {activeTab === 'volume' && (
-            <VolumeCalc
-              onCalculate={(req) => calculateAndMaybeAttach('volume', req, (request) => apiClient.calculateVolume(request))}
-            />
-          )}
-
-          {activeTab === 'conversion' && (
-            <ConversionCalc
-              onCalculate={(req) => calculateAndMaybeAttach('conversion', req, (request) => apiClient.calculateConversion(request))}
-            />
-          )}
+        <div className="mt-6">
+          <UnifiedDosingCalculator
+            attachedMessage={attachedMessage}
+            isRecording={isRecording}
+            onRecord={selectedProtocolId ? attachCalculation : undefined}
+          />
         </div>
 
         {/* Info Section */}
         <div className="mt-8 p-5 rounded-2xl border border-blue-400/15 bg-blue-500/10">
           <h3 className="text-sm font-semibold text-blue-300 mb-2">About These Calculators</h3>
           <p className="text-sm text-blue-200/70">
-            These are mathematical tools for calculating concentrations, volumes, and unit conversions. They provide reference calculations only and are not intended for medical decision-making.
+            This mathematical tool calculates concentrations, volumes, unit conversions, and split schedules. It provides reference calculations only and is not intended for medical decision-making.
           </p>
         </div>
       </div>
     </div>
   );
-}
-
-function computationLabel(type: 'reconstitution' | 'volume' | 'conversion') {
-  if (type === 'reconstitution') return 'Reconstitution calculation';
-  if (type === 'volume') return 'Dosage math';
-  return 'Unit conversion';
 }

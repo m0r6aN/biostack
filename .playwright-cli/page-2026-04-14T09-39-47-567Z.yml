@@ -1,0 +1,899 @@
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "BioStack" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e13]: BioStack
+        - button "Open menu" [ref=e15] [cursor=pointer]:
+          - img
+          - generic [ref=e16]: Open menu
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - img [ref=e20]
+        - text: Start free • Upgrade anytime
+      - 'heading "AI Blood Test Analyzer: Upload & Interpret Results Instantly" [level=1] [ref=e22]'
+      - paragraph [ref=e23]: Drag & drop your PDF from Quest, LabCorp, InsideTracker, or your Vet. Get longevity insights, biological age, and optimal ranges in seconds.
+      - generic [ref=e25] [cursor=pointer]:
+        - img [ref=e27]
+        - generic [ref=e31]:
+          - paragraph [ref=e32]: Drop your blood test here or click to upload
+          - paragraph [ref=e33]: Supports PDF, PNG, JPG (max 10MB)
+        - button "Upload Blood Test PDF" [ref=e34]:
+          - img
+          - text: Upload Blood Test PDF
+      - generic [ref=e35]:
+        - img [ref=e36]
+        - generic [ref=e39]: 100% Private & HIPAA Compliant. No human sees your data.
+      - generic [ref=e40]:
+        - link "View Sample Report" [ref=e41] [cursor=pointer]:
+          - /url: /demo/vitamin-deficiency
+          - img
+          - text: View Sample Report
+        - paragraph [ref=e42]: See a real analysis before uploading
+      - generic [ref=e43]:
+        - paragraph [ref=e44]: "Or explore other sample reports:"
+        - generic [ref=e45]:
+          - link "💪 Healthy Adult" [ref=e46] [cursor=pointer]:
+            - /url: /demo/healthy-adult
+            - generic [ref=e47]: 💪
+            - paragraph [ref=e49]: Healthy Adult
+          - link "🩸 Vitamin Deficiency" [ref=e50] [cursor=pointer]:
+            - /url: /demo/vitamin-deficiency
+            - generic [ref=e51]: 🩸
+            - paragraph [ref=e53]: Vitamin Deficiency
+          - link "⚠️ Metabolic Concerns" [ref=e54] [cursor=pointer]:
+            - /url: /demo/metabolic-panel
+            - generic [ref=e55]: ⚠️
+            - paragraph [ref=e57]: Metabolic Concerns
+          - link "🐕 Senior Dog (Buddy)" [ref=e58] [cursor=pointer]:
+            - /url: /demo/pet-senior-dog
+            - generic [ref=e59]: 🐕
+            - paragraph [ref=e61]: Senior Dog (Buddy)
+      - generic [ref=e62]:
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - button "Before" [ref=e66] [cursor=pointer]:
+              - generic [ref=e67]:
+                - img [ref=e68]
+                - text: Before
+            - button "After" [ref=e71] [cursor=pointer]:
+              - generic [ref=e72]:
+                - img [ref=e73]
+                - text: After
+          - generic [ref=e75]:
+            - generic [ref=e77]:
+              - generic [ref=e78]:
+                - img [ref=e80]
+                - generic [ref=e83]:
+                  - generic [ref=e84]: Laboratory Report
+                  - generic [ref=e85]: Complete Blood Panel
+              - generic [ref=e86]:
+                - generic [ref=e87]:
+                  - generic [ref=e88]: HbA1c.........
+                  - generic [ref=e89]:
+                    - generic [ref=e90]: 5.9%
+                    - generic [ref=e91]:
+                      - img [ref=e92]
+                      - text: H
+                - generic [ref=e94]:
+                  - generic [ref=e95]: LDL-C.........
+                  - generic [ref=e96]:
+                    - generic [ref=e97]: 142 mg/dL
+                    - generic [ref=e98]:
+                      - img [ref=e99]
+                      - text: H
+                - generic [ref=e101]:
+                  - generic [ref=e102]: TSH.........
+                  - generic [ref=e103]: 2.4 mIU/L
+                - generic [ref=e104]:
+                  - generic [ref=e105]: Vitamin D...
+                  - generic [ref=e106]:
+                    - generic [ref=e107]: 18 ng/mL
+                    - generic [ref=e108]: L
+              - generic [ref=e110]:
+                - img [ref=e111]
+                - text: What does this mean?
+            - generic [ref=e114]:
+              - generic [ref=e115]:
+                - generic [ref=e116]:
+                  - img [ref=e118]
+                  - generic [ref=e121]: Your Health Dashboard
+                - generic [ref=e122]: 3 Actions
+              - generic [ref=e123]:
+                - generic [ref=e124]:
+                  - generic [ref=e125]:
+                    - generic [ref=e126]: Blood Sugar (HbA1c)
+                    - generic [ref=e127]: Pre-diabetic range
+                  - generic [ref=e128]:
+                    - generic [ref=e129]: 5.9%
+                    - generic [ref=e130]: Monitor
+                - generic [ref=e131]:
+                  - generic [ref=e132]:
+                    - generic [ref=e133]: Vitamin D
+                    - generic [ref=e134]: Supplement recommended
+                  - generic [ref=e135]:
+                    - generic [ref=e136]: 18 ng/mL
+                    - generic [ref=e137]:
+                      - img [ref=e138]
+                      - text: Action
+                - generic [ref=e140]:
+                  - generic [ref=e141]:
+                    - generic [ref=e142]: Cholesterol (LDL)
+                    - generic [ref=e143]: Lifestyle changes suggested
+                  - generic [ref=e144]:
+                    - generic [ref=e145]: "142"
+                    - generic [ref=e146]: Improve
+              - generic [ref=e148]:
+                - img [ref=e149]
+                - text: Clear action plan ready
+            - button:
+              - img
+            - button [ref=e151] [cursor=pointer]:
+              - img [ref=e152]
+        - paragraph [ref=e157]: From Confusing Labs to Clear Action Plans
+    - generic [ref=e159]:
+      - heading "Compatible with Major Labs & Formats" [level=2] [ref=e160]
+      - generic [ref=e161]:
+        - generic [ref=e163]:
+          - img [ref=e165]
+          - heading "Quest Diagnostics" [level=3] [ref=e167]
+          - paragraph [ref=e168]: Standard PDF exports
+        - generic [ref=e170]:
+          - img [ref=e172]
+          - heading "LabCorp" [level=3] [ref=e174]
+          - paragraph [ref=e175]: Clinical reports
+        - generic [ref=e177]:
+          - img [ref=e179]
+          - heading "InsideTracker" [level=3] [ref=e182]
+          - paragraph [ref=e183]: Performance tracking
+        - generic [ref=e185]:
+          - img [ref=e187]
+          - heading "Function Health" [level=3] [ref=e189]
+          - paragraph [ref=e190]: Comprehensive panels
+        - generic [ref=e192]:
+          - img [ref=e194]
+          - heading "Veterinary Reports" [level=3] [ref=e199]
+          - paragraph [ref=e200]: Dog & Cat bloodwork
+        - generic [ref=e202]:
+          - img [ref=e204]
+          - heading "International Labs" [level=3] [ref=e207]
+          - paragraph [ref=e208]: SI Units supported
+    - generic [ref=e211]:
+      - generic [ref=e212]:
+        - img [ref=e214]
+        - generic [ref=e216]: 0k+
+        - generic [ref=e217]: Clinical Studies Analyzed
+      - generic [ref=e218]:
+        - img [ref=e220]
+        - generic [ref=e224]: 0+
+        - generic [ref=e225]: Biomarkers Supported
+      - generic [ref=e226]:
+        - img [ref=e228]
+        - generic [ref=e231]: 0K+
+        - generic [ref=e232]: Reports Generated
+      - generic [ref=e233]:
+        - img [ref=e235]
+        - generic [ref=e245]: 0%
+        - generic [ref=e246]: Science-Backed Logic
+    - generic [ref=e248]:
+      - heading "Quest, Labcorp, or your local clinic? Unify them all." [level=2] [ref=e249]
+      - paragraph [ref=e250]: Stop logging into multiple portals to track down your history. BioStack merges reports from any provider into one single, powerful timeline of your health.
+    - generic [ref=e252]:
+      - generic [ref=e253]:
+        - generic [ref=e254]:
+          - img [ref=e255]
+          - text: Simple 3-Step Process
+        - heading "How It Works" [level=2] [ref=e257]
+        - paragraph [ref=e258]: From upload to actionable insights in under 60 seconds
+      - generic [ref=e259]:
+        - generic [ref=e260]:
+          - generic [ref=e261]:
+            - generic [ref=e262] [cursor=pointer]:
+              - generic [ref=e264]: "1"
+              - img [ref=e267]
+              - heading "Upload Your Results" [level=3] [ref=e270]
+              - paragraph [ref=e271]: Snap a photo or upload a PDF of your blood test from any lab.
+              - generic [ref=e272]:
+                - generic [ref=e273]: Quest, LabCorp, any lab
+                - generic [ref=e275]: PDF or photo
+                - generic [ref=e277]: Auto-extracts data
+            - img [ref=e280]
+          - generic [ref=e282]:
+            - generic [ref=e283] [cursor=pointer]:
+              - generic [ref=e285]: "2"
+              - img [ref=e288]
+              - heading "AI Analysis" [level=3] [ref=e298]
+              - paragraph [ref=e299]: Our engine cross-references 50k+ clinical studies in seconds.
+              - generic:
+                - generic [ref=e300]: 200+ biomarkers
+                - generic [ref=e302]: Optimal ranges
+                - generic [ref=e304]: Trend detection
+            - img [ref=e307]
+          - generic [ref=e310] [cursor=pointer]:
+            - generic [ref=e312]: "3"
+            - img [ref=e315]
+            - heading "Get Recommendations" [level=3] [ref=e317]
+            - paragraph [ref=e318]: Receive personalized, science-backed insights and action steps.
+            - generic:
+              - generic [ref=e319]: Supplement advice
+              - generic [ref=e321]: Lifestyle tips
+              - generic [ref=e323]: Doctor questions
+        - generic [ref=e325]:
+          - heading "What You'll Get" [level=4] [ref=e327]
+          - generic [ref=e328]:
+            - generic [ref=e329]:
+              - img [ref=e331]
+              - generic [ref=e334]: Doctor-Ready PDF
+            - generic [ref=e335]:
+              - img [ref=e337]
+              - generic [ref=e349]: Biological Age Reveal
+            - generic [ref=e350]:
+              - img [ref=e352]
+              - generic [ref=e355]: Supplement Plan
+        - generic [ref=e356]:
+          - button [ref=e357] [cursor=pointer]
+          - button [ref=e358] [cursor=pointer]
+          - button [ref=e359] [cursor=pointer]
+    - generic [ref=e361]:
+      - generic [ref=e362]:
+        - heading "Why Not Just Use ChatGPT?" [level=2] [ref=e363]
+        - paragraph [ref=e364]: Generic AI tools weren't built for health analysis. Here's why our specialized engine is different.
+      - generic [ref=e365]:
+        - generic [ref=e366]:
+          - generic [ref=e367]:
+            - img [ref=e369]
+            - heading "Generic AI" [level=3] [ref=e371]
+          - list [ref=e372]:
+            - listitem [ref=e373]:
+              - img [ref=e374]
+              - generic [ref=e377]:
+                - text: General Knowledge Only
+                - paragraph [ref=e378]: Trained on everything, specialized in nothing medical.
+            - listitem [ref=e379]:
+              - img [ref=e380]
+              - generic [ref=e383]:
+                - text: Prone to Hallucinations
+                - paragraph [ref=e384]: May invent reference ranges or misinterpret values.
+            - listitem [ref=e385]:
+              - img [ref=e386]
+              - generic [ref=e389]:
+                - text: Outdated Medical Data
+                - paragraph [ref=e390]: Training cutoffs mean missing recent clinical updates.
+            - listitem [ref=e391]:
+              - img [ref=e392]
+              - generic [ref=e395]:
+                - text: Your Data at Risk
+                - paragraph [ref=e396]: No guarantee your health data stays private.
+        - generic [ref=e397]:
+          - generic [ref=e398]:
+            - img [ref=e400]
+            - heading "Our Medical Engine" [level=3] [ref=e410]
+          - list [ref=e411]:
+            - listitem [ref=e412]:
+              - img [ref=e413]
+              - generic [ref=e415]:
+                - text: Specialized Clinical Training
+                - paragraph [ref=e416]: Trained on 50k+ clinical papers and lab standards.
+            - listitem [ref=e417]:
+              - img [ref=e418]
+              - generic [ref=e420]:
+                - text: Reference Range Validated
+                - paragraph [ref=e421]: Every marker compared against verified lab standards.
+            - listitem [ref=e422]:
+              - img [ref=e423]
+              - generic [ref=e425]:
+                - text: Real-Time Study Updates
+                - paragraph [ref=e426]: Continuously updated with latest clinical research.
+            - listitem [ref=e427]:
+              - img [ref=e428]
+              - generic [ref=e430]:
+                - text: Private & Encrypted
+                - paragraph [ref=e431]: HIPAA-compliant. Your data is never shared or sold.
+    - generic [ref=e433]:
+      - generic [ref=e434]:
+        - heading "Built on Peer-Reviewed Clinical Data, Not Influencers" [level=2] [ref=e435]
+        - paragraph [ref=e436]: Our analysis engine is trained on real medical literature and validated reference ranges from trusted institutions.
+      - generic [ref=e437]:
+        - generic [ref=e438]:
+          - img [ref=e440]
+          - paragraph [ref=e444]: 50,000+
+          - paragraph [ref=e445]: Clinical papers analyzed
+        - generic [ref=e446]:
+          - img [ref=e448]
+          - paragraph [ref=e451]: Mayo Clinic
+          - paragraph [ref=e452]: Reference range standards
+        - generic [ref=e453]:
+          - img [ref=e455]
+          - paragraph [ref=e465]: PubMed
+          - paragraph [ref=e466]: Research database powered
+        - generic [ref=e467]:
+          - img [ref=e469]
+          - paragraph [ref=e472]: Cleveland Clinic
+          - paragraph [ref=e473]: Optimal range guidelines
+      - paragraph [ref=e474]: Every recommendation is backed by evidence. We cite our sources so you can verify the science yourself.
+      - generic [ref=e475]:
+        - heading "Trusted by Healthcare Professionals" [level=3] [ref=e476]
+        - generic [ref=e477]:
+          - generic [ref=e478]:
+            - img [ref=e479]
+            - generic [ref=e482]:
+              - generic [ref=e483]: DR
+              - generic [ref=e484]:
+                - paragraph [ref=e485]: Dr. Rebecca Chen
+                - paragraph [ref=e486]: Internal Medicine Physician
+            - paragraph [ref=e487]: "\"I recommend this to my patients who want to be proactive about their health. The analysis is thorough and the reference ranges align with current clinical guidelines.\""
+            - generic [ref=e488]:
+              - img [ref=e489]
+              - img [ref=e491]
+              - img [ref=e493]
+              - img [ref=e495]
+              - img [ref=e497]
+          - generic [ref=e499]:
+            - img [ref=e500]
+            - generic [ref=e503]:
+              - generic [ref=e504]: AS
+              - generic [ref=e505]:
+                - paragraph [ref=e506]: Amanda Sullivan, RD
+                - paragraph [ref=e507]: Registered Dietitian
+            - paragraph [ref=e508]: "\"The food-first approach and personalized recommendations make this an invaluable tool. My clients finally understand the 'why' behind my nutrition advice.\""
+            - generic [ref=e509]:
+              - img [ref=e510]
+              - img [ref=e512]
+              - img [ref=e514]
+              - img [ref=e516]
+              - img [ref=e518]
+          - generic [ref=e520]:
+            - img [ref=e521]
+            - generic [ref=e524]:
+              - generic [ref=e525]: MK
+              - generic [ref=e526]:
+                - paragraph [ref=e527]: Dr. Michael Kim
+                - paragraph [ref=e528]: Sports Medicine Specialist
+            - paragraph [ref=e529]: "\"For my athlete patients, the biological age feature and optimization insights are game-changers. It bridges the gap between lab results and peak performance.\""
+            - generic [ref=e530]:
+              - img [ref=e531]
+              - img [ref=e533]
+              - img [ref=e535]
+              - img [ref=e537]
+              - img [ref=e539]
+    - generic [ref=e542]:
+      - heading "Invest in your longevity for less than the cost of one supplement bottle." [level=2] [ref=e543]
+      - paragraph [ref=e544]: Start free today. 30-Day Money-Back Guarantee on Premium.
+      - generic [ref=e545]:
+        - generic [ref=e546]:
+          - img [ref=e547]
+          - generic [ref=e552]: Money-Back
+        - generic [ref=e553]:
+          - img [ref=e554]
+          - generic [ref=e557]: Encrypted
+        - generic [ref=e558]:
+          - img [ref=e559]
+          - generic [ref=e562]: HIPAA
+        - generic [ref=e563]:
+          - img [ref=e564]
+          - generic [ref=e567]: Trusted
+      - generic [ref=e568]:
+        - generic [ref=e569]:
+          - generic [ref=e570]:
+            - heading "Free" [level=3] [ref=e571]
+            - paragraph [ref=e572]: Perfect for getting started
+          - generic [ref=e573]: $0/month
+          - list [ref=e574]:
+            - listitem [ref=e575]:
+              - img [ref=e577]
+              - generic [ref=e579]: Up to 5 blood test analyses
+            - listitem [ref=e580]:
+              - img [ref=e582]
+              - generic [ref=e584]: Basic supplement recommendations
+            - listitem [ref=e585]:
+              - img [ref=e587]
+              - generic [ref=e589]: Smart supplement scheduler
+            - listitem [ref=e590]:
+              - img [ref=e592]
+              - generic [ref=e594]: Family member profiles
+            - listitem [ref=e595]:
+              - img [ref=e597]
+              - generic [ref=e599]: Normal range comparisons
+            - listitem [ref=e600]:
+              - img [ref=e602]
+              - generic [ref=e604]: Smart Shopping Assistant
+          - link "Get Started" [ref=e605] [cursor=pointer]:
+            - /url: /auth?mode=signup
+        - generic [ref=e606]:
+          - generic [ref=e607]:
+            - img [ref=e608]
+            - text: Most Popular
+          - generic [ref=e610]:
+            - heading "Premium" [level=3] [ref=e611]
+            - paragraph [ref=e612]: For health enthusiasts
+          - generic [ref=e614]:
+            - button "Monthly" [ref=e615] [cursor=pointer]
+            - button "Annual -35%" [ref=e616] [cursor=pointer]:
+              - text: Annual
+              - generic [ref=e617]: "-35%"
+          - generic [ref=e618]:
+            - generic [ref=e619]:
+              - generic [ref=e620]: $12.99
+              - generic [ref=e621]: /month
+            - paragraph [ref=e622]: Less than $0.43 per day
+            - paragraph [ref=e623]: 30-Day Money-Back Guarantee
+          - list [ref=e624]:
+            - listitem [ref=e625]:
+              - img [ref=e627]
+              - generic [ref=e629]:
+                - text: Unlimited PDF Uploads (with Batch Support)
+                - paragraph [ref=e630]: Upload as many blood tests as you want, including batch uploads of multiple files at once.
+            - listitem [ref=e631]:
+              - img [ref=e633]
+              - generic [ref=e635]:
+                - text: Full Trend Analysis (Lifetime History)
+                - paragraph [ref=e636]: Visualize how your biomarkers change over months or years. See your health trajectory at a glance.
+            - listitem [ref=e637]:
+              - img [ref=e639]
+              - generic [ref=e641]:
+                - text: Biological Age Calculation
+                - paragraph [ref=e642]: Discover if you're aging faster or slower than your birthday suggests based on key biomarkers.
+            - listitem [ref=e643]:
+              - img [ref=e645]
+              - generic [ref=e647]:
+                - text: Optimal Range Targets (Longevity Focused)
+                - paragraph [ref=e648]: Go beyond "Normal" lab ranges. See where elite performers keep their markers for peak health.
+            - listitem [ref=e649]:
+              - img [ref=e651]
+              - generic [ref=e653]:
+                - text: The Detective Engine (Missing Marker Suggestions)
+                - paragraph [ref=e654]: Get intelligent suggestions for missing biomarkers that could complete your health picture.
+            - listitem [ref=e655]:
+              - img [ref=e657]
+              - generic [ref=e659]:
+                - text: Smart Re-analysis (Update old files with new AI)
+                - paragraph [ref=e660]: Update old reports with our latest AI algorithms. Your historical data gets smarter over time.
+            - listitem [ref=e661]:
+              - img [ref=e663]
+              - generic [ref=e665]:
+                - text: AI Health Chat Assistant
+                - paragraph [ref=e666]: Ask questions about your results and get personalized health insights powered by AI.
+            - listitem [ref=e667]:
+              - img [ref=e669]
+              - generic [ref=e671]:
+                - text: Doctor-Ready Clinical Reports
+                - paragraph [ref=e672]: Export a one-page "Executive Summary" designed specifically for your GP to read in 30 seconds.
+            - listitem [ref=e673]:
+              - img [ref=e675]
+              - generic [ref=e677]:
+                - text: Family Health Tracking
+                - paragraph [ref=e678]: Track your whole family's health with one account. Manage multiple profiles easily.
+            - listitem [ref=e679]:
+              - img [ref=e681]
+              - generic [ref=e683]:
+                - text: Smart Shopping Assistant
+                - paragraph [ref=e684]: Instantly compare prices across major retailers like Amazon and iHerb with one click.
+            - listitem [ref=e685]:
+              - img [ref=e687]
+              - generic [ref=e692]:
+                - text: Pet Health Tracking (Dogs & Cats)
+                - paragraph [ref=e693]: Track your furry family members' veterinary blood work and visualize their health trends.
+          - link "Unlock Premium Insights" [ref=e694] [cursor=pointer]:
+            - /url: /auth?mode=signup
+    - generic [ref=e696]:
+      - heading "Feature Comparison" [level=2] [ref=e697]
+      - generic [ref=e698]:
+        - generic [ref=e699]:
+          - generic [ref=e700]:
+            - img [ref=e701]
+            - generic [ref=e703]: Blood test analyses
+          - generic [ref=e704]:
+            - generic [ref=e705]:
+              - generic [ref=e706]: "Free:"
+              - generic [ref=e707]: Up to 5
+            - generic [ref=e708]:
+              - generic [ref=e709]: "Premium:"
+              - generic [ref=e710]: Unlimited
+        - generic [ref=e711]:
+          - generic [ref=e712]:
+            - img [ref=e713]
+            - generic [ref=e715]: Basic supplement recommendations
+          - generic [ref=e716]:
+            - generic [ref=e717]:
+              - generic [ref=e718]: "Free:"
+              - img [ref=e719]
+            - generic [ref=e721]:
+              - generic [ref=e722]: "Premium:"
+              - img [ref=e723]
+        - generic [ref=e725]:
+          - generic [ref=e726]:
+            - img [ref=e727]
+            - generic [ref=e730]: Smart supplement scheduler
+          - generic [ref=e731]:
+            - generic [ref=e732]:
+              - generic [ref=e733]: "Free:"
+              - img [ref=e734]
+            - generic [ref=e736]:
+              - generic [ref=e737]: "Premium:"
+              - img [ref=e738]
+        - generic [ref=e740]:
+          - generic [ref=e741]:
+            - img [ref=e742]
+            - generic [ref=e747]: Family member profiles
+          - generic [ref=e748]:
+            - generic [ref=e749]:
+              - generic [ref=e750]: "Free:"
+              - img [ref=e751]
+            - generic [ref=e753]:
+              - generic [ref=e754]: "Premium:"
+              - img [ref=e755]
+        - generic [ref=e757]:
+          - generic [ref=e758]:
+            - img [ref=e759]
+            - generic [ref=e761]: Normal range comparisons
+          - generic [ref=e762]:
+            - generic [ref=e763]:
+              - generic [ref=e764]: "Free:"
+              - img [ref=e765]
+            - generic [ref=e767]:
+              - generic [ref=e768]: "Premium:"
+              - img [ref=e769]
+        - generic [ref=e771]:
+          - generic [ref=e772]:
+            - img [ref=e773]
+            - generic [ref=e776]: Smart Shopping Assistant
+          - generic [ref=e777]:
+            - generic [ref=e778]:
+              - generic [ref=e779]: "Free:"
+              - img [ref=e780]
+            - generic [ref=e782]:
+              - generic [ref=e783]: "Premium:"
+              - img [ref=e784]
+        - generic [ref=e786]:
+          - generic [ref=e787]:
+            - img [ref=e788]
+            - generic [ref=e792]: Unlimited PDF Uploads (Batch Support)
+          - generic [ref=e793]:
+            - generic [ref=e794]:
+              - generic [ref=e795]: "Free:"
+              - img [ref=e796]
+            - generic [ref=e799]:
+              - generic [ref=e800]: "Premium:"
+              - img [ref=e801]
+        - generic [ref=e803]:
+          - generic [ref=e804]:
+            - img [ref=e805]
+            - generic [ref=e808]: Full Trend Analysis (Lifetime History)
+          - generic [ref=e809]:
+            - generic [ref=e810]:
+              - generic [ref=e811]: "Free:"
+              - img [ref=e812]
+            - generic [ref=e815]:
+              - generic [ref=e816]: "Premium:"
+              - img [ref=e817]
+        - generic [ref=e819]:
+          - generic [ref=e820]:
+            - img [ref=e821]
+            - generic [ref=e823]: Biological Age Calculation
+          - generic [ref=e824]:
+            - generic [ref=e825]:
+              - generic [ref=e826]: "Free:"
+              - img [ref=e827]
+            - generic [ref=e830]:
+              - generic [ref=e831]: "Premium:"
+              - img [ref=e832]
+        - generic [ref=e834]:
+          - generic [ref=e835]:
+            - img [ref=e836]
+            - generic [ref=e839]: Optimal Range Targets
+          - generic [ref=e840]:
+            - generic [ref=e841]:
+              - generic [ref=e842]: "Free:"
+              - img [ref=e843]
+            - generic [ref=e846]:
+              - generic [ref=e847]: "Premium:"
+              - img [ref=e848]
+        - generic [ref=e850]:
+          - generic [ref=e851]:
+            - img [ref=e852]
+            - generic [ref=e855]: The Detective Engine
+          - generic [ref=e856]:
+            - generic [ref=e857]:
+              - generic [ref=e858]: "Free:"
+              - img [ref=e859]
+            - generic [ref=e862]:
+              - generic [ref=e863]: "Premium:"
+              - img [ref=e864]
+        - generic [ref=e866]:
+          - generic [ref=e867]:
+            - img [ref=e868]
+            - generic [ref=e873]: Smart Re-analysis
+          - generic [ref=e874]:
+            - generic [ref=e875]:
+              - generic [ref=e876]: "Free:"
+              - img [ref=e877]
+            - generic [ref=e880]:
+              - generic [ref=e881]: "Premium:"
+              - img [ref=e882]
+        - generic [ref=e884]:
+          - generic [ref=e885]:
+            - img [ref=e886]
+            - generic [ref=e896]: AI Health Chat Assistant
+          - generic [ref=e897]:
+            - generic [ref=e898]:
+              - generic [ref=e899]: "Free:"
+              - img [ref=e900]
+            - generic [ref=e903]:
+              - generic [ref=e904]: "Premium:"
+              - img [ref=e905]
+        - generic [ref=e907]:
+          - generic [ref=e908]:
+            - img [ref=e909]
+            - generic [ref=e912]: Doctor-Ready Clinical Reports
+          - generic [ref=e913]:
+            - generic [ref=e914]:
+              - generic [ref=e915]: "Free:"
+              - img [ref=e916]
+            - generic [ref=e919]:
+              - generic [ref=e920]: "Premium:"
+              - img [ref=e921]
+        - generic [ref=e923]:
+          - generic [ref=e924]:
+            - img [ref=e925]
+            - generic [ref=e927]: Side-by-side test comparisons
+          - generic [ref=e928]:
+            - generic [ref=e929]:
+              - generic [ref=e930]: "Free:"
+              - img [ref=e931]
+            - generic [ref=e934]:
+              - generic [ref=e935]: "Premium:"
+              - img [ref=e936]
+        - generic [ref=e938]:
+          - generic [ref=e939]:
+            - img [ref=e940]
+            - generic [ref=e945]: Pet Health Tracking (Dogs & Cats)
+          - generic [ref=e946]:
+            - generic [ref=e947]:
+              - generic [ref=e948]: "Free:"
+              - img [ref=e949]
+            - generic [ref=e952]:
+              - generic [ref=e953]: "Premium:"
+              - img [ref=e954]
+    - generic [ref=e957]:
+      - generic [ref=e958]:
+        - generic [ref=e959]:
+          - img [ref=e960]
+          - text: Success Stories
+        - heading "Loved by Health Enthusiasts" [level=2] [ref=e963]
+        - paragraph [ref=e964]: See how BloodTest Advisor is helping people take control of their health journey.
+      - generic [ref=e965]:
+        - generic [ref=e966]:
+          - generic [ref=e967]:
+            - img [ref=e968]
+            - img [ref=e970]
+            - img [ref=e972]
+            - img [ref=e974]
+            - img [ref=e976]
+          - blockquote [ref=e978]: "\"Finally, I can understand my blood work without a medical degree. The supplement recommendations helped me optimize my iron levels in just 3 months!\""
+          - generic [ref=e979]:
+            - generic [ref=e980]: S
+            - generic [ref=e981]:
+              - paragraph [ref=e982]: Sarah M.
+              - paragraph [ref=e983]: Fitness Enthusiast
+            - generic [ref=e984]: Iron levels optimized
+        - generic [ref=e985]:
+          - generic [ref=e986]:
+            - img [ref=e987]
+            - img [ref=e989]
+            - img [ref=e991]
+            - img [ref=e993]
+            - img [ref=e995]
+          - blockquote [ref=e997]: "\"As a doctor, I appreciate the accuracy. I use it to track my own health and recommend it to family. The biological age feature is fascinating.\""
+          - generic [ref=e998]:
+            - generic [ref=e999]: J
+            - generic [ref=e1000]:
+              - paragraph [ref=e1001]: Dr. James T.
+              - paragraph [ref=e1002]: Retired Physician
+            - generic [ref=e1003]: Doctor recommended
+        - generic [ref=e1004]:
+          - generic [ref=e1005]:
+            - img [ref=e1006]
+            - img [ref=e1008]
+            - img [ref=e1010]
+            - img [ref=e1012]
+            - img [ref=e1014]
+          - blockquote [ref=e1016]: "\"The trend tracking showed me exactly how my training affects my markers. Game changer for endurance athletes who want to perform at their best.\""
+          - generic [ref=e1017]:
+            - generic [ref=e1018]: M
+            - generic [ref=e1019]:
+              - paragraph [ref=e1020]: Mike R.
+              - paragraph [ref=e1021]: Marathon Runner
+            - generic [ref=e1022]: Performance improved
+        - generic [ref=e1023]:
+          - generic [ref=e1024]:
+            - img [ref=e1025]
+            - img [ref=e1027]
+            - img [ref=e1029]
+            - img [ref=e1031]
+            - img [ref=e1033]
+          - blockquote [ref=e1035]: "\"I track my whole family with one account. The doctor questions PDF saved us so much time at our last checkups. Worth every penny!\""
+          - generic [ref=e1036]:
+            - generic [ref=e1037]: L
+            - generic [ref=e1038]:
+              - paragraph [ref=e1039]: Linda K.
+              - paragraph [ref=e1040]: Health-Conscious Mom
+            - generic [ref=e1041]: Family tracking
+        - generic [ref=e1042]:
+          - generic [ref=e1043]:
+            - img [ref=e1044]
+            - img [ref=e1046]
+            - img [ref=e1048]
+            - img [ref=e1050]
+            - img [ref=e1052]
+          - blockquote [ref=e1054]: "\"I was skeptical at first, but seeing my vitamin D deficiency flagged and corrected with the right supplements made me a believer.\""
+          - generic [ref=e1055]:
+            - generic [ref=e1056]: D
+            - generic [ref=e1057]:
+              - paragraph [ref=e1058]: David Chen
+              - paragraph [ref=e1059]: Software Engineer
+            - generic [ref=e1060]: Deficiency corrected
+        - generic [ref=e1061]:
+          - generic [ref=e1062]:
+            - img [ref=e1063]
+            - img [ref=e1065]
+            - img [ref=e1067]
+            - img [ref=e1069]
+            - img [ref=e1071]
+          - blockquote [ref=e1073]: "\"I recommend BioStack to all my clients. It bridges the gap between lab results and actionable nutrition advice beautifully.\""
+          - generic [ref=e1074]:
+            - generic [ref=e1075]: E
+            - generic [ref=e1076]:
+              - paragraph [ref=e1077]: Emma W.
+              - paragraph [ref=e1078]: Nutritionist
+            - generic [ref=e1079]: Professional use
+    - generic [ref=e1081]:
+      - heading "Frequently Asked Questions" [level=2] [ref=e1082]
+      - paragraph [ref=e1083]: Everything you need to know about BloodTest Advisor. Can't find what you're looking for? Ask our AI assistant.
+      - generic [ref=e1084]:
+        - generic [ref=e1085]:
+          - generic [ref=e1086]:
+            - img [ref=e1088]
+            - heading "Methodology & Accuracy" [level=3] [ref=e1090]
+          - generic [ref=e1091]:
+            - heading "Why does the app say my results are \"Low\" when my lab report says \"Normal\"?" [level=3] [ref=e1093]:
+              - button "Why does the app say my results are \"Low\" when my lab report says \"Normal\"?" [ref=e1094] [cursor=pointer]:
+                - text: Why does the app say my results are "Low" when my lab report says "Normal"?
+                - img [ref=e1095]
+            - heading "Is this AI offering medical diagnosis?" [level=3] [ref=e1098]:
+              - button "Is this AI offering medical diagnosis?" [ref=e1099] [cursor=pointer]:
+                - text: Is this AI offering medical diagnosis?
+                - img [ref=e1100]
+            - heading "How accurate is the AI analysis?" [level=3] [ref=e1103]:
+              - button "How accurate is the AI analysis?" [ref=e1104] [cursor=pointer]:
+                - text: How accurate is the AI analysis?
+                - img [ref=e1105]
+            - heading "Do you earn money from the supplements you recommend?" [level=3] [ref=e1108]:
+              - button "Do you earn money from the supplements you recommend?" [ref=e1109] [cursor=pointer]:
+                - text: Do you earn money from the supplements you recommend?
+                - img [ref=e1110]
+        - generic [ref=e1112]:
+          - generic [ref=e1113]:
+            - img [ref=e1115]
+            - heading "Using the App" [level=3] [ref=e1117]
+          - generic [ref=e1118]:
+            - heading "Can I upload blood tests in languages other than English?" [level=3] [ref=e1120]:
+              - button "Can I upload blood tests in languages other than English?" [ref=e1121] [cursor=pointer]:
+                - text: Can I upload blood tests in languages other than English?
+                - img [ref=e1122]
+            - heading "Can I upload blood tests from years ago?" [level=3] [ref=e1125]:
+              - button "Can I upload blood tests from years ago?" [ref=e1126] [cursor=pointer]:
+                - text: Can I upload blood tests from years ago?
+                - img [ref=e1127]
+            - heading "Which labs do you support? (Quest, LabCorp, etc.)" [level=3] [ref=e1130]:
+              - button "Which labs do you support? (Quest, LabCorp, etc.)" [ref=e1131] [cursor=pointer]:
+                - text: Which labs do you support? (Quest, LabCorp, etc.)
+                - img [ref=e1132]
+            - heading "Can I manage profiles for my family or children?" [level=3] [ref=e1135]:
+              - button "Can I manage profiles for my family or children?" [ref=e1136] [cursor=pointer]:
+                - text: Can I manage profiles for my family or children?
+                - img [ref=e1137]
+        - generic [ref=e1139]:
+          - generic [ref=e1140]:
+            - img [ref=e1142]
+            - heading "Privacy & Billing" [level=3] [ref=e1144]
+          - generic [ref=e1145]:
+            - heading "What's included in the Free plan?" [level=3] [ref=e1147]:
+              - button "What's included in the Free plan?" [ref=e1148] [cursor=pointer]:
+                - text: What's included in the Free plan?
+                - img [ref=e1149]
+            - heading "Can I cancel my subscription anytime?" [level=3] [ref=e1152]:
+              - button "Can I cancel my subscription anytime?" [ref=e1153] [cursor=pointer]:
+                - text: Can I cancel my subscription anytime?
+                - img [ref=e1154]
+            - heading "Is my health data secure?" [level=3] [ref=e1157]:
+              - button "Is my health data secure?" [ref=e1158] [cursor=pointer]:
+                - text: Is my health data secure?
+                - img [ref=e1159]
+            - heading "Where is my data stored?" [level=3] [ref=e1162]:
+              - button "Where is my data stored?" [ref=e1163] [cursor=pointer]:
+                - text: Where is my data stored?
+                - img [ref=e1164]
+            - heading "What are my data rights?" [level=3] [ref=e1167]:
+              - button "What are my data rights?" [ref=e1168] [cursor=pointer]:
+                - text: What are my data rights?
+                - img [ref=e1169]
+            - heading "What happens to my data if I cancel my subscription?" [level=3] [ref=e1172]:
+              - button "What happens to my data if I cancel my subscription?" [ref=e1173] [cursor=pointer]:
+                - text: What happens to my data if I cancel my subscription?
+                - img [ref=e1174]
+    - generic [ref=e1177]:
+      - heading "Ready to optimize your health?" [level=2] [ref=e1178]
+      - paragraph [ref=e1179]: Join thousands of users who are taking control of their health with data-driven insights.
+      - link "Get Started Free" [ref=e1180] [cursor=pointer]:
+        - /url: /auth?mode=signup
+    - generic [ref=e1183]:
+      - img [ref=e1184]
+      - paragraph [ref=e1186]:
+        - strong [ref=e1187]: "Medical Disclaimer:"
+        - text: This tool is for informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult your healthcare provider before starting any supplement regimen.
+    - contentinfo [ref=e1188]:
+      - generic [ref=e1189]:
+        - link "BioStack" [ref=e1191] [cursor=pointer]:
+          - /url: /
+          - img [ref=e1192]
+          - generic [ref=e1198]: BioStack
+        - generic [ref=e1199]:
+          - generic [ref=e1200]:
+            - heading "Product" [level=3] [ref=e1201]
+            - list [ref=e1202]:
+              - listitem [ref=e1203]:
+                - link "Home" [ref=e1204] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e1205]:
+                - link "Pricing" [ref=e1206] [cursor=pointer]:
+                  - /url: /pricing
+              - listitem [ref=e1207]:
+                - link "Upload Results" [ref=e1208] [cursor=pointer]:
+                  - /url: /upload-blood-test
+              - listitem [ref=e1209]:
+                - link "Bio Age" [ref=e1210] [cursor=pointer]:
+                  - /url: /biological-age-calculator
+              - listitem [ref=e1211]:
+                - link "Pet Health" [ref=e1212] [cursor=pointer]:
+                  - /url: /pet-blood-test-analyzer
+          - generic [ref=e1213]:
+            - heading "Resources" [level=3] [ref=e1214]
+            - list [ref=e1215]:
+              - listitem [ref=e1216]:
+                - link "Biomarker Glossary" [ref=e1217] [cursor=pointer]:
+                  - /url: /markers
+              - listitem [ref=e1218]:
+                - link "Help & Support" [ref=e1219] [cursor=pointer]:
+                  - /url: mailto:support@biostack.app
+          - generic [ref=e1220]:
+            - heading "BioStack" [level=3] [ref=e1221]
+            - list [ref=e1222]:
+              - listitem [ref=e1223]:
+                - link "About Us" [ref=e1224] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e1225]:
+                - link "Contact" [ref=e1226] [cursor=pointer]:
+                  - /url: /contact
+          - generic [ref=e1227]:
+            - heading "Legal" [level=3] [ref=e1228]
+            - list [ref=e1229]:
+              - listitem [ref=e1230]:
+                - link "Privacy Policy" [ref=e1231] [cursor=pointer]:
+                  - /url: /privacy
+              - listitem [ref=e1232]:
+                - link "Terms of Service" [ref=e1233] [cursor=pointer]:
+                  - /url: /terms
+        - generic [ref=e1234]:
+          - generic [ref=e1235]:
+            - paragraph [ref=e1236]: © 2026 SIA DEVIX (BioStack). All rights reserved.
+            - paragraph [ref=e1237]: Reg. No. 40203710936 · VAT LV40203710936
+          - link "Follow us on X" [ref=e1238] [cursor=pointer]:
+            - /url: https://x.com/MrSulcs
+            - img [ref=e1239]
+    - button "Back to top":
+      - img
