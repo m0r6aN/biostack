@@ -1,5 +1,7 @@
 namespace BioStack.Api.Auth;
 
+using Azure;
+using Azure.Communication.Email;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Mail;
@@ -107,6 +109,71 @@ public sealed class SmtpMagicLinkDelivery : IMagicLinkDelivery
         await client.SendMailAsync(message, ct);
         _logger.LogInformation("Sent BioStack magic link email to {Contact}", contact);
     }
+
+    private static string BuildHtmlBody(string magicLink, DateTime expiresAtUtc)
+    {
+        var safeLink = WebUtility.HtmlEncode(magicLink);
+        var safeExpiresAt = WebUtility.HtmlEncode(expiresAtUtc.ToString("u"));
+
+        return $"""
+            <p>Use this private link to sign in to BioStack:</p>
+            <p><a href="{safeLink}">Sign in to BioStack</a></p>
+            <p>This link expires at {safeExpiresAt}.</p>
+            <p>If you did not request this link, you can ignore this email.</p>
+            """;
+    }
+}
+
+public sealed class AzureCommunicationEmailMagicLinkDelivery : IMagicLinkDelivery
+{
+    private readonly IConfiguration _config;
+    private readonly ILogger<AzureCommunicationEmailMagicLinkDelivery> _logger;
+
+    public AzureCommunicationEmailMagicLinkDelivery(
+        IConfiguration config,
+        ILogger<AzureCommunicationEmailMagicLinkDelivery> logger)
+    {
+        _config = config;
+        _logger = logger;
+    }
+
+    public async Task SendAsync(string contact, string magicLink, string redirectPath, DateTime expiresAtUtc, CancellationToken ct)
+    {
+        var connectionString = _config["AzureCommunicationEmail:ConnectionString"];
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            throw new InvalidOperationException("AzureCommunicationEmail:ConnectionString must be configured to send magic link emails.");
+        }
+
+        var senderAddress = _config["AzureCommunicationEmail:SenderAddress"];
+        if (string.IsNullOrWhiteSpace(senderAddress))
+        {
+            throw new InvalidOperationException("AzureCommunicationEmail:SenderAddress must be configured to send magic link emails.");
+        }
+
+        var subject = _config["AzureCommunicationEmail:MagicLinkSubject"] ?? "Your BioStack sign-in link";
+        var client = new EmailClient(connectionString);
+        var content = new EmailContent(subject)
+        {
+            PlainText = BuildPlainTextBody(magicLink, expiresAtUtc),
+            Html = BuildHtmlBody(magicLink, expiresAtUtc),
+        };
+        var message = new EmailMessage(senderAddress, contact, content);
+
+        await client.SendAsync(WaitUntil.Started, message, ct);
+        _logger.LogInformation("Queued BioStack magic link email to {Contact} through Azure Communication Email", contact);
+    }
+
+    private static string BuildPlainTextBody(string magicLink, DateTime expiresAtUtc)
+        => $"""
+            Use this private link to sign in to BioStack:
+
+            {magicLink}
+
+            This link expires at {expiresAtUtc:u}.
+
+            If you did not request this link, you can ignore this email.
+            """;
 
     private static string BuildHtmlBody(string magicLink, DateTime expiresAtUtc)
     {
