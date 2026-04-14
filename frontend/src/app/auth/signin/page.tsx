@@ -40,6 +40,7 @@ function SignInPageContent() {
   const [email, setEmail] = useState('');
   const [submittedEmail, setSubmittedEmail] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const [sendError, setSendError] = useState('');
   const [cooldownUntil, setCooldownUntil] = useState(0);
   const [now, setNow] = useState(Date.now());
 
@@ -70,15 +71,23 @@ function SignInPageContent() {
     }
 
     setIsSending(true);
+    setSendError('');
     try {
-      await fetch(`${API_URL}/api/v1/auth/start`, {
+      const response = await fetch(`${API_URL}/api/v1/auth/start`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contact: normalized, channel: 'email', redirectPath }),
       });
+
+      if (!response.ok) {
+        throw new Error('Unable to send sign-in link.');
+      }
+
       setSubmittedEmail(normalized);
       setCooldownUntil(Date.now() + 30000);
+    } catch {
+      setSendError('We could not send that sign-in link. Try again in a moment.');
     } finally {
       setIsSending(false);
     }
@@ -109,6 +118,12 @@ function SignInPageContent() {
               {error && (
                 <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
                   That sign-in link is expired or already used. Send yourself a new one.
+                </div>
+              )}
+
+              {sendError && (
+                <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
+                  {sendError}
                 </div>
               )}
 

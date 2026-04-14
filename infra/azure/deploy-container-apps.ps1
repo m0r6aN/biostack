@@ -14,7 +14,15 @@ param(
     [string]$DatabaseProvider = "sqlite",
     [string]$PostgresConnectionString = "",
     [string]$WebUrlOverride = "",
-    [string]$ApiUrlOverride = ""
+    [string]$ApiUrlOverride = "",
+    [string]$SmtpHost = "",
+    [string]$SmtpPort = "587",
+    [string]$SmtpEnableSsl = "true",
+    [string]$SmtpUsername = "",
+    [string]$SmtpPassword = "",
+    [string]$SmtpFromEmail = "",
+    [string]$SmtpFromName = "BioStack",
+    [string]$SmtpMagicLinkSubject = "Your BioStack sign-in link"
 )
 
 $ErrorActionPreference = "Stop"
@@ -91,6 +99,10 @@ $apiSecrets = @(
     "jwt-secret=$JwtSecret"
 )
 
+if (-not [string]::IsNullOrWhiteSpace($SmtpPassword)) {
+    $apiSecrets += "smtp-password=$SmtpPassword"
+}
+
 $apiEnvVars = @(
     "ASPNETCORE_ENVIRONMENT=Production",
     "ASPNETCORE_URLS=http://+:5000",
@@ -101,6 +113,22 @@ $apiEnvVars = @(
     "FrontendUrl=https://placeholder",
     "Jwt__Secret=secretref:jwt-secret"
 )
+
+if (-not [string]::IsNullOrWhiteSpace($SmtpHost)) {
+    $apiEnvVars += @(
+        "Smtp__Host=$SmtpHost",
+        "Smtp__Port=$SmtpPort",
+        "Smtp__EnableSsl=$SmtpEnableSsl",
+        "Smtp__Username=$SmtpUsername",
+        "Smtp__FromEmail=$SmtpFromEmail",
+        "Smtp__FromName=$SmtpFromName",
+        "Smtp__MagicLinkSubject=$SmtpMagicLinkSubject"
+    )
+
+    if (-not [string]::IsNullOrWhiteSpace($SmtpPassword)) {
+        $apiEnvVars += "Smtp__Password=secretref:smtp-password"
+    }
+}
 
 $usePostgres = $DatabaseProvider.Equals("postgres", [System.StringComparison]::OrdinalIgnoreCase) -or
     $DatabaseProvider.Equals("postgresql", [System.StringComparison]::OrdinalIgnoreCase) -or
@@ -190,6 +218,22 @@ $apiFinalEnvVars = @(
     "Jwt__Secret=secretref:jwt-secret"
 )
 
+if (-not [string]::IsNullOrWhiteSpace($SmtpHost)) {
+    $apiFinalEnvVars += @(
+        "Smtp__Host=$SmtpHost",
+        "Smtp__Port=$SmtpPort",
+        "Smtp__EnableSsl=$SmtpEnableSsl",
+        "Smtp__Username=$SmtpUsername",
+        "Smtp__FromEmail=$SmtpFromEmail",
+        "Smtp__FromName=$SmtpFromName",
+        "Smtp__MagicLinkSubject=$SmtpMagicLinkSubject"
+    )
+
+    if (-not [string]::IsNullOrWhiteSpace($SmtpPassword)) {
+        $apiFinalEnvVars += "Smtp__Password=secretref:smtp-password"
+    }
+}
+
 if ($usePostgres) {
     $apiFinalEnvVars += "ConnectionStrings__DefaultConnection=secretref:db-conn-string"
     $apiFinalEnvVars += "Database__Provider=postgresql"
@@ -215,4 +259,8 @@ Write-Host "Deployment complete." -ForegroundColor Green
 Write-Host "Frontend: $publicWebUrl"
 Write-Host "API:      $publicApiUrl"
 Write-Host ""
-Write-Host "Passwordless email auth is configured. Use /dev/auth/inbox only in local development."
+if ([string]::IsNullOrWhiteSpace($SmtpHost)) {
+    Write-Host "Passwordless email auth still needs SMTP settings before production sign-in emails can send." -ForegroundColor Yellow
+} else {
+    Write-Host "Passwordless email auth is configured for SMTP delivery."
+}
