@@ -92,14 +92,13 @@ export default function HomePage() {
                 You add BPC-157 and TB-500 for recovery. That seems logical.
               </p>
               <p>
-                But both target similar pathways, so you may not be getting additional benefit while increasing exposure.
+                They can share a tissue-repair focus and still make sense together when the recovery goal calls for that pairing.
               </p>
               <p>
-                BioStack flags the overlap, shows evidence strength, and helps you track whether
-                it is actually working.
+                BioStack shows what overlaps, what may complement the goal, and what each compound is doing in the stack.
               </p>
               <p className="border-l-2 border-emerald-400/50 pl-5 text-base text-white/56">
-                The point is not to tell you what to take. The point is to show what deserves a closer look.
+                The point is not to call a stack right or wrong. The point is to show what deserves a closer look.
               </p>
             </div>
           </div>

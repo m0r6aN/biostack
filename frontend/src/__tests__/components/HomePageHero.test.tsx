@@ -16,17 +16,22 @@ describe('HomePage hero', () => {
     render(<LandingHero />);
 
     expect(screen.getByRole('heading', { name: 'BioStack Protocol Console' })).toBeInTheDocument();
-    expect(screen.getByText('Stop guessing what your protocol is actually doing.')).toBeInTheDocument();
+    expect(screen.getByText('Stop guessing where to start - or what your stack is actually doing.')).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Start simple. Get it right. Then go deeper when you're ready. Track compounds, avoid overlap, and turn daily signal into clarity."
+        "Add what you're using - or thinking about using. BioStack shows how it fits, what overlaps, and what actually works together."
       )
     ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Build My Protocol/ })).toHaveAttribute('href', '/onboarding');
     expect(screen.getByRole('link', { name: /Map My Current Stack/ })).toHaveAttribute('href', '/onboarding?mode=existing');
     expect(screen.getByRole('link', { name: 'Explore Calculators' })).toHaveAttribute('href', '/tools');
+    expect(screen.getByText('Start with one compound or build a full stack.')).toBeInTheDocument();
+    expect(screen.getByText('See how your current compounds fit together.')).toBeInTheDocument();
     expect(
-      screen.getByText('Most protocols fail from overlap, drift, and conflicting guidance - not intent.')
+      screen.getByText('Some compounds overlap. Some work better together. BioStack shows the difference.')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Conflicting advice, overlapping compounds, and guesswork make this harder than it should be.')
     ).toBeInTheDocument();
   });
 });

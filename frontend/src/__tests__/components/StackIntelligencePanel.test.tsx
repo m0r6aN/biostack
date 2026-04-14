@@ -10,24 +10,26 @@ describe('StackIntelligencePanel', () => {
     expect(screen.getByRole('tab', { name: 'Protocol' })).toHaveAttribute('aria-selected', 'true');
     expect(
       screen.getByText(
-        'Live protocol state with compounds added, guidance structured, overlap surfaced, and the next tracking step ready.'
+        'See how your compounds relate - where they overlap, where they support each other, and what to do next.'
       )
     ).toBeInTheDocument();
-    expect(screen.getByText('Tracking started')).toBeInTheDocument();
-    expect(screen.getByText('Baseline captured')).toBeInTheDocument();
-    expect(screen.getByText('Day 7 review pending')).toBeInTheDocument();
-    expect(screen.getByText('Typical range:')).toBeInTheDocument();
-    expect(screen.getByText('0.25mg - 4mg weekly')).toBeInTheDocument();
-    expect(screen.getByText('Common pattern:')).toBeInTheDocument();
-    expect(screen.getByText('1-3 doses/week')).toBeInTheDocument();
-    expect(screen.getByText(/Adjusted \(your profile\): more precise/)).toBeInTheDocument();
-    expect(screen.getByText('Shared tissue-repair pathway')).toBeInTheDocument();
-    expect(screen.getByText('Correlation ready')).toBeInTheDocument();
-    expect(screen.getByText('BPC-157 + TB-500 flagged for overlapping tissue-repair pathways.')).toBeInTheDocument();
-    expect(panelContent.simple.insights).toContain('Typical range and common frequency are separated from evidence strength.');
-    expect(screen.getByText('BPC-157')).toBeInTheDocument();
-    expect(screen.getByText('TB-500')).toBeInTheDocument();
-    expect(screen.getByText('Creatine')).toBeInTheDocument();
+    expect(screen.getByText('Compounds added')).toBeInTheDocument();
+    expect(screen.getByText('Relationships mapped')).toBeInTheDocument();
+    expect(screen.getByText('Next step ready')).toBeInTheDocument();
+    expect(screen.getByText('Overlap')).toBeInTheDocument();
+    expect(screen.getByText('Synergy')).toBeInTheDocument();
+    expect(screen.getByText('Support')).toBeInTheDocument();
+    expect(screen.getByText('Shared tissue-repair focus')).toBeInTheDocument();
+    expect(screen.getByText('Common recovery stack pairing')).toBeInTheDocument();
+    expect(screen.getByText('Recovery and performance baseline')).toBeInTheDocument();
+    expect(screen.getByText('Relationship summary: overlap + synergy')).toBeInTheDocument();
+    expect(
+      screen.getByText('BPC-157 and TB-500 share tissue-repair focus, and are often used together for recovery support.')
+    ).toBeInTheDocument();
+    expect(panelContent.simple.insights).toContain(
+      'Overlap does not automatically mean bad. It means the shared role is worth understanding.'
+    );
+    expect(screen.getByText('BPC-157, TB-500, Creatine')).toBeInTheDocument();
     expect(screen.getByText('Add dose schedule -> track recovery + sleep -> evaluate after 7 days')).toBeInTheDocument();
   });
 
@@ -36,14 +38,14 @@ describe('StackIntelligencePanel', () => {
 
     fireEvent.click(screen.getByRole('tab', { name: 'Evidence' }));
 
-    expect(screen.getByText('Moderate evidence')).toBeInTheDocument();
-    expect(screen.getByText('Signal baseline')).toBeInTheDocument();
+    expect(screen.getByText('Tissue-repair pathway alignment')).toBeInTheDocument();
+    expect(screen.getByText('Recovery context may justify pairing')).toBeInTheDocument();
     expect(
       await screen.findByText(
-        'BioStack ties protocol inputs to typical ranges, evidence confidence, pathway structure, and observable signal over time.'
+        'BioStack ties your inputs to relationship type, evidence confidence, pathway structure, and observable signal over time.'
       )
     ).toBeInTheDocument();
-    expect(await screen.findByText('2 overlapping pathways detected')).toBeInTheDocument();
+    expect(await screen.findByText('Relationship summary: overlap + support')).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'Evidence' })).toHaveAttribute('aria-selected', 'true');
   });
 });
