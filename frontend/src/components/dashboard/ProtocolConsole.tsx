@@ -9,7 +9,7 @@ import {
   CurrentStackIntelligence,
   GoalDefinition,
   InteractionFlag,
-  MissionControl,
+  ProtocolConsolePayload,
   TimelineEvent,
 } from '@/lib/types';
 import { Header } from '@/components/Header';
@@ -23,21 +23,21 @@ import { LatestCheckInCard } from '@/components/dashboard/LatestCheckInCard';
 import { TimelineSnapshot } from '@/components/dashboard/TimelineSnapshot';
 import { OverlapFlagsBanner } from '@/components/dashboard/OverlapFlagsBanner';
 import { CohesionTimelinePanel } from '@/components/dashboard/CohesionTimelinePanel';
-import { MissionControlOverview } from '@/components/dashboard/MissionControlOverview';
+import { ProtocolConsoleOverview } from '@/components/dashboard/ProtocolConsoleOverview';
 import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
 import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
 import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
 import { ObservationSignalsPanel } from '@/components/dashboard/ObservationSignalsPanel';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
 
-export function MissionControlDashboard() {
+export function ProtocolConsole() {
   const { currentProfileId, setProfiles } = useProfile();
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
   const [overlaps, setOverlaps] = useState<InteractionFlag[]>([]);
   const [currentStack, setCurrentStack] = useState<CurrentStackIntelligence | null>(null);
-  const [mission, setMission] = useState<MissionControl | null>(null);
+  const [mission, setMission] = useState<ProtocolConsolePayload | null>(null);
   const [profileGoals, setProfileGoals] = useState<GoalDefinition[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -64,10 +64,10 @@ export function MissionControlDashboard() {
       return;
     }
 
-    loadDashboardData();
+    loadProtocolConsoleData();
   }, [currentProfileId]);
 
-  async function loadDashboardData() {
+  async function loadProtocolConsoleData() {
     if (!currentProfileId) {
       return;
     }
@@ -82,7 +82,7 @@ export function MissionControlDashboard() {
         apiClient.getTimeline(currentProfileId),
         apiClient.getProfileGoals(currentProfileId),
         apiClient.getCurrentStackIntelligence(currentProfileId),
-        apiClient.getProtocolMissionControl(currentProfileId),
+        apiClient.getProtocolConsole(currentProfileId),
       ]);
 
       setCompounds(comp);
@@ -102,7 +102,7 @@ export function MissionControlDashboard() {
         setOverlaps([]);
       }
     } catch (err) {
-      setError('Failed to load dashboard data');
+      setError('Failed to load protocol console data');
       console.error(err);
     } finally {
       setLoading(false);
@@ -112,7 +112,7 @@ export function MissionControlDashboard() {
   if (!currentProfileId) {
     return (
       <div className="w-full">
-        <Header title="Mission Control" subtitle="Dashboard" />
+        <Header title="Protocol Console" subtitle="Protocol Intelligence" />
         <div className="p-8">
           <EmptyState
             title="No Profile Selected"
@@ -130,9 +130,9 @@ export function MissionControlDashboard() {
   if (error) {
     return (
       <div className="w-full">
-        <Header title="Mission Control" subtitle="Dashboard" />
+        <Header title="Protocol Console" subtitle="Protocol Intelligence" />
         <div className="p-8">
-          <ErrorState message={error} onRetry={loadDashboardData} />
+          <ErrorState message={error} onRetry={loadProtocolConsoleData} />
         </div>
       </div>
     );
@@ -140,7 +140,7 @@ export function MissionControlDashboard() {
 
   return (
     <div className="w-full">
-      <Header title="Mission Control" subtitle="Dashboard" actions={<ProfileSwitcher />} />
+      <Header title="Protocol Console" subtitle="Protocol Intelligence" actions={<ProfileSwitcher />} />
 
       <div className="p-8 space-y-6">
         {loading ? (
@@ -157,14 +157,14 @@ export function MissionControlDashboard() {
                 color={overlaps.length > 0 ? 'amber' : 'default'}
               />
               <StatCard
-                title="Stack Score"
+                title="Protocol Score"
                 value={currentStack ? currentStack.stackScore.score : '—'}
                 icon="🎯"
                 color={currentStack && currentStack.stackScore.score < 60 ? 'amber' : 'emerald'}
               />
             </div>
 
-            <MissionControlOverview mission={mission} />
+            <ProtocolConsoleOverview mission={mission} />
             <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
               <PatternMemoryPanel snapshot={mission?.patternSnapshot ?? null} />
               <DriftRegimePanel drift={mission?.driftSnapshot ?? null} patterns={mission?.patternSnapshot ?? null} />

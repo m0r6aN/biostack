@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: ['/', '/pricing', '/faq', '/tools'],
-        disallow: ['/mission-control', '/profiles', '/compounds', '/checkins', '/timeline', '/knowledge', '/admin'],
+        disallow: ['/protocol-console', '/mission-control', '/profiles', '/compounds', '/checkins', '/timeline', '/knowledge', '/admin'],
       },
     ],
     sitemap: 'https://biostack.app/sitemap.xml',

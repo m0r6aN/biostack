@@ -19,7 +19,7 @@ const GOAL_OPTIONS = [
 ] as const;
 const STORAGE_KEY = 'biostack_onboarding_preview';
 const STEP_ITEMS: Array<{ id: OnboardingStep; label: string; shortLabel: string }> = [
-  { id: 'input', label: '1. Add your stack', shortLabel: 'Add' },
+  { id: 'input', label: '1. Add protocol inputs', shortLabel: 'Add' },
   { id: 'aha', label: '2. See the overlap', shortLabel: 'See' },
   { id: 'goals', label: '3. Set your goals', shortLabel: 'Goals' },
 ];
@@ -107,7 +107,7 @@ export function OnboardingExperience() {
     () => ({
       simple: {
         subtext:
-          'BioStack turns a few items in your stack into a fast overlap preview so you can spot what deserves a second look.',
+          'BioStack turns a few protocol inputs into a fast overlap preview so you can spot what deserves a second look.',
         nodes: [
           {
             label: 'These may be doing the same job',
@@ -186,7 +186,7 @@ export function OnboardingExperience() {
     <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:py-16">
       <div className="max-w-3xl">
         <p className="text-xs font-semibold uppercase tracking-[0.32em] text-emerald-300/70">
-          Start Free
+          Protocol Setup
         </p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
           Get to the first aha in a few seconds.
@@ -272,7 +272,7 @@ export function OnboardingExperience() {
                 </p>
 
                 <label className="mt-6 block">
-                  <span className="mb-2 block text-sm text-white/62">Search your stack</span>
+                  <span className="mb-2 block text-sm text-white/62">Search your protocol</span>
                   <div className="flex flex-col gap-3 sm:flex-row">
                     <input
                       ref={inputRef}
@@ -347,7 +347,7 @@ export function OnboardingExperience() {
 
                 <div className="mt-6 min-h-24 rounded-2xl border border-white/8 bg-black/15 p-4">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="text-xs uppercase tracking-[0.2em] text-white/35">Your stack</p>
+                    <p className="text-xs uppercase tracking-[0.2em] text-white/35">Your protocol</p>
                     <p className="text-xs text-white/38">Remove anything with one tap</p>
                   </div>
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -375,7 +375,7 @@ export function OnboardingExperience() {
                     disabled={!canSubmit}
                     className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-50"
                   >
-                    Add to My Stack
+                    Add to My Protocol
                   </button>
                   <p className="text-sm text-white/45">You&apos;ll see the first visualization right away.</p>
                 </div>
@@ -415,7 +415,7 @@ export function OnboardingExperience() {
               <div className="absolute inset-x-8 top-0 h-24 rounded-full bg-emerald-500/10 blur-3xl" />
               <StackIntelligencePanel
                 compoundNames={selectedCompounds}
-                eyebrowLabel="Preview your stack"
+                eyebrowLabel="Preview your protocol"
                 contentOverrides={previewPanelOverrides}
               />
             </div>
@@ -530,7 +530,7 @@ export function OnboardingExperience() {
 
             <div className="space-y-4">
               <div className="rounded-[1.75rem] border border-white/10 bg-black/20 p-5">
-                <p className="text-xs uppercase tracking-[0.2em] text-emerald-300/70">Your preview stack</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-emerald-300/70">Your preview protocol</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {selectedCompounds.map((compound) => (
                     <span
@@ -546,7 +546,7 @@ export function OnboardingExperience() {
               <div className="rounded-[1.75rem] border border-emerald-300/12 bg-emerald-500/[0.05] p-5">
                 <p className="text-xs uppercase tracking-[0.2em] text-emerald-200/70">What setup unlocks</p>
                 <p className="mt-3 text-sm leading-7 text-white/62">
-                  Save your stack, keep building, and connect what you take to the outcomes you actually care about.
+                  Save your protocol, keep building, and connect what you take to the outcomes you actually care about.
                 </p>
               </div>
             </div>
