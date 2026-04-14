@@ -6,12 +6,13 @@ export default function VolumeCalculatorPage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'Use the BioStack Volume Calculator',
-    description: 'Calculate the volume required for a target dose from concentration.',
+    name: 'Use the BioStack Reconstitution and Dosing Calculator',
+    description: 'Calculate the volume required for a target dose from concentration, including daily and weekly splits.',
     step: [
       { '@type': 'HowToStep', text: 'Enter the target dose in micrograms.' },
-      { '@type': 'HowToStep', text: 'Enter the concentration in micrograms per milliliter.' },
-      { '@type': 'HowToStep', text: 'Review the exact draw volume output.' },
+      { '@type': 'HowToStep', text: 'Use the calculated concentration or enter a known concentration.' },
+      { '@type': 'HowToStep', text: 'Choose per-dose, daily total, or weekly total splitting.' },
+      { '@type': 'HowToStep', text: 'Review the exact draw volume and schedule totals.' },
     ],
   };
 
