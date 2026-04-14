@@ -2,7 +2,11 @@
 
 import { StackIntelligencePanel } from '@/components/marketing/StackIntelligencePanel';
 import { apiClient } from '@/lib/api';
-import type { KnowledgeEntry } from '@/lib/types';
+import {
+  readOnboardingPreview,
+  writeOnboardingPreview,
+} from '@/lib/onboardingPreview';
+import type { InteractionFlag, KnowledgeEntry } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
@@ -10,17 +14,16 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 const QUICK_ADD_ITEMS = ['BPC-157', 'NAD+', 'Creatine', 'Vitamin D', 'TRT'] as const;
 const GOAL_OPTIONS = [
-  { id: 'energy-fat-loss', label: 'Fat loss' },
-  { id: 'recovery-post-workout', label: 'Recovery' },
-  { id: 'energy-levels', label: 'Energy' },
-  { id: 'longevity-pathways', label: 'Longevity' },
-  { id: 'performance-strength', label: 'Strength' },
-  { id: 'cognitive-focus', label: 'Focus' },
+  { id: 'energy-fat-loss', label: 'Fat loss', signal: 'appetite, weight, energy' },
+  { id: 'recovery-post-workout', label: 'Recovery', signal: 'sleep, soreness, joint signal' },
+  { id: 'energy-levels', label: 'Energy', signal: 'energy, sleep, mood' },
+  { id: 'longevity-pathways', label: 'Longevity', signal: 'consistency, recovery, baseline drift' },
+  { id: 'performance-strength', label: 'Strength', signal: 'strength, endurance, recovery' },
+  { id: 'cognitive-focus', label: 'Focus', signal: 'focus, clarity, sleep' },
 ] as const;
-const STORAGE_KEY = 'biostack_onboarding_preview';
 const STEP_ITEMS: Array<{ id: OnboardingStep; label: string; shortLabel: string }> = [
   { id: 'input', label: '1. Add protocol inputs', shortLabel: 'Add' },
-  { id: 'aha', label: '2. See the overlap', shortLabel: 'See' },
+  { id: 'aha', label: '2. See what is known', shortLabel: 'See' },
   { id: 'goals', label: '3. Set your goals', shortLabel: 'Goals' },
 ];
 
@@ -30,40 +33,173 @@ function getStepIndex(step: OnboardingStep) {
   return STEP_ITEMS.findIndex((item) => item.id === step);
 }
 
-function readStoredPreview() {
-  if (typeof window === 'undefined') {
-    return { compounds: [] as string[], goals: [] as string[] };
-  }
-
-  try {
-    const stored = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '{}') as {
-      compounds?: string[];
-      goals?: string[];
-    };
-
-    return {
-      compounds: stored.compounds ?? [],
-      goals: stored.goals ?? [],
-    };
-  } catch {
-    window.localStorage.removeItem(STORAGE_KEY);
-    return { compounds: [] as string[], goals: [] as string[] };
-  }
-}
-
 function normalizeName(name: string) {
   return name.trim().replace(/\s+/g, ' ');
 }
 
-export function OnboardingExperience() {
-  const [storedPreview] = useState(readStoredPreview);
+function isSameCompound(left: string, right: string) {
+  return left.trim().toLowerCase() === right.trim().toLowerCase();
+}
+
+function findKnowledgeEntry(knowledgeBase: KnowledgeEntry[], compoundName: string) {
+  const normalizedName = compoundName.trim().toLowerCase();
+
+  return knowledgeBase.find((entry) => {
+    if (entry.canonicalName.toLowerCase() === normalizedName) {
+      return true;
+    }
+
+    return entry.aliases.some((alias) => alias.toLowerCase() === normalizedName);
+  });
+}
+
+function parseBulkCompounds(value: string) {
+  return value
+    .split(/[\n,;]+/)
+    .map(normalizeName)
+    .filter(Boolean);
+}
+
+interface OnboardingExperienceProps {
+  mode?: 'new' | 'existing';
+}
+
+interface RewardPanelProps {
+  step: OnboardingStep;
+  compounds: string[];
+  selectedGoalIds: string[];
+  overlaps: InteractionFlag[];
+  isCheckingOverlaps: boolean;
+}
+
+function getSelectedGoalLabels(goalIds: string[]) {
+  return GOAL_OPTIONS.filter((goal) => goalIds.includes(goal.id)).map((goal) => goal.label);
+}
+
+function RewardPanel({
+  step,
+  compounds,
+  selectedGoalIds,
+  overlaps,
+  isCheckingOverlaps,
+}: RewardPanelProps) {
+  const selectedGoalLabels = getSelectedGoalLabels(selectedGoalIds);
+  const hasCompounds = compounds.length > 0;
+  const hasRelationshipInputs = compounds.length > 1;
+  const hasOverlap = overlaps.length > 0;
+  const isGoalsStep = step === 'goals';
+
+  const state = (() => {
+    if (isGoalsStep) {
+      return {
+        eyebrow: 'Priority Tuning',
+        title: selectedGoalLabels.length > 0 ? 'Protocol aimed.' : 'Aim the next read.',
+        body:
+          selectedGoalLabels.length > 0
+            ? 'BioStack will weight the next steps around your selected outcomes.'
+            : 'Pick a target so the next profile is organized around the signal you care about.',
+        status: selectedGoalLabels.length > 0 ? 'Tuned' : 'Waiting for aim',
+      };
+    }
+
+    if (!hasCompounds) {
+      return {
+        eyebrow: 'Payoff Surface',
+        title: 'Ready for the first anchor.',
+        body: 'Add one real input and BioStack will start with grounded context.',
+        status: 'No input yet',
+      };
+    }
+
+    if (!hasRelationshipInputs) {
+      return {
+        eyebrow: 'First Input Locked',
+        title: `${compounds[0]} is anchored.`,
+        body: 'Context is live. Add one more item when you want relationship checking.',
+        status: 'Context active',
+      };
+    }
+
+    if (isCheckingOverlaps) {
+      return {
+        eyebrow: 'Relationship Check',
+        title: 'Checking the real set.',
+        body: 'BioStack is comparing only the compounds you added.',
+        status: 'Checking',
+      };
+    }
+
+    return {
+      eyebrow: 'Relationship Check',
+      title: hasOverlap ? 'Relationship found.' : 'No known overlap found.',
+      body: hasOverlap
+        ? 'The flag is earned from your selected inputs.'
+        : 'That is still useful. The map stayed honest and did not force a claim.',
+      status: hasOverlap ? `${overlaps.length} flag${overlaps.length === 1 ? '' : 's'}` : 'Clear so far',
+    };
+  })();
+
+  const rows = [
+    ['Input', hasCompounds ? compounds.join(', ') : 'Add a compound'],
+    ['Unlocked', hasRelationshipInputs ? 'Relationship check' : hasCompounds ? 'Grounded context' : 'Context after first item'],
+    ['Next', isGoalsStep ? 'Save profile' : hasRelationshipInputs ? 'Aim the protocol' : 'Add one more'],
+  ] as const;
+
+  return (
+    <div className="rounded-[1.75rem] border border-emerald-300/14 bg-[linear-gradient(180deg,rgba(16,185,129,0.095),rgba(255,255,255,0.03))] p-5 shadow-[0_18px_55px_rgba(0,0,0,0.28)]">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-200/75">{state.eyebrow}</p>
+        <span className="rounded-full border border-emerald-300/18 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-100/80">
+          {state.status}
+        </span>
+      </div>
+      <h3 className="mt-4 text-2xl font-semibold tracking-tight text-white">{state.title}</h3>
+      <p className="mt-3 text-sm leading-6 text-white/62">{state.body}</p>
+
+      <div className="mt-5 grid gap-2">
+        {rows.map(([label, value]) => (
+          <div key={label} className="grid grid-cols-[82px_1fr] gap-3 rounded-lg border border-white/8 bg-black/20 px-3 py-2">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">{label}</p>
+            <p className="min-w-0 text-sm font-medium text-white/78">{value}</p>
+          </div>
+        ))}
+      </div>
+
+      {isGoalsStep && (
+        <div className="mt-5 rounded-lg border border-white/8 bg-black/20 p-3">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">Priority Signal</p>
+          <p className="mt-2 text-sm leading-6 text-white/66">
+            {selectedGoalLabels.length > 0
+              ? selectedGoalLabels.join(', ')
+              : 'Choose one or skip. The protocol still saves.'}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps) {
+  const [storedPreview] = useState(readOnboardingPreview);
   const inputRef = useRef<HTMLInputElement>(null);
   const reduceMotion = useReducedMotion();
+  const isExistingMode = mode === 'existing';
   const [step, setStep] = useState<OnboardingStep>('input');
   const [query, setQuery] = useState('');
+  const [bulkInput, setBulkInput] = useState('');
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeEntry[]>([]);
+  const [overlapResult, setOverlapResult] = useState<{ key: string; overlaps: InteractionFlag[] }>({
+    key: '',
+    overlaps: [],
+  });
   const [selectedCompounds, setSelectedCompounds] = useState<string[]>(() => storedPreview.compounds);
   const [selectedGoals, setSelectedGoals] = useState<string[]>(() => storedPreview.goals);
+  const relationshipCheckKey = selectedCompounds.map((compound) => compound.toLowerCase()).join('|');
+  const overlaps = useMemo(
+    () => (overlapResult.key === relationshipCheckKey ? overlapResult.overlaps : []),
+    [overlapResult, relationshipCheckKey]
+  );
+  const isCheckingOverlaps = selectedCompounds.length > 1 && overlapResult.key !== relationshipCheckKey;
 
   useEffect(() => {
     apiClient.getAllKnowledgeCompounds().then(setKnowledgeBase).catch(() => setKnowledgeBase([]));
@@ -74,11 +210,36 @@ export function OnboardingExperience() {
       return;
     }
 
-    window.localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ compounds: selectedCompounds, goals: selectedGoals })
-    );
+    writeOnboardingPreview({ compounds: selectedCompounds, goals: selectedGoals });
   }, [selectedCompounds, selectedGoals]);
+
+  useEffect(() => {
+    if (selectedCompounds.length < 2) {
+      return;
+    }
+
+    let isActive = true;
+    const checkOverlap =
+      typeof apiClient.checkOverlap === 'function'
+        ? apiClient.checkOverlap.bind(apiClient)
+        : async () => [] as InteractionFlag[];
+
+    checkOverlap(selectedCompounds)
+      .then((flags) => {
+        if (isActive) {
+          setOverlapResult({ key: relationshipCheckKey, overlaps: flags });
+        }
+      })
+      .catch(() => {
+        if (isActive) {
+          setOverlapResult({ key: relationshipCheckKey, overlaps: [] });
+        }
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, [relationshipCheckKey, selectedCompounds]);
 
   const suggestions = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -103,33 +264,132 @@ export function OnboardingExperience() {
   const currentStepIndex = getStepIndex(step);
   const progressWidth = `${((currentStepIndex + 1) / STEP_ITEMS.length) * 100}%`;
   const canSubmit = selectedCompounds.length > 0 || Boolean(query.trim());
-  const previewPanelOverrides = useMemo(
-    () => ({
-      simple: {
-        subtext:
-          'BioStack turns a few protocol inputs into a fast overlap preview so you can spot what deserves a second look.',
-        nodes: [
-          {
-            label: 'These may be doing the same job',
-            x: 49,
-            y: 44,
-            bubbleClassName: '-translate-x-[18%] -translate-y-[145%]',
-          },
-          {
-            label: 'You might not need both',
-            x: 41,
-            y: 60,
-            bubbleClassName: '-translate-x-[8%] translate-y-4',
-          },
-        ],
-        insights: [
-          'A lot of people don’t notice this at first',
-          'You could be doubling up without realizing it',
-        ],
-      },
-    }),
-    []
+  const selectedKnowledgeEntries = useMemo(
+    () =>
+      selectedCompounds
+        .map((compound) => findKnowledgeEntry(knowledgeBase, compound))
+        .filter((entry): entry is KnowledgeEntry => Boolean(entry)),
+    [knowledgeBase, selectedCompounds]
   );
+  const firstKnowledgeEntry = selectedKnowledgeEntries[0];
+  const previewPanelOverrides = useMemo(() => {
+    if (selectedCompounds.length === 1) {
+      const compound = selectedCompounds[0];
+      const evidenceTier = firstKnowledgeEntry?.evidenceTier || 'Needs review';
+      const classification = firstKnowledgeEntry?.classification || 'Manual entry';
+      const mechanism = firstKnowledgeEntry?.mechanismSummary || 'BioStack has the item, but needs more context before mapping relationships.';
+      const typicalPattern = firstKnowledgeEntry?.frequency || firstKnowledgeEntry?.recommendedDosage || 'Add schedule details later when you are ready.';
+
+      return {
+        simple: {
+          subtext: `${compound} is anchored. Context is live; relationships unlock with one more item.`,
+          stageLabels: ['1 item', 'Context live', 'Relationships next'],
+          stats: [
+            ['Compound', compound],
+            ['Evidence tier', evidenceTier],
+            ['Relationship map', 'Needs 2+ items'],
+          ] as Array<[string, string]>,
+          relationshipGroups: [
+            {
+              type: 'Context' as const,
+              label: classification,
+              detail: mechanism,
+            },
+            {
+              type: 'Context' as const,
+              label: 'Typical pattern',
+              detail: typicalPattern,
+            },
+          ],
+          insightLabel: 'First read',
+          summary: `${compound} is now grounded in BioStack.`,
+          insights: [
+            'One item gives context.',
+            'Add one more item to start relationship checking.',
+          ],
+          nextAction: 'Add one more item for relationship checking.',
+        },
+        technical: {
+          subtext: 'Evidence context is available. No relationship is inferred from one item.',
+          stageLabels: ['1 item', 'Evidence context', 'No inferred overlap'],
+          stats: [
+            ['Compound', compound],
+            ['Evidence tier', evidenceTier],
+            ['Comparison', 'Not enough inputs'],
+          ] as Array<[string, string]>,
+          relationshipGroups: [
+            {
+              type: 'Context' as const,
+              label: 'Evidence context',
+              detail: firstKnowledgeEntry?.notes || mechanism,
+            },
+          ],
+          insightLabel: 'Boundary',
+          summary: 'Single-compound context is ready. Comparison waits for another input.',
+          insights: [
+            'One item is enough for context.',
+            'Two items are required for relationship checks.',
+          ],
+          nextAction: 'Add another item or save this first input.',
+        },
+      };
+    }
+
+    if (selectedCompounds.length > 1) {
+      const relationshipGroups =
+        overlaps.length > 0
+          ? overlaps.map((overlap) => ({
+              type: 'Overlap' as const,
+              label: overlap.compoundNames.join(' + '),
+              detail: `${overlap.pathwayTag}: ${overlap.description}`,
+            }))
+          : [
+              {
+                type: 'Context' as const,
+                label: isCheckingOverlaps ? 'Checking relationships' : 'No overlap found yet',
+                detail: isCheckingOverlaps
+                  ? 'BioStack is checking these real inputs before making a claim.'
+                  : 'BioStack did not find a known overlap for this exact set yet.',
+              },
+            ];
+
+      return {
+        simple: {
+          subtext:
+            overlaps.length > 0
+              ? 'Relationship checking is active. A supported flag was found.'
+              : 'Relationship checking is active. No known overlap was found.',
+          stageLabels: ['2+ items', 'Check active', overlaps.length > 0 ? 'Flag found' : 'Clear so far'],
+          stats: [
+            ['Compounds', selectedCompounds.join(', ')],
+            ['Relationship check', isCheckingOverlaps ? 'Checking' : overlaps.length > 0 ? `${overlaps.length} flag${overlaps.length === 1 ? '' : 's'}` : 'No flag'],
+            ['Timeline', 'Ready to save'],
+          ] as Array<[string, string]>,
+          relationshipGroups,
+          insightLabel: overlaps.length > 0 ? 'Relationship found' : 'Check complete',
+          summary:
+            overlaps.length > 0
+              ? 'This flag comes from your selected inputs.'
+              : 'No known overlap found for this exact set.',
+          insights:
+            overlaps.length > 0
+              ? [
+                  'The map is now working from real inputs.',
+                  'More detail will sharpen what BioStack tracks next.',
+                ]
+              : [
+                  'Clear so far is a useful result.',
+                  'Add goals or schedule details to deepen the map.',
+                ],
+          nextAction: overlaps.length > 0
+            ? 'Pick a goal so BioStack knows what to watch first.'
+            : 'Pick a goal or add another item.',
+        },
+      };
+    }
+
+    return undefined;
+  }, [firstKnowledgeEntry, isCheckingOverlaps, overlaps, selectedCompounds]);
 
   function addCompound(name: string) {
     const normalized = normalizeName(name);
@@ -146,6 +406,26 @@ export function OnboardingExperience() {
     });
     setQuery('');
     inputRef.current?.focus();
+  }
+
+  function addBulkCompounds() {
+    const compounds = parseBulkCompounds(bulkInput);
+    if (compounds.length === 0) {
+      return;
+    }
+
+    setSelectedCompounds((current) => {
+      const next = [...current];
+
+      for (const compound of compounds) {
+        if (!next.some((selected) => isSameCompound(selected, compound))) {
+          next.push(compound);
+        }
+      }
+
+      return next;
+    });
+    setBulkInput('');
   }
 
   function removeCompound(name: string) {
@@ -186,13 +466,15 @@ export function OnboardingExperience() {
     <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:py-16">
       <div className="max-w-3xl">
         <p className="text-xs font-semibold uppercase tracking-[0.32em] text-emerald-300/70">
-          Protocol Setup
+          {isExistingMode ? 'Stack Mapping' : 'Protocol Setup'}
         </p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-          Get to the first aha in a few seconds.
+          {isExistingMode ? 'Drop in the stack. We will sort what fits.' : 'Start with one real input.'}
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-white/62">
-          Add a few things, preview how they connect, and decide if BioStack earns a place in your workflow.
+          {isExistingMode
+            ? 'Paste the current list. BioStack checks only what you entered.'
+            : 'One item gets context. Two items start the relationship check.'}
         </p>
       </div>
 
@@ -266,10 +548,40 @@ export function OnboardingExperience() {
                   </span>
                 </div>
 
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white">Add what you already know.</h2>
+                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                  {isExistingMode ? 'Paste what is already in the mix.' : 'Add what you already know.'}
+                </h2>
                 <p className="mt-4 max-w-xl text-base leading-7 text-white/60">
-                  Search, choose a suggestion, or enter something manually. You only need a couple of items to see value.
+                  {isExistingMode
+                    ? 'Use commas or new lines. Clean it up later.'
+                    : 'Search, quick add, or type manually. You do not need a full plan.'}
                 </p>
+
+                {isExistingMode && (
+                  <div className="mt-6 rounded-2xl border border-emerald-300/12 bg-emerald-500/[0.045] p-4">
+                    <label className="block">
+                      <span className="mb-2 block text-sm text-emerald-100/75">Bulk add current stack</span>
+                      <textarea
+                        value={bulkInput}
+                        onChange={(event) => setBulkInput(event.target.value)}
+                        placeholder="BPC-157, TB-500, Creatine…"
+                        rows={4}
+                        className="w-full resize-none rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/40"
+                      />
+                    </label>
+                    <div className="mt-3 flex flex-wrap items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={addBulkCompounds}
+                        disabled={!bulkInput.trim()}
+                        className="rounded-full border border-emerald-300/20 bg-emerald-400/12 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-300/35 disabled:cursor-not-allowed disabled:opacity-45"
+                      >
+                        Add Stack
+                      </button>
+                      <p className="text-sm text-white/45">Fast entry first. Honest read next.</p>
+                    </div>
+                  </div>
+                )}
 
                 <label className="mt-6 block">
                   <span className="mb-2 block text-sm text-white/62">Search your protocol</span>
@@ -364,7 +676,11 @@ export function OnboardingExperience() {
                         </button>
                       ))
                     ) : (
-                      <p className="text-sm text-white/38">Add 2–3 items to get the first relationship map.</p>
+                      <p className="text-sm text-white/38">
+                        {isExistingMode
+                          ? 'Paste or add the compounds, supplements, or medications you already have in mind.'
+                          : 'Add one item to start.'}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -377,26 +693,18 @@ export function OnboardingExperience() {
                   >
                     Add to My Protocol
                   </button>
-                  <p className="text-sm text-white/45">You&apos;ll see the first visualization right away.</p>
+                  <p className="text-sm text-white/45">Context first. Relationships when earned.</p>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <div className="rounded-[1.75rem] border border-white/10 bg-black/20 p-5">
-                  <p className="text-xs uppercase tracking-[0.2em] text-emerald-300/70">What happens next</p>
-                  <div className="mt-4 space-y-4 text-sm leading-7 text-white/62">
-                    <p>1. Add a couple of things you&apos;re taking.</p>
-                    <p>2. BioStack shows where the overlap or redundancy might be.</p>
-                    <p>3. Decide whether it&apos;s worth going deeper — no long setup first.</p>
-                  </div>
-                </div>
-
-                <div className="rounded-[1.75rem] border border-emerald-300/12 bg-emerald-500/[0.05] p-5">
-                  <p className="text-xs uppercase tracking-[0.2em] text-emerald-200/70">Suggested starting point</p>
-                  <p className="mt-3 text-base leading-7 text-white/62">
-                    Start with the things you actually take most often. Even two items is enough to show where the hidden overlap might be.
-                  </p>
-                </div>
+                <RewardPanel
+                  step={step}
+                  compounds={selectedCompounds}
+                  selectedGoalIds={selectedGoals}
+                  overlaps={overlaps}
+                  isCheckingOverlaps={isCheckingOverlaps}
+                />
               </div>
             </div>
           </motion.form>
@@ -429,7 +737,9 @@ export function OnboardingExperience() {
               </div>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">This is the point.</h2>
               <p className="mt-4 text-base leading-7 text-white/60">
-                You put in a few items and BioStack immediately starts surfacing what might overlap, what may be redundant, and what deserves a closer look.
+                {selectedCompounds.length === 1
+                  ? 'Your first input is grounded. BioStack can work from here.'
+                  : 'Relationship checking is active. The result stays tied to your inputs.'}
               </p>
 
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -450,9 +760,21 @@ export function OnboardingExperience() {
                 <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
                   <p className="text-xs uppercase tracking-[0.2em] text-white/35">Why this matters</p>
                   <p className="mt-3 text-sm leading-7 text-white/58">
-                    This is where guesswork starts turning into structure. You can spot likely redundancy before it becomes a habit.
+                    {selectedCompounds.length === 1
+                      ? 'You have a real starting point, not a blank setup form.'
+                      : 'No forced claims. If the map is clear so far, BioStack says that too.'}
                   </p>
                 </div>
+              </div>
+
+              <div className="mt-5">
+                <RewardPanel
+                  step={step}
+                  compounds={selectedCompounds}
+                  selectedGoalIds={selectedGoals}
+                  overlaps={overlaps}
+                  isCheckingOverlaps={isCheckingOverlaps}
+                />
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">
@@ -485,9 +807,9 @@ export function OnboardingExperience() {
             transition={{ duration: reduceMotion ? 0 : 0.26, ease: 'easeOut' }}
           >
             <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_20px_70px_rgba(0,0,0,0.35)] sm:p-8">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-300/72">Optional goal setup</p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">What are you trying to improve?</h2>
-              <p className="mt-4 text-base leading-7 text-white/60">Pick anything that fits right now. You can change this later.</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-300/72">Aim The Protocol</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">What should BioStack watch first?</h2>
+              <p className="mt-4 text-base leading-7 text-white/60">Choose the signal that matters most. This tunes the next profile.</p>
 
               <div className="mt-6 flex flex-wrap gap-3">
                 {GOAL_OPTIONS.map((goal) => {
@@ -497,15 +819,17 @@ export function OnboardingExperience() {
                     <button
                       key={goal.id}
                       type="button"
+                      aria-label={goal.label}
                       onClick={() => toggleGoal(goal.id)}
                       className={cn(
-                        'rounded-full border px-4 py-2 text-sm font-medium transition-colors',
+                        'rounded-lg border px-4 py-3 text-left transition-colors',
                         isSelected
                           ? 'border-emerald-300/35 bg-emerald-500/12 text-emerald-200'
                           : 'border-white/10 bg-white/[0.03] text-white/70 hover:text-white'
                       )}
                     >
-                      {goal.label}
+                      <span className="block text-sm font-semibold">{goal.label}</span>
+                      <span className="mt-1 block text-xs leading-5 text-white/45">{goal.signal}</span>
                     </button>
                   );
                 })}
@@ -529,26 +853,13 @@ export function OnboardingExperience() {
             </div>
 
             <div className="space-y-4">
-              <div className="rounded-[1.75rem] border border-white/10 bg-black/20 p-5">
-                <p className="text-xs uppercase tracking-[0.2em] text-emerald-300/70">Your preview protocol</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {selectedCompounds.map((compound) => (
-                    <span
-                      key={compound}
-                      className="rounded-full border border-emerald-300/18 bg-emerald-500/10 px-3 py-1.5 text-sm text-emerald-100/90"
-                    >
-                      {compound}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-[1.75rem] border border-emerald-300/12 bg-emerald-500/[0.05] p-5">
-                <p className="text-xs uppercase tracking-[0.2em] text-emerald-200/70">What setup unlocks</p>
-                <p className="mt-3 text-sm leading-7 text-white/62">
-                  Save your protocol, keep building, and connect what you take to the outcomes you actually care about.
-                </p>
-              </div>
+              <RewardPanel
+                step={step}
+                compounds={selectedCompounds}
+                selectedGoalIds={selectedGoals}
+                overlaps={overlaps}
+                isCheckingOverlaps={isCheckingOverlaps}
+              />
             </div>
           </motion.div>
         )}

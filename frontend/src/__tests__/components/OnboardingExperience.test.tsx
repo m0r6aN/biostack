@@ -15,6 +15,7 @@ vi.mock('next/link', () => ({
 vi.mock('@/lib/api', () => ({
   apiClient: {
     getAllKnowledgeCompounds: vi.fn(),
+    checkOverlap: vi.fn(),
   },
 }));
 
@@ -72,6 +73,15 @@ describe('OnboardingExperience', () => {
         optimizationExercise: '',
       },
     ]);
+    vi.mocked(apiClient.checkOverlap).mockResolvedValue([
+      {
+        compoundNames: ['BPC-157', 'NAD+'],
+        overlapType: 'SharedPathway',
+        pathwayTag: 'Recovery context',
+        description: 'Both were selected by the user, so this is a real input check.',
+        evidenceConfidence: 'Limited',
+      },
+    ]);
     localStorage.clear();
   });
 
@@ -94,15 +104,15 @@ describe('OnboardingExperience', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Add to My Protocol' }));
 
-    expect(await screen.findByText('These may be doing the same job')).toBeInTheDocument();
-    expect(screen.getByText('You might not need both')).toBeInTheDocument();
-    expect(screen.getByText('A lot of people don’t notice this at first')).toBeInTheDocument();
+    expect(await screen.findByText('Relationship checking is active. A supported flag was found.')).toBeInTheDocument();
+    expect(screen.getByText('Recovery context: Both were selected by the user, so this is a real input check.')).toBeInTheDocument();
+    expect(screen.getByText('The map is now working from real inputs.')).toBeInTheDocument();
     expect(screen.getAllByText('BPC-157').length).toBeGreaterThan(0);
     expect(screen.getAllByText('NAD+').length).toBeGreaterThan(0);
 
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
 
-    expect(await screen.findByText('What are you trying to improve?')).toBeInTheDocument();
+    expect(await screen.findByText('What should BioStack watch first?')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Energy' }));
     expect(screen.getByRole('link', { name: 'Finish Setup' })).toHaveAttribute('href', '/profiles');
   });

@@ -19,12 +19,15 @@ export interface StackIntelligencePanelContent {
   subtext: string;
   insightLabel: string;
   summary: string;
+  stats?: Array<[string, string]>;
+  stageLabels?: string[];
   relationshipGroups: Array<{
-    type: 'Overlap' | 'Synergy' | 'Support';
+    type: 'Context' | 'Overlap' | 'Synergy' | 'Support';
     label: string;
     detail: string;
   }>;
   insights: string[];
+  nextAction?: string;
 }
 
 export const panelContent: Record<PanelMode, StackIntelligencePanelContent> = {
@@ -88,7 +91,14 @@ export const panelContent: Record<PanelMode, StackIntelligencePanelContent> = {
   },
 };
 
-function buildCompounds(compoundNames: string[] = []) {
+function buildCompounds(compoundNames?: string[]) {
+  if (compoundNames === undefined) {
+    return DEFAULT_COMPOUND_NAMES.map((name, index) => ({
+      id: `compound-${index}`,
+      name,
+    }));
+  }
+
   const orderedNames: string[] = [];
   const seen = new Set<string>();
 
@@ -106,18 +116,6 @@ function buildCompounds(compoundNames: string[] = []) {
     seen.add(key);
     orderedNames.push(trimmed);
 
-    if (orderedNames.length === DEFAULT_COMPOUND_NAMES.length) {
-      break;
-    }
-  }
-
-  for (const fallback of DEFAULT_COMPOUND_NAMES) {
-    const key = fallback.toLowerCase();
-    if (seen.has(key)) {
-      continue;
-    }
-
-    orderedNames.push(fallback);
     if (orderedNames.length === DEFAULT_COMPOUND_NAMES.length) {
       break;
     }
@@ -155,6 +153,10 @@ function mergePanelContent(
 }
 
 function relationshipTone(type: StackIntelligencePanelContent['relationshipGroups'][number]['type']) {
+  if (type === 'Context') {
+    return 'border-white/12 bg-white/[0.045] text-white/78';
+  }
+
   if (type === 'Overlap') {
     return 'border-amber-300/20 bg-amber-300/[0.055] text-amber-100/85';
   }
@@ -186,6 +188,12 @@ export function StackIntelligencePanel({
     [contentOverrides]
   );
   const activeContent = mergedContent[mode];
+  const stageLabels = activeContent.stageLabels ?? ['Compounds added', 'Relationships mapped', 'Next step ready'];
+  const stats = activeContent.stats ?? [
+    ['Compounds', displayedCompounds.map((compound) => compound.name).join(', ') || 'None yet'],
+    ['Evidence tier', mode === 'technical' ? 'Limited -> Moderate' : 'Review ready'],
+    ['Timeline', 'Day 0 baseline'],
+  ];
 
   useEffect(() => {
     if (reduceMotion) {
@@ -273,19 +281,16 @@ export function StackIntelligencePanel({
           </div>
 
           <div className="relative mt-3 flex flex-wrap gap-x-3 gap-y-1 rounded-lg border border-white/8 bg-black/20 px-3 py-2 text-[11px] font-medium text-white/42">
-            <span>Compounds added</span>
-            <span className="text-white/18">/</span>
-            <span>Relationships mapped</span>
-            <span className="text-white/18">/</span>
-            <span>Next step ready</span>
+            {stageLabels.map((label, index) => (
+              <span key={label} className="contents">
+                <span>{label}</span>
+                {index < stageLabels.length - 1 && <span className="text-white/18">/</span>}
+              </span>
+            ))}
           </div>
 
           <div className="relative mt-3 grid gap-3 rounded-lg border border-white/8 bg-white/[0.025] p-3 sm:grid-cols-[0.9fr_1.15fr_0.95fr]">
-            {[
-              ['Compounds', displayedCompounds.map((compound) => compound.name).join(', ')],
-              ['Evidence tier', mode === 'technical' ? 'Limited -> Moderate' : 'Review ready'],
-              ['Timeline', 'Day 0 baseline'],
-            ].map(([label, value]) => (
+            {stats.map(([label, value]) => (
               <div key={label} className="rounded-lg border border-white/7 bg-black/20 px-3 py-2">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">{label}</p>
                 <p className="mt-1 text-sm font-semibold leading-5 text-white/82">{value}</p>
@@ -296,7 +301,7 @@ export function StackIntelligencePanel({
           <div className="relative mt-3 grid gap-2.5">
             {activeContent.relationshipGroups.map((relationship) => (
               <motion.div
-                key={`${mode}-${relationship.type}`}
+                key={`${mode}-${relationship.type}-${relationship.label}`}
                 className="grid gap-3 rounded-lg border border-white/8 bg-black/20 p-3 sm:grid-cols-[116px_1fr]"
                 initial={false}
                 animate={{ opacity: 1, y: 0 }}
@@ -350,7 +355,7 @@ export function StackIntelligencePanel({
               Suggested next action
             </p>
             <p className="mt-1 text-sm leading-6 text-white/76">
-              Add dose schedule -&gt; track recovery + sleep -&gt; evaluate after 7 days
+              {activeContent.nextAction ?? 'Add dose schedule -> track recovery + sleep -> evaluate after 7 days'}
             </p>
           </div>
         </div>
