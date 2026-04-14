@@ -4,19 +4,9 @@ import { MarketingNav } from '@/components/marketing/MarketingNav';
 
 const tools = [
   {
-    title: 'Reconstitution Calculator',
+    title: 'Reconstitution & Dosing Calculator',
     href: '/tools/reconstitution-calculator',
-    description: 'mg powder plus mL diluent into transparent concentration math.',
-  },
-  {
-    title: 'Volume Calculator',
-    href: '/tools/volume-calculator',
-    description: 'Target dose and concentration into exact draw volume.',
-  },
-  {
-    title: 'Unit Converter',
-    href: '/tools/unit-converter',
-    description: 'Fast mg, mcg, and gram conversion without context switching.',
+    description: 'Powder, diluent, concentration, dose volume, unit conversion, and daily or weekly splits in one flow.',
   },
 ];
 
@@ -31,15 +21,15 @@ export default function ToolsPage() {
             Tools
           </p>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            The calculators that should have existed years ago.
+            The calculator that should have existed years ago.
           </h1>
           <p className="mt-5 text-lg leading-8 text-white/62">
             No account required. The math is the first value delivery point in the funnel, so the
-            tools stay public and transparent by design.
+            tool stays public and transparent by design.
           </p>
         </section>
 
-        <section className="mt-14 grid gap-5 md:grid-cols-3">
+        <section className="mt-14 grid gap-5 md:grid-cols-2">
           {tools.map((tool) => (
             <Link
               key={tool.title}
