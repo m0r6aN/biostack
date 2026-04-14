@@ -178,7 +178,18 @@ builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
 builder.Services.AddSingleton<InMemoryMagicLinkDelivery>();
-builder.Services.AddSingleton<IMagicLinkDelivery>(sp => sp.GetRequiredService<InMemoryMagicLinkDelivery>());
+if (!string.IsNullOrWhiteSpace(builder.Configuration["Smtp:Host"]))
+{
+    builder.Services.AddSingleton<IMagicLinkDelivery, SmtpMagicLinkDelivery>();
+}
+else if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSingleton<IMagicLinkDelivery>(sp => sp.GetRequiredService<InMemoryMagicLinkDelivery>());
+}
+else
+{
+    builder.Services.AddSingleton<IMagicLinkDelivery, SmtpMagicLinkDelivery>();
+}
 builder.Services.AddSingleton<IDevMagicLinkInbox>(sp => sp.GetRequiredService<InMemoryMagicLinkDelivery>());
 
 // ── Domain services ─────────────────────────────────────────────────────────
