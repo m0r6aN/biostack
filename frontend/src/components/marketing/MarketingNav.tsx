@@ -23,16 +23,17 @@ export function MarketingNav() {
 
         <div className="flex items-center gap-3">
           <Link
-            href="/tools/reconstitution-calculator"
-            className="rounded-full border border-white/12 px-4 py-2 text-sm text-white/75 transition-colors hover:text-white"
+            href="/tools"
+            className="hidden rounded-full border border-white/12 px-4 py-2 text-sm text-white/75 transition-colors hover:text-white sm:inline-flex"
           >
-            Try the Calculators
+            Explore Calculators
           </Link>
           <Link
-            href="/auth/signin"
+            href="/onboarding"
             className="rounded-full bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
           >
-            Get Started Free
+            <span className="sm:hidden">Build Protocol</span>
+            <span className="hidden sm:inline">Build My Protocol</span>
           </Link>
         </div>
       </div>

@@ -1,4 +1,4 @@
-// Core data types for BioStack Mission Control
+// Core data types for BioStack Protocol Console
 
 export interface GoalDefinition {
   id: string;
@@ -278,20 +278,20 @@ export interface RegimeClassificationSummary {
   contributingFactors: string[];
 }
 
-export interface MissionControl {
+export interface ProtocolConsolePayload {
   activeRun: ProtocolRun | null;
   latestClosedRun: ProtocolRun | null;
-  latestReviewSummary: MissionControlReviewSummary | null;
-  recentEvolution: MissionControlEvolution | null;
-  latestCheckInSignal: MissionControlCheckInSignal;
-  observationSignals: MissionControlObservationSignal[];
+  latestReviewSummary: ProtocolConsoleReviewSummary | null;
+  recentEvolution: ProtocolConsoleEvolution | null;
+  latestCheckInSignal: ProtocolConsoleCheckInSignal;
+  observationSignals: ProtocolConsoleObservationSignal[];
   patternSnapshot: ProtocolPatternSnapshot | null;
   driftSnapshot: ProtocolDriftSnapshot | null;
   sequenceExpectationSnapshot: ProtocolSequenceExpectationSnapshot | null;
   cohesionTimeline: ProtocolReviewTimelineEvent[];
 }
 
-export interface MissionControlReviewSummary {
+export interface ProtocolConsoleReviewSummary {
   protocolId: string;
   lineageRootProtocolId: string;
   lineageName: string;
@@ -302,7 +302,7 @@ export interface MissionControlReviewSummary {
   checkInCount: number;
 }
 
-export interface MissionControlEvolution {
+export interface ProtocolConsoleEvolution {
   protocolId: string;
   parentProtocolId: string | null;
   evolvedFromRunId: string | null;
@@ -312,7 +312,7 @@ export interface MissionControlEvolution {
   changes: ProtocolVersionChange[];
 }
 
-export interface MissionControlCheckInSignal {
+export interface ProtocolConsoleCheckInSignal {
   checkInId: string | null;
   protocolRunId: string | null;
   date: string | null;
@@ -321,7 +321,7 @@ export interface MissionControlCheckInSignal {
   hasObservationGap: boolean;
 }
 
-export interface MissionControlObservationSignal {
+export interface ProtocolConsoleObservationSignal {
   type: 'gap' | 'trend_shift' | string;
   severity: 'low' | 'medium' | 'high' | string;
   metric: string | null;

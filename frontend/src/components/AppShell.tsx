@@ -4,6 +4,7 @@ import { Sidebar } from '@/components/Sidebar';
 import { usePathname } from 'next/navigation';
 
 const APP_ROUTE_PREFIXES = [
+  '/protocol-console',
   '/mission-control',
   '/profiles',
   '/compounds',

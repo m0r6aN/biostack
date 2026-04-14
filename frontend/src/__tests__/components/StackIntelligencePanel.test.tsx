@@ -6,37 +6,44 @@ describe('StackIntelligencePanel', () => {
   it('defaults to simple mode with plain-language guidance', () => {
     render(<StackIntelligencePanel />);
 
-    expect(screen.getByText('Your stack is a system')).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: 'Simple' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByText('Protocol preview')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Protocol' })).toHaveAttribute('aria-selected', 'true');
     expect(
       screen.getByText(
-        "BioStack shows how the things you're taking relate to each other — so you can spot overlap, avoid mistakes, and make smarter choices."
+        'Live protocol state with compounds added, guidance structured, overlap surfaced, and the next tracking step ready.'
       )
     ).toBeInTheDocument();
-    expect(screen.getByText('These work on the same thing')).toBeInTheDocument();
-    expect(screen.getByText('You might not need both')).toBeInTheDocument();
-    expect(screen.getByText('Some of these may overlap')).toBeInTheDocument();
-    expect(panelContent.simple.insights).toContain('This is easy to miss when you’re tracking it in your head');
-    expect(panelContent.simple.insights).toContain('Most people don’t realize this until weeks later');
+    expect(screen.getByText('Tracking started')).toBeInTheDocument();
+    expect(screen.getByText('Baseline captured')).toBeInTheDocument();
+    expect(screen.getByText('Day 7 review pending')).toBeInTheDocument();
+    expect(screen.getByText('Typical range:')).toBeInTheDocument();
+    expect(screen.getByText('0.25mg - 4mg weekly')).toBeInTheDocument();
+    expect(screen.getByText('Common pattern:')).toBeInTheDocument();
+    expect(screen.getByText('1-3 doses/week')).toBeInTheDocument();
+    expect(screen.getByText(/Adjusted \(your profile\): more precise/)).toBeInTheDocument();
+    expect(screen.getByText('Shared tissue-repair pathway')).toBeInTheDocument();
+    expect(screen.getByText('Correlation ready')).toBeInTheDocument();
+    expect(screen.getByText('BPC-157 + TB-500 flagged for overlapping tissue-repair pathways.')).toBeInTheDocument();
+    expect(panelContent.simple.insights).toContain('Typical range and common frequency are separated from evidence strength.');
     expect(screen.getByText('BPC-157')).toBeInTheDocument();
     expect(screen.getByText('TB-500')).toBeInTheDocument();
-    expect(screen.getByText('NAD+')).toBeInTheDocument();
-    expect(screen.getByText('MOTS-C')).toBeInTheDocument();
+    expect(screen.getByText('Creatine')).toBeInTheDocument();
+    expect(screen.getByText('Add dose schedule -> track recovery + sleep -> evaluate after 7 days')).toBeInTheDocument();
   });
 
   it('switches to technical mode without changing the panel structure', async () => {
     render(<StackIntelligencePanel />);
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Technical' }));
+    fireEvent.click(screen.getByRole('tab', { name: 'Evidence' }));
 
-    expect(screen.getByText('Shared pathway')).toBeInTheDocument();
-    expect(screen.getByText('Potential redundancy')).toBeInTheDocument();
+    expect(screen.getByText('Moderate evidence')).toBeInTheDocument();
+    expect(screen.getByText('Signal baseline')).toBeInTheDocument();
     expect(
       await screen.findByText(
-        'BioStack surfaces interaction structure, pathway overlap, and compound relationships inside a protocol before mistakes compound.'
+        'BioStack ties protocol inputs to typical ranges, evidence confidence, pathway structure, and observable signal over time.'
       )
     ).toBeInTheDocument();
-    expect(await screen.findByText('Synergy cluster identified')).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: 'Technical' })).toHaveAttribute('aria-selected', 'true');
+    expect(await screen.findByText('2 overlapping pathways detected')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Evidence' })).toHaveAttribute('aria-selected', 'true');
   });
 });

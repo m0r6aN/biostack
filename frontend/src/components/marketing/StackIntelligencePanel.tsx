@@ -9,24 +9,22 @@ const LOOP_DURATION = 7.2;
 export type PanelMode = 'simple' | 'technical';
 
 const modeOptions = [
-  { id: 'simple', label: 'Simple' },
-  { id: 'technical', label: 'Technical' },
+  { id: 'simple', label: 'Protocol' },
+  { id: 'technical', label: 'Evidence' },
 ] as const;
 
-const DEFAULT_COMPOUND_NAMES = ['BPC-157', 'TB-500', 'NAD+', 'MOTS-C'] as const;
+const DEFAULT_COMPOUND_NAMES = ['BPC-157', 'TB-500', 'Creatine'] as const;
 
 const compoundSlots = [
-  { x: 18, y: 18 },
+  { x: 18, y: 20 },
   { x: 76, y: 22 },
-  { x: 24, y: 76 },
-  { x: 74, y: 74 },
+  { x: 42, y: 78 },
 ] as const;
 
 const connections = [
   [0, 1],
-  [0, 3],
+  [0, 2],
   [1, 2],
-  [2, 3],
 ] as const;
 
 export interface StackIntelligencePanelContent {
@@ -42,51 +40,50 @@ export const panelContent: Record<
 > = {
   simple: {
     subtext:
-      "BioStack shows how the things you're taking relate to each other — so you can spot overlap, avoid mistakes, and make smarter choices.",
-    insightLabel: 'What this means',
+      'Live protocol state with compounds added, guidance structured, overlap surfaced, and the next tracking step ready.',
+    insightLabel: 'Detected overlap',
     nodes: [
       {
-        label: 'These work on the same thing',
+        label: 'Shared tissue-repair pathway',
         x: 49,
         y: 44,
-        bubbleClassName: '-translate-x-[18%] -translate-y-[145%]',
+        bubbleClassName: '-translate-x-[22%] -translate-y-[145%]',
       },
       {
-        label: 'You might not need both',
+        label: 'Correlation ready',
         x: 41,
         y: 60,
         bubbleClassName: '-translate-x-[8%] translate-y-4',
       },
     ],
     insights: [
-      'Some of these may overlap',
-      'You could be doubling up without realizing it',
-      'This is easy to miss when you’re tracking it in your head',
-      'Most people don’t realize this until weeks later',
+      'BPC-157 + TB-500 flagged for overlapping tissue-repair pathways.',
+      'Typical range and common frequency are separated from evidence strength.',
+      'Timeline snippet ready: recovery + sleep signal, 7-day review.',
     ],
   },
   technical: {
     subtext:
-      'BioStack surfaces interaction structure, pathway overlap, and compound relationships inside a protocol before mistakes compound.',
+      'BioStack ties protocol inputs to typical ranges, evidence confidence, pathway structure, and observable signal over time.',
     insightLabel: 'Detected signal',
     nodes: [
       {
-        label: 'Shared pathway',
+        label: 'Moderate evidence',
         x: 49,
         y: 44,
         bubbleClassName: '-translate-x-[12%] -translate-y-[140%]',
       },
       {
-        label: 'Potential redundancy',
+        label: 'Signal baseline',
         x: 41,
         y: 60,
         bubbleClassName: '-translate-x-[6%] translate-y-4',
       },
     ],
     insights: [
-      'Synergy cluster identified',
-      '1 potential redundancy',
       '2 overlapping pathways detected',
+      'Evidence tier: Limited -> Moderate',
+      'Recovery, sleep, and joint signal ready for timeline correlation',
     ],
   },
 };
@@ -164,7 +161,7 @@ export function StackIntelligencePanel({
   compoundNames,
   initialMode = 'simple',
   showModeToggle = true,
-  eyebrowLabel = 'Your stack is a system',
+  eyebrowLabel = 'Protocol preview',
   contentOverrides,
 }: StackIntelligencePanelProps) {
   const [mode, setMode] = useState<PanelMode>(initialMode);
@@ -199,7 +196,7 @@ export function StackIntelligencePanel({
         className
       )}
     >
-      <div className="relative overflow-hidden rounded-[15px] bg-[#0B0F14] p-5">
+      <div className="relative overflow-hidden rounded-[15px] bg-[#0B0F14] p-5 sm:p-5">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(16,185,129,0.16),transparent_34%),radial-gradient(circle_at_82%_20%,rgba(59,130,246,0.16),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_42%)]" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
 
@@ -209,7 +206,7 @@ export function StackIntelligencePanel({
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-emerald-300/72">
                 {eyebrowLabel}
               </p>
-              <div className="mt-2 min-h-[68px] max-w-sm">
+              <div className="mt-2 min-h-[68px] max-w-md">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.p
                     key={mode}
@@ -265,7 +262,50 @@ export function StackIntelligencePanel({
             )}
           </div>
 
-          <div className="relative mt-4 h-[204px] sm:h-[220px]">
+          <div className="relative mt-3 flex flex-wrap gap-x-3 gap-y-1 rounded-lg border border-white/8 bg-black/20 px-3 py-2 text-[11px] font-medium text-white/42">
+            <span>Tracking started</span>
+            <span className="text-white/18">/</span>
+            <span>Baseline captured</span>
+            <span className="text-white/18">/</span>
+            <span>Day 7 review pending</span>
+          </div>
+
+          <div className="relative mt-3 grid gap-3 rounded-lg border border-white/8 bg-white/[0.025] p-3 sm:grid-cols-[0.9fr_1.15fr_0.95fr]">
+            {[
+              ['Compounds', '3 active'],
+              ['Evidence tier', mode === 'technical' ? 'Limited -> Moderate' : 'Review ready'],
+              ['Timeline', 'Day 0 baseline'],
+            ].map(([label, value]) => (
+              <div key={label} className="rounded-lg border border-white/7 bg-black/20 px-3 py-2">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">{label}</p>
+                <p className="mt-1 text-sm font-semibold text-white/82">{value}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative mt-3 grid gap-3 md:grid-cols-[0.92fr_1.08fr]">
+            <div className="rounded-lg border border-white/8 bg-black/20 p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200/70">
+                Guidance layer
+              </p>
+              <div className="mt-3 space-y-2 text-sm leading-5 text-white/72">
+                <p><span className="text-white/38">Typical range:</span> 0.25mg - 4mg weekly</p>
+                <p><span className="text-white/38">Common pattern:</span> 1-3 doses/week</p>
+                <p><span className="text-white/38">Evidence tier:</span> Limited -&gt; Moderate</p>
+              </div>
+            </div>
+
+            <div className="rounded-lg border border-emerald-300/14 bg-emerald-500/[0.045] p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200/70">
+                Context layer
+              </p>
+              <p className="mt-3 text-sm leading-6 text-white/66">
+                Adjusted (your profile): more precise with age, weight, goals, and tracking.
+              </p>
+            </div>
+          </div>
+
+          <div className="relative mt-3 h-[142px] sm:h-[156px]">
             <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden="true">
               <defs>
                 <linearGradient id="stack-line-gradient" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
@@ -305,7 +345,7 @@ export function StackIntelligencePanel({
                 animate={reduceMotion ? { opacity: 1, scale: 1, y: 0 } : { opacity: [0, 1, 1, 0], scale: [0.92, 1, 1, 0.98], y: [10, 0, 0, -4] }}
                 transition={reduceMotion ? { duration: 0 } : { duration: LOOP_DURATION, delay: index * 0.1, times: [0, 0.16, 0.82, 1], repeat: Infinity, ease: 'easeOut' }}
               >
-                <div className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-2 text-xs font-medium tracking-[0.12em] text-white shadow-[0_0_18px_rgba(34,197,94,0.14)] backdrop-blur-xl sm:px-4">
+                <div className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-2 text-xs font-medium tracking-[0.08em] text-white shadow-[0_0_18px_rgba(34,197,94,0.14)] backdrop-blur-xl sm:px-4">
                   {compound.name}
                 </div>
               </motion.div>
@@ -352,7 +392,7 @@ export function StackIntelligencePanel({
             ))}
           </div>
 
-          <div className="relative mt-4 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3.5">
+          <div className="relative mt-3 rounded-lg border border-white/8 bg-white/[0.03] px-4 py-3.5">
             <div className="flex items-start gap-3">
               <div className="mt-1 h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_14px_rgba(52,211,153,0.8)]" />
               <div className="min-w-0 flex-1">
@@ -375,6 +415,15 @@ export function StackIntelligencePanel({
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="relative mt-3 rounded-lg border border-emerald-300/14 bg-emerald-500/[0.055] px-4 py-3">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200/72">
+              Suggested next action
+            </p>
+            <p className="mt-1 text-sm leading-6 text-white/76">
+              Add dose schedule -&gt; track recovery + sleep -&gt; evaluate after 7 days
+            </p>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
-import { MissionControlDashboard } from '@/components/dashboard/MissionControlDashboard';
+import { redirect } from 'next/navigation';
 
-export default function MissionControlPage() {
-  return <MissionControlDashboard />;
+export default function LegacyProtocolConsoleRedirectPage() {
+  redirect('/protocol-console');
 }
