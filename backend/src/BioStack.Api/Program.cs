@@ -178,15 +178,22 @@ builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
 builder.Services.AddSingleton<InMemoryMagicLinkDelivery>();
-if (!string.IsNullOrWhiteSpace(builder.Configuration["AzureCommunicationEmail:ConnectionString"]))
+var hasAzureEmail = !string.IsNullOrWhiteSpace(builder.Configuration["AzureCommunicationEmail:ConnectionString"]);
+var hasSmtp = !string.IsNullOrWhiteSpace(builder.Configuration["Smtp:Host"]);
+var isLocalFrontend = Uri.TryCreate(builder.Configuration["FrontendUrl"], UriKind.Absolute, out var frontendUri) &&
+    (frontendUri.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) ||
+     frontendUri.Host.Equals("127.0.0.1", StringComparison.OrdinalIgnoreCase));
+var useInMemoryMagicLinks = builder.Environment.IsDevelopment() || (!hasAzureEmail && !hasSmtp && isLocalFrontend);
+
+if (hasAzureEmail)
 {
     builder.Services.AddSingleton<IMagicLinkDelivery, AzureCommunicationEmailMagicLinkDelivery>();
 }
-else if (!string.IsNullOrWhiteSpace(builder.Configuration["Smtp:Host"]))
+else if (hasSmtp)
 {
     builder.Services.AddSingleton<IMagicLinkDelivery, SmtpMagicLinkDelivery>();
 }
-else if (builder.Environment.IsDevelopment())
+else if (useInMemoryMagicLinks)
 {
     builder.Services.AddSingleton<IMagicLinkDelivery>(sp => sp.GetRequiredService<InMemoryMagicLinkDelivery>());
 }
@@ -252,7 +259,7 @@ app.MapKnowledgeEndpoints();
 app.MapLeadEndpoints();
 app.MapAdminEndpoints();
 
-if (app.Environment.IsDevelopment())
+if (useInMemoryMagicLinks)
     app.MapDevAuthEndpoints();
 
 try
