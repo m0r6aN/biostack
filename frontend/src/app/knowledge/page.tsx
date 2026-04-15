@@ -19,6 +19,7 @@ export default function KnowledgePage() {
   const [overlapResults, setOverlapResults] = useState<InteractionFlag[]>([]);
   const [checkingOverlaps, setCheckingOverlaps] = useState(false);
   const [overlapError, setOverlapError] = useState<string | null>(null);
+  const [hasCheckedOverlaps, setHasCheckedOverlaps] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +52,9 @@ export default function KnowledgePage() {
     try {
       setCheckingOverlaps(true);
       setOverlapError(null);
-      setOverlapResults(await apiClient.checkOverlap(selectedCompounds));
+      const results = await apiClient.checkOverlap(selectedCompounds);
+      setOverlapResults(results);
+      setHasCheckedOverlaps(true);
     } catch {
       setOverlapError('Failed to check overlaps');
     } finally {
@@ -59,10 +62,13 @@ export default function KnowledgePage() {
     }
   };
 
-  const toggleCompound = (name: string) =>
+  const toggleCompound = (name: string) => {
     setSelectedCompounds(prev =>
       prev.includes(name) ? prev.filter(c => c !== name) : [...prev, name]
     );
+    setHasCheckedOverlaps(false);
+    setOverlapResults([]);
+  };
 
   return (
     <div className="w-full min-h-screen">
@@ -185,7 +191,11 @@ export default function KnowledgePage() {
               </p>
               {selectedCompounds.length > 0 && (
                 <button
-                  onClick={() => setSelectedCompounds([])}
+                  onClick={() => {
+                    setSelectedCompounds([]);
+                    setHasCheckedOverlaps(false);
+                    setOverlapResults([]);
+                  }}
                   className="text-xs text-white/30 hover:text-white/60 transition-colors"
                 >
                   Clear
@@ -209,9 +219,9 @@ export default function KnowledgePage() {
 
             {checkingOverlaps && <div className="mt-4"><LoadingState /></div>}
 
-            {overlapResults.length >= 0 && !checkingOverlaps && selectedCompounds.length > 0 && (
+            {hasCheckedOverlaps && !checkingOverlaps && selectedCompounds.length >= 2 && (
               <div className="mt-5">
-                <OverlapResults flags={overlapResults} />
+                <OverlapResults flags={overlapResults} inputCount={selectedCompounds.length} />
               </div>
             )}
           </div>
