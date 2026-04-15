@@ -11,18 +11,33 @@ import { TrendChart } from '@/components/checkins/TrendChart';
 import { apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
 import { buildDay7Review } from '@/lib/day7Review';
-import { CheckIn, CreateCheckInRequest, GoalDefinition } from '@/lib/types';
+import { getEarnedSuggestion } from '@/lib/earnedSuggestions';
+import { CheckIn, CompoundRecord, CreateCheckInRequest, GoalDefinition, InteractionFlag } from '@/lib/types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export default function CheckInsPage() {
   const { currentProfileId } = useProfile();
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
+  const [activeCompounds, setActiveCompounds] = useState<CompoundRecord[]>([]);
+  const [overlapFlags, setOverlapFlags] = useState<InteractionFlag[]>([]);
   const [profileGoals, setProfileGoals] = useState<GoalDefinition[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const day7Review = useMemo(() => buildDay7Review(checkIns), [checkIns]);
+  const earnedSuggestion = useMemo(
+    () =>
+      getEarnedSuggestion({
+        day7Review,
+        overlaps: overlapFlags,
+        stackShape: {
+          activeInputCount: activeCompounds.length,
+          categoryCounts: getCategoryCounts(activeCompounds),
+        },
+      }),
+    [activeCompounds, day7Review, overlapFlags]
+  );
 
   const loadCheckIns = useCallback(async () => {
     if (!currentProfileId) {
@@ -31,12 +46,20 @@ export default function CheckInsPage() {
 
     try {
       setLoading(true);
-      const [checkInData, goalsData] = await Promise.all([
+      const [checkInData, goalsData, compoundData] = await Promise.all([
         apiClient.getCheckIns(currentProfileId),
-        apiClient.getProfileGoals(currentProfileId)
+        apiClient.getProfileGoals(currentProfileId),
+        apiClient.getCompounds(currentProfileId),
       ]);
+      const currentActiveCompounds = compoundData.filter((compound) => compound.status === 'Active');
+      const currentOverlapFlags = currentActiveCompounds.length >= 2
+        ? await apiClient.checkOverlap(currentActiveCompounds.map((compound) => compound.name)).catch(() => [])
+        : [];
+
       setCheckIns(checkInData);
       setProfileGoals(goalsData);
+      setActiveCompounds(currentActiveCompounds);
+      setOverlapFlags(currentOverlapFlags);
     } catch {
       setError('Failed to load check-ins');
     } finally {
@@ -142,7 +165,7 @@ export default function CheckInsPage() {
           />
         ) : (
           <>
-            <Day7ReviewCard review={day7Review} />
+            <Day7ReviewCard review={day7Review} suggestion={earnedSuggestion} />
 
             {/* Trend Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -178,4 +201,17 @@ export default function CheckInsPage() {
       </div>
     </div>
   );
+}
+
+function getCategoryCounts(compounds: CompoundRecord[]) {
+  return compounds.reduce<Record<string, number>>((counts, compound) => {
+    const category = compound.category.trim().toLowerCase();
+
+    if (!category) {
+      return counts;
+    }
+
+    counts[category] = (counts[category] ?? 0) + 1;
+    return counts;
+  }, {});
 }

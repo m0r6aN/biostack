@@ -1,9 +1,13 @@
 'use client';
 
+import { SuggestionCard } from '@/components/suggestions/SuggestionCard';
+import type { EarnedSuggestion } from '@/lib/earnedSuggestions';
 import { Day7Review, Day7ReviewTrend } from '@/lib/types';
+import { useMemo, useState } from 'react';
 
 interface Day7ReviewCardProps {
   review: Day7Review;
+  suggestion?: EarnedSuggestion | null;
 }
 
 const trendLabels: Record<Day7ReviewTrend, string> = {
@@ -19,7 +23,14 @@ const nextStepLabels: Record<Day7Review['nextStep'], string> = {
   track_longer: 'Track longer before drawing a conclusion.',
 };
 
-export function Day7ReviewCard({ review }: Day7ReviewCardProps) {
+export function Day7ReviewCard({ review, suggestion = null }: Day7ReviewCardProps) {
+  const suggestionKey = useMemo(
+    () => (suggestion ? `${suggestion.type}:${suggestion.reasoning}` : null),
+    [suggestion]
+  );
+  const [dismissedSuggestionKey, setDismissedSuggestionKey] = useState<string | null>(null);
+  const shouldShowSuggestion = Boolean(suggestion && suggestionKey !== dismissedSuggestionKey);
+
   if (!review.isEarned) {
     return (
       <section
@@ -75,6 +86,12 @@ export function Day7ReviewCard({ review }: Day7ReviewCardProps) {
       </div>
 
       <p className="mt-4 text-xs leading-relaxed text-white/35">{review.confidenceNote}</p>
+
+      {suggestion && shouldShowSuggestion && (
+        <div className="mt-5">
+          <SuggestionCard suggestion={suggestion} onDismiss={() => setDismissedSuggestionKey(suggestionKey)} />
+        </div>
+      )}
     </section>
   );
 }
