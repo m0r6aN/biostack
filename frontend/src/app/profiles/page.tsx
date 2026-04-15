@@ -15,10 +15,11 @@ import {
   type OnboardingPreview,
 } from '@/lib/onboardingPreview';
 import { useSettings } from '@/lib/settings';
+import { getProfilesContinuationStatuses } from '@/lib/systemStatus';
 import { CreateProfileRequest, GoalDefinition } from '@/lib/types';
 import { formatDate, formatWeight } from '@/lib/utils';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function ProfilesPage() {
   const { profiles, setProfiles, setCurrentProfileId } = useProfile();
@@ -29,40 +30,24 @@ export default function ProfilesPage() {
   const [onboardingPreview, setOnboardingPreview] = useState<OnboardingPreview>(emptyOnboardingPreview);
   const [profileGoalMap, setProfileGoalMap] = useState<Record<string, GoalDefinition[]>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const continuationStatuses = getProfilesContinuationStatuses(onboardingPreview.compounds.length > 0);
 
-  useEffect(() => {
-    loadProfiles();
-    setOnboardingPreview(readOnboardingPreview());
-  }, []);
-
-  useEffect(() => {
-    // Load goals for each profile (for card display)
-    if (profiles.length === 0) return;
-    const loadGoals = async () => {
-      const map: Record<string, GoalDefinition[]> = {};
-      for (const p of profiles) {
-        try {
-          map[p.id] = await apiClient.getProfileGoals(p.id);
-        } catch {
-          map[p.id] = [];
-        }
-      }
-      setProfileGoalMap(map);
-    };
-    loadGoals();
-  }, [profiles]);
-
-  const loadProfiles = async () => {
+  const loadProfiles = useCallback(async () => {
     try {
       setLoading(true);
       const data = await apiClient.getProfiles();
       setProfiles(data);
-    } catch (err) {
+    } catch {
       setError('Failed to load profiles');
     } finally {
       setLoading(false);
     }
-  };
+  }, [setProfiles]);
+
+  useEffect(() => {
+    loadProfiles();
+    setOnboardingPreview(readOnboardingPreview());
+  }, [loadProfiles]);
 
   const handleCreateProfile = async (data: CreateProfileRequest & { selectedGoalIds?: string[] }) => {
     try {
@@ -95,7 +80,7 @@ export default function ProfilesPage() {
       clearOnboardingPreview();
       setOnboardingPreview(emptyOnboardingPreview());
       setShowForm(false);
-    } catch (err) {
+    } catch {
       setError('Failed to create profile');
     } finally {
       setIsSubmitting(false);
@@ -113,10 +98,27 @@ export default function ProfilesPage() {
     try {
       await apiClient.deleteProfile(id);
       setProfiles(profiles.filter(p => p.id !== id));
-    } catch (err) {
+    } catch {
       alert('Failed to delete profile');
     }
   };
+
+  useEffect(() => {
+    // Load goals for each profile (for card display)
+    if (profiles.length === 0) return;
+    const loadGoals = async () => {
+      const map: Record<string, GoalDefinition[]> = {};
+      for (const p of profiles) {
+        try {
+          map[p.id] = await apiClient.getProfileGoals(p.id);
+        } catch {
+          map[p.id] = [];
+        }
+      }
+      setProfileGoalMap(map);
+    };
+    loadGoals();
+  }, [profiles]);
 
   if (error) {
     return (
@@ -147,11 +149,11 @@ export default function ProfilesPage() {
         {onboardingPreview.compounds.length > 0 && !showForm && (
           <div className="mb-6 rounded-lg border border-emerald-300/15 bg-emerald-500/[0.06] p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200/75">
-              Ready To Continue
+              {continuationStatuses?.recovered.eyebrow}
             </p>
-            <h2 className="mt-2 text-xl font-semibold text-white">Your protocol inputs are saved.</h2>
+            <h2 className="mt-2 text-xl font-semibold text-white">{continuationStatuses?.recovered.title}</h2>
             <p className="mt-2 text-sm leading-6 text-white/58">
-              Create a profile and BioStack will attach them automatically.
+              {continuationStatuses?.profile.title}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {onboardingPreview.compounds.map((compound) => (
@@ -168,7 +170,7 @@ export default function ProfilesPage() {
               onClick={() => setShowForm(true)}
               className="mt-5 rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300"
             >
-              Create Profile & Attach Inputs
+              Continue Profile Setup
             </button>
           </div>
         )}
@@ -190,11 +192,11 @@ export default function ProfilesPage() {
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300/70">
-                  One Move Left
+                  {continuationStatuses?.profile.eyebrow}
                 </p>
-                <h3 className="mt-3 text-2xl font-semibold text-white">Name the profile. Keep the protocol.</h3>
+                <h3 className="mt-3 text-2xl font-semibold text-white">{continuationStatuses?.profile.title}</h3>
                 <p className="mt-3 max-w-xl text-sm leading-6 text-white/58">
-                  Your first inputs are already staged. The profile connects them to goals, tracking, and future check-ins.
+                  {continuationStatuses?.persistence.title}
                 </p>
               </div>
               <button
@@ -202,15 +204,15 @@ export default function ProfilesPage() {
                 onClick={() => setShowForm(true)}
                 className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300"
               >
-                Create Profile
+                Continue Profile Setup
               </button>
             </div>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
               {[
-                ['Saved inputs', onboardingPreview.compounds.join(', ')],
-                ['Next unlock', 'Profile context'],
-                ['After that', 'Protocol workspace'],
+                ['Recovered inputs', onboardingPreview.compounds.join(', ')],
+                ['Profile state', continuationStatuses?.profile.title ?? 'Pending'],
+                ['Persistence', continuationStatuses?.persistence.title ?? 'Ready'],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-lg border border-white/8 bg-black/20 p-4">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">{label}</p>

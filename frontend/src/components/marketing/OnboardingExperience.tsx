@@ -8,6 +8,7 @@ import {
   getOnboardingRewardContent,
   getRelationshipCandidatesFromOverlaps,
 } from '@/lib/onboardingIntelligence';
+import { getOnboardingSystemStatus } from '@/lib/systemStatus';
 import {
   readOnboardingPreview,
   writeOnboardingPreview,
@@ -246,6 +247,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
       }),
     [firstKnowledgeEntry, intelligence, isCheckingOverlaps, relationshipCandidates, selectedCompounds]
   );
+  const systemStatus = getOnboardingSystemStatus(intelligence);
 
   function addCompound(name: string) {
     const normalized = normalizeName(name);
@@ -575,16 +577,18 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
 
             <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.28)]">
               <div className="flex flex-wrap items-center gap-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-300/72">Your first aha</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-300/72">
+                  {systemStatus.eyebrow ?? 'System State'}
+                </p>
                 <span className="rounded-full border border-emerald-300/20 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-100/80">
-                  Live preview
+                  {systemStatus.title}
                 </span>
               </div>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">This is the point.</h2>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">{systemStatus.title}</h2>
               <p className="mt-4 text-base leading-7 text-white/60">
                 {intelligence.stage === 'context'
-                  ? 'Context is established. Relationship analysis remains locked.'
-                  : 'Relationship analysis is tied to selected inputs.'}
+                  ? 'Relationship analysis unavailable.'
+                  : systemStatus.subtitle ?? 'Selected inputs staged.'}
               </p>
 
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -603,11 +607,11 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 </div>
 
                 <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/35">Why this matters</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/35">Current state</p>
                   <p className="mt-3 text-sm leading-7 text-white/58">
                     {intelligence.stage === 'context'
-                      ? 'One input unlocks context only.'
-                      : 'No forced claims. If no relationship is detected, BioStack says that too.'}
+                      ? 'Relationship analysis locked.'
+                      : systemStatus.subtitle ?? systemStatus.title}
                   </p>
                 </div>
               </div>

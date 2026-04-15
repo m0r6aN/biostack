@@ -94,8 +94,10 @@ describe('OnboardingExperience', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Add' }));
     fireEvent.click(screen.getByRole('button', { name: 'Add to My Protocol' }));
 
-    expect(await screen.findByText('Context is established. Relationship analysis remains locked.')).toBeInTheDocument();
-    expect(screen.getByText('Relationship analysis unavailable - requires additional inputs.')).toBeInTheDocument();
+    expect(await screen.findAllByText('Context established.')).not.toHaveLength(0);
+    expect(screen.getAllByText('Relationship analysis unavailable.').length).toBeGreaterThan(0);
+    expect(screen.queryByText('This is the point.')).not.toBeInTheDocument();
+    expect(screen.queryByText('Why this matters')).not.toBeInTheDocument();
     expect(screen.queryByText('Relationship detected.')).not.toBeInTheDocument();
     expect(screen.queryByText('Recovery context: Both were selected by the user, so this is a real input check.')).not.toBeInTheDocument();
     expect(apiClient.checkOverlap).not.toHaveBeenCalled();
@@ -121,9 +123,9 @@ describe('OnboardingExperience', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Add to My Protocol' }));
 
-    expect(await screen.findByText('Relationship detected.')).toBeInTheDocument();
+    expect(await screen.findAllByText('Relationship detected.')).not.toHaveLength(0);
     expect(screen.getByText('Recovery context: Both were selected by the user, so this is a real input check.')).toBeInTheDocument();
-    expect(screen.getByText('Only one earned relationship outcome is shown.')).toBeInTheDocument();
+    expect(screen.getByText('One earned relationship outcome emitted.')).toBeInTheDocument();
     expect(screen.getAllByText('BPC-157').length).toBeGreaterThan(0);
     expect(screen.getAllByText('NAD+').length).toBeGreaterThan(0);
 

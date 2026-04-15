@@ -60,17 +60,17 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        {/* Personalized Guidance Section */}
+        {/* Profile context section */}
         {currentProfile && (
           <div className="p-4 rounded-xl bg-emerald-500/[0.04] border border-emerald-500/10 space-y-3">
             <div className="flex items-center gap-2">
-              <span className="text-emerald-400 text-xs">🧬</span>
-              <p className="text-xs font-semibold text-emerald-400/80 uppercase tracking-wider">Personalized Guidance</p>
+              <span className="text-emerald-400 text-xs" aria-hidden="true">•</span>
+              <p className="text-xs font-semibold text-emerald-400/80 uppercase tracking-wider">Profile Context</p>
             </div>
             
             <div className="grid grid-cols-2 gap-4">
               <div className="text-xs">
-                <p className="text-white/30 uppercase tracking-tighter mb-1">Based on Profile</p>
+                <p className="text-white/30 uppercase tracking-tighter mb-1">Profile Reference</p>
                 <p className="text-white/60">
                   {currentProfile.displayName} ({currentProfile.sex}, {currentProfile.age || '??'}y, {formatWeight(currentProfile.weight, settings.weightUnit)})
                 </p>
@@ -78,18 +78,25 @@ export function CompoundIntelligenceCard({
               
               {entry.recommendedDosage && (
                 <div className="text-xs">
-                  <p className="text-white/30 uppercase tracking-tighter mb-1">Personalized Adjustments</p>
+                  <p className="text-white/30 uppercase tracking-tighter mb-1">Published Range Context</p>
                   <p className="text-emerald-300/80 italic">
-                    {currentProfile.weight > 90 ? 'Higher end of dosage range recommended.' : 'Standard dosage range applicable.'}
+                    {currentProfile.weight > 90
+                      ? 'Profile context may warrant closer review of published ranges.'
+                      : 'General published range referenced.'}
                   </p>
                 </div>
               )}
             </div>
 
+            {entry.recommendedDosage && (
+              <p className="text-[11px] text-emerald-300/50 leading-relaxed border-t border-emerald-500/5 pt-2">
+                Reference only. Published ranges are not BioStack recommendations.
+              </p>
+            )}
+
             {entry.canonicalName === 'MOTS-C' && currentProfile.age && currentProfile.age > 40 && (
               <p className="text-[11px] text-emerald-300/50 leading-relaxed border-t border-emerald-500/5 pt-2">
-                * Note: As a mitochondrial peptide, MOTS-C response can vary significantly with biological age. 
-                Focus on synergistic NAD+ support as indicated in your profile goals.
+                Note: Published MOTS-C context can vary with biological age. Review source references independently.
               </p>
             )}
           </div>
@@ -137,14 +144,14 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        {/* Protocol Guidance */}
+        {/* Reference data */}
         {(entry.recommendedDosage || entry.frequency || entry.preferredTimeOfDay || entry.weeklyDosageSchedule.length > 0) && (
           <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 border-b border-white/5 pb-1">Protocol Guidance</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/40 border-b border-white/5 pb-1">Reference Data</p>
             <div className="grid grid-cols-3 gap-2 text-center">
               {entry.recommendedDosage && (
                 <div className="p-2 rounded bg-white/5">
-                  <p className="text-[10px] text-white/40 uppercase">Dosage</p>
+                  <p className="text-[10px] text-white/40 uppercase">Published Range</p>
                   <p className="text-sm text-white font-medium">{entry.recommendedDosage}</p>
                 </div>
               )}
@@ -163,7 +170,7 @@ export function CompoundIntelligenceCard({
             </div>
             {entry.weeklyDosageSchedule.length > 0 && (
               <div className="text-sm text-white/60 bg-white/5 p-3 rounded-lg">
-                <p className="text-[10px] uppercase text-white/40 mb-2">Weekly Schedule</p>
+                <p className="text-[10px] uppercase text-white/40 mb-2">Published Schedule Reference</p>
                 <ul className="space-y-1">
                   {entry.weeklyDosageSchedule.map((step, i) => (
                     <li key={i} className="flex items-center gap-2">
@@ -173,6 +180,11 @@ export function CompoundIntelligenceCard({
                   ))}
                 </ul>
               </div>
+            )}
+            {entry.recommendedDosage && (
+              <p className="text-xs leading-5 text-white/42">
+                Published ranges are reference data only and are not dosing instructions.
+              </p>
             )}
           </div>
         )}

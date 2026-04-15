@@ -5,6 +5,7 @@ import {
   getOnboardingPanelContent,
   type OnboardingRelationshipCandidate,
 } from '@/lib/onboardingIntelligence';
+import { getOnboardingSystemStatus, type SystemStatusTone } from '@/lib/systemStatus';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
@@ -118,6 +119,18 @@ function relationshipTone(type: StackIntelligencePanelContent['relationshipGroup
   return 'border-sky-300/20 bg-sky-300/[0.055] text-sky-100/85';
 }
 
+function statusTone(tone: SystemStatusTone = 'neutral') {
+  if (tone === 'positive') {
+    return 'border-emerald-300/20 bg-emerald-500/10 text-emerald-100/85';
+  }
+
+  if (tone === 'dim') {
+    return 'border-white/10 bg-white/[0.035] text-white/55';
+  }
+
+  return 'border-sky-300/18 bg-sky-400/[0.08] text-sky-100/78';
+}
+
 export function StackIntelligencePanel({
   className,
   compoundNames,
@@ -136,6 +149,7 @@ export function StackIntelligencePanel({
     () => getOnboardingIntelligenceState(compoundNames ?? [], relationshipCandidates),
     [compoundNames, relationshipCandidates]
   );
+  const statusDescriptor = getOnboardingSystemStatus(intelligence);
   const helperContent = useMemo(
     () =>
       getOnboardingPanelContent(intelligence, compoundNames ?? [], {
@@ -186,8 +200,19 @@ export function StackIntelligencePanel({
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-emerald-300/72">
-                {eyebrowLabel}
+                {statusDescriptor.eyebrow ?? eyebrowLabel}
               </p>
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                <span
+                  className={cn(
+                    'inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold',
+                    statusTone(statusDescriptor.tone)
+                  )}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-current" />
+                  {statusDescriptor.title}
+                </span>
+              </div>
               <div className="mt-2 max-w-md">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.p
