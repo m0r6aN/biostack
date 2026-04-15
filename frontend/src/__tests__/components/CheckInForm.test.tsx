@@ -98,4 +98,48 @@ describe('CheckInForm', () => {
     render(<CheckInForm personId="p1" onSubmit={vi.fn()} isLoading />);
     expect(screen.getByRole('button', { name: /synchronizing/i })).toBeDisabled();
   });
+
+  describe('quick mode', () => {
+    beforeEach(() => {
+      mockUseSettings.mockReturnValue({ settings: { weightUnit: 'metric' } });
+    });
+
+    it('renders only the low-friction check-in fields', () => {
+      render(<CheckInForm personId="p1" onSubmit={vi.fn()} mode="quick" />);
+
+      expect(screen.getByText('Sleep')).toBeInTheDocument();
+      expect(screen.getByText('Energy')).toBeInTheDocument();
+      expect(screen.getByText('Recovery')).toBeInTheDocument();
+      expect(screen.getByText(/notes optional/i)).toBeInTheDocument();
+      expect(screen.queryByText('Appetite')).not.toBeInTheDocument();
+      expect(screen.queryByText('Weight')).not.toBeInTheDocument();
+      expect(screen.queryByText(/goal-specific metrics/i)).not.toBeInTheDocument();
+    });
+
+    it('submits using existing check-in contract defaults without optional metrics', async () => {
+      const onSubmit = vi.fn().mockResolvedValue(undefined);
+      render(<CheckInForm personId="p1" onSubmit={onSubmit} mode="quick" />);
+
+      await userEvent.type(screen.getByPlaceholderText(/anything worth remembering/i), 'Felt steady.');
+      await userEvent.click(screen.getByRole('button', { name: /save quick check-in/i }));
+
+      await waitFor(() => {
+        expect(onSubmit).toHaveBeenCalled();
+        const submitted = onSubmit.mock.calls[0][0];
+        expect(submitted.sleepQuality).toBe(7);
+        expect(submitted.energy).toBe(7);
+        expect(submitted.recovery).toBe(7);
+        expect(submitted.appetite).toBe(5);
+        expect(submitted.weight).toBe(0);
+        expect(submitted.notes).toBe('Felt steady.');
+        expect(submitted.focus).toBeUndefined();
+        expect(submitted.sideEffects).toBe('');
+      });
+    });
+
+    it('disables the quick submit button when loading', () => {
+      render(<CheckInForm personId="p1" onSubmit={vi.fn()} mode="quick" isLoading />);
+      expect(screen.getByRole('button', { name: /saving/i })).toBeDisabled();
+    });
+  });
 });

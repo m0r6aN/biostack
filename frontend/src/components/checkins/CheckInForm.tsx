@@ -11,6 +11,7 @@ interface CheckInFormProps {
   profileGoals?: GoalDefinition[];
   onSubmit: (data: CreateCheckInRequest) => Promise<void>;
   isLoading?: boolean;
+  mode?: 'full' | 'quick';
 }
 
 function RatingSlider({ label, value, onChange, invert = false }: { label: string; value: number; onChange: (v: number) => void, invert?: boolean }) {
@@ -45,9 +46,9 @@ function RatingSlider({ label, value, onChange, invert = false }: { label: strin
   );
 }
 
-export function CheckInForm({ personId, profileGoals = [], onSubmit, isLoading }: CheckInFormProps) {
+export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'full' }: CheckInFormProps) {
   const { settings } = useSettings();
-  const [formData, setFormData] = useState({
+  const defaultFormData = () => ({
     date: new Date().toISOString().split('T')[0],
     weight: 0,
     sleepQuality: 7,
@@ -68,6 +69,7 @@ export function CheckInForm({ personId, profileGoals = [], onSubmit, isLoading }
     mood: 'neutral',
     notes: '',
   });
+  const [formData, setFormData] = useState(defaultFormData);
 
   const [newPhotoUrl, setNewPhotoUrl] = useState('');
 
@@ -80,7 +82,9 @@ export function CheckInForm({ personId, profileGoals = [], onSubmit, isLoading }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const weightKg = settings.weightUnit === 'imperial'
+      const weightKg = mode === 'quick'
+        ? 0
+        : settings.weightUnit === 'imperial'
         ? lbsToKg(formData.weight)
         : formData.weight;
 
@@ -98,29 +102,25 @@ export function CheckInForm({ personId, profileGoals = [], onSubmit, isLoading }
         eyesight: showMetric('longevity') ? formData.eyesight : undefined,
       };
 
+      if (mode === 'quick') {
+        submissionData.appetite = 5;
+        submissionData.focus = undefined;
+        submissionData.thoughtClarity = undefined;
+        submissionData.skinQuality = undefined;
+        submissionData.digestiveHealth = undefined;
+        submissionData.strength = undefined;
+        submissionData.endurance = undefined;
+        submissionData.jointPain = undefined;
+        submissionData.eyesight = undefined;
+        submissionData.sideEffects = '';
+        submissionData.photoUrls = [];
+        submissionData.giSymptoms = '';
+        submissionData.mood = '';
+      }
+
       await onSubmit(submissionData);
       
-      setFormData({
-        date: new Date().toISOString().split('T')[0],
-        weight: 0,
-        sleepQuality: 7,
-        energy: 7,
-        appetite: 5,
-        recovery: 7,
-        focus: 7,
-        thoughtClarity: 7,
-        skinQuality: 7,
-        digestiveHealth: 7,
-        strength: 5,
-        endurance: 5,
-        jointPain: 0,
-        eyesight: 7,
-        sideEffects: '',
-        photoUrls: [],
-        giSymptoms: 'none',
-        mood: 'neutral',
-        notes: '',
-      });
+      setFormData(defaultFormData());
     } catch (err) {
       console.error('Form submission error:', err);
     }
@@ -136,6 +136,49 @@ export function CheckInForm({ personId, profileGoals = [], onSubmit, isLoading }
   const removePhotoUrl = (url: string) => {
     setFormData({ ...formData, photoUrls: formData.photoUrls.filter(u => u !== url) });
   };
+
+  if (mode === 'quick') {
+    return (
+      <form onSubmit={handleSubmit} className="space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-5">
+          <div>
+            <label className="block text-xs font-medium text-white/40 mb-2 uppercase">Date</label>
+            <input
+              type="date"
+              value={formData.date}
+              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+              required
+              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-lg text-white focus:outline-none focus:border-emerald-500/50 transition-all"
+            />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <RatingSlider label="Sleep" value={formData.sleepQuality} onChange={(v) => setFormData({ ...formData, sleepQuality: v })} />
+            <RatingSlider label="Energy" value={formData.energy} onChange={(v) => setFormData({ ...formData, energy: v })} />
+            <RatingSlider label="Recovery" value={formData.recovery} onChange={(v) => setFormData({ ...formData, recovery: v })} />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-xs font-medium text-white/40 mb-2 uppercase">Notes optional</label>
+          <textarea
+            value={formData.notes}
+            onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+            placeholder="Anything worth remembering?"
+            rows={3}
+            className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-lg text-white placeholder:text-white/20 focus:outline-none focus:border-emerald-500/50 transition-all text-sm"
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full px-5 py-4 bg-emerald-500 hover:bg-emerald-400 disabled:bg-white/5 disabled:text-white/10 text-slate-950 rounded-lg font-black text-base shadow-[0_12px_40px_rgb(16,185,129,0.2)] hover:-translate-y-0.5 active:translate-y-0 transition-all"
+        >
+          {isLoading ? 'Saving...' : 'Save quick check-in'}
+        </button>
+      </form>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">

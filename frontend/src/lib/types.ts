@@ -102,6 +102,26 @@ export interface CreateCheckInRequest {
   notes?: string;
 }
 
+export type Day7ReviewTrend =
+  | 'improving'
+  | 'flat'
+  | 'declining'
+  | 'insufficient_data';
+
+export interface Day7Review {
+  isEarned: boolean;
+  coveredDays: number;
+  requiredDays: number;
+  sleepTrend: Day7ReviewTrend;
+  energyTrend: Day7ReviewTrend;
+  recoveryTrend: Day7ReviewTrend;
+  trendSummary: string;
+  signalStrength: 'weak' | 'moderate' | 'clear';
+  alignmentWithExpected: 'yes' | 'no' | 'unclear';
+  nextStep: 'continue' | 'reassess' | 'track_longer';
+  confidenceNote: string;
+}
+
 export interface ProtocolPhase {
   id: string;
   personId: string;
