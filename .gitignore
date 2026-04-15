@@ -1,6 +1,7 @@
 # Comprehensive .gitignore for BioStack Mission Control (.NET + Next.js monorepo)
 # See https://git-scm.com/docs/gitignore
 
+output/
 *.pbd
 *.CLAUDE
 *.dll

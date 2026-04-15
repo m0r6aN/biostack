@@ -5,9 +5,14 @@ import { SafetyDisclaimer } from '../SafetyDisclaimer';
 
 interface OverlapResultsProps {
   flags: InteractionFlag[];
+  inputCount: number;
 }
 
-export function OverlapResults({ flags }: OverlapResultsProps) {
+export function OverlapResults({ flags, inputCount }: OverlapResultsProps) {
+  if (inputCount < 2) {
+    return null;
+  }
+
   const recommendationTags = getContextTagsForOverlapFlags(flags);
   const recommendations = getRecommendationsForOverlapFlags(flags, 3, 'overlap-results');
 

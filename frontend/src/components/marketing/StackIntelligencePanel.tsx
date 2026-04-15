@@ -1,5 +1,10 @@
 'use client';
 
+import {
+  getOnboardingIntelligenceState,
+  getOnboardingPanelContent,
+  type OnboardingRelationshipCandidate,
+} from '@/lib/onboardingIntelligence';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
@@ -12,8 +17,6 @@ const modeOptions = [
   { id: 'simple', label: 'Protocol' },
   { id: 'technical', label: 'Evidence' },
 ] as const;
-
-const DEFAULT_COMPOUND_NAMES = ['BPC-157', 'TB-500', 'Creatine'] as const;
 
 export interface StackIntelligencePanelContent {
   subtext: string;
@@ -32,77 +35,26 @@ export interface StackIntelligencePanelContent {
 
 export const panelContent: Record<PanelMode, StackIntelligencePanelContent> = {
   simple: {
-    subtext:
-      'See how your compounds relate - where they overlap, where they support each other, and what to do next.',
-    insightLabel: 'Relationship summary: overlap + synergy',
-    summary:
-      'BPC-157 and TB-500 share tissue-repair focus, and are often used together for recovery support.',
-    relationshipGroups: [
-      {
-        type: 'Overlap',
-        label: 'BPC-157 + TB-500',
-        detail: 'Shared tissue-repair focus',
-      },
-      {
-        type: 'Synergy',
-        label: 'BPC-157 + TB-500',
-        detail: 'Common recovery stack pairing',
-      },
-      {
-        type: 'Support',
-        label: 'Creatine',
-        detail: 'Recovery and performance baseline',
-      },
-    ],
-    insights: [
-      'Overlap does not automatically mean bad. It means the shared role is worth understanding.',
-      'Synergy shows where compounds may make more sense together than alone.',
-      'Support compounds can help the goal without duplicating the same pathway.',
-    ],
+    subtext: 'No inputs detected. Add an item to establish context.',
+    insightLabel: 'No inputs detected',
+    summary: 'Add an item to establish context.',
+    relationshipGroups: [],
+    insights: ['No intelligence is shown until an input exists.'],
   },
   technical: {
-    subtext:
-      'BioStack ties your inputs to relationship type, evidence confidence, pathway structure, and observable signal over time.',
-    insightLabel: 'Relationship summary: overlap + support',
-    summary:
-      'The same pair can share a pathway and still be used together when the recovery goal calls for that relationship.',
-    relationshipGroups: [
-      {
-        type: 'Overlap',
-        label: 'BPC-157 + TB-500',
-        detail: 'Tissue-repair pathway alignment',
-      },
-      {
-        type: 'Synergy',
-        label: 'BPC-157 + TB-500',
-        detail: 'Recovery context may justify pairing',
-      },
-      {
-        type: 'Support',
-        label: 'Creatine',
-        detail: 'Non-overlapping baseline signal',
-      },
-    ],
-    insights: [
-      'Evidence tier: Limited -> Moderate',
-      'Recovery, sleep, and joint signal ready for timeline correlation',
-      'Next step: track whether the pairing matches your goal over time',
-    ],
+    subtext: 'No inputs detected. Evidence context unavailable.',
+    insightLabel: 'No inputs detected',
+    summary: 'Add an item to establish evidence context.',
+    relationshipGroups: [],
+    insights: ['No evidence context is shown until an input exists.'],
   },
 };
 
 function buildCompounds(compoundNames?: string[]) {
-  if (compoundNames === undefined) {
-    return DEFAULT_COMPOUND_NAMES.map((name, index) => ({
-      id: `compound-${index}`,
-      name,
-    }));
-  }
-
   const orderedNames: string[] = [];
   const seen = new Set<string>();
 
-  for (const name of compoundNames) {
+  for (const name of compoundNames ?? []) {
     const trimmed = name.trim();
     if (!trimmed) {
       continue;
@@ -115,13 +67,9 @@ function buildCompounds(compoundNames?: string[]) {
 
     seen.add(key);
     orderedNames.push(trimmed);
-
-    if (orderedNames.length === DEFAULT_COMPOUND_NAMES.length) {
-      break;
-    }
   }
 
-  return orderedNames.slice(0, DEFAULT_COMPOUND_NAMES.length).map((name, index) => ({
+  return orderedNames.map((name, index) => ({
     id: `compound-${index}`,
     name,
   }));
@@ -134,6 +82,8 @@ interface StackIntelligencePanelProps {
   showModeToggle?: boolean;
   eyebrowLabel?: string;
   contentOverrides?: Partial<Record<PanelMode, Partial<StackIntelligencePanelContent>>>;
+  relationshipCandidates?: OnboardingRelationshipCandidate[];
+  isCheckingRelationships?: boolean;
 }
 
 function mergePanelContent(
@@ -175,24 +125,38 @@ export function StackIntelligencePanel({
   showModeToggle = true,
   eyebrowLabel = 'Protocol preview',
   contentOverrides,
+  relationshipCandidates = [],
+  isCheckingRelationships = false,
 }: StackIntelligencePanelProps) {
   const [mode, setMode] = useState<PanelMode>(initialMode);
   const [insightIndex, setInsightIndex] = useState(0);
   const reduceMotion = useReducedMotion();
   const displayedCompounds = useMemo(() => buildCompounds(compoundNames), [compoundNames]);
+  const intelligence = useMemo(
+    () => getOnboardingIntelligenceState(compoundNames ?? [], relationshipCandidates),
+    [compoundNames, relationshipCandidates]
+  );
+  const helperContent = useMemo(
+    () =>
+      getOnboardingPanelContent(intelligence, compoundNames ?? [], {
+        relationshipCandidates,
+        isCheckingRelationships,
+      }),
+    [compoundNames, intelligence, isCheckingRelationships, relationshipCandidates]
+  );
   const mergedContent = useMemo(
     () => ({
-      simple: mergePanelContent(panelContent.simple, contentOverrides?.simple),
-      technical: mergePanelContent(panelContent.technical, contentOverrides?.technical),
+      simple: mergePanelContent(helperContent, contentOverrides?.simple),
+      technical: mergePanelContent(helperContent, contentOverrides?.technical),
     }),
-    [contentOverrides]
+    [contentOverrides, helperContent]
   );
   const activeContent = mergedContent[mode];
   const stageLabels = activeContent.stageLabels ?? ['Compounds added', 'Relationships mapped', 'Next step ready'];
   const stats = activeContent.stats ?? [
     ['Compounds', displayedCompounds.map((compound) => compound.name).join(', ') || 'None yet'],
-    ['Evidence tier', mode === 'technical' ? 'Limited -> Moderate' : 'Review ready'],
-    ['Timeline', 'Day 0 baseline'],
+    ['Context', displayedCompounds.length > 0 ? 'Established' : 'Unavailable'],
+    ['Relationship map', intelligence.isRelationshipAllowed ? 'Eligible' : 'Locked'],
   ];
 
   useEffect(() => {
@@ -355,7 +319,7 @@ export function StackIntelligencePanel({
               Suggested next action
             </p>
             <p className="mt-1 text-sm leading-6 text-white/76">
-              {activeContent.nextAction ?? 'Add dose schedule -> track recovery + sleep -> evaluate after 7 days'}
+              {activeContent.nextAction ?? 'Add one item.'}
             </p>
           </div>
         </div>

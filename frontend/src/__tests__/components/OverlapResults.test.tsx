@@ -6,6 +6,7 @@ describe('OverlapResults', () => {
   it('shows contextual recommendations only after overlap insight exists', () => {
     render(
       <OverlapResults
+        inputCount={2}
         flags={[
           {
             compoundNames: ['BPC-157', 'TB-500'],
@@ -29,8 +30,15 @@ describe('OverlapResults', () => {
   });
 
   it('does not render the recommendations block when no overlaps exist', () => {
-    render(<OverlapResults flags={[]} />);
+    render(<OverlapResults flags={[]} inputCount={2} />);
 
+    expect(screen.queryByText('Common additions')).not.toBeInTheDocument();
+  });
+
+  it('does not render overlap UI with fewer than 2 inputs', () => {
+    render(<OverlapResults flags={[]} inputCount={1} />);
+
+    expect(screen.queryByText('No pathway overlaps detected for selected compounds.')).not.toBeInTheDocument();
     expect(screen.queryByText('Common additions')).not.toBeInTheDocument();
   });
 });
