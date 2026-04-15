@@ -3,14 +3,16 @@
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
+import { Day7ReviewCard } from '@/components/checkins/Day7ReviewCard';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { CheckInForm } from '@/components/checkins/CheckInForm';
 import { CheckInHistory } from '@/components/checkins/CheckInHistory';
 import { TrendChart } from '@/components/checkins/TrendChart';
 import { apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
-import { CheckIn, GoalDefinition } from '@/lib/types';
-import { useEffect, useState } from 'react';
+import { buildDay7Review } from '@/lib/day7Review';
+import { CheckIn, CreateCheckInRequest, GoalDefinition } from '@/lib/types';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export default function CheckInsPage() {
   const { currentProfileId } = useProfile();
@@ -20,36 +22,41 @@ export default function CheckInsPage() {
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const day7Review = useMemo(() => buildDay7Review(checkIns), [checkIns]);
+
+  const loadCheckIns = useCallback(async () => {
+    if (!currentProfileId) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const [checkInData, goalsData] = await Promise.all([
+        apiClient.getCheckIns(currentProfileId),
+        apiClient.getProfileGoals(currentProfileId)
+      ]);
+      setCheckIns(checkInData);
+      setProfileGoals(goalsData);
+    } catch {
+      setError('Failed to load check-ins');
+    } finally {
+      setLoading(false);
+    }
+  }, [currentProfileId]);
 
   useEffect(() => {
     if (currentProfileId) {
       loadCheckIns();
     }
-  }, [currentProfileId]);
+  }, [currentProfileId, loadCheckIns]);
 
-  const loadCheckIns = async () => {
-    try {
-      setLoading(true);
-      const [checkInData, goalsData] = await Promise.all([
-        apiClient.getCheckIns(currentProfileId!),
-        apiClient.getProfileGoals(currentProfileId!)
-      ]);
-      setCheckIns(checkInData);
-      setProfileGoals(goalsData);
-    } catch (err) {
-      setError('Failed to load check-ins');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAddCheckIn = async (data: any) => {
+  const handleAddCheckIn = async (data: CreateCheckInRequest) => {
     try {
       setIsSubmitting(true);
       const newCheckIn = await apiClient.createCheckIn(currentProfileId!, data);
       setCheckIns([newCheckIn, ...checkIns]);
       setShowForm(false);
-    } catch (err) {
+    } catch {
       setError('Failed to record check-in');
     } finally {
       setIsSubmitting(false);
@@ -91,7 +98,7 @@ export default function CheckInsPage() {
             onClick={() => setShowForm(!showForm)}
             className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-sm font-medium transition-all duration-150"
           >
-            {showForm ? 'Cancel' : 'New Check-in'}
+            {showForm ? 'Cancel' : 'Quick check-in'}
           </button>
         }
       />
@@ -101,8 +108,8 @@ export default function CheckInsPage() {
           <div className="p-8 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.4)] animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-2xl font-black text-white">Daily Check-In</h2>
-                <p className="text-sm text-white/40 mt-1">Capture your biomarkers and qualitative state.</p>
+                <h2 className="text-2xl font-black text-white">Quick Check-In</h2>
+                <p className="text-sm text-white/40 mt-1">Sleep, energy, recovery, and anything worth noting.</p>
               </div>
               <button
                 onClick={() => setShowForm(false)}
@@ -116,6 +123,7 @@ export default function CheckInsPage() {
               profileGoals={profileGoals}
               onSubmit={handleAddCheckIn}
               isLoading={isSubmitting}
+              mode="quick"
             />
           </div>
         )}
@@ -134,6 +142,8 @@ export default function CheckInsPage() {
           />
         ) : (
           <>
+            <Day7ReviewCard review={day7Review} />
+
             {/* Trend Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <TrendChart
