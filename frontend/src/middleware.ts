@@ -13,7 +13,7 @@ const PUBLIC_PREFIX_ROUTES = [
   '/sitemap.xml',
 ];
 
-export default function proxy(req: NextRequest) {
+export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (pathname === '/' || PUBLIC_PREFIX_ROUTES.some((p) => pathname.startsWith(p))) {

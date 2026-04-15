@@ -23,6 +23,7 @@ public static class AuthEndpoints
     private static readonly TimeSpan SessionLifetime = TimeSpan.FromDays(30);
     private static readonly string[] RedirectAllowlist =
     [
+        "/protocol-console",
         "/mission-control",
         "/profiles",
         "/compounds",
@@ -121,8 +122,11 @@ public static class AuthEndpoints
         db.AuthChallenges.Add(challenge);
         await db.SaveChangesAsync(ct);
 
-        var publicApiUrl = config["PublicApiUrl"] ?? config["Auth:PublicApiUrl"] ?? $"{http.Request.Scheme}://{http.Request.Host}";
-        var magicLink = $"{publicApiUrl.TrimEnd('/')}/auth/verify?token={Uri.EscapeDataString(rawToken)}";
+        // Magic link must point to the FRONTEND /auth/verify page, not the backend endpoint.
+        // This prevents email scanners (Gmail, Outlook, etc.) from pre-fetching the backend
+        // GET /auth/verify URL and consuming the one-time token before the user clicks it.
+        var frontendBaseUrl = (config["FrontendUrl"] ?? config["Auth:FrontendUrl"] ?? "http://localhost:3043").TrimEnd('/');
+        var magicLink = $"{frontendBaseUrl}/auth/verify?token={Uri.EscapeDataString(rawToken)}";
         await delivery.SendAsync(contact, magicLink, redirectPath, challenge.ExpiresAtUtc, ct);
 
         return Results.Ok(new { message = "If that email can sign in, we sent a link." });
