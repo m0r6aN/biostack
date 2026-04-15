@@ -24,34 +24,36 @@ vi.mock('@/lib/settings', () => ({
 }));
 
 describe('CompoundIntelligenceCard', () => {
+  const baseEntry = {
+    canonicalName: 'NAD+',
+    aliases: [],
+    classification: 'Coenzyme',
+    regulatoryStatus: 'Supplement',
+    mechanismSummary: 'Supports cellular energy pathways.',
+    evidenceTier: 'Moderate',
+    sourceReferences: [],
+    notes: 'Educational use only.',
+    pathways: ['cellular-energy', 'mitochondrial-function'],
+    benefits: ['Energy support'],
+    pairsWellWith: ['MOTS-C'],
+    avoidWith: [],
+    compatibleBlends: [],
+    recommendedDosage: '',
+    frequency: '',
+    preferredTimeOfDay: '',
+    weeklyDosageSchedule: [],
+    drugInteractions: [],
+    optimizationProtein: '',
+    optimizationCarbs: '',
+    optimizationSupplements: '',
+    optimizationSleep: '',
+    optimizationExercise: '',
+  };
+
   it('renders contextual recommendations quietly inside the compound detail surface when relevant', () => {
     render(
       <CompoundIntelligenceCard
-        entry={{
-          canonicalName: 'NAD+',
-          aliases: [],
-          classification: 'Coenzyme',
-          regulatoryStatus: 'Supplement',
-          mechanismSummary: 'Supports cellular energy pathways.',
-          evidenceTier: 'Moderate',
-          sourceReferences: [],
-          notes: 'Educational use only.',
-          pathways: ['cellular-energy', 'mitochondrial-function'],
-          benefits: ['Energy support'],
-          pairsWellWith: ['MOTS-C'],
-          avoidWith: [],
-          compatibleBlends: [],
-          recommendedDosage: '',
-          frequency: '',
-          preferredTimeOfDay: '',
-          weeklyDosageSchedule: [],
-          drugInteractions: [],
-          optimizationProtein: '',
-          optimizationCarbs: '',
-          optimizationSupplements: '',
-          optimizationSleep: '',
-          optimizationExercise: '',
-        }}
+        entry={baseEntry}
       />
     );
 
@@ -69,36 +71,37 @@ describe('CompoundIntelligenceCard', () => {
     render(
       <CompoundIntelligenceCard
         recommendationSurface="knowledge-search"
-        entry={{
-          canonicalName: 'NAD+',
-          aliases: [],
-          classification: 'Coenzyme',
-          regulatoryStatus: 'Supplement',
-          mechanismSummary: 'Supports cellular energy pathways.',
-          evidenceTier: 'Moderate',
-          sourceReferences: [],
-          notes: 'Educational use only.',
-          pathways: ['cellular-energy', 'mitochondrial-function'],
-          benefits: ['Energy support'],
-          pairsWellWith: ['MOTS-C'],
-          avoidWith: [],
-          compatibleBlends: [],
-          recommendedDosage: '',
-          frequency: '',
-          preferredTimeOfDay: '',
-          weeklyDosageSchedule: [],
-          drugInteractions: [],
-          optimizationProtein: '',
-          optimizationCarbs: '',
-          optimizationSupplements: '',
-          optimizationSleep: '',
-          optimizationExercise: '',
-        }}
+        entry={baseEntry}
       />
     );
 
     expect(
       screen.getByText('People exploring mitochondrial-support compounds often look at these examples next.')
     ).toBeInTheDocument();
+  });
+
+  it('uses reference-oriented profile copy instead of prescriptive guidance', () => {
+    render(
+      <CompoundIntelligenceCard
+        entry={{
+          ...baseEntry,
+          recommendedDosage: 'Published range: 250-500 mg',
+          frequency: 'Published schedule varies',
+        }}
+      />
+    );
+
+    expect(screen.getByText('Profile Context')).toBeInTheDocument();
+    expect(screen.getByText('Published Range Context')).toBeInTheDocument();
+    expect(screen.getByText('General published range referenced.')).toBeInTheDocument();
+    expect(screen.getByText('Reference only. Published ranges are not BioStack recommendations.')).toBeInTheDocument();
+    expect(screen.getByText('Reference Data')).toBeInTheDocument();
+    expect(screen.getByText('Published Range')).toBeInTheDocument();
+    expect(screen.getByText('Published ranges are reference data only and are not dosing instructions.')).toBeInTheDocument();
+    expect(screen.queryByText('Personalized Guidance')).not.toBeInTheDocument();
+    expect(screen.queryByText('Personalized Adjustments')).not.toBeInTheDocument();
+    expect(screen.queryByText('Higher end of dosage range recommended.')).not.toBeInTheDocument();
+    expect(screen.queryByText('Standard dosage range applicable.')).not.toBeInTheDocument();
+    expect(screen.queryByText('Protocol Guidance')).not.toBeInTheDocument();
   });
 });

@@ -1,3 +1,9 @@
+import {
+  getOnboardingSystemStatus,
+  getRelationshipAvailabilityStatus,
+  getSystemStatusDescriptor,
+} from './systemStatus';
+
 export type OnboardingIntelligenceStage = 'empty' | 'context' | 'relationship' | 'pattern';
 
 export type OnboardingRelationshipType = 'synergy' | 'overlap' | 'support' | 'none';
@@ -162,10 +168,12 @@ export function getOnboardingPanelContent(
   const relationshipDetail = options.relationshipCandidates?.find(
     (candidate) => candidate.type === state.relationship?.type && candidate.label === state.relationship?.label
   )?.detail;
+  const status = getOnboardingSystemStatus(state);
+  const relationshipStatus = getRelationshipAvailabilityStatus(state);
 
   if (state.stage === 'empty') {
     return {
-      subtext: 'No inputs detected. Add an item to establish context.',
+      subtext: `${status.title} ${status.subtitle}`,
       stageLabels: ['0 items', 'No context', 'Relationship locked'],
       stats: [
         ['Compounds', 'None'],
@@ -173,16 +181,16 @@ export function getOnboardingPanelContent(
         ['Relationship map', 'Locked'],
       ],
       relationshipGroups: [],
-      insightLabel: 'No inputs detected',
-      summary: 'Add an item to establish context.',
-      insights: ['No intelligence is shown until an input exists.'],
+      insightLabel: status.title,
+      summary: status.subtitle ?? status.title,
+      insights: [relationshipStatus.title],
       nextAction: 'Add one item.',
     };
   }
 
   if (state.stage === 'context') {
     return {
-      subtext: 'Context established. Relationship analysis unavailable - requires additional inputs.',
+      subtext: `${status.title} ${relationshipStatus.title}`,
       stageLabels: ['1 item', 'Context established', 'Relationship locked'],
       stats: [
         ['Compound', firstCompound],
@@ -201,19 +209,20 @@ export function getOnboardingPanelContent(
           detail: typicalPattern,
         },
       ],
-      insightLabel: 'Context established',
-      summary: `${firstCompound} is the only active onboarding input.`,
+      insightLabel: status.title,
+      summary: relationshipStatus.title,
       insights: [
-        'Identity and evidence context are available.',
-        'Relationship analysis remains locked with one input.',
+        status.subtitle ?? status.title,
+        relationshipStatus.subtitle ?? relationshipStatus.title,
       ],
       nextAction: 'Add one more item to unlock relationship analysis.',
     };
   }
 
   if (options.isCheckingRelationships) {
+    const checkingStatus = getSystemStatusDescriptor('relationship_unavailable');
     return {
-      subtext: 'Relationship analysis active. Checking only selected inputs.',
+      subtext: 'Relationship analysis active.',
       stageLabels: [`${state.count} items`, 'Relationship eligible', 'Checking'],
       stats: [
         ['Compounds', compoundList],
@@ -227,9 +236,9 @@ export function getOnboardingPanelContent(
           detail: 'The check is limited to selected inputs.',
         },
       ],
-      insightLabel: 'Relationship pending',
-      summary: 'Selected inputs are being checked.',
-      insights: ['No relationship claim is shown until the check completes.'],
+      insightLabel: 'Relationship pending.',
+      summary: 'Selected inputs queued.',
+      insights: [checkingStatus.subtitle ?? checkingStatus.title],
       nextAction: 'Wait for the relationship check.',
     };
   }
@@ -238,8 +247,8 @@ export function getOnboardingPanelContent(
     return {
       subtext:
         state.stage === 'pattern'
-          ? 'Map expanding. No relationship detected for the current inputs.'
-          : 'Relationship analysis complete. No relationship detected.',
+          ? `${status.title} ${getSystemStatusDescriptor('no_relationship_detected').title}`
+          : status.title,
       stageLabels: [`${state.count} items`, 'Relationship eligible', 'No relationship detected'],
       stats: [
         ['Compounds', compoundList],
@@ -250,14 +259,14 @@ export function getOnboardingPanelContent(
         {
           type: 'Context',
           label: 'No relationship detected',
-          detail: 'No known overlap, support, or synergy was found for this exact set.',
+          detail: status.subtitle ?? 'No known relationship found for this set.',
         },
       ],
-      insightLabel: 'No relationship detected',
-      summary: 'No known relationship was found for this exact set.',
+      insightLabel: status.title,
+      summary: status.subtitle ?? status.title,
       insights: [
-        'No relationship claim was forced.',
-        state.stage === 'pattern' ? 'Additional inputs expand the map without adding unsupported claims.' : 'Add goals or save the current inputs.',
+        state.stage === 'pattern' ? 'Additional inputs included.' : 'No relationship claim emitted.',
+        getSystemStatusDescriptor('ready_for_persistence').title,
       ],
       nextAction: state.stage === 'pattern' ? 'Save the inputs or adjust the set.' : 'Pick a goal or save the inputs.',
     };
@@ -272,8 +281,8 @@ export function getOnboardingPanelContent(
   return {
     subtext:
       state.stage === 'pattern'
-        ? 'Map expanding. One earned relationship is shown.'
-        : 'Relationship detected. One earned outcome is shown.',
+        ? `${status.title} ${getSystemStatusDescriptor('relationship_detected').title}`
+        : status.title,
     stageLabels: [`${state.count} items`, 'Relationship eligible', `${relationshipType} detected`],
     stats: [
       ['Compounds', compoundList],
@@ -287,11 +296,11 @@ export function getOnboardingPanelContent(
         detail: relationshipDetail ?? 'Detected from selected inputs.',
       },
     ],
-    insightLabel: `${relationshipType} detected`,
-    summary: 'This relationship comes from selected inputs.',
+    insightLabel: status.title,
+    summary: status.subtitle ?? status.title,
     insights: [
-      'Only one earned relationship outcome is shown.',
-      state.stage === 'pattern' ? 'Additional inputs expand the map without adding unsupported claims.' : 'Save or add another input to expand the map.',
+      'One earned relationship outcome emitted.',
+      state.stage === 'pattern' ? 'Additional inputs included.' : getSystemStatusDescriptor('ready_for_persistence').title,
     ],
     nextAction: state.stage === 'pattern' ? 'Save the inputs or adjust the set.' : 'Pick a goal or add another item.',
   };
@@ -308,14 +317,15 @@ export function getOnboardingRewardContent(
   const compoundList = hasInputs ? validCompounds.join(', ') : 'No inputs';
 
   if (options.isGoalsStep) {
+    const persistenceStatus = getSystemStatusDescriptor('ready_for_persistence');
     return {
-      eyebrow: 'Priority Tuning',
-      title: selectedGoalLabels.length > 0 ? 'Protocol aimed.' : 'Aim pending.',
+      eyebrow: persistenceStatus.eyebrow ?? 'Persistence State',
+      title: persistenceStatus.title,
       body:
         selectedGoalLabels.length > 0
-          ? 'Selected outcomes are staged for profile creation.'
-          : 'Profile creation can continue without a selected goal.',
-      status: selectedGoalLabels.length > 0 ? 'Tuned' : 'Untuned',
+          ? 'Selected outcomes staged.'
+          : 'Profile attachment ready.',
+      status: 'Ready',
       rows: [
         ['Input', compoundList],
         ['Unlocked', hasInputs ? 'Profile attachment' : 'Profile creation'],
@@ -325,10 +335,11 @@ export function getOnboardingRewardContent(
   }
 
   if (state.stage === 'empty') {
+    const emptyStatus = getSystemStatusDescriptor('empty');
     return {
-      eyebrow: 'Input State',
-      title: 'No inputs detected.',
-      body: 'Add an item to establish context.',
+      eyebrow: emptyStatus.eyebrow ?? 'Input State',
+      title: emptyStatus.title,
+      body: emptyStatus.subtitle ?? '',
       status: 'Empty',
       rows: [
         ['Input', 'None'],
@@ -339,10 +350,12 @@ export function getOnboardingRewardContent(
   }
 
   if (state.stage === 'context') {
+    const contextStatus = getSystemStatusDescriptor('context_established');
+    const unavailableStatus = getSystemStatusDescriptor('relationship_unavailable');
     return {
-      eyebrow: 'Input State',
-      title: 'Context established.',
-      body: 'Relationship analysis unavailable - requires additional inputs.',
+      eyebrow: contextStatus.eyebrow ?? 'Input State',
+      title: contextStatus.title,
+      body: unavailableStatus.title,
       status: 'Context',
       rows: [
         ['Input', compoundList],
@@ -356,7 +369,7 @@ export function getOnboardingRewardContent(
     return {
       eyebrow: 'Relationship Check',
       title: 'Relationship analysis active.',
-      body: 'Checking only selected inputs.',
+      body: 'Selected inputs queued.',
       status: 'Checking',
       rows: [
         ['Input', compoundList],
@@ -366,16 +379,11 @@ export function getOnboardingRewardContent(
     };
   }
 
+  const rewardStatus = getOnboardingSystemStatus(state);
   return {
-    eyebrow: state.stage === 'pattern' ? 'Pattern State' : 'Relationship State',
-    title:
-      state.relationship?.type === 'none'
-        ? 'No relationship detected.'
-        : 'Relationship detected.',
-    body:
-      state.relationship?.type === 'none'
-        ? 'No known relationship was found for this exact set.'
-        : 'One earned relationship outcome is available.',
+    eyebrow: rewardStatus.eyebrow ?? (state.stage === 'pattern' ? 'Pattern State' : 'Relationship State'),
+    title: rewardStatus.title,
+    body: rewardStatus.subtitle ?? rewardStatus.title,
     status:
       state.relationship?.type === 'none'
         ? 'No relationship'
