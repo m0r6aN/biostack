@@ -10,7 +10,6 @@ const APP_ROUTE_PREFIXES = [
   '/compounds',
   '/checkins',
   '/timeline',
-  '/calculators',
   '/knowledge',
   '/admin',
 ];
