@@ -1,5 +1,6 @@
 import { LandingHero } from '@/components/marketing/LandingHero';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import type { ComponentProps } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -12,26 +13,40 @@ vi.mock('next/link', () => ({
 }));
 
 describe('HomePage hero', () => {
-  it('frames BioStack as the protocol intelligence system', () => {
+  it('routes users into the three audience entry paths', async () => {
+    const user = userEvent.setup();
+    const listener = vi.fn();
+    window.addEventListener('biostack:landing_path_selected', listener);
+
     render(<LandingHero />);
 
-    expect(screen.getByRole('heading', { name: 'BioStack Protocol Console' })).toBeInTheDocument();
-    expect(screen.getByText('Stop guessing where to start - or what your stack is actually doing.')).toBeInTheDocument();
     expect(
-      screen.getByText(
-        "Add what you're using - or thinking about using. BioStack shows how it fits, what overlaps, and what actually works together."
-      )
-    ).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Build My Protocol/ })).toHaveAttribute('href', '/onboarding');
-    expect(screen.getByRole('link', { name: /Map My Current Stack/ })).toHaveAttribute('href', '/onboarding?mode=existing');
-    expect(screen.getByRole('link', { name: 'Explore Calculators' })).toHaveAttribute('href', '/tools');
-    expect(screen.getByText('Start with one compound or build a full stack.')).toBeInTheDocument();
-    expect(screen.getByText('See how your current compounds fit together.')).toBeInTheDocument();
-    expect(
-      screen.getByText('Some compounds overlap. Some work better together. BioStack shows the difference.')
+      screen.getByRole('heading', { name: 'Stop guessing what to take—or what your stack is actually doing.' })
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Conflicting advice, overlapping compounds, and guesswork make this harder than it should be.')
+      screen.getByText("Start from scratch, analyze what you're already using, or manage protocols at scale.")
     ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /I'm getting started/ })).toHaveAttribute('href', '/start');
+    expect(screen.getByRole('link', { name: /I already have a stack/ })).toHaveAttribute('href', '/map');
+    expect(screen.getByRole('link', { name: /I work with clients/ })).toHaveAttribute('href', '/providers');
+    expect(screen.getByText('Starter')).toBeInTheDocument();
+    expect(screen.getByText('Help me figure out what to take and how to begin')).toBeInTheDocument();
+    expect(screen.getByText('Experienced')).toBeInTheDocument();
+    expect(screen.getByText("Show me what overlaps, what works, and what doesn't")).toBeInTheDocument();
+    expect(screen.getByText('Retail / Provider')).toBeInTheDocument();
+    expect(screen.getByText('Manage client protocols with structure and clarity')).toBeInTheDocument();
+    expect(screen.queryByText(/No inputs detected/)).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('link', { name: /I work with clients/ }));
+    expect(listener).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: expect.objectContaining({
+          eventName: 'landing_path_selected_provider',
+          path: 'provider',
+        }),
+      })
+    );
+
+    window.removeEventListener('biostack:landing_path_selected', listener);
   });
 });

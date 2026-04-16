@@ -5,6 +5,12 @@ const baseUrl = 'https://biostack.app';
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     '',
+    '/start',
+    '/map',
+    '/providers',
+    '/calculators',
+    '/how-it-works',
+    '/safety',
     '/pricing',
     '/faq',
     '/terms',
