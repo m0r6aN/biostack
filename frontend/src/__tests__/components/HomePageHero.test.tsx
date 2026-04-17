@@ -24,17 +24,22 @@ describe('HomePage hero', () => {
       screen.getByRole('heading', { name: 'Stop guessing what to take—or what your stack is actually doing.' })
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Start from scratch, analyze what you're already using, or manage protocols at scale.")
+      screen.getByText('Track peptides, compounds, and layered protocols')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Organize compounds by date, protocol, overlap, and check-in history before you decide what comes next.')
     ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /I'm getting started/ })).toHaveAttribute('href', '/start');
     expect(screen.getByRole('link', { name: /I already have a stack/ })).toHaveAttribute('href', '/map');
     expect(screen.getByRole('link', { name: /I work with clients/ })).toHaveAttribute('href', '/providers');
     expect(screen.getByText('Starter')).toBeInTheDocument();
-    expect(screen.getByText('Help me figure out what to take and how to begin')).toBeInTheDocument();
+    expect(screen.getByText('Set up compound tracking without rebuilding a spreadsheet.')).toBeInTheDocument();
     expect(screen.getByText('Experienced')).toBeInTheDocument();
-    expect(screen.getByText("Show me what overlaps, what works, and what doesn't")).toBeInTheDocument();
-    expect(screen.getByText('Retail / Provider')).toBeInTheDocument();
-    expect(screen.getByText('Manage client protocols with structure and clarity')).toBeInTheDocument();
+    expect(screen.getByText('Map active compounds, overlap signals, and timeline context.')).toBeInTheDocument();
+    expect(screen.getByText('Provider')).toBeInTheDocument();
+    expect(screen.getByText('Track client protocol changes, notes, and check-ins.')).toBeInTheDocument();
+    expect(screen.getByText('Protocol Surface')).toBeInTheDocument();
+    expect(screen.queryByText('Live')).not.toBeInTheDocument();
     expect(screen.queryByText(/No inputs detected/)).not.toBeInTheDocument();
 
     await user.click(screen.getByRole('link', { name: /I work with clients/ }));

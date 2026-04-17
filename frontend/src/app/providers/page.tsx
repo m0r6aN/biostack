@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 const providerUses = [
   'Repeatable protocol structure',
-  'Client-level tracking workflows',
-  'Clear calculator and overlap context',
+  'Client protocol changes and notes',
+  'Check-ins organized across active clients',
 ];
 
 export default function ProvidersPage() {
@@ -16,13 +16,13 @@ export default function ProvidersPage() {
       <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 lg:py-16">
         <section className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/72">
-            Retail / Provider
+            Provider
           </p>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-6xl">
             Structure protocols across multiple people.
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-white/62 sm:text-lg">
-            A reserved path for retail teams, providers, and operators who need repeatable client workflows.
+            Organize multi-client protocol workflows with clearer dates, notes, and check-ins.
           </p>
         </section>
 
