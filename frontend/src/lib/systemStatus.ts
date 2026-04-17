@@ -59,8 +59,8 @@ export const SYSTEM_STATUS_COPY: Record<SystemStatusKey, SystemStatusDescriptor>
   },
   ready_for_persistence: {
     eyebrow: 'Persistence State',
-    title: 'Protocol ready for persistence.',
-    subtitle: 'Inputs staged for profile attachment.',
+    title: 'Your list is ready to save.',
+    subtitle: 'Items are staged for profile attachment.',
     tone: 'positive',
   },
   inputs_recovered: {

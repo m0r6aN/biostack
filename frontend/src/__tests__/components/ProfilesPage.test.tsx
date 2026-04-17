@@ -70,7 +70,7 @@ describe('ProfilesPage continuation state', () => {
 
     expect(await screen.findByText('Inputs recovered.')).toBeInTheDocument();
     expect(screen.getAllByText('Profile not yet instantiated.').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('Protocol ready for persistence.').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Your list is ready to save.').length).toBeGreaterThan(0);
     expect(screen.getAllByRole('button', { name: 'Continue Profile Setup' }).length).toBeGreaterThan(0);
     expect(screen.queryByText('Ready To Continue')).not.toBeInTheDocument();
     expect(screen.queryByText('Name the profile. Keep the protocol.')).not.toBeInTheDocument();

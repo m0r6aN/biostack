@@ -13,6 +13,7 @@ import {
   readOnboardingPreview,
   writeOnboardingPreview,
 } from '@/lib/onboardingPreview';
+import { starterStacks } from '@/lib/starterStacks';
 import type { InteractionFlag, KnowledgeEntry } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
@@ -20,17 +21,17 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 const GOAL_OPTIONS = [
-  { id: 'energy-fat-loss', label: 'Fat loss', signal: 'appetite, weight, energy' },
-  { id: 'recovery-post-workout', label: 'Recovery', signal: 'sleep, soreness, joint signal' },
-  { id: 'energy-levels', label: 'Energy', signal: 'energy, sleep, mood' },
-  { id: 'longevity-pathways', label: 'Longevity', signal: 'consistency, recovery, baseline drift' },
-  { id: 'performance-strength', label: 'Strength', signal: 'strength, endurance, recovery' },
-  { id: 'cognitive-focus', label: 'Focus', signal: 'focus, clarity, sleep' },
+  { id: 'energy-fat-loss', label: 'Fat loss', signal: "We'll watch weight trends, appetite, and energy" },
+  { id: 'recovery-post-workout', label: 'Recovery', signal: "We'll watch sleep quality, soreness, and joint comfort" },
+  { id: 'energy-levels', label: 'Energy', signal: "We'll watch daytime energy, sleep, and mood" },
+  { id: 'longevity-pathways', label: 'Longevity', signal: "We'll watch consistency, recovery, and baseline changes" },
+  { id: 'performance-strength', label: 'Strength', signal: "We'll watch strength, endurance, and recovery" },
+  { id: 'cognitive-focus', label: 'Focus', signal: "We'll watch focus, clarity, and sleep" },
 ] as const;
 const STEP_ITEMS: Array<{ id: OnboardingStep; label: string; shortLabel: string }> = [
-  { id: 'input', label: '1. Add protocol inputs', shortLabel: 'Add' },
-  { id: 'aha', label: '2. See what is known', shortLabel: 'See' },
-  { id: 'goals', label: '3. Set your goals', shortLabel: 'Goals' },
+  { id: 'goals', label: '1. Choose what matters', shortLabel: 'Goals' },
+  { id: 'input', label: '2. Build your list', shortLabel: 'List' },
+  { id: 'aha', label: '3. See what is known', shortLabel: 'See' },
 ];
 
 type OnboardingStep = 'input' | 'aha' | 'goals';
@@ -124,7 +125,7 @@ function RewardPanel({
           <p className="mt-2 text-sm leading-6 text-white/66">
             {selectedGoalLabels.length > 0
               ? selectedGoalLabels.join(', ')
-              : 'Choose one or skip. The protocol still saves.'}
+              : 'Choose one or skip. Your list still saves.'}
           </p>
         </div>
       )}
@@ -137,7 +138,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
   const inputRef = useRef<HTMLInputElement>(null);
   const reduceMotion = useReducedMotion();
   const isExistingMode = mode === 'existing';
-  const [step, setStep] = useState<OnboardingStep>('input');
+  const [step, setStep] = useState<OnboardingStep>('goals');
   const [query, setQuery] = useState('');
   const [bulkInput, setBulkInput] = useState('');
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeEntry[]>([]);
@@ -286,6 +287,22 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
     setBulkInput('');
   }
 
+  function selectStarterStack(compounds: readonly string[]) {
+    setSelectedCompounds((current) => {
+      const next = [...current];
+
+      for (const compound of compounds) {
+        if (!next.some((selected) => isSameCompound(selected, compound))) {
+          next.push(compound);
+        }
+      }
+
+      return next;
+    });
+    setQuery('');
+    inputRef.current?.focus();
+  }
+
   function removeCompound(name: string) {
     setSelectedCompounds((current) => current.filter((compound) => compound !== name));
   }
@@ -324,16 +341,21 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
     <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:py-16">
       <div className="max-w-3xl">
         <p className="text-xs font-semibold uppercase tracking-[0.32em] text-emerald-300/70">
-          {isExistingMode ? 'Stack Mapping' : 'Protocol Setup'}
+          {isExistingMode ? 'Stack Mapping' : 'Getting Started'}
         </p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-          {isExistingMode ? 'Drop in the stack. We will sort what fits.' : 'Start with one real input.'}
+          {isExistingMode ? 'Drop in the stack. We will sort what fits.' : 'Tell us what you take — or start from an example.'}
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-white/62">
           {isExistingMode
             ? 'Paste the current list. BioStack checks only what you entered.'
-            : 'One item gets context. Two items start the relationship check.'}
+            : "Add anything you already take. If you're not sure, start from a sample."}
         </p>
+        {!isExistingMode && (
+          <p className="mt-4 max-w-2xl text-base leading-7 text-white/55">
+            A protocol is just the list of things you take. We&apos;ll show overlaps and conflicts as you add items.
+          </p>
+        )}
       </div>
 
       <div className="mt-8">
@@ -387,9 +409,78 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
       </div>
 
       <AnimatePresence mode="wait" initial={false}>
+        {step === 'goals' && (
+          <motion.div
+            key="goals"
+            className="mt-8 grid gap-6 lg:grid-cols-[1fr_0.84fr]"
+            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
+            transition={{ duration: reduceMotion ? 0 : 0.26, ease: 'easeOut' }}
+          >
+            <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_20px_70px_rgba(0,0,0,0.35)] sm:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-300/72">What Matters Most</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">What do you want help with first?</h2>
+              <p className="mt-4 text-base leading-7 text-white/60">Pick one or more goals. You can change this later.</p>
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                {GOAL_OPTIONS.map((goal) => {
+                  const isSelected = selectedGoals.includes(goal.id);
+
+                  return (
+                    <button
+                      key={goal.id}
+                      type="button"
+                      aria-label={goal.label}
+                      onClick={() => toggleGoal(goal.id)}
+                      className={cn(
+                        'rounded-lg border px-4 py-3 text-left transition-colors',
+                        isSelected
+                          ? 'border-emerald-300/35 bg-emerald-500/12 text-emerald-200'
+                          : 'border-white/10 bg-white/[0.03] text-white/70 hover:text-white'
+                      )}
+                    >
+                      <span className="block text-sm font-semibold">{goal.label}</span>
+                      <span className="mt-1 block text-xs leading-5 text-white/45">{goal.signal}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => goToStep('input')}
+                  className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
+                >
+                  Continue
+                </button>
+                <button
+                  type="button"
+                  onClick={() => goToStep('input')}
+                  className="rounded-full border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24"
+                >
+                  Skip for now
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <RewardPanel
+                step={step}
+                compounds={selectedCompounds}
+                selectedGoalIds={selectedGoals}
+                overlaps={overlaps}
+                isCheckingOverlaps={isCheckingOverlaps}
+              />
+            </div>
+          </motion.div>
+        )}
+
         {step === 'input' && (
           <motion.form
             key="input"
+            id="starter-stacks"
             onSubmit={handleSubmit}
             className="mt-8 rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_20px_70px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
@@ -412,7 +503,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 <p className="mt-4 max-w-xl text-base leading-7 text-white/60">
                   {isExistingMode
                     ? 'Use commas or new lines. Clean it up later.'
-                    : 'Search, quick add, or type manually. You do not need a full plan.'}
+                    : 'Search, quick add, type manually, or pick an example below.'}
                 </p>
 
                 {isExistingMode && (
@@ -441,8 +532,30 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                   </div>
                 )}
 
+                {!isExistingMode && (
+                  <div className="mt-6">
+                    <p className="text-sm font-semibold text-white/78">Not sure yet? Start from an example</p>
+                    <div className="-mx-6 mt-3 flex gap-3 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:px-0 lg:grid-cols-4">
+                      {starterStacks.map((starterStack) => (
+                        <button
+                          key={starterStack.id}
+                          type="button"
+                          onClick={() => selectStarterStack(starterStack.compounds)}
+                          className="min-w-[220px] rounded-lg border border-white/10 bg-white/[0.035] p-4 text-left transition-colors hover:border-emerald-300/30 hover:bg-emerald-500/[0.07] sm:min-w-0"
+                        >
+                          <span className="block text-sm font-semibold text-white">{starterStack.name}</span>
+                          <span className="mt-2 block text-xs leading-5 text-white/52">{starterStack.description}</span>
+                          <span className="mt-3 block text-xs leading-5 text-emerald-100/72">
+                            {starterStack.compounds.join(', ')}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <label className="mt-6 block">
-                  <span className="mb-2 block text-sm text-white/62">Search your protocol</span>
+                  <span className="mb-2 block text-sm text-white/62">Search what you take</span>
                   <div className="flex flex-col gap-3 sm:flex-row">
                     <input
                       ref={inputRef}
@@ -492,7 +605,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                           ))}
                         </div>
                       ) : (
-                        <p className="text-sm text-white/46">No direct matches yet. You can still add this manually.</p>
+                        <p className="text-sm text-white/46">We don&apos;t have deep data on this one yet, but we&apos;ll still track it for you.</p>
                       )}
                       <p className="mt-2 text-sm text-white/42">Press Enter to add &ldquo;{query.trim()}&rdquo; manually.</p>
                     </motion.div>
@@ -501,7 +614,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
 
                 <div className="mt-6 min-h-24 rounded-2xl border border-white/8 bg-black/15 p-4">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="text-xs uppercase tracking-[0.2em] text-white/35">Your protocol</p>
+                    <p className="text-xs uppercase tracking-[0.2em] text-white/35">Your list</p>
                     <p className="text-xs text-white/38">Remove anything with one tap</p>
                   </div>
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -521,7 +634,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                       <p className="text-sm text-white/38">
                         {isExistingMode
                           ? 'Paste or add the compounds, supplements, or medications you already have in mind.'
-                          : 'Add one item to start.'}
+                          : "Type anything you take — a supplement, medication, or peptide. Don't worry about getting it perfect."}
                       </p>
                     )}
                   </div>
@@ -533,9 +646,9 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                     disabled={!canSubmit}
                     className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-50"
                   >
-                    Add to My Protocol
+                    Add to My List
                   </button>
-                  <p className="text-sm text-white/45">Context first. Relationships when earned.</p>
+                  <p className="text-sm text-white/45">We&apos;ll flag overlaps and conflicts once you&apos;ve added two items.</p>
                 </div>
               </div>
 
@@ -565,7 +678,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
               <div className="absolute inset-x-8 top-0 h-24 rounded-full bg-emerald-500/10 blur-3xl" />
               <StackIntelligencePanel
                 compoundNames={selectedCompounds}
-                eyebrowLabel="Preview your protocol"
+                eyebrowLabel="Preview your list"
                 contentOverrides={{
                   simple: previewPanelContent,
                   technical: previewPanelContent,
@@ -587,7 +700,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">{systemStatus.title}</h2>
               <p className="mt-4 text-base leading-7 text-white/60">
                 {intelligence.stage === 'context'
-                  ? 'Relationship analysis unavailable.'
+                  ? "We'll flag overlaps and conflicts once you've added two items."
                   : systemStatus.subtitle ?? 'Selected inputs staged.'}
               </p>
 
@@ -610,7 +723,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                   <p className="text-xs uppercase tracking-[0.2em] text-white/35">Current state</p>
                   <p className="mt-3 text-sm leading-7 text-white/58">
                     {intelligence.stage === 'context'
-                      ? 'Relationship analysis locked.'
+                      ? "Add one more item when you're ready for overlap and conflict checks."
                       : systemStatus.subtitle ?? systemStatus.title}
                   </p>
                 </div>
@@ -627,13 +740,12 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={() => goToStep('goals')}
+                <Link
+                  href="/profiles"
                   className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
                 >
-                  Continue
-                </button>
+                  Finish Setup
+                </Link>
                 <button
                   type="button"
                   onClick={() => goToStep('input')}
@@ -646,72 +758,6 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
           </motion.div>
         )}
 
-        {step === 'goals' && (
-          <motion.div
-            key="goals"
-            className="mt-8 grid gap-6 lg:grid-cols-[1fr_0.84fr]"
-            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
-            transition={{ duration: reduceMotion ? 0 : 0.26, ease: 'easeOut' }}
-          >
-            <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_20px_70px_rgba(0,0,0,0.35)] sm:p-8">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-300/72">Aim The Protocol</p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">What should BioStack watch first?</h2>
-              <p className="mt-4 text-base leading-7 text-white/60">Choose the signal that matters most. This tunes the next profile.</p>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                {GOAL_OPTIONS.map((goal) => {
-                  const isSelected = selectedGoals.includes(goal.id);
-
-                  return (
-                    <button
-                      key={goal.id}
-                      type="button"
-                      aria-label={goal.label}
-                      onClick={() => toggleGoal(goal.id)}
-                      className={cn(
-                        'rounded-lg border px-4 py-3 text-left transition-colors',
-                        isSelected
-                          ? 'border-emerald-300/35 bg-emerald-500/12 text-emerald-200'
-                          : 'border-white/10 bg-white/[0.03] text-white/70 hover:text-white'
-                      )}
-                    >
-                      <span className="block text-sm font-semibold">{goal.label}</span>
-                      <span className="mt-1 block text-xs leading-5 text-white/45">{goal.signal}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link
-                  href="/profiles"
-                  className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
-                >
-                  Finish Setup
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => goToStep('aha')}
-                  className="rounded-full border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24"
-                >
-                  Back
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <RewardPanel
-                step={step}
-                compounds={selectedCompounds}
-                selectedGoalIds={selectedGoals}
-                overlaps={overlaps}
-                isCheckingOverlaps={isCheckingOverlaps}
-              />
-            </div>
-          </motion.div>
-        )}
       </AnimatePresence>
     </section>
   );
