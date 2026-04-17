@@ -3,9 +3,10 @@
 import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/Button';
 import { GlassCard } from '@/components/ui/GlassCard';
+import { getApiBaseUrl } from '@/lib/apiBase';
 import { useEffect, useRef, useState } from 'react';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_URL = getApiBaseUrl();
 
 interface SystemStats {
   profiles: number;

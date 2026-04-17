@@ -1,10 +1,11 @@
 'use client';
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
+import { getApiBaseUrl } from '@/lib/apiBase';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef } from 'react';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_URL = getApiBaseUrl();
 
 /**
  * Magic-link landing page.
@@ -30,7 +31,7 @@ function VerifyPageContent() {
 
     // Navigate the browser to the backend verify endpoint.
     // The backend will set the session cookie and redirect back to the app.
-    window.location.href = `${API_URL}/auth/verify?token=${encodeURIComponent(token)}`;
+    window.location.href = `${API_URL}/api/auth/verify?token=${encodeURIComponent(token)}`;
   }, [token]);
 
   return (

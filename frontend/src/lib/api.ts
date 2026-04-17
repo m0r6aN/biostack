@@ -4,6 +4,7 @@ import {
     resolveGoalDefinitions,
     setMockProfileGoalIds,
 } from './goals';
+import { getApiBaseUrl } from './apiBase';
 import { normalizeTimelineEvent } from './timeline';
 import {
     CalculatorResult,
@@ -33,11 +34,9 @@ import {
     VolumeRequest,
 } from './types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-
 export class ApiClient {
   private baseUrl: string;
-  constructor(baseUrl: string = API_URL) {
+  constructor(baseUrl: string = getApiBaseUrl()) {
     this.baseUrl = baseUrl;
   }
 
