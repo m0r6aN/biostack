@@ -482,7 +482,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
             key="input"
             id="starter-stacks"
             onSubmit={handleSubmit}
-            className="mt-8 rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_20px_70px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8"
+            className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-[0_20px_70px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:rounded-[2rem] sm:p-8"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
@@ -497,7 +497,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                   </span>
                 </div>
 
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
                   {isExistingMode ? 'Paste what is already in the mix.' : 'Add what you already know.'}
                 </h2>
                 <p className="mt-4 max-w-xl text-base leading-7 text-white/60">
@@ -535,13 +535,13 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 {!isExistingMode && (
                   <div className="mt-6">
                     <p className="text-sm font-semibold text-white/78">Not sure yet? Start from an example</p>
-                    <div className="-mx-6 mt-3 flex gap-3 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:px-0 lg:grid-cols-4">
+                    <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                       {starterStacks.map((starterStack) => (
                         <button
                           key={starterStack.id}
                           type="button"
                           onClick={() => selectStarterStack(starterStack.compounds)}
-                          className="min-w-[220px] rounded-lg border border-white/10 bg-white/[0.035] p-4 text-left transition-colors hover:border-emerald-300/30 hover:bg-emerald-500/[0.07] sm:min-w-0"
+                          className="rounded-lg border border-white/10 bg-white/[0.035] p-4 text-left transition-colors hover:border-emerald-300/30 hover:bg-emerald-500/[0.07]"
                         >
                           <span className="block text-sm font-semibold text-white">{starterStack.name}</span>
                           <span className="mt-2 block text-xs leading-5 text-white/52">{starterStack.description}</span>
@@ -640,11 +640,11 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                   </div>
                 </div>
 
-                <div className="mt-6 flex flex-wrap items-center gap-3">
+                <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
                   <button
                     type="submit"
                     disabled={!canSubmit}
-                    className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-50"
+                    className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-50 sm:w-auto"
                   >
                     Add to My List
                   </button>

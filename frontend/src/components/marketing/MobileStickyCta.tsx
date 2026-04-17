@@ -20,6 +20,10 @@ export function MobileStickyCta() {
     return () => window.removeEventListener('scroll', updateVisibility);
   }, []);
 
+  if (isStartRoute) {
+    return null;
+  }
+
   return (
     <nav
       aria-label="Primary actions"
@@ -27,15 +31,13 @@ export function MobileStickyCta() {
         isVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0'
       }`}
     >
-      <div className={`grid gap-2 ${isStartRoute ? 'grid-cols-2' : 'grid-cols-3'}`}>
-        {!isStartRoute && (
-          <Link
-            href="/start"
-            className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-sm font-semibold text-slate-950"
-          >
-            Start
-          </Link>
-        )}
+      <div className="grid grid-cols-3 gap-2">
+        <Link
+          href="/start"
+          className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-sm font-semibold text-slate-950"
+        >
+          Start
+        </Link>
         <Link
           href="/map"
           className="flex min-h-12 items-center justify-center rounded-lg border border-sky-300/16 bg-sky-400/[0.06] px-2 text-sm font-semibold text-white"
