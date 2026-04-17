@@ -174,28 +174,28 @@ export function getOnboardingPanelContent(
   if (state.stage === 'empty') {
     return {
       subtext: `${status.title} ${status.subtitle}`,
-      stageLabels: ['0 items', 'No context', 'Relationship locked'],
+      stageLabels: ['0 items', 'Nothing added yet', 'Checks start at 2 items'],
       stats: [
-        ['Compounds', 'None'],
-        ['Context', 'Unavailable'],
-        ['Relationship map', 'Locked'],
+        ['Items', 'None'],
+        ['Context', 'Add anything you take'],
+        ['Overlap check', 'Starts at 2 items'],
       ],
       relationshipGroups: [],
       insightLabel: status.title,
       summary: status.subtitle ?? status.title,
       insights: [relationshipStatus.title],
-      nextAction: 'Add one item.',
+      nextAction: 'Type anything you take.',
     };
   }
 
   if (state.stage === 'context') {
     return {
       subtext: `${status.title} ${relationshipStatus.title}`,
-      stageLabels: ['1 item', 'Context established', 'Relationship locked'],
+      stageLabels: ['1 item', 'Context established', 'Add one more for checks'],
       stats: [
-        ['Compound', firstCompound],
+        ['Item', firstCompound],
         ['Evidence tier', evidenceTier],
-        ['Relationship map', 'Requires 2 inputs'],
+        ['Overlap check', 'Starts at 2 items'],
       ],
       relationshipGroups: [
         {
@@ -268,7 +268,7 @@ export function getOnboardingPanelContent(
         state.stage === 'pattern' ? 'Additional inputs included.' : 'No relationship claim emitted.',
         getSystemStatusDescriptor('ready_for_persistence').title,
       ],
-      nextAction: state.stage === 'pattern' ? 'Save the inputs or adjust the set.' : 'Pick a goal or save the inputs.',
+    nextAction: state.stage === 'pattern' ? 'Save the list or adjust it.' : 'Save the list or add another item.',
     };
   }
 
@@ -285,7 +285,7 @@ export function getOnboardingPanelContent(
         : status.title,
     stageLabels: [`${state.count} items`, 'Relationship eligible', `${relationshipType} detected`],
     stats: [
-      ['Compounds', compoundList],
+      ['Items', compoundList],
       ['Relationship check', `${relationshipType} detected`],
       ['Timeline', 'Ready after save'],
     ],
@@ -302,7 +302,7 @@ export function getOnboardingPanelContent(
       'One earned relationship outcome emitted.',
       state.stage === 'pattern' ? 'Additional inputs included.' : getSystemStatusDescriptor('ready_for_persistence').title,
     ],
-    nextAction: state.stage === 'pattern' ? 'Save the inputs or adjust the set.' : 'Pick a goal or add another item.',
+    nextAction: state.stage === 'pattern' ? 'Save the list or adjust it.' : 'Save the list or add another item.',
   };
 }
 
@@ -317,19 +317,18 @@ export function getOnboardingRewardContent(
   const compoundList = hasInputs ? validCompounds.join(', ') : 'No inputs';
 
   if (options.isGoalsStep) {
-    const persistenceStatus = getSystemStatusDescriptor('ready_for_persistence');
     return {
-      eyebrow: persistenceStatus.eyebrow ?? 'Persistence State',
-      title: persistenceStatus.title,
+      eyebrow: 'Goal State',
+      title: selectedGoalLabels.length > 0 ? 'Goals selected.' : 'Choose what matters first.',
       body:
         selectedGoalLabels.length > 0
-          ? 'Selected outcomes staged.'
-          : 'Profile attachment ready.',
-      status: 'Ready',
+          ? 'We will use these priorities when you build your list.'
+          : 'Pick one or skip for now. You can change this later.',
+      status: selectedGoalLabels.length > 0 ? 'Selected' : 'Optional',
       rows: [
-        ['Input', compoundList],
-        ['Unlocked', hasInputs ? 'Profile attachment' : 'Profile creation'],
-        ['Next', 'Save profile'],
+        ['Goals', selectedGoalLabels.length > 0 ? selectedGoalLabels.join(', ') : 'None yet'],
+        ['List', hasInputs ? compoundList : 'Next step'],
+        ['Next', 'Build your list'],
       ],
     };
   }
@@ -342,9 +341,9 @@ export function getOnboardingRewardContent(
       body: emptyStatus.subtitle ?? '',
       status: 'Empty',
       rows: [
-        ['Input', 'None'],
+        ['List', 'None'],
         ['Unlocked', 'Nothing yet'],
-        ['Next', 'Add one item'],
+        ['Next', 'Add anything you take'],
       ],
     };
   }
@@ -358,8 +357,8 @@ export function getOnboardingRewardContent(
       body: unavailableStatus.title,
       status: 'Context',
       rows: [
-        ['Input', compoundList],
-        ['Unlocked', 'Identity context'],
+        ['List', compoundList],
+        ['Unlocked', 'Item context'],
         ['Next', 'Add one more'],
       ],
     };
@@ -372,8 +371,8 @@ export function getOnboardingRewardContent(
       body: 'Selected inputs queued.',
       status: 'Checking',
       rows: [
-        ['Input', compoundList],
-        ['Unlocked', 'Relationship check'],
+        ['List', compoundList],
+        ['Unlocked', 'Overlap check'],
         ['Next', 'Wait for result'],
       ],
     };
@@ -389,9 +388,9 @@ export function getOnboardingRewardContent(
         ? 'No relationship'
         : state.relationship?.type ?? 'Detected',
     rows: [
-      ['Input', compoundList],
-      ['Unlocked', state.stage === 'pattern' ? 'Pattern map' : 'Relationship check'],
-      ['Next', state.stage === 'pattern' ? 'Save inputs' : 'Aim protocol'],
+      ['List', compoundList],
+      ['Unlocked', state.stage === 'pattern' ? 'Pattern map' : 'Overlap check'],
+      ['Next', state.stage === 'pattern' ? 'Save list' : 'Save list'],
     ],
   };
 }

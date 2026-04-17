@@ -15,7 +15,7 @@ const LOOP_DURATION = 7.2;
 export type PanelMode = 'simple' | 'technical';
 
 const modeOptions = [
-  { id: 'simple', label: 'Protocol' },
+  { id: 'simple', label: 'List' },
   { id: 'technical', label: 'Evidence' },
 ] as const;
 
@@ -136,7 +136,7 @@ export function StackIntelligencePanel({
   compoundNames,
   initialMode = 'simple',
   showModeToggle = true,
-  eyebrowLabel = 'Protocol preview',
+  eyebrowLabel = 'List preview',
   contentOverrides,
   relationshipCandidates = [],
   isCheckingRelationships = false,
@@ -344,7 +344,7 @@ export function StackIntelligencePanel({
               Suggested next action
             </p>
             <p className="mt-1 text-sm leading-6 text-white/76">
-              {activeContent.nextAction ?? 'Add one item.'}
+              {activeContent.nextAction ?? 'Type anything you take.'}
             </p>
           </div>
         </div>

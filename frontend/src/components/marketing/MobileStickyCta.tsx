@@ -1,10 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export function MobileStickyCta() {
   const [isVisible, setIsVisible] = useState(false);
+  const pathname = usePathname();
+  const isStartRoute = pathname === '/start';
 
   useEffect(() => {
     function updateVisibility() {
@@ -16,6 +19,10 @@ export function MobileStickyCta() {
 
     return () => window.removeEventListener('scroll', updateVisibility);
   }, []);
+
+  if (isStartRoute) {
+    return null;
+  }
 
   return (
     <nav
