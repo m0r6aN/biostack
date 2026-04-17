@@ -19,7 +19,7 @@ export function MarketingNav() {
               Calculators
             </Link>
             <Link href="/providers" className="transition-colors hover:text-white">
-              Providers
+              Provider
             </Link>
             <Link href="/safety" className="transition-colors hover:text-white">
               Safety
@@ -35,9 +35,9 @@ export function MarketingNav() {
             </Link>
             <Link
               href="/start"
-              className="rounded-full bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
+              className="rounded-full border border-emerald-300/30 bg-emerald-400/12 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/50 hover:text-white"
             >
-              Start Protocol
+              Start free
             </Link>
           </div>
         </div>

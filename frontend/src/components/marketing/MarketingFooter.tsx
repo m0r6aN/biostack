@@ -14,7 +14,7 @@ export function MarketingFooter() {
             Calculators
           </Link>
           <Link href="/providers" className="transition-colors hover:text-white">
-            Providers
+            Provider
           </Link>
           <Link href="/safety" className="transition-colors hover:text-white">
             Safety

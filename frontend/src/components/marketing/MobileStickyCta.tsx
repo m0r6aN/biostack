@@ -41,7 +41,7 @@ export function MobileStickyCta() {
           href="/providers"
           className="flex min-h-12 items-center justify-center rounded-lg border border-amber-300/16 bg-amber-300/[0.06] px-2 text-sm font-semibold text-white"
         >
-          Providers
+          Provider
         </Link>
       </div>
     </nav>
