@@ -27,7 +27,7 @@ describe('SignInPage', () => {
 
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledWith(
-        'http://localhost:5000/api/v1/auth/start',
+        '/api/v1/auth/start',
         expect.objectContaining({
           method: 'POST',
           credentials: 'include',

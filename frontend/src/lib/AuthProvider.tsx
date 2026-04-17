@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { getApiBaseUrl } from './apiBase';
 
 export type AuthUser = {
   id: string;
@@ -17,7 +18,7 @@ type AuthContextValue = {
   logout: () => Promise<void>;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_URL = getApiBaseUrl();
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {

@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 
 const PUBLIC_PREFIX_ROUTES = [
   '/auth',
+  '/api',
   '/pricing',
   '/faq',
   '/onboarding',

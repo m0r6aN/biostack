@@ -1,10 +1,11 @@
 'use client';
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
+import { getApiBaseUrl } from '@/lib/apiBase';
 import { useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useEffect, useMemo, useState } from 'react';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_URL = getApiBaseUrl();
 
 function resolveRedirectPath(callbackUrl: string | null) {
   if (!callbackUrl) {
