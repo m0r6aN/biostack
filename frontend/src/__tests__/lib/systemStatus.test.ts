@@ -73,7 +73,7 @@ describe('systemStatus', () => {
     expect(getProfilesContinuationStatuses(true)).toMatchObject({
       recovered: { title: 'Inputs recovered.' },
       profile: { title: 'Profile not yet instantiated.' },
-      persistence: { title: 'Protocol ready for persistence.' },
+      persistence: { title: 'Your list is ready to save.' },
     });
   });
 });

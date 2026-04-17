@@ -7,10 +7,10 @@ describe('StackIntelligencePanel', () => {
     render(<StackIntelligencePanel />);
 
     expect(screen.getByText('Input State')).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: 'Protocol' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tab', { name: 'List' })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getAllByText('No inputs detected.')[0]).toBeInTheDocument();
     expect(screen.getByText('Relationship analysis unavailable.')).toBeInTheDocument();
-    expect(screen.getByText('Add one item.')).toBeInTheDocument();
+    expect(screen.getByText('Type anything you take.')).toBeInTheDocument();
     expect(screen.queryByText('BPC-157, TB-500, Creatine')).not.toBeInTheDocument();
     expect(panelContent.simple.relationshipGroups).toEqual([]);
   });

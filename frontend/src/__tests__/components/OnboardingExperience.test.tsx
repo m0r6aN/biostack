@@ -89,10 +89,13 @@ describe('OnboardingExperience', () => {
   it('shows context only for one input and keeps relationship analysis locked', async () => {
     render(<OnboardingExperience />);
 
-    const input = screen.getByPlaceholderText('Type a compound, supplement, or medication…');
+    expect(screen.getByText('What do you want help with first?')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    const input = await screen.findByPlaceholderText('Type a compound, supplement, or medication…');
     fireEvent.change(input, { target: { value: 'BPC-157' } });
     fireEvent.click(screen.getByRole('button', { name: 'Add' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Add to My Protocol' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Add to My List' }));
 
     expect(await screen.findAllByText('Context established.')).not.toHaveLength(0);
     expect(screen.getAllByText('Relationship analysis unavailable.').length).toBeGreaterThan(0);
@@ -103,11 +106,15 @@ describe('OnboardingExperience', () => {
     expect(apiClient.checkOverlap).not.toHaveBeenCalled();
   });
 
-  it('gets users from input to earned relationship to goals without an auth wall first', async () => {
+  it('gets users from goals to input to earned relationship without an auth wall first', async () => {
     render(<OnboardingExperience />);
 
+    expect(screen.getByText('What do you want help with first?')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Energy' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
     expect(
-      screen.getByPlaceholderText('Type a compound, supplement, or medication…')
+      await screen.findByPlaceholderText('Type a compound, supplement, or medication…')
     ).toBeInTheDocument();
     fireEvent.change(screen.getByPlaceholderText('Type a compound, supplement, or medication…'), {
       target: { value: 'BPC-157' },
@@ -121,7 +128,7 @@ describe('OnboardingExperience', () => {
       code: 'Enter',
     });
 
-    fireEvent.click(screen.getByRole('button', { name: 'Add to My Protocol' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Add to My List' }));
 
     expect(await screen.findAllByText('Relationship detected.')).not.toHaveLength(0);
     expect(screen.getByText('Recovery context: Both were selected by the user, so this is a real input check.')).toBeInTheDocument();
@@ -129,10 +136,20 @@ describe('OnboardingExperience', () => {
     expect(screen.getAllByText('BPC-157').length).toBeGreaterThan(0);
     expect(screen.getAllByText('NAD+').length).toBeGreaterThan(0);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
-
-    expect(await screen.findByText('What should BioStack watch first?')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Energy' }));
     expect(screen.getByRole('link', { name: 'Finish Setup' })).toHaveAttribute('href', '/profiles');
+  });
+
+  it('lets beginners start from an example without knowing compound names', async () => {
+    render(<OnboardingExperience />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(await screen.findByRole('button', { name: /Sleep Reset/ }));
+
+    expect(screen.getByText('Magnesium')).toBeInTheDocument();
+    expect(screen.getByText('L-Theanine')).toBeInTheDocument();
+    expect(screen.getByText('Glycine')).toBeInTheDocument();
+    expect(screen.getByText('3 items added')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Type a compound, supplement, or medication…')).toBeInTheDocument();
+    expect(await screen.findByText('Relationship analysis active.')).toBeInTheDocument();
   });
 });
