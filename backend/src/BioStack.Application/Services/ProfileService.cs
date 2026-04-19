@@ -8,10 +8,14 @@ using BioStack.Contracts.Responses;
 public sealed class ProfileService : IProfileService
 {
     private readonly IPersonProfileRepository _profileRepository;
+    private readonly IOwnershipGuard _ownershipGuard;
 
-    public ProfileService(IPersonProfileRepository profileRepository)
+    public ProfileService(
+        IPersonProfileRepository profileRepository,
+        IOwnershipGuard ownershipGuard)
     {
         _profileRepository = profileRepository;
+        _ownershipGuard = ownershipGuard;
     }
 
     public async Task<ProfileResponse> CreateProfileAsync(CreateProfileRequest request, CancellationToken cancellationToken = default)
@@ -19,6 +23,7 @@ public sealed class ProfileService : IProfileService
         var profile = new PersonProfile
         {
             Id = Guid.NewGuid(),
+            OwnerId = _ownershipGuard.CurrentUserId,
             DisplayName = request.DisplayName,
             Sex = request.Sex,
             Weight = request.Weight,
@@ -37,21 +42,19 @@ public sealed class ProfileService : IProfileService
 
     public async Task<ProfileResponse?> GetProfileAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var profile = await _profileRepository.GetByIdAsync(id, cancellationToken);
+        var profile = await _profileRepository.GetOwnedByIdAsync(id, _ownershipGuard.CurrentUserId, cancellationToken);
         return profile is null ? null : MapToResponse(profile);
     }
 
     public async Task<IEnumerable<ProfileResponse>> GetAllProfilesAsync(CancellationToken cancellationToken = default)
     {
-        var profiles = await _profileRepository.GetAllAsync(cancellationToken);
+        var profiles = await _profileRepository.GetAllByOwnerAsync(_ownershipGuard.CurrentUserId, cancellationToken);
         return profiles.Select(MapToResponse);
     }
 
     public async Task<ProfileResponse> UpdateProfileAsync(Guid id, UpdateProfileRequest request, CancellationToken cancellationToken = default)
     {
-        var profile = await _profileRepository.GetByIdAsync(id, cancellationToken);
-        if (profile is null)
-            throw new InvalidOperationException($"Profile with ID {id} not found");
+        var profile = await _ownershipGuard.GetOwnedProfileAsync(id, cancellationToken);
 
         profile.DisplayName = request.DisplayName;
         profile.Sex = request.Sex;
@@ -69,9 +72,15 @@ public sealed class ProfileService : IProfileService
 
     public async Task<bool> DeleteProfileAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var profile = await _profileRepository.GetByIdAsync(id, cancellationToken);
-        if (profile is null)
+        PersonProfile profile;
+        try
+        {
+            profile = await _ownershipGuard.GetOwnedProfileAsync(id, cancellationToken);
+        }
+        catch (InvalidOperationException)
+        {
             return false;
+        }
 
         await _profileRepository.DeleteAsync(profile, cancellationToken);
         await _profileRepository.SaveChangesAsync(cancellationToken);
@@ -102,4 +111,3 @@ public interface IProfileService
     Task<ProfileResponse> UpdateProfileAsync(Guid id, UpdateProfileRequest request, CancellationToken cancellationToken = default);
     Task<bool> DeleteProfileAsync(Guid id, CancellationToken cancellationToken = default);
 }
-

@@ -8,7 +8,8 @@ public static class ProfileEndpoints
     public static void MapProfileEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/api/v1/profiles")
-            .WithTags("Profiles");
+            .WithTags("Profiles")
+            .RequireAuthorization();
 
         group.MapGet("/", GetAllProfiles)
             .WithName("GetAllProfiles");

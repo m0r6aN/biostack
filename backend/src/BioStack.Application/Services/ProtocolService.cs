@@ -17,6 +17,7 @@ public sealed class ProtocolService : IProtocolService
     private readonly IProtocolComputationRecordRepository _computationRepository;
     private readonly IProtocolReviewCompletedEventRepository _reviewCompletedEventRepository;
     private readonly IKnowledgeSource _knowledgeSource;
+    private readonly IOwnershipGuard _ownershipGuard;
 
     public ProtocolService(
         IProtocolRepository protocolRepository,
@@ -26,7 +27,8 @@ public sealed class ProtocolService : IProtocolService
         IProtocolRunRepository protocolRunRepository,
         IProtocolComputationRecordRepository computationRepository,
         IProtocolReviewCompletedEventRepository reviewCompletedEventRepository,
-        IKnowledgeSource knowledgeSource)
+        IKnowledgeSource knowledgeSource,
+        IOwnershipGuard ownershipGuard)
     {
         _protocolRepository = protocolRepository;
         _profileRepository = profileRepository;
@@ -36,13 +38,12 @@ public sealed class ProtocolService : IProtocolService
         _computationRepository = computationRepository;
         _reviewCompletedEventRepository = reviewCompletedEventRepository;
         _knowledgeSource = knowledgeSource;
+        _ownershipGuard = ownershipGuard;
     }
 
     public async Task<ProtocolResponse> SaveCurrentStackAsync(Guid personId, SaveProtocolRequest request, CancellationToken cancellationToken = default)
     {
-        var profile = await _profileRepository.GetByIdAsync(personId, cancellationToken);
-        if (profile is null)
-            throw new InvalidOperationException($"Profile with ID {personId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
 
         var activeCompounds = (await _compoundRepository.GetByPersonIdAsync(personId, cancellationToken))
             .Where(compound => compound.Status == CompoundStatus.Active)
@@ -86,6 +87,7 @@ public sealed class ProtocolService : IProtocolService
 
     public async Task<IEnumerable<ProtocolResponse>> GetProtocolsByProfileAsync(Guid personId, CancellationToken cancellationToken = default)
     {
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var protocols = await _protocolRepository.GetByPersonIdAsync(personId, cancellationToken);
         var responses = new List<ProtocolResponse>();
 
@@ -102,6 +104,7 @@ public sealed class ProtocolService : IProtocolService
         var protocol = await _protocolRepository.GetWithItemsAsync(id, cancellationToken);
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {id} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
 
         return await MapProtocolAsync(protocol, includeComparison: true, cancellationToken);
     }
@@ -111,6 +114,7 @@ public sealed class ProtocolService : IProtocolService
         var protocol = await _protocolRepository.GetWithItemsAsync(id, cancellationToken);
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {id} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
 
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
             .OrderBy(version => version.Version)
@@ -193,6 +197,7 @@ public sealed class ProtocolService : IProtocolService
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
 
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
             .OrderBy(version => version.Version)
@@ -262,6 +267,7 @@ public sealed class ProtocolService : IProtocolService
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
 
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
             .OrderBy(version => version.Version)
@@ -351,6 +357,7 @@ public sealed class ProtocolService : IProtocolService
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
 
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
             .OrderBy(version => version.Version)
@@ -455,6 +462,7 @@ public sealed class ProtocolService : IProtocolService
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
 
         var now = DateTime.UtcNow;
         var activeRun = await _protocolRunRepository.GetActiveByPersonIdAsync(protocol.PersonId, cancellationToken);
@@ -486,12 +494,14 @@ public sealed class ProtocolService : IProtocolService
 
     public async Task<ProtocolRunResponse?> GetActiveRunAsync(Guid personId, CancellationToken cancellationToken = default)
     {
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var run = await _protocolRunRepository.GetActiveByPersonIdAsync(personId, cancellationToken);
         return run is null ? null : MapRun(run);
     }
 
     public async Task<MissionControlResponse> GetMissionControlAsync(Guid personId, CancellationToken cancellationToken = default)
     {
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var protocols = (await _protocolRepository.GetByPersonIdAsync(personId, cancellationToken)).ToList();
         var activeRun = await _protocolRunRepository.GetActiveByPersonIdAsync(personId, cancellationToken);
         var runs = protocols.Count == 0
@@ -555,6 +565,7 @@ public sealed class ProtocolService : IProtocolService
         var run = await _protocolRunRepository.GetWithProtocolAsync(runId, cancellationToken);
         if (run is null)
             throw new InvalidOperationException($"Protocol run with ID {runId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(run.PersonId, cancellationToken);
 
         if (run.Status == ProtocolRunStatus.Active)
         {
@@ -572,6 +583,7 @@ public sealed class ProtocolService : IProtocolService
         var run = await _protocolRunRepository.GetWithProtocolAsync(runId, cancellationToken);
         if (run is null)
             throw new InvalidOperationException($"Protocol run with ID {runId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(run.PersonId, cancellationToken);
 
         if (run.Status == ProtocolRunStatus.Active)
         {
@@ -592,6 +604,7 @@ public sealed class ProtocolService : IProtocolService
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
 
         if (string.IsNullOrWhiteSpace(request.Type))
             throw new InvalidOperationException("Computation type is required.");
@@ -625,6 +638,7 @@ public sealed class ProtocolService : IProtocolService
         var protocol = await _protocolRepository.GetWithItemsAsync(protocolId, cancellationToken);
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
 
         if (request.RunId is not null)
         {
@@ -653,6 +667,7 @@ public sealed class ProtocolService : IProtocolService
         var run = await _protocolRunRepository.GetWithProtocolAsync(runId, cancellationToken);
         if (run?.Protocol is null)
             throw new InvalidOperationException($"Protocol run with ID {runId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(run.PersonId, cancellationToken);
 
         if (run.Status is not (ProtocolRunStatus.Completed or ProtocolRunStatus.Abandoned))
             throw new InvalidOperationException("Only completed or abandoned runs can be evolved into a new protocol draft.");
@@ -690,6 +705,7 @@ public sealed class ProtocolService : IProtocolService
 
     public async Task<CurrentStackIntelligenceResponse> GetCurrentStackIntelligenceAsync(Guid personId, CancellationToken cancellationToken = default)
     {
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var compounds = (await _compoundRepository.GetByPersonIdAsync(personId, cancellationToken))
             .Where(compound => compound.Status == CompoundStatus.Active)
             .ToList();

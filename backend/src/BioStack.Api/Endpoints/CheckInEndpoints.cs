@@ -8,7 +8,8 @@ public static class CheckInEndpoints
     public static void MapCheckInEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/api/v1/profiles/{profileId}/checkins")
-            .WithTags("Check-Ins");
+            .WithTags("Check-Ins")
+            .RequireAuthorization();
 
         group.MapGet("/", GetCheckIns)
             .WithName("GetCheckIns");
@@ -19,8 +20,15 @@ public static class CheckInEndpoints
 
     private static async Task<IResult> GetCheckIns(Guid profileId, ICheckInService checkInService, CancellationToken ct)
     {
-        var checkIns = await checkInService.GetCheckInsByProfileAsync(profileId, ct);
-        return Results.Ok(checkIns);
+        try
+        {
+            var checkIns = await checkInService.GetCheckInsByProfileAsync(profileId, ct);
+            return Results.Ok(checkIns);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
     }
 
     private static async Task<IResult> CreateCheckIn(Guid profileId, CreateCheckInRequest request, ICheckInService checkInService, CancellationToken ct)

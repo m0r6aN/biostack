@@ -8,7 +8,8 @@ public static class ProtocolEndpoints
     public static void MapProtocolEndpoints(this WebApplication app)
     {
         var profileGroup = app.MapGroup("/api/v1/profiles/{profileId}/protocols")
-            .WithTags("Protocols");
+            .WithTags("Protocols")
+            .RequireAuthorization();
 
         profileGroup.MapGet("", GetProtocols)
             .WithName("GetProtocols");
@@ -26,7 +27,8 @@ public static class ProtocolEndpoints
             .WithName("GetProtocolMissionControl");
 
         var protocolGroup = app.MapGroup("/api/v1/protocols")
-            .WithTags("Protocols");
+            .WithTags("Protocols")
+            .RequireAuthorization();
 
         protocolGroup.MapGet("/{id}", GetProtocol)
             .WithName("GetProtocol");
@@ -64,26 +66,54 @@ public static class ProtocolEndpoints
 
     private static async Task<IResult> GetProtocols(Guid profileId, IProtocolService protocolService, CancellationToken ct)
     {
-        var protocols = await protocolService.GetProtocolsByProfileAsync(profileId, ct);
-        return Results.Ok(protocols);
+        try
+        {
+            var protocols = await protocolService.GetProtocolsByProfileAsync(profileId, ct);
+            return Results.Ok(protocols);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
     }
 
     private static async Task<IResult> GetCurrentStackIntelligence(Guid profileId, IProtocolService protocolService, CancellationToken ct)
     {
-        var intelligence = await protocolService.GetCurrentStackIntelligenceAsync(profileId, ct);
-        return Results.Ok(intelligence);
+        try
+        {
+            var intelligence = await protocolService.GetCurrentStackIntelligenceAsync(profileId, ct);
+            return Results.Ok(intelligence);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
     }
 
     private static async Task<IResult> GetActiveRun(Guid profileId, IProtocolService protocolService, CancellationToken ct)
     {
-        var run = await protocolService.GetActiveRunAsync(profileId, ct);
-        return run is null ? Results.NoContent() : Results.Ok(run);
+        try
+        {
+            var run = await protocolService.GetActiveRunAsync(profileId, ct);
+            return run is null ? Results.NoContent() : Results.Ok(run);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
     }
 
     private static async Task<IResult> GetMissionControl(Guid profileId, IProtocolService protocolService, CancellationToken ct)
     {
-        var missionControl = await protocolService.GetMissionControlAsync(profileId, ct);
-        return Results.Ok(missionControl);
+        try
+        {
+            var missionControl = await protocolService.GetMissionControlAsync(profileId, ct);
+            return Results.Ok(missionControl);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
     }
 
     private static async Task<IResult> SaveCurrentStack(Guid profileId, SaveProtocolRequest request, IProtocolService protocolService, CancellationToken ct)

@@ -177,6 +177,8 @@ builder.Services.AddScoped<IProtocolPhaseRepository, ProtocolPhaseRepository>();
 builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
 builder.Services.AddSingleton<InMemoryMagicLinkDelivery>();
 var hasAzureEmail = !string.IsNullOrWhiteSpace(builder.Configuration["AzureCommunicationEmail:ConnectionString"]);
 var hasSmtp = !string.IsNullOrWhiteSpace(builder.Configuration["Smtp:Host"]);
@@ -207,6 +209,7 @@ builder.Services.AddSingleton<IDevMagicLinkInbox>(sp => sp.GetRequiredService<In
 builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IOwnershipGuard, OwnershipGuard>();
 builder.Services.AddScoped<ICompoundService, CompoundService>();
 builder.Services.AddScoped<ICheckInService, CheckInService>();
 builder.Services.AddScoped<IProtocolService, ProtocolService>();

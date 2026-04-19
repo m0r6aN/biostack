@@ -8,7 +8,8 @@ public static class CompoundEndpoints
     public static void MapCompoundEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/api/v1/profiles/{profileId}/compounds")
-            .WithTags("Compounds");
+            .WithTags("Compounds")
+            .RequireAuthorization();
 
         group.MapGet("/", GetCompounds)
             .WithName("GetCompounds");
@@ -25,8 +26,15 @@ public static class CompoundEndpoints
 
     private static async Task<IResult> GetCompounds(Guid profileId, ICompoundService compoundService, CancellationToken ct)
     {
-        var compounds = await compoundService.GetCompoundsByProfileAsync(profileId, ct);
-        return Results.Ok(compounds);
+        try
+        {
+            var compounds = await compoundService.GetCompoundsByProfileAsync(profileId, ct);
+            return Results.Ok(compounds);
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
     }
 
     private static async Task<IResult> CreateCompound(Guid profileId, CreateCompoundRequest request, ICompoundService compoundService, CancellationToken ct)
@@ -42,11 +50,11 @@ public static class CompoundEndpoints
         }
     }
 
-    private static async Task<IResult> UpdateCompound(Guid id, UpdateCompoundRequest request, ICompoundService compoundService, CancellationToken ct)
+    private static async Task<IResult> UpdateCompound(Guid profileId, Guid id, UpdateCompoundRequest request, ICompoundService compoundService, CancellationToken ct)
     {
         try
         {
-            var compound = await compoundService.UpdateCompoundAsync(id, request, ct);
+            var compound = await compoundService.UpdateCompoundAsync(profileId, id, request, ct);
             return Results.Ok(compound);
         }
         catch (InvalidOperationException)
@@ -55,11 +63,11 @@ public static class CompoundEndpoints
         }
     }
 
-    private static async Task<IResult> DeleteCompound(Guid id, ICompoundService compoundService, CancellationToken ct)
+    private static async Task<IResult> DeleteCompound(Guid profileId, Guid id, ICompoundService compoundService, CancellationToken ct)
     {
         try
         {
-            await compoundService.DeleteCompoundAsync(id, ct);
+            await compoundService.DeleteCompoundAsync(profileId, id, ct);
             return Results.NoContent();
         }
         catch (InvalidOperationException)

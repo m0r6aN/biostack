@@ -9,24 +9,22 @@ using BioStack.Contracts.Responses;
 public sealed class CompoundService : ICompoundService
 {
     private readonly ICompoundRecordRepository _compoundRepository;
-    private readonly IPersonProfileRepository _profileRepository;
     private readonly ITimelineEventRepository _timelineRepository;
+    private readonly IOwnershipGuard _ownershipGuard;
 
     public CompoundService(
         ICompoundRecordRepository compoundRepository,
-        IPersonProfileRepository profileRepository,
-        ITimelineEventRepository timelineRepository)
+        ITimelineEventRepository timelineRepository,
+        IOwnershipGuard ownershipGuard)
     {
         _compoundRepository = compoundRepository;
-        _profileRepository = profileRepository;
         _timelineRepository = timelineRepository;
+        _ownershipGuard = ownershipGuard;
     }
 
     public async Task<CompoundResponse> CreateCompoundAsync(Guid personId, CreateCompoundRequest request, CancellationToken cancellationToken = default)
     {
-        var profile = await _profileRepository.GetByIdAsync(personId, cancellationToken);
-        if (profile is null)
-            throw new InvalidOperationException($"Profile with ID {personId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
 
         var compound = new CompoundRecord
         {
@@ -71,14 +69,16 @@ public sealed class CompoundService : ICompoundService
 
     public async Task<IEnumerable<CompoundResponse>> GetCompoundsByProfileAsync(Guid personId, CancellationToken cancellationToken = default)
     {
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var compounds = await _compoundRepository.GetByPersonIdAsync(personId, cancellationToken);
         return compounds.Select(MapToResponse);
     }
 
-    public async Task<CompoundResponse> UpdateCompoundAsync(Guid id, UpdateCompoundRequest request, CancellationToken cancellationToken = default)
+    public async Task<CompoundResponse> UpdateCompoundAsync(Guid personId, Guid id, UpdateCompoundRequest request, CancellationToken cancellationToken = default)
     {
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var compound = await _compoundRepository.GetByIdAsync(id, cancellationToken);
-        if (compound is null)
+        if (compound is null || compound.PersonId != personId)
             throw new InvalidOperationException($"Compound with ID {id} not found");
 
         compound.Name = request.Name;
@@ -99,10 +99,11 @@ public sealed class CompoundService : ICompoundService
         return MapToResponse(compound);
     }
 
-    public async Task DeleteCompoundAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task DeleteCompoundAsync(Guid personId, Guid id, CancellationToken cancellationToken = default)
     {
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var compound = await _compoundRepository.GetByIdAsync(id, cancellationToken);
-        if (compound is null)
+        if (compound is null || compound.PersonId != personId)
             throw new InvalidOperationException($"Compound with ID {id} not found");
 
         await _compoundRepository.DeleteAsync(compound, cancellationToken);
@@ -134,6 +135,6 @@ public interface ICompoundService
 {
     Task<CompoundResponse> CreateCompoundAsync(Guid personId, CreateCompoundRequest request, CancellationToken cancellationToken = default);
     Task<IEnumerable<CompoundResponse>> GetCompoundsByProfileAsync(Guid personId, CancellationToken cancellationToken = default);
-    Task<CompoundResponse> UpdateCompoundAsync(Guid id, UpdateCompoundRequest request, CancellationToken cancellationToken = default);
-    Task DeleteCompoundAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<CompoundResponse> UpdateCompoundAsync(Guid personId, Guid id, UpdateCompoundRequest request, CancellationToken cancellationToken = default);
+    Task DeleteCompoundAsync(Guid personId, Guid id, CancellationToken cancellationToken = default);
 }
