@@ -21,24 +21,25 @@ describe('HomePage hero', () => {
     render(<LandingHero />);
 
     expect(
-      screen.getByRole('heading', { name: 'Stop guessing what to take—or what your stack is actually doing.' })
+      screen.getByRole('heading', { name: 'What to take. How to use it. See what it’s doing.' })
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Track peptides, compounds, and layered protocols')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('Organize compounds by date, protocol, overlap, and check-in history before you decide what comes next.')
+      screen.getByText('Start with answers. Then track, compare, and optimize over time.')
     ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /I'm getting started/ })).toHaveAttribute('href', '/start');
     expect(screen.getByRole('link', { name: /I already have a stack/ })).toHaveAttribute('href', '/map');
     expect(screen.getByRole('link', { name: /I work with clients/ })).toHaveAttribute('href', '/providers');
+    expect(screen.getByRole('link', { name: 'Need help with dosage or mixing? → Start here' })).toHaveAttribute('href', '/tools');
     expect(screen.getByText('Starter')).toBeInTheDocument();
     expect(screen.getByText('Set up compound tracking without rebuilding a spreadsheet.')).toBeInTheDocument();
     expect(screen.getByText('Experienced')).toBeInTheDocument();
     expect(screen.getByText('Map active compounds, overlap signals, and timeline context.')).toBeInTheDocument();
     expect(screen.getByText('Provider')).toBeInTheDocument();
     expect(screen.getByText('Track client protocol changes, notes, and check-ins.')).toBeInTheDocument();
-    expect(screen.getByText('Protocol Surface')).toBeInTheDocument();
+    expect(screen.queryByText('Protocol Surface')).not.toBeInTheDocument();
+    expect(screen.queryByText('Stop guessing what to take—or what your stack is actually doing.')).not.toBeInTheDocument();
+    expect(screen.queryByText('Track peptides, compounds, and layered protocols')).not.toBeInTheDocument();
+    expect(screen.queryByText('Learn more')).not.toBeInTheDocument();
     expect(screen.queryByText('Live')).not.toBeInTheDocument();
     expect(screen.queryByText(/No inputs detected/)).not.toBeInTheDocument();
 
