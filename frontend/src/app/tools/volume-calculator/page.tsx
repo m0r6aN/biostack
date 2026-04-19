@@ -1,13 +1,19 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { PublicCalculatorExperience } from '@/components/marketing/PublicCalculatorExperience';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Dose Volume Calculator | BioStack',
+  description: 'Calculate the draw volume for a target dose from a known concentration.',
+};
 
 export default function VolumeCalculatorPage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'Use the BioStack Reconstitution and Dosing Calculator',
-    description: 'Calculate the volume required for a target dose from concentration, including daily and weekly splits.',
+    name: 'Use the BioStack Dose Volume Calculator',
+    description: 'Calculate the volume required for a target dose from concentration.',
     step: [
       { '@type': 'HowToStep', text: 'Enter the target dose in micrograms.' },
       { '@type': 'HowToStep', text: 'Use the calculated concentration or enter a known concentration.' },

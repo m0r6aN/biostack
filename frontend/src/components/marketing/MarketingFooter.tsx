@@ -10,8 +10,8 @@ export function MarketingFooter() {
           <Link href="/how-it-works" className="transition-colors hover:text-white">
             How it works
           </Link>
-          <Link href="/calculators" className="transition-colors hover:text-white">
-            Calculators
+          <Link href="/tools" className="transition-colors hover:text-white">
+            Tools
           </Link>
           <Link href="/providers" className="transition-colors hover:text-white">
             Provider

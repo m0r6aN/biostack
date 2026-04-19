@@ -107,8 +107,8 @@ export default function HomePage() {
                   Track, compare, and calculate clearly.
                 </h2>
               </div>
-              <Link href="/calculators" className="hidden text-sm font-semibold text-emerald-200 hover:text-white sm:inline">
-                Open calculators
+              <Link href="/tools" className="hidden text-sm font-semibold text-emerald-200 hover:text-white sm:inline">
+                Open tools
               </Link>
             </div>
 

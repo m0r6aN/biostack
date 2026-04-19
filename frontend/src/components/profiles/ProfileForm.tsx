@@ -9,19 +9,20 @@ import { useState } from 'react';
 
 interface ProfileFormProps {
   initialData?: PersonProfile;
+  initialNotes?: string;
   onSubmit: (data: CreateProfileRequest & { selectedGoalIds?: string[] }) => Promise<void>;
   onCancel: () => void;
   isSubmitting?: boolean;
 }
 
-export function ProfileForm({ initialData, onSubmit, onCancel, isSubmitting }: ProfileFormProps) {
+export function ProfileForm({ initialData, initialNotes, onSubmit, onCancel, isSubmitting }: ProfileFormProps) {
   const { settings } = useSettings();
   const [formData, setFormData] = useState({
     displayName: initialData?.displayName || '',
-    sex: (initialData?.sex as any) || 'Male',
+    sex: initialData?.sex || 'Male',
     age: initialData?.age,
     weight: initialData?.weight || 70,
-    notes: initialData?.notes || '',
+    notes: initialData?.notes || initialNotes || '',
   });
   const [selectedGoalIds, setSelectedGoalIds] = useState<string[]>([]); // Note: We'd need to load existing goals if editing
   const [goalSummary, setGoalSummary] = useState(initialData?.goalSummary || '');
@@ -66,7 +67,7 @@ export function ProfileForm({ initialData, onSubmit, onCancel, isSubmitting }: P
           <label className="block text-sm font-medium text-white/70 mb-2">Sex</label>
           <select
             value={formData.sex}
-            onChange={(e) => setFormData({ ...formData, sex: e.target.value as any })}
+            onChange={(e) => setFormData({ ...formData, sex: e.target.value })}
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
           >
             <option value="Male">Male</option>

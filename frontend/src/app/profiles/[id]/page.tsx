@@ -8,7 +8,7 @@ import { ProfileForm } from '@/components/profiles/ProfileForm';
 import { apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
 import { useSettings } from '@/lib/settings';
-import { CheckIn, CompoundRecord, GoalDefinition, PersonProfile, ProtocolPhase } from '@/lib/types';
+import { CheckIn, CompoundRecord, CreateProfileRequest, GoalDefinition, PersonProfile, ProtocolPhase } from '@/lib/types';
 import { formatDate, formatWeight } from '@/lib/utils';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
@@ -29,10 +29,14 @@ export default function ProfileDetailPage() {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [importConfirmation, setImportConfirmation] = useState('');
 
   useEffect(() => {
     loadData();
     setCurrentProfileId(id);
+    if (new URLSearchParams(window.location.search).get('imported') === 'tools') {
+      setImportConfirmation('We imported your saved calculations and setups from this device.');
+    }
   }, [id]);
 
   const loadData = async () => {
@@ -57,7 +61,7 @@ export default function ProfileDetailPage() {
     }
   };
 
-  const handleUpdate = async (data: any) => {
+  const handleUpdate = async (data: CreateProfileRequest & { selectedGoalIds?: string[] }) => {
     try {
       setIsSubmitting(true);
       const { selectedGoalIds: goalIds, ...profileData } = data;
@@ -121,6 +125,12 @@ export default function ProfileDetailPage() {
       <Header title={profile.displayName} subtitle="Profile details" />
 
       <div className="p-4 sm:p-8 max-w-7xl mx-auto">
+        {importConfirmation && (
+          <div className="mb-6 rounded-lg border border-emerald-300/15 bg-emerald-500/[0.07] px-4 py-3 text-sm font-semibold text-emerald-100/85">
+            {importConfirmation}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
           {/* Main Column */}
           <div className="lg:col-span-2 space-y-4 sm:space-y-8">

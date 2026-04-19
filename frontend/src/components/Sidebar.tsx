@@ -112,7 +112,7 @@ const navItems = [
   { label: 'Protocols',   href: '/protocols',   icon: <IconProtocols />,   adminOnly: false },
   { label: 'Check-ins',   href: '/checkins',    icon: <IconCheckins />,    adminOnly: false },
   { label: 'Timeline',    href: '/timeline',    icon: <IconTimeline />,    adminOnly: false },
-  { label: 'Calculators', href: '/calculators', icon: <IconCalculators />, adminOnly: false },
+  { label: 'Tools',       href: '/tools',       icon: <IconCalculators />, adminOnly: false },
   { label: 'Knowledge',   href: '/knowledge',   icon: <IconKnowledge />,   adminOnly: false },
   // Admin nav item — only rendered when role === 1
   { label: 'Admin',       href: '/admin',       icon: <IconAdmin />,       adminOnly: true  },
