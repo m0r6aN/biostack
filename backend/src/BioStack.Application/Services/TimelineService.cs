@@ -6,21 +6,19 @@ using BioStack.Contracts.Responses;
 public sealed class TimelineService : ITimelineService
 {
     private readonly ITimelineEventRepository _timelineRepository;
-    private readonly IPersonProfileRepository _profileRepository;
+    private readonly IOwnershipGuard _ownershipGuard;
 
     public TimelineService(
         ITimelineEventRepository timelineRepository,
-        IPersonProfileRepository profileRepository)
+        IOwnershipGuard ownershipGuard)
     {
         _timelineRepository = timelineRepository;
-        _profileRepository = profileRepository;
+        _ownershipGuard = ownershipGuard;
     }
 
     public async Task<IEnumerable<TimelineEventResponse>> GetTimelineAsync(Guid personId, CancellationToken cancellationToken = default)
     {
-        var profile = await _profileRepository.GetByIdAsync(personId, cancellationToken);
-        if (profile is null)
-            throw new InvalidOperationException($"Profile with ID {personId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
 
         var events = await _timelineRepository.GetByPersonIdAsync(personId, cancellationToken);
         return events.Select(MapToResponse);

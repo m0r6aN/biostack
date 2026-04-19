@@ -3,17 +3,27 @@ namespace BioStack.Api.Tests.Integration;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using System.Net.Http.Json;
 using Xunit;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using BioStack.Api;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Enums;
+using BioStack.Infrastructure.Persistence;
 
 public class ProfileEndpointsIntegrationTests : IAsyncLifetime
 {
     private WebApplicationFactory<Program> _factory = null!;
     private HttpClient _client = null!;
+    private string _dbPath = string.Empty;
     private readonly JsonSerializerOptions _options = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -22,15 +32,50 @@ public class ProfileEndpointsIntegrationTests : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        _factory = new WebApplicationFactory<Program>();
-        _client = _factory.CreateClient();
-        await Task.CompletedTask;
+        _dbPath = Path.Combine(Path.GetTempPath(), $"biostack-profiles-{Guid.NewGuid():N}.db");
+        _factory = new WebApplicationFactory<Program>()
+            .WithWebHostBuilder(builder =>
+            {
+                builder.UseSetting("environment", "Development");
+                builder.ConfigureLogging(logging => logging.ClearProviders());
+                builder.ConfigureAppConfiguration((_, config) =>
+                {
+                    config.AddInMemoryCollection(new Dictionary<string, string?>
+                    {
+                        ["ConnectionStrings:DefaultConnection"] = $"Data Source={_dbPath}",
+                        ["FrontendUrl"] = "http://localhost:3043",
+                        ["PublicApiUrl"] = "http://localhost:5000",
+                        ["Jwt:Secret"] = "test-secret-value-that-is-long-enough-for-hmac",
+                    });
+                });
+                builder.ConfigureServices(services =>
+                {
+                    services.RemoveAll<DbContextOptions<BioStackDbContext>>();
+                    services.AddDbContext<BioStackDbContext>(options =>
+                        options.UseSqlite($"Data Source={_dbPath}"));
+                });
+            });
+        _client = _factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false,
+        });
+        await SignInAsync();
     }
 
     public async Task DisposeAsync()
     {
         _client.Dispose();
         await _factory.DisposeAsync();
+        try
+        {
+            if (File.Exists(_dbPath))
+            {
+                File.Delete(_dbPath);
+            }
+        }
+        catch (IOException)
+        {
+        }
     }
 
     [Fact]
@@ -200,5 +245,13 @@ public class ProfileEndpointsIntegrationTests : IAsyncLifetime
         var getResponse = await _client.GetAsync($"/api/v1/profiles/{createdProfile.Id}");
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     }
-}
 
+    private async Task SignInAsync()
+    {
+        await _client.PostAsJsonAsync("/api/v1/auth/start", new StartAuthRequest("profiles@example.com", "email", "/profiles"));
+        using var doc = await JsonDocument.ParseAsync(await _client.GetStreamAsync("/dev/auth/inbox"));
+        var link = doc.RootElement.EnumerateArray().First().GetProperty("link").GetString()!;
+        var uri = new Uri(link);
+        await _client.GetAsync($"{uri.AbsolutePath}{uri.Query}");
+    }
+}

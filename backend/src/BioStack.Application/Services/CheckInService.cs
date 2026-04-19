@@ -9,27 +9,25 @@ using BioStack.Contracts.Responses;
 public sealed class CheckInService : ICheckInService
 {
     private readonly ICheckInRepository _checkInRepository;
-    private readonly IPersonProfileRepository _profileRepository;
     private readonly ITimelineEventRepository _timelineRepository;
     private readonly IProtocolRunRepository _protocolRunRepository;
+    private readonly IOwnershipGuard _ownershipGuard;
 
     public CheckInService(
         ICheckInRepository checkInRepository,
-        IPersonProfileRepository profileRepository,
         ITimelineEventRepository timelineRepository,
-        IProtocolRunRepository protocolRunRepository)
+        IProtocolRunRepository protocolRunRepository,
+        IOwnershipGuard ownershipGuard)
     {
         _checkInRepository = checkInRepository;
-        _profileRepository = profileRepository;
         _timelineRepository = timelineRepository;
         _protocolRunRepository = protocolRunRepository;
+        _ownershipGuard = ownershipGuard;
     }
 
     public async Task<CheckInResponse> CreateCheckInAsync(Guid personId, CreateCheckInRequest request, CancellationToken cancellationToken = default)
     {
-        var profile = await _profileRepository.GetByIdAsync(personId, cancellationToken);
-        if (profile is null)
-            throw new InvalidOperationException($"Profile with ID {personId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
 
         var activeRun = await _protocolRunRepository.GetActiveByPersonIdAsync(personId, cancellationToken);
 
@@ -83,6 +81,7 @@ public sealed class CheckInService : ICheckInService
 
     public async Task<IEnumerable<CheckInResponse>> GetCheckInsByProfileAsync(Guid personId, CancellationToken cancellationToken = default)
     {
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var checkIns = await _checkInRepository.GetByPersonIdAsync(personId, cancellationToken);
         return checkIns.Select(MapToResponse);
     }

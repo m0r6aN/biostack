@@ -9,24 +9,22 @@ using BioStack.Contracts.Responses;
 public sealed class ProtocolPhaseService : IProtocolPhaseService
 {
     private readonly IProtocolPhaseRepository _phaseRepository;
-    private readonly IPersonProfileRepository _profileRepository;
     private readonly ITimelineEventRepository _timelineRepository;
+    private readonly IOwnershipGuard _ownershipGuard;
 
     public ProtocolPhaseService(
         IProtocolPhaseRepository phaseRepository,
-        IPersonProfileRepository profileRepository,
-        ITimelineEventRepository timelineRepository)
+        ITimelineEventRepository timelineRepository,
+        IOwnershipGuard ownershipGuard)
     {
         _phaseRepository = phaseRepository;
-        _profileRepository = profileRepository;
         _timelineRepository = timelineRepository;
+        _ownershipGuard = ownershipGuard;
     }
 
     public async Task<ProtocolPhaseResponse> CreatePhaseAsync(Guid personId, CreateProtocolPhaseRequest request, CancellationToken cancellationToken = default)
     {
-        var profile = await _profileRepository.GetByIdAsync(personId, cancellationToken);
-        if (profile is null)
-            throw new InvalidOperationException($"Profile with ID {personId} not found");
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
 
         var phase = new ProtocolPhase
         {
@@ -65,6 +63,7 @@ public sealed class ProtocolPhaseService : IProtocolPhaseService
 
     public async Task<IEnumerable<ProtocolPhaseResponse>> GetPhasesByProfileAsync(Guid personId, CancellationToken cancellationToken = default)
     {
+        await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
         var phases = await _phaseRepository.GetByPersonIdAsync(personId, cancellationToken);
         return phases.Select(MapToResponse);
     }

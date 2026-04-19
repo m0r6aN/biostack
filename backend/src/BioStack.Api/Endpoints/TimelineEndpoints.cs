@@ -7,7 +7,8 @@ public static class TimelineEndpoints
     public static void MapTimelineEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/api/v1/profiles/{profileId}/timeline")
-            .WithTags("Timeline");
+            .WithTags("Timeline")
+            .RequireAuthorization();
 
         group.MapGet("/", GetTimeline)
             .WithName("GetTimeline");

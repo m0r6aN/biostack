@@ -979,7 +979,19 @@ public class ProtocolServiceTests
             runRepository,
             computationRepository ?? EmptyComputationRepository(),
             reviewCompletedEventRepository ?? EmptyReviewCompletedEventRepository(),
-            new Mock<IKnowledgeSource>().Object);
+            new Mock<IKnowledgeSource>().Object,
+            PermissiveOwnershipGuard());
+    }
+
+    private static IOwnershipGuard PermissiveOwnershipGuard()
+    {
+        var guard = new Mock<IOwnershipGuard>();
+        guard.SetupGet(item => item.CurrentUserId).Returns(Guid.NewGuid());
+        guard.Setup(item => item.EnsureProfileOwnedAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        guard.Setup(item => item.GetOwnedProfileAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((Guid profileId, CancellationToken _) => new PersonProfile { Id = profileId, OwnerId = Guid.NewGuid() });
+        return guard.Object;
     }
 
     private static IProtocolComputationRecordRepository EmptyComputationRepository()
