@@ -8,12 +8,12 @@ import {
   getOnboardingRewardContent,
   getRelationshipCandidatesFromOverlaps,
 } from '@/lib/onboardingIntelligence';
-import { getOnboardingSystemStatus } from '@/lib/systemStatus';
 import {
   readOnboardingPreview,
   writeOnboardingPreview,
 } from '@/lib/onboardingPreview';
 import { starterStacks } from '@/lib/starterStacks';
+import { getOnboardingSystemStatus } from '@/lib/systemStatus';
 import type { InteractionFlag, KnowledgeEntry } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
@@ -344,7 +344,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
           {isExistingMode ? 'Stack Mapping' : 'Getting Started'}
         </p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-          {isExistingMode ? 'Drop in the stack. We will sort what fits.' : 'Tell us what you take — or start from an example.'}
+          {isExistingMode ? 'A personal bio-operating system with longitudinal intelligence.' : 'Tell us what you take — or start from an example.'}
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-white/62">
           {isExistingMode
