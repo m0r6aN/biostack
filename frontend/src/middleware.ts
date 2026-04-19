@@ -23,6 +23,10 @@ const PUBLIC_PREFIX_ROUTES = [
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  if (pathname === '/calculators') {
+    return NextResponse.redirect(new URL('/tools', req.url), 308);
+  }
+
   if (pathname === '/' || PUBLIC_PREFIX_ROUTES.some((p) => pathname.startsWith(p))) {
     return NextResponse.next();
   }

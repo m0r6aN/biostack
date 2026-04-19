@@ -7,6 +7,13 @@ import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { ProfileForm } from '@/components/profiles/ProfileForm';
 import { apiClient } from '@/lib/api';
+import {
+  buildImportedProfileNotes,
+  hasPendingAnonymousToolData,
+  markAnonymousToolPayloadImported,
+  readAnonymousToolPayload,
+  type AnonymousToolPayload,
+} from '@/lib/anonymousTools';
 import { useProfile } from '@/lib/context';
 import {
   clearOnboardingPreview,
@@ -28,9 +35,12 @@ export default function ProfilesPage() {
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [onboardingPreview, setOnboardingPreview] = useState<OnboardingPreview>(emptyOnboardingPreview);
+  const [toolPayload, setToolPayload] = useState<AnonymousToolPayload | null>(null);
+  const [importConfirmation, setImportConfirmation] = useState('');
   const [profileGoalMap, setProfileGoalMap] = useState<Record<string, GoalDefinition[]>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const continuationStatuses = getProfilesContinuationStatuses(onboardingPreview.compounds.length > 0);
+  const hasPendingToolData = hasPendingAnonymousToolData(toolPayload);
 
   const loadProfiles = useCallback(async () => {
     try {
@@ -47,6 +57,12 @@ export default function ProfilesPage() {
   useEffect(() => {
     loadProfiles();
     setOnboardingPreview(readOnboardingPreview());
+    const pendingToolPayload = readAnonymousToolPayload();
+    setToolPayload(pendingToolPayload);
+    const bootstrap = new URLSearchParams(window.location.search).get('bootstrap');
+    if (bootstrap === 'tools' && hasPendingAnonymousToolData(pendingToolPayload)) {
+      setShowForm(true);
+    }
   }, [loadProfiles]);
 
   const handleCreateProfile = async (data: CreateProfileRequest & { selectedGoalIds?: string[] }) => {
@@ -74,12 +90,43 @@ export default function ProfilesPage() {
           source: 'Onboarding',
         });
       }
+
+      const pendingToolPayload = toolPayload;
+      if (pendingToolPayload && hasPendingAnonymousToolData(pendingToolPayload) && !pendingToolPayload.importStatus.importedProfileIds.includes(newProfile.id)) {
+        const importedNames = Array.from(
+          new Set(
+            pendingToolPayload.draftStackItems
+              .map((item) => item.name.trim())
+              .filter((name) => Boolean(name) && !onboardingPreview.compounds.some((compound) => compound.toLowerCase() === name.toLowerCase()))
+          )
+        );
+
+        for (const compoundName of importedNames) {
+          await apiClient.createCompound(newProfile.id, {
+            personId: newProfile.id,
+            name: compoundName,
+            category: 'Unknown',
+            startDate: new Date().toISOString(),
+            endDate: null,
+            status: 'Active',
+            notes: 'Imported from saved tool work on this device.',
+            sourceType: 'Manual',
+            goal: '',
+            source: 'Local device bootstrap',
+          });
+        }
+
+        const markedPayload = markAnonymousToolPayloadImported(newProfile.id);
+        setToolPayload(markedPayload);
+        setImportConfirmation('We imported your saved calculations and setups from this device.');
+      }
       
       setProfiles([...profiles, newProfile]);
       setCurrentProfileId(newProfile.id);
       clearOnboardingPreview();
       setOnboardingPreview(emptyOnboardingPreview());
       setShowForm(false);
+      window.location.href = `/profiles/${newProfile.id}?imported=tools`;
     } catch {
       setError('Failed to create profile');
     } finally {
@@ -120,7 +167,7 @@ export default function ProfilesPage() {
     loadGoals();
   }, [profiles]);
 
-  if (error) {
+  if (error && !hasPendingToolData) {
     return (
       <div className="w-full">
         <Header title="Profiles" />
@@ -146,6 +193,31 @@ export default function ProfilesPage() {
       />
 
       <div className="p-4 sm:p-8 max-w-4xl">
+        {importConfirmation && (
+          <div className="mb-6 rounded-lg border border-emerald-300/15 bg-emerald-500/[0.07] px-4 py-3 text-sm font-semibold text-emerald-100/85">
+            {importConfirmation}
+          </div>
+        )}
+
+        {hasPendingToolData && !showForm && (
+          <div className="mb-6 rounded-lg border border-emerald-300/15 bg-emerald-500/[0.06] p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200/75">
+              Saved on this device
+            </p>
+            <h2 className="mt-2 text-xl font-semibold text-white">Your saved calculations are ready for this profile.</h2>
+            <p className="mt-2 text-sm leading-6 text-white/58">
+              BioStack can bring over compounds, calculations, setups, instructions, and blend checks from this browser.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowForm(true)}
+              className="mt-5 rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300"
+            >
+              Continue Profile Setup
+            </button>
+          </div>
+        )}
+
         {onboardingPreview.compounds.length > 0 && !showForm && (
           <div className="mb-6 rounded-lg border border-emerald-300/15 bg-emerald-500/[0.06] p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200/75">
@@ -178,6 +250,7 @@ export default function ProfilesPage() {
         {showForm && (
           <div className="mb-8">
             <ProfileForm
+              initialNotes={buildImportedProfileNotes(toolPayload)}
               onSubmit={handleCreateProfile}
               onCancel={() => setShowForm(false)}
               isSubmitting={isSubmitting}

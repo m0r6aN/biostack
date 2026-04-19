@@ -1,6 +1,12 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { PublicCalculatorExperience } from '@/components/marketing/PublicCalculatorExperience';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Reconstitution Calculator | BioStack',
+  description: 'Calculate concentration from powder and solution volume with handling steps next to the result.',
+};
 
 export default function ReconstitutionCalculatorPage() {
   const howToSchema = {
