@@ -1,5 +1,5 @@
-import { LandingPathCard } from './LandingPathCard';
 import Link from 'next/link';
+import { LandingPathCard } from './LandingPathCard';
 
 const entryPaths = [
   {
@@ -62,15 +62,17 @@ const signalClasses = {
 };
 
 export function LandingHero() {
-  return (
+  return ( 
     <section className="border-b border-white/8">
       <div className="mx-auto flex min-h-[calc(90svh-61px)] max-w-7xl flex-col justify-center gap-5 px-5 pb-7 pt-5 sm:min-h-[calc(90svh-73px)] sm:px-8 sm:pt-8 lg:min-h-[calc(88svh-73px)] lg:gap-7 lg:py-7">
         <div className="max-w-5xl">
+          <p>Built for peptides, SARMs, SERMs, and beyond</p>
           <h1 className="text-[2.45rem] font-semibold leading-[0.96] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            What to take. How to use it. See what it’s doing.
+            What to take. How to use it.<br />
+            See what it's doing.
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-6 text-white/64 sm:mt-5 sm:text-lg">
-            Start with answers. Then track, compare, and optimize over time.
+            Start with answers. Then choose to track, compare, and optimize over time.
           </p>
         </div>
 

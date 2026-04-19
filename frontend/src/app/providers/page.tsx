@@ -19,10 +19,10 @@ export default function ProvidersPage() {
             Provider
           </p>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-6xl">
-            Structure protocols across multiple people.
+            A bio-operating system for managing protocols with longitudinal intelligence.
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-white/62 sm:text-lg">
-            Organize multi-client protocol workflows with clearer dates, notes, and check-ins.
+            Organize & track multi-client protocol workflows with clearer dates, notes, and check-ins.
           </p>
         </section>
 
