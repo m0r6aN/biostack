@@ -1,0 +1,201 @@
+[
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "tesamorelin",
+      "canonicalName": "Tesamorelin",
+      "slug": "tesamorelin",
+      "aliases": ["TH9507", "Tesamorelin Acetate"],
+      "brandNames": ["Egrifta", "Egrifta SV"],
+      "synonyms": ["GRF (1-44) analog"],
+      "classification": "Peptide",
+      "compoundFamily": "Growth Hormone Releasing Hormone analog",
+      "isCombinationProduct": false,
+      "activeMoieties": ["tesamorelin"],
+      "externalIdentifiers": {
+        "rxnorm": "1116150",
+        "unii": "9SL627Z9R0",
+        "casNumber": "901758-09-6",
+        "drugbank": "DB08869",
+        "pubchem": "16137828"
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": true,
+      "regulatoryStatus": "FDA-approved (prescription)",
+      "labelStatusByUseCase": [
+        { "useCase": "HIV-associated lipodystrophy visceral fat reduction", "labelStatus": "on-label" },
+        { "useCase": "General body composition / anti-aging", "labelStatus": "off-label" }
+      ],
+      "jurisdiction": "US",
+      "approvedIndications": ["Reduction of excess abdominal fat in HIV-infected patients with lipodystrophy"],
+      "offLabelNotes": ["Prescribed off-label for visceral fat reduction in non-HIV populations; evidence is limited and supervision is advised."]
+    },
+    "mechanism": {
+      "mechanismSummary": "Tesamorelin is a synthetic analog of growth hormone-releasing hormone (GHRH) that binds GHRH receptors on somatotrophs, stimulating pulsatile endogenous GH release and downstream IGF-1 elevation.",
+      "primaryMechanisms": ["GHRH receptor agonism", "Pulsatile GH release", "IGF-1 elevation"],
+      "pathways": ["GH-IGF-1 axis", "Lipolysis"],
+      "targets": ["GHRH receptor"],
+      "effectTags": ["visceral-fat-reduction", "lipolytic", "body-composition"],
+      "goalTags": ["body-composition", "metabolic-health"]
+    },
+    "formulations": [
+      {
+        "formulationId": "egrifta-sv-2mg",
+        "productName": "Egrifta SV",
+        "manufacturer": "Theratechnologies",
+        "route": "subcutaneous",
+        "dosageForm": "Lyophilized powder for reconstitution",
+        "strength": "2 mg/vial",
+        "concentration": 2.0,
+        "unit": "mg",
+        "substitutableWith": [],
+        "storage": {
+          "beforeReconstitution": "Store refrigerated 2-8°C; protect from light.",
+          "afterReconstitution": "Use immediately; discard unused portion.",
+          "temperatureNotes": "Do not freeze.",
+          "lightSensitivity": true,
+          "stabilityWindow": "Single-use after reconstitution."
+        },
+        "reconstitution": {
+          "required": true,
+          "diluent": "Sterile water for injection",
+          "diluentVolume": 2.2,
+          "instructions": "Swirl gently until dissolved; do not shake. Inspect for particulates before injection.",
+          "productSpecific": true
+        }
+      }
+    ],
+    "indications": [
+      {
+        "useCase": "HIV-associated lipodystrophy visceral fat reduction",
+        "labelStatus": "on-label",
+        "population": "HIV-infected adults with lipodystrophy and excess abdominal fat",
+        "benefitSummary": "Reduces visceral adipose tissue and improves body composition over 26 weeks of therapy.",
+        "evidenceTier": "Strong",
+        "sources": ["fda-label:egrifta-sv", "falutz-2007-nejm"]
+      }
+    ],
+    "dosingGuidance": [
+      {
+        "guidanceId": "egrifta-sv-standard",
+        "context": {
+          "useCase": "HIV-associated lipodystrophy visceral fat reduction",
+          "population": "HIV-infected adults with lipodystrophy",
+          "formulation": "egrifta-sv-2mg",
+          "route": "subcutaneous"
+        },
+        "dose": {
+          "amount": 1.4,
+          "unit": "mg",
+          "frequency": "once daily",
+          "scheduleText": "1.4 mg SC once daily, preferably in the abdomen, rotating injection sites.",
+          "preferredTimeOfDay": "evening"
+        },
+        "notes": ["Label-directed dose. Alternate injection site abdominal quadrants to reduce local reactions."],
+        "productSpecific": true,
+        "sources": ["fda-label:egrifta-sv"]
+      }
+    ],
+    "compatibility": {
+      "vialCompatibilitySummary": "Reconstitute with the supplied sterile water only. Do not co-mix with other peptides in the same vial prior to administration.",
+      "blendingRules": [
+        { "ruleType": "co-mix", "target": "other peptides", "status": "avoid", "message": "Do not reconstitute or co-mix tesamorelin with other peptides; label specifies sterile water for injection only.", "sources": ["fda-label:egrifta-sv"] }
+      ],
+      "compatibleBlends": [],
+      "incompatibleBlends": ["CJC-1295", "Ipamorelin co-vial"],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [
+        { "item": "Disruption of hypothalamic-pituitary axis (hypophysectomy, hypopituitarism, pituitary tumor/surgery, head irradiation, head trauma)", "severity": "high", "notes": "Contraindicated per label.", "sources": ["fda-label:egrifta-sv"] },
+        { "item": "Active malignancy", "severity": "critical", "notes": "Discontinue therapy if active malignancy is diagnosed.", "sources": ["fda-label:egrifta-sv"] },
+        { "item": "Pregnancy", "severity": "high", "notes": "Discontinue if pregnancy occurs.", "sources": ["fda-label:egrifta-sv"] }
+      ],
+      "warnings": [
+        { "item": "Increased IGF-1", "severity": "moderate", "notes": "Monitor IGF-1 periodically; consider dose interruption if persistently elevated >3x ULN.", "sources": ["fda-label:egrifta-sv"] },
+        { "item": "Glucose intolerance / new-onset diabetes", "severity": "moderate", "notes": "Assess glucose tolerance prior to initiation and periodically during therapy.", "sources": ["fda-label:egrifta-sv"] },
+        { "item": "Fluid retention", "severity": "low", "notes": "May cause peripheral edema and arthralgia.", "sources": ["fda-label:egrifta-sv"] },
+        { "item": "Injection site reactions", "severity": "low", "notes": "Rotate injection sites.", "sources": ["fda-label:egrifta-sv"] }
+      ],
+      "precautions": [
+        { "item": "Acute critical illness", "notes": "Increased mortality reported with GH therapy in acutely critically ill patients; consider discontinuation.", "sources": ["fda-label:egrifta-sv"] }
+      ],
+      "adverseEffects": {
+        "common": ["arthralgia", "injection site erythema", "peripheral edema", "myalgia", "paresthesia"],
+        "serious": ["hypersensitivity reactions", "glucose intolerance progression"]
+      },
+      "monitoring": [
+        { "parameter": "IGF-1", "reason": "Detect supraphysiologic GH axis activation", "frequency": "Baseline, 3 months, then every 6 months", "sources": ["fda-label:egrifta-sv"] },
+        { "parameter": "Fasting glucose and HbA1c", "reason": "Screen for new-onset glucose intolerance", "frequency": "Baseline and periodically", "sources": ["fda-label:egrifta-sv"] }
+      ]
+    },
+    "interactions": [
+      { "interactionId": "tesamorelin-corticosteroids", "type": "drug-drug", "target": "Systemic corticosteroids", "severity": "moderate", "mechanism": "Chronic supraphysiologic corticosteroid exposure can blunt GH axis response.", "effect": "Potential reduction in tesamorelin efficacy.", "recommendedAction": "Use lowest effective corticosteroid dose; reassess tesamorelin response.", "sources": ["fda-label:egrifta-sv"] },
+      { "interactionId": "tesamorelin-cyp3a4-substrates", "type": "drug-drug", "target": "CYP3A4 substrates (narrow therapeutic index)", "severity": "low", "mechanism": "GH elevation may alter CYP3A4 activity.", "effect": "Potential altered plasma concentrations of simvastatin, cyclosporine.", "recommendedAction": "Monitor therapeutic levels where applicable.", "sources": ["fda-label:egrifta-sv"] }
+    ],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [
+        { "target": "Other GH secretagogues (CJC-1295, Sermorelin, Ipamorelin) used concurrently", "reason": "Additive GH/IGF-1 elevation with no labeled support; increased adverse-event risk.", "severity": "moderate", "sources": ["fda-label:egrifta-sv"] }
+      ],
+      "overlapRules": [
+        { "ruleId": "ghrh-axis-overlap", "ruleType": "pathway-overlap", "tag": "GH-IGF-1 axis", "severity": "moderate", "message": "Combining with other GH axis agents duplicates pathway activation.", "action": "Flag for review; do not auto-approve.", "sources": ["fda-label:egrifta-sv"] }
+      ],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [
+        { "ruleId": "ghrh-redundancy", "ruleType": "redundancy", "tag": "GHRH analog", "severity": "low", "message": "Multiple GHRH analogs are redundant.", "action": "Consolidate to a single GHRH analog.", "sources": ["fda-label:egrifta-sv"] }
+      ],
+      "timingRules": [
+        { "ruleId": "tesamorelin-bedtime", "ruleType": "timing", "tag": "GH pulse alignment", "severity": "low", "message": "Evening dosing aligns with nocturnal GH pulse.", "action": "Prefer evening administration.", "sources": ["fda-label:egrifta-sv"] }
+      ]
+    },
+    "supportiveGuidance": {
+      "nutrition": [
+        { "topic": "Protein intake", "guidance": "Adequate dietary protein (1.2-1.6 g/kg/day) supports lean mass retention during visceral fat reduction." }
+      ],
+      "supplements": [],
+      "sleep": [
+        { "guidance": "Prioritize 7-9 hours of sleep; endogenous GH pulses peak during slow-wave sleep and complement tesamorelin therapy." }
+      ],
+      "exercise": [
+        { "guidance": "Combine with resistance training 2-3x/week to preserve lean mass during fat loss." }
+      ],
+      "applicabilityNotes": ["Guidance is enrichment-only and does not alter label-directed dosing."],
+      "sources": ["internal-curation:biostack-guidance-v1"]
+    },
+    "evidence": {
+      "overallTier": "Strong",
+      "claimSpecificEvidence": [
+        { "claim": "Reduces visceral adipose tissue in HIV-lipodystrophy", "tier": "Strong", "confidence": "high", "sources": ["falutz-2007-nejm", "fda-label:egrifta-sv"] },
+        { "claim": "Improves body composition in non-HIV populations", "tier": "Limited", "confidence": "low", "sources": [] }
+      ],
+      "evidenceGaps": ["Long-term (>52 week) safety data in non-HIV populations."],
+      "controversies": ["Off-label use for general body composition lacks strong RCT support."]
+    },
+    "provenance": {
+      "sourceRecords": [
+        { "sourceType": "label", "title": "EGRIFTA SV (tesamorelin for injection) Prescribing Information", "publisher": "Theratechnologies / FDA", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/022505s012lbl.pdf", "publishedAt": "2019-06-01T00:00:00Z", "lastCheckedAt": "2026-04-15T00:00:00Z" },
+        { "sourceType": "paper", "title": "Effects of Tesamorelin on Visceral Fat and Liver Fat in HIV-Infected Patients", "publisher": "NEJM", "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa071943", "publishedAt": "2007-12-06T00:00:00Z", "lastCheckedAt": "2026-04-15T00:00:00Z" }
+      ],
+      "curationNotes": ["ClassA source (FDA label) establishes regulatory, dosing, safety, and monitoring canon."],
+      "lastReviewedAt": "2026-04-15T00:00:00Z",
+      "reviewStatus": "approved"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "seed:substances-seed.json",
+      "ingestedAt": null,
+      "updatedAt": null,
+      "lastChangeType": "seed",
+      "isActive": true,
+      "completeness": "substantial",
+      "needsReview": false,
+      "reviewReasons": [],
+      "qualityFlags": []
+    }
+  }
+]

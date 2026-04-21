@@ -17,6 +17,7 @@ public sealed class ProtocolService : IProtocolService
     private readonly IProtocolComputationRecordRepository _computationRepository;
     private readonly IProtocolReviewCompletedEventRepository _reviewCompletedEventRepository;
     private readonly IKnowledgeSource _knowledgeSource;
+    private readonly IInteractionIntelligenceService _interactionIntelligenceService;
     private readonly IOwnershipGuard _ownershipGuard;
 
     public ProtocolService(
@@ -28,6 +29,7 @@ public sealed class ProtocolService : IProtocolService
         IProtocolComputationRecordRepository computationRepository,
         IProtocolReviewCompletedEventRepository reviewCompletedEventRepository,
         IKnowledgeSource knowledgeSource,
+        IInteractionIntelligenceService interactionIntelligenceService,
         IOwnershipGuard ownershipGuard)
     {
         _protocolRepository = protocolRepository;
@@ -38,6 +40,7 @@ public sealed class ProtocolService : IProtocolService
         _computationRepository = computationRepository;
         _reviewCompletedEventRepository = reviewCompletedEventRepository;
         _knowledgeSource = knowledgeSource;
+        _interactionIntelligenceService = interactionIntelligenceService;
         _ownershipGuard = ownershipGuard;
     }
 
@@ -139,7 +142,9 @@ public sealed class ProtocolService : IProtocolService
         foreach (var version in lineage)
         {
             var compounds = version.Items.Select(SnapshotCompoundFromItem).ToList();
-            var simulation = Simulate(await LoadKnowledgeEntriesAsync(compounds, cancellationToken));
+            var knowledgeEntries = await LoadKnowledgeEntriesAsync(compounds, cancellationToken);
+            var interactionIntelligence = await _interactionIntelligenceService.EvaluateAsync(knowledgeEntries, cancellationToken);
+            var simulation = Simulate(knowledgeEntries, interactionIntelligence);
             var versionRuns = new List<ProtocolReviewRunResponse>();
 
             foreach (var run in runs.GetValueOrDefault(version.Id, new List<ProtocolRun>()))
@@ -677,7 +682,9 @@ public sealed class ProtocolService : IProtocolService
         var nextVersion = maxVersion + 1;
         var now = DateTime.UtcNow;
         var sourceCompounds = source.Items.Select(SnapshotCompoundFromItem).ToList();
-        var simulation = Simulate(await LoadKnowledgeEntriesAsync(sourceCompounds, cancellationToken));
+        var sourceKnowledgeEntries = await LoadKnowledgeEntriesAsync(sourceCompounds, cancellationToken);
+        var sourceInteractionIntelligence = await _interactionIntelligenceService.EvaluateAsync(sourceKnowledgeEntries, cancellationToken);
+        var simulation = Simulate(sourceKnowledgeEntries, sourceInteractionIntelligence);
         var comparison = await CompareActualAsync(source.PersonId, sourceCompounds, simulation, run, source, cancellationToken);
 
         var draft = new Protocol
@@ -710,10 +717,12 @@ public sealed class ProtocolService : IProtocolService
             .Where(compound => compound.Status == CompoundStatus.Active)
             .ToList();
         var knowledgeEntries = await LoadKnowledgeEntriesAsync(compounds, cancellationToken);
+        var interactionIntelligence = await _interactionIntelligenceService.EvaluateAsync(knowledgeEntries, cancellationToken);
 
         return new CurrentStackIntelligenceResponse(
-            CalculateStackScore(knowledgeEntries),
-            Simulate(knowledgeEntries)
+            CalculateStackScore(knowledgeEntries, interactionIntelligence),
+            Simulate(knowledgeEntries, interactionIntelligence),
+            interactionIntelligence
         );
     }
 
@@ -724,8 +733,9 @@ public sealed class ProtocolService : IProtocolService
             .ToList();
 
         var knowledgeEntries = await LoadKnowledgeEntriesAsync(compounds, cancellationToken);
-        var score = CalculateStackScore(knowledgeEntries);
-        var simulation = Simulate(knowledgeEntries);
+        var interactionIntelligence = await _interactionIntelligenceService.EvaluateAsync(knowledgeEntries, cancellationToken);
+        var score = CalculateStackScore(knowledgeEntries, interactionIntelligence);
+        var simulation = Simulate(knowledgeEntries, interactionIntelligence);
         var activeRun = await _protocolRunRepository.GetActiveByProtocolIdAsync(protocol.Id, cancellationToken);
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken)).ToList();
         var maxVersion = lineage.Count == 0 ? protocol.Version : lineage.Max(version => version.Version);
@@ -764,6 +774,7 @@ public sealed class ProtocolService : IProtocolService
             protocol.Items.Select(MapItem).ToList(),
             score,
             simulation,
+            interactionIntelligence,
             activeRun is null ? null : MapRun(activeRun),
             diff,
             comparison
@@ -785,7 +796,9 @@ public sealed class ProtocolService : IProtocolService
         return entries;
     }
 
-    private static StackScoreResponse CalculateStackScore(List<KnowledgeEntry> entries)
+    private static StackScoreResponse CalculateStackScore(
+        List<KnowledgeEntry> entries,
+        InteractionIntelligenceResponse interactionIntelligence)
     {
         if (entries.Count == 0)
         {
@@ -796,26 +809,30 @@ public sealed class ProtocolService : IProtocolService
             );
         }
 
-        var synergyHits = CountNameMatches(entries, entry => entry.PairsWellWith);
+        var synergyHits = interactionIntelligence.Summary.Synergies;
+        var redundancyHits = interactionIntelligence.Summary.Redundancies;
+        var interferenceHits = interactionIntelligence.Summary.Interferences;
         var avoidHits = CountNameMatches(entries, entry => entry.AvoidWith);
         var drugInteractionFlags = entries.Sum(entry => entry.DrugInteractions.Count);
-        var redundancyHits = CountOverlappingPathways(entries);
         var strongEvidence = entries.Count(entry => entry.EvidenceTier is EvidenceTier.Strong or EvidenceTier.Mechanistic);
         var moderateEvidence = entries.Count(entry => entry.EvidenceTier == EvidenceTier.Moderate);
+        var synergyScore = interactionIntelligence.Score.SynergyScore;
+        var redundancyPenalty = interactionIntelligence.Score.RedundancyPenalty;
+        var interferencePenalty = interactionIntelligence.Score.InterferencePenalty;
 
         var score = 60
-            + Math.Min(18, synergyHits * 6)
+            + Math.Min(20, (int)Math.Round(synergyScore * 10))
             + Math.Min(16, strongEvidence * 5 + moderateEvidence * 2)
-            - Math.Min(12, redundancyHits * 2)
-            - Math.Min(36, avoidHits * 14 + drugInteractionFlags * 5);
+            - Math.Min(14, (int)Math.Round(redundancyPenalty * 7))
+            - Math.Min(38, (int)Math.Round(interferencePenalty * 10) + avoidHits * 8 + drugInteractionFlags * 3);
 
         score = Math.Clamp(score, 0, 100);
 
         var chips = new List<string>
         {
-            avoidHits + drugInteractionFlags == 0
+            interferenceHits + avoidHits + drugInteractionFlags == 0
                 ? "No interaction flags"
-                : $"{avoidHits + drugInteractionFlags} interaction flag{(avoidHits + drugInteractionFlags == 1 ? string.Empty : "s")}",
+                : $"{interferenceHits + avoidHits + drugInteractionFlags} review-first interaction signal{(interferenceHits + avoidHits + drugInteractionFlags == 1 ? string.Empty : "s")}",
             redundancyHits == 0
                 ? "Low redundancy"
                 : redundancyHits <= 2 ? "Moderate redundancy" : "High redundancy",
@@ -832,16 +849,18 @@ public sealed class ProtocolService : IProtocolService
         return new StackScoreResponse(
             score,
             new StackScoreBreakdownResponse(
-                Math.Min(100, synergyHits * 25),
-                Math.Min(100, redundancyHits * 20),
-                Math.Min(100, (avoidHits + drugInteractionFlags) * 25),
+                Math.Min(100, (int)Math.Round(synergyScore * 35)),
+                Math.Min(100, (int)Math.Round(redundancyPenalty * 30)),
+                Math.Min(100, (int)Math.Round(interferencePenalty * 30) + Math.Min(40, (avoidHits + drugInteractionFlags) * 10)),
                 Math.Min(100, strongEvidence * 35 + moderateEvidence * 15)
             ),
             chips
         );
     }
 
-    private static SimulationResultResponse Simulate(List<KnowledgeEntry> entries)
+    private static SimulationResultResponse Simulate(
+        List<KnowledgeEntry> entries,
+        InteractionIntelligenceResponse interactionIntelligence)
     {
         var earlySignals = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var midSignals = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -881,6 +900,11 @@ public sealed class ProtocolService : IProtocolService
         if (entries.Any(entry => entry.DrugInteractions.Count > 0 || entry.AvoidWith.Count > 0))
         {
             insights.Add("Interaction and avoid-with flags are educational warnings; review them before interpreting the protocol.");
+        }
+
+        foreach (var finding in interactionIntelligence.TopFindings.Take(3))
+        {
+            insights.Add(finding.Message);
         }
 
         laterSignals.Add("plateau or adaptation signals are most useful to review after week 3");

@@ -14,6 +14,7 @@ import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
 import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
 import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
+import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { apiClient } from '@/lib/api';
 import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
@@ -318,7 +319,10 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
             </section>
 
             <section id="run" className="grid scroll-mt-6 gap-6 lg:grid-cols-[360px_1fr]">
-              <StackScoreCard score={protocol.stackScore} />
+              <div className="space-y-6">
+                <StackScoreCard score={protocol.stackScore} />
+                <InteractionIntelligenceCard intelligence={protocol.interactionIntelligence} />
+              </div>
               <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Compounds</p>
                 <div className="mt-4 space-y-3">

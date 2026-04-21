@@ -980,6 +980,7 @@ public class ProtocolServiceTests
             computationRepository ?? EmptyComputationRepository(),
             reviewCompletedEventRepository ?? EmptyReviewCompletedEventRepository(),
             new Mock<IKnowledgeSource>().Object,
+            EmptyInteractionIntelligenceService(),
             PermissiveOwnershipGuard());
     }
 
@@ -1008,6 +1009,20 @@ public class ProtocolServiceTests
         repository.Setup(item => item.GetByProtocolIdsAsync(It.IsAny<IEnumerable<Guid>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<ProtocolReviewCompletedEvent>());
         return repository.Object;
+    }
+
+    private static IInteractionIntelligenceService EmptyInteractionIntelligenceService()
+    {
+        var service = new Mock<IInteractionIntelligenceService>();
+        service.Setup(item => item.EvaluateAsync(It.IsAny<IReadOnlyList<KnowledgeEntry>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new BioStack.Contracts.Responses.InteractionIntelligenceResponse(
+                new BioStack.Contracts.Responses.InteractionSummaryResponse(0, 0, 0),
+                new BioStack.Contracts.Responses.ProtocolInteractionScoreResponse(0, 0, 0),
+                50,
+                new List<BioStack.Contracts.Responses.InteractionFindingResponse>(),
+                new List<BioStack.Contracts.Responses.InteractionResultResponse>(),
+                new List<BioStack.Contracts.Responses.InteractionCounterfactualResponse>()));
+        return service.Object;
     }
 
     private static ProtocolService CreateMissionControlService(

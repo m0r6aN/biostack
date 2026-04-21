@@ -2,5 +2,6 @@ namespace BioStack.Contracts.Responses;
 
 public sealed record CurrentStackIntelligenceResponse(
     StackScoreResponse StackScore,
-    SimulationResultResponse Simulation
+    SimulationResultResponse Simulation,
+    InteractionIntelligenceResponse InteractionIntelligence
 );

@@ -17,6 +17,7 @@ public sealed record ProtocolResponse(
     List<ProtocolItemResponse> Items,
     StackScoreResponse StackScore,
     SimulationResultResponse Simulation,
+    InteractionIntelligenceResponse InteractionIntelligence,
     ProtocolRunResponse? ActiveRun,
     ProtocolVersionDiffResponse? VersionDiff,
     ProtocolActualComparisonResponse? ActualComparison

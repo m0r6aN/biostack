@@ -8,6 +8,7 @@ import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
+import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
@@ -121,6 +122,7 @@ export default function ProtocolsPage() {
                 </div>
 
                 {currentStack && <StackScoreCard score={currentStack.stackScore} />}
+                {currentStack && <InteractionIntelligenceCard intelligence={currentStack.interactionIntelligence} title="Current Stack Intelligence" />}
               </div>
 
               {currentStack && <SimulationTimeline simulation={currentStack.simulation} />}

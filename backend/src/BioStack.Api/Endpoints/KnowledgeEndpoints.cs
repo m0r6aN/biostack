@@ -18,6 +18,9 @@ public static class KnowledgeEndpoints
 
         group.MapPost("/overlap-check", CheckOverlap)
             .WithName("CheckOverlap");
+
+        group.MapPost("/interaction-check", CheckInteractions)
+            .WithName("CheckInteractions");
     }
 
     private static async Task<IResult> GetAllCompounds(IKnowledgeService knowledgeService, CancellationToken ct)
@@ -36,5 +39,14 @@ public static class KnowledgeEndpoints
     {
         var flags = await overlapService.CheckOverlapAsync(request, ct);
         return Results.Ok(new { overlaps = flags });
+    }
+
+    private static async Task<IResult> CheckInteractions(
+        OverlapCheckRequest request,
+        IInteractionIntelligenceService interactionIntelligenceService,
+        CancellationToken ct)
+    {
+        var result = await interactionIntelligenceService.EvaluateByNamesAsync(request.CompoundNames, ct);
+        return Results.Ok(result);
     }
 }

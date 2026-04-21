@@ -1,0 +1,832 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biostack.cc/schemas/substance-record.schema.json",
+  "title": "BioStack Substance Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "identity",
+    "regulatory",
+    "mechanism",
+    "formulations",
+    "indications",
+    "dosingGuidance",
+    "compatibility",
+    "safety",
+    "interactions",
+    "stackIntelligence",
+    "supportiveGuidance",
+    "evidence",
+    "provenance",
+    "ops"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "recordType": {
+      "type": "string",
+      "const": "substance"
+    },
+    "identity": {
+      "$ref": "#/$defs/identity"
+    },
+    "regulatory": {
+      "$ref": "#/$defs/regulatory"
+    },
+    "mechanism": {
+      "$ref": "#/$defs/mechanism"
+    },
+    "formulations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/formulation" }
+    },
+    "indications": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/indication" }
+    },
+    "dosingGuidance": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/dosingGuidance" }
+    },
+    "compatibility": {
+      "$ref": "#/$defs/compatibility"
+    },
+    "safety": {
+      "$ref": "#/$defs/safety"
+    },
+    "interactions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/interaction" }
+    },
+    "stackIntelligence": {
+      "$ref": "#/$defs/stackIntelligence"
+    },
+    "supportiveGuidance": {
+      "$ref": "#/$defs/supportiveGuidance"
+    },
+    "evidence": {
+      "$ref": "#/$defs/evidence"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "ops": {
+      "$ref": "#/$defs/ops"
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullableString": {
+      "type": ["string", "null"]
+    },
+    "nullableNumber": {
+      "type": ["number", "null"]
+    },
+    "nullableBoolean": {
+      "type": ["boolean", "null"]
+    },
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "nullableDateTime": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["low", "moderate", "high", "critical", "review", "unknown"]
+    },
+    "evidenceTier": {
+      "type": "string",
+      "enum": ["Strong", "Moderate", "Limited", "Insufficient", "Unknown"]
+    },
+    "reviewStatus": {
+      "type": "string",
+      "enum": ["draft", "reviewed", "approved", "deprecated"]
+    },
+    "completeness": {
+      "type": "string",
+      "enum": ["minimal", "partial", "substantial", "complete"]
+    },
+    "labelStatus": {
+      "type": "string",
+      "enum": ["on-label", "off-label", "not-indicated", "unknown"]
+    },
+    "sourceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRefArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourceRef" },
+      "uniqueItems": true
+    },
+    "externalIdentifiers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rxnorm", "unii", "casNumber", "drugbank", "pubchem"],
+      "properties": {
+        "rxnorm": { "$ref": "#/$defs/nullableString" },
+        "unii": { "$ref": "#/$defs/nullableString" },
+        "casNumber": { "$ref": "#/$defs/nullableString" },
+        "drugbank": { "$ref": "#/$defs/nullableString" },
+        "pubchem": { "$ref": "#/$defs/nullableString" }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonicalId",
+        "canonicalName",
+        "slug",
+        "aliases",
+        "brandNames",
+        "synonyms",
+        "classification",
+        "compoundFamily",
+        "isCombinationProduct",
+        "activeMoieties",
+        "externalIdentifiers"
+      ],
+      "properties": {
+        "canonicalId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "canonicalName": { "$ref": "#/$defs/nonEmptyString" },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "aliases": { "$ref": "#/$defs/stringArray" },
+        "brandNames": { "$ref": "#/$defs/stringArray" },
+        "synonyms": { "$ref": "#/$defs/stringArray" },
+        "classification": {
+          "type": "string",
+          "enum": [
+            "Peptide",
+            "Small Molecule",
+            "Biologic",
+            "Hormone",
+            "SARM",
+            "SERM",
+            "Vitamin",
+            "Mineral",
+            "Supplement",
+            "Pharmaceutical",
+            "Amino Acid",
+            "Research Compound",
+            "Other"
+          ]
+        },
+        "compoundFamily": { "$ref": "#/$defs/nonEmptyString" },
+        "isCombinationProduct": { "type": "boolean" },
+        "activeMoieties": { "$ref": "#/$defs/stringArray" },
+        "externalIdentifiers": { "$ref": "#/$defs/externalIdentifiers" }
+      }
+    },
+    "labelStatusByUseCaseItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["useCase", "labelStatus"],
+      "properties": {
+        "useCase": { "$ref": "#/$defs/nonEmptyString" },
+        "labelStatus": { "$ref": "#/$defs/labelStatus" }
+      }
+    },
+    "regulatory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requiresPrescription",
+        "regulatoryStatus",
+        "labelStatusByUseCase",
+        "jurisdiction",
+        "approvedIndications",
+        "offLabelNotes"
+      ],
+      "properties": {
+        "requiresPrescription": { "type": "boolean" },
+        "regulatoryStatus": { "$ref": "#/$defs/nonEmptyString" },
+        "labelStatusByUseCase": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/labelStatusByUseCaseItem" }
+        },
+        "jurisdiction": { "$ref": "#/$defs/nonEmptyString" },
+        "approvedIndications": { "$ref": "#/$defs/stringArray" },
+        "offLabelNotes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "mechanism": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mechanismSummary",
+        "primaryMechanisms",
+        "pathways",
+        "targets",
+        "effectTags",
+        "goalTags"
+      ],
+      "properties": {
+        "mechanismSummary": { "$ref": "#/$defs/nonEmptyString" },
+        "primaryMechanisms": { "$ref": "#/$defs/stringArray" },
+        "pathways": { "$ref": "#/$defs/stringArray" },
+        "targets": { "$ref": "#/$defs/stringArray" },
+        "effectTags": { "$ref": "#/$defs/stringArray" },
+        "goalTags": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "beforeReconstitution",
+        "afterReconstitution",
+        "temperatureNotes",
+        "lightSensitivity",
+        "stabilityWindow"
+      ],
+      "properties": {
+        "beforeReconstitution": { "$ref": "#/$defs/nullableString" },
+        "afterReconstitution": { "$ref": "#/$defs/nullableString" },
+        "temperatureNotes": { "$ref": "#/$defs/nullableString" },
+        "lightSensitivity": { "$ref": "#/$defs/nullableBoolean" },
+        "stabilityWindow": { "$ref": "#/$defs/nullableString" }
+      }
+    },
+    "reconstitution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "diluent",
+        "diluentVolume",
+        "instructions",
+        "productSpecific"
+      ],
+      "properties": {
+        "required": { "type": "boolean" },
+        "diluent": { "$ref": "#/$defs/nullableString" },
+        "diluentVolume": { "$ref": "#/$defs/nullableNumber" },
+        "instructions": { "$ref": "#/$defs/nullableString" },
+        "productSpecific": { "type": "boolean" }
+      }
+    },
+    "formulation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "formulationId",
+        "productName",
+        "manufacturer",
+        "route",
+        "dosageForm",
+        "strength",
+        "concentration",
+        "unit",
+        "substitutableWith",
+        "storage",
+        "reconstitution"
+      ],
+      "properties": {
+        "formulationId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "productName": { "$ref": "#/$defs/nonEmptyString" },
+        "manufacturer": { "$ref": "#/$defs/nullableString" },
+        "route": {
+          "type": "string",
+          "enum": [
+            "oral",
+            "subcutaneous",
+            "intramuscular",
+            "intravenous",
+            "topical",
+            "intranasal",
+            "transdermal",
+            "other"
+          ]
+        },
+        "dosageForm": { "$ref": "#/$defs/nonEmptyString" },
+        "strength": { "$ref": "#/$defs/nullableString" },
+        "concentration": { "$ref": "#/$defs/nullableNumber" },
+        "unit": { "$ref": "#/$defs/nullableString" },
+        "substitutableWith": { "$ref": "#/$defs/stringArray" },
+        "storage": { "$ref": "#/$defs/storage" },
+        "reconstitution": { "$ref": "#/$defs/reconstitution" }
+      }
+    },
+    "indication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "useCase",
+        "labelStatus",
+        "population",
+        "benefitSummary",
+        "evidenceTier",
+        "sources"
+      ],
+      "properties": {
+        "useCase": { "$ref": "#/$defs/nonEmptyString" },
+        "labelStatus": { "$ref": "#/$defs/labelStatus" },
+        "population": { "$ref": "#/$defs/nonEmptyString" },
+        "benefitSummary": { "$ref": "#/$defs/nonEmptyString" },
+        "evidenceTier": { "$ref": "#/$defs/evidenceTier" },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "doseContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["useCase", "population", "formulation", "route"],
+      "properties": {
+        "useCase": { "$ref": "#/$defs/nonEmptyString" },
+        "population": { "$ref": "#/$defs/nonEmptyString" },
+        "formulation": { "$ref": "#/$defs/nullableString" },
+        "route": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "dose": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "unit", "frequency", "scheduleText", "preferredTimeOfDay"],
+      "properties": {
+        "amount": { "$ref": "#/$defs/nullableNumber" },
+        "unit": { "$ref": "#/$defs/nonEmptyString" },
+        "frequency": { "$ref": "#/$defs/nonEmptyString" },
+        "scheduleText": { "$ref": "#/$defs/nonEmptyString" },
+        "preferredTimeOfDay": { "$ref": "#/$defs/nullableString" }
+      }
+    },
+    "dosingGuidance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "guidanceId",
+        "context",
+        "dose",
+        "notes",
+        "productSpecific",
+        "sources"
+      ],
+      "properties": {
+        "guidanceId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "context": { "$ref": "#/$defs/doseContext" },
+        "dose": { "$ref": "#/$defs/dose" },
+        "notes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "productSpecific": { "type": "boolean" },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "blendingRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ruleType", "target", "status", "message", "sources"],
+      "properties": {
+        "ruleType": { "$ref": "#/$defs/nonEmptyString" },
+        "target": { "$ref": "#/$defs/nonEmptyString" },
+        "status": {
+          "type": "string",
+          "enum": ["allowed", "avoid", "unknown", "review"]
+        },
+        "message": { "$ref": "#/$defs/nonEmptyString" },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "vialCompatibilitySummary",
+        "blendingRules",
+        "compatibleBlends",
+        "incompatibleBlends",
+        "unknownCompatibility"
+      ],
+      "properties": {
+        "vialCompatibilitySummary": { "$ref": "#/$defs/nullableString" },
+        "blendingRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/blendingRule" }
+        },
+        "compatibleBlends": { "$ref": "#/$defs/stringArray" },
+        "incompatibleBlends": { "$ref": "#/$defs/stringArray" },
+        "unknownCompatibility": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "safetyItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["item", "severity", "notes", "sources"],
+      "properties": {
+        "item": { "$ref": "#/$defs/nonEmptyString" },
+        "severity": { "$ref": "#/$defs/severity" },
+        "notes": { "$ref": "#/$defs/nullableString" },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "precautionItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["item", "notes", "sources"],
+      "properties": {
+        "item": { "$ref": "#/$defs/nonEmptyString" },
+        "notes": { "$ref": "#/$defs/nullableString" },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "monitoringItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parameter", "reason", "frequency", "sources"],
+      "properties": {
+        "parameter": { "$ref": "#/$defs/nonEmptyString" },
+        "reason": { "$ref": "#/$defs/nonEmptyString" },
+        "frequency": { "$ref": "#/$defs/nullableString" },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "adverseEffects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["common", "serious"],
+      "properties": {
+        "common": { "$ref": "#/$defs/stringArray" },
+        "serious": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contraindications",
+        "warnings",
+        "precautions",
+        "adverseEffects",
+        "monitoring"
+      ],
+      "properties": {
+        "contraindications": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/safetyItem" }
+        },
+        "warnings": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/safetyItem" }
+        },
+        "precautions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/precautionItem" }
+        },
+        "adverseEffects": { "$ref": "#/$defs/adverseEffects" },
+        "monitoring": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/monitoringItem" }
+        }
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "interactionId",
+        "type",
+        "target",
+        "severity",
+        "mechanism",
+        "effect",
+        "recommendedAction",
+        "sources"
+      ],
+      "properties": {
+        "interactionId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "drug-drug",
+            "drug-condition",
+            "drug-lab",
+            "drug-food",
+            "drug-supplement",
+            "other"
+          ]
+        },
+        "target": { "$ref": "#/$defs/nonEmptyString" },
+        "severity": { "$ref": "#/$defs/severity" },
+        "mechanism": { "$ref": "#/$defs/nullableString" },
+        "effect": { "$ref": "#/$defs/nullableString" },
+        "recommendedAction": { "$ref": "#/$defs/nonEmptyString" },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "pairRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "context", "rationale", "sources"],
+      "properties": {
+        "target": { "$ref": "#/$defs/nonEmptyString" },
+        "context": { "$ref": "#/$defs/nullableString" },
+        "rationale": { "$ref": "#/$defs/nullableString" },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "avoidRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "reason", "severity", "sources"],
+      "properties": {
+        "target": { "$ref": "#/$defs/nonEmptyString" },
+        "reason": { "$ref": "#/$defs/nullableString" },
+        "severity": { "$ref": "#/$defs/severity" },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "stackRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ruleId", "ruleType", "tag", "severity", "message", "action"],
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "ruleType": {
+          "type": "string",
+          "enum": [
+            "pathway-overlap",
+            "mechanism-overlap",
+            "goal-overlap",
+            "synergy",
+            "conflict",
+            "redundancy",
+            "timing"
+          ]
+        },
+        "tag": { "$ref": "#/$defs/nonEmptyString" },
+        "severity": { "$ref": "#/$defs/severity" },
+        "message": { "$ref": "#/$defs/nonEmptyString" },
+        "action": { "$ref": "#/$defs/nonEmptyString" },
+        "sources": {
+          "$ref": "#/$defs/sourceRefArray"
+        }
+      }
+    },
+    "stackIntelligence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pairsWellWith",
+        "avoidWith",
+        "overlapRules",
+        "synergyRules",
+        "conflictRules",
+        "redundancyRules",
+        "timingRules"
+      ],
+      "properties": {
+        "pairsWellWith": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/pairRule" }
+        },
+        "avoidWith": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/avoidRule" }
+        },
+        "overlapRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/stackRule" }
+        },
+        "synergyRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/stackRule" }
+        },
+        "conflictRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/stackRule" }
+        },
+        "redundancyRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/stackRule" }
+        },
+        "timingRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/stackRule" }
+        }
+      }
+    },
+    "guidanceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["topic", "guidance"],
+      "properties": {
+        "topic": { "$ref": "#/$defs/nonEmptyString" },
+        "guidance": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "simpleGuidanceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["guidance"],
+      "properties": {
+        "guidance": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "supportiveGuidance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nutrition",
+        "supplements",
+        "sleep",
+        "exercise",
+        "applicabilityNotes",
+        "sources"
+      ],
+      "properties": {
+        "nutrition": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/guidanceItem" }
+        },
+        "supplements": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/guidanceItem" }
+        },
+        "sleep": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/simpleGuidanceItem" }
+        },
+        "exercise": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/simpleGuidanceItem" }
+        },
+        "applicabilityNotes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "claimEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim", "tier", "confidence", "sources"],
+      "properties": {
+        "claim": { "$ref": "#/$defs/nonEmptyString" },
+        "tier": { "$ref": "#/$defs/evidenceTier" },
+        "confidence": {
+          "type": "string",
+          "enum": ["low", "moderate", "high", "unknown"]
+        },
+        "sources": { "$ref": "#/$defs/sourceRefArray" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "overallTier",
+        "claimSpecificEvidence",
+        "evidenceGaps",
+        "controversies"
+      ],
+      "properties": {
+        "overallTier": { "$ref": "#/$defs/evidenceTier" },
+        "claimSpecificEvidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/claimEvidence" }
+        },
+        "evidenceGaps": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "controversies": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "sourceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceType",
+        "title",
+        "publisher",
+        "url",
+        "publishedAt",
+        "lastCheckedAt"
+      ],
+      "properties": {
+        "sourceType": {
+          "type": "string",
+          "enum": [
+            "label",
+            "regulator",
+            "paper",
+            "review",
+            "database",
+            "guideline",
+            "manufacturer",
+            "internal-curation",
+            "other"
+          ]
+        },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "publisher": { "$ref": "#/$defs/nullableString" },
+        "url": { "$ref": "#/$defs/nullableString" },
+        "publishedAt": { "$ref": "#/$defs/nullableDateTime" },
+        "lastCheckedAt": { "$ref": "#/$defs/nullableDateTime" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceRecords",
+        "curationNotes",
+        "lastReviewedAt",
+        "reviewStatus"
+      ],
+      "properties": {
+        "sourceRecords": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sourceRecord" }
+        },
+        "curationNotes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "lastReviewedAt": { "$ref": "#/$defs/nullableDateTime" },
+        "reviewStatus": { "$ref": "#/$defs/reviewStatus" }
+      }
+    },
+    "ops": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recordVersion",
+        "contentHash",
+        "ingestionSource",
+        "ingestedAt",
+        "updatedAt",
+        "lastChangeType",
+        "isActive",
+        "completeness",
+        "needsReview",
+        "reviewReasons",
+        "qualityFlags"
+      ],
+      "properties": {
+        "recordVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "contentHash": { "$ref": "#/$defs/nullableString" },
+        "ingestionSource": { "$ref": "#/$defs/nonEmptyString" },
+        "ingestedAt": { "$ref": "#/$defs/nullableDateTime" },
+        "updatedAt": { "$ref": "#/$defs/nullableDateTime" },
+        "lastChangeType": {
+          "type": "string",
+          "enum": ["seed", "upsert", "refresh", "manual-review", "deactivate"]
+        },
+        "isActive": { "type": "boolean" },
+        "completeness": { "$ref": "#/$defs/completeness" },
+        "needsReview": { "type": "boolean" },
+        "reviewReasons": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "qualityFlags": {
+          "type": "array",
+          "items": { "type": "string" }
+          
+        }
+      }
+    }
+  }
+}

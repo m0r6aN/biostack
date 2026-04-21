@@ -25,6 +25,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<ProtocolPhase> ProtocolPhases { get; set; }
     public DbSet<TimelineEvent> TimelineEvents { get; set; }
     public DbSet<InteractionFlag> InteractionFlags { get; set; }
+    public DbSet<CompoundInteractionHint> CompoundInteractionHints { get; set; }
     public DbSet<KnowledgeEntry> KnowledgeEntries { get; set; }
     public DbSet<LeadCapture> LeadCaptures { get; set; }
 
@@ -306,6 +307,22 @@ public sealed class BioStackDbContext : DbContext
                 .HasConversion(
                     v => string.Join(",", v),
                     v => v.Split(",", StringSplitOptions.RemoveEmptyEntries).ToList());
+        });
+
+        modelBuilder.Entity<CompoundInteractionHint>(entity =>
+        {
+            entity.HasKey(hint => hint.Id);
+            entity.Property(hint => hint.CompoundA).HasMaxLength(255).IsRequired();
+            entity.Property(hint => hint.CompoundB).HasMaxLength(255).IsRequired();
+            entity.Property(hint => hint.InteractionType).HasConversion<int>();
+            entity.Property(hint => hint.Strength).HasPrecision(3, 2);
+            entity.Property(hint => hint.Notes).HasMaxLength(2000);
+            entity.Property(hint => hint.MechanismOverlap).HasConversion(
+                v => v == null ? null : string.Join("|", v),
+                v => string.IsNullOrWhiteSpace(v)
+                    ? null
+                    : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
+            entity.HasIndex(hint => new { hint.CompoundA, hint.CompoundB }).IsUnique();
         });
 
         modelBuilder.Entity<KnowledgeEntry>(entity =>

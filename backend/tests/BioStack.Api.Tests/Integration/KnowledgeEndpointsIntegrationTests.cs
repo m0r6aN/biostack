@@ -3,7 +3,9 @@ namespace BioStack.Api.Tests.Integration;
 using System.Net;
 using System.Text.Json;
 using BioStack.Api;
+using BioStack.Infrastructure.Knowledge;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
@@ -15,7 +17,16 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
     {
         _factory = new WebApplicationFactory<Program>();
         _client = _factory.CreateClient();
-        await Task.CompletedTask;
+
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var knowledgeSource = scope.ServiceProvider.GetRequiredService<IKnowledgeSource>();
+        var seedSource = new LocalKnowledgeSource();
+        var seedEntries = await seedSource.GetAllCompoundsAsync();
+
+        foreach (var entry in seedEntries)
+        {
+            await knowledgeSource.UpsertCompoundAsync(entry);
+        }
     }
 
     public async Task DisposeAsync()

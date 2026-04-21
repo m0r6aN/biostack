@@ -1,4 +1,21 @@
 services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: biostack-postgres
+    environment:
+      - POSTGRES_DB=biostack
+      - POSTGRES_USER=biostack
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-biostack_dev_password}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U biostack -d biostack"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
   biostack-api:
     build:
       context: ./backend
@@ -6,12 +23,11 @@ services:
     container_name: biostack-api
     ports:
       - "5000:5000"
-    volumes:
-      - biostack-data:/app/data
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__DefaultConnection=Data Source=/app/data/biostack.db
+      - Database__Provider=postgres
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=biostack;Username=biostack;Password=${DB_PASSWORD:-biostack_dev_password}
       - Jwt__Secret=${Jwt__Secret:-CHANGE_ME_MINIMUM_32_CHARACTER_RANDOM_STRING}
       - Auth__CallbackSecret=${Auth__CallbackSecret:-CHANGE_ME_SHARED_SECRET}
       - PublicApiUrl=${PublicApiUrl:-http://localhost:5000}
@@ -30,6 +46,9 @@ services:
       timeout: 3s
       start_period: 10s
       retries: 3
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
 
   biostack-ui:
@@ -71,6 +90,30 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  # One-shot ingestion job. Runs once per `docker compose run` (or per Azure
+  # Container App Job invocation in production) and exits. `restart: "no"`
+  # keeps compose from treating its clean exit as a crash and looping forever.
+  biostack-knowledge-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.knowledge-worker
+    container_name: biostack-knowledge-worker
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=biostack;Username=biostack;Password=${DB_PASSWORD:-biostack_dev_password}
+      - Worker__RunMode=${Worker__RunMode:-Seed}
+      - Worker__DryRun=${Worker__DryRun:-false}
+      - Worker__MaxBatchSize=${Worker__MaxBatchSize:-50}
+      - Worker__SeedFilePath=/app/Seeds/substances-seed.json
+      - Worker__TrustThresholds__ClassA=${Worker__TrustThresholds__ClassA:-0.70}
+      - Worker__TrustThresholds__ClassB=${Worker__TrustThresholds__ClassB:-0.85}
+      - Worker__LogLevel=${Worker__LogLevel:-Information}
+      - Worker__ScopeHint=${Worker__ScopeHint:-}
+    depends_on:
+      biostack-api:
+        condition: service_healthy
+    restart: "no"
+
 volumes:
-  biostack-data:
+  postgres-data:
     driver: local

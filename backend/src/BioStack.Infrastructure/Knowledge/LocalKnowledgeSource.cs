@@ -35,24 +35,80 @@ public sealed class LocalKnowledgeSource : IKnowledgeSource
         return Task.FromResult(results);
     }
 
-    public Task UpsertCompoundAsync(KnowledgeEntry entry, CancellationToken cancellationToken = default)
+    public Task<KnowledgeUpsertDisposition> UpsertCompoundAsync(KnowledgeEntry entry, CancellationToken cancellationToken = default)
     {
         var existing = _knowledgeBase.FirstOrDefault(k => k.CanonicalName == entry.CanonicalName);
-        if (existing != null) _knowledgeBase.Remove(existing);
+        if (existing != null)
+        {
+            if (AreEquivalent(existing, entry))
+            {
+                return Task.FromResult(KnowledgeUpsertDisposition.Unchanged);
+            }
+
+            _knowledgeBase.Remove(existing);
+        }
+
         _knowledgeBase.Add(entry);
-        return Task.CompletedTask;
+        return Task.FromResult(existing is null
+            ? KnowledgeUpsertDisposition.Created
+            : KnowledgeUpsertDisposition.Updated);
     }
 
     public Task<int> IngestBulkAsync(List<KnowledgeEntry> entries, CancellationToken cancellationToken = default)
     {
+        var changed = 0;
         foreach (var entry in entries)
         {
             var existing = _knowledgeBase.FirstOrDefault(k => k.CanonicalName == entry.CanonicalName);
-            if (existing != null) _knowledgeBase.Remove(existing);
+            if (existing != null)
+            {
+                if (AreEquivalent(existing, entry))
+                {
+                    continue;
+                }
+
+                _knowledgeBase.Remove(existing);
+            }
+
             _knowledgeBase.Add(entry);
+            changed++;
         }
-        return Task.FromResult(entries.Count);
+        return Task.FromResult(changed);
     }
+
+    private static bool AreEquivalent(KnowledgeEntry left, KnowledgeEntry right)
+    {
+        return left.CanonicalName == right.CanonicalName
+            && left.Classification == right.Classification
+            && left.RegulatoryStatus == right.RegulatoryStatus
+            && left.MechanismSummary == right.MechanismSummary
+            && left.EvidenceTier == right.EvidenceTier
+            && left.Notes == right.Notes
+            && left.VialCompatibility == right.VialCompatibility
+            && left.RecommendedDosage == right.RecommendedDosage
+            && left.StandardDosageRange == right.StandardDosageRange
+            && left.MaxReportedDose == right.MaxReportedDose
+            && left.Frequency == right.Frequency
+            && left.PreferredTimeOfDay == right.PreferredTimeOfDay
+            && left.OptimizationProtein == right.OptimizationProtein
+            && left.OptimizationCarbs == right.OptimizationCarbs
+            && left.OptimizationSleep == right.OptimizationSleep
+            && left.OptimizationExercise == right.OptimizationExercise
+            && SequenceEqual(left.Aliases, right.Aliases)
+            && SequenceEqual(left.Pathways, right.Pathways)
+            && SequenceEqual(left.Benefits, right.Benefits)
+            && SequenceEqual(left.PairsWellWith, right.PairsWellWith)
+            && SequenceEqual(left.AvoidWith, right.AvoidWith)
+            && SequenceEqual(left.CompatibleBlends, right.CompatibleBlends)
+            && SequenceEqual(left.WeeklyDosageSchedule, right.WeeklyDosageSchedule)
+            && SequenceEqual(left.IncrementalEscalationSteps, right.IncrementalEscalationSteps)
+            && SequenceEqual(left.DrugInteractions, right.DrugInteractions)
+            && SequenceEqual(left.OptimizationSupplements, right.OptimizationSupplements)
+            && SequenceEqual(left.SourceReferences, right.SourceReferences);
+    }
+
+    private static bool SequenceEqual(List<string> left, List<string> right) =>
+        left.SequenceEqual(right, StringComparer.Ordinal);
 
     private static List<KnowledgeEntry> InitializeKnowledgeBase()
     {

@@ -149,10 +149,25 @@ builder.Services.AddAuthorization(options =>
 
 // ── Database ────────────────────────────────────────────────────────────────
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Data Source=./data/biostack.db";
+    ?? (builder.Environment.IsProduction() ? null : "Data Source=./data/biostack.db");
 
 var configuredDatabaseProvider = builder.Configuration["Database:Provider"];
 var usePostgres = DatabaseProviderResolver.IsPostgres(configuredDatabaseProvider, connectionString);
+
+if (builder.Environment.IsProduction())
+{
+    if (string.IsNullOrWhiteSpace(connectionString))
+    {
+        throw new InvalidOperationException(
+            "ConnectionStrings:DefaultConnection is required in Production and must point to Azure Postgres.");
+    }
+
+    if (!usePostgres)
+    {
+        throw new InvalidOperationException(
+            "Production requires a Postgres DefaultConnection. SQLite/file-backed production databases are not supported.");
+    }
+}
 
 builder.Services.AddDbContext<BioStackDbContext>(options =>
 {
@@ -176,6 +191,7 @@ builder.Services.AddScoped<IProtocolReviewCompletedEventRepository, ProtocolRevi
 builder.Services.AddScoped<IProtocolPhaseRepository, ProtocolPhaseRepository>();
 builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
+builder.Services.AddScoped<ICompoundInteractionHintRepository, CompoundInteractionHintRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
@@ -217,6 +233,7 @@ builder.Services.AddScoped<IProtocolPhaseService, ProtocolPhaseService>();
 builder.Services.AddScoped<ITimelineService, TimelineService>();
 builder.Services.AddScoped<ICalculatorService, CalculatorService>();
 builder.Services.AddScoped<IKnowledgeService, KnowledgeService>();
+builder.Services.AddScoped<IInteractionIntelligenceService, InteractionIntelligenceService>();
 builder.Services.AddScoped<IOverlapService, OverlapService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
@@ -269,29 +286,27 @@ try
 {
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+    await InteractionSchemaBootstrapper.EnsureCompoundInteractionHintsTableAsync(db);
 
-    db.Database.EnsureCreated();
-
-    if (db.Database.IsSqlite())
+    if (!app.Environment.IsProduction())
     {
-        var createScript = DatabaseSchemaBootstrapper.MakeSqliteCreateScriptIdempotent(
-            db.Database.GenerateCreateScript());
+        db.Database.EnsureCreated();
 
-        if (!string.IsNullOrWhiteSpace(createScript))
+        if (db.Database.IsSqlite())
         {
-            db.Database.ExecuteSqlRaw(createScript);
+            var createScript = DatabaseSchemaBootstrapper.MakeSqliteCreateScriptIdempotent(
+                db.Database.GenerateCreateScript());
+
+            if (!string.IsNullOrWhiteSpace(createScript))
+            {
+                db.Database.ExecuteSqlRaw(createScript);
+            }
+
+            DatabaseSchemaBootstrapper.BackfillMissingSqliteColumns(db);
         }
 
-        DatabaseSchemaBootstrapper.BackfillMissingSqliteColumns(db);
-    }
-
-    // Seed Knowledge if empty
-    if (!db.KnowledgeEntries.Any())
-    {
-        var source = new LocalKnowledgeSource();
-        var initialData = source.GetAllCompoundsAsync().Result;
-        db.KnowledgeEntries.AddRange(initialData);
-        db.SaveChanges();
+        var hintRepository = scope.ServiceProvider.GetRequiredService<ICompoundInteractionHintRepository>();
+        await CompoundInteractionHintCatalog.SeedDefaultsAsync(hintRepository);
     }
 }
 catch (Exception ex)

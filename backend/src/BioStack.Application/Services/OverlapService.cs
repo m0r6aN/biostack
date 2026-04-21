@@ -2,74 +2,63 @@ namespace BioStack.Application.Services;
 
 using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
-using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Repositories;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 
 public sealed class OverlapService : IOverlapService
 {
-    private readonly IKnowledgeSource _knowledgeSource;
+    private readonly IInteractionIntelligenceService _interactionIntelligenceService;
     private readonly IInteractionFlagRepository _flagRepository;
 
-    public OverlapService(IKnowledgeSource knowledgeSource, IInteractionFlagRepository flagRepository)
+    public OverlapService(IInteractionIntelligenceService interactionIntelligenceService, IInteractionFlagRepository flagRepository)
     {
-        _knowledgeSource = knowledgeSource;
+        _interactionIntelligenceService = interactionIntelligenceService;
         _flagRepository = flagRepository;
     }
 
     public async Task<List<InteractionFlagResponse>> CheckOverlapAsync(OverlapCheckRequest request, CancellationToken cancellationToken = default)
     {
-        var flags = new List<InteractionFlagResponse>();
-
         if (request.CompoundNames.Count < 2)
-            return flags;
+            return new List<InteractionFlagResponse>();
 
-        var knowledgeEntries = new List<KnowledgeEntry>();
-        foreach (var name in request.CompoundNames)
+        var intelligence = await _interactionIntelligenceService.EvaluateByNamesAsync(request.CompoundNames, cancellationToken);
+        var flags = intelligence.Interactions
+            .Where(result => result.Type != InteractionType.Neutral)
+            .Select(MapToFlag)
+            .ToList();
+
+        foreach (var flag in flags)
         {
-            var entry = await _knowledgeSource.GetCompoundAsync(name, cancellationToken);
-            if (entry is not null)
-                knowledgeEntries.Add(entry);
-        }
-
-        for (int i = 0; i < knowledgeEntries.Count; i++)
-        {
-            for (int j = i + 1; j < knowledgeEntries.Count; j++)
-            {
-                var compound1 = knowledgeEntries[i];
-                var compound2 = knowledgeEntries[j];
-
-                var overlappingPathways = compound1.Pathways
-                    .Intersect(compound2.Pathways)
-                    .ToList();
-
-                if (overlappingPathways.Count > 0)
-                {
-                    foreach (var pathway in overlappingPathways)
-                    {
-                        var flag = new InteractionFlag
-                        {
-                            Id = Guid.NewGuid(),
-                            CompoundNames = new List<string> { compound1.CanonicalName, compound2.CanonicalName },
-                            OverlapType = OverlapType.PathwayOverlap,
-                            PathwayTag = pathway,
-                            Description = $"Both {compound1.CanonicalName} and {compound2.CanonicalName} are associated with the {pathway} pathway. Educational reference only.",
-                            EvidenceConfidence = "Limited — Educational reference only",
-                            CreatedAtUtc = DateTime.UtcNow
-                        };
-
-                        await _flagRepository.AddAsync(flag, cancellationToken);
-                        flags.Add(MapToResponse(flag));
-                    }
-                }
-            }
+            await _flagRepository.AddAsync(flag, cancellationToken);
         }
 
         if (flags.Count > 0)
             await _flagRepository.SaveChangesAsync(cancellationToken);
 
-        return flags;
+        return flags.Select(MapToResponse).ToList();
+    }
+
+    private static InteractionFlag MapToFlag(InteractionResultResponse result)
+    {
+        var pathwayTag = result.SharedPathways.FirstOrDefault() ?? string.Empty;
+
+        return new InteractionFlag
+        {
+            Id = Guid.NewGuid(),
+            CompoundNames = new List<string> { result.CompoundA, result.CompoundB },
+            OverlapType = result.Type switch
+            {
+                InteractionType.Synergistic => OverlapType.AdditiveBenefit,
+                InteractionType.Redundant => OverlapType.PathwayOverlap,
+                InteractionType.Interfering => OverlapType.PotentialInteraction,
+                _ => OverlapType.Unknown
+            },
+            PathwayTag = pathwayTag,
+            Description = result.Reason,
+            EvidenceConfidence = $"Confidence {result.Confidence:0.00}",
+            CreatedAtUtc = DateTime.UtcNow
+        };
     }
 
     private static InteractionFlagResponse MapToResponse(InteractionFlag flag)
