@@ -14,6 +14,16 @@ const toneByType: Record<string, string> = {
   Neutral: 'border-white/[0.08] bg-white/[0.04] text-white/70',
 };
 
+const swapReasonLabels: Record<string, string> = {
+  reduces_redundancy: 'reduces redundancy',
+  preserves_synergy: 'preserves synergy',
+  lowers_interference: 'lowers interference',
+  improves_goal_alignment: 'improves goal alignment',
+  improves_signal_clarity: 'improves signal clarity',
+  stronger_evidence: 'stronger evidence',
+  lower_estimated_cost: 'lower estimated cost',
+};
+
 export function InteractionIntelligenceCard({
   intelligence,
   title = 'Interaction Intelligence',
@@ -21,6 +31,7 @@ export function InteractionIntelligenceCard({
   const summary = intelligence.summary;
   const topFindings = intelligence.topFindings;
   const bestRemoval = intelligence.counterfactuals[0];
+  const bestSwap = intelligence.swaps?.[0];
 
   return (
     <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
@@ -60,6 +71,33 @@ export function InteractionIntelligenceCard({
               Best remove-one scenario: {bestRemoval.removedCompound}
             </p>
             <p className="mt-2 text-sm leading-6 text-white/65">{bestRemoval.recommendation}</p>
+          </div>
+        )}
+
+        {bestSwap && (
+          <div className="rounded-lg border border-violet-400/20 bg-violet-500/10 p-4">
+            <div className="flex items-start justify-between gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/60">Best swap</p>
+              <span className="text-xs text-white/40">
+                +{bestSwap.deltaScore.toFixed(1)} pts
+              </span>
+            </div>
+            <p className="mt-2 text-sm font-semibold text-white">
+              Replace {bestSwap.originalCompound} → {bestSwap.candidateCompound}
+            </p>
+            <p className="mt-2 text-sm leading-6 text-white/65">{bestSwap.recommendation}</p>
+            {bestSwap.reasons.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {bestSwap.reasons.map((reason) => (
+                  <span
+                    key={reason}
+                    className="rounded border border-violet-400/20 bg-violet-500/10 px-2 py-0.5 text-[11px] text-violet-200/80"
+                  >
+                    {swapReasonLabels[reason] ?? reason.replace(/_/g, ' ')}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

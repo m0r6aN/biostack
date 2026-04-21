@@ -195,6 +195,24 @@ export interface InteractionIntelligence {
     };
     topFindings: InteractionFinding[];
   }>;
+  swaps: Array<{
+    originalCompound: string;
+    candidateCompound: string;
+    baselineScore: number;
+    variantScore: number;
+    deltaScore: number;
+    deltaPercent: number;
+    verdict: 'likely_improves' | 'little_expected_change' | 'likely_worsens' | string;
+    reasons: string[];
+    recommendation: string;
+    similarityScore: number;
+    summary: {
+      synergies: number;
+      redundancies: number;
+      interferences: number;
+    };
+    topFindings: InteractionFinding[];
+  }>;
 }
 
 export interface ProtocolActualComparison {

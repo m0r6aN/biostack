@@ -45,12 +45,12 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
         IReadOnlyList<KnowledgeEntry> entries,
         CancellationToken cancellationToken = default)
     {
-        return await EvaluateAsync(entries, includeCounterfactuals: true, cancellationToken);
+        return await EvaluateAsync(entries, includeScenarios: true, cancellationToken);
     }
 
     private async Task<InteractionIntelligenceResponse> EvaluateAsync(
         IReadOnlyList<KnowledgeEntry> entries,
-        bool includeCounterfactuals,
+        bool includeScenarios,
         CancellationToken cancellationToken)
     {
         var interactions = new List<InteractionResultResponse>();
@@ -87,11 +87,15 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
                 result.Confidence))
             .ToList();
 
-        var counterfactuals = includeCounterfactuals
+        var counterfactuals = includeScenarios
             ? await BuildCounterfactualsAsync(entries, compositeScore, cancellationToken)
             : new List<InteractionCounterfactualResponse>();
 
-        return new InteractionIntelligenceResponse(summary, score, compositeScore, topFindings, interactions, counterfactuals);
+        var swaps = includeScenarios
+            ? await BuildSwapsAsync(entries, compositeScore, summary, cancellationToken)
+            : new List<InteractionSwapRecommendationResponse>();
+
+        return new InteractionIntelligenceResponse(summary, score, compositeScore, topFindings, interactions, counterfactuals, swaps);
     }
 
     private async Task<InteractionResultResponse> EvaluatePairAsync(
@@ -241,7 +245,7 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
                 .Where((_, index) => index != i)
                 .ToList();
 
-            var variant = await EvaluateAsync(variantEntries, includeCounterfactuals: false, cancellationToken);
+            var variant = await EvaluateAsync(variantEntries, includeScenarios: false, cancellationToken);
             var deltaScore = Math.Round(variant.CompositeScore - baselineCompositeScore, 2);
             var deltaPercent = Math.Round(CalculateDeltaPercent(deltaScore, baselineCompositeScore), 2);
             var verdict = ResolveVerdict(deltaScore);
@@ -261,6 +265,33 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             .OrderByDescending(counterfactual => counterfactual.DeltaScore)
             .ThenBy(counterfactual => counterfactual.RemovedCompound, StringComparer.OrdinalIgnoreCase)
             .ToList();
+    }
+
+    private async Task<List<InteractionSwapRecommendationResponse>> BuildSwapsAsync(
+        IReadOnlyList<KnowledgeEntry> entries,
+        double baselineCompositeScore,
+        InteractionSummaryResponse baselineSummary,
+        CancellationToken cancellationToken)
+    {
+        if (entries.Count == 0)
+        {
+            return new List<InteractionSwapRecommendationResponse>();
+        }
+
+        var candidatePool = await _knowledgeSource.GetAllCompoundsAsync(cancellationToken)
+            ?? new List<KnowledgeEntry>();
+        if (candidatePool.Count == 0)
+        {
+            return new List<InteractionSwapRecommendationResponse>();
+        }
+
+        return await SwapRecommendationEngine.BuildSwapsAsync(
+            entries,
+            candidatePool,
+            baselineCompositeScore,
+            baselineSummary,
+            (variantEntries, ct) => EvaluateAsync(variantEntries, includeScenarios: false, ct),
+            cancellationToken);
     }
 
     private static double CalculateCompositeScore(ProtocolInteractionScoreResponse score)

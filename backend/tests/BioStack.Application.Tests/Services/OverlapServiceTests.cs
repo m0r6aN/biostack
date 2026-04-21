@@ -40,7 +40,8 @@ public class OverlapServiceTests
                 {
                     new(bpc157.CanonicalName, tb500.CanonicalName, Domain.Enums.InteractionType.Redundant, 0.58, new List<string> { "tissue-repair" }, "Shared pathway overlap detected: tissue-repair.", false)
                 },
-                new List<InteractionCounterfactualResponse>()));
+                new List<InteractionCounterfactualResponse>(),
+                new List<InteractionSwapRecommendationResponse>()));
         var mockFlagRepository = new Mock<IInteractionFlagRepository>();
 
         var service = new OverlapService(mockInteractionService.Object, mockFlagRepository.Object);
@@ -85,7 +86,8 @@ public class OverlapServiceTests
                 {
                     new(bpc157.CanonicalName, nad.CanonicalName, Domain.Enums.InteractionType.Neutral, 0.30, new List<string>(), "No significant overlap detected from the current rule set.", false)
                 },
-                new List<InteractionCounterfactualResponse>()));
+                new List<InteractionCounterfactualResponse>(),
+                new List<InteractionSwapRecommendationResponse>()));
         var mockFlagRepository = new Mock<IInteractionFlagRepository>();
 
         var service = new OverlapService(mockInteractionService.Object, mockFlagRepository.Object);
