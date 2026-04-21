@@ -1021,7 +1021,8 @@ public class ProtocolServiceTests
                 50,
                 new List<BioStack.Contracts.Responses.InteractionFindingResponse>(),
                 new List<BioStack.Contracts.Responses.InteractionResultResponse>(),
-                new List<BioStack.Contracts.Responses.InteractionCounterfactualResponse>()));
+                new List<BioStack.Contracts.Responses.InteractionCounterfactualResponse>(),
+                new List<BioStack.Contracts.Responses.InteractionSwapRecommendationResponse>()));
         return service.Object;
     }
 
