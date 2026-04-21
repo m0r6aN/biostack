@@ -13,4 +13,8 @@
     <ProjectReference Include="..\BioStack.Contracts\BioStack.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="BioStack.Application.Tests" />
+  </ItemGroup>
+
 </Project>

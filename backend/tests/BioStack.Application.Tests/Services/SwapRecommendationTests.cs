@@ -120,10 +120,13 @@ public class SwapRecommendationTests
         {
             MakePeptide(
                 "Interfering-Repair",
-                new List<string> { "tissue-repair", "angiogenesis" },
+                new List<string> { "tissue-repair", "angiogenesis", "gi-protective" },
                 EvidenceTier.Strong,
                 avoidWith: new List<string> { "TB-500" }),
-            MakePeptide("Clean-Repair", new List<string> { "tissue-repair", "wound-healing" }, EvidenceTier.Strong)
+            MakePeptide(
+                "Clean-Repair",
+                new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
+                EvidenceTier.Strong)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -137,10 +140,16 @@ public class SwapRecommendationTests
     {
         var candidates = new List<KnowledgeEntry>
         {
-            // Replaces BPC-157: removes the tissue-repair overlap with TB-500.
-            MakePeptide("BpcReplacer-A", new List<string> { "gi-protective", "wound-healing" }, EvidenceTier.Strong),
-            // Replaces TB-500: shares cell-migration with TB but no overlap with BPC after swap.
-            MakePeptide("TbReplacer-B", new List<string> { "cell-migration", "bone-density" }, EvidenceTier.Strong)
+            // Replaces BPC-157: preserves 2/3 of BPC's pathways and removes tissue-repair overlap with TB-500.
+            MakePeptide(
+                "BpcReplacer-A",
+                new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
+                EvidenceTier.Strong),
+            // Replaces TB-500: preserves 2/3 of TB's pathways and removes tissue-repair overlap with BPC.
+            MakePeptide(
+                "TbReplacer-B",
+                new List<string> { "anti-inflammatory", "cell-migration", "bone-density" },
+                EvidenceTier.Strong)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -190,7 +199,10 @@ public class SwapRecommendationTests
 
         var candidates = new List<KnowledgeEntry>
         {
-            MakePeptide("Clean-Repair", new List<string> { "gi-protective", "wound-healing" }, EvidenceTier.Strong)
+            MakePeptide(
+                "Clean-Repair",
+                new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
+                EvidenceTier.Strong)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -219,7 +231,10 @@ public class SwapRecommendationTests
     {
         var candidates = new List<KnowledgeEntry>
         {
-            MakePeptide("Clean-Repair", new List<string> { "gi-protective", "wound-healing" }, EvidenceTier.Strong)
+            MakePeptide(
+                "Clean-Repair",
+                new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
+                EvidenceTier.Strong)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -235,7 +250,10 @@ public class SwapRecommendationTests
     {
         var candidates = new List<KnowledgeEntry>
         {
-            MakePeptide("Clean-Repair", new List<string> { "gi-protective", "wound-healing" }, EvidenceTier.Strong)
+            MakePeptide(
+                "Clean-Repair",
+                new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
+                EvidenceTier.Strong)
         };
 
         var (service, stack) = BuildTestRig(candidates);
@@ -243,5 +261,134 @@ public class SwapRecommendationTests
 
         Assert.NotEmpty(result.Counterfactuals);
         Assert.Equal(stack.Count, result.Counterfactuals.Count);
+    }
+
+    [Fact]
+    public async Task Swaps_ExcludePathwayNotPreservedCandidates_TraceRecordsReason()
+    {
+        // Weak-overlap candidate shares only 1 of BPC's 3 pathways — below the
+        // preservation floor — so it must be excluded with pathway_not_preserved.
+        var candidates = new List<KnowledgeEntry>
+        {
+            MakePeptide("Weak-Overlap", new List<string> { "tissue-repair", "unrelated-1" }, EvidenceTier.Strong)
+        };
+
+        var (service, stack) = BuildTestRig(candidates);
+        var eval = await service.EvaluateSwapsWithTraceAsync(stack, CancellationToken.None);
+
+        Assert.DoesNotContain(eval.Recommendations, swap => swap.CandidateCompound == "Weak-Overlap");
+        Assert.Contains(eval.Traces, trace =>
+            trace.CandidateCompound == "Weak-Overlap"
+            && !trace.PassedEligibility
+            && trace.ExclusionReason == SwapRecommendationEngine.ExclusionPathwayNotPreserved);
+    }
+
+    [Fact]
+    public async Task Swaps_SuppressWhenDeltaTrivial_TraceRecordsSuppressionReason()
+    {
+        var candidates = new List<KnowledgeEntry>
+        {
+            MakePeptide(
+                "NearlyIdentical",
+                new List<string> { "tissue-repair", "angiogenesis", "gi-protective" },
+                EvidenceTier.Moderate)
+        };
+
+        var (service, stack) = BuildTestRig(candidates);
+        var eval = await service.EvaluateSwapsWithTraceAsync(stack, CancellationToken.None);
+
+        Assert.Empty(eval.Recommendations);
+        Assert.Contains(eval.Traces, trace =>
+            trace.CandidateCompound == "NearlyIdentical"
+            && trace.PassedEligibility
+            && !trace.Surfaced
+            && trace.SuppressionReason == SwapRecommendationEngine.SuppressionTrivialDelta);
+    }
+
+    [Fact]
+    public async Task Swaps_NeverEmitLowerEstimatedCostReason()
+    {
+        var candidates = new List<KnowledgeEntry>
+        {
+            MakePeptide(
+                "Clean-Repair",
+                new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
+                EvidenceTier.Strong),
+            MakePeptide(
+                "Alt-Repair",
+                new List<string> { "tissue-repair", "angiogenesis", "wound-healing" },
+                EvidenceTier.Strong)
+        };
+
+        var (service, stack) = BuildTestRig(candidates);
+        var result = await service.EvaluateAsync(stack, CancellationToken.None);
+
+        Assert.All(result.Swaps, swap =>
+            Assert.DoesNotContain(SwapReasonAtoms.LowerEstimatedCost, swap.Reasons));
+    }
+
+    [Fact]
+    public async Task Swaps_ImprovesGoalAlignmentSuppressedWhenPathwayCoverageWeak()
+    {
+        // Candidate is pathway-preserving just enough to be eligible (2/3) but we
+        // expect no goal-alignment reason unless intended-use score is strong.
+        // Because other reason atoms (reduces_redundancy) will fire here, the
+        // fallback goal-alignment reason must not be emitted at all.
+        var candidates = new List<KnowledgeEntry>
+        {
+            MakePeptide(
+                "Clean-Repair",
+                new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
+                EvidenceTier.Strong)
+        };
+
+        var (service, stack) = BuildTestRig(candidates);
+        var result = await service.EvaluateAsync(stack, CancellationToken.None);
+
+        var swap = Assert.Single(result.Swaps, s => s.CandidateCompound == "Clean-Repair");
+        Assert.DoesNotContain(SwapReasonAtoms.ImprovesGoalAlignment, swap.Reasons);
+        Assert.Contains(SwapReasonAtoms.ReducesRedundancy, swap.Reasons);
+    }
+
+    [Fact]
+    public async Task Swaps_RankingPrefersStrongerIntendedUseAndEvidenceOnTies()
+    {
+        // Both candidates should produce the same composite delta (both remove
+        // the tissue-repair overlap). The one that preserves more of BPC's
+        // pathways and has a stronger evidence tier should rank first.
+        var candidates = new List<KnowledgeEntry>
+        {
+            // 2/3 preservation, Moderate evidence
+            MakePeptide(
+                "LowerIntendedUse",
+                new List<string> { "angiogenesis", "gi-protective", "wound-healing" },
+                EvidenceTier.Moderate),
+            // 3/3 preservation but without tissue-repair: use angiogenesis + gi-protective + a third BPC pathway... BPC has 3 pathways, so to get 3/3 we'd need tissue-repair.
+            // Use 2/3 but different pair + Strong evidence instead.
+            MakePeptide(
+                "HigherIntendedUse",
+                new List<string> { "angiogenesis", "gi-protective", "cell-signaling" },
+                EvidenceTier.Strong)
+        };
+
+        var (service, stack) = BuildTestRig(candidates);
+        var result = await service.EvaluateAsync(stack, CancellationToken.None);
+
+        Assert.NotEmpty(result.Swaps);
+        // Find both candidates in the surfaced swaps
+        var higher = result.Swaps.FirstOrDefault(s => s.CandidateCompound == "HigherIntendedUse");
+        var lower = result.Swaps.FirstOrDefault(s => s.CandidateCompound == "LowerIntendedUse");
+        if (higher is not null && lower is not null)
+        {
+            var higherIdx = result.Swaps.IndexOf(higher);
+            var lowerIdx = result.Swaps.IndexOf(lower);
+            Assert.True(higherIdx <= lowerIdx,
+                "stronger-evidence candidate should rank no worse than weaker-evidence candidate on equal delta");
+        }
+        else
+        {
+            // At minimum the stronger candidate should surface if the pool allows it.
+            Assert.NotNull(higher);
+        }
     }
 }
