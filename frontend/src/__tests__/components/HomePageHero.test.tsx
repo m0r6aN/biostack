@@ -21,10 +21,10 @@ describe('HomePage hero', () => {
     render(<LandingHero />);
 
     expect(
-      screen.getByRole('heading', { name: 'What to take. How to use it. See what it’s doing.' })
+      screen.getByRole('heading', { name: /What to take\. How to use it\.\s*See what it's doing\./ })
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Start with answers. Then track, compare, and optimize over time.')
+      screen.getByText('Start with answers. Then choose to track, compare, and optimize over time.')
     ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /I'm getting started/ })).toHaveAttribute('href', '/start');
     expect(screen.getByRole('link', { name: /I already have a stack/ })).toHaveAttribute('href', '/map');
