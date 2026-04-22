@@ -102,7 +102,7 @@ internal static class SwapRecommendationEngine
             var remainingStack = currentEntries
                 .Where(entry => !ReferenceEquals(entry, original))
                 .ToList();
-            var preservableSynergies = CountPreservableSynergies(baselineInteractions, original);
+            var preservableSynergyPairs = CollectPreservableSynergyPairs(baselineInteractions, original);
 
             var eligible = new List<(KnowledgeEntry Entry, double Similarity)>();
 
@@ -144,7 +144,8 @@ internal static class SwapRecommendationEngine
                 var reasons = DeriveReasons(
                     original, entry,
                     baselineSummary, variant.Summary,
-                    preservableSynergies, deltaScore);
+                    preservableSynergyPairs, variant.Interactions,
+                    deltaScore);
 
                 var suppression = EvaluateSuppression(deltaScore, similarity, reasons);
                 if (suppression is not null)
@@ -299,19 +300,60 @@ internal static class SwapRecommendationEngine
         return (double)shared / original.Pathways.Count;
     }
 
-    private static int CountPreservableSynergies(
+    private static HashSet<(string, string)> CollectPreservableSynergyPairs(
         IReadOnlyList<InteractionResultResponse> baselineInteractions,
         KnowledgeEntry original)
     {
+        var pairs = new HashSet<(string, string)>();
         if (baselineInteractions.Count == 0)
+        {
+            return pairs;
+        }
+
+        foreach (var result in baselineInteractions)
+        {
+            if (result.Type != InteractionType.Synergistic)
+            {
+                continue;
+            }
+            if (IsOriginal(result.CompoundA, original) || IsOriginal(result.CompoundB, original))
+            {
+                continue;
+            }
+            pairs.Add(NormalizePairKey(result.CompoundA, result.CompoundB));
+        }
+        return pairs;
+    }
+
+    private static (string, string) NormalizePairKey(string a, string b)
+    {
+        var left = (a ?? string.Empty).Trim().ToLowerInvariant();
+        var right = (b ?? string.Empty).Trim().ToLowerInvariant();
+        return string.CompareOrdinal(left, right) <= 0 ? (left, right) : (right, left);
+    }
+
+    private static int CountPreservedSynergies(
+        IReadOnlySet<(string, string)> preservableSynergyPairs,
+        IReadOnlyList<InteractionResultResponse> variantInteractions)
+    {
+        if (preservableSynergyPairs.Count == 0 || variantInteractions.Count == 0)
         {
             return 0;
         }
 
-        return baselineInteractions.Count(result =>
-            result.Type == InteractionType.Synergistic
-            && !IsOriginal(result.CompoundA, original)
-            && !IsOriginal(result.CompoundB, original));
+        var preserved = 0;
+        foreach (var result in variantInteractions)
+        {
+            if (result.Type != InteractionType.Synergistic)
+            {
+                continue;
+            }
+            if (preservableSynergyPairs.Contains(NormalizePairKey(result.CompoundA, result.CompoundB)))
+            {
+                preserved++;
+            }
+        }
+        return preserved;
     }
 
     private static bool IsOriginal(string name, KnowledgeEntry original)
@@ -459,7 +501,8 @@ internal static class SwapRecommendationEngine
         KnowledgeEntry candidate,
         InteractionSummaryResponse baselineSummary,
         InteractionSummaryResponse variantSummary,
-        int preservableSynergies,
+        IReadOnlySet<(string, string)> preservableSynergyPairs,
+        IReadOnlyList<InteractionResultResponse> variantInteractions,
         double deltaScore)
     {
         var reasons = new List<string>();
@@ -474,7 +517,8 @@ internal static class SwapRecommendationEngine
             reasons.Add(SwapReasonAtoms.LowersInterference);
         }
 
-        if (preservableSynergies > 0 && variantSummary.Synergies >= preservableSynergies)
+        if (preservableSynergyPairs.Count > 0
+            && CountPreservedSynergies(preservableSynergyPairs, variantInteractions) == preservableSynergyPairs.Count)
         {
             reasons.Add(SwapReasonAtoms.PreservesSynergy);
         }

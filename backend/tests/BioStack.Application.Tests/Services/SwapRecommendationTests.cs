@@ -391,4 +391,126 @@ public class SwapRecommendationTests
             Assert.NotNull(higher);
         }
     }
+
+    // Regression fixtures for the `preserves_synergy` pair-identity gate (PR #36 review).
+    // Peers B and D are Supplements so only the A->X swap clears the classification gate,
+    // leaving a single recommendation to assert against.
+    private static (List<KnowledgeEntry> current, List<KnowledgeEntry> pool,
+        InteractionSummaryResponse baselineSummary,
+        List<InteractionResultResponse> baselineInteractions,
+        double baselineComposite) BuildPairIdentityRig(EvidenceTier candidateEvidence)
+    {
+        var original = MakePeptide("A", new List<string> { "p1", "p2", "p3" });
+        var peerB = new KnowledgeEntry
+        {
+            CanonicalName = "B",
+            Classification = CompoundCategory.Supplement,
+            Pathways = new List<string> { "p1" },
+            EvidenceTier = EvidenceTier.Moderate
+        };
+        var peerD = new KnowledgeEntry
+        {
+            CanonicalName = "D",
+            Classification = CompoundCategory.Supplement,
+            Pathways = new List<string> { "p2" },
+            EvidenceTier = EvidenceTier.Moderate
+        };
+        var candidate = MakePeptide("X", new List<string> { "p1", "p2", "p3" }, candidateEvidence);
+
+        var baselineInteractions = new List<InteractionResultResponse>
+        {
+            new("A", "B", InteractionType.Synergistic, 0.8d, new List<string> { "p1" }, string.Empty, false),
+            new("B", "D", InteractionType.Synergistic, 0.8d, new List<string>(), string.Empty, false)
+        };
+
+        return (
+            new List<KnowledgeEntry> { original, peerB, peerD },
+            new List<KnowledgeEntry> { candidate },
+            new InteractionSummaryResponse(2, 0, 0),
+            baselineInteractions,
+            10d);
+    }
+
+    private static InteractionIntelligenceResponse BuildVariant(
+        double compositeScore,
+        InteractionSummaryResponse summary,
+        List<InteractionResultResponse> interactions)
+    {
+        return new InteractionIntelligenceResponse(
+            summary,
+            new ProtocolInteractionScoreResponse(0d, 0d, 0d),
+            compositeScore,
+            new List<InteractionFindingResponse>(),
+            interactions,
+            new List<InteractionCounterfactualResponse>(),
+            new List<InteractionSwapRecommendationResponse>());
+    }
+
+    [Fact]
+    public async Task Swaps_FiresPreservesSynergyWhenBaselinePairSurvives()
+    {
+        var (current, pool, baselineSummary, baselineInteractions, baselineComposite) =
+            BuildPairIdentityRig(EvidenceTier.Moderate);
+
+        // Variant keeps the (B,D) baseline synergy intact after A -> X.
+        var variant = BuildVariant(
+            15d,
+            new InteractionSummaryResponse(2, 0, 0),
+            new List<InteractionResultResponse>
+            {
+                new("X", "B", InteractionType.Synergistic, 0.8d, new List<string> { "p1" }, string.Empty, false),
+                new("B", "D", InteractionType.Synergistic, 0.8d, new List<string>(), string.Empty, false)
+            });
+
+        var result = await SwapRecommendationEngine.EvaluateAsync(
+            current,
+            pool,
+            baselineComposite,
+            baselineSummary,
+            baselineInteractions,
+            (_, _) => Task.FromResult(variant),
+            CancellationToken.None);
+
+        var swap = Assert.Single(result.Recommendations);
+        Assert.Equal("A", swap.OriginalCompound);
+        Assert.Equal("X", swap.CandidateCompound);
+        Assert.Contains(SwapReasonAtoms.PreservesSynergy, swap.Reasons);
+    }
+
+    [Fact]
+    public async Task Swaps_DoesNotFirePreservesSynergyWhenBaselinePairIsLostButCountIsMaintained()
+    {
+        // Candidate with Strong evidence so stronger_evidence fires and the swap still surfaces
+        // even though preserves_synergy must not.
+        var (current, pool, baselineSummary, baselineInteractions, baselineComposite) =
+            BuildPairIdentityRig(EvidenceTier.Strong);
+
+        // Variant drops the (B,D) baseline pair but introduces two NEW synergies so the
+        // aggregate synergy count is at least as high as baseline - this is the exact
+        // scenario where the old count-vs-count gate would falsely fire preserves_synergy.
+        var variant = BuildVariant(
+            13d,
+            new InteractionSummaryResponse(2, 0, 0),
+            new List<InteractionResultResponse>
+            {
+                new("X", "B", InteractionType.Synergistic, 0.8d, new List<string> { "p1" }, string.Empty, false),
+                new("X", "D", InteractionType.Synergistic, 0.8d, new List<string> { "p2" }, string.Empty, false)
+            });
+
+        var result = await SwapRecommendationEngine.EvaluateAsync(
+            current,
+            pool,
+            baselineComposite,
+            baselineSummary,
+            baselineInteractions,
+            (_, _) => Task.FromResult(variant),
+            CancellationToken.None);
+
+        var swap = Assert.Single(result.Recommendations);
+        Assert.Equal("A", swap.OriginalCompound);
+        Assert.Equal("X", swap.CandidateCompound);
+        Assert.DoesNotContain(SwapReasonAtoms.PreservesSynergy, swap.Reasons);
+        Assert.Contains(SwapReasonAtoms.StrongerEvidence, swap.Reasons);
+    }
+
 }
