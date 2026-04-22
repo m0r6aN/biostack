@@ -16,7 +16,7 @@ import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpecta
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
-import { apiClient } from '@/lib/api';
+import { ApiError, apiClient } from '@/lib/api';
 import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
 
 interface ProtocolDetailPageProps {
@@ -38,6 +38,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
   const [completingReview, setCompletingReview] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [commanderLockedMessage, setCommanderLockedMessage] = useState<string | null>(null);
 
   useEffect(() => {
     loadProtocol();
@@ -47,18 +48,32 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
     try {
       setLoading(true);
       setError(null);
-      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
-        apiClient.getProtocol(id),
-        apiClient.getProtocolReview(id),
-        apiClient.getProtocolPatterns(id),
-        apiClient.getProtocolDrift(id),
-        apiClient.getProtocolSequenceExpectation(id),
-      ]);
+      setCommanderLockedMessage(null);
+      const protocolData = await apiClient.getProtocol(id);
       setProtocol(protocolData);
-      setReview(reviewData);
-      setPatterns(patternData);
-      setDrift(driftData);
-      setSequence(sequenceData);
+
+      try {
+        const [reviewData, patternData, driftData, sequenceData] = await Promise.all([
+          apiClient.getProtocolReview(id),
+          apiClient.getProtocolPatterns(id),
+          apiClient.getProtocolDrift(id),
+          apiClient.getProtocolSequenceExpectation(id),
+        ]);
+        setReview(reviewData);
+        setPatterns(patternData);
+        setDrift(driftData);
+        setSequence(sequenceData);
+      } catch (err) {
+        if (err instanceof ApiError && err.upgradeRequired) {
+          setReview(null);
+          setPatterns(null);
+          setDrift(null);
+          setSequence(null);
+          setCommanderLockedMessage(err.message);
+        } else {
+          throw err;
+        }
+      }
     } catch (err) {
       setError('Failed to load protocol');
     } finally {
@@ -71,18 +86,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setStarting(true);
       setError(null);
       await apiClient.startProtocolRun(id);
-      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
-        apiClient.getProtocol(id),
-        apiClient.getProtocolReview(id),
-        apiClient.getProtocolPatterns(id),
-        apiClient.getProtocolDrift(id),
-        apiClient.getProtocolSequenceExpectation(id),
-      ]);
-      setProtocol(protocolData);
-      setReview(reviewData);
-      setPatterns(patternData);
-      setDrift(driftData);
-      setSequence(sequenceData);
+      await loadProtocol();
       setToast('Protocol run started');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -101,18 +105,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setEnding(true);
       setError(null);
       await apiClient.completeProtocolRun(protocol.activeRun.id);
-      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
-        apiClient.getProtocol(id),
-        apiClient.getProtocolReview(id),
-        apiClient.getProtocolPatterns(id),
-        apiClient.getProtocolDrift(id),
-        apiClient.getProtocolSequenceExpectation(id),
-      ]);
-      setProtocol(protocolData);
-      setReview(reviewData);
-      setPatterns(patternData);
-      setDrift(driftData);
-      setSequence(sequenceData);
+      await loadProtocol();
       setToast('Run marked completed');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -131,18 +124,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setEnding(true);
       setError(null);
       await apiClient.abandonProtocolRun(protocol.activeRun.id);
-      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
-        apiClient.getProtocol(id),
-        apiClient.getProtocolReview(id),
-        apiClient.getProtocolPatterns(id),
-        apiClient.getProtocolDrift(id),
-        apiClient.getProtocolSequenceExpectation(id),
-      ]);
-      setProtocol(protocolData);
-      setReview(reviewData);
-      setPatterns(patternData);
-      setDrift(driftData);
-      setSequence(sequenceData);
+      await loadProtocol();
       setToast('Run marked abandoned');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -183,16 +165,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
         protocol.actualComparison?.run?.id ?? protocol.activeRun?.id ?? null,
         'Protocol review completed from detail view.'
       );
-      const [reviewData, patternData, driftData, sequenceData] = await Promise.all([
-        apiClient.getProtocolReview(id),
-        apiClient.getProtocolPatterns(id),
-        apiClient.getProtocolDrift(id),
-        apiClient.getProtocolSequenceExpectation(id),
-      ]);
-      setReview(reviewData);
-      setPatterns(patternData);
-      setDrift(driftData);
-      setSequence(sequenceData);
+      await loadProtocol();
       setToast('Review completed');
       window.setTimeout(() => setToast(null), 2600);
     } catch (err) {
@@ -270,6 +243,12 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
         ) : protocol ? (
           <>
             <ProtocolContinuityStrip protocol={protocol} review={review} patterns={patterns} drift={drift} sequence={sequence} />
+            {commanderLockedMessage && (
+              <UpgradeBanner
+                title="Commander keeps the historical intelligence layer unlocked"
+                detail={commanderLockedMessage}
+              />
+            )}
             <div className="grid gap-4 lg:grid-cols-3">
               <PatternMemoryPanel snapshot={patterns} compact />
               <DriftRegimePanel drift={drift} patterns={patterns} compact />
@@ -357,15 +336,17 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
               <ProtocolComparison comparison={protocol.actualComparison} />
             </section>
             <section id="review" className="scroll-mt-6">
-              <div className="mb-3 flex justify-end">
-                <button
-                  onClick={completeReview}
-                  disabled={completingReview || !review}
-                  className="rounded-lg border border-lime-400/25 bg-lime-500/10 px-4 py-2 text-sm font-semibold text-lime-100 hover:border-lime-300/45 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {completingReview ? 'Completing review' : 'Complete review'}
-                </button>
-              </div>
+              {review && (
+                <div className="mb-3 flex justify-end">
+                  <button
+                    onClick={completeReview}
+                    disabled={completingReview || !review}
+                    className="rounded-lg border border-lime-400/25 bg-lime-500/10 px-4 py-2 text-sm font-semibold text-lime-100 hover:border-lime-300/45 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {completingReview ? 'Completing review' : 'Complete review'}
+                  </button>
+                </div>
+              )}
               <ProtocolIntelligenceReview review={review} patterns={patterns} drift={drift} sequence={sequence} />
             </section>
           </>
@@ -374,5 +355,29 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
         )}
       </div>
     </div>
+  );
+}
+
+function UpgradeBanner({ title, detail }: { title: string; detail: string }) {
+  return (
+    <section className="rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-100/75">Commander</p>
+      <h2 className="mt-2 text-xl font-semibold text-white">{title}</h2>
+      <p className="mt-2 max-w-3xl text-sm leading-6 text-white/65">{detail}</p>
+      <div className="mt-4 flex flex-wrap gap-3">
+        <Link
+          href="/billing"
+          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-300"
+        >
+          Upgrade plan
+        </Link>
+        <Link
+          href="/pricing"
+          className="rounded-lg border border-white/[0.1] px-4 py-2 text-sm font-semibold text-white/75 hover:border-white/20"
+        >
+          Compare tiers
+        </Link>
+      </div>
+    </section>
   );
 }

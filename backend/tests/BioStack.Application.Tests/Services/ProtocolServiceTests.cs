@@ -981,7 +981,8 @@ public class ProtocolServiceTests
             reviewCompletedEventRepository ?? EmptyReviewCompletedEventRepository(),
             new Mock<IKnowledgeSource>().Object,
             EmptyInteractionIntelligenceService(),
-            PermissiveOwnershipGuard());
+            PermissiveOwnershipGuard(),
+            AllowAllFeatureGate());
     }
 
     private static IOwnershipGuard PermissiveOwnershipGuard()
@@ -993,6 +994,22 @@ public class ProtocolServiceTests
         guard.Setup(item => item.GetOwnedProfileAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((Guid profileId, CancellationToken _) => new PersonProfile { Id = profileId, OwnerId = Guid.NewGuid() });
         return guard.Object;
+    }
+
+    private static IFeatureGate AllowAllFeatureGate()
+    {
+        var gate = new Mock<IFeatureGate>();
+        gate.Setup(item => item.EnsureEnabledAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        gate.Setup(item => item.GetCurrentTierAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(ProductTier.Commander);
+        gate.Setup(item => item.GetEffectiveTierAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(ProductTier.Commander);
+        gate.Setup(item => item.IsEnabledAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+        gate.Setup(item => item.GetLimitAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((int?)null);
+        return gate.Object;
     }
 
     private static IProtocolComputationRecordRepository EmptyComputationRepository()

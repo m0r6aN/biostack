@@ -18,6 +18,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
+var stripeSecretKey = builder.Configuration["Stripe:SecretKey"];
+if (!string.IsNullOrWhiteSpace(stripeSecretKey))
+{
+    Stripe.StripeConfiguration.ApiKey = stripeSecretKey;
+}
+
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
@@ -226,6 +232,8 @@ builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IOwnershipGuard, OwnershipGuard>();
+builder.Services.AddScoped<IFeatureGate, FeatureGate>();
+builder.Services.AddScoped<IBillingService, BillingService>();
 builder.Services.AddScoped<ICompoundService, CompoundService>();
 builder.Services.AddScoped<ICheckInService, CheckInService>();
 builder.Services.AddScoped<IProtocolService, ProtocolService>();
@@ -268,6 +276,7 @@ app.MapScalarApiReference(options =>
 app.MapHealthChecks("/health");
 
 app.MapAuthEndpoints();
+app.MapBillingEndpoints();
 app.MapProfileEndpoints();
 app.MapCompoundEndpoints();
 app.MapCheckInEndpoints();

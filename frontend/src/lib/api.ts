@@ -19,6 +19,7 @@ import {
     PersonProfile,
     ProfileGoal,
     CurrentStackIntelligence,
+    CurrentSubscription,
     ProtocolConsolePayload,
     Protocol,
     ProtocolComputationRecord,
@@ -33,6 +34,28 @@ import {
     TimelineEvent,
     VolumeRequest,
 } from './types';
+
+export class ApiError extends Error {
+  status: number;
+  code?: string;
+  upgradeRequired?: boolean;
+  limit?: number | null;
+  tier?: string;
+
+  constructor(
+    status: number,
+    message: string,
+    details?: { code?: string; upgradeRequired?: boolean; limit?: number | null; tier?: string }
+  ) {
+    super(message);
+    this.name = 'ApiError';
+    this.status = status;
+    this.code = details?.code;
+    this.upgradeRequired = details?.upgradeRequired;
+    this.limit = details?.limit;
+    this.tier = details?.tier;
+  }
+}
 
 export class ApiClient {
   private baseUrl: string;
@@ -53,7 +76,17 @@ export class ApiClient {
     const response = await fetch(url, { ...options, headers, credentials: 'include' });
 
     if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
+      let message = `API Error: ${response.status} ${response.statusText}`;
+      let details: { code?: string; upgradeRequired?: boolean; limit?: number | null; tier?: string } | undefined;
+
+      try {
+        const body = await response.json();
+        message = body.message || body.error || message;
+        details = body;
+      } catch {
+      }
+
+      throw new ApiError(response.status, message, details);
     }
 
     if (response.status === 204) {
@@ -329,6 +362,23 @@ export class ApiClient {
     return this.request('/api/v1/leads/capture', {
       method: 'POST',
       body: JSON.stringify({ email, source }),
+    });
+  }
+
+  async getCurrentSubscription(): Promise<CurrentSubscription> {
+    return this.request<CurrentSubscription>('/api/v1/billing/subscription');
+  }
+
+  async createCheckoutSession(planCode: 'operator' | 'commander'): Promise<{ url: string }> {
+    return this.request<{ url: string }>('/api/v1/billing/checkout', {
+      method: 'POST',
+      body: JSON.stringify({ planCode }),
+    });
+  }
+
+  async createBillingPortalSession(): Promise<{ url: string }> {
+    return this.request<{ url: string }>('/api/v1/billing/portal', {
+      method: 'POST',
     });
   }
 

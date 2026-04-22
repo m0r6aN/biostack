@@ -55,6 +55,17 @@ export interface CompoundRecord {
   pricePaid?: number;
 }
 
+export interface CurrentSubscription {
+  tier: string;
+  status: string;
+  productCode: string;
+  isPaid: boolean;
+  cancelAtPeriodEnd: boolean;
+  currentPeriodEndUtc: string | null;
+  features: Record<string, boolean>;
+  limits: Record<string, number | null>;
+}
+
 export interface CheckIn {
   id: string;
   personId: string;

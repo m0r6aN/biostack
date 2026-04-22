@@ -19,6 +19,7 @@ public sealed class ProtocolService : IProtocolService
     private readonly IKnowledgeSource _knowledgeSource;
     private readonly IInteractionIntelligenceService _interactionIntelligenceService;
     private readonly IOwnershipGuard _ownershipGuard;
+    private readonly IFeatureGate _featureGate;
 
     public ProtocolService(
         IProtocolRepository protocolRepository,
@@ -30,7 +31,8 @@ public sealed class ProtocolService : IProtocolService
         IProtocolReviewCompletedEventRepository reviewCompletedEventRepository,
         IKnowledgeSource knowledgeSource,
         IInteractionIntelligenceService interactionIntelligenceService,
-        IOwnershipGuard ownershipGuard)
+        IOwnershipGuard ownershipGuard,
+        IFeatureGate featureGate)
     {
         _protocolRepository = protocolRepository;
         _profileRepository = profileRepository;
@@ -42,6 +44,7 @@ public sealed class ProtocolService : IProtocolService
         _knowledgeSource = knowledgeSource;
         _interactionIntelligenceService = interactionIntelligenceService;
         _ownershipGuard = ownershipGuard;
+        _featureGate = featureGate;
     }
 
     public async Task<ProtocolResponse> SaveCurrentStackAsync(Guid personId, SaveProtocolRequest request, CancellationToken cancellationToken = default)
@@ -118,6 +121,7 @@ public sealed class ProtocolService : IProtocolService
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {id} not found");
         await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
+        await _featureGate.EnsureEnabledAsync(FeatureCodes.CommanderIntelligence, cancellationToken);
 
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
             .OrderBy(version => version.Version)
@@ -203,6 +207,7 @@ public sealed class ProtocolService : IProtocolService
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
         await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
+        await _featureGate.EnsureEnabledAsync(FeatureCodes.CommanderIntelligence, cancellationToken);
 
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
             .OrderBy(version => version.Version)
@@ -273,6 +278,7 @@ public sealed class ProtocolService : IProtocolService
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
         await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
+        await _featureGate.EnsureEnabledAsync(FeatureCodes.CommanderIntelligence, cancellationToken);
 
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
             .OrderBy(version => version.Version)
@@ -363,6 +369,7 @@ public sealed class ProtocolService : IProtocolService
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
         await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
+        await _featureGate.EnsureEnabledAsync(FeatureCodes.CommanderIntelligence, cancellationToken);
 
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
             .OrderBy(version => version.Version)
@@ -507,6 +514,7 @@ public sealed class ProtocolService : IProtocolService
     public async Task<MissionControlResponse> GetMissionControlAsync(Guid personId, CancellationToken cancellationToken = default)
     {
         await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
+        await _featureGate.EnsureEnabledAsync(FeatureCodes.CommanderIntelligence, cancellationToken);
         var protocols = (await _protocolRepository.GetByPersonIdAsync(personId, cancellationToken)).ToList();
         var activeRun = await _protocolRunRepository.GetActiveByPersonIdAsync(personId, cancellationToken);
         var runs = protocols.Count == 0
@@ -713,6 +721,7 @@ public sealed class ProtocolService : IProtocolService
     public async Task<CurrentStackIntelligenceResponse> GetCurrentStackIntelligenceAsync(Guid personId, CancellationToken cancellationToken = default)
     {
         await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
+        await _featureGate.EnsureEnabledAsync(FeatureCodes.PaidIntelligence, cancellationToken);
         var compounds = (await _compoundRepository.GetByPersonIdAsync(personId, cancellationToken))
             .Where(compound => compound.Status == CompoundStatus.Active)
             .ToList();
