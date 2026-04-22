@@ -1,1 +1,11 @@
-namespace BioStack.Api.Billing;  public sealed class BillingOptions {     public string SecretKey { get; set; } = string.Empty;     public string WebhookSecret { get; set; } = string.Empty;     public string ProPriceId { get; set; } = string.Empty;     public string ProProductName { get; set; } = "BioStack Pro";     public string SuccessPath { get; set; } = "/billing/success";     public string CancelPath { get; set; } = "/pricing"; }
+namespace BioStack.Api.Billing;
+
+public sealed class BillingOptions
+{
+    public string SecretKey { get; set; } = string.Empty;
+    public string WebhookSecret { get; set; } = string.Empty;
+    public string ProPriceId { get; set; } = string.Empty;
+    public string ProProductName { get; set; } = "BioStack Pro";
+    public string SuccessPath { get; set; } = "/billing/success";
+    public string CancelPath { get; set; } = "/pricing";
+}
