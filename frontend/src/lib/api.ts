@@ -4,7 +4,6 @@ import {
     resolveGoalDefinitions,
     setMockProfileGoalIds,
 } from './goals';
-import { getApiBaseUrl } from './apiBase';
 import { normalizeTimelineEvent } from './timeline';
 import {
     CalculatorResult,
@@ -19,7 +18,6 @@ import {
     PersonProfile,
     ProfileGoal,
     CurrentStackIntelligence,
-    CurrentSubscription,
     ProtocolConsolePayload,
     Protocol,
     ProtocolComputationRecord,
@@ -33,33 +31,14 @@ import {
     ReconstitutionRequest,
     TimelineEvent,
     VolumeRequest,
+    Entitlements,
 } from './types';
 
-export class ApiError extends Error {
-  status: number;
-  code?: string;
-  upgradeRequired?: boolean;
-  limit?: number | null;
-  tier?: string;
-
-  constructor(
-    status: number,
-    message: string,
-    details?: { code?: string; upgradeRequired?: boolean; limit?: number | null; tier?: string }
-  ) {
-    super(message);
-    this.name = 'ApiError';
-    this.status = status;
-    this.code = details?.code;
-    this.upgradeRequired = details?.upgradeRequired;
-    this.limit = details?.limit;
-    this.tier = details?.tier;
-  }
-}
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 export class ApiClient {
   private baseUrl: string;
-  constructor(baseUrl: string = getApiBaseUrl()) {
+  constructor(baseUrl: string = API_URL) {
     this.baseUrl = baseUrl;
   }
 
@@ -76,17 +55,7 @@ export class ApiClient {
     const response = await fetch(url, { ...options, headers, credentials: 'include' });
 
     if (!response.ok) {
-      let message = `API Error: ${response.status} ${response.statusText}`;
-      let details: { code?: string; upgradeRequired?: boolean; limit?: number | null; tier?: string } | undefined;
-
-      try {
-        const body = await response.json();
-        message = body.message || body.error || message;
-        details = body;
-      } catch {
-      }
-
-      throw new ApiError(response.status, message, details);
+      throw new Error(`API Error: ${response.status} ${response.statusText}`);
     }
 
     if (response.status === 204) {
@@ -365,21 +334,23 @@ export class ApiClient {
     });
   }
 
-  async getCurrentSubscription(): Promise<CurrentSubscription> {
-    return this.request<CurrentSubscription>('/api/v1/billing/subscription');
+  async getEntitlements(): Promise<Entitlements> {
+    return this.request<Entitlements>('/api/v1/billing/entitlements');
   }
 
-  async createCheckoutSession(planCode: 'operator' | 'commander'): Promise<{ url: string }> {
-    return this.request<{ url: string }>('/api/v1/billing/checkout', {
+  async refreshEntitlements(): Promise<Entitlements> {
+    return this.request<Entitlements>('/api/v1/billing/refresh', {
       method: 'POST',
-      body: JSON.stringify({ planCode }),
+      body: JSON.stringify({}),
     });
   }
 
-  async createBillingPortalSession(): Promise<{ url: string }> {
-    return this.request<{ url: string }>('/api/v1/billing/portal', {
+  async createCheckoutSession(returnPath?: string): Promise<string> {
+    const data = await this.request<{ url: string }>('/api/v1/billing/create-checkout-session', {
       method: 'POST',
+      body: JSON.stringify({ returnPath }),
     });
+    return data.url;
   }
 
   // Goals

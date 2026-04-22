@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using BioStack.Api;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
+using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
@@ -217,6 +218,25 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         Assert.NotNull(calculation);
         Assert.Equal(2000m, calculation.Output);
         Assert.Equal("mcg/mL", calculation.Unit);
+
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            var user = await db.AppUsers.SingleAsync(u => u.Email == "new-user@example.com");
+            db.UserSubscriptions.Add(new UserSubscription
+            {
+                Id = Guid.NewGuid(),
+                UserId = user.Id,
+                Plan = "pro",
+                IsPro = true,
+                SubscriptionStatus = "active",
+                PriceId = "price_test_pro",
+                CurrentPeriodEndUtc = DateTime.UtcNow.AddMonths(1),
+                CreatedAtUtc = DateTime.UtcNow,
+                UpdatedAtUtc = DateTime.UtcNow,
+            });
+            await db.SaveChangesAsync();
+        }
 
         var protocolResponse = await _client.PostAsJsonAsync($"/api/v1/profiles/{profile.Id}/protocols", new SaveProtocolRequest("First active stack"));
         if (protocolResponse.StatusCode != HttpStatusCode.Created)

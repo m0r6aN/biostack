@@ -103,28 +103,18 @@ function IconAdmin() {
   );
 }
 
-function IconBilling() {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-      <rect x="2" y="3" width="12" height="10" rx="1.5" />
-      <path d="M2 6h12" />
-      <path d="M5 10h3" />
-    </svg>
-  );
-}
-
 // ─── Nav items ────────────────────────────────────────────────────────────────
 
 const navItems = [
   { label: 'Protocol Console', href: '/protocol-console', icon: <IconProtocolConsole />, adminOnly: false },
   { label: 'Profiles',    href: '/profiles',    icon: <IconProfiles />,    adminOnly: false },
   { label: 'Compounds',   href: '/compounds',   icon: <IconCompounds />,   adminOnly: false },
+  { label: 'Map My Stack', href: '/map-my-stack', icon: <IconKnowledge />, adminOnly: false },
   { label: 'Protocols',   href: '/protocols',   icon: <IconProtocols />,   adminOnly: false },
   { label: 'Check-ins',   href: '/checkins',    icon: <IconCheckins />,    adminOnly: false },
   { label: 'Timeline',    href: '/timeline',    icon: <IconTimeline />,    adminOnly: false },
-  { label: 'Tools',       href: '/tools',       icon: <IconCalculators />, adminOnly: false },
+  { label: 'Calculators', href: '/calculators', icon: <IconCalculators />, adminOnly: false },
   { label: 'Knowledge',   href: '/knowledge',   icon: <IconKnowledge />,   adminOnly: false },
-  { label: 'Billing',     href: '/billing',     icon: <IconBilling />,     adminOnly: false },
   // Admin nav item — only rendered when role === 1
   { label: 'Admin',       href: '/admin',       icon: <IconAdmin />,       adminOnly: true  },
 ];

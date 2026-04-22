@@ -1,4 +1,6 @@
 import { ContextualRecommendations } from '@/components/recommendations/ContextualRecommendations';
+import { LockedInsightCard } from '@/components/monetization/LockedInsightCard';
+import { useEntitlements } from '@/lib/entitlements';
 import { getContextTagsForOverlapFlags, getRecommendationsForOverlapFlags } from '@/lib/recommendations';
 import { InteractionFlag } from '@/lib/types';
 import { SafetyDisclaimer } from '../SafetyDisclaimer';
@@ -9,6 +11,8 @@ interface OverlapResultsProps {
 }
 
 export function OverlapResults({ flags, inputCount }: OverlapResultsProps) {
+  const { entitlements } = useEntitlements();
+
   if (inputCount < 2) {
     return null;
   }
@@ -21,6 +25,31 @@ export function OverlapResults({ flags, inputCount }: OverlapResultsProps) {
       <div className="p-6 rounded-2xl border border-white/[0.08] bg-[#121923]/90">
         <p className="text-sm text-white/50 text-center">No pathway overlaps detected for selected compounds.</p>
       </div>
+    );
+  }
+
+  if (!entitlements.isPro) {
+    const firstFlag = flags[0];
+
+    return (
+      <LockedInsightCard
+        title={`${Math.max(flags.length - 1, 1)} deeper stack intelligence signal${flags.length === 2 ? '' : 's'}`}
+        cta="See full overlap analysis"
+        returnPath="/knowledge"
+        visibleInsight={
+          <p>
+            Potential pathway overlap detected between {firstFlag.compoundNames.join(' and ')} via {firstFlag.pathwayTag}.
+          </p>
+        }
+        lockedItems={[
+          'Overlap intensity',
+          'Synergy rating',
+          'Conflict flags',
+          'Optimization suggestions',
+          'Recommended support compounds',
+          'Affiliate-ready support slots',
+        ]}
+      />
     );
   }
 

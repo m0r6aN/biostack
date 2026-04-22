@@ -3,17 +3,11 @@ import { NextResponse } from 'next/server';
 
 const PUBLIC_PREFIX_ROUTES = [
   '/auth',
-  '/api',
   '/pricing',
+  '/map-my-stack',
   '/faq',
   '/onboarding',
-  '/start',
-  '/map',
-  '/providers',
-  '/calculators',
   '/tools',
-  '/how-it-works',
-  '/safety',
   '/terms',
   '/privacy',
   '/robots.txt',
@@ -22,10 +16,6 @@ const PUBLIC_PREFIX_ROUTES = [
 
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-
-  if (pathname === '/calculators') {
-    return NextResponse.redirect(new URL('/tools', req.url), 308);
-  }
 
   if (pathname === '/' || PUBLIC_PREFIX_ROUTES.some((p) => pathname.startsWith(p))) {
     return NextResponse.next();

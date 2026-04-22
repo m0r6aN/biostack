@@ -7,11 +7,14 @@ import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
+import { LockedInsightCard } from '@/components/monetization/LockedInsightCard';
+import { ProBadge } from '@/components/monetization/ProBadge';
+import { UpgradeCard } from '@/components/monetization/UpgradeCard';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
-import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
-import { ApiError, apiClient } from '@/lib/api';
+import { apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
+import { useEntitlements } from '@/lib/entitlements';
 import { CurrentStackIntelligence, Protocol } from '@/lib/types';
 
 export default function ProtocolsPage() {
@@ -22,7 +25,7 @@ export default function ProtocolsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [stackLockedMessage, setStackLockedMessage] = useState<string | null>(null);
+  const { entitlements } = useEntitlements();
 
   useEffect(() => {
     if (currentProfileId) {
@@ -38,22 +41,12 @@ export default function ProtocolsPage() {
     try {
       setLoading(true);
       setError(null);
-      setStackLockedMessage(null);
-
-      const protocolData = await apiClient.getProtocols(currentProfileId);
+      const [protocolData, stackData] = await Promise.all([
+        apiClient.getProtocols(currentProfileId),
+        apiClient.getCurrentStackIntelligence(currentProfileId),
+      ]);
       setProtocols(protocolData);
-
-      try {
-        const stackData = await apiClient.getCurrentStackIntelligence(currentProfileId);
-        setCurrentStack(stackData);
-      } catch (err) {
-        if (err instanceof ApiError && err.upgradeRequired) {
-          setCurrentStack(null);
-          setStackLockedMessage(err.message);
-        } else {
-          throw err;
-        }
-      }
+      setCurrentStack(stackData);
     } catch (err) {
       setError('Failed to load protocols');
     } finally {
@@ -112,50 +105,59 @@ export default function ProtocolsPage() {
           <>
             <section className="grid gap-6 lg:grid-cols-[360px_1fr]">
               <div className="space-y-4">
-                <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-                  <h2 className="text-xl font-bold text-white">Save Current Stack as Protocol</h2>
-                  <p className="mt-2 text-sm text-white/45">Name the active stack and keep it as a protocol snapshot.</p>
-                  <div className="mt-5 flex gap-2">
-                    <input
-                      value={name}
-                      onChange={(event) => setName(event.target.value)}
-                      placeholder="Cut phase v1"
-                      className="min-w-0 flex-1 rounded-lg border border-white/[0.08] bg-black/20 px-3 py-2 text-sm text-white outline-none focus:border-emerald-400/50"
-                    />
-                    <button
-                      onClick={saveCurrentStack}
-                      disabled={saving || !name.trim()}
-                      className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      {saving ? 'Saving' : 'Save'}
-                    </button>
+                {entitlements.isPro ? (
+                  <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <h2 className="text-xl font-bold text-white">Save Current Stack as Protocol</h2>
+                      <ProBadge plan={entitlements.plan} />
+                    </div>
+                    <p className="mt-2 text-sm text-white/45">Name the active stack and keep it as a protocol snapshot.</p>
+                    <div className="mt-5 flex gap-2">
+                      <input
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                        placeholder="Cut phase v1"
+                        className="min-w-0 flex-1 rounded-lg border border-white/[0.08] bg-black/20 px-3 py-2 text-sm text-white outline-none focus:border-emerald-400/50"
+                      />
+                      <button
+                        onClick={saveCurrentStack}
+                        disabled={saving || !name.trim()}
+                        className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {saving ? 'Saving' : 'Save'}
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                {currentStack ? (
-                  <>
-                    <StackScoreCard score={currentStack.stackScore} />
-                    <InteractionIntelligenceCard intelligence={currentStack.interactionIntelligence} title="Current Stack Intelligence" />
-                  </>
                 ) : (
-                  <LockedTierCard
-                    eyebrow="Operator"
-                    title="Current stack intelligence is gated"
-                    detail={stackLockedMessage ?? 'Upgrade to Operator to unlock live stack scoring and interaction intelligence.'}
+                  <UpgradeCard
+                    eyebrow="Protocol builder"
+                    title="Build advanced protocols with Pro"
+                    description="Free previews the current stack score and simulation. Pro lets you save protocol views, plan phases, run cycles, and compare observed outcomes."
+                    cta="Unlock phase planning"
+                    returnPath="/protocols"
+                    bullets={['Saved protocol snapshots', 'Phase and cycle planning', 'Outcome comparison']}
+                  />
+                )}
+
+                {currentStack && <StackScoreCard score={currentStack.stackScore} />}
+              </div>
+
+              <div className="space-y-4">
+                {currentStack && <SimulationTimeline simulation={currentStack.simulation} />}
+                {!entitlements.isPro && (
+                  <LockedInsightCard
+                    title="Advanced protocol planning"
+                    cta="Plan cycles and compare outcomes"
+                    returnPath="/protocols"
+                    lockedItems={[
+                      'Phases',
+                      'Cycles',
+                      'Stack comparison',
+                      'Saved advanced protocol views',
+                    ]}
                   />
                 )}
               </div>
-
-              {currentStack ? (
-                <SimulationTimeline simulation={currentStack.simulation} />
-              ) : (
-                <LockedTierCard
-                  eyebrow="Operator"
-                  title="Simulation stays locked on Observer"
-                  detail="Observer can still save and manage protocols, but the deeper stack intelligence surfaces unlock with Operator."
-                  large
-                />
-              )}
             </section>
 
             <section>
@@ -209,40 +211,6 @@ export default function ProtocolsPage() {
             </section>
           </>
         )}
-      </div>
-    </div>
-  );
-}
-
-function LockedTierCard({
-  eyebrow,
-  title,
-  detail,
-  large = false,
-}: {
-  eyebrow: string;
-  title: string;
-  detail: string;
-  large?: boolean;
-}) {
-  return (
-    <div className={`rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5 ${large ? 'min-h-[280px]' : ''}`}>
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-100/75">{eyebrow}</p>
-      <h2 className="mt-2 text-xl font-semibold text-white">{title}</h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">{detail}</p>
-      <div className="mt-5 flex flex-wrap gap-3">
-        <Link
-          href="/billing"
-          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-300"
-        >
-          Upgrade plan
-        </Link>
-        <Link
-          href="/pricing"
-          className="rounded-lg border border-white/[0.1] px-4 py-2 text-sm font-semibold text-white/75 hover:border-white/20"
-        >
-          Compare tiers
-        </Link>
       </div>
     </div>
   );

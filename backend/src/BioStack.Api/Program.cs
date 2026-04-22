@@ -11,23 +11,26 @@ using BioStack.Infrastructure.Repositories;
 using BioStack.Infrastructure.Knowledge;
 using BioStack.Application.Services;
 using BioStack.Api.Endpoints;
+using BioStack.Api.Billing;
 using BioStack.Api;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-var stripeSecretKey = builder.Configuration["Stripe:SecretKey"];
-if (!string.IsNullOrWhiteSpace(stripeSecretKey))
-{
-    Stripe.StripeConfiguration.ApiKey = stripeSecretKey;
-}
-
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
 });
+
+builder.Services.Configure<BillingOptions>(builder.Configuration.GetSection("Stripe"));
+var stripeSecretKey = builder.Configuration["Stripe:SecretKey"];
+if (!string.IsNullOrWhiteSpace(stripeSecretKey))
+{
+    StripeConfiguration.ApiKey = stripeSecretKey;
+}
 
 var allowedOrigins = builder.Configuration
     .GetSection("Cors:AllowedOrigins")
@@ -155,25 +158,10 @@ builder.Services.AddAuthorization(options =>
 
 // ── Database ────────────────────────────────────────────────────────────────
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? (builder.Environment.IsProduction() ? null : "Data Source=./data/biostack.db");
+    ?? "Data Source=./data/biostack.db";
 
 var configuredDatabaseProvider = builder.Configuration["Database:Provider"];
 var usePostgres = DatabaseProviderResolver.IsPostgres(configuredDatabaseProvider, connectionString);
-
-if (builder.Environment.IsProduction())
-{
-    if (string.IsNullOrWhiteSpace(connectionString))
-    {
-        throw new InvalidOperationException(
-            "ConnectionStrings:DefaultConnection is required in Production and must point to Azure Postgres.");
-    }
-
-    if (!usePostgres)
-    {
-        throw new InvalidOperationException(
-            "Production requires a Postgres DefaultConnection. SQLite/file-backed production databases are not supported.");
-    }
-}
 
 builder.Services.AddDbContext<BioStackDbContext>(options =>
 {
@@ -197,10 +185,7 @@ builder.Services.AddScoped<IProtocolReviewCompletedEventRepository, ProtocolRevi
 builder.Services.AddScoped<IProtocolPhaseRepository, ProtocolPhaseRepository>();
 builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
-builder.Services.AddScoped<ICompoundInteractionHintRepository, CompoundInteractionHintRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
 builder.Services.AddSingleton<InMemoryMagicLinkDelivery>();
 var hasAzureEmail = !string.IsNullOrWhiteSpace(builder.Configuration["AzureCommunicationEmail:ConnectionString"]);
 var hasSmtp = !string.IsNullOrWhiteSpace(builder.Configuration["Smtp:Host"]);
@@ -231,9 +216,6 @@ builder.Services.AddSingleton<IDevMagicLinkInbox>(sp => sp.GetRequiredService<In
 builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
-builder.Services.AddScoped<IOwnershipGuard, OwnershipGuard>();
-builder.Services.AddScoped<IFeatureGate, FeatureGate>();
-builder.Services.AddScoped<IBillingService, BillingService>();
 builder.Services.AddScoped<ICompoundService, CompoundService>();
 builder.Services.AddScoped<ICheckInService, CheckInService>();
 builder.Services.AddScoped<IProtocolService, ProtocolService>();
@@ -241,9 +223,9 @@ builder.Services.AddScoped<IProtocolPhaseService, ProtocolPhaseService>();
 builder.Services.AddScoped<ITimelineService, TimelineService>();
 builder.Services.AddScoped<ICalculatorService, CalculatorService>();
 builder.Services.AddScoped<IKnowledgeService, KnowledgeService>();
-builder.Services.AddScoped<IInteractionIntelligenceService, InteractionIntelligenceService>();
 builder.Services.AddScoped<IOverlapService, OverlapService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<IEntitlementService, EntitlementService>();
 
 // ── OpenAPI ──────────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi(options =>
@@ -276,7 +258,6 @@ app.MapScalarApiReference(options =>
 app.MapHealthChecks("/health");
 
 app.MapAuthEndpoints();
-app.MapBillingEndpoints();
 app.MapProfileEndpoints();
 app.MapCompoundEndpoints();
 app.MapCheckInEndpoints();
@@ -287,6 +268,7 @@ app.MapCalculatorEndpoints();
 app.MapKnowledgeEndpoints();
 app.MapLeadEndpoints();
 app.MapAdminEndpoints();
+app.MapBillingEndpoints();
 
 if (useInMemoryMagicLinks)
     app.MapDevAuthEndpoints();
@@ -295,27 +277,29 @@ try
 {
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
-    await InteractionSchemaBootstrapper.EnsureCompoundInteractionHintsTableAsync(db);
 
-    if (!app.Environment.IsProduction())
+    db.Database.EnsureCreated();
+
+    if (db.Database.IsSqlite())
     {
-        db.Database.EnsureCreated();
+        var createScript = DatabaseSchemaBootstrapper.MakeSqliteCreateScriptIdempotent(
+            db.Database.GenerateCreateScript());
 
-        if (db.Database.IsSqlite())
+        if (!string.IsNullOrWhiteSpace(createScript))
         {
-            var createScript = DatabaseSchemaBootstrapper.MakeSqliteCreateScriptIdempotent(
-                db.Database.GenerateCreateScript());
-
-            if (!string.IsNullOrWhiteSpace(createScript))
-            {
-                db.Database.ExecuteSqlRaw(createScript);
-            }
-
-            DatabaseSchemaBootstrapper.BackfillMissingSqliteColumns(db);
+            db.Database.ExecuteSqlRaw(createScript);
         }
 
-        var hintRepository = scope.ServiceProvider.GetRequiredService<ICompoundInteractionHintRepository>();
-        await CompoundInteractionHintCatalog.SeedDefaultsAsync(hintRepository);
+        DatabaseSchemaBootstrapper.BackfillMissingSqliteColumns(db);
+    }
+
+    // Seed Knowledge if empty
+    if (!db.KnowledgeEntries.Any())
+    {
+        var source = new LocalKnowledgeSource();
+        var initialData = source.GetAllCompoundsAsync().Result;
+        db.KnowledgeEntries.AddRange(initialData);
+        db.SaveChanges();
     }
 }
 catch (Exception ex)

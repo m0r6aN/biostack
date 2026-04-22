@@ -55,17 +55,6 @@ export interface CompoundRecord {
   pricePaid?: number;
 }
 
-export interface CurrentSubscription {
-  tier: string;
-  status: string;
-  productCode: string;
-  isPaid: boolean;
-  cancelAtPeriodEnd: boolean;
-  currentPeriodEndUtc: string | null;
-  features: Record<string, boolean>;
-  limits: Record<string, number | null>;
-}
-
 export interface CheckIn {
   id: string;
   personId: string;
@@ -159,71 +148,6 @@ export interface SimulationResult {
     signals: string[];
   }>;
   insights: string[];
-}
-
-export interface InteractionFinding {
-  type: 'Neutral' | 'Synergistic' | 'Redundant' | 'Interfering' | string;
-  compounds: string[];
-  message: string;
-  confidence: number;
-}
-
-export interface InteractionResult {
-  compoundA: string;
-  compoundB: string;
-  type: 'Neutral' | 'Synergistic' | 'Redundant' | 'Interfering' | string;
-  confidence: number;
-  sharedPathways: string[];
-  reason: string;
-  hintBacked: boolean;
-}
-
-export interface InteractionIntelligence {
-  summary: {
-    synergies: number;
-    redundancies: number;
-    interferences: number;
-  };
-  score: {
-    synergyScore: number;
-    redundancyPenalty: number;
-    interferencePenalty: number;
-  };
-  compositeScore: number;
-  topFindings: InteractionFinding[];
-  interactions: InteractionResult[];
-  counterfactuals: Array<{
-    removedCompound: string;
-    variantScore: number;
-    deltaScore: number;
-    deltaPercent: number;
-    verdict: 'improves' | 'worsens' | 'no_meaningful_change' | string;
-    recommendation: string;
-    summary: {
-      synergies: number;
-      redundancies: number;
-      interferences: number;
-    };
-    topFindings: InteractionFinding[];
-  }>;
-  swaps: Array<{
-    originalCompound: string;
-    candidateCompound: string;
-    baselineScore: number;
-    variantScore: number;
-    deltaScore: number;
-    deltaPercent: number;
-    verdict: 'likely_improves' | 'little_expected_change' | 'likely_worsens' | string;
-    reasons: string[];
-    recommendation: string;
-    similarityScore: number;
-    summary: {
-      synergies: number;
-      redundancies: number;
-      interferences: number;
-    };
-    topFindings: InteractionFinding[];
-  }>;
 }
 
 export interface ProtocolActualComparison {
@@ -510,7 +434,6 @@ export interface Protocol {
   items: ProtocolItem[];
   stackScore: StackScore;
   simulation: SimulationResult;
-  interactionIntelligence: InteractionIntelligence;
   activeRun: ProtocolRun | null;
   versionDiff: ProtocolVersionDiff | null;
   actualComparison: ProtocolActualComparison | null;
@@ -541,7 +464,27 @@ export interface ProtocolVersionChange {
 export interface CurrentStackIntelligence {
   stackScore: StackScore;
   simulation: SimulationResult;
-  interactionIntelligence: InteractionIntelligence;
+}
+
+export interface EntitlementLimits {
+  maxCompounds: number;
+}
+
+export interface EntitlementFeatures {
+  stackIntelligence: boolean;
+  fullOverlapAnalysis: boolean;
+  protocolBuilder: boolean;
+  observabilityCorrelations: boolean;
+  savedAdvancedProtocolViews: boolean;
+  affiliateSurfaces: boolean;
+}
+
+export interface Entitlements {
+  isPro: boolean;
+  plan: 'free' | 'pro' | string;
+  limits: EntitlementLimits;
+  features: EntitlementFeatures;
+  futureRoles: string[];
 }
 
 export type TimelineEventType =

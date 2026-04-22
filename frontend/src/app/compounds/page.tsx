@@ -7,9 +7,13 @@ import { LoadingSkeleton } from '@/components/LoadingState';
 import { CompoundForm } from '@/components/compounds/CompoundForm';
 import { CompoundList } from '@/components/compounds/CompoundList';
 import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
-import { ApiError, apiClient } from '@/lib/api';
+import { OverlapResults } from '@/components/knowledge/OverlapResults';
+import { ProBadge } from '@/components/monetization/ProBadge';
+import { UpgradeCard } from '@/components/monetization/UpgradeCard';
+import { apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
-import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
+import { useEntitlements } from '@/lib/entitlements';
+import { CompoundRecord, InteractionFlag, KnowledgeEntry } from '@/lib/types';
 import { useEffect, useState } from 'react';
 
 export default function CompoundsPage() {
@@ -21,6 +25,9 @@ export default function CompoundsPage() {
   const [selectedCompound, setSelectedCompound] = useState<CompoundRecord | null>(null);
   const [knowledgeEntry, setKnowledgeEntry] = useState<KnowledgeEntry | null>(null);
   const [loadingKnowledge, setLoadingKnowledge] = useState(false);
+  const [overlapFlags, setOverlapFlags] = useState<InteractionFlag[]>([]);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const { entitlements } = useEntitlements();
 
   useEffect(() => {
     if (currentProfileId) {
@@ -33,6 +40,7 @@ export default function CompoundsPage() {
       setLoading(true);
       const data = await apiClient.getCompounds(currentProfileId!);
       setCompounds(data);
+      await loadStackInsight(data);
     } catch (err) {
       setError('Failed to load compounds');
     } finally {
@@ -42,16 +50,31 @@ export default function CompoundsPage() {
 
   const handleAddCompound = async (data: Omit<CompoundRecord, 'id'>) => {
     try {
-      const newCompound = await apiClient.createCompound(currentProfileId!, data);
-      setCompounds([...compounds, newCompound]);
-      setShowForm(false);
-    } catch (err) {
-      if (err instanceof ApiError && err.upgradeRequired) {
-        setError(err.message);
+      if (!entitlements.isPro && compounds.length >= entitlements.limits.maxCompounds) {
+        setActionError('Free plans can track 2 compounds. Upgrade to map unlimited stack intelligence.');
         return;
       }
+
+      setActionError(null);
+      const newCompound = await apiClient.createCompound(currentProfileId!, data);
+      const nextCompounds = [...compounds, newCompound];
+      setCompounds(nextCompounds);
+      await loadStackInsight(nextCompounds);
+      setShowForm(false);
+    } catch (err) {
       setError('Failed to add compound');
     }
+  };
+
+  const loadStackInsight = async (records: CompoundRecord[]) => {
+    const active = records.filter((compound) => compound.status === 'Active');
+    if (active.length < 2) {
+      setOverlapFlags([]);
+      return;
+    }
+
+    const flags = await apiClient.checkOverlap(active.map((compound) => compound.name)).catch(() => []);
+    setOverlapFlags(flags);
   };
 
   const handleSelectCompound = async (compound: CompoundRecord) => {
@@ -97,13 +120,17 @@ export default function CompoundsPage() {
     <div className="w-full">
       <Header
         title="Compounds"
+        subtitle={`${entitlements.isPro ? 'Unlimited compounds' : 'Free plan: 2 compounds'} · stack intelligence preview`}
         actions={
-          <button
-            onClick={() => setShowForm(!showForm)}
-            className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-sm font-medium transition-all duration-150"
-          >
-            {showForm ? 'Cancel' : 'Add Compound'}
-          </button>
+          <div className="flex items-center gap-3">
+            <ProBadge plan={entitlements.plan} />
+            <button
+              onClick={() => setShowForm(!showForm)}
+              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-lg text-sm font-medium transition-all duration-150"
+            >
+              {showForm ? 'Cancel' : 'Add Compound'}
+            </button>
+          </div>
         }
       />
 
@@ -111,10 +138,25 @@ export default function CompoundsPage() {
         {showForm && (
           <div className="p-6 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
             <h2 className="text-lg font-semibold text-white mb-4">Add New Compound</h2>
-            <CompoundForm
-              personId={currentProfileId}
-              onSubmit={handleAddCompound}
-            />
+            {actionError && (
+              <p className="mb-4 rounded-lg border border-amber-400/20 bg-amber-500/10 px-3 py-2 text-sm text-amber-100/80">
+                {actionError}
+              </p>
+            )}
+            {!entitlements.isPro && compounds.length >= entitlements.limits.maxCompounds ? (
+              <UpgradeCard
+                title="Your free stack is mapped"
+                description="You can keep using BioStack with two compounds. Pro opens unlimited stacks and the intelligence layer that explains overlap, compatibility, and optimization."
+                cta="Unlock full stack intelligence"
+                returnPath="/compounds"
+                bullets={['Unlimited compounds', 'Full overlap analysis', 'Optimization signals']}
+              />
+            ) : (
+              <CompoundForm
+                personId={currentProfileId}
+                onSubmit={handleAddCompound}
+              />
+            )}
           </div>
         )}
 
@@ -138,6 +180,15 @@ export default function CompoundsPage() {
                 compounds={compounds}
                 onSelect={handleSelectCompound}
               />
+              {compounds.filter((compound) => compound.status === 'Active').length >= 2 && (
+                <div className="mt-6">
+                  <h2 className="mb-4 text-lg font-semibold text-white">Stack Intelligence</h2>
+                  <OverlapResults
+                    flags={overlapFlags}
+                    inputCount={compounds.filter((compound) => compound.status === 'Active').length}
+                  />
+                </div>
+              )}
             </div>
 
             <div>

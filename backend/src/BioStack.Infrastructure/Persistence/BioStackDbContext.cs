@@ -14,6 +14,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<AuthIdentity> AuthIdentities { get; set; }
     public DbSet<AuthChallenge> AuthChallenges { get; set; }
     public DbSet<Session> Sessions { get; set; }
+    public DbSet<UserSubscription> UserSubscriptions { get; set; }
     public DbSet<PersonProfile> PersonProfiles { get; set; }
     public DbSet<CompoundRecord> CompoundRecords { get; set; }
     public DbSet<CheckIn> CheckIns { get; set; }
@@ -25,11 +26,8 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<ProtocolPhase> ProtocolPhases { get; set; }
     public DbSet<TimelineEvent> TimelineEvents { get; set; }
     public DbSet<InteractionFlag> InteractionFlags { get; set; }
-    public DbSet<CompoundInteractionHint> CompoundInteractionHints { get; set; }
     public DbSet<KnowledgeEntry> KnowledgeEntries { get; set; }
     public DbSet<LeadCapture> LeadCaptures { get; set; }
-    public DbSet<Subscription> Subscriptions { get; set; }
-    public DbSet<StripeWebhookEvent> StripeWebhookEvents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -43,11 +41,9 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(u => u.Email).HasMaxLength(255).IsRequired();
             entity.Property(u => u.DisplayName).HasMaxLength(255).IsRequired();
             entity.Property(u => u.AvatarUrl).HasMaxLength(1024);
-            entity.Property(u => u.StripeCustomerId).HasMaxLength(255);
             entity.Property(u => u.Role).HasConversion<int>();
             entity.HasIndex(u => new { u.Provider, u.ProviderKey }).IsUnique();
             entity.HasIndex(u => u.Email);
-            entity.HasIndex(u => u.StripeCustomerId);
             entity.HasMany(u => u.Profiles)
                 .WithOne(p => p.Owner)
                 .HasForeignKey(p => p.OwnerId)
@@ -60,10 +56,23 @@ public sealed class BioStackDbContext : DbContext
                 .WithOne(s => s.User)
                 .HasForeignKey(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-            entity.HasMany(u => u.Subscriptions)
-                .WithOne(s => s.AppUser)
-                .HasForeignKey(s => s.AppUserId)
+            entity.HasOne(u => u.Subscription)
+                .WithOne(s => s.User)
+                .HasForeignKey<UserSubscription>(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<UserSubscription>(entity =>
+        {
+            entity.HasKey(s => s.Id);
+            entity.Property(s => s.Plan).HasMaxLength(50).IsRequired();
+            entity.Property(s => s.StripeCustomerId).HasMaxLength(255);
+            entity.Property(s => s.StripeSubscriptionId).HasMaxLength(255);
+            entity.Property(s => s.SubscriptionStatus).HasMaxLength(100).IsRequired();
+            entity.Property(s => s.PriceId).HasMaxLength(255);
+            entity.HasIndex(s => s.UserId).IsUnique();
+            entity.HasIndex(s => s.StripeCustomerId);
+            entity.HasIndex(s => s.StripeSubscriptionId);
         });
 
         modelBuilder.Entity<AuthIdentity>(entity =>
@@ -317,22 +326,6 @@ public sealed class BioStackDbContext : DbContext
                     v => v.Split(",", StringSplitOptions.RemoveEmptyEntries).ToList());
         });
 
-        modelBuilder.Entity<CompoundInteractionHint>(entity =>
-        {
-            entity.HasKey(hint => hint.Id);
-            entity.Property(hint => hint.CompoundA).HasMaxLength(255).IsRequired();
-            entity.Property(hint => hint.CompoundB).HasMaxLength(255).IsRequired();
-            entity.Property(hint => hint.InteractionType).HasConversion<int>();
-            entity.Property(hint => hint.Strength).HasPrecision(3, 2);
-            entity.Property(hint => hint.Notes).HasMaxLength(2000);
-            entity.Property(hint => hint.MechanismOverlap).HasConversion(
-                v => v == null ? null : string.Join("|", v),
-                v => string.IsNullOrWhiteSpace(v)
-                    ? null
-                    : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
-            entity.HasIndex(hint => new { hint.CompoundA, hint.CompoundB }).IsUnique();
-        });
-
         modelBuilder.Entity<KnowledgeEntry>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -381,29 +374,6 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(l => l.Email).HasMaxLength(255).IsRequired();
             entity.Property(l => l.Source).HasMaxLength(255).IsRequired();
             entity.HasIndex(l => new { l.Email, l.Source }).IsUnique();
-        });
-
-        modelBuilder.Entity<Subscription>(entity =>
-        {
-            entity.HasKey(s => s.Id);
-            entity.Property(s => s.ProductCode).HasMaxLength(64).IsRequired();
-            entity.Property(s => s.Tier).HasConversion<int>();
-            entity.Property(s => s.Provider).HasConversion<int>();
-            entity.Property(s => s.StripeCustomerId).HasMaxLength(255).IsRequired();
-            entity.Property(s => s.StripeSubscriptionId).HasMaxLength(255).IsRequired();
-            entity.Property(s => s.StripePriceId).HasMaxLength(255);
-            entity.Property(s => s.Status).HasConversion<int>();
-            entity.HasIndex(s => s.AppUserId);
-            entity.HasIndex(s => s.StripeCustomerId);
-            entity.HasIndex(s => s.StripeSubscriptionId).IsUnique();
-        });
-
-        modelBuilder.Entity<StripeWebhookEvent>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.StripeEventId).HasMaxLength(255).IsRequired();
-            entity.Property(e => e.EventType).HasMaxLength(255).IsRequired();
-            entity.HasIndex(e => e.StripeEventId).IsUnique();
         });
     }
 }
