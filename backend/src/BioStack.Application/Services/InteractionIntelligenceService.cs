@@ -92,7 +92,7 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             : new List<InteractionCounterfactualResponse>();
 
         var swaps = includeScenarios
-            ? await BuildSwapsAsync(entries, compositeScore, summary, cancellationToken)
+            ? await BuildSwapsAsync(entries, compositeScore, summary, interactions, cancellationToken)
             : new List<InteractionSwapRecommendationResponse>();
 
         return new InteractionIntelligenceResponse(summary, score, compositeScore, topFindings, interactions, counterfactuals, swaps);
@@ -267,10 +267,28 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             .ToList();
     }
 
+    internal async Task<SwapRecommendationEngine.SwapEvaluationResult> EvaluateSwapsWithTraceAsync(
+        IReadOnlyList<KnowledgeEntry> entries,
+        CancellationToken cancellationToken = default)
+    {
+        var baseline = await EvaluateAsync(entries, includeScenarios: false, cancellationToken);
+        var candidatePool = await _knowledgeSource.GetAllCompoundsAsync(cancellationToken)
+            ?? new List<KnowledgeEntry>();
+        return await SwapRecommendationEngine.EvaluateAsync(
+            entries,
+            candidatePool,
+            baseline.CompositeScore,
+            baseline.Summary,
+            baseline.Interactions,
+            (variantEntries, ct) => EvaluateAsync(variantEntries, includeScenarios: false, ct),
+            cancellationToken);
+    }
+
     private async Task<List<InteractionSwapRecommendationResponse>> BuildSwapsAsync(
         IReadOnlyList<KnowledgeEntry> entries,
         double baselineCompositeScore,
         InteractionSummaryResponse baselineSummary,
+        IReadOnlyList<InteractionResultResponse> baselineInteractions,
         CancellationToken cancellationToken)
     {
         if (entries.Count == 0)
@@ -290,6 +308,7 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             candidatePool,
             baselineCompositeScore,
             baselineSummary,
+            baselineInteractions,
             (variantEntries, ct) => EvaluateAsync(variantEntries, includeScenarios: false, ct),
             cancellationToken);
     }
