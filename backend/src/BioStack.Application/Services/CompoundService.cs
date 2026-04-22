@@ -11,20 +11,24 @@ public sealed class CompoundService : ICompoundService
     private readonly ICompoundRecordRepository _compoundRepository;
     private readonly ITimelineEventRepository _timelineRepository;
     private readonly IOwnershipGuard _ownershipGuard;
+    private readonly IFeatureGate _featureGate;
 
     public CompoundService(
         ICompoundRecordRepository compoundRepository,
         ITimelineEventRepository timelineRepository,
-        IOwnershipGuard ownershipGuard)
+        IOwnershipGuard ownershipGuard,
+        IFeatureGate featureGate)
     {
         _compoundRepository = compoundRepository;
         _timelineRepository = timelineRepository;
         _ownershipGuard = ownershipGuard;
+        _featureGate = featureGate;
     }
 
     public async Task<CompoundResponse> CreateCompoundAsync(Guid personId, CreateCompoundRequest request, CancellationToken cancellationToken = default)
     {
         await _ownershipGuard.EnsureProfileOwnedAsync(personId, cancellationToken);
+        await EnsureActiveCompoundLimitAsync(personId, request.Status, excludedCompoundId: null, cancellationToken);
 
         var compound = new CompoundRecord
         {
@@ -80,6 +84,7 @@ public sealed class CompoundService : ICompoundService
         var compound = await _compoundRepository.GetByIdAsync(id, cancellationToken);
         if (compound is null || compound.PersonId != personId)
             throw new InvalidOperationException($"Compound with ID {id} not found");
+        await EnsureActiveCompoundLimitAsync(personId, request.Status, compound.Id, cancellationToken);
 
         compound.Name = request.Name;
         compound.Category = request.Category;
@@ -97,6 +102,31 @@ public sealed class CompoundService : ICompoundService
         await _compoundRepository.SaveChangesAsync(cancellationToken);
 
         return MapToResponse(compound);
+    }
+
+    private async Task EnsureActiveCompoundLimitAsync(
+        Guid personId,
+        CompoundStatus requestedStatus,
+        Guid? excludedCompoundId,
+        CancellationToken cancellationToken)
+    {
+        if (requestedStatus != CompoundStatus.Active)
+            return;
+
+        var limit = await _featureGate.GetLimitAsync(FeatureCodes.ActiveCompounds, cancellationToken);
+        if (limit is null)
+            return;
+
+        var activeCount = (await _compoundRepository.GetByPersonIdAsync(personId, cancellationToken))
+            .Count(compound => compound.Status == CompoundStatus.Active && compound.Id != excludedCompoundId);
+        if (activeCount >= limit)
+        {
+            throw new FeatureLimitExceededException(
+                "observer_active_compound_limit",
+                $"Observer includes up to {limit} active compounds. Pause or complete one before adding another, or upgrade to Operator.",
+                ProductTier.Observer,
+                limit);
+        }
     }
 
     public async Task DeleteCompoundAsync(Guid personId, Guid id, CancellationToken cancellationToken = default)

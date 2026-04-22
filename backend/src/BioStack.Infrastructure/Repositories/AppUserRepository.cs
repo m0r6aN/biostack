@@ -34,6 +34,7 @@ public sealed class AppUserRepository : IAppUserRepository
             existing.Email        = user.Email;
             existing.DisplayName  = user.DisplayName;
             existing.AvatarUrl    = user.AvatarUrl;
+            existing.StripeCustomerId = user.StripeCustomerId;
             existing.LastSeenAtUtc = DateTime.UtcNow;
             // Role is never overwritten by the provider data
         }

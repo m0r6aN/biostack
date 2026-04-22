@@ -2,9 +2,15 @@ namespace BioStack.Api.Endpoints;
 
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
+using BioStack.Contracts.Responses;
 
 public static class ProtocolEndpoints
 {
+    private static IResult ProductGate(FeatureLimitExceededException ex) =>
+        Results.Json(
+            new ProductErrorResponse(ex.Code, ex.Message, ex.Tier.ToString(), ex.Limit, true),
+            statusCode: StatusCodes.Status402PaymentRequired);
+
     public static void MapProtocolEndpoints(this WebApplication app)
     {
         var profileGroup = app.MapGroup("/api/v1/profiles/{profileId}/protocols")
@@ -84,6 +90,10 @@ public static class ProtocolEndpoints
             var intelligence = await protocolService.GetCurrentStackIntelligenceAsync(profileId, ct);
             return Results.Ok(intelligence);
         }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
+        }
         catch (InvalidOperationException)
         {
             return Results.NotFound();
@@ -109,6 +119,10 @@ public static class ProtocolEndpoints
         {
             var missionControl = await protocolService.GetMissionControlAsync(profileId, ct);
             return Results.Ok(missionControl);
+        }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
         }
         catch (InvalidOperationException)
         {
@@ -153,6 +167,10 @@ public static class ProtocolEndpoints
             var review = await protocolService.GetProtocolReviewAsync(id, ct);
             return Results.Ok(review);
         }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
+        }
         catch (InvalidOperationException)
         {
             return Results.NotFound();
@@ -165,6 +183,10 @@ public static class ProtocolEndpoints
         {
             var snapshot = await protocolService.GetPatternSnapshotAsync(id, ct);
             return Results.Ok(snapshot);
+        }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
         }
         catch (InvalidOperationException)
         {
@@ -179,6 +201,10 @@ public static class ProtocolEndpoints
             var snapshot = await protocolService.GetDriftSnapshotAsync(id, ct);
             return Results.Ok(snapshot);
         }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
+        }
         catch (InvalidOperationException)
         {
             return Results.NotFound();
@@ -191,6 +217,10 @@ public static class ProtocolEndpoints
         {
             var snapshot = await protocolService.GetSequenceExpectationSnapshotAsync(id, ct);
             return Results.Ok(snapshot);
+        }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
         }
         catch (InvalidOperationException)
         {

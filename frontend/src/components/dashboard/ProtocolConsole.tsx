@@ -1,8 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useProfile } from '@/lib/context';
-import { apiClient } from '@/lib/api';
+import { ApiError, apiClient } from '@/lib/api';
 import {
   CheckIn,
   CompoundRecord,
@@ -41,6 +42,8 @@ export function ProtocolConsole() {
   const [profileGoals, setProfileGoals] = useState<GoalDefinition[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [stackLockedMessage, setStackLockedMessage] = useState<string | null>(null);
+  const [missionLockedMessage, setMissionLockedMessage] = useState<string | null>(null);
 
   useEffect(() => {
     loadProfiles();
@@ -75,22 +78,42 @@ export function ProtocolConsole() {
     try {
       setLoading(true);
       setError(null);
+      setStackLockedMessage(null);
+      setMissionLockedMessage(null);
 
-      const [comp, chk, tl, goals, stack, missionData] = await Promise.all([
+      const [comp, chk, tl, goals] = await Promise.all([
         apiClient.getCompounds(currentProfileId),
         apiClient.getCheckIns(currentProfileId),
         apiClient.getTimeline(currentProfileId),
         apiClient.getProfileGoals(currentProfileId),
-        apiClient.getCurrentStackIntelligence(currentProfileId),
-        apiClient.getProtocolConsole(currentProfileId),
       ]);
 
       setCompounds(comp);
       setCheckIns(chk);
       setTimeline(tl);
       setProfileGoals(goals);
-      setCurrentStack(stack);
-      setMission(missionData);
+
+      try {
+        setCurrentStack(await apiClient.getCurrentStackIntelligence(currentProfileId));
+      } catch (err) {
+        if (err instanceof ApiError && err.upgradeRequired) {
+          setCurrentStack(null);
+          setStackLockedMessage(err.message);
+        } else {
+          throw err;
+        }
+      }
+
+      try {
+        setMission(await apiClient.getProtocolConsole(currentProfileId));
+      } catch (err) {
+        if (err instanceof ApiError && err.upgradeRequired) {
+          setMission(null);
+          setMissionLockedMessage(err.message);
+        } else {
+          throw err;
+        }
+      }
 
       const activeCompoundNames = comp
         .filter((compound) => compound.status === 'Active')
@@ -165,12 +188,26 @@ export function ProtocolConsole() {
             </div>
 
             <ProtocolConsoleOverview mission={mission} />
+            {missionLockedMessage && (
+              <UpgradeNotice
+                eyebrow="Commander"
+                title="Mission control is locked on this tier"
+                detail={missionLockedMessage}
+              />
+            )}
             <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
               <PatternMemoryPanel snapshot={mission?.patternSnapshot ?? null} />
               <DriftRegimePanel drift={mission?.driftSnapshot ?? null} patterns={mission?.patternSnapshot ?? null} />
               <SequenceExpectationPanel snapshot={mission?.sequenceExpectationSnapshot ?? null} />
               <ObservationSignalsPanel signals={mission?.observationSignals ?? []} />
             </div>
+            {stackLockedMessage && (
+              <UpgradeNotice
+                eyebrow="Operator"
+                title="Live stack intelligence is locked on Observer"
+                detail={stackLockedMessage}
+              />
+            )}
             {overlaps.length > 0 && <OverlapFlagsBanner flags={overlaps} />}
             {profileGoals.length > 0 && (
               <ActiveGoalsCard goals={profileGoals} profileId={currentProfileId} />
@@ -189,5 +226,37 @@ export function ProtocolConsole() {
         )}
       </div>
     </div>
+  );
+}
+
+function UpgradeNotice({
+  eyebrow,
+  title,
+  detail,
+}: {
+  eyebrow: string;
+  title: string;
+  detail: string;
+}) {
+  return (
+    <section className="rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-100/75">{eyebrow}</p>
+      <h2 className="mt-2 text-lg font-semibold text-white">{title}</h2>
+      <p className="mt-2 text-sm leading-6 text-white/65">{detail}</p>
+      <div className="mt-4 flex flex-wrap gap-3">
+        <Link
+          href="/billing"
+          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-300"
+        >
+          Upgrade plan
+        </Link>
+        <Link
+          href="/pricing"
+          className="rounded-lg border border-white/[0.1] px-4 py-2 text-sm font-semibold text-white/75 hover:border-white/20"
+        >
+          Compare tiers
+        </Link>
+      </div>
+    </section>
   );
 }

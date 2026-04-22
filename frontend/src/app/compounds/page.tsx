@@ -7,7 +7,7 @@ import { LoadingSkeleton } from '@/components/LoadingState';
 import { CompoundForm } from '@/components/compounds/CompoundForm';
 import { CompoundList } from '@/components/compounds/CompoundList';
 import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
-import { apiClient } from '@/lib/api';
+import { ApiError, apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { useEffect, useState } from 'react';
@@ -46,6 +46,10 @@ export default function CompoundsPage() {
       setCompounds([...compounds, newCompound]);
       setShowForm(false);
     } catch (err) {
+      if (err instanceof ApiError && err.upgradeRequired) {
+        setError(err.message);
+        return;
+      }
       setError('Failed to add compound');
     }
   };

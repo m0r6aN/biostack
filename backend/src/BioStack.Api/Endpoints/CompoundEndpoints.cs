@@ -2,9 +2,15 @@ namespace BioStack.Api.Endpoints;
 
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
+using BioStack.Contracts.Responses;
 
 public static class CompoundEndpoints
 {
+    private static IResult ProductGate(FeatureLimitExceededException ex) =>
+        Results.Json(
+            new ProductErrorResponse(ex.Code, ex.Message, ex.Tier.ToString(), ex.Limit, true),
+            statusCode: StatusCodes.Status402PaymentRequired);
+
     public static void MapCompoundEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/api/v1/profiles/{profileId}/compounds")
@@ -44,6 +50,10 @@ public static class CompoundEndpoints
             var compound = await compoundService.CreateCompoundAsync(profileId, request, ct);
             return Results.Created($"/api/v1/compounds/{compound.Id}", compound);
         }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
+        }
         catch (InvalidOperationException)
         {
             return Results.NotFound();
@@ -56,6 +66,10 @@ public static class CompoundEndpoints
         {
             var compound = await compoundService.UpdateCompoundAsync(profileId, id, request, ct);
             return Results.Ok(compound);
+        }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
         }
         catch (InvalidOperationException)
         {
