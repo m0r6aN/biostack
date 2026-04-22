@@ -1,1 +1,126 @@
-'use client';  import { SafetyDisclaimer } from '@/components/SafetyDisclaimer'; import { InteractionIntelligence } from '@/lib/types'; import { useState } from 'react';  interface ScenarioComparisonCardProps {   intelligence: InteractionIntelligence; }  export function ScenarioComparisonCard({ intelligence }: ScenarioComparisonCardProps) {   const [showPaywall, setShowPaywall] = useState(false);   const bestRemoval = intelligence.counterfactuals[0] ?? null;   const bestSwap = intelligence.swaps[0] ?? null;    if (!bestRemoval && !bestSwap) {     return null;   }    return (     <section className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">       <div className="flex flex-wrap items-start justify-between gap-3">         <div>           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Scenario Comparison</p>           <h3 className="mt-2 text-xl font-bold text-white">Current stack vs best next scenario</h3>           <p className="mt-2 max-w-2xl text-sm text-white/50">             Compare the current stack with the strongest remove-one or swap path without changing the underlying analysis engine.           </p>         </div>         <button           type="button"           onClick={() => setShowPaywall((current) => !current)}           className="rounded-full border border-white/[0.1] px-4 py-2 text-sm font-semibold text-white/75 transition-colors hover:border-white/25 hover:text-white"         >           {showPaywall ? 'Hide lock details' : 'Unlock full scenario view'}         </button>       </div>        <div className="mt-5 grid gap-4 lg:grid-cols-2">         {bestRemoval && (           <ScenarioPanel             eyebrow="Drop one"             title={`Remove ${bestRemoval.removedCompound}`}             baseline={Math.round(bestRemoval.variantScore - bestRemoval.deltaScore)}             variant={Math.round(bestRemoval.variantScore)}             delta={bestRemoval.deltaScore}             detail={bestRemoval.recommendation}             highlight={bestRemoval.topFindings[0]?.message ?? 'See how the headline finding changes if you simplify the stack.'}           />         )}         {bestSwap && (           <ScenarioPanel             eyebrow="Best swap"             title={`Replace ${bestSwap.originalCompound} with ${bestSwap.candidateCompound}`}             baseline={Math.round(bestSwap.baselineScore)}             variant={Math.round(bestSwap.variantScore)}             delta={bestSwap.deltaScore}             detail={bestSwap.recommendation}             highlight={bestSwap.topFindings[0]?.message ?? 'See the primary finding delta for the best ranked swap.'}           />         )}       </div>        {showPaywall && (         <div className="mt-5 rounded-2xl border border-emerald-400/18 bg-emerald-500/[0.08] p-4">           <p className="text-sm font-semibold text-white">Full scenario comparison is part of the paid stack workflow.</p>           <p className="mt-2 text-sm leading-6 text-white/60">             Unlock scenario deltas, full finding changes, and tracked stack history in one place.           </p>           <div className="mt-4 flex flex-wrap items-center gap-3">             <button               type="button"               className="rounded-full bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"             >               Start 7-day trial             </button>             <span className="text-sm text-white/50">$12/mo Operator</span>           </div>         </div>       )}        <SafetyDisclaimer type="observation" />     </section>   ); }  function ScenarioPanel({   eyebrow,   title,   baseline,   variant,   delta,   detail,   highlight, }: {   eyebrow: string;   title: string;   baseline: number;   variant: number;   delta: number;   detail: string;   highlight: string; }) {   return (     <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4">       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">{eyebrow}</p>       <h4 className="mt-2 text-lg font-semibold text-white">{title}</h4>       <div className="mt-4 grid grid-cols-3 gap-3">         <Metric label="Current" value={baseline} />         <Metric label="Scenario" value={variant} />         <Metric label="Delta" value={`${delta >= 0 ? '+' : ''}${delta.toFixed(1)}`} />       </div>       <p className="mt-4 text-sm leading-6 text-white/65">{detail}</p>       <p className="mt-3 text-sm text-white/50">{highlight}</p>     </div>   ); }  function Metric({ label, value }: { label: string; value: string | number }) {   return (     <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3">       <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35">{label}</p>       <p className="mt-2 text-lg font-bold text-white">{value}</p>     </div>   ); }
+'use client';
+
+import { SafetyDisclaimer } from '@/components/SafetyDisclaimer';
+import { InteractionIntelligence } from '@/lib/types';
+import { useState } from 'react';
+
+interface ScenarioComparisonCardProps {
+  intelligence: InteractionIntelligence;
+}
+
+export function ScenarioComparisonCard({ intelligence }: ScenarioComparisonCardProps) {
+  const [showPaywall, setShowPaywall] = useState(false);
+  const bestRemoval = intelligence.counterfactuals[0] ?? null;
+  const bestSwap = intelligence.swaps[0] ?? null;
+
+  if (!bestRemoval && !bestSwap) {
+    return null;
+  }
+
+  return (
+    <section className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Scenario Comparison</p>
+          <h3 className="mt-2 text-xl font-bold text-white">Current stack vs best next scenario</h3>
+          <p className="mt-2 max-w-2xl text-sm text-white/50">
+            Compare the current stack with the strongest remove-one or swap path without changing the underlying analysis engine.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => setShowPaywall((current) => !current)}
+          className="rounded-full border border-white/[0.1] px-4 py-2 text-sm font-semibold text-white/75 transition-colors hover:border-white/25 hover:text-white"
+        >
+          {showPaywall ? 'Hide lock details' : 'Unlock full scenario view'}
+        </button>
+      </div>
+
+      <div className="mt-5 grid gap-4 lg:grid-cols-2">
+        {bestRemoval && (
+          <ScenarioPanel
+            eyebrow="Drop one"
+            title={`Remove ${bestRemoval.removedCompound}`}
+            baseline={Math.round(bestRemoval.variantScore - bestRemoval.deltaScore)}
+            variant={Math.round(bestRemoval.variantScore)}
+            delta={bestRemoval.deltaScore}
+            detail={bestRemoval.recommendation}
+            highlight={bestRemoval.topFindings[0]?.message ?? 'See how the headline finding changes if you simplify the stack.'}
+          />
+        )}
+        {bestSwap && (
+          <ScenarioPanel
+            eyebrow="Best swap"
+            title={`Replace ${bestSwap.originalCompound} with ${bestSwap.candidateCompound}`}
+            baseline={Math.round(bestSwap.baselineScore)}
+            variant={Math.round(bestSwap.variantScore)}
+            delta={bestSwap.deltaScore}
+            detail={bestSwap.recommendation}
+            highlight={bestSwap.topFindings[0]?.message ?? 'See the primary finding delta for the best ranked swap.'}
+          />
+        )}
+      </div>
+
+      {showPaywall && (
+        <div className="mt-5 rounded-2xl border border-emerald-400/18 bg-emerald-500/[0.08] p-4">
+          <p className="text-sm font-semibold text-white">Full scenario comparison is part of the paid stack workflow.</p>
+          <p className="mt-2 text-sm leading-6 text-white/60">
+            Unlock scenario deltas, full finding changes, and tracked stack history in one place.
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              className="rounded-full bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
+            >
+              Start 7-day trial
+            </button>
+            <span className="text-sm text-white/50">$12/mo Operator</span>
+          </div>
+        </div>
+      )}
+
+      <SafetyDisclaimer type="observation" />
+    </section>
+  );
+}
+
+function ScenarioPanel({
+  eyebrow,
+  title,
+  baseline,
+  variant,
+  delta,
+  detail,
+  highlight,
+}: {
+  eyebrow: string;
+  title: string;
+  baseline: number;
+  variant: number;
+  delta: number;
+  detail: string;
+  highlight: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">{eyebrow}</p>
+      <h4 className="mt-2 text-lg font-semibold text-white">{title}</h4>
+      <div className="mt-4 grid grid-cols-3 gap-3">
+        <Metric label="Current" value={baseline} />
+        <Metric label="Scenario" value={variant} />
+        <Metric label="Delta" value={`${delta >= 0 ? '+' : ''}${delta.toFixed(1)}`} />
+      </div>
+      <p className="mt-4 text-sm leading-6 text-white/65">{detail}</p>
+      <p className="mt-3 text-sm text-white/50">{highlight}</p>
+    </div>
+  );
+}
+
+function Metric({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35">{label}</p>
+      <p className="mt-2 text-lg font-bold text-white">{value}</p>
+    </div>
+  );
+}
