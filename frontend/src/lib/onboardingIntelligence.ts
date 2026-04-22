@@ -174,24 +174,24 @@ export function getOnboardingPanelContent(
   if (state.stage === 'empty') {
     return {
       subtext: `${status.title} ${status.subtitle}`,
-      stageLabels: ['0 items', 'Nothing added yet', 'Checks start at 2 items'],
+      stageLabels: ['0 items', 'Paste your stack', 'Checks start at 2 items'],
       stats: [
         ['Items', 'None'],
-        ['Context', 'Add anything you take'],
+        ['Context', 'Paste anything you take'],
         ['Overlap check', 'Starts at 2 items'],
       ],
       relationshipGroups: [],
       insightLabel: status.title,
       summary: status.subtitle ?? status.title,
       insights: [relationshipStatus.title],
-      nextAction: 'Type anything you take.',
+      nextAction: 'Paste your stack one item per line.',
     };
   }
 
   if (state.stage === 'context') {
     return {
       subtext: `${status.title} ${relationshipStatus.title}`,
-      stageLabels: ['1 item', 'Context established', 'Add one more for checks'],
+      stageLabels: ['1 item', 'First item recognized', 'Add one more for checks'],
       stats: [
         ['Item', firstCompound],
         ['Evidence tier', evidenceTier],
@@ -215,31 +215,31 @@ export function getOnboardingPanelContent(
         status.subtitle ?? status.title,
         relationshipStatus.subtitle ?? relationshipStatus.title,
       ],
-      nextAction: 'Add one more item to unlock relationship analysis.',
+      nextAction: 'Add one more item to unlock the first finding.',
     };
   }
 
   if (options.isCheckingRelationships) {
     const checkingStatus = getSystemStatusDescriptor('relationship_unavailable');
     return {
-      subtext: 'Relationship analysis active.',
-      stageLabels: [`${state.count} items`, 'Relationship eligible', 'Checking'],
+      subtext: 'Stack analysis is checking the items you entered.',
+      stageLabels: [`${state.count} items`, 'Finding eligible', 'Checking'],
       stats: [
         ['Compounds', compoundList],
         ['Relationship check', 'Checking'],
-        ['Timeline', 'Ready after save'],
+        ['Tracked stack', 'Ready after save'],
       ],
       relationshipGroups: [
         {
           type: 'Context',
-          label: 'Checking relationships',
-          detail: 'The check is limited to selected inputs.',
+          label: 'Checking stack relationships',
+          detail: 'BioStack is only checking the items you entered.',
         },
       ],
-      insightLabel: 'Relationship pending.',
-      summary: 'Selected inputs queued.',
+      insightLabel: 'Finding pending.',
+      summary: 'Selected stack queued.',
       insights: [checkingStatus.subtitle ?? checkingStatus.title],
-      nextAction: 'Wait for the relationship check.',
+      nextAction: 'Wait for the stack check to finish.',
     };
   }
 
@@ -249,16 +249,16 @@ export function getOnboardingPanelContent(
         state.stage === 'pattern'
           ? `${status.title} ${getSystemStatusDescriptor('no_relationship_detected').title}`
           : status.title,
-      stageLabels: [`${state.count} items`, 'Relationship eligible', 'No relationship detected'],
+      stageLabels: [`${state.count} items`, 'Finding eligible', 'No major overlap found'],
       stats: [
         ['Compounds', compoundList],
-        ['Relationship check', 'No relationship detected'],
-        ['Timeline', 'Ready after save'],
+        ['Stack check', 'No major overlap found'],
+        ['Tracked stack', 'Ready after save'],
       ],
       relationshipGroups: [
         {
           type: 'Context',
-          label: 'No relationship detected',
+          label: 'No major overlap found',
           detail: status.subtitle ?? 'No known relationship found for this set.',
         },
       ],
@@ -268,7 +268,7 @@ export function getOnboardingPanelContent(
         state.stage === 'pattern' ? 'Additional inputs included.' : 'No relationship claim emitted.',
         getSystemStatusDescriptor('ready_for_persistence').title,
       ],
-    nextAction: state.stage === 'pattern' ? 'Save the list or adjust it.' : 'Save the list or add another item.',
+      nextAction: state.stage === 'pattern' ? 'Save this stack or explore a scenario next.' : 'Save this stack or add another item.',
     };
   }
 
@@ -283,11 +283,11 @@ export function getOnboardingPanelContent(
       state.stage === 'pattern'
         ? `${status.title} ${getSystemStatusDescriptor('relationship_detected').title}`
         : status.title,
-    stageLabels: [`${state.count} items`, 'Relationship eligible', `${relationshipType} detected`],
+    stageLabels: [`${state.count} items`, 'Finding eligible', `${relationshipType} found`],
     stats: [
       ['Items', compoundList],
-      ['Relationship check', `${relationshipType} detected`],
-      ['Timeline', 'Ready after save'],
+      ['Stack check', `${relationshipType} found`],
+      ['Tracked stack', 'Ready after save'],
     ],
     relationshipGroups: [
       {
@@ -299,10 +299,10 @@ export function getOnboardingPanelContent(
     insightLabel: status.title,
     summary: status.subtitle ?? status.title,
     insights: [
-      'One earned relationship outcome emitted.',
+      'One headline finding is ready.',
       state.stage === 'pattern' ? 'Additional inputs included.' : getSystemStatusDescriptor('ready_for_persistence').title,
     ],
-    nextAction: state.stage === 'pattern' ? 'Save the list or adjust it.' : 'Save the list or add another item.',
+    nextAction: state.stage === 'pattern' ? 'Save this stack or unlock more findings.' : 'Save this stack or add another item.',
   };
 }
 
@@ -343,7 +343,7 @@ export function getOnboardingRewardContent(
       rows: [
         ['List', 'None'],
         ['Unlocked', 'Nothing yet'],
-        ['Next', 'Add anything you take'],
+        ['Next', 'Paste your stack'],
       ],
     };
   }
@@ -359,7 +359,7 @@ export function getOnboardingRewardContent(
       rows: [
         ['List', compoundList],
         ['Unlocked', 'Item context'],
-        ['Next', 'Add one more'],
+        ['Next', 'Add one more item'],
       ],
     };
   }
@@ -367,12 +367,12 @@ export function getOnboardingRewardContent(
   if (options.isCheckingRelationships) {
     return {
       eyebrow: 'Relationship Check',
-      title: 'Relationship analysis active.',
-      body: 'Selected inputs queued.',
+      title: 'Stack analysis active.',
+      body: 'Selected items queued.',
       status: 'Checking',
       rows: [
         ['List', compoundList],
-        ['Unlocked', 'Overlap check'],
+        ['Unlocked', 'First finding'],
         ['Next', 'Wait for result'],
       ],
     };
@@ -381,16 +381,16 @@ export function getOnboardingRewardContent(
   const rewardStatus = getOnboardingSystemStatus(state);
   return {
     eyebrow: rewardStatus.eyebrow ?? (state.stage === 'pattern' ? 'Pattern State' : 'Relationship State'),
-    title: rewardStatus.title,
-    body: rewardStatus.subtitle ?? rewardStatus.title,
-    status:
-      state.relationship?.type === 'none'
-        ? 'No relationship'
-        : state.relationship?.type ?? 'Detected',
-    rows: [
-      ['List', compoundList],
-      ['Unlocked', state.stage === 'pattern' ? 'Pattern map' : 'Overlap check'],
-      ['Next', state.stage === 'pattern' ? 'Save list' : 'Save list'],
-    ],
+      title: rewardStatus.title,
+      body: rewardStatus.subtitle ?? rewardStatus.title,
+      status:
+        state.relationship?.type === 'none'
+          ? 'No relationship'
+          : state.relationship?.type ?? 'Detected',
+      rows: [
+        ['List', compoundList],
+        ['Unlocked', state.stage === 'pattern' ? 'Stack map' : 'First finding'],
+        ['Next', 'Save stack'],
+      ],
   };
 }

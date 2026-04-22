@@ -48,6 +48,10 @@ function isSameCompound(left: string, right: string) {
   return left.trim().toLowerCase() === right.trim().toLowerCase();
 }
 
+function getUnknownCompounds(compounds: string[], knowledgeBase: KnowledgeEntry[]) {
+  return compounds.filter((compound) => !findKnowledgeEntry(knowledgeBase, compound));
+}
+
 function findKnowledgeEntry(knowledgeBase: KnowledgeEntry[], compoundName: string) {
   const normalizedName = compoundName.trim().toLowerCase();
 
@@ -249,6 +253,14 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
     [firstKnowledgeEntry, intelligence, isCheckingOverlaps, relationshipCandidates, selectedCompounds]
   );
   const systemStatus = getOnboardingSystemStatus(intelligence);
+  const unknownCompounds = useMemo(
+    () => getUnknownCompounds(selectedCompounds, knowledgeBase),
+    [knowledgeBase, selectedCompounds]
+  );
+  const recognizedCompounds = useMemo(
+    () => selectedCompounds.filter((compound) => !unknownCompounds.includes(compound)),
+    [selectedCompounds, unknownCompounds]
+  );
 
   function addCompound(name: string) {
     const normalized = normalizeName(name);
@@ -344,16 +356,16 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
           {isExistingMode ? 'Stack Mapping' : 'Getting Started'}
         </p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-          {isExistingMode ? 'A personal bio-operating system with longitudinal intelligence.' : 'Tell us what you take — or start from an example.'}
+          {isExistingMode ? 'Paste your stack and see what it is doing together.' : 'Paste your stack — or start from an example.'}
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-white/62">
           {isExistingMode
-            ? 'Paste the current list. BioStack checks only what you entered.'
-            : "Add anything you already take. If you're not sure, start from a sample."}
+            ? 'Paste the current stack. BioStack checks only what you entered.'
+            : "Paste anything you already take. If you're not sure, start from a sample."}
         </p>
         {!isExistingMode && (
           <p className="mt-4 max-w-2xl text-base leading-7 text-white/55">
-            A protocol is just the list of things you take. We&apos;ll show overlaps and conflicts as you add items.
+            A stack is just the list of things you take. We&apos;ll show overlaps and conflicts as you add items.
           </p>
         )}
       </div>
@@ -491,19 +503,19 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
             <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr]">
               <div>
                 <div className="flex flex-wrap items-center gap-3">
-                  <p className="text-sm font-medium text-emerald-200/85">Build a quick preview</p>
+                  <p className="text-sm font-medium text-emerald-200/85">Build a quick stack preview</p>
                   <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-white/52">
                     {selectedCompounds.length} item{selectedCompounds.length === 1 ? '' : 's'} added
                   </span>
                 </div>
 
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                  {isExistingMode ? 'Paste what is already in the mix.' : 'Add what you already know.'}
+                  {isExistingMode ? 'Paste what is already in the stack.' : 'Paste what you already know.'}
                 </h2>
                 <p className="mt-4 max-w-xl text-base leading-7 text-white/60">
                   {isExistingMode
-                    ? 'Use commas or new lines. Clean it up later.'
-                    : 'Search, quick add, type manually, or pick an example below.'}
+                    ? 'Paste one per line, brand or compound name. Commas still work too.'
+                    : 'Paste one per line, brand or compound name. Search, quick add, or pick an example below.'}
                 </p>
 
                 {isExistingMode && (
@@ -513,7 +525,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                       <textarea
                         value={bulkInput}
                         onChange={(event) => setBulkInput(event.target.value)}
-                        placeholder="Enter one item per line or separate items with commas."
+                        placeholder="BPC-157&#10;TB-500&#10;NAD+"
                         rows={4}
                         className="w-full resize-none rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/40"
                       />
@@ -525,9 +537,9 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                         disabled={!bulkInput.trim()}
                         className="rounded-full border border-emerald-300/20 bg-emerald-400/12 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-300/35 disabled:cursor-not-allowed disabled:opacity-45"
                       >
-                        Add Stack
+                        Add stack
                       </button>
-                      <p className="text-sm text-white/45">Fast entry first. Honest read next.</p>
+                      <p className="text-sm text-white/45">Fast paste first. Honest read next.</p>
                     </div>
                   </div>
                 )}
@@ -555,7 +567,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 )}
 
                 <label className="mt-6 block">
-                  <span className="mb-2 block text-sm text-white/62">Search what you take</span>
+                  <span className="mb-2 block text-sm text-white/62">Paste your stack — one per line, brand or compound name</span>
                   <div className="flex flex-col gap-3 sm:flex-row">
                     <input
                       ref={inputRef}
@@ -605,7 +617,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                           ))}
                         </div>
                       ) : (
-                        <p className="text-sm text-white/46">We don&apos;t have deep data on this one yet, but we&apos;ll still track it for you.</p>
+                        <p className="text-sm text-white/46">We don&apos;t recognize this one yet, but you can still add it and BioStack will analyze the rest.</p>
                       )}
                       <p className="mt-2 text-sm text-white/42">Press Enter to add &ldquo;{query.trim()}&rdquo; manually.</p>
                     </motion.div>
@@ -633,7 +645,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                     ) : (
                       <p className="text-sm text-white/38">
                         {isExistingMode
-                          ? 'Paste or add the compounds, supplements, or medications you already have in mind.'
+                          ? 'Paste or add the compounds, supplements, or medications already in your stack.'
                           : "Type anything you take — a supplement, medication, or peptide. Don't worry about getting it perfect."}
                       </p>
                     )}
@@ -646,9 +658,9 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                     disabled={!canSubmit}
                     className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-50 sm:w-auto"
                   >
-                    Add to My List
+                    Analyze My Stack
                   </button>
-                  <p className="text-sm text-white/45">We&apos;ll flag overlaps and conflicts once you&apos;ve added two items.</p>
+                  <p className="text-sm text-white/45">We&apos;ll flag overlaps and conflicts once you&apos;ve added two recognized items.</p>
                 </div>
               </div>
 
@@ -678,7 +690,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
               <div className="absolute inset-x-8 top-0 h-24 rounded-full bg-emerald-500/10 blur-3xl" />
               <StackIntelligencePanel
                 compoundNames={selectedCompounds}
-                eyebrowLabel="Preview your list"
+                eyebrowLabel="Preview your stack"
                 contentOverrides={{
                   simple: previewPanelContent,
                   technical: previewPanelContent,
@@ -697,16 +709,31 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                   {systemStatus.title}
                 </span>
               </div>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">{systemStatus.title}</h2>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">
+                {recognizedCompounds.length >= 2 ? 'First stack insight ready' : systemStatus.title}
+              </h2>
               <p className="mt-4 text-base leading-7 text-white/60">
-                {intelligence.stage === 'context'
-                  ? "We'll flag overlaps and conflicts once you've added two items."
-                  : systemStatus.subtitle ?? 'Selected inputs staged.'}
+                {recognizedCompounds.length >= 2
+                  ? 'BioStack found the first believable read from the stack you entered.'
+                  : intelligence.stage === 'context'
+                    ? "We'll flag overlaps and conflicts once you've added two recognized items."
+                    : systemStatus.subtitle ?? 'Selected inputs staged.'}
               </p>
+
+              {unknownCompounds.length > 0 && (
+                <div className="mt-5 rounded-2xl border border-amber-400/18 bg-amber-500/10 p-4">
+                  <p className="text-sm font-semibold text-amber-100">
+                    Analyzed without {unknownCompounds.length} unrecognized item{unknownCompounds.length === 1 ? '' : 's'}: {unknownCompounds.map((compound) => `"${compound}"`).join(', ')}.
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-amber-100/75">
+                    We matched the rest of your stack and continued analysis.
+                  </p>
+                </div>
+              )}
 
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/35">Selected items</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/35">Selected stack</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {selectedCompounds.map((compound) => (
                       <span
@@ -720,11 +747,13 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 </div>
 
                 <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/35">Current state</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/35">Current read</p>
                   <p className="mt-3 text-sm leading-7 text-white/58">
-                    {intelligence.stage === 'context'
-                      ? "Add one more item when you're ready for overlap and conflict checks."
-                      : systemStatus.subtitle ?? systemStatus.title}
+                    {recognizedCompounds.length >= 2
+                      ? 'Free shows the first finding. Save this stack to keep going.'
+                      : intelligence.stage === 'context'
+                        ? "Add one more recognized item when you're ready for overlap and conflict checks."
+                        : systemStatus.subtitle ?? systemStatus.title}
                   </p>
                 </div>
               </div>
@@ -744,7 +773,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                   href="/profiles"
                   className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
                 >
-                  Finish Setup
+                  Save and Track This Stack
                 </Link>
                 <button
                   type="button"

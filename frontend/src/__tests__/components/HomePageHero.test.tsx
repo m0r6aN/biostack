@@ -21,21 +21,21 @@ describe('HomePage hero', () => {
     render(<LandingHero />);
 
     expect(
-      screen.getByRole('heading', { name: /What to take\. How to use it\.\s*See what it's doing\./ })
+      screen.getByRole('heading', { name: /See what your stack.*doing to itself\./ })
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Start with answers. Then choose to track, compare, and optimize over time.')
+      screen.getByText('Paste your stack. Get interactions, redundancies, and conflicts in seconds.')
     ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /I'm getting started/ })).toHaveAttribute('href', '/start');
     expect(screen.getByRole('link', { name: /I already have a stack/ })).toHaveAttribute('href', '/map');
     expect(screen.getByRole('link', { name: /I work with clients/ })).toHaveAttribute('href', '/providers');
     expect(screen.getByRole('link', { name: 'Need help with dosage or mixing? → Start here' })).toHaveAttribute('href', '/tools');
     expect(screen.getByText('Starter')).toBeInTheDocument();
-    expect(screen.getByText('Set up compound tracking without rebuilding a spreadsheet.')).toBeInTheDocument();
+    expect(screen.getByText('Paste a stack, get your first finding, and start tracking only if you want more.')).toBeInTheDocument();
     expect(screen.getByText('Experienced')).toBeInTheDocument();
-    expect(screen.getByText('Map active compounds, overlap signals, and timeline context.')).toBeInTheDocument();
+    expect(screen.getByText('Paste your current stack and see overlaps, redundancies, and conflicts fast.')).toBeInTheDocument();
     expect(screen.getByText('Provider')).toBeInTheDocument();
-    expect(screen.getByText('Track client protocol changes, notes, and check-ins.')).toBeInTheDocument();
+    expect(screen.getByText('Review client stacks, compare revisions, and keep the history straight.')).toBeInTheDocument();
     expect(screen.queryByText('Protocol Surface')).not.toBeInTheDocument();
     expect(screen.queryByText('Stop guessing what to take—or what your stack is actually doing.')).not.toBeInTheDocument();
     expect(screen.queryByText('Track peptides, compounds, and layered protocols')).not.toBeInTheDocument();

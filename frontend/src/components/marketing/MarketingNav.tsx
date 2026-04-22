@@ -15,14 +15,14 @@ export function MarketingNav() {
             <Link href="/how-it-works" className="transition-colors hover:text-white">
               How it works
             </Link>
-            <Link href="/tools" className="transition-colors hover:text-white">
-              Tools
-            </Link>
-            <Link href="/providers" className="transition-colors hover:text-white">
-              Provider
+            <Link href="/pricing" className="transition-colors hover:text-white">
+              Pricing
             </Link>
             <Link href="/safety" className="transition-colors hover:text-white">
               Safety
+            </Link>
+            <Link href="/tools" className="transition-colors hover:text-white">
+              Tools
             </Link>
           </nav>
 

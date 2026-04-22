@@ -6,9 +6,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'BioStack Protocol Console',
+  title: 'BioStack',
   description:
-    'Your protocol intelligence system. Track compounds, surface overlap, and turn daily signal into continuity.',
+    'Your stack intelligence system. Analyze stacks, surface overlap, and turn daily signal into tracked history.',
 };
 
 export default async function RootLayout({

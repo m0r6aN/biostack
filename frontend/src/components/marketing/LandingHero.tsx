@@ -5,7 +5,7 @@ const entryPaths = [
   {
     label: 'Starter',
     title: "I'm getting started",
-    body: 'Set up compound tracking without rebuilding a spreadsheet.',
+    body: 'Paste a stack, get your first finding, and start tracking only if you want more.',
     href: '/start',
     tone: 'emerald',
     signal: 'Guided',
@@ -15,7 +15,7 @@ const entryPaths = [
   {
     label: 'Experienced',
     title: 'I already have a stack',
-    body: 'Map active compounds, overlap signals, and timeline context.',
+    body: 'Paste your current stack and see overlaps, redundancies, and conflicts fast.',
     href: '/map',
     tone: 'sky',
     signal: 'Fast analysis',
@@ -25,7 +25,7 @@ const entryPaths = [
   {
     label: 'Provider',
     title: 'I work with clients',
-    body: 'Track client protocol changes, notes, and check-ins.',
+    body: 'Review client stacks, compare revisions, and keep the history straight.',
     href: '/providers',
     tone: 'gold',
     signal: 'Multi-client',
@@ -68,11 +68,11 @@ export function LandingHero() {
         <div className="max-w-5xl">
           <p>Built for peptides, SARMs, SERMs, and beyond</p>
           <h1 className="text-[2.45rem] font-semibold leading-[0.96] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            What to take. How to use it.<br />
-            See what it's doing.
+            See what your stack<br />
+            is doing to itself.
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-6 text-white/64 sm:mt-5 sm:text-lg">
-            Start with answers. Then choose to track, compare, and optimize over time.
+            Paste your stack. Get interactions, redundancies, and conflicts in seconds.
           </p>
         </div>
 

@@ -25,12 +25,12 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'What does BioStack actually do?',
     answer:
-      'BioStack is a personal bio-protocol operating system. It lets you log compounds, calculate injection math, detect pathway overlaps, track daily check-ins across 15+ biomarkers, and correlate patterns over time in a unified timeline.',
+      'BioStack helps you paste a stack, surface overlap and conflict findings, calculate injection math, track daily check-ins across 15+ biomarkers, and compare how your stack changes over time.',
   },
   {
     question: 'Who is BioStack designed for?',
     answer:
-      'BioStack is built for serious self-experimenters who manage complex compound protocols and need more than a spreadsheet. It is for users who already do the research and want a system that keeps up with the complexity.',
+      'BioStack is built for serious self-experimenters who manage complex stacks and need more than a spreadsheet. It is for users who already do the research and want a system that keeps up with the complexity.',
   },
   {
     question: 'What is the Reconstitution Calculator?',
@@ -45,22 +45,22 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'Is there a free plan?',
     answer:
-      'Yes. Observer is free forever and includes basic tracking, knowledge base preview, and free public calculators. Upgrade to Operator for the full protocol workflow.',
+      'Yes. Observer is free forever and includes one stack score, one headline finding, calculators, and basic knowledge access. Upgrade to Operator for scenarios, reasoning, and tracked stack history.',
   },
   {
     question: 'What is Pathway Overlap detection?',
     answer:
-      'Pathway Overlap detection analyzes your protocol and identifies when two or more compounds share the same biological pathways. BioStack surfaces flags and evidence confidence levels so you can investigate further.',
+      'Pathway Overlap detection analyzes your stack and identifies when two or more compounds share the same biological pathways. BioStack surfaces findings and confidence levels so you can investigate further.',
   },
   {
     question: 'Where is my data stored?',
     answer:
-      'Your BioStack data is stored securely and is private to your account. BioStack does not sell personal data or share protocol information with third parties.',
+      'Your BioStack data is stored securely and is private to your account. BioStack does not sell personal data or share stack information with third parties.',
   },
   {
     question: 'How is BioStack different from a spreadsheet?',
     answer:
-      'Spreadsheets do not calculate reconstitution math, detect pathway overlaps, or align check-ins and compound events in a unified timeline. BioStack is built for protocol intelligence rather than passive storage.',
+      'Spreadsheets do not calculate reconstitution math, detect pathway overlaps, or align check-ins and compound events in a unified timeline. BioStack is built for stack intelligence rather than passive storage.',
   },
   {
     question: 'What daily metrics can I track?',
@@ -78,10 +78,10 @@ export const pricingTiers: PricingTier[] = [
     description: 'Getting organized.',
     detail:
       'A simple place to track what you’re taking and stop relying on notes, memory, or scattered apps.',
-    ctaLabel: 'Build My Protocol',
+    ctaLabel: 'Analyze My Stack',
     href: '/onboarding',
     highlights: [
-      'Track up to 5 active compounds',
+      'Track one saved stack',
       'Basic knowledge library access',
       'Core check-ins',
       'Free calculators',
@@ -92,9 +92,9 @@ export const pricingTiers: PricingTier[] = [
     monthly: '$12/mo',
     annual: '$96/year',
     annualEffective: '$8/mo effective',
-    description: 'For people actively running protocols - not just tracking them.',
+    description: 'For people actively managing stacks, not just logging them.',
     detail:
-      'Everything you need to track compounds, log results, and understand how your protocol fits together.',
+      'Everything you need to track compounds, log results, and understand how your stack fits together.',
     ctaLabel: 'Choose Operator',
     href: '/auth/signin',
     featured: true,
@@ -103,7 +103,7 @@ export const pricingTiers: PricingTier[] = [
       'Full timeline history',
       'Reconstitution and volume calculators',
       'All check-in fields',
-      'Protocol phases and overlap insights',
+      'Tracked stack history and overlap insights',
     ],
   },
   {
@@ -113,11 +113,11 @@ export const pricingTiers: PricingTier[] = [
     annualEffective: '$19/mo effective',
     description: 'For deeper analysis and pattern optimization.',
     detail:
-      'Advanced insight tools for people managing more complex protocols over time.',
+      'Advanced insight tools for people managing more complex stacks over time.',
     ctaLabel: 'See Commander',
     href: '/auth/signin',
     highlights: [
-      'AI-assisted protocol analysis',
+      'Deep stack analysis',
       'Trend and pattern detection',
       'Cross-session comparison',
       'Side-effect pattern surfacing',
@@ -128,7 +128,7 @@ export const pricingTiers: PricingTier[] = [
 
 export const landingFeatures = [
   'Compound tracking with precision structure',
-  'Pathway overlap intelligence across your active protocol',
+  'Pathway overlap intelligence across your active stack',
   'Reconstitution, volume, and unit conversion math',
   'Evidence-tiered knowledge base entries',
   'Daily check-ins that turn subjectivity into analyzable signal',
