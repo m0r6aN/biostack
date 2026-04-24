@@ -361,7 +361,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
           <Link
             href="/tools/analyzer"
-            className="group rounded-lg border border-violet-300/20 bg-violet-400/[0.06] px-4 py-3.5 flex items-center justify-between gap-4 transition hover:border-violet-300/40 hover:bg-violet-400/[0.10]"
+            className="group flex items-center justify-between gap-4 rounded-lg border border-violet-300/20 bg-violet-400/[0.06] px-4 py-3.5 transition-colors hover:border-violet-300/40 hover:bg-violet-400/[0.10]"
           >
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-100/60">Protocol Analyzer</p>
