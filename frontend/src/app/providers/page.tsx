@@ -34,8 +34,8 @@ export default function ProvidersPage() {
           ))}
         </section>
 
-        <section className="mt-8 rounded-lg border border-amber-200/16 bg-amber-400/[0.05] p-5 sm:p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-200/72">
+        <section className="mt-8 rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5 sm:p-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/72">
             Audit client protocols
           </p>
           <p className="mt-3 text-lg font-semibold tracking-tight text-white">
