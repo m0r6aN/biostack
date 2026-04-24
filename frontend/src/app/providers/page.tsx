@@ -34,6 +34,24 @@ export default function ProvidersPage() {
           ))}
         </section>
 
+        <section className="mt-8 rounded-lg border border-amber-200/16 bg-amber-400/[0.05] p-5 sm:p-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-200/72">
+            Audit client protocols
+          </p>
+          <p className="mt-3 text-lg font-semibold tracking-tight text-white">
+            Turn client documents into structured BioStack reviews.
+          </p>
+          <p className="mt-2 text-sm leading-6 text-white/60">
+            Upload or scan clinic handouts, client PDFs, and coach spreadsheets. BioStack extracts the structure, scores the stack, and surfaces overlap and optimization signals.
+          </p>
+          <Link
+            href="/tools/analyzer"
+            className="mt-4 inline-flex rounded-lg border border-amber-200/20 px-4 py-2.5 text-sm font-semibold text-amber-100 transition-colors hover:border-amber-200/40 hover:text-white"
+          >
+            Open Protocol Analyzer →
+          </Link>
+        </section>
+
         <div className="mt-10 flex flex-wrap gap-3">
           <Link
             href="/start"

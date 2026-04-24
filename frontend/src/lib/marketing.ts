@@ -85,6 +85,7 @@ export const pricingTiers: PricingTier[] = [
       'Basic knowledge library access',
       'Core check-ins',
       'Free calculators',
+      'Protocol Analyzer — extract and score any protocol',
     ],
   },
   {
@@ -104,6 +105,7 @@ export const pricingTiers: PricingTier[] = [
       'Reconstitution and volume calculators',
       'All check-in fields',
       'Protocol phases and overlap insights',
+      'Save and convert analyzed protocols',
     ],
   },
   {
@@ -117,7 +119,7 @@ export const pricingTiers: PricingTier[] = [
     ctaLabel: 'See Commander',
     href: '/auth/signin',
     highlights: [
-      'AI-assisted protocol analysis',
+      'Protocol Analyzer — full counterfactuals and goal-aware optimization',
       'Trend and pattern detection',
       'Cross-session comparison',
       'Side-effect pattern surfacing',
