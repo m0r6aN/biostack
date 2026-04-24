@@ -1,9 +1,10 @@
-export type LandingPath = 'starter' | 'experienced' | 'provider';
+export type LandingPath = 'starter' | 'experienced' | 'provider' | 'analyzer';
 
 const landingPathEventNames: Record<LandingPath, string> = {
   starter: 'landing_path_selected_starter',
   experienced: 'landing_path_selected_experienced',
   provider: 'landing_path_selected_provider',
+  analyzer: 'landing_path_selected_analyzer',
 };
 
 export function trackLandingPathSelection(path: LandingPath) {
