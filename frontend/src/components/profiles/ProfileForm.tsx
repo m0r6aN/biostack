@@ -5,7 +5,7 @@ import { WeightUnitToggle } from '@/components/ui/WeightUnitToggle';
 import { useSettings } from '@/lib/settings';
 import { CreateProfileRequest, PersonProfile } from '@/lib/types';
 import { kgToLbs, lbsToKg } from '@/lib/utils';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 
 interface ProfileFormProps {
   initialData?: PersonProfile;
@@ -17,6 +17,7 @@ interface ProfileFormProps {
 
 export function ProfileForm({ initialData, initialNotes, onSubmit, onCancel, isSubmitting }: ProfileFormProps) {
   const { settings } = useSettings();
+  const formId = useId();
   const [formData, setFormData] = useState({
     displayName: initialData?.displayName || '',
     sex: initialData?.sex || 'Male',
@@ -52,8 +53,9 @@ export function ProfileForm({ initialData, initialNotes, onSubmit, onCancel, isS
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-white/70 mb-2">Display Name</label>
+        <label htmlFor={`${formId}-display-name`} className="block text-sm font-medium text-white/70 mb-2">Display Name</label>
         <input
+          id={`${formId}-display-name`}
           type="text"
           value={formData.displayName}
           onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
@@ -64,8 +66,9 @@ export function ProfileForm({ initialData, initialNotes, onSubmit, onCancel, isS
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Sex</label>
+          <label htmlFor={`${formId}-sex`} className="block text-sm font-medium text-white/70 mb-2">Sex</label>
           <select
+            id={`${formId}-sex`}
             value={formData.sex}
             onChange={(e) => setFormData({ ...formData, sex: e.target.value })}
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_0_1px_rgba(34,197,94,0.2)] transition-all"
@@ -76,8 +79,9 @@ export function ProfileForm({ initialData, initialNotes, onSubmit, onCancel, isS
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Age</label>
+          <label htmlFor={`${formId}-age`} className="block text-sm font-medium text-white/70 mb-2">Age</label>
           <input
+            id={`${formId}-age`}
             type="number"
             value={formData.age || ''}
             onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || undefined })}
@@ -87,10 +91,11 @@ export function ProfileForm({ initialData, initialNotes, onSubmit, onCancel, isS
         </div>
         <div className="col-span-2 sm:col-span-1">
           <div className="flex items-center justify-between mb-2">
-            <label className="text-sm font-medium text-white/70">Weight</label>
+            <label htmlFor={`${formId}-weight`} className="text-sm font-medium text-white/70">Weight</label>
             <WeightUnitToggle />
           </div>
           <input
+            id={`${formId}-weight`}
             type="number"
             step="any"
             value={settings.weightUnit === 'imperial' ? kgToLbs(formData.weight) : formData.weight || ''}
@@ -111,8 +116,9 @@ export function ProfileForm({ initialData, initialNotes, onSubmit, onCancel, isS
       />
 
       <div>
-        <label className="block text-sm font-medium text-white/70 mb-2">Notes</label>
+        <label htmlFor={`${formId}-notes`} className="block text-sm font-medium text-white/70 mb-2">Notes</label>
         <textarea
+          id={`${formId}-notes`}
           value={formData.notes}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
           placeholder="Any additional notes..."

@@ -2,7 +2,7 @@
 
 import { apiClient } from '@/lib/api';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 
 interface CompoundFormProps {
   personId: string;
@@ -11,6 +11,7 @@ interface CompoundFormProps {
 }
 
 export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProps) {
+  const formId = useId();
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeEntry[]>([]);
   const [formData, setFormData] = useState({
     name: '',
@@ -87,8 +88,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
       <div className="space-y-4">
         {/* 1. Category */}
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">1. Select a Category</label>
+          <label htmlFor={`${formId}-category`} className="block text-sm font-medium text-white/70 mb-2">1. Select a Category</label>
           <select
+            id={`${formId}-category`}
             value={formData.category}
             onChange={(e) => setFormData({ ...formData, category: e.target.value, goal: '', name: '' })}
             required
@@ -106,8 +108,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
 
         {/* 2. Goal */}
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">2. Select a Goal</label>
+          <label htmlFor={`${formId}-goal`} className="block text-sm font-medium text-white/70 mb-2">2. Select a Goal</label>
           <select
+            id={`${formId}-goal`}
             value={formData.goal}
             onChange={(e) => setFormData({ ...formData, goal: e.target.value, name: '' })}
             disabled={!formData.category}
@@ -122,8 +125,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
 
         {/* 3. Compound Selection */}
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">3. Select a Compound</label>
+          <label htmlFor={`${formId}-compound`} className="block text-sm font-medium text-white/70 mb-2">3. Select a Compound</label>
           <select
+            id={`${formId}-compound`}
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             disabled={!formData.category}
@@ -138,8 +142,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
 
         {/* 4. Optional: Search / Manual Entry */}
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">4. Optional: Manual Search/Entry</label>
+          <label htmlFor={`${formId}-manual-name`} className="block text-sm font-medium text-white/70 mb-2">4. Optional: Manual Search/Entry</label>
           <input
+            id={`${formId}-manual-name`}
             type="text"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -152,8 +157,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
         {/* 5. Optional: Source and Price */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-white/70 mb-2">5a. Optional: Source</label>
+            <label htmlFor={`${formId}-source`} className="block text-sm font-medium text-white/70 mb-2">5a. Optional: Source</label>
             <input
+              id={`${formId}-source`}
               type="text"
               value={formData.source}
               onChange={(e) => setFormData({ ...formData, source: e.target.value })}
@@ -162,10 +168,11 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-white/70 mb-2">5b. Optional: Price Paid</label>
+            <label htmlFor={`${formId}-price-paid`} className="block text-sm font-medium text-white/70 mb-2">5b. Optional: Price Paid</label>
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30">$</span>
               <input
+                id={`${formId}-price-paid`}
                 type="number"
                 step="0.01"
                 value={formData.pricePaid}
@@ -182,8 +189,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Start Date</label>
+          <label htmlFor={`${formId}-start-date`} className="block text-sm font-medium text-white/70 mb-2">Start Date</label>
           <input
+            id={`${formId}-start-date`}
             type="date"
             value={formData.startDate}
             onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
@@ -192,8 +200,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">End Date (Optional)</label>
+          <label htmlFor={`${formId}-end-date`} className="block text-sm font-medium text-white/70 mb-2">End Date (Optional)</label>
           <input
+            id={`${formId}-end-date`}
             type="date"
             value={formData.endDate}
             onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
@@ -203,8 +212,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-white/70 mb-2">Status</label>
+        <label htmlFor={`${formId}-status`} className="block text-sm font-medium text-white/70 mb-2">Status</label>
         <select
+          id={`${formId}-status`}
           value={formData.status}
           onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
           className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
@@ -216,8 +226,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-white/70 mb-2">Notes</label>
+        <label htmlFor={`${formId}-notes`} className="block text-sm font-medium text-white/70 mb-2">Notes</label>
         <textarea
+          id={`${formId}-notes`}
           value={formData.notes}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
           placeholder="Any additional notes..."
