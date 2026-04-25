@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Xml;
 using System.Xml.Linq;
 using BioStack.Contracts.Requests;
 using Microsoft.Extensions.Logging;
@@ -225,50 +226,65 @@ public sealed class DocxProtocolExtractor : IProtocolTextExtractor
             throw new ProtocolIngestionException("The uploaded DOCX was empty.");
         }
 
-        using var stream = new MemoryStream(request.SourceBytes, writable: false);
-        using var archive = new ZipArchive(stream, ZipArchiveMode.Read, leaveOpen: false);
-        var entry = archive.GetEntry("word/document.xml")
-            ?? throw new ProtocolIngestionException("The DOCX file did not contain a readable document body.");
-
-        using var entryStream = entry.Open();
-        var document = XDocument.Load(entryStream);
-        var blocks = new List<string>();
-
-        foreach (var element in document.Root?.Descendants(W + "body").Elements() ?? Enumerable.Empty<XElement>())
+        try
         {
-            if (element.Name == W + "p")
+            using var stream = new MemoryStream(request.SourceBytes, writable: false);
+            using var archive = new ZipArchive(stream, ZipArchiveMode.Read, leaveOpen: false);
+            var entry = archive.GetEntry("word/document.xml")
+                ?? throw new ProtocolIngestionException("The DOCX file did not contain a readable document body.");
+
+            using var entryStream = entry.Open();
+            var document = XDocument.Load(entryStream);
+            var blocks = new List<string>();
+
+            foreach (var element in document.Root?.Descendants(W + "body").Elements() ?? Enumerable.Empty<XElement>())
             {
-                var text = string.Concat(element.Descendants(W + "t").Select(node => node.Value)).Trim();
-                if (!string.IsNullOrWhiteSpace(text))
+                if (element.Name == W + "p")
                 {
-                    blocks.Add(text);
+                    var text = string.Concat(element.Descendants(W + "t").Select(node => node.Value)).Trim();
+                    if (!string.IsNullOrWhiteSpace(text))
+                    {
+                        blocks.Add(text);
+                    }
+
+                    continue;
                 }
 
-                continue;
-            }
-
-            if (element.Name == W + "tbl")
-            {
-                foreach (var row in element.Descendants(W + "tr"))
+                if (element.Name == W + "tbl")
                 {
-                    var cells = row.Descendants(W + "tc")
-                        .Select(cell => string.Concat(cell.Descendants(W + "t").Select(node => node.Value)).Trim())
-                        .Where(value => !string.IsNullOrWhiteSpace(value))
-                        .ToList();
-
-                    if (cells.Count > 0)
+                    foreach (var row in element.Descendants(W + "tr"))
                     {
-                        blocks.Add(string.Join(" | ", cells));
+                        var cells = row.Descendants(W + "tc")
+                            .Select(cell => string.Concat(cell.Descendants(W + "t").Select(node => node.Value)).Trim())
+                            .Where(value => !string.IsNullOrWhiteSpace(value))
+                            .ToList();
+
+                        if (cells.Count > 0)
+                        {
+                            blocks.Add(string.Join(" | ", cells));
+                        }
                     }
                 }
             }
-        }
 
-        return Task.FromResult(new ProtocolExtractionResult(
-            string.Join(Environment.NewLine, blocks),
-            Array.Empty<string>(),
-            Array.Empty<ProtocolIngestionArtifact>(),
-            false));
+            return Task.FromResult(new ProtocolExtractionResult(
+                string.Join(Environment.NewLine, blocks),
+                Array.Empty<string>(),
+                Array.Empty<ProtocolIngestionArtifact>(),
+                false));
+        }
+        catch (ProtocolIngestionException)
+        {
+            throw;
+        }
+        catch (InvalidDataException)
+        {
+            throw new ProtocolIngestionException("The DOCX file appears to be corrupted or is not a valid Word document.");
+        }
+        catch (XmlException)
+        {
+            throw new ProtocolIngestionException("The DOCX file contains malformed content and could not be read.");
+        }
     }
 }
 
@@ -301,50 +317,65 @@ public sealed class SpreadsheetProtocolExtractor : IProtocolTextExtractor
                 false));
         }
 
-        using var stream = new MemoryStream(request.SourceBytes, writable: false);
-        using var archive = new ZipArchive(stream, ZipArchiveMode.Read, leaveOpen: false);
-
-        var workbook = LoadXml(archive, "xl/workbook.xml");
-        var relationships = LoadXml(archive, "xl/_rels/workbook.xml.rels");
-        var sharedStrings = LoadSharedStrings(archive);
-        var sheetMap = relationships.Root?
-            .Elements(Relationship + "Relationship")
-            .Where(element => element.Attribute("Id") is not null && element.Attribute("Target") is not null)
-            .ToDictionary(
-                element => element.Attribute("Id")!.Value,
-                element => $"xl/{element.Attribute("Target")!.Value.Replace("\\", "/").TrimStart('/')}",
-                StringComparer.OrdinalIgnoreCase)
-            ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-        var blocks = new List<string>();
-        foreach (var sheet in workbook.Root?.Descendants(Spreadsheet + "sheet") ?? Enumerable.Empty<XElement>())
+        try
         {
-            var sheetName = sheet.Attribute("name")?.Value ?? "Sheet";
-            var relationId = sheet.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "id")?.Value;
-            if (string.IsNullOrWhiteSpace(relationId) || !sheetMap.TryGetValue(relationId, out var target))
+            using var stream = new MemoryStream(request.SourceBytes, writable: false);
+            using var archive = new ZipArchive(stream, ZipArchiveMode.Read, leaveOpen: false);
+
+            var workbook = LoadXml(archive, "xl/workbook.xml");
+            var relationships = LoadXml(archive, "xl/_rels/workbook.xml.rels");
+            var sharedStrings = LoadSharedStrings(archive);
+            var sheetMap = relationships.Root?
+                .Elements(Relationship + "Relationship")
+                .Where(element => element.Attribute("Id") is not null && element.Attribute("Target") is not null)
+                .ToDictionary(
+                    element => element.Attribute("Id")!.Value,
+                    element => $"xl/{element.Attribute("Target")!.Value.Replace("\\", "/").TrimStart('/')}",
+                    StringComparer.OrdinalIgnoreCase)
+                ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            var blocks = new List<string>();
+            foreach (var sheet in workbook.Root?.Descendants(Spreadsheet + "sheet") ?? Enumerable.Empty<XElement>())
             {
-                continue;
+                var sheetName = sheet.Attribute("name")?.Value ?? "Sheet";
+                var relationId = sheet.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "id")?.Value;
+                if (string.IsNullOrWhiteSpace(relationId) || !sheetMap.TryGetValue(relationId, out var target))
+                {
+                    continue;
+                }
+
+                var worksheet = LoadXml(archive, target);
+                var rows = worksheet.Root?
+                    .Descendants(Spreadsheet + "row")
+                    .Select(row => row.Elements(Spreadsheet + "c").Select(cell => ReadCellValue(cell, sharedStrings)).ToList())
+                    .Where(row => row.Any(cell => !string.IsNullOrWhiteSpace(cell)))
+                    .ToList()
+                    ?? new List<List<string>>();
+
+                if (rows.Count > 0)
+                {
+                    blocks.Add(ConvertDelimitedRowsToText(sheetName, rows));
+                }
             }
 
-            var worksheet = LoadXml(archive, target);
-            var rows = worksheet.Root?
-                .Descendants(Spreadsheet + "row")
-                .Select(row => row.Elements(Spreadsheet + "c").Select(cell => ReadCellValue(cell, sharedStrings)).ToList())
-                .Where(row => row.Any(cell => !string.IsNullOrWhiteSpace(cell)))
-                .ToList()
-                ?? new List<List<string>>();
-
-            if (rows.Count > 0)
-            {
-                blocks.Add(ConvertDelimitedRowsToText(sheetName, rows));
-            }
+            return Task.FromResult(new ProtocolExtractionResult(
+                string.Join(Environment.NewLine + Environment.NewLine, blocks),
+                Array.Empty<string>(),
+                Array.Empty<ProtocolIngestionArtifact>(),
+                false));
         }
-
-        return Task.FromResult(new ProtocolExtractionResult(
-            string.Join(Environment.NewLine + Environment.NewLine, blocks),
-            Array.Empty<string>(),
-            Array.Empty<ProtocolIngestionArtifact>(),
-            false));
+        catch (ProtocolIngestionException)
+        {
+            throw;
+        }
+        catch (InvalidDataException)
+        {
+            throw new ProtocolIngestionException("The spreadsheet appears to be corrupted or is not a valid XLSX file.");
+        }
+        catch (XmlException)
+        {
+            throw new ProtocolIngestionException("The spreadsheet contains malformed content and could not be read.");
+        }
     }
 
     private static XDocument LoadXml(ZipArchive archive, string path)
@@ -504,43 +535,54 @@ public sealed class LinkProtocolExtractor : IProtocolTextExtractor
         }
 
         var client = _httpClientFactory.CreateClient("protocol-link-extractor");
-        using var response = await client.GetAsync(uri, cancellationToken);
-        if (response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden)
+        try
         {
-            throw new ProtocolIngestionException("That document requires authentication. Use a public share link or upload the file directly.");
-        }
+            using var response = await client.GetAsync(uri, cancellationToken);
+            if (response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden)
+            {
+                throw new ProtocolIngestionException("That document requires authentication. Use a public share link or upload the file directly.");
+            }
 
-        if (!response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ProtocolIngestionException("We could not fetch that shared document.");
+            }
+
+            var contentType = response.Content.Headers.ContentType?.MediaType;
+            var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+            var nestedRequest = new ProtocolIngestionRequest(
+                GuessInputType(contentType),
+                null,
+                request.LinkUrl,
+                request.SourceName ?? Path.GetFileName(uri.LocalPath),
+                contentType,
+                bytes);
+
+            if (string.Equals(contentType, "text/plain", StringComparison.OrdinalIgnoreCase))
+            {
+                return new ProtocolExtractionResult(
+                    Encoding.UTF8.GetString(bytes),
+                    Array.Empty<string>(),
+                    Array.Empty<ProtocolIngestionArtifact>(),
+                    false);
+            }
+
+            var extractor = CreateNestedExtractor(nestedRequest);
+            if (extractor is null)
+            {
+                throw new ProtocolIngestionException("That link points to a source we cannot extract yet. Upload the file directly for now.");
+            }
+
+            return await extractor.ExtractAsync(nestedRequest, cancellationToken);
+        }
+        catch (ProtocolIngestionException)
         {
-            throw new ProtocolIngestionException("We could not fetch that shared document.");
+            throw;
         }
-
-        var contentType = response.Content.Headers.ContentType?.MediaType;
-        var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
-        var nestedRequest = new ProtocolIngestionRequest(
-            GuessInputType(contentType),
-            null,
-            request.LinkUrl,
-            request.SourceName ?? Path.GetFileName(uri.LocalPath),
-            contentType,
-            bytes);
-
-        if (string.Equals(contentType, "text/plain", StringComparison.OrdinalIgnoreCase))
+        catch (HttpRequestException)
         {
-            return new ProtocolExtractionResult(
-                Encoding.UTF8.GetString(bytes),
-                Array.Empty<string>(),
-                Array.Empty<ProtocolIngestionArtifact>(),
-                false);
+            throw new ProtocolIngestionException("We could not reach that URL. Check the link and try again.");
         }
-
-        var extractor = CreateNestedExtractor(nestedRequest);
-        if (extractor is null)
-        {
-            throw new ProtocolIngestionException("That link points to a source we cannot extract yet. Upload the file directly for now.");
-        }
-
-        return await extractor.ExtractAsync(nestedRequest, cancellationToken);
     }
 
     private static ProtocolInputType GuessInputType(string? contentType)
@@ -588,32 +630,51 @@ public sealed class AzureVisionProtocolOcrService : IProtocolOcrService
         request.Content = new ByteArrayContent(imageBytes);
         request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
-        using var response = await client.SendAsync(request, cancellationToken);
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            throw new ProtocolIngestionException("We could not read text from that image yet. Try a clearer photo or upload the file instead.");
+            using var response = await client.SendAsync(request, cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ProtocolIngestionException("We could not read text from that image yet. Try a clearer photo or upload the file instead.");
+            }
+
+            await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+            using var payload = await JsonDocument.ParseAsync(stream, cancellationToken: cancellationToken);
+            var lines = payload.RootElement
+                .GetProperty("readResult")
+                .GetProperty("blocks")
+                .EnumerateArray()
+                .SelectMany(block => block.GetProperty("lines").EnumerateArray())
+                .Select(line => line.GetProperty("text").GetString())
+                .Where(text => !string.IsNullOrWhiteSpace(text))
+                .Select(text => text!.Trim())
+                .ToList();
+
+            var text = string.Join(Environment.NewLine, lines);
+            var warnings = new List<string>();
+            if (lines.Count < 3)
+            {
+                warnings.Add("This image produced limited OCR output. Review the parsed protocol carefully.");
+            }
+
+            return new ProtocolOcrResult(text, warnings, warnings.Count > 0);
         }
-
-        await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-        using var payload = await JsonDocument.ParseAsync(stream, cancellationToken: cancellationToken);
-        var lines = payload.RootElement
-            .GetProperty("readResult")
-            .GetProperty("blocks")
-            .EnumerateArray()
-            .SelectMany(block => block.GetProperty("lines").EnumerateArray())
-            .Select(line => line.GetProperty("text").GetString())
-            .Where(text => !string.IsNullOrWhiteSpace(text))
-            .Select(text => text!.Trim())
-            .ToList();
-
-        var text = string.Join(Environment.NewLine, lines);
-        var warnings = new List<string>();
-        if (lines.Count < 3)
+        catch (ProtocolIngestionException)
         {
-            warnings.Add("This image produced limited OCR output. Review the parsed protocol carefully.");
+            throw;
         }
-
-        return new ProtocolOcrResult(text, warnings, warnings.Count > 0);
+        catch (HttpRequestException)
+        {
+            throw new ProtocolIngestionException("Could not reach the image analysis service. Try again or upload a text-based file instead.");
+        }
+        catch (JsonException)
+        {
+            throw new ProtocolIngestionException("The image analysis service returned an unexpected response. Try again or upload a text-based file instead.");
+        }
+        catch (KeyNotFoundException)
+        {
+            throw new ProtocolIngestionException("The image analysis service returned an unexpected response. Try again or upload a text-based file instead.");
+        }
     }
 }
 
