@@ -53,6 +53,11 @@ public static class AnalyzeEndpoints
         {
             return Results.BadRequest(new { message = ex.Message });
         }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Unhandled exception in protocol analyzer. InputType={InputType}", request.InputType);
+            return Results.Problem("An unexpected error occurred while analyzing the protocol. Please try again.");
+        }
     }
 
     private static string HashInput(string input)
