@@ -341,19 +341,23 @@ internal static class SwapRecommendationEngine
             return 0;
         }
 
-        var preserved = 0;
+        // Use a set of matched keys so that duplicate Synergistic rows for the same
+        // pair do not inflate the count past preservableSynergyPairs.Count and
+        // incorrectly block the preserves_synergy gate (which checks ==).
+        var preservedKeys = new HashSet<(string, string)>();
         foreach (var result in variantInteractions)
         {
             if (result.Type != InteractionType.Synergistic)
             {
                 continue;
             }
-            if (preservableSynergyPairs.Contains(NormalizePairKey(result.CompoundA, result.CompoundB)))
+            var key = NormalizePairKey(result.CompoundA, result.CompoundB);
+            if (preservableSynergyPairs.Contains(key))
             {
-                preserved++;
+                preservedKeys.Add(key);
             }
         }
-        return preserved;
+        return preservedKeys.Count;
     }
 
     private static bool IsOriginal(string name, KnowledgeEntry original)

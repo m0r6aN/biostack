@@ -478,6 +478,42 @@ public class SwapRecommendationTests
     }
 
     [Fact]
+    public async Task Swaps_FiresPreservesSynergyWhenBaselinePairAppearsAsDuplicateRowInVariant()
+    {
+        // Regression: if variantInteractions contains two Synergistic rows for the
+        // same (B,D) pair, the old counter incremented to 2 while
+        // preservableSynergyPairs.Count == 1, so the == gate blocked preserves_synergy.
+        // The fix counts distinct matched pair keys, so duplicates no longer inflate
+        // the preserved count past the preservable count.
+        var (current, pool, baselineSummary, baselineInteractions, baselineComposite) =
+            BuildPairIdentityRig(EvidenceTier.Moderate);
+
+        // Variant keeps the (B,D) baseline synergy but emits it twice (duplicate rows).
+        var variant = BuildVariant(
+            15d,
+            new InteractionSummaryResponse(2, 0, 0),
+            new List<InteractionResultResponse>
+            {
+                new("B", "D", InteractionType.Synergistic, 0.8d, new List<string>(), string.Empty, false),
+                new("B", "D", InteractionType.Synergistic, 0.8d, new List<string>(), string.Empty, false)
+            });
+
+        var result = await SwapRecommendationEngine.EvaluateAsync(
+            current,
+            pool,
+            baselineComposite,
+            baselineSummary,
+            baselineInteractions,
+            (_, _) => Task.FromResult(variant),
+            CancellationToken.None);
+
+        var swap = Assert.Single(result.Recommendations);
+        Assert.Equal("A", swap.OriginalCompound);
+        Assert.Equal("X", swap.CandidateCompound);
+        Assert.Contains(SwapReasonAtoms.PreservesSynergy, swap.Reasons);
+    }
+
+    [Fact]
     public async Task Swaps_DoesNotFirePreservesSynergyWhenBaselinePairIsLostButCountIsMaintained()
     {
         // Candidate with Strong evidence so stronger_evidence fires and the swap still surfaces
