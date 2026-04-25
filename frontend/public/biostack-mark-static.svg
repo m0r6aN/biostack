@@ -1,0 +1,13 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BioStack">
+  <path d="M 80,96 L 140,122 L 80,142 L 20,122 Z" fill="none" stroke="#273A51" stroke-width="5" opacity="0.95"/>
+  <path d="M 80,58 L 145,88 L 80,108 L 15,88 Z" fill="#1E2D3E" stroke="#38516D" stroke-width="4"/>
+  <path d="M 80,18 L 148,50 L 80,70 L 12,50 Z" fill="#273A51" stroke="#4A6888" stroke-width="4"/>
+  <path d="M 20,50 L 80,22 L 140,50" fill="none" stroke="#67E8F9" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  <path d="M 24,64 L 40,64 L 50,51 L 58,77 L 70,24 L 85,64 L 97,52 L 110,64 L 136,64" fill="none" stroke="#2DD4BF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 58,112 C 72,92 92,86 105,66 C 115,50 112,36 100,26" fill="none" stroke="#22D3EE" stroke-width="4" stroke-linecap="round" stroke-dasharray="3 9" opacity="0.68"/>
+  <circle cx="60" cy="110" r="6" fill="#2DD4BF"/>
+  <circle cx="78" cy="96" r="5" fill="#2DD4BF"/>
+  <circle cx="96" cy="76" r="4.7" fill="#2DD4BF"/>
+  <circle cx="108" cy="54" r="4.4" fill="#67E8F9"/>
+  <circle cx="70" cy="24" r="7" fill="#67E8F9"/>
+</svg>

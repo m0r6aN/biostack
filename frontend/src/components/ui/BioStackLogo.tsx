@@ -39,34 +39,12 @@ const WORDMARK_CLASS: Record<BioStackSize, string> = {
   lg: 'text-3xl',
 };
 
-// SVG viewBox: 160 × 160
-//
-// Three isometric rhombus plates stacked front-to-back:
-//   Plate 1 (top / front)  — filled, highest opacity
-//   Plate 2 (middle)       — filled, medium opacity
-//   Plate 3 (bottom / back)— outline only, for depth
-//
-// EKG waveform runs at y ≈ 64, crossing all three plates.
-//
-// Render order (SVG painter model): plate 3 → plate 2 → plate 1 → signal
-// so the signal always reads on top.
-
 const PLATE_1 = 'M 80,18 L 148,50 L 80,70 L 12,50 Z';
 const PLATE_2 = 'M 80,58 L 145,88 L 80,108 L 15,88 Z';
 const PLATE_3 = 'M 80,96 L 140,122 L 80,142 L 20,122 Z';
-
-// EKG: flat baseline → P wave → QRS complex → T wave → flat
 const SIGNAL = 'M 24,64 L 40,64 L 50,51 L 58,77 L 70,24 L 85,64 L 97,52 L 110,64 L 136,64';
-
-const PLATE_FILL: Record<BioStackTheme, { p1: string; p2: string }> = {
-  dark:  { p1: '#2A3D54', p2: '#1E2D3E' },
-  light: { p1: '#94A3B8', p2: '#7B8FA0' },
-};
-
-const PLATE_STROKE: Record<BioStackTheme, string> = {
-  dark:  '#2A3D54',
-  light: '#8094A8',
-};
+const PATHWAY_ARC = 'M 58,112 C 72,92 92,86 105,66 C 115,50 112,36 100,26';
+const TOP_HIGHLIGHT = 'M 20,50 L 80,22 L 140,50';
 
 const WORDMARK_COLOR: Record<BioStackTheme, string> = {
   dark:  '#F8FAFC',
@@ -74,6 +52,12 @@ const WORDMARK_COLOR: Record<BioStackTheme, string> = {
 };
 
 const SIGNAL_COLOR = '#22C55E';
+const SIGNAL_GRADIENT_ID = 'biostackSignal';
+const NODE_GRADIENT_ID = 'biostackNode';
+const PLATE_TOP_GRADIENT_ID = 'biostackPlateTop';
+const PLATE_MID_GRADIENT_ID = 'biostackPlateMid';
+const SOFT_GLOW_ID = 'biostackSoftGlow';
+const PLATE_SHADOW_ID = 'biostackPlateShadow';
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -89,8 +73,6 @@ export function BioStackLogo({
   wordmarkClassName,
 }: BioStackLogoProps) {
   const iconPx     = ICON_PX[size];
-  const fills      = PLATE_FILL[theme];
-  const stroke     = PLATE_STROKE[theme];
   const isPulsing  = animated && !loading;
   const isLoading  = loading;
 
@@ -114,49 +96,132 @@ export function BioStackLogo({
         aria-label="BioStack"
         className="overflow-visible shrink-0"
       >
-        {/* ── Plate 3 — bottom / back, outline only ────────────────────── */}
+        <defs>
+          <linearGradient id={PLATE_TOP_GRADIENT_ID} x1="12" y1="18" x2="148" y2="70" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor={theme === 'dark' ? '#31465F' : '#D6E1EA'} />
+            <stop offset="0.52" stopColor={theme === 'dark' ? '#273A51' : '#ADC0CF'} />
+            <stop offset="1" stopColor={theme === 'dark' ? '#1A2838' : '#7F96AA'} />
+          </linearGradient>
+
+          <linearGradient id={PLATE_MID_GRADIENT_ID} x1="15" y1="58" x2="145" y2="108" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor={theme === 'dark' ? '#26384E' : '#B9CBD8'} />
+            <stop offset="0.55" stopColor={theme === 'dark' ? '#1E2D3E' : '#91A8BA'} />
+            <stop offset="1" stopColor={theme === 'dark' ? '#172333' : '#6F8498'} />
+          </linearGradient>
+
+          <linearGradient id={SIGNAL_GRADIENT_ID} x1="24" y1="24" x2="136" y2="77" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#22D3EE" />
+            <stop offset="0.48" stopColor="#2DD4BF" />
+            <stop offset="1" stopColor="#22C55E" />
+          </linearGradient>
+
+          <linearGradient id={NODE_GRADIENT_ID} x1="54" y1="34" x2="108" y2="120" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#67E8F9" />
+            <stop offset="0.55" stopColor="#2DD4BF" />
+            <stop offset="1" stopColor="#60A5FA" />
+          </linearGradient>
+
+          <filter id={SOFT_GLOW_ID} x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feColorMatrix
+              in="blur"
+              type="matrix"
+              values="
+                0 0 0 0 0.13
+                0 0 0 0 0.83
+                0 0 0 0 0.93
+                0 0 0 0.38 0"
+              result="glow"
+            />
+            <feMerge>
+              <feMergeNode in="glow" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+          <filter id={PLATE_SHADOW_ID} x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="8" stdDeviation="8" floodColor="#020617" floodOpacity="0.38" />
+          </filter>
+        </defs>
+
         <path
           d={PLATE_3}
           fill="none"
-          stroke={stroke}
+          stroke={theme === 'dark' ? '#2A3D54' : '#8094A8'}
           strokeWidth="2"
-          opacity="0.60"
+          opacity="0.58"
           className="biostack-plate-3"
         />
 
-        {/* ── Plate 2 — middle ─────────────────────────────────────────── */}
         <path
           d={PLATE_2}
-          fill={fills.p2}
-          stroke={stroke}
+          fill={`url(#${PLATE_MID_GRADIENT_ID})`}
+          stroke={theme === 'dark' ? '#38516D' : '#8094A8'}
           strokeWidth="1.5"
-          opacity="0.86"
+          opacity="0.88"
+          filter={`url(#${PLATE_SHADOW_ID})`}
           className="biostack-plate-2"
         />
 
-        {/* ── Plate 1 — top / front ────────────────────────────────────── */}
         <path
           d={PLATE_1}
-          fill={fills.p1}
-          stroke={stroke}
+          fill={`url(#${PLATE_TOP_GRADIENT_ID})`}
+          stroke={theme === 'dark' ? '#4A6888' : '#9DB3C6'}
           strokeWidth="1.5"
-          opacity="0.96"
+          opacity="0.98"
+          filter={`url(#${PLATE_SHADOW_ID})`}
           className="biostack-plate-1"
         />
 
-        {/* ── EKG signal ───────────────────────────────────────────────── */}
+        <path
+          d={TOP_HIGHLIGHT}
+          fill="none"
+          stroke="#67E8F9"
+          strokeWidth="1.25"
+          strokeLinecap="round"
+          opacity="0.38"
+          className="biostack-top-highlight"
+        />
+
         <path
           d={SIGNAL}
           fill="none"
-          stroke={SIGNAL_COLOR}
+          stroke={`url(#${SIGNAL_GRADIENT_ID})`}
           strokeWidth="4.5"
           strokeLinecap="round"
           strokeLinejoin="round"
+          filter={`url(#${SOFT_GLOW_ID})`}
           className={cn(
             'biostack-signal-path',
             isPulsing && 'biostack-signal',
             glow && !isPulsing && !isLoading && 'biostack-glow-static'
           )}
+        />
+
+        <path
+          d={PATHWAY_ARC}
+          fill="none"
+          stroke="#22D3EE"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray="2 7"
+          opacity="0.52"
+          className={cn('biostack-pathway-arc', isPulsing && 'biostack-pathway-pulse')}
+        />
+
+        <circle cx="60" cy="110" r="4.5" fill={`url(#${NODE_GRADIENT_ID})`} opacity="0.95" className="biostack-node biostack-node-1" />
+        <circle cx="78" cy="96" r="3.8" fill={`url(#${NODE_GRADIENT_ID})`} opacity="0.92" className="biostack-node biostack-node-2" />
+        <circle cx="96" cy="76" r="3.5" fill={`url(#${NODE_GRADIENT_ID})`} opacity="0.88" className="biostack-node biostack-node-3" />
+        <circle cx="108" cy="54" r="3.2" fill={`url(#${NODE_GRADIENT_ID})`} opacity="0.82" className="biostack-node biostack-node-4" />
+
+        <circle
+          cx="70"
+          cy="24"
+          r="5.5"
+          fill="#67E8F9"
+          opacity="0.98"
+          filter={`url(#${SOFT_GLOW_ID})`}
+          className={cn('biostack-anchor-node', isPulsing && 'biostack-anchor-pulse')}
         />
       </svg>
 

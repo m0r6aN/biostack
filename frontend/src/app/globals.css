@@ -157,6 +157,28 @@ input[type="range"]::-webkit-slider-thumb {
   20%           { opacity: 0.95; }
 }
 
+@keyframes biostackNodePulse {
+  0%, 100% {
+    opacity: 0.72;
+    transform: scale(0.96);
+  }
+  48% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes biostackArcDrift {
+  0%, 100% {
+    opacity: 0.34;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    opacity: 0.72;
+    stroke-dashoffset: -9;
+  }
+}
+
 /* ============================================================
    BioStack logo CSS classes
    ============================================================ */
@@ -178,6 +200,29 @@ input[type="range"]::-webkit-slider-thumb {
 .biostack-signal {
   animation: biostackPulse 2400ms ease-in-out infinite;
   transform-origin: center;
+}
+
+.biostack-pathway-pulse {
+  animation: biostackArcDrift 3600ms ease-in-out infinite;
+}
+
+.biostack-anchor-pulse,
+.biostack-signal ~ .biostack-node {
+  animation: biostackNodePulse 2400ms ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.biostack-signal ~ .biostack-node-2 {
+  animation-delay: 180ms;
+}
+
+.biostack-signal ~ .biostack-node-3 {
+  animation-delay: 360ms;
+}
+
+.biostack-signal ~ .biostack-node-4 {
+  animation-delay: 540ms;
 }
 
 /* Base glow (static, no animation) */
@@ -206,6 +251,9 @@ input[type="range"]::-webkit-slider-thumb {
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .biostack-signal,
+  .biostack-pathway-pulse,
+  .biostack-anchor-pulse,
+  .biostack-signal ~ .biostack-node,
   .biostack-hover,
   .biostack-loading .biostack-plate-1,
   .biostack-loading .biostack-plate-2,

@@ -163,7 +163,7 @@ export function Sidebar() {
         {/* ── Brand zone ────────────────────────────────────────────────────── */}
         <div className="px-5 py-5 border-b border-white/[0.05] flex items-center justify-between">
           <Link href="/protocol-console" onClick={() => setSidebarOpen(false)} aria-label="BioStack Protocol Console home">
-            <BioStackLogo variant="horizontal" theme="dark" size="md" hoverable />
+            <BioStackLogo variant="horizontal" theme="dark" size="md" animated hoverable />
           </Link>
 
           {/* Mobile close button */}

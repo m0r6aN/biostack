@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   title: 'BioStack Protocol Console',
   description:
     'Your protocol intelligence system. Track compounds, surface overlap, and turn daily signal into continuity.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+  },
 };
 
 export default async function RootLayout({

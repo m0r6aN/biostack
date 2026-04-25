@@ -8,7 +8,7 @@ export function MarketingNav() {
       <header className="sticky top-0 z-30 border-b border-white/8 bg-[#0B0F14]/75 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 sm:px-8 sm:py-4">
           <Link href="/" aria-label="BioStack home">
-            <BioStackLogo variant="horizontal" theme="dark" size="md" hoverable />
+            <BioStackLogo variant="horizontal" theme="dark" size="md" animated hoverable />
           </Link>
 
           <nav className="hidden items-center gap-6 text-sm text-white/55 md:flex">
