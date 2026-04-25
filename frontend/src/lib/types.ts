@@ -597,6 +597,107 @@ export interface InteractionFlag {
   evidenceConfidence: string;
 }
 
+export interface ProtocolAnalyzerEntry {
+  compoundName: string;
+  dose: number;
+  unit: string;
+  frequency: string;
+  duration: string;
+}
+
+export interface ProtocolAnalyzerIssue {
+  type: 'redundancy' | 'overlap' | 'inefficiency' | 'excessive_compounds' | string;
+  message: string;
+  compounds: string[];
+}
+
+export interface ProtocolAnalyzerSuggestion {
+  type: 'remove' | 'swap' | 'simplify' | 'clarify' | 'maintain' | string;
+  message: string;
+  compounds: string[];
+}
+
+export interface ProtocolAnalyzerScoreExplanation {
+  baseScore: number;
+  synergy: number;
+  redundancy: number;
+  interference: number;
+}
+
+export interface ProtocolAnalyzerBlendExpansion {
+  blendName: string;
+  components: string[];
+}
+
+export interface ProtocolAnalyzerCounterfactual {
+  removedCompound: string;
+  variantScore: number;
+  deltaScore: number;
+  deltaPercent: number;
+  verdict: string;
+  recommendation: string;
+}
+
+export interface ProtocolAnalyzerSwap {
+  originalCompound: string;
+  candidateCompound: string;
+  baselineScore: number;
+  variantScore: number;
+  deltaScore: number;
+  deltaPercent: number;
+  verdict: string;
+  recommendation: string;
+  reasons: string[];
+}
+
+export interface ProtocolAnalyzerSimplifiedProtocol {
+  compounds: ProtocolAnalyzerEntry[];
+  score: number;
+  removed: string[];
+  reasons: string[];
+}
+
+export interface ProtocolAnalyzerGoalAwareOption {
+  goal: string;
+  compounds: ProtocolAnalyzerEntry[];
+  score: number;
+  reasons: string[];
+}
+
+export interface ProtocolAnalyzerCounterfactuals {
+  baselineScore: number;
+  bestRemoveOne: ProtocolAnalyzerCounterfactual[];
+  bestSwapOne: ProtocolAnalyzerSwap[];
+  bestSimplifiedProtocol: ProtocolAnalyzerSimplifiedProtocol | null;
+  goalAwareOptions: ProtocolAnalyzerGoalAwareOption[];
+}
+
+export type ProtocolAnalyzerInputType = 'Paste' | 'FileUpload' | 'CameraScan' | 'Link';
+
+export interface ProtocolAnalyzerArtifact {
+  kind: string;
+  label: string;
+  preview: string;
+}
+
+export interface ProtocolAnalyzerResult {
+  protocol: ProtocolAnalyzerEntry[];
+  score: number;
+  scoreExplanation: ProtocolAnalyzerScoreExplanation;
+  issues: ProtocolAnalyzerIssue[];
+  suggestions: ProtocolAnalyzerSuggestion[];
+  decomposedBlends: ProtocolAnalyzerBlendExpansion[];
+  unknownCompounds: string[];
+  counterfactuals: ProtocolAnalyzerCounterfactuals;
+  inputType: ProtocolAnalyzerInputType;
+  sourceName: string | null;
+  extractionWarnings: string[];
+  parserWarnings: string[];
+  lowConfidenceExtraction: boolean;
+  extractedTextPreview: string | null;
+  artifacts: ProtocolAnalyzerArtifact[];
+}
+
 export interface CalculatorResult {
   input: number;
   output: number;

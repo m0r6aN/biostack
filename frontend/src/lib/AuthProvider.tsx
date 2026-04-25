@@ -32,6 +32,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         cache: 'no-store',
       });
       if (!res.ok) {
+        if (res.status >= 500) {
+          console.warn('BioStack session check failed', { status: res.status });
+        }
         setUser(null);
         return;
       }

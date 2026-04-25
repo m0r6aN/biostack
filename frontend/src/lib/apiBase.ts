@@ -3,5 +3,5 @@ export function getApiBaseUrl() {
     return '';
   }
 
-  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050';
 }

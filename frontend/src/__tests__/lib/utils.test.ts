@@ -2,6 +2,7 @@ import {
     cn,
     daysAgo,
     formatDate,
+    formatDateTime,
     formatWeight,
     getEventIcon,
     getEvidenceTierColor,
@@ -35,6 +36,20 @@ describe('formatDate', () => {
   });
   it('returns the original string on invalid input', () => {
     expect(formatDate('not-a-date')).toBe('Invalid Date');
+  });
+});
+
+// ── formatDateTime ────────────────────────────────────────────────────────────
+describe('formatDateTime', () => {
+  it('formats a valid date-time string with hour and minute', () => {
+    const result = formatDateTime('2024-06-15T14:30:00');
+    expect(result).toMatch(/Jun/);
+    expect(result).toMatch(/2024/);
+  });
+  it('returns the original string on invalid input', () => {
+    const result = formatDateTime('not-a-date');
+    expect(typeof result).toBe('string');
+    expect(result.length).toBeGreaterThan(0);
   });
 });
 

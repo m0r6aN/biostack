@@ -148,6 +148,18 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Session_WithoutCookie_ReturnsAnonymousContract()
+    {
+        var response = await _client.GetAsync("/api/v1/auth/session");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var session = await response.Content.ReadFromJsonAsync<AuthSessionResponse>(JsonOptions);
+        Assert.NotNull(session);
+        Assert.False(session.Authenticated);
+        Assert.Null(session.User);
+    }
+
+    [Fact]
     public async Task MagicLink_NewUserCanLoginCreateProfileSaveCompoundAndRecordCalculation()
     {
         await StartAsync("new-user@example.com", "/profiles");

@@ -1,18 +1,10 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 const SETTINGS_KEY = 'biostack_settings';
 
-// We test the persistence logic by directly manipulating localStorage
-// and then importing after clearing module cache.
 describe('settings persistence', () => {
   beforeEach(() => {
     localStorage.clear();
-  });
-
-  it('default weightUnit is metric when nothing in localStorage', async () => {
-    // Dynamically import to get a fresh read of localStorage
-    const { SettingsProvider } = await import('@/lib/settings');
-    expect(typeof SettingsProvider).toBe('function');
   });
 
   it('stores and reads back a settings object', () => {
@@ -26,13 +18,19 @@ describe('settings persistence', () => {
 
   it('returns default when localStorage has invalid JSON', () => {
     localStorage.setItem(SETTINGS_KEY, 'not-json{{{');
-    let parsed: any = null;
+    let parsed: { weightUnit: string } | null = null;
     try {
       const raw = localStorage.getItem(SETTINGS_KEY)!;
       parsed = JSON.parse(raw);
     } catch {
       parsed = { weightUnit: 'metric' };
     }
-    expect(parsed.weightUnit).toBe('metric');
+    expect(parsed!.weightUnit).toBe('metric');
+  });
+
+  it('exports SettingsProvider and useSettings as functions', async () => {
+    const mod = await import('@/lib/settings');
+    expect(typeof mod.SettingsProvider).toBe('function');
+    expect(typeof mod.useSettings).toBe('function');
   });
 });

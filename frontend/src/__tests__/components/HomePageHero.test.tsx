@@ -13,7 +13,7 @@ vi.mock('next/link', () => ({
 }));
 
 describe('HomePage hero', () => {
-  it('routes users into the three audience entry paths', async () => {
+  it('routes users into the audience and analyzer entry paths', async () => {
     const user = userEvent.setup();
     const listener = vi.fn();
     window.addEventListener('biostack:landing_path_selected', listener);
@@ -21,14 +21,15 @@ describe('HomePage hero', () => {
     render(<LandingHero />);
 
     expect(
-      screen.getByRole('heading', { name: /What to take\. How to use it\.\s*See what it's doing\./ })
+      screen.getByRole('heading', { name: /What to take\. How to use it\.\s*See what it is doing\./ })
     ).toBeInTheDocument();
     expect(
       screen.getByText('Start with answers. Then choose to track, compare, and optimize over time.')
     ).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /I'm getting started/ })).toHaveAttribute('href', '/start');
+    expect(screen.getByRole('link', { name: /I am getting started/ })).toHaveAttribute('href', '/start');
     expect(screen.getByRole('link', { name: /I already have a stack/ })).toHaveAttribute('href', '/map');
     expect(screen.getByRole('link', { name: /I work with clients/ })).toHaveAttribute('href', '/providers');
+    expect(screen.getByRole('link', { name: /Analyze a protocol/ })).toHaveAttribute('href', '/tools/analyzer');
     expect(screen.getByRole('link', { name: 'Need help with dosage or mixing? → Start here' })).toHaveAttribute('href', '/tools');
     expect(screen.getByText('Starter')).toBeInTheDocument();
     expect(screen.getByText('Set up compound tracking without rebuilding a spreadsheet.')).toBeInTheDocument();
@@ -36,6 +37,8 @@ describe('HomePage hero', () => {
     expect(screen.getByText('Map active compounds, overlap signals, and timeline context.')).toBeInTheDocument();
     expect(screen.getByText('Provider')).toBeInTheDocument();
     expect(screen.getByText('Track client protocol changes, notes, and check-ins.')).toBeInTheDocument();
+    expect(screen.getByText('Analyzer')).toBeInTheDocument();
+    expect(screen.getByText('Paste, upload, scan, or link any stack and see what BioStack finds.')).toBeInTheDocument();
     expect(screen.queryByText('Protocol Surface')).not.toBeInTheDocument();
     expect(screen.queryByText('Stop guessing what to take—or what your stack is actually doing.')).not.toBeInTheDocument();
     expect(screen.queryByText('Track peptides, compounds, and layered protocols')).not.toBeInTheDocument();

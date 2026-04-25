@@ -3,8 +3,18 @@ import { LandingPathCard } from './LandingPathCard';
 
 const entryPaths = [
   {
+    label: 'Analyzer',
+    title: 'Analyze a protocol',
+    body: 'Paste, upload, scan, or link any stack and see what BioStack finds.',
+    href: '/tools/analyzer',
+    tone: 'cyan',
+    signal: 'Instant insight',
+    action: 'Analyze',
+    path: 'analyzer',
+  },
+  {
     label: 'Starter',
-    title: "I'm getting started",
+    title: 'I am getting started',
     body: 'Set up compound tracking without rebuilding a spreadsheet.',
     href: '/start',
     tone: 'emerald',
@@ -41,24 +51,29 @@ const toneClasses = {
     'border-sky-300/24 bg-sky-400/[0.075] shadow-[inset_0_0_0_1px_rgba(56,189,248,0.035),0_12px_34px_rgba(0,0,0,0.2)] hover:border-sky-200/52 hover:bg-sky-400/[0.12] hover:shadow-[0_18px_48px_rgba(56,189,248,0.14)] focus-visible:ring-sky-300/55',
   gold:
     'border-amber-200/24 bg-[linear-gradient(135deg,rgba(251,191,36,0.09),rgba(255,255,255,0.035))] hover:border-amber-100/52 hover:bg-amber-300/[0.1] hover:shadow-[0_18px_48px_rgba(251,191,36,0.12)] focus-visible:ring-amber-200/55',
+  cyan:
+    'border-cyan-200/24 bg-cyan-400/[0.075] shadow-[inset_0_0_0_1px_rgba(103,232,249,0.035),0_12px_34px_rgba(0,0,0,0.2)] hover:border-cyan-100/52 hover:bg-cyan-400/[0.12] hover:shadow-[0_18px_48px_rgba(103,232,249,0.14)] focus-visible:ring-cyan-200/55',
 };
 
 const iconClasses = {
   emerald: 'border-emerald-300/20 text-emerald-100 group-hover:bg-emerald-400/14',
   sky: 'border-sky-200/22 text-sky-100 group-hover:bg-sky-400/14',
   gold: 'border-amber-100/22 text-amber-100 group-hover:bg-amber-300/12',
+  cyan: 'border-cyan-100/22 text-cyan-100 group-hover:bg-cyan-300/12',
 };
 
 const railClasses = {
   emerald: 'bg-emerald-300/70 shadow-[0_0_18px_rgba(52,211,153,0.48)]',
   sky: 'bg-sky-300/78 shadow-[0_0_18px_rgba(56,189,248,0.5)]',
   gold: 'bg-amber-200/72 shadow-[0_0_18px_rgba(251,191,36,0.36)]',
+  cyan: 'bg-cyan-200/72 shadow-[0_0_18px_rgba(103,232,249,0.36)]',
 };
 
 const signalClasses = {
   emerald: 'text-emerald-100/90',
   sky: 'text-sky-100/90',
   gold: 'text-amber-100/90',
+  cyan: 'text-cyan-100/90',
 };
 
 export function LandingHero() {
@@ -69,14 +84,14 @@ export function LandingHero() {
           <p>Built for peptides, SARMs, SERMs, and beyond</p>
           <h1 className="text-[2.45rem] font-semibold leading-[0.96] tracking-tight text-white sm:text-6xl lg:text-7xl">
             What to take. How to use it.<br />
-            See what it's doing.
+            See what it is doing.
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-6 text-white/64 sm:mt-5 sm:text-lg">
             Start with answers. Then choose to track, compare, and optimize over time.
           </p>
         </div>
 
-        <div className="grid gap-2.5 sm:gap-3 lg:col-span-2 lg:grid-cols-3">
+        <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 lg:col-span-2 lg:grid-cols-4">
           {entryPaths.map((path) => (
             <LandingPathCard
               key={path.href}
