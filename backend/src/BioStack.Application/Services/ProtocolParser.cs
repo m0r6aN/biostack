@@ -20,6 +20,13 @@ public sealed class ProtocolParser : IProtocolParser
         @"\b(?<frequency>daily|twice daily|once daily|weekly|twice weekly|three times weekly|3x weekly|2x weekly|every other day|eod|morning|nightly|evening|pre[-\s]?workout|post[-\s]?workout)\b",
         RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
+    // Matches cycle/duration phrases that are not compounds, e.g.:
+    //   "8 weeks on, 8 weeks off", "8w on / 8w off", "cycle 8 weeks on 8 off"
+    // These must never be emitted as a compound row.
+    private static readonly Regex CyclePattern = new(
+        @"\b\d+\s*(?:w|wk|wks|week|weeks|d|day|days|month|months)\b\s*(?:on|off)\b.*?\b(?:on|off)\b",
+        RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
     private readonly IKnowledgeSource _knowledgeSource;
     private readonly IBlendDecomposerService _blendDecomposerService;
     private readonly IMemoryCache _memoryCache;
@@ -55,7 +62,7 @@ public sealed class ProtocolParser : IProtocolParser
             .SelectMany(segment => ParseSegment(segment, aliases, blendExpansions))
             .Where(entry => !string.IsNullOrWhiteSpace(entry.CompoundName))
             .GroupBy(entry => entry.CompoundName, StringComparer.OrdinalIgnoreCase)
-            .Select(group => group.First())
+            .Select(MergeEntries)
             .ToList();
 
         var matchedKnowledge = entries
@@ -73,6 +80,13 @@ public sealed class ProtocolParser : IProtocolParser
         IReadOnlyDictionary<string, KnowledgeEntry> aliases,
         ICollection<ProtocolBlendExpansionResponse> blendExpansions)
     {
+        // Cycle phrases like "8 weeks on, 8 weeks off" describe duration/cadence,
+        // not a compound. Skip the segment so it never surfaces as an entry.
+        if (CyclePattern.IsMatch(segment))
+        {
+            return Array.Empty<ProtocolEntryResponse>();
+        }
+
         var cleaned = Regex.Replace(segment.Trim(), @"^[\-\*\u2022\d\.\)\s]+", string.Empty).Trim();
         var frequency = ExtractMatch(FrequencyPattern, cleaned);
         var duration = ExtractMatch(DurationPattern, cleaned);
@@ -129,6 +143,41 @@ public sealed class ProtocolParser : IProtocolParser
                 NormalizeFrequency(frequency),
                 duration)
         };
+    }
+
+    // When the same compound is emitted by both a blend header (no dose) and a
+    // dedicated detail line ("BPC-157 500mcg daily"), merge into one entry that
+    // preserves the richest data: highest dose, and any populated unit/freq/duration.
+    private static ProtocolEntryResponse MergeEntries(IGrouping<string, ProtocolEntryResponse> group)
+    {
+        var members = group.ToList();
+        if (members.Count == 1)
+        {
+            return members[0];
+        }
+
+        var canonicalName = members
+            .Select(entry => entry.CompoundName)
+            .FirstOrDefault(name => !string.IsNullOrWhiteSpace(name)) ?? group.Key;
+
+        var bestDoseEntry = members
+            .OrderByDescending(entry => entry.Dose)
+            .ThenByDescending(entry => string.IsNullOrWhiteSpace(entry.Unit) ? 0 : 1)
+            .First();
+
+        var unit = !string.IsNullOrWhiteSpace(bestDoseEntry.Unit)
+            ? bestDoseEntry.Unit
+            : members.Select(entry => entry.Unit).FirstOrDefault(value => !string.IsNullOrWhiteSpace(value)) ?? string.Empty;
+
+        var frequency = members
+            .Select(entry => entry.Frequency)
+            .FirstOrDefault(value => !string.IsNullOrWhiteSpace(value)) ?? string.Empty;
+
+        var duration = members
+            .Select(entry => entry.Duration)
+            .FirstOrDefault(value => !string.IsNullOrWhiteSpace(value)) ?? string.Empty;
+
+        return new ProtocolEntryResponse(canonicalName, bestDoseEntry.Dose, unit, frequency, duration);
     }
 
     private static string ResolveCompoundName(string segment, Match doseMatch, IReadOnlyDictionary<string, KnowledgeEntry> aliases)

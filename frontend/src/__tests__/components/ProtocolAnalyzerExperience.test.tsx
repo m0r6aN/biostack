@@ -1,9 +1,9 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ProtocolAnalyzerExperience } from '@/components/tools/ProtocolAnalyzerExperience';
 import { ANALYZER_ANALYSIS_HISTORY_KEY, ANALYZER_PROTOCOL_DRAFT_KEY } from '@/lib/analyzerStorage';
 import type { ProtocolAnalyzerResult } from '@/lib/types';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const pushMock = vi.fn();
 
@@ -82,10 +82,11 @@ describe('ProtocolAnalyzerExperience', () => {
     await waitFor(() => {
       expect(screen.getByText('What this means')).toBeInTheDocument();
     });
-    expect(screen.getByText('No obvious removal surfaced.')).toBeInTheDocument();
-    expect(screen.getByText('No strong swap surfaced.')).toBeInTheDocument();
-    expect(screen.getByText('No cleaner version beat the current stack.')).toBeInTheDocument();
-    expect(screen.getByText('Goal-aware optimization needs more context.')).toBeInTheDocument();
+    // BioStack must not present a "Why this is better" section when no
+    // counterfactual variant beats the baseline. Empty improvement cards
+    // create the false impression that the optimizer ran.
+    expect(screen.queryByText('Why this is better')).not.toBeInTheDocument();
+    expect(screen.queryByText('Original vs BioStack Version')).not.toBeInTheDocument();
   });
 
   it('saves an anonymous analysis locally without a session', async () => {

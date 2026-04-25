@@ -108,7 +108,10 @@
     "benefits": [
       "preclinical signals for tissue repair (animal/in‑vitro); human clinical efficacy is not established"
     ],
-    "pairsWellWith": [],
+    "pairsWellWith": [
+      "TB-500",
+      "GHK-Cu"
+    ],
     "avoidWith": [
       "competitive sport governed by WADA/USADA (prohibited)",
       "use of non-sterile/non-regulated injectable products"
@@ -125,6 +128,91 @@
     "optimizationProtein": "0.7–1.0 g/lb/day (≈1.6–2.2 g/kg/day) for active/resistance training; RDA baseline is 0.36 g/lb/day (0.8 g/kg/day).",
     "optimizationCarbs": "1.4–2.3 g/lb/day (≈3–5 g/kg/day) for light–moderate training; up to ~3.2 g/lb/day (≈7 g/kg/day) for higher-volume training; adjust to energy needs.",
     "optimizationSupplements": ["Creatine monohydrate (3–5 g/day)", "Vitamin D (dose to reach sufficiency)", "Omega‑3 (EPA/DHA)", "Magnesium (if dietary intake is low)"],
+    "optimizationSleep": "≥7 hours/night (often 7–9 hours).",
+    "optimizationExercise": "150–300 min/week moderate activity (or 75–150 min vigorous) + ≥2 strength-training days; daily walking often benefits around ~7,000–10,000 steps (individualized)."
+  },
+  {
+    "canonicalName": "TB-500",
+    "aliases": [
+      "TB500",
+      "Thymosin Beta-4 fragment",
+      "Tβ4 fragment"
+    ],
+    "classification": "Peptide",
+    "regulatoryStatus": "Unapproved substance; not FDA-approved for human use. Listed as prohibited under WADA Prohibited List category S0 (Unapproved Substances).",
+    "mechanismSummary": "Synthetic fragment derived from Thymosin Beta-4; preclinical work suggests effects on actin-binding, cell migration, angiogenesis, and tissue-repair signaling. Human clinical efficacy is not established.",
+    "evidenceTier": "Limited",
+    "pathways": [
+      "tissue-repair (preclinical)",
+      "angiogenesis (preclinical)",
+      "actin-binding (preclinical)"
+    ],
+    "benefits": [
+      "preclinical signals for tissue repair and cell migration (animal/in‑vitro); human clinical efficacy is not established"
+    ],
+    "pairsWellWith": [
+      "BPC-157",
+      "GHK-Cu"
+    ],
+    "avoidWith": [
+      "competitive sport governed by WADA/USADA (prohibited)",
+      "use of non-sterile/non-regulated injectable products"
+    ],
+    "vialCompatibility": "Not recommended; there is no validated clinical stability/compatibility data and substantial quality/sterility concerns exist for non-approved injectable sources.",
+    "compatibleBlends": [],
+    "recommendedDosage": "Data not currently available (no established clinical dosing).",
+    "frequency": "Data not currently available",
+    "preferredTimeOfDay": "Data not currently available",
+    "weeklyDosageSchedule": [],
+    "drugInteractions": [
+      "Data not currently available"
+    ],
+    "optimizationProtein": "0.7–1.0 g/lb/day (≈1.6–2.2 g/kg/day) for active/resistance training; RDA baseline is 0.36 g/lb/day (0.8 g/kg/day).",
+    "optimizationCarbs": "1.4–2.3 g/lb/day (≈3–5 g/kg/day) for light–moderate training; up to ~3.2 g/lb/day (≈7 g/kg/day) for higher-volume training; adjust to energy needs.",
+    "optimizationSupplements": ["Creatine monohydrate (3–5 g/day)", "Vitamin D (dose to reach sufficiency)", "Omega‑3 (EPA/DHA)", "Magnesium (if dietary intake is low)"],
+    "optimizationSleep": "≥7 hours/night (often 7–9 hours).",
+    "optimizationExercise": "150–300 min/week moderate activity (or 75–150 min vigorous) + ≥2 strength-training days; daily walking often benefits around ~7,000–10,000 steps (individualized)."
+  },
+  {
+    "canonicalName": "GHK-Cu",
+    "aliases": [
+      "GHK-cu",
+      "GHK copper peptide",
+      "Copper tripeptide-1",
+      "Glycyl-L-histidyl-L-lysine copper"
+    ],
+    "classification": "Peptide",
+    "regulatoryStatus": "Cosmetic ingredient in topical products; not FDA-approved for systemic/injectable human use.",
+    "mechanismSummary": "Naturally occurring copper-binding tripeptide; preclinical and topical literature describe wound-healing, anti-inflammatory, and extracellular-matrix-remodeling signals. Systemic clinical efficacy is not established.",
+    "evidenceTier": "Limited",
+    "pathways": [
+      "tissue-repair (preclinical)",
+      "wound-healing (preclinical)",
+      "extracellular-matrix-remodeling (preclinical)"
+    ],
+    "benefits": [
+      "preclinical and topical signals for wound healing and skin/connective-tissue support; systemic clinical efficacy is not established"
+    ],
+    "pairsWellWith": [
+      "BPC-157",
+      "TB-500"
+    ],
+    "avoidWith": [
+      "use of non-sterile/non-regulated injectable products",
+      "known copper-handling disorders (e.g., Wilson's disease) without clinician oversight"
+    ],
+    "vialCompatibility": "Not recommended for self-prepared injectable use; topical formulations have established cosmetic stability, but injectable stability/compatibility data are not validated.",
+    "compatibleBlends": [],
+    "recommendedDosage": "Data not currently available (no established clinical dosing for systemic use).",
+    "frequency": "Data not currently available",
+    "preferredTimeOfDay": "Data not currently available",
+    "weeklyDosageSchedule": [],
+    "drugInteractions": [
+      "Data not currently available"
+    ],
+    "optimizationProtein": "0.7–1.0 g/lb/day (≈1.6–2.2 g/kg/day) for active/resistance training; RDA baseline is 0.36 g/lb/day (0.8 g/kg/day).",
+    "optimizationCarbs": "1.4–2.3 g/lb/day (≈3–5 g/kg/day) for light–moderate training; up to ~3.2 g/lb/day (≈7 g/kg/day) for higher-volume training; adjust to energy needs.",
+    "optimizationSupplements": ["Vitamin D (dose to reach sufficiency)", "Omega‑3 (EPA/DHA)", "Magnesium (if dietary intake is low)"],
     "optimizationSleep": "≥7 hours/night (often 7–9 hours).",
     "optimizationExercise": "150–300 min/week moderate activity (or 75–150 min vigorous) + ≥2 strength-training days; daily walking often benefits around ~7,000–10,000 steps (individualized)."
   },

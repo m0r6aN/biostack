@@ -332,8 +332,8 @@ public class SwapRecommendationTests
     {
         // Candidate is pathway-preserving just enough to be eligible (2/3) but we
         // expect no goal-alignment reason unless intended-use score is strong.
-        // Because other reason atoms (reduces_redundancy) will fire here, the
-        // fallback goal-alignment reason must not be emitted at all.
+        // Because another concrete reason atom (stronger_evidence) will fire here,
+        // the fallback goal-alignment reason must not be emitted at all.
         var candidates = new List<KnowledgeEntry>
         {
             MakePeptide(
@@ -347,7 +347,7 @@ public class SwapRecommendationTests
 
         var swap = Assert.Single(result.Swaps, s => s.CandidateCompound == "Clean-Repair");
         Assert.DoesNotContain(SwapReasonAtoms.ImprovesGoalAlignment, swap.Reasons);
-        Assert.Contains(SwapReasonAtoms.ReducesRedundancy, swap.Reasons);
+        Assert.Contains(SwapReasonAtoms.StrongerEvidence, swap.Reasons);
     }
 
     [Fact]

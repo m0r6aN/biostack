@@ -5,6 +5,12 @@ using BioStack.Domain.Entities;
 
 public sealed class CounterfactualEngine : ICounterfactualEngine
 {
+    // Aligns with InteractionIntelligenceService.ResolveVerdict ("improves" >= 3).
+    // We do not surface a removal/swap recommendation unless the predicted
+    // gain crosses this bar — protocols that score the same with or without
+    // a compound must not produce a "remove this" message.
+    private const double MeaningfulImprovementDelta = 3d;
+
     private readonly IInteractionIntelligenceService _interactionIntelligenceService;
     private readonly ICounterfactualCandidateService _candidateService;
     private readonly ICounterfactualExplainerService _explainerService;
@@ -28,12 +34,14 @@ public sealed class CounterfactualEngine : ICounterfactualEngine
         var baseline = await _interactionIntelligenceService.EvaluateAsync(knownEntries, cancellationToken);
         var baselineScore = (int)Math.Round(baseline.CompositeScore);
         var bestRemove = baseline.Counterfactuals
+            .Where(item => item.DeltaScore >= MeaningfulImprovementDelta)
             .OrderByDescending(item => item.DeltaScore)
             .Take(5)
             .Select(item => item with { Recommendation = string.Join(" ", _explainerService.ExplainRemoval(item)) })
             .ToList();
         var bestSwap = baseline.Swaps
             .Where(swap => !context.ExcludedCompoundIds.Any(item => string.Equals(item, swap.CandidateCompound, StringComparison.OrdinalIgnoreCase)))
+            .Where(swap => swap.DeltaScore >= MeaningfulImprovementDelta)
             .OrderByDescending(item => item.DeltaScore)
             .Take(5)
             .Select(item => item with { Recommendation = string.Join(" ", _explainerService.ExplainSwap(item)) })

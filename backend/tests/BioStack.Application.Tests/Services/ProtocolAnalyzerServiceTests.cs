@@ -79,4 +79,86 @@ public sealed class ProtocolAnalyzerServiceTests
         Assert.Contains(result.Protocol, entry => entry.CompoundName == "NAD+");
         Assert.Contains(result.Protocol, entry => entry.CompoundName == "MOTS-C");
     }
+
+    // Regression for the GLOW Blend healing-stack trust failure:
+    //   - "8 weeks on, 8 weeks off" must never be parsed as a compound.
+    //   - BPC-157 500mcg daily must keep its dose and frequency even when the
+    //     blend header line emits a same-named entry with no dose.
+    //   - TB-500 2mg twice weekly must keep its dose and frequency for the
+    //     same reason.
+    //   - The optimizer must not surface a "remove BPC-157" recommendation
+    //     when the variant score does not meaningfully improve.
+    [Fact]
+    public async Task AnalyzeAsync_GlowBlendHealingStack_DoesNotEmitCycleAsCompoundAndPreservesDoses()
+    {
+        var input = string.Join(
+            '\n',
+            "GLOW Blend (GHK-cu, BPC-157, TB-500)",
+            "BPC-157 500mcg daily",
+            "TB-500 2mg twice weekly",
+            "8 weeks on, 8 weeks off");
+
+        var result = await _service.AnalyzeAsync(new AnalyzeProtocolRequest(
+            ProtocolInputType.Paste,
+            InputText: input,
+            Goal: "healing"));
+
+        Assert.DoesNotContain(result.Protocol, entry =>
+            entry.CompoundName.Contains("weeks", StringComparison.OrdinalIgnoreCase));
+
+        var bpc = Assert.Single(result.Protocol, entry =>
+            string.Equals(entry.CompoundName, "BPC-157", StringComparison.OrdinalIgnoreCase));
+        Assert.Equal(500d, bpc.Dose);
+        Assert.Equal("mcg", bpc.Unit);
+        Assert.Equal("daily", bpc.Frequency);
+
+        var tb500 = Assert.Single(result.Protocol, entry =>
+            string.Equals(entry.CompoundName, "TB-500", StringComparison.OrdinalIgnoreCase));
+        Assert.Equal(2d, tb500.Dose);
+        Assert.Equal("mg", tb500.Unit);
+        Assert.Equal("twice weekly", tb500.Frequency);
+
+        Assert.Contains(result.DecomposedBlends, blend =>
+            string.Equals(blend.BlendName, "GLOW Blend", StringComparison.OrdinalIgnoreCase));
+
+        Assert.DoesNotContain(result.Counterfactuals.BestRemoveOne, candidate =>
+            string.Equals(candidate.RemovedCompound, "BPC-157", StringComparison.OrdinalIgnoreCase)
+            && candidate.DeltaScore < 3d);
+    }
+
+    // The healing-domain Complementary classification (BPC-157, TB-500, GHK-Cu
+    // converging on tissue-repair / angiogenesis via distinct mechanisms) must
+    // reach the analyzer response surface. The public response does not expose
+    // the raw InteractionResult list, so we assert via two faithful proxies:
+    //   1. No `redundancy` issue is emitted for the BPC-157 + TB-500 pair —
+    //      the pair must no longer be misread as Redundant.
+    //   2. No `inefficiency` issue is emitted — Complementary pairs count
+    //      toward Synergies > 0, so the "lacks complementary signal" gate
+    //      must not fire on a healing stack of this shape.
+    [Fact]
+    public async Task AnalyzeAsync_GlowBlendHealingStack_ClassifiesBpcAndTb500AsComplementary()
+    {
+        var input = string.Join(
+            '\n',
+            "GLOW Blend (GHK-cu, BPC-157, TB-500)",
+            "BPC-157 500mcg daily",
+            "TB-500 2mg twice weekly",
+            "8 weeks on, 8 weeks off");
+
+        var result = await _service.AnalyzeAsync(new AnalyzeProtocolRequest(
+            ProtocolInputType.Paste,
+            InputText: input,
+            Goal: "healing"));
+
+        Assert.DoesNotContain(result.Issues, issue =>
+            string.Equals(issue.Type, "redundancy", StringComparison.OrdinalIgnoreCase)
+            && issue.Compounds.Any(c => string.Equals(c, "BPC-157", StringComparison.OrdinalIgnoreCase))
+            && issue.Compounds.Any(c => string.Equals(c, "TB-500", StringComparison.OrdinalIgnoreCase)));
+
+        Assert.DoesNotContain(result.Issues, issue =>
+            string.Equals(issue.Type, "inefficiency", StringComparison.OrdinalIgnoreCase));
+
+        Assert.True(result.ScoreExplanation.Synergy > 0,
+            "Complementary healing-domain pairs must register a positive synergy score on the response.");
+    }
 }
