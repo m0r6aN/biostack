@@ -8,7 +8,9 @@ public static class CompoundInteractionHintCatalog
 {
     public static IReadOnlyList<CompoundInteractionHint> Defaults { get; } = new List<CompoundInteractionHint>
     {
-        Hint("BPC-157", "TB-500", InteractionType.Synergistic, 0.85m, new[] { "tissue-repair", "angiogenesis" }, "Known repair-stack pairing with overlapping recovery intent."),
+        Hint("BPC-157", "TB-500", InteractionType.Complementary, 0.85m, new[] { "tissue-repair", "angiogenesis" }, "Repair-stack pairing: distinct mechanisms converging on tissue-repair and angiogenesis."),
+        Hint("BPC-157", "GHK-Cu", InteractionType.Complementary, 0.72m, new[] { "tissue-repair", "wound-healing" }, "Healing-domain pairing: peptide and copper-peptide signals act on complementary repair pathways."),
+        Hint("TB-500", "GHK-Cu", InteractionType.Complementary, 0.70m, new[] { "tissue-repair", "wound-healing" }, "Healing-domain pairing: actin-binding peptide alongside a copper-peptide regenerative signal."),
         Hint("Semaglutide", "Tirzepatide", InteractionType.Redundant, 0.88m, new[] { "incretin-signaling", "appetite-regulation" }, "Stacking incretin agonists usually creates overlap rather than a clean additive gain."),
         Hint("Semaglutide", "Liraglutide", InteractionType.Redundant, 0.84m, new[] { "incretin-signaling", "glucose-regulation" }, "GLP-1 agonist overlap suggests redundancy before new signal."),
         Hint("Tirzepatide", "Retatrutide", InteractionType.Redundant, 0.76m, new[] { "incretin-signaling", "appetite-regulation" }, "Dual and triple incretin exposure should be interpreted as overlap-heavy."),

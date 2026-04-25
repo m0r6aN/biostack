@@ -50,6 +50,7 @@ public sealed class OverlapService : IOverlapService
             OverlapType = result.Type switch
             {
                 InteractionType.Synergistic => OverlapType.AdditiveBenefit,
+                InteractionType.Complementary => OverlapType.AdditiveBenefit,
                 InteractionType.Redundant => OverlapType.PathwayOverlap,
                 InteractionType.Interfering => OverlapType.PotentialInteraction,
                 _ => OverlapType.Unknown

@@ -1,20 +1,20 @@
 'use client';
 
-import Link from 'next/link';
-import { ChangeEvent, useEffect, useMemo, useRef, useState, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
-import { apiClient } from '@/lib/api';
 import { trackAnalyzerEvent } from '@/lib/analyzerAnalytics';
 import { saveAnalyzerAnalysis, saveAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
+import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
 import type {
-  ProtocolAnalyzerArtifact,
-  ProtocolAnalyzerCounterfactual,
-  ProtocolAnalyzerGoalAwareOption,
-  ProtocolAnalyzerInputType,
-  ProtocolAnalyzerResult,
-  ProtocolAnalyzerSwap,
+    ProtocolAnalyzerArtifact,
+    ProtocolAnalyzerCounterfactual,
+    ProtocolAnalyzerGoalAwareOption,
+    ProtocolAnalyzerInputType,
+    ProtocolAnalyzerResult,
+    ProtocolAnalyzerSwap,
 } from '@/lib/types';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, useEffect, useMemo, useRef, useState, useTransition } from 'react';
 
 const STORAGE_KEY = 'biostack.analyzer.session.v3';
 const supportedFileTypes = '.pdf,.docx,.xlsx,.csv,.txt,.jpg,.jpeg,.png,.webp';
@@ -165,6 +165,12 @@ export function ProtocolAnalyzerExperience() {
   const scoreInsight = getScoreInsight(result, optimizedProtocol);
   const whatThisMeans = getWhatThisMeans(result, optimizedProtocol);
   const premiumLocked = Boolean(result);
+  // BioStack only claims an improvement when there is one. If nothing crosses
+  // the meaningful-improvement threshold, we hide the comparison and the
+  // "Why this is better" section instead of presenting an empty pretense.
+  const hasMeaningfulImprovement = Boolean(
+    optimizedProtocol || primaryRemoval || primarySwap,
+  );
 
   useEffect(() => {
     trackAnalyzerEvent('analyzer_viewed', {
@@ -572,7 +578,9 @@ export function ProtocolAnalyzerExperience() {
               onToggleExtractedText={() => setShowExtractedText((current) => !current)}
             />
           )}
-          {result && <OriginalVsOptimizedSection result={result} optimized={optimizedProtocol} />}
+          {result && optimizedProtocol && (
+            <OriginalVsOptimizedSection result={result} optimized={optimizedProtocol} />
+          )}
           <ParsedProtocolSection result={result} />
           {result && <ShareableSummaryStub />}
 
@@ -614,31 +622,37 @@ export function ProtocolAnalyzerExperience() {
 
           {result && <WhatThisMeansPanel message={whatThisMeans} />}
 
-          <section className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-            <h2 className="text-lg font-semibold text-white">Why this is better</h2>
-            <p className="mt-2 text-sm leading-6 text-white/55">
-              BioStack is testing cleaner ways to reach the same goal with less noise.
-            </p>
-            <div className="mt-4 space-y-3">
-              {result ? <WhyBetterBlocks result={result} optimized={optimizedProtocol} /> : null}
-              <ImprovementCard
-                title="Best removal"
-                teaser={primaryRemoval}
-                empty="No obvious removal surfaced."
-                emptyDetail="BioStack did not find a high-confidence compound to remove for this goal. This may mean the stack is already relatively lean, or that more context is needed."
-                kind="remove"
-              />
-              <ImprovementCard
-                title="Best swap"
-                teaser={primarySwap}
-                empty="No strong swap surfaced."
-                emptyDetail="BioStack did not find a higher-scoring replacement from the current knowledge set. Full optimization may still identify goal-specific refinements."
-                kind="swap"
-              />
-              <SimplifiedProtocolCard protocol={simplified} />
-              <GoalAwareCard option={goalAware} />
-            </div>
-          </section>
+          {result && hasMeaningfulImprovement && (
+            <section className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+              <h2 className="text-lg font-semibold text-white">Why this is better</h2>
+              <p className="mt-2 text-sm leading-6 text-white/55">
+                BioStack is testing cleaner ways to reach the same goal with less noise.
+              </p>
+              <div className="mt-4 space-y-3">
+                {optimizedProtocol ? <WhyBetterBlocks result={result} optimized={optimizedProtocol} /> : null}
+                {primaryRemoval && (
+                  <ImprovementCard
+                    title="Best removal"
+                    teaser={primaryRemoval}
+                    empty="No obvious removal surfaced."
+                    emptyDetail="BioStack did not find a high-confidence compound to remove for this goal."
+                    kind="remove"
+                  />
+                )}
+                {primarySwap && (
+                  <ImprovementCard
+                    title="Best swap"
+                    teaser={primarySwap}
+                    empty="No strong swap surfaced."
+                    emptyDetail="BioStack did not find a higher-scoring replacement from the current knowledge set."
+                    kind="swap"
+                  />
+                )}
+                {simplified && <SimplifiedProtocolCard protocol={simplified} />}
+                {goalAware && <GoalAwareCard option={goalAware} />}
+              </div>
+            </section>
+          )}
 
           <section className="rounded-lg border border-white/[0.08] bg-[#121923]/95 p-4">
             <h2 className="text-lg font-semibold text-white">Turn this into a BioStack protocol</h2>
@@ -1307,9 +1321,14 @@ function pickOptimizedProtocol(result: ProtocolAnalyzerResult | null): Optimized
     return null;
   }
 
+  // Only surface an "optimized" variant when it is strictly better than the
+  // baseline. BioStack must not present a variant labeled as an improvement
+  // when the score delta is zero or negative — that is what creates the
+  // "Removed redundant compounds" misread on stacks the optimizer does not
+  // actually understand well enough to improve.
   const counterfactuals = result.counterfactuals;
   const simplified = counterfactuals?.bestSimplifiedProtocol;
-  if (simplified) {
+  if (simplified && simplified.score > result.score) {
     return {
       label: 'BioStack simplified protocol',
       protocol: simplified.compounds,
@@ -1319,7 +1338,7 @@ function pickOptimizedProtocol(result: ProtocolAnalyzerResult | null): Optimized
   }
 
   const goalAware = counterfactuals?.goalAwareOptions?.[0];
-  if (goalAware) {
+  if (goalAware && goalAware.score > result.score) {
     return {
       label: `BioStack version for ${goalAware.goal}`,
       protocol: goalAware.compounds,

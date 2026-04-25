@@ -9,6 +9,7 @@ interface InteractionIntelligenceCardProps {
 
 const toneByType: Record<string, string> = {
   Synergistic: 'border-emerald-400/20 bg-emerald-500/10 text-emerald-100',
+  Complementary: 'border-teal-400/20 bg-teal-500/10 text-teal-100',
   Redundant: 'border-amber-400/20 bg-amber-500/10 text-amber-100',
   Interfering: 'border-rose-400/20 bg-rose-500/10 text-rose-100',
   Neutral: 'border-white/[0.08] bg-white/[0.04] text-white/70',

@@ -162,7 +162,7 @@ export interface SimulationResult {
 }
 
 export interface InteractionFinding {
-  type: 'Neutral' | 'Synergistic' | 'Redundant' | 'Interfering' | string;
+  type: 'Neutral' | 'Synergistic' | 'Complementary' | 'Redundant' | 'Interfering' | string;
   compounds: string[];
   message: string;
   confidence: number;
@@ -171,7 +171,7 @@ export interface InteractionFinding {
 export interface InteractionResult {
   compoundA: string;
   compoundB: string;
-  type: 'Neutral' | 'Synergistic' | 'Redundant' | 'Interfering' | string;
+  type: 'Neutral' | 'Synergistic' | 'Complementary' | 'Redundant' | 'Interfering' | string;
   confidence: number;
   sharedPathways: string[];
   reason: string;

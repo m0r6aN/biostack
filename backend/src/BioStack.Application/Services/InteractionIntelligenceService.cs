@@ -8,6 +8,20 @@ using BioStack.Infrastructure.Repositories;
 
 public sealed class InteractionIntelligenceService : IInteractionIntelligenceService
 {
+    // Pathway-domain keywords that signal complementary (not redundant) overlap when
+    // two compounds share them. Healing/repair stacks like BPC-157 + TB-500 + GHK-Cu
+    // converge on these domains via distinct mechanisms, so attribution is not muddied
+    // the way it is for receptor-level overlap (e.g. dual incretin agonists).
+    private static readonly string[] ComplementaryPathwayKeywords = new[]
+    {
+        "tissue-repair",
+        "angiogenesis",
+        "wound-healing",
+        "extracellular-matrix-remodeling",
+        "actin-binding",
+        "nitric-oxide-signaling"
+    };
+
     private readonly IKnowledgeSource _knowledgeSource;
     private readonly ICompoundInteractionHintRepository _hintRepository;
 
@@ -63,13 +77,16 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             }
         }
 
+        // Complementary pairs (e.g. healing-domain overlap via distinct mechanisms) are
+        // a positive signal and roll into the synergy bucket for summary/score, while
+        // keeping their distinct InteractionType for UI surfacing and finding messages.
         var summary = new InteractionSummaryResponse(
-            interactions.Count(result => result.Type == InteractionType.Synergistic),
+            interactions.Count(result => IsPositiveSignal(result.Type)),
             interactions.Count(result => result.Type == InteractionType.Redundant),
             interactions.Count(result => result.Type == InteractionType.Interfering));
 
         var score = new ProtocolInteractionScoreResponse(
-            Math.Round(interactions.Where(result => result.Type == InteractionType.Synergistic).Sum(result => result.Confidence), 2),
+            Math.Round(interactions.Where(result => IsPositiveSignal(result.Type)).Sum(result => result.Confidence), 2),
             Math.Round(interactions.Where(result => result.Type == InteractionType.Redundant).Sum(result => result.Confidence), 2),
             Math.Round(interactions.Where(result => result.Type == InteractionType.Interfering).Sum(result => result.Confidence * 1.5d), 2));
         var compositeScore = CalculateCompositeScore(score);
@@ -145,8 +162,33 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
                 HintBacked: false);
         }
 
-        if (HasNamedMatch(compoundA.PairsWellWith, compoundB) || HasNamedMatch(compoundB.PairsWellWith, compoundA) ||
-            HasNamedMatch(compoundA.CompatibleBlends, compoundB) || HasNamedMatch(compoundB.CompatibleBlends, compoundA))
+        var pairedByMetadata =
+            HasNamedMatch(compoundA.PairsWellWith, compoundB) || HasNamedMatch(compoundB.PairsWellWith, compoundA) ||
+            HasNamedMatch(compoundA.CompatibleBlends, compoundB) || HasNamedMatch(compoundB.CompatibleBlends, compoundA);
+
+        // Complementary-overlap detection: when two compounds share pathways that all sit
+        // inside the healing/repair domain (tissue-repair, angiogenesis, wound-healing, etc.),
+        // they are converging on the same outcome via distinct mechanisms rather than
+        // duplicating signal. This must outrank the generic "shared pathway → Redundant"
+        // branch so that pairs like BPC-157 + TB-500 are not flagged as redundant for
+        // healing-oriented stacks.
+        if (sharedPathways.Count > 0 && AllPathwaysInComplementaryDomain(sharedPathways))
+        {
+            var confidenceFloor = pairedByMetadata ? 0.62d : 0.55d;
+            var confidence = Math.Max(confidenceFloor, CalculatePathwayOverlapConfidence(compoundA, compoundB, sharedPathways.Count));
+            return new InteractionResultResponse(
+                compoundA.CanonicalName,
+                compoundB.CanonicalName,
+                InteractionType.Complementary,
+                Math.Round(confidence, 2),
+                sharedPathways,
+                sharedPathways.Count == 1
+                    ? $"Distinct mechanisms converging on {sharedPathways[0]}."
+                    : $"Distinct mechanisms converging on {sharedPathways.Count} healing-domain pathways.",
+                HintBacked: false);
+        }
+
+        if (pairedByMetadata)
         {
             return new InteractionResultResponse(
                 compoundA.CanonicalName,
@@ -220,10 +262,48 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
         return result.Type switch
         {
             InteractionType.Synergistic => $"{result.CompoundA} and {result.CompoundB} show a complementary signal worth tracking together.",
+            InteractionType.Complementary => $"{result.CompoundA} and {result.CompoundB} converge on the same outcome through distinct mechanisms.",
             InteractionType.Redundant => $"{result.CompoundA} and {result.CompoundB} appear to overlap enough that attribution may get muddy.",
             InteractionType.Interfering => $"{result.CompoundA} and {result.CompoundB} raise a review-first interaction signal.",
             _ => $"{result.CompoundA} and {result.CompoundB} do not currently trigger a strong interaction signal."
         };
+    }
+
+    private static bool IsPositiveSignal(InteractionType type) =>
+        type == InteractionType.Synergistic || type == InteractionType.Complementary;
+
+    private static bool AllPathwaysInComplementaryDomain(IReadOnlyList<string> sharedPathways)
+    {
+        if (sharedPathways.Count == 0)
+        {
+            return false;
+        }
+
+        foreach (var pathway in sharedPathways)
+        {
+            if (!IsComplementaryPathway(pathway))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static bool IsComplementaryPathway(string pathway)
+    {
+        if (string.IsNullOrWhiteSpace(pathway))
+        {
+            return false;
+        }
+
+        foreach (var keyword in ComplementaryPathwayKeywords)
+        {
+            if (pathway.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private async Task<List<InteractionCounterfactualResponse>> BuildCounterfactualsAsync(

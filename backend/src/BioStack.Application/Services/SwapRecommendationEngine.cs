@@ -312,7 +312,7 @@ internal static class SwapRecommendationEngine
 
         foreach (var result in baselineInteractions)
         {
-            if (result.Type != InteractionType.Synergistic)
+            if (!IsPositivePairSignal(result.Type))
             {
                 continue;
             }
@@ -324,6 +324,9 @@ internal static class SwapRecommendationEngine
         }
         return pairs;
     }
+
+    private static bool IsPositivePairSignal(InteractionType type) =>
+        type == InteractionType.Synergistic || type == InteractionType.Complementary;
 
     private static (string, string) NormalizePairKey(string a, string b)
     {
@@ -347,7 +350,7 @@ internal static class SwapRecommendationEngine
         var preservedKeys = new HashSet<(string, string)>();
         foreach (var result in variantInteractions)
         {
-            if (result.Type != InteractionType.Synergistic)
+            if (!IsPositivePairSignal(result.Type))
             {
                 continue;
             }
