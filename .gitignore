@@ -82,6 +82,9 @@ backend/data/
 *.sqlite*
 dumps/
 backups/
+data/TPDB/
+data/TPDB.zip
+data/*.zip
 
 # Build/Test artifacts
 **/*.tsbuildinfo
