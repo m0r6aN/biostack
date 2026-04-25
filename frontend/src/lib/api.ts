@@ -21,6 +21,7 @@ import {
     CurrentStackIntelligence,
     CurrentSubscription,
     ProtocolConsolePayload,
+    ProtocolAnalyzerResult,
     Protocol,
     ProtocolComputationRecord,
     ProtocolDriftSnapshot,
@@ -321,6 +322,51 @@ export class ApiClient {
       }
     );
     return data.overlaps;
+  }
+
+  async analyzeProtocol(payload: {
+    inputType?: 'Paste' | 'FileUpload' | 'CameraScan' | 'Link';
+    inputText?: string;
+    linkUrl?: string;
+    sourceName?: string;
+    file?: File;
+    goal?: string;
+    maxCompounds?: number;
+  }): Promise<ProtocolAnalyzerResult> {
+    if (payload.file) {
+      const formData = new FormData();
+      formData.append('inputType', payload.inputType ?? 'FileUpload');
+      formData.append('goal', payload.goal ?? '');
+      if (payload.maxCompounds) {
+        formData.append('maxCompounds', String(payload.maxCompounds));
+      }
+
+      formData.append('file', payload.file, payload.sourceName ?? payload.file.name);
+
+      const response = await fetch(`${this.baseUrl}/api/analyze/protocol`, {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        let message = `API Error: ${response.status} ${response.statusText}`;
+        try {
+          const body = await response.json();
+          message = body.message || body.error || message;
+        } catch {
+        }
+
+        throw new ApiError(response.status, message);
+      }
+
+      return response.json();
+    }
+
+    return this.request<ProtocolAnalyzerResult>('/api/analyze/protocol', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
   }
 
   // Calculators

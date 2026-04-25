@@ -107,3 +107,6 @@ CLAUDE.md
 tmp/
 temp/
 cache/
+
+# Git worktrees
+.worktrees/

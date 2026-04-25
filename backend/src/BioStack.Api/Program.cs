@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Scalar.AspNetCore;
 using BioStack.Infrastructure.Persistence;
 using BioStack.Infrastructure.Repositories;
@@ -28,6 +29,26 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
 });
+
+builder.Services.AddMemoryCache();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("protocol-link-extractor");
+builder.Services.AddHttpClient("protocol-ocr");
+builder.Services.Configure<ProtocolOcrOptions>(builder.Configuration.GetSection("Analyzer:Ocr"));
+
+var redisConfiguration = builder.Configuration["Redis:Configuration"];
+if (!string.IsNullOrWhiteSpace(redisConfiguration))
+{
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = redisConfiguration;
+        options.InstanceName = builder.Configuration["Redis:InstanceName"] ?? "biostack:";
+    });
+}
+else
+{
+    builder.Services.AddDistributedMemoryCache();
+}
 
 var allowedOrigins = builder.Configuration
     .GetSection("Cors:AllowedOrigins")
@@ -243,7 +264,27 @@ builder.Services.AddScoped<ICalculatorService, CalculatorService>();
 builder.Services.AddScoped<IKnowledgeService, KnowledgeService>();
 builder.Services.AddScoped<IInteractionIntelligenceService, InteractionIntelligenceService>();
 builder.Services.AddScoped<IOverlapService, OverlapService>();
+builder.Services.AddSingleton<IBlendDecomposerService, BlendDecomposerService>();
+builder.Services.AddSingleton<IProtocolFingerprintService, ProtocolFingerprintService>();
+builder.Services.AddSingleton<IProtocolAnalysisPersistenceHook, NullProtocolAnalysisPersistenceHook>();
+builder.Services.AddScoped<IProtocolAnalysisCache, ProtocolAnalysisCache>();
+builder.Services.AddScoped<IProtocolParser, ProtocolParser>();
+builder.Services.AddScoped<IProtocolNormalizationService, ProtocolNormalizationService>();
+builder.Services.AddScoped<IProtocolIngestionService, ProtocolIngestionService>();
+builder.Services.AddScoped<IProtocolOcrService, AzureVisionProtocolOcrService>();
+builder.Services.AddScoped<IProtocolTextExtractor, PlainTextProtocolExtractor>();
+builder.Services.AddScoped<IProtocolTextExtractor, PdfProtocolExtractor>();
+builder.Services.AddScoped<IProtocolTextExtractor, DocxProtocolExtractor>();
+builder.Services.AddScoped<IProtocolTextExtractor, SpreadsheetProtocolExtractor>();
+builder.Services.AddScoped<IProtocolTextExtractor, ImageOcrProtocolExtractor>();
+builder.Services.AddScoped<IProtocolTextExtractor, LinkProtocolExtractor>();
+builder.Services.AddScoped<IProtocolSuggestionService, ProtocolSuggestionService>();
+builder.Services.AddScoped<ICounterfactualCandidateService, CounterfactualCandidateService>();
+builder.Services.AddScoped<ICounterfactualExplainerService, CounterfactualExplainerService>();
+builder.Services.AddScoped<ICounterfactualEngine, CounterfactualEngine>();
+builder.Services.AddScoped<IProtocolAnalyzerService, ProtocolAnalyzerService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddHostedService<AnalyzerPrewarmService>();
 
 // ── OpenAPI ──────────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi(options =>
@@ -285,6 +326,7 @@ app.MapProtocolPhaseEndpoints();
 app.MapTimelineEndpoints();
 app.MapCalculatorEndpoints();
 app.MapKnowledgeEndpoints();
+app.MapAnalyzeEndpoints();
 app.MapLeadEndpoints();
 app.MapAdminEndpoints();
 

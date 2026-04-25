@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 import path from "path";
 
-const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, '');
+const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050').replace(/\/$/, '');
 
 const nextConfig: NextConfig = {
   output: 'standalone',
@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
       {
         source: '/api/v1/:path*',
         destination: `${apiUrl}/api/v1/:path*`,
+      },
+      {
+        source: '/api/analyze/:path*',
+        destination: `${apiUrl}/api/analyze/:path*`,
       },
     ];
   },
