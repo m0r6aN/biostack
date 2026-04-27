@@ -8,6 +8,8 @@ COPY src/BioStack.Application/BioStack.Application.csproj src/BioStack.Applicati
 COPY src/BioStack.Infrastructure/BioStack.Infrastructure.csproj src/BioStack.Infrastructure/
 COPY src/BioStack.Api/BioStack.Api.csproj src/BioStack.Api/
 COPY src/BioStack.KnowledgeWorker/BioStack.KnowledgeWorker.csproj src/BioStack.KnowledgeWorker/
+COPY src/BioStack.Cognition/BioStack.Cognition.csproj src/BioStack.Cognition/
+COPY src/BioStack.Cognition.CollectiveAdapter/BioStack.Cognition.CollectiveAdapter.csproj src/BioStack.Cognition.CollectiveAdapter/
 COPY tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj tests/BioStack.Api.Tests/
 COPY tests/BioStack.Domain.Tests/BioStack.Domain.Tests.csproj tests/BioStack.Domain.Tests/
 COPY tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj tests/BioStack.Application.Tests/

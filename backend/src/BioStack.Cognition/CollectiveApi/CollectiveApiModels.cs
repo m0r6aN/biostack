@@ -47,7 +47,14 @@ internal sealed record CollectiveCognitionSurfaces(
     CollectiveConfidenceSurface? ConfidenceProfile,
 
     [property: JsonPropertyName("reasoningGraphRef")]
-    CollectiveGraphRef? ReasoningGraphRef);
+    CollectiveGraphRef? ReasoningGraphRef,
+
+    /// <summary>
+    /// Cryptographic attestation from the Collective Host. Present on live responses;
+    /// absent on mock/degraded responses. Mapped to BranchPerspectiveReview.WitnessSignature.
+    /// </summary>
+    [property: JsonPropertyName("witnessSignature")]
+    string? WitnessSignature = null);
 
 internal sealed record CollectivePerspectiveReview(
     [property: JsonPropertyName("kind")]     string Kind,

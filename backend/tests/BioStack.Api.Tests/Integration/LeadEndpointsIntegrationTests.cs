@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BioStack.Api;
 using BioStack.Infrastructure.Persistence;
 
+[Trait("Category", "Integration")]
 public class LeadEndpointsIntegrationTests : IAsyncLifetime
 {
     private WebApplicationFactory<Program> _factory = null!;
