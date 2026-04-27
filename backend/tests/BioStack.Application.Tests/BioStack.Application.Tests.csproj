@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\BioStack.Application\BioStack.Application.csproj" />
+    <ProjectReference Include="..\..\src\BioStack.Cognition\BioStack.Cognition.csproj" />
   </ItemGroup>
 
 </Project>

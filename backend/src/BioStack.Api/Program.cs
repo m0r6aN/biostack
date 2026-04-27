@@ -13,6 +13,7 @@ using BioStack.Infrastructure.Knowledge;
 using BioStack.Application.Services;
 using BioStack.Api.Endpoints;
 using BioStack.Api;
+using BioStack.Cognition;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -285,6 +286,11 @@ builder.Services.AddScoped<ICounterfactualEngine, CounterfactualEngine>();
 builder.Services.AddScoped<IProtocolAnalyzerService, ProtocolAnalyzerService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddHostedService<AnalyzerPrewarmService>();
+
+// ── Cognition (Stack Review Board) ──────────────────────────────────────────
+// AddCollectiveIntegration selects live vs. stub orchestrator based on
+// KeonCollective:LiveMode and KeonCollective:ControlBaseUrl in configuration.
+builder.Services.AddCollectiveIntegration(builder.Configuration);
 
 // ── OpenAPI ──────────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi(options =>

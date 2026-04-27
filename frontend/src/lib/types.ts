@@ -698,6 +698,70 @@ export interface ProtocolAnalyzerResult {
   artifacts: ProtocolAnalyzerArtifact[];
 }
 
+// ── Stack Review Board types ────────────────────────────────────────────────
+
+export type SrbFindingSeverity = 'Info' | 'Warning' | 'Critical';
+export type SrbPerspectiveKind = 'Optimizer' | 'Skeptic' | 'Regulator' | 'Historian';
+
+export interface SrbPerspectiveFinding {
+  findingId: string;
+  category: string;
+  narrative: string;
+  severity: SrbFindingSeverity;
+}
+
+export interface SrbPerspectiveReview {
+  kind: SrbPerspectiveKind;
+  findings: SrbPerspectiveFinding[];
+  summary: string;
+}
+
+export interface SrbContradictionReview {
+  counterPlanNarrative: string;
+  counterPlanIsExecutable: false; // DOCTRINE: always false
+  isExecutable: false;            // DOCTRINE: always false
+}
+
+export interface SrbConfidenceProfile {
+  model: string;
+  epistemic: string;
+  evidenceSupport: string;
+  contradictionDensity: string;
+  calibrationVersion: string;
+}
+
+export interface SrbReasoningGraphRef {
+  graphId: string;
+  nodeCount: number;
+  edgeCount: number;
+}
+
+export interface SrbCognitiveDensityEnvelope {
+  branchPerspectiveReview: Record<SrbPerspectiveKind, SrbPerspectiveReview>;
+  contradictionReview: SrbContradictionReview;
+  confidenceProfile: SrbConfidenceProfile;
+  reasoningGraphRef: SrbReasoningGraphRef;
+}
+
+/** A deterministic safety finding rendered ABOVE the cognitive review. */
+export interface SrbDeterministicFinding {
+  findingId: string;
+  code: string;
+  category: string;
+  narrative: string;
+  compoundSlugs: string[];
+  riskScoreContribution: number;
+  evidenceTier: string;
+}
+
+/** A BioStack known pattern surfaced in the Pattern Recognition panel. */
+export interface SrbKnownPattern {
+  patternId: string;
+  name: string;
+  matchedCompoundSlugs: string[];
+  description: string;
+}
+
 export interface CalculatorResult {
   input: number;
   output: number;
