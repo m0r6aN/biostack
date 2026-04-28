@@ -19,6 +19,7 @@ using BioStack.Contracts.Responses;
 using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Persistence;
 
+[Trait("Category", "Integration")]
 public class ProfileEndpointsIntegrationTests : IAsyncLifetime
 {
     private WebApplicationFactory<Program> _factory = null!;

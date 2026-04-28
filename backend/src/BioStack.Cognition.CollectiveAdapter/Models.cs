@@ -114,7 +114,12 @@ public record PerspectiveReview(
     string Summary);
 
 public record BranchPerspectiveReview(
-    IReadOnlyDictionary<PerspectiveKind, PerspectiveReview> PerspectiveReviews);
+    IReadOnlyDictionary<PerspectiveKind, PerspectiveReview> PerspectiveReviews,
+    /// <summary>
+    /// Cryptographic attestation from the Collective Host proving the deliberation
+    /// response is authentic and unmodified. Null on stub/degraded envelopes.
+    /// </summary>
+    string? WitnessSignature = null);
 
 public record ContradictionReview(
     string CounterPlanNarrative,
@@ -126,7 +131,21 @@ public record ConfidenceProfile(
     string Epistemic,
     string EvidenceSupport,
     string ContradictionDensity,
-    string CalibrationVersion);
+    string CalibrationVersion)
+{
+    /// <summary>
+    /// Returns true when the profile carries a live, traceable identity:
+    /// non-empty model that is not the degraded sentinel, non-empty epistemic label,
+    /// and a populated calibration version.
+    /// Use in live integration tests and runtime assertions to verify that Keon
+    /// did not silently return a hollow confidence record.
+    /// </summary>
+    public bool IsBoundedAndTraceable() =>
+        !string.IsNullOrWhiteSpace(Model)             &&
+        Model != "COLLECTIVE_UNAVAILABLE"             &&
+        !string.IsNullOrWhiteSpace(Epistemic)         &&
+        !string.IsNullOrWhiteSpace(CalibrationVersion);
+}
 
 public record ReasoningGraphRef(
     string GraphId,

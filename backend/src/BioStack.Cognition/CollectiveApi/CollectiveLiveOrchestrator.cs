@@ -168,7 +168,7 @@ internal sealed class CollectiveLiveOrchestrator : ICognitiveDensityOrchestrator
             gr?.EdgeCount ?? 0);
 
         return new CognitiveDensityEnvelope(
-            new BranchPerspectiveReview(perspectiveMap),
+            new BranchPerspectiveReview(perspectiveMap, surfaces.WitnessSignature),
             contradiction,
             confidence,
             graphRef);

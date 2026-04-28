@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
+[Trait("Category", "Integration")]
 public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
 {
     private WebApplicationFactory<Program> _factory = null!;

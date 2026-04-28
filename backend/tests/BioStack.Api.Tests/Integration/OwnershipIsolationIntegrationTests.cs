@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
+[Trait("Category", "Integration")]
 public sealed class OwnershipIsolationIntegrationTests : IAsyncLifetime
 {
     private WebApplicationFactory<Program> _factory = null!;

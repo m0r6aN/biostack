@@ -81,8 +81,11 @@ public sealed class ProtocolParser : IProtocolParser
         ICollection<ProtocolBlendExpansionResponse> blendExpansions)
     {
         // Cycle phrases like "8 weeks on, 8 weeks off" describe duration/cadence,
-        // not a compound. Skip the segment so it never surfaces as an entry.
-        if (CyclePattern.IsMatch(segment))
+        // not a compound. Strip the cycle phrase from the segment rather than
+        // discarding the whole thing, so that a compound written on the same line
+        // is still parsed (e.g. "BPC-157 500mcg daily — 8 weeks on, 8 weeks off").
+        segment = CyclePattern.Replace(segment, string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(segment))
         {
             return Array.Empty<ProtocolEntryResponse>();
         }

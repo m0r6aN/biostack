@@ -48,6 +48,7 @@ public sealed class CollectiveLiveOrchestratorTests
             correlationId = "corr-001",
             cognitionSurfaces = new
             {
+                witnessSignature = "sig-biostack-test-001",
                 perspectiveReviews = new Dictionary<string, object>
                 {
                     ["Optimizer"] = new { kind = "Optimizer", summary = "Good", findings = new[] { new { findingId = "OPT-001", category = "Efficiency", narrative = "Strong synergy", severity = "Info" } } },
@@ -113,7 +114,9 @@ public sealed class CollectiveLiveOrchestratorTests
         Assert.True(envelope.BranchPerspectiveReview.PerspectiveReviews.ContainsKey(PerspectiveKind.Optimizer));
         Assert.True(envelope.BranchPerspectiveReview.PerspectiveReviews.ContainsKey(PerspectiveKind.Historian));
         Assert.Equal("epistemic-v1", envelope.ConfidenceProfile.Model);
+        Assert.True(envelope.ConfidenceProfile.IsBoundedAndTraceable(), "Live response must have a bounded, traceable confidence profile");
         Assert.Equal(5, envelope.ReasoningGraphRef.NodeCount);
+        Assert.Equal("sig-biostack-test-001", envelope.BranchPerspectiveReview.WitnessSignature);
         Assert.False(envelope.ContradictionReview.IsExecutable,            "IsExecutable must be false (doctrine)");
         Assert.False(envelope.ContradictionReview.CounterPlanIsExecutable, "CounterPlanIsExecutable must be false (doctrine)");
     }

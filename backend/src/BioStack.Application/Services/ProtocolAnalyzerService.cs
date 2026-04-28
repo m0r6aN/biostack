@@ -155,7 +155,24 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
 
         var parsed = await _parser.ParseAsync(inputText, cancellationToken);
         await _cache.SetParsedAsync(parseKey, new ParsedProtocolCacheDto(parsed.Entries, parsed.BlendExpansions), ParseCacheTtl, cancellationToken);
-        return parsed;
+
+        // The parser builds KnowledgeByCompound from its in-memory alias cache, which may be stale
+        // (e.g. after new compounds are seeded via the admin endpoint). Re-verify each parsed entry
+        // against the live DB so freshly seeded compounds are immediately reflected in the analysis.
+        var augmentedKnowledge = new Dictionary<string, KnowledgeEntry>(parsed.KnowledgeByCompound, StringComparer.OrdinalIgnoreCase);
+        foreach (var entry in parsed.Entries)
+        {
+            if (!augmentedKnowledge.ContainsKey(entry.CompoundName))
+            {
+                var match = await _knowledgeSource.GetCompoundAsync(entry.CompoundName, cancellationToken);
+                if (match is not null)
+                {
+                    augmentedKnowledge[entry.CompoundName] = match;
+                }
+            }
+        }
+
+        return new ProtocolParseResult(parsed.Entries, augmentedKnowledge, parsed.BlendExpansions);
     }
 
     private async Task<ProtocolAnalysisCacheDto> GetOrAnalyzeAsync(
