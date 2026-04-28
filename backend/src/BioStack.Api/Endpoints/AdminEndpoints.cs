@@ -3,6 +3,7 @@ namespace BioStack.Api.Endpoints;
 using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Knowledge;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 public static class AdminEndpoints
 {
@@ -16,6 +17,7 @@ public static class AdminEndpoints
         group.MapPost("/knowledge/ingest", async (
             [FromBody] List<KnowledgeEntry> entries,
             [FromServices] IKnowledgeSource knowledgeSource,
+            [FromServices] IMemoryCache memoryCache,
             CancellationToken ct) =>
         {
             if (entries == null || entries.Count == 0)
@@ -24,6 +26,8 @@ public static class AdminEndpoints
             try
             {
                 var count = await knowledgeSource.IngestBulkAsync(entries, ct);
+                // Bust the parser's alias cache so the analyzer immediately reflects newly seeded compounds.
+                memoryCache.Remove("analyzer:knowledge:aliases");
                 return Results.Ok(new { Message = $"Successfully ingested {count} compounds", Count = count });
             }
             catch (Exception ex)
