@@ -161,4 +161,32 @@ public sealed class ProtocolAnalyzerServiceTests
         Assert.True(result.ScoreExplanation.Synergy > 0,
             "Complementary healing-domain pairs must register a positive synergy score on the response.");
     }
+
+    // Regression for review comment #3153773795:
+    // When a compound and a cycle phrase appear on the same line
+    // (e.g. "BPC-157 500mcg daily — 8 weeks on, 8 weeks off"), the old code
+    // skipped the entire segment, silently dropping the compound. The fix strips
+    // the cycle portion from the segment instead of discarding it wholesale.
+    [Fact]
+    public async Task AnalyzeAsync_CompoundAndCycleOnSameLine_DoesNotDropCompound()
+    {
+        var input = "BPC-157 500mcg daily — 8 weeks on, 8 weeks off";
+
+        var result = await _service.AnalyzeAsync(new AnalyzeProtocolRequest(
+            ProtocolInputType.Paste,
+            InputText: input,
+            Goal: "healing"));
+
+        // The compound must be present — not silently dropped.
+        var bpc = Assert.Single(result.Protocol, entry =>
+            string.Equals(entry.CompoundName, "BPC-157", StringComparison.OrdinalIgnoreCase));
+
+        Assert.Equal(500d, bpc.Dose);
+        Assert.Equal("mcg", bpc.Unit);
+        Assert.Equal("daily", bpc.Frequency);
+
+        // The cycle phrase must not surface as a phantom compound.
+        Assert.DoesNotContain(result.Protocol, entry =>
+            entry.CompoundName.Contains("weeks", StringComparison.OrdinalIgnoreCase));
+    }
 }
