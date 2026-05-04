@@ -3,6 +3,7 @@ namespace BioStack.Application.Tests.Services;
 using BioStack.Application.Services;
 using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Repositories;
+using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
 
@@ -17,7 +18,7 @@ public sealed class OwnershipGuardTests
 
     public OwnershipGuardTests()
     {
-        _sut = new OwnershipGuard(_userAccessorMock.Object, _profileRepositoryMock.Object);
+        _sut = new OwnershipGuard(_userAccessorMock.Object, _profileRepositoryMock.Object, CreateBypassOptions());
     }
 
     // ─── CurrentUserId ────────────────────────────────────────────────────────
@@ -126,4 +127,23 @@ public sealed class OwnershipGuardTests
             x => x.GetOwnedByIdAsync(ProfileId, OwnerId, token),
             Times.Once);
     }
+
+    [Fact]
+    public async Task GetOwnedProfileAsync_BypassEnabled_LoadsProfileWithoutOwnerFilter()
+    {
+        var profile = new PersonProfile { Id = ProfileId, OwnerId = Guid.NewGuid() };
+        var guard = new OwnershipGuard(_userAccessorMock.Object, _profileRepositoryMock.Object, CreateBypassOptions(enabled: true));
+
+        _profileRepositoryMock
+            .Setup(x => x.GetByIdWithNavigationAsync(ProfileId, default))
+            .ReturnsAsync(profile);
+
+        var result = await guard.GetOwnedProfileAsync(ProfileId);
+
+        Assert.Equal(ProfileId, result.Id);
+        _profileRepositoryMock.Verify(x => x.GetByIdWithNavigationAsync(ProfileId, default), Times.Once);
+    }
+
+    private static IOptions<DevBypassOptions> CreateBypassOptions(bool enabled = false)
+        => Options.Create(new DevBypassOptions { Enabled = enabled });
 }

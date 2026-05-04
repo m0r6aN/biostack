@@ -20,11 +20,19 @@ const PUBLIC_PREFIX_ROUTES = [
   '/sitemap.xml',
 ];
 
+function isDevBypassAuthEnabled() {
+  return process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
+}
+
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (pathname === '/calculators') {
     return NextResponse.redirect(new URL('/tools', req.url), 308);
+  }
+
+  if (isDevBypassAuthEnabled()) {
+    return NextResponse.next();
   }
 
   if (pathname === '/' || PUBLIC_PREFIX_ROUTES.some((p) => pathname.startsWith(p))) {

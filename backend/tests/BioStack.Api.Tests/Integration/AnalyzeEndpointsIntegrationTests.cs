@@ -51,7 +51,11 @@ public sealed class AnalyzeEndpointsIntegrationTests : IAsyncLifetime
         Assert.True(payload.RootElement.TryGetProperty("protocol", out var protocol));
         Assert.True(payload.RootElement.TryGetProperty("score", out var score));
         Assert.True(payload.RootElement.TryGetProperty("inputType", out var inputType));
+        Assert.True(payload.RootElement.TryGetProperty("knownPatterns", out var knownPatterns));
+        Assert.True(payload.RootElement.TryGetProperty("emergentPatterns", out var emergentPatterns));
         Assert.Equal(JsonValueKind.Array, protocol.ValueKind);
+        Assert.Equal(JsonValueKind.Array, knownPatterns.ValueKind);
+        Assert.Equal(JsonValueKind.Array, emergentPatterns.ValueKind);
         Assert.True(score.GetInt32() >= 0);
         Assert.Equal("Paste", inputType.GetString());
     }

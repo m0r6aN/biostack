@@ -13,14 +13,15 @@
  * T10c: Loading skeleton is shown when loading=true.
  */
 
-import { render, screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
 import { StackReviewBoard } from '@/components/tools/StackReviewBoard';
 import type {
-  SrbCognitiveDensityEnvelope,
-  SrbDeterministicFinding,
-  SrbKnownPattern,
+    SrbCognitiveDensityEnvelope,
+    SrbDeterministicFinding,
+    SrbEmergentPattern,
+    SrbKnownPattern,
 } from '@/lib/types';
+import { render, screen, within } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 // ── Fixtures ──────────────────────────────────────────────────────────────────
 
@@ -42,6 +43,23 @@ const knownPatterns: SrbKnownPattern[] = [
     name: 'BPC-157 + TB-500 Regenerative Pairing',
     matchedCompoundSlugs: ['bpc-157', 'tb-500'],
     description: 'Classic regenerative pairing for tissue recovery protocols.',
+  },
+];
+
+const emergentPatterns: SrbEmergentPattern[] = [
+  {
+    id: 'emergent-shared-pathway-tissue-repair',
+    title: 'Shared pathway motif · tissue-repair',
+    patternType: 'motif',
+    compounds: ['bpc-157', 'tb-500', 'ghk-cu'],
+    pathways: ['tissue-repair'],
+    mechanisms: ['tissue-repair signaling'],
+    confidence: 'moderate',
+    basis: 'pathway-overlap',
+    explanation:
+      'Three or more compounds appear to converge on tissue-repair, inferred from overlapping pathway tags in this stack.',
+    evidenceNotes: ['Evidence mix in this pattern: 1 moderate/strong and 2 limited/mechanistic entries.'],
+    userFacingLabel: 'Inferred from this stack · not canonical',
   },
 ];
 
@@ -123,6 +141,7 @@ describe('StackReviewBoard', () => {
       <StackReviewBoard
         deterministicFindings={deterministicFindings}
         knownPatterns={knownPatterns}
+        emergentPatterns={emergentPatterns}
         review={mockReview}
         {...props}
       />,
@@ -162,15 +181,33 @@ describe('StackReviewBoard', () => {
   });
 
   // T9b: BioStack KnownPatterns rendered and distinguished
-  it('T9b — BioStack KnownPatterns render with "BioStack Known-Pattern Memory" label', () => {
+  it('T9b — known and emergent sections render separately', () => {
     renderBoard();
-    expect(
-      screen.getByText(/BioStack Known-Pattern Memory/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/BioStack Known Pattern Memory/i)).toBeInTheDocument();
+    expect(screen.getByText(/Emergent Stack Patterns/i)).toBeInTheDocument();
     expect(
       screen.getByTestId('known-pattern-bpc157-tb500-recovery'),
     ).toBeInTheDocument();
     expect(screen.getByText('BPC-157 + TB-500 Regenerative Pairing')).toBeInTheDocument();
+    expect(screen.getByTestId('emergent-pattern-emergent-shared-pathway-tissue-repair')).toBeInTheDocument();
+  });
+
+  it('renders the known-pattern empty state separately', () => {
+    renderBoard({ knownPatterns: [] });
+    expect(screen.getByText('No known BioStack memory patterns were found.')).toBeInTheDocument();
+    expect(screen.getByTestId('emergent-pattern-emergent-shared-pathway-tissue-repair')).toBeInTheDocument();
+  });
+
+  it('renders the emergent-pattern empty state separately', () => {
+    renderBoard({ emergentPatterns: [] });
+    expect(screen.getByText('No emergent stack motifs were detected.')).toBeInTheDocument();
+    expect(screen.getByTestId('known-pattern-bpc157-tb500-recovery')).toBeInTheDocument();
+  });
+
+  it('labels emergent patterns as inferred rather than canonical', () => {
+    renderBoard();
+    expect(screen.getByText('Inferred from this stack · not canonical')).toBeInTheDocument();
+    expect(screen.getByText(/Inferred · not canonical/i)).toBeInTheDocument();
   });
 
   // T10a: Challenge panel non-executable label

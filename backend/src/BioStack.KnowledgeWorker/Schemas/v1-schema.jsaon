@@ -1,0 +1,1157 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "string"
+        },
+        "recordType": {
+          "type": "string"
+        },
+        "identity": {
+          "type": "object",
+          "properties": {
+            "canonicalId": {
+              "type": "string"
+            },
+            "canonicalName": {
+              "type": "string"
+            },
+            "slug": {
+              "type": "string"
+            },
+            "aliases": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "brandNames": {
+              "type": "array",
+              "items": {}
+            },
+            "synonyms": {
+              "type": "array",
+              "items": {}
+            },
+            "classification": {
+              "type": "string"
+            },
+            "compoundFamily": {
+              "type": "string"
+            },
+            "isCombinationProduct": {
+              "type": "boolean"
+            },
+            "activeMoieties": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "externalIdentifiers": {
+              "type": "object",
+              "properties": {
+                "rxnorm": {
+                  "type": "null"
+                },
+                "unii": {
+                  "type": "null"
+                },
+                "casNumber": {
+                  "type": "null"
+                },
+                "drugbank": {
+                  "type": "null"
+                },
+                "pubchem": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "rxnorm",
+                "unii",
+                "casNumber",
+                "drugbank",
+                "pubchem"
+              ]
+            }
+          },
+          "required": [
+            "canonicalId",
+            "canonicalName",
+            "slug",
+            "aliases",
+            "brandNames",
+            "synonyms",
+            "classification",
+            "compoundFamily",
+            "isCombinationProduct",
+            "activeMoieties",
+            "externalIdentifiers"
+          ]
+        },
+        "regulatory": {
+          "type": "object",
+          "properties": {
+            "requiresPrescription": {
+              "type": "boolean"
+            },
+            "regulatoryStatus": {
+              "type": "string"
+            },
+            "labelStatusByUseCase": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "useCase": {
+                      "type": "string"
+                    },
+                    "labelStatus": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "useCase",
+                    "labelStatus"
+                  ]
+                }
+              ]
+            },
+            "jurisdiction": {
+              "type": "string"
+            },
+            "approvedIndications": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "offLabelNotes": {
+              "type": "array",
+              "items": {}
+            }
+          },
+          "required": [
+            "requiresPrescription",
+            "regulatoryStatus",
+            "labelStatusByUseCase",
+            "jurisdiction",
+            "approvedIndications",
+            "offLabelNotes"
+          ]
+        },
+        "mechanism": {
+          "type": "object",
+          "properties": {
+            "mechanismSummary": {
+              "type": "string"
+            },
+            "primaryMechanisms": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "pathways": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "targets": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "effectTags": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "goalTags": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "mechanismSummary",
+            "primaryMechanisms",
+            "pathways",
+            "targets",
+            "effectTags",
+            "goalTags"
+          ]
+        },
+        "formulations": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "formulationId": {
+                  "type": "string"
+                },
+                "productName": {
+                  "type": "string"
+                },
+                "manufacturer": {
+                  "type": "null"
+                },
+                "route": {
+                  "type": "string"
+                },
+                "dosageForm": {
+                  "type": "string"
+                },
+                "strength": {
+                  "type": "null"
+                },
+                "concentration": {
+                  "type": "null"
+                },
+                "unit": {
+                  "type": "null"
+                },
+                "substitutableWith": {
+                  "type": "array",
+                  "items": {}
+                },
+                "storage": {
+                  "type": "object",
+                  "properties": {
+                    "beforeReconstitution": {
+                      "type": "string"
+                    },
+                    "afterReconstitution": {
+                      "type": "string"
+                    },
+                    "temperatureNotes": {
+                      "type": "string"
+                    },
+                    "lightSensitivity": {
+                      "type": "null"
+                    },
+                    "stabilityWindow": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "beforeReconstitution",
+                    "afterReconstitution",
+                    "temperatureNotes",
+                    "lightSensitivity",
+                    "stabilityWindow"
+                  ]
+                },
+                "reconstitution": {
+                  "type": "object",
+                  "properties": {
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "diluent": {
+                      "type": "string"
+                    },
+                    "diluentVolume": {
+                      "type": "null"
+                    },
+                    "instructions": {
+                      "type": "string"
+                    },
+                    "productSpecific": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "required",
+                    "diluent",
+                    "diluentVolume",
+                    "instructions",
+                    "productSpecific"
+                  ]
+                }
+              },
+              "required": [
+                "formulationId",
+                "productName",
+                "manufacturer",
+                "route",
+                "dosageForm",
+                "strength",
+                "concentration",
+                "unit",
+                "substitutableWith",
+                "storage",
+                "reconstitution"
+              ]
+            }
+          ]
+        },
+        "indications": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "useCase": {
+                  "type": "string"
+                },
+                "labelStatus": {
+                  "type": "string"
+                },
+                "population": {
+                  "type": "string"
+                },
+                "benefitSummary": {
+                  "type": "string"
+                },
+                "evidenceTier": {
+                  "type": "string"
+                },
+                "sources": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "useCase",
+                "labelStatus",
+                "population",
+                "benefitSummary",
+                "evidenceTier",
+                "sources"
+              ]
+            }
+          ]
+        },
+        "dosingGuidance": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "guidanceId": {
+                  "type": "string"
+                },
+                "context": {
+                  "type": "object",
+                  "properties": {
+                    "useCase": {
+                      "type": "string"
+                    },
+                    "population": {
+                      "type": "string"
+                    },
+                    "formulation": {
+                      "type": "null"
+                    },
+                    "route": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "useCase",
+                    "population",
+                    "formulation",
+                    "route"
+                  ]
+                },
+                "dose": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "string"
+                    },
+                    "frequency": {
+                      "type": "string"
+                    },
+                    "scheduleText": {
+                      "type": "string"
+                    },
+                    "preferredTimeOfDay": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "amount",
+                    "unit",
+                    "frequency",
+                    "scheduleText",
+                    "preferredTimeOfDay"
+                  ]
+                },
+                "notes": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "productSpecific": {
+                  "type": "boolean"
+                },
+                "sources": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "guidanceId",
+                "context",
+                "dose",
+                "notes",
+                "productSpecific",
+                "sources"
+              ]
+            }
+          ]
+        },
+        "compatibility": {
+          "type": "object",
+          "properties": {
+            "vialCompatibilitySummary": {
+              "type": "string"
+            },
+            "blendingRules": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "ruleType": {
+                      "type": "string"
+                    },
+                    "target": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ruleType",
+                    "target",
+                    "status",
+                    "message",
+                    "sources"
+                  ]
+                }
+              ]
+            },
+            "compatibleBlends": {
+              "type": "array",
+              "items": {}
+            },
+            "incompatibleBlends": {
+              "type": "array",
+              "items": {}
+            },
+            "unknownCompatibility": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "vialCompatibilitySummary",
+            "blendingRules",
+            "compatibleBlends",
+            "incompatibleBlends",
+            "unknownCompatibility"
+          ]
+        },
+        "safety": {
+          "type": "object",
+          "properties": {
+            "contraindications": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "string"
+                    },
+                    "severity": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "item",
+                    "severity",
+                    "notes",
+                    "sources"
+                  ]
+                }
+              ]
+            },
+            "warnings": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "string"
+                    },
+                    "severity": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "item",
+                    "severity",
+                    "notes",
+                    "sources"
+                  ]
+                }
+              ]
+            },
+            "precautions": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "item",
+                    "notes",
+                    "sources"
+                  ]
+                }
+              ]
+            },
+            "adverseEffects": {
+              "type": "object",
+              "properties": {
+                "common": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "serious": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "common",
+                "serious"
+              ]
+            },
+            "monitoring": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "parameter": {
+                      "type": "string"
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "frequency": {
+                      "type": "string"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "parameter",
+                    "reason",
+                    "frequency",
+                    "sources"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "contraindications",
+            "warnings",
+            "precautions",
+            "adverseEffects",
+            "monitoring"
+          ]
+        },
+        "interactions": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "interactionId": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                },
+                "severity": {
+                  "type": "string"
+                },
+                "mechanism": {
+                  "type": "string"
+                },
+                "effect": {
+                  "type": "string"
+                },
+                "recommendedAction": {
+                  "type": "string"
+                },
+                "sources": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "interactionId",
+                "type",
+                "target",
+                "severity",
+                "mechanism",
+                "effect",
+                "recommendedAction",
+                "sources"
+              ]
+            }
+          ]
+        },
+        "stackIntelligence": {
+          "type": "object",
+          "properties": {
+            "pairsWellWith": {
+              "type": "array",
+              "items": {}
+            },
+            "avoidWith": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "target": {
+                      "type": "string"
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "severity": {
+                      "type": "string"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "target",
+                    "reason",
+                    "severity",
+                    "sources"
+                  ]
+                }
+              ]
+            },
+            "overlapRules": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "ruleId": {
+                      "type": "string"
+                    },
+                    "ruleType": {
+                      "type": "string"
+                    },
+                    "tag": {
+                      "type": "string"
+                    },
+                    "severity": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "action": {
+                      "type": "string"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ruleId",
+                    "ruleType",
+                    "tag",
+                    "severity",
+                    "message",
+                    "action",
+                    "sources"
+                  ]
+                }
+              ]
+            },
+            "synergyRules": {
+              "type": "array",
+              "items": {}
+            },
+            "conflictRules": {
+              "type": "array",
+              "items": {}
+            },
+            "redundancyRules": {
+              "type": "array",
+              "items": {}
+            },
+            "timingRules": {
+              "type": "array",
+              "items": {}
+            }
+          },
+          "required": [
+            "pairsWellWith",
+            "avoidWith",
+            "overlapRules",
+            "synergyRules",
+            "conflictRules",
+            "redundancyRules",
+            "timingRules"
+          ]
+        },
+        "supportiveGuidance": {
+          "type": "object",
+          "properties": {
+            "nutrition": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "topic": {
+                      "type": "string"
+                    },
+                    "guidance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "topic",
+                    "guidance"
+                  ]
+                }
+              ]
+            },
+            "supplements": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "topic": {
+                      "type": "string"
+                    },
+                    "guidance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "topic",
+                    "guidance"
+                  ]
+                }
+              ]
+            },
+            "sleep": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "guidance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "guidance"
+                  ]
+                }
+              ]
+            },
+            "exercise": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "guidance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "guidance"
+                  ]
+                }
+              ]
+            },
+            "applicabilityNotes": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "sources": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "nutrition",
+            "supplements",
+            "sleep",
+            "exercise",
+            "applicabilityNotes",
+            "sources"
+          ]
+        },
+        "evidence": {
+          "type": "object",
+          "properties": {
+            "overallTier": {
+              "type": "string"
+            },
+            "claimSpecificEvidence": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "claim": {
+                      "type": "string"
+                    },
+                    "tier": {
+                      "type": "string"
+                    },
+                    "confidence": {
+                      "type": "string"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "claim",
+                    "tier",
+                    "confidence",
+                    "sources"
+                  ]
+                }
+              ]
+            },
+            "evidenceGaps": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "controversies": {
+              "type": "array",
+              "items": {}
+            }
+          },
+          "required": [
+            "overallTier",
+            "claimSpecificEvidence",
+            "evidenceGaps",
+            "controversies"
+          ]
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "sourceRecords": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "sourceType": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "publisher": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "publishedAt": {
+                      "type": "string"
+                    },
+                    "lastCheckedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "sourceType",
+                    "title",
+                    "publisher",
+                    "url",
+                    "publishedAt",
+                    "lastCheckedAt"
+                  ]
+                }
+              ]
+            },
+            "curationNotes": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "lastReviewedAt": {
+              "type": "string"
+            },
+            "reviewStatus": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "sourceRecords",
+            "curationNotes",
+            "lastReviewedAt",
+            "reviewStatus"
+          ]
+        },
+        "ops": {
+          "type": "object",
+          "properties": {
+            "recordVersion": {
+              "type": "integer"
+            },
+            "contentHash": {
+              "type": "null"
+            },
+            "ingestionSource": {
+              "type": "string"
+            },
+            "ingestedAt": {
+              "type": "null"
+            },
+            "updatedAt": {
+              "type": "null"
+            },
+            "lastChangeType": {
+              "type": "string"
+            },
+            "isActive": {
+              "type": "boolean"
+            },
+            "completeness": {
+              "type": "string"
+            },
+            "needsReview": {
+              "type": "boolean"
+            },
+            "reviewReasons": {
+              "type": "array",
+              "items": {}
+            },
+            "qualityFlags": {
+              "type": "array",
+              "items": {}
+            }
+          },
+          "required": [
+            "recordVersion",
+            "contentHash",
+            "ingestionSource",
+            "ingestedAt",
+            "updatedAt",
+            "lastChangeType",
+            "isActive",
+            "completeness",
+            "needsReview",
+            "reviewReasons",
+            "qualityFlags"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "recordType",
+        "identity",
+        "regulatory",
+        "mechanism",
+        "formulations",
+        "indications",
+        "dosingGuidance",
+        "compatibility",
+        "safety",
+        "interactions",
+        "stackIntelligence",
+        "supportiveGuidance",
+        "evidence",
+        "provenance",
+        "ops"
+      ]
+    }
+  ]
+}

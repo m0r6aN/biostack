@@ -3,6 +3,7 @@ namespace BioStack.Application.Services;
 using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 public static class FeatureCodes
 {
@@ -16,18 +17,28 @@ public sealed class FeatureGate : IFeatureGate
     public const int ObserverActiveCompoundLimit = 5;
     private readonly BioStackDbContext _db;
     private readonly ICurrentUserAccessor _currentUserAccessor;
+    private readonly bool _devBypassEnabled;
 
-    public FeatureGate(BioStackDbContext db, ICurrentUserAccessor currentUserAccessor)
+    public FeatureGate(
+        BioStackDbContext db,
+        ICurrentUserAccessor currentUserAccessor,
+        IOptions<DevBypassOptions> devBypassOptions)
     {
         _db = db;
         _currentUserAccessor = currentUserAccessor;
+        _devBypassEnabled = devBypassOptions.Value.Enabled;
     }
 
     public async Task<ProductTier> GetCurrentTierAsync(CancellationToken cancellationToken = default)
-        => await GetEffectiveTierAsync(_currentUserAccessor.GetCurrentUserId(), cancellationToken);
+        => _devBypassEnabled
+            ? ProductTier.Commander
+            : await GetEffectiveTierAsync(_currentUserAccessor.GetCurrentUserId(), cancellationToken);
 
     public async Task<ProductTier> GetEffectiveTierAsync(Guid appUserId, CancellationToken cancellationToken = default)
     {
+        if (_devBypassEnabled)
+            return ProductTier.Commander;
+
         var subscription = await _db.Subscriptions
             .Where(s => s.AppUserId == appUserId)
             .OrderByDescending(s => s.UpdatedAtUtc)
@@ -46,6 +57,9 @@ public sealed class FeatureGate : IFeatureGate
 
     public async Task<bool> IsEnabledAsync(string featureCode, CancellationToken cancellationToken = default)
     {
+        if (_devBypassEnabled)
+            return true;
+
         var tier = await GetCurrentTierAsync(cancellationToken);
         return featureCode switch
         {
@@ -57,6 +71,9 @@ public sealed class FeatureGate : IFeatureGate
 
     public async Task<int?> GetLimitAsync(string featureCode, CancellationToken cancellationToken = default)
     {
+        if (_devBypassEnabled)
+            return null;
+
         var tier = await GetCurrentTierAsync(cancellationToken);
         return featureCode == FeatureCodes.ActiveCompounds && tier == ProductTier.Observer
             ? ObserverActiveCompoundLimit

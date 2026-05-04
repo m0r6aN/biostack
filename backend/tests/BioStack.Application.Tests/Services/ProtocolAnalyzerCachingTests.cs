@@ -1,6 +1,7 @@
 namespace BioStack.Application.Tests.Services;
 
 using BioStack.Application.Services;
+using BioStack.Cognition;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
@@ -80,6 +81,7 @@ public sealed class ProtocolAnalyzerCachingTests
             interaction ?? CreateInteractionMock().Object,
             new ProtocolSuggestionService(),
             engine ?? CreateEngineMock().Object,
+            new Mock<IStackReviewBoardService>().Object,
             new NullProtocolAnalysisPersistenceHook(),
             NullLogger<ProtocolAnalyzerService>.Instance);
     }

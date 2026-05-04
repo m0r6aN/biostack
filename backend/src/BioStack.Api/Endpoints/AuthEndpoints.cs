@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using BioStack.Application.Services;
 using BioStack.Api.Auth;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
@@ -13,6 +14,7 @@ using BioStack.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 public static class AuthEndpoints
 {
@@ -46,7 +48,7 @@ public static class AuthEndpoints
             .WithName("StartPasswordlessAuth")
             .RequireRateLimiting("auth-start");
 
-        group.MapGet("/session", GetSession)
+        group.MapGet("/session", (Delegate)GetSession)
             .WithName("GetAuthSession");
 
         group.MapPost("/logout", Logout)
@@ -203,12 +205,34 @@ public static class AuthEndpoints
         return Results.Redirect($"{frontendUrl}{NormalizeRedirectPath(challenge.RedirectPath)}");
     }
 
-    private static IResult GetSession(HttpContext http)
+    private static async Task<AuthSessionResponse> GetSession(HttpContext http, IOptions<DevBypassOptions> devBypassOptions)
     {
-        var user = UserFromClaims(http.User);
-        return Results.Ok(user is null
+        if (devBypassOptions.Value.Enabled)
+        {
+            return new AuthSessionResponse(
+                true,
+                new UserInfoDto(
+                    DevBypassCurrentUserAccessor.UserId,
+                    "dev@biostack.local",
+                    "Dev Bypass User",
+                    null,
+                    1));
+        }
+
+        var principal = http.User;
+        if (principal.Identity?.IsAuthenticated != true)
+        {
+            var authResult = await http.AuthenticateAsync();
+            if (authResult.Succeeded && authResult.Principal is not null)
+            {
+                principal = authResult.Principal;
+            }
+        }
+
+        var user = UserFromClaims(principal);
+        return user is null
             ? new AuthSessionResponse(false, null)
-            : new AuthSessionResponse(true, user));
+            : new AuthSessionResponse(true, user);
     }
 
     private static async Task<IResult> Logout(

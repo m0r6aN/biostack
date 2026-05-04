@@ -1,5 +1,5 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { ApiClient } from '@/lib/api';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('ApiClient analyzeProtocol', () => {
   beforeEach(() => {
@@ -32,6 +32,9 @@ describe('ApiClient analyzeProtocol', () => {
         lowConfidenceExtraction: false,
         extractedTextPreview: 'BPC-157 500mcg daily',
         artifacts: [],
+        knownPatterns: [],
+        emergentPatterns: [],
+        stackReviewBoard: null,
       }),
     });
 
@@ -77,6 +80,9 @@ describe('ApiClient analyzeProtocol', () => {
         lowConfidenceExtraction: false,
         extractedTextPreview: 'stack text',
         artifacts: [],
+        knownPatterns: [],
+        emergentPatterns: [],
+        stackReviewBoard: null,
       }),
     });
 

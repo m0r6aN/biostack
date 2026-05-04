@@ -1,0 +1,101 @@
+- microneedling 
+- scalp health
+- minoxidil
+- finasteride
+
+
+## CANONICAL AUTHORITY (MANDATORY)
+
+The following canonical documents define **ground truth for system structure, terminology, and boundaries**:
+
+```
+D:\Repos\keon-omega\keon-docs\canon\keon_collective_canon_v2.json
+D:\Repos\keon-omega\keon-docs\canon\keon_control_canon_v1_locked.json
+D:\Repos\keon-omega\keon-docs\canon\keon_cortex_canon_v1_locked.json
+D:\Repos\keon-omega\keon-docs\canon\keon_mcp_gateway_canon_v1_locked.json
+D:\Repos\keon-omega\keon-docs\canon\keon_runtime_canon_v1_locked.json
+```
+
+### Enforcement
+
+* Treat these as **authoritative definitions**, not supporting material
+* If website content **contradicts canon**, it is a **Critical Failure**
+* If concepts are:
+
+  * missing
+  * misrepresented
+  * collapsed incorrectly
+    → flag under **Structural Weaknesses or Critical Failures**
+
+---
+
+## Why this placement matters (quick and real)
+
+If you put it:
+
+* at the bottom → ignored
+* inside a section → treated as “nice to have”
+* in context authority → enforced as law
+
+This aligns perfectly with your doctrine:
+
+* **“Receipts outrank stories”** → canon outranks marketing
+* **Non-bypassability** → no UI narrative can redefine system truth
+
+---
+
+> “Canon violations are more severe than UX issues.Put it in **Context → Authority Layer**, not in the task body.
+
+You want Claude treating canon as **source of truth**, not optional reference.
+
+Add this section **right after the “Reference standard” block**:
+
+---
+
+## CANONICAL AUTHORITY (MANDATORY)
+
+The following canonical documents define **ground truth for system structure, terminology, and boundaries**:
+
+```
+D:\Repos\keon-omega\keon-docs\canon\keon_collective_canon_v2.json
+D:\Repos\keon-omega\keon-docs\canon\keon_control_canon_v1_locked.json
+D:\Repos\keon-omega\keon-docs\canon\keon_cortex_canon_v1_locked.json
+D:\Repos\keon-omega\keon-docs\canon\keon_mcp_gateway_canon_v1_locked.json
+D:\Repos\keon-omega\keon-docs\canon\keon_runtime_canon_v1_locked.json
+```
+
+### Enforcement
+
+* Treat these as **authoritative definitions**, not supporting material
+* If website content **contradicts canon**, it is a **Critical Failure**
+* If concepts are:
+
+  * missing
+  * misrepresented
+  * collapsed incorrectly
+    → flag under **Structural Weaknesses or Critical Failures**
+
+---
+
+## Why this placement matters (quick and real)
+
+If you put it:
+
+* at the bottom → ignored
+* inside a section → treated as “nice to have”
+* in context authority → enforced as law
+
+This aligns perfectly with your doctrine:
+
+* **“Receipts outrank stories”** → canon outranks marketing
+* **Non-bypassability** → no UI narrative can redefine system truth
+
+---
+
+
+
+
+
+
+
+

@@ -15,7 +15,63 @@ public sealed record AnalyzeProtocolResponse(
     List<string> ParserWarnings,
     bool LowConfidenceExtraction,
     string? ExtractedTextPreview,
-    List<ProtocolIngestionArtifactResponse> Artifacts);
+    List<ProtocolIngestionArtifactResponse> Artifacts,
+    List<KnownPatternResponse> KnownPatterns,
+    List<EmergentPatternResponse> EmergentPatterns,
+    StackReviewBoardResponse? StackReviewBoard);
+
+public sealed record StackReviewBoardResponse(
+    Dictionary<string, PerspectiveReviewResponse> BranchPerspectiveReview,
+    ContradictionReviewResponse ContradictionReview,
+    ConfidenceProfileResponse ConfidenceProfile,
+    ReasoningGraphRefResponse ReasoningGraphRef);
+
+public sealed record PerspectiveReviewResponse(
+    string Kind,
+    List<PerspectiveFindingResponse> Findings,
+    string Summary);
+
+public sealed record PerspectiveFindingResponse(
+    string FindingId,
+    string Category,
+    string Narrative,
+    string Severity);
+
+public sealed record ContradictionReviewResponse(
+    string CounterPlanNarrative,
+    bool CounterPlanIsExecutable,
+    bool IsExecutable);
+
+public sealed record ConfidenceProfileResponse(
+    string Model,
+    string Epistemic,
+    string EvidenceSupport,
+    string ContradictionDensity,
+    string CalibrationVersion);
+
+public sealed record ReasoningGraphRefResponse(
+    string GraphId,
+    int NodeCount,
+    int EdgeCount);
+
+public sealed record KnownPatternResponse(
+    string PatternId,
+    string Name,
+    List<string> MatchedCompoundSlugs,
+    string Description);
+
+public sealed record EmergentPatternResponse(
+    string Id,
+    string Title,
+    string PatternType,
+    List<string> Compounds,
+    List<string> Pathways,
+    List<string> Mechanisms,
+    string Confidence,
+    string Basis,
+    string Explanation,
+    List<string> EvidenceNotes,
+    string UserFacingLabel);
 
 public sealed record ProtocolIngestionArtifactResponse(
     string Kind,

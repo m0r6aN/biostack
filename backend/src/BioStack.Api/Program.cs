@@ -3,6 +3,7 @@ using System.Threading.RateLimiting;
 using BioStack.Api.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
@@ -36,6 +37,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpClient("protocol-link-extractor");
 builder.Services.AddHttpClient("protocol-ocr");
 builder.Services.Configure<ProtocolOcrOptions>(builder.Configuration.GetSection("Analyzer:Ocr"));
+builder.Services.Configure<DevBypassOptions>(builder.Configuration.GetSection("DevBypass"));
 
 var redisConfiguration = builder.Configuration["Redis:Configuration"];
 if (!string.IsNullOrWhiteSpace(redisConfiguration))
@@ -106,6 +108,7 @@ builder.Services.AddRateLimiter(options =>
 // ── First-party cookie sessions + legacy bearer support ─────────────────────
 var jwtSecret = builder.Configuration["Jwt:Secret"]
     ?? throw new InvalidOperationException("Jwt:Secret must be set in configuration or environment.");
+var devBypassEnabled = builder.Configuration.GetValue<bool>("DevBypass:Enabled");
 
 builder.Services
     .AddAuthentication(options =>
@@ -171,8 +174,18 @@ builder.Services
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminOnly", policy =>
-        policy.RequireClaim("role", "1"));
+    if (devBypassEnabled)
+    {
+        var bypassPolicy = new AuthorizationPolicyBuilder()
+            .RequireAssertion(_ => true)
+            .Build();
+
+        options.DefaultPolicy = bypassPolicy;
+        options.AddPolicy("AdminOnly", bypassPolicy);
+        return;
+    }
+
+    options.AddPolicy("AdminOnly", policy => policy.RequireClaim("role", "1"));
 });
 
 // ── Database ────────────────────────────────────────────────────────────────
@@ -222,7 +235,14 @@ builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository
 builder.Services.AddScoped<ICompoundInteractionHintRepository, CompoundInteractionHintRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
+if (devBypassEnabled)
+{
+    builder.Services.AddScoped<ICurrentUserAccessor, DevBypassCurrentUserAccessor>();
+}
+else
+{
+    builder.Services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
+}
 builder.Services.AddSingleton<InMemoryMagicLinkDelivery>();
 var hasAzureEmail = !string.IsNullOrWhiteSpace(builder.Configuration["AzureCommunicationEmail:ConnectionString"]);
 var hasSmtp = !string.IsNullOrWhiteSpace(builder.Configuration["Smtp:Host"]);

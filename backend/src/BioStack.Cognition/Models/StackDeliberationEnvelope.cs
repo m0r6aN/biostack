@@ -11,6 +11,7 @@ public sealed record StackDeliberationEnvelope(
     IReadOnlyDictionary<string, EvidenceTier> EvidenceTiers,
     IReadOnlyList<DeterministicFinding> DeterministicFindings,
     IReadOnlyList<KnownPattern> KnownPatterns,
+    IReadOnlyList<EmergentPattern> EmergentPatterns,
     IReadOnlyList<string> MissingInputs,
     decimal ProviderReviewPressure,
     string SafetyBoundaryText);
@@ -43,3 +44,16 @@ public sealed record KnownPattern(
     string Name,
     IReadOnlyList<string> MatchedCompoundSlugs,
     string Description);
+
+public sealed record EmergentPattern(
+    string Id,
+    string Title,
+    string PatternType,
+    IReadOnlyList<string> Compounds,
+    IReadOnlyList<string> Pathways,
+    IReadOnlyList<string> Mechanisms,
+    string Confidence,
+    string Basis,
+    string Explanation,
+    IReadOnlyList<string> EvidenceNotes,
+    string UserFacingLabel);

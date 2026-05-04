@@ -21,8 +21,13 @@
 
 import type {
     SrbCognitiveDensityEnvelope,
+    SrbConfidenceProfile,
+    SrbContradictionReview,
     SrbDeterministicFinding,
-    SrbKnownPattern
+    SrbEmergentPattern,
+    SrbKnownPattern,
+    SrbPerspectiveFinding,
+    SrbPerspectiveReview,
 } from '@/lib/types';
 
 export interface StackReviewBoardProps {
@@ -30,6 +35,8 @@ export interface StackReviewBoardProps {
   deterministicFindings: SrbDeterministicFinding[];
   /** BioStack known patterns from the envelope — surfaced in Pattern Recognition. */
   knownPatterns: SrbKnownPattern[];
+  /** Deterministic analyzer motifs inferred from the current stack. */
+  emergentPatterns: SrbEmergentPattern[];
   /** Cognitive density envelope from the keon.collective orchestrator. */
   review: SrbCognitiveDensityEnvelope | null;
   /** When true, shows a loading skeleton instead of panels. */
@@ -39,6 +46,7 @@ export interface StackReviewBoardProps {
 export function StackReviewBoard({
   deterministicFindings,
   knownPatterns,
+  emergentPatterns,
   review,
   loading = false,
 }: StackReviewBoardProps) {
@@ -87,6 +95,7 @@ export function StackReviewBoard({
               <PatternRecognitionPanel
                 perspective={historian}
                 knownPatterns={knownPatterns}
+                emergentPatterns={emergentPatterns}
               />
 
               {/* ── 6. Challenge This Stack ── */}
@@ -263,9 +272,11 @@ function ClaimRiskPanel({ perspective }: { perspective: SrbPerspectiveReview | n
 function PatternRecognitionPanel({
   perspective,
   knownPatterns,
+  emergentPatterns,
 }: {
   perspective: SrbPerspectiveReview | null;
   knownPatterns: SrbKnownPattern[];
+  emergentPatterns: SrbEmergentPattern[];
 }) {
   const historianFindings = (perspective?.findings ?? []).filter(
     (f) => !f.findingId.startsWith('HST-000'),
@@ -280,31 +291,76 @@ function PatternRecognitionPanel({
           <FindingList findings={historianFindings} />
         </>
       )}
-      {knownPatterns.length > 0 && (
-        <div className={historianFindings.length > 0 ? 'mt-4' : ''}>
+      <div className={historianFindings.length > 0 ? 'mt-4 space-y-4' : 'space-y-4'}>
+        <section data-testid="known-pattern-section">
           <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
-            BioStack Known-Pattern Memory
+            BioStack Known Pattern Memory
           </p>
-          <ul className="space-y-2">
-            {knownPatterns.map((p) => (
-              <li
-                key={p.patternId}
-                data-testid={`known-pattern-${p.patternId}`}
-                className="rounded-lg border border-white/10 bg-black/20 p-3"
-              >
-                <p className="text-sm font-semibold text-white/85">{p.name}</p>
-                <p className="mt-1 text-xs leading-5 text-white/55">{p.description}</p>
-                <p className="mt-1 text-xs text-white/35">
-                  Compounds: {p.matchedCompoundSlugs.join(', ')}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {knownPatterns.length === 0 && historianFindings.length === 0 && (
-        <p className="text-sm text-white/45">No pattern history matched this stack combination.</p>
-      )}
+          {knownPatterns.length === 0 ? (
+            <p className="text-sm text-white/45">No known BioStack memory patterns were found.</p>
+          ) : (
+            <ul className="space-y-2">
+              {knownPatterns.map((p) => (
+                <li
+                  key={p.patternId}
+                  data-testid={`known-pattern-${p.patternId}`}
+                  className="rounded-lg border border-white/10 bg-black/20 p-3"
+                >
+                  <p className="text-sm font-semibold text-white/85">{p.name}</p>
+                  <p className="mt-1 text-xs leading-5 text-white/55">{p.description}</p>
+                  <p className="mt-1 text-xs text-white/35">
+                    Compounds: {p.matchedCompoundSlugs.join(', ')}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        <section data-testid="emergent-pattern-section">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
+              Emergent Stack Patterns
+            </p>
+            <span className="rounded-full border border-sky-300/15 bg-sky-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-100/70">
+              Inferred · not canonical
+            </span>
+          </div>
+          {emergentPatterns.length === 0 ? (
+            <p className="text-sm text-white/45">No emergent stack motifs were detected.</p>
+          ) : (
+            <ul className="space-y-2">
+              {emergentPatterns.map((pattern) => (
+                <li
+                  key={pattern.id}
+                  data-testid={`emergent-pattern-${pattern.id}`}
+                  className="rounded-lg border border-sky-300/10 bg-sky-500/[0.05] p-3"
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="text-sm font-semibold text-white/85">{pattern.title}</p>
+                    <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/48">
+                      {pattern.confidence}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-sky-100/60">
+                    {pattern.userFacingLabel}
+                  </p>
+                  <p className="mt-2 text-xs leading-5 text-white/60">{pattern.explanation}</p>
+                  <p className="mt-2 text-xs text-white/38">
+                    Basis: {pattern.basis} · Compounds: {pattern.compounds.join(', ')}
+                  </p>
+                  {pattern.pathways.length > 0 && (
+                    <p className="mt-1 text-xs text-white/38">Pathways: {pattern.pathways.join(', ')}</p>
+                  )}
+                  {pattern.mechanisms.length > 0 && (
+                    <p className="mt-1 text-xs text-white/38">Mechanisms: {pattern.mechanisms.join(', ')}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </div>
     </SrbPanel>
   );
 }

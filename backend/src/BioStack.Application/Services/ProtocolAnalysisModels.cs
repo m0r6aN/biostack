@@ -47,7 +47,9 @@ public sealed record ProtocolAnalysisCacheDto(
     int Score,
     ProtocolScoreExplanationResponse ScoreExplanation,
     List<ProtocolIssueResponse> Issues,
-    List<string> UnknownCompounds);
+    List<string> UnknownCompounds,
+    List<KnownPatternResponse> KnownPatterns,
+    List<EmergentPatternResponse> EmergentPatterns);
 
 public sealed record ProtocolCandidate(
     string CanonicalName,

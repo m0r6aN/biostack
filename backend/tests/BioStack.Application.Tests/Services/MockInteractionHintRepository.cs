@@ -19,4 +19,26 @@ internal static class MockInteractionHintRepository
 
         return repository;
     }
+
+    public static Mock<ICompoundInteractionHintRepository> WithHints(params CompoundInteractionHint[] hints)
+    {
+        var repository = Empty();
+        var storedHints = hints.ToList();
+
+        repository
+            .Setup(store => store.FindPairAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((string compoundA, string compoundB, CancellationToken _) =>
+            {
+                var normalized = CompoundInteractionHintRepository.NormalizePair(compoundA, compoundB);
+                return storedHints.FirstOrDefault(hint =>
+                    string.Equals(hint.CompoundA, normalized.CompoundA, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(hint.CompoundB, normalized.CompoundB, StringComparison.OrdinalIgnoreCase));
+            });
+
+        repository
+            .Setup(store => store.GetAllAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(storedHints);
+
+        return repository;
+    }
 }

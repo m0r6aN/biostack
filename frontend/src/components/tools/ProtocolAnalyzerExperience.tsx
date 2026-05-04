@@ -1,5 +1,6 @@
 'use client';
 
+import { StackReviewBoard } from '@/components/tools/StackReviewBoard';
 import { trackAnalyzerEvent } from '@/lib/analyzerAnalytics';
 import { saveAnalyzerAnalysis, saveAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
 import { apiClient } from '@/lib/api';
@@ -11,6 +12,7 @@ import type {
     ProtocolAnalyzerInputType,
     ProtocolAnalyzerResult,
     ProtocolAnalyzerSwap,
+    SrbDeterministicFinding,
 } from '@/lib/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -161,6 +163,10 @@ export function ProtocolAnalyzerExperience() {
   const goalAware = counterfactuals?.goalAwareOptions?.[0] ?? null;
   const modeConfig = modeTabs.find((tab) => tab.id === mode) ?? modeTabs[0];
   const optimizedProtocol = useMemo(() => pickOptimizedProtocol(result), [result]);
+  const deterministicFindings = useMemo(
+    () => mapIssuesToDeterministicFindings(result?.issues ?? []),
+    [result?.issues],
+  );
   const scoreLabel = getScoreLabel(result?.score);
   const scoreInsight = getScoreInsight(result, optimizedProtocol);
   const whatThisMeans = getWhatThisMeans(result, optimizedProtocol);
@@ -588,6 +594,15 @@ export function ProtocolAnalyzerExperience() {
             <ResultList title="What BioStack found" empty="No issues yet." items={result?.issues.map((issue) => issue.message) ?? []} />
             <ResultList title="Parser notes" empty="Parser confidence looks clean." items={result?.parserWarnings ?? buildParserWarnings(result)} />
           </section>
+
+          {result && (
+            <StackReviewBoard
+              deterministicFindings={deterministicFindings}
+              knownPatterns={result.knownPatterns ?? []}
+              emergentPatterns={result.emergentPatterns ?? []}
+              review={result.stackReviewBoard}
+            />
+          )}
         </div>
 
         <aside className="space-y-4 xl:sticky xl:top-24 xl:self-start">
@@ -1218,6 +1233,44 @@ function buildParserWarnings(result: ProtocolAnalyzerResult | null): string[] {
     warnings.push('One or more items were only partially extracted from the source text.');
   }
   return warnings;
+}
+
+function mapIssuesToDeterministicFindings(issues: ProtocolAnalyzerResult['issues']): SrbDeterministicFinding[] {
+  return issues.map((issue, index) => ({
+    findingId: `issue-${index + 1}`,
+    code: deterministicCode(issue.type, index),
+    category: issue.type,
+    narrative: issue.message,
+    compoundSlugs: issue.compounds.map((compound) => toSlug(compound)),
+    riskScoreContribution: deterministicRisk(issue.type),
+    evidenceTier: 'Deterministic',
+  }));
+}
+
+function deterministicCode(type: string, index: number): string {
+  const prefix = type === 'redundancy'
+    ? 'RED'
+    : type === 'overlap'
+      ? 'OVR'
+      : type === 'inefficiency'
+        ? 'INE'
+        : type === 'excessive_compounds'
+          ? 'CMP'
+          : 'ANL';
+
+  return `${prefix}-${String(index + 1).padStart(3, '0')}`;
+}
+
+function deterministicRisk(type: string): number {
+  if (type === 'overlap') return 0.15;
+  if (type === 'redundancy') return 0.1;
+  if (type === 'excessive_compounds') return 0.08;
+  if (type === 'inefficiency') return 0.05;
+  return 0.03;
+}
+
+function toSlug(value: string): string {
+  return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
 function scoreSummary(score: number): string {

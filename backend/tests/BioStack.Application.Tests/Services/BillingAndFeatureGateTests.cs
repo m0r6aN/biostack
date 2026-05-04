@@ -6,6 +6,7 @@ using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Persistence;
 using BioStack.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Moq;
 using Stripe;
 using AppSubscription = BioStack.Domain.Entities.Subscription;
@@ -20,7 +21,7 @@ public sealed class BillingAndFeatureGateTests
         var userId = Guid.NewGuid();
         await using var db = CreateDbContext();
         var accessor = CurrentUser(userId);
-        var gate = new FeatureGate(db, accessor.Object);
+        var gate = new FeatureGate(db, accessor.Object, CreateBypassOptions());
         db.AppUsers.Add(new AppUser
         {
             Id = userId,
@@ -60,6 +61,18 @@ public sealed class BillingAndFeatureGateTests
     }
 
     [Fact]
+    public async Task FeatureGate_BypassEnabled_AlwaysReturnsCommanderAndUnlimited()
+    {
+        await using var db = CreateDbContext();
+        var accessor = CurrentUser(Guid.NewGuid());
+        var gate = new FeatureGate(db, accessor.Object, CreateBypassOptions(enabled: true));
+
+        Assert.Equal(ProductTier.Commander, await gate.GetCurrentTierAsync());
+        Assert.True(await gate.IsEnabledAsync(FeatureCodes.PaidIntelligence));
+        Assert.Null(await gate.GetLimitAsync(FeatureCodes.ActiveCompounds));
+    }
+
+    [Fact]
     public async Task WebhookReconciliation_IsIdempotentAndWritesSubscriptionState()
     {
         var userId = Guid.NewGuid();
@@ -85,7 +98,7 @@ public sealed class BillingAndFeatureGateTests
             db,
             new AppUserRepository(db),
             accessor.Object,
-            new FeatureGate(db, accessor.Object),
+            new FeatureGate(db, accessor.Object, CreateBypassOptions()),
             config.Object);
 
         var stripeEvent = new Event
@@ -143,4 +156,7 @@ public sealed class BillingAndFeatureGateTests
         accessor.Setup(item => item.GetCurrentUserId()).Returns(userId);
         return accessor;
     }
+
+    private static IOptions<DevBypassOptions> CreateBypassOptions(bool enabled = false)
+        => Options.Create(new DevBypassOptions { Enabled = enabled });
 }

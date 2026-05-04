@@ -162,7 +162,7 @@ internal sealed class CognitiveDensityOrchestrator : ICognitiveDensityOrchestrat
         {
             findings.Add(new PerspectiveFinding("HST-000", "NoPatternHistory",
                 "No BioStack known-pattern history matched this stack combination. " +
-                "Pattern recognition for v1 relies on BioStack KnownPatterns rendered in the UI.",
+                "Structured known and emergent pattern lanes are rendered separately in the analyzer UI.",
                 FindingSeverity.Info));
         }
 

@@ -41,7 +41,38 @@ BioStack Mission Control is a high-fidelity platform designed for researchers an
 
 ---
 
-## 🚀 Quick Start - Docker Local Deployment\n\n### Development (Hot Reload)\n```bash\ndocker compose -f docker-compose.dev.yml up --build\n```\n\n- API: http://localhost:5000/health | http://localhost:5001 (HTTPS)\n- UI: http://localhost:3043\n- Edit .env secrets for auth (regenerate for prod)\n\n### Production\n```bash\ndocker compose up -d --build\n```\n- API: http://localhost:5000\n- UI: http://localhost:3043\n\nStop: `docker compose down -v` (removes data volumes)\n\n## 🏗️ System Architecture\n\nBioStack follows a **Clean Architecture** pattern, ensuring the logic is decoupled from the infrastructure and UI.
+## 🚀 Quick Start - Docker Local Deployment
+
+### Development (Hot Reload)
+```bash
+docker compose -f docker-compose.dev.yml up --build
+```
+
+- API: http://localhost:5000/health | http://localhost:5001 (HTTPS)
+- UI: http://localhost:3043
+- Edit `.env` secrets for auth (regenerate for prod)
+
+### Development with local auth/paywall bypass
+```powershell
+./start-dev-bypass.ps1
+```
+
+- Adds the local-only bypass flags for that launch only
+- Keeps normal compose defaults clean/off
+
+### Production
+```bash
+docker compose up -d --build
+```
+
+- API: http://localhost:5000
+- UI: http://localhost:3043
+
+Stop: `docker compose down -v` (removes data volumes)
+
+## 🏗️ System Architecture
+
+BioStack follows a **Clean Architecture** pattern, ensuring the logic is decoupled from the infrastructure and UI.
 
 *   **API Layer**: Minimal APIs built with .NET 8, featuring Scalar for live documentation and health monitoring.
 *   **Application Layer**: Decoupled use cases, validation logic, and protocol mapping services.

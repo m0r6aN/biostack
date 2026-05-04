@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BioStack.Infrastructure.Persistence.Migrations
+namespace BioStack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class RecoverBillingTierEnforcement : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,16 +15,16 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "AppUsers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProviderKey = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Provider = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    DisplayName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    AvatarUrl = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: true),
-                    StripeCustomerId = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Role = table.Column<int>(type: "INTEGER", nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastSeenAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProviderKey = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Provider = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    DisplayName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    AvatarUrl = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
+                    StripeCustomerId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Role = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastSeenAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,14 +35,14 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "CompoundInteractionHints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CompoundA = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    CompoundB = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    InteractionType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Strength = table.Column<decimal>(type: "TEXT", precision: 3, scale: 2, nullable: false),
-                    MechanismOverlap = table.Column<string>(type: "TEXT", nullable: true),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CompoundA = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    CompoundB = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    InteractionType = table.Column<int>(type: "integer", nullable: false),
+                    Strength = table.Column<decimal>(type: "numeric(3,2)", precision: 3, scale: 2, nullable: false),
+                    MechanismOverlap = table.Column<string>(type: "text", nullable: true),
+                    Notes = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,13 +53,13 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "InteractionFlags",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CompoundNames = table.Column<string>(type: "TEXT", nullable: false),
-                    OverlapType = table.Column<int>(type: "INTEGER", nullable: false),
-                    PathwayTag = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false),
-                    EvidenceConfidence = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CompoundNames = table.Column<string>(type: "text", nullable: false),
+                    OverlapType = table.Column<int>(type: "integer", nullable: false),
+                    PathwayTag = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    EvidenceConfidence = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,35 +70,35 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "KnowledgeEntries",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CanonicalName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Aliases = table.Column<string>(type: "TEXT", nullable: false),
-                    Classification = table.Column<int>(type: "INTEGER", nullable: false),
-                    RegulatoryStatus = table.Column<string>(type: "TEXT", nullable: false),
-                    MechanismSummary = table.Column<string>(type: "TEXT", nullable: false),
-                    EvidenceTier = table.Column<int>(type: "INTEGER", nullable: false),
-                    SourceReferences = table.Column<string>(type: "TEXT", nullable: false),
-                    Notes = table.Column<string>(type: "TEXT", nullable: false),
-                    Pathways = table.Column<string>(type: "TEXT", nullable: false),
-                    Benefits = table.Column<string>(type: "TEXT", nullable: false),
-                    PairsWellWith = table.Column<string>(type: "TEXT", nullable: false),
-                    AvoidWith = table.Column<string>(type: "TEXT", nullable: false),
-                    CompatibleBlends = table.Column<string>(type: "TEXT", nullable: false),
-                    VialCompatibility = table.Column<string>(type: "TEXT", nullable: false),
-                    RecommendedDosage = table.Column<string>(type: "TEXT", nullable: false),
-                    StandardDosageRange = table.Column<string>(type: "TEXT", nullable: false),
-                    MaxReportedDose = table.Column<string>(type: "TEXT", nullable: false),
-                    Frequency = table.Column<string>(type: "TEXT", nullable: false),
-                    PreferredTimeOfDay = table.Column<string>(type: "TEXT", nullable: false),
-                    WeeklyDosageSchedule = table.Column<string>(type: "TEXT", nullable: false),
-                    IncrementalEscalationSteps = table.Column<string>(type: "TEXT", nullable: false),
-                    TieredDosing = table.Column<string>(type: "TEXT", nullable: true),
-                    DrugInteractions = table.Column<string>(type: "TEXT", nullable: false),
-                    OptimizationProtein = table.Column<string>(type: "TEXT", nullable: false),
-                    OptimizationCarbs = table.Column<string>(type: "TEXT", nullable: false),
-                    OptimizationSupplements = table.Column<string>(type: "TEXT", nullable: false),
-                    OptimizationSleep = table.Column<string>(type: "TEXT", nullable: false),
-                    OptimizationExercise = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CanonicalName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Aliases = table.Column<string>(type: "text", nullable: false),
+                    Classification = table.Column<int>(type: "integer", nullable: false),
+                    RegulatoryStatus = table.Column<string>(type: "text", nullable: false),
+                    MechanismSummary = table.Column<string>(type: "text", nullable: false),
+                    EvidenceTier = table.Column<int>(type: "integer", nullable: false),
+                    SourceReferences = table.Column<string>(type: "text", nullable: false),
+                    Notes = table.Column<string>(type: "text", nullable: false),
+                    Pathways = table.Column<string>(type: "text", nullable: false),
+                    Benefits = table.Column<string>(type: "text", nullable: false),
+                    PairsWellWith = table.Column<string>(type: "text", nullable: false),
+                    AvoidWith = table.Column<string>(type: "text", nullable: false),
+                    CompatibleBlends = table.Column<string>(type: "text", nullable: false),
+                    VialCompatibility = table.Column<string>(type: "text", nullable: false),
+                    RecommendedDosage = table.Column<string>(type: "text", nullable: false),
+                    StandardDosageRange = table.Column<string>(type: "text", nullable: false),
+                    MaxReportedDose = table.Column<string>(type: "text", nullable: false),
+                    Frequency = table.Column<string>(type: "text", nullable: false),
+                    PreferredTimeOfDay = table.Column<string>(type: "text", nullable: false),
+                    WeeklyDosageSchedule = table.Column<string>(type: "text", nullable: false),
+                    IncrementalEscalationSteps = table.Column<string>(type: "text", nullable: false),
+                    TieredDosing = table.Column<string>(type: "text", nullable: true),
+                    DrugInteractions = table.Column<string>(type: "text", nullable: false),
+                    OptimizationProtein = table.Column<string>(type: "text", nullable: false),
+                    OptimizationCarbs = table.Column<string>(type: "text", nullable: false),
+                    OptimizationSupplements = table.Column<string>(type: "text", nullable: false),
+                    OptimizationSleep = table.Column<string>(type: "text", nullable: false),
+                    OptimizationExercise = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,10 +109,10 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "LeadCaptures",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Source = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Source = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,10 +123,10 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "StripeWebhookEvents",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    StripeEventId = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    EventType = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    ProcessedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    StripeEventId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    EventType = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    ProcessedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,13 +137,13 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "AuthIdentities",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    ValueNormalized = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    IsVerified = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    VerifiedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Type = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    ValueNormalized = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    IsVerified = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    VerifiedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -160,17 +160,17 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "PersonProfiles",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    DisplayName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Sex = table.Column<int>(type: "INTEGER", nullable: false),
-                    Age = table.Column<int>(type: "INTEGER", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Weight = table.Column<decimal>(type: "TEXT", nullable: false),
-                    GoalSummary = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: false),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DisplayName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Sex = table.Column<int>(type: "integer", nullable: false),
+                    Age = table.Column<int>(type: "integer", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Weight = table.Column<decimal>(type: "numeric", nullable: false),
+                    GoalSummary = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    Notes = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -187,14 +187,14 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "Sessions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TokenHash = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ExpiresAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    RevokedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    IpAddress = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
-                    UserAgent = table.Column<string>(type: "TEXT", maxLength: 512, nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TokenHash = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ExpiresAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RevokedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    IpAddress = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    UserAgent = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -211,20 +211,20 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "Subscriptions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    AppUserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProductCode = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
-                    Tier = table.Column<int>(type: "INTEGER", nullable: false),
-                    Provider = table.Column<int>(type: "INTEGER", nullable: false),
-                    StripeCustomerId = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    StripeSubscriptionId = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    StripePriceId = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    CurrentPeriodStartUtc = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CurrentPeriodEndUtc = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CancelAtPeriodEnd = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    AppUserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProductCode = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    Tier = table.Column<int>(type: "integer", nullable: false),
+                    Provider = table.Column<int>(type: "integer", nullable: false),
+                    StripeCustomerId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    StripeSubscriptionId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    StripePriceId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CurrentPeriodStartUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CurrentPeriodEndUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CancelAtPeriodEnd = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -241,17 +241,17 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "AuthChallenges",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    IdentityId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Channel = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    ChallengeType = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    TokenHash = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
-                    ExpiresAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ConsumedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    AttemptCount = table.Column<int>(type: "INTEGER", nullable: false),
-                    IpAddress = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
-                    RedirectPath = table.Column<string>(type: "TEXT", maxLength: 512, nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    IdentityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Channel = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    ChallengeType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    TokenHash = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+                    ExpiresAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ConsumedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    AttemptCount = table.Column<int>(type: "integer", nullable: false),
+                    IpAddress = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    RedirectPath = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -268,20 +268,20 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "CompoundRecords",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PersonId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Category = table.Column<int>(type: "INTEGER", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false),
-                    SourceType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Goal = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Source = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    PricePaid = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: true),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    PersonId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Category = table.Column<int>(type: "integer", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    Notes = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    SourceType = table.Column<int>(type: "integer", nullable: false),
+                    Goal = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Source = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    PricePaid = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: true),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -298,14 +298,14 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "ProtocolPhases",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PersonId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    PersonId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Notes = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -322,14 +322,14 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "TimelineEvents",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PersonId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EventType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false),
-                    OccurredAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    RelatedEntityId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    RelatedEntityType = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    PersonId = table.Column<Guid>(type: "uuid", nullable: false),
+                    EventType = table.Column<int>(type: "integer", nullable: false),
+                    Title = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    OccurredAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RelatedEntityId = table.Column<Guid>(type: "uuid", nullable: true),
+                    RelatedEntityType = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -346,29 +346,29 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "CheckIns",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PersonId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProtocolRunId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Weight = table.Column<decimal>(type: "TEXT", nullable: false),
-                    SleepQuality = table.Column<int>(type: "INTEGER", nullable: false),
-                    Energy = table.Column<int>(type: "INTEGER", nullable: false),
-                    Appetite = table.Column<int>(type: "INTEGER", nullable: false),
-                    Recovery = table.Column<int>(type: "INTEGER", nullable: false),
-                    Focus = table.Column<int>(type: "INTEGER", nullable: true),
-                    ThoughtClarity = table.Column<int>(type: "INTEGER", nullable: true),
-                    SkinQuality = table.Column<int>(type: "INTEGER", nullable: true),
-                    DigestiveHealth = table.Column<int>(type: "INTEGER", nullable: true),
-                    Strength = table.Column<int>(type: "INTEGER", nullable: true),
-                    Endurance = table.Column<int>(type: "INTEGER", nullable: true),
-                    JointPain = table.Column<int>(type: "INTEGER", nullable: true),
-                    Eyesight = table.Column<int>(type: "INTEGER", nullable: true),
-                    SideEffects = table.Column<string>(type: "TEXT", nullable: false),
-                    PhotoUrls = table.Column<string>(type: "TEXT", nullable: false),
-                    GiSymptoms = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: false),
-                    Mood = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    PersonId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProtocolRunId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Weight = table.Column<decimal>(type: "numeric", nullable: false),
+                    SleepQuality = table.Column<int>(type: "integer", nullable: false),
+                    Energy = table.Column<int>(type: "integer", nullable: false),
+                    Appetite = table.Column<int>(type: "integer", nullable: false),
+                    Recovery = table.Column<int>(type: "integer", nullable: false),
+                    Focus = table.Column<int>(type: "integer", nullable: true),
+                    ThoughtClarity = table.Column<int>(type: "integer", nullable: true),
+                    SkinQuality = table.Column<int>(type: "integer", nullable: true),
+                    DigestiveHealth = table.Column<int>(type: "integer", nullable: true),
+                    Strength = table.Column<int>(type: "integer", nullable: true),
+                    Endurance = table.Column<int>(type: "integer", nullable: true),
+                    JointPain = table.Column<int>(type: "integer", nullable: true),
+                    Eyesight = table.Column<int>(type: "integer", nullable: true),
+                    SideEffects = table.Column<string>(type: "text", nullable: false),
+                    PhotoUrls = table.Column<string>(type: "text", nullable: false),
+                    GiSymptoms = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    Mood = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    Notes = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -385,13 +385,13 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "ProtocolComputationRecords",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProtocolId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProtocolRunId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    Type = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    InputSnapshot = table.Column<string>(type: "TEXT", maxLength: 4000, nullable: false),
-                    OutputResult = table.Column<string>(type: "TEXT", maxLength: 4000, nullable: false),
-                    TimestampUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProtocolId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProtocolRunId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Type = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    InputSnapshot = table.Column<string>(type: "character varying(4000)", maxLength: 4000, nullable: false),
+                    OutputResult = table.Column<string>(type: "character varying(4000)", maxLength: 4000, nullable: false),
+                    TimestampUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -402,20 +402,20 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "ProtocolItems",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProtocolId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CompoundRecordId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CalculatorResultId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false),
-                    CompoundNameSnapshot = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    CompoundCategorySnapshot = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    CompoundStartDateSnapshot = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CompoundEndDateSnapshot = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CompoundStatusSnapshot = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    CompoundNotesSnapshot = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false),
-                    CompoundGoalSnapshot = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    CompoundSourceSnapshot = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    CompoundPricePaidSnapshot = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProtocolId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CompoundRecordId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CalculatorResultId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Notes = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    CompoundNameSnapshot = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    CompoundCategorySnapshot = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    CompoundStartDateSnapshot = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CompoundEndDateSnapshot = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CompoundStatusSnapshot = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    CompoundNotesSnapshot = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    CompoundGoalSnapshot = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    CompoundSourceSnapshot = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    CompoundPricePaidSnapshot = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -432,11 +432,11 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "ProtocolReviewCompletedEvents",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProtocolId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProtocolRunId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CompletedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProtocolId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProtocolRunId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CompletedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Notes = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -447,13 +447,13 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "ProtocolRuns",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProtocolId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PersonId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    StartedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProtocolId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PersonId = table.Column<Guid>(type: "uuid", nullable: false),
+                    StartedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EndedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    Notes = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -470,17 +470,17 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                 name: "Protocols",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PersonId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Version = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 1),
-                    ParentProtocolId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    OriginProtocolId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    EvolvedFromRunId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    IsDraft = table.Column<bool>(type: "INTEGER", nullable: false),
-                    EvolutionContext = table.Column<string>(type: "TEXT", maxLength: 4000, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    PersonId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Version = table.Column<int>(type: "integer", nullable: false, defaultValue: 1),
+                    ParentProtocolId = table.Column<Guid>(type: "uuid", nullable: true),
+                    OriginProtocolId = table.Column<Guid>(type: "uuid", nullable: true),
+                    EvolvedFromRunId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDraft = table.Column<bool>(type: "boolean", nullable: false),
+                    EvolutionContext = table.Column<string>(type: "character varying(4000)", maxLength: 4000, nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -11,6 +11,18 @@ export type AuthUser = {
   role: number;
 };
 
+const DEV_BYPASS_USER: AuthUser = {
+  id: '00000000-0000-0000-0000-000000000001',
+  email: 'dev@biostack.local',
+  displayName: 'Dev Bypass User',
+  avatarUrl: null,
+  role: 1,
+};
+
+function isDevBypassAuthEnabled() {
+  return process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
+}
+
 type AuthContextValue = {
   user: AuthUser | null;
   loading: boolean;
@@ -26,6 +38,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
+    if (isDevBypassAuthEnabled()) {
+      setUser(DEV_BYPASS_USER);
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch(`${API_URL}/api/v1/auth/session`, {
         credentials: 'include',
@@ -49,6 +67,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const logout = useCallback(async () => {
+    if (isDevBypassAuthEnabled()) {
+      setUser(DEV_BYPASS_USER);
+      window.location.href = '/';
+      return;
+    }
+
     await fetch(`${API_URL}/api/v1/auth/logout`, {
       method: 'POST',
       credentials: 'include',

@@ -696,6 +696,9 @@ export interface ProtocolAnalyzerResult {
   lowConfidenceExtraction: boolean;
   extractedTextPreview: string | null;
   artifacts: ProtocolAnalyzerArtifact[];
+  knownPatterns: SrbKnownPattern[];
+  emergentPatterns: SrbEmergentPattern[];
+  stackReviewBoard: SrbCognitiveDensityEnvelope | null;
 }
 
 // ── Stack Review Board types ────────────────────────────────────────────────
@@ -760,6 +763,35 @@ export interface SrbKnownPattern {
   name: string;
   matchedCompoundSlugs: string[];
   description: string;
+}
+
+/** A deterministic stack motif inferred from the current protocol, not canonical memory. */
+export interface SrbEmergentPattern {
+  id: string;
+  title: string;
+  patternType:
+    | 'pair'
+    | 'group'
+    | 'motif'
+    | 'risk-cluster'
+    | 'support-cluster'
+    | 'redundancy-cluster'
+    | 'complexity-load';
+  compounds: string[];
+  pathways: string[];
+  mechanisms: string[];
+  confidence: 'low' | 'moderate' | 'high';
+  basis:
+    | 'pathway-overlap'
+    | 'mechanism-complementarity'
+    | 'mechanism-redundancy'
+    | 'goal-alignment'
+    | 'risk-amplification'
+    | 'complexity-load'
+    | 'evidence-mismatch';
+  explanation: string;
+  evidenceNotes: string[];
+  userFacingLabel: string;
 }
 
 export interface CalculatorResult {

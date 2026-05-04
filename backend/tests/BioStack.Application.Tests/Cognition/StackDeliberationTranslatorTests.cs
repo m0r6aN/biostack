@@ -50,6 +50,21 @@ public sealed class StackDeliberationTranslatorTests
                 ["bpc-157", "tb-500"],
                 "Classic regenerative pairing combining BPC-157 and TB-500 for tissue recovery protocols."),
         ],
+        EmergentPatterns:
+        [
+            new EmergentPattern(
+                "emergent-repair-bpc-157-tb-500",
+                "Repair-signaling cluster",
+                "support-cluster",
+                ["bpc-157", "tb-500"],
+                ["tissue-repair", "angiogenesis"],
+                ["tissue-repair signaling"],
+                "moderate",
+                "goal-alignment",
+                "These compounds appear to converge on tissue-repair signaling, inferred from this stack's pathway and mechanism tags.",
+                ["Evidence mix in this pattern: 0 moderate/strong and 2 limited/mechanistic entries."],
+                "Inferred from this stack · not canonical"),
+        ],
         MissingInputs: ["duration", "dose schedule"],
         ProviderReviewPressure: 0.75m,
         SafetyBoundaryText: "educational and observational only");

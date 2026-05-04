@@ -1,12 +1,12 @@
-import { beforeEach, describe, expect, it } from 'vitest';
 import {
-  ANALYZER_ANALYSIS_HISTORY_KEY,
-  ANALYZER_PROTOCOL_DRAFT_KEY,
-  saveAnalyzerAnalysis,
-  saveAnalyzerProtocolDraft,
-  readAnalyzerAnalysisHistory,
+    ANALYZER_ANALYSIS_HISTORY_KEY,
+    ANALYZER_PROTOCOL_DRAFT_KEY,
+    readAnalyzerAnalysisHistory,
+    saveAnalyzerAnalysis,
+    saveAnalyzerProtocolDraft,
 } from '@/lib/analyzerStorage';
 import type { ProtocolAnalyzerResult } from '@/lib/types';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 const makeResult = (overrides: Partial<ProtocolAnalyzerResult> = {}): ProtocolAnalyzerResult => ({
   protocol: [{ compoundName: 'BPC-157', dose: 500, unit: 'mcg', frequency: 'daily', duration: '' }],
@@ -30,6 +30,9 @@ const makeResult = (overrides: Partial<ProtocolAnalyzerResult> = {}): ProtocolAn
   lowConfidenceExtraction: false,
   extractedTextPreview: null,
   artifacts: [],
+  knownPatterns: [],
+  emergentPatterns: [],
+  stackReviewBoard: null,
   ...overrides,
 });
 

@@ -4,18 +4,22 @@ using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Repositories;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
+using Microsoft.Extensions.Options;
 
 public sealed class ProfileService : IProfileService
 {
     private readonly IPersonProfileRepository _profileRepository;
     private readonly IOwnershipGuard _ownershipGuard;
+    private readonly bool _devBypassEnabled;
 
     public ProfileService(
         IPersonProfileRepository profileRepository,
-        IOwnershipGuard ownershipGuard)
+        IOwnershipGuard ownershipGuard,
+        IOptions<DevBypassOptions> devBypassOptions)
     {
         _profileRepository = profileRepository;
         _ownershipGuard = ownershipGuard;
+        _devBypassEnabled = devBypassOptions.Value.Enabled;
     }
 
     public async Task<ProfileResponse> CreateProfileAsync(CreateProfileRequest request, CancellationToken cancellationToken = default)
@@ -42,13 +46,19 @@ public sealed class ProfileService : IProfileService
 
     public async Task<ProfileResponse?> GetProfileAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var profile = await _profileRepository.GetOwnedByIdAsync(id, _ownershipGuard.CurrentUserId, cancellationToken);
+        var profile = _devBypassEnabled
+            ? await _profileRepository.GetByIdWithNavigationAsync(id, cancellationToken)
+            : await _profileRepository.GetOwnedByIdAsync(id, _ownershipGuard.CurrentUserId, cancellationToken);
+
         return profile is null ? null : MapToResponse(profile);
     }
 
     public async Task<IEnumerable<ProfileResponse>> GetAllProfilesAsync(CancellationToken cancellationToken = default)
     {
-        var profiles = await _profileRepository.GetAllByOwnerAsync(_ownershipGuard.CurrentUserId, cancellationToken);
+        var profiles = _devBypassEnabled
+            ? (await _profileRepository.GetAllAsync(cancellationToken)).OrderByDescending(profile => profile.UpdatedAtUtc)
+            : await _profileRepository.GetAllByOwnerAsync(_ownershipGuard.CurrentUserId, cancellationToken);
+
         return profiles.Select(MapToResponse);
     }
 

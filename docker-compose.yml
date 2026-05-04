@@ -28,6 +28,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:5000
+      - DevBypass__Enabled=${DevBypass__Enabled:-false}
+      - DOTNET_SYSTEM_NET_DISABLEIPV6=1
       - Database__Provider=postgres
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=biostack;Username=biostack;Password=${DB_PASSWORD:-biostack_dev_password}
       - Jwt__Secret=${Jwt__Secret:-CHANGE_ME_MINIMUM_32_CHARACTER_RANDOM_STRING}
@@ -59,11 +61,13 @@ services:
       dockerfile: Dockerfile
       args:
         - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:5000}
+        - NEXT_PUBLIC_DEV_BYPASS_AUTH=${NEXT_PUBLIC_DEV_BYPASS_AUTH:-false}
     container_name: biostack-ui
     ports:
       - "3043:3000"
     environment:
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:5000}
+      - NEXT_PUBLIC_DEV_BYPASS_AUTH=${NEXT_PUBLIC_DEV_BYPASS_AUTH:-false}
       - API_INTERNAL_URL=${API_INTERNAL_URL:-http://biostack-api:5000}
       - AUTH_SECRET=${AUTH_SECRET:-CHANGE_ME_NEXTAUTH_SECRET_MIN_32_CHARS}
       - AUTH_URL=${AUTH_URL:-http://localhost:3043}
@@ -102,6 +106,7 @@ services:
     container_name: biostack-knowledge-worker
     environment:
       - DOTNET_ENVIRONMENT=Production
+      - DOTNET_SYSTEM_NET_DISABLEIPV6=1
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=biostack;Username=biostack;Password=${DB_PASSWORD:-biostack_dev_password}
       - Worker__RunMode=${Worker__RunMode:-Seed}
       - Worker__DryRun=${Worker__DryRun:-false}

@@ -65,6 +65,9 @@ describe('ProtocolAnalyzerExperience', () => {
       lowConfidenceExtraction: false,
       extractedTextPreview: 'BPC-157 500mcg daily',
       artifacts: [],
+      knownPatterns: [],
+      emergentPatterns: [],
+      stackReviewBoard: null,
     } as unknown as ProtocolAnalyzerResult;
 
     window.localStorage.setItem(
@@ -113,6 +116,21 @@ describe('ProtocolAnalyzerExperience', () => {
     });
     expect(screen.getByText(/Analysis saved locally/)).toBeInTheDocument();
     expect(events).toContain('analyzer_save_clicked');
+  });
+
+  it('renders the Stack Review Board when a review payload is present', async () => {
+    restoreAnalyzerResult(restorableResult({ withStackReviewBoard: true }));
+
+    render(<ProtocolAnalyzerExperience />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('stack-review-board')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Stack Review Board · commentary only')).toBeInTheDocument();
+    expect(screen.getByText('Deterministic · authoritative')).toBeInTheDocument();
+    expect(screen.getByTestId('known-pattern-bpc-157-tb-500-complementary')).toBeInTheDocument();
+    expect(screen.getByTestId('emergent-pattern-emergent-shared-pathway-tissue-repair')).toBeInTheDocument();
   });
 
   it('saves anonymous conversion handoff state before sign-in redirect', async () => {
@@ -183,7 +201,13 @@ function restoreAnalyzerResult(result: ProtocolAnalyzerResult) {
   );
 }
 
-function restorableResult({ withOptimizedVariant = true }: { withOptimizedVariant?: boolean } = {}): ProtocolAnalyzerResult {
+function restorableResult({
+  withOptimizedVariant = true,
+  withStackReviewBoard = false,
+}: {
+  withOptimizedVariant?: boolean;
+  withStackReviewBoard?: boolean;
+} = {}): ProtocolAnalyzerResult {
   return {
     protocol: [
       {
@@ -252,5 +276,76 @@ function restorableResult({ withOptimizedVariant = true }: { withOptimizedVarian
     lowConfidenceExtraction: false,
     extractedTextPreview: 'BPC-157 500mcg daily',
     artifacts: [],
+    knownPatterns: withStackReviewBoard
+      ? [
+          {
+            patternId: 'bpc-157-tb-500-complementary',
+            name: 'BPC-157 + TB-500 Complementary Pairing',
+            matchedCompoundSlugs: ['bpc-157', 'tb-500'],
+            description: 'Known repair-stack pairing with overlapping recovery intent.',
+          },
+        ]
+      : [],
+    emergentPatterns: withStackReviewBoard
+      ? [
+          {
+            id: 'emergent-shared-pathway-tissue-repair',
+            title: 'Shared pathway motif · tissue-repair',
+            patternType: 'motif',
+            compounds: ['bpc-157', 'tb-500', 'ghk-cu'],
+            pathways: ['tissue-repair'],
+            mechanisms: ['tissue-repair signaling'],
+            confidence: 'moderate',
+            basis: 'pathway-overlap',
+            explanation:
+              'Three or more compounds appear to converge on tissue-repair, inferred from overlapping pathway tags in this stack.',
+            evidenceNotes: ['Evidence mix in this pattern: 1 moderate/strong and 2 limited/mechanistic entries.'],
+            userFacingLabel: 'Inferred from this stack · not canonical',
+          },
+        ]
+      : [],
+    stackReviewBoard: withStackReviewBoard
+      ? {
+          branchPerspectiveReview: {
+            Optimizer: {
+              kind: 'Optimizer',
+              findings: [{ findingId: 'opt-1', category: 'alignment', narrative: 'Keep the stack goal-focused.', severity: 'Info' }],
+              summary: 'Optimizer summary',
+            },
+            Skeptic: {
+              kind: 'Skeptic',
+              findings: [{ findingId: 'ske-1', category: 'evidence', narrative: 'Evidence remains limited.', severity: 'Warning' }],
+              summary: 'Skeptic summary',
+            },
+            Regulator: {
+              kind: 'Regulator',
+              findings: [{ findingId: 'reg-1', category: 'claim-risk', narrative: 'Avoid overclaiming outcomes.', severity: 'Warning' }],
+              summary: 'Regulator summary',
+            },
+            Historian: {
+              kind: 'Historian',
+              findings: [{ findingId: 'his-1', category: 'pattern', narrative: 'This pairing appears in recovery stacks.', severity: 'Info' }],
+              summary: 'Historian summary',
+            },
+          },
+          contradictionReview: {
+            counterPlanNarrative: 'No executable counter-plan generated.',
+            counterPlanIsExecutable: false,
+            isExecutable: false,
+          },
+          confidenceProfile: {
+            model: 'keon.collective-stub-v1',
+            epistemic: 'bounded',
+            evidenceSupport: 'moderate',
+            contradictionDensity: 'low',
+            calibrationVersion: '1.0.0',
+          },
+          reasoningGraphRef: {
+            graphId: 'rg::front-test',
+            nodeCount: 4,
+            edgeCount: 3,
+          },
+        }
+      : null,
   } as unknown as ProtocolAnalyzerResult;
 }

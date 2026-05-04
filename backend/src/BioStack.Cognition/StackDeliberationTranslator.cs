@@ -68,6 +68,8 @@ public sealed class StackDeliberationTranslator : IStackDeliberationTranslator
             compounds = envelope.Compounds,
             goal = envelope.Goal,
             pathways = envelope.Pathways,
+            knownPatterns = envelope.KnownPatterns,
+            emergentPatterns = envelope.EmergentPatterns,
         });
 
         return new TemporalEchoBranch(
