@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "ostarine-evidence-pilot-001", "category": "hormones-serms-sarms", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Ostarine",
+    "aliases": ["MK-2866", "Enobosarm", "GTx-024"],
+    "classification": "SARM",
+    "compoundFamily": "Selective androgen receptor modulator",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "841205-47-8", "drugbank": null, "pubchem": null, "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "fda-sarms-warning-consumer", "sourceType": "regulator", "authorityTier": "A1", "title": "FDA Warns of Use of Selective Androgen Receptor Modulators (SARMs) Among Teens, Young Adults", "publisher": "U.S. Food and Drug Administration", "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "fda-sarms-bodybuilding-risk", "sourceType": "regulator", "authorityTier": "A1", "title": "Certain bodybuilding products put consumers at risk for heart attack, stroke, serious liver damage and more", "publisher": "U.S. Food and Drug Administration", "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "pmc-enobosarm-cancer-cachexia-2013", "sourceType": "paper", "authorityTier": "B2", "title": "Effects of enobosarm on muscle wasting and physical function in patients with cancer: a double-blind, randomised controlled phase 2 trial", "publisher": "Lancet Oncology / PubMed Central", "url": "https://ncbi.nlm.nih.gov/pmc/articles/PMC4898053/", "doi": "10.1016/S1470-2045(13)70055-X", "pmid": "23499390", "publishedAt": "2013-03-14T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "ostarine-fda-sarm-warning-001", "claimType": "warning", "statement": "FDA warns that SARMs are unapproved drug products with potentially dangerous side effects and have not been reviewed by FDA for safety or efficacy for consumer bodybuilding use.",
+      "context": { "population": "consumers using SARM products", "route": null, "formulation": "products marketed as SARMs or containing ostarine/enobosarm", "useCase": "consumer safety warning", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["fda-sarms-warning-consumer", "fda-sarms-bodybuilding-risk"],
+      "extractedEvidence": [{ "sourceRef": "fda-sarms-warning-consumer", "quote": "Because these are unapproved drug products with potentially dangerous side effects, and they have not been reviewed by the FDA for safety or efficacy", "pageOrSection": "Consumer update" }], "reviewFlags": ["safety-critical FDA warning"]
+    },
+    {
+      "claimId": "ostarine-bodybuilding-risk-001", "claimType": "warning", "statement": "FDA states that bodybuilding products containing SARMs have been associated with serious risks, including liver injury and potential cardiovascular risks; BioStack should not normalize performance-enhancement use.",
+      "context": { "population": "bodybuilding and performance-enhancement consumers", "route": null, "formulation": "SARM-containing bodybuilding products", "useCase": "misuse and safety boundary", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["fda-sarms-bodybuilding-risk"],
+      "extractedEvidence": [{ "sourceRef": "fda-sarms-bodybuilding-risk", "quote": "Life-threatening reactions, including liver injuries that required hospitalization, have occurred in people taking products containing SARMs", "pageOrSection": "FDA risk warning" }], "reviewFlags": ["safety-critical; human review required"]
+    },
+    {
+      "claimId": "ostarine-enobosarm-studied-use-001", "claimType": "studied-use", "statement": "Enobosarm has been studied in phase 2 clinical contexts such as cancer-associated muscle wasting, but these trials do not establish consumer bodybuilding or non-prescribed performance uses as safe or effective.",
+      "context": { "population": "patients with cancer-associated muscle wasting in clinical trial context", "route": "oral", "formulation": "enobosarm/ostarine investigational product", "useCase": "clinical-trial studied use", "doseText": null },
+      "evidenceTier": "Moderate", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-enobosarm-cancer-cachexia-2013"],
+      "extractedEvidence": [{ "sourceRef": "pmc-enobosarm-cancer-cachexia-2013", "quote": "This randomised, double-blind, placebo-controlled phase 2 trial assessed the efficacy and safety of enobosarm", "pageOrSection": "Background / Methods" }], "reviewFlags": ["do not generalize clinical-trial population to bodybuilding use"]
+    },
+    {
+      "claimId": "ostarine-vendor-boundary-001", "claimType": "misinformation-claim", "statement": "Online claims often market ostarine/MK-2866 for muscle gain or recomposition; BioStack should treat these as misinformation/popularity signals unless tied to approved, indication-specific evidence and safety review.",
+      "context": { "population": "consumer bodybuilding and performance communities", "route": null, "formulation": "vendor/research SARM products", "useCase": "misinformation monitoring", "doseText": null },
+      "evidenceTier": "Anecdotal", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["fda-sarms-warning-consumer", "fda-sarms-bodybuilding-risk"],
+      "extractedEvidence": [{ "sourceRef": "fda-sarms-bodybuilding-risk", "quote": "These products are illegally marketed and are often promoted to increase muscle mass and strength.", "pageOrSection": "FDA risk warning" }], "reviewFlags": ["do not publish as benefit claim"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot SARM evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "misinformation-heavy", "fda-warning", "performance-use-boundary"] }
+}

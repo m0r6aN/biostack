@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "review-decision-fixture-001",
+    "reviewerId": "test-reviewer",
+    "reviewedAt": "2026-05-05T00:00:00Z",
+    "notes": ["Fixture review decision for test-only promotion readiness behavior."]
+  },
+  "decisions": [
+    {
+      "decisionId": "approve-creatine-fixture-001",
+      "compoundName": "Creatine",
+      "decision": "approve-for-promotion",
+      "reviewerId": "test-reviewer",
+      "reviewedAt": "2026-05-05T00:00:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [],
+        "reviewCategories": ["Safety Critical"],
+        "promotionBlockers": ["review-required: draft is marked needsReview"]
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": ["Test approval clears soft blockers only."]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "tirzepatide-evidence-pilot-001", "category": "glp1-incretins", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Tirzepatide",
+    "aliases": ["GIP/GLP-1 receptor agonist"],
+    "classification": "Peptide",
+    "compoundFamily": "GIP/GLP-1 receptor agonist",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "2023788-19-2", "drugbank": "DB15171", "pubchem": "156588324", "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "dailymed-mounjaro", "sourceType": "label", "authorityTier": "A1", "title": "DailyMed MOUNJARO (tirzepatide) injection", "publisher": "National Library of Medicine / DailyMed", "url": "https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=d2d7da5d-ad07-4228-955f-cf7e355c8cc0", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "dailymed-zepbound", "sourceType": "label", "authorityTier": "A1", "title": "DailyMed ZEPBOUND (tirzepatide) injection", "publisher": "National Library of Medicine / DailyMed", "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=487cd7e7-434c-4925-99fa-aa80b1cc776b", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "fda-compounded-glp1-concerns", "sourceType": "regulator", "authorityTier": "A1", "title": "FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss", "publisher": "U.S. Food and Drug Administration", "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/medications-containing-semaglutide-marketed-type-2-diabetes-or-weight-loss", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "tirzepatide-mounjaro-regulatory-001", "claimType": "approved-indication", "statement": "DailyMed identifies Mounjaro as tirzepatide injection indicated as an adjunct to diet and exercise to improve glycemic control in label-specified type 2 diabetes populations.",
+      "context": { "population": "label-specified patients with type 2 diabetes mellitus", "route": "subcutaneous", "formulation": "Mounjaro tirzepatide injection", "useCase": "approved labeled use", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-mounjaro"],
+      "extractedEvidence": [{ "sourceRef": "dailymed-mounjaro", "quote": "MOUNJARO is a glucose-dependent insulinotropic polypeptide (GIP) receptor and glucagon-like peptide-1 (GLP-1) receptor agonist indicated as an adjunct to diet and exercise to improve glycemic control", "pageOrSection": "Indications and Usage" }], "reviewFlags": ["product-specific indication; verify latest label before publication"]
+    },
+    {
+      "claimId": "tirzepatide-zepbound-regulatory-001", "claimType": "approved-indication", "statement": "DailyMed identifies Zepbound as tirzepatide indicated with reduced-calorie diet and increased physical activity for chronic weight-management contexts and for label-specified obstructive sleep apnea context in adults with obesity.",
+      "context": { "population": "label-specified adults with obesity/overweight or OSA contexts", "route": "subcutaneous", "formulation": "Zepbound tirzepatide injection", "useCase": "approved labeled use", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-zepbound"],
+      "extractedEvidence": [{ "sourceRef": "dailymed-zepbound", "quote": "ZEPBOUND is a glucose-dependent insulinotropic polypeptide (GIP) receptor and glucagon-like peptide-1 (GLP-1) receptor agonist indicated in combination with a reduced-calorie diet and increased physical activity", "pageOrSection": "Indications and Usage" }], "reviewFlags": ["product-specific indication; verify latest label before publication"]
+    },
+    {
+      "claimId": "tirzepatide-mtc-men2-contraindication-001", "claimType": "contraindication", "statement": "DailyMed tirzepatide product labels list personal or family history of medullary thyroid carcinoma or MEN 2 as a contraindication.",
+      "context": { "population": "patients with personal or family history of MTC or MEN 2", "route": null, "formulation": "tirzepatide labeled products", "useCase": "contraindication", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-mounjaro", "dailymed-zepbound"],
+      "extractedEvidence": [{ "sourceRef": "dailymed-zepbound", "quote": "Personal or family history of medullary thyroid carcinoma or in patients with Multiple Endocrine Neoplasia syndrome type 2", "pageOrSection": "Contraindications" }], "reviewFlags": ["safety-critical; human review required"]
+    },
+    {
+      "claimId": "tirzepatide-compounded-warning-001", "claimType": "warning", "statement": "FDA advises caution around compounded semaglutide or tirzepatide products and dosing schedules; BioStack should separate approved tirzepatide labels from compounded or vendor-marketed products.",
+      "context": { "population": "users of compounded GLP-1/GIP products", "route": "subcutaneous", "formulation": "compounded tirzepatide", "useCase": "compounding and misinformation boundary", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["fda-compounded-glp1-concerns"],
+      "extractedEvidence": [{ "sourceRef": "fda-compounded-glp1-concerns", "quote": "Health care providers should be vigilant when prescribing compounded semaglutide or tirzepatide products", "pageOrSection": "FDA concerns with unapproved GLP-1 drugs" }], "reviewFlags": ["compounded-product claims require separate evidence and review"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot regulatory evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "a1-label-backed", "product-specific-labels"] }
+}

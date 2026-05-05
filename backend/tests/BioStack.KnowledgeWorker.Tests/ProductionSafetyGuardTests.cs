@@ -74,6 +74,14 @@ public class ProductionSafetyGuardTests
     }
 
     [Fact]
+    public void ResolveRunMode_Returns_Explicit_Research_RunMode_When_Set()
+    {
+        var opts = new WorkerOptions { RunMode = RunMode.Research };
+
+        Assert.Equal(RunMode.Research, ProductionSafetyGuard.ResolveRunMode(opts, isProduction: true));
+    }
+
+    [Fact]
     public void ResolveRunMode_Throws_In_Production_When_RunMode_Unset()
     {
         var opts = new WorkerOptions { RunMode = null };

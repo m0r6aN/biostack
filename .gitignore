@@ -110,6 +110,8 @@ CLAUDE.md
 tmp/
 temp/
 cache/
+research/output/*
+!research/output/.gitkeep
 
 # Git worktrees
 .worktrees/

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "spermidine-evidence-pilot-001", "category": "emerging-research", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Spermidine",
+    "aliases": ["N-(3-aminopropyl)-1,4-butanediamine"],
+    "classification": "Small Molecule",
+    "compoundFamily": "Polyamine",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "124-20-9", "drugbank": null, "pubchem": "1102", "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "pubchem-spermidine", "sourceType": "database", "authorityTier": "C1", "title": "PubChem Compound Summary for Spermidine", "publisher": "National Center for Biotechnology Information", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/1102", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "pubmed-spermidine-memory-pilot-2018", "sourceType": "paper", "authorityTier": "B2", "title": "The effect of spermidine on memory performance in older adults at risk for dementia: A randomized controlled trial", "publisher": "Cortex / PubMed", "url": "https://pubmed.ncbi.nlm.nih.gov/30388439/", "doi": "10.1016/j.cortex.2018.09.014", "pmid": "30388439", "publishedAt": "2018-09-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "jama-spermidine-smartage-2022", "sourceType": "paper", "authorityTier": "B2", "title": "Effects of Spermidine Supplementation on Cognition and Biomarkers in Older Adults With Subjective Cognitive Decline: A Randomized Clinical Trial", "publisher": "JAMA Network Open", "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2792725", "doi": "10.1001/jamanetworkopen.2022.13875", "pmid": null, "publishedAt": "2022-05-26T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "spermidine-identity-pubchem-001", "claimType": "identity", "statement": "Spermidine is indexed by PubChem as CID 1102 and associated with CAS number 124-20-9.",
+      "context": { "population": null, "route": null, "formulation": null, "useCase": "identity resolution", "doseText": null },
+      "evidenceTier": "Unknown", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-spermidine"],
+      "extractedEvidence": [{ "sourceRef": "pubchem-spermidine", "quote": null, "pageOrSection": "Compound summary" }], "reviewFlags": []
+    },
+    {
+      "claimId": "spermidine-polyamine-mechanism-001", "claimType": "mechanism", "statement": "PubChem describes spermidine as a polyamine formed from putrescine and found in tissues, supporting its classification as an endogenous polyamine rather than a disease-specific treatment claim.",
+      "context": { "population": "general physiology context", "route": null, "formulation": null, "useCase": "polyamine identity and mechanism context", "doseText": null },
+      "evidenceTier": "Limited", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-spermidine"],
+      "extractedEvidence": [{ "sourceRef": "pubchem-spermidine", "quote": "Spermidine is a polyamine formed from putrescine.", "pageOrSection": "Description" }], "reviewFlags": ["do not translate endogenous mechanism into supplementation outcome"]
+    },
+    {
+      "claimId": "spermidine-cognition-studied-use-001", "claimType": "studied-use", "statement": "Human studies have investigated spermidine-rich supplementation in older adults with subjective cognitive decline or dementia-risk contexts, but BioStack should treat cognition claims as emerging and study-context-specific.",
+      "context": { "population": "older adults with subjective cognitive decline or dementia-risk contexts", "route": "oral", "formulation": "spermidine-rich plant or wheat-germ extract supplements", "useCase": "cognition and memory research", "doseText": null },
+      "evidenceTier": "Limited", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["pubmed-spermidine-memory-pilot-2018", "jama-spermidine-smartage-2022"],
+      "extractedEvidence": [{ "sourceRef": "pubmed-spermidine-memory-pilot-2018", "quote": "This is the first human study to evaluate the impact of spermidine supplementation on memory performance in older adults", "pageOrSection": "Abstract" }], "reviewFlags": ["cognition evidence is emerging and should not be generalized"]
+    },
+    {
+      "claimId": "spermidine-longevity-hype-boundary-001", "claimType": "evidence-gap", "statement": "BioStack should separate spermidine autophagy/longevity marketing claims from human clinical outcomes; current pilot evidence supports tracking the research area, not presenting broad anti-aging conclusions.",
+      "context": { "population": null, "route": "oral", "formulation": "spermidine supplements", "useCase": "longevity and marketing-claim boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-spermidine", "pubmed-spermidine-memory-pilot-2018", "jama-spermidine-smartage-2022"],
+      "extractedEvidence": [{ "sourceRef": "jama-spermidine-smartage-2022", "quote": null, "pageOrSection": "Trial design and outcomes" }], "reviewFlags": ["vendor longevity claims require misinformation monitoring"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot emerging evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "emerging-longevity-compound", "hype-boundary"] }
+}

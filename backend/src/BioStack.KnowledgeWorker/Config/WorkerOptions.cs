@@ -14,7 +14,7 @@ public sealed class WorkerOptions
     /// <summary>
     /// Which job to execute on this invocation. One-shot: the worker resolves this,
     /// runs exactly one pass, and exits. Azure Container App Job scheduling decides
-    /// how often to invoke. Parsed from <c>Worker:RunMode</c> (string: "Seed" | "Refresh").
+    /// how often to invoke. Parsed from <c>Worker:RunMode</c> (string: "Seed" | "Refresh" | "Research").
     /// If unset, <see cref="SeedOnStartup"/> is consulted as a legacy fallback.
     /// </summary>
     public RunMode? RunMode { get; set; }
@@ -47,6 +47,56 @@ public sealed class WorkerOptions
     /// When set, only substances matching this hint are processed.
     /// </summary>
     public string? ScopeHint { get; set; }
+
+    /// <summary>
+    /// Optional compound candidate batch path used by <see cref="RunMode.Research" />.
+    /// </summary>
+    public string? ResearchCandidateFilePath { get; set; }
+
+    /// <summary>
+    /// Optional source registry path used by <see cref="RunMode.Research" />.
+    /// </summary>
+    public string? ResearchSourceRegistryFilePath { get; set; }
+
+    /// <summary>
+    /// Optional single evidence-packet path used by <see cref="RunMode.Research" />.
+    /// </summary>
+    public string? ResearchEvidencePacketPath { get; set; }
+
+    /// <summary>
+    /// Optional directory of evidence-packet JSON files used by <see cref="RunMode.Research" />.
+    /// </summary>
+    public string? ResearchEvidencePacketDirectory { get; set; }
+
+    /// <summary>
+    /// Optional single review-decision batch path used by <see cref="RunMode.Research" />.
+    /// </summary>
+    public string? ResearchReviewDecisionPath { get; set; }
+
+    /// <summary>
+    /// Optional directory of review-decision batch JSON files used by <see cref="RunMode.Research" />.
+    /// </summary>
+    public string? ResearchReviewDecisionDirectory { get; set; }
+
+    /// <summary>
+    /// Output directory for research-mode draft records, review queue, and run report.
+    /// </summary>
+    public string ResearchOutputDirectory { get; set; } = "ResearchOutput";
+
+    /// <summary>
+    /// Promotion import preview path used by <see cref="RunMode.PromotionImportDryRun" />.
+    /// </summary>
+    public string? PromotionImportPreviewPath { get; set; }
+
+    /// <summary>
+    /// Promotion export aggregate path used by <see cref="RunMode.PromotionImportDryRun" />.
+    /// </summary>
+    public string? PromotionImportAggregatePath { get; set; }
+
+    /// <summary>
+    /// Output directory for promotion-import dry-run reports.
+    /// </summary>
+    public string PromotionImportDryRunOutputDirectory { get; set; } = "PromotionImportDryRunOutput";
 
     /// <summary>
     /// Trust threshold values used by the publish decision engine.

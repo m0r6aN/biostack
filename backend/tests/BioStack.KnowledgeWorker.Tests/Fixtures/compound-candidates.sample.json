@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-candidate-batch",
+  "batch": {
+    "batchId": "pilot-core-supplements-001",
+    "category": "core-supplements",
+    "generatedAt": "2026-05-04T00:00:00Z",
+    "agentId": "candidate-agent-pilot",
+    "notes": ["Pilot fixture for research intake validation."]
+  },
+  "candidates": [
+    {
+      "canonicalNameCandidate": "Creatine",
+      "aliases": ["Creatine monohydrate"],
+      "brandNames": [],
+      "category": "core-supplements",
+      "classification": "Supplement",
+      "compoundFamily": "Amino-acid derivative",
+      "inclusionRationale": "High consumer interest, broad scientific literature, and frequent use in performance and health optimization contexts.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 2,
+        "clinicalRelevance": 4,
+        "safetyRisk": 1,
+        "misinformationRisk": 3,
+        "sourceAvailability": 5
+      },
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": "57-00-1",
+        "drugbank": null,
+        "pubchem": "586",
+        "chembl": null
+      },
+      "discoverySources": ["pubchem-creatine", "pubmed-creatine-search"],
+      "reviewFlags": []
+    }
+  ]
+}

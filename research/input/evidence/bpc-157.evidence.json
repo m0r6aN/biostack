@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "bpc-157-evidence-pilot-001", "category": "peptides-core", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "BPC-157",
+    "aliases": ["Body Protection Compound 157", "PL 14736"],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic peptide",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": null, "drugbank": null, "pubchem": null, "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "fda-bpc157-category2", "sourceType": "regulator", "authorityTier": "A1", "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks", "publisher": "U.S. Food and Drug Administration", "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "pmc-bpc157-review-2025", "sourceType": "review", "authorityTier": "B1", "title": "Multifunctionality and Possible Medical Application of the BPC 157 Peptide—Literature and Patent Review", "publisher": "Pharmaceuticals / PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11859134/", "doi": "10.3390/ph18020185", "pmid": "40005999", "publishedAt": "2025-02-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "bpc157-regulatory-compounding-risk-001", "claimType": "regulatory", "statement": "FDA lists BPC-157 among bulk drug substances that may present significant safety risks for compounding, citing immunogenicity risk for certain routes, peptide-impurity/API-characterization complexity, and limited route-specific safety information.",
+      "context": { "population": "humans exposed to compounded BPC-157 products", "route": "various proposed routes", "formulation": "compounded BPC-157", "useCase": "compounding safety and regulatory boundary", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["fda-bpc157-category2"],
+      "extractedEvidence": [{ "sourceRef": "fda-bpc157-category2", "quote": "Compounded drugs containing BPC-157 may pose risk for immunogenicity... peptide-related impurities and active pharmaceutical ingredient (API) characterization... limited, safety-related information", "pageOrSection": "BPC-157 row" }], "reviewFlags": ["safety-critical regulatory claim", "do not present compounded or gray-market products as equivalent to approved drugs"]
+    },
+    {
+      "claimId": "bpc157-preclinical-human-gap-001", "claimType": "evidence-gap", "statement": "A literature review describes broad preclinical interest in BPC-157 but emphasizes scarce human studies and the need for human-oriented studies to establish therapeutic and toxic profiles.",
+      "context": { "population": "human use claims extrapolated from preclinical literature", "route": null, "formulation": "BPC-157", "useCase": "human-evidence boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-bpc157-review-2025"],
+      "extractedEvidence": [{ "sourceRef": "pmc-bpc157-review-2025", "quote": "Considering the scarcity of human studies... more extensive human-oriented studies indicating therapeutic and toxic profiles of BPC 157 are required", "pageOrSection": "Review discussion" }], "reviewFlags": ["do not infer human efficacy from animal models", "vendor healing claims require misinformation monitoring"]
+    },
+    {
+      "claimId": "bpc157-misinformation-boundary-001", "claimType": "misinformation-claim", "statement": "Online claims commonly present BPC-157 as a proven systemic healing peptide; BioStack should label such claims as unsupported unless tied to high-quality human clinical evidence and product-specific safety review.",
+      "context": { "population": "consumer and biohacker communities", "route": null, "formulation": "research/vendor BPC-157 products", "useCase": "misinformation monitoring", "doseText": null },
+      "evidenceTier": "Anecdotal", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["fda-bpc157-category2", "pmc-bpc157-review-2025"],
+      "extractedEvidence": [{ "sourceRef": "pmc-bpc157-review-2025", "quote": null, "pageOrSection": "Review discussion of human evidence limits and accessibility" }], "reviewFlags": ["do not publish as factual benefit claim"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot misinformation-heavy evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "misinformation-heavy", "limited-human-evidence", "regulatory-boundary"] }
+}

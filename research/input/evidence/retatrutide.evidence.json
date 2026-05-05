@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "retatrutide-evidence-pilot-001", "category": "glp1-incretins", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Retatrutide",
+    "aliases": ["LY3437943", "GLP-1/GIP/glucagon receptor agonist", "triple agonist"],
+    "classification": "Peptide",
+    "compoundFamily": "GLP-1/GIP/glucagon receptor agonist",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": null, "drugbank": null, "pubchem": null, "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "nejm-retatrutide-obesity-phase2-2023", "sourceType": "paper", "authorityTier": "B2", "title": "Triple-Hormone-Receptor Agonist Retatrutide for Obesity — A Phase 2 Trial", "publisher": "New England Journal of Medicine", "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972", "doi": "10.1056/NEJMoa2301972", "pmid": null, "publishedAt": "2023-06-26T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "clinicaltrials-retatrutide-nct04881760", "sourceType": "clinical-trial-registry", "authorityTier": "C1", "title": "ClinicalTrials.gov record for retatrutide obesity phase 2 study", "publisher": "ClinicalTrials.gov", "url": "https://clinicaltrials.gov/study/NCT04881760", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "retatrutide-identity-ly3437943-001", "claimType": "identity", "statement": "Retatrutide is also referred to as LY3437943 and is described in clinical-trial literature as a triple hormone receptor agonist targeting GIP, GLP-1, and glucagon receptor pathways.",
+      "context": { "population": null, "route": null, "formulation": null, "useCase": "identity and investigational mechanism", "doseText": null },
+      "evidenceTier": "Moderate", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["nejm-retatrutide-obesity-phase2-2023", "clinicaltrials-retatrutide-nct04881760"],
+      "extractedEvidence": [{ "sourceRef": "nejm-retatrutide-obesity-phase2-2023", "quote": "Triple-Hormone-Receptor Agonist Retatrutide for Obesity", "pageOrSection": "Article title and abstract" }], "reviewFlags": ["investigational identity should be reviewed against latest sponsor/regulatory records"]
+    },
+    {
+      "claimId": "retatrutide-phase2-obesity-studied-use-001", "claimType": "studied-use", "statement": "A phase 2 randomized, double-blind, placebo-controlled trial studied subcutaneous retatrutide in adults with obesity or overweight plus at least one weight-related condition, with body-weight change as a primary endpoint.",
+      "context": { "population": "adults with obesity or overweight with at least one weight-related condition", "route": "subcutaneous", "formulation": "investigational retatrutide", "useCase": "obesity clinical-trial endpoint", "doseText": null },
+      "evidenceTier": "Moderate", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["nejm-retatrutide-obesity-phase2-2023"],
+      "extractedEvidence": [{ "sourceRef": "nejm-retatrutide-obesity-phase2-2023", "quote": "We conducted a phase 2, double-blind, randomized, placebo-controlled trial involving adults who had a body-mass index...", "pageOrSection": "Methods / abstract" }], "reviewFlags": ["do not generalize phase 2 evidence to approved-use claims"]
+    },
+    {
+      "claimId": "retatrutide-investigational-boundary-001", "claimType": "evidence-gap", "statement": "BioStack should treat retatrutide as investigational in this pilot unless a jurisdiction-specific regulatory approval source is added; clinical-trial evidence should not be presented as an approved-product label.",
+      "context": { "population": null, "route": "subcutaneous", "formulation": "investigational retatrutide", "useCase": "regulatory and evidence boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["clinicaltrials-retatrutide-nct04881760", "nejm-retatrutide-obesity-phase2-2023"],
+      "extractedEvidence": [{ "sourceRef": "clinicaltrials-retatrutide-nct04881760", "quote": null, "pageOrSection": "Study record" }], "reviewFlags": ["review latest FDA/DailyMed/EMA status before publication", "vendor or compounded claims require misinformation monitoring"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot emerging evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "investigational-compound", "no-approved-label-source"] }
+}

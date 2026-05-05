@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "testosterone-cypionate-evidence-pilot-001", "category": "hormones-serms-sarms", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Testosterone cypionate",
+    "aliases": ["Testosterone cyclopentylpropionate"],
+    "classification": "Hormone",
+    "compoundFamily": "Androgen ester",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "58-20-8", "drugbank": "DB13946", "pubchem": "441404", "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "dailymed-depo-testosterone", "sourceType": "label", "authorityTier": "A1", "title": "DailyMed DEPO-TESTOSTERONE (testosterone cypionate) injection", "publisher": "National Library of Medicine / DailyMed", "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=735b5bf3-4464-412c-a072-1bd02f2e5380", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "testosterone-cypionate-approved-indication-001", "claimType": "approved-indication", "statement": "DailyMed identifies testosterone cypionate injection as indicated for replacement therapy in males with conditions associated with symptoms of deficiency or absence of endogenous testosterone, including primary and hypogonadotropic hypogonadism contexts described in the label.",
+      "context": { "population": "label-specified males with testosterone deficiency or absence contexts", "route": "intramuscular", "formulation": "testosterone cypionate injection", "useCase": "approved labeled use", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-depo-testosterone"],
+      "extractedEvidence": [{ "sourceRef": "dailymed-depo-testosterone", "quote": "DEPO-Testosterone Injection is indicated for replacement therapy in the male in conditions associated with symptoms of deficiency or absence of endogenous testosterone.", "pageOrSection": "Indications and Usage" }], "reviewFlags": ["prescription hormone context; do not convert to optimization advice"]
+    },
+    {
+      "claimId": "testosterone-cypionate-contraindications-001", "claimType": "contraindication", "statement": "DailyMed lists contraindications for testosterone cypionate injection including hypersensitivity, males with breast carcinoma, males with known or suspected prostate carcinoma, pregnancy, and serious cardiac, hepatic, or renal disease.",
+      "context": { "population": "label-specified contraindicated populations", "route": "intramuscular", "formulation": "testosterone cypionate injection", "useCase": "contraindication", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-depo-testosterone"],
+      "extractedEvidence": [{ "sourceRef": "dailymed-depo-testosterone", "quote": "Known hypersensitivity to the drug... Males with carcinoma of the breast... Males with known or suspected carcinoma of the prostate gland... Women who are pregnant... Patients with serious cardiac, hepatic or renal disease", "pageOrSection": "Contraindications" }], "reviewFlags": ["safety-critical; human review required"]
+    },
+    {
+      "claimId": "testosterone-cypionate-warning-hypercalcemia-001", "claimType": "warning", "statement": "DailyMed warns that hypercalcemia may occur in immobilized patients receiving testosterone cypionate, and the drug should be discontinued if this occurs.",
+      "context": { "population": "immobilized patients", "route": "intramuscular", "formulation": "testosterone cypionate injection", "useCase": "warning", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-depo-testosterone"],
+      "extractedEvidence": [{ "sourceRef": "dailymed-depo-testosterone", "quote": "Hypercalcemia may occur in immobilized patients. If this occurs, the drug should be discontinued.", "pageOrSection": "Warnings" }], "reviewFlags": ["safety-critical; human review required"]
+    },
+    {
+      "claimId": "testosterone-cypionate-misuse-boundary-001", "claimType": "evidence-gap", "statement": "BioStack should separate labeled testosterone replacement therapy contexts from bodybuilding, performance-enhancement, or non-prescribed optimization claims, which require separate legal, safety, and misinformation review.",
+      "context": { "population": "non-label performance or optimization contexts", "route": "intramuscular", "formulation": "testosterone cypionate injection", "useCase": "misuse and evidence boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["dailymed-depo-testosterone"],
+      "extractedEvidence": [{ "sourceRef": "dailymed-depo-testosterone", "quote": null, "pageOrSection": "Indications and Usage / Contraindications" }], "reviewFlags": ["misuse claims must not be presented as medical guidance"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot regulatory evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "a1-label-backed", "prescription-hormone-context"] }
+}
