@@ -36,19 +36,20 @@ export async function GET(request: NextRequest) {
 
   // Determine base path based on data source
   const dataSource = process.env.RESEARCH_DATA_SOURCE ?? 'fixtures';
-  const projectRoot = path.resolve(process.cwd(), '..');
 
   let basePath: string;
   if (dataSource === 'api') {
     const artifactsPath = process.env.RESEARCH_ARTIFACTS_PATH ?? 'research/pilot';
-    basePath = path.resolve(process.cwd(), '..', artifactsPath);
-
-    // Path traversal prevention: ensure resolved path is within project root
-    if (!basePath.startsWith(projectRoot)) {
+    // Anchor to the Next.js app root (cwd) parent — this is the monorepo root
+    const repoRoot = path.resolve(process.cwd(), '..');
+    const resolved = path.resolve(repoRoot, artifactsPath);
+    // Append sep to prevent prefix-sibling bypass (e.g. BioStack-evil vs BioStack)
+    const repoRootWithSep = repoRoot.endsWith(path.sep) ? repoRoot : repoRoot + path.sep;
+    if (!resolved.startsWith(repoRootWithSep) && resolved !== repoRoot) {
       return Response.json({ error: 'Invalid path' }, { status: 400 });
     }
+    basePath = resolved;
   } else {
-    // Default to fixtures directory
     basePath = path.resolve(process.cwd(), 'src/fixtures/research');
   }
 
