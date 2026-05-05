@@ -1,0 +1,62 @@
+{
+  "manifestVersion": "1.0.0",
+  "generatedAtUtc": "2026-05-05T09:00:00Z",
+  "counts": { "totalDrafts": 3, "blocked": 1, "reviewRequired": 1, "candidatesForPromotion": 1 },
+  "blocked": [
+    {
+      "name": "BPC-157",
+      "classification": "Peptide",
+      "readiness": "blocked",
+      "overallEvidenceTier": "Limited",
+      "completeness": "partial",
+      "reviewQueueItemCount": 3,
+      "reviewDecisionIds": [],
+      "blockers": [
+        "blocked: missing required authoritative support",
+        "review-required: draft is marked needsReview",
+        "review-required: completeness is partial"
+      ],
+      "qualityFlags": ["missing-authoritative-support", "limited-human-evidence", "misinformation-heavy"],
+      "requiredNextActions": [
+        "Attach an A1/A2 source for safety, regulatory, monitoring, contraindication, or approved-use claim before promotion.",
+        "Resolve all blocked promotion blockers before review approval or import promotion."
+      ]
+    }
+  ],
+  "reviewRequired": [
+    {
+      "name": "Semaglutide",
+      "classification": "Pharmaceutical",
+      "readiness": "review-required",
+      "overallEvidenceTier": "Strong",
+      "completeness": "substantial",
+      "reviewQueueItemCount": 2,
+      "reviewDecisionIds": [],
+      "blockers": [
+        "review-required: draft is marked needsReview",
+        "review-required: 2 review queue item(s)"
+      ],
+      "qualityFlags": ["a1-label-backed", "product-specific-labels"],
+      "requiredNextActions": [
+        "Complete human review and clear promotion blockers before marking candidate-for-promotion.",
+        "Verify the latest product label before publication."
+      ]
+    }
+  ],
+  "candidatesForPromotion": [
+    {
+      "name": "Creatine",
+      "classification": "Supplement",
+      "readiness": "candidate-for-promotion",
+      "overallEvidenceTier": "Strong",
+      "completeness": "substantial",
+      "reviewQueueItemCount": 0,
+      "reviewDecisionIds": [],
+      "blockers": [],
+      "qualityFlags": [],
+      "requiredNextActions": [
+        "Eligible for promotion review; verify final provenance and schema output before import."
+      ]
+    }
+  ]
+}
