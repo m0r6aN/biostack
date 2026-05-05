@@ -113,20 +113,31 @@ function IconBilling() {
   );
 }
 
+function IconResearch() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <circle cx="6.5" cy="6.5" r="4" />
+      <line x1="9.5" y1="9.5" x2="14" y2="14" />
+      <line x1="6.5" y1="4" x2="6.5" y2="9" />
+      <line x1="4" y1="6.5" x2="9" y2="6.5" />
+    </svg>
+  );
+}
+
 // ─── Nav items ────────────────────────────────────────────────────────────────
 
 const navItems = [
-  { label: 'Protocol Console', href: '/protocol-console', icon: <IconProtocolConsole />, adminOnly: false },
-  { label: 'Profiles',    href: '/profiles',    icon: <IconProfiles />,    adminOnly: false },
-  { label: 'Compounds',   href: '/compounds',   icon: <IconCompounds />,   adminOnly: false },
-  { label: 'Protocols',   href: '/protocols',   icon: <IconProtocols />,   adminOnly: false },
-  { label: 'Check-ins',   href: '/checkins',    icon: <IconCheckins />,    adminOnly: false },
-  { label: 'Timeline',    href: '/timeline',    icon: <IconTimeline />,    adminOnly: false },
-  { label: 'Tools',       href: '/tools',       icon: <IconCalculators />, adminOnly: false },
-  { label: 'Knowledge',   href: '/knowledge',   icon: <IconKnowledge />,   adminOnly: false },
-  { label: 'Billing',     href: '/billing',     icon: <IconBilling />,     adminOnly: false },
-  // Admin nav item — only rendered when role === 1
-  { label: 'Admin',       href: '/admin',       icon: <IconAdmin />,       adminOnly: true  },
+  { label: 'Protocol Console', href: '/protocol-console', icon: <IconProtocolConsole />, adminOnly: false, exact: false },
+  { label: 'Profiles',    href: '/profiles',    icon: <IconProfiles />,    adminOnly: false, exact: false },
+  { label: 'Compounds',   href: '/compounds',   icon: <IconCompounds />,   adminOnly: false, exact: false },
+  { label: 'Protocols',   href: '/protocols',   icon: <IconProtocols />,   adminOnly: false, exact: false },
+  { label: 'Check-ins',   href: '/checkins',    icon: <IconCheckins />,    adminOnly: false, exact: false },
+  { label: 'Timeline',    href: '/timeline',    icon: <IconTimeline />,    adminOnly: false, exact: false },
+  { label: 'Tools',       href: '/tools',       icon: <IconCalculators />, adminOnly: false, exact: false },
+  { label: 'Knowledge',   href: '/knowledge',   icon: <IconKnowledge />,   adminOnly: false, exact: false },
+  { label: 'Billing',     href: '/billing',     icon: <IconBilling />,     adminOnly: false, exact: false },
+  { label: 'Admin',       href: '/admin',       icon: <IconAdmin />,       adminOnly: true,  exact: true  },
+  { label: 'Research',    href: '/admin/research', icon: <IconResearch />, adminOnly: true,  exact: false },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -189,7 +200,9 @@ export function Sidebar() {
               const isActive =
                 item.href === '/protocol-console'
                   ? pathname.startsWith('/protocol-console') || pathname.startsWith('/mission-control')
-                  : pathname.startsWith(item.href);
+                  : item.exact
+                    ? pathname === item.href
+                    : pathname.startsWith(item.href);
 
               return (
                 <Link
