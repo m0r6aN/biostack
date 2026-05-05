@@ -115,3 +115,6 @@ research/output/*
 
 # Git worktrees
 .worktrees/
+
+# Superpowers brainstorm session files
+.superpowers/
