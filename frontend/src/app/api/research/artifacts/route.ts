@@ -21,12 +21,6 @@ export async function GET(request: NextRequest) {
     return Response.json({ error: 'Not Found' }, { status: 404 });
   }
 
-  // Check authorization header
-  const auth = request.headers.get('authorization');
-  if (!auth?.startsWith('Bearer ')) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   // Extract and validate artifact parameter
   const artifact = request.nextUrl.searchParams.get('artifact') ?? '';
   const filename = ALLOWED[artifact];
@@ -36,6 +30,15 @@ export async function GET(request: NextRequest) {
 
   // Determine base path based on data source
   const dataSource = process.env.RESEARCH_DATA_SOURCE ?? 'fixtures';
+
+  // Auth is required when serving real artifacts (api mode) — fixture data is not sensitive
+  // and the route is already dev-only (returns 404 in production above).
+  if (dataSource !== 'fixtures') {
+    const auth = request.headers.get('authorization');
+    if (!auth?.startsWith('Bearer ')) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+  }
 
   let basePath: string;
   if (dataSource === 'api') {
