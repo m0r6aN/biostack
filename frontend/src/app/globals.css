@@ -179,6 +179,17 @@ input[type="range"]::-webkit-slider-thumb {
   }
 }
 
+@keyframes powderAmountLabelFade {
+  0%, 18% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  20%, 100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
 /* ============================================================
    BioStack logo CSS classes
    ============================================================ */
@@ -232,6 +243,13 @@ input[type="range"]::-webkit-slider-thumb {
     drop-shadow(0 0 14px rgba(34, 197, 94, 0.18));
 }
 
+.powder-amount-label {
+  animation: powderAmountLabelFade 7.5s ease-in-out infinite;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 /* Loading: layer activation sequence */
 .biostack-loading .biostack-plate-3 {
   animation: biostackPlateLoad 1200ms ease-in-out 0ms infinite;
@@ -258,8 +276,13 @@ input[type="range"]::-webkit-slider-thumb {
   .biostack-loading .biostack-plate-1,
   .biostack-loading .biostack-plate-2,
   .biostack-loading .biostack-plate-3,
-  .biostack-loading .biostack-signal-path {
+  .biostack-loading .biostack-signal-path,
+  .powder-amount-label {
     animation: none !important;
     transition: none !important;
+  }
+
+  .powder-amount-label:first-of-type {
+    opacity: 1;
   }
 }

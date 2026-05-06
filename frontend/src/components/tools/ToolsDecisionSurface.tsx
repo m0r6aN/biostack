@@ -1,9 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { apiClient } from '@/lib/api';
-import { useAuth } from '@/lib/AuthProvider';
+import { SyringeDrawVisualizer } from '@/components/calculators/SyringeDrawVisualizer';
+import { PowderAmountGuide } from '@/components/calculators/PowderAmountGuide';
 import {
   deleteAnonymousToolArtifact,
   readAnonymousToolPayload,
@@ -12,6 +10,8 @@ import {
   type SavedToolArtifact,
   type ToolMode,
 } from '@/lib/anonymousTools';
+import { apiClient } from '@/lib/api';
+import { useAuth } from '@/lib/AuthProvider';
 import { useProfile } from '@/lib/context';
 import {
   calculateUnifiedDosing,
@@ -24,6 +24,8 @@ import {
   type UnifiedDosingInput,
 } from '@/lib/dosingCalculator';
 import { type CompoundRecord, type InteractionFlag, type KnowledgeEntry } from '@/lib/types';
+import Link from 'next/link';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 type SurfaceMode = ToolMode;
 type BlendStatus = 'compatible' | 'caution' | 'avoid' | 'unknown';
@@ -124,12 +126,12 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
   const storageInstructions = [
     'Store reconstituted solution in the refrigerator.',
-    'Avoid door shelves because of temperature fluctuation.',
+    'Avoid door shelves because of temperature fluctuation and shaking.',
     'Store unmixed powder cold for longevity.',
   ];
 
   const primaryAnswer = dosing.result
-    ? `Draw to ${formatNumber(dosing.result.u100UnitsPerAdministration, 1)} units on a 1 mL insulin syringe`
+    ? `Calculated draw: ${formatNumber(dosing.result.u100UnitsPerAdministration, 1)} units on a U-100 syringe`
     : 'Enter valid numbers to calculate';
   const secondaryAnswer = dosing.result ? `${formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL per dose` : dosing.error;
   const blendResult = useMemo(
@@ -387,7 +389,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             ) : (
               <div className="mt-5 space-y-5">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <NumberWithUnitField label="Powder amount" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} />
+                  <NumberWithUnitFieldWithInfo label="Powder amount" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} />
                   <NumberField label="Solution volume" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
                   <NumberWithUnitField label="Desired dose" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
                 </div>
@@ -410,6 +412,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <ResultPanel mode={mode} primary={mode === 'convert' ? `${formatNumber(conversionResult.value, 4)} ${conversion.toUnit}` : primaryAnswer} secondary={mode === 'convert' ? `${formatNumber(conversion.amount)} ${conversion.fromUnit}` : secondaryAnswer} hasError={mode === 'convert' ? Boolean(conversionResult.error) : Boolean(dosing.error)} />
+          {mode !== 'convert' && dosing.result && <SyringeDrawVisualizer result={dosing.result} />}
           {mode !== 'convert' && dosing.result && (
             <div className="grid gap-3 sm:grid-cols-2">
               <Metric label="Dose" value={formatDose(dosing.result.dosePerAdministrationMcg)} detail="per administration" />
@@ -696,6 +699,68 @@ function NumberWithUnitField<TUnit extends string>({ label, value, unit, units, 
         </select>
       </div>
     </label>
+  );
+}
+
+function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit, units, onValueChange, onUnitChange }: { label: string; value: number; unit: TUnit; units: TUnit[]; onValueChange: (value: number) => void; onUnitChange: (unit: TUnit) => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [open]);
+
+  return (
+    <div ref={ref} className="block">
+      <span className="mb-2 flex items-center gap-1.5 text-sm text-white/62">
+        {label}
+        <button
+          type="button"
+          aria-label="View vial measurement guide"
+          onClick={() => setOpen((v) => !v)}
+          className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full text-white/40 transition-colors hover:text-emerald-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
+        >
+          <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+            <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-2.5a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4A.75.75 0 0 1 8 5.5Zm0-2a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
+          </svg>
+        </button>
+      </span>
+      <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
+        <input type="number" min="0" step="0.1" value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
+        <select value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
+          {units.map((item) => <option key={item} value={item}>{item}</option>)}
+        </select>
+      </div>
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setOpen(false)}>
+          <div className="relative max-h-[90dvh] w-full max-w-2xl overflow-auto rounded-xl border border-white/10 bg-[#121923] shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              aria-label="Close"
+              onClick={() => setOpen(false)}
+              className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-black/40 text-white/60 transition-colors hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
+            >
+              <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z" />
+              </svg>
+            </button>
+            <PowderAmountGuide />
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
