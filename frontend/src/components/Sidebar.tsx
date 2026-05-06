@@ -137,7 +137,7 @@ const navItems = [
   { label: 'Knowledge',   href: '/knowledge',   icon: <IconKnowledge />,   adminOnly: false, exact: false },
   { label: 'Billing',     href: '/billing',     icon: <IconBilling />,     adminOnly: false, exact: false },
   { label: 'Admin',       href: '/admin',       icon: <IconAdmin />,       adminOnly: true,  exact: true  },
-  { label: 'Research',    href: '/admin/research', icon: <IconResearch />, adminOnly: true,  exact: false },
+  { label: 'Research',    href: '/admin/research', icon: <IconResearch />, adminOnly: false, exact: false },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
