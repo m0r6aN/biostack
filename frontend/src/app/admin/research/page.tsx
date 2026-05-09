@@ -1,9 +1,8 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from '@/components/Header';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { ResearchStatChip } from '@/components/research/ResearchStatChip';
-import { getApiBaseUrl } from '@/lib/apiBase';
 import { fetchResearchSummary, fetchPromotionManifest, fetchReviewResolutionPlan } from '@/lib/research/loader';
 import type { ResearchSummary, PromotionManifest, ReviewResolutionPlan } from '@/lib/research/types';
 import Link from 'next/link';
@@ -22,26 +21,17 @@ export default function ResearchDashboard() {
   const [manifest, setManifest] = useState<PromotionManifest | null>(null);
   const [plan, setPlan] = useState<ReviewResolutionPlan | null>(null);
   const [error, setError] = useState('');
-  const tokenRef = useRef<string | null>(null);
 
   useEffect(() => {
-    acquireToken().then(load);
+    load();
   }, []);
 
-  async function acquireToken() {
-    try {
-      const res = await fetch(`${getApiBaseUrl()}/api/v1/auth/dev-token`, { method: 'POST' });
-      if (res.ok) tokenRef.current = (await res.json()).token;
-    } catch { /* production — no-op */ }
-  }
-
   async function load() {
-    const t = tokenRef.current ?? '';
     try {
       const [s, m, p] = await Promise.all([
-        fetchResearchSummary(t),
-        fetchPromotionManifest(t),
-        fetchReviewResolutionPlan(t),
+        fetchResearchSummary(''),
+        fetchPromotionManifest(''),
+        fetchReviewResolutionPlan(''),
       ]);
       setSummary(s); setManifest(m); setPlan(p);
     } catch (e) {

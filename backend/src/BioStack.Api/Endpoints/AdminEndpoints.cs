@@ -4,6 +4,7 @@ using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Knowledge;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 
 public static class AdminEndpoints
 {
@@ -18,6 +19,7 @@ public static class AdminEndpoints
             [FromBody] List<KnowledgeEntry> entries,
             [FromServices] IKnowledgeSource knowledgeSource,
             [FromServices] IMemoryCache memoryCache,
+            [FromServices] ILoggerFactory loggerFactory,
             CancellationToken ct) =>
         {
             if (entries == null || entries.Count == 0)
@@ -32,7 +34,8 @@ public static class AdminEndpoints
             }
             catch (Exception ex)
             {
-                return Results.Problem(ex.Message);
+                loggerFactory.CreateLogger("AdminEndpoints").LogError(ex, "Knowledge ingest failed");
+                return Results.Problem("Knowledge ingestion failed. Check server logs for details.");
             }
         });
 
