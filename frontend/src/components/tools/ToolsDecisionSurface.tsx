@@ -129,7 +129,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   ];
 
   const primaryAnswer = dosing.result
-    ? `Draw to ${formatNumber(dosing.result.u100UnitsPerAdministration, 1)} units on a 1 mL insulin syringe`
+    ? `Calculated draw: ${formatNumber(dosing.result.u100UnitsPerAdministration, 1)} units on a U-100 syringe`
     : 'Enter valid numbers to calculate';
   const secondaryAnswer = dosing.result ? `${formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL per dose` : dosing.error;
   const blendResult = useMemo(
@@ -410,6 +410,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <ResultPanel mode={mode} primary={mode === 'convert' ? `${formatNumber(conversionResult.value, 4)} ${conversion.toUnit}` : primaryAnswer} secondary={mode === 'convert' ? `${formatNumber(conversion.amount)} ${conversion.fromUnit}` : secondaryAnswer} hasError={mode === 'convert' ? Boolean(conversionResult.error) : Boolean(dosing.error)} />
+          {mode !== 'convert' && dosing.result && <SyringeDrawVisualizer result={dosing.result} />}
           {mode !== 'convert' && dosing.result && (
             <div className="grid gap-3 sm:grid-cols-2">
               <Metric label="Dose" value={formatDose(dosing.result.dosePerAdministrationMcg)} detail="per administration" />
