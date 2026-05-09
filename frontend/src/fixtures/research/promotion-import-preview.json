@@ -1,0 +1,22 @@
+{
+  "previewVersion": "1.0.0",
+  "generatedAtUtc": "2026-05-05T09:00:00Z",
+  "counts": {
+    "totalExported": 1, "wouldCreate": 1, "wouldUpdate": 0, "wouldSkip": 0,
+    "schemaValid": 1, "schemaInvalid": 0, "duplicateSlugs": 0,
+    "duplicateCanonicalIds": 0, "activeRecords": 1, "inactiveRecords": 0
+  },
+  "items": [
+    {
+      "name": "Creatine",
+      "slug": "creatine",
+      "canonicalId": "creatine-001",
+      "action": "create",
+      "schemaValid": true,
+      "isActive": true,
+      "existingSeedMatch": false,
+      "reasons": ["New compound — no existing seed record found."],
+      "reviewDecisionIds": []
+    }
+  ]
+}

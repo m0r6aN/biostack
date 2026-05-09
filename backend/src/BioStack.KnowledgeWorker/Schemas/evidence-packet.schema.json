@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biostack.cc/schemas/evidence-packet.schema.json",
+  "title": "BioStack Compound Evidence Packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "recordType", "packet", "compound", "sources", "claims", "conflicts", "ops"],
+  "properties": {
+    "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "recordType": { "type": "string", "const": "compound-evidence-packet" },
+    "packet": { "$ref": "#/$defs/packet" },
+    "compound": { "$ref": "#/$defs/compound" },
+    "sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourceSnapshot" }
+    },
+    "claims": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/claim" }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/conflict" }
+    },
+    "ops": { "$ref": "#/$defs/ops" }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "nullableString": { "type": ["string", "null"] },
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "sourceRefArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "packet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packetId", "category", "agentId", "generatedAt", "sourceRegistryVersion"],
+      "properties": {
+        "packetId": { "$ref": "#/$defs/nonEmptyString" },
+        "category": { "$ref": "#/$defs/nonEmptyString" },
+        "agentId": { "$ref": "#/$defs/nonEmptyString" },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "sourceRegistryVersion": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "compound": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonicalName", "aliases", "classification", "compoundFamily", "externalIdentifiers"],
+      "properties": {
+        "canonicalName": { "$ref": "#/$defs/nonEmptyString" },
+        "aliases": { "$ref": "#/$defs/stringArray" },
+        "classification": { "$ref": "#/$defs/nonEmptyString" },
+        "compoundFamily": { "$ref": "#/$defs/nullableString" },
+        "externalIdentifiers": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rxnorm", "unii", "casNumber", "drugbank", "pubchem", "chembl", "doi", "pmid"],
+          "properties": {
+            "rxnorm": { "$ref": "#/$defs/nullableString" },
+            "unii": { "$ref": "#/$defs/nullableString" },
+            "casNumber": { "$ref": "#/$defs/nullableString" },
+            "drugbank": { "$ref": "#/$defs/nullableString" },
+            "pubchem": { "$ref": "#/$defs/nullableString" },
+            "chembl": { "$ref": "#/$defs/nullableString" },
+            "doi": { "$ref": "#/$defs/nullableString" },
+            "pmid": { "$ref": "#/$defs/nullableString" }
+          }
+        }
+      }
+    },
+    "sourceSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "sourceType", "authorityTier", "title", "publisher", "url", "publishedAt", "accessedAt"],
+      "properties": {
+        "sourceId": { "$ref": "#/$defs/nonEmptyString" },
+        "sourceType": { "$ref": "#/$defs/nonEmptyString" },
+        "authorityTier": { "$ref": "#/$defs/nonEmptyString" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "publisher": { "$ref": "#/$defs/nullableString" },
+        "url": { "$ref": "#/$defs/nullableString" },
+        "doi": { "$ref": "#/$defs/nullableString" },
+        "pmid": { "$ref": "#/$defs/nullableString" },
+        "publishedAt": { "type": ["string", "null"], "format": "date-time" },
+        "accessedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claimId",
+        "claimType",
+        "statement",
+        "context",
+        "evidenceTier",
+        "confidence",
+        "fieldAuthorityRequired",
+        "sourceRefs",
+        "extractedEvidence",
+        "reviewFlags"
+      ],
+      "properties": {
+        "claimId": { "$ref": "#/$defs/nonEmptyString" },
+        "claimType": {
+          "type": "string",
+          "enum": [
+            "identity",
+            "regulatory",
+            "approved-indication",
+            "studied-use",
+            "common-off-label-use",
+            "mechanism",
+            "target-pathway",
+            "efficacy",
+            "dose-context",
+            "formulation",
+            "storage-reconstitution",
+            "contraindication",
+            "warning",
+            "adverse-effect",
+            "monitoring",
+            "interaction",
+            "stack-heuristic",
+            "misinformation-claim",
+            "evidence-gap",
+            "controversy"
+          ]
+        },
+        "statement": { "$ref": "#/$defs/nonEmptyString" },
+        "context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["population", "route", "formulation", "useCase", "doseText"],
+          "properties": {
+            "population": { "$ref": "#/$defs/nullableString" },
+            "route": { "$ref": "#/$defs/nullableString" },
+            "formulation": { "$ref": "#/$defs/nullableString" },
+            "useCase": { "$ref": "#/$defs/nullableString" },
+            "doseText": { "$ref": "#/$defs/nullableString" }
+          }
+        },
+        "evidenceTier": {
+          "type": "string",
+          "enum": ["Strong", "Moderate", "Limited", "Insufficient", "Unknown", "Anecdotal"]
+        },
+        "confidence": { "type": "string", "enum": ["low", "moderate", "high", "unknown"] },
+        "fieldAuthorityRequired": { "type": "boolean" },
+        "sourceRefs": { "$ref": "#/$defs/sourceRefArray" },
+        "extractedEvidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sourceRef", "quote", "pageOrSection"],
+            "properties": {
+              "sourceRef": { "$ref": "#/$defs/nonEmptyString" },
+              "quote": { "$ref": "#/$defs/nullableString" },
+              "pageOrSection": { "$ref": "#/$defs/nullableString" }
+            }
+          }
+        },
+        "reviewFlags": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conflictId", "claimRefs", "severity", "summary", "resolutionStatus"],
+      "properties": {
+        "conflictId": { "$ref": "#/$defs/nonEmptyString" },
+        "claimRefs": { "$ref": "#/$defs/sourceRefArray" },
+        "severity": { "type": "string", "enum": ["low", "moderate", "high", "critical", "review"] },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "resolutionStatus": { "type": "string", "enum": ["unresolved", "resolved", "needs-human-review"] }
+      }
+    },
+    "ops": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["completeness", "needsReview", "reviewReasons", "qualityFlags"],
+      "properties": {
+        "completeness": { "type": "string", "enum": ["minimal", "partial", "substantial", "complete"] },
+        "needsReview": { "type": "boolean" },
+        "reviewReasons": { "$ref": "#/$defs/stringArray" },
+        "qualityFlags": { "$ref": "#/$defs/stringArray" }
+      }
+    }
+  }
+}

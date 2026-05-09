@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biostack.cc/schemas/source-registry.schema.json",
+  "title": "BioStack Research Source Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "recordType", "generatedAt", "agentId", "sources"],
+  "properties": {
+    "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "recordType": { "type": "string", "const": "source-registry" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "agentId": { "type": "string", "minLength": 1 },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/source" }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceId",
+        "name",
+        "sourceType",
+        "authorityTier",
+        "reliabilityScore",
+        "url",
+        "jurisdictions",
+        "categoriesCovered",
+        "authorizedFieldUse",
+        "limitations"
+      ],
+      "properties": {
+        "sourceId": { "$ref": "#/$defs/nonEmptyString" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "publisher": { "type": ["string", "null"] },
+        "url": { "type": ["string", "null"] },
+        "sourceType": {
+          "type": "string",
+          "enum": [
+            "label",
+            "regulator",
+            "guideline",
+            "manufacturer",
+            "systematic-review",
+            "paper",
+            "review",
+            "database",
+            "clinical-trial-registry",
+            "medical-summary",
+            "forum",
+            "social",
+            "vendor-marketing",
+            "internal-curation",
+            "other"
+          ]
+        },
+        "authorityTier": {
+          "type": "string",
+          "enum": ["A1", "A2", "B1", "B2", "B3", "B4", "C1", "C2", "D", "X"]
+        },
+        "reliabilityScore": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "jurisdictions": { "$ref": "#/$defs/stringArray" },
+        "categoriesCovered": { "$ref": "#/$defs/stringArray" },
+        "structuredAccess": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["hasApi", "hasBulkExport", "requiresAccount", "accessNotes"],
+          "properties": {
+            "hasApi": { "type": "boolean" },
+            "hasBulkExport": { "type": "boolean" },
+            "requiresAccount": { "type": "boolean" },
+            "accessNotes": { "type": ["string", "null"] }
+          }
+        },
+        "authorizedFieldUse": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "regulatory",
+              "approved-indications",
+              "product-specific-dosing",
+              "storage-reconstitution",
+              "contraindications-warnings",
+              "monitoring",
+              "mechanism",
+              "efficacy-claims",
+              "interactions",
+              "stack-heuristics",
+              "popularity-signals",
+              "misinformation-monitoring"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "limitations": { "$ref": "#/$defs/stringArray" }
+      }
+    }
+  }
+}

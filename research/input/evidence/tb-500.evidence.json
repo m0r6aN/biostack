@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "tb-500-evidence-pilot-001", "category": "peptides-core", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "TB-500",
+    "aliases": ["Thymosin beta-4 fragment", "TB500", "Thymosin beta-4 derivative"],
+    "classification": "Peptide",
+    "compoundFamily": "Thymosin beta-4 related peptide",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": null, "drugbank": null, "pubchem": null, "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "wada-prohibited-list-tb500", "sourceType": "regulator", "authorityTier": "A1", "title": "WADA Prohibited List - Thymosin beta-4 and derivatives e.g. TB-500", "publisher": "World Anti-Doping Agency", "url": "https://www.wada-ama.org/en/prohibited-list", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "frontiers-thymosin-beta4-2021", "sourceType": "review", "authorityTier": "B1", "title": "Progress on the Function and Application of Thymosin β4", "publisher": "Frontiers in Endocrinology", "url": "https://www.frontiersin.org/articles/10.3389/fendo.2021.767785/full", "doi": "10.3389/fendo.2021.767785", "pmid": null, "publishedAt": "2021-12-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "tb500-wada-prohibited-001", "claimType": "regulatory", "statement": "WADA lists thymosin-β4 and its derivatives, including TB-500, among prohibited peptide hormones/growth factors-related substances in sport.",
+      "context": { "population": "competitive athletes subject to anti-doping rules", "route": null, "formulation": "TB-500 or thymosin beta-4 derivatives", "useCase": "sports anti-doping status", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["wada-prohibited-list-tb500"],
+      "extractedEvidence": [{ "sourceRef": "wada-prohibited-list-tb500", "quote": "Thymosin-β4 and its derivatives e.g. TB-500", "pageOrSection": "Peptide hormones, growth factors, related substances, and mimetics" }], "reviewFlags": ["sports-regulatory claim; jurisdiction/league-specific guidance should be reviewed"]
+    },
+    {
+      "claimId": "tb500-parent-protein-evidence-boundary-001", "claimType": "evidence-gap", "statement": "Much published biomedical literature concerns thymosin beta-4 or formulations studied in specific clinical contexts; BioStack should not assume vendor TB-500 products are equivalent to the parent protein or studied formulations.",
+      "context": { "population": "users extrapolating thymosin beta-4 research to TB-500 products", "route": null, "formulation": "vendor/research TB-500 products", "useCase": "alias and formulation boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["frontiers-thymosin-beta4-2021", "wada-prohibited-list-tb500"],
+      "extractedEvidence": [{ "sourceRef": "frontiers-thymosin-beta4-2021", "quote": null, "pageOrSection": "Review of thymosin beta-4 functions and applications" }], "reviewFlags": ["alias ambiguity", "do not generalize parent-protein literature to gray-market TB-500"]
+    },
+    {
+      "claimId": "tb500-misinformation-boundary-001", "claimType": "evidence-gap", "statement": "Online recovery and injury-repair claims for TB-500 are often broader than the available human evidence for specific products; BioStack should treat this as an evidence gap unless claim-specific human evidence or a dedicated misinformation-monitoring source is added.",
+      "context": { "population": "consumer, performance, and recovery communities", "route": null, "formulation": "research/vendor TB-500 products", "useCase": "evidence and misinformation boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["frontiers-thymosin-beta4-2021"],
+      "extractedEvidence": [{ "sourceRef": "frontiers-thymosin-beta4-2021", "quote": null, "pageOrSection": "Review discussion" }], "reviewFlags": ["do not publish as proven human benefit"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot misinformation-heavy evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "misinformation-heavy", "alias-ambiguity", "sports-prohibited-boundary"] }
+}

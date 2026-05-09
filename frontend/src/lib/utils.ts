@@ -56,6 +56,12 @@ export function getEvidenceTierColor(tier: string): string {
       return 'bg-amber-500/10 text-amber-300 border border-amber-400/20';
     case 'theoretical':
       return 'bg-white/10 text-white/50 border border-white/15';
+    case 'insufficient':
+      return 'bg-rose-500/10 text-rose-300 border border-rose-400/20';
+    case 'anecdotal':
+      return 'bg-white/5 text-white/40 border border-white/10';
+    case 'unknown':
+      return 'bg-white/5 text-white/40 border border-white/10';
     default:
       return 'bg-white/10 text-white/70 border border-white/15';
   }

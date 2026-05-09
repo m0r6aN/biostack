@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "caffeine-evidence-pilot-001", "category": "nootropics-sleep", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Caffeine",
+    "aliases": ["1,3,7-trimethylxanthine"],
+    "classification": "Small Molecule",
+    "compoundFamily": "Methylxanthine stimulant",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "58-08-2", "drugbank": "DB00201", "pubchem": "2519", "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "pubchem-caffeine", "sourceType": "database", "authorityTier": "C1", "title": "PubChem Compound Summary for Caffeine", "publisher": "National Center for Biotechnology Information", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/2519", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "issn-caffeine-position-stand-2021", "sourceType": "review", "authorityTier": "B1", "title": "International society of sports nutrition position stand: caffeine and exercise performance", "publisher": "Journal of the International Society of Sports Nutrition", "url": "https://jissn.biomedcentral.com/articles/10.1186/s12970-020-00383-4", "doi": "10.1186/s12970-020-00383-4", "pmid": null, "publishedAt": "2021-01-02T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "caffeine-identity-pubchem-001", "claimType": "identity", "statement": "Caffeine is indexed by PubChem as CID 2519 and associated with CAS number 58-08-2.",
+      "context": { "population": null, "route": null, "formulation": null, "useCase": "identity resolution", "doseText": null },
+      "evidenceTier": "Unknown", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-caffeine"],
+      "extractedEvidence": [{ "sourceRef": "pubchem-caffeine", "quote": null, "pageOrSection": "Compound summary" }], "reviewFlags": []
+    },
+    {
+      "claimId": "caffeine-performance-position-001", "claimType": "efficacy", "statement": "A 2021 ISSN position stand states that caffeine supplementation has been shown to acutely enhance various aspects of exercise performance in many, but not all, studies.",
+      "context": { "population": "exercise and sport nutrition populations", "route": "oral", "formulation": null, "useCase": "acute exercise performance", "doseText": null },
+      "evidenceTier": "Moderate", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["issn-caffeine-position-stand-2021"],
+      "extractedEvidence": [{ "sourceRef": "issn-caffeine-position-stand-2021", "quote": "Supplementation with caffeine has been shown to acutely enhance various aspects of exercise performance in many but not all studies", "pageOrSection": "Position statement" }], "reviewFlags": ["avoid personalized timing or dosing advice"]
+    },
+    {
+      "claimId": "caffeine-evidence-gap-stimulant-load-001", "claimType": "evidence-gap", "statement": "BioStack should model caffeine separately from product blends and total stimulant load because pre-workouts, energy drinks, medications, and beverages can all contribute to exposure.",
+      "context": { "population": null, "route": "oral", "formulation": "beverages, capsules, energy products, pre-workouts", "useCase": "stack context", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["issn-caffeine-position-stand-2021"],
+      "extractedEvidence": [{ "sourceRef": "issn-caffeine-position-stand-2021", "quote": null, "pageOrSection": "Position statement / source forms" }], "reviewFlags": ["stimulant-load warnings require stronger authority before canonical safety output"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot evidence packet has not received human review."], "qualityFlags": ["pilot-input", "no-safety-canonicalization"] }
+}

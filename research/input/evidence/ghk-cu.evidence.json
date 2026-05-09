@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "ghk-cu-evidence-pilot-001", "category": "peptides-core", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "GHK-Cu",
+    "aliases": ["Copper tripeptide-1", "Glycyl-L-histidyl-L-lysine copper"],
+    "classification": "Peptide",
+    "compoundFamily": "Copper-binding peptide",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "300801-03-0", "drugbank": null, "pubchem": "133697840", "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "pubchem-ghk-cu", "sourceType": "database", "authorityTier": "C1", "title": "PubChem Compound Summary for GHK-Cu", "publisher": "National Center for Biotechnology Information", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/133697840", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "pmc-ghk-skin-regeneration-2015", "sourceType": "review", "authorityTier": "B1", "title": "GHK Peptide as a Natural Modulator of Multiple Cellular Pathways in Skin Regeneration", "publisher": "BioMed Research International / PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4508379/", "doi": "10.1155/2015/648108", "pmid": null, "publishedAt": "2015-01-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "ghk-cu-identity-pubchem-001", "claimType": "identity", "statement": "GHK-Cu is indexed by PubChem as CID 133697840 and associated with CAS number 300801-03-0.",
+      "context": { "population": null, "route": null, "formulation": null, "useCase": "identity resolution", "doseText": null },
+      "evidenceTier": "Unknown", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-ghk-cu"],
+      "extractedEvidence": [{ "sourceRef": "pubchem-ghk-cu", "quote": null, "pageOrSection": "Compound summary" }], "reviewFlags": ["verify aliases and CAS across product types"]
+    },
+    {
+      "claimId": "ghk-cu-skin-regeneration-context-001", "claimType": "studied-use", "statement": "A review describes GHK-Cu research in skin regeneration and wound-healing contexts, with substantial preclinical evidence and cosmetic/topical relevance; BioStack should keep topical/cosmetic claims separate from injectable or systemic claims.",
+      "context": { "population": "skin-regeneration and cosmetic research contexts", "route": "topical or studied route-specific contexts", "formulation": "GHK-Cu", "useCase": "skin regeneration literature boundary", "doseText": null },
+      "evidenceTier": "Limited", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-ghk-skin-regeneration-2015"],
+      "extractedEvidence": [{ "sourceRef": "pmc-ghk-skin-regeneration-2015", "quote": "Wound healing activity of GHK-Cu was confirmed in animal experiments", "pageOrSection": "Skin regeneration discussion" }], "reviewFlags": ["route-specific claims must be separated", "do not generalize topical evidence to injectable/systemic use"]
+    },
+    {
+      "claimId": "ghk-cu-hype-boundary-001", "claimType": "evidence-gap", "statement": "BioStack should separate GHK-Cu topical/cosmetic evidence from broad anti-aging, systemic healing, or injectable wellness claims unless source-specific human evidence supports those exact claims.",
+      "context": { "population": "consumer anti-aging and peptide users", "route": "topical, injectable, or unspecified", "formulation": "GHK-Cu products", "useCase": "route and marketing-claim boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-ghk-skin-regeneration-2015", "pubchem-ghk-cu"],
+      "extractedEvidence": [{ "sourceRef": "pmc-ghk-skin-regeneration-2015", "quote": null, "pageOrSection": "Review scope and evidence context" }], "reviewFlags": ["vendor injectable claims require misinformation monitoring"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot misinformation-heavy evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "misinformation-heavy", "route-specific-boundary"] }
+}

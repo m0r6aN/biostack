@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "creatine-evidence-pilot-001",
+    "category": "core-supplements",
+    "agentId": "augment-research-launchpack",
+    "generatedAt": "2026-05-05T00:00:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Creatine",
+    "aliases": ["Creatine monohydrate"],
+    "classification": "Supplement",
+    "compoundFamily": "Amino-acid derivative",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "57-00-1",
+      "drugbank": null,
+      "pubchem": "586",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "pubchem-creatine",
+      "sourceType": "database",
+      "authorityTier": "C1",
+      "title": "PubChem Compound Summary for Creatine",
+      "publisher": "National Center for Biotechnology Information",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/586",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-05-05T00:00:00Z"
+    },
+    {
+      "sourceId": "issn-creatine-position-stand-2017",
+      "sourceType": "review",
+      "authorityTier": "B1",
+      "title": "International Society of Sports Nutrition position stand: safety and efficacy of creatine supplementation in exercise, sport, and medicine",
+      "publisher": "Journal of the International Society of Sports Nutrition",
+      "url": "https://jissn.biomedcentral.com/articles/10.1186/s12970-017-0173-z",
+      "doi": "10.1186/s12970-017-0173-z",
+      "pmid": "28615996",
+      "publishedAt": "2017-06-13T00:00:00Z",
+      "accessedAt": "2026-05-05T00:00:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "creatine-identity-pubchem-001",
+      "claimType": "identity",
+      "statement": "Creatine is a distinct compound indexed by PubChem as CID 586 and associated with CAS number 57-00-1.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": null,
+        "useCase": "identity resolution",
+        "doseText": null
+      },
+      "evidenceTier": "Unknown",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": ["pubchem-creatine"],
+      "extractedEvidence": [
+        { "sourceRef": "pubchem-creatine", "quote": null, "pageOrSection": "Compound summary" }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "creatine-mechanism-phosphocreatine-001",
+      "claimType": "mechanism",
+      "statement": "Creatine is discussed in sports-nutrition literature primarily through its role in the creatine/phosphocreatine energy system, which supports rapid ATP resynthesis during high-intensity activity.",
+      "context": {
+        "population": "general adult sports-nutrition context",
+        "route": "oral",
+        "formulation": "creatine monohydrate",
+        "useCase": "exercise performance mechanism",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": ["issn-creatine-position-stand-2017"],
+      "extractedEvidence": [
+        { "sourceRef": "issn-creatine-position-stand-2017", "quote": null, "pageOrSection": "Position stand background and conclusions" }
+      ],
+      "reviewFlags": ["mechanism summary should be reviewed before customer-facing simplification"]
+    },
+    {
+      "claimId": "creatine-efficacy-performance-001",
+      "claimType": "efficacy",
+      "statement": "A 2017 International Society of Sports Nutrition position stand describes creatine monohydrate as one of the most extensively studied sports-nutrition supplements and supports its role in high-intensity exercise and training-adaptation contexts.",
+      "context": {
+        "population": "exercise and sport nutrition populations",
+        "route": "oral",
+        "formulation": "creatine monohydrate",
+        "useCase": "high-intensity exercise and training adaptation",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": ["issn-creatine-position-stand-2017"],
+      "extractedEvidence": [
+        { "sourceRef": "issn-creatine-position-stand-2017", "quote": null, "pageOrSection": "Position stand conclusions" }
+      ],
+      "reviewFlags": ["avoid converting population-level sports-nutrition evidence into personalized recommendations"]
+    },
+    {
+      "claimId": "creatine-evidence-gap-formulation-001",
+      "claimType": "evidence-gap",
+      "statement": "BioStack should separate creatine monohydrate evidence from claims about alternate creatine salts, blends, proprietary products, and marketing-specific formulations unless those products have their own evidence.",
+      "context": {
+        "population": null,
+        "route": "oral",
+        "formulation": "alternate formulations and proprietary blends",
+        "useCase": "evidence generalization boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": ["issn-creatine-position-stand-2017"],
+      "extractedEvidence": [
+        { "sourceRef": "issn-creatine-position-stand-2017", "quote": null, "pageOrSection": "Position stand scope" }
+      ],
+      "reviewFlags": ["product/formulation claims need separate packet support"]
+    }
+  ],
+  "conflicts": [],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": ["Pilot evidence packet has not received human review."],
+    "qualityFlags": ["pilot-input", "no-safety-canonicalization"]
+  }
+}

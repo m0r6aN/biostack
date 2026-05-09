@@ -1,0 +1,109 @@
+{
+  "draftSubstanceCount": 3,
+  "reviewQueueItemCount": 5,
+  "compounds": [
+    {
+      "name": "BPC-157",
+      "classification": "Peptide",
+      "overallEvidenceTier": "Limited",
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewQueueItemCount": 3,
+      "promotionReadiness": "blocked",
+      "promotionBlockers": [
+        "blocked: missing required authoritative support",
+        "review-required: draft is marked needsReview",
+        "review-required: completeness is partial"
+      ],
+      "reviewDecisionIds": [],
+      "qualityFlags": ["missing-authoritative-support", "limited-human-evidence", "misinformation-heavy"],
+      "reviewReasons": ["requires authoritative A1/A2 source for safety claims", "needsReview flag set by pipeline"]
+    },
+    {
+      "name": "Semaglutide",
+      "classification": "Pharmaceutical",
+      "overallEvidenceTier": "Strong",
+      "completeness": "substantial",
+      "needsReview": true,
+      "reviewQueueItemCount": 2,
+      "promotionReadiness": "review-required",
+      "promotionBlockers": [
+        "review-required: draft is marked needsReview",
+        "review-required: 2 review queue item(s)"
+      ],
+      "reviewDecisionIds": [],
+      "qualityFlags": ["a1-label-backed", "product-specific-labels"],
+      "reviewReasons": ["regulatory boundary — approved product with specific label", "needsReview flag set by pipeline"]
+    },
+    {
+      "name": "Creatine",
+      "classification": "Supplement",
+      "overallEvidenceTier": "Strong",
+      "completeness": "substantial",
+      "needsReview": false,
+      "reviewQueueItemCount": 0,
+      "promotionReadiness": "candidate-for-promotion",
+      "promotionBlockers": [],
+      "reviewDecisionIds": [],
+      "qualityFlags": [],
+      "reviewReasons": []
+    }
+  ],
+  "reviewCategories": [
+    {
+      "name": "Safety Critical",
+      "count": 1,
+      "compounds": ["BPC-157"],
+      "signals": ["missing-authoritative-support"],
+      "recommendedActions": [
+        "Require A1/A2 support for contraindications, warnings, adverse effects, monitoring, and safety-critical fields.",
+        "Escalate prescription, hormone-axis, and severe-risk claims for human review."
+      ]
+    },
+    {
+      "name": "Misinformation / Vendor Claims",
+      "count": 1,
+      "compounds": ["BPC-157"],
+      "signals": ["misinformation-heavy"],
+      "recommendedActions": [
+        "Treat social, vendor, and community claims as popularity or misinformation signals only.",
+        "Use cautious customer-facing language that separates claimed uses from supported evidence."
+      ]
+    },
+    {
+      "name": "Regulatory / Approval",
+      "count": 1,
+      "compounds": ["Semaglutide"],
+      "signals": ["a1-label-backed", "product-specific-labels"],
+      "recommendedActions": [
+        "Verify jurisdiction-specific status against authoritative regulator or product-label sources.",
+        "Do not publish approved-use language unless the exact product/use case is source-backed."
+      ]
+    }
+  ],
+  "promotionReadiness": [
+    { "name": "blocked", "count": 1, "compounds": ["BPC-157"] },
+    { "name": "review-required", "count": 1, "compounds": ["Semaglutide"] },
+    { "name": "candidate-for-promotion", "count": 1, "compounds": ["Creatine"] }
+  ],
+  "qualityFlags": [
+    { "name": "missing-authoritative-support", "count": 1, "compounds": ["BPC-157"] },
+    { "name": "misinformation-heavy", "count": 1, "compounds": ["BPC-157"] },
+    { "name": "limited-human-evidence", "count": 1, "compounds": ["BPC-157"] },
+    { "name": "a1-label-backed", "count": 1, "compounds": ["Semaglutide"] },
+    { "name": "product-specific-labels", "count": 1, "compounds": ["Semaglutide"] }
+  ],
+  "reviewReasons": [
+    { "name": "requires authoritative A1/A2 source for safety claims", "count": 1, "compounds": ["BPC-157"] },
+    { "name": "needsReview flag set by pipeline", "count": 2, "compounds": ["BPC-157", "Semaglutide"] }
+  ],
+  "classifications": [
+    { "name": "Peptide", "count": 1, "compounds": ["BPC-157"] },
+    { "name": "Pharmaceutical", "count": 1, "compounds": ["Semaglutide"] },
+    { "name": "Supplement", "count": 1, "compounds": ["Creatine"] }
+  ],
+  "evidenceTiers": [
+    { "name": "Strong", "count": 2, "compounds": ["Semaglutide", "Creatine"] },
+    { "name": "Limited", "count": 1, "compounds": ["BPC-157"] }
+  ]
+}

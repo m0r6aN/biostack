@@ -110,6 +110,11 @@ CLAUDE.md
 tmp/
 temp/
 cache/
+research/output/*
+!research/output/.gitkeep
 
 # Git worktrees
 .worktrees/
+
+# Superpowers brainstorm session files
+.superpowers/

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "creatine-evidence-pilot-001",
+    "category": "core-supplements",
+    "agentId": "evidence-agent-pilot",
+    "generatedAt": "2026-05-04T00:00:00Z",
+    "sourceRegistryVersion": "pilot-001"
+  },
+  "compound": {
+    "canonicalName": "Creatine",
+    "aliases": ["Creatine monohydrate"],
+    "classification": "Supplement",
+    "compoundFamily": "Amino-acid derivative",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "57-00-1",
+      "drugbank": null,
+      "pubchem": "586",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "pubchem-creatine",
+      "sourceType": "database",
+      "authorityTier": "C1",
+      "title": "PubChem Compound Summary for Creatine",
+      "publisher": "National Center for Biotechnology Information",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/586",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-05-04T00:00:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "creatine-identity-pubchem-001",
+      "claimType": "identity",
+      "statement": "Creatine is a distinct compound with PubChem CID 586 and CAS number 57-00-1.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": null,
+        "useCase": "identity resolution",
+        "doseText": null
+      },
+      "evidenceTier": "Unknown",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": ["pubchem-creatine"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-creatine",
+          "quote": null,
+          "pageOrSection": "Compound summary"
+        }
+      ],
+      "reviewFlags": []
+    }
+  ],
+  "conflicts": [],
+  "ops": {
+    "completeness": "minimal",
+    "needsReview": false,
+    "reviewReasons": [],
+    "qualityFlags": ["pilot-fixture"]
+  }
+}

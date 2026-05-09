@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "magnesium-evidence-pilot-001", "category": "core-supplements", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Magnesium",
+    "aliases": ["Mg", "Magnesium glycinate", "Magnesium citrate", "Magnesium oxide"],
+    "classification": "Mineral",
+    "compoundFamily": "Essential mineral",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "7439-95-4", "drugbank": null, "pubchem": "5462224", "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "pubchem-magnesium", "sourceType": "database", "authorityTier": "C1", "title": "PubChem Compound Summary for Magnesium", "publisher": "National Center for Biotechnology Information", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/5462224", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "nih-ods-magnesium-hp", "sourceType": "medical-summary", "authorityTier": "C2", "title": "Magnesium - Health Professional Fact Sheet", "publisher": "NIH Office of Dietary Supplements", "url": "https://ods.od.nih.gov/factsheets/magnesium-HealthProfessional/", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "magnesium-identity-pubchem-001", "claimType": "identity", "statement": "Magnesium is indexed by PubChem as CID 5462224 and associated with CAS number 7439-95-4.",
+      "context": { "population": null, "route": null, "formulation": null, "useCase": "identity resolution", "doseText": null },
+      "evidenceTier": "Unknown", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-magnesium"],
+      "extractedEvidence": [{ "sourceRef": "pubchem-magnesium", "quote": null, "pageOrSection": "Compound summary" }], "reviewFlags": []
+    },
+    {
+      "claimId": "magnesium-essential-mineral-001", "claimType": "mechanism", "statement": "NIH ODS describes magnesium as an essential mineral involved in numerous biochemical processes, making it relevant to nutrition, neuromuscular, and metabolic contexts.",
+      "context": { "population": "general nutrition context", "route": "oral", "formulation": null, "useCase": "nutrition and physiology", "doseText": null },
+      "evidenceTier": "Moderate", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["nih-ods-magnesium-hp"],
+      "extractedEvidence": [{ "sourceRef": "nih-ods-magnesium-hp", "quote": null, "pageOrSection": "Introduction / overview" }], "reviewFlags": ["customer-facing physiology summary should be reviewed"]
+    },
+    {
+      "claimId": "magnesium-formulation-gap-001", "claimType": "evidence-gap", "statement": "BioStack should keep claims about magnesium forms such as glycinate, citrate, and oxide separate because supplement form can affect use context, tolerability, and claim specificity.",
+      "context": { "population": null, "route": "oral", "formulation": "multiple magnesium salts", "useCase": "formulation boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["nih-ods-magnesium-hp"],
+      "extractedEvidence": [{ "sourceRef": "nih-ods-magnesium-hp", "quote": null, "pageOrSection": "Dietary supplements" }], "reviewFlags": ["do not generalize form-specific claims without supporting sources"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot evidence packet has not received human review."], "qualityFlags": ["pilot-input", "no-safety-canonicalization"] }
+}

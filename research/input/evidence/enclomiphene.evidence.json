@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "enclomiphene-evidence-pilot-001", "category": "hormones-serms-sarms", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Enclomiphene",
+    "aliases": ["trans-clomiphene", "Enclomiphene citrate", "Androxal"],
+    "classification": "SERM",
+    "compoundFamily": "Selective estrogen receptor modulator",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "15690-57-0", "drugbank": null, "pubchem": null, "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "pmc-enclomiphene-pkpd-2014", "sourceType": "paper", "authorityTier": "B2", "title": "Testosterone restoration using enclomiphene citrate in men with secondary hypogonadism: a pharmacodynamic and pharmacokinetic study", "publisher": "PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4155868/", "doi": null, "pmid": null, "publishedAt": "2014-01-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "pmc-enclomiphene-secondary-hypogonadism-2016", "sourceType": "review", "authorityTier": "B1", "title": "Enclomiphene Citrate for the Treatment of Secondary Male Hypogonadism", "publisher": "PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5009465/", "doi": null, "pmid": null, "publishedAt": "2016-01-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "enclomiphene-secondary-hypogonadism-studied-use-001", "claimType": "studied-use", "statement": "Clinical studies have investigated enclomiphene citrate in men with secondary hypogonadism, including effects on testosterone, LH/FSH, and sperm-concentration preservation compared with exogenous testosterone contexts.",
+      "context": { "population": "men with secondary hypogonadism in clinical studies", "route": "oral", "formulation": "enclomiphene citrate", "useCase": "secondary hypogonadism research", "doseText": null },
+      "evidenceTier": "Limited", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-enclomiphene-pkpd-2014", "pmc-enclomiphene-secondary-hypogonadism-2016"],
+      "extractedEvidence": [{ "sourceRef": "pmc-enclomiphene-pkpd-2014", "quote": "randomized, single-blind, two-centre, phase II study", "pageOrSection": "Methods" }], "reviewFlags": ["do not present as personalized hormone guidance", "verify jurisdiction-specific regulatory status"]
+    },
+    {
+      "claimId": "enclomiphene-regulatory-boundary-001", "claimType": "evidence-gap", "statement": "This pilot packet includes clinical-study literature but no approved product label; BioStack should not present enclomiphene as an approved therapy unless jurisdiction-specific regulatory evidence is added.",
+      "context": { "population": null, "route": "oral", "formulation": "enclomiphene citrate", "useCase": "regulatory boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-enclomiphene-secondary-hypogonadism-2016"],
+      "extractedEvidence": [{ "sourceRef": "pmc-enclomiphene-secondary-hypogonadism-2016", "quote": null, "pageOrSection": "Review of trials and development status" }], "reviewFlags": ["regulatory status requires authoritative source", "compounded or clinic claims require separate review"]
+    },
+    {
+      "claimId": "enclomiphene-hormone-safety-boundary-001", "claimType": "evidence-gap", "statement": "Because enclomiphene affects endocrine pathways, BioStack should require explicit safety, contraindication, monitoring, fertility, and visual/ocular review before customer-facing stack intelligence is produced.",
+      "context": { "population": "hormone optimization and fertility-related contexts", "route": "oral", "formulation": "enclomiphene citrate", "useCase": "safety and monitoring boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-enclomiphene-pkpd-2014", "pmc-enclomiphene-secondary-hypogonadism-2016"],
+      "extractedEvidence": [{ "sourceRef": "pmc-enclomiphene-secondary-hypogonadism-2016", "quote": null, "pageOrSection": "Trial table and safety context" }], "reviewFlags": ["safety-critical fields require authoritative review"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot hormone/SERM evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "regulatory-ambiguity", "hormone-axis-boundary"] }
+}
