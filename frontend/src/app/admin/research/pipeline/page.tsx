@@ -1,9 +1,8 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from '@/components/Header';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { ReadinessBadge } from '@/components/research/ReadinessBadge';
-import { getApiBaseUrl } from '@/lib/apiBase';
 import {
   fetchPromotionManifest,
   fetchImportPreview,
@@ -30,29 +29,20 @@ function ArtifactEmpty({ name }: { name: string }) {
 }
 
 export default function PipelinePage() {
-  const tokenRef = useRef<string | null>(null);
   const [manifest, setManifest] = useState<PromotionManifest | null>(null);
   const [importPreview, setImportPreview] = useState<PromotionImportPreview | null>(null);
   const [dryRun, setDryRun] = useState<unknown>(null);
   const [exportManifest, setExportManifest] = useState<unknown>(null);
   const [open, setOpen] = useState({ manifest: true, export: false, import: false, dryRun: false });
 
-  useEffect(() => { acquireToken().then(load); }, []);
-
-  async function acquireToken() {
-    try {
-      const res = await fetch(`${getApiBaseUrl()}/api/v1/auth/dev-token`, { method: 'POST' });
-      if (res.ok) tokenRef.current = (await res.json()).token;
-    } catch { /* no-op */ }
-  }
+  useEffect(() => { load(); }, []);
 
   async function load() {
-    const t = tokenRef.current ?? '';
     const [m, ip, dr, em] = await Promise.allSettled([
-      fetchPromotionManifest(t),
-      fetchImportPreview(t),
-      fetchDryRunReport(t),
-      fetchExportManifest(t),
+      fetchPromotionManifest(''),
+      fetchImportPreview(''),
+      fetchDryRunReport(''),
+      fetchExportManifest(''),
     ]);
     if (m.status === 'fulfilled') setManifest(m.value);
     if (ip.status === 'fulfilled') setImportPreview(ip.value);
