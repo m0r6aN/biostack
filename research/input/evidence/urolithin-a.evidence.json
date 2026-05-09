@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "urolithin-a-evidence-pilot-001", "category": "emerging-research", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Urolithin A",
+    "aliases": ["3,8-dihydroxyurolithin"],
+    "classification": "Supplement",
+    "compoundFamily": "Gut-derived ellagitannin metabolite",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "1143-70-0", "drugbank": null, "pubchem": "5488186", "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "pubchem-urolithin-a", "sourceType": "database", "authorityTier": "C1", "title": "PubChem Compound Summary for Urolithin A", "publisher": "National Center for Biotechnology Information", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/5488186", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "jama-urolithin-a-older-adults-2022", "sourceType": "paper", "authorityTier": "B2", "title": "Effect of Urolithin A Supplementation on Muscle Endurance and Mitochondrial Health in Older Adults: A Randomized Clinical Trial", "publisher": "JAMA Network Open", "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2788244", "doi": "10.1001/jamanetworkopen.2021.44279", "pmid": "35050355", "publishedAt": "2022-01-20T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "urolithin-a-identity-pubchem-001", "claimType": "identity", "statement": "Urolithin A is indexed by PubChem as CID 5488186 and associated with CAS number 1143-70-0.",
+      "context": { "population": null, "route": null, "formulation": null, "useCase": "identity resolution", "doseText": null },
+      "evidenceTier": "Unknown", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-urolithin-a"],
+      "extractedEvidence": [{ "sourceRef": "pubchem-urolithin-a", "quote": null, "pageOrSection": "Compound summary" }], "reviewFlags": []
+    },
+    {
+      "claimId": "urolithin-a-mitochondrial-studied-use-001", "claimType": "studied-use", "statement": "A randomized clinical trial studied urolithin A supplementation in older adults using muscle endurance and mitochondrial-health biomarkers as outcomes, supporting BioStack tracking it as an emerging mitochondrial-health compound without overstating general longevity benefits.",
+      "context": { "population": "adults aged 65 to 90 years in a randomized clinical trial", "route": "oral", "formulation": "urolithin A supplementation", "useCase": "muscle endurance and mitochondrial-health biomarkers", "doseText": null },
+      "evidenceTier": "Moderate", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["jama-urolithin-a-older-adults-2022"],
+      "extractedEvidence": [{ "sourceRef": "jama-urolithin-a-older-adults-2022", "quote": "This double-blind, placebo-controlled randomized clinical trial in adults aged 65 to 90 years", "pageOrSection": "Design, Setting, and Participants" }], "reviewFlags": ["review endpoints before customer-facing claims", "do not convert biomarker evidence into broad longevity promises"]
+    },
+    {
+      "claimId": "urolithin-a-hype-boundary-001", "claimType": "evidence-gap", "statement": "BioStack should separate urolithin A evidence on specific trial endpoints from broader anti-aging, lifespan, or universal mitochondrial-optimization claims unless stronger human evidence is added.",
+      "context": { "population": null, "route": "oral", "formulation": "urolithin A supplementation", "useCase": "longevity and marketing-claim boundary", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["jama-urolithin-a-older-adults-2022", "pubchem-urolithin-a"],
+      "extractedEvidence": [{ "sourceRef": "jama-urolithin-a-older-adults-2022", "quote": null, "pageOrSection": "Outcomes and limitations" }], "reviewFlags": ["vendor longevity claims require misinformation monitoring"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot emerging evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "emerging-longevity-compound", "hype-boundary"] }
+}

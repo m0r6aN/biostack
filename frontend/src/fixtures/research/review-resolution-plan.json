@@ -1,0 +1,48 @@
+{
+  "planVersion": "1.0.0",
+  "generatedAtUtc": "2026-05-05T09:00:00Z",
+  "counts": {
+    "totalItems": 3,
+    "blockedItems": 1,
+    "reviewRequiredItems": 2,
+    "resolutionTypes": [
+      { "name": "add-authoritative-source", "count": 1, "compounds": ["BPC-157"] },
+      { "name": "human-review", "count": 2, "compounds": ["BPC-157", "Semaglutide"] }
+    ]
+  },
+  "items": [
+    {
+      "itemId": "bpc-157-resolution-1",
+      "compoundName": "BPC-157",
+      "readiness": "blocked",
+      "severity": "blocked",
+      "resolutionType": "add-authoritative-source",
+      "issue": "blocked: missing required authoritative support",
+      "recommendedAction": "Attach an A1/A2 source for the safety, regulatory, monitoring, contraindication, or approved-use claim before promotion.",
+      "relatedBlockers": ["blocked: missing required authoritative support"],
+      "relatedQualityFlags": ["missing-authoritative-support"]
+    },
+    {
+      "itemId": "bpc-157-resolution-2",
+      "compoundName": "BPC-157",
+      "readiness": "blocked",
+      "severity": "review",
+      "resolutionType": "human-review",
+      "issue": "review-required: draft is marked needsReview",
+      "recommendedAction": "Human reviewer must assess and resolve: review-required: draft is marked needsReview",
+      "relatedBlockers": ["review-required: draft is marked needsReview"],
+      "relatedQualityFlags": ["limited-human-evidence"]
+    },
+    {
+      "itemId": "semaglutide-resolution-1",
+      "compoundName": "Semaglutide",
+      "readiness": "review-required",
+      "severity": "review",
+      "resolutionType": "human-review",
+      "issue": "review-required: 2 review queue item(s)",
+      "recommendedAction": "Human reviewer must assess and resolve each review queue item.",
+      "relatedBlockers": ["review-required: 2 review queue item(s)"],
+      "relatedQualityFlags": ["a1-label-backed"]
+    }
+  ]
+}

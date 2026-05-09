@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "melatonin-evidence-pilot-001", "category": "nootropics-sleep", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Melatonin",
+    "aliases": ["N-acetyl-5-methoxytryptamine"],
+    "classification": "Hormone",
+    "compoundFamily": "Indoleamine hormone",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "73-31-4", "drugbank": "DB01065", "pubchem": "896", "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "pubchem-melatonin", "sourceType": "database", "authorityTier": "C1", "title": "PubChem Compound Summary for Melatonin", "publisher": "National Center for Biotechnology Information", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/896", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "nih-nccih-melatonin-what-to-know", "sourceType": "medical-summary", "authorityTier": "C2", "title": "Melatonin: What You Need To Know", "publisher": "NIH National Center for Complementary and Integrative Health", "url": "https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "melatonin-identity-pubchem-001", "claimType": "identity", "statement": "Melatonin is indexed by PubChem as CID 896 and associated with CAS number 73-31-4.",
+      "context": { "population": null, "route": null, "formulation": null, "useCase": "identity resolution", "doseText": null },
+      "evidenceTier": "Unknown", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-melatonin"],
+      "extractedEvidence": [{ "sourceRef": "pubchem-melatonin", "quote": null, "pageOrSection": "Compound summary" }], "reviewFlags": []
+    },
+    {
+      "claimId": "melatonin-hormone-sleep-wake-001", "claimType": "mechanism", "statement": "PubChem describes melatonin as a hormone produced by the pineal gland that is believed to play a role in regulation of the sleep-wake cycle.",
+      "context": { "population": "general physiology context", "route": null, "formulation": null, "useCase": "sleep-wake physiology", "doseText": null },
+      "evidenceTier": "Moderate", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-melatonin"],
+      "extractedEvidence": [{ "sourceRef": "pubchem-melatonin", "quote": "Melatonin is a hormone produced by the pineal gland that has multiple effects including somnolence, and is believed to play a role in regulation of the sleep-wake cycle.", "pageOrSection": "Description" }], "reviewFlags": ["customer-facing wording should avoid overstating supplement outcomes"]
+    },
+    {
+      "claimId": "melatonin-long-term-safety-gap-001", "claimType": "evidence-gap", "statement": "NCCIH states that short-term use of melatonin supplements appears to be safe for most people, but information on long-term safety is lacking; BioStack should keep this as an evidence gap unless stronger safety review is completed.",
+      "context": { "population": "general consumer supplement context", "route": "oral", "formulation": "over-the-counter melatonin supplements", "useCase": "safety evidence boundary", "doseText": null },
+      "evidenceTier": "Limited", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["nih-nccih-melatonin-what-to-know"],
+      "extractedEvidence": [{ "sourceRef": "nih-nccih-melatonin-what-to-know", "quote": "Short-term use of melatonin supplements appears to be safe for most people, but information on the long-term safety of supplementing with melatonin is lacking.", "pageOrSection": "Is it safe to take melatonin?" }], "reviewFlags": ["do not convert into personalized safety guidance", "pediatric claims require separate review"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot evidence packet has not received human review."], "qualityFlags": ["pilot-input", "no-safety-canonicalization"] }
+}

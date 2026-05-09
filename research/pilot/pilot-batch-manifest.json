@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0.0",
+  "pilotId": "compound-research-pilot-001",
+  "purpose": "Validate BioStack's research supply chain across common, high-risk, emerging, and misinformation-heavy compound classes before scaling.",
+  "publicationDefault": "draft-review-required",
+  "categories": [
+    {
+      "category": "core-supplements",
+      "priority": 1,
+      "compounds": ["Creatine", "Magnesium", "Vitamin D3"],
+      "why": "High consumer demand, strong source availability, useful baseline for evidence scoring."
+    },
+    {
+      "category": "peptides-core",
+      "priority": 1,
+      "compounds": ["BPC-157", "TB-500", "GHK-Cu"],
+      "why": "High interest, frequent stacking, major misinformation risk, mixed evidence quality."
+    },
+    {
+      "category": "glp1-incretins",
+      "priority": 1,
+      "compounds": ["Semaglutide", "Tirzepatide", "Retatrutide"],
+      "why": "High clinical relevance, strong regulatory sources for approved incretins, high customer interest, and emerging pipeline relevance."
+    },
+    {
+      "category": "hormones-serms-sarms",
+      "priority": 1,
+      "compounds": ["Testosterone cypionate", "Enclomiphene", "Ostarine"],
+      "why": "High-risk category requiring strict regulatory/safety authority checks."
+    },
+    {
+      "category": "nootropics-sleep",
+      "priority": 2,
+      "compounds": ["Caffeine", "Melatonin"],
+      "why": "Broad usage, timing interactions, safety nuance, easy pilot coverage."
+    },
+    {
+      "category": "emerging-research",
+      "priority": 2,
+      "compounds": ["Urolithin A", "Spermidine"],
+      "why": "Emerging longevity interest with need to separate early evidence from claims."
+    }
+  ],
+  "requiredOutputs": [
+    "compound-candidate batches by category",
+    "source registry covering all pilot categories",
+    "one evidence packet per compound",
+    "ResearchJob draft-substances.json",
+    "ResearchJob review-queue.json",
+    "ResearchJob research-run-report.json"
+  ],
+  "reviewGates": [
+    "missing authoritative support",
+    "regulatory ambiguity",
+    "safety-critical claims",
+    "unresolved source conflicts",
+    "D/X-tier source contamination",
+    "animal or in-vitro evidence promoted as human outcome"
+  ]
+}

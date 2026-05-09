@@ -1,0 +1,15 @@
+{
+  "reportVersion": "1.0.0",
+  "generatedAtUtc": "2026-05-05T09:00:00Z",
+  "summary": { "total": 1, "safe": 1, "blocked": 0, "errors": 0 },
+  "items": [
+    {
+      "name": "Creatine",
+      "slug": "creatine",
+      "safe": true,
+      "action": "create",
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

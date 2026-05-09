@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": { "packetId": "semaglutide-evidence-pilot-001", "category": "glp1-incretins", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "compound": {
+    "canonicalName": "Semaglutide",
+    "aliases": ["GLP-1 receptor agonist"],
+    "classification": "Peptide",
+    "compoundFamily": "GLP-1 receptor agonist",
+    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "910463-68-2", "drugbank": "DB13928", "pubchem": "56843331", "chembl": null, "doi": null, "pmid": null }
+  },
+  "sources": [
+    { "sourceId": "dailymed-ozempic", "sourceType": "label", "authorityTier": "A1", "title": "DailyMed OZEMPIC (semaglutide) injection, solution", "publisher": "National Library of Medicine / DailyMed", "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e6da837c-0da0-41d6-973c-5559bf764367", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "dailymed-wegovy", "sourceType": "label", "authorityTier": "A1", "title": "DailyMed WEGOVY (semaglutide) injection/tablet", "publisher": "National Library of Medicine / DailyMed", "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ee06186f-2aa3-4990-a760-757579d8f77b", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "fda-compounded-glp1-concerns", "sourceType": "regulator", "authorityTier": "A1", "title": "FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss", "publisher": "U.S. Food and Drug Administration", "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/medications-containing-semaglutide-marketed-type-2-diabetes-or-weight-loss", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" }
+  ],
+  "claims": [
+    {
+      "claimId": "semaglutide-ozempic-regulatory-001", "claimType": "approved-indication", "statement": "DailyMed identifies Ozempic as semaglutide injection indicated as an adjunct to diet and exercise to improve glycemic control in adults with type 2 diabetes mellitus and for certain cardiovascular-risk contexts in adults with type 2 diabetes.",
+      "context": { "population": "adults with type 2 diabetes mellitus", "route": "subcutaneous", "formulation": "Ozempic semaglutide injection", "useCase": "approved labeled use", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-ozempic"],
+      "extractedEvidence": [{ "sourceRef": "dailymed-ozempic", "quote": "OZEMPIC is a glucagon-like peptide 1 (GLP-1) receptor agonist indicated...", "pageOrSection": "Indications and Usage" }], "reviewFlags": ["product-specific indication; do not generalize to compounded products"]
+    },
+    {
+      "claimId": "semaglutide-wegovy-regulatory-001", "claimType": "approved-indication", "statement": "DailyMed identifies Wegovy as semaglutide indicated with diet and physical activity for chronic weight-management contexts and cardiovascular-risk reduction contexts described in the product label.",
+      "context": { "population": "label-specified obesity, overweight, or cardiovascular-risk populations", "route": "subcutaneous or label-specified product presentation", "formulation": "Wegovy semaglutide", "useCase": "approved labeled use", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-wegovy"],
+      "extractedEvidence": [{ "sourceRef": "dailymed-wegovy", "quote": "WEGOVY is a glucagon-like peptide-1 (GLP-1) receptor agonist indicated in combination with a reduced calorie diet and increased physical activity", "pageOrSection": "Indications and Usage" }], "reviewFlags": ["product-specific indication; verify latest label before publication"]
+    },
+    {
+      "claimId": "semaglutide-mtc-men2-contraindication-001", "claimType": "contraindication", "statement": "DailyMed semaglutide product labels list personal or family history of medullary thyroid carcinoma or MEN 2 as a contraindication.",
+      "context": { "population": "patients with personal or family history of MTC or MEN 2", "route": null, "formulation": "semaglutide labeled products", "useCase": "contraindication", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-ozempic", "dailymed-wegovy"],
+      "extractedEvidence": [{ "sourceRef": "dailymed-ozempic", "quote": "Personal or family history of MTC or in patients with MEN 2", "pageOrSection": "Contraindications" }], "reviewFlags": ["safety-critical; human review required"]
+    },
+    {
+      "claimId": "semaglutide-compounded-warning-001", "claimType": "warning", "statement": "FDA has warned about dosing errors and adverse events associated with compounded injectable semaglutide products; BioStack should not treat compounded-product claims as equivalent to approved product labels.",
+      "context": { "population": "users of compounded injectable semaglutide products", "route": "subcutaneous", "formulation": "compounded semaglutide", "useCase": "compounding and misinformation boundary", "doseText": null },
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["fda-compounded-glp1-concerns"],
+      "extractedEvidence": [{ "sourceRef": "fda-compounded-glp1-concerns", "quote": "FDA received multiple reports of adverse events, some requiring hospitalization, that may be related to dosing errors associated with compounded injectable semaglutide products.", "pageOrSection": "FDA concerns with unapproved GLP-1 drugs" }], "reviewFlags": ["compounded-product claims require separate evidence and review"]
+    }
+  ],
+  "conflicts": [],
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot regulatory evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "a1-label-backed", "product-specific-labels"] }
+}

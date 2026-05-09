@@ -18,4 +18,18 @@ public enum RunMode
     /// Idempotent: no-ops against unchanged records.
     /// </summary>
     Refresh = 2,
+
+    /// <summary>
+    /// Local/offline research artifact processing. Validates candidate/source/evidence
+    /// JSON, compiles draft substance records, and emits review/report artifacts without
+    /// connecting to or writing a database.
+    /// </summary>
+    Research = 3,
+
+    /// <summary>
+    /// Offline promotion-import dry run. Consumes promotion export + import preview
+    /// artifacts, validates safety gates, emits a dry-run report, and performs no
+    /// database writes.
+    /// </summary>
+    PromotionImportDryRun = 4,
 }
