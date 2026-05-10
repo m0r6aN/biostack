@@ -6,6 +6,7 @@ public enum ResearchArtifactKind
     SourceRegistry = 2,
     EvidencePacket = 3,
     ReviewDecisionBatch = 4,
+    ResearchRequestBatch = 5,
 }
 
 public sealed record ResearchArtifactSchemaDescriptor(
@@ -33,6 +34,10 @@ public static class ResearchArtifactSchemas
             ResearchArtifactKind.ReviewDecisionBatch,
             "review-decision.schema.json",
             "review-decision-batch"),
+        new ResearchArtifactSchemaDescriptor(
+            ResearchArtifactKind.ResearchRequestBatch,
+            "research-request.schema.json",
+            "research-request-batch"),
     };
 
     public static ResearchArtifactSchemaDescriptor Get(ResearchArtifactKind kind)

@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react';
 import CompoundDetail from '@/app/admin/research/compounds/[slug]/page';
+import { fetchEvidencePacket } from '@/lib/research/loader';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 vi.mock('@/components/Header', () => ({
   Header: ({ title }: { title: string }) => <div>{title}</div>,
@@ -55,8 +56,25 @@ vi.mock('@/lib/research/loader', () => ({
       resolutionType: 'add-authoritative-source',
       issue: 'blocked: missing required authoritative support',
       recommendedAction: 'Attach A1/A2.',
+      relatedReviewQueueItemIds: [],
       relatedBlockers: [], relatedQualityFlags: [],
     }],
+  }),
+  fetchReviewQueue: vi.fn().mockResolvedValue([{ itemId: 'bpc-157-ops-review-1', compoundName: 'BPC-157', severity: 'review', reason: 'Pilot review.', references: [] }]),
+  fetchEvidencePacket: vi.fn().mockResolvedValue({
+    schemaVersion: '1.0.0', recordType: 'compound-evidence-packet',
+    packet: { packetId: 'bpc-packet', category: 'peptides', agentId: 'agent', generatedAt: '', sourceRegistryVersion: 'sources' },
+    compound: { canonicalName: 'BPC-157', aliases: [], classification: 'Peptide', compoundFamily: null, externalIdentifiers: {} },
+    sources: [{ sourceId: 'src-1', sourceType: 'clinical', authorityTier: 'B2', title: 'BPC source', publisher: null, url: null, doi: null, pmid: null, publishedAt: null, accessedAt: '' }],
+    claims: [{
+      claimId: 'claim-1', claimType: 'evidence-gap',
+      statement: 'BPC-157 requires human review before promotion.',
+      context: { population: null, route: null, formulation: null, useCase: null, doseText: null },
+      evidenceTier: 'Limited', confidence: 'moderate', fieldAuthorityRequired: false,
+      sourceRefs: ['src-1'], extractedEvidence: [{ sourceRef: 'src-1', quote: 'Review quote.', pageOrSection: null }],
+      reviewFlags: ['pilot-input'],
+    }],
+    conflicts: [], ops: { completeness: 'partial', needsReview: true, reviewReasons: [], qualityFlags: [] },
   }),
 }));
 
@@ -74,5 +92,30 @@ describe('CompoundDetail', () => {
   it('shows promotion blockers', async () => {
     render(<CompoundDetail />);
     expect(await screen.findByText(/missing required authoritative support/)).toBeInTheDocument();
+  });
+
+  it('renders evidence packet claims', async () => {
+    render(<CompoundDetail />);
+    await screen.findAllByText('BPC-157');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Claims' }));
+
+    expect(await screen.findByText('BPC-157 requires human review before promotion.')).toBeInTheDocument();
+    expect(screen.getByText('Evidence support: Limited')).toBeInTheDocument();
+    expect(screen.getByText('Extraction confidence: moderate')).toBeInTheDocument();
+    expect(screen.getByText(/Reviewer guardrails/)).toBeInTheDocument();
+    expect(screen.getByText('B2 · BPC source')).toBeInTheDocument();
+    expect(fetchEvidencePacket).toHaveBeenCalledWith('bpc-157', expect.any(String));
+  });
+
+  it('shows a section-level empty state when the evidence packet is missing', async () => {
+    vi.mocked(fetchEvidencePacket).mockRejectedValueOnce(new Error('404'));
+
+    render(<CompoundDetail />);
+    await screen.findAllByText('BPC-157');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Claims' }));
+
+    expect(await screen.findByText(/Research artifacts not yet generated/)).toBeInTheDocument();
   });
 });

@@ -79,6 +79,16 @@ public sealed class WorkerOptions
     public string? ResearchReviewDecisionDirectory { get; set; }
 
     /// <summary>
+    /// Optional single research-request batch path used by <see cref="RunMode.Research" />.
+    /// </summary>
+    public string? ResearchRequestPath { get; set; }
+
+    /// <summary>
+    /// Optional directory of research-request batch JSON files used by <see cref="RunMode.Research" />.
+    /// </summary>
+    public string? ResearchRequestDirectory { get; set; }
+
+    /// <summary>
     /// Output directory for research-mode draft records, review queue, and run report.
     /// </summary>
     public string ResearchOutputDirectory { get; set; } = "ResearchOutput";

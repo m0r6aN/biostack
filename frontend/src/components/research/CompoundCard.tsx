@@ -1,6 +1,6 @@
+import type { ResearchSummaryCompound } from '@/lib/research/types';
 import { cn } from '@/lib/utils';
 import { ReadinessBadge } from './ReadinessBadge';
-import type { ResearchSummaryCompound } from '@/lib/research/types';
 
 interface CompoundCardProps {
   compound: ResearchSummaryCompound;
@@ -9,6 +9,7 @@ interface CompoundCardProps {
 }
 
 const borderColor: Record<string, string> = {
+  'research-requested': 'border-l-violet-500',
   'blocked': 'border-l-rose-500',
   'review-required': 'border-l-amber-500',
   'candidate-for-promotion': 'border-l-emerald-500',

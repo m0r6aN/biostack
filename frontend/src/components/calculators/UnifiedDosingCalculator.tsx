@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { SafetyDisclaimer } from '@/components/SafetyDisclaimer';
+import { SyringeDrawVisualizer } from '@/components/calculators/SyringeDrawVisualizer';
 import {
   calculateUnifiedDosing,
   DEFAULT_UNIFIED_DOSING_INPUT,
@@ -184,17 +185,7 @@ export function UnifiedDosingCalculator({
 
           {result && (
             <>
-              <div className="rounded-lg border border-emerald-400/20 bg-emerald-500/10 p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200/70">
-                  Draw volume
-                </p>
-                <p className="mt-2 text-4xl font-semibold tracking-tight text-white">
-                  {formatNumber(result.volumePerAdministrationMl, 4)} mL
-                </p>
-                <p className="mt-2 text-sm text-emerald-100/75">
-                  {formatNumber(result.u100UnitsPerAdministration, 1)} units on a U-100 syringe
-                </p>
-              </div>
+              <SyringeDrawVisualizer result={result} />
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <Metric label="Concentration" value={`${formatNumber(result.concentrationMcgPerMl)} mcg/mL`} detail={`${formatNumber(result.concentrationMgPerMl, 4)} mg/mL`} />

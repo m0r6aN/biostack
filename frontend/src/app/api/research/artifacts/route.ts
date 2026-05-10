@@ -1,10 +1,11 @@
-import { NextRequest } from 'next/server';
 import { readFile } from 'fs/promises';
+import { NextRequest } from 'next/server';
 import path from 'path';
 
 const ALLOWED: Record<string, string> = {
   'research-summary': 'research-summary.json',
   'promotion-manifest': 'promotion-manifest.json',
+  'review-queue': 'review-queue.json',
   'review-resolution-plan': 'review-resolution-plan.json',
   'promotion-import-preview': 'promotion-import-preview.json',
   'import-dry-run/promotion-import-dry-run-report':
@@ -15,6 +16,17 @@ const ALLOWED: Record<string, string> = {
     'promotion-export/substances.promotable.json',
 };
 
+const EVIDENCE_PACKET_PATTERN = /^evidence-packet\/[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+function resolveArtifactFilename(artifact: string): string | null {
+  if (EVIDENCE_PACKET_PATTERN.test(artifact)) {
+    const slug = artifact.slice('evidence-packet/'.length);
+    return `evidence-packet/${slug}.json`;
+  }
+
+  return ALLOWED[artifact] ?? null;
+}
+
 export async function GET(request: NextRequest) {
   // Route is dev-only; return 404 in production
   if (process.env.NODE_ENV === 'production') {
@@ -23,7 +35,7 @@ export async function GET(request: NextRequest) {
 
   // Extract and validate artifact parameter
   const artifact = request.nextUrl.searchParams.get('artifact') ?? '';
-  const filename = ALLOWED[artifact];
+  const filename = resolveArtifactFilename(artifact);
   if (!filename) {
     return Response.json({ error: 'Invalid artifact' }, { status: 400 });
   }

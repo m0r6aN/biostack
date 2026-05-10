@@ -38,6 +38,7 @@ public class ResearchJobTests
             AssertOutputJson(outputDir, "review-resolution-plan.json");
             AssertOutputJson(outputDir, "promotion-import-preview.json");
             AssertOutputJson(outputDir, "research-run-report.json");
+            AssertOutputJson(Path.Combine(outputDir, "evidence-packet"), "creatine.json");
             AssertOutputJson(Path.Combine(outputDir, "promotion-export"), "promotion-export-manifest.json");
             AssertOutputJson(Path.Combine(outputDir, "promotion-export"), "substances.promotable.json");
             AssertOutputJson(outputDir, "promotion-import-preview.json");
@@ -55,6 +56,8 @@ public class ResearchJobTests
             Assert.Equal("review-required", manifest["ReviewRequired"]![0]!["Readiness"]!.GetValue<string>());
             var plan = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "review-resolution-plan.json")))!;
             Assert.True(plan["Counts"]!["TotalItems"]!.GetValue<int>() > 0);
+            var evidencePacket = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "evidence-packet", "creatine.json")))!;
+            Assert.Equal("Creatine", evidencePacket["compound"]!["canonicalName"]!.GetValue<string>());
         }
         finally
         {

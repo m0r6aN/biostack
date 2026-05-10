@@ -85,11 +85,15 @@ public sealed class ResearchJob : IResearchJob
         var drafts = new JsonArray();
         var reviewQueue = new List<ResearchReviewQueueItem>();
         var reviewDecisions = LoadReviewDecisions(context, report);
+        var researchRequests = LoadResearchRequests(context, report);
+
+        var evidencePacketOutputDir = Path.Combine(outputDir, "evidence-packet");
+        Directory.CreateDirectory(evidencePacketOutputDir);
 
         foreach (var file in evidenceFiles)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            ProcessEvidencePacket(context, report, file, sourceRegistry, drafts, reviewQueue);
+            ProcessEvidencePacket(context, report, file, sourceRegistry, drafts, reviewQueue, evidencePacketOutputDir);
         }
 
         var draftsPath = Path.Combine(outputDir, "draft-substances.json");
@@ -98,13 +102,17 @@ public sealed class ResearchJob : IResearchJob
         var promotionManifestPath = Path.Combine(outputDir, "promotion-manifest.json");
         var resolutionPlanPath = Path.Combine(outputDir, "review-resolution-plan.json");
         var importPreviewPath = Path.Combine(outputDir, "promotion-import-preview.json");
-        var summary = _summaryBuilder.Build(drafts, reviewQueue, reviewDecisions);
+        var activeReviewQueue = reviewQueue
+            .Where(item => !reviewDecisions.IsCompoundArchived(item.CompoundName))
+            .Where(item => !reviewDecisions.IsReviewQueueItemResolved(item.CompoundName, item.ItemId))
+            .ToList();
+        var summary = _summaryBuilder.Build(drafts, activeReviewQueue, reviewDecisions, researchRequests);
         var promotionManifest = _promotionManifestBuilder.Build(summary, new PromotionManifestOutputs(
             DraftSubstances: draftsPath,
             ReviewQueue: reviewQueuePath,
             ResearchSummary: summaryPath,
             RunReport: Path.Combine(outputDir, "research-run-report.json")));
-        var resolutionPlan = _reviewResolutionPlanBuilder.Build(promotionManifest, reviewQueue);
+        var resolutionPlan = _reviewResolutionPlanBuilder.Build(promotionManifest, activeReviewQueue);
         var promotionExport = _promotionExporter.Export(drafts, promotionManifest, outputDir);
         var importPreview = _promotionImportPreviewBuilder.Build(
             LoadJsonArray(promotionExport.AggregatePath),
@@ -112,7 +120,7 @@ public sealed class ResearchJob : IResearchJob
             LoadOptionalSeedArray(_options.SeedFilePath),
             _substanceValidator);
         File.WriteAllText(draftsPath, drafts.ToJsonString(JsonOptions));
-        File.WriteAllText(reviewQueuePath, JsonSerializer.Serialize(reviewQueue, JsonOptions));
+        File.WriteAllText(reviewQueuePath, JsonSerializer.Serialize(activeReviewQueue, JsonOptions));
         File.WriteAllText(summaryPath, JsonSerializer.Serialize(summary, JsonOptions));
         File.WriteAllText(promotionManifestPath, JsonSerializer.Serialize(promotionManifest, JsonOptions));
         File.WriteAllText(resolutionPlanPath, JsonSerializer.Serialize(resolutionPlan, JsonOptions));
@@ -122,6 +130,7 @@ public sealed class ResearchJob : IResearchJob
         report.Outputs["researchSummary"] = summaryPath;
         report.Outputs["promotionManifest"] = promotionManifestPath;
         report.Outputs["reviewResolutionPlan"] = resolutionPlanPath;
+        report.Outputs["evidencePacketDirectory"] = evidencePacketOutputDir;
         report.Outputs["promotionExportDirectory"] = promotionExport.ExportDirectory;
         report.Outputs["promotionExportManifest"] = promotionExport.ManifestPath;
         report.Outputs["promotionExportAggregate"] = promotionExport.AggregatePath;
@@ -169,7 +178,8 @@ public sealed class ResearchJob : IResearchJob
         string file,
         JsonNode? sourceRegistry,
         JsonArray drafts,
-        List<ResearchReviewQueueItem> reviewQueue)
+        List<ResearchReviewQueueItem> reviewQueue,
+        string evidencePacketOutputDir)
     {
         context.IncrementScanned();
         try
@@ -198,6 +208,8 @@ public sealed class ResearchJob : IResearchJob
                 report.Records.Add(ResearchRunRecord.Failed(loaded.Path, postValidation.Summary()));
                 return;
             }
+
+            WriteEvidencePacketArtifact(evidencePacketOutputDir, packet);
 
             var draft = _compiler.CompileDraft(packet);
             var draftValidation = _substanceValidator.Validate(draft);
@@ -228,6 +240,16 @@ public sealed class ResearchJob : IResearchJob
             context.IncrementFailed();
             report.Records.Add(ResearchRunRecord.Failed(file, ex.Message));
         }
+    }
+
+    private static void WriteEvidencePacketArtifact(string outputDir, JsonNode packet)
+    {
+        var canonicalName = ReadString(packet["compound"]?["canonicalName"]);
+        var slug = SubstanceRecordNormalizer.Slugify(canonicalName);
+        if (slug.Length == 0) return;
+
+        var artifactPath = Path.Combine(outputDir, $"{slug}.json");
+        File.WriteAllText(artifactPath, packet.ToJsonString(JsonOptions));
     }
 
     private void WriteReport(string outputDir, ResearchRunReport report)
@@ -286,6 +308,36 @@ public sealed class ResearchJob : IResearchJob
         return batches.Count == 0 ? ReviewDecisionIndex.Empty : ReviewDecisionIndex.FromBatches(batches);
     }
 
+    private ResearchRequestIndex LoadResearchRequests(IngestionContext context, ResearchRunReport report)
+    {
+        var batches = new List<JsonNode>();
+        foreach (var file in ResolveResearchRequestFiles(_options))
+        {
+            try
+            {
+                var loaded = _loader.Load(ResearchArtifactKind.ResearchRequestBatch, file);
+                report.Inputs.Add(loaded.Path);
+                var validation = _researchValidator.Validate(ResearchArtifactKind.ResearchRequestBatch, loaded.Node);
+                if (!validation.IsValid)
+                {
+                    context.IncrementFailed();
+                    report.Records.Add(ResearchRunRecord.Failed(loaded.Path, validation.Summary()));
+                    continue;
+                }
+
+                batches.Add(loaded.Node);
+                report.Records.Add(ResearchRunRecord.Validated(loaded.Path, ResearchArtifactKind.ResearchRequestBatch.ToString()));
+            }
+            catch (Exception ex)
+            {
+                context.IncrementFailed();
+                report.Records.Add(ResearchRunRecord.Failed(file, ex.Message));
+            }
+        }
+
+        return batches.Count == 0 ? ResearchRequestIndex.Empty : ResearchRequestIndex.FromBatches(batches);
+    }
+
     private static IEnumerable<string> ResolveReviewDecisionFiles(WorkerOptions options)
     {
         if (!string.IsNullOrWhiteSpace(options.ResearchReviewDecisionPath))
@@ -295,6 +347,22 @@ public sealed class ResearchJob : IResearchJob
 
         if (string.IsNullOrWhiteSpace(options.ResearchReviewDecisionDirectory)) yield break;
         var dir = ResolveInputPath(options.ResearchReviewDecisionDirectory);
+        if (!Directory.Exists(dir)) yield break;
+        foreach (var file in Directory.EnumerateFiles(dir, "*.json", SearchOption.TopDirectoryOnly).OrderBy(f => f))
+        {
+            yield return file;
+        }
+    }
+
+    private static IEnumerable<string> ResolveResearchRequestFiles(WorkerOptions options)
+    {
+        if (!string.IsNullOrWhiteSpace(options.ResearchRequestPath))
+        {
+            yield return ResolveInputPath(options.ResearchRequestPath);
+        }
+
+        if (string.IsNullOrWhiteSpace(options.ResearchRequestDirectory)) yield break;
+        var dir = ResolveInputPath(options.ResearchRequestDirectory);
         if (!Directory.Exists(dir)) yield break;
         foreach (var file in Directory.EnumerateFiles(dir, "*.json", SearchOption.TopDirectoryOnly).OrderBy(f => f))
         {

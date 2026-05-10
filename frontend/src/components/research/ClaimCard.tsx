@@ -1,7 +1,7 @@
 'use client';
-import { useState } from 'react';
 import { EvidenceTierBadge } from '@/components/knowledge/EvidenceTierBadge';
 import type { EvidenceClaim } from '@/lib/research/types';
+import { useState } from 'react';
 
 interface ClaimCardProps { claim: EvidenceClaim }
 
@@ -48,7 +48,7 @@ export function ClaimCard({ claim }: ClaimCardProps) {
             <div className="mt-2 flex flex-col gap-2">
               {claim.extractedEvidence.map((ev, i) => (
                 <div key={i} className="rounded-lg bg-white/[0.03] border border-white/[0.06] px-2.5 py-2">
-                  {ev.quote && <p className="text-[11px] text-white/70 italic">"{ev.quote}"</p>}
+                  {ev.quote && <p className="text-[11px] text-white/70 italic">&ldquo;{ev.quote}&rdquo;</p>}
                   <p className="text-[10px] text-white/35 mt-1">{ev.sourceRef}{ev.pageOrSection && ` · ${ev.pageOrSection}`}</p>
                 </div>
               ))}

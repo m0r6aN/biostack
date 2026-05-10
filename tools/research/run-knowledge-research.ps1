@@ -6,6 +6,8 @@ param(
     [string]$EvidencePacketPath = "",
     [string]$ReviewDecisionDirectory = "research/review-decisions",
     [string]$ReviewDecisionPath = "",
+    [string]$ResearchRequestDirectory = "research/research-requests",
+    [string]$ResearchRequestPath = "",
     [string]$OutputDirectory = "research/output/latest",
     [switch]$NoBuild
 )
@@ -50,6 +52,14 @@ if (-not [string]::IsNullOrWhiteSpace($ReviewDecisionPath)) {
 } elseif (-not [string]::IsNullOrWhiteSpace($ReviewDecisionDirectory)) {
     $reviewDecisions = if ([System.IO.Path]::IsPathRooted($ReviewDecisionDirectory)) { $ReviewDecisionDirectory } else { Join-Path $repoRoot $ReviewDecisionDirectory }
     if (Test-Path $reviewDecisions) { $workerArgs += "--Worker:ResearchReviewDecisionDirectory=$reviewDecisions" }
+}
+
+if (-not [string]::IsNullOrWhiteSpace($ResearchRequestPath)) {
+    $researchRequest = if ([System.IO.Path]::IsPathRooted($ResearchRequestPath)) { $ResearchRequestPath } else { Join-Path $repoRoot $ResearchRequestPath }
+    if (Test-Path $researchRequest) { $workerArgs += "--Worker:ResearchRequestPath=$researchRequest" }
+} elseif (-not [string]::IsNullOrWhiteSpace($ResearchRequestDirectory)) {
+    $researchRequests = if ([System.IO.Path]::IsPathRooted($ResearchRequestDirectory)) { $ResearchRequestDirectory } else { Join-Path $repoRoot $ResearchRequestDirectory }
+    if (Test-Path $researchRequests) { $workerArgs += "--Worker:ResearchRequestDirectory=$researchRequests" }
 }
 
 Write-Host "[BioStack Research] Output: $output"

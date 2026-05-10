@@ -1,10 +1,11 @@
 'use client';
-import { useState } from 'react';
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
 import type { ResearchReviewCategory } from '@/lib/research/types';
+import { cn } from '@/lib/utils';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 interface FilterBarProps {
+  researchRequestedCount?: number;
   blockedCount: number;
   reviewCount: number;
   candidateCount: number;
@@ -19,7 +20,7 @@ const SORT_OPTIONS = [
   { value: 'completeness', label: 'Completeness' },
 ];
 
-export function FilterBar({ blockedCount, reviewCount, candidateCount, categories }: FilterBarProps) {
+export function FilterBar({ researchRequestedCount = 0, blockedCount, reviewCount, candidateCount, categories }: FilterBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -49,11 +50,12 @@ export function FilterBar({ blockedCount, reviewCount, candidateCount, categorie
   }
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3 flex flex-col gap-3">
+    <div className="grid gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 md:grid-cols-2">
       <div>
         <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Readiness</p>
         <div className="flex flex-wrap gap-1.5">
           {[
+            { key: 'research-requested',       label: `Research Requested (${researchRequestedCount})`, cls: 'text-violet-300 border-violet-400/30 bg-violet-400/10' },
             { key: 'blocked',                 label: `Blocked (${blockedCount})`,        cls: 'text-rose-400 border-rose-400/30 bg-rose-400/10' },
             { key: 'review-required',         label: `Review Required (${reviewCount})`, cls: 'text-amber-400 border-amber-400/30 bg-amber-400/10' },
             { key: 'candidate-for-promotion', label: `Candidate (${candidateCount})`,    cls: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10' },
@@ -88,7 +90,7 @@ export function FilterBar({ blockedCount, reviewCount, candidateCount, categorie
       </button>
 
       {moreOpen && (
-        <div className="border-t border-white/[0.06] pt-2">
+        <div className="border-t border-white/[0.06] pt-2 md:col-span-2">
           <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Evidence Tier</p>
           <div className="flex flex-wrap gap-1.5">
             {EVIDENCE_TIERS.map(tier => (

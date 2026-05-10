@@ -1,15 +1,29 @@
 {
   "reportVersion": "1.0.0",
   "generatedAtUtc": "2026-05-05T09:00:00Z",
-  "summary": { "total": 1, "safe": 1, "blocked": 0, "errors": 0 },
+  "previewPath": "research/output/pilot-dry-run-source/promotion-import-preview.json",
+  "aggregatePath": "research/output/pilot-dry-run-source/promotion-export/substances.promotable.json",
+  "safeToApply": true,
+  "refusalReasons": [],
+  "previewCounts": {
+    "totalExported": 1,
+    "wouldCreate": 1,
+    "wouldUpdate": 0,
+    "wouldSkip": 0,
+    "schemaValid": 1,
+    "schemaInvalid": 0,
+    "duplicateSlugs": 0,
+    "duplicateCanonicalIds": 0,
+    "activeRecords": 0,
+    "inactiveRecords": 1
+  },
   "items": [
     {
       "name": "Creatine",
       "slug": "creatine",
-      "safe": true,
-      "action": "create",
-      "errors": [],
-      "warnings": []
+      "plannedAction": "create",
+      "schemaValid": true,
+      "reasons": []
     }
   ]
 }

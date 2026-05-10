@@ -16,6 +16,7 @@
       "reviewedAt": "2026-05-05T00:00:00Z",
       "scope": {
         "claimIds": [],
+        "reviewQueueItemIds": [],
         "qualityFlags": [],
         "reviewCategories": ["Safety Critical"],
         "promotionBlockers": ["review-required: draft is marked needsReview"]

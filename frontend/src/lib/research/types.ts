@@ -1,6 +1,7 @@
 // frontend/src/lib/research/types.ts
 
 export type PromotionReadiness =
+  | 'research-requested'
   | 'blocked'
   | 'review-required'
   | 'candidate-for-promotion';
@@ -23,12 +24,14 @@ export type Confidence = 'low' | 'moderate' | 'high' | 'unknown';
 
 export type ReviewDecisionType =
   | 'approve-for-promotion' | 'approve-claims'
+  | 'resolve-review-items' | 'archive-draft'
   | 'request-changes' | 'reject';
 
 // ── Research Summary ──────────────────────────────────────────────────────────
 export interface ResearchSummary {
   draftSubstanceCount: number;
   reviewQueueItemCount: number;
+  researchRequestCount?: number;
   compounds: ResearchSummaryCompound[];
   reviewCategories: ResearchReviewCategory[];
   promotionReadiness: ResearchSummaryBucket[];
@@ -48,6 +51,9 @@ export interface ResearchSummaryCompound {
   promotionReadiness: PromotionReadiness;
   promotionBlockers: string[];
   reviewDecisionIds: string[];
+  hasRequestedChanges?: boolean;
+  hasResearchRequest?: boolean;
+  researchRequestIds?: string[];
   qualityFlags: string[];
   reviewReasons: string[];
 }
@@ -71,8 +77,10 @@ export interface PromotionManifest {
   manifestVersion: string;
   generatedAtUtc: string;
   counts: PromotionManifestCounts;
+  outputs?: Record<string, string>;
   blocked: PromotionManifestCandidate[];
   reviewRequired: PromotionManifestCandidate[];
+  researchRequested?: PromotionManifestCandidate[];
   candidatesForPromotion: PromotionManifestCandidate[];
 }
 
@@ -80,6 +88,7 @@ export interface PromotionManifestCounts {
   totalDrafts: number;
   blocked: number;
   reviewRequired: number;
+  researchRequested?: number;
   candidatesForPromotion: number;
 }
 
@@ -91,6 +100,9 @@ export interface PromotionManifestCandidate {
   completeness: string;
   reviewQueueItemCount: number;
   reviewDecisionIds: string[];
+  hasRequestedChanges?: boolean;
+  hasResearchRequest?: boolean;
+  researchRequestIds?: string[];
   blockers: string[];
   qualityFlags: string[];
   requiredNextActions: string[];
@@ -119,8 +131,41 @@ export interface ReviewResolutionPlanItem {
   resolutionType: string;
   issue: string;
   recommendedAction: string;
+  relatedReviewQueueItemIds: string[];
   relatedBlockers: string[];
   relatedQualityFlags: string[];
+}
+
+export interface ResearchReviewQueueItem {
+  itemId: string;
+  compoundName: string;
+  severity: string;
+  reason: string;
+  references: string[];
+}
+
+export interface ResearchRequestBatch {
+  schemaVersion: '1.0.0';
+  recordType: 'research-request-batch';
+  batch: {
+    batchId: string;
+    requesterId: string;
+    requestedAt: string;
+    notes: string[];
+  };
+  requests: ResearchRequest[];
+}
+
+export interface ResearchRequest {
+  requestId: string;
+  compoundName: string;
+  aliases: string[];
+  classification: string;
+  priority: 'low' | 'normal' | 'high' | 'urgent';
+  requesterId: string;
+  requestedAt: string;
+  rationale: string;
+  notes: string[];
 }
 
 // ── Evidence Packet ───────────────────────────────────────────────────────────
@@ -205,9 +250,48 @@ export interface PromotionImportPreviewItem {
   reviewDecisionIds: string[];
 }
 
+// ── Promotion Export / Dry-Run ───────────────────────────────────────────────
+export interface PromotionExportManifest {
+  manifestVersion: string;
+  generatedAtUtc: string;
+  exportedCount: number;
+  candidates: PromotionExportCandidate[];
+  skippedCompounds: string[];
+}
+
+export interface PromotionExportCandidate {
+  name: string;
+  slug: string;
+  readiness: PromotionReadiness;
+  substanceFile: string;
+  aggregateIndex: number;
+  reviewDecisionIds: string[];
+  qualityFlags: string[];
+}
+
+export interface PromotionImportDryRunReport {
+  reportVersion: string;
+  generatedAtUtc: string;
+  previewPath: string;
+  aggregatePath: string;
+  safeToApply: boolean;
+  refusalReasons: string[];
+  previewCounts: PromotionImportPreview['counts'];
+  items: PromotionImportDryRunItem[];
+}
+
+export interface PromotionImportDryRunItem {
+  name: string;
+  slug: string;
+  plannedAction: 'create' | 'update';
+  schemaValid: boolean;
+  reasons: string[];
+}
+
 // ── Review Decision ───────────────────────────────────────────────────────────
 export interface ReviewDecisionScope {
   claimIds: string[];
+  reviewQueueItemIds: string[];
   qualityFlags: string[];
   reviewCategories: string[];
   promotionBlockers: string[];

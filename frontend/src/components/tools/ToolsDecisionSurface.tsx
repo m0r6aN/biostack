@@ -1,5 +1,7 @@
 'use client';
 
+import { SyringeDrawVisualizer } from '@/components/calculators/SyringeDrawVisualizer';
+import { PowderAmountGuide } from '@/components/calculators/PowderAmountGuide';
 import {
   deleteAnonymousToolArtifact,
   readAnonymousToolPayload,
@@ -129,7 +131,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   ];
 
   const primaryAnswer = dosing.result
-    ? `Draw to ${formatNumber(dosing.result.u100UnitsPerAdministration, 1)} units on a 1 mL insulin syringe`
+    ? `Calculated draw: ${formatNumber(dosing.result.u100UnitsPerAdministration, 1)} units on a U-100 syringe`
     : 'Enter valid numbers to calculate';
   const secondaryAnswer = dosing.result ? `${formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL per dose` : dosing.error;
   const blendResult = useMemo(
@@ -387,7 +389,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             ) : (
               <div className="mt-5 space-y-5">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <NumberWithUnitFieldWithInfo label="Powder amount" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} infoImageSrc="/images/vial.jpg" infoImageAlt="Vial measurement guide" />
+                  <NumberWithUnitFieldWithInfo label="Powder amount" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} />
                   <NumberField label="Solution volume" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
                   <NumberWithUnitField label="Desired dose" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
                 </div>
@@ -410,6 +412,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <ResultPanel mode={mode} primary={mode === 'convert' ? `${formatNumber(conversionResult.value, 4)} ${conversion.toUnit}` : primaryAnswer} secondary={mode === 'convert' ? `${formatNumber(conversion.amount)} ${conversion.fromUnit}` : secondaryAnswer} hasError={mode === 'convert' ? Boolean(conversionResult.error) : Boolean(dosing.error)} />
+          {mode !== 'convert' && dosing.result && <SyringeDrawVisualizer result={dosing.result} />}
           {mode !== 'convert' && dosing.result && (
             <div className="grid gap-3 sm:grid-cols-2">
               <Metric label="Dose" value={formatDose(dosing.result.dosePerAdministrationMcg)} detail="per administration" />
@@ -699,7 +702,7 @@ function NumberWithUnitField<TUnit extends string>({ label, value, unit, units, 
   );
 }
 
-function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit, units, onValueChange, onUnitChange, infoImageSrc, infoImageAlt }: { label: string; value: number; unit: TUnit; units: TUnit[]; onValueChange: (value: number) => void; onUnitChange: (unit: TUnit) => void; infoImageSrc: string; infoImageAlt: string }) {
+function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit, units, onValueChange, onUnitChange }: { label: string; value: number; unit: TUnit; units: TUnit[]; onValueChange: (value: number) => void; onUnitChange: (unit: TUnit) => void }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -742,7 +745,7 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit,
       </div>
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setOpen(false)}>
-          <div className="relative max-h-[90dvh] max-w-sm w-full overflow-hidden rounded-xl border border-white/10 bg-[#121923] shadow-2xl" onClick={(e) => e.stopPropagation()}>
+          <div className="relative max-h-[90dvh] w-full max-w-2xl overflow-auto rounded-xl border border-white/10 bg-[#121923] shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               aria-label="Close"
@@ -753,7 +756,7 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit,
                 <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z" />
               </svg>
             </button>
-            <img src={infoImageSrc} alt={infoImageAlt} className="h-auto w-full object-contain" />
+            <PowderAmountGuide />
           </div>
         </div>
       )}

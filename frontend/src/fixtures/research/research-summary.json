@@ -44,7 +44,7 @@
       "reviewQueueItemCount": 0,
       "promotionReadiness": "candidate-for-promotion",
       "promotionBlockers": [],
-      "reviewDecisionIds": [],
+      "reviewDecisionIds": ["approve-creatine-fixture-001"],
       "qualityFlags": [],
       "reviewReasons": []
     }

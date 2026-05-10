@@ -1,4 +1,5 @@
 import { ConversionCalc } from '@/components/calculators/ConversionCalc';
+import { PowderAmountGuide } from '@/components/calculators/PowderAmountGuide';
 import { ReconstitutionCalc } from '@/components/calculators/ReconstitutionCalc';
 import { UnifiedDosingCalculator } from '@/components/calculators/UnifiedDosingCalculator';
 import { VolumeCalc } from '@/components/calculators/VolumeCalc';
@@ -482,5 +483,38 @@ describe('UnifiedDosingCalculator', () => {
   it('shows Attach to Protocol button when onRecord is provided', () => {
     render(<UnifiedDosingCalculator onRecord={vi.fn()} />);
     expect(screen.getByText('Attach to Protocol')).toBeInTheDocument();
+  });
+
+  it('renders a syringe draw visualizer mapped to U-100 units', () => {
+    render(<UnifiedDosingCalculator />);
+
+    const syringe = screen.getByRole('meter', { name: /u-100 syringe draw visualizer/i });
+    expect(syringe).toHaveAttribute('data-orientation', 'horizontal');
+    expect(syringe).toHaveAttribute('aria-valuenow', '10');
+    expect(syringe).toHaveAttribute('aria-valuemax', '100');
+    expect(screen.getByText('Calculated draw')).toBeInTheDocument();
+    expect(screen.getByText('10 units filled on a U-100 syringe')).toBeInTheDocument();
+  });
+
+  it('warns when the calculated draw exceeds one U-100 syringe', () => {
+    render(<UnifiedDosingCalculator />);
+
+    fireEvent.change(screen.getByLabelText('Desired dose'), { target: { value: '3000' } });
+
+    const syringe = screen.getByRole('meter', { name: /u-100 syringe draw visualizer/i });
+    expect(syringe).toHaveAttribute('aria-valuenow', '100');
+    expect(screen.getByText('Draw exceeds one U-100 syringe.')).toBeInTheDocument();
+  });
+});
+
+describe('PowderAmountGuide', () => {
+  it('shows an animated vial guide for powder amount labels', () => {
+    render(<PowderAmountGuide />);
+
+    expect(screen.getByRole('img', { name: /powder amount vial guide/i })).toBeInTheDocument();
+    expect(screen.getByText('Powder amount')).toBeInTheDocument();
+    ['5 mg', '10 mg', '20 mg', '30 mg', '60 mg'].forEach((label) => {
+      expect(screen.getAllByText(label).length).toBeGreaterThan(0);
+    });
   });
 });
