@@ -160,12 +160,161 @@ export interface ResearchRequest {
   requestId: string;
   compoundName: string;
   aliases: string[];
+  categories?: string[];
   classification: string;
   priority: 'low' | 'normal' | 'high' | 'urgent';
   requesterId: string;
   requestedAt: string;
   rationale: string;
   notes: string[];
+}
+
+export interface ResearchCategoryTaxonomy {
+  taxonomyVersion: string;
+  updatedAtUtc: string;
+  categories: ResearchCategoryDefinition[];
+}
+
+export interface ResearchCategoryDefinition {
+  name: string;
+  aliases?: string[];
+  deprecated?: boolean;
+  replacedBy?: string;
+}
+
+export interface ResearchCategoryMigrationReport {
+  generatedAtUtc: string;
+  taxonomyVersion: string;
+  counts: ResearchCategoryMigrationCounts;
+  deprecatedCategories: ResearchCategoryMigrationCategorySummary[];
+  findings: ResearchCategoryMigrationFinding[];
+}
+
+export interface ResearchCategoryMigrationCounts {
+  requestFilesScanned: number;
+  requestFindings: number;
+  taskArtifactsScanned: number;
+  taskItemFindings: number;
+  resolvedTaskItemFindings: number;
+  totalFindings: number;
+}
+
+export interface ResearchCategoryMigrationCategorySummary {
+  deprecatedCategory: string;
+  replacementCategory: string;
+  findings: number;
+  requestFindings: number;
+  taskItemFindings: number;
+  resolvedTaskItemFindings: number;
+}
+
+export interface ResearchCategoryMigrationFinding {
+  sourceType: 'request' | 'task-item' | 'resolved-task-item';
+  sourcePath: string;
+  compoundName: string;
+  matchedCategory: string;
+  deprecatedCategory: string;
+  replacementCategory: string;
+  requestId?: string;
+  taskId?: string;
+}
+
+export interface ResearchCategoryMigrationApplyReceipt {
+  appliedAtUtc: string;
+  taxonomyVersion: string;
+  counts: ResearchCategoryMigrationApplyCounts;
+  updatedFiles: ResearchCategoryMigrationApplyFileReceipt[];
+}
+
+export interface ResearchCategoryMigrationApplyCounts {
+  totalFilesUpdated: number;
+  requestFilesUpdated: number;
+  taskArtifactsUpdated: number;
+  categoriesRewritten: number;
+  requestCategoriesRewritten: number;
+  taskItemCategoriesRewritten: number;
+  resolvedTaskItemCategoriesRewritten: number;
+}
+
+export interface ResearchCategoryMigrationApplyFileReceipt {
+  sourceType: 'request-file' | 'task-artifact';
+  sourcePath: string;
+  categoriesRewritten: number;
+  compounds: string[];
+  rewrites: ResearchCategoryMigrationFinding[];
+}
+
+export interface ResearchCategoryTaxonomyAuditLog {
+  schemaVersion: string;
+  updatedAtUtc: string;
+  entries: ResearchCategoryTaxonomyAuditEntry[];
+}
+
+export interface ResearchCategoryTaxonomyAuditEntry {
+  entryId: string;
+  action: 'save-taxonomy' | 'apply-migration-fixup';
+  createdAtUtc: string;
+  taxonomyVersion: string;
+  summary: string;
+  beforeTaxonomy?: ResearchCategoryTaxonomy | null;
+  afterTaxonomy?: ResearchCategoryTaxonomy | null;
+  beforeMigrationReport?: ResearchCategoryMigrationReport | null;
+  afterMigrationReport?: ResearchCategoryMigrationReport | null;
+  applyReceipt?: ResearchCategoryMigrationApplyReceipt | null;
+}
+
+export interface ResearchTaskQueue {
+  queueVersion: string;
+  generatedAtUtc: string;
+  counts: ResearchTaskQueueCounts;
+  items: ResearchTaskQueueItem[];
+  resolvedItems?: ResearchTaskQueueResolvedItem[];
+}
+
+export interface ResearchTaskQueueCounts {
+  totalItems: number;
+  urgent: number;
+  high: number;
+  normal: number;
+  low: number;
+  resolvedItems?: number;
+}
+
+export interface ResearchTaskQueueItem {
+  taskId: string;
+  taskType: string;
+  compoundName: string;
+  aliases: string[];
+  categories?: string[];
+  classification: string;
+  priority: 'low' | 'normal' | 'high' | 'urgent';
+  requestIds: string[];
+  requesterIds: string[];
+  firstRequestedAtUtc: string;
+  latestRequestedAtUtc: string;
+  rationales: string[];
+  notes: string[];
+  suggestedResearchDirectives: string[];
+  targetEvidencePath: string;
+  requiredSchema: string;
+}
+
+export interface ResearchTaskQueueResolvedItem {
+  taskId: string;
+  compoundName: string;
+  aliases: string[];
+  categories?: string[];
+  classification: string;
+  priority: 'low' | 'normal' | 'high' | 'urgent';
+  requestIds: string[];
+  requesterIds: string[];
+  firstRequestedAtUtc: string;
+  latestRequestedAtUtc: string;
+  resolvedAtUtc: string;
+  currentReadiness: string;
+  resolution: string;
+  resolutionReason: string;
+  targetEvidencePath: string;
 }
 
 // ── Evidence Packet ───────────────────────────────────────────────────────────

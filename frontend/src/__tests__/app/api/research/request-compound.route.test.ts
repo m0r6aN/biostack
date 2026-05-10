@@ -1,12 +1,21 @@
+import { POST } from '@/app/api/research/request-compound/route';
 import { spawn } from 'node:child_process';
 import { EventEmitter } from 'node:events';
-import { mkdir, rename, unlink, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { POST } from '@/app/api/research/request-compound/route';
 
 vi.mock('node:fs/promises', () => ({
   default: {},
   mkdir: vi.fn().mockResolvedValue(undefined),
+  readFile: vi.fn().mockResolvedValue(JSON.stringify({
+    taxonomyVersion: '1.0.0',
+    updatedAtUtc: '2026-05-10T00:00:00Z',
+    categories: [
+      { name: 'Nootropics', aliases: ['nootropic', 'cognitive support'] },
+      { name: 'Longevity', aliases: ['longevity'] },
+      { name: 'Mitochondrial Support', aliases: ['mitochondrial support'] },
+    ],
+  })),
   writeFile: vi.fn().mockResolvedValue(undefined),
   rename: vi.fn().mockResolvedValue(undefined),
   unlink: vi.fn().mockResolvedValue(undefined),
@@ -40,6 +49,7 @@ describe('research request-compound route', () => {
   beforeEach(() => {
     process.env.RESEARCH_AUTOMATION_ENABLED = 'true';
     vi.mocked(mkdir).mockClear();
+    vi.mocked(readFile).mockClear();
     vi.mocked(writeFile).mockClear();
     vi.mocked(rename).mockClear();
     vi.mocked(unlink).mockClear();
@@ -61,14 +71,23 @@ describe('research request-compound route', () => {
   });
 
   it('saves a research request and runs the worker', async () => {
-    const response = await POST(request({ compoundName: 'Epitalon', aliases: 'Epithalon', rationale: 'Add to BioStack research backlog.' }));
+    const response = await POST(request({
+      compoundName: 'Epitalon',
+      aliases: 'Epithalon',
+      categories: 'nootropic, Nootropics, mitochondrial support',
+      rationale: 'Add to BioStack research backlog.',
+    }));
     const payload = await response.json();
 
     expect(response.status).toBe(200);
     expect(payload.savedFilename).toMatch(/^research-request-/);
     expect(payload.exitCode).toBe(0);
     expect(vi.mocked(mkdir)).toHaveBeenCalledWith(expect.stringContaining(`${path.sep}research${path.sep}research-requests`), { recursive: true });
+    expect(vi.mocked(readFile)).toHaveBeenCalledWith(expect.stringContaining(`${path.sep}research${path.sep}category-taxonomy.json`), 'utf8');
     expect(vi.mocked(writeFile)).toHaveBeenCalledWith(expect.stringContaining('.tmp'), expect.stringContaining('"recordType": "research-request-batch"'), 'utf8');
+    expect(vi.mocked(writeFile).mock.calls[0]?.[1]).toContain('"categories": [');
+    expect(vi.mocked(writeFile).mock.calls[0]?.[1]).toContain('"Nootropics"');
+    expect(vi.mocked(writeFile).mock.calls[0]?.[1]).toContain('"Mitochondrial Support"');
     expect(vi.mocked(rename)).toHaveBeenCalled();
     expect(vi.mocked(spawn)).toHaveBeenCalledWith(expect.any(String), expect.arrayContaining(['-File', expect.stringContaining('run-knowledge-research.ps1')]), expect.objectContaining({ cwd: expect.any(String) }));
   });

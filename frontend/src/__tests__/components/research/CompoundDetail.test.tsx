@@ -1,6 +1,8 @@
 import CompoundDetail from '@/app/admin/research/compounds/[slug]/page';
-import { fetchEvidencePacket } from '@/lib/research/loader';
+import { fetchEvidencePacket, fetchPromotionManifest, fetchResearchSummary, fetchResearchTaskQueue, fetchReviewQueue, fetchReviewResolutionPlan } from '@/lib/research/loader';
 import { fireEvent, render, screen } from '@testing-library/react';
+
+const pushMock = vi.hoisted(() => vi.fn());
 
 vi.mock('@/components/Header', () => ({
   Header: ({ title }: { title: string }) => <div>{title}</div>,
@@ -13,7 +15,7 @@ vi.mock('@/components/ui/GlassCard', () => ({
 }));
 
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({ push: vi.fn() }),
+  useRouter: () => ({ push: pushMock }),
   useParams: () => ({ slug: 'bpc-157' }),
 }));
 vi.mock('@/lib/apiBase', () => ({ getApiBaseUrl: () => 'http://localhost' }));
@@ -61,6 +63,9 @@ vi.mock('@/lib/research/loader', () => ({
     }],
   }),
   fetchReviewQueue: vi.fn().mockResolvedValue([{ itemId: 'bpc-157-ops-review-1', compoundName: 'BPC-157', severity: 'review', reason: 'Pilot review.', references: [] }]),
+  fetchResearchTaskQueue: vi.fn().mockResolvedValue({
+    queueVersion: '1.0.0', generatedAtUtc: '', counts: { totalItems: 0, urgent: 0, high: 0, normal: 0, low: 0, resolvedItems: 0 }, items: [], resolvedItems: [],
+  }),
   fetchEvidencePacket: vi.fn().mockResolvedValue({
     schemaVersion: '1.0.0', recordType: 'compound-evidence-packet',
     packet: { packetId: 'bpc-packet', category: 'peptides', agentId: 'agent', generatedAt: '', sourceRegistryVersion: 'sources' },
@@ -79,6 +84,10 @@ vi.mock('@/lib/research/loader', () => ({
 }));
 
 describe('CompoundDetail', () => {
+  beforeEach(() => {
+    pushMock.mockReset();
+  });
+
   it('renders the compound name', async () => {
     render(<CompoundDetail />);
     expect(await screen.findAllByText('BPC-157')).not.toHaveLength(0);
@@ -117,5 +126,150 @@ describe('CompoundDetail', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Claims' }));
 
     expect(await screen.findByText(/Research artifacts not yet generated/)).toBeInTheDocument();
+  });
+
+  it('shows queued evidence-task details for a research-requested compound', async () => {
+    vi.mocked(fetchResearchSummary).mockResolvedValueOnce({
+      draftSubstanceCount: 0, reviewQueueItemCount: 0, researchRequestCount: 1,
+      compounds: [{
+        name: 'BPC-157', classification: 'Peptide', overallEvidenceTier: 'Unknown',
+        completeness: 'requested', needsReview: true, reviewQueueItemCount: 0,
+        promotionReadiness: 'research-requested',
+        promotionBlockers: ['research-requested: evidence packet has not been generated'],
+        reviewDecisionIds: [], hasResearchRequest: true, researchRequestIds: ['research-bpc-157-001'], qualityFlags: ['research-requested'], reviewReasons: [],
+      }],
+      reviewCategories: [], promotionReadiness: [], qualityFlags: [], reviewReasons: [], classifications: [], evidenceTiers: [],
+    });
+    vi.mocked(fetchPromotionManifest).mockResolvedValueOnce({
+      manifestVersion: '1.0.0', generatedAtUtc: '',
+      counts: { totalDrafts: 0, blocked: 0, reviewRequired: 0, researchRequested: 1, candidatesForPromotion: 0 },
+      blocked: [], reviewRequired: [],
+      researchRequested: [{
+        name: 'BPC-157', classification: 'Peptide', readiness: 'research-requested', overallEvidenceTier: 'Unknown', completeness: 'requested', reviewQueueItemCount: 0,
+        reviewDecisionIds: [], hasResearchRequest: true, researchRequestIds: ['research-bpc-157-001'], blockers: ['research-requested: evidence packet has not been generated'], qualityFlags: ['research-requested'],
+        requiredNextActions: ['Create a compound evidence packet from the research request.'],
+      }],
+      candidatesForPromotion: [],
+    });
+    vi.mocked(fetchReviewResolutionPlan).mockResolvedValueOnce({
+      planVersion: '1.0.0', generatedAtUtc: '', counts: { totalItems: 1, blockedItems: 0, reviewRequiredItems: 0, resolutionTypes: [] },
+      items: [{
+        itemId: 'i1', compoundName: 'BPC-157', readiness: 'research-requested', severity: 'research', resolutionType: 'perform-initial-research',
+        issue: 'research-requested: evidence packet has not been generated', recommendedAction: 'Perform initial evidence research.', relatedReviewQueueItemIds: [], relatedBlockers: [], relatedQualityFlags: [],
+      }],
+    });
+    vi.mocked(fetchReviewQueue).mockResolvedValueOnce([]);
+    vi.mocked(fetchResearchTaskQueue).mockResolvedValueOnce({
+      queueVersion: '1.0.0', generatedAtUtc: '', counts: { totalItems: 1, urgent: 0, high: 1, normal: 0, low: 0 },
+      items: [{
+        taskId: 'bpc-157-initial-research', taskType: 'generate-evidence-packet', compoundName: 'BPC-157', aliases: [], categories: ['Peptides'], classification: 'Peptide', priority: 'high',
+        requestIds: ['research-bpc-157-001'], requesterIds: ['operator-1'], firstRequestedAtUtc: '', latestRequestedAtUtc: '',
+        rationales: ['Queue an evidence packet for BPC-157.'], notes: [],
+        suggestedResearchDirectives: ['Use the source registry agent first.'], targetEvidencePath: 'research/input/evidence/bpc-157.evidence.json', requiredSchema: 'evidence-packet.schema.json',
+      }],
+      resolvedItems: [],
+    });
+    vi.mocked(fetchEvidencePacket).mockRejectedValueOnce(new Error('404'));
+
+    render(<CompoundDetail />);
+
+    expect(await screen.findByText('Queued Evidence Task')).toBeInTheDocument();
+    expect(screen.getByText('research/input/evidence/bpc-157.evidence.json')).toBeInTheDocument();
+    expect(screen.getByText('evidence-packet.schema.json')).toBeInTheDocument();
+    expect(screen.getByText('Peptides')).toBeInTheDocument();
+    expect(screen.getByText(/Use the source registry agent first/i)).toBeInTheDocument();
+  });
+
+  it('routes the queued evidence card into the task board', async () => {
+    vi.mocked(fetchResearchSummary).mockResolvedValueOnce({
+      draftSubstanceCount: 0, reviewQueueItemCount: 0, researchRequestCount: 1,
+      compounds: [{
+        name: 'BPC-157', classification: 'Peptide', overallEvidenceTier: 'Unknown',
+        completeness: 'requested', needsReview: true, reviewQueueItemCount: 0,
+        promotionReadiness: 'research-requested',
+        promotionBlockers: ['research-requested: evidence packet has not been generated'],
+        reviewDecisionIds: [], hasResearchRequest: true, researchRequestIds: ['research-bpc-157-001'], qualityFlags: ['research-requested'], reviewReasons: [],
+      }],
+      reviewCategories: [], promotionReadiness: [], qualityFlags: [], reviewReasons: [], classifications: [], evidenceTiers: [],
+    });
+    vi.mocked(fetchPromotionManifest).mockResolvedValueOnce({
+      manifestVersion: '1.0.0', generatedAtUtc: '',
+      counts: { totalDrafts: 0, blocked: 0, reviewRequired: 0, researchRequested: 1, candidatesForPromotion: 0 },
+      blocked: [], reviewRequired: [],
+      researchRequested: [{
+        name: 'BPC-157', classification: 'Peptide', readiness: 'research-requested', overallEvidenceTier: 'Unknown', completeness: 'requested', reviewQueueItemCount: 0,
+        reviewDecisionIds: [], hasResearchRequest: true, researchRequestIds: ['research-bpc-157-001'], blockers: ['research-requested: evidence packet has not been generated'], qualityFlags: ['research-requested'],
+        requiredNextActions: ['Create a compound evidence packet from the research request.'],
+      }],
+      candidatesForPromotion: [],
+    });
+    vi.mocked(fetchReviewResolutionPlan).mockResolvedValueOnce({
+      planVersion: '1.0.0', generatedAtUtc: '', counts: { totalItems: 1, blockedItems: 0, reviewRequiredItems: 0, resolutionTypes: [] },
+      items: [{
+        itemId: 'i1', compoundName: 'BPC-157', readiness: 'research-requested', severity: 'research', resolutionType: 'perform-initial-research',
+        issue: 'research-requested: evidence packet has not been generated', recommendedAction: 'Perform initial evidence research.', relatedReviewQueueItemIds: [], relatedBlockers: [], relatedQualityFlags: [],
+      }],
+    });
+    vi.mocked(fetchReviewQueue).mockResolvedValueOnce([]);
+    vi.mocked(fetchResearchTaskQueue).mockResolvedValueOnce({
+      queueVersion: '1.0.0', generatedAtUtc: '', counts: { totalItems: 1, urgent: 0, high: 1, normal: 0, low: 0 },
+      items: [{
+        taskId: 'bpc-157-initial-research', taskType: 'generate-evidence-packet', compoundName: 'BPC-157', aliases: [], categories: ['Peptides'], classification: 'Peptide', priority: 'high',
+        requestIds: ['research-bpc-157-001'], requesterIds: ['operator-1'], firstRequestedAtUtc: '', latestRequestedAtUtc: '',
+        rationales: ['Queue an evidence packet for BPC-157.'], notes: [],
+        suggestedResearchDirectives: ['Use the source registry agent first.'], targetEvidencePath: 'research/input/evidence/bpc-157.evidence.json', requiredSchema: 'evidence-packet.schema.json',
+      }],
+      resolvedItems: [],
+    });
+    vi.mocked(fetchEvidencePacket).mockRejectedValueOnce(new Error('404'));
+
+    render(<CompoundDetail />);
+
+    fireEvent.click(await screen.findByRole('button', { name: /Open in task board/i }));
+    expect(pushMock).toHaveBeenCalledWith('/admin/research/tasks?compound=bpc-157');
+  });
+
+  it('shows a consumed-task signal after evidence clears the queue', async () => {
+    vi.mocked(fetchResearchSummary).mockResolvedValueOnce({
+      draftSubstanceCount: 1, reviewQueueItemCount: 1, researchRequestCount: 0,
+      compounds: [{
+        name: 'BPC-157', classification: 'Peptide', overallEvidenceTier: 'Limited',
+        completeness: 'partial', needsReview: true, reviewQueueItemCount: 1,
+        promotionReadiness: 'review-required',
+        promotionBlockers: ['review-required: compiled draft requires human review'],
+        reviewDecisionIds: [], hasResearchRequest: true, researchRequestIds: ['research-bpc-157-001'], qualityFlags: [], reviewReasons: [],
+      }],
+      reviewCategories: [], promotionReadiness: [], qualityFlags: [], reviewReasons: [], classifications: [], evidenceTiers: [],
+    });
+    vi.mocked(fetchPromotionManifest).mockResolvedValueOnce({
+      manifestVersion: '1.0.0', generatedAtUtc: '',
+      counts: { totalDrafts: 1, blocked: 0, reviewRequired: 1, researchRequested: 0, candidatesForPromotion: 0 },
+      blocked: [], reviewRequired: [{
+        name: 'BPC-157', classification: 'Peptide', readiness: 'review-required', overallEvidenceTier: 'Limited', completeness: 'partial', reviewQueueItemCount: 1,
+        reviewDecisionIds: [], hasResearchRequest: true, researchRequestIds: ['research-bpc-157-001'], blockers: ['review-required: compiled draft requires human review'], qualityFlags: [], requiredNextActions: ['Review compiled evidence.'],
+      }], candidatesForPromotion: [], researchRequested: [],
+    });
+    vi.mocked(fetchReviewResolutionPlan).mockResolvedValueOnce({
+      planVersion: '1.0.0', generatedAtUtc: '', counts: { totalItems: 1, blockedItems: 0, reviewRequiredItems: 1, resolutionTypes: [] },
+      items: [{
+        itemId: 'i1', compoundName: 'BPC-157', readiness: 'review-required', severity: 'review', resolutionType: 'review-evidence',
+        issue: 'review-required: compiled draft requires human review', recommendedAction: 'Review evidence.', relatedReviewQueueItemIds: [], relatedBlockers: [], relatedQualityFlags: [],
+      }],
+    });
+    vi.mocked(fetchReviewQueue).mockResolvedValueOnce([]);
+    vi.mocked(fetchResearchTaskQueue).mockResolvedValueOnce({
+      queueVersion: '1.0.0', generatedAtUtc: '', counts: { totalItems: 0, urgent: 0, high: 0, normal: 0, low: 0, resolvedItems: 1 }, items: [],
+      resolvedItems: [{
+        taskId: 'bpc-157-initial-research', compoundName: 'BPC-157', aliases: [], categories: ['Peptides'], classification: 'Peptide', priority: 'high',
+        requestIds: ['research-bpc-157-001'], requesterIds: ['operator-1'], firstRequestedAtUtc: '', latestRequestedAtUtc: '', resolvedAtUtc: '',
+        currentReadiness: 'review-required', resolution: 'evidence-detected', resolutionReason: 'Evidence is now present.', targetEvidencePath: 'research/input/evidence/bpc-157.evidence.json',
+      }],
+    });
+    vi.mocked(fetchEvidencePacket).mockRejectedValueOnce(new Error('404'));
+
+    render(<CompoundDetail />);
+
+    expect(await screen.findByText('Research Task Consumed')).toBeInTheDocument();
+    expect(screen.getByText(/Evidence is now present/i)).toBeInTheDocument();
   });
 });

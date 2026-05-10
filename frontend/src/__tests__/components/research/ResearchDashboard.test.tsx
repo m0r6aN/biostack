@@ -1,6 +1,10 @@
 import ResearchDashboard from '@/app/admin/research/page';
 import { render, screen } from '@testing-library/react';
 
+vi.mock('next/link', () => ({
+  default: ({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => <a href={href} {...props}>{children}</a>,
+}));
+
 vi.mock('@/lib/apiBase', () => ({ getApiBaseUrl: () => 'http://localhost' }));
 
 vi.mock('@/components/Header', () => ({
@@ -81,5 +85,10 @@ describe('ResearchDashboard', () => {
     expect(await screen.findByText('Dry-Run Safe')).toBeInTheDocument();
     expect(await screen.findByText('Active Exports')).toBeInTheDocument();
     expect(await screen.findByText(/Safe to apply:/i)).toBeInTheDocument();
+  });
+
+  it('links to taxonomy management', async () => {
+    render(<ResearchDashboard />);
+    expect(await screen.findByRole('link', { name: /Manage category taxonomy/i })).toHaveAttribute('href', '/admin/research/taxonomy');
   });
 });

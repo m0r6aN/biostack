@@ -160,9 +160,17 @@ export default function ResearchDashboard() {
         </div>
 
         <div className="flex justify-end">
-          <Link href="/admin/research/compounds" className="text-[12px] text-emerald-400 hover:text-emerald-300 transition-colors">
-            View all compounds →
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/admin/research/taxonomy" className="text-[12px] text-sky-300 hover:text-sky-200 transition-colors">
+              Manage category taxonomy →
+            </Link>
+            <Link href="/admin/research/tasks" className="text-[12px] text-violet-300 hover:text-violet-200 transition-colors">
+              View evidence tasks →
+            </Link>
+            <Link href="/admin/research/compounds" className="text-[12px] text-emerald-400 hover:text-emerald-300 transition-colors">
+              View all compounds →
+            </Link>
+          </div>
         </div>
       </main>
     </div>

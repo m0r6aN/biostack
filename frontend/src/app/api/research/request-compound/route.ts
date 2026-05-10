@@ -1,4 +1,5 @@
-import type { ResearchRequestBatch } from '@/lib/research/types';
+import { normalizeResearchCategories } from '@/lib/research/categoryRegistry';
+import type { ResearchCategoryTaxonomy, ResearchRequestBatch } from '@/lib/research/types';
 import * as childProcess from 'node:child_process';
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
@@ -38,7 +39,19 @@ function parseStringArray(value: unknown) {
   return parseString(value).split(',').map(item => item.trim()).filter(Boolean);
 }
 
-function toBatch(body: unknown): ResearchRequestBatch | null {
+async function loadResearchCategoryTaxonomy(root: string): Promise<ResearchCategoryTaxonomy | null> {
+  try {
+    const raw = await fs.readFile(path.join(root, 'research', 'category-taxonomy.json'), 'utf8');
+    return JSON.parse(raw) as ResearchCategoryTaxonomy;
+  } catch (error) {
+    if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'ENOENT') {
+      return null;
+    }
+    throw error;
+  }
+}
+
+async function toBatch(body: unknown, root: string): Promise<ResearchRequestBatch | null> {
   if (!isRecord(body)) return null;
   const compoundName = parseString(body.compoundName);
   const rationale = parseString(body.rationale) || parseString(body.notes);
@@ -47,6 +60,8 @@ function toBatch(body: unknown): ResearchRequestBatch | null {
   const now = new Date().toISOString();
   const requesterId = parseString(body.requesterId) || 'research-ui';
   const priority = parseString(body.priority);
+  const categoryTaxonomy = await loadResearchCategoryTaxonomy(root);
+  const categories = normalizeResearchCategories(categoryTaxonomy, parseStringArray(body.categories));
   const normalizedPriority = ['low', 'normal', 'high', 'urgent'].includes(priority) ? priority as ResearchRequestBatch['requests'][number]['priority'] : 'normal';
   const requestId = `research-request-${Date.now()}-${safeName(compoundName).toLowerCase()}`;
   return {
@@ -57,6 +72,7 @@ function toBatch(body: unknown): ResearchRequestBatch | null {
       requestId,
       compoundName,
       aliases: parseStringArray(body.aliases),
+      categories,
       classification: parseString(body.classification) || 'Other',
       priority: normalizedPriority,
       requesterId,
@@ -124,12 +140,12 @@ export async function POST(request: Request) {
 
   let body: unknown;
   try { body = await request.json(); } catch { return Response.json({ error: 'Invalid JSON body.' }, { status: 400 }); }
-  const batch = toBatch(body);
+  const root = repoRoot();
+  const batch = await toBatch(body, root);
   if (!batch) return Response.json({ error: 'Compound name and rationale are required.' }, { status: 400 });
 
   isProcessing = true;
   try {
-    const root = repoRoot();
     const saved = await saveBatch(root, batch);
     const worker = await runResearchWorker(root);
     const payload = { savedFilename: saved.filename, savedPath: saved.target, researchRequestDirectory: saved.directory, ...worker };

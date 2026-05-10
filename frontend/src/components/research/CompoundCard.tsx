@@ -6,6 +6,10 @@ interface CompoundCardProps {
   compound: ResearchSummaryCompound;
   selected: boolean;
   onClick: () => void;
+  secondaryAction?: {
+    label: string;
+    onClick: () => void;
+  };
 }
 
 const borderColor: Record<string, string> = {
@@ -15,7 +19,7 @@ const borderColor: Record<string, string> = {
   'candidate-for-promotion': 'border-l-emerald-500',
 };
 
-export function CompoundCard({ compound, selected, onClick }: CompoundCardProps) {
+export function CompoundCard({ compound, selected, onClick, secondaryAction }: CompoundCardProps) {
   const firstBlocker = compound.promotionBlockers[0];
   const showBlocker =
     firstBlocker && compound.promotionReadiness !== 'candidate-for-promotion';
@@ -50,6 +54,21 @@ export function CompoundCard({ compound, selected, onClick }: CompoundCardProps)
         <p className="mt-1.5 text-[10px] text-rose-400/70 italic truncate">
           {firstBlocker}
         </p>
+      )}
+      {secondaryAction && (
+        <div className="mt-2 flex justify-end">
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              secondaryAction.onClick();
+            }}
+            onKeyDown={(event) => event.stopPropagation()}
+            className="rounded-md border border-violet-400/20 bg-violet-500/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-violet-200 transition-colors hover:bg-violet-500/20"
+          >
+            {secondaryAction.label}
+          </button>
+        </div>
       )}
     </div>
   );

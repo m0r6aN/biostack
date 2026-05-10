@@ -4,8 +4,10 @@ import type {
     PromotionImportDryRunReport,
     PromotionImportPreview,
     PromotionManifest,
+    ResearchCategoryTaxonomy,
     ResearchReviewQueueItem,
     ResearchSummary,
+    ResearchTaskQueue,
     ReviewResolutionPlan,
 } from './types';
 
@@ -52,6 +54,12 @@ export const fetchReviewResolutionPlan = (t: string) =>
 
 export const fetchReviewQueue = (t: string) =>
   fetchArtifact<ResearchReviewQueueItem[]>('review-queue', t);
+
+export const fetchResearchTaskQueue = (t: string) =>
+  fetchArtifact<ResearchTaskQueue>('research-task-queue', t);
+
+export const fetchResearchCategoryTaxonomy = (t: string) =>
+  fetchArtifact<ResearchCategoryTaxonomy>('category-taxonomy', t);
 
 export const fetchImportPreview = (t: string) =>
   fetchArtifact<PromotionImportPreview>('promotion-import-preview', t);

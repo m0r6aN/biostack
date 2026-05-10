@@ -6,9 +6,9 @@ import { ResolutionPlanItem } from '@/components/research/ResolutionPlanItem';
 import { ReviewDecisionForm } from '@/components/research/ReviewDecisionForm';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { getApiBaseUrl } from '@/lib/apiBase';
-import { fetchEvidencePacket, fetchPromotionManifest, fetchResearchSummary, fetchReviewQueue, fetchReviewResolutionPlan } from '@/lib/research/loader';
-import { buildSlugMap } from '@/lib/research/slugs';
-import type { EvidencePacket, PromotionManifestCandidate, ResearchReviewQueueItem, ResearchSummaryCompound, ReviewResolutionPlan } from '@/lib/research/types';
+import { fetchEvidencePacket, fetchPromotionManifest, fetchResearchSummary, fetchResearchTaskQueue, fetchReviewQueue, fetchReviewResolutionPlan } from '@/lib/research/loader';
+import { buildSlugMap, toSlug } from '@/lib/research/slugs';
+import type { EvidencePacket, PromotionManifestCandidate, ResearchReviewQueueItem, ResearchSummaryCompound, ResearchTaskQueue, ReviewResolutionPlan } from '@/lib/research/types';
 import { cn } from '@/lib/utils';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -34,6 +34,7 @@ export default function CompoundDetail() {
   const [evidencePacket, setEvidencePacket] = useState<EvidencePacket | null>(null);
   const [evidencePacketMissing, setEvidencePacketMissing] = useState(false);
   const [reviewQueue, setReviewQueue] = useState<ResearchReviewQueueItem[]>([]);
+  const [researchTaskQueue, setResearchTaskQueue] = useState<ResearchTaskQueue | null>(null);
   const [plan, setPlan] = useState<ReviewResolutionPlan | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [tab, setTab] = useState<Tab>('overview');
@@ -52,12 +53,14 @@ export default function CompoundDetail() {
       setEvidencePacket(null);
       setEvidencePacketMissing(false);
       setReviewQueue([]);
+      setResearchTaskQueue(null);
       try {
-        const [summary, manifest, resolutionPlan, queue] = await Promise.all([
+        const [summary, manifest, resolutionPlan, queue, taskQueue] = await Promise.all([
           fetchResearchSummary(t),
           fetchPromotionManifest(t),
           fetchReviewResolutionPlan(t),
           fetchReviewQueue(t).catch(() => [] as ResearchReviewQueueItem[]),
+          fetchResearchTaskQueue(t).catch(() => null),
         ]);
         const slugMap = buildSlugMap(summary.compounds);
         const canonicalName = slugMap.get(slug);
@@ -71,6 +74,7 @@ export default function CompoundDetail() {
         setCandidate(allCandidates.find(c => c.name === canonicalName) ?? null);
         setPlan(resolutionPlan);
         setReviewQueue(queue);
+        setResearchTaskQueue(taskQueue);
 
         try {
           setEvidencePacket(await fetchEvidencePacket(slug, t));
@@ -89,6 +93,8 @@ export default function CompoundDetail() {
 
   const planItems = plan?.items.filter(i => i.compoundName === compound?.name) ?? [];
   const compoundQueueItems = reviewQueue.filter(item => item.compoundName === compound?.name);
+  const queuedResearchTask = researchTaskQueue?.items.find(item => item.compoundName === compound?.name) ?? null;
+  const consumedResearchTask = (researchTaskQueue?.resolvedItems ?? []).find(item => item.compoundName === compound?.name) ?? null;
 
   if (notFound) {
     return (
@@ -175,6 +181,101 @@ export default function CompoundDetail() {
               </div>
             </GlassCard>
 
+            {queuedResearchTask && (
+              <GlassCard className="p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35">Queued Evidence Task</h3>
+                    <p className="mt-2 text-sm text-white/70">
+                      This compound is still waiting for its first evidence packet. Use the queued task below for agent pickup.
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-end gap-2">
+                    <span className="rounded-full border border-violet-400/20 bg-violet-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-200">
+                      {queuedResearchTask.priority}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => router.push(`/admin/research/tasks?compound=${encodeURIComponent(toSlug(compound.name))}`)}
+                      className="text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-100/80 transition-colors hover:text-violet-100"
+                    >
+                      Open in task board →
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                  <TaskMeta label="Target evidence path" value={queuedResearchTask.targetEvidencePath} />
+                  <TaskMeta label="Required schema" value={queuedResearchTask.requiredSchema} />
+                  <TaskMeta label="Request IDs" value={queuedResearchTask.requestIds.join(', ') || 'None'} />
+                  <TaskMeta label="Requesters" value={queuedResearchTask.requesterIds.join(', ') || 'Unknown'} />
+                </div>
+                {(queuedResearchTask.categories?.length ?? 0) > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {queuedResearchTask.categories?.map((category) => (
+                      <span key={category} className="rounded-full border border-violet-400/20 bg-violet-500/10 px-2.5 py-1 text-[10px] text-violet-200">
+                        {category}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {queuedResearchTask.rationales.length > 0 && (
+                  <div className="mt-4 rounded-xl border border-violet-400/15 bg-violet-500/[0.04] px-3 py-3">
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-violet-200/70">Rationale</p>
+                    <div className="mt-2 flex flex-col gap-2 text-[11px] leading-5 text-white/70">
+                      {queuedResearchTask.rationales.map(rationale => <p key={rationale}>{rationale}</p>)}
+                    </div>
+                  </div>
+                )}
+                {queuedResearchTask.suggestedResearchDirectives.length > 0 && (
+                  <div className="mt-4">
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-white/35">Suggested Research Directives</p>
+                    <ul className="mt-2 flex flex-col gap-2 text-[11px] leading-5 text-white/65">
+                      {queuedResearchTask.suggestedResearchDirectives.slice(0, 3).map(directive => (
+                        <li key={directive} className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2">
+                          → {directive}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </GlassCard>
+            )}
+
+            {!queuedResearchTask && consumedResearchTask && (
+              <GlassCard className="p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35">Research Task Consumed</h3>
+                    <p className="mt-2 text-sm text-white/70">
+                      The initial research request cleared from the active queue on the latest run because evidence is now in the pipeline.
+                    </p>
+                  </div>
+                  <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200">
+                    {consumedResearchTask.currentReadiness}
+                  </span>
+                </div>
+                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                  <TaskMeta label="Target evidence path" value={consumedResearchTask.targetEvidencePath} />
+                  <TaskMeta label="Resolution" value={consumedResearchTask.resolution} />
+                  <TaskMeta label="Request IDs" value={consumedResearchTask.requestIds.join(', ') || 'None'} />
+                  <TaskMeta label="Requesters" value={consumedResearchTask.requesterIds.join(', ') || 'Unknown'} />
+                </div>
+                {(consumedResearchTask.categories?.length ?? 0) > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {consumedResearchTask.categories?.map((category) => (
+                      <span key={category} className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2.5 py-1 text-[10px] text-emerald-200">
+                        {category}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <div className="mt-4 rounded-xl border border-emerald-400/15 bg-emerald-500/[0.04] px-3 py-3">
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-emerald-200/70">Consumption signal</p>
+                  <p className="mt-2 text-[11px] leading-5 text-white/70">{consumedResearchTask.resolutionReason}</p>
+                </div>
+              </GlassCard>
+            )}
+
             {compound.promotionBlockers.length > 0 && (
               <GlassCard className="p-5">
                 <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-3">Promotion Blockers</h3>
@@ -247,6 +348,15 @@ export default function CompoundDetail() {
           </GlassCard>
         )}
       </main>
+    </div>
+  );
+}
+
+function TaskMeta({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-2">
+      <p className="text-[9px] text-white/35 uppercase tracking-widest">{label}</p>
+      <p className="mt-1 break-all text-[11px] font-medium text-white/75">{value}</p>
     </div>
   );
 }
