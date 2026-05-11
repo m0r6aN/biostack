@@ -25,6 +25,7 @@ import { EVIDENCE_TIER_TOKENS, INTERACTION_TOKENS } from '@/styles/tokens';
 import { cn } from '@/lib/utils';
 import { track } from '@/lib/telemetry';
 import type { InteractionIntelligence, CompoundRecord, KnowledgeEntry } from '@/lib/types';
+import { CompoundLink } from '@/components/knowledge/CompoundLink';
 
 // ── Custom Node ────────────────────────────────────────────────────────────
 
@@ -56,6 +57,11 @@ function CompoundNode({ data, selected }: { data: StackGraphNode['data']; select
           {tierToken.short}
         </span>
       )}
+
+      <CompoundLink
+        displayName={data.label}
+        className="text-[9px] text-white/20 hover:text-white/50 mt-1 block"
+      />
 
       <Handle type="source" position={Position.Bottom} className="!w-2 !h-2 !bg-white/20 !border-0" />
     </div>

@@ -3,6 +3,10 @@ namespace BioStack.Api.Endpoints;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
+using BioStack.Domain.Governance;
+using BioStack.Infrastructure.Governance;
+using BioStack.Infrastructure.Keon;
+using System.Text.Json;
 
 public static class ProtocolEndpoints
 {
@@ -228,12 +232,54 @@ public static class ProtocolEndpoints
         }
     }
 
-    private static async Task<IResult> CompleteReview(Guid id, CompleteProtocolReviewRequest request, IProtocolService protocolService, CancellationToken ct)
+    private static async Task<IResult> CompleteReview(
+        Guid id,
+        CompleteProtocolReviewRequest request,
+        IProtocolService protocolService,
+        IKeonRuntimeClient keonClient,
+        ISpineRepository spine,
+        CancellationToken ct)
     {
         try
         {
             var completed = await protocolService.CompleteReviewAsync(id, request, ct);
-            return Results.Created($"/api/v1/protocols/{id}/review/completions/{completed.Id}", completed);
+
+            // Issue a Decision Receipt — this review completion is a governed effect on the Spine.
+            var receiptRequest = new ReceiptRequest(
+                SubjectUri: $"protocol:{id}/review",
+                TenantId: "biostack-public",
+                ActorId: "biostack-system",
+                Decision: "commentary-only",
+                InputHash: completed.Id.ToString("N"),
+                EvidenceRefs: [],
+                EffectStatus: "commentary-only");
+
+            var receipt = await keonClient.IssueReceiptAsync(receiptRequest, ct);
+
+            await spine.AppendAsync(new SpineEntry
+            {
+                ReceiptUri = receipt.ReceiptUri,
+                SubjectUri = receipt.SubjectUri,
+                TenantId = receipt.TenantId,
+                ActorId = receipt.ActorId,
+                TimestampUtc = receipt.TimestampUtc,
+                Decision = receipt.Decision,
+                PolicyHashValue = receipt.PolicyHash.Value,
+                PolicyHashVersion = receipt.PolicyHash.Version,
+                InputHash = receipt.InputHash,
+                EvidenceRefsJson = JsonSerializer.Serialize(receipt.EvidenceRefs),
+                EffectStatus = receipt.EffectStatus,
+            }, ct);
+
+            return Results.Created($"/api/v1/protocols/{id}/review/completions/{completed.Id}", new
+            {
+                id = completed.Id,
+                protocolId = completed.ProtocolId,
+                runId = completed.RunId,
+                completedAtUtc = completed.CompletedAtUtc,
+                notes = completed.Notes,
+                receiptUri = receipt.ReceiptUri,
+            });
         }
         catch (InvalidOperationException)
         {

@@ -17,7 +17,11 @@ public sealed record StackDeliberationEnvelopeResponse(
     // 5. Reasoning Graph reference
     ReasoningGraphRefResponse ReasoningGraph,
     // Non-negotiable doctrine stamp
-    string EffectStatus);   // always "commentary-only"
+    string EffectStatus,    // always "commentary-only"
+    // 6. KE-7: Witness Narrative
+    WitnessNarrativeResponse WitnessNarrative,
+    // 7. KE-8: Reasoning Graph (full node/edge detail)
+    ReasoningGraphResponse ReasoningGraphFull);
 
 public sealed record DeterministicFindingResponse(
     string FindingId,
@@ -58,3 +62,34 @@ public sealed record ReasoningGraphRefResponse(
     string GraphId,
     int NodeCount,
     int EdgeCount);
+
+// ── KE-7: Witness Narrative ───────────────────────────────────────────────
+
+public sealed record WitnessNarrativeResponse(
+    IReadOnlyList<WitnessEntryResponse> Entries);
+
+public sealed record WitnessEntryResponse(
+    string Role,
+    string EventType,
+    string Timestamp,
+    string Summary,
+    IReadOnlyList<string> FindingIds);
+
+// ── KE-8: Reasoning Graph ────────────────────────────────────────────────
+
+public sealed record ReasoningGraphResponse(
+    string GraphId,
+    IReadOnlyList<GraphNodeResponse> Nodes,
+    IReadOnlyList<GraphEdgeResponse> Edges);
+
+public sealed record GraphNodeResponse(
+    string Id,
+    string Kind,
+    string Label,
+    string? RoleOrigin,
+    IReadOnlyList<string> EvidenceRefs);
+
+public sealed record GraphEdgeResponse(
+    string Source,
+    string Target,
+    string Relation);

@@ -440,6 +440,7 @@ export interface ProtocolReviewCompletedEvent {
   runId: string | null;
   completedAtUtc: string;
   notes: string;
+  receiptUri?: string;
 }
 
 export interface ProtocolRun {
@@ -810,4 +811,131 @@ export interface DecisionReceiptResponse {
   inputHash: string;
   evidenceRefs: string[];
   effectStatus: string;
+}
+
+// ── KE-7: Witness Narrative ──────────────────────────────────────────────
+export interface WitnessEntry {
+  role: string;
+  eventType: 'proposed' | 'challenged' | 'survived' | 'blocked' | 'escalated' | string;
+  timestamp: string;
+  summary: string;
+  findingIds: string[];
+}
+
+export interface WitnessNarrative {
+  entries: WitnessEntry[];
+}
+
+// ── KE-8: Reasoning Graph ────────────────────────────────────────────────
+export interface GraphNode {
+  id: string;
+  kind: 'claim' | 'assumption' | 'risk' | 'decision' | 'mitigation' | 'contradiction';
+  label: string;
+  roleOrigin?: string;
+  evidenceRefs?: string[];
+}
+
+export interface GraphEdge {
+  source: string;
+  target: string;
+  relation: 'supports' | 'contradicts' | 'depends_on' | 'mitigates' | 'derives_from';
+}
+
+export interface ReasoningGraph {
+  graphId: string;
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+}
+
+// Expanded SRB envelope with KE-7 and KE-8
+export interface StackDeliberationEnvelopeFullResponse {
+  deterministicFindings: SrbDeterministicFinding[];
+  perspectiveReviews: Record<string, SrbPerspectiveReview>;
+  contradictionReview: SrbContradictionReview;
+  confidenceProfile: SrbConfidenceProfile;
+  reasoningGraph: SrbReasoningGraphRef;
+  effectStatus: string;
+  witnessNarrative: WitnessNarrative;
+  reasoningGraphFull: ReasoningGraph;
+}
+
+// ── SRB-2: Decision Theater — API-accurate envelope types ────────────────
+
+export interface SrbEnvelopeFinding {
+  findingId: string;
+  category: string;
+  narrative: string;
+  severity: string;
+  effectStatus: string;
+}
+
+export interface SrbEnvelopePerspective {
+  role: string;
+  findings: SrbEnvelopeFinding[];
+  summary: string;
+  effectStatus: string;
+}
+
+export interface SrbEnvelopeDeterministic {
+  findingId: string;
+  code: string;
+  category: string;
+  narrative: string;
+  compoundSlugs: string[];
+  riskScoreContribution: number;
+  evidenceTier: string;
+  effectStatus: string;
+}
+
+export interface SrbEnvelopeContradiction {
+  counterPlanNarrative: string;
+  isExecutable: false;
+  effectStatus: string;
+}
+
+export interface SrbEnvelopeConfidenceProfile {
+  model: string;
+  epistemic: string;
+  evidenceSupport: string;
+  contradictionDensity: string;
+  calibrationVersion: string;
+}
+
+export interface SrbEnvelopeResponse {
+  deterministicFindings: SrbEnvelopeDeterministic[];
+  perspectiveReviews: Record<string, SrbEnvelopePerspective>;
+  contradictionReview: SrbEnvelopeContradiction;
+  confidenceProfile: SrbEnvelopeConfidenceProfile;
+  reasoningGraph: { graphId: string; nodeCount: number; edgeCount: number };
+  effectStatus: string;
+  witnessNarrative: WitnessNarrative;
+  reasoningGraphFull: ReasoningGraph;
+}
+
+export interface SrbEnvelopeCompoundRef {
+  slug: string;
+  displayName: string;
+  form: string;
+  category: string;
+  evidenceTier: string;
+}
+
+export interface SrbEnvelopeDeterministicFindingRequest {
+  code: string;
+  category: string;
+  narrative: string;
+  compoundSlugs: string[];
+  riskScoreContribution: number;
+}
+
+export interface SrbEnvelopeRequest {
+  protocolId: null;
+  payload: {
+    goal: string;
+    compounds: SrbEnvelopeCompoundRef[];
+    pathways: string[];
+    deterministicFindings: SrbEnvelopeDeterministicFindingRequest[];
+    knownPatternNames: string[];
+    providerReviewPressure: number;
+  };
 }

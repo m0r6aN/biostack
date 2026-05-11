@@ -6,6 +6,7 @@ import { ConfidenceChip } from '@/components/intel/ConfidenceChip';
 import { cn } from '@/lib/utils';
 import { track } from '@/lib/telemetry';
 import type { InteractionIntelligence } from '@/lib/types';
+import { CompoundLink } from '@/components/knowledge/CompoundLink';
 
 interface CounterfactualLabProps {
   intelligence: InteractionIntelligence | null;
@@ -86,7 +87,7 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
               counterfactuals.map((cf) => (
                 <VariantCard
                   key={cf.removedCompound}
-                  title={`Remove ${cf.removedCompound}`}
+                  title={<>Remove <CompoundLink displayName={cf.removedCompound} /></>}
                   description={cf.recommendation}
                   verdict={cf.verdict}
                   delta={cf.deltaScore}
@@ -111,7 +112,7 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
               swaps.slice(0, 5).map((sw, i) => (
                 <VariantCard
                   key={`${sw.originalCompound}-${sw.candidateCompound}-${i}`}
-                  title={`Swap ${sw.originalCompound} → ${sw.candidateCompound}`}
+                  title={<>Swap <CompoundLink displayName={sw.originalCompound} /> {'→'} <CompoundLink displayName={sw.candidateCompound} /></>}
                   description={sw.recommendation}
                   verdict={sw.verdict}
                   delta={sw.deltaScore}
@@ -134,7 +135,7 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
               <p className="text-xs text-white/30 px-1 py-3">Simplified variant requires at least one removal counterfactual.</p>
             ) : (
               <VariantCard
-                title={`Simplified: Remove ${bestRemoval.removedCompound}`}
+                title={<>Simplified: Remove <CompoundLink displayName={bestRemoval.removedCompound} /></>}
                 description={`Best single-compound removal for signal clarity. ${bestRemoval.recommendation}`}
                 verdict={bestRemoval.verdict}
                 delta={bestRemoval.deltaScore}
@@ -165,7 +166,7 @@ function VariantCard({
   title, description, verdict, delta, baseScore, variantScore, findings,
   onHover, onLeave, onSaveDraft, savedDraft,
 }: {
-  title: string;
+  title: React.ReactNode;
   description: string;
   verdict: string;
   delta: number;
