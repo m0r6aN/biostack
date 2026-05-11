@@ -1044,6 +1044,71 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                     b.ToTable("TimelineEvents");
                 });
 
+            modelBuilder.Entity("BioStack.Domain.Governance.SpineEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ActorId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Decision")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EffectStatus")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EvidenceRefsJson")
+                        .IsRequired()
+                        .HasDefaultValue("[]")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("InputHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PolicyHashValue")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PolicyHashVersion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ReceiptUri")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SubjectUri")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("TimestampUtc")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActorId");
+
+                    b.HasIndex("ReceiptUri")
+                        .IsUnique();
+
+                    b.HasIndex("SubjectUri");
+
+                    b.ToTable("SpineEntries");
+                });
+
             modelBuilder.Entity("BioStack.Domain.Entities.AuthChallenge", b =>
                 {
                     b.HasOne("BioStack.Domain.Entities.AuthIdentity", "Identity")

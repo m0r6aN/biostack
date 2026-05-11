@@ -3,6 +3,7 @@ namespace BioStack.Infrastructure.Persistence;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using BioStack.Domain.Entities;
+using BioStack.Domain.Governance;
 
 public sealed class BioStackDbContext : DbContext
 {
@@ -30,6 +31,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<LeadCapture> LeadCaptures { get; set; }
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<StripeWebhookEvent> StripeWebhookEvents { get; set; }
+    public DbSet<SpineEntry> SpineEntries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -404,6 +406,26 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(e => e.StripeEventId).HasMaxLength(255).IsRequired();
             entity.Property(e => e.EventType).HasMaxLength(255).IsRequired();
             entity.HasIndex(e => e.StripeEventId).IsUnique();
+        });
+
+        modelBuilder.Entity<SpineEntry>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.ReceiptUri).IsRequired();
+            entity.Property(e => e.SubjectUri).IsRequired();
+            entity.Property(e => e.TenantId).IsRequired();
+            entity.Property(e => e.ActorId).IsRequired();
+            entity.Property(e => e.TimestampUtc).IsRequired();
+            entity.Property(e => e.Decision).IsRequired();
+            entity.Property(e => e.PolicyHashValue).IsRequired();
+            entity.Property(e => e.PolicyHashVersion).IsRequired();
+            entity.Property(e => e.InputHash).IsRequired();
+            entity.Property(e => e.EvidenceRefsJson).IsRequired().HasDefaultValue("[]");
+            entity.Property(e => e.EffectStatus).IsRequired();
+            entity.Property(e => e.CreatedAt).IsRequired();
+            entity.HasIndex(e => e.ReceiptUri).IsUnique();
+            entity.HasIndex(e => e.SubjectUri);
+            entity.HasIndex(e => e.ActorId);
         });
     }
 }

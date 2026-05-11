@@ -2,6 +2,7 @@ namespace BioStack.Infrastructure.Keon;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BioStack.Infrastructure.Governance;
 
 public static class KeonRuntimeDependencyInjection
 {
@@ -31,6 +32,8 @@ public static class KeonRuntimeDependencyInjection
         {
             services.AddSingleton<IKeonRuntimeClient, KeonRuntimeClientStub>();
         }
+
+        services.AddScoped<ISpineRepository, SpineRepository>();
 
         return services;
     }

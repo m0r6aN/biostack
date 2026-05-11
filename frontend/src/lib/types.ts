@@ -787,6 +787,31 @@ export interface ConversionRequest {
   conversionFactor: number;
 }
 
+// ── Trust Ledger types ─────────────────────────────────────────────────────
+
+export interface TrustLedgerClaim {
+  claimText: string;
+  confidence: string;
+  sourceRefs: string[];
+  extractedQuote: string | null;
+  reviewFlags: string[];
+}
+
+export interface TrustLedgerResponse {
+  slug: string;
+  canonicalName: string;
+  evidenceTier: string;
+  completeness: string;
+  needsReview: boolean;
+  qualityFlags: string[];
+  regulatoryBoundary: string;
+  claims: TrustLedgerClaim[];
+  conflicts: string[];
+  promotionBlockers: string[];
+  requiredNextActions: string[];
+  status: string;
+}
+
 // API Response types
 export interface ApiResponse<T> {
   success: boolean;
@@ -797,4 +822,17 @@ export interface ApiResponse<T> {
 export interface ListResponse<T> {
   items: T[];
   total: number;
+}
+
+export interface DecisionReceiptResponse {
+  receiptUri: string;
+  subjectUri: string;
+  tenantId: string;
+  actorId: string;
+  timestampUtc: string;
+  decision: string;
+  policyHash: { value: string; version: string };
+  inputHash: string;
+  evidenceRefs: string[];
+  effectStatus: string;
 }

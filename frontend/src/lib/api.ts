@@ -13,6 +13,7 @@ import {
     ConversionRequest,
     CreateCheckInRequest,
     CreateProfileRequest,
+    DecisionReceiptResponse,
     GoalDefinition,
     InteractionFlag,
     KnowledgeEntry,
@@ -33,6 +34,7 @@ import {
     ProtocolPhase,
     ReconstitutionRequest,
     TimelineEvent,
+    TrustLedgerResponse,
     VolumeRequest,
 } from './types';
 
@@ -312,6 +314,12 @@ export class ApiClient {
     return this.request(`/api/v1/knowledge/compounds/${encodeURIComponent(name)}`);
   }
 
+  async getTrustLedger(slug: string): Promise<TrustLedgerResponse> {
+    return this.request<TrustLedgerResponse>(
+      `/api/v1/knowledge/compounds/${encodeURIComponent(slug)}/trust-ledger`
+    );
+  }
+
   // Interaction / Overlap checking
   async checkOverlap(compoundNames: string[]): Promise<InteractionFlag[]> {
     const data = await this.request<{ overlaps: InteractionFlag[] }>(
@@ -460,6 +468,17 @@ export class ApiClient {
     } catch {
       setMockProfileGoalIds(profileId, goalIds);
     }
+  }
+
+  // Receipts
+  async getReceipt(receiptUri: string): Promise<DecisionReceiptResponse> {
+    const encoded = encodeURIComponent(receiptUri);
+    return this.request<DecisionReceiptResponse>(`/api/v1/receipts/${encoded}`);
+  }
+
+  async getReceiptsBySubject(subjectUri: string): Promise<DecisionReceiptResponse[]> {
+    const encoded = encodeURIComponent(subjectUri);
+    return this.request<DecisionReceiptResponse[]>(`/api/v1/receipts?subject=${encoded}`);
   }
 }
 
