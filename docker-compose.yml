@@ -30,8 +30,8 @@ services:
       - ASPNETCORE_URLS=http://+:5000
       - Database__Provider=postgres
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=biostack;Username=biostack;Password=${DB_PASSWORD:-biostack_dev_password}
-      - Jwt__Secret=${Jwt__Secret:-CHANGE_ME_MINIMUM_32_CHARACTER_RANDOM_STRING}
-      - Auth__CallbackSecret=${Auth__CallbackSecret:-CHANGE_ME_SHARED_SECRET}
+      - Jwt__Secret=${Jwt__Secret:?Jwt__Secret must be set (min 32 random chars). Copy .env.example to .env and fill it in.}
+      - Auth__CallbackSecret=${Auth__CallbackSecret:?Auth__CallbackSecret must be set. Must match AUTH_CALLBACK_SECRET. See .env.example.}
       - PublicApiUrl=${PublicApiUrl:-http://localhost:5000}
       - FrontendUrl=${FrontendUrl:-http://localhost:3043}
       - Smtp__Host=${Smtp__Host:-}
@@ -65,10 +65,10 @@ services:
     environment:
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:5000}
       - API_INTERNAL_URL=${API_INTERNAL_URL:-http://biostack-api:5000}
-      - AUTH_SECRET=${AUTH_SECRET:-CHANGE_ME_NEXTAUTH_SECRET_MIN_32_CHARS}
+      - AUTH_SECRET=${AUTH_SECRET:?AUTH_SECRET must be set (min 32 random chars). Generate: openssl rand -hex 32}
       - AUTH_URL=${AUTH_URL:-http://localhost:3043}
       - AUTH_TRUST_HOST=${AUTH_TRUST_HOST:-true}
-      - AUTH_CALLBACK_SECRET=${AUTH_CALLBACK_SECRET:-CHANGE_ME_SHARED_SECRET}
+      - AUTH_CALLBACK_SECRET=${AUTH_CALLBACK_SECRET:?AUTH_CALLBACK_SECRET must be set. Must match Auth__CallbackSecret. See .env.example.}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
       - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID:-}

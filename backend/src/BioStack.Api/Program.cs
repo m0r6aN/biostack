@@ -355,7 +355,7 @@ app.MapAnalyzeEndpoints();
 app.MapLeadEndpoints();
 app.MapAdminEndpoints();
 
-if (useInMemoryMagicLinks)
+if (app.Environment.IsDevelopment())
     app.MapDevAuthEndpoints();
 
 try
@@ -364,7 +364,12 @@ try
     var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
     await InteractionSchemaBootstrapper.EnsureCompoundInteractionHintsTableAsync(db);
 
-    if (!app.Environment.IsProduction())
+    if (app.Environment.IsProduction())
+    {
+        // Apply pending EF migrations on startup so fresh deployments self-migrate.
+        db.Database.Migrate();
+    }
+    else
     {
         db.Database.EnsureCreated();
 
@@ -388,6 +393,7 @@ try
 catch (Exception ex)
 {
     Console.WriteLine($"[FATAL] Database initialization failed: {ex.Message}");
+    throw;
 }
 
 app.Run();

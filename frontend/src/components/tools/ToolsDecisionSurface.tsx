@@ -389,7 +389,11 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             ) : (
               <div className="mt-5 space-y-5">
                 <div className="grid gap-4 sm:grid-cols-2">
+<<<<<<< HEAD
                   <NumberWithUnitFieldWithInfo label="Powder amount" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} />
+=======
+                  <NumberWithUnitFieldWithInfo label="Powder amount" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} infoImageSrc="/images/vial.jpg" infoImageAlt="Vial measurement guide" />
+>>>>>>> main
                   <NumberField label="Solution volume" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
                   <NumberWithUnitField label="Desired dose" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
                 </div>
@@ -702,7 +706,11 @@ function NumberWithUnitField<TUnit extends string>({ label, value, unit, units, 
   );
 }
 
+<<<<<<< HEAD
 function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit, units, onValueChange, onUnitChange }: { label: string; value: number; unit: TUnit; units: TUnit[]; onValueChange: (value: number) => void; onUnitChange: (unit: TUnit) => void }) {
+=======
+function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit, units, onValueChange, onUnitChange, infoImageSrc, infoImageAlt }: { label: string; value: number; unit: TUnit; units: TUnit[]; onValueChange: (value: number) => void; onUnitChange: (unit: TUnit) => void; infoImageSrc: string; infoImageAlt: string }) {
+>>>>>>> main
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -745,7 +753,11 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit,
       </div>
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setOpen(false)}>
+<<<<<<< HEAD
           <div className="relative max-h-[90dvh] w-full max-w-2xl overflow-auto rounded-xl border border-white/10 bg-[#121923] shadow-2xl" onClick={(e) => e.stopPropagation()}>
+=======
+          <div className="relative max-h-[90dvh] max-w-sm w-full overflow-hidden rounded-xl border border-white/10 bg-[#121923] shadow-2xl" onClick={(e) => e.stopPropagation()}>
+>>>>>>> main
             <button
               type="button"
               aria-label="Close"
@@ -756,7 +768,11 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit,
                 <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z" />
               </svg>
             </button>
+<<<<<<< HEAD
             <PowderAmountGuide />
+=======
+            <img src={infoImageSrc} alt={infoImageAlt} className="h-auto w-full object-contain" />
+>>>>>>> main
           </div>
         </div>
       )}
