@@ -12,6 +12,7 @@ public interface ISpineRepository
     Task<SpineEntry> AppendAsync(SpineEntry entry, CancellationToken ct = default);
     Task<SpineEntry?> GetByReceiptUriAsync(string receiptUri, CancellationToken ct = default);
     Task<IReadOnlyList<SpineEntry>> GetBySubjectAsync(string subjectUri, CancellationToken ct = default);
+    Task<IReadOnlyList<SpineEntry>> GetByActorAsync(string actorId, CancellationToken ct = default);
 }
 
 public sealed class SpineRepository(BioStackDbContext db) : ISpineRepository
@@ -38,6 +39,13 @@ public sealed class SpineRepository(BioStackDbContext db) : ISpineRepository
         => await db.SpineEntries
             .AsNoTracking()
             .Where(e => e.SubjectUri == subjectUri)
+            .OrderByDescending(e => e.TimestampUtc)
+            .ToListAsync(ct);
+
+    public async Task<IReadOnlyList<SpineEntry>> GetByActorAsync(string actorId, CancellationToken ct = default)
+        => await db.SpineEntries
+            .AsNoTracking()
+            .Where(e => e.ActorId == actorId)
             .OrderByDescending(e => e.TimestampUtc)
             .ToListAsync(ct);
 }

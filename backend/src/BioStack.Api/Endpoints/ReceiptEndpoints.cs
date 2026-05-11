@@ -14,8 +14,8 @@ public static class ReceiptEndpoints
         group.MapGet("/{uri}", GetReceiptByUri)
             .WithName("GetReceiptByUri");
 
-        group.MapGet("", GetReceiptsBySubject)
-            .WithName("GetReceiptsBySubject");
+        group.MapGet("", GetReceipts)
+            .WithName("GetReceipts");
     }
 
     private static async Task<IResult> GetReceiptByUri(
@@ -32,16 +32,25 @@ public static class ReceiptEndpoints
         return Results.Ok(MapToResponse(entry));
     }
 
-    private static async Task<IResult> GetReceiptsBySubject(
-        string subject,
+    private static async Task<IResult> GetReceipts(
+        string? subject,
+        string? actor,
         ISpineRepository spine,
         CancellationToken ct)
     {
-        if (string.IsNullOrWhiteSpace(subject))
-            return Results.BadRequest("subject query parameter is required");
+        if (!string.IsNullOrWhiteSpace(subject))
+        {
+            var entries = await spine.GetBySubjectAsync(subject, ct);
+            return Results.Ok(entries.Select(MapToResponse));
+        }
 
-        var entries = await spine.GetBySubjectAsync(subject, ct);
-        return Results.Ok(entries.Select(MapToResponse));
+        if (!string.IsNullOrWhiteSpace(actor))
+        {
+            var entries = await spine.GetByActorAsync(actor, ct);
+            return Results.Ok(entries.Select(MapToResponse));
+        }
+
+        return Results.BadRequest("Either 'subject' or 'actor' query parameter is required");
     }
 
     private static object MapToResponse(SpineEntry e)
