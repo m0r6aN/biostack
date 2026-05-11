@@ -28,6 +28,7 @@ Use the runner from the repository root:
 ```
 
 The runner invokes `BioStack.KnowledgeWorker` with `Worker:RunMode=Research`, which does not touch the database.
+By default it also loads research-request batches from `research/research-requests` and review decisions from `research/review-decisions` when those paths exist.
 
 ## Publication rule
 

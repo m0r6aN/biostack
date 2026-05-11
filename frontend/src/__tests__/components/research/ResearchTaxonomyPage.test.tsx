@@ -59,7 +59,30 @@ describe('ResearchTaxonomyPage', () => {
         schemaVersion: '1.0.0',
         updatedAtUtc: '2026-05-10T12:00:00Z',
         entries: [
-          { entryId: 'audit-1', action: 'save-taxonomy', createdAtUtc: '2026-05-10T12:00:00Z', taxonomyVersion: '1.0.0', summary: 'Saved taxonomy with 3 categories.' },
+          {
+            entryId: 'audit-1',
+            action: 'save-taxonomy',
+            createdAtUtc: '2026-05-10T12:00:00Z',
+            taxonomyVersion: '1.0.0',
+            summary: 'Saved taxonomy with 3 categories.',
+            beforeTaxonomy: {
+              taxonomyVersion: '1.0.0',
+              updatedAtUtc: '2026-05-10T11:00:00Z',
+              categories: [
+                { name: 'Nootropics', aliases: ['nootropic'] },
+                { name: 'Longevity', aliases: [] },
+              ],
+            },
+            afterTaxonomy: {
+              taxonomyVersion: '1.0.0',
+              updatedAtUtc: '2026-05-10T12:00:00Z',
+              categories: [
+                { name: 'Nootropics', aliases: ['nootropic', 'cognitive support'] },
+                { name: 'Anti-Aging', aliases: ['anti-aging'], deprecated: true, replacedBy: 'Longevity' },
+                { name: 'Longevity', aliases: [] },
+              ],
+            },
+          },
         ],
       }), { status: 200 }))
       .mockResolvedValueOnce(new Response(JSON.stringify({
@@ -111,6 +134,10 @@ describe('ResearchTaxonomyPage', () => {
     expect(screen.getByText(/research\/research-requests\/request-1\.json/i)).toBeInTheDocument();
     expect(screen.getByText('Governance audit history')).toBeInTheDocument();
     expect(screen.getByText('Saved taxonomy with 3 categories.')).toBeInTheDocument();
+    expect(screen.getByText('Added: Anti-Aging')).toBeInTheDocument();
+    expect(screen.getByText('Aliases changed: Nootropics')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Open full timeline/i })).toHaveAttribute('href', '/admin/research/taxonomy/history');
+    expect(screen.getByRole('link', { name: /Open in timeline/i })).toHaveAttribute('href', '/admin/research/taxonomy/history?entry=audit-1');
   });
 
   it('adds a category and saves the taxonomy with deprecations', async () => {
@@ -211,7 +238,28 @@ describe('ResearchTaxonomyPage', () => {
         schemaVersion: '1.0.0',
         updatedAtUtc: '2026-05-10T12:31:00Z',
         entries: [
-          { entryId: 'audit-3', action: 'apply-migration-fixup', createdAtUtc: '2026-05-10T12:31:00Z', taxonomyVersion: '1.0.0', summary: 'Applied taxonomy migration fix-up to 2 files.', applyReceipt: { counts: { totalFilesUpdated: 2, categoriesRewritten: 2 } } },
+          {
+            entryId: 'audit-3',
+            action: 'apply-migration-fixup',
+            createdAtUtc: '2026-05-10T12:31:00Z',
+            taxonomyVersion: '1.0.0',
+            summary: 'Applied taxonomy migration fix-up to 2 files.',
+            applyReceipt: { counts: { totalFilesUpdated: 2, categoriesRewritten: 2 } },
+            beforeMigrationReport: {
+              generatedAtUtc: '2026-05-10T12:00:00Z',
+              taxonomyVersion: '1.0.0',
+              counts: { requestFilesScanned: 1, requestFindings: 1, taskArtifactsScanned: 1, taskItemFindings: 1, resolvedTaskItemFindings: 0, totalFindings: 2 },
+              deprecatedCategories: [],
+              findings: [],
+            },
+            afterMigrationReport: {
+              generatedAtUtc: '2026-05-10T12:31:00Z',
+              taxonomyVersion: '1.0.0',
+              counts: { requestFilesScanned: 1, requestFindings: 0, taskArtifactsScanned: 1, taskItemFindings: 0, resolvedTaskItemFindings: 0, totalFindings: 0 },
+              deprecatedCategories: [],
+              findings: [],
+            },
+          },
         ],
       }), { status: 200 }));
     vi.stubGlobal('fetch', fetchMock);
@@ -225,6 +273,7 @@ describe('ResearchTaxonomyPage', () => {
     expect(await screen.findByText(/Applied taxonomy migration fix-up to 2 files and rewrote 2 category references/i)).toBeInTheDocument();
     expect(await screen.findByText('Last migration receipt')).toBeInTheDocument();
     expect(await screen.findByText('Applied taxonomy migration fix-up to 2 files.')).toBeInTheDocument();
+    expect(await screen.findByText(/Migration impact Δ total -2 · requests -1 · queued -1 · resolved 0/i)).toBeInTheDocument();
     expect(screen.getByText('research/research-requests/request-1.json')).toBeInTheDocument();
     expect(screen.getByText('research/pilot/research-task-queue.json')).toBeInTheDocument();
   });

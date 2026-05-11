@@ -1,6 +1,7 @@
 'use client';
 
 import { Header } from '@/components/Header';
+import { TaxonomyAuditEntryCard } from '@/components/research/TaxonomyAuditEntryCard';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { getApiBaseUrl } from '@/lib/apiBase';
 import { fetchResearchCategoryTaxonomy } from '@/lib/research/loader';
@@ -8,7 +9,7 @@ import type {
     ResearchCategoryMigrationApplyReceipt,
     ResearchCategoryMigrationReport,
     ResearchCategoryTaxonomy,
-    ResearchCategoryTaxonomyAuditLog,
+    ResearchCategoryTaxonomyAuditLog
 } from '@/lib/research/types';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -389,30 +390,15 @@ export default function ResearchTaxonomyPage() {
                 Saved taxonomy revisions and migration-apply receipts are preserved here for operator review.
               </p>
             </div>
+            <Link href="/admin/research/taxonomy/history" className="text-[11px] font-semibold text-violet-200/80 transition-colors hover:text-violet-100">
+              Open full timeline →
+            </Link>
           </div>
 
-          {auditLog && auditLog.entries.length > 0 ? (
+          {(auditLog?.entries.length ?? 0) > 0 ? (
             <div className="space-y-3">
-              {auditLog.entries.map((entry) => (
-                <div key={entry.entryId} className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white/80">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <p className="font-semibold text-white">{entry.summary}</p>
-                    <span className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/45">{entry.action}</span>
-                  </div>
-                  <p className="mt-2 text-[11px] text-white/50">
-                    {new Date(entry.createdAtUtc).toLocaleString()} · taxonomy {entry.taxonomyVersion}
-                  </p>
-                  {entry.applyReceipt && (
-                    <p className="mt-1 text-[11px] text-white/45">
-                      Files updated {entry.applyReceipt.counts.totalFilesUpdated} · categories rewritten {entry.applyReceipt.counts.categoriesRewritten}
-                    </p>
-                  )}
-                  {entry.beforeTaxonomy && entry.afterTaxonomy && entry.action === 'save-taxonomy' && (
-                    <p className="mt-1 text-[11px] text-white/45">
-                      Categories {entry.beforeTaxonomy.categories.length} → {entry.afterTaxonomy.categories.length}
-                    </p>
-                  )}
-                </div>
+              {auditLog?.entries.map((entry) => (
+                <TaxonomyAuditEntryCard key={entry.entryId} entry={entry} timelineHref={`/admin/research/taxonomy/history?entry=${encodeURIComponent(entry.entryId)}`} />
               ))}
             </div>
           ) : (

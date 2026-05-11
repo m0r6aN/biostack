@@ -19,6 +19,7 @@ public sealed class ResearchJob : IResearchJob
     private readonly IEvidencePacketSubstanceRecordCompiler _compiler;
     private readonly IResearchReviewQueueBuilder _reviewQueueBuilder;
     private readonly IResearchSummaryBuilder _summaryBuilder;
+    private readonly IResearchTaskQueueBuilder _researchTaskQueueBuilder;
     private readonly IPromotionManifestBuilder _promotionManifestBuilder;
     private readonly IReviewResolutionPlanBuilder _reviewResolutionPlanBuilder;
     private readonly IPromotionExporter _promotionExporter;
@@ -34,6 +35,7 @@ public sealed class ResearchJob : IResearchJob
         IEvidencePacketSubstanceRecordCompiler compiler,
         IResearchReviewQueueBuilder reviewQueueBuilder,
         IResearchSummaryBuilder summaryBuilder,
+        IResearchTaskQueueBuilder researchTaskQueueBuilder,
         IPromotionManifestBuilder promotionManifestBuilder,
         IReviewResolutionPlanBuilder reviewResolutionPlanBuilder,
         IPromotionExporter promotionExporter,
@@ -48,6 +50,7 @@ public sealed class ResearchJob : IResearchJob
         _compiler = compiler;
         _reviewQueueBuilder = reviewQueueBuilder;
         _summaryBuilder = summaryBuilder;
+        _researchTaskQueueBuilder = researchTaskQueueBuilder;
         _promotionManifestBuilder = promotionManifestBuilder;
         _reviewResolutionPlanBuilder = reviewResolutionPlanBuilder;
         _promotionExporter = promotionExporter;
@@ -71,21 +74,21 @@ public sealed class ResearchJob : IResearchJob
         var sourceRegistry = ValidateOptionalArtifact(context, report, ResearchArtifactKind.SourceRegistry, _options.ResearchSourceRegistryFilePath);
 
         var evidenceFiles = ResolveEvidenceFiles(_options).ToList();
-        if (evidenceFiles.Count == 0)
-        {
-            context.IncrementFailed();
-            report.Records.Add(ResearchRunRecord.Failed(
-                "evidence-packets",
-                "No evidence packet files were provided. Set Worker:ResearchEvidencePacketPath or Worker:ResearchEvidencePacketDirectory."));
-            WriteReport(outputDir, report);
-            context.LogSummary("ResearchJob");
-            return Task.FromResult(JobRunResult.FromContext(context));
-        }
-
         var drafts = new JsonArray();
         var reviewQueue = new List<ResearchReviewQueueItem>();
         var reviewDecisions = LoadReviewDecisions(context, report);
         var researchRequests = LoadResearchRequests(context, report);
+
+        if (evidenceFiles.Count == 0 && !researchRequests.All().Any())
+        {
+            context.IncrementFailed();
+            report.Records.Add(ResearchRunRecord.Failed(
+                "evidence-packets",
+                "No evidence packet files or research requests were provided. Set Worker:ResearchEvidencePacketPath, Worker:ResearchEvidencePacketDirectory, Worker:ResearchRequestPath, or Worker:ResearchRequestDirectory."));
+            WriteReport(outputDir, report);
+            context.LogSummary("ResearchJob");
+            return Task.FromResult(JobRunResult.FromContext(context));
+        }
 
         var evidencePacketOutputDir = Path.Combine(outputDir, "evidence-packet");
         Directory.CreateDirectory(evidencePacketOutputDir);
@@ -99,6 +102,7 @@ public sealed class ResearchJob : IResearchJob
         var draftsPath = Path.Combine(outputDir, "draft-substances.json");
         var reviewQueuePath = Path.Combine(outputDir, "review-queue.json");
         var summaryPath = Path.Combine(outputDir, "research-summary.json");
+        var researchTaskQueuePath = Path.Combine(outputDir, "research-task-queue.json");
         var promotionManifestPath = Path.Combine(outputDir, "promotion-manifest.json");
         var resolutionPlanPath = Path.Combine(outputDir, "review-resolution-plan.json");
         var importPreviewPath = Path.Combine(outputDir, "promotion-import-preview.json");
@@ -107,11 +111,13 @@ public sealed class ResearchJob : IResearchJob
             .Where(item => !reviewDecisions.IsReviewQueueItemResolved(item.CompoundName, item.ItemId))
             .ToList();
         var summary = _summaryBuilder.Build(drafts, activeReviewQueue, reviewDecisions, researchRequests);
+        var researchTaskQueue = _researchTaskQueueBuilder.Build(summary, researchRequests, ResolveTaskEvidenceDirectory(_options));
         var promotionManifest = _promotionManifestBuilder.Build(summary, new PromotionManifestOutputs(
             DraftSubstances: draftsPath,
             ReviewQueue: reviewQueuePath,
             ResearchSummary: summaryPath,
-            RunReport: Path.Combine(outputDir, "research-run-report.json")));
+            RunReport: Path.Combine(outputDir, "research-run-report.json"),
+            ResearchTaskQueue: researchTaskQueuePath));
         var resolutionPlan = _reviewResolutionPlanBuilder.Build(promotionManifest, activeReviewQueue);
         var promotionExport = _promotionExporter.Export(drafts, promotionManifest, outputDir);
         var importPreview = _promotionImportPreviewBuilder.Build(
@@ -122,12 +128,14 @@ public sealed class ResearchJob : IResearchJob
         File.WriteAllText(draftsPath, drafts.ToJsonString(JsonOptions));
         File.WriteAllText(reviewQueuePath, JsonSerializer.Serialize(activeReviewQueue, JsonOptions));
         File.WriteAllText(summaryPath, JsonSerializer.Serialize(summary, JsonOptions));
+        File.WriteAllText(researchTaskQueuePath, JsonSerializer.Serialize(researchTaskQueue, JsonOptions));
         File.WriteAllText(promotionManifestPath, JsonSerializer.Serialize(promotionManifest, JsonOptions));
         File.WriteAllText(resolutionPlanPath, JsonSerializer.Serialize(resolutionPlan, JsonOptions));
         File.WriteAllText(importPreviewPath, JsonSerializer.Serialize(importPreview, JsonOptions));
         report.Outputs["draftSubstances"] = draftsPath;
         report.Outputs["reviewQueue"] = reviewQueuePath;
         report.Outputs["researchSummary"] = summaryPath;
+        report.Outputs["researchTaskQueue"] = researchTaskQueuePath;
         report.Outputs["promotionManifest"] = promotionManifestPath;
         report.Outputs["reviewResolutionPlan"] = resolutionPlanPath;
         report.Outputs["evidencePacketDirectory"] = evidencePacketOutputDir;
@@ -368,6 +376,22 @@ public sealed class ResearchJob : IResearchJob
         {
             yield return file;
         }
+    }
+
+    private static string ResolveTaskEvidenceDirectory(WorkerOptions options)
+    {
+        if (!string.IsNullOrWhiteSpace(options.ResearchEvidencePacketDirectory))
+        {
+            return options.ResearchEvidencePacketDirectory;
+        }
+
+        if (!string.IsNullOrWhiteSpace(options.ResearchEvidencePacketPath))
+        {
+            var directory = Path.GetDirectoryName(options.ResearchEvidencePacketPath);
+            if (!string.IsNullOrWhiteSpace(directory)) return directory;
+        }
+
+        return "research/input/evidence";
     }
 
     private static string ResolveInputPath(string path)

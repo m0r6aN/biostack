@@ -78,6 +78,7 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddSingleton<IEvidencePacketSubstanceRecordCompiler, EvidencePacketSubstanceRecordCompiler>();
         services.AddSingleton<IResearchReviewQueueBuilder, ResearchReviewQueueBuilder>();
         services.AddSingleton<IResearchSummaryBuilder, ResearchSummaryBuilder>();
+        services.AddSingleton<IResearchTaskQueueBuilder, ResearchTaskQueueBuilder>();
         services.AddSingleton<IPromotionManifestBuilder, PromotionManifestBuilder>();
         services.AddSingleton<IReviewResolutionPlanBuilder, ReviewResolutionPlanBuilder>();
         services.AddSingleton<IPromotionExporter, PromotionExporter>();

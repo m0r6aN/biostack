@@ -10,6 +10,8 @@ public class ResearchSchemaFilesTests
         new object[] { "compound-candidate.schema.json", "compound-candidate-batch" },
         new object[] { "source-registry.schema.json", "source-registry" },
         new object[] { "evidence-packet.schema.json", "compound-evidence-packet" },
+        new object[] { "review-decision.schema.json", "review-decision-batch" },
+        new object[] { "research-request.schema.json", "research-request-batch" },
     };
 
     [Theory]

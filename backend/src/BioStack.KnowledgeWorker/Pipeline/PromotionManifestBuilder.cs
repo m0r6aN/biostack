@@ -21,7 +21,8 @@ public sealed record PromotionManifestOutputs(
     string DraftSubstances,
     string ReviewQueue,
     string ResearchSummary,
-    string RunReport);
+    string RunReport,
+    string? ResearchTaskQueue = null);
 
 public sealed record PromotionManifestCandidate(
     string Name,

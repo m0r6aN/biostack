@@ -41,6 +41,7 @@
         "requestId": { "$ref": "#/$defs/nonEmptyString" },
         "compoundName": { "$ref": "#/$defs/nonEmptyString" },
         "aliases": { "$ref": "#/$defs/stringArray" },
+        "categories": { "$ref": "#/$defs/stringArray" },
         "classification": { "$ref": "#/$defs/nonEmptyString" },
         "priority": { "type": "string", "enum": ["low", "normal", "high", "urgent"] },
         "requesterId": { "$ref": "#/$defs/nonEmptyString" },
