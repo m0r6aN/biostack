@@ -12,6 +12,7 @@ public class ResearchArtifactValidatorTests
         new object[] { ResearchArtifactKind.SourceRegistry, "source-registry.sample.json" },
         new object[] { ResearchArtifactKind.EvidencePacket, "evidence-packet.sample.json" },
         new object[] { ResearchArtifactKind.ReviewDecisionBatch, "review-decision.sample.json" },
+        new object[] { ResearchArtifactKind.ResearchRequestBatch, "research-request.sample.json" },
     };
 
     [Theory]

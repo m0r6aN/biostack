@@ -1,15 +1,16 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { Header } from '@/components/Header';
-import { GlassCard } from '@/components/ui/GlassCard';
 import { ReadinessBadge } from '@/components/research/ReadinessBadge';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { getApiBaseUrl } from '@/lib/apiBase';
 import {
-  fetchPromotionManifest,
-  fetchImportPreview,
-  fetchDryRunReport,
-  fetchExportManifest,
+    fetchDryRunReport,
+    fetchExportManifest,
+    fetchImportPreview,
+    fetchPromotionManifest,
 } from '@/lib/research/loader';
-import type { PromotionManifest, PromotionImportPreview } from '@/lib/research/types';
+import type { PromotionExportManifest, PromotionImportDryRunReport, PromotionImportPreview, PromotionManifest } from '@/lib/research/types';
+import { useEffect, useRef, useState } from 'react';
 
 function SectionHeader({ title, open, toggle }: { title: string; open: boolean; toggle: () => void }) {
   return (
@@ -29,26 +30,37 @@ function ArtifactEmpty({ name }: { name: string }) {
 }
 
 export default function PipelinePage() {
+  const tokenRef = useRef<string | null>(null);
   const [manifest, setManifest] = useState<PromotionManifest | null>(null);
   const [importPreview, setImportPreview] = useState<PromotionImportPreview | null>(null);
-  const [dryRun, setDryRun] = useState<unknown>(null);
-  const [exportManifest, setExportManifest] = useState<unknown>(null);
+  const [dryRun, setDryRun] = useState<PromotionImportDryRunReport | null>(null);
+  const [exportManifest, setExportManifest] = useState<PromotionExportManifest | null>(null);
   const [open, setOpen] = useState({ manifest: true, export: false, import: false, dryRun: false });
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    async function acquireToken() {
+      try {
+        const res = await fetch(`${getApiBaseUrl()}/api/v1/auth/dev-token`, { method: 'POST' });
+        if (res.ok) tokenRef.current = (await res.json()).token;
+      } catch { /* no-op */ }
+    }
 
-  async function load() {
-    const [m, ip, dr, em] = await Promise.allSettled([
-      fetchPromotionManifest(''),
-      fetchImportPreview(''),
-      fetchDryRunReport(''),
-      fetchExportManifest(''),
-    ]);
-    if (m.status === 'fulfilled') setManifest(m.value);
-    if (ip.status === 'fulfilled') setImportPreview(ip.value);
-    if (dr.status === 'fulfilled') setDryRun(dr.value);
-    if (em.status === 'fulfilled') setExportManifest(em.value);
-  }
+    async function load() {
+      const t = tokenRef.current ?? '';
+      const [m, ip, dr, em] = await Promise.allSettled([
+        fetchPromotionManifest(t),
+        fetchImportPreview(t),
+        fetchDryRunReport(t),
+        fetchExportManifest(t),
+      ]);
+      if (m.status === 'fulfilled') setManifest(m.value);
+      if (ip.status === 'fulfilled') setImportPreview(ip.value);
+      if (dr.status === 'fulfilled') setDryRun(dr.value);
+      if (em.status === 'fulfilled') setExportManifest(em.value);
+    }
+
+    acquireToken().then(load);
+  }, []);
 
   function toggle(key: keyof typeof open) {
     setOpen(prev => ({ ...prev, [key]: !prev[key] }));
@@ -105,7 +117,21 @@ export default function PipelinePage() {
           <SectionHeader title="Export Manifest" open={open.export} toggle={() => toggle('export')} />
           {open.export && (
             exportManifest
-              ? <pre className="mt-3 text-[10px] text-white/60 bg-black/30 rounded-xl p-3 overflow-x-auto">{JSON.stringify(exportManifest, null, 2)}</pre>
+              ? <div className="mt-4 flex flex-col gap-3">
+                  <div className="flex gap-6 text-[12px]">
+                    <span className="text-white/60">Exported: <strong className="text-white">{exportManifest.exportedCount}</strong></span>
+                    <span className="text-white/40">Skipped: {exportManifest.skippedCompounds.length}</span>
+                  </div>
+                  {exportManifest.candidates.map(candidate => (
+                    <div key={candidate.slug} className="rounded-xl border border-emerald-400/15 bg-emerald-400/5 px-3 py-2">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-[12px] font-semibold text-white/80">{candidate.name}</span>
+                        <span className="text-[9px] uppercase tracking-widest text-emerald-300">{candidate.readiness.replace(/-/g, ' ')}</span>
+                      </div>
+                      <p className="mt-1 text-[10px] text-white/40">Review decisions: {candidate.reviewDecisionIds.length > 0 ? candidate.reviewDecisionIds.join(', ') : 'none'}</p>
+                    </div>
+                  ))}
+                </div>
               : <ArtifactEmpty name="promotion-export/promotion-export-manifest.json" />
           )}
         </GlassCard>
@@ -156,7 +182,37 @@ export default function PipelinePage() {
           <SectionHeader title="Dry-Run Report" open={open.dryRun} toggle={() => toggle('dryRun')} />
           {open.dryRun && (
             dryRun
-              ? <pre className="mt-3 text-[10px] text-white/60 bg-black/30 rounded-xl p-3 overflow-x-auto">{JSON.stringify(dryRun, null, 2)}</pre>
+              ? <div className="mt-4 flex flex-col gap-3">
+                  <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 flex items-center justify-between">
+                    <span className="text-[12px] text-white/60">Safe to apply</span>
+                    <span className={`text-[11px] font-bold uppercase ${dryRun.safeToApply ? 'text-emerald-400' : 'text-rose-400'}`}>
+                      {dryRun.safeToApply ? 'Yes' : 'No'}
+                    </span>
+                  </div>
+                  {dryRun.refusalReasons.length > 0 && (
+                    <div className="rounded-xl border border-rose-400/20 bg-rose-500/10 px-3 py-2">
+                      {dryRun.refusalReasons.map(reason => <p key={reason} className="text-[11px] text-rose-300">{reason}</p>)}
+                    </div>
+                  )}
+                  <table className="w-full text-[11px]">
+                    <thead>
+                      <tr className="text-white/30 text-left border-b border-white/[0.06]">
+                        <th className="py-2 pr-4">Name</th>
+                        <th className="py-2 pr-4">Planned Action</th>
+                        <th className="py-2 pr-4">Schema Valid</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dryRun.items.map(item => (
+                        <tr key={item.slug} className="border-b border-white/[0.04]">
+                          <td className="py-2 pr-4 text-white/80">{item.name}</td>
+                          <td className="py-2 pr-4 text-white/60">{item.plannedAction}</td>
+                          <td className="py-2 pr-4 text-white/60">{item.schemaValid ? '✓' : '✕'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               : <ArtifactEmpty name="import-dry-run/promotion-import-dry-run-report.json" />
           )}
         </GlassCard>

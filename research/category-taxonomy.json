@@ -1,0 +1,50 @@
+{
+  "taxonomyVersion": "1.0.0",
+  "updatedAtUtc": "2026-05-10T00:00:00Z",
+  "categories": [
+    {
+      "name": "Nootropics",
+      "aliases": ["nootropic", "nootropics", "cognitive"]
+    },
+    {
+      "name": "Cognitive Support",
+      "aliases": ["cognitive support"],
+      "deprecated": true,
+      "replacedBy": "Nootropics"
+    },
+    {
+      "name": "Longevity",
+      "aliases": ["longevity"]
+    },
+    {
+      "name": "Anti-Aging",
+      "aliases": ["anti aging", "anti-aging"],
+      "deprecated": true,
+      "replacedBy": "Longevity"
+    },
+    {
+      "name": "Peptides",
+      "aliases": ["peptide", "peptides"]
+    },
+    {
+      "name": "Mitochondrial Support",
+      "aliases": ["mitochondria", "mitochondrial", "mitochondrial support"]
+    },
+    {
+      "name": "Metabolic Health",
+      "aliases": ["metabolism", "metabolic", "metabolic health"]
+    },
+    {
+      "name": "Recovery",
+      "aliases": ["recovery"]
+    },
+    {
+      "name": "Sleep",
+      "aliases": ["sleep"]
+    },
+    {
+      "name": "Performance",
+      "aliases": ["performance"]
+    }
+  ]
+}

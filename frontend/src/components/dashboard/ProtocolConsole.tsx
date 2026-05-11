@@ -30,6 +30,14 @@ import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
 import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
 import { ObservationSignalsPanel } from '@/components/dashboard/ObservationSignalsPanel';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
+// Mission Control 2.0 components
+import { OperatingStateHero } from '@/components/mission/OperatingStateHero';
+import { NextObservationCard } from '@/components/mission/NextObservationCard';
+import { ProtocolWeather } from '@/components/mission/ProtocolWeather';
+import { StackClarityMeter } from '@/components/mission/StackClarityMeter';
+import { ObservationDebtInbox } from '@/components/mission/ObservationDebtInbox';
+import { StackGraphMini } from '@/components/mission/StackGraphMini';
+import { isEnabled } from '@/lib/flags';
 
 export function ProtocolConsole() {
   const { currentProfileId, setProfiles } = useProfile();
@@ -161,67 +169,163 @@ export function ProtocolConsole() {
     );
   }
 
+  const mc2 = isEnabled('missionControl2');
+
   return (
     <div className="w-full">
-      <Header title="Protocol Console" subtitle="Protocol Intelligence" actions={<ProfileSwitcher />} />
+      <Header title="Mission Control" subtitle="Protocol Intelligence" actions={<ProfileSwitcher />} />
 
       <div className="p-8 space-y-6">
         {loading ? (
           <LoadingSkeleton />
         ) : (
           <>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <StatCard title="Active Compounds" value={activeCompounds} icon="🧪" color="emerald" />
-              <StatCard title="Total Check-ins" value={checkIns.length} icon="📊" color="blue" />
-              <StatCard
-                title="Pathway Flags"
-                value={overlaps.length}
-                icon="⚠️"
-                color={overlaps.length > 0 ? 'amber' : 'default'}
-              />
-              <StatCard
-                title="Protocol Score"
-                value={currentStack ? currentStack.stackScore.score : '—'}
-                icon="🎯"
-                color={currentStack && currentStack.stackScore.score < 60 ? 'amber' : 'emerald'}
-              />
-            </div>
+            {mc2 ? (
+              /* ── Mission Control 2.0 Layout ───────────────────────────── */
+              <>
+                {/* Hero: single operating state */}
+                <OperatingStateHero payload={mission} compounds={compounds} />
 
-            <ProtocolConsoleOverview mission={mission} />
-            {missionLockedMessage && (
-              <UpgradeNotice
-                eyebrow="Commander"
-                title="Mission control is locked on this tier"
-                detail={missionLockedMessage}
-              />
-            )}
-            <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-              <PatternMemoryPanel snapshot={mission?.patternSnapshot ?? null} />
-              <DriftRegimePanel drift={mission?.driftSnapshot ?? null} patterns={mission?.patternSnapshot ?? null} />
-              <SequenceExpectationPanel snapshot={mission?.sequenceExpectationSnapshot ?? null} />
-              <ObservationSignalsPanel signals={mission?.observationSignals ?? []} />
-            </div>
-            {stackLockedMessage && (
-              <UpgradeNotice
-                eyebrow="Operator"
-                title="Live stack intelligence is locked on Observer"
-                detail={stackLockedMessage}
-              />
-            )}
-            {overlaps.length > 0 && <OverlapFlagsBanner flags={overlaps} />}
-            {profileGoals.length > 0 && (
-              <ActiveGoalsCard goals={profileGoals} profileId={currentProfileId} />
-            )}
+                {/* Top row: Weather + Clarity + Next Observation */}
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+                  <ProtocolWeather driftSnapshot={mission?.driftSnapshot ?? null} />
+                  <StackClarityMeter
+                    stackIntelligence={currentStack}
+                    compounds={compounds}
+                    checkInCount={checkIns.length}
+                    hasActiveRun={!!mission?.activeRun}
+                  />
+                  <NextObservationCard
+                    payload={mission}
+                    checkIns={checkIns}
+                    compounds={compounds}
+                    goals={profileGoals}
+                  />
+                </div>
 
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-              <div className="lg:col-span-2">
-                <ActiveCompoundsCard compounds={compounds} />
-              </div>
-              <LatestCheckInCard checkIn={latestCheckIn} />
-            </div>
+                {/* Stack Graph mini (SG-3) — only when stack graph flag is on */}
+                {isEnabled('stackGraph') && (
+                  <StackGraphMini
+                    intelligence={currentStack?.interactionIntelligence ?? null}
+                    compounds={compounds}
+                    activeProtocolId={mission?.activeRun?.protocolId ?? null}
+                  />
+                )}
 
-            <CohesionTimelinePanel events={mission?.cohesionTimeline ?? []} sequence={mission?.sequenceExpectationSnapshot ?? null} />
-            <TimelineSnapshot events={timeline} />
+                {/* Observation Debt Inbox */}
+                <ObservationDebtInbox
+                  payload={mission}
+                  checkIns={checkIns}
+                  compounds={compounds}
+                  goals={profileGoals}
+                />
+
+                {/* Upgrade notices */}
+                {missionLockedMessage && (
+                  <UpgradeNotice
+                    eyebrow="Commander"
+                    title="Mission control is locked on this tier"
+                    detail={missionLockedMessage}
+                  />
+                )}
+                {stackLockedMessage && (
+                  <UpgradeNotice
+                    eyebrow="Operator"
+                    title="Live stack intelligence is locked on Observer"
+                    detail={stackLockedMessage}
+                  />
+                )}
+
+                {/* Overlap flags */}
+                {overlaps.length > 0 && <OverlapFlagsBanner flags={overlaps} />}
+
+                {/* Pattern + Drift panels */}
+                <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+                  <PatternMemoryPanel snapshot={mission?.patternSnapshot ?? null} />
+                  <DriftRegimePanel drift={mission?.driftSnapshot ?? null} patterns={mission?.patternSnapshot ?? null} />
+                  <SequenceExpectationPanel snapshot={mission?.sequenceExpectationSnapshot ?? null} />
+                  <ObservationSignalsPanel signals={mission?.observationSignals ?? []} />
+                </div>
+
+                {/* Goals */}
+                {profileGoals.length > 0 && (
+                  <ActiveGoalsCard goals={profileGoals} profileId={currentProfileId} />
+                )}
+
+                {/* Compound + Check-in grid */}
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                  <div className="lg:col-span-2">
+                    <ActiveCompoundsCard compounds={compounds} />
+                  </div>
+                  <LatestCheckInCard checkIn={latestCheckIn} />
+                </div>
+
+                {/* Annotated timeline */}
+                <CohesionTimelinePanel
+                  events={mission?.cohesionTimeline ?? []}
+                  sequence={mission?.sequenceExpectationSnapshot ?? null}
+                  drift={mission?.driftSnapshot ?? null}
+                />
+                <TimelineSnapshot events={timeline} />
+              </>
+            ) : (
+              /* ── Legacy Layout ────────────────────────────────────────── */
+              <>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                  <StatCard title="Active Compounds" value={activeCompounds} icon="🧪" color="emerald" />
+                  <StatCard title="Total Check-ins" value={checkIns.length} icon="📊" color="blue" />
+                  <StatCard
+                    title="Pathway Flags"
+                    value={overlaps.length}
+                    icon="⚠️"
+                    color={overlaps.length > 0 ? 'amber' : 'default'}
+                  />
+                  <StatCard
+                    title="Protocol Score"
+                    value={currentStack ? currentStack.stackScore.score : '—'}
+                    icon="🎯"
+                    color={currentStack && currentStack.stackScore.score < 60 ? 'amber' : 'emerald'}
+                  />
+                </div>
+                <ProtocolConsoleOverview mission={mission} />
+                {missionLockedMessage && (
+                  <UpgradeNotice
+                    eyebrow="Commander"
+                    title="Mission control is locked on this tier"
+                    detail={missionLockedMessage}
+                  />
+                )}
+                <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+                  <PatternMemoryPanel snapshot={mission?.patternSnapshot ?? null} />
+                  <DriftRegimePanel drift={mission?.driftSnapshot ?? null} patterns={mission?.patternSnapshot ?? null} />
+                  <SequenceExpectationPanel snapshot={mission?.sequenceExpectationSnapshot ?? null} />
+                  <ObservationSignalsPanel signals={mission?.observationSignals ?? []} />
+                </div>
+                {stackLockedMessage && (
+                  <UpgradeNotice
+                    eyebrow="Operator"
+                    title="Live stack intelligence is locked on Observer"
+                    detail={stackLockedMessage}
+                  />
+                )}
+                {overlaps.length > 0 && <OverlapFlagsBanner flags={overlaps} />}
+                {profileGoals.length > 0 && (
+                  <ActiveGoalsCard goals={profileGoals} profileId={currentProfileId} />
+                )}
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                  <div className="lg:col-span-2">
+                    <ActiveCompoundsCard compounds={compounds} />
+                  </div>
+                  <LatestCheckInCard checkIn={latestCheckIn} />
+                </div>
+                <CohesionTimelinePanel
+                  events={mission?.cohesionTimeline ?? []}
+                  sequence={mission?.sequenceExpectationSnapshot ?? null}
+                  drift={mission?.driftSnapshot ?? null}
+                />
+                <TimelineSnapshot events={timeline} />
+              </>
+            )}
           </>
         )}
       </div>

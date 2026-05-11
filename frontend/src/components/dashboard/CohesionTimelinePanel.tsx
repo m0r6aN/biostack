@@ -1,107 +1,160 @@
 'use client';
 
 import Link from 'next/link';
-import { ProtocolReviewTimelineEvent, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
+import { TIMELINE_TAG_TOKENS, type TimelineEventTag } from '@/styles/tokens';
+import { cn } from '@/lib/utils';
+import type {
+  ProtocolReviewTimelineEvent,
+  ProtocolSequenceExpectationSnapshot,
+  ProtocolDriftSnapshot,
+} from '@/lib/types';
 
 interface CohesionTimelinePanelProps {
   events: ProtocolReviewTimelineEvent[];
   sequence?: ProtocolSequenceExpectationSnapshot | null;
+  drift?: ProtocolDriftSnapshot | null;
 }
 
-export function CohesionTimelinePanel({ events, sequence }: CohesionTimelinePanelProps) {
-  if (events.length === 0) {
-    return (
-      <section className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Cohesion Timeline</p>
-        <p className="mt-3 text-sm text-white/45">Runs, check-ins, calculator math, reviews, evolution events, and sequence annotations will appear here.</p>
-      </section>
-    );
-  }
+// Derive an alignment tag from event data and context snapshots
+function deriveTag(
+  event: ProtocolReviewTimelineEvent,
+  sequence: ProtocolSequenceExpectationSnapshot | null | undefined,
+  drift: ProtocolDriftSnapshot | null | undefined,
+): TimelineEventTag | null {
+  const detail = event.detail.toLowerCase();
+  const status = sequence?.currentStatus?.state;
+  const driftState = drift?.driftState;
 
-  return (
-    <section className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Cohesion Timeline</p>
-          <h2 className="mt-2 text-lg font-bold text-white">Recent sequence</h2>
-          {sequence?.currentStatus && (
-            <p className="mt-1 text-sm text-white/45">Current sequence status: {sequence.currentStatus.state}</p>
-          )}
-        </div>
-        <Link href="/timeline" className="text-sm font-semibold text-emerald-200/80 hover:text-emerald-100">
-          Full timeline
-        </Link>
-      </div>
-      <div className="mt-5 space-y-3">
-        {events.map((event, index) => (
-          <div key={`${event.eventType}-${event.occurredAtUtc}-${index}`} className="grid grid-cols-[88px_1fr] gap-3">
-            <time className="pt-0.5 text-xs text-white/35">{formatDate(event.occurredAtUtc)}</time>
-            <div className={`relative border-l pl-4 ${eventBandClass(event.eventType)}`}>
-              <span className={`absolute -left-1.5 top-1 h-3 w-3 rounded-full ${eventDotClass(event.eventType)}`} />
-              <div className="group rounded-lg px-2 py-1 transition-colors hover:bg-white/[0.035]">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm">{eventIcon(event.eventType)}</span>
-                  <p className="text-sm font-semibold text-white">{event.label}</p>
-                  {timelineBadges(event.detail).map((badge) => (
-                    <span key={badge} className="rounded-lg border border-white/[0.08] px-2 py-0.5 text-[11px] text-white/40">
-                      {badge}
-                    </span>
-                  ))}
-                </div>
-              <p className="mt-1 text-xs leading-5 text-white/50">{event.detail}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
+  if (detail.includes('regime shift') || driftState === 'regime_shift') return 'regime-shift';
+  if (detail.includes('sequence break') || detail.includes('sequence diverging')) return 'diverging';
+  if (detail.includes('outside typical timing') || detail.includes('later than usual') || status === 'late') return 'late';
+  if (detail.includes('matches prior pattern') || detail.includes('within common sequence window') || status === 'aligned') return 'aligned';
+  if (detail.includes('usual next event') || status === 'pending') return 'expected-pending';
+
+  return null;
 }
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(new Date(value));
 }
 
-function eventDotClass(eventType: string) {
-  if (eventType === 'check_in') return 'bg-sky-300';
-  if (eventType === 'computation') return 'bg-amber-300';
-  if (eventType === 'review_completed') return 'bg-lime-300';
-  if (eventType === 'evolution' || eventType === 'version_created') return 'bg-fuchsia-300';
-  if (eventType.startsWith('run_')) return 'bg-emerald-300';
-  return 'bg-white/45';
+const EVENT_DOT: Record<string, string> = {
+  check_in: 'bg-sky-400',
+  computation: 'bg-amber-400',
+  review_completed: 'bg-lime-400',
+  evolution: 'bg-fuchsia-400',
+  version_created: 'bg-fuchsia-400',
+};
+
+const EVENT_BAND: Record<string, string> = {
+  check_in: 'border-sky-400/20',
+  computation: 'border-amber-400/20',
+  review_completed: 'border-lime-400/20',
+  evolution: 'border-fuchsia-400/20',
+  version_created: 'border-fuchsia-400/20',
+};
+
+const EVENT_ICON: Record<string, string> = {
+  check_in: 'OBS',
+  computation: 'MATH',
+  review_completed: 'REV',
+  evolution: 'EVO',
+  version_created: 'VER',
+};
+
+function getEventStyle(eventType: string) {
+  const key = eventType.startsWith('run_') ? 'run' : eventType;
+  return {
+    dot: EVENT_DOT[key] ?? (eventType.startsWith('run_') ? 'bg-emerald-400' : 'bg-white/40'),
+    band: EVENT_BAND[key] ?? (eventType.startsWith('run_') ? 'border-emerald-400/20' : 'border-white/8'),
+    icon: EVENT_ICON[key] ?? (eventType.startsWith('run_') ? 'RUN' : 'EVT'),
+  };
 }
 
-function eventBandClass(eventType: string) {
-  if (eventType === 'check_in') return 'border-sky-300/20';
-  if (eventType === 'computation') return 'border-amber-300/20';
-  if (eventType === 'review_completed') return 'border-lime-300/20';
-  if (eventType === 'evolution' || eventType === 'version_created') return 'border-fuchsia-300/20';
-  if (eventType.startsWith('run_')) return 'border-emerald-300/20';
-  return 'border-white/[0.08]';
-}
+export function CohesionTimelinePanel({ events, sequence, drift }: CohesionTimelinePanelProps) {
+  const hasData = events.length > 0;
+  const hasSnapshots = !!(sequence || drift);
 
-function eventIcon(eventType: string) {
-  if (eventType === 'check_in') return 'CI';
-  if (eventType === 'computation') return 'MATH';
-  if (eventType === 'review_completed') return 'REV';
-  if (eventType === 'evolution' || eventType === 'version_created') return 'EVO';
-  if (eventType.startsWith('run_')) return 'RUN';
-  return 'EVT';
-}
+  if (!hasData) {
+    return (
+      <section className="rounded-3xl border border-white/8 bg-[#121923]/90 p-5">
+        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Cohesion Timeline</p>
+        <div className="mt-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4">
+          <p className="text-sm text-white/50 leading-relaxed">
+            Protocol events will appear here as runs progress. Alignment annotations require at least one completed run.
+          </p>
+          {!hasSnapshots && (
+            <p className="mt-2 text-xs text-white/30">Start a protocol run to begin collecting timeline data.</p>
+          )}
+        </div>
+      </section>
+    );
+  }
 
-function timelineBadges(detail: string) {
-  const badges: string[] = [];
-  if (detail.includes('matches prior pattern') || detail.includes('occurred within common sequence window')) {
-    badges.push('matches pattern');
-  }
-  if (detail.includes('outside common sequence window') || detail.includes('outside typical timing') || detail.includes('later than usual')) {
-    badges.push('outside typical timing');
-  }
-  if (detail.includes('sequence diverging') || detail.includes('sequence break')) {
-    badges.push('sequence break');
-  }
-  if (detail.includes('usual next event')) {
-    badges.push('usual next event');
-  }
-  return badges;
+  return (
+    <section className="rounded-3xl border border-white/8 bg-[#121923]/90 p-5">
+      <div className="flex items-center justify-between gap-3 mb-5">
+        <div>
+          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-1">Cohesion Timeline</p>
+          <h2 className="text-base font-bold text-white/90">
+            Recent sequence
+            {sequence?.currentStatus && (
+              <span className="ml-2 text-sm font-normal text-white/40">
+                — {sequence.currentStatus.state}
+              </span>
+            )}
+          </h2>
+        </div>
+        <Link href="/timeline" className="text-xs font-semibold text-emerald-400/70 hover:text-emerald-300 transition-colors flex items-center gap-1">
+          Full timeline
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+          </svg>
+        </Link>
+      </div>
+
+      <div className="space-y-2">
+        {events.map((event, index) => {
+          const { dot, band, icon } = getEventStyle(event.eventType);
+          const tag = deriveTag(event, sequence, drift);
+          const tagToken = tag ? TIMELINE_TAG_TOKENS[tag] : null;
+
+          return (
+            <div key={`${event.eventType}-${event.occurredAtUtc}-${index}`} className="grid grid-cols-[72px_1fr] gap-3">
+              <time className="pt-1 text-[11px] text-white/30 font-mono">{formatDate(event.occurredAtUtc)}</time>
+
+              <div className={cn('relative border-l pl-4', band)}>
+                <span className={cn('absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full', dot)} />
+
+                <div className="group rounded-2xl px-3 py-2 transition-colors hover:bg-white/[0.03]">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <span className="text-[9px] font-bold text-white/20 tracking-widest">{icon}</span>
+                    <p className="text-sm font-semibold text-white/85">{event.label}</p>
+                    {tagToken && (
+                      <span
+                        className={cn(
+                          'text-[10px] font-semibold px-2 py-0.5 rounded-full border',
+                          tagToken.bg, tagToken.color, tagToken.border,
+                        )}
+                        title={`Alignment tag: ${tag}`}
+                      >
+                        {tagToken.label}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-white/40 leading-relaxed">{event.detail}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {!hasSnapshots && hasData && (
+        <p className="mt-4 text-[10px] text-white/20 italic">
+          Alignment annotations will appear once historical runs provide a baseline for comparison.
+        </p>
+      )}
+    </section>
+  );
 }

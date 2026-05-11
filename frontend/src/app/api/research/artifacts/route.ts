@@ -1,19 +1,45 @@
-import { NextRequest } from 'next/server';
 import { readFile } from 'fs/promises';
+import { NextRequest } from 'next/server';
 import path from 'path';
 
-const ALLOWED: Record<string, string> = {
-  'research-summary': 'research-summary.json',
-  'promotion-manifest': 'promotion-manifest.json',
-  'review-resolution-plan': 'review-resolution-plan.json',
-  'promotion-import-preview': 'promotion-import-preview.json',
-  'import-dry-run/promotion-import-dry-run-report':
-    'import-dry-run/promotion-import-dry-run-report.json',
-  'promotion-export/promotion-export-manifest':
-    'promotion-export/promotion-export-manifest.json',
-  'promotion-export/substances.promotable':
-    'promotion-export/substances.promotable.json',
+type ArtifactScope = 'repo' | 'data-source';
+
+const ALLOWED: Record<string, { filename: string; scope: ArtifactScope }> = {
+  'category-taxonomy': { filename: path.join('research', 'category-taxonomy.json'), scope: 'repo' },
+  'research-summary': { filename: 'research-summary.json', scope: 'data-source' },
+  'research-task-queue': { filename: 'research-task-queue.json', scope: 'data-source' },
+  'promotion-manifest': { filename: 'promotion-manifest.json', scope: 'data-source' },
+  'review-queue': { filename: 'review-queue.json', scope: 'data-source' },
+  'review-resolution-plan': { filename: 'review-resolution-plan.json', scope: 'data-source' },
+  'promotion-import-preview': { filename: 'promotion-import-preview.json', scope: 'data-source' },
+  'import-dry-run/promotion-import-dry-run-report': {
+    filename: 'import-dry-run/promotion-import-dry-run-report.json',
+    scope: 'data-source',
+  },
+  'promotion-export/promotion-export-manifest': {
+    filename: 'promotion-export/promotion-export-manifest.json',
+    scope: 'data-source',
+  },
+  'promotion-export/substances.promotable': {
+    filename: 'promotion-export/substances.promotable.json',
+    scope: 'data-source',
+  },
 };
+
+const EVIDENCE_PACKET_PATTERN = /^evidence-packet\/[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+function repoRoot() {
+  return path.resolve(process.cwd(), '..');
+}
+
+function resolveArtifactFilename(artifact: string): { filename: string; scope: ArtifactScope } | null {
+  if (EVIDENCE_PACKET_PATTERN.test(artifact)) {
+    const slug = artifact.slice('evidence-packet/'.length);
+    return { filename: `evidence-packet/${slug}.json`, scope: 'data-source' };
+  }
+
+  return ALLOWED[artifact] ?? null;
+}
 
 export async function GET(request: NextRequest) {
   // Route is dev-only; return 404 in production
@@ -23,8 +49,8 @@ export async function GET(request: NextRequest) {
 
   // Extract and validate artifact parameter
   const artifact = request.nextUrl.searchParams.get('artifact') ?? '';
-  const filename = ALLOWED[artifact];
-  if (!filename) {
+  const resolvedArtifact = resolveArtifactFilename(artifact);
+  if (!resolvedArtifact) {
     return Response.json({ error: 'Invalid artifact' }, { status: 400 });
   }
 
@@ -40,25 +66,29 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  let basePath: string;
-  if (dataSource === 'api') {
-    const artifactsPath = process.env.RESEARCH_ARTIFACTS_PATH ?? 'research/pilot';
-    // Anchor to the Next.js app root (cwd) parent — this is the monorepo root
-    const repoRoot = path.resolve(process.cwd(), '..');
-    const resolved = path.resolve(repoRoot, artifactsPath);
-    // Append sep to prevent prefix-sibling bypass (e.g. BioStack-evil vs BioStack)
-    const repoRootWithSep = repoRoot.endsWith(path.sep) ? repoRoot : repoRoot + path.sep;
-    if (!resolved.startsWith(repoRootWithSep) && resolved !== repoRoot) {
-      return Response.json({ error: 'Invalid path' }, { status: 400 });
-    }
-    basePath = resolved;
+  let filePath: string;
+  if (resolvedArtifact.scope === 'repo') {
+    filePath = path.resolve(repoRoot(), resolvedArtifact.filename);
   } else {
-    basePath = path.resolve(process.cwd(), 'src/fixtures/research');
+    let basePath: string;
+    if (dataSource === 'api') {
+      const artifactsPath = process.env.RESEARCH_ARTIFACTS_PATH ?? 'research/pilot';
+      const root = repoRoot();
+      const resolved = path.resolve(root, artifactsPath);
+      const repoRootWithSep = root.endsWith(path.sep) ? root : root + path.sep;
+      if (!resolved.startsWith(repoRootWithSep) && resolved !== root) {
+        return Response.json({ error: 'Invalid path' }, { status: 400 });
+      }
+      basePath = resolved;
+    } else {
+      basePath = path.resolve(process.cwd(), 'src/fixtures/research');
+    }
+    filePath = path.join(basePath, resolvedArtifact.filename);
   }
 
   // Read and return the artifact
   try {
-    const content = await readFile(path.join(basePath, filename), 'utf-8');
+    const content = await readFile(filePath, 'utf-8');
     return Response.json(JSON.parse(content));
   } catch {
     return Response.json({ error: 'Artifact not found' }, { status: 404 });

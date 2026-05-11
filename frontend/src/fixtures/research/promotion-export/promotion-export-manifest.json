@@ -1,7 +1,17 @@
 {
-  "exportVersion": "1.0.0",
+  "manifestVersion": "1.0.0",
   "generatedAtUtc": "2026-05-05T09:00:00Z",
   "exportedCount": 1,
-  "schemaVersion": "1.0.0",
-  "outputFiles": ["substances.promotable.json"]
+  "candidates": [
+    {
+      "name": "Creatine",
+      "slug": "creatine",
+      "readiness": "candidate-for-promotion",
+      "substanceFile": "research/output/pilot-dry-run-source/promotion-export/substances/creatine.json",
+      "aggregateIndex": 0,
+      "reviewDecisionIds": ["approve-creatine-fixture-001"],
+      "qualityFlags": ["compiled-from-evidence-packet", "no-safety-canonicalization", "pilot-input"]
+    }
+  ],
+  "skippedCompounds": []
 }

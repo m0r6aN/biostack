@@ -1,11 +1,12 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { Header } from '@/components/Header';
-import { GlassCard } from '@/components/ui/GlassCard';
 import { ResearchStatChip } from '@/components/research/ResearchStatChip';
-import { fetchResearchSummary, fetchPromotionManifest, fetchReviewResolutionPlan } from '@/lib/research/loader';
-import type { ResearchSummary, PromotionManifest, ReviewResolutionPlan } from '@/lib/research/types';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { getApiBaseUrl } from '@/lib/apiBase';
+import { fetchDryRunReport, fetchImportPreview, fetchPromotionManifest, fetchResearchSummary, fetchReviewResolutionPlan } from '@/lib/research/loader';
+import type { PromotionImportDryRunReport, PromotionImportPreview, PromotionManifest, ResearchSummary, ReviewResolutionPlan } from '@/lib/research/types';
 import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
 const CATEGORY_COLORS: Record<string, string> = {
   'Safety Critical':               'text-rose-400 bg-rose-400/8 border-rose-400/20',
@@ -20,24 +21,38 @@ export default function ResearchDashboard() {
   const [summary, setSummary] = useState<ResearchSummary | null>(null);
   const [manifest, setManifest] = useState<PromotionManifest | null>(null);
   const [plan, setPlan] = useState<ReviewResolutionPlan | null>(null);
+  const [importPreview, setImportPreview] = useState<PromotionImportPreview | null>(null);
+  const [dryRun, setDryRun] = useState<PromotionImportDryRunReport | null>(null);
   const [error, setError] = useState('');
+  const tokenRef = useRef<string | null>(null);
 
   useEffect(() => {
-    load();
-  }, []);
-
-  async function load() {
-    try {
-      const [s, m, p] = await Promise.all([
-        fetchResearchSummary(''),
-        fetchPromotionManifest(''),
-        fetchReviewResolutionPlan(''),
-      ]);
-      setSummary(s); setManifest(m); setPlan(p);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to load research data');
+    async function acquireToken() {
+      try {
+        const res = await fetch(`${getApiBaseUrl()}/api/v1/auth/dev-token`, { method: 'POST' });
+        if (res.ok) tokenRef.current = (await res.json()).token;
+      } catch { /* production — no-op */ }
     }
-  }
+
+    async function load() {
+      const t = tokenRef.current ?? '';
+      try {
+        const [s, m, p, ip, dr] = await Promise.all([
+          fetchResearchSummary(t),
+          fetchPromotionManifest(t),
+          fetchReviewResolutionPlan(t),
+          fetchImportPreview(t).catch(() => null),
+          fetchDryRunReport(t).catch(() => null),
+        ]);
+        setSummary(s); setManifest(m); setPlan(p);
+        setImportPreview(ip); setDryRun(dr);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : 'Failed to load research data');
+      }
+    }
+
+    acquireToken().then(load);
+  }, []);
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
@@ -48,13 +63,15 @@ export default function ResearchDashboard() {
         )}
 
         {/* Stat bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
           <ResearchStatChip label="Total Drafts"    value={summary?.draftSubstanceCount ?? '—'}          color="neutral" />
           <ResearchStatChip label="Blocked"          value={manifest?.counts.blocked ?? '—'}              color="red" />
           <ResearchStatChip label="Review Req."      value={manifest?.counts.reviewRequired ?? '—'}       color="amber" />
           <ResearchStatChip label="Candidates"       value={manifest?.counts.candidatesForPromotion ?? '—'} color="green" />
           <ResearchStatChip label="Resolution Items" value={plan?.counts.totalItems ?? '—'}               color="blue" />
           <ResearchStatChip label="Queue Items"      value={summary?.reviewQueueItemCount ?? '—'}         color="neutral" />
+          <ResearchStatChip label="Active Exports"   value={importPreview?.counts.activeRecords ?? '—'}   color={(importPreview?.counts.activeRecords ?? 0) > 0 ? 'red' : 'green'} />
+          <ResearchStatChip label="Dry-Run Safe"     value={dryRun ? (dryRun.safeToApply ? 'Yes' : 'No') : '—'} color={dryRun ? (dryRun.safeToApply ? 'green' : 'red') : 'neutral'} />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -121,13 +138,39 @@ export default function ResearchDashboard() {
                 <p className="text-sm text-white/30">Loading...</p>
               )}
             </GlassCard>
+            <GlassCard className="p-5 flex flex-col gap-2">
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Promotion Dry-Run Gate</h3>
+              {dryRun ? (
+                <>
+                  <div className="flex gap-4 text-[12px]">
+                    <span className={dryRun.safeToApply ? 'text-emerald-400' : 'text-rose-400'}>
+                      Safe to apply: <strong>{dryRun.safeToApply ? 'Yes' : 'No'}</strong>
+                    </span>
+                    <span className="text-white/60">Refusals: <strong className="text-white">{dryRun.refusalReasons.length}</strong></span>
+                  </div>
+                  <Link href="/admin/research/pipeline" className="text-[11px] text-emerald-400 hover:text-emerald-300">
+                    Inspect import preview and dry-run report →
+                  </Link>
+                </>
+              ) : (
+                <p className="text-sm text-white/30">Dry-run report not generated for this run yet.</p>
+              )}
+            </GlassCard>
           </div>
         </div>
 
         <div className="flex justify-end">
-          <Link href="/admin/research/compounds" className="text-[12px] text-emerald-400 hover:text-emerald-300 transition-colors">
-            View all compounds →
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/admin/research/taxonomy" className="text-[12px] text-sky-300 hover:text-sky-200 transition-colors">
+              Manage category taxonomy →
+            </Link>
+            <Link href="/admin/research/tasks" className="text-[12px] text-violet-300 hover:text-violet-200 transition-colors">
+              View evidence tasks →
+            </Link>
+            <Link href="/admin/research/compounds" className="text-[12px] text-emerald-400 hover:text-emerald-300 transition-colors">
+              View all compounds →
+            </Link>
+          </div>
         </div>
       </main>
     </div>

@@ -1,0 +1,14 @@
+{
+  "queueVersion": "1.0.0",
+  "generatedAtUtc": "2026-05-10T00:00:00Z",
+  "counts": {
+    "totalItems": 0,
+    "urgent": 0,
+    "high": 0,
+    "normal": 0,
+    "low": 0,
+    "resolvedItems": 0
+  },
+  "items": [],
+  "resolvedItems": []
+}

@@ -51,7 +51,7 @@
       "overallEvidenceTier": "Strong",
       "completeness": "substantial",
       "reviewQueueItemCount": 0,
-      "reviewDecisionIds": [],
+      "reviewDecisionIds": ["approve-creatine-fixture-001"],
       "blockers": [],
       "qualityFlags": [],
       "requiredNextActions": [

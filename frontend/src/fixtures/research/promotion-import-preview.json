@@ -4,19 +4,19 @@
   "counts": {
     "totalExported": 1, "wouldCreate": 1, "wouldUpdate": 0, "wouldSkip": 0,
     "schemaValid": 1, "schemaInvalid": 0, "duplicateSlugs": 0,
-    "duplicateCanonicalIds": 0, "activeRecords": 1, "inactiveRecords": 0
+    "duplicateCanonicalIds": 0, "activeRecords": 0, "inactiveRecords": 1
   },
   "items": [
     {
       "name": "Creatine",
       "slug": "creatine",
-      "canonicalId": "creatine-001",
+      "canonicalId": "creatine",
       "action": "create",
       "schemaValid": true,
-      "isActive": true,
+      "isActive": false,
       "existingSeedMatch": false,
-      "reasons": ["New compound — no existing seed record found."],
-      "reviewDecisionIds": []
+      "reasons": [],
+      "reviewDecisionIds": ["approve-creatine-fixture-001"]
     }
   ]
 }

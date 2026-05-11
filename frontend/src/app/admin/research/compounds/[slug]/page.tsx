@@ -1,17 +1,17 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
 import { Header } from '@/components/Header';
-import { GlassCard } from '@/components/ui/GlassCard';
-import { ReadinessBadge } from '@/components/research/ReadinessBadge';
 import { BlockerCard } from '@/components/research/BlockerCard';
+import { ReadinessBadge } from '@/components/research/ReadinessBadge';
 import { ResolutionPlanItem } from '@/components/research/ResolutionPlanItem';
 import { ReviewDecisionForm } from '@/components/research/ReviewDecisionForm';
+import { GlassCard } from '@/components/ui/GlassCard';
 import { getApiBaseUrl } from '@/lib/apiBase';
-import { fetchResearchSummary, fetchPromotionManifest, fetchReviewResolutionPlan } from '@/lib/research/loader';
-import { buildSlugMap } from '@/lib/research/slugs';
+import { fetchEvidencePacket, fetchPromotionManifest, fetchResearchSummary, fetchResearchTaskQueue, fetchReviewQueue, fetchReviewResolutionPlan } from '@/lib/research/loader';
+import { buildSlugMap, toSlug } from '@/lib/research/slugs';
+import type { EvidencePacket, PromotionManifestCandidate, ResearchReviewQueueItem, ResearchSummaryCompound, ResearchTaskQueue, ReviewResolutionPlan } from '@/lib/research/types';
 import { cn } from '@/lib/utils';
-import type { ResearchSummaryCompound, PromotionManifestCandidate, ReviewResolutionPlan } from '@/lib/research/types';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 
 type Tab = 'overview' | 'claims' | 'resolution' | 'decision';
 
@@ -19,8 +19,8 @@ const STATUS_COLOR: Record<string, string> = {
   Strong: 'text-emerald-400', Moderate: 'text-blue-400', Limited: 'text-amber-400',
   Insufficient: 'text-rose-400', Unknown: 'text-white/40', Anecdotal: 'text-white/40',
   substantial: 'text-emerald-400', complete: 'text-emerald-400',
-  partial: 'text-amber-400', minimal: 'text-rose-400',
-  blocked: 'text-rose-400', 'review-required': 'text-amber-400',
+  partial: 'text-amber-400', minimal: 'text-rose-400', requested: 'text-violet-300',
+  blocked: 'text-rose-400', 'review-required': 'text-amber-400', 'research-requested': 'text-violet-300',
   'candidate-for-promotion': 'text-emerald-400',
 };
 
@@ -31,46 +31,70 @@ export default function CompoundDetail() {
   const tokenRef = useRef<string | null>(null);
   const [compound, setCompound] = useState<ResearchSummaryCompound | null>(null);
   const [candidate, setCandidate] = useState<PromotionManifestCandidate | null>(null);
+  const [evidencePacket, setEvidencePacket] = useState<EvidencePacket | null>(null);
+  const [evidencePacketMissing, setEvidencePacketMissing] = useState(false);
+  const [reviewQueue, setReviewQueue] = useState<ResearchReviewQueueItem[]>([]);
+  const [researchTaskQueue, setResearchTaskQueue] = useState<ResearchTaskQueue | null>(null);
   const [plan, setPlan] = useState<ReviewResolutionPlan | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [tab, setTab] = useState<Tab>('overview');
 
   useEffect(() => {
+    async function acquireToken() {
+      try {
+        const res = await fetch(`${getApiBaseUrl()}/api/v1/auth/dev-token`, { method: 'POST' });
+        if (res.ok) tokenRef.current = (await res.json()).token;
+      } catch { /* no-op */ }
+    }
+
+    async function load() {
+      const t = tokenRef.current ?? '';
+      setNotFound(false);
+      setEvidencePacket(null);
+      setEvidencePacketMissing(false);
+      setReviewQueue([]);
+      setResearchTaskQueue(null);
+      try {
+        const [summary, manifest, resolutionPlan, queue, taskQueue] = await Promise.all([
+          fetchResearchSummary(t),
+          fetchPromotionManifest(t),
+          fetchReviewResolutionPlan(t),
+          fetchReviewQueue(t).catch(() => [] as ResearchReviewQueueItem[]),
+          fetchResearchTaskQueue(t).catch(() => null),
+        ]);
+        const slugMap = buildSlugMap(summary.compounds);
+        const canonicalName = slugMap.get(slug);
+        if (!canonicalName) { setNotFound(true); return; }
+
+        const found = summary.compounds.find(c => c.name === canonicalName);
+        if (!found) { setNotFound(true); return; }
+        setCompound(found);
+
+        const allCandidates = [...manifest.blocked, ...manifest.reviewRequired, ...(manifest.researchRequested ?? []), ...manifest.candidatesForPromotion];
+        setCandidate(allCandidates.find(c => c.name === canonicalName) ?? null);
+        setPlan(resolutionPlan);
+        setReviewQueue(queue);
+        setResearchTaskQueue(taskQueue);
+
+        try {
+          setEvidencePacket(await fetchEvidencePacket(slug, t));
+          setEvidencePacketMissing(false);
+        } catch {
+          setEvidencePacket(null);
+          setEvidencePacketMissing(true);
+        }
+      } catch {
+        setNotFound(true);
+      }
+    }
+
     acquireToken().then(load);
   }, [slug]);
 
-  async function acquireToken() {
-    try {
-      const res = await fetch(`${getApiBaseUrl()}/api/v1/auth/dev-token`, { method: 'POST' });
-      if (res.ok) tokenRef.current = (await res.json()).token;
-    } catch { /* no-op */ }
-  }
-
-  async function load() {
-    const t = tokenRef.current ?? '';
-    try {
-      const [summary, manifest, resolutionPlan] = await Promise.all([
-        fetchResearchSummary(t),
-        fetchPromotionManifest(t),
-        fetchReviewResolutionPlan(t),
-      ]);
-      const slugMap = buildSlugMap(summary.compounds);
-      const canonicalName = slugMap.get(slug);
-      if (!canonicalName) { setNotFound(true); return; }
-
-      const found = summary.compounds.find(c => c.name === canonicalName);
-      if (!found) { setNotFound(true); return; }
-      setCompound(found);
-
-      const allCandidates = [...manifest.blocked, ...manifest.reviewRequired, ...manifest.candidatesForPromotion];
-      setCandidate(allCandidates.find(c => c.name === canonicalName) ?? null);
-      setPlan(resolutionPlan);
-    } catch {
-      setNotFound(true);
-    }
-  }
-
   const planItems = plan?.items.filter(i => i.compoundName === compound?.name) ?? [];
+  const compoundQueueItems = reviewQueue.filter(item => item.compoundName === compound?.name);
+  const queuedResearchTask = researchTaskQueue?.items.find(item => item.compoundName === compound?.name) ?? null;
+  const consumedResearchTask = (researchTaskQueue?.resolvedItems ?? []).find(item => item.compoundName === compound?.name) ?? null;
 
   if (notFound) {
     return (
@@ -112,7 +136,7 @@ export default function CompoundDetail() {
           {([
             { key: 'overview',   label: 'Overview' },
             { key: 'claims',     label: 'Claims' },
-            { key: 'resolution', label: `Resolution Plan (${planItems.length})` },
+            { key: 'resolution', label: `Remediation Plan (${planItems.length})` },
             { key: 'decision',   label: 'Review Decision' },
           ] as { key: Tab; label: string }[]).map(t => (
             <button
@@ -157,6 +181,101 @@ export default function CompoundDetail() {
               </div>
             </GlassCard>
 
+            {queuedResearchTask && (
+              <GlassCard className="p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35">Queued Evidence Task</h3>
+                    <p className="mt-2 text-sm text-white/70">
+                      This compound is still waiting for its first evidence packet. Use the queued task below for agent pickup.
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-end gap-2">
+                    <span className="rounded-full border border-violet-400/20 bg-violet-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-200">
+                      {queuedResearchTask.priority}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => router.push(`/admin/research/tasks?compound=${encodeURIComponent(toSlug(compound.name))}`)}
+                      className="text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-100/80 transition-colors hover:text-violet-100"
+                    >
+                      Open in task board →
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                  <TaskMeta label="Target evidence path" value={queuedResearchTask.targetEvidencePath} />
+                  <TaskMeta label="Required schema" value={queuedResearchTask.requiredSchema} />
+                  <TaskMeta label="Request IDs" value={queuedResearchTask.requestIds.join(', ') || 'None'} />
+                  <TaskMeta label="Requesters" value={queuedResearchTask.requesterIds.join(', ') || 'Unknown'} />
+                </div>
+                {(queuedResearchTask.categories?.length ?? 0) > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {queuedResearchTask.categories?.map((category) => (
+                      <span key={category} className="rounded-full border border-violet-400/20 bg-violet-500/10 px-2.5 py-1 text-[10px] text-violet-200">
+                        {category}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {queuedResearchTask.rationales.length > 0 && (
+                  <div className="mt-4 rounded-xl border border-violet-400/15 bg-violet-500/[0.04] px-3 py-3">
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-violet-200/70">Rationale</p>
+                    <div className="mt-2 flex flex-col gap-2 text-[11px] leading-5 text-white/70">
+                      {queuedResearchTask.rationales.map(rationale => <p key={rationale}>{rationale}</p>)}
+                    </div>
+                  </div>
+                )}
+                {queuedResearchTask.suggestedResearchDirectives.length > 0 && (
+                  <div className="mt-4">
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-white/35">Suggested Research Directives</p>
+                    <ul className="mt-2 flex flex-col gap-2 text-[11px] leading-5 text-white/65">
+                      {queuedResearchTask.suggestedResearchDirectives.slice(0, 3).map(directive => (
+                        <li key={directive} className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2">
+                          → {directive}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </GlassCard>
+            )}
+
+            {!queuedResearchTask && consumedResearchTask && (
+              <GlassCard className="p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35">Research Task Consumed</h3>
+                    <p className="mt-2 text-sm text-white/70">
+                      The initial research request cleared from the active queue on the latest run because evidence is now in the pipeline.
+                    </p>
+                  </div>
+                  <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200">
+                    {consumedResearchTask.currentReadiness}
+                  </span>
+                </div>
+                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                  <TaskMeta label="Target evidence path" value={consumedResearchTask.targetEvidencePath} />
+                  <TaskMeta label="Resolution" value={consumedResearchTask.resolution} />
+                  <TaskMeta label="Request IDs" value={consumedResearchTask.requestIds.join(', ') || 'None'} />
+                  <TaskMeta label="Requesters" value={consumedResearchTask.requesterIds.join(', ') || 'Unknown'} />
+                </div>
+                {(consumedResearchTask.categories?.length ?? 0) > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {consumedResearchTask.categories?.map((category) => (
+                      <span key={category} className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2.5 py-1 text-[10px] text-emerald-200">
+                        {category}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <div className="mt-4 rounded-xl border border-emerald-400/15 bg-emerald-500/[0.04] px-3 py-3">
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-emerald-200/70">Consumption signal</p>
+                  <p className="mt-2 text-[11px] leading-5 text-white/70">{consumedResearchTask.resolutionReason}</p>
+                </div>
+              </GlassCard>
+            )}
+
             {compound.promotionBlockers.length > 0 && (
               <GlassCard className="p-5">
                 <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-3">Promotion Blockers</h3>
@@ -197,21 +316,17 @@ export default function CompoundDetail() {
         )}
 
         {tab === 'claims' && (
-          <GlassCard className="p-5">
-            <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4">Evidence Claims</h3>
-            <p className="text-sm text-white/30">
-              Evidence packet loading from per-compound files is a v2 feature. Wire up{' '}
-              <code className="text-white/50">fetchArtifact(&apos;evidence-packet/&#123;slug&#125;&apos;)</code>{' '}
-              when individual packets are available.
-            </p>
-          </GlassCard>
+          <EvidenceClaimsPanel packet={evidencePacket} missing={evidencePacketMissing} />
         )}
 
         {tab === 'resolution' && (
           <GlassCard className="p-5">
             <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4">
-              Resolution Plan ({planItems.length})
+              Suggested Remediation Plan ({planItems.length})
             </h3>
+            <p className="mb-4 rounded-xl border border-blue-400/20 bg-blue-500/10 px-3 py-2 text-[11px] leading-5 text-blue-100/70">
+              These are generated tasks that explain what must be fixed before promotion. Agreeing with a review decision does not automatically implement them.
+            </p>
             {planItems.length === 0 && <p className="text-sm text-white/30">No resolution items for this compound.</p>}
             <div className="flex flex-col gap-3">
               {planItems.map(item => <ResolutionPlanItem key={item.itemId} item={item} />)}
@@ -224,7 +339,7 @@ export default function CompoundDetail() {
             <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4">
               Review Decision — {compound.name}
             </h3>
-            <ReviewDecisionForm candidate={candidate} />
+            <ReviewDecisionForm candidate={candidate} compound={compound} evidencePacket={evidencePacket} planItems={planItems} reviewQueueItems={compoundQueueItems} />
           </GlassCard>
         )}
         {tab === 'decision' && !candidate && (
@@ -234,5 +349,100 @@ export default function CompoundDetail() {
         )}
       </main>
     </div>
+  );
+}
+
+function TaskMeta({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-2">
+      <p className="text-[9px] text-white/35 uppercase tracking-widest">{label}</p>
+      <p className="mt-1 break-all text-[11px] font-medium text-white/75">{value}</p>
+    </div>
+  );
+}
+
+function EvidenceClaimsPanel({ packet, missing }: { packet: EvidencePacket | null; missing: boolean }) {
+  if (missing) {
+    return (
+      <GlassCard className="p-5">
+        <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4">Evidence Claims</h3>
+        <p className="text-sm text-white/30">Research artifacts not yet generated for this compound evidence packet.</p>
+      </GlassCard>
+    );
+  }
+
+  if (!packet) {
+    return (
+      <GlassCard className="p-5">
+        <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35 mb-4">Evidence Claims</h3>
+        <p className="text-sm text-white/30">Loading evidence packet…</p>
+      </GlassCard>
+    );
+  }
+
+  return (
+    <GlassCard className="p-5">
+      <div className="mb-4 flex items-start justify-between gap-4">
+        <div>
+          <h3 className="text-[9px] font-bold uppercase tracking-widest text-white/35">Evidence Claims</h3>
+          <p className="mt-1 text-[11px] text-white/35">{packet.claims.length} claims · {packet.sources.length} sources</p>
+        </div>
+        <span className={`text-[10px] font-semibold ${STATUS_COLOR[packet.ops.completeness] ?? 'text-white/50'}`}>
+          {packet.ops.completeness}
+        </span>
+      </div>
+
+      <div className="mb-4 rounded-xl border border-blue-400/20 bg-blue-500/10 px-3 py-2 text-[11px] leading-5 text-blue-100/70">
+        Evidence support describes the strength of the underlying evidence. Extraction confidence describes how confident the packet is that the statement accurately reflects its sources. “Insufficient + high confidence” means the evidence gap is clear, not that the therapeutic claim is proven.
+      </div>
+
+      <div className="flex flex-col gap-3">
+        {packet.claims.map(claim => {
+          const sources = claim.sourceRefs
+            .map(ref => packet.sources.find(source => source.sourceId === ref))
+            .filter(Boolean);
+
+          return (
+            <div key={claim.claimId} className="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-4">
+              <div className="mb-3 flex flex-wrap items-center gap-2">
+                <span className="rounded-full border border-white/10 bg-white/[0.05] px-2 py-1 text-[10px] text-white/55">{claim.claimType}</span>
+                <span className={`text-[10px] font-semibold ${STATUS_COLOR[claim.evidenceTier] ?? 'text-white/50'}`}>Evidence support: {claim.evidenceTier}</span>
+                <span className="text-[10px] text-white/35">Extraction confidence: {claim.confidence}</span>
+              </div>
+              <p className="mb-2 font-mono text-[10px] text-white/30">Claim ID: {claim.claimId}</p>
+              <p className="text-sm leading-6 text-white/75">{claim.statement}</p>
+
+              {claim.extractedEvidence.length > 0 && (
+                <div className="mt-3 space-y-2">
+                  {claim.extractedEvidence.map((evidence, index) => (
+                    <p key={`${claim.claimId}-evidence-${index}`} className="border-l border-emerald-300/25 pl-3 text-[11px] leading-5 text-white/45">
+                      {evidence.quote ?? evidence.pageOrSection ?? evidence.sourceRef}
+                    </p>
+                  ))}
+                </div>
+              )}
+
+              {sources.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <span className="w-full text-[9px] font-bold uppercase tracking-widest text-white/25">Sources used by this claim</span>
+                  {sources.map(source => source && (
+                    <span key={source.sourceId} className="rounded-full bg-blue-900/15 px-2 py-1 text-[10px] text-blue-200/80">
+                      {source.authorityTier} · {source.title}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {claim.reviewFlags.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <span className="w-full text-[9px] font-bold uppercase tracking-widest text-amber-200/50">Reviewer guardrails — not auto-approved output</span>
+                  {claim.reviewFlags.map(flag => <span key={flag} className="rounded-full border border-amber-300/20 bg-amber-500/10 px-2 py-1 text-[10px] text-amber-200/80">{flag}</span>)}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </GlassCard>
   );
 }

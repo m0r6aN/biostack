@@ -30,7 +30,7 @@
       "properties": {
         "decisionId": { "type": "string", "minLength": 1 },
         "compoundName": { "type": "string", "minLength": 1 },
-        "decision": { "type": "string", "enum": ["approve-for-promotion", "approve-claims", "request-changes", "reject"] },
+        "decision": { "type": "string", "enum": ["approve-for-promotion", "approve-claims", "resolve-review-items", "archive-draft", "request-changes", "reject"] },
         "reviewerId": { "type": "string", "minLength": 1 },
         "reviewedAt": { "type": "string", "format": "date-time" },
         "scope": {
@@ -39,6 +39,7 @@
           "required": ["claimIds", "qualityFlags", "reviewCategories", "promotionBlockers"],
           "properties": {
             "claimIds": { "$ref": "#/$defs/stringArray" },
+            "reviewQueueItemIds": { "$ref": "#/$defs/stringArray" },
             "qualityFlags": { "$ref": "#/$defs/stringArray" },
             "reviewCategories": { "$ref": "#/$defs/stringArray" },
             "promotionBlockers": { "$ref": "#/$defs/stringArray" }

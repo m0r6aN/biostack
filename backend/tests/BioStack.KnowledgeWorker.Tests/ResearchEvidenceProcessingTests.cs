@@ -164,6 +164,281 @@ public class ResearchEvidenceProcessingTests
     }
 
     [Fact]
+    public void SummaryBuilder_ResearchRequest_Adds_ResearchRequested_Item_Until_Evidence_Exists()
+    {
+        var requests = ResearchRequestIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "research-request-batch",
+          "batch": { "batchId": "rb1", "requesterId": "r1", "requestedAt": "2026-05-10T00:00:00Z", "notes": [] },
+          "requests": [{
+            "requestId": "research-epitalon-001",
+            "compoundName": "Epitalon",
+            "aliases": ["Epithalon"],
+            "classification": "Research Compound",
+            "priority": "normal",
+            "requesterId": "r1",
+            "requestedAt": "2026-05-10T00:00:00Z",
+            "rationale": "User requested coverage for longevity protocols.",
+            "notes": []
+          }]
+        }
+        """)! });
+
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(), Array.Empty<ResearchReviewQueueItem>(), ReviewDecisionIndex.Empty, requests);
+        var manifest = new PromotionManifestBuilder().Build(summary, new PromotionManifestOutputs(
+            DraftSubstances: "draft-substances.json",
+            ReviewQueue: "review-queue.json",
+            ResearchSummary: "research-summary.json",
+            RunReport: "research-run-report.json"));
+        var plan = new ReviewResolutionPlanBuilder().Build(manifest, Array.Empty<ResearchReviewQueueItem>());
+
+        var compound = summary.Compounds.Single();
+        Assert.Equal("research-requested", compound.PromotionReadiness);
+        Assert.True(compound.HasResearchRequest);
+        Assert.Contains("research-epitalon-001", compound.ResearchRequestIds);
+        Assert.Contains(summary.ReviewCategories, c => c.Name == "Research Requested" && c.Compounds.Contains("Epitalon"));
+        Assert.Single(manifest.ResearchRequested);
+        Assert.Equal(1, manifest.Counts.ResearchRequested);
+        Assert.Contains(manifest.ResearchRequested.Single().RequiredNextActions, a => a.Contains("evidence packet", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(plan.Items, item => item.CompoundName == "Epitalon" && item.ResolutionType == "perform-initial-research");
+    }
+
+    [Fact]
+    public void SummaryBuilder_ResearchRequest_Follows_Normal_Flow_When_Evidence_Exists()
+    {
+        var draft = Draft("Epitalon", "Moderate", "substantial", needsReview: true);
+        var requests = ResearchRequestIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "research-request-batch",
+          "batch": { "batchId": "rb1", "requesterId": "r1", "requestedAt": "2026-05-10T00:00:00Z", "notes": [] },
+          "requests": [{
+            "requestId": "research-epitalon-001",
+            "compoundName": "Epitalon",
+            "aliases": [],
+            "classification": "Research Compound",
+            "priority": "normal",
+            "requesterId": "r1",
+            "requestedAt": "2026-05-10T00:00:00Z",
+            "rationale": "User requested coverage.",
+            "notes": []
+          }]
+        }
+        """)! });
+
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(draft), Array.Empty<ResearchReviewQueueItem>(), ReviewDecisionIndex.Empty, requests);
+
+        var compound = summary.Compounds.Single();
+        Assert.Equal("review-required", compound.PromotionReadiness);
+        Assert.True(compound.HasResearchRequest);
+        Assert.Contains("research-epitalon-001", compound.ResearchRequestIds);
+        Assert.DoesNotContain(summary.PromotionReadiness, b => b.Name == "research-requested");
+    }
+
+    [Fact]
+    public void ResearchTaskQueueBuilder_Emits_Initial_Research_Task_For_Request_Without_Evidence()
+    {
+        var requests = ResearchRequestIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "research-request-batch",
+          "batch": { "batchId": "rb1", "requesterId": "r1", "requestedAt": "2026-05-10T00:00:00Z", "notes": [] },
+          "requests": [{
+            "requestId": "research-epitalon-001",
+            "compoundName": "Epitalon",
+            "aliases": ["Epithalon"],
+            "classification": "Research Compound",
+            "priority": "high",
+            "requesterId": "r1",
+            "requestedAt": "2026-05-10T00:00:00Z",
+            "rationale": "User requested coverage for longevity protocols.",
+            "notes": ["Prioritize human evidence first."]
+          }]
+        }
+        """)! });
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(), Array.Empty<ResearchReviewQueueItem>(), ReviewDecisionIndex.Empty, requests);
+
+        var queue = new ResearchTaskQueueBuilder().Build(summary, requests, "research/input/evidence");
+
+        var item = Assert.Single(queue.Items);
+        Assert.Equal(1, queue.Counts.TotalItems);
+        Assert.Equal(0, queue.Counts.ResolvedItems);
+        Assert.Equal("Epitalon", item.CompoundName);
+        Assert.Equal("high", item.Priority);
+        Assert.Contains("Epithalon", item.Aliases);
+        Assert.Equal("research/input/evidence/epitalon.evidence.json", item.TargetEvidencePath);
+        Assert.Equal("evidence-packet.schema.json", item.RequiredSchema);
+        Assert.Contains(item.SuggestedResearchDirectives, directive => directive.Contains("Do not fabricate evidence", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void ResearchTaskQueueBuilder_Does_Not_Emit_Initial_Task_When_Evidence_Already_Exists()
+    {
+        var draft = Draft("Epitalon", "Moderate", "substantial", needsReview: true);
+        var requests = ResearchRequestIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "research-request-batch",
+          "batch": { "batchId": "rb1", "requesterId": "r1", "requestedAt": "2026-05-10T00:00:00Z", "notes": [] },
+          "requests": [{
+            "requestId": "research-epitalon-001",
+            "compoundName": "Epitalon",
+            "aliases": [],
+            "classification": "Research Compound",
+            "priority": "normal",
+            "requesterId": "r1",
+            "requestedAt": "2026-05-10T00:00:00Z",
+            "rationale": "User requested coverage.",
+            "notes": []
+          }]
+        }
+        """)! });
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(draft), Array.Empty<ResearchReviewQueueItem>(), ReviewDecisionIndex.Empty, requests);
+
+        var queue = new ResearchTaskQueueBuilder().Build(summary, requests, "research/input/evidence");
+
+        Assert.Empty(queue.Items);
+        Assert.Equal(0, queue.Counts.TotalItems);
+        var resolved = Assert.Single(queue.ResolvedItems);
+        Assert.Equal(1, queue.Counts.ResolvedItems);
+        Assert.Equal("Epitalon", resolved.CompoundName);
+        Assert.Equal("review-required", resolved.CurrentReadiness);
+        Assert.Equal("evidence-detected", resolved.Resolution);
+    }
+
+    [Fact]
+    public void ResearchTaskQueueBuilder_Does_Not_Emit_Task_For_Rejected_Request()
+    {
+        var requests = ResearchRequestIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "research-request-batch",
+          "batch": { "batchId": "rb1", "requesterId": "r1", "requestedAt": "2026-05-10T00:00:00Z", "notes": [] },
+          "requests": [{
+            "requestId": "research-legacy-001",
+            "compoundName": "Legacy Compound",
+            "aliases": [],
+            "classification": "Research Compound",
+            "priority": "normal",
+            "requesterId": "r1",
+            "requestedAt": "2026-05-10T00:00:00Z",
+            "rationale": "Old request should not resurface.",
+            "notes": []
+          }]
+        }
+        """)! });
+        var decisions = ReviewDecisionIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "review-decision-batch",
+          "batch": { "batchId": "b1", "reviewerId": "r1", "reviewedAt": "2026-05-11T00:00:00Z", "notes": [] },
+          "decisions": [{
+            "decisionId": "reject-legacy-001",
+            "compoundName": "Legacy Compound",
+            "decision": "reject",
+            "reviewerId": "r1",
+            "reviewedAt": "2026-05-11T00:00:00Z",
+            "scope": { "claimIds": [], "reviewQueueItemIds": [], "qualityFlags": [], "reviewCategories": [], "promotionBlockers": [] },
+            "clearsSoftPromotionBlockers": false,
+            "expiresAt": null,
+            "notes": ["Rejected request."]
+          }]
+        }
+        """)! });
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(), Array.Empty<ResearchReviewQueueItem>(), decisions, requests);
+
+        var queue = new ResearchTaskQueueBuilder().Build(summary, requests, "research/input/evidence");
+
+        Assert.Empty(summary.Compounds);
+        Assert.Empty(queue.Items);
+        Assert.Empty(queue.ResolvedItems);
+    }
+
+    [Fact]
+    public void ResearchTaskQueueBuilder_Carries_Request_Categories_Into_Task_And_Resolved_Artifacts()
+    {
+        var draft = Draft("Noopept", "Moderate", "substantial", needsReview: true);
+        var requests = ResearchRequestIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "research-request-batch",
+          "batch": { "batchId": "rb1", "requesterId": "r1", "requestedAt": "2026-05-10T00:00:00Z", "notes": [] },
+          "requests": [{
+            "requestId": "research-noopept-001",
+            "compoundName": "Noopept",
+            "aliases": ["GVS-111"],
+            "categories": ["nootropic", "Cognitive Support", "mitochondrial support"],
+            "classification": "Research Compound",
+            "priority": "high",
+            "requesterId": "r1",
+            "requestedAt": "2026-05-10T00:00:00Z",
+            "rationale": "Need a nootropics evidence packet.",
+            "notes": []
+          }]
+        }
+        """)! });
+
+        var requestedSummary = new ResearchSummaryBuilder().Build(new JsonArray(), Array.Empty<ResearchReviewQueueItem>(), ReviewDecisionIndex.Empty, requests);
+        var requestedQueue = new ResearchTaskQueueBuilder().Build(requestedSummary, requests, "research/input/evidence");
+        Assert.Equal(new[] { "Mitochondrial Support", "Nootropics" }, requestedQueue.Items.Single().Categories);
+
+        var resolvedSummary = new ResearchSummaryBuilder().Build(new JsonArray(draft), Array.Empty<ResearchReviewQueueItem>(), ReviewDecisionIndex.Empty, requests);
+        var resolvedQueue = new ResearchTaskQueueBuilder().Build(resolvedSummary, requests, "research/input/evidence");
+        Assert.Equal(new[] { "Mitochondrial Support", "Nootropics" }, resolvedQueue.ResolvedItems.Single().Categories);
+    }
+
+    [Fact]
+    public void ResearchCategoryCatalog_Loads_Aliases_From_Shared_Taxonomy_Artifact()
+    {
+        var normalized = ResearchCategoryCatalog.NormalizeMany(new[] { "nootropic", "anti-aging", "mitochondrial support" });
+
+        Assert.Equal(new[] { "Nootropics", "Longevity", "Mitochondrial Support" }, normalized);
+    }
+
+    [Fact]
+    public void SummaryBuilder_RequestChangesDecision_Marks_Draft_For_Rereview()
+    {
+        var draft = Draft("Clean Compound", "Strong", "complete", needsReview: false);
+        var decisions = ReviewDecisionIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "review-decision-batch",
+          "batch": { "batchId": "b1", "reviewerId": "r1", "reviewedAt": "2026-05-05T00:00:00Z", "notes": [] },
+          "decisions": [{
+            "decisionId": "change-clean-001",
+            "compoundName": "Clean Compound",
+            "decision": "request-changes",
+            "reviewerId": "r1",
+            "reviewedAt": "2026-05-05T00:00:00Z",
+            "scope": { "claimIds": [], "reviewQueueItemIds": [], "qualityFlags": [], "reviewCategories": [], "promotionBlockers": [] },
+            "clearsSoftPromotionBlockers": false,
+            "expiresAt": null,
+            "notes": ["Add newer source and reword claim."]
+          }]
+        }
+        """)! });
+
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(draft), Array.Empty<ResearchReviewQueueItem>(), decisions);
+        var manifest = new PromotionManifestBuilder().Build(summary, new PromotionManifestOutputs(
+            DraftSubstances: "draft-substances.json",
+            ReviewQueue: "review-queue.json",
+            ResearchSummary: "research-summary.json",
+            RunReport: "research-run-report.json"));
+        var plan = new ReviewResolutionPlanBuilder().Build(manifest, Array.Empty<ResearchReviewQueueItem>());
+
+        var compound = summary.Compounds.Single();
+        Assert.True(compound.HasRequestedChanges);
+        Assert.Equal("review-required", compound.PromotionReadiness);
+        Assert.Contains("change-clean-001", compound.ReviewDecisionIds);
+        Assert.Contains(compound.PromotionBlockers, b => b.Contains("requested changes", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(summary.ReviewCategories, c => c.Name == "Requested Changes" && c.Compounds.Contains("Clean Compound"));
+        Assert.True(manifest.ReviewRequired.Single().HasRequestedChanges);
+        Assert.Contains(manifest.ReviewRequired.Single().RequiredNextActions, a => a.Contains("targeted follow-up research", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(plan.Items, item => item.CompoundName == "Clean Compound" && item.ResolutionType == "targeted-research-rereview");
+    }
+
+    [Fact]
     public void SummaryBuilder_ReviewDecision_Clears_Soft_Blockers()
     {
         var draft = Draft("Creatine", "Unknown", "partial", needsReview: true);
@@ -191,6 +466,72 @@ public class ResearchEvidenceProcessingTests
         var compound = summary.Compounds.Single();
         Assert.Equal("blocked", compound.PromotionReadiness);
         Assert.Contains(compound.PromotionBlockers, b => b.Contains("source-registry", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void SummaryBuilder_ReviewDecision_Resolves_ReviewQueue_Items()
+    {
+        var draft = Draft("Clean Compound", "Strong", "complete", needsReview: false);
+        var queue = new[]
+        {
+            new ResearchReviewQueueItem("clean-compound-queue-1", "Clean Compound", "review", "First item", Array.Empty<string>()),
+            new ResearchReviewQueueItem("clean-compound-queue-2", "Clean Compound", "review", "Second item", Array.Empty<string>())
+        };
+        var decisions = ReviewDecisionIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "review-decision-batch",
+          "batch": { "batchId": "b1", "reviewerId": "r1", "reviewedAt": "2026-05-05T00:00:00Z", "notes": [] },
+          "decisions": [{
+            "decisionId": "resolve-clean-queue-001",
+            "compoundName": "Clean Compound",
+            "decision": "resolve-review-items",
+            "reviewerId": "r1",
+            "reviewedAt": "2026-05-05T00:00:00Z",
+            "scope": { "claimIds": [], "reviewQueueItemIds": ["clean-compound-queue-1"], "qualityFlags": [], "reviewCategories": [], "promotionBlockers": [] },
+            "clearsSoftPromotionBlockers": false,
+            "expiresAt": null,
+            "notes": ["First queue item resolved."]
+          }]
+        }
+        """)! });
+
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(draft), queue, decisions);
+
+        var compound = summary.Compounds.Single();
+        Assert.Equal(1, summary.ReviewQueueItemCount);
+        Assert.Equal(1, compound.ReviewQueueItemCount);
+        Assert.Contains(compound.PromotionBlockers, b => b.Contains("1 review queue item", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains("resolve-clean-queue-001", compound.ReviewDecisionIds);
+    }
+
+    [Fact]
+    public void SummaryBuilder_ArchiveDecision_Removes_Draft_From_Active_Summary()
+    {
+        var draft = Draft("Old Draft", "Strong", "complete", needsReview: false);
+        var decisions = ReviewDecisionIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "review-decision-batch",
+          "batch": { "batchId": "b1", "reviewerId": "r1", "reviewedAt": "2026-05-05T00:00:00Z", "notes": [] },
+          "decisions": [{
+            "decisionId": "archive-old-draft-001",
+            "compoundName": "Old Draft",
+            "decision": "archive-draft",
+            "reviewerId": "r1",
+            "reviewedAt": "2026-05-05T00:00:00Z",
+            "scope": { "claimIds": [], "reviewQueueItemIds": [], "qualityFlags": [], "reviewCategories": [], "promotionBlockers": [] },
+            "clearsSoftPromotionBlockers": false,
+            "expiresAt": null,
+            "notes": ["Superseded by newer draft."]
+          }]
+        }
+        """)! });
+
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(draft), Array.Empty<ResearchReviewQueueItem>(), decisions);
+
+        Assert.Equal(0, summary.DraftSubstanceCount);
+        Assert.Empty(summary.Compounds);
     }
 
     [Fact]

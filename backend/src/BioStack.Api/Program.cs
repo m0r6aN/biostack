@@ -14,6 +14,8 @@ using BioStack.Application.Services;
 using BioStack.Api.Endpoints;
 using BioStack.Api;
 using BioStack.Cognition;
+using BioStack.Infrastructure.Keon;
+using BioStack.Application.Governance;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -263,6 +265,7 @@ builder.Services.AddScoped<IProtocolPhaseService, ProtocolPhaseService>();
 builder.Services.AddScoped<ITimelineService, TimelineService>();
 builder.Services.AddScoped<ICalculatorService, CalculatorService>();
 builder.Services.AddScoped<IKnowledgeService, KnowledgeService>();
+builder.Services.AddScoped<ITrustLedgerService, TrustLedgerService>();
 builder.Services.AddScoped<IInteractionIntelligenceService, InteractionIntelligenceService>();
 builder.Services.AddScoped<IOverlapService, OverlapService>();
 builder.Services.AddSingleton<IBlendDecomposerService, BlendDecomposerService>();
@@ -291,6 +294,8 @@ builder.Services.AddHostedService<AnalyzerPrewarmService>();
 // AddCollectiveIntegration selects live vs. stub orchestrator based on
 // KeonCollective:LiveMode and KeonCollective:ControlBaseUrl in configuration.
 builder.Services.AddCollectiveIntegration(builder.Configuration);
+builder.Services.AddKeonRuntime(builder.Configuration);
+builder.Services.AddSingleton<DoctrineSanitizer>();
 
 // ── OpenAPI ──────────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi(options =>
@@ -322,6 +327,18 @@ app.MapScalarApiReference(options =>
 
 app.MapHealthChecks("/health");
 
+app.MapGet("/health/keon", async (IKeonRuntimeClient keon, CancellationToken ct) =>
+{
+    var status = await keon.CheckHealthAsync(ct);
+    return status.IsHealthy
+        ? Results.Ok(new { status = "healthy", mode = status.Mode.ToString() })
+        : Results.Json(
+            new { status = "unhealthy", mode = status.Mode.ToString(), message = status.Message },
+            statusCode: 503);
+})
+.WithTags("Health")
+.WithName("KeonRuntimeHealth");
+
 app.MapAuthEndpoints();
 app.MapBillingEndpoints();
 app.MapProfileEndpoints();
@@ -332,6 +349,8 @@ app.MapProtocolPhaseEndpoints();
 app.MapTimelineEndpoints();
 app.MapCalculatorEndpoints();
 app.MapKnowledgeEndpoints();
+app.MapTrustLedgerEndpoints();
+app.MapStackReviewEndpoints();
 app.MapAnalyzeEndpoints();
 app.MapLeadEndpoints();
 app.MapAdminEndpoints();

@@ -1,9 +1,38 @@
 import type {
-  ResearchSummary,
-  PromotionManifest,
-  ReviewResolutionPlan,
-  PromotionImportPreview,
+    EvidencePacket,
+    PromotionExportManifest,
+    PromotionImportDryRunReport,
+    PromotionImportPreview,
+    PromotionManifest,
+    ResearchCategoryTaxonomy,
+    ResearchReviewQueueItem,
+    ResearchSummary,
+    ResearchTaskQueue,
+    ReviewResolutionPlan,
 } from './types';
+
+type JsonLike = null | boolean | number | string | JsonLike[] | { [key: string]: JsonLike };
+
+function camelizeKey(key: string): string {
+  return key.length === 0 ? key : key[0].toLowerCase() + key.slice(1);
+}
+
+export function normalizeResearchArtifact<T>(artifact: JsonLike): T {
+  if (Array.isArray(artifact)) {
+    return artifact.map(item => normalizeResearchArtifact<JsonLike>(item)) as T;
+  }
+
+  if (artifact && typeof artifact === 'object') {
+    return Object.fromEntries(
+      Object.entries(artifact).map(([key, value]) => [
+        camelizeKey(key),
+        normalizeResearchArtifact<JsonLike>(value),
+      ])
+    ) as T;
+  }
+
+  return artifact as T;
+}
 
 async function fetchArtifact<T>(artifact: string, token: string): Promise<T> {
   const res = await fetch(
@@ -11,7 +40,7 @@ async function fetchArtifact<T>(artifact: string, token: string): Promise<T> {
     { headers: { Authorization: `Bearer ${token}` } }
   );
   if (!res.ok) throw new Error(`Failed to fetch ${artifact}: ${res.status}`);
-  return res.json() as Promise<T>;
+  return normalizeResearchArtifact<T>(await res.json() as JsonLike);
 }
 
 export const fetchResearchSummary = (t: string) =>
@@ -23,14 +52,26 @@ export const fetchPromotionManifest = (t: string) =>
 export const fetchReviewResolutionPlan = (t: string) =>
   fetchArtifact<ReviewResolutionPlan>('review-resolution-plan', t);
 
+export const fetchReviewQueue = (t: string) =>
+  fetchArtifact<ResearchReviewQueueItem[]>('review-queue', t);
+
+export const fetchResearchTaskQueue = (t: string) =>
+  fetchArtifact<ResearchTaskQueue>('research-task-queue', t);
+
+export const fetchResearchCategoryTaxonomy = (t: string) =>
+  fetchArtifact<ResearchCategoryTaxonomy>('category-taxonomy', t);
+
 export const fetchImportPreview = (t: string) =>
   fetchArtifact<PromotionImportPreview>('promotion-import-preview', t);
 
 export const fetchDryRunReport = (t: string) =>
-  fetchArtifact<unknown>('import-dry-run/promotion-import-dry-run-report', t);
+  fetchArtifact<PromotionImportDryRunReport>('import-dry-run/promotion-import-dry-run-report', t);
 
 export const fetchExportManifest = (t: string) =>
-  fetchArtifact<unknown>('promotion-export/promotion-export-manifest', t);
+  fetchArtifact<PromotionExportManifest>('promotion-export/promotion-export-manifest', t);
 
 export const fetchPromotableSubstances = (t: string) =>
   fetchArtifact<unknown[]>('promotion-export/substances.promotable', t);
+
+export const fetchEvidencePacket = (slug: string, t: string) =>
+  fetchArtifact<EvidencePacket>(`evidence-packet/${slug}`, t);

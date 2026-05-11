@@ -9,11 +9,12 @@ namespace BioStack.Infrastructure.Persistence
     {
         var host = Environment.GetEnvironmentVariable("PGHOST") ?? "localhost";
         var user = Environment.GetEnvironmentVariable("PGUSER") ?? "biostack";
-        var password = Environment.GetEnvironmentVariable("PGPASSWORD") ?? "";
+        var password = Environment.GetEnvironmentVariable("PGPASSWORD") ?? "biostack_dev_password";
         var database = Environment.GetEnvironmentVariable("PGDATABASE") ?? "biostack";
         var port = Environment.GetEnvironmentVariable("PGPORT") ?? "5432";
+        var sslMode = Environment.GetEnvironmentVariable("PGSSLMODE") ?? "Prefer";
 
-        var connectionString = $"Server={host};Port={port};Database={database};User Id={user};Password={password};SSL Mode=Require";
+        var connectionString = $"Host={host};Port={port};Database={database};Username={user};Password={password};SSL Mode={sslMode}";
 
         var optionsBuilder = new DbContextOptionsBuilder<BioStackDbContext>();
         optionsBuilder.UseNpgsql(connectionString);

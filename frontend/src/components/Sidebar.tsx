@@ -127,17 +127,17 @@ function IconResearch() {
 // ─── Nav items ────────────────────────────────────────────────────────────────
 
 const navItems = [
-  { label: 'Protocol Console', href: '/protocol-console', icon: <IconProtocolConsole />, adminOnly: false, exact: false },
-  { label: 'Profiles',    href: '/profiles',    icon: <IconProfiles />,    adminOnly: false, exact: false },
-  { label: 'Compounds',   href: '/compounds',   icon: <IconCompounds />,   adminOnly: false, exact: false },
-  { label: 'Protocols',   href: '/protocols',   icon: <IconProtocols />,   adminOnly: false, exact: false },
-  { label: 'Check-ins',   href: '/checkins',    icon: <IconCheckins />,    adminOnly: false, exact: false },
-  { label: 'Timeline',    href: '/timeline',    icon: <IconTimeline />,    adminOnly: false, exact: false },
-  { label: 'Tools',       href: '/tools',       icon: <IconCalculators />, adminOnly: false, exact: false },
-  { label: 'Knowledge',   href: '/knowledge',   icon: <IconKnowledge />,   adminOnly: false, exact: false },
-  { label: 'Billing',     href: '/billing',     icon: <IconBilling />,     adminOnly: false, exact: false },
-  { label: 'Admin',       href: '/admin',       icon: <IconAdmin />,       adminOnly: true,  exact: true  },
-  { label: 'Research',    href: '/admin/research', icon: <IconResearch />, adminOnly: false, exact: false },
+  { label: 'Mission Control',      href: '/protocol-console', icon: <IconProtocolConsole />, adminOnly: false, exact: false },
+  { label: 'Profiles',             href: '/profiles',         icon: <IconProfiles />,        adminOnly: false, exact: false },
+  { label: 'Compounds',            href: '/compounds',        icon: <IconCompounds />,        adminOnly: false, exact: false },
+  { label: 'Protocol Lab',         href: '/protocols',        icon: <IconProtocols />,        adminOnly: false, exact: false },
+  { label: 'Observations',         href: '/checkins',         icon: <IconCheckins />,         adminOnly: false, exact: false },
+  { label: 'Timeline',             href: '/timeline',         icon: <IconTimeline />,         adminOnly: false, exact: false },
+  { label: 'Tools',                href: '/tools',            icon: <IconCalculators />,      adminOnly: false, exact: false },
+  { label: 'Compound Intelligence',href: '/knowledge',        icon: <IconKnowledge />,        adminOnly: false, exact: false },
+  { label: 'Billing',              href: '/billing',          icon: <IconBilling />,          adminOnly: false, exact: false },
+  { label: 'Admin',                href: '/admin',            icon: <IconAdmin />,            adminOnly: true,  exact: true  },
+  { label: 'Research',             href: '/admin/research',   icon: <IconResearch />,         adminOnly: false, exact: false },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -189,7 +189,7 @@ export function Sidebar() {
         </div>
         <div className="px-6 py-2">
           <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.3em] pl-0.5">
-            Protocol Console
+            Mission Control
           </p>
         </div>
 

@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import { CompoundCard } from '@/components/research/CompoundCard';
 import type { ResearchSummaryCompound } from '@/lib/research/types';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 const blocked: ResearchSummaryCompound = {
   name: 'BPC-157',
@@ -64,5 +64,16 @@ describe('CompoundCard', () => {
     render(<CompoundCard compound={blocked} selected={false} onClick={onClick} />);
     screen.getByRole('button').click();
     expect(onClick).toHaveBeenCalled();
+  });
+
+  it('supports a secondary action without triggering the primary click', () => {
+    const onClick = vi.fn();
+    const onSecondary = vi.fn();
+    render(<CompoundCard compound={blocked} selected={false} onClick={onClick} secondaryAction={{ label: 'Open Task Board', onClick: onSecondary }} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Open Task Board' }));
+
+    expect(onSecondary).toHaveBeenCalled();
+    expect(onClick).not.toHaveBeenCalled();
   });
 });

@@ -34,10 +34,12 @@ public class ResearchJobTests
             AssertOutputJson(outputDir, "draft-substances.json");
             AssertOutputJson(outputDir, "review-queue.json");
             AssertOutputJson(outputDir, "research-summary.json");
+            AssertOutputJson(outputDir, "research-task-queue.json");
             AssertOutputJson(outputDir, "promotion-manifest.json");
             AssertOutputJson(outputDir, "review-resolution-plan.json");
             AssertOutputJson(outputDir, "promotion-import-preview.json");
             AssertOutputJson(outputDir, "research-run-report.json");
+            AssertOutputJson(Path.Combine(outputDir, "evidence-packet"), "creatine.json");
             AssertOutputJson(Path.Combine(outputDir, "promotion-export"), "promotion-export-manifest.json");
             AssertOutputJson(Path.Combine(outputDir, "promotion-export"), "substances.promotable.json");
             AssertOutputJson(outputDir, "promotion-import-preview.json");
@@ -50,11 +52,17 @@ public class ResearchJobTests
             Assert.Equal(0, summary["ReviewQueueItemCount"]!.GetValue<int>());
             Assert.Equal("Creatine", summary["Compounds"]![0]!["Name"]!.GetValue<string>());
             Assert.NotNull(summary["ReviewCategories"]);
+            var taskQueue = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-task-queue.json")))!;
+            Assert.Equal(0, taskQueue["Counts"]!["TotalItems"]!.GetValue<int>());
+            Assert.Equal(0, taskQueue["Counts"]!["ResolvedItems"]!.GetValue<int>());
             var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "promotion-manifest.json")))!;
             Assert.Equal(1, manifest["Counts"]!["TotalDrafts"]!.GetValue<int>());
+            Assert.Equal(Path.Combine(outputDir, "research-task-queue.json"), manifest["Outputs"]!["ResearchTaskQueue"]!.GetValue<string>());
             Assert.Equal("review-required", manifest["ReviewRequired"]![0]!["Readiness"]!.GetValue<string>());
             var plan = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "review-resolution-plan.json")))!;
             Assert.True(plan["Counts"]!["TotalItems"]!.GetValue<int>() > 0);
+            var evidencePacket = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "evidence-packet", "creatine.json")))!;
+            Assert.Equal("Creatine", evidencePacket["compound"]!["canonicalName"]!.GetValue<string>());
         }
         finally
         {
@@ -76,7 +84,79 @@ public class ResearchJobTests
             Assert.False(result.Success);
             Assert.Equal(1, result.FailedCount);
             var report = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-run-report.json")))!;
-            Assert.Contains("No evidence packet files", report["Records"]![0]!["Error"]!.GetValue<string>());
+            Assert.Contains("No evidence packet files or research requests", report["Records"]![0]!["Error"]!.GetValue<string>());
+        }
+        finally
+        {
+            Directory.Delete(outputDir, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task ResearchJob_Emits_Research_Task_Queue_When_Request_Exists_Without_Evidence()
+    {
+        var outputDir = CreateTempDirectory();
+        var requestsPath = Path.Combine(outputDir, "research-request.json");
+        try
+        {
+            File.WriteAllText(requestsPath, """
+            {
+              "schemaVersion": "1.0.0",
+              "recordType": "research-request-batch",
+              "batch": {
+                "batchId": "rb1",
+                "requesterId": "operator-1",
+                "requestedAt": "2026-05-10T00:00:00Z",
+                "notes": []
+              },
+              "requests": [
+                {
+                  "requestId": "research-epitalon-001",
+                  "compoundName": "Epitalon",
+                  "aliases": ["Epithalon"],
+                  "categories": ["Longevity", "Peptides"],
+                  "classification": "Research Compound",
+                  "priority": "high",
+                  "requesterId": "operator-1",
+                  "requestedAt": "2026-05-10T00:00:00Z",
+                  "rationale": "Need an evidence packet for a new longevity compound.",
+                  "notes": ["Focus on human evidence."]
+                }
+              ]
+            }
+            """);
+
+            var options = new WorkerOptions
+            {
+                RunMode = RunMode.Research,
+                ResearchRequestPath = requestsPath,
+                ResearchOutputDirectory = outputDir,
+            };
+
+            var result = await CreateJob(options).RunAsync(new IngestionContext(options, CreateLogger()));
+
+            Assert.True(result.Success, result.ErrorMessage);
+            AssertOutputJson(outputDir, "research-summary.json");
+            AssertOutputJson(outputDir, "research-task-queue.json");
+            AssertOutputJson(outputDir, "promotion-manifest.json");
+            AssertOutputJson(outputDir, "research-run-report.json");
+
+            var taskQueue = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-task-queue.json")))!;
+            Assert.Equal(1, taskQueue["Counts"]!["TotalItems"]!.GetValue<int>());
+            Assert.Equal(0, taskQueue["Counts"]!["ResolvedItems"]!.GetValue<int>());
+            Assert.Equal("Epitalon", taskQueue["Items"]![0]!["CompoundName"]!.GetValue<string>());
+            Assert.Equal("research/input/evidence/epitalon.evidence.json", taskQueue["Items"]![0]!["TargetEvidencePath"]!.GetValue<string>());
+            Assert.Equal("Longevity", taskQueue["Items"]![0]!["Categories"]![0]!.GetValue<string>());
+
+            var summary = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-summary.json")))!;
+            Assert.Equal(1, summary["ResearchRequestCount"]!.GetValue<int>());
+
+            var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "promotion-manifest.json")))!;
+            Assert.Equal(1, manifest["Counts"]!["ResearchRequested"]!.GetValue<int>());
+            Assert.Equal(Path.Combine(outputDir, "research-task-queue.json"), manifest["Outputs"]!["ResearchTaskQueue"]!.GetValue<string>());
+
+            var report = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-run-report.json")))!;
+            Assert.Equal(Path.Combine(outputDir, "research-task-queue.json"), report["Outputs"]!["researchTaskQueue"]!.GetValue<string>());
         }
         finally
         {
@@ -211,6 +291,7 @@ public class ResearchJobTests
         new EvidencePacketSubstanceRecordCompiler(),
         new ResearchReviewQueueBuilder(),
         new ResearchSummaryBuilder(),
+        new ResearchTaskQueueBuilder(),
         new PromotionManifestBuilder(),
         new ReviewResolutionPlanBuilder(),
         new PromotionExporter(),

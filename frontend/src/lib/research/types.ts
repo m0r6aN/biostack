@@ -1,6 +1,7 @@
 // frontend/src/lib/research/types.ts
 
 export type PromotionReadiness =
+  | 'research-requested'
   | 'blocked'
   | 'review-required'
   | 'candidate-for-promotion';
@@ -23,12 +24,14 @@ export type Confidence = 'low' | 'moderate' | 'high' | 'unknown';
 
 export type ReviewDecisionType =
   | 'approve-for-promotion' | 'approve-claims'
+  | 'resolve-review-items' | 'archive-draft'
   | 'request-changes' | 'reject';
 
 // ── Research Summary ──────────────────────────────────────────────────────────
 export interface ResearchSummary {
   draftSubstanceCount: number;
   reviewQueueItemCount: number;
+  researchRequestCount?: number;
   compounds: ResearchSummaryCompound[];
   reviewCategories: ResearchReviewCategory[];
   promotionReadiness: ResearchSummaryBucket[];
@@ -48,6 +51,9 @@ export interface ResearchSummaryCompound {
   promotionReadiness: PromotionReadiness;
   promotionBlockers: string[];
   reviewDecisionIds: string[];
+  hasRequestedChanges?: boolean;
+  hasResearchRequest?: boolean;
+  researchRequestIds?: string[];
   qualityFlags: string[];
   reviewReasons: string[];
 }
@@ -71,8 +77,10 @@ export interface PromotionManifest {
   manifestVersion: string;
   generatedAtUtc: string;
   counts: PromotionManifestCounts;
+  outputs?: Record<string, string>;
   blocked: PromotionManifestCandidate[];
   reviewRequired: PromotionManifestCandidate[];
+  researchRequested?: PromotionManifestCandidate[];
   candidatesForPromotion: PromotionManifestCandidate[];
 }
 
@@ -80,6 +88,7 @@ export interface PromotionManifestCounts {
   totalDrafts: number;
   blocked: number;
   reviewRequired: number;
+  researchRequested?: number;
   candidatesForPromotion: number;
 }
 
@@ -91,6 +100,9 @@ export interface PromotionManifestCandidate {
   completeness: string;
   reviewQueueItemCount: number;
   reviewDecisionIds: string[];
+  hasRequestedChanges?: boolean;
+  hasResearchRequest?: boolean;
+  researchRequestIds?: string[];
   blockers: string[];
   qualityFlags: string[];
   requiredNextActions: string[];
@@ -119,8 +131,190 @@ export interface ReviewResolutionPlanItem {
   resolutionType: string;
   issue: string;
   recommendedAction: string;
+  relatedReviewQueueItemIds: string[];
   relatedBlockers: string[];
   relatedQualityFlags: string[];
+}
+
+export interface ResearchReviewQueueItem {
+  itemId: string;
+  compoundName: string;
+  severity: string;
+  reason: string;
+  references: string[];
+}
+
+export interface ResearchRequestBatch {
+  schemaVersion: '1.0.0';
+  recordType: 'research-request-batch';
+  batch: {
+    batchId: string;
+    requesterId: string;
+    requestedAt: string;
+    notes: string[];
+  };
+  requests: ResearchRequest[];
+}
+
+export interface ResearchRequest {
+  requestId: string;
+  compoundName: string;
+  aliases: string[];
+  categories?: string[];
+  classification: string;
+  priority: 'low' | 'normal' | 'high' | 'urgent';
+  requesterId: string;
+  requestedAt: string;
+  rationale: string;
+  notes: string[];
+}
+
+export interface ResearchCategoryTaxonomy {
+  taxonomyVersion: string;
+  updatedAtUtc: string;
+  categories: ResearchCategoryDefinition[];
+}
+
+export interface ResearchCategoryDefinition {
+  name: string;
+  aliases?: string[];
+  deprecated?: boolean;
+  replacedBy?: string;
+}
+
+export interface ResearchCategoryMigrationReport {
+  generatedAtUtc: string;
+  taxonomyVersion: string;
+  counts: ResearchCategoryMigrationCounts;
+  deprecatedCategories: ResearchCategoryMigrationCategorySummary[];
+  findings: ResearchCategoryMigrationFinding[];
+}
+
+export interface ResearchCategoryMigrationCounts {
+  requestFilesScanned: number;
+  requestFindings: number;
+  taskArtifactsScanned: number;
+  taskItemFindings: number;
+  resolvedTaskItemFindings: number;
+  totalFindings: number;
+}
+
+export interface ResearchCategoryMigrationCategorySummary {
+  deprecatedCategory: string;
+  replacementCategory: string;
+  findings: number;
+  requestFindings: number;
+  taskItemFindings: number;
+  resolvedTaskItemFindings: number;
+}
+
+export interface ResearchCategoryMigrationFinding {
+  sourceType: 'request' | 'task-item' | 'resolved-task-item';
+  sourcePath: string;
+  compoundName: string;
+  matchedCategory: string;
+  deprecatedCategory: string;
+  replacementCategory: string;
+  requestId?: string;
+  taskId?: string;
+}
+
+export interface ResearchCategoryMigrationApplyReceipt {
+  appliedAtUtc: string;
+  taxonomyVersion: string;
+  counts: ResearchCategoryMigrationApplyCounts;
+  updatedFiles: ResearchCategoryMigrationApplyFileReceipt[];
+}
+
+export interface ResearchCategoryMigrationApplyCounts {
+  totalFilesUpdated: number;
+  requestFilesUpdated: number;
+  taskArtifactsUpdated: number;
+  categoriesRewritten: number;
+  requestCategoriesRewritten: number;
+  taskItemCategoriesRewritten: number;
+  resolvedTaskItemCategoriesRewritten: number;
+}
+
+export interface ResearchCategoryMigrationApplyFileReceipt {
+  sourceType: 'request-file' | 'task-artifact';
+  sourcePath: string;
+  categoriesRewritten: number;
+  compounds: string[];
+  rewrites: ResearchCategoryMigrationFinding[];
+}
+
+export interface ResearchCategoryTaxonomyAuditLog {
+  schemaVersion: string;
+  updatedAtUtc: string;
+  entries: ResearchCategoryTaxonomyAuditEntry[];
+}
+
+export interface ResearchCategoryTaxonomyAuditEntry {
+  entryId: string;
+  action: 'save-taxonomy' | 'apply-migration-fixup';
+  createdAtUtc: string;
+  taxonomyVersion: string;
+  summary: string;
+  beforeTaxonomy?: ResearchCategoryTaxonomy | null;
+  afterTaxonomy?: ResearchCategoryTaxonomy | null;
+  beforeMigrationReport?: ResearchCategoryMigrationReport | null;
+  afterMigrationReport?: ResearchCategoryMigrationReport | null;
+  applyReceipt?: ResearchCategoryMigrationApplyReceipt | null;
+}
+
+export interface ResearchTaskQueue {
+  queueVersion: string;
+  generatedAtUtc: string;
+  counts: ResearchTaskQueueCounts;
+  items: ResearchTaskQueueItem[];
+  resolvedItems?: ResearchTaskQueueResolvedItem[];
+}
+
+export interface ResearchTaskQueueCounts {
+  totalItems: number;
+  urgent: number;
+  high: number;
+  normal: number;
+  low: number;
+  resolvedItems?: number;
+}
+
+export interface ResearchTaskQueueItem {
+  taskId: string;
+  taskType: string;
+  compoundName: string;
+  aliases: string[];
+  categories?: string[];
+  classification: string;
+  priority: 'low' | 'normal' | 'high' | 'urgent';
+  requestIds: string[];
+  requesterIds: string[];
+  firstRequestedAtUtc: string;
+  latestRequestedAtUtc: string;
+  rationales: string[];
+  notes: string[];
+  suggestedResearchDirectives: string[];
+  targetEvidencePath: string;
+  requiredSchema: string;
+}
+
+export interface ResearchTaskQueueResolvedItem {
+  taskId: string;
+  compoundName: string;
+  aliases: string[];
+  categories?: string[];
+  classification: string;
+  priority: 'low' | 'normal' | 'high' | 'urgent';
+  requestIds: string[];
+  requesterIds: string[];
+  firstRequestedAtUtc: string;
+  latestRequestedAtUtc: string;
+  resolvedAtUtc: string;
+  currentReadiness: string;
+  resolution: string;
+  resolutionReason: string;
+  targetEvidencePath: string;
 }
 
 // ── Evidence Packet ───────────────────────────────────────────────────────────
@@ -205,9 +399,48 @@ export interface PromotionImportPreviewItem {
   reviewDecisionIds: string[];
 }
 
+// ── Promotion Export / Dry-Run ───────────────────────────────────────────────
+export interface PromotionExportManifest {
+  manifestVersion: string;
+  generatedAtUtc: string;
+  exportedCount: number;
+  candidates: PromotionExportCandidate[];
+  skippedCompounds: string[];
+}
+
+export interface PromotionExportCandidate {
+  name: string;
+  slug: string;
+  readiness: PromotionReadiness;
+  substanceFile: string;
+  aggregateIndex: number;
+  reviewDecisionIds: string[];
+  qualityFlags: string[];
+}
+
+export interface PromotionImportDryRunReport {
+  reportVersion: string;
+  generatedAtUtc: string;
+  previewPath: string;
+  aggregatePath: string;
+  safeToApply: boolean;
+  refusalReasons: string[];
+  previewCounts: PromotionImportPreview['counts'];
+  items: PromotionImportDryRunItem[];
+}
+
+export interface PromotionImportDryRunItem {
+  name: string;
+  slug: string;
+  plannedAction: 'create' | 'update';
+  schemaValid: boolean;
+  reasons: string[];
+}
+
 // ── Review Decision ───────────────────────────────────────────────────────────
 export interface ReviewDecisionScope {
   claimIds: string[];
+  reviewQueueItemIds: string[];
   qualityFlags: string[];
   reviewCategories: string[];
   promotionBlockers: string[];

@@ -5,6 +5,7 @@ using System.Text.Json.Nodes;
 public sealed record ResearchSummary(
     int DraftSubstanceCount,
     int ReviewQueueItemCount,
+    int ResearchRequestCount,
     IReadOnlyList<ResearchSummaryCompound> Compounds,
     IReadOnlyList<ResearchReviewCategory> ReviewCategories,
     IReadOnlyList<ResearchSummaryBucket> PromotionReadiness,
@@ -23,6 +24,9 @@ public sealed record ResearchSummaryCompound(
     string PromotionReadiness,
     IReadOnlyList<string> PromotionBlockers,
     IReadOnlyList<string> ReviewDecisionIds,
+    bool HasRequestedChanges,
+    bool HasResearchRequest,
+    IReadOnlyList<string> ResearchRequestIds,
     IReadOnlyList<string> QualityFlags,
     IReadOnlyList<string> ReviewReasons);
 
@@ -39,6 +43,7 @@ public interface IResearchSummaryBuilder
 {
     ResearchSummary Build(JsonArray draftSubstances, IReadOnlyList<ResearchReviewQueueItem> reviewQueue);
     ResearchSummary Build(JsonArray draftSubstances, IReadOnlyList<ResearchReviewQueueItem> reviewQueue, ReviewDecisionIndex reviewDecisions);
+    ResearchSummary Build(JsonArray draftSubstances, IReadOnlyList<ResearchReviewQueueItem> reviewQueue, ReviewDecisionIndex reviewDecisions, ResearchRequestIndex researchRequests);
 }
 
 public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
@@ -47,20 +52,34 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
         => Build(draftSubstances, reviewQueue, ReviewDecisionIndex.Empty);
 
     public ResearchSummary Build(JsonArray draftSubstances, IReadOnlyList<ResearchReviewQueueItem> reviewQueue, ReviewDecisionIndex reviewDecisions)
+        => Build(draftSubstances, reviewQueue, reviewDecisions, ResearchRequestIndex.Empty);
+
+    public ResearchSummary Build(JsonArray draftSubstances, IReadOnlyList<ResearchReviewQueueItem> reviewQueue, ReviewDecisionIndex reviewDecisions, ResearchRequestIndex researchRequests)
     {
-        var reviewCounts = reviewQueue
+        var activeReviewQueue = reviewQueue
+            .Where(item => !reviewDecisions.IsCompoundArchived(item.CompoundName))
+            .Where(item => !reviewDecisions.IsReviewQueueItemResolved(item.CompoundName, item.ItemId))
+            .ToList();
+
+        var reviewCounts = activeReviewQueue
             .GroupBy(item => item.CompoundName, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(group => group.Key, group => group.Count(), StringComparer.OrdinalIgnoreCase);
 
         var compounds = draftSubstances
             .Where(node => node is not null)
-            .Select(node => ToCompound(node, reviewCounts, reviewDecisions))
+            .Where(node => !reviewDecisions.IsCompoundArchived(ReadString(node?["identity"]?["canonicalName"])))
+            .Select(node => ToCompound(node, reviewCounts, reviewDecisions, researchRequests))
             .OrderBy(c => c.Name, StringComparer.OrdinalIgnoreCase)
             .ToList();
+        var draftSubstanceCount = compounds.Count;
+
+        AddPendingResearchRequests(compounds, researchRequests, reviewDecisions);
+        compounds = compounds.OrderBy(c => c.Name, StringComparer.OrdinalIgnoreCase).ToList();
 
         return new ResearchSummary(
-            DraftSubstanceCount: compounds.Count,
-            ReviewQueueItemCount: reviewQueue.Count,
+            DraftSubstanceCount: draftSubstanceCount,
+            ReviewQueueItemCount: activeReviewQueue.Count,
+            ResearchRequestCount: compounds.Count(c => c.PromotionReadiness == "research-requested"),
             Compounds: compounds,
             ReviewCategories: Classify(compounds),
             PromotionReadiness: Bucket(compounds, c => new[] { c.PromotionReadiness }),
@@ -96,6 +115,8 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
                 "sports-prohibited-boundary", "performance-use-boundary"));
             AddWhen(categories, "Source Registry Authorization", compound, HasAny(compound,
                 "source-registry-field-mismatch", "source-registry-unmapped-source"));
+            AddWhen(categories, "Requested Changes", compound, compound.HasRequestedChanges);
+            AddWhen(categories, "Research Requested", compound, compound.HasResearchRequest && compound.PromotionReadiness == "research-requested");
         }
 
         return categories
@@ -166,6 +187,18 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
             "If the source is valid but unmapped, add a source-family mapping or source registry entry.",
             "Do not compile unsupported claims into canonical fields until the authorization mismatch is resolved."
         },
+        "Requested Changes" => new[]
+        {
+            "Re-run targeted research against the reviewer notes and changed evidence packet.",
+            "Confirm the requested changes are addressed before approving promotion.",
+            "Keep the draft in re-review until a later approval, archive, or reject decision closes the request."
+        },
+        "Research Requested" => new[]
+        {
+            "Create an evidence packet for the requested compound and save it under research/input/evidence.",
+            "Run the evidence agent/directive pass before attempting promotion review.",
+            "Once evidence exists, the compound enters the normal review and promotion readiness flow."
+        },
         _ => new[] { "Review source provenance, claim type, and customer-facing language before publication." }
     };
 
@@ -189,8 +222,10 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
             categories[category] = list;
         }
 
-        foreach (var signal in compound.QualityFlags.Concat(compound.ReviewReasons)
-                     .Where(s => !string.IsNullOrWhiteSpace(s)))
+        var signals = compound.QualityFlags.Concat(compound.ReviewReasons)
+            .Where(s => !string.IsNullOrWhiteSpace(s))
+            .DefaultIfEmpty(category);
+        foreach (var signal in signals)
         {
             list.Add((compound.Name, signal));
         }
@@ -199,7 +234,8 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
     private static ResearchSummaryCompound ToCompound(
         JsonNode? draftNode,
         IReadOnlyDictionary<string, int> reviewQueueCounts,
-        ReviewDecisionIndex reviewDecisions)
+        ReviewDecisionIndex reviewDecisions,
+        ResearchRequestIndex researchRequests)
     {
         var identity = draftNode?["identity"];
         var ops = draftNode?["ops"];
@@ -210,6 +246,8 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
         var reviewQueueItemCount = reviewQueueCounts.TryGetValue(name, out var count) ? count : 0;
         var decisions = reviewDecisions.ForCompound(name);
         var hasPromotionApproval = reviewDecisions.HasPromotionApproval(name);
+        var hasRequestedChanges = reviewDecisions.HasPendingRequestedChanges(name);
+        var requests = researchRequests.ForCompound(name);
         var blockers = PromotionBlockers(
             qualityFlags,
             reviewReasons,
@@ -217,7 +255,8 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
             ReadString(ops?["completeness"]),
             ReadBool(ops?["needsReview"]),
             reviewQueueItemCount,
-            hasPromotionApproval);
+            hasPromotionApproval,
+            hasRequestedChanges);
 
         return new ResearchSummaryCompound(
             Name: name,
@@ -229,8 +268,44 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
             PromotionReadiness: DeterminePromotionReadiness(blockers),
             PromotionBlockers: blockers,
             ReviewDecisionIds: decisions.Select(d => d.DecisionId).Where(id => id.Length > 0).ToList(),
+            HasRequestedChanges: hasRequestedChanges,
+            HasResearchRequest: requests.Count > 0,
+            ResearchRequestIds: requests.Select(r => r.RequestId).Where(id => id.Length > 0).ToList(),
             QualityFlags: qualityFlags,
             ReviewReasons: reviewReasons);
+    }
+
+    private static void AddPendingResearchRequests(
+        List<ResearchSummaryCompound> compounds,
+        ResearchRequestIndex researchRequests,
+        ReviewDecisionIndex reviewDecisions)
+    {
+        var existing = new HashSet<string>(compounds.Select(c => c.Name), StringComparer.OrdinalIgnoreCase);
+        foreach (var group in researchRequests.All().GroupBy(r => r.CompoundName, StringComparer.OrdinalIgnoreCase))
+        {
+            var name = group.Key;
+            if (existing.Contains(name) || reviewDecisions.IsCompoundArchived(name)) continue;
+            var requests = group.OrderByDescending(r => r.RequestedAt).ToList();
+            var latest = requests[0];
+            compounds.Add(new ResearchSummaryCompound(
+                Name: name,
+                Classification: latest.Classification.Length > 0 ? latest.Classification : "Unknown",
+                OverallEvidenceTier: "Unknown",
+                Completeness: "requested",
+                NeedsReview: true,
+                ReviewQueueItemCount: 0,
+                PromotionReadiness: "research-requested",
+                PromotionBlockers: new[] { "research-requested: evidence packet has not been generated" },
+                ReviewDecisionIds: Array.Empty<string>(),
+                HasRequestedChanges: false,
+                HasResearchRequest: true,
+                ResearchRequestIds: requests.Select(r => r.RequestId).Where(id => id.Length > 0).Distinct(StringComparer.OrdinalIgnoreCase).ToList(),
+                QualityFlags: new[] { "research-requested" },
+                ReviewReasons: requests.Select(r => r.Rationale.Length > 0 ? $"Research requested: {r.Rationale}" : "Research requested for new compound.")
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList()));
+            existing.Add(name);
+        }
     }
 
     private static string DeterminePromotionReadiness(IReadOnlyList<string> blockers)
@@ -247,7 +322,8 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
         string completeness,
         bool needsReview,
         int reviewQueueItemCount,
-        bool hasPromotionApproval)
+        bool hasPromotionApproval,
+        bool hasRequestedChanges)
     {
         var blockers = new List<string>();
         if (qualityFlags.Any(flag => flag.Equals("source-registry-field-mismatch", StringComparison.OrdinalIgnoreCase)
@@ -259,6 +335,10 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
             || reviewReasons.Any(reason => reason.Contains("requires authoritative", StringComparison.OrdinalIgnoreCase)))
         {
             blockers.Add("blocked: missing required authoritative support");
+        }
+        if (hasRequestedChanges)
+        {
+            blockers.Add("review-required: requested changes pending re-review");
         }
         if (!hasPromotionApproval)
         {

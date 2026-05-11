@@ -1,4 +1,4 @@
-import { createBatch, addDecision, toJson } from '@/lib/research/reviewDecisionBatch';
+import { addDecision, createBatch, toJson } from '@/lib/research/reviewDecisionBatch';
 import type { ReviewDecision } from '@/lib/research/types';
 
 const makeDecision = (overrides: Partial<ReviewDecision> = {}): ReviewDecision => ({
@@ -7,7 +7,7 @@ const makeDecision = (overrides: Partial<ReviewDecision> = {}): ReviewDecision =
   decision: 'request-changes',
   reviewerId: 'reviewer-1',
   reviewedAt: '2026-05-05T10:00:00Z',
-  scope: { claimIds: [], qualityFlags: [], reviewCategories: [], promotionBlockers: [] },
+  scope: { claimIds: [], reviewQueueItemIds: [], qualityFlags: [], reviewCategories: [], promotionBlockers: [] },
   clearsSoftPromotionBlockers: false,
   expiresAt: null,
   notes: ['Needs authoritative source'],

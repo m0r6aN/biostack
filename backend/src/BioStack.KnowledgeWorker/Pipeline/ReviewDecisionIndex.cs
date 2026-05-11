@@ -9,6 +9,7 @@ public sealed record ReviewDecisionInfo(
     string ReviewerId,
     DateTimeOffset ReviewedAt,
     bool ClearsSoftPromotionBlockers,
+    IReadOnlyList<string> ReviewQueueItemIds,
     IReadOnlyList<string> Notes);
 
 public sealed class ReviewDecisionIndex
@@ -41,6 +42,7 @@ public sealed class ReviewDecisionIndex
                     ReviewerId: ReadString(decision["reviewerId"]),
                     ReviewedAt: ReadDate(decision["reviewedAt"]),
                     ClearsSoftPromotionBlockers: ReadBool(decision["clearsSoftPromotionBlockers"]),
+                    ReviewQueueItemIds: ReadStringArray(decision["scope"]?["reviewQueueItemIds"]),
                     Notes: ReadStringArray(decision["notes"]));
 
                 if (!byCompound.TryGetValue(compound, out var list))
@@ -70,6 +72,33 @@ public sealed class ReviewDecisionIndex
         => ForCompound(compoundName).Any(d =>
             d.Decision.Equals("approve-for-promotion", StringComparison.OrdinalIgnoreCase)
             && d.ClearsSoftPromotionBlockers);
+
+    public bool HasPendingRequestedChanges(string compoundName)
+    {
+        foreach (var decision in ForCompound(compoundName))
+        {
+            if (decision.Decision.Equals("approve-for-promotion", StringComparison.OrdinalIgnoreCase)
+                || decision.Decision.Equals("archive-draft", StringComparison.OrdinalIgnoreCase)
+                || decision.Decision.Equals("reject", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            if (decision.Decision.Equals("request-changes", StringComparison.OrdinalIgnoreCase)) return true;
+        }
+
+        return false;
+    }
+
+    public bool IsCompoundArchived(string compoundName)
+        => ForCompound(compoundName).Any(d =>
+            d.Decision.Equals("archive-draft", StringComparison.OrdinalIgnoreCase)
+            || d.Decision.Equals("reject", StringComparison.OrdinalIgnoreCase));
+
+    public bool IsReviewQueueItemResolved(string compoundName, string itemId)
+        => itemId.Length > 0 && ForCompound(compoundName)
+            .SelectMany(d => d.ReviewQueueItemIds)
+            .Contains(itemId, StringComparer.OrdinalIgnoreCase);
 
     private static string ReadString(JsonNode? node) => node?.GetValue<string>()?.Trim() ?? string.Empty;
 

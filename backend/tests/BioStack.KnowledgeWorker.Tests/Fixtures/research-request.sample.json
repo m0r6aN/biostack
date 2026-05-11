@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "research-request-batch",
+  "batch": {
+    "batchId": "batch-research-request-sample-001",
+    "requesterId": "research-ui",
+    "requestedAt": "2026-05-10T00:00:00Z",
+    "notes": ["Operator generated sample request."]
+  },
+  "requests": [
+    {
+      "requestId": "research-sample-noopept-001",
+      "compoundName": "Noopept",
+      "aliases": ["GVS-111"],
+      "categories": ["Nootropics"],
+      "classification": "Research Compound",
+      "priority": "high",
+      "requesterId": "research-ui",
+      "requestedAt": "2026-05-10T00:00:00Z",
+      "rationale": "Generate a starter nootropics evidence packet.",
+      "notes": ["Human cognition data first."]
+    }
+  ]
+}
