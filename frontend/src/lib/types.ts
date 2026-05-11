@@ -798,3 +798,16 @@ export interface ListResponse<T> {
   items: T[];
   total: number;
 }
+
+export interface DecisionReceiptResponse {
+  receiptUri: string;
+  subjectUri: string;
+  tenantId: string;
+  actorId: string;
+  timestampUtc: string;
+  decision: string;
+  policyHash: { value: string; version: string };
+  inputHash: string;
+  evidenceRefs: string[];
+  effectStatus: string;
+}

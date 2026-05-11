@@ -13,6 +13,7 @@ import {
     ConversionRequest,
     CreateCheckInRequest,
     CreateProfileRequest,
+    DecisionReceiptResponse,
     GoalDefinition,
     InteractionFlag,
     KnowledgeEntry,
@@ -460,6 +461,17 @@ export class ApiClient {
     } catch {
       setMockProfileGoalIds(profileId, goalIds);
     }
+  }
+
+  // Receipts
+  async getReceipt(receiptUri: string): Promise<DecisionReceiptResponse> {
+    const encoded = encodeURIComponent(receiptUri);
+    return this.request<DecisionReceiptResponse>(`/api/v1/receipts/${encoded}`);
+  }
+
+  async getReceiptsBySubject(subjectUri: string): Promise<DecisionReceiptResponse[]> {
+    const encoded = encodeURIComponent(subjectUri);
+    return this.request<DecisionReceiptResponse[]>(`/api/v1/receipts?subject=${encoded}`);
   }
 }
 

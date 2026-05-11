@@ -296,6 +296,7 @@ builder.Services.AddHostedService<AnalyzerPrewarmService>();
 builder.Services.AddCollectiveIntegration(builder.Configuration);
 builder.Services.AddKeonRuntime(builder.Configuration);
 builder.Services.AddSingleton<DoctrineSanitizer>();
+builder.Services.AddGovernance();
 
 // ── OpenAPI ──────────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi(options =>
@@ -351,6 +352,8 @@ app.MapCalculatorEndpoints();
 app.MapKnowledgeEndpoints();
 app.MapTrustLedgerEndpoints();
 app.MapStackReviewEndpoints();
+app.MapPolicyGateEndpoints();
+app.MapReceiptEndpoints();
 app.MapAnalyzeEndpoints();
 app.MapLeadEndpoints();
 app.MapAdminEndpoints();
