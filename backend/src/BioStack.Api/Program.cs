@@ -15,6 +15,7 @@ using BioStack.Api.Endpoints;
 using BioStack.Api;
 using BioStack.Cognition;
 using BioStack.Infrastructure.Keon;
+using BioStack.Application.Governance;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -294,6 +295,7 @@ builder.Services.AddHostedService<AnalyzerPrewarmService>();
 // KeonCollective:LiveMode and KeonCollective:ControlBaseUrl in configuration.
 builder.Services.AddCollectiveIntegration(builder.Configuration);
 builder.Services.AddKeonRuntime(builder.Configuration);
+builder.Services.AddSingleton<DoctrineSanitizer>();
 
 // ── OpenAPI ──────────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi(options =>
@@ -348,6 +350,7 @@ app.MapTimelineEndpoints();
 app.MapCalculatorEndpoints();
 app.MapKnowledgeEndpoints();
 app.MapTrustLedgerEndpoints();
+app.MapStackReviewEndpoints();
 app.MapAnalyzeEndpoints();
 app.MapLeadEndpoints();
 app.MapAdminEndpoints();
