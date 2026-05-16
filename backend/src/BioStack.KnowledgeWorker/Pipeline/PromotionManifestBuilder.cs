@@ -116,9 +116,9 @@ public sealed class PromotionManifestBuilder : IPromotionManifestBuilder
         {
             if (compound.HasRequestedChanges)
             {
-                yield return "Run targeted follow-up research for requested changes, then send the updated draft back through human re-review.";
+                yield return "Run targeted follow-up research for requested changes using independent source families not already used by the original claim, then send the updated draft back through human re-review.";
             }
-            yield return "Complete human review and clear promotion blockers before marking candidate-for-promotion.";
+            yield return "Complete human review with cross-source verification and clear promotion blockers before marking candidate-for-promotion.";
         }
         else
         {

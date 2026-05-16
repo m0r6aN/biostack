@@ -42,7 +42,9 @@
             "reviewQueueItemIds": { "$ref": "#/$defs/stringArray" },
             "qualityFlags": { "$ref": "#/$defs/stringArray" },
             "reviewCategories": { "$ref": "#/$defs/stringArray" },
-            "promotionBlockers": { "$ref": "#/$defs/stringArray" }
+            "promotionBlockers": { "$ref": "#/$defs/stringArray" },
+            "remediationPlanItemIds": { "$ref": "#/$defs/stringArray" },
+            "remediationResolutionTypes": { "$ref": "#/$defs/stringArray" }
           }
         },
         "clearsSoftPromotionBlockers": { "type": "boolean", "default": false },

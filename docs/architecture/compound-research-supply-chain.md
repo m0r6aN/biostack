@@ -136,7 +136,22 @@ A compound is publishable only when:
 - `ops.completeness` is at least `partial` for discovery pages and `substantial` for high-demand pages.
 - Human review is complete for high-risk, regulatory, dosing, monitoring, or contraindication fields.
 
-## 10. Next engineering steps
+## 10. Remediation-aware follow-up review
+
+When a draft is partial or review-blocked, the knowledge worker should not restart generic research. It should continue from the generated `review-resolution-plan.json`.
+
+Automatic `expand-review-sources` tasks carry:
+
+- remediation plan item IDs,
+- resolution types,
+- original recommended actions,
+- related review queue item IDs,
+- current independent source families,
+- the configured `Worker:ResearchReviewSourceExpansionLimit`.
+
+The follow-up agent must resolve the original remediation intent using materially different source families. If the configured source-expansion limit is reached and the remediation item is still unresolved, the draft remains partially complete and human-review gated.
+
+## 11. Next engineering steps
 
 1. Add validators for the three intermediate schemas.
 2. Add a preprocessor that emits normalized evidence packets and conflict reports.

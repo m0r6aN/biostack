@@ -1,0 +1,433 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "batch-1778411233539",
+    "reviewerId": "cmorgan",
+    "reviewedAt": "2026-05-10T11:07:13.539Z",
+    "notes": []
+  },
+  "decisions": [
+    {
+      "decisionId": "dec-1778599343508",
+      "compoundName": "BPC-157",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T15:22:23.508Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "limited-human-evidence",
+          "misinformation-heavy",
+          "pilot-input",
+          "regulatory-boundary"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: expand the evidence packet with authoritative regulator/product-label status checks by jurisdiction; add route- and formulation-specific safety context; separate FDA compounding-risk language from efficacy discussion; clearly label preclinical/animal findings as non-confirmatory for humans; add misinformation-monitoring sources if online healing claims are discussed; avoid any approved-use, dosing, or efficacy language unless tied to high-quality human clinical evidence and product-specific regulatory status."
+      ]
+    },
+    {
+      "decisionId": "dec-1778599390173",
+      "compoundName": "Caffeine",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T15:23:10.173Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "no-safety-canonicalization",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Request an expanded evidence packet with source provenance, claim-level support, and authoritative safety context. After evidence is attached, a human reviewer should assess the queue item and determine whether any narrow source-scoped claims can be approved."
+      ]
+    },
+    {
+      "decisionId": "dec-1778599429704",
+      "compoundName": "Creatine",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T15:23:49.704Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "no-safety-canonicalization",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: expand the evidence packet beyond the current PubChem and 2017 ISSN position stand sources; add authoritative safety sources and canonicalize safety fields; preserve formulation boundaries by separating creatine monohydrate from alternate salts, blends, and proprietary products; add human review notes for efficacy/mechanism wording; avoid personalized dosing or product recommendations. Once these changes are made, a human reviewer could consider narrow source-scoped approval of identity and carefully worded creatine monohydrate performance-context claims."
+      ]
+    },
+    {
+      "decisionId": "dec-1778599462287",
+      "compoundName": "Enclomiphene",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T15:24:22.287Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "hormone-axis-boundary",
+          "pilot-input",
+          "regulatory-ambiguity"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview",
+          "review-required: evidence tier is Limited"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Expand the packet with authoritative regulator/product-label sources where available, jurisdiction-specific status, safety-critical fields, contraindications, adverse effects, monitoring considerations, fertility context, ocular/visual risk review, and clearer separation of investigational/off-label/compounded contexts. Maintain cautious language limited to studied populations and endpoints; do not present enclomiphene as an approved therapy without source-backed regulatory evidence."
+      ]
+    },
+    {
+      "decisionId": "dec-1778599509946",
+      "compoundName": "GHK-Cu",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T15:25:09.946Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "misinformation-heavy",
+          "pilot-input",
+          "route-specific-boundary"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview",
+          "review-required: evidence tier is Limited"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Request changes before any promotion. Add authoritative safety/regulatory sources, clarify canonical identity and aliases/CAS boundaries, separate topical/cosmetic evidence from injectable/systemic claims, and rewrite benefit language as route-specific and evidence-limited. Consider retaining the evidence-gap claim concept, but it should be reviewed alongside added misinformation-monitoring and safety context before approval."
+      ]
+    },
+    {
+      "decisionId": "dec-1778599555041",
+      "compoundName": "Magnesium",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T15:25:55.041Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "no-safety-canonicalization",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: expand the evidence packet; add direct excerpts or structured evidence from NIH ODS and other authoritative sources; add safety canonicalization before populating safety-critical fields; separate form-specific magnesium claims such as citrate, glycinate, and oxide; document provenance and human review notes. The identity claim may be a candidate for narrow source-scoped approval after reviewer verification, but I would not approve it within this unresolved partial packet."
+      ]
+    },
+    {
+      "decisionId": "dec-1778599595259",
+      "compoundName": "Melatonin",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T15:26:35.259Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "no-safety-canonicalization",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: expand the evidence packet; add authoritative safety sources and canonicalized safety fields; include clear provenance and review notes; keep claims source-scoped and avoid personalized safety guidance or dosing language; add explicit human/regulatory review for hormone-related and safety-critical claims before promotion."
+      ]
+    },
+    {
+      "decisionId": "dec-1778599650607",
+      "compoundName": "Ostarine",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T15:27:30.607Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "fda-warning",
+          "misinformation-heavy",
+          "performance-use-boundary",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: expand the evidence packet; attach current authoritative regulator/product-label sources for legal and approval status; add current anti-doping policy checks; keep approved-use, efficacy, contraindication, adverse-effect, monitoring, and safety fields empty or review-required unless source-backed; preserve a strong FDA-warning and non-normalization boundary for bodybuilding/performance-enhancement use; separate investigational clinical-trial evidence from consumer or vendor claims."
+      ]
+    },
+    {
+      "decisionId": "dec-1778615644556",
+      "compoundName": "Retatrutide",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T19:54:04.556Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "investigational-compound",
+          "no-approved-label-source",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: add current authoritative regulator/product-label checks for relevant jurisdictions; add safety/adverse-event context from the phase 2 publication and any later trials; clearly separate investigational clinical-trial evidence from approved-use/product language; preserve population, route, formulation, endpoint, and phase 2 limitations in all summaries; review for misinformation risk around compounded or gray-market retatrutide claims."
+      ]
+    },
+    {
+      "decisionId": "dec-1778615686791",
+      "compoundName": "Semaglutide",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T19:54:46.791Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "a1-label-backed",
+          "compiled-from-evidence-packet",
+          "pilot-input",
+          "product-specific-labels"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: expand the evidence packet to substantial or complete; attach product-specific provenance for each approved indication, contraindication, storage, and any dosing-related fields without giving generalized dosing guidance; verify the latest Ozempic and Wegovy labels; keep compounded/unapproved semaglutide separate from approved-product records; and have a human reviewer assess the safety-critical contraindication and FDA compounded-product warning before publication."
+      ]
+    },
+    {
+      "decisionId": "dec-1778615768787",
+      "compoundName": "Spermidine",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T19:56:08.787Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "emerging-longevity-compound",
+          "hype-boundary",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview",
+          "review-required: evidence tier is Limited"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Revise the draft to clearly separate identity/mechanism, studied-use, and evidence-gap language. Add authoritative safety and regulatory/context sources, summarize the 2018 pilot and 2022 SMARTAGE/JAMA trial outcomes and limitations, and include a misinformation-monitoring or marketing-claim boundary source. Keep longevity and cognition language conservative and study-context-specific."
+      ]
+    },
+    {
+      "decisionId": "dec-1778615822797",
+      "compoundName": "TB-500",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T19:57:02.797Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "alias-ambiguity",
+          "compiled-from-evidence-packet",
+          "misinformation-heavy",
+          "pilot-input",
+          "sports-prohibited-boundary"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: expand the evidence packet; add authoritative safety/regulatory context; verify the current WADA status and any sport/league/jurisdiction-specific rules; separate anti-doping status from efficacy and safety claims; split parent-protein, derivative, route, formulation, and vendor-product claims; add a misinformation-monitoring source or reclassify broad online recovery claims as unsupported evidence gaps."
+      ]
+    },
+    {
+      "decisionId": "dec-1778615875274",
+      "compoundName": "Tirzepatide",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T19:57:55.274Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "a1-label-backed",
+          "compiled-from-evidence-packet",
+          "pilot-input",
+          "product-specific-labels"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: attach product-specific provenance to indication, contraindication, storage, administration, and safety fields; verify current DailyMed/FDA labels for both Mounjaro and Zepbound; keep Mounjaro, Zepbound, compounded tirzepatide, research-use tirzepatide, and off-label contexts separate; add fuller safety context before publication, including boxed warning/contraindications, major warnings and precautions, and product-specific limitations of use where applicable. After updates, a human reviewer can consider narrow, source-scoped approval of the label-backed claims."
+      ]
+    },
+    {
+      "decisionId": "dec-1778616166822",
+      "compoundName": "Urolithin A",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T20:02:46.822Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "emerging-longevity-compound",
+          "hype-boundary",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: add authoritative safety and tolerability context; add full RCT endpoint/results/limitations extraction; add a misinformation-monitoring or claim-boundary source for longevity/anti-aging claims; keep all benefit language tied to the studied population and endpoints; preserve the evidence-gap claim separating trial endpoints from broader marketing claims."
+      ]
+    },
+    {
+      "decisionId": "dec-1778616222052",
+      "compoundName": "Vitamin D3",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T20:03:42.052Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "no-safety-canonicalization",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Expand the evidence packet before reconsideration. Add authoritative safety sources, separate identity/physiology claims from lab interpretation, deficiency, toxicity, contraindication, monitoring, and product-dose claims, and document human review decisions. Consider narrow claim approval later only for source-scoped claims after the reviewer verifies wording against the cited source."
+      ]
+    }
+  ]
+}

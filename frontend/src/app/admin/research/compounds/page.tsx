@@ -10,6 +10,21 @@ import type { PromotionManifest, ResearchCategoryTaxonomy, ResearchSummary, Rese
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+type QueueTabKey = 'requested' | 'review' | 'rereview' | 'processing';
+
+interface QueueTabDefinition {
+  key: QueueTabKey;
+  tabLabel: string;
+  title: string;
+  subtitle: string;
+  count: number;
+  tone: 'requested' | 'review' | 'rereview' | 'processing';
+  compounds: ResearchSummaryCompound[];
+  empty: string;
+  queuedTaskCount?: number;
+  taskBoardCompounds?: ReadonlySet<string>;
+}
+
 function sortCompounds(compounds: ResearchSummaryCompound[], sort: string): ResearchSummaryCompound[] {
   const copy = [...compounds];
   if (sort === 'name') return copy.sort((a, b) => a.name.localeCompare(b.name));
@@ -32,6 +47,8 @@ export default function CompoundList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const tokenRef = useRef<string | null>(null);
+  const userSelectedTabRef = useRef(false);
+  const [activeTab, setActiveTab] = useState<QueueTabKey>('rereview');
 
   useEffect(() => {
     acquireToken().then(load);
@@ -85,6 +102,58 @@ export default function CompoundList() {
   const requestedNames = new Set(researchRequested.map(compound => compound.name));
   const queuedResearchTaskCount = (taskQueue?.items ?? []).filter(item => requestedNames.has(item.compoundName)).length;
   const queuedTaskNames = new Set((taskQueue?.items ?? []).map(item => item.compoundName));
+  const queueTabs: QueueTabDefinition[] = [
+    {
+      key: 'rereview',
+      tabLabel: 'Ready for Re-review',
+      title: 'Ready for Re-review',
+      subtitle: 'Requested changes have been recorded; verify the updated research before promotion.',
+      count: readyForReReview.length,
+      tone: 'rereview',
+      compounds: readyForReReview,
+      empty: 'No filtered compounds are awaiting re-review.',
+    },
+    {
+      key: 'review',
+      tabLabel: 'Ready for Review',
+      title: 'Ready for Review',
+      subtitle: 'Blocked or review-required drafts that still need human decisions.',
+      count: readyForReview.length,
+      tone: 'review',
+      compounds: readyForReview,
+      empty: 'No filtered compounds need review.',
+    },
+    {
+      key: 'requested',
+      tabLabel: 'Research Requested',
+      title: 'Research Requested',
+      subtitle: 'New compounds queued for initial evidence research.',
+      count: researchRequested.length,
+      tone: 'requested',
+      compounds: researchRequested,
+      empty: 'No filtered compounds are waiting on initial research.',
+      queuedTaskCount: queuedResearchTaskCount,
+      taskBoardCompounds: queuedTaskNames,
+    },
+    {
+      key: 'processing',
+      tabLabel: 'Ready for Processing',
+      title: 'Ready for Processing',
+      subtitle: 'Candidates cleared for the next worker/import processing step.',
+      count: readyForProcessing.length,
+      tone: 'processing',
+      compounds: readyForProcessing,
+      empty: 'No filtered compounds are ready for processing.',
+    },
+  ];
+  const preferredTab = queueTabs.find(tab => tab.count > 0)?.key ?? queueTabs[0].key;
+  const activeQueueTab = queueTabs.find(tab => tab.key === activeTab) ?? queueTabs[0];
+
+  useEffect(() => {
+    if (!userSelectedTabRef.current) {
+      setActiveTab(preferredTab);
+    }
+  }, [preferredTab]);
 
   function openCompound(compound: ResearchSummaryCompound) {
     router.push(`/admin/research/compounds/${toSlug(compound.name)}`);
@@ -95,72 +164,128 @@ export default function CompoundList() {
     router.push(`/admin/research/tasks${query}`);
   }
 
+  function selectQueueTab(tab: QueueTabKey) {
+    userSelectedTabRef.current = true;
+    setActiveTab(tab);
+  }
+
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
       <Header title="Compound Review" subtitle="Research pipeline triage queue · Internal" />
       <main className="flex-1 p-4 max-w-7xl mx-auto w-full flex flex-col gap-4">
         {summary && manifest && (
-          <section className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
-            <FilterBar
-              researchRequestedCount={manifest.counts.researchRequested ?? summary.researchRequestCount ?? 0}
-              blockedCount={manifest.counts.blocked}
-              reviewCount={manifest.counts.reviewRequired}
-              candidateCount={manifest.counts.candidatesForPromotion}
-              categories={summary.reviewCategories}
+          <section className="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)] xl:items-start">
+            <aside className="flex flex-col gap-4 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:overflow-y-auto xl:pr-1">
+              <FilterBar
+                researchRequestedCount={manifest.counts.researchRequested ?? summary.researchRequestCount ?? 0}
+                blockedCount={manifest.counts.blocked}
+                reviewCount={manifest.counts.reviewRequired}
+                candidateCount={manifest.counts.candidatesForPromotion}
+                categories={summary.reviewCategories}
+                sidebar
+              />
+              <ResearchRequestForm onRequested={load} categoryTaxonomy={categoryTaxonomy} />
+            </aside>
+
+            <QueueWorkspace
+              tabs={queueTabs}
+              activeTab={activeQueueTab}
+              onSelectTab={selectQueueTab}
+              onOpen={openCompound}
+              onOpenTaskBoard={openTaskBoard}
+              statusMessage={!loading && !error && sorted.length === 0
+                ? 'No compounds match the current filters.'
+                : ''}
             />
-            <ResearchRequestForm onRequested={load} categoryTaxonomy={categoryTaxonomy} />
           </section>
         )}
 
         {loading && <p className="text-sm text-white/30 px-1">Loading...</p>}
         {error && <p className="text-sm text-rose-300 px-1">{error}</p>}
-        {!loading && sorted.length === 0 && (
-          <p className="text-sm text-white/30 px-1">No compounds match the current filters.</p>
-        )}
-
-        <section className="grid flex-1 gap-4 xl:grid-cols-2 2xl:grid-cols-4">
-          <CompoundLane
-            title="Research Requested"
-            subtitle="New compounds queued for initial evidence research."
-            count={researchRequested.length}
-            tone="requested"
-            compounds={researchRequested}
-            queuedTaskCount={queuedResearchTaskCount}
-            empty="No filtered compounds are waiting on initial research."
-            onOpen={openCompound}
-            onOpenTaskBoard={openTaskBoard}
-            taskBoardCompounds={queuedTaskNames}
-          />
-          <CompoundLane
-            title="Ready for Review"
-            subtitle="Blocked or review-required drafts that still need human decisions."
-            count={readyForReview.length}
-            tone="review"
-            compounds={readyForReview}
-            empty="No filtered compounds need review."
-            onOpen={openCompound}
-          />
-          <CompoundLane
-            title="Ready for Re-review"
-            subtitle="Requested changes have been recorded; verify the updated research before promotion."
-            count={readyForReReview.length}
-            tone="rereview"
-            compounds={readyForReReview}
-            empty="No filtered compounds are awaiting re-review."
-            onOpen={openCompound}
-          />
-          <CompoundLane
-            title="Ready for Processing"
-            subtitle="Candidates cleared for the next worker/import processing step."
-            count={readyForProcessing.length}
-            tone="processing"
-            compounds={readyForProcessing}
-            empty="No filtered compounds are ready for processing."
-            onOpen={openCompound}
-          />
-        </section>
       </main>
     </div>
+  );
+}
+
+function QueueWorkspace({
+  tabs,
+  activeTab,
+  onSelectTab,
+  onOpen,
+  onOpenTaskBoard,
+  statusMessage,
+}: {
+  tabs: QueueTabDefinition[];
+  activeTab: QueueTabDefinition;
+  onSelectTab: (tab: QueueTabKey) => void;
+  onOpen: (compound: ResearchSummaryCompound) => void;
+  onOpenTaskBoard: (compound?: ResearchSummaryCompound) => void;
+  statusMessage: string;
+}) {
+  return (
+    <section className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.025] p-4 sm:p-5">
+      <div className="border-b border-white/8 pb-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">Compound Queues</p>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/55">
+              Keep filters and intake pinned while you work one operator queue at a time.
+            </p>
+          </div>
+          <span className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-[11px] font-semibold text-white/55">
+            {activeTab.count} active
+          </span>
+        </div>
+
+        <div role="tablist" aria-label="Compound queues" className="mt-4 flex flex-wrap gap-2">
+          {tabs.map((tab) => {
+            const isActive = tab.key === activeTab.key;
+            return (
+              <button
+                key={tab.key}
+                id={`compound-queue-tab-${tab.key}`}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`compound-queue-panel-${tab.key}`}
+                onClick={() => onSelectTab(tab.key)}
+                className={`rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors ${
+                  isActive
+                    ? 'border-white/20 bg-white/10 text-white'
+                    : 'border-white/10 text-white/45 hover:border-white/20 hover:text-white/75'
+                }`}
+              >
+                {tab.tabLabel} ({tab.count})
+              </button>
+            );
+          })}
+        </div>
+
+        {statusMessage && (
+          <p className="mt-4 text-sm text-white/35">{statusMessage}</p>
+        )}
+      </div>
+
+      <div
+        id={`compound-queue-panel-${activeTab.key}`}
+        role="tabpanel"
+        aria-labelledby={`compound-queue-tab-${activeTab.key}`}
+        className="mt-4"
+      >
+        <CompoundLane
+          title={activeTab.title}
+          subtitle={activeTab.subtitle}
+          count={activeTab.count}
+          tone={activeTab.tone}
+          compounds={activeTab.compounds}
+          empty={activeTab.empty}
+          onOpen={onOpen}
+          queuedTaskCount={activeTab.queuedTaskCount}
+          onOpenTaskBoard={onOpenTaskBoard}
+          taskBoardCompounds={activeTab.taskBoardCompounds}
+        />
+      </div>
+    </section>
   );
 }
 
@@ -173,7 +298,7 @@ function CompoundLane({ title, subtitle, count, tone, compounds, empty, onOpen, 
   }[tone];
 
   return (
-    <div className="min-h-[420px] rounded-2xl border border-white/10 bg-white/[0.025] p-4">
+    <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-4">
       <div className="mb-4 flex items-start justify-between gap-3">
         <div>
           <h2 className="text-sm font-semibold text-white">{title}</h2>
@@ -199,7 +324,7 @@ function CompoundLane({ title, subtitle, count, tone, compounds, empty, onOpen, 
       </div>
 
       {compounds.length === 0 ? (
-        <div className="flex min-h-40 items-center justify-center rounded-xl border border-dashed border-white/10 bg-black/10 px-4 text-center text-sm text-white/25">
+        <div className="flex min-h-48 items-center justify-center rounded-xl border border-dashed border-white/10 bg-black/10 px-4 text-center text-sm text-white/25">
           {empty}
         </div>
       ) : (

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "batch-1778768172351",
+    "reviewerId": "cmorgan",
+    "reviewedAt": "2026-05-14T14:16:12.351Z",
+    "notes": []
+  },
+  "decisions": [
+    {
+      "decisionId": "apply-remediation-alcohol-resolution-1",
+      "compoundName": "Alcohol",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-15T11:51:35.968Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "research-requested"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "research-requested: evidence packet has not been generated"
+        ],
+        "remediationPlanItemIds": [
+          "alcohol-resolution-1"
+        ],
+        "remediationResolutionTypes": [
+          "perform-initial-research"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Apply remediation in next agent round: alcohol-resolution-1 (perform-initial-research). Perform initial evidence research across multiple source families, generate a compound evidence packet, and rerun the research worker."
+      ]
+    },
+    {
+      "decisionId": "dec-1778845975016",
+      "compoundName": "Alcohol",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-15T11:52:55.016Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "research-requested"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "research-requested: evidence packet has not been generated"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "complete selected tasks in the remediation plan."
+      ]
+    }
+  ]
+}

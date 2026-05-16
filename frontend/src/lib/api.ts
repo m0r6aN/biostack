@@ -14,6 +14,8 @@ import {
     CreateCheckInRequest,
     CreateProfileRequest,
     DecisionReceiptResponse,
+    SrbEnvelopeRequest,
+    SrbEnvelopeResponse,
     GoalDefinition,
     InteractionFlag,
     KnowledgeEntry,
@@ -472,6 +474,18 @@ export class ApiClient {
   async getReceiptsBySubject(subjectUri: string): Promise<DecisionReceiptResponse[]> {
     const encoded = encodeURIComponent(subjectUri);
     return this.request<DecisionReceiptResponse[]>(`/api/v1/receipts?subject=${encoded}`);
+  }
+
+  async postStackReviewEnvelope(request: SrbEnvelopeRequest): Promise<SrbEnvelopeResponse> {
+    return this.request<SrbEnvelopeResponse>('/api/v1/stack-review/envelope', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+  }
+
+  async getReceiptsByActor(actorId: string): Promise<DecisionReceiptResponse[]> {
+    const encoded = encodeURIComponent(actorId);
+    return this.request<DecisionReceiptResponse[]>(`/api/v1/receipts?actor=${encoded}`);
   }
 }
 

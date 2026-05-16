@@ -27,6 +27,8 @@ public sealed record ResearchSummaryCompound(
     bool HasRequestedChanges,
     bool HasResearchRequest,
     IReadOnlyList<string> ResearchRequestIds,
+    IReadOnlyList<string> RequestedRemediationPlanItemIds,
+    IReadOnlyList<string> SourceFamilies,
     IReadOnlyList<string> QualityFlags,
     IReadOnlyList<string> ReviewReasons);
 
@@ -240,9 +242,11 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
         var identity = draftNode?["identity"];
         var ops = draftNode?["ops"];
         var evidence = draftNode?["evidence"];
+        var provenance = draftNode?["provenance"];
         var name = ReadString(identity?["canonicalName"]);
         var qualityFlags = ReadStringArray(ops?["qualityFlags"]);
         var reviewReasons = ReadStringArray(ops?["reviewReasons"]);
+        var sourceFamilies = ReadSourceFamilies(provenance?["sourceRecords"]);
         var reviewQueueItemCount = reviewQueueCounts.TryGetValue(name, out var count) ? count : 0;
         var decisions = reviewDecisions.ForCompound(name);
         var hasPromotionApproval = reviewDecisions.HasPromotionApproval(name);
@@ -267,10 +271,12 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
             ReviewQueueItemCount: reviewQueueItemCount,
             PromotionReadiness: DeterminePromotionReadiness(blockers),
             PromotionBlockers: blockers,
-            ReviewDecisionIds: decisions.Select(d => d.DecisionId).Where(id => id.Length > 0).ToList(),
+            ReviewDecisionIds: decisions.Select(d => d.DecisionId).Where(id => id.Length > 0).Distinct(StringComparer.OrdinalIgnoreCase).ToList(),
             HasRequestedChanges: hasRequestedChanges,
             HasResearchRequest: requests.Count > 0,
             ResearchRequestIds: requests.Select(r => r.RequestId).Where(id => id.Length > 0).ToList(),
+            RequestedRemediationPlanItemIds: reviewDecisions.PendingRequestedRemediationPlanItemIds(name),
+            SourceFamilies: sourceFamilies,
             QualityFlags: qualityFlags,
             ReviewReasons: reviewReasons);
     }
@@ -287,6 +293,8 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
             if (existing.Contains(name) || reviewDecisions.IsCompoundArchived(name)) continue;
             var requests = group.OrderByDescending(r => r.RequestedAt).ToList();
             var latest = requests[0];
+            var decisions = reviewDecisions.ForCompound(name);
+            var requestedRemediationPlanItemIds = reviewDecisions.PendingRequestedRemediationPlanItemIds(name);
             compounds.Add(new ResearchSummaryCompound(
                 Name: name,
                 Classification: latest.Classification.Length > 0 ? latest.Classification : "Unknown",
@@ -296,10 +304,12 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
                 ReviewQueueItemCount: 0,
                 PromotionReadiness: "research-requested",
                 PromotionBlockers: new[] { "research-requested: evidence packet has not been generated" },
-                ReviewDecisionIds: Array.Empty<string>(),
-                HasRequestedChanges: false,
+                ReviewDecisionIds: decisions.Select(d => d.DecisionId).Where(id => id.Length > 0).Distinct(StringComparer.OrdinalIgnoreCase).ToList(),
+                HasRequestedChanges: requestedRemediationPlanItemIds.Count > 0 || reviewDecisions.HasPendingRequestedChanges(name),
                 HasResearchRequest: true,
                 ResearchRequestIds: requests.Select(r => r.RequestId).Where(id => id.Length > 0).Distinct(StringComparer.OrdinalIgnoreCase).ToList(),
+                RequestedRemediationPlanItemIds: requestedRemediationPlanItemIds,
+                SourceFamilies: Array.Empty<string>(),
                 QualityFlags: new[] { "research-requested" },
                 ReviewReasons: requests.Select(r => r.Rationale.Length > 0 ? $"Research requested: {r.Rationale}" : "Research requested for new compound.")
                     .Distinct(StringComparer.OrdinalIgnoreCase)
@@ -389,6 +399,16 @@ public sealed class ResearchSummaryBuilder : IResearchSummaryBuilder
     {
         if (node is not JsonArray arr) return new List<string>();
         return arr.Select(item => item?.GetValue<string>()?.Trim() ?? string.Empty)
+            .Where(s => s.Length > 0)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(s => s, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+    }
+
+    private static List<string> ReadSourceFamilies(JsonNode? node)
+    {
+        if (node is not JsonArray arr) return new List<string>();
+        return arr.Select(item => ReadString(item?["sourceType"]))
             .Where(s => s.Length > 0)
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .OrderBy(s => s, StringComparer.OrdinalIgnoreCase)

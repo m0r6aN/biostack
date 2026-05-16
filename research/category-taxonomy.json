@@ -1,50 +1,93 @@
 {
   "taxonomyVersion": "1.0.0",
-  "updatedAtUtc": "2026-05-10T00:00:00Z",
+  "updatedAtUtc": "2026-05-12T15:17:09.891Z",
   "categories": [
     {
       "name": "Nootropics",
-      "aliases": ["nootropic", "nootropics", "cognitive"]
+      "aliases": [
+        "nootropic",
+        "cognitive"
+      ]
     },
     {
       "name": "Cognitive Support",
-      "aliases": ["cognitive support"],
+      "aliases": [],
       "deprecated": true,
       "replacedBy": "Nootropics"
     },
     {
       "name": "Longevity",
-      "aliases": ["longevity"]
+      "aliases": []
     },
     {
       "name": "Anti-Aging",
-      "aliases": ["anti aging", "anti-aging"],
+      "aliases": [],
       "deprecated": true,
       "replacedBy": "Longevity"
     },
     {
       "name": "Peptides",
-      "aliases": ["peptide", "peptides"]
+      "aliases": [
+        "peptide"
+      ]
     },
     {
       "name": "Mitochondrial Support",
-      "aliases": ["mitochondria", "mitochondrial", "mitochondrial support"]
+      "aliases": [
+        "mitochondria",
+        "mitochondrial",
+        "ATP"
+      ]
     },
     {
       "name": "Metabolic Health",
-      "aliases": ["metabolism", "metabolic", "metabolic health"]
+      "aliases": [
+        "metabolism",
+        "metabolic"
+      ]
     },
     {
       "name": "Recovery",
-      "aliases": ["recovery"]
+      "aliases": []
     },
     {
       "name": "Sleep",
-      "aliases": ["sleep"]
+      "aliases": []
     },
     {
       "name": "Performance",
-      "aliases": ["performance"]
+      "aliases": []
+    },
+    {
+      "name": "Weight Loss",
+      "aliases": [
+        "Weight reduction",
+        "weight decrease",
+        "weight drop",
+        "weight decline",
+        "weight management",
+        "fat loss"
+      ]
+    },
+    {
+      "name": "Muscle Gain",
+      "aliases": [
+        "hypertrophy",
+        "lean mass gain"
+      ]
+    },
+    {
+      "name": "Strength",
+      "aliases": [
+        "stamina",
+        "power"
+      ]
+    },
+    {
+      "name": "Energy",
+      "aliases": [
+        "endurance"
+      ]
     }
   ]
 }

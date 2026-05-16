@@ -126,15 +126,15 @@ public sealed class ReviewResolutionPlanBuilder : IReviewResolutionPlanBuilder
 
     private static string RecommendedAction(string resolutionType, string issue) => resolutionType switch
     {
-        "fix-source-authorization" => "Add a source authorized for the required field use, map the source family, or change the claim type to match the evidence.",
-        "add-authoritative-source" => "Attach an A1/A2 source for the safety, regulatory, monitoring, contraindication, or approved-use claim before promotion.",
+        "fix-source-authorization" => "Add a source authorized for the required field use from an independent source family, map the source family, or change the claim type to match the evidence.",
+        "add-authoritative-source" => "Attach an independent A1/A2 source for the safety, regulatory, monitoring, contraindication, or approved-use claim before promotion.",
         "mark-insufficient-evidence" => "Keep the claim review-gated and use evidence-gap or insufficient-evidence language until stronger human evidence is added.",
-        "expand-evidence-packet" => "Add missing claims, sources, safety context, provenance, or review notes until completeness is substantial or complete.",
-        "perform-initial-research" => "Perform initial evidence research, generate a compound evidence packet, and rerun the research worker.",
-        "targeted-research-rereview" => "Use the requested-change notes to perform targeted follow-up research, regenerate artifacts, and send the draft back for human re-review.",
+        "expand-evidence-packet" => "Add missing claims, independent sources, safety context, provenance, or review notes until completeness is substantial or complete.",
+        "perform-initial-research" => "Perform initial evidence research across multiple source families, generate a compound evidence packet, and rerun the research worker.",
+        "targeted-research-rereview" => "Use the requested-change notes to perform targeted follow-up research against independent source families not already used by the original claim, regenerate artifacts, and send the draft back for human re-review.",
         "split-route-or-identity" => "Separate route, formulation, ester/salt, product, alias, or parent-compound claims into distinct evidence records.",
         "remove-or-reword-claim" => "Remove benefit language or reword as a popularity, misinformation, controversy, or evidence-gap claim.",
-        _ => $"Human reviewer must assess and resolve: {issue}"
+        _ => $"Human reviewer must assess and resolve using cross-source verification: {issue}"
     };
 
     private static IReadOnlyList<ResearchSummaryBucket> Bucket(IReadOnlyList<ReviewResolutionPlanItem> items)

@@ -111,7 +111,6 @@ public sealed class ResearchJob : IResearchJob
             .Where(item => !reviewDecisions.IsReviewQueueItemResolved(item.CompoundName, item.ItemId))
             .ToList();
         var summary = _summaryBuilder.Build(drafts, activeReviewQueue, reviewDecisions, researchRequests);
-        var researchTaskQueue = _researchTaskQueueBuilder.Build(summary, researchRequests, ResolveTaskEvidenceDirectory(_options));
         var promotionManifest = _promotionManifestBuilder.Build(summary, new PromotionManifestOutputs(
             DraftSubstances: draftsPath,
             ReviewQueue: reviewQueuePath,
@@ -119,6 +118,12 @@ public sealed class ResearchJob : IResearchJob
             RunReport: Path.Combine(outputDir, "research-run-report.json"),
             ResearchTaskQueue: researchTaskQueuePath));
         var resolutionPlan = _reviewResolutionPlanBuilder.Build(promotionManifest, activeReviewQueue);
+        var researchTaskQueue = _researchTaskQueueBuilder.Build(
+            summary,
+            researchRequests,
+            ResolveTaskEvidenceDirectory(_options),
+            _options.ResearchReviewSourceExpansionLimit,
+            resolutionPlan);
         var promotionExport = _promotionExporter.Export(drafts, promotionManifest, outputDir);
         var importPreview = _promotionImportPreviewBuilder.Build(
             LoadJsonArray(promotionExport.AggregatePath),

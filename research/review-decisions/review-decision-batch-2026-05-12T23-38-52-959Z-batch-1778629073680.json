@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "batch-1778629073680",
+    "reviewerId": "cmorgan",
+    "reviewedAt": "2026-05-12T23:37:53.680Z",
+    "notes": []
+  },
+  "decisions": [
+    {
+      "decisionId": "dec-1778629130482",
+      "compoundName": "BPC-157",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T23:38:50.482Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "limited-human-evidence",
+          "misinformation-heavy",
+          "pilot-input",
+          "regulatory-boundary"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview",
+          "review-required: requested changes pending re-review"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Requested changes should focus on expanding the evidence packet with independent regulator/product-label sources, human safety data if available, and clear separation of preclinical findings, evidence gaps, compounded/gray-market use, and any approved-product context. Customer-facing language should avoid therapeutic benefit claims and should frame BPC-157 as an investigational/unsupported-use peptide unless specific claims are directly source-backed."
+      ]
+    }
+  ]
+}

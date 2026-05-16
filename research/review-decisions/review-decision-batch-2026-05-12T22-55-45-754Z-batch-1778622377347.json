@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "batch-1778622377347",
+    "reviewerId": "cmorgan",
+    "reviewedAt": "2026-05-12T21:46:17.347Z",
+    "notes": []
+  },
+  "decisions": [
+    {
+      "decisionId": "dec-1778626541136",
+      "compoundName": "BPC-157",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T22:55:41.136Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "limited-human-evidence",
+          "misinformation-heavy",
+          "pilot-input",
+          "regulatory-boundary"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview",
+          "review-required: requested changes pending re-review"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Revise the draft to emphasize that BPC-157 has broad preclinical interest but scarce human clinical evidence, and that compounded/gray-market products should not be presented as equivalent to approved drugs. Add or attach a misinformation-monitoring source if retaining the misinformation-boundary claim, or reclassify unsupported online/vendor benefit claims as evidence gaps. Keep regulatory, compounded, investigational, and consumer/vendor contexts separate. After targeted follow-up research and edits, return the draft for human re-review."
+      ]
+    }
+  ]
+}
