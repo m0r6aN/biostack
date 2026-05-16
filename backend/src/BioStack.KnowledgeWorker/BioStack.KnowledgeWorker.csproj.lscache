@@ -75,9 +75,18 @@ obj/Debug/net10.0/
  BioStack.KnowledgeWorker.AssemblyInfo.cs
  BioStack.KnowledgeWorker.GlobalUsings.g.cs
 Pipeline/
+ CompoundGraphBuilder.cs
  EvidencePacketPreprocessor.cs
  EvidencePacketSubstanceRecordCompiler.cs
  FieldAuthorityPolicy.cs
+ Graph/
+  CommunitySignal.cs
+  CompoundGraph.cs
+  CompoundGraphEdge.cs
+  CompoundGraphNode.cs
+  CompoundGraphReviewFinding.cs
+  RelationshipPacketAuthorizer.cs
+  SourceAuthorityMix.cs
  IngestionPipeline.cs
  PromotionExporter.cs
  PromotionImportPreviewBuilder.cs

@@ -72,7 +72,7 @@ export default function KnowledgePage() {
 
   return (
     <div className="w-full min-h-screen">
-      <Header title="Knowledge Base" subtitle="Intelligence · Pathway analysis" />
+      <Header title="Compound Library" subtitle="Evidence-tiered compound reference · Not medical advice" />
 
       <div className="p-8 space-y-8 max-w-5xl">
 

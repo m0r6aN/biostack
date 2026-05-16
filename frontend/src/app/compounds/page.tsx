@@ -70,7 +70,7 @@ export default function CompoundsPage() {
   if (!currentProfileId) {
     return (
       <div className="w-full">
-        <Header title="Compounds" />
+        <Header title="Compounds" subtitle="Your tracked compounds — educational reference only" />
         <div className="p-8">
           <EmptyState
             title="No Profile Selected"
@@ -85,7 +85,7 @@ export default function CompoundsPage() {
   if (error) {
     return (
       <div className="w-full">
-        <Header title="Compounds" />
+        <Header title="Compounds" subtitle="Your tracked compounds — educational reference only" />
         <div className="p-8">
           <ErrorState message={error} onRetry={loadCompounds} />
         </div>
@@ -97,6 +97,7 @@ export default function CompoundsPage() {
     <div className="w-full">
       <Header
         title="Compounds"
+        subtitle="Your tracked compounds — educational reference only"
         actions={
           <button
             onClick={() => setShowForm(!showForm)}
