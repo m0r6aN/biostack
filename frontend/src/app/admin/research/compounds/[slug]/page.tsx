@@ -6,9 +6,10 @@ import { ResolutionPlanItem } from '@/components/research/ResolutionPlanItem';
 import { ReviewDecisionForm } from '@/components/research/ReviewDecisionForm';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { getApiBaseUrl } from '@/lib/apiBase';
+import { useReviewDecision } from '@/lib/research/ReviewDecisionContext';
 import { fetchEvidencePacket, fetchPromotionManifest, fetchResearchSummary, fetchResearchTaskQueue, fetchReviewQueue, fetchReviewResolutionPlan } from '@/lib/research/loader';
 import { buildSlugMap, toSlug } from '@/lib/research/slugs';
-import type { EvidencePacket, PromotionManifestCandidate, ResearchReviewQueueItem, ResearchSummaryCompound, ResearchTaskQueue, ReviewResolutionPlan } from '@/lib/research/types';
+import type { EvidencePacket, PromotionManifestCandidate, ResearchReviewQueueItem, ResearchSummaryCompound, ResearchTaskQueue, ReviewDecision, ReviewResolutionPlan, ReviewResolutionPlanItem } from '@/lib/research/types';
 import { cn } from '@/lib/utils';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -28,6 +29,7 @@ export default function CompoundDetail() {
   const params = useParams<{ slug: string }>();
   const slug = params?.slug ?? '';
   const router = useRouter();
+  const { batch, reviewerId, setReviewerId, addToSession, removeFromSession } = useReviewDecision();
   const tokenRef = useRef<string | null>(null);
   const [compound, setCompound] = useState<ResearchSummaryCompound | null>(null);
   const [candidate, setCandidate] = useState<PromotionManifestCandidate | null>(null);
@@ -95,6 +97,45 @@ export default function CompoundDetail() {
   const compoundQueueItems = reviewQueue.filter(item => item.compoundName === compound?.name);
   const queuedResearchTask = researchTaskQueue?.items.find(item => item.compoundName === compound?.name) ?? null;
   const consumedResearchTask = (researchTaskQueue?.resolvedItems ?? []).find(item => item.compoundName === compound?.name) ?? null;
+  const taskForPlanItem = (itemId: string) => researchTaskQueue?.items.find(item =>
+    item.compoundName === compound?.name && (item.remediationPlanItemIds ?? []).includes(itemId)
+  ) ?? null;
+  const pendingDecisionForPlanItem = (itemId: string) => batch.decisions.find(decision =>
+    decision.compoundName === compound?.name
+    && decision.decision === 'request-changes'
+    && (decision.scope.remediationPlanItemIds ?? []).includes(itemId)
+  ) ?? null;
+
+  function toggleNextRoundRemediation(item: ReviewResolutionPlanItem) {
+    const pendingDecision = pendingDecisionForPlanItem(item.itemId);
+    if (pendingDecision) {
+      removeFromSession(pendingDecision.decisionId);
+      return;
+    }
+
+    const effectiveReviewerId = reviewerId.trim() || 'research-ui';
+    if (!reviewerId.trim()) setReviewerId(effectiveReviewerId);
+    const decision: ReviewDecision = {
+      decisionId: `apply-remediation-${item.itemId}`,
+      compoundName: item.compoundName,
+      decision: 'request-changes',
+      reviewerId: effectiveReviewerId,
+      reviewedAt: new Date().toISOString(),
+      scope: {
+        claimIds: [],
+        reviewQueueItemIds: item.relatedReviewQueueItemIds,
+        qualityFlags: item.relatedQualityFlags,
+        reviewCategories: [],
+        promotionBlockers: item.relatedBlockers,
+        remediationPlanItemIds: [item.itemId],
+        remediationResolutionTypes: [item.resolutionType],
+      },
+      clearsSoftPromotionBlockers: false,
+      expiresAt: null,
+      notes: [`Apply remediation in next agent round: ${item.itemId} (${item.resolutionType}). ${item.recommendedAction}`],
+    };
+    addToSession(decision);
+  }
 
   if (notFound) {
     return (
@@ -325,11 +366,15 @@ export default function CompoundDetail() {
               Suggested Remediation Plan ({planItems.length})
             </h3>
             <p className="mb-4 rounded-xl border border-blue-400/20 bg-blue-500/10 px-3 py-2 text-[11px] leading-5 text-blue-100/70">
-              These are generated tasks that explain what must be fixed before promotion. Agreeing with a review decision does not automatically implement them.
+              These generated remediation items explain what must be fixed before promotion. Items with a checked next-round control are already carried by a generated research task.
             </p>
             {planItems.length === 0 && <p className="text-sm text-white/30">No resolution items for this compound.</p>}
             <div className="flex flex-col gap-3">
-              {planItems.map(item => <ResolutionPlanItem key={item.itemId} item={item} />)}
+              {planItems.map(item => {
+                const queuedTask = taskForPlanItem(item.itemId);
+                const pendingDecision = pendingDecisionForPlanItem(item.itemId);
+                return <ResolutionPlanItem key={item.itemId} item={item} queuedTask={queuedTask} pendingDecisionId={pendingDecision?.decisionId ?? null} onToggleNextRound={queuedTask ? undefined : () => toggleNextRoundRemediation(item)} />;
+              })}
             </div>
           </GlassCard>
         )}

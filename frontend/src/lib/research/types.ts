@@ -54,6 +54,7 @@ export interface ResearchSummaryCompound {
   hasRequestedChanges?: boolean;
   hasResearchRequest?: boolean;
   researchRequestIds?: string[];
+  requestedRemediationPlanItemIds?: string[];
   qualityFlags: string[];
   reviewReasons: string[];
 }
@@ -297,6 +298,10 @@ export interface ResearchTaskQueueItem {
   suggestedResearchDirectives: string[];
   targetEvidencePath: string;
   requiredSchema: string;
+  remediationPlanItemIds?: string[];
+  remediationResolutionTypes?: string[];
+  remediationRecommendedActions?: string[];
+  relatedReviewQueueItemIds?: string[];
 }
 
 export interface ResearchTaskQueueResolvedItem {
@@ -444,6 +449,8 @@ export interface ReviewDecisionScope {
   qualityFlags: string[];
   reviewCategories: string[];
   promotionBlockers: string[];
+  remediationPlanItemIds?: string[];
+  remediationResolutionTypes?: string[];
 }
 
 export interface ReviewDecision {

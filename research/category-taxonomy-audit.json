@@ -1,0 +1,184 @@
+{
+  "schemaVersion": "1.0.0",
+  "updatedAtUtc": "2026-05-12T15:17:09.932Z",
+  "entries": [
+    {
+      "action": "save-taxonomy",
+      "taxonomyVersion": "1.0.0",
+      "summary": "Saved taxonomy with 14 categories.",
+      "beforeTaxonomy": {
+        "taxonomyVersion": "1.0.0",
+        "updatedAtUtc": "2026-05-10T00:00:00Z",
+        "categories": [
+          {
+            "name": "Nootropics",
+            "aliases": [
+              "nootropic",
+              "nootropics",
+              "cognitive"
+            ]
+          },
+          {
+            "name": "Cognitive Support",
+            "aliases": [
+              "cognitive support"
+            ],
+            "deprecated": true,
+            "replacedBy": "Nootropics"
+          },
+          {
+            "name": "Longevity",
+            "aliases": [
+              "longevity"
+            ]
+          },
+          {
+            "name": "Anti-Aging",
+            "aliases": [
+              "anti aging",
+              "anti-aging"
+            ],
+            "deprecated": true,
+            "replacedBy": "Longevity"
+          },
+          {
+            "name": "Peptides",
+            "aliases": [
+              "peptide",
+              "peptides"
+            ]
+          },
+          {
+            "name": "Mitochondrial Support",
+            "aliases": [
+              "mitochondria",
+              "mitochondrial",
+              "mitochondrial support"
+            ]
+          },
+          {
+            "name": "Metabolic Health",
+            "aliases": [
+              "metabolism",
+              "metabolic",
+              "metabolic health"
+            ]
+          },
+          {
+            "name": "Recovery",
+            "aliases": [
+              "recovery"
+            ]
+          },
+          {
+            "name": "Sleep",
+            "aliases": [
+              "sleep"
+            ]
+          },
+          {
+            "name": "Performance",
+            "aliases": [
+              "performance"
+            ]
+          }
+        ]
+      },
+      "afterTaxonomy": {
+        "taxonomyVersion": "1.0.0",
+        "updatedAtUtc": "2026-05-12T15:17:09.891Z",
+        "categories": [
+          {
+            "name": "Nootropics",
+            "aliases": [
+              "nootropic",
+              "cognitive"
+            ]
+          },
+          {
+            "name": "Cognitive Support",
+            "aliases": [],
+            "deprecated": true,
+            "replacedBy": "Nootropics"
+          },
+          {
+            "name": "Longevity",
+            "aliases": []
+          },
+          {
+            "name": "Anti-Aging",
+            "aliases": [],
+            "deprecated": true,
+            "replacedBy": "Longevity"
+          },
+          {
+            "name": "Peptides",
+            "aliases": [
+              "peptide"
+            ]
+          },
+          {
+            "name": "Mitochondrial Support",
+            "aliases": [
+              "mitochondria",
+              "mitochondrial",
+              "ATP"
+            ]
+          },
+          {
+            "name": "Metabolic Health",
+            "aliases": [
+              "metabolism",
+              "metabolic"
+            ]
+          },
+          {
+            "name": "Recovery",
+            "aliases": []
+          },
+          {
+            "name": "Sleep",
+            "aliases": []
+          },
+          {
+            "name": "Performance",
+            "aliases": []
+          },
+          {
+            "name": "Weight Loss",
+            "aliases": [
+              "Weight reduction",
+              "weight decrease",
+              "weight drop",
+              "weight decline",
+              "weight management",
+              "fat loss"
+            ]
+          },
+          {
+            "name": "Muscle Gain",
+            "aliases": [
+              "hypertrophy",
+              "lean mass gain"
+            ]
+          },
+          {
+            "name": "Strength",
+            "aliases": [
+              "stamina",
+              "power"
+            ]
+          },
+          {
+            "name": "Energy",
+            "aliases": [
+              "endurance"
+            ]
+          }
+        ]
+      },
+      "entryId": "taxonomy-audit-1778599029932-lpfmy0",
+      "createdAtUtc": "2026-05-12T15:17:09.932Z"
+    }
+  ]
+}

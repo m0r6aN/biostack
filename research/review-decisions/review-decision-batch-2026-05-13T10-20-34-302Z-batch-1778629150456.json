@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "batch-1778629150456",
+    "reviewerId": "cmorgan",
+    "reviewedAt": "2026-05-12T23:39:10.456Z",
+    "notes": []
+  },
+  "decisions": [
+    {
+      "decisionId": "dec-1778667628666",
+      "compoundName": "BPC-157",
+      "decision": "resolve-review-items",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-13T10:20:28.666Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [
+          "bpc-157-ops-review-1"
+        ],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "limited-human-evidence",
+          "misinformation-heavy",
+          "pilot-input",
+          "regulatory-boundary"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview",
+          "review-required: requested changes pending re-review"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": []
+    }
+  ]
+}

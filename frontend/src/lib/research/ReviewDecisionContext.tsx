@@ -1,6 +1,6 @@
 'use client';
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { addDecision, createBatch } from './reviewDecisionBatch';
+import { addDecision, createBatch, removeDecision } from './reviewDecisionBatch';
 import type { ReviewDecision, ReviewDecisionBatch } from './types';
 
 const STORAGE_KEY = 'biostack.reviewDecisionBatch.v1';
@@ -10,6 +10,7 @@ interface ReviewDecisionContextValue {
   reviewerId: string;
   setReviewerId: (id: string) => void;
   addToSession: (decision: ReviewDecision) => void;
+  removeFromSession: (decisionId: string) => void;
   resetSession: () => void;
 }
 
@@ -65,12 +66,16 @@ export function ReviewDecisionProvider({ children }: { children: ReactNode }) {
     setState(prev => ({ ...prev, batch: addDecision(prev.batch, decision) }));
   }
 
+  function removeFromSession(decisionId: string) {
+    setState(prev => ({ ...prev, batch: removeDecision(prev.batch, decisionId) }));
+  }
+
   function resetSession() {
     setState(prev => ({ ...prev, batch: createBatch(prev.reviewerId) }));
   }
 
   return (
-    <ReviewDecisionContext.Provider value={{ batch: state.batch, reviewerId: state.reviewerId, setReviewerId, addToSession, resetSession }}>
+    <ReviewDecisionContext.Provider value={{ batch: state.batch, reviewerId: state.reviewerId, setReviewerId, addToSession, removeFromSession, resetSession }}>
       {children}
     </ReviewDecisionContext.Provider>
   );

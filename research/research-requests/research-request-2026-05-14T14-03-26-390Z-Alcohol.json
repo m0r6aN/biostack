@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "research-request-batch",
+  "batch": {
+    "batchId": "batch-research-request-1778767406389-alcohol",
+    "requesterId": "research-ui",
+    "requestedAt": "2026-05-14T14:03:26.382Z",
+    "notes": []
+  },
+  "requests": [
+    {
+      "requestId": "research-request-1778767406389-alcohol",
+      "compoundName": "Alcohol",
+      "aliases": [],
+      "categories": [],
+      "classification": "Other",
+      "priority": "normal",
+      "requesterId": "research-ui",
+      "requestedAt": "2026-05-14T14:03:26.382Z",
+      "rationale": "We should be able to list any interactions or affect on efficacy alcohol has with a compound.",
+      "notes": []
+    }
+  ]
+}

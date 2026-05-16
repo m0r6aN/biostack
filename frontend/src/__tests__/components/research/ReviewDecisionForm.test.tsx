@@ -14,10 +14,11 @@ const mockContext: {
   reviewerId: string;
   setReviewerId: ReturnType<typeof vi.fn>;
   addToSession: ReturnType<typeof vi.fn>;
+  removeFromSession: ReturnType<typeof vi.fn>;
   resetSession: ReturnType<typeof vi.fn>;
 } = {
   batch: { schemaVersion: '1.0.0' as const, recordType: 'review-decision-batch' as const, batch: { batchId: 'b1', reviewerId: 'r1', reviewedAt: '', notes: [] }, decisions: [] },
-  reviewerId: 'r1', setReviewerId: vi.fn(), addToSession: vi.fn(), resetSession: vi.fn(),
+  reviewerId: 'r1', setReviewerId: vi.fn(), addToSession: vi.fn(), removeFromSession: vi.fn(), resetSession: vi.fn(),
 };
 vi.mock('@/lib/research/ReviewDecisionContext', () => ({ useReviewDecision: () => mockContext }));
 
@@ -25,6 +26,7 @@ beforeEach(() => {
   mockContext.batch = { ...emptyBatch, decisions: [] };
   mockContext.setReviewerId.mockClear();
   mockContext.addToSession.mockClear();
+  mockContext.removeFromSession.mockClear();
   mockContext.resetSession.mockClear();
   vi.unstubAllGlobals();
 });
