@@ -269,7 +269,106 @@ public class ResearchEvidenceProcessingTests
         Assert.Contains("Epithalon", item.Aliases);
         Assert.Equal("research/input/evidence/epitalon.evidence.json", item.TargetEvidencePath);
         Assert.Equal("evidence-packet.schema.json", item.RequiredSchema);
+        Assert.Contains(item.SuggestedResearchDirectives, directive => directive.Contains("materially different source families", StringComparison.OrdinalIgnoreCase));
         Assert.Contains(item.SuggestedResearchDirectives, directive => directive.Contains("Do not fabricate evidence", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void ResearchTaskQueueBuilder_Carries_Remediation_Context_For_Requested_Initial_Research()
+    {
+        var requests = ResearchRequestIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "research-request-batch",
+          "batch": { "batchId": "rb1", "requesterId": "r1", "requestedAt": "2026-05-10T00:00:00Z", "notes": [] },
+          "requests": [{
+            "requestId": "research-alcohol-001",
+            "compoundName": "Alcohol",
+            "aliases": [],
+            "categories": [],
+            "classification": "Other",
+            "priority": "normal",
+            "requesterId": "r1",
+            "requestedAt": "2026-05-10T00:00:00Z",
+            "rationale": "List interaction and efficacy effects.",
+            "notes": []
+          }]
+        }
+        """)! });
+        var decisions = ReviewDecisionIndex.FromBatches(new[] { JsonNode.Parse("""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "review-decision-batch",
+          "batch": { "batchId": "b1", "reviewerId": "r1", "reviewedAt": "2026-05-10T00:00:00Z", "notes": [] },
+          "decisions": [{
+            "decisionId": "apply-remediation-alcohol-resolution-1",
+            "compoundName": "Alcohol",
+            "decision": "request-changes",
+            "reviewerId": "r1",
+            "reviewedAt": "2026-05-10T00:00:00Z",
+            "scope": { "claimIds": [], "reviewQueueItemIds": [], "qualityFlags": ["research-requested"], "reviewCategories": [], "promotionBlockers": ["research-requested: evidence packet has not been generated"], "remediationPlanItemIds": ["alcohol-resolution-1"], "remediationResolutionTypes": ["perform-initial-research"] },
+            "clearsSoftPromotionBlockers": false,
+            "expiresAt": null,
+            "notes": ["Apply remediation in next agent round."]
+          }]
+        }
+        """)! });
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(), Array.Empty<ResearchReviewQueueItem>(), decisions, requests);
+        var manifest = new PromotionManifestBuilder().Build(summary, new PromotionManifestOutputs(
+            DraftSubstances: "draft-substances.json",
+            ReviewQueue: "review-queue.json",
+            ResearchSummary: "research-summary.json",
+            RunReport: "research-run-report.json"));
+        var plan = new ReviewResolutionPlanBuilder().Build(manifest, Array.Empty<ResearchReviewQueueItem>());
+
+        var queue = new ResearchTaskQueueBuilder().Build(summary, requests, "research/input/evidence", reviewResolutionPlan: plan);
+
+        var compound = summary.Compounds.Single();
+        Assert.True(compound.HasRequestedChanges);
+        Assert.Contains("apply-remediation-alcohol-resolution-1", compound.ReviewDecisionIds);
+        Assert.Contains("alcohol-resolution-1", compound.RequestedRemediationPlanItemIds);
+        var task = Assert.Single(queue.Items);
+        Assert.Equal("alcohol-initial-research", task.TaskId);
+        Assert.Equal(new[] { "alcohol-resolution-1" }, task.RemediationPlanItemIds);
+        Assert.Contains(task.SuggestedResearchDirectives, directive => directive.Contains("Original remediation action", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void ResearchTaskQueueBuilder_Emits_SourceExpansion_Task_For_Partial_Review_Below_Limit()
+    {
+        var draft = Draft("Partial Compound", "Limited", "partial", needsReview: true, sourceFamilies: new[] { "database" });
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(draft), Array.Empty<ResearchReviewQueueItem>());
+        var manifest = new PromotionManifestBuilder().Build(summary, new PromotionManifestOutputs(
+            DraftSubstances: "draft-substances.json",
+            ReviewQueue: "review-queue.json",
+            ResearchSummary: "research-summary.json",
+            RunReport: "research-run-report.json"));
+        var plan = new ReviewResolutionPlanBuilder().Build(manifest, Array.Empty<ResearchReviewQueueItem>());
+
+        var queue = new ResearchTaskQueueBuilder().Build(summary, ResearchRequestIndex.Empty, "research/input/evidence", reviewSourceExpansionLimit: 3, reviewResolutionPlan: plan);
+
+        var item = Assert.Single(queue.Items);
+        Assert.Equal("expand-review-sources", item.TaskType);
+        Assert.Equal("Partial Compound", item.CompoundName);
+        Assert.Contains(item.Notes, note => note.Contains("1/3 independent source families", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(item.SuggestedResearchDirectives, directive => directive.Contains("human-only review", StringComparison.OrdinalIgnoreCase));
+        Assert.NotEmpty(item.RemediationPlanItemIds);
+        Assert.NotEmpty(item.RemediationRecommendedActions);
+        Assert.Contains(item.Notes, note => note.Contains("Continue remediation item", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(item.SuggestedResearchDirectives, directive => directive.Contains("Original remediation action", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void ResearchTaskQueueBuilder_Stops_SourceExpansion_When_Configured_Limit_Is_Reached()
+    {
+        var draft = Draft("Limit Compound", "Limited", "partial", needsReview: true,
+            sourceFamilies: new[] { "database", "paper", "review" });
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(draft), Array.Empty<ResearchReviewQueueItem>());
+
+        var queue = new ResearchTaskQueueBuilder().Build(summary, ResearchRequestIndex.Empty, "research/input/evidence", reviewSourceExpansionLimit: 3);
+
+        Assert.Empty(queue.Items);
+        Assert.Equal("review-required", summary.Compounds.Single().PromotionReadiness);
     }
 
     [Fact]
@@ -339,7 +438,7 @@ public class ResearchEvidenceProcessingTests
             "decision": "reject",
             "reviewerId": "r1",
             "reviewedAt": "2026-05-11T00:00:00Z",
-            "scope": { "claimIds": [], "reviewQueueItemIds": [], "qualityFlags": [], "reviewCategories": [], "promotionBlockers": [] },
+            "scope": { "claimIds": [], "reviewQueueItemIds": [], "qualityFlags": [], "reviewCategories": [], "promotionBlockers": [], "remediationPlanItemIds": ["clean-compound-resolution-1"], "remediationResolutionTypes": ["targeted-research-rereview"] },
             "clearsSoftPromotionBlockers": false,
             "expiresAt": null,
             "notes": ["Rejected request."]
@@ -411,7 +510,7 @@ public class ResearchEvidenceProcessingTests
             "decision": "request-changes",
             "reviewerId": "r1",
             "reviewedAt": "2026-05-05T00:00:00Z",
-            "scope": { "claimIds": [], "reviewQueueItemIds": [], "qualityFlags": [], "reviewCategories": [], "promotionBlockers": [] },
+            "scope": { "claimIds": [], "reviewQueueItemIds": [], "qualityFlags": [], "reviewCategories": [], "promotionBlockers": [], "remediationPlanItemIds": ["clean-compound-resolution-1"], "remediationResolutionTypes": ["targeted-research-rereview"] },
             "clearsSoftPromotionBlockers": false,
             "expiresAt": null,
             "notes": ["Add newer source and reword claim."]
@@ -431,11 +530,18 @@ public class ResearchEvidenceProcessingTests
         Assert.True(compound.HasRequestedChanges);
         Assert.Equal("review-required", compound.PromotionReadiness);
         Assert.Contains("change-clean-001", compound.ReviewDecisionIds);
+        Assert.Contains("clean-compound-resolution-1", compound.RequestedRemediationPlanItemIds);
         Assert.Contains(compound.PromotionBlockers, b => b.Contains("requested changes", StringComparison.OrdinalIgnoreCase));
         Assert.Contains(summary.ReviewCategories, c => c.Name == "Requested Changes" && c.Compounds.Contains("Clean Compound"));
         Assert.True(manifest.ReviewRequired.Single().HasRequestedChanges);
         Assert.Contains(manifest.ReviewRequired.Single().RequiredNextActions, a => a.Contains("targeted follow-up research", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(manifest.ReviewRequired.Single().RequiredNextActions, a => a.Contains("independent source families", StringComparison.OrdinalIgnoreCase));
         Assert.Contains(plan.Items, item => item.CompoundName == "Clean Compound" && item.ResolutionType == "targeted-research-rereview");
+        Assert.Contains(plan.Items, item => item.CompoundName == "Clean Compound"
+                                           && item.RecommendedAction.Contains("independent source families", StringComparison.OrdinalIgnoreCase));
+        var queue = new ResearchTaskQueueBuilder().Build(summary, ResearchRequestIndex.Empty, "research/input/evidence", reviewSourceExpansionLimit: 3, reviewResolutionPlan: plan);
+        var sourceExpansion = Assert.Single(queue.Items);
+        Assert.Equal(new[] { "clean-compound-resolution-1" }, sourceExpansion.RemediationPlanItemIds);
     }
 
     [Fact]
@@ -755,7 +861,8 @@ public class ResearchEvidenceProcessingTests
         string completeness,
         bool needsReview,
         IReadOnlyList<string>? qualityFlags = null,
-        IReadOnlyList<string>? reviewReasons = null)
+        IReadOnlyList<string>? reviewReasons = null,
+        IReadOnlyList<string>? sourceFamilies = null)
         => new JsonObject
         {
             ["identity"] = new JsonObject
@@ -764,6 +871,7 @@ public class ResearchEvidenceProcessingTests
                 ["classification"] = "Supplement",
             },
             ["evidence"] = new JsonObject { ["overallTier"] = evidenceTier },
+            ["provenance"] = new JsonObject { ["sourceRecords"] = ToSourceRecords(sourceFamilies ?? Array.Empty<string>()) },
             ["ops"] = new JsonObject
             {
                 ["completeness"] = completeness,
@@ -772,6 +880,16 @@ public class ResearchEvidenceProcessingTests
                 ["reviewReasons"] = ToArray(reviewReasons ?? Array.Empty<string>()),
             },
         };
+
+    private static JsonArray ToSourceRecords(IEnumerable<string> sourceFamilies)
+    {
+        var arr = new JsonArray();
+        foreach (var family in sourceFamilies)
+        {
+            arr.Add(new JsonObject { ["sourceType"] = family });
+        }
+        return arr;
+    }
 
     private static JsonArray ToArray(IEnumerable<string> values)
     {

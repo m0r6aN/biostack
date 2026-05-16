@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "batch-1778676260430",
+    "reviewerId": "cmorgan",
+    "reviewedAt": "2026-05-13T12:44:20.430Z",
+    "notes": []
+  },
+  "decisions": [
+    {
+      "decisionId": "dec-1778767070246",
+      "compoundName": "Caffeine",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-14T13:57:50.246Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "no-safety-canonicalization",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview",
+          "review-required: requested changes pending re-review"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: expand the evidence packet with independent authoritative sources, especially for safety-critical caffeine content; address the requested remediation items; document provenance and cross-source verification; keep stimulant-load warnings non-canonical or review-required until stronger support is attached; then return the draft for human re-review."
+      ]
+    },
+    {
+      "decisionId": "dec-1778767157158",
+      "compoundName": "Creatine",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-14T13:59:17.158Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "no-safety-canonicalization",
+          "pilot-input"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview",
+          "review-required: requested changes pending re-review"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Requested changes: expand the evidence packet before re-review. Add independent authoritative sources, especially for safety, contraindications, adverse effects, renal/hepatic considerations, pregnancy/lactation, medication interactions, age/population boundaries, and monitoring where applicable. Keep customer-facing efficacy language limited to population-level sports-nutrition evidence for creatine monohydrate, and avoid generalizing to proprietary blends or alternate creatine formulations without separate evidence. Do not convert sports-nutrition evidence into personalized recommendations or dosing instructions."
+      ]
+    },
+    {
+      "decisionId": "dec-1778767205890",
+      "compoundName": "Enclomiphene",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-14T14:00:05.890Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "compiled-from-evidence-packet",
+          "hormone-axis-boundary",
+          "pilot-input",
+          "regulatory-ambiguity"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview",
+          "review-required: evidence tier is Limited",
+          "review-required: requested changes pending re-review"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Recommended changes: keep the draft in re-review; add independent source families beyond the current paper/review sources; verify jurisdiction-specific regulatory status using authoritative regulator/product-label sources; keep investigational, compounded, off-label, and approved-product contexts separate; avoid approved-therapy or personalized hormone guidance language; add authoritative safety support before populating contraindications, warnings, monitoring, adverse effects, fertility, or ocular/visual risk fields."
+      ]
+    }
+  ]
+}

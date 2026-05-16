@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "batch-1778616488679",
+    "reviewerId": "cmorgan",
+    "reviewedAt": "2026-05-12T20:08:08.679Z",
+    "notes": []
+  },
+  "decisions": [
+    {
+      "decisionId": "dec-1778616537327",
+      "compoundName": "Testosterone cypionate",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T20:08:57.327Z",
+      "scope": {
+        "claimIds": [],
+        "reviewQueueItemIds": [],
+        "qualityFlags": [
+          "a1-label-backed",
+          "compiled-from-evidence-packet",
+          "pilot-input",
+          "prescription-hormone-context"
+        ],
+        "reviewCategories": [],
+        "promotionBlockers": [
+          "review-required: 1 review queue item(s)",
+          "review-required: completeness is partial",
+          "review-required: draft is marked needsReview"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Requested changes: expand the evidence packet to substantial or complete; attach product-specific provenance to approved indications, contraindications, storage, dosing, warnings, adverse effects, and monitoring fields as applicable; verify the latest DailyMed/FDA label; keep labeled replacement therapy separate from off-label, compounded, research, performance-enhancement, and optimization contexts; and complete human review of the prescription-hormone and safety-critical fields before any promotion."
+      ]
+    }
+  ]
+}

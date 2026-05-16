@@ -10,6 +10,7 @@ interface FilterBarProps {
   reviewCount: number;
   candidateCount: number;
   categories: ResearchReviewCategory[];
+  sidebar?: boolean;
 }
 
 const EVIDENCE_TIERS = ['Strong', 'Moderate', 'Limited', 'Insufficient', 'Unknown', 'Anecdotal'];
@@ -20,7 +21,7 @@ const SORT_OPTIONS = [
   { value: 'completeness', label: 'Completeness' },
 ];
 
-export function FilterBar({ researchRequestedCount = 0, blockedCount, reviewCount, candidateCount, categories }: FilterBarProps) {
+export function FilterBar({ researchRequestedCount = 0, blockedCount, reviewCount, candidateCount, categories, sidebar = false }: FilterBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -50,7 +51,7 @@ export function FilterBar({ researchRequestedCount = 0, blockedCount, reviewCoun
   }
 
   return (
-    <div className="grid gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 md:grid-cols-2">
+    <div className={cn('grid gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3', !sidebar && 'md:grid-cols-2')}>
       <div>
         <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Readiness</p>
         <div className="flex flex-wrap gap-1.5">
@@ -90,7 +91,7 @@ export function FilterBar({ researchRequestedCount = 0, blockedCount, reviewCoun
       </button>
 
       {moreOpen && (
-        <div className="border-t border-white/[0.06] pt-2 md:col-span-2">
+        <div className={cn('border-t border-white/[0.06] pt-2', !sidebar && 'md:col-span-2')}>
           <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Evidence Tier</p>
           <div className="flex flex-wrap gap-1.5">
             {EVIDENCE_TIERS.map(tier => (

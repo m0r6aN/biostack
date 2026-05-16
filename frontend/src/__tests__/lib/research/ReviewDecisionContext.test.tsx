@@ -17,13 +17,14 @@ const decision: ReviewDecision = {
 };
 
 function Harness() {
-  const { batch, reviewerId, setReviewerId, addToSession, resetSession } = useReviewDecision();
+  const { batch, reviewerId, setReviewerId, addToSession, removeFromSession, resetSession } = useReviewDecision();
   return (
     <div>
       <p>Reviewer: {reviewerId || 'none'}</p>
       <p>Decisions: {batch.decisions.length}</p>
       <button onClick={() => setReviewerId('reviewer-1')}>Set reviewer</button>
       <button onClick={() => addToSession(decision)}>Add decision</button>
+      <button onClick={() => removeFromSession('dec-001')}>Remove decision</button>
       <button onClick={resetSession}>Reset</button>
     </div>
   );
@@ -70,6 +71,17 @@ describe('ReviewDecisionProvider localStorage persistence', () => {
     await waitFor(() => {
       const saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? '{}');
       expect(saved.batch.reviewerId).toBe('reviewer-1');
+      expect(saved.decisions).toHaveLength(0);
+    });
+  });
+
+  it('removes a pending decision by id', async () => {
+    render(<ReviewDecisionProvider><Harness /></ReviewDecisionProvider>);
+    fireEvent.click(screen.getByText('Add decision'));
+    fireEvent.click(screen.getByText('Remove decision'));
+
+    await waitFor(() => {
+      const saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? '{}');
       expect(saved.decisions).toHaveLength(0);
     });
   });

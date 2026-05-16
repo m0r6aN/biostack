@@ -94,6 +94,12 @@ public sealed class WorkerOptions
     public string ResearchOutputDirectory { get; set; } = "ResearchOutput";
 
     /// <summary>
+    /// Maximum independent source families to pursue automatically for partial review follow-up
+    /// before leaving the item gated for human review.
+    /// </summary>
+    public int ResearchReviewSourceExpansionLimit { get; set; } = 3;
+
+    /// <summary>
     /// Promotion import preview path used by <see cref="RunMode.PromotionImportDryRun" />.
     /// </summary>
     public string? PromotionImportPreviewPath { get; set; }

@@ -53,8 +53,11 @@ public class ResearchJobTests
             Assert.Equal("Creatine", summary["Compounds"]![0]!["Name"]!.GetValue<string>());
             Assert.NotNull(summary["ReviewCategories"]);
             var taskQueue = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-task-queue.json")))!;
-            Assert.Equal(0, taskQueue["Counts"]!["TotalItems"]!.GetValue<int>());
+            Assert.Equal(1, taskQueue["Counts"]!["TotalItems"]!.GetValue<int>());
             Assert.Equal(0, taskQueue["Counts"]!["ResolvedItems"]!.GetValue<int>());
+            Assert.Equal("expand-review-sources", taskQueue["Items"]![0]!["TaskType"]!.GetValue<string>());
+            Assert.Contains(taskQueue["Items"]![0]!["SuggestedResearchDirectives"]!.AsArray(), directive => directive!.GetValue<string>().Contains("materially different source family", StringComparison.OrdinalIgnoreCase));
+            Assert.NotEmpty(taskQueue["Items"]![0]!["RemediationPlanItemIds"]!.AsArray());
             var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "promotion-manifest.json")))!;
             Assert.Equal(1, manifest["Counts"]!["TotalDrafts"]!.GetValue<int>());
             Assert.Equal(Path.Combine(outputDir, "research-task-queue.json"), manifest["Outputs"]!["ResearchTaskQueue"]!.GetValue<string>());
@@ -201,6 +204,97 @@ public class ResearchJobTests
     }
 
     [Fact]
+    public async Task ResearchJob_Loads_Request_And_Decision_Directories_Into_Remediated_Initial_Task()
+    {
+        var root = CreateTempDirectory();
+        try
+        {
+            var requestDir = Path.Combine(root, "requests");
+            var decisionDir = Path.Combine(root, "decisions");
+            var evidenceDir = Path.Combine(root, "evidence");
+            var outputDir = Path.Combine(root, "output");
+            Directory.CreateDirectory(requestDir);
+            Directory.CreateDirectory(decisionDir);
+            Directory.CreateDirectory(evidenceDir);
+            File.WriteAllText(Path.Combine(requestDir, "alcohol-request.json"), ResearchRequestBatch("Alcohol", "research-alcohol-001"));
+            File.WriteAllText(Path.Combine(decisionDir, "alcohol-decision.json"), ReviewDecisionBatch(
+                compoundName: "Alcohol",
+                decisionId: "apply-remediation-alcohol-resolution-1",
+                remediationId: "alcohol-resolution-1",
+                resolutionType: "perform-initial-research"));
+            var options = new WorkerOptions
+            {
+                RunMode = RunMode.Research,
+                ResearchRequestDirectory = requestDir,
+                ResearchReviewDecisionDirectory = decisionDir,
+                ResearchEvidencePacketDirectory = evidenceDir,
+                ResearchOutputDirectory = outputDir,
+            };
+
+            var result = await CreateJob(options).RunAsync(new IngestionContext(options, CreateLogger()));
+
+            Assert.True(result.Success, result.ErrorMessage);
+            var summary = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-summary.json")))!;
+            var alcohol = summary["Compounds"]![0]!;
+            Assert.Equal("Alcohol", alcohol["Name"]!.GetValue<string>());
+            Assert.True(alcohol["HasRequestedChanges"]!.GetValue<bool>());
+            Assert.Equal("alcohol-resolution-1", alcohol["RequestedRemediationPlanItemIds"]![0]!.GetValue<string>());
+            Assert.Equal("apply-remediation-alcohol-resolution-1", alcohol["ReviewDecisionIds"]![0]!.GetValue<string>());
+
+            var taskQueue = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-task-queue.json")))!;
+            var task = taskQueue["Items"]![0]!;
+            Assert.Equal("alcohol-initial-research", task["TaskId"]!.GetValue<string>());
+            Assert.Equal("generate-evidence-packet", task["TaskType"]!.GetValue<string>());
+            Assert.Equal("alcohol-resolution-1", task["RemediationPlanItemIds"]![0]!.GetValue<string>());
+            Assert.Contains("alcohol.evidence.json", task["TargetEvidencePath"]!.GetValue<string>(), StringComparison.OrdinalIgnoreCase);
+            Assert.Contains(task["SuggestedResearchDirectives"]!.AsArray(), directive => directive!.GetValue<string>().Contains("Original remediation action", StringComparison.OrdinalIgnoreCase));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task ResearchJob_Resolves_Requested_Initial_Task_When_Evidence_File_Appears()
+    {
+        var root = CreateTempDirectory();
+        try
+        {
+            var requestDir = Path.Combine(root, "requests");
+            var evidenceDir = Path.Combine(root, "evidence");
+            var outputDir = Path.Combine(root, "output");
+            Directory.CreateDirectory(requestDir);
+            Directory.CreateDirectory(evidenceDir);
+            File.WriteAllText(Path.Combine(requestDir, "creatine-request.json"), ResearchRequestBatch("Creatine", "research-creatine-001"));
+            File.Copy(TestPaths.FixturePath("evidence-packet.sample.json"), Path.Combine(evidenceDir, "creatine.evidence.json"));
+            var options = new WorkerOptions
+            {
+                RunMode = RunMode.Research,
+                ResearchRequestDirectory = requestDir,
+                ResearchEvidencePacketDirectory = evidenceDir,
+                ResearchOutputDirectory = outputDir,
+            };
+
+            var result = await CreateJob(options).RunAsync(new IngestionContext(options, CreateLogger()));
+
+            Assert.True(result.Success, result.ErrorMessage);
+            AssertOutputJson(Path.Combine(outputDir, "evidence-packet"), "creatine.json");
+            var taskQueue = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-task-queue.json")))!;
+            var items = taskQueue["Items"]!.AsArray();
+            Assert.DoesNotContain(items, item => item!["TaskType"]!.GetValue<string>() == "generate-evidence-packet");
+            var resolved = Assert.Single(taskQueue["ResolvedItems"]!.AsArray());
+            Assert.Equal("Creatine", resolved!["CompoundName"]!.GetValue<string>());
+            Assert.Equal("evidence-detected", resolved["Resolution"]!.GetValue<string>());
+            Assert.Equal("review-required", resolved["CurrentReadiness"]!.GetValue<string>());
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
     public async Task PromotionImportDryRunJob_Succeeds_For_Safe_Create_Preview()
     {
         var researchOutput = CreateTempDirectory();
@@ -304,6 +398,45 @@ public class ResearchJobTests
 
     private static ILogger CreateLogger()
         => LoggerFactory.Create(_ => { }).CreateLogger("ResearchJobTests");
+
+    private static string ResearchRequestBatch(string compoundName, string requestId) => $$"""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "research-request-batch",
+          "batch": { "batchId": "rb1", "requesterId": "operator-1", "requestedAt": "2026-05-10T00:00:00Z", "notes": [] },
+          "requests": [{
+            "requestId": "{{requestId}}",
+            "compoundName": "{{compoundName}}",
+            "aliases": [],
+            "categories": [],
+            "classification": "Other",
+            "priority": "normal",
+            "requesterId": "operator-1",
+            "requestedAt": "2026-05-10T00:00:00Z",
+            "rationale": "Need evidence packet and interaction review.",
+            "notes": []
+          }]
+        }
+        """;
+
+    private static string ReviewDecisionBatch(string compoundName, string decisionId, string remediationId, string resolutionType) => $$"""
+        {
+          "schemaVersion": "1.0.0",
+          "recordType": "review-decision-batch",
+          "batch": { "batchId": "b1", "reviewerId": "operator-1", "reviewedAt": "2026-05-10T00:00:00Z", "notes": [] },
+          "decisions": [{
+            "decisionId": "{{decisionId}}",
+            "compoundName": "{{compoundName}}",
+            "decision": "request-changes",
+            "reviewerId": "operator-1",
+            "reviewedAt": "2026-05-10T00:00:00Z",
+            "scope": { "claimIds": [], "reviewQueueItemIds": [], "qualityFlags": ["research-requested"], "reviewCategories": [], "promotionBlockers": ["research-requested: evidence packet has not been generated"], "remediationPlanItemIds": ["{{remediationId}}"], "remediationResolutionTypes": ["{{resolutionType}}"] },
+            "clearsSoftPromotionBlockers": false,
+            "expiresAt": null,
+            "notes": ["Apply remediation in next agent round."]
+          }]
+        }
+        """;
 
     private static string CreateTempDirectory()
     {

@@ -69,33 +69,49 @@ describe('CompoundList', () => {
 
   afterEach(() => vi.unstubAllGlobals());
 
-  it('renders compound names after loading', async () => {
+  it('renders the highest-priority queue first after loading', async () => {
     render(<CompoundList />);
-    expect(await screen.findByText('Epitalon')).toBeInTheDocument();
-    expect(await screen.findByText('BPC-157')).toBeInTheDocument();
     expect(await screen.findByText('Semaglutide')).toBeInTheDocument();
-    expect(await screen.findByText('Creatine')).toBeInTheDocument();
+    expect(screen.queryByText('Epitalon')).not.toBeInTheDocument();
+    expect(screen.queryByText('BPC-157')).not.toBeInTheDocument();
+    expect(screen.queryByText('Creatine')).not.toBeInTheDocument();
   });
 
   it('renders filter bar with readiness chips', async () => {
     render(<CompoundList />);
-    expect(await screen.findByText('Research Requested (1)')).toBeInTheDocument();
+    expect((await screen.findAllByText('Research Requested (1)')).length).toBeGreaterThan(0);
     expect(await screen.findByText('Blocked (1)')).toBeInTheDocument();
     expect(await screen.findByText('Candidate (1)')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Anti-Aging' })).not.toBeInTheDocument();
   });
 
-  it('splits compounds into research, review, re-review, and processing lanes', async () => {
+  it('renders a tabbed queue workspace and opens re-review by default', async () => {
     render(<CompoundList />);
-    expect(await screen.findByRole('heading', { name: 'Research Requested' })).toBeInTheDocument();
-    expect(await screen.findByRole('heading', { name: 'Ready for Review' })).toBeInTheDocument();
-    expect(await screen.findByRole('heading', { name: 'Ready for Re-review' })).toBeInTheDocument();
-    expect(await screen.findByRole('heading', { name: 'Ready for Processing' })).toBeInTheDocument();
+
+    const tablist = await screen.findByRole('tablist', { name: /compound queues/i });
+    expect(within(tablist).getByRole('tab', { name: 'Research Requested (1)' })).toBeInTheDocument();
+    expect(within(tablist).getByRole('tab', { name: 'Ready for Review (1)' })).toBeInTheDocument();
+    expect(within(tablist).getByRole('tab', { name: 'Ready for Re-review (1)' })).toHaveAttribute('aria-selected', 'true');
+    expect(within(tablist).getByRole('tab', { name: 'Ready for Processing (1)' })).toBeInTheDocument();
+
+    expect(screen.getByRole('heading', { name: 'Ready for Re-review' })).toBeInTheDocument();
+    expect(screen.getByText(/Requested changes have been recorded/i)).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Research Requested' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Ready for Review' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Ready for Processing' })).not.toBeInTheDocument();
+  });
+
+  it('switches queue panels when a different tab is selected', async () => {
+    render(<CompoundList />);
+
+    const tablist = await screen.findByRole('tablist', { name: /compound queues/i });
+    fireEvent.click(within(tablist).getByRole('tab', { name: 'Research Requested (1)' }));
+
+    expect(within(tablist).getByRole('tab', { name: 'Research Requested (1)' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('heading', { name: 'Research Requested' })).toBeInTheDocument();
     expect(screen.getByText(/New compounds queued for initial evidence research/i)).toBeInTheDocument();
     expect(screen.getByText(/1 evidence task queued for agent pickup/i)).toBeInTheDocument();
-    expect(screen.getByText(/Blocked or review-required drafts/i)).toBeInTheDocument();
-    expect(screen.getByText(/Requested changes have been recorded/i)).toBeInTheDocument();
-    expect(screen.getByText(/Candidates cleared for the next worker/i)).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Ready for Re-review' })).not.toBeInTheDocument();
   });
 
   it('submits a new research request', async () => {
@@ -132,6 +148,9 @@ describe('CompoundList', () => {
 
   it('opens the task board for a queued research-requested compound', async () => {
     render(<CompoundList />);
+
+    const tablist = await screen.findByRole('tablist', { name: /compound queues/i });
+    fireEvent.click(within(tablist).getByRole('tab', { name: 'Research Requested (1)' }));
 
     const card = (await screen.findByText('Epitalon')).closest('[role="button"]');
     expect(card).not.toBeNull();

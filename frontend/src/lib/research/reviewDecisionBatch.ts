@@ -21,6 +21,13 @@ export function addDecision(
   return { ...batch, decisions: [...batch.decisions, decision] };
 }
 
+export function removeDecision(
+  batch: ReviewDecisionBatch,
+  decisionId: string
+): ReviewDecisionBatch {
+  return { ...batch, decisions: batch.decisions.filter(decision => decision.decisionId !== decisionId) };
+}
+
 export function toJson(batch: ReviewDecisionBatch): string {
   return JSON.stringify(batch, null, 2);
 }

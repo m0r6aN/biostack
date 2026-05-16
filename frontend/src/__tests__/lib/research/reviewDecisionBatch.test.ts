@@ -1,4 +1,4 @@
-import { addDecision, createBatch, toJson } from '@/lib/research/reviewDecisionBatch';
+import { addDecision, createBatch, removeDecision, toJson } from '@/lib/research/reviewDecisionBatch';
 import type { ReviewDecision } from '@/lib/research/types';
 
 const makeDecision = (overrides: Partial<ReviewDecision> = {}): ReviewDecision => ({
@@ -42,6 +42,16 @@ describe('addDecision', () => {
     b = addDecision(b, makeDecision({ decisionId: 'dec-001', compoundName: 'BPC-157' }));
     b = addDecision(b, makeDecision({ decisionId: 'dec-002', compoundName: 'Creatine' }));
     expect(b.decisions).toHaveLength(2);
+  });
+});
+
+describe('removeDecision', () => {
+  it('removes a decision by id without mutating the original', () => {
+    const original = addDecision(createBatch('reviewer-1'), makeDecision({ decisionId: 'dec-001' }));
+    const next = removeDecision(original, 'dec-001');
+
+    expect(next.decisions).toHaveLength(0);
+    expect(original.decisions).toHaveLength(1);
   });
 });
 
