@@ -4,6 +4,7 @@ using System.Text.Json.Nodes;
 using BioStack.KnowledgeWorker.Config;
 using BioStack.KnowledgeWorker.Jobs;
 using BioStack.KnowledgeWorker.Pipeline;
+using BioStack.KnowledgeWorker.Pipeline.Graph;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
@@ -390,7 +391,8 @@ public class ResearchJobTests
         new ReviewResolutionPlanBuilder(),
         new PromotionExporter(),
         new PromotionImportPreviewBuilder(),
-        SubstanceRecordValidator.LoadFromFile(Path.Combine(TestPaths.WorkerSchemaDirectory(), "substance-record.schema.json")));
+        SubstanceRecordValidator.LoadFromFile(Path.Combine(TestPaths.WorkerSchemaDirectory(), "substance-record.schema.json")),
+        new CompoundGraphBuilder(new RelationshipPacketAuthorizer()));
 
     private static PromotionImportDryRunJob CreateDryRunJob(WorkerOptions options) => new(
         options,

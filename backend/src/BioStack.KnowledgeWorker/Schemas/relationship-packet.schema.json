@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biostack.cc/schemas/relationship-packet.schema.json",
+  "title": "BioStack Compound Relationship Packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "recordType", "packet", "relationships", "sources", "ops"],
+  "properties": {
+    "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "recordType": { "type": "string", "const": "compound-relationship-packet" },
+    "packet": { "$ref": "#/$defs/packet" },
+    "relationships": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relationship" }
+    },
+    "sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourceSnapshot" }
+    },
+    "ops": { "$ref": "#/$defs/ops" }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "nullableString": { "type": ["string", "null"] },
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "nullableStringArray": {
+      "type": ["array", "null"],
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "sourceRefArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "packet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packetId", "agentId", "generatedAt", "sourceRegistryVersion"],
+      "properties": {
+        "packetId": { "$ref": "#/$defs/nonEmptyString" },
+        "agentId": { "$ref": "#/$defs/nonEmptyString" },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "sourceRegistryVersion": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relationshipId",
+        "subjectCompound",
+        "objectCompound",
+        "relationshipType",
+        "directionality",
+        "effectDomain",
+        "mechanismBasis",
+        "categoryBasis",
+        "claimRefs",
+        "sourceRefs",
+        "evidenceTier",
+        "confidence",
+        "communitySignal",
+        "reviewFlags",
+        "resolutionStatus"
+      ],
+      "properties": {
+        "relationshipId": { "$ref": "#/$defs/nonEmptyString" },
+        "subjectCompound": { "$ref": "#/$defs/nonEmptyString" },
+        "objectCompound": { "$ref": "#/$defs/nonEmptyString" },
+        "relationshipType": {
+          "type": "string",
+          "enum": [
+            "synergy",
+            "complementary",
+            "redundant",
+            "conflict",
+            "contraindicated",
+            "caution",
+            "timing-sensitive",
+            "dose-dependent",
+            "mechanism-overlap",
+            "opposing-effect",
+            "community-stack",
+            "popular-but-unsupported",
+            "vendor-claimed",
+            "misinformation-pattern"
+          ]
+        },
+        "directionality": {
+          "type": "string",
+          "enum": ["symmetric", "subject-to-object", "object-to-subject", "context-dependent"]
+        },
+        "effectDomain": { "$ref": "#/$defs/nonEmptyString" },
+        "mechanismBasis": { "$ref": "#/$defs/stringArray" },
+        "categoryBasis": { "$ref": "#/$defs/stringArray" },
+        "claimRefs": { "$ref": "#/$defs/stringArray" },
+        "sourceRefs": { "$ref": "#/$defs/sourceRefArray" },
+        "evidenceTier": {
+          "type": "string",
+          "enum": ["Strong", "Moderate", "Limited", "Anecdotal", "Insufficient", "Unknown"]
+        },
+        "confidence": { "type": "string", "enum": ["low", "moderate", "high", "unknown"] },
+        "communitySignal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "present",
+            "signalStrength",
+            "signalDirection",
+            "signalUse",
+            "canonicalTruthStatus",
+            "notes"
+          ],
+          "properties": {
+            "present": { "type": "boolean" },
+            "signalStrength": {
+              "type": "string",
+              "enum": ["none", "isolated", "recurring", "widespread"]
+            },
+            "signalDirection": {
+              "type": "string",
+              "enum": ["positive", "negative", "mixed", "unclear"]
+            },
+            "signalUse": {
+              "type": "string",
+              "enum": [
+                "popularity",
+                "alias-discovery",
+                "stack-pattern",
+                "adverse-self-report",
+                "misinformation",
+                "research-priority"
+              ]
+            },
+            "canonicalTruthStatus": {
+              "type": "string",
+              "enum": [
+                "unsupported",
+                "contradicted",
+                "plausible-mechanistic",
+                "partially-supported",
+                "supported",
+                "unknown"
+              ]
+            },
+            "notes": { "type": "string" }
+          }
+        },
+        "reviewFlags": { "$ref": "#/$defs/stringArray" },
+        "resolutionStatus": {
+          "type": "string",
+          "enum": ["unresolved", "resolved", "needs-human-review"]
+        },
+        "relationshipPolarity": {
+          "type": "string",
+          "enum": ["positive", "negative", "mixed", "neutral", "caution", "contradictory", "unknown"]
+        },
+        "assertionClass": {
+          "type": "string",
+          "enum": [
+            "direct-evidence",
+            "mechanistic-inference",
+            "category-inference",
+            "community-signal",
+            "vendor-claim",
+            "authoritative-caution",
+            "curator-hypothesis"
+          ]
+        },
+        "effectDirection": {
+          "type": "string",
+          "enum": ["positive", "negative", "mixed", "unclear"]
+        },
+        "riskDomains": { "$ref": "#/$defs/nullableStringArray" },
+        "contradictedByClaimRefs": { "$ref": "#/$defs/nullableStringArray" },
+        "context": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "population": { "$ref": "#/$defs/nullableString" },
+            "route": { "$ref": "#/$defs/nullableString" },
+            "formulation": { "$ref": "#/$defs/nullableString" },
+            "doseContext": { "$ref": "#/$defs/nullableString" },
+            "timingContext": { "$ref": "#/$defs/nullableString" },
+            "useCase": { "$ref": "#/$defs/nullableString" }
+          }
+        },
+        "evidenceBasis": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "directHumanEvidence": { "type": "boolean" },
+            "mechanisticEvidence": { "type": "boolean" },
+            "preclinicalEvidence": { "type": "boolean" },
+            "communitySignal": { "type": "boolean" },
+            "authoritativeSafetySignal": { "type": "boolean" },
+            "sourceFamilyCount": { "type": "integer", "minimum": 0 },
+            "independentSourceFamilyCount": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "relationshipReviewStatus": {
+          "type": "string",
+          "enum": [
+            "unreviewed",
+            "review-required",
+            "human-reviewed",
+            "rejected",
+            "accepted-as-signal",
+            "accepted-as-evidence-backed"
+          ]
+        },
+        "sourceAuthorityMix": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Advisory summary of authority tiers represented in sourceRefs.",
+          "required": ["authorityTiers"],
+          "properties": {
+            "authorityTiers": { "$ref": "#/$defs/stringArray" }
+          }
+        },
+        "assertedRelationshipType": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Original relationshipType preserved by authorizer when the relationship is quarantined or reclassified."
+        }
+      }
+    },
+    "sourceSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "sourceType", "authorityTier", "title", "url", "accessedAt"],
+      "properties": {
+        "sourceId": { "$ref": "#/$defs/nonEmptyString" },
+        "sourceType": { "$ref": "#/$defs/nonEmptyString" },
+        "authorityTier": { "$ref": "#/$defs/nonEmptyString" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "publisher": { "$ref": "#/$defs/nullableString" },
+        "url": { "$ref": "#/$defs/nullableString" },
+        "doi": { "$ref": "#/$defs/nullableString" },
+        "pmid": { "$ref": "#/$defs/nullableString" },
+        "publishedAt": { "type": ["string", "null"], "format": "date-time" },
+        "accessedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ops": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["completeness", "needsReview", "reviewReasons", "qualityFlags"],
+      "properties": {
+        "completeness": { "type": "string", "enum": ["minimal", "partial", "substantial", "complete"] },
+        "needsReview": { "type": "boolean" },
+        "reviewReasons": { "$ref": "#/$defs/stringArray" },
+        "qualityFlags": { "$ref": "#/$defs/stringArray" }
+      }
+    }
+  }
+}

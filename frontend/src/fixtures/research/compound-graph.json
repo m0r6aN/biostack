@@ -1,0 +1,120 @@
+{
+  "GraphVersion": "1.0.0",
+  "GeneratedAtUtc": "2026-05-05T09:00:00Z",
+  "Counts": {
+    "Nodes": 5,
+    "Edges": 3,
+    "ReviewRequiredEdges": 1,
+    "CommunitySignalEdges": 1,
+    "ConflictEdges": 0
+  },
+  "Nodes": [
+    {
+      "NodeId": "compound:creatine",
+      "NodeType": "compound",
+      "Label": "Creatine",
+      "Aliases": ["Creatine Monohydrate"],
+      "Metadata": { "Slug": "creatine", "Classification": "Supplement" }
+    },
+    {
+      "NodeId": "compound:beta-alanine",
+      "NodeType": "compound",
+      "Label": "Beta-Alanine",
+      "Aliases": [],
+      "Metadata": { "Slug": "beta-alanine", "Classification": "Supplement" }
+    },
+    {
+      "NodeId": "compound:bpc-157",
+      "NodeType": "compound",
+      "Label": "BPC-157",
+      "Aliases": [],
+      "Metadata": { "Slug": "bpc-157", "Classification": "Peptide" }
+    },
+    {
+      "NodeId": "compound:semaglutide",
+      "NodeType": "compound",
+      "Label": "Semaglutide",
+      "Aliases": [],
+      "Metadata": { "Slug": "semaglutide", "Classification": "Pharmaceutical" }
+    },
+    {
+      "NodeId": "category:performance-supplement",
+      "NodeType": "category",
+      "Label": "Performance Supplement",
+      "Aliases": [],
+      "Metadata": {}
+    }
+  ],
+  "Edges": [
+    {
+      "EdgeId": "edge:creatine-synergizes-beta-alanine",
+      "From": "compound:creatine",
+      "To": "compound:beta-alanine",
+      "EdgeType": "synergizes-with",
+      "RelationshipType": "synergizes-with",
+      "AssertedRelationshipType": "synergizes-with",
+      "EffectDomain": "exercise-performance",
+      "EvidenceTier": "Moderate",
+      "Confidence": "moderate",
+      "SourceRefs": ["src-creatine-001", "src-beta-alanine-001"],
+      "ClaimRefs": ["claim-creatine-perf-001"],
+      "ReviewFlags": [],
+      "NeedsReview": false,
+      "CommunitySignal": null,
+      "SourceAuthorityMix": { "AuthorityTiers": ["B", "B"] }
+    },
+    {
+      "EdgeId": "edge:bpc-community-pairs-semaglutide",
+      "From": "compound:bpc-157",
+      "To": "compound:semaglutide",
+      "EdgeType": "has-community-signal",
+      "RelationshipType": "pairs-with",
+      "AssertedRelationshipType": "pairs-with",
+      "EffectDomain": null,
+      "EvidenceTier": "Anecdotal",
+      "Confidence": "low",
+      "SourceRefs": ["src-bpc-community-001"],
+      "ClaimRefs": [],
+      "ReviewFlags": ["community-only", "low-authority"],
+      "NeedsReview": true,
+      "CommunitySignal": {
+        "Present": true,
+        "SignalStrength": "recurring",
+        "SignalDirection": "positive",
+        "SignalUse": "stack-pattern",
+        "CanonicalTruthStatus": "unsupported",
+        "Notes": "Frequent self-reports of pairing for recovery; no authoritative support."
+      },
+      "SourceAuthorityMix": { "AuthorityTiers": ["D"] }
+    },
+    {
+      "EdgeId": "edge:creatine-belongs-perf",
+      "From": "compound:creatine",
+      "To": "category:performance-supplement",
+      "EdgeType": "belongs-to-category",
+      "RelationshipType": null,
+      "AssertedRelationshipType": null,
+      "EffectDomain": null,
+      "EvidenceTier": "Strong",
+      "Confidence": "high",
+      "SourceRefs": ["src-creatine-001"],
+      "ClaimRefs": [],
+      "ReviewFlags": [],
+      "NeedsReview": false,
+      "CommunitySignal": null,
+      "SourceAuthorityMix": { "AuthorityTiers": ["A2"] }
+    }
+  ],
+  "ReviewFindings": [
+    {
+      "FindingId": "finding-bpc-semaglutide-community-001",
+      "FindingType": "popular-stack-insufficient-evidence",
+      "Severity": "moderate",
+      "CompoundRefs": ["compound:bpc-157", "compound:semaglutide"],
+      "EdgeRefs": ["edge:bpc-community-pairs-semaglutide"],
+      "Summary": "Recurring community stack pattern pairing BPC-157 with Semaglutide lacks authoritative support.",
+      "RecommendedAction": "Flag for human review; require A1/A2 evidence before surfacing as a recommended pairing.",
+      "NeedsHumanReview": true
+    }
+  ]
+}

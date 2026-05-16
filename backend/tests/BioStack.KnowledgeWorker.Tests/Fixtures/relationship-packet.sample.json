@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-relationship-packet",
+  "packet": {
+    "packetId": "rel-packet-sample-001",
+    "agentId": "relationship-agent-v1",
+    "generatedAt": "2026-05-01T12:00:00Z",
+    "sourceRegistryVersion": "2026.05.01"
+  },
+  "relationships": [
+    {
+      "relationshipId": "rel-bpc157-tb500-001",
+      "subjectCompound": "BPC-157",
+      "objectCompound": "TB-500",
+      "relationshipType": "complementary",
+      "directionality": "symmetric",
+      "effectDomain": "recovery",
+      "mechanismBasis": ["tissue-repair", "angiogenesis"],
+      "categoryBasis": ["Peptides", "Recovery"],
+      "claimRefs": ["claim-bpc157-mech-001"],
+      "sourceRefs": ["src-peptide-review-2024"],
+      "evidenceTier": "Limited",
+      "confidence": "low",
+      "communitySignal": {
+        "present": false,
+        "signalStrength": "none",
+        "signalDirection": "unclear",
+        "signalUse": "research-priority",
+        "canonicalTruthStatus": "plausible-mechanistic",
+        "notes": "Mechanistic plausibility from preclinical data; no human trials of the combination."
+      },
+      "reviewFlags": ["mechanism-not-validated-in-humans"],
+      "resolutionStatus": "needs-human-review",
+      "relationshipPolarity": "positive",
+      "assertionClass": "mechanistic-inference",
+      "effectDirection": "positive",
+      "relationshipReviewStatus": "review-required"
+    },
+    {
+      "relationshipId": "rel-sema-tirz-001",
+      "subjectCompound": "Semaglutide",
+      "objectCompound": "Tirzepatide",
+      "relationshipType": "redundant",
+      "directionality": "symmetric",
+      "effectDomain": "metabolic-health",
+      "mechanismBasis": ["incretin-signaling"],
+      "categoryBasis": ["Metabolic Health", "Weight Loss"],
+      "claimRefs": ["claim-glp1-mech-001"],
+      "sourceRefs": ["src-nejm-surmount-2022"],
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "communitySignal": {
+        "present": false,
+        "signalStrength": "none",
+        "signalDirection": "unclear",
+        "signalUse": "research-priority",
+        "canonicalTruthStatus": "partially-supported",
+        "notes": "Both drugs target overlapping incretin pathway; combined use considered redundant and elevates adverse-event risk."
+      },
+      "reviewFlags": ["overlapping-mechanism-risk"],
+      "resolutionStatus": "needs-human-review",
+      "relationshipPolarity": "caution",
+      "assertionClass": "direct-evidence",
+      "effectDirection": "mixed",
+      "relationshipReviewStatus": "review-required"
+    },
+    {
+      "relationshipId": "rel-caffeine-broscience-001",
+      "subjectCompound": "Caffeine",
+      "objectCompound": "Yohimbine",
+      "relationshipType": "community-stack",
+      "directionality": "symmetric",
+      "effectDomain": "performance",
+      "mechanismBasis": [],
+      "categoryBasis": ["Performance"],
+      "claimRefs": [],
+      "sourceRefs": ["src-forum-broscience-thread-001"],
+      "evidenceTier": "Anecdotal",
+      "confidence": "low",
+      "communitySignal": {
+        "present": true,
+        "signalStrength": "recurring",
+        "signalDirection": "positive",
+        "signalUse": "stack-pattern",
+        "canonicalTruthStatus": "unsupported",
+        "notes": "Recurring forum-level stack pattern with no peer-reviewed support; commonly reported jitters and anxiety."
+      },
+      "reviewFlags": ["low-authority-relationship-claim"],
+      "resolutionStatus": "needs-human-review",
+      "assertionClass": "community-signal",
+      "relationshipReviewStatus": "review-required"
+    }
+  ],
+  "sources": [
+    {
+      "sourceId": "src-peptide-review-2024",
+      "sourceType": "review-article",
+      "authorityTier": "B",
+      "title": "Therapeutic peptides in tissue repair: a narrative review",
+      "publisher": "Journal of Regenerative Medicine",
+      "url": "https://example.org/peptide-review-2024",
+      "doi": "10.1000/example.2024.001",
+      "pmid": null,
+      "publishedAt": "2024-03-15T00:00:00Z",
+      "accessedAt": "2026-04-30T18:22:00Z"
+    },
+    {
+      "sourceId": "src-nejm-surmount-2022",
+      "sourceType": "rct",
+      "authorityTier": "A",
+      "title": "Tirzepatide once weekly for the treatment of obesity (SURMOUNT-1)",
+      "publisher": "New England Journal of Medicine",
+      "url": "https://example.org/nejm-surmount-2022",
+      "doi": "10.1056/example.2022.001",
+      "pmid": "35658024",
+      "publishedAt": "2022-07-21T00:00:00Z",
+      "accessedAt": "2026-04-30T18:25:00Z"
+    },
+    {
+      "sourceId": "src-forum-broscience-thread-001",
+      "sourceType": "forum-thread",
+      "authorityTier": "D",
+      "title": "Caffeine + yohimbine pre-workout — anyone stacking?",
+      "publisher": "r/PEDs",
+      "url": "https://example.org/forum/thread/12345",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-09-10T14:00:00Z",
+      "accessedAt": "2026-04-30T18:30:00Z"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": ["mechanism-not-validated"],
+    "qualityFlags": []
+  }
+}

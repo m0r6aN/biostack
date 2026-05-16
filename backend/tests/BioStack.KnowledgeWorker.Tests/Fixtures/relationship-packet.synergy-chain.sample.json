@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-relationship-packet",
+  "packet": {
+    "packetId": "rel-packet-synergy-chain-001",
+    "agentId": "relationship-agent-v1",
+    "generatedAt": "2026-05-01T13:00:00Z",
+    "sourceRegistryVersion": "2026.05.01"
+  },
+  "relationships": [
+    {
+      "relationshipId": "rel-chain-alpha-beta-001",
+      "subjectCompound": "ChainTest-Alpha",
+      "objectCompound": "ChainTest-Beta",
+      "relationshipType": "synergy",
+      "directionality": "symmetric",
+      "effectDomain": "cognitive-performance",
+      "mechanismBasis": ["pathway-overlap"],
+      "categoryBasis": ["Nootropic"],
+      "claimRefs": ["claim-chain-ab-001"],
+      "sourceRefs": ["src-chain-review-001"],
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "communitySignal": {
+        "present": false,
+        "signalStrength": "none",
+        "signalDirection": "unclear",
+        "signalUse": "research-priority",
+        "canonicalTruthStatus": "plausible-mechanistic",
+        "notes": "Preclinical synergy reported."
+      },
+      "reviewFlags": [],
+      "resolutionStatus": "unresolved",
+      "relationshipPolarity": "positive",
+      "assertionClass": "mechanistic-inference",
+      "effectDirection": "positive",
+      "relationshipReviewStatus": "unreviewed"
+    },
+    {
+      "relationshipId": "rel-chain-beta-gamma-001",
+      "subjectCompound": "ChainTest-Beta",
+      "objectCompound": "ChainTest-Gamma",
+      "relationshipType": "synergy",
+      "directionality": "symmetric",
+      "effectDomain": "cognitive-performance",
+      "mechanismBasis": ["pathway-overlap"],
+      "categoryBasis": ["Nootropic"],
+      "claimRefs": ["claim-chain-bg-001"],
+      "sourceRefs": ["src-chain-review-002"],
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "communitySignal": {
+        "present": false,
+        "signalStrength": "none",
+        "signalDirection": "unclear",
+        "signalUse": "research-priority",
+        "canonicalTruthStatus": "plausible-mechanistic",
+        "notes": "Preclinical synergy reported."
+      },
+      "reviewFlags": [],
+      "resolutionStatus": "unresolved",
+      "relationshipPolarity": "positive",
+      "assertionClass": "mechanistic-inference",
+      "effectDirection": "positive",
+      "relationshipReviewStatus": "unreviewed"
+    },
+    {
+      "relationshipId": "rel-chain-alpha-gamma-001",
+      "subjectCompound": "ChainTest-Alpha",
+      "objectCompound": "ChainTest-Gamma",
+      "relationshipType": "conflict",
+      "directionality": "symmetric",
+      "effectDomain": "cognitive-performance",
+      "mechanismBasis": ["receptor-antagonism"],
+      "categoryBasis": ["Nootropic"],
+      "claimRefs": ["claim-chain-ag-conflict-001"],
+      "sourceRefs": ["src-chain-rct-003"],
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "communitySignal": {
+        "present": false,
+        "signalStrength": "none",
+        "signalDirection": "unclear",
+        "signalUse": "research-priority",
+        "canonicalTruthStatus": "partially-supported",
+        "notes": "Direct human trial showed antagonistic interaction."
+      },
+      "reviewFlags": ["chain-conflict"],
+      "resolutionStatus": "needs-human-review",
+      "relationshipPolarity": "contradictory",
+      "assertionClass": "direct-evidence",
+      "effectDirection": "negative",
+      "relationshipReviewStatus": "review-required"
+    }
+  ],
+  "sources": [
+    {
+      "sourceId": "src-chain-review-001",
+      "sourceType": "review-article",
+      "authorityTier": "B",
+      "title": "Alpha-Beta interaction: preclinical synergy review",
+      "publisher": "Journal of Pathway Studies",
+      "url": "https://example.org/chain-review-001",
+      "doi": "10.1000/chain.2024.001",
+      "pmid": null,
+      "publishedAt": "2024-06-01T00:00:00Z",
+      "accessedAt": "2026-04-30T19:00:00Z"
+    },
+    {
+      "sourceId": "src-chain-review-002",
+      "sourceType": "review-article",
+      "authorityTier": "B",
+      "title": "Beta-Gamma interaction: preclinical synergy review",
+      "publisher": "Journal of Pathway Studies",
+      "url": "https://example.org/chain-review-002",
+      "doi": "10.1000/chain.2024.002",
+      "pmid": null,
+      "publishedAt": "2024-08-10T00:00:00Z",
+      "accessedAt": "2026-04-30T19:05:00Z"
+    },
+    {
+      "sourceId": "src-chain-rct-003",
+      "sourceType": "review-article",
+      "authorityTier": "B",
+      "title": "Alpha + Gamma co-administration RCT summary",
+      "publisher": "Journal of Combination Trials",
+      "url": "https://example.org/chain-rct-003",
+      "doi": "10.1000/chain.2025.003",
+      "pmid": null,
+      "publishedAt": "2025-02-12T00:00:00Z",
+      "accessedAt": "2026-04-30T19:10:00Z"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": ["chain-conflict-detected"],
+    "qualityFlags": []
+  }
+}

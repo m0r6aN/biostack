@@ -81,6 +81,11 @@ vi.mock('@/lib/research/loader', () => ({
     }],
     conflicts: [], ops: { completeness: 'partial', needsReview: true, reviewReasons: [], qualityFlags: [] },
   }),
+  fetchCompoundGraph: vi.fn().mockResolvedValue({
+    graphVersion: '1.0.0', generatedAtUtc: '',
+    counts: { nodes: 0, edges: 0, reviewRequiredEdges: 0, communitySignalEdges: 0, conflictEdges: 0 },
+    nodes: [], edges: [], reviewFindings: [],
+  }),
 }));
 
 describe('CompoundDetail', () => {
