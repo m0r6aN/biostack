@@ -1,7 +1,7 @@
 # Compound Relationship User Surface — Design Spec
 **Date:** 2026-05-16  
 **PR:** 2 — User-facing compound relationship explanations  
-**Status:** Approved
+**Status:** Ready for implementation
 
 ---
 
@@ -123,7 +123,7 @@ export function getCommunitySignalLabel(
 | `complements` | "May support the same goal differently" |
 | `redundantwith` | "May overlap" |
 | `conflictswith`, `opposeseffect`, `opposingeffect` | "Potential conflict" |
-| `avoidwith` | "Use with caution together" |
+| `avoidwith` | "Caution signal" |
 | `hascommunitysignal` | "Community-reported pairing" |
 | `contradictedby` | "Contradicted by evidence" |
 | *(unknown)* | "Related compound" |
@@ -136,7 +136,7 @@ export function getCommunitySignalLabel(
 | `moderate` | "Moderate evidence" |
 | `limited` | "Limited evidence" |
 | `mechanistic` | "Mechanistic evidence" |
-| `anecdotal` | "Community report — not clinically verified" |
+| `anecdotal` | "Community report: not clinically verified" |
 | `insufficient`, `unknown`, null, unrecognised | "Evidence level unknown" |
 
 **Community signal labels (`getCommunitySignalLabel`):**
@@ -206,8 +206,8 @@ interface Props {
 
 **Behaviour:**
 
-1. On mount, read token from `useAuth()`. Call `fetchCompoundGraph(token)`.
-2. On any fetch error → set internal graph state to null, render nothing.
+1. On mount, read token from `useAuth()`. If token is missing or falsy, render null without calling `fetchCompoundGraph`.
+2. Call `fetchCompoundGraph(token)`. On any fetch error → set internal graph state to null, render nothing.
 3. Filter edges: `isRelationshipEdge(edge.edgeType)` must return true.
 4. Match edges: normalize both endpoints with `normalizeCompoundId`. Compare against `normalizeCompoundId(compoundName)` and every `normalizeCompoundId(alias)` in `aliases ?? []`.
 5. Extract counterpart: the endpoint that is NOT this compound. Look up its node from `graph.nodes` by `nodeId`. Confirm `counterpart.nodeType === 'compound'` before linking.
@@ -221,8 +221,9 @@ interface Props {
 **Counterpart link rule:**
 - Only link if `counterpart.nodeType === 'compound'` (exact match on the typed `CompoundGraphNodeType`).
 - Derive slug using existing `toSlug(counterpart.label)` from `lib/research/slugs.ts`.
+- Only link when `toSlug(counterpart.label)` returns a non-empty string containing only safe URL path characters (i.e., the function produced a usable slug). If the result is empty, render plain text.
 - Link target: `/knowledge/${slug}`.
-- If counterpart is not a confirmed compound node, render plain text.
+- If counterpart is not a confirmed compound node or slug is empty, render plain text.
 
 **Fields explicitly excluded from the DOM:**
 `assertedRelationshipType`, `sourceAuthorityMix`, `canonicalTruthStatus`, `reviewFlags` array contents, `sourceRefs`, `claimRefs`, raw `edgeType` strings.
@@ -279,7 +280,7 @@ interface Props {
 | 6 | `getRelationshipLabel` maps all expected edge types to user-facing copy |
 | 7 | `getRelationshipLabel` returns `"Related compound"` for unknown types |
 | 8 | `getEvidenceTierLabel` is case-insensitive (`STRONG`, `Strong`, `strong` all map the same) |
-| 9 | `getEvidenceTierLabel` maps `anecdotal` to `"Community report — not clinically verified"` |
+| 9 | `getEvidenceTierLabel` maps `anecdotal` to `"Community report: not clinically verified"` |
 | 10 | `getEvidenceTierLabel` returns `"Evidence level unknown"` for null/undefined/empty |
 | 11 | `getCommunitySignalLabel` returns strings for isolated/recurring/widespread |
 | 12 | `getCommunitySignalLabel` returns null for `none` and absent/null |
@@ -298,20 +299,21 @@ interface Props {
 
 | # | Test |
 |---|------|
-| 1 | Renders null when `fetchCompoundGraph` throws |
-| 2 | Renders null when graph has no matching relationship edges |
-| 3 | Filters out taxonomic edges (`belongs-to-category`, `affects-pathway`) |
-| 4 | Matches compound by canonical name |
-| 5 | Matches compound by alias |
-| 6 | Matches compound by normalized node ID with `compound:` prefix stripped |
-| 7 | Renders user-facing labels for `synergizes-with`, `conflicts-with`, `has-community-signal` — no raw edge type strings in DOM |
-| 8 | Renders `"Community report — not clinically verified"` for Anecdotal evidence tier |
-| 9 | Renders community signal badge for `recurring` and `widespread`; hides for `none`/absent |
-| 10 | Renders `"Awaiting research review · Advisory signal only"` for `needsReview: true` |
-| 11 | Does not render: `assertedRelationshipType`, `sourceAuthorityMix`, `canonicalTruthStatus`, raw `reviewFlags`, `sourceRefs`, `claimRefs`, raw `edgeType` |
-| 12 | Links counterpart name to `/knowledge/[slug]` only when `node.nodeType === "compound"` and slug is safe |
-| 13 | Sort order: stronger evidence tier first, then `needsReview: true` first, then counterpart label alphabetically |
-| 14 | Skips malformed/partial edges without crashing; renders remaining valid edges |
+| 1 | Renders null and does not call `fetchCompoundGraph` when auth token is missing or falsy |
+| 2 | Renders null when `fetchCompoundGraph` throws |
+| 3 | Renders null when graph has no matching relationship edges |
+| 4 | Filters out taxonomic edges (`belongs-to-category`, `affects-pathway`) |
+| 5 | Matches compound by canonical name |
+| 6 | Matches compound by alias |
+| 7 | Matches compound by normalized node ID with `compound:` prefix stripped |
+| 8 | Renders user-facing labels for `synergizes-with`, `conflicts-with`, `has-community-signal` — no raw edge type strings in DOM |
+| 9 | Renders `"Community report: not clinically verified"` for Anecdotal evidence tier |
+| 10 | Renders community signal badge for `recurring` and `widespread`; hides for `none`/absent |
+| 11 | Renders `"Awaiting research review · Advisory signal only"` for `needsReview: true` |
+| 12 | Does not render: `assertedRelationshipType`, `sourceAuthorityMix`, `canonicalTruthStatus`, raw `reviewFlags`, `sourceRefs`, `claimRefs`, raw `edgeType` |
+| 13 | Links counterpart name to `/knowledge/[slug]` only when `node.nodeType === "compound"` and `toSlug(label)` is non-empty |
+| 14 | Sort order: stronger evidence tier first, then `needsReview: true` first, then counterpart label alphabetically |
+| 15 | Skips malformed/partial edges without crashing; renders remaining valid edges |
 
 ### Admin regression test (add to `__tests__/components/research/CompoundRelationshipPanel.test.tsx`)
 
