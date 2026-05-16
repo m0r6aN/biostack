@@ -1,4 +1,5 @@
 import type {
+    CompoundGraph,
     EvidencePacket,
     PromotionExportManifest,
     PromotionImportDryRunReport,
@@ -75,3 +76,6 @@ export const fetchPromotableSubstances = (t: string) =>
 
 export const fetchEvidencePacket = (slug: string, t: string) =>
   fetchArtifact<EvidencePacket>(`evidence-packet/${slug}`, t);
+
+export const fetchCompoundGraph = (t: string) =>
+  fetchArtifact<CompoundGraph>('compound-graph', t);

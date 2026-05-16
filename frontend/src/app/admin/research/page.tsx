@@ -3,8 +3,8 @@ import { Header } from '@/components/Header';
 import { ResearchStatChip } from '@/components/research/ResearchStatChip';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { getApiBaseUrl } from '@/lib/apiBase';
-import { fetchDryRunReport, fetchImportPreview, fetchPromotionManifest, fetchResearchSummary, fetchReviewResolutionPlan } from '@/lib/research/loader';
-import type { PromotionImportDryRunReport, PromotionImportPreview, PromotionManifest, ResearchSummary, ReviewResolutionPlan } from '@/lib/research/types';
+import { fetchCompoundGraph, fetchDryRunReport, fetchImportPreview, fetchPromotionManifest, fetchResearchSummary, fetchReviewResolutionPlan } from '@/lib/research/loader';
+import type { CompoundGraph, PromotionImportDryRunReport, PromotionImportPreview, PromotionManifest, ResearchSummary, ReviewResolutionPlan } from '@/lib/research/types';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
@@ -23,6 +23,7 @@ export default function ResearchDashboard() {
   const [plan, setPlan] = useState<ReviewResolutionPlan | null>(null);
   const [importPreview, setImportPreview] = useState<PromotionImportPreview | null>(null);
   const [dryRun, setDryRun] = useState<PromotionImportDryRunReport | null>(null);
+  const [graph, setGraph] = useState<CompoundGraph | null>(null);
   const [error, setError] = useState('');
   const tokenRef = useRef<string | null>(null);
 
@@ -37,15 +38,16 @@ export default function ResearchDashboard() {
     async function load() {
       const t = tokenRef.current ?? '';
       try {
-        const [s, m, p, ip, dr] = await Promise.all([
+        const [s, m, p, ip, dr, g] = await Promise.all([
           fetchResearchSummary(t),
           fetchPromotionManifest(t),
           fetchReviewResolutionPlan(t),
           fetchImportPreview(t).catch(() => null),
           fetchDryRunReport(t).catch(() => null),
+          fetchCompoundGraph(t).catch(() => null),
         ]);
         setSummary(s); setManifest(m); setPlan(p);
-        setImportPreview(ip); setDryRun(dr);
+        setImportPreview(ip); setDryRun(dr); setGraph(g);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load research data');
       }
@@ -73,6 +75,26 @@ export default function ResearchDashboard() {
           <ResearchStatChip label="Active Exports"   value={importPreview?.counts.activeRecords ?? '—'}   color={(importPreview?.counts.activeRecords ?? 0) > 0 ? 'red' : 'green'} />
           <ResearchStatChip label="Dry-Run Safe"     value={dryRun ? (dryRun.safeToApply ? 'Yes' : 'No') : '—'} color={dryRun ? (dryRun.safeToApply ? 'green' : 'red') : 'neutral'} />
         </div>
+
+        {/* Compound Relationship Graph counts */}
+        <GlassCard className="px-5 py-3">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px]">
+            <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40 mr-2">Relationship Graph</h3>
+            {graph ? (
+              <>
+                <span className="text-white/80"><strong className="text-white">{graph.counts.edges}</strong> relationships</span>
+                <span className="text-white/30">·</span>
+                <span className="text-amber-400"><strong>{graph.counts.reviewRequiredEdges}</strong> review-required</span>
+                <span className="text-white/30">·</span>
+                <span className="text-sky-300"><strong>{graph.counts.communitySignalEdges}</strong> community-signal</span>
+                <span className="text-white/30">·</span>
+                <span className="text-rose-400"><strong>{graph.counts.conflictEdges}</strong> conflicts</span>
+              </>
+            ) : (
+              <span className="text-white/30">Relationship graph not generated for this run yet.</span>
+            )}
+          </div>
+        </GlassCard>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left: Review Categories */}

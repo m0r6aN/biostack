@@ -1,20 +1,21 @@
 'use client';
 import { Header } from '@/components/Header';
 import { BlockerCard } from '@/components/research/BlockerCard';
+import { CompoundRelationshipPanel, countRelationshipEdgesForCompound } from '@/components/research/CompoundRelationshipPanel';
 import { ReadinessBadge } from '@/components/research/ReadinessBadge';
 import { ResolutionPlanItem } from '@/components/research/ResolutionPlanItem';
 import { ReviewDecisionForm } from '@/components/research/ReviewDecisionForm';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { getApiBaseUrl } from '@/lib/apiBase';
 import { useReviewDecision } from '@/lib/research/ReviewDecisionContext';
-import { fetchEvidencePacket, fetchPromotionManifest, fetchResearchSummary, fetchResearchTaskQueue, fetchReviewQueue, fetchReviewResolutionPlan } from '@/lib/research/loader';
+import { fetchCompoundGraph, fetchEvidencePacket, fetchPromotionManifest, fetchResearchSummary, fetchResearchTaskQueue, fetchReviewQueue, fetchReviewResolutionPlan } from '@/lib/research/loader';
 import { buildSlugMap, toSlug } from '@/lib/research/slugs';
-import type { EvidencePacket, PromotionManifestCandidate, ResearchReviewQueueItem, ResearchSummaryCompound, ResearchTaskQueue, ReviewDecision, ReviewResolutionPlan, ReviewResolutionPlanItem } from '@/lib/research/types';
+import type { CompoundGraph, EvidencePacket, PromotionManifestCandidate, ResearchReviewQueueItem, ResearchSummaryCompound, ResearchTaskQueue, ReviewDecision, ReviewResolutionPlan, ReviewResolutionPlanItem } from '@/lib/research/types';
 import { cn } from '@/lib/utils';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
-type Tab = 'overview' | 'claims' | 'resolution' | 'decision';
+type Tab = 'overview' | 'claims' | 'resolution' | 'decision' | 'relationships';
 
 const STATUS_COLOR: Record<string, string> = {
   Strong: 'text-emerald-400', Moderate: 'text-blue-400', Limited: 'text-amber-400',
@@ -38,6 +39,8 @@ export default function CompoundDetail() {
   const [reviewQueue, setReviewQueue] = useState<ResearchReviewQueueItem[]>([]);
   const [researchTaskQueue, setResearchTaskQueue] = useState<ResearchTaskQueue | null>(null);
   const [plan, setPlan] = useState<ReviewResolutionPlan | null>(null);
+  const [compoundGraph, setCompoundGraph] = useState<CompoundGraph | null>(null);
+  const [knownCompoundSlugs, setKnownCompoundSlugs] = useState<ReadonlySet<string>>(new Set());
   const [notFound, setNotFound] = useState(false);
   const [tab, setTab] = useState<Tab>('overview');
 
@@ -56,15 +59,18 @@ export default function CompoundDetail() {
       setEvidencePacketMissing(false);
       setReviewQueue([]);
       setResearchTaskQueue(null);
+      setCompoundGraph(null);
       try {
-        const [summary, manifest, resolutionPlan, queue, taskQueue] = await Promise.all([
+        const [summary, manifest, resolutionPlan, queue, taskQueue, graph] = await Promise.all([
           fetchResearchSummary(t),
           fetchPromotionManifest(t),
           fetchReviewResolutionPlan(t),
           fetchReviewQueue(t).catch(() => [] as ResearchReviewQueueItem[]),
           fetchResearchTaskQueue(t).catch(() => null),
+          fetchCompoundGraph(t).catch(() => null),
         ]);
         const slugMap = buildSlugMap(summary.compounds);
+        setKnownCompoundSlugs(new Set(slugMap.keys()));
         const canonicalName = slugMap.get(slug);
         if (!canonicalName) { setNotFound(true); return; }
 
@@ -77,6 +83,7 @@ export default function CompoundDetail() {
         setPlan(resolutionPlan);
         setReviewQueue(queue);
         setResearchTaskQueue(taskQueue);
+        setCompoundGraph(graph);
 
         try {
           setEvidencePacket(await fetchEvidencePacket(slug, t));
@@ -94,6 +101,9 @@ export default function CompoundDetail() {
   }, [slug]);
 
   const planItems = plan?.items.filter(i => i.compoundName === compound?.name) ?? [];
+  const relationshipCount = compound
+    ? countRelationshipEdgesForCompound(compoundGraph, { canonicalName: compound.name, slug })
+    : 0;
   const compoundQueueItems = reviewQueue.filter(item => item.compoundName === compound?.name);
   const queuedResearchTask = researchTaskQueue?.items.find(item => item.compoundName === compound?.name) ?? null;
   const consumedResearchTask = (researchTaskQueue?.resolvedItems ?? []).find(item => item.compoundName === compound?.name) ?? null;
@@ -179,6 +189,7 @@ export default function CompoundDetail() {
             { key: 'claims',     label: 'Claims' },
             { key: 'resolution', label: `Remediation Plan (${planItems.length})` },
             { key: 'decision',   label: 'Review Decision' },
+            { key: 'relationships', label: `Relationships (${relationshipCount})` },
           ] as { key: Tab; label: string }[]).map(t => (
             <button
               key={t.key}
@@ -391,6 +402,14 @@ export default function CompoundDetail() {
           <GlassCard className="p-5">
             <p className="text-sm text-white/30">Promotion manifest entry not found for this compound.</p>
           </GlassCard>
+        )}
+
+        {tab === 'relationships' && (
+          <CompoundRelationshipPanel
+            graph={compoundGraph}
+            compound={{ canonicalName: compound.name, slug }}
+            knownSlugs={knownCompoundSlugs}
+          />
         )}
       </main>
     </div>

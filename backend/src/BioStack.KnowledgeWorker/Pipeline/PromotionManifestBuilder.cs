@@ -22,7 +22,8 @@ public sealed record PromotionManifestOutputs(
     string ReviewQueue,
     string ResearchSummary,
     string RunReport,
-    string? ResearchTaskQueue = null);
+    string? ResearchTaskQueue = null,
+    string? CompoundGraph = null);
 
 public sealed record PromotionManifestCandidate(
     string Name,

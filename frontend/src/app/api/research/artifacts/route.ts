@@ -11,6 +11,7 @@ const ALLOWED: Record<string, { filename: string; scope: ArtifactScope }> = {
   'promotion-manifest': { filename: 'promotion-manifest.json', scope: 'data-source' },
   'review-queue': { filename: 'review-queue.json', scope: 'data-source' },
   'review-resolution-plan': { filename: 'review-resolution-plan.json', scope: 'data-source' },
+  'compound-graph': { filename: 'compound-graph.json', scope: 'data-source' },
   'promotion-import-preview': { filename: 'promotion-import-preview.json', scope: 'data-source' },
   'import-dry-run/promotion-import-dry-run-report': {
     filename: 'import-dry-run/promotion-import-dry-run-report.json',

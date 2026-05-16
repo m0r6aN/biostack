@@ -473,3 +473,102 @@ export interface ReviewDecisionBatch {
 }
 
 export type SlugMap = Map<string, string>; // slug → canonicalName
+
+// ── Compound Relationship Graph ───────────────────────────────────────────────
+export type CompoundGraphNodeType =
+  | 'compound' | 'category' | 'mechanism' | 'pathway'
+  | 'target' | 'effect-domain' | 'risk-domain'
+  | 'source-family' | 'claim';
+
+export type CompoundGraphEdgeType =
+  | 'belongs-to-category' | 'affects-pathway' | 'has-target'
+  | 'has-benefit-claim' | 'has-risk-claim'
+  | 'pairs-with' | 'avoid-with' | 'synergizes-with'
+  | 'complements' | 'redundant-with' | 'conflicts-with'
+  | 'opposes-effect' | 'has-community-signal'
+  | 'supported-by' | 'contradicted-by' | 'source-derived-from';
+
+export type CompoundGraphFindingType =
+  | 'synergy-chain-with-conflict'
+  | 'same-category-opposing-effects'
+  | 'shared-pathway-additive-risk'
+  | 'popular-stack-insufficient-evidence'
+  | 'community-claim-contradicted-by-authority';
+
+export type CompoundGraphFindingSeverity = 'low' | 'moderate' | 'high' | 'critical';
+
+export type CommunitySignalStrength = 'none' | 'isolated' | 'recurring' | 'widespread';
+export type CommunitySignalDirection = 'positive' | 'negative' | 'mixed' | 'unclear';
+export type CommunitySignalUse =
+  | 'popularity' | 'alias-discovery' | 'stack-pattern'
+  | 'adverse-self-report' | 'misinformation' | 'research-priority';
+export type CanonicalTruthStatus =
+  | 'unsupported' | 'contradicted' | 'plausible-mechanistic'
+  | 'partially-supported' | 'supported' | 'unknown';
+
+export interface CommunitySignal {
+  present: boolean;
+  signalStrength: CommunitySignalStrength;
+  signalDirection: CommunitySignalDirection;
+  signalUse?: CommunitySignalUse | null;
+  canonicalTruthStatus: CanonicalTruthStatus;
+  notes?: string | null;
+}
+
+export interface SourceAuthorityMix {
+  authorityTiers: string[];
+}
+
+export interface CompoundGraphNode {
+  nodeId: string;
+  nodeType: CompoundGraphNodeType;
+  label: string;
+  aliases: string[];
+  metadata: Record<string, unknown>;
+}
+
+export interface CompoundGraphEdge {
+  edgeId: string;
+  from: string;
+  to: string;
+  edgeType: CompoundGraphEdgeType;
+  relationshipType?: string | null;
+  assertedRelationshipType?: string | null;
+  effectDomain?: string | null;
+  evidenceTier?: string | null;
+  confidence?: string | null;
+  sourceRefs: string[];
+  claimRefs: string[];
+  reviewFlags: string[];
+  needsReview: boolean;
+  communitySignal?: CommunitySignal | null;
+  sourceAuthorityMix: SourceAuthorityMix;
+}
+
+export interface CompoundGraphReviewFinding {
+  findingId: string;
+  findingType: CompoundGraphFindingType;
+  severity: CompoundGraphFindingSeverity;
+  compoundRefs: string[];
+  edgeRefs: string[];
+  summary: string;
+  recommendedAction: string;
+  needsHumanReview: boolean;
+}
+
+export interface CompoundGraphCounts {
+  nodes: number;
+  edges: number;
+  reviewRequiredEdges: number;
+  communitySignalEdges: number;
+  conflictEdges: number;
+}
+
+export interface CompoundGraph {
+  graphVersion: string;
+  generatedAtUtc: string;
+  counts: CompoundGraphCounts;
+  nodes: CompoundGraphNode[];
+  edges: CompoundGraphEdge[];
+  reviewFindings: CompoundGraphReviewFinding[];
+}
