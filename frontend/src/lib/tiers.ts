@@ -1,0 +1,1 @@
+export const FREE_TIER_COMPOUND_LIMIT = 8;

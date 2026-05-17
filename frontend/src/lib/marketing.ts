@@ -81,7 +81,7 @@ export const pricingTiers: PricingTier[] = [
     ctaLabel: 'Build My Protocol',
     href: '/onboarding',
     highlights: [
-      'Track up to 5 active compounds',
+      'Track up to 8 active compounds',
       'Basic knowledge library access',
       'Core check-ins',
       'Free calculators',

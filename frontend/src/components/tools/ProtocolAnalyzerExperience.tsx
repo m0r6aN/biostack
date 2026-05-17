@@ -4,6 +4,7 @@ import { trackAnalyzerEvent } from '@/lib/analyzerAnalytics';
 import { saveAnalyzerAnalysis, saveAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
 import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
+import { FREE_TIER_COMPOUND_LIMIT } from '@/lib/tiers';
 import type {
     ProtocolAnalyzerArtifact,
     ProtocolAnalyzerCounterfactual,
@@ -205,15 +206,15 @@ export function ProtocolAnalyzerExperience() {
       try {
         const payload =
           input.inputType === 'Paste'
-            ? { inputType: input.inputType, inputText: input.inputText ?? '', goal: input.goal, maxCompounds: 5 as const }
+            ? { inputType: input.inputType, inputText: input.inputText ?? '', goal: input.goal, maxCompounds: FREE_TIER_COMPOUND_LIMIT }
             : input.inputType === 'Link'
-              ? { inputType: input.inputType, linkUrl: input.linkUrl ?? '', goal: input.goal, maxCompounds: 5 as const }
+              ? { inputType: input.inputType, linkUrl: input.linkUrl ?? '', goal: input.goal, maxCompounds: FREE_TIER_COMPOUND_LIMIT }
               : {
                   inputType: input.inputType,
                   file: input.file ?? undefined,
                   sourceName: input.sourceName,
                   goal: input.goal,
-                  maxCompounds: 5 as const,
+                  maxCompounds: FREE_TIER_COMPOUND_LIMIT,
                 };
 
         setResult(await apiClient.analyzeProtocol(payload));
@@ -657,9 +658,9 @@ export function ProtocolAnalyzerExperience() {
           )}
 
           <section className="rounded-lg border border-white/[0.08] bg-[#121923]/95 p-4">
-            <h2 className="text-lg font-semibold text-white">Turn this into a BioStack protocol</h2>
+            <h2 className="text-lg font-semibold text-white">Track whether these patterns hold</h2>
             <p className="mt-3 text-sm leading-6 text-white/58">
-              Save the analysis, convert it into a protocol, and track it in Mission Control.
+              Save this stack as a protocol and check in over time to see whether the synergies and conflicts playing out now actually hold.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <button

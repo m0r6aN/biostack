@@ -135,13 +135,13 @@ export default function ProtocolsPage() {
                 {currentStack ? (
                   <>
                     <StackScoreCard score={currentStack.stackScore} />
-                    <InteractionIntelligenceCard intelligence={currentStack.interactionIntelligence} title="Current Stack Intelligence" />
+                    <InteractionIntelligenceCard intelligence={currentStack.interactionIntelligence} title="Current Stack Intelligence" showTrackingCta />
                   </>
                 ) : (
                   <LockedTierCard
                     eyebrow="Operator"
-                    title="Current stack intelligence is gated"
-                    detail={stackLockedMessage ?? 'Upgrade to Operator to unlock live stack scoring and interaction intelligence.'}
+                    title="See how your protocol fits together"
+                    detail={stackLockedMessage ?? 'Score your active stack, surface synergies and conflicts, and run counterfactual scenarios — all included in Operator.'}
                   />
                 )}
               </div>
@@ -151,8 +151,8 @@ export default function ProtocolsPage() {
               ) : (
                 <LockedTierCard
                   eyebrow="Operator"
-                  title="Simulation stays locked on Observer"
-                  detail="Observer can still save and manage protocols, but the deeper stack intelligence surfaces unlock with Operator."
+                  title="Protocol simulation unlocks with Operator"
+                  detail="Model compound timing across phases, visualize your protocol's structure, and see how your stack is projected to play out over time."
                   large
                 />
               )}

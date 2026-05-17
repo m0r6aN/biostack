@@ -18,7 +18,7 @@ function stateCopy(subscription: CurrentSubscription) {
     return {
       label: 'Observer',
       title: 'Core tracking is active.',
-      detail: 'Observer includes up to 5 active compounds. Existing data stays available if a paid plan ends.',
+      detail: 'Observer includes up to 8 active compounds. Existing data stays available if a paid plan ends.',
     };
   }
 
@@ -86,7 +86,7 @@ export default function BillingPage() {
   };
 
   const copy = subscription ? stateCopy(subscription) : null;
-  const activeLimit = subscription?.limits.active_compounds;
+  const activeLimit = subscription?.limits.active_compounds ?? undefined;
 
   return (
     <div className="w-full">
@@ -128,11 +128,11 @@ export default function BillingPage() {
               </div>
             </section>
 
-            {subscription.tier === 'Observer' && activeLimit === 5 && (
+            {subscription.tier === 'Observer' && activeLimit != null && (
               <section className="rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5">
                 <h3 className="text-base font-semibold text-amber-100">Observer active compound limit</h3>
                 <p className="mt-2 text-sm leading-6 text-amber-50/70">
-                  Observer is capped at 5 active compounds. If a paid plan ends while more are active, your data remains saved, but adding or reactivating active compounds is blocked until enough records are paused or completed.
+                  Observer is capped at {activeLimit} active compounds. If a paid plan ends while more are active, your data remains saved, but adding or reactivating active compounds is blocked until enough records are paused or completed.
                 </p>
               </section>
             )}
@@ -141,7 +141,15 @@ export default function BillingPage() {
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Operator</p>
                 <h3 className="mt-2 text-xl font-semibold text-white">Stack intelligence</h3>
-                <p className="mt-2 text-sm leading-6 text-white/55">Unlock current stack scoring, interaction intelligence, and remove the Observer active compound cap.</p>
+                <p className="mt-2 text-sm leading-6 text-white/55">See how your compounds interact — score your protocol, identify synergies and conflicts, and model what changes with counterfactual scenarios. Removes the active compound limit.</p>
+                <ul aria-label="Operator plan features" className="mt-3 space-y-1.5">
+                  {['Stack score across all compounds', 'Synergy and conflict surface', 'Counterfactual scenarios', 'No compound cap'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-xs text-white/50">
+                      <span className="h-1 w-1 flex-none rounded-full bg-emerald-400/60" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
                 <button
                   onClick={() => startCheckout('operator')}
                   disabled={busy !== null}
@@ -153,8 +161,16 @@ export default function BillingPage() {
 
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Commander</p>
-                <h3 className="mt-2 text-xl font-semibold text-white">Historical intelligence</h3>
-                <p className="mt-2 text-sm leading-6 text-white/55">Unlock protocol review, pattern memory, drift, sequence expectation, and mission control.</p>
+                <h3 className="mt-2 text-xl font-semibold text-white">Pattern intelligence</h3>
+                <p className="mt-2 text-sm leading-6 text-white/55">Track how your protocols evolve — detect trends and drift, predict what comes next, and get structured reviews across all your protocol runs.</p>
+                <ul aria-label="Commander plan features" className="mt-3 space-y-1.5">
+                  {['Trend and drift detection', 'Sequence expectation modeling', 'Structured protocol reviews', 'Cross-run comparison'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-xs text-white/50">
+                      <span className="h-1 w-1 flex-none rounded-full bg-emerald-400/60" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
                 <button
                   onClick={() => startCheckout('commander')}
                   disabled={busy !== null}
