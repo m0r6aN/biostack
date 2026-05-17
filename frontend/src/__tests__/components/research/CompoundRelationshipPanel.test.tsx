@@ -383,6 +383,40 @@ describe('CompoundRelationshipPanel', () => {
     expect(screen.getByText(/Moderate/i)).toBeInTheDocument();
   });
 
+  it('still filters relationship edges and excludes taxonomic edges after shared helper extraction', () => {
+    const graph: CompoundGraph = {
+      ...baseGraph,
+      nodes: [
+        makeNode({ nodeId: 'compound:creatine', label: 'Creatine', nodeType: 'compound' }),
+        makeNode({ nodeId: 'compound:beta-alanine', label: 'Beta-Alanine', nodeType: 'compound' }),
+        makeNode({ nodeId: 'category:performance-supplement', label: 'Performance Supplement', nodeType: 'category' }),
+      ],
+      edges: [
+        makeEdge({
+          edgeId: 'e-tax',
+          from: 'compound:creatine',
+          to: 'category:performance-supplement',
+          edgeType: 'belongs-to-category',
+        }),
+        makeEdge({
+          edgeId: 'e-rel',
+          from: 'compound:creatine',
+          to: 'compound:beta-alanine',
+          edgeType: 'synergizes-with',
+        }),
+      ],
+    };
+    render(
+      <CompoundRelationshipPanel
+        graph={graph}
+        compound={{ canonicalName: 'Creatine', slug: 'creatine', aliases: [] }}
+        knownSlugs={new Set(['creatine', 'beta-alanine'])}
+      />
+    );
+    expect(screen.getByText('Beta-Alanine')).toBeInTheDocument();
+    expect(screen.queryByText('Performance Supplement')).not.toBeInTheDocument();
+  });
+
   it('only renders the counterpart as a link when its slug is in knownSlugs', () => {
     const graph: CompoundGraph = {
       ...baseGraph,

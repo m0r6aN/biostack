@@ -3,6 +3,10 @@ import { CommunitySignalBadge } from '@/components/research/CommunitySignalBadge
 import { ReviewRequiredBadge } from '@/components/research/ReviewRequiredBadge';
 import { EvidenceTierBadge } from '@/components/knowledge/EvidenceTierBadge';
 import { GlassCard } from '@/components/ui/GlassCard';
+import {
+  RELATIONSHIP_EDGE_KEYS,
+  normalizeEdgeType as normalizeKey,
+} from '@/lib/research/compoundGraphRelationships';
 import { toSlug } from '@/lib/research/slugs';
 import type {
   CompoundGraph,
@@ -16,25 +20,6 @@ interface CompoundRelationshipPanelProps {
   graph: CompoundGraph | null;
   compound: { canonicalName: string; slug: string; aliases?: string[] };
   knownSlugs?: ReadonlySet<string>;
-}
-
-// Edge types that represent cross-compound relationships (not taxonomic).
-const RELATIONSHIP_EDGE_KEYS = new Set([
-  'pairswith',
-  'conflictswith',
-  'redundantwith',
-  'synergizeswith',
-  'complements',
-  'hascommunitysignal',
-  'contradictedby',
-  'opposeseffect',
-  'opposingeffect',
-  'avoidwith',
-]);
-
-function normalizeKey(value: string | undefined | null): string {
-  if (!value) return '';
-  return value.toString().replace(/[-_\s]/g, '').toLowerCase();
 }
 
 function kebabOrPascalToTitle(value: string | undefined | null): string {
