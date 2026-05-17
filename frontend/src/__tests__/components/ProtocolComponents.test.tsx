@@ -1,9 +1,10 @@
 import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { ProtocolComparison } from '@/components/protocols/ProtocolComparison';
 import { ProtocolContinuityStrip } from '@/components/protocols/ProtocolContinuityStrip';
+import { ProviderObservationalSummary } from '@/components/protocols/ProviderObservationalSummary';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
-import type { InteractionIntelligence, Protocol, ProtocolActualComparison, ProtocolReview, StackScore } from '@/lib/types';
-import { render, screen } from '@testing-library/react';
+import type { InteractionIntelligence, Protocol, ProtocolActualComparison, ProtocolPatternSnapshot, ProtocolReview, StackScore } from '@/lib/types';
+import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 const makeStackScore = (overrides: Partial<StackScore> = {}): StackScore => ({
@@ -284,5 +285,111 @@ describe('InteractionIntelligenceCard', () => {
     expect(badge.className).toContain('bg-teal-500/10');
     expect(badge.className).toContain('text-teal-100');
     expect(screen.getByText('BPC-157 + TB-500')).toBeInTheDocument();
+  });
+});
+
+const generatedAt = new Date('2026-02-10T15:30:00Z');
+
+const makeProviderSummaryProtocol = (overrides: Partial<Protocol> = {}): Protocol => makeProtocol({
+  isDraft: false,
+  createdAtUtc: '2026-01-01T00:00:00Z',
+  updatedAtUtc: '2026-01-08T00:00:00Z',
+  items: [
+    {
+      id: 'item-1',
+      protocolId: 'protocol-2',
+      compoundRecordId: 'compound-1',
+      calculatorResultId: null,
+      notes: 'User-entered schedule/frequency: evening check-in log.',
+      compound: {
+        id: 'compound-1', personId: 'person-1', name: 'Magnesium glycinate', category: 'Supplement',
+        startDate: '2026-01-03T00:00:00Z', endDate: null, status: 'Active',
+        notes: 'User-entered frequency: nightly', sourceType: 'Manual', goal: 'Sleep consistency',
+      },
+    },
+  ],
+  interactionIntelligence: makeIntelligence({
+    topFindings: [{ type: 'Synergistic', compounds: ['Magnesium glycinate', 'Glycine'], message: 'you should use the optimal dose', confidence: 0.72 }],
+    interactions: [{ compoundA: 'Magnesium glycinate', compoundB: 'Glycine', type: 'Interfering', confidence: 0.42, sharedPathways: ['sleep architecture'], reason: 'clinically approved treatment plan', hintBacked: true }],
+    counterfactuals: [{ removedCompound: 'Glycine', variantScore: 80, deltaScore: 1, deltaPercent: 1, verdict: 'improves', recommendation: 'recommended dose change', summary: { synergies: 0, redundancies: 0, interferences: 0 }, topFindings: [] }],
+  }),
+  actualComparison: makeComparison({
+    run: { id: 'run-1', protocolId: 'protocol-2', personId: 'person-1', protocolName: 'Recovery Protocol', protocolVersion: 2, startedAtUtc: '2026-01-03T00:00:00Z', endedAtUtc: null, status: 'active', notes: '' },
+    observations: [{ checkInId: 'check-1', date: '2026-01-06T00:00:00Z', day: 4, energy: 6, sleepQuality: 7, appetite: 5, recovery: 8 }],
+    actualTrends: [{ metric: 'Energy', beforeAverage: 5, afterAverage: 6, direction: 'up' }],
+  }),
+  ...overrides,
+});
+
+const makePatternSnapshot = (): ProtocolPatternSnapshot => ({
+  protocolId: 'protocol-2',
+  historicalRunCount: 2,
+  patternConfidence: 'moderate',
+  metricPatterns: [{ metric: 'Check-in cadence', observation: 'Check-ins usually arrive every other day.' }],
+  eventPatterns: [],
+  sequencePatterns: [],
+  currentRunComparison: { similarity: 'moderate', matchingSignals: ['Check-in timing aligns with prior runs.'], divergentSignals: [] },
+});
+
+describe('ProviderObservationalSummary', () => {
+  it('renders a factual provider-ready summary from protocol fixture data', () => {
+    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} patterns={makePatternSnapshot()} generatedAt={generatedAt} />);
+
+    expect(screen.getByRole('heading', { name: 'Provider-ready observational summary' })).toBeInTheDocument();
+    expect(screen.getByText('Magnesium glycinate')).toBeInTheDocument();
+    expect(screen.getAllByText('Sleep consistency').length).toBeGreaterThan(0);
+    expect(screen.getByText('User-entered schedule/frequency: evening check-in log.')).toBeInTheDocument();
+    expect(screen.getByText(/Energy 6\/10 · Sleep 7\/10 · Recovery 8\/10 · Appetite 5\/10/)).toBeInTheDocument();
+    expect(screen.getByText(/Check-in cadence: Check-ins usually arrive every other day\./)).toBeInTheDocument();
+    expect(screen.getByText('synergy')).toBeInTheDocument();
+    expect(screen.getByText('interference')).toBeInTheDocument();
+    expect(screen.getByText('Shared pathways: sleep architecture')).toBeInTheDocument();
+    expect(screen.getByText('Evidence tier labels')).toBeInTheDocument();
+  });
+
+  it('renders the required safety framing copy', () => {
+    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+
+    expect(screen.getByText('Observational summary')).toBeInTheDocument();
+    expect(screen.getByText('For discussion with a qualified professional.')).toBeInTheDocument();
+    expect(screen.getByText('Not medical advice.')).toBeInTheDocument();
+    expect(screen.getByText('Does not recommend starting, stopping, combining, or dosing any substance.')).toBeInTheDocument();
+  });
+
+  it('does not render banned advice phrases from generated interaction fields', () => {
+    const { container } = render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    const text = container.textContent?.toLowerCase() ?? '';
+
+    for (const phrase of ['recommended', 'clinically approved', 'optimal dose', 'you should']) {
+      expect(text).not.toContain(phrase);
+    }
+    expect(text).not.toMatch(/\bsafe\b/);
+  });
+
+  it('does not emit generated dosing or treatment recommendation language', () => {
+    const { container } = render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    const text = container.textContent?.toLowerCase() ?? '';
+
+    expect(text).not.toContain('treatment plan');
+    expect(text).not.toContain('dose change');
+    expect(text).not.toContain('recommendation');
+  });
+
+  it('renders graceful placeholders for empty or missing data', () => {
+    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol({ items: [], actualComparison: null, interactionIntelligence: makeIntelligence() })} generatedAt={generatedAt} />);
+
+    expect(screen.getByText('No active substances were present in this saved protocol snapshot.')).toBeInTheDocument();
+    expect(screen.getByText('No protocol check-ins are attached to this snapshot yet.')).toBeInTheDocument();
+    expect(screen.getByText('Historical pattern snapshots are not available for this view.')).toBeInTheDocument();
+    expect(screen.getByText('No overlap, synergy, redundancy, or interference flags are present in this snapshot.')).toBeInTheDocument();
+  });
+
+  it('keeps base protocol facts visible when gated historical snapshots are unavailable', () => {
+    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol({ actualComparison: makeComparison() })} review={null} patterns={null} drift={null} sequence={null} generatedAt={generatedAt} />);
+
+    const overview = screen.getByText('Stack overview').closest('section');
+    expect(overview).not.toBeNull();
+    expect(within(overview as HTMLElement).getByText('Recovery Protocol')).toBeInTheDocument();
+    expect(screen.getByText('Historical pattern snapshots are not available for this view.')).toBeInTheDocument();
   });
 });
