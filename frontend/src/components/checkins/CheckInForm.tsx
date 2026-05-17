@@ -65,7 +65,7 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
     eyesight: 7,
     sideEffects: '',
     photoUrls: [] as string[],
-    giSymptoms: 'none',
+    giSymptoms: '',
     mood: 'neutral',
     notes: '',
   });
@@ -287,6 +287,19 @@ export function CheckInForm({ profileGoals = [], onSubmit, isLoading, mode = 'fu
               placeholder="Report any negative reactions..."
               rows={3}
               className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/10 focus:outline-none focus:border-red-500/30 transition-all text-sm"
+            />
+          </div>
+          <div>
+            <label htmlFor="gi-symptoms" className="block text-xs font-medium text-white/40 mb-2 uppercase">
+              GI / digestive notes (optional)
+            </label>
+            <textarea
+              id="gi-symptoms"
+              value={formData.giSymptoms}
+              onChange={(e) => setFormData({ ...formData, giSymptoms: e.target.value })}
+              placeholder="Bloating, regularity, anything off?"
+              rows={3}
+              className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/10 focus:outline-none focus:border-emerald-500/30 transition-all text-sm"
             />
           </div>
         </div>

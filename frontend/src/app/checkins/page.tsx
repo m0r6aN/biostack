@@ -1,5 +1,6 @@
 'use client';
 
+import { ActiveProfileChip } from '@/components/ActiveProfileChip';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
@@ -16,7 +17,8 @@ import { CheckIn, CompoundRecord, CreateCheckInRequest, GoalDefinition, Interact
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export default function CheckInsPage() {
-  const { currentProfileId } = useProfile();
+  const { currentProfileId, profiles } = useProfile();
+  const currentProfile = profiles.find((profile) => profile.id === currentProfileId);
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
   const [activeCompounds, setActiveCompounds] = useState<CompoundRecord[]>([]);
   const [overlapFlags, setOverlapFlags] = useState<InteractionFlag[]>([]);
@@ -127,6 +129,8 @@ export default function CheckInsPage() {
       />
 
       <div className="p-8 space-y-8 max-w-6xl">
+        <ActiveProfileChip />
+
         {showForm && (
           <div className="p-8 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.4)] animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between mb-8">
@@ -155,8 +159,8 @@ export default function CheckInsPage() {
           <LoadingSkeleton />
         ) : checkIns.length === 0 ? (
           <EmptyState
-            title="Your protocol has no observations yet"
-            description="Record the first check-in so runs have reality to compare against."
+            title={`No check-ins logged for ${currentProfile?.displayName ?? 'this profile'} yet`}
+            description="Record the first to start a baseline."
             icon="📊"
             action={{
               label: 'Record First Check-in',
