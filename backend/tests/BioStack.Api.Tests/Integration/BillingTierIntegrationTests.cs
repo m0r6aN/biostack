@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using BioStack.Api;
+using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
@@ -81,27 +82,28 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Observer_IsBlockedOnSixthActiveCompound_AndPaidStatesCanExceedUntilExpired()
+    public async Task Observer_IsBlockedBeyondActiveCompoundLimit_AndPaidStatesCanExceedUntilExpired()
     {
+        var limit = FeatureGate.ObserverActiveCompoundLimit;
         var userId = await SignInAsync("tier-user@example.com");
         var profile = await CreateProfileAsync("Tier User");
 
-        for (var index = 1; index <= 5; index++)
+        for (var index = 1; index <= limit; index++)
         {
             Assert.Equal(HttpStatusCode.Created, (await CreateCompoundAsync(profile.Id, $"compound-{index}")).StatusCode);
         }
 
-        var blocked = await CreateCompoundAsync(profile.Id, "compound-6");
+        var blocked = await CreateCompoundAsync(profile.Id, $"compound-{limit + 1}");
         Assert.Equal(HttpStatusCode.PaymentRequired, blocked.StatusCode);
         var error = await blocked.Content.ReadFromJsonAsync<ProductErrorResponse>(JsonOptions);
         Assert.NotNull(error);
         Assert.Equal("observer_active_compound_limit", error.Code);
-        Assert.Equal(5, error.Limit);
+        Assert.Equal(limit, error.Limit);
 
         var current = await _client.GetFromJsonAsync<CurrentSubscriptionResponse>("/api/v1/billing/subscription", JsonOptions);
         Assert.NotNull(current);
         Assert.Equal("Observer", current.Tier);
-        Assert.Equal(5, current.Limits["active_compounds"]);
+        Assert.Equal(limit, current.Limits["active_compounds"]);
 
         await UpsertSubscriptionAsync(userId, ProductTier.Operator, "operator", SubscriptionStatus.Active, DateTime.UtcNow.AddDays(20), cancelAtPeriodEnd: false);
         Assert.Equal(HttpStatusCode.Created, (await CreateCompoundAsync(profile.Id, "compound-paid")).StatusCode);
@@ -123,7 +125,7 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
 
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
-        Assert.Equal(7, await db.CompoundRecords.CountAsync(compound => compound.PersonId == profile.Id));
+        Assert.Equal(limit + 2, await db.CompoundRecords.CountAsync(compound => compound.PersonId == profile.Id));
     }
 
     private async Task<Guid> SignInAsync(string email)
