@@ -3,10 +3,18 @@ import { ProtocolComparison } from '@/components/protocols/ProtocolComparison';
 import { ProtocolContinuityStrip } from '@/components/protocols/ProtocolContinuityStrip';
 import { ProviderObservationalSummary } from '@/components/protocols/ProviderObservationalSummary';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
-import type { InteractionIntelligence, Protocol, ProtocolActualComparison, ProtocolPatternSnapshot, ProtocolReview, StackScore } from '@/lib/types';
+import type { InteractionIntelligence, Protocol, ProtocolActualComparison, ProtocolReview, StackScore } from '@/lib/types';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import {
+    makeProviderSummaryActualComparison,
+    makeProviderSummaryPatternSnapshot,
+    makeSavedProviderSummaryProtocol,
+    makeSavedProviderSummaryProtocolWithMissingData,
+    makeSavedProviderSummaryProtocolWithUnsafeGeneratedFields,
+    providerSummaryGeneratedAt,
+} from '../fixtures/providerSummary';
 
 const originalClipboardDescriptor = Object.getOwnPropertyDescriptor(window.navigator, 'clipboard');
 
@@ -301,49 +309,6 @@ describe('InteractionIntelligenceCard', () => {
   });
 });
 
-const generatedAt = new Date('2026-02-10T15:30:00Z');
-
-const makeProviderSummaryProtocol = (overrides: Partial<Protocol> = {}): Protocol => makeProtocol({
-  isDraft: false,
-  createdAtUtc: '2026-01-01T00:00:00Z',
-  updatedAtUtc: '2026-01-08T00:00:00Z',
-  items: [
-    {
-      id: 'item-1',
-      protocolId: 'protocol-2',
-      compoundRecordId: 'compound-1',
-      calculatorResultId: null,
-      notes: 'User-entered schedule/frequency: evening check-in log.',
-      compound: {
-        id: 'compound-1', personId: 'person-1', name: 'Magnesium glycinate', category: 'Supplement',
-        startDate: '2026-01-03T00:00:00Z', endDate: null, status: 'Active',
-        notes: 'User-entered frequency: nightly', sourceType: 'Manual', goal: 'Sleep consistency',
-      },
-    },
-  ],
-  interactionIntelligence: makeIntelligence({
-    topFindings: [{ type: 'Synergistic', compounds: ['Magnesium glycinate', 'Glycine'], message: 'you should use the optimal dose', confidence: 0.72 }],
-    interactions: [{ compoundA: 'Magnesium glycinate', compoundB: 'Glycine', type: 'Interfering', confidence: 0.42, sharedPathways: ['sleep architecture'], reason: 'clinically approved treatment plan', hintBacked: true }],
-    counterfactuals: [{ removedCompound: 'Glycine', variantScore: 80, deltaScore: 1, deltaPercent: 1, verdict: 'improves', recommendation: 'recommended dose change', summary: { synergies: 0, redundancies: 0, interferences: 0 }, topFindings: [] }],
-  }),
-  actualComparison: makeComparison({
-    run: { id: 'run-1', protocolId: 'protocol-2', personId: 'person-1', protocolName: 'Recovery Protocol', protocolVersion: 2, startedAtUtc: '2026-01-03T00:00:00Z', endedAtUtc: null, status: 'active', notes: '' },
-    observations: [{ checkInId: 'check-1', date: '2026-01-06T00:00:00Z', day: 4, energy: 6, sleepQuality: 7, appetite: 5, recovery: 8 }],
-    actualTrends: [{ metric: 'Energy', beforeAverage: 5, afterAverage: 6, direction: 'up' }],
-  }),
-  ...overrides,
-});
-
-const makePatternSnapshot = (): ProtocolPatternSnapshot => ({
-  protocolId: 'protocol-2',
-  historicalRunCount: 2,
-  patternConfidence: 'moderate',
-  metricPatterns: [{ metric: 'Check-in cadence', observation: 'Check-ins usually arrive every other day.' }],
-  eventPatterns: [],
-  sequencePatterns: [],
-  currentRunComparison: { similarity: 'moderate', matchingSignals: ['Check-in timing aligns with prior runs.'], divergentSignals: [] },
-});
-
 function mockClipboardWrite(writeText: (text: string) => Promise<void>) {
   const writeTextMock = vi.fn(writeText);
   Object.defineProperty(window.navigator, 'clipboard', { configurable: true, value: { writeText: writeTextMock } });
@@ -356,7 +321,7 @@ function getCopiedText(writeText: ReturnType<typeof mockClipboardWrite>) {
 
 describe('ProviderObservationalSummary', () => {
   it('renders a factual provider-ready summary from protocol fixture data', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} patterns={makePatternSnapshot()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} patterns={makeProviderSummaryPatternSnapshot()} generatedAt={providerSummaryGeneratedAt} />);
 
     expect(screen.getByRole('heading', { name: 'Provider-ready observational summary' })).toBeInTheDocument();
     expect(screen.getByText('Magnesium glycinate')).toBeInTheDocument();
@@ -371,7 +336,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('frames the intro as observational and for professional discussion', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     const intro = screen.getByText('A factual, observational snapshot of saved protocol data, user-entered check-ins, and BioStack-observed signals for discussion with a qualified professional.');
 
@@ -381,7 +346,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('does not add advice wording to the provider summary intro', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     const introText = screen.getByText(/A factual, observational snapshot/).textContent?.toLowerCase() ?? '';
     for (const phrase of ['clinical approval', 'diagnosis', 'recommendation', 'recommended', 'start', 'stop', 'combine', 'dosing', 'treatment']) {
@@ -390,7 +355,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('renders populated section counts for available summary data', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     expect(screen.getByText('1 active substance')).toBeInTheDocument();
     expect(screen.getByText('1 recent check-in')).toBeInTheDocument();
@@ -398,7 +363,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('renders informational scanability labels for data provenance and missing data', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     expect(screen.getAllByText('User-entered data').length).toBeGreaterThanOrEqual(2);
     expect(screen.getAllByText('BioStack-observed data').length).toBeGreaterThanOrEqual(2);
@@ -406,7 +371,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('keeps scanability labels informational without advice or clinical wording', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol({ items: [], actualComparison: null, interactionIntelligence: makeIntelligence() })} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocolWithMissingData()} generatedAt={providerSummaryGeneratedAt} />);
 
     for (const label of ['User-entered data', 'BioStack-observed data', 'Missing data']) {
       const text = screen.getAllByText(label)[0].textContent?.toLowerCase() ?? '';
@@ -417,7 +382,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('renders a copy summary button', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     const copyButton = screen.getByRole('button', { name: 'Copy summary' });
     const printButton = screen.getByRole('button', { name: 'Print summary' });
@@ -429,7 +394,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('keeps print layout safety boundary and footer rendered', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     expect(screen.getAllByText(/Feb 10, 2026/).length).toBeGreaterThan(0);
     expect(screen.getByText('For discussion with a qualified professional.')).toBeInTheDocument();
@@ -438,7 +403,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('keeps scanability labels screen-only for stable print output', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     for (const label of ['User-entered data', 'BioStack-observed data', 'Missing data']) {
       for (const badge of screen.getAllByText(label)) {
@@ -451,7 +416,7 @@ describe('ProviderObservationalSummary', () => {
   it('copies factual summary sections as plain text', async () => {
     const user = userEvent.setup();
     const writeText = mockClipboardWrite(async () => undefined);
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} patterns={makePatternSnapshot()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} patterns={makeProviderSummaryPatternSnapshot()} generatedAt={providerSummaryGeneratedAt} />);
 
     await user.click(screen.getByRole('button', { name: 'Copy summary' }));
 
@@ -472,7 +437,7 @@ describe('ProviderObservationalSummary', () => {
   it('keeps visual scanability labels out of copied summary text', async () => {
     const user = userEvent.setup();
     const writeText = mockClipboardWrite(async () => undefined);
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} patterns={makePatternSnapshot()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} patterns={makeProviderSummaryPatternSnapshot()} generatedAt={providerSummaryGeneratedAt} />);
 
     await user.click(screen.getByRole('button', { name: 'Copy summary' }));
 
@@ -485,7 +450,7 @@ describe('ProviderObservationalSummary', () => {
   it('copied text contains the safety boundary framing', async () => {
     const user = userEvent.setup();
     const writeText = mockClipboardWrite(async () => undefined);
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     await user.click(screen.getByRole('button', { name: 'Copy summary' }));
 
@@ -499,7 +464,7 @@ describe('ProviderObservationalSummary', () => {
   it('copied text excludes unsafe generated advice fields', async () => {
     const user = userEvent.setup();
     const writeText = mockClipboardWrite(async () => undefined);
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocolWithUnsafeGeneratedFields()} generatedAt={providerSummaryGeneratedAt} />);
 
     await user.click(screen.getByRole('button', { name: 'Copy summary' }));
 
@@ -514,7 +479,7 @@ describe('ProviderObservationalSummary', () => {
     mockClipboardWrite(async () => {
       throw new Error('clipboard blocked');
     });
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     await user.click(screen.getByRole('button', { name: 'Copy summary' }));
 
@@ -524,7 +489,7 @@ describe('ProviderObservationalSummary', () => {
   it('keeps print button behavior unchanged', async () => {
     const user = userEvent.setup();
     const print = vi.spyOn(window, 'print').mockImplementation(() => undefined);
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     await user.click(screen.getByRole('button', { name: 'Print summary' }));
 
@@ -532,7 +497,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('renders the required safety framing copy', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocol()} generatedAt={providerSummaryGeneratedAt} />);
 
     expect(screen.getByText('Observational summary')).toBeInTheDocument();
     expect(screen.getByText('For discussion with a qualified professional.')).toBeInTheDocument();
@@ -541,7 +506,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('does not render banned advice phrases from generated interaction fields', () => {
-    const { container } = render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    const { container } = render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocolWithUnsafeGeneratedFields()} generatedAt={providerSummaryGeneratedAt} />);
     const text = container.textContent?.toLowerCase() ?? '';
 
     for (const phrase of ['recommended', 'clinically approved', 'optimal dose', 'you should']) {
@@ -551,7 +516,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('does not emit generated dosing or treatment recommendation language', () => {
-    const { container } = render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+    const { container } = render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocolWithUnsafeGeneratedFields()} generatedAt={providerSummaryGeneratedAt} />);
     const text = container.textContent?.toLowerCase() ?? '';
 
     expect(text).not.toContain('treatment plan');
@@ -560,7 +525,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('renders graceful placeholders for empty or missing data', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol({ items: [], actualComparison: null, interactionIntelligence: makeIntelligence() })} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocolWithMissingData()} generatedAt={providerSummaryGeneratedAt} />);
 
     expect(screen.getByText('No active substances recorded')).toBeInTheDocument();
     expect(screen.getByText('No recent check-ins recorded')).toBeInTheDocument();
@@ -570,7 +535,7 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('keeps missing section placeholders neutral and factual', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol({ items: [], actualComparison: null, interactionIntelligence: makeIntelligence() })} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocolWithMissingData()} generatedAt={providerSummaryGeneratedAt} />);
 
     const placeholders = [
       'No active substances recorded',
@@ -591,7 +556,7 @@ describe('ProviderObservationalSummary', () => {
   it('copies neutral missing-data text when sections are empty', async () => {
     const user = userEvent.setup();
     const writeText = mockClipboardWrite(async () => undefined);
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol({ items: [], actualComparison: null, interactionIntelligence: makeIntelligence() })} generatedAt={generatedAt} />);
+    render(<ProviderObservationalSummary protocol={makeSavedProviderSummaryProtocolWithMissingData()} generatedAt={providerSummaryGeneratedAt} />);
 
     await user.click(screen.getByRole('button', { name: 'Copy summary' }));
 
@@ -604,7 +569,11 @@ describe('ProviderObservationalSummary', () => {
   });
 
   it('keeps base protocol facts visible when gated historical snapshots are unavailable', () => {
-    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol({ actualComparison: makeComparison() })} review={null} patterns={null} drift={null} sequence={null} generatedAt={generatedAt} />);
+    const protocol = makeSavedProviderSummaryProtocol({
+      actualComparison: makeProviderSummaryActualComparison({ run: null, observations: [], actualTrends: [] }),
+    });
+
+    render(<ProviderObservationalSummary protocol={protocol} review={null} patterns={null} drift={null} sequence={null} generatedAt={providerSummaryGeneratedAt} />);
 
     const overview = screen.getByText('Stack overview').closest('section');
     expect(overview).not.toBeNull();

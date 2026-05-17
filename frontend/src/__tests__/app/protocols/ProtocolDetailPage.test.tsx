@@ -1,10 +1,10 @@
 import ProtocolDetailPage from '@/app/protocols/[id]/page';
 import { apiClient } from '@/lib/api';
-import type { Protocol } from '@/lib/types';
 import { act, render, screen, waitFor, type RenderResult } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { Suspense } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { makeSavedProviderSummaryProtocol } from '../../fixtures/providerSummary';
 
 vi.mock('next/link', () => ({
   default: ({ href, children, ...props }: { href: string; children: ReactNode }) => <a href={href} {...props}>{children}</a>,
@@ -53,17 +53,6 @@ vi.mock('@/lib/api', () => ({
   },
 }));
 
-const protocolFixture: Protocol = {
-  id: 'protocol-2', personId: 'person-1', name: 'Recovery Protocol', version: 2,
-  parentProtocolId: null, originProtocolId: null, evolvedFromRunId: null, isDraft: false,
-  evolutionContext: '', isCurrentVersion: true, priorVersions: [],
-  createdAtUtc: '2026-01-01T00:00:00Z', updatedAtUtc: '2026-01-08T00:00:00Z',
-  items: [], stackScore: { score: 78, breakdown: { synergy: 25, redundancy: 10, conflicts: 5, evidence: 38 }, chips: [] },
-  simulation: { timeline: [], insights: [] },
-  interactionIntelligence: { summary: { synergies: 0, redundancies: 0, interferences: 0 }, score: { synergyScore: 0, redundancyPenalty: 0, interferencePenalty: 0 }, compositeScore: 0, topFindings: [], interactions: [], counterfactuals: [], swaps: [] },
-  activeRun: null, versionDiff: null, actualComparison: null,
-};
-
 async function renderPage() {
   let result: RenderResult | undefined;
   const params = Promise.resolve({ id: 'protocol-2' });
@@ -82,7 +71,7 @@ async function renderPage() {
 describe('/protocols/[id] provider summary access', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(apiClient.getProtocol).mockResolvedValue(protocolFixture);
+    vi.mocked(apiClient.getProtocol).mockResolvedValue(makeSavedProviderSummaryProtocol());
     vi.mocked(apiClient.getProtocolReview).mockResolvedValue(null);
     vi.mocked(apiClient.getProtocolPatterns).mockResolvedValue(null);
     vi.mocked(apiClient.getProtocolDrift).mockResolvedValue(null);
