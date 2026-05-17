@@ -56,7 +56,7 @@ public sealed class AnalyzerGateIntegrationTests : IAsyncLifetime
                 });
                 builder.ConfigureServices(services =>
                 {
-                    services.RemoveAll<DbContextOptions<BioStackDbContext>>();
+                    services.RemoveBioStackDbContext();
                     services.AddDbContext<BioStackDbContext>(options =>
                         options.UseSqlite($"Data Source={_dbPath}"));
                 });
