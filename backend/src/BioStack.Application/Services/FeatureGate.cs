@@ -13,7 +13,7 @@ public static class FeatureCodes
 
 public sealed class FeatureGate : IFeatureGate
 {
-    public const int ObserverActiveCompoundLimit = 5;
+    public const int ObserverActiveCompoundLimit = 8;
     private readonly BioStackDbContext _db;
     private readonly ICurrentUserAccessor _currentUserAccessor;
 
