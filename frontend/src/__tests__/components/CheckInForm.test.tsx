@@ -99,6 +99,50 @@ describe('CheckInForm', () => {
     expect(screen.getByRole('button', { name: /synchronizing/i })).toBeDisabled();
   });
 
+  describe('GI / digestive notes (B2)', () => {
+    beforeEach(() => {
+      mockUseSettings.mockReturnValue({ settings: { weightUnit: 'metric' } });
+    });
+
+    it('renders the GI textarea in full mode and round-trips its value to the submit payload', async () => {
+      const onSubmit = vi.fn().mockResolvedValue(undefined);
+      render(<CheckInForm personId="p1" onSubmit={onSubmit} />);
+
+      const giTextarea = screen.getByLabelText(/GI \/ digestive notes \(optional\)/i);
+      expect(giTextarea).toBeInTheDocument();
+      expect(giTextarea).toHaveValue('');
+
+      await userEvent.type(giTextarea, 'Mild bloating after dose 2.');
+
+      const weightInput = screen.getByPlaceholderText(/e\.g\. 77/i);
+      await userEvent.clear(weightInput);
+      await userEvent.type(weightInput, '80');
+
+      fireEvent.submit(weightInput.closest('form')!);
+
+      await waitFor(() => {
+        expect(onSubmit).toHaveBeenCalled();
+        const submitted = onSubmit.mock.calls[0][0];
+        expect(submitted.giSymptoms).toBe('Mild bloating after dose 2.');
+      });
+    });
+
+    it('omits the GI textarea in quick mode and clears giSymptoms on the submit payload', async () => {
+      const onSubmit = vi.fn().mockResolvedValue(undefined);
+      render(<CheckInForm personId="p1" onSubmit={onSubmit} mode="quick" />);
+
+      expect(screen.queryByLabelText(/GI \/ digestive notes/i)).not.toBeInTheDocument();
+
+      await userEvent.click(screen.getByRole('button', { name: /save quick check-in/i }));
+
+      await waitFor(() => {
+        expect(onSubmit).toHaveBeenCalled();
+        const submitted = onSubmit.mock.calls[0][0];
+        expect(submitted.giSymptoms).toBe('');
+      });
+    });
+  });
+
   describe('quick mode', () => {
     beforeEach(() => {
       mockUseSettings.mockReturnValue({ settings: { weightUnit: 'metric' } });

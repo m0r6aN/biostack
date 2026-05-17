@@ -1,5 +1,6 @@
 'use client';
 
+import { ActiveProfileChip } from '@/components/ActiveProfileChip';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
@@ -108,6 +109,8 @@ export default function CompoundsPage() {
       />
 
       <div className="p-8 space-y-8 max-w-6xl">
+        <ActiveProfileChip />
+
         {showForm && (
           <div className="p-6 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
             <h2 className="text-lg font-semibold text-white mb-4">Add New Compound</h2>

@@ -10,6 +10,7 @@ import { EmptyState } from '@/components/EmptyState';
 import { TimelineEventCard } from '@/components/timeline/TimelineEventCard';
 import { TimelineFilter } from '@/components/timeline/TimelineFilter';
 import { Header } from '@/components/Header';
+import { ActiveProfileChip } from '@/components/ActiveProfileChip';
 
 export default function TimelinePage() {
   const { currentProfileId } = useProfile();
@@ -75,6 +76,10 @@ export default function TimelinePage() {
       <Header title="Timeline" subtitle="Unified event stream" />
 
       <div className="p-8 max-w-4xl">
+        <div className="mb-6">
+          <ActiveProfileChip />
+        </div>
+
         {loading ? (
           <LoadingSkeleton />
         ) : (
