@@ -95,4 +95,15 @@ describe('/protocols/[id] provider summary access', () => {
 
     await waitFor(() => expect(container.querySelector('#provider-summary')).toBeInTheDocument());
   });
+
+  it('smoke-renders the provider summary CTA and anchored section together', async () => {
+    const { container } = await renderPage();
+
+    expect(await screen.findByRole('link', { name: 'Prepare provider summary' })).toHaveAttribute('href', '#provider-summary');
+    await waitFor(() => {
+      const providerSummarySection = container.querySelector('#provider-summary');
+      expect(providerSummarySection).toBeInTheDocument();
+      expect(providerSummarySection).toHaveTextContent('Provider summary body');
+    });
+  });
 });
