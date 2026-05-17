@@ -18,3 +18,20 @@ it('exposes HelpTip buttons for synergy, redundancy, interference, and counterfa
   expect(buttons.some(b => b.textContent?.includes('Interferences'))).toBe(true);
   expect(buttons.some(b => b.textContent?.includes('Counterfactual'))).toBe(true);
 });
+
+it('renders a tracking CTA when showTrackingCta is true', () => {
+  render(
+    <InteractionIntelligenceCard
+      intelligence={mockIntelligence as any}
+      showTrackingCta
+    />,
+  );
+  const link = screen.getByRole('link', { name: /start tracking/i });
+  expect(link).toBeInTheDocument();
+  expect(link).toHaveAttribute('href', '/protocols');
+});
+
+it('does not render a tracking CTA when showTrackingCta is omitted', () => {
+  render(<InteractionIntelligenceCard intelligence={mockIntelligence as any} />);
+  expect(screen.queryByRole('link', { name: /start tracking/i })).not.toBeInTheDocument();
+});

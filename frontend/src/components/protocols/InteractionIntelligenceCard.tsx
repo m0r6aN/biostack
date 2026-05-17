@@ -1,11 +1,13 @@
 'use client';
 
+import Link from 'next/link';
 import { InteractionIntelligence } from '@/lib/types';
 import { HelpTip } from '@/components/ui/HelpTip';
 
 interface InteractionIntelligenceCardProps {
   intelligence: InteractionIntelligence;
   title?: string;
+  showTrackingCta?: boolean;
 }
 
 const toneByType: Record<string, string> = {
@@ -29,6 +31,7 @@ const swapReasonLabels: Record<string, string> = {
 export function InteractionIntelligenceCard({
   intelligence,
   title = 'Interaction Intelligence',
+  showTrackingCta = false,
 }: InteractionIntelligenceCardProps) {
   const summary = intelligence.summary;
   const topFindings = intelligence.topFindings;
@@ -125,6 +128,20 @@ export function InteractionIntelligenceCard({
           ))
         )}
       </div>
+
+      {showTrackingCta && (
+        <div className="mt-4 rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
+          <p className="text-sm text-white/60">
+            Tracking this protocol over time will show whether these interaction patterns hold.
+          </p>
+          <Link
+            href="/protocols"
+            className="mt-3 inline-block rounded-lg border border-emerald-300/25 px-4 py-2 text-sm font-semibold text-emerald-100 hover:bg-emerald-400/10"
+          >
+            Start tracking
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

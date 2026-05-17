@@ -135,7 +135,7 @@ export default function ProtocolsPage() {
                 {currentStack ? (
                   <>
                     <StackScoreCard score={currentStack.stackScore} />
-                    <InteractionIntelligenceCard intelligence={currentStack.interactionIntelligence} title="Current Stack Intelligence" />
+                    <InteractionIntelligenceCard intelligence={currentStack.interactionIntelligence} title="Current Stack Intelligence" showTrackingCta />
                   </>
                 ) : (
                   <LockedTierCard
