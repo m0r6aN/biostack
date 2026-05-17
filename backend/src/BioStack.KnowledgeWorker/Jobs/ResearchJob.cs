@@ -1,15 +1,25 @@
 namespace BioStack.KnowledgeWorker.Jobs;
 
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using BioStack.KnowledgeWorker.Config;
 using BioStack.KnowledgeWorker.Pipeline;
+using BioStack.KnowledgeWorker.Pipeline.Graph;
 
 public interface IResearchJob : IIngestionJob { }
 
 public sealed class ResearchJob : IResearchJob
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
+
+    private static readonly JsonSerializerOptions GraphJsonOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = true,
+        Converters = { new JsonStringEnumConverter(new KebabCaseNamingPolicy()) },
+    };
 
     private readonly WorkerOptions _options;
     private readonly IResearchArtifactLoader _loader;
@@ -25,6 +35,7 @@ public sealed class ResearchJob : IResearchJob
     private readonly IPromotionExporter _promotionExporter;
     private readonly IPromotionImportPreviewBuilder _promotionImportPreviewBuilder;
     private readonly ISubstanceRecordValidator _substanceValidator;
+    private readonly ICompoundGraphBuilder _compoundGraphBuilder;
 
     public ResearchJob(
         WorkerOptions options,
@@ -40,7 +51,8 @@ public sealed class ResearchJob : IResearchJob
         IReviewResolutionPlanBuilder reviewResolutionPlanBuilder,
         IPromotionExporter promotionExporter,
         IPromotionImportPreviewBuilder promotionImportPreviewBuilder,
-        ISubstanceRecordValidator substanceValidator)
+        ISubstanceRecordValidator substanceValidator,
+        ICompoundGraphBuilder compoundGraphBuilder)
     {
         _options = options;
         _loader = loader;
@@ -56,6 +68,7 @@ public sealed class ResearchJob : IResearchJob
         _promotionExporter = promotionExporter;
         _promotionImportPreviewBuilder = promotionImportPreviewBuilder;
         _substanceValidator = substanceValidator;
+        _compoundGraphBuilder = compoundGraphBuilder;
     }
 
     public Task<JobRunResult> RunAsync(IngestionContext context, CancellationToken cancellationToken = default)
@@ -78,6 +91,8 @@ public sealed class ResearchJob : IResearchJob
         var reviewQueue = new List<ResearchReviewQueueItem>();
         var reviewDecisions = LoadReviewDecisions(context, report);
         var researchRequests = LoadResearchRequests(context, report);
+        var relationshipPackets = LoadRelationshipPackets(context, report);
+        var evidencePackets = new List<JsonNode>();
 
         if (evidenceFiles.Count == 0 && !researchRequests.All().Any())
         {
@@ -96,7 +111,11 @@ public sealed class ResearchJob : IResearchJob
         foreach (var file in evidenceFiles)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            ProcessEvidencePacket(context, report, file, sourceRegistry, drafts, reviewQueue, evidencePacketOutputDir);
+            var processedPacket = ProcessEvidencePacket(context, report, file, sourceRegistry, drafts, reviewQueue, evidencePacketOutputDir);
+            if (processedPacket is not null)
+            {
+                evidencePackets.Add(processedPacket);
+            }
         }
 
         var draftsPath = Path.Combine(outputDir, "draft-substances.json");
@@ -106,6 +125,7 @@ public sealed class ResearchJob : IResearchJob
         var promotionManifestPath = Path.Combine(outputDir, "promotion-manifest.json");
         var resolutionPlanPath = Path.Combine(outputDir, "review-resolution-plan.json");
         var importPreviewPath = Path.Combine(outputDir, "promotion-import-preview.json");
+        var compoundGraphPath = Path.Combine(outputDir, "compound-graph.json");
         var activeReviewQueue = reviewQueue
             .Where(item => !reviewDecisions.IsCompoundArchived(item.CompoundName))
             .Where(item => !reviewDecisions.IsReviewQueueItemResolved(item.CompoundName, item.ItemId))
@@ -116,7 +136,8 @@ public sealed class ResearchJob : IResearchJob
             ReviewQueue: reviewQueuePath,
             ResearchSummary: summaryPath,
             RunReport: Path.Combine(outputDir, "research-run-report.json"),
-            ResearchTaskQueue: researchTaskQueuePath));
+            ResearchTaskQueue: researchTaskQueuePath,
+            CompoundGraph: compoundGraphPath));
         var resolutionPlan = _reviewResolutionPlanBuilder.Build(promotionManifest, activeReviewQueue);
         var researchTaskQueue = _researchTaskQueueBuilder.Build(
             summary,
@@ -137,6 +158,9 @@ public sealed class ResearchJob : IResearchJob
         File.WriteAllText(promotionManifestPath, JsonSerializer.Serialize(promotionManifest, JsonOptions));
         File.WriteAllText(resolutionPlanPath, JsonSerializer.Serialize(resolutionPlan, JsonOptions));
         File.WriteAllText(importPreviewPath, JsonSerializer.Serialize(importPreview, JsonOptions));
+
+        var compoundGraph = _compoundGraphBuilder.Build(drafts, evidencePackets, relationshipPackets, sourceRegistry);
+        File.WriteAllText(compoundGraphPath, JsonSerializer.Serialize(compoundGraph, GraphJsonOptions));
         report.Outputs["draftSubstances"] = draftsPath;
         report.Outputs["reviewQueue"] = reviewQueuePath;
         report.Outputs["researchSummary"] = summaryPath;
@@ -148,6 +172,7 @@ public sealed class ResearchJob : IResearchJob
         report.Outputs["promotionExportManifest"] = promotionExport.ManifestPath;
         report.Outputs["promotionExportAggregate"] = promotionExport.AggregatePath;
         report.Outputs["promotionImportPreview"] = importPreviewPath;
+        report.Outputs["compoundGraph"] = compoundGraphPath;
         WriteReport(outputDir, report);
 
         context.LogSummary("ResearchJob");
@@ -185,7 +210,7 @@ public sealed class ResearchJob : IResearchJob
         return null;
     }
 
-    private void ProcessEvidencePacket(
+    private JsonNode? ProcessEvidencePacket(
         IngestionContext context,
         ResearchRunReport report,
         string file,
@@ -204,7 +229,7 @@ public sealed class ResearchJob : IResearchJob
             {
                 context.IncrementFailed();
                 report.Records.Add(ResearchRunRecord.Failed(loaded.Path, validation.Summary()));
-                return;
+                return null;
             }
 
             var preprocessed = _preprocessor.Preprocess(loaded.Node);
@@ -219,7 +244,7 @@ public sealed class ResearchJob : IResearchJob
             {
                 context.IncrementFailed();
                 report.Records.Add(ResearchRunRecord.Failed(loaded.Path, postValidation.Summary()));
-                return;
+                return null;
             }
 
             WriteEvidencePacketArtifact(evidencePacketOutputDir, packet);
@@ -230,7 +255,7 @@ public sealed class ResearchJob : IResearchJob
             {
                 context.IncrementFailed();
                 report.Records.Add(ResearchRunRecord.Failed(loaded.Path, draftValidation.Summary()));
-                return;
+                return null;
             }
 
             var items = _reviewQueueBuilder.BuildFromEvidencePacket(packet);
@@ -247,11 +272,14 @@ public sealed class ResearchJob : IResearchJob
                 ReadString(packet["compound"]?["canonicalName"]),
                 items.Count,
                 ReadQualityFlags(packet)));
+
+            return packet;
         }
         catch (Exception ex)
         {
             context.IncrementFailed();
             report.Records.Add(ResearchRunRecord.Failed(file, ex.Message));
+            return null;
         }
     }
 
@@ -383,6 +411,52 @@ public sealed class ResearchJob : IResearchJob
         }
     }
 
+    private IReadOnlyList<JsonNode> LoadRelationshipPackets(IngestionContext context, ResearchRunReport report)
+    {
+        var packets = new List<JsonNode>();
+        foreach (var file in ResolveRelationshipFiles(_options))
+        {
+            try
+            {
+                var loaded = _loader.Load(ResearchArtifactKind.RelationshipPacket, file);
+                report.Inputs.Add(loaded.Path);
+                var validation = _researchValidator.Validate(ResearchArtifactKind.RelationshipPacket, loaded.Node);
+                if (!validation.IsValid)
+                {
+                    context.IncrementFailed();
+                    report.Records.Add(ResearchRunRecord.Failed(loaded.Path, validation.Summary()));
+                    continue;
+                }
+
+                packets.Add(loaded.Node);
+                report.Records.Add(ResearchRunRecord.Validated(loaded.Path, ResearchArtifactKind.RelationshipPacket.ToString()));
+            }
+            catch (Exception ex)
+            {
+                context.IncrementFailed();
+                report.Records.Add(ResearchRunRecord.Failed(file, ex.Message));
+            }
+        }
+
+        return packets;
+    }
+
+    private static IEnumerable<string> ResolveRelationshipFiles(WorkerOptions options)
+    {
+        if (!string.IsNullOrWhiteSpace(options.ResearchRelationshipPacketPath))
+        {
+            yield return ResolveInputPath(options.ResearchRelationshipPacketPath);
+        }
+
+        if (string.IsNullOrWhiteSpace(options.ResearchRelationshipPacketDirectory)) yield break;
+        var dir = ResolveInputPath(options.ResearchRelationshipPacketDirectory);
+        if (!Directory.Exists(dir)) yield break;
+        foreach (var file in Directory.EnumerateFiles(dir, "*.json", SearchOption.TopDirectoryOnly).OrderBy(f => f))
+        {
+            yield return file;
+        }
+    }
+
     private static string ResolveTaskEvidenceDirectory(WorkerOptions options)
     {
         if (!string.IsNullOrWhiteSpace(options.ResearchEvidencePacketDirectory))
@@ -431,6 +505,26 @@ public sealed class ResearchJob : IResearchJob
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList()
             : Array.Empty<string>();
+
+    private sealed class KebabCaseNamingPolicy : JsonNamingPolicy
+    {
+        public override string ConvertName(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return name;
+            var sb = new StringBuilder(name.Length + 8);
+            for (int i = 0; i < name.Length; i++)
+            {
+                var c = name[i];
+                if (char.IsUpper(c))
+                {
+                    if (i > 0) sb.Append('-');
+                    sb.Append(char.ToLowerInvariant(c));
+                }
+                else sb.Append(c);
+            }
+            return sb.ToString();
+        }
+    }
 
     private sealed record ResearchRunReport(
         DateTimeOffset StartedAtUtc,

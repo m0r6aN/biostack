@@ -7,6 +7,7 @@ public enum ResearchArtifactKind
     EvidencePacket = 3,
     ReviewDecisionBatch = 4,
     ResearchRequestBatch = 5,
+    RelationshipPacket = 6,
 }
 
 public sealed record ResearchArtifactSchemaDescriptor(
@@ -38,6 +39,10 @@ public static class ResearchArtifactSchemas
             ResearchArtifactKind.ResearchRequestBatch,
             "research-request.schema.json",
             "research-request-batch"),
+        new ResearchArtifactSchemaDescriptor(
+            ResearchArtifactKind.RelationshipPacket,
+            "relationship-packet.schema.json",
+            "compound-relationship-packet"),
     };
 
     public static ResearchArtifactSchemaDescriptor Get(ResearchArtifactKind kind)

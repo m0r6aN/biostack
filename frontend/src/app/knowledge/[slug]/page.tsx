@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { apiClient } from '@/lib/api';
-import { TrustLedgerResponse } from '@/lib/types';
-import { CompoundDossier } from '@/components/knowledge/CompoundDossier';
+import { KnowledgeEntry } from '@/lib/types';
+import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
+import { CompoundRelationshipsSection } from '@/components/knowledge/CompoundRelationshipsSection';
 
 function DossierSkeleton() {
   return (
@@ -35,13 +36,21 @@ function DossierSkeleton() {
   );
 }
 
+function safeDecodeSlug(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
 interface PageProps {
   params: { slug: string };
 }
 
 export default function CompoundDossierPage({ params }: PageProps) {
   const { slug } = params;
-  const [data, setData] = useState<TrustLedgerResponse | null>(null);
+  const [entry, setEntry] = useState<KnowledgeEntry | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,9 +59,9 @@ export default function CompoundDossierPage({ params }: PageProps) {
     setLoading(true);
     setError(null);
 
-    apiClient.getTrustLedger(slug).then(res => {
+    apiClient.getKnowledgeEntry(safeDecodeSlug(slug)).then(res => {
       if (!cancelled) {
-        setData(res);
+        setEntry(res);
         setLoading(false);
       }
     }).catch(err => {
@@ -75,7 +84,7 @@ export default function CompoundDossierPage({ params }: PageProps) {
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
-          Compound Intelligence
+          Compound Library
         </Link>
       </nav>
 
@@ -85,8 +94,14 @@ export default function CompoundDossierPage({ params }: PageProps) {
         <div className="max-w-3xl mx-auto rounded-2xl border border-rose-400/20 bg-rose-500/[0.06] p-6">
           <p className="text-sm text-rose-300">{error}</p>
         </div>
-      ) : data ? (
-        <CompoundDossier data={data} />
+      ) : entry ? (
+        <>
+          <CompoundIntelligenceCard entry={entry} recommendationSurface="knowledge-detail" />
+          <CompoundRelationshipsSection
+            compoundName={entry.canonicalName}
+            aliases={entry.aliases}
+          />
+        </>
       ) : null}
     </main>
   );

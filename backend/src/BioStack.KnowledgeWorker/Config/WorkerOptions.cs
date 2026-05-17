@@ -89,6 +89,16 @@ public sealed class WorkerOptions
     public string? ResearchRequestDirectory { get; set; }
 
     /// <summary>
+    /// Optional single relationship-packet path used by <see cref="RunMode.Research" />.
+    /// </summary>
+    public string? ResearchRelationshipPacketPath { get; set; }
+
+    /// <summary>
+    /// Optional directory of relationship-packet JSON files used by <see cref="RunMode.Research" />.
+    /// </summary>
+    public string? ResearchRelationshipPacketDirectory { get; set; }
+
+    /// <summary>
     /// Output directory for research-mode draft records, review queue, and run report.
     /// </summary>
     public string ResearchOutputDirectory { get; set; } = "ResearchOutput";

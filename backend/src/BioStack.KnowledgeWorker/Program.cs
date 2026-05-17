@@ -3,6 +3,7 @@ using BioStack.Infrastructure.Persistence;
 using BioStack.KnowledgeWorker.Config;
 using BioStack.KnowledgeWorker.Jobs;
 using BioStack.KnowledgeWorker.Pipeline;
+using BioStack.KnowledgeWorker.Pipeline.Graph;
 using BioStack.KnowledgeWorker.Workers;
 using BioStack.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -80,6 +81,8 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddSingleton<IResearchSummaryBuilder, ResearchSummaryBuilder>();
         services.AddSingleton<IResearchTaskQueueBuilder, ResearchTaskQueueBuilder>();
         services.AddSingleton<IPromotionManifestBuilder, PromotionManifestBuilder>();
+        services.AddSingleton<IRelationshipPacketAuthorizer, RelationshipPacketAuthorizer>();
+        services.AddSingleton<ICompoundGraphBuilder, CompoundGraphBuilder>();
         services.AddSingleton<IReviewResolutionPlanBuilder, ReviewResolutionPlanBuilder>();
         services.AddSingleton<IPromotionExporter, PromotionExporter>();
         services.AddSingleton<IPromotionImportPreviewBuilder, PromotionImportPreviewBuilder>();
