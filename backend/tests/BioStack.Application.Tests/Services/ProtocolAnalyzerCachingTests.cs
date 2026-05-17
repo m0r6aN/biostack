@@ -81,6 +81,7 @@ public sealed class ProtocolAnalyzerCachingTests
             new ProtocolSuggestionService(),
             engine ?? CreateEngineMock().Object,
             new NullProtocolAnalysisPersistenceHook(),
+            ProtocolAnalyzerServiceTests.AllowAllFeatureGate().Object,
             NullLogger<ProtocolAnalyzerService>.Instance);
     }
 
