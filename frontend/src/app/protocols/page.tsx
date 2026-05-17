@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { ActiveProfileChip } from '@/components/ActiveProfileChip';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
@@ -106,6 +107,8 @@ export default function ProtocolsPage() {
       <Header title="Protocols" subtitle="Simulate, save, track, compare, evolve" actions={<ProfileSwitcher />} />
 
       <div className="max-w-6xl space-y-6 p-8">
+        <ActiveProfileChip />
+
         {loading ? (
           <LoadingSkeleton />
         ) : (
