@@ -61,6 +61,7 @@ DatabaseSchemaBootstrapperTests.cs
 InfrastructureRepositoryTests.cs
 Integration/
  AnalyzeEndpointsIntegrationTests.cs
+ AnalyzerGateIntegrationTests.cs
  AuthEndpointsIntegrationTests.cs
  BillingTierIntegrationTests.cs
  KnowledgeEndpointsIntegrationTests.cs
