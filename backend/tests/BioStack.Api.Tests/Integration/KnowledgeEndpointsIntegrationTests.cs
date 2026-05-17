@@ -4,8 +4,13 @@ using System.Net;
 using System.Text.Json;
 using BioStack.Api;
 using BioStack.Infrastructure.Knowledge;
+using BioStack.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Xunit;
 
 [Trait("Category", "Integration")]
@@ -13,10 +18,33 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
 {
     private WebApplicationFactory<Program> _factory = null!;
     private HttpClient _client = null!;
+    private string _dbPath = string.Empty;
 
     public async Task InitializeAsync()
     {
-        _factory = new WebApplicationFactory<Program>();
+        _dbPath = Path.Combine(Path.GetTempPath(), $"biostack-knowledge-{Guid.NewGuid():N}.db");
+        _factory = new WebApplicationFactory<Program>()
+            .WithWebHostBuilder(builder =>
+            {
+                builder.UseSetting("environment", "Development");
+                builder.ConfigureLogging(logging => logging.ClearProviders());
+                builder.ConfigureAppConfiguration((_, config) =>
+                {
+                    config.AddInMemoryCollection(new Dictionary<string, string?>
+                    {
+                        ["ConnectionStrings:DefaultConnection"] = $"Data Source={_dbPath}",
+                        ["FrontendUrl"] = "http://localhost:3043",
+                        ["PublicApiUrl"] = "http://localhost:5000",
+                        ["Jwt:Secret"] = "test-secret-value-that-is-long-enough-for-hmac",
+                    });
+                });
+                builder.ConfigureServices(services =>
+                {
+                    services.RemoveBioStackDbContext();
+                    services.AddDbContext<BioStackDbContext>(options =>
+                        options.UseSqlite($"Data Source={_dbPath}"));
+                });
+            });
         _client = _factory.CreateClient();
 
         await using var scope = _factory.Services.CreateAsyncScope();
@@ -34,6 +62,16 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
     {
         _client.Dispose();
         await _factory.DisposeAsync();
+        try
+        {
+            if (File.Exists(_dbPath))
+            {
+                File.Delete(_dbPath);
+            }
+        }
+        catch (IOException)
+        {
+        }
     }
 
     [Fact]
