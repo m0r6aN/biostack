@@ -38,4 +38,10 @@ describe('marketing content', () => {
     expect(landingFeatures.some((feature) => feature.includes('Pathway overlap'))).toBe(true);
     expect(landingFeatures.some((feature) => feature.includes('Unified timeline'))).toBe(true);
   });
+
+  it('Observer tier highlight reflects the current free-tier compound limit', () => {
+    const observer = pricingTiers.find((t) => t.name === 'Observer')!;
+    expect(observer.highlights.some((h) => h.includes('8'))).toBe(true);
+    expect(observer.highlights.every((h) => !h.includes(' 5 '))).toBe(true);
+  });
 });
