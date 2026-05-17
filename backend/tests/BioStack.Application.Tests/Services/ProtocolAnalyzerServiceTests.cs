@@ -2,10 +2,12 @@ namespace BioStack.Application.Tests.Services;
 
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
+using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Knowledge;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging.Abstractions;
+using Moq;
 using Xunit;
 
 public sealed class ProtocolAnalyzerServiceTests
@@ -42,7 +44,17 @@ public sealed class ProtocolAnalyzerServiceTests
             suggestions,
             new CounterfactualEngine(interactionIntelligence, new CounterfactualCandidateService(knowledgeSource), new CounterfactualExplainerService()),
             new NullProtocolAnalysisPersistenceHook(),
+            AllowAllFeatureGate(ProductTier.Operator).Object,
             NullLogger<ProtocolAnalyzerService>.Instance);
+    }
+
+    internal static Mock<IFeatureGate> AllowAllFeatureGate(ProductTier tier = ProductTier.Operator)
+    {
+        var gate = new Mock<IFeatureGate>();
+        gate.Setup(g => g.IsEnabledAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+        gate.Setup(g => g.GetCurrentTierAsync(It.IsAny<CancellationToken>())).ReturnsAsync(tier);
+        gate.Setup(g => g.EnsureEnabledAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+        return gate;
     }
 
     [Fact]
@@ -160,6 +172,62 @@ public sealed class ProtocolAnalyzerServiceTests
 
         Assert.True(result.ScoreExplanation.Synergy > 0,
             "Complementary healing-domain pairs must register a positive synergy score on the response.");
+    }
+
+    // PR 1A (B1): the paid-intelligence gate must run BEFORE ingestion/parse/analysis.
+    // Ingestion is mocked to throw if reached; the test passes only if the gate exception
+    // surfaces first — i.e. nothing downstream got a chance to do work.
+    [Fact]
+    public async Task AnalyzeAsync_RunsFeatureGateBeforeIngestion()
+    {
+        var gate = new Mock<IFeatureGate>();
+        gate.Setup(g => g.EnsureEnabledAsync(FeatureCodes.PaidIntelligence, It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new FeatureLimitExceededException(
+                "paid_intelligence",
+                "Operator is required for this intelligence surface.",
+                ProductTier.Observer,
+                null));
+
+        var ingestion = new Mock<IProtocolIngestionService>();
+        ingestion.Setup(s => s.IngestAsync(It.IsAny<ProtocolIngestionRequest>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new InvalidOperationException("ingestion must not run when gate blocks"));
+
+        var parser = new Mock<IProtocolParser>();
+        parser.Setup(s => s.ParseAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new InvalidOperationException("parser must not run when gate blocks"));
+
+        var knowledgeSource = new LocalKnowledgeSource();
+        var normalization = new ProtocolNormalizationService();
+        var fingerprint = new ProtocolFingerprintService();
+        var memory = new MemoryCache(new MemoryCacheOptions());
+        var distributed = new MemoryDistributedCache(new Microsoft.Extensions.Options.OptionsWrapper<MemoryDistributedCacheOptions>(new MemoryDistributedCacheOptions()));
+        var cache = new ProtocolAnalysisCache(memory, distributed, NullLogger<ProtocolAnalysisCache>.Instance);
+        var interactionIntelligence = new InteractionIntelligenceService(
+            knowledgeSource,
+            MockInteractionHintRepository.Empty().Object);
+
+        var service = new ProtocolAnalyzerService(
+            parser.Object,
+            ingestion.Object,
+            normalization,
+            fingerprint,
+            cache,
+            knowledgeSource,
+            interactionIntelligence,
+            new ProtocolSuggestionService(),
+            new CounterfactualEngine(interactionIntelligence, new CounterfactualCandidateService(knowledgeSource), new CounterfactualExplainerService()),
+            new NullProtocolAnalysisPersistenceHook(),
+            gate.Object,
+            NullLogger<ProtocolAnalyzerService>.Instance);
+
+        var ex = await Assert.ThrowsAsync<FeatureLimitExceededException>(
+            () => service.AnalyzeAsync(new AnalyzeProtocolRequest("BPC-157 500mcg daily")));
+
+        Assert.Equal("paid_intelligence", ex.Code);
+        Assert.Equal(ProductTier.Observer, ex.Tier);
+        gate.Verify(g => g.EnsureEnabledAsync(FeatureCodes.PaidIntelligence, It.IsAny<CancellationToken>()), Times.Once);
+        ingestion.Verify(s => s.IngestAsync(It.IsAny<ProtocolIngestionRequest>(), It.IsAny<CancellationToken>()), Times.Never);
+        parser.Verify(s => s.ParseAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     // Regression for review comment #3153773795:
