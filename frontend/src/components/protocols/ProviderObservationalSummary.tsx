@@ -28,6 +28,9 @@ const NO_RECENT_CHECK_INS = 'No recent check-ins recorded';
 const NO_OBSERVED_PATTERNS = 'No observed patterns available yet';
 const NO_INTERACTION_NOTES = 'No interaction or overlap notes available';
 const NO_EVIDENCE_CONTEXT = 'No evidence context available';
+const USER_ENTERED_LABEL = 'User-entered data';
+const BIOSTACK_OBSERVED_LABEL = 'BioStack-observed data';
+const MISSING_DATA_LABEL = 'Missing data';
 const SAFETY_BOUNDARY_LINES = [
   'For discussion with a qualified professional.',
   'Not medical advice.',
@@ -140,7 +143,7 @@ export function ProviderObservationalSummary({
         </SummarySection>
       </div>
 
-      <SummarySection title="Active substances" metadata={formatCount(activeItems.length, 'active substance')} fullWidth>
+      <SummarySection title="Active substances" metadata={formatCount(activeItems.length, 'active substance')} label={USER_ENTERED_LABEL} fullWidth>
         {activeItems.length === 0 ? (
           <Placeholder>{NO_ACTIVE_SUBSTANCES}</Placeholder>
         ) : (
@@ -153,7 +156,7 @@ export function ProviderObservationalSummary({
       </SummarySection>
 
       <div className="grid gap-0 divide-y divide-slate-200 border-t border-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
-        <SummarySection title="Recent check-ins" metadata={formatCount(observations.length, 'recent check-in')}>
+        <SummarySection title="Recent check-ins" metadata={formatCount(observations.length, 'recent check-in')} label={USER_ENTERED_LABEL}>
           {observations.length === 0 ? (
             <Placeholder>{NO_RECENT_CHECK_INS}</Placeholder>
           ) : (
@@ -165,7 +168,7 @@ export function ProviderObservationalSummary({
           )}
         </SummarySection>
 
-        <SummarySection title="Observed patterns">
+        <SummarySection title="Observed patterns" label={BIOSTACK_OBSERVED_LABEL}>
           {trends.length === 0 && patternNotes.length === 0 ? (
             <Placeholder>{NO_OBSERVED_PATTERNS}</Placeholder>
           ) : (
@@ -184,7 +187,7 @@ export function ProviderObservationalSummary({
       </div>
 
       <div className="grid gap-0 divide-y divide-slate-200 border-t border-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
-        <SummarySection title="Interaction and overlap notes" metadata={formatCount(interactionNoteCount, 'interaction/overlap note')}>
+        <SummarySection title="Interaction and overlap notes" metadata={formatCount(interactionNoteCount, 'interaction/overlap note')} label={BIOSTACK_OBSERVED_LABEL}>
           {findings.length === 0 && interactions.length === 0 ? (
             <Placeholder>{NO_INTERACTION_NOTES}</Placeholder>
           ) : (
@@ -214,13 +217,32 @@ export function ProviderObservationalSummary({
   );
 }
 
-function SummarySection({ title, metadata, fullWidth = false, children }: { title: string; metadata?: string; fullWidth?: boolean; children: ReactNode }) {
+function SummarySection({ title, metadata, label, fullWidth = false, children }: { title: string; metadata?: string; label?: SummaryLabel; fullWidth?: boolean; children: ReactNode }) {
   return (
     <section className={`${fullWidth ? 'border-t border-slate-200' : ''} p-6 print:break-inside-avoid print:px-4 print:py-3`}>
-      <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 print:text-[11px] print:text-slate-700">{title}</h3>
+      <div className="flex flex-wrap items-center gap-2 print:block">
+        <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 print:text-[11px] print:text-slate-700">{title}</h3>
+        {label && <DataBadge label={label} />}
+      </div>
       {metadata && <p className="mt-1 text-xs font-semibold text-slate-500 print:text-[11px] print:text-slate-700">{metadata}</p>}
       <div className="mt-4 print:mt-3">{children}</div>
     </section>
+  );
+}
+
+type SummaryLabel = typeof USER_ENTERED_LABEL | typeof BIOSTACK_OBSERVED_LABEL | typeof MISSING_DATA_LABEL;
+
+function DataBadge({ label }: { label: SummaryLabel }) {
+  const tone = label === USER_ENTERED_LABEL
+    ? 'border-sky-200 bg-sky-50 text-sky-700'
+    : label === BIOSTACK_OBSERVED_LABEL
+      ? 'border-violet-200 bg-violet-50 text-violet-700'
+      : 'border-slate-200 bg-slate-50 text-slate-600';
+
+  return (
+    <span className={`rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] print:hidden ${tone}`}>
+      {label}
+    </span>
   );
 }
 
@@ -317,7 +339,12 @@ function FlagBadge({ type }: { type: string }) {
 }
 
 function Placeholder({ children }: { children: ReactNode }) {
-  return <p className="rounded-lg border border-dashed border-slate-300 bg-white px-4 py-3 text-sm text-slate-500 print:break-inside-avoid print:text-xs print:text-slate-700">{children}</p>;
+  return (
+    <div className="rounded-lg border border-dashed border-slate-300 bg-white px-4 py-3 print:break-inside-avoid">
+      <DataBadge label={MISSING_DATA_LABEL} />
+      <p className="mt-2 text-sm text-slate-500 print:mt-0 print:text-xs print:text-slate-700">{children}</p>
+    </div>
+  );
 }
 
 function BoundaryText({ children }: { children: ReactNode }) {
