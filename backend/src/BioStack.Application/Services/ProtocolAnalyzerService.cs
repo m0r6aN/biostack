@@ -23,6 +23,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
     private readonly IProtocolSuggestionService _suggestionService;
     private readonly ICounterfactualEngine _counterfactualEngine;
     private readonly IProtocolAnalysisPersistenceHook _persistenceHook;
+    private readonly IFeatureGate _featureGate;
     private readonly ILogger<ProtocolAnalyzerService> _logger;
 
     public ProtocolAnalyzerService(
@@ -36,6 +37,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
         IProtocolSuggestionService suggestionService,
         ICounterfactualEngine counterfactualEngine,
         IProtocolAnalysisPersistenceHook persistenceHook,
+        IFeatureGate featureGate,
         ILogger<ProtocolAnalyzerService> logger)
     {
         _parser = parser;
@@ -48,6 +50,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
         _suggestionService = suggestionService;
         _counterfactualEngine = counterfactualEngine;
         _persistenceHook = persistenceHook;
+        _featureGate = featureGate;
         _logger = logger;
     }
 
@@ -70,6 +73,8 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
         ProtocolIngestionRequest ingestionRequest,
         CancellationToken cancellationToken = default)
     {
+        await _featureGate.EnsureEnabledAsync(FeatureCodes.PaidIntelligence, cancellationToken);
+
         var ingestion = await _ingestionService.IngestAsync(ingestionRequest, cancellationToken);
 
         var parseKey = $"analyzer:parse:parser-{ProtocolFingerprintService.ParserVersion}:{ingestion.ParseFingerprint}";

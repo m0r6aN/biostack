@@ -4,16 +4,23 @@ using System.Security.Cryptography;
 using System.Text;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
+using BioStack.Contracts.Responses;
 using Microsoft.AspNetCore.Http.Features;
 
 public static class AnalyzeEndpoints
 {
     private const long MaxUploadBytes = 12 * 1024 * 1024;
 
+    private static IResult ProductGate(FeatureLimitExceededException ex) =>
+        Results.Json(
+            new ProductErrorResponse(ex.Code, ex.Message, ex.Tier.ToString(), ex.Limit, true),
+            statusCode: StatusCodes.Status402PaymentRequired);
+
     public static void MapAnalyzeEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/api/analyze")
-            .WithTags("Analyze");
+            .WithTags("Analyze")
+            .RequireAuthorization();
 
         group.MapPost("/protocol", AnalyzeProtocol)
             .WithName("AnalyzeProtocol");
@@ -48,6 +55,10 @@ public static class AnalyzeEndpoints
         {
             var result = await analyzerService.AnalyzeAsync(request, ingestionRequest, ct);
             return Results.Ok(result);
+        }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
         }
         catch (ProtocolIngestionException ex)
         {
