@@ -1,5 +1,6 @@
 import { CompoundRecord } from '@/lib/types';
 import Link from 'next/link';
+import { FREE_TIER_COMPOUND_LIMIT } from '@/lib/tiers';
 
 interface ActiveCompoundsCardProps {
   compounds: CompoundRecord[];
@@ -15,7 +16,7 @@ export function ActiveCompoundsCard({ compounds }: ActiveCompoundsCardProps) {
         <p className="text-sm text-white/45">No active compounds</p>
       ) : (
         <div className="space-y-3">
-          {activeCompounds.slice(0, 5).map((compound) => (
+          {activeCompounds.slice(0, FREE_TIER_COMPOUND_LIMIT).map((compound) => (
             <Link
               key={compound.id}
               href={`/compounds?detail=${compound.id}`}
