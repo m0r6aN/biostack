@@ -15,6 +15,8 @@ import type {
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useMemo, useRef, useState, useTransition } from 'react';
+import { HelpTip } from '@/components/ui/HelpTip';
+import type { HelpTipKey } from '@/lib/helpTips';
 
 const STORAGE_KEY = 'biostack.analyzer.session.v3';
 const supportedFileTypes = '.pdf,.docx,.xlsx,.csv,.txt,.jpg,.jpeg,.png,.webp';
@@ -613,9 +615,9 @@ export function ProtocolAnalyzerExperience() {
             {showWhyScore && result && (
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <ScoreChip label="Base" value={result.scoreExplanation.baseScore} tone="neutral" />
-                <ScoreChip label="Synergy" value={result.scoreExplanation.synergy} tone="positive" />
-                <ScoreChip label="Redundancy" value={result.scoreExplanation.redundancy} tone="negative" />
-                <ScoreChip label="Interference" value={result.scoreExplanation.interference} tone="negative" />
+                <ScoreChip label="Synergy"      helpKey="synergy"      value={result.scoreExplanation.synergy}      tone="positive" />
+                <ScoreChip label="Redundancy"   helpKey="redundancy"   value={result.scoreExplanation.redundancy}   tone="negative" />
+                <ScoreChip label="Interference" helpKey="interference" value={result.scoreExplanation.interference} tone="negative" />
               </div>
             )}
           </section>
@@ -1189,7 +1191,12 @@ function GoalAwareCard({ option }: { option: ProtocolAnalyzerGoalAwareOption | n
   );
 }
 
-function ScoreChip({ label, value, tone }: { label: string; value: number; tone: 'positive' | 'negative' | 'neutral' }) {
+function ScoreChip({ label, value, tone, helpKey }: {
+  label: string;
+  value: number;
+  tone: 'positive' | 'negative' | 'neutral';
+  helpKey?: HelpTipKey;
+}) {
   const toneClass =
     tone === 'positive'
       ? 'border-emerald-300/20 bg-emerald-400/10 text-emerald-50'
@@ -1199,7 +1206,9 @@ function ScoreChip({ label, value, tone }: { label: string; value: number; tone:
 
   return (
     <div className={`rounded-lg border p-3 ${toneClass}`}>
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] opacity-70">{label}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] opacity-70">
+        {helpKey ? <HelpTip tipKey={helpKey}>{label}</HelpTip> : label}
+      </p>
       <p className="mt-2 text-lg font-semibold">{value > 0 ? `+${value}` : value}</p>
     </div>
   );
