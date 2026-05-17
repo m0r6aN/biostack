@@ -15,6 +15,7 @@ import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
 import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
+import { ProviderObservationalSummary } from '@/components/protocols/ProviderObservationalSummary';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { ApiError, apiClient } from '@/lib/api';
 import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
@@ -332,6 +333,15 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
 
             <section id="simulation" className="scroll-mt-6">
               <SimulationTimeline simulation={protocol.simulation} />
+            </section>
+            <section id="provider-summary" className="scroll-mt-6">
+              <ProviderObservationalSummary
+                protocol={protocol}
+                review={review}
+                patterns={patterns}
+                drift={drift}
+                sequence={sequence}
+              />
             </section>
             <section id="comparison" className="scroll-mt-6">
               <ProtocolComparison comparison={protocol.actualComparison} />
