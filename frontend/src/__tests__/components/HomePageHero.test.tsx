@@ -21,7 +21,7 @@ describe('HomePage hero', () => {
     render(<LandingHero />);
 
     expect(
-      screen.getByRole('heading', { name: /What to take\. How to use it\.\s*See what it is doing\./ })
+      screen.getByRole('heading', { name: /What's in your stack\. How it works\.\s*See what it's doing\./ })
     ).toBeInTheDocument();
     expect(
       screen.getByText('Start with answers. Then choose to track, compare, and optimize over time.')
