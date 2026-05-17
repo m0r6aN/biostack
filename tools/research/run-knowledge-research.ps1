@@ -8,6 +8,8 @@ param(
     [string]$ReviewDecisionPath = "",
     [string]$ResearchRequestDirectory = "research/research-requests",
     [string]$ResearchRequestPath = "",
+    [string]$RelationshipPacketPath = "",
+    [string]$RelationshipDirectory = "research/input/relationships",
     [string]$OutputDirectory = "research/output/latest",
     [switch]$NoBuild
 )
@@ -60,6 +62,20 @@ if (-not [string]::IsNullOrWhiteSpace($ResearchRequestPath)) {
 } elseif (-not [string]::IsNullOrWhiteSpace($ResearchRequestDirectory)) {
     $researchRequests = if ([System.IO.Path]::IsPathRooted($ResearchRequestDirectory)) { $ResearchRequestDirectory } else { Join-Path $repoRoot $ResearchRequestDirectory }
     if (Test-Path $researchRequests) { $workerArgs += "--Worker:ResearchRequestDirectory=$researchRequests" }
+}
+
+if (-not [string]::IsNullOrWhiteSpace($RelationshipPacketPath)) {
+    $relPacket = if ([System.IO.Path]::IsPathRooted($RelationshipPacketPath)) { $RelationshipPacketPath } else { Join-Path $repoRoot $RelationshipPacketPath }
+    if (Test-Path $relPacket) {
+        $relPacketResolved = (Resolve-Path -Path $relPacket -ErrorAction SilentlyContinue).Path
+        if ($relPacketResolved) { $workerArgs += "--Worker:ResearchRelationshipPacketPath=$relPacketResolved" }
+    }
+} elseif (-not [string]::IsNullOrWhiteSpace($RelationshipDirectory)) {
+    $relDir = if ([System.IO.Path]::IsPathRooted($RelationshipDirectory)) { $RelationshipDirectory } else { Join-Path $repoRoot $RelationshipDirectory }
+    $relDirResolved = (Resolve-Path -Path $relDir -ErrorAction SilentlyContinue).Path
+    if ($relDirResolved -and (Test-Path $relDirResolved -PathType Container)) {
+        $workerArgs += "--Worker:ResearchRelationshipPacketDirectory=$relDirResolved"
+    }
 }
 
 Write-Host "[BioStack Research] Output: $output"
