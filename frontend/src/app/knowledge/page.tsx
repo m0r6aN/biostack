@@ -149,7 +149,6 @@ export default function KnowledgePage() {
 
           <div className="relative">
             <div className="flex items-center gap-2.5 mb-1">
-              <span className="text-amber-400 text-base">⚡</span>
               <h2 className="text-base font-semibold text-white">Pathway Overlap Checker</h2>
             </div>
             <p className="text-sm text-white/50 mb-5">

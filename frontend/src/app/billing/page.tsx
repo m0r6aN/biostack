@@ -35,7 +35,7 @@ function stateCopy(subscription: CurrentSubscription) {
     title: `${subscription.tier} is active.`,
     detail: subscription.tier === 'Commander'
       ? 'Advanced protocol review, pattern, drift, sequence, and mission-control surfaces are unlocked.'
-      : 'Stack intelligence and unlimited active compounds are unlocked.',
+      : 'Protocol scoring, analysis tools, and unlimited active compounds are unlocked.',
   };
 }
 
@@ -140,7 +140,7 @@ export default function BillingPage() {
             <section className="grid gap-4 md:grid-cols-2">
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Operator</p>
-                <h3 className="mt-2 text-xl font-semibold text-white">Stack intelligence</h3>
+                <h3 className="mt-2 text-xl font-semibold text-white">Protocol scoring and analysis</h3>
                 <p className="mt-2 text-sm leading-6 text-white/55">See how your compounds interact — score your protocol, identify synergies and conflicts, and model what changes with counterfactual scenarios. Removes the active compound limit.</p>
                 <ul aria-label="Operator plan features" className="mt-3 space-y-1.5">
                   {['Stack score across all compounds', 'Synergy and conflict surface', 'Counterfactual scenarios', 'No compound cap'].map((item) => (
@@ -161,7 +161,7 @@ export default function BillingPage() {
 
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Commander</p>
-                <h3 className="mt-2 text-xl font-semibold text-white">Pattern intelligence</h3>
+                <h3 className="mt-2 text-xl font-semibold text-white">Run history and trend analysis</h3>
                 <p className="mt-2 text-sm leading-6 text-white/55">Track how your protocols evolve — detect trends and drift, anticipate the next phase from prior runs, and get structured reviews across all your protocol runs.</p>
                 <ul aria-label="Commander plan features" className="mt-3 space-y-1.5">
                   {['Trend and drift detection', 'Sequence expectation modeling', 'Structured protocol reviews', 'Cross-run comparison'].map((item) => (

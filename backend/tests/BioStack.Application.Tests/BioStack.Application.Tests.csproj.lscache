@@ -82,6 +82,7 @@ Services/
  ProtocolIngestionServiceTests.cs
  ProtocolNormalizationServiceTests.cs
  ProtocolServiceTests.cs
+ StackScoreChipVocabularyTests.cs
  SwapRecommendationTests.cs
  TrustLedgerServiceTests.cs
 

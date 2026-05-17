@@ -114,7 +114,7 @@ export function LandingHero() {
           href="/tools"
           className="w-fit text-sm font-medium text-white/62 underline-offset-4 transition-colors hover:text-white/82 hover:underline sm:text-base"
         >
-          Need help with dosage or mixing? → Start here
+          Need to calculate dose volume or reconstitution? → Start here
         </Link>
       </div>
     </section>
