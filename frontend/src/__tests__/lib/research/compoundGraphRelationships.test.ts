@@ -80,6 +80,9 @@ describe('getRelationshipLabel', () => {
     expect(getRelationshipLabel('conflicts-with')).toBe('Potential conflict');
     expect(getRelationshipLabel('opposes-effect')).toBe('Potential conflict');
   });
+  it('maps opposing-effect to Potential conflict', () => {
+    expect(getRelationshipLabel('opposing-effect')).toBe('Potential conflict');
+  });
   it('maps avoid-with to Caution signal', () => {
     expect(getRelationshipLabel('avoid-with')).toBe('Caution signal');
   });

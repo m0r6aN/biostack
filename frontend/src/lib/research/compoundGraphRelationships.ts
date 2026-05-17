@@ -11,11 +11,13 @@ export const RELATIONSHIP_EDGE_KEYS: ReadonlySet<string> = new Set([
   'avoidwith',
 ]);
 
+/** Normalises a raw edge-type token for lookup in RELATIONSHIP_EDGE_KEYS. */
 export function normalizeEdgeType(raw: string | null | undefined): string {
   if (!raw) return '';
   return raw.toString().replace(/[-_\s]/g, '').toLowerCase();
 }
 
+/** Normalises a compound ID (strips optional "compound:" prefix, then normalises). */
 export function normalizeCompoundId(raw: string | null | undefined): string {
   if (!raw) return '';
   const stripped = raw.toString().replace(/^compound:/i, '');
