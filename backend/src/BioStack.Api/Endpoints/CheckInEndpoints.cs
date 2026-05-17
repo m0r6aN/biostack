@@ -1,5 +1,6 @@
 namespace BioStack.Api.Endpoints;
 
+using BioStack.Api.Auth;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 
@@ -15,7 +16,8 @@ public static class CheckInEndpoints
             .WithName("GetCheckIns");
 
         group.MapPost("/", CreateCheckIn)
-            .WithName("CreateCheckIn");
+            .WithName("CreateCheckIn")
+            .RequireConsent();
     }
 
     private static async Task<IResult> GetCheckIns(Guid profileId, ICheckInService checkInService, CancellationToken ct)

@@ -27,6 +27,13 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                         .HasMaxLength(1024)
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("ConsentAcceptedAtUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ConsentVersion")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("TEXT");
 

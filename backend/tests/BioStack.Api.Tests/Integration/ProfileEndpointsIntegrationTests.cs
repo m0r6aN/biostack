@@ -267,5 +267,7 @@ public class ProfileEndpointsIntegrationTests : IAsyncLifetime
         var link = doc.RootElement.EnumerateArray().First().GetProperty("link").GetString()!;
         var uri = new Uri(link);
         await _client.GetAsync($"{uri.AbsolutePath}{uri.Query}");
+        var consent = await _client.PostAsJsonAsync("/api/v1/consent", new { });
+        Assert.Equal(HttpStatusCode.OK, consent.StatusCode);
     }
 }

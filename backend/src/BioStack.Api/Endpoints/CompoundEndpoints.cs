@@ -1,5 +1,6 @@
 namespace BioStack.Api.Endpoints;
 
+using BioStack.Api.Auth;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
@@ -21,13 +22,16 @@ public static class CompoundEndpoints
             .WithName("GetCompounds");
 
         group.MapPost("/", CreateCompound)
-            .WithName("CreateCompound");
+            .WithName("CreateCompound")
+            .RequireConsent();
 
         group.MapPut("/{id}", UpdateCompound)
-            .WithName("UpdateCompound");
+            .WithName("UpdateCompound")
+            .RequireConsent();
 
         group.MapDelete("/{id}", DeleteCompound)
-            .WithName("DeleteCompound");
+            .WithName("DeleteCompound")
+            .RequireConsent();
     }
 
     private static async Task<IResult> GetCompounds(Guid profileId, ICompoundService compoundService, CancellationToken ct)

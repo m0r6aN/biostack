@@ -135,6 +135,8 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
         var link = doc.RootElement.EnumerateArray().First().GetProperty("link").GetString()!;
         var uri = new Uri(link);
         await _client.GetAsync($"{uri.AbsolutePath}{uri.Query}");
+        var consent = await _client.PostAsJsonAsync("/api/v1/consent", new { }, JsonOptions);
+        Assert.Equal(HttpStatusCode.OK, consent.StatusCode);
 
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
