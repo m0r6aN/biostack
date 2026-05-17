@@ -12,7 +12,7 @@ interface EvidenceTierBadgeProps {
 }
 
 function tierHelpKey(key: string): HelpTipKey {
-  return key === 'mechanistic' ? 'mechanisticEvidence' : 'evidenceTier';
+  return key === 'mechanistic' || key === 'theoretical' ? 'mechanisticEvidence' : 'evidenceTier';
 }
 
 export function EvidenceTierBadge({ tier, short = false, className }: EvidenceTierBadgeProps) {
