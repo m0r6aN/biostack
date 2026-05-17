@@ -245,7 +245,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
             <ProtocolContinuityStrip protocol={protocol} review={review} patterns={patterns} drift={drift} sequence={sequence} />
             {commanderLockedMessage && (
               <UpgradeBanner
-                title="Commander keeps the historical intelligence layer unlocked"
+                title="Pattern memory, drift analysis, and sequence intelligence unlock with Commander"
                 detail={commanderLockedMessage}
               />
             )}
