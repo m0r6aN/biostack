@@ -99,7 +99,7 @@ export function ProviderObservationalSummary({
               Provider-ready observational summary
             </h2>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600 print:text-xs print:leading-5 print:text-slate-700">
-              A factual snapshot of what you are tracking, what changed, and what BioStack observed. Bring it to a qualified professional for review.
+              A factual, observational snapshot of saved protocol data, user-entered check-ins, and BioStack-observed signals for discussion with a qualified professional.
             </p>
           </div>
           <div className="text-left sm:text-right">

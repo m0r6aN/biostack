@@ -370,6 +370,25 @@ describe('ProviderObservationalSummary', () => {
     expect(screen.getByText('No evidence context available')).toBeInTheDocument();
   });
 
+  it('frames the intro as observational and for professional discussion', () => {
+    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+
+    const intro = screen.getByText('A factual, observational snapshot of saved protocol data, user-entered check-ins, and BioStack-observed signals for discussion with a qualified professional.');
+
+    expect(intro).toBeInTheDocument();
+    expect(intro).toHaveTextContent('observational');
+    expect(intro).toHaveTextContent('discussion with a qualified professional');
+  });
+
+  it('does not add advice wording to the provider summary intro', () => {
+    render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
+
+    const introText = screen.getByText(/A factual, observational snapshot/).textContent?.toLowerCase() ?? '';
+    for (const phrase of ['clinical approval', 'diagnosis', 'recommendation', 'recommended', 'start', 'stop', 'combine', 'dosing', 'treatment']) {
+      expect(introText).not.toContain(phrase);
+    }
+  });
+
   it('renders populated section counts for available summary data', () => {
     render(<ProviderObservationalSummary protocol={makeProviderSummaryProtocol()} generatedAt={generatedAt} />);
 
