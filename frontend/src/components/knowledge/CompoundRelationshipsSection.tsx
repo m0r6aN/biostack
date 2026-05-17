@@ -45,13 +45,14 @@ function tierRank(tier: string | null | undefined): number {
 export function CompoundRelationshipsSection({ compoundName, aliases }: Props) {
   const { user } = useAuth();
   const [matched, setMatched] = useState<MatchedEdge[] | null>(null);
+  const aliasKey = aliases?.join('\x00') ?? '';
 
   useEffect(() => {
     if (!user) return;
 
     fetchCompoundGraph('')
       .then(graph => {
-        const aliasList = aliases ?? [];
+        const aliasList = aliasKey ? aliasKey.split('\x00') : [];
         const myIds = new Set([
           normalizeCompoundId(compoundName),
           ...aliasList.map(a => normalizeCompoundId(a)),
@@ -110,7 +111,7 @@ export function CompoundRelationshipsSection({ compoundName, aliases }: Props) {
         setMatched(edges);
       })
       .catch(() => setMatched([]));
-  }, [user, compoundName, aliases]);
+  }, [user, compoundName, aliasKey]);
 
   if (!matched || matched.length === 0) return null;
 
@@ -130,9 +131,9 @@ export function CompoundRelationshipsSection({ compoundName, aliases }: Props) {
         </p>
 
         <ul className="space-y-3">
-          {matched.map((edge, i) => (
+          {matched.map((edge) => (
             <li
-              key={i}
+              key={`${edge.counterpartLabel}:${edge.relationshipLabel}`}
               className="flex flex-col gap-1 px-4 py-3 rounded-xl border border-white/[0.07] bg-white/[0.02]"
             >
               <div className="flex flex-wrap items-center gap-2">
