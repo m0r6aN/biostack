@@ -18,7 +18,7 @@ function stateCopy(subscription: CurrentSubscription) {
     return {
       label: 'Observer',
       title: 'Core tracking is active.',
-      detail: 'Observer includes up to 5 active compounds. Existing data stays available if a paid plan ends.',
+      detail: 'Observer includes up to 8 active compounds. Existing data stays available if a paid plan ends.',
     };
   }
 
@@ -128,11 +128,11 @@ export default function BillingPage() {
               </div>
             </section>
 
-            {subscription.tier === 'Observer' && activeLimit === 5 && (
+            {subscription.tier === 'Observer' && activeLimit != null && (
               <section className="rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5">
                 <h3 className="text-base font-semibold text-amber-100">Observer active compound limit</h3>
                 <p className="mt-2 text-sm leading-6 text-amber-50/70">
-                  Observer is capped at 5 active compounds. If a paid plan ends while more are active, your data remains saved, but adding or reactivating active compounds is blocked until enough records are paused or completed.
+                  Observer is capped at {activeLimit} active compounds. If a paid plan ends while more are active, your data remains saved, but adding or reactivating active compounds is blocked until enough records are paused or completed.
                 </p>
               </section>
             )}
