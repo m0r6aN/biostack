@@ -658,9 +658,9 @@ export function ProtocolAnalyzerExperience() {
           )}
 
           <section className="rounded-lg border border-white/[0.08] bg-[#121923]/95 p-4">
-            <h2 className="text-lg font-semibold text-white">Turn this into a BioStack protocol</h2>
+            <h2 className="text-lg font-semibold text-white">Track whether these patterns hold</h2>
             <p className="mt-3 text-sm leading-6 text-white/58">
-              Save the analysis, convert it into a protocol, and track it in Mission Control.
+              Save this stack as a protocol and check in over time to see whether the synergies and conflicts playing out now actually hold.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <button
