@@ -7,7 +7,7 @@ export const RELATIONSHIP_EDGE_KEYS: ReadonlySet<string> = new Set([
   'hascommunitysignal',
   'contradictedby',
   'opposeseffect',
-  'opposingeffect',
+  'opposingeffect', // variant: normalised form of 'opposing-effect' (alias of opposes-effect)
   'avoidwith',
 ]);
 

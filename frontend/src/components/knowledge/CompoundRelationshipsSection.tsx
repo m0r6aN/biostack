@@ -50,6 +50,9 @@ export function CompoundRelationshipsSection({ compoundName, aliases }: Props) {
   useEffect(() => {
     if (!user) return;
 
+    // The artifact API is dev-only (/api/research/artifacts returns 404 in production).
+    // useAuth() exposes no token. In dev/fixture mode, auth is not enforced.
+    // In production, the 404 is caught below and the section renders null silently.
     fetchCompoundGraph('')
       .then(graph => {
         const aliasList = aliasKey ? aliasKey.split('\x00') : [];
@@ -133,7 +136,7 @@ export function CompoundRelationshipsSection({ compoundName, aliases }: Props) {
         <ul className="space-y-3">
           {matched.map((edge) => (
             <li
-              key={`${edge.counterpartLabel}:${edge.relationshipLabel}`}
+              key={`${edge.counterpartLabel}:${edge.relationshipLabel}:${edge.tierRank}:${String(edge.needsReview)}`}
               className="flex flex-col gap-1 px-4 py-3 rounded-xl border border-white/[0.07] bg-white/[0.02]"
             >
               <div className="flex flex-wrap items-center gap-2">
