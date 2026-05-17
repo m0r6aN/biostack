@@ -1,6 +1,5 @@
 'use client';
 
-import { HelpTip } from '@/components/ui/HelpTip';
 import type {
     InteractionFinding,
     InteractionResult,
@@ -12,6 +11,7 @@ import type {
     ProtocolRunObservation,
     ProtocolSequenceExpectationSnapshot,
 } from '@/lib/types';
+import { useState, type ReactNode } from 'react';
 
 interface ProviderObservationalSummaryProps {
   protocol: Protocol;
@@ -23,6 +23,17 @@ interface ProviderObservationalSummaryProps {
 }
 
 const NOT_RECORDED = 'Not recorded in this saved protocol snapshot.';
+const NO_ACTIVE_SUBSTANCES = 'No active substances recorded';
+const NO_RECENT_CHECK_INS = 'No recent check-ins recorded';
+const NO_OBSERVED_PATTERNS = 'No observed patterns available yet';
+const NO_INTERACTION_NOTES = 'No interaction or overlap notes available';
+const NO_EVIDENCE_CONTEXT = 'No evidence context available';
+const SAFETY_BOUNDARY_LINES = [
+  'For discussion with a qualified professional.',
+  'Not medical advice.',
+  'Does not recommend starting, stopping, combining, or dosing any substance.',
+  'Observational and educational use only.',
+];
 
 export function ProviderObservationalSummary({
   protocol,
@@ -42,39 +53,78 @@ export function ProviderObservationalSummary({
   const interactions = protocol.interactionIntelligence.interactions
     .filter((interaction) => interaction.type !== 'Neutral')
     .slice(0, 4);
+  const interactionNoteCount = findings.length + interactions.length;
   const patternNotes = collectPatternNotes(patterns, drift, sequence, review);
+  const [copyState, setCopyState] = useState<'idle' | 'success' | 'error'>('idle');
+  const summaryText = buildProviderSummaryText({
+    protocol,
+    activeItems,
+    goals,
+    observations,
+    trends,
+    run,
+    findings,
+    interactions,
+    patternNotes,
+    generatedDate,
+  });
+
+  const handleCopySummary = async () => {
+    if (!navigator.clipboard?.writeText) {
+      setCopyState('error');
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(summaryText);
+      setCopyState('success');
+    } catch {
+      setCopyState('error');
+    }
+  };
 
   return (
     <section
       aria-labelledby="provider-summary-title"
-      className="rounded-2xl border border-white/[0.08] bg-[#f8fafc] p-0 text-slate-950 shadow-2xl shadow-black/20 print:border-slate-200 print:bg-white print:shadow-none"
+      className="rounded-2xl border border-white/[0.08] bg-[#f8fafc] p-0 text-slate-950 shadow-2xl shadow-black/20 print:rounded-none print:border-slate-300 print:bg-white print:text-black print:shadow-none"
     >
-      <div className="border-b border-slate-200 p-6 print:p-5">
+      <div className="border-b border-slate-200 p-6 print:break-inside-avoid print:p-4">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">Observational summary</p>
-            <h2 id="provider-summary-title" className="mt-2 text-2xl font-black text-slate-950">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500 print:text-slate-700">Observational summary</p>
+            <h2 id="provider-summary-title" className="mt-2 text-2xl font-black text-slate-950 print:text-xl print:text-black">
               Provider-ready observational summary
             </h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600 print:text-xs print:leading-5 print:text-slate-700">
               A factual snapshot of what you are tracking, what changed, and what BioStack observed. Bring it to a qualified professional for review.
             </p>
           </div>
           <div className="text-left sm:text-right">
-            <p className="text-xs uppercase tracking-[0.14em] text-slate-500">Generated</p>
-            <p className="mt-1 text-sm font-semibold text-slate-800">{generatedDate}</p>
-            <button
-              type="button"
-              onClick={() => window.print()}
-              className="mt-3 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 print:hidden"
-            >
-              Print summary
-            </button>
+            <p className="text-xs uppercase tracking-[0.14em] text-slate-500 print:text-slate-700">Generated</p>
+            <p className="mt-1 text-sm font-semibold text-slate-800 print:text-xs print:text-black">{generatedDate}</p>
+            <div aria-label="Provider summary actions" className="mt-3 flex flex-wrap items-center gap-2 sm:justify-end print:hidden">
+              <button
+                type="button"
+                onClick={handleCopySummary}
+                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 print:hidden"
+              >
+                Copy summary
+              </button>
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 print:hidden"
+              >
+                Print summary
+              </button>
+            </div>
+            {copyState === 'success' && <p role="status" className="mt-2 text-xs font-semibold text-emerald-700 print:hidden">Summary copied.</p>}
+            {copyState === 'error' && <p role="alert" className="mt-2 text-xs font-semibold text-amber-700 print:hidden">Copy failed. Select and copy the summary manually.</p>}
           </div>
         </div>
       </div>
 
-      <div className="grid gap-0 divide-y divide-slate-200 lg:grid-cols-2 lg:divide-x lg:divide-y-0">
+      <div className="grid gap-0 divide-y divide-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
         <SummarySection title="Stack overview">
           <Fact label="Protocol" value={protocol.name} />
           <Fact label="Version" value={`v${protocol.version}${protocol.isDraft ? ' draft' : ' snapshot'}`} />
@@ -90,9 +140,9 @@ export function ProviderObservationalSummary({
         </SummarySection>
       </div>
 
-      <SummarySection title="Active substances" fullWidth>
+      <SummarySection title="Active substances" metadata={formatCount(activeItems.length, 'active substance')} fullWidth>
         {activeItems.length === 0 ? (
-          <Placeholder>No active substances were present in this saved protocol snapshot.</Placeholder>
+          <Placeholder>{NO_ACTIVE_SUBSTANCES}</Placeholder>
         ) : (
           <div className="grid gap-3 md:grid-cols-2">
             {activeItems.map((item) => (
@@ -102,10 +152,10 @@ export function ProviderObservationalSummary({
         )}
       </SummarySection>
 
-      <div className="grid gap-0 divide-y divide-slate-200 border-t border-slate-200 lg:grid-cols-2 lg:divide-x lg:divide-y-0">
-        <SummarySection title="Recent check-ins">
+      <div className="grid gap-0 divide-y divide-slate-200 border-t border-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
+        <SummarySection title="Recent check-ins" metadata={formatCount(observations.length, 'recent check-in')}>
           {observations.length === 0 ? (
-            <Placeholder>No protocol check-ins are attached to this snapshot yet.</Placeholder>
+            <Placeholder>{NO_RECENT_CHECK_INS}</Placeholder>
           ) : (
             <div className="space-y-3">
               {observations.map((observation) => (
@@ -117,7 +167,7 @@ export function ProviderObservationalSummary({
 
         <SummarySection title="Observed patterns">
           {trends.length === 0 && patternNotes.length === 0 ? (
-            <Placeholder>Historical pattern snapshots are not available for this view.</Placeholder>
+            <Placeholder>{NO_OBSERVED_PATTERNS}</Placeholder>
           ) : (
             <div className="space-y-2">
               {trends.map((trend) => (
@@ -133,10 +183,10 @@ export function ProviderObservationalSummary({
         </SummarySection>
       </div>
 
-      <div className="grid gap-0 divide-y divide-slate-200 border-t border-slate-200 lg:grid-cols-2 lg:divide-x lg:divide-y-0">
-        <SummarySection title="Interaction and overlap notes">
+      <div className="grid gap-0 divide-y divide-slate-200 border-t border-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
+        <SummarySection title="Interaction and overlap notes" metadata={formatCount(interactionNoteCount, 'interaction/overlap note')}>
           {findings.length === 0 && interactions.length === 0 ? (
-            <Placeholder>No overlap, synergy, redundancy, or interference flags are present in this snapshot.</Placeholder>
+            <Placeholder>{NO_INTERACTION_NOTES}</Placeholder>
           ) : (
             <div className="space-y-3">
               {findings.map((finding) => <FindingRow key={`${finding.type}-${finding.compounds.join('-')}`} finding={finding} />)}
@@ -147,29 +197,29 @@ export function ProviderObservationalSummary({
 
         <SummarySection title="Evidence context">
           <Fact label="Stack evidence score" value={`${protocol.stackScore.breakdown.evidence}`} />
-          <p className="mt-3 text-sm leading-6 text-slate-600">
-            <HelpTip tipKey="evidenceTier">Evidence tier labels</HelpTip> are shown when they are stored with the saved snapshot. Compound-level tier labels are not stored on this protocol snapshot.
-          </p>
+          <Placeholder>{NO_EVIDENCE_CONTEXT}</Placeholder>
         </SummarySection>
       </div>
 
       <SummarySection title="Safety boundary" fullWidth>
         <div className="grid gap-3 md:grid-cols-2">
-          <BoundaryText>For discussion with a qualified professional.</BoundaryText>
-          <BoundaryText>Not medical advice.</BoundaryText>
-          <BoundaryText>Does not recommend starting, stopping, combining, or dosing any substance.</BoundaryText>
-          <BoundaryText>Observational and educational use only.</BoundaryText>
+          {SAFETY_BOUNDARY_LINES.map((line) => <BoundaryText key={line}>{line}</BoundaryText>)}
         </div>
       </SummarySection>
+
+      <footer className="hidden border-t border-slate-200 p-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-600 print:block">
+        Generated by BioStack · {generatedDate} · Observational summary. Not medical advice.
+      </footer>
     </section>
   );
 }
 
-function SummarySection({ title, fullWidth = false, children }: { title: string; fullWidth?: boolean; children: React.ReactNode }) {
+function SummarySection({ title, metadata, fullWidth = false, children }: { title: string; metadata?: string; fullWidth?: boolean; children: ReactNode }) {
   return (
-    <section className={`${fullWidth ? 'border-t border-slate-200' : ''} p-6 print:p-5`}>
-      <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{title}</h3>
-      <div className="mt-4">{children}</div>
+    <section className={`${fullWidth ? 'border-t border-slate-200' : ''} p-6 print:break-inside-avoid print:px-4 print:py-3`}>
+      <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 print:text-[11px] print:text-slate-700">{title}</h3>
+      {metadata && <p className="mt-1 text-xs font-semibold text-slate-500 print:text-[11px] print:text-slate-700">{metadata}</p>}
+      <div className="mt-4 print:mt-3">{children}</div>
     </section>
   );
 }
@@ -177,8 +227,8 @@ function SummarySection({ title, fullWidth = false, children }: { title: string;
 function Fact({ label, value }: { label: string; value: string }) {
   return (
     <div className="mb-3 last:mb-0">
-      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">{label}</p>
-      <p className="mt-1 text-sm font-semibold text-slate-800">{value || NOT_RECORDED}</p>
+      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400 print:text-slate-600">{label}</p>
+      <p className="mt-1 text-sm font-semibold text-slate-800 print:text-xs print:text-black">{value || NOT_RECORDED}</p>
     </div>
   );
 }
@@ -188,7 +238,7 @@ function SubstanceCard({ item }: { item: ProtocolItem }) {
   const scheduleText = item.notes || compound?.notes || NOT_RECORDED;
 
   return (
-    <article className="rounded-xl border border-slate-200 bg-white p-4">
+    <article className="rounded-xl border border-slate-200 bg-white p-4 print:break-inside-avoid print:p-3">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h4 className="font-bold text-slate-950">{compound?.name ?? 'Compound snapshot'}</h4>
@@ -198,7 +248,7 @@ function SubstanceCard({ item }: { item: ProtocolItem }) {
           {compound?.status ?? 'snapshot'}
         </span>
       </div>
-      <dl className="mt-4 grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
+      <dl className="mt-4 grid gap-2 text-sm text-slate-700 print:mt-3 print:text-xs sm:grid-cols-2">
         <MiniFact label="Start" value={formatDate(compound?.startDate)} />
         <MiniFact label="Stop" value={compound?.endDate ? formatDate(compound.endDate) : 'Not recorded'} />
         <MiniFact label="Goal" value={compound?.goal || NOT_RECORDED} />
@@ -219,7 +269,7 @@ function MiniFact({ label, value }: { label: string; value: string }) {
 
 function CheckInRow({ observation }: { observation: ProtocolRunObservation }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-3">
+    <div className="rounded-lg border border-slate-200 bg-white p-3 print:break-inside-avoid">
       <div className="flex items-center justify-between gap-3">
         <p className="font-semibold text-slate-950">{formatDate(observation.date)}</p>
         <span className="text-xs font-semibold text-slate-500">Day {observation.day}</span>
@@ -233,7 +283,7 @@ function CheckInRow({ observation }: { observation: ProtocolRunObservation }) {
 
 function FindingRow({ finding }: { finding: InteractionFinding }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-3">
+    <div className="rounded-lg border border-slate-200 bg-white p-3 print:break-inside-avoid">
       <div className="flex flex-wrap items-center gap-2">
         <FlagBadge type={finding.type} />
         <span className="text-sm font-semibold text-slate-900">{finding.compounds.join(' + ')}</span>
@@ -245,7 +295,7 @@ function FindingRow({ finding }: { finding: InteractionFinding }) {
 
 function InteractionRow({ interaction }: { interaction: InteractionResult }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-3">
+    <div className="rounded-lg border border-slate-200 bg-white p-3 print:break-inside-avoid">
       <div className="flex flex-wrap items-center gap-2">
         <FlagBadge type={interaction.type} />
         <span className="text-sm font-semibold text-slate-900">{interaction.compoundA} + {interaction.compoundB}</span>
@@ -266,12 +316,108 @@ function FlagBadge({ type }: { type: string }) {
   );
 }
 
-function Placeholder({ children }: { children: React.ReactNode }) {
-  return <p className="rounded-lg border border-dashed border-slate-300 bg-white px-4 py-3 text-sm text-slate-500">{children}</p>;
+function Placeholder({ children }: { children: ReactNode }) {
+  return <p className="rounded-lg border border-dashed border-slate-300 bg-white px-4 py-3 text-sm text-slate-500 print:break-inside-avoid print:text-xs print:text-slate-700">{children}</p>;
 }
 
-function BoundaryText({ children }: { children: React.ReactNode }) {
-  return <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">{children}</p>;
+function BoundaryText({ children }: { children: ReactNode }) {
+  return <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900 print:break-inside-avoid print:border-slate-300 print:bg-white print:text-xs print:text-black">{children}</p>;
+}
+
+interface ProviderSummaryTextInput {
+  protocol: Protocol;
+  activeItems: ProtocolItem[];
+  goals: string[];
+  observations: ProtocolRunObservation[];
+  trends: ProtocolActualTrend[];
+  run: Protocol['activeRun'];
+  findings: InteractionFinding[];
+  interactions: InteractionResult[];
+  patternNotes: string[];
+  generatedDate: string;
+}
+
+type ProtocolActualTrend = NonNullable<Protocol['actualComparison']>['actualTrends'][number];
+
+function buildProviderSummaryText({
+  protocol,
+  activeItems,
+  goals,
+  observations,
+  trends,
+  run,
+  findings,
+  interactions,
+  patternNotes,
+  generatedDate,
+}: ProviderSummaryTextInput) {
+  return [
+    'Observational summary',
+    'Provider-ready observational summary',
+    'For discussion with a qualified professional.',
+    'Not medical advice.',
+    `Generated timestamp: ${generatedDate}`,
+    '',
+    formatTextSection('Stack overview', [
+      `Protocol: ${protocol.name}`,
+      `Version: v${protocol.version}${protocol.isDraft ? ' draft' : ' snapshot'}`,
+      `Snapshot state: ${protocol.isCurrentVersion ? 'Current version' : 'Prior version'}`,
+      `Run state: ${run ? `${run.status} run` : 'No active run in this snapshot'}`,
+    ]),
+    formatTextSection('Active substances', buildActiveSubstanceLines(activeItems), formatCount(activeItems.length, 'active substance')),
+    formatTextSection('Goals and timeline', [
+      `Stated goals: ${goals.length > 0 ? goals.join(', ') : NOT_RECORDED}`,
+      `Protocol created: ${formatDate(protocol.createdAtUtc)}`,
+      `Protocol updated: ${formatDate(protocol.updatedAtUtc)}`,
+      ...(run ? [`Run window: ${formatDate(run.startedAtUtc)} — ${run.endedAtUtc ? formatDate(run.endedAtUtc) : 'ongoing'}`] : []),
+    ]),
+    formatTextSection('Recent check-ins', buildObservationLines(observations), formatCount(observations.length, 'recent check-in')),
+    formatTextSection('Observed patterns', buildPatternLines(trends, patternNotes)),
+    formatTextSection('Interaction and overlap notes', buildInteractionLines(findings, interactions), formatCount(findings.length + interactions.length, 'interaction/overlap note')),
+    formatTextSection('Evidence context', [
+      `Stack evidence score: ${protocol.stackScore.breakdown.evidence}`,
+      NO_EVIDENCE_CONTEXT,
+    ]),
+    formatTextSection('Safety boundary', SAFETY_BOUNDARY_LINES),
+  ].join('\n\n');
+}
+
+function buildActiveSubstanceLines(activeItems: ProtocolItem[]) {
+  if (activeItems.length === 0) return [NO_ACTIVE_SUBSTANCES];
+
+  return activeItems.map((item) => {
+    const compound = item.compound;
+    const scheduleText = item.notes || compound?.notes || NOT_RECORDED;
+    return `${compound?.name ?? 'Compound snapshot'} (${compound?.category ?? item.compoundRecordId}; ${compound?.status ?? 'snapshot'}) — Start: ${formatDate(compound?.startDate)}; Stop: ${compound?.endDate ? formatDate(compound.endDate) : 'Not recorded'}; Goal: ${compound?.goal || NOT_RECORDED}; User-entered schedule/frequency: ${scheduleText}`;
+  });
+}
+
+function buildObservationLines(observations: ProtocolRunObservation[]) {
+  if (observations.length === 0) return [NO_RECENT_CHECK_INS];
+
+  return observations.map((observation) => `${formatDate(observation.date)} (Day ${observation.day}): Energy ${observation.energy}/10 · Sleep ${observation.sleepQuality}/10 · Recovery ${observation.recovery}/10 · Appetite ${observation.appetite}/10`);
+}
+
+function buildPatternLines(trends: ProtocolActualTrend[], patternNotes: string[]) {
+  if (trends.length === 0 && patternNotes.length === 0) return [NO_OBSERVED_PATTERNS];
+
+  return [
+    ...trends.map((trend) => `${trend.metric}: ${trend.direction} (${formatAverage(trend.beforeAverage)} before · ${formatAverage(trend.afterAverage)} after)`),
+    ...patternNotes,
+  ];
+}
+
+function buildInteractionLines(findings: InteractionFinding[], interactions: InteractionResult[]) {
+  if (findings.length === 0 && interactions.length === 0) return [NO_INTERACTION_NOTES];
+
+  return [
+    ...findings.map((finding) => `${flagLabel(finding.type)}: ${finding.compounds.join(' + ')} (${Math.round(finding.confidence * 100)}% confidence)`),
+    ...interactions.map((interaction) => `${flagLabel(interaction.type)}: ${interaction.compoundA} + ${interaction.compoundB} (${Math.round(interaction.confidence * 100)}% confidence)${interaction.sharedPathways.length > 0 ? `; Shared pathways: ${interaction.sharedPathways.join(', ')}` : ''}`),
+  ];
+}
+
+function formatTextSection(title: string, lines: string[], metadata?: string) {
+  return [title, ...(metadata ? [`- ${metadata}`] : []), ...lines.map((line) => `- ${line}`)].join('\n');
 }
 
 function collectPatternNotes(
@@ -308,6 +454,10 @@ function unique(values: string[]) {
 
 function formatAverage(value: number | null) {
   return value === null ? 'n/a' : value.toString();
+}
+
+function formatCount(count: number, singular: string) {
+  return `${count} ${singular}${count === 1 ? '' : 's'}`;
 }
 
 function formatDate(value?: string | null) {
