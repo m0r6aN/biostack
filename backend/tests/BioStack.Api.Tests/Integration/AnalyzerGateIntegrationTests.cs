@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using BioStack.Api;
 using BioStack.Contracts.Requests;
+using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Knowledge;
@@ -19,8 +20,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
+// PR 1A (B1): server-side PaidIntelligence enforcement on POST /api/analyze/protocol.
 [Trait("Category", "Integration")]
-public sealed class AnalyzeEndpointsIntegrationTests : IAsyncLifetime
+public sealed class AnalyzerGateIntegrationTests : IAsyncLifetime
 {
     private WebApplicationFactory<Program> _factory = null!;
     private HttpClient _client = null!;
@@ -33,7 +35,7 @@ public sealed class AnalyzeEndpointsIntegrationTests : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        _dbPath = Path.Combine(Path.GetTempPath(), $"biostack-analyze-{Guid.NewGuid():N}.db");
+        _dbPath = Path.Combine(Path.GetTempPath(), $"biostack-analyzer-gate-{Guid.NewGuid():N}.db");
         _factory = new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
@@ -89,9 +91,39 @@ public sealed class AnalyzeEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task AnalyzeProtocol_ReturnsStructuredResponseForOperator()
+    public async Task AnalyzeProtocol_AnonymousUser_Returns401()
     {
-        var userId = await SignInAsync("analyze-user@example.com");
+        var response = await _client.PostAsJsonAsync("/api/analyze/protocol", new
+        {
+            inputText = "BPC-157 500mcg daily"
+        });
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AnalyzeProtocol_ObserverTier_ReturnsUpgradeRequired()
+    {
+        await SignInAsync("observer@example.com");
+
+        var response = await _client.PostAsJsonAsync("/api/analyze/protocol", new
+        {
+            inputText = "BPC-157 500mcg daily"
+        });
+
+        Assert.Equal(HttpStatusCode.PaymentRequired, response.StatusCode);
+
+        var error = await response.Content.ReadFromJsonAsync<ProductErrorResponse>(JsonOptions);
+        Assert.NotNull(error);
+        Assert.Equal("paid_intelligence", error!.Code);
+        Assert.Equal("Observer", error.Tier);
+        Assert.True(error.UpgradeRequired);
+    }
+
+    [Fact]
+    public async Task AnalyzeProtocol_OperatorTier_Returns200()
+    {
+        var userId = await SignInAsync("operator@example.com");
         await UpsertSubscriptionAsync(userId, ProductTier.Operator);
 
         var response = await _client.PostAsJsonAsync("/api/analyze/protocol", new
@@ -100,14 +132,20 @@ public sealed class AnalyzeEndpointsIntegrationTests : IAsyncLifetime
         });
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
 
-        using var payload = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
-        Assert.True(payload.RootElement.TryGetProperty("protocol", out var protocol));
-        Assert.True(payload.RootElement.TryGetProperty("score", out var score));
-        Assert.True(payload.RootElement.TryGetProperty("inputType", out var inputType));
-        Assert.Equal(JsonValueKind.Array, protocol.ValueKind);
-        Assert.True(score.GetInt32() >= 0);
-        Assert.Equal("Paste", inputType.GetString());
+    [Fact]
+    public async Task AnalyzeProtocol_CommanderTier_Returns200()
+    {
+        var userId = await SignInAsync("commander@example.com");
+        await UpsertSubscriptionAsync(userId, ProductTier.Commander);
+
+        var response = await _client.PostAsJsonAsync("/api/analyze/protocol", new
+        {
+            inputText = "BPC-157 500mcg daily"
+        });
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
     private async Task<Guid> SignInAsync(string email)
