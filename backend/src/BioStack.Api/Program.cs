@@ -131,6 +131,30 @@ builder.Services
             ? CookieSecurePolicy.SameAsRequest
             : CookieSecurePolicy.Always;
         options.SlidingExpiration = false;
+        // API clients expect 401/403, not a redirect to a sign-in page. Browser flows on
+        // non-/api paths keep the default redirect behavior.
+        options.Events.OnRedirectToLogin = context =>
+        {
+            if (context.Request.Path.StartsWithSegments("/api"))
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return Task.CompletedTask;
+            }
+
+            context.Response.Redirect(context.RedirectUri);
+            return Task.CompletedTask;
+        };
+        options.Events.OnRedirectToAccessDenied = context =>
+        {
+            if (context.Request.Path.StartsWithSegments("/api"))
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                return Task.CompletedTask;
+            }
+
+            context.Response.Redirect(context.RedirectUri);
+            return Task.CompletedTask;
+        };
         options.Events.OnValidatePrincipal = async context =>
         {
             var sessionToken = context.Principal?.FindFirst("session_token")?.Value;
