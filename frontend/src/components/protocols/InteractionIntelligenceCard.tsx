@@ -45,7 +45,7 @@ export function InteractionIntelligenceCard({
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">{title}</p>
           <h3 className="mt-2 text-lg font-bold text-white">What the stack is doing together</h3>
         </div>
-        <div className="text-right text-xs text-white/45">
+        <div className="min-w-0 text-right text-xs text-white/45">
           <div>{intelligence.compositeScore.toFixed(1)} predicted score</div>
           <div>+{intelligence.score.synergyScore.toFixed(2)} synergy</div>
           <div>-{intelligence.score.redundancyPenalty.toFixed(2)} redundancy</div>
@@ -138,7 +138,7 @@ export function InteractionIntelligenceCard({
             href="/protocols"
             className="mt-3 inline-block rounded-lg border border-emerald-300/25 px-4 py-2 text-sm font-semibold text-emerald-100 hover:bg-emerald-400/10"
           >
-            Start tracking
+            Start tracking this protocol
           </Link>
         </div>
       )}
