@@ -92,7 +92,7 @@ export function saveAnalyzerProtocolDraft(input: {
     id: `protocol-draft-${stableHash({ sourceAnalysisId: input.sourceAnalysisId, optimizedProtocol: input.optimizedProtocol })}`,
     schemaVersion: SCHEMA_VERSION,
     sourceAnalysisId: input.sourceAnalysisId,
-    name: `${input.goal || 'BioStack'} optimized protocol`,
+    name: `${input.goal || 'BioStack'} alternative protocol`,
     protocol: input.protocol,
     optimizedProtocol: input.optimizedProtocol,
     goal: input.goal,

@@ -21,11 +21,14 @@ describe('HomePage hero', () => {
     render(<LandingHero />);
 
     expect(
-      screen.getByRole('heading', { name: /What to take\. How to use it\.\s*See what it is doing\./ })
+      screen.getByRole('heading', { name: /What you're taking\. How it's structured\.\s*See what it's doing\./ })
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Start with answers. Then choose to track, compare, and optimize over time.')
+      screen.getByText('Start with clarity. Then track, compare, and observe changes over time.')
     ).toBeInTheDocument();
+    // Banned prescriptive copy must not appear on the landing hero.
+    expect(screen.queryByText(/What to take\. How to use it\./)).not.toBeInTheDocument();
+    expect(screen.queryByText(/optimize over time/)).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /I am getting started/ })).toHaveAttribute('href', '/start');
     expect(screen.getByRole('link', { name: /I already have a stack/ })).toHaveAttribute('href', '/map');
     expect(screen.getByRole('link', { name: /I work with clients/ })).toHaveAttribute('href', '/providers');

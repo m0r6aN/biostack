@@ -22,8 +22,8 @@ const swapReasonLabels: Record<string, string> = {
   reduces_redundancy: 'reduces redundancy',
   preserves_synergy: 'preserves synergy',
   lowers_interference: 'lowers interference',
-  improves_goal_alignment: 'improves goal alignment',
-  improves_signal_clarity: 'improves signal clarity',
+  improves_goal_alignment: 'closer goal alignment',
+  improves_signal_clarity: 'clearer signal',
   stronger_evidence: 'stronger evidence',
   lower_estimated_cost: 'lower estimated cost',
 };
@@ -73,7 +73,7 @@ export function InteractionIntelligenceCard({
           <div className="rounded-lg border border-sky-400/20 bg-sky-500/10 p-4">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-sky-200/60"><HelpTip tipKey="counterfactual">Counterfactual</HelpTip></p>
             <p className="mt-2 text-sm font-semibold text-white">
-              Best remove-one scenario: {bestRemoval.removedCompound}
+              Remove-one scenario: {bestRemoval.removedCompound}
             </p>
             <p className="mt-2 text-sm leading-6 text-white/65">{bestRemoval.recommendation}</p>
           </div>
@@ -81,14 +81,12 @@ export function InteractionIntelligenceCard({
 
         {bestSwap && (
           <div className="rounded-lg border border-violet-400/20 bg-violet-500/10 p-4">
-            <div className="flex items-start justify-between gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/60">Best swap</p>
-              <span className="text-xs text-white/40">
-                +{bestSwap.deltaScore.toFixed(1)} pts
-              </span>
-            </div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/60">What-if comparison</p>
             <p className="mt-2 text-sm font-semibold text-white">
-              Replace {bestSwap.originalCompound} → {bestSwap.candidateCompound}
+              Compare {bestSwap.originalCompound} vs {bestSwap.candidateCompound}
+            </p>
+            <p className="mt-1 text-xs text-white/45">
+              internal score delta: +{bestSwap.deltaScore.toFixed(1)}
             </p>
             <p className="mt-2 text-sm leading-6 text-white/65">{bestSwap.recommendation}</p>
             {bestSwap.reasons.length > 0 && (

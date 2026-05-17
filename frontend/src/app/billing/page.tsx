@@ -162,7 +162,7 @@ export default function BillingPage() {
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Commander</p>
                 <h3 className="mt-2 text-xl font-semibold text-white">Pattern intelligence</h3>
-                <p className="mt-2 text-sm leading-6 text-white/55">Track how your protocols evolve — detect trends and drift, predict what comes next, and get structured reviews across all your protocol runs.</p>
+                <p className="mt-2 text-sm leading-6 text-white/55">Track how your protocols evolve — detect trends and drift, anticipate the next phase from prior runs, and get structured reviews across all your protocol runs.</p>
                 <ul aria-label="Commander plan features" className="mt-3 space-y-1.5">
                   {['Trend and drift detection', 'Sequence expectation modeling', 'Structured protocol reviews', 'Cross-run comparison'].map((item) => (
                     <li key={item} className="flex items-center gap-2 text-xs text-white/50">
