@@ -10,6 +10,9 @@ const ALL_NEW_COPY = [
   'Pattern memory, drift analysis, and sequence intelligence unlock with Commander',
   // Billing — Observer
   'Observer includes up to 8 active compounds. Existing data stays available if a paid plan ends.',
+  'Observer is capped at {activeLimit} active compounds. If a paid plan ends while more are active, your data remains saved, but adding or reactivating active compounds is blocked until enough records are paused or completed.',
+  // Marketing — Observer tier
+  'Track up to 8 active compounds',
   // Billing — Operator card
   'See how your compounds interact — score your protocol, identify synergies and conflicts, and model what changes with counterfactual scenarios. Removes the active compound limit.',
   'Stack score across all compounds',
@@ -28,7 +31,7 @@ const ALL_NEW_COPY = [
   "Save this stack as a protocol and check in over time to see whether the synergies and conflicts playing out now actually hold.",
   // InteractionIntelligenceCard CTA
   'Tracking this protocol over time will show whether these interaction patterns hold.',
-  'Start tracking',
+  'Start tracking this protocol',
 ];
 
 const BANNED = [

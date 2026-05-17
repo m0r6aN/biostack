@@ -130,11 +130,11 @@ const navItems = [
   { label: 'Mission Control',      href: '/protocol-console', icon: <IconProtocolConsole />, adminOnly: false, exact: false },
   { label: 'Profiles',             href: '/profiles',         icon: <IconProfiles />,        adminOnly: false, exact: false },
   { label: 'Compounds',            href: '/compounds',        icon: <IconCompounds />,        adminOnly: false, exact: false },
-  { label: 'Protocol Lab',         href: '/protocols',        icon: <IconProtocols />,        adminOnly: false, exact: false },
+  { label: 'Protocol Builder',      href: '/protocols',        icon: <IconProtocols />,        adminOnly: false, exact: false },
   { label: 'Observations',         href: '/checkins',         icon: <IconCheckins />,         adminOnly: false, exact: false },
   { label: 'Timeline',             href: '/timeline',         icon: <IconTimeline />,         adminOnly: false, exact: false },
   { label: 'Tools',                href: '/tools',            icon: <IconCalculators />,      adminOnly: false, exact: false },
-  { label: 'Compound Intelligence',href: '/knowledge',        icon: <IconKnowledge />,        adminOnly: false, exact: false },
+  { label: 'Compound Library',     href: '/knowledge',        icon: <IconKnowledge />,        adminOnly: false, exact: false },
   { label: 'Billing',              href: '/billing',          icon: <IconBilling />,          adminOnly: false, exact: false },
   { label: 'Admin',                href: '/admin',            icon: <IconAdmin />,            adminOnly: true,  exact: true  },
   { label: 'Research',             href: '/admin/research',   icon: <IconResearch />,         adminOnly: false, exact: false },
@@ -284,19 +284,18 @@ export function Sidebar() {
             </div>
           )}
 
-          {/* ── System zone ─────────────────────────────────────────────────── */}
+          {/* ── Posture zone ────────────────────────────────────────────────── */}
           <div className="p-4 rounded-2xl border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent">
             <div className="flex items-center gap-3">
-              {/* Pulsing status indicator */}
-              <div className="relative flex h-2 w-2">
+              <div className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-40"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </div>
 
               <div className="min-w-0">
-                <p className="text-[11px] font-bold text-white/50 leading-none">SYSTEM ACTIVE</p>
+                <p className="text-[11px] font-bold text-white/50 leading-none">Educational use only</p>
                 <p className="text-[10px] text-white/20 mt-1 font-medium tracking-wide">
-                  ESTABLISHED · 128-BIT
+                  Advisory · No medical claims
                 </p>
               </div>
             </div>
