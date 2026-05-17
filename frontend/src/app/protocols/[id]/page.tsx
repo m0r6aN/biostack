@@ -1,24 +1,24 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
+import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
+import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
+import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { ProtocolComparison } from '@/components/protocols/ProtocolComparison';
 import { ProtocolContinuityStrip } from '@/components/protocols/ProtocolContinuityStrip';
 import { ProtocolIntelligenceReview } from '@/components/protocols/ProtocolIntelligenceReview';
-import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
-import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
-import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
-import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
-import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { ProviderObservationalSummary } from '@/components/protocols/ProviderObservationalSummary';
+import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { ApiError, apiClient } from '@/lib/api';
 import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { use, useEffect, useState } from 'react';
 
 interface ProtocolDetailPageProps {
   params: Promise<{ id: string }>;
@@ -194,6 +194,14 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
         subtitle={protocol ? `Version ${protocol.version}${protocol.isDraft ? ' draft' : ''}${protocol.isCurrentVersion ? ' · current' : ' · prior version'}` : undefined}
         actions={
           <div className="flex flex-wrap gap-2">
+            {protocol && (
+              <Link
+                href="#provider-summary"
+                className="rounded-lg border border-sky-300/25 bg-sky-500/10 px-4 py-2 text-sm font-semibold text-sky-100 hover:border-sky-200/45"
+              >
+                Prepare provider summary
+              </Link>
+            )}
             {protocol?.actualComparison?.run && protocol.actualComparison.run.status !== 'active' && (
               <button
                 onClick={evolveFromRun}
