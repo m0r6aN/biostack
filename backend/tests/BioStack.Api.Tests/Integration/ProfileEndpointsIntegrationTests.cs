@@ -221,6 +221,19 @@ public class ProfileEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task GetAllProfiles_AnonymousRequest_Returns401NotRedirect()
+    {
+        using var anonymousClient = _factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false,
+        });
+
+        var response = await anonymousClient.GetAsync("/api/v1/profiles");
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
     public async Task DeleteProfile_WithValidId_ReturnsNoContent()
     {
         var createRequest = new CreateProfileRequest(
