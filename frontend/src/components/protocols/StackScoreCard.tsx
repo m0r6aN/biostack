@@ -1,4 +1,6 @@
 import { StackScore } from '@/lib/types';
+import { HelpTip } from '@/components/ui/HelpTip';
+import type { HelpTipKey } from '@/lib/helpTips';
 
 interface StackScoreCardProps {
   score: StackScore;
@@ -27,20 +29,22 @@ export function StackScoreCard({ score }: StackScoreCardProps) {
       </div>
 
       <div className="mt-5 grid grid-cols-2 gap-3 text-xs">
-        <Breakdown label="Synergy" value={score.breakdown.synergy} />
-        <Breakdown label="Redundancy" value={score.breakdown.redundancy} />
-        <Breakdown label="Conflicts" value={score.breakdown.conflicts} />
-        <Breakdown label="Evidence" value={score.breakdown.evidence} />
+        <Breakdown label="Synergy"    helpKey="synergy"      value={score.breakdown.synergy} />
+        <Breakdown label="Redundancy" helpKey="redundancy"   value={score.breakdown.redundancy} />
+        <Breakdown label="Conflicts"  helpKey="interference" value={score.breakdown.conflicts} />
+        <Breakdown label="Evidence"   helpKey="evidenceTier" value={score.breakdown.evidence} />
       </div>
     </div>
   );
 }
 
-function Breakdown({ label, value }: { label: string; value: number }) {
+function Breakdown({ label, value, helpKey }: { label: string; value: number; helpKey?: HelpTipKey }) {
   return (
     <div className="rounded-lg border border-white/[0.06] bg-white/[0.025] p-3">
       <div className="flex items-center justify-between">
-        <span className="text-white/45">{label}</span>
+        <span className="text-white/45">
+          {helpKey ? <HelpTip tipKey={helpKey}>{label}</HelpTip> : label}
+        </span>
         <span className="font-semibold text-white">{value}</span>
       </div>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">

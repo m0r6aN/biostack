@@ -26,6 +26,17 @@ import { cn } from '@/lib/utils';
 import { track } from '@/lib/telemetry';
 import type { InteractionIntelligence, CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { CompoundLink } from '@/components/knowledge/CompoundLink';
+import { HelpTip } from '@/components/ui/HelpTip';
+import type { HelpTipKey } from '@/lib/helpTips';
+
+function edgeLabelHelpKey(label: string): HelpTipKey | null {
+  const l = label.toLowerCase();
+  if (l.includes('synergi') || l.includes('complement')) return 'synergy';
+  if (l.includes('redundant') || l.includes('redundan'))  return 'redundancy';
+  if (l.includes('interfer'))                              return 'interference';
+  if (l.includes('pathway') || l.includes('overlap'))     return 'pathwayOverlap';
+  return null;
+}
 
 // ── Custom Node ────────────────────────────────────────────────────────────
 
@@ -54,7 +65,9 @@ function CompoundNode({ data, selected }: { data: StackGraphNode['data']; select
 
       {tierToken && (
         <span className={cn('mt-1.5 inline-block text-[9px] font-medium px-1.5 py-0.5 rounded-full', tierToken.bg, tierToken.color)}>
-          {tierToken.short}
+          <HelpTip tipKey={data.evidenceTier === 'mechanistic' ? 'mechanisticEvidence' : 'evidenceTier'}>
+            {tierToken.short}
+          </HelpTip>
         </span>
       )}
 
@@ -75,6 +88,7 @@ function InteractionEdge({
   data, style, markerEnd,
 }: any) {
   const [edgePath, labelX, labelY] = getBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
+  const labelHelpKey = data?.label ? edgeLabelHelpKey(data.label) : null;
 
   return (
     <>
@@ -86,7 +100,9 @@ function InteractionEdge({
         >
           {data?.label && (
             <span className="text-[9px] text-white/30 bg-[#0B0F14] px-1.5 py-0.5 rounded-full border border-white/8 font-mono">
-              {data.label}
+              {labelHelpKey
+                ? <HelpTip tipKey={labelHelpKey}>{data.label}</HelpTip>
+                : data.label}
             </span>
           )}
         </div>

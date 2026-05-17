@@ -1,11 +1,18 @@
-// Canonical EvidenceTierBadge — replaces the one in knowledge/ which can be deleted.
+'use client';
+
 import { EVIDENCE_TIER_TOKENS } from '@/styles/tokens';
 import { cn } from '@/lib/utils';
+import { HelpTip } from '@/components/ui/HelpTip';
+import type { HelpTipKey } from '@/lib/helpTips';
 
 interface EvidenceTierBadgeProps {
   tier: string;
   short?: boolean;
   className?: string;
+}
+
+function tierHelpKey(key: string): HelpTipKey {
+  return key === 'mechanistic' || key === 'theoretical' ? 'mechanisticEvidence' : 'evidenceTier';
 }
 
 export function EvidenceTierBadge({ tier, short = false, className }: EvidenceTierBadgeProps) {
@@ -19,9 +26,8 @@ export function EvidenceTierBadge({ tier, short = false, className }: EvidenceTi
         t.bg, t.color, t.border,
         className,
       )}
-      title={t.label}
     >
-      {short ? t.short : t.label}
+      <HelpTip tipKey={tierHelpKey(key)}>{short ? t.short : t.label}</HelpTip>
     </span>
   );
 }

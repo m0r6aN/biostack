@@ -130,7 +130,8 @@ describe('OverlapFlagsBanner', () => {
       evidenceConfidence: 'High',
     }];
     render(<OverlapFlagsBanner flags={flags} />);
-    expect(screen.getByText(/1 pathway overlap detected/i)).toBeInTheDocument();
+    // heading text is split across child spans due to HelpTip wrapper
+    expect(screen.getByRole('heading', { level: 4 })).toHaveTextContent(/1.*pathway overlap.*detected/i);
   });
 
   it('renders plural text for multiple flags', () => {
@@ -139,7 +140,8 @@ describe('OverlapFlagsBanner', () => {
       { compoundNames: ['C', 'D'], overlapType: 'X', pathwayTag: 'p2', description: '', evidenceConfidence: '' },
     ];
     render(<OverlapFlagsBanner flags={flags} />);
-    expect(screen.getByText(/2 pathway overlap flags detected/i)).toBeInTheDocument();
+    // heading text is split across child spans due to HelpTip wrapper
+    expect(screen.getByRole('heading', { level: 4 })).toHaveTextContent(/2.*pathway overlap.*flags detected/i);
   });
 });
 

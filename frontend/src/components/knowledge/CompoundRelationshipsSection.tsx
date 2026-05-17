@@ -13,6 +13,8 @@ import {
   isRelationshipEdge,
   normalizeCompoundId,
 } from '@/lib/research/compoundGraphRelationships';
+import { HelpTip } from '@/components/ui/HelpTip';
+import type { HelpTipKey } from '@/lib/helpTips';
 
 interface Props {
   compoundName: string;
@@ -40,6 +42,10 @@ interface MatchedEdge {
 function tierRank(tier: string | null | undefined): number {
   if (!tier) return 0;
   return TIER_RANK[tier.toLowerCase()] ?? 0;
+}
+
+function tierHelpKey(label: string): HelpTipKey {
+  return label.toLowerCase().includes('mechanistic') ? 'mechanisticEvidence' : 'evidenceTier';
 }
 
 export function CompoundRelationshipsSection({ compoundName, aliases }: Props) {
@@ -156,17 +162,18 @@ export function CompoundRelationshipsSection({ compoundName, aliases }: Props) {
                   {edge.relationshipLabel}
                 </span>
                 <span className="text-xs text-white/35">
-                  {edge.evidenceTierLabel}
+                  <HelpTip tipKey={tierHelpKey(edge.evidenceTierLabel)}>{edge.evidenceTierLabel}</HelpTip>
                 </span>
               </div>
               {edge.communitySignalLabel && (
                 <p className="text-xs text-sky-300/70 mt-0.5">
-                  {edge.communitySignalLabel}
+                  <HelpTip tipKey="communitySignal">{edge.communitySignalLabel}</HelpTip>
                 </p>
               )}
               {edge.needsReview && (
                 <p className="text-xs text-amber-300/70 mt-0.5">
-                  Awaiting research review · Advisory signal only
+                  <HelpTip tipKey="reviewRequired">Awaiting research review</HelpTip>
+                  {' · Advisory signal only'}
                 </p>
               )}
             </li>
