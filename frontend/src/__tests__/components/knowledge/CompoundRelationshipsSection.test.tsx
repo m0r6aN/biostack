@@ -237,7 +237,7 @@ describe('CompoundRelationshipsSection', () => {
     });
   });
 
-  it('renders "Awaiting research review · Advisory signal only" for needsReview: true', async () => {
+  it('renders "Awaiting research review" and "Advisory signal only" for needsReview: true', async () => {
     mockFetchGraph.mockResolvedValue(makeGraph({
       nodes: [
         makeNode({ nodeId: 'compound:creatine', label: 'Creatine', nodeType: 'compound' }),
@@ -247,7 +247,8 @@ describe('CompoundRelationshipsSection', () => {
     }));
     render(<CompoundRelationshipsSection compoundName="Creatine" />);
     await waitFor(() => {
-      expect(screen.getByText('Awaiting research review · Advisory signal only')).toBeInTheDocument();
+      expect(screen.getByText('Awaiting research review')).toBeInTheDocument();
+      expect(screen.getByText('· Advisory signal only', { exact: false })).toBeInTheDocument();
     });
   });
 
@@ -344,6 +345,53 @@ describe('CompoundRelationshipsSection', () => {
     render(<CompoundRelationshipsSection compoundName="Creatine" />);
     await waitFor(() => {
       expect(screen.getByText('Beta-Alanine')).toBeInTheDocument();
+    });
+  });
+
+  it('HelpTip: evidence tier label is rendered as a button', async () => {
+    mockFetchGraph.mockResolvedValue(makeGraph({
+      nodes: [
+        makeNode({ nodeId: 'compound:creatine', label: 'Creatine', nodeType: 'compound' }),
+        makeNode({ nodeId: 'compound:beta-alanine', label: 'Beta-Alanine', nodeType: 'compound' }),
+      ],
+      edges: [makeEdge({ evidenceTier: 'Strong' })],
+    }));
+    render(<CompoundRelationshipsSection compoundName="Creatine" />);
+    await waitFor(() => {
+      const buttons = screen.getAllByRole('button');
+      expect(buttons.some(b => b.textContent?.includes('Strong evidence'))).toBe(true);
+    });
+  });
+
+  it('HelpTip: community signal label is rendered as a button', async () => {
+    mockFetchGraph.mockResolvedValue(makeGraph({
+      nodes: [
+        makeNode({ nodeId: 'compound:creatine', label: 'Creatine', nodeType: 'compound' }),
+        makeNode({ nodeId: 'compound:beta-alanine', label: 'Beta-Alanine', nodeType: 'compound' }),
+      ],
+      edges: [makeEdge({
+        communitySignal: { present: true, signalStrength: 'recurring', signalDirection: 'positive', canonicalTruthStatus: 'partially-supported' },
+      })],
+    }));
+    render(<CompoundRelationshipsSection compoundName="Creatine" />);
+    await waitFor(() => {
+      const buttons = screen.getAllByRole('button');
+      expect(buttons.some(b => b.textContent?.includes('Commonly reported'))).toBe(true);
+    });
+  });
+
+  it('HelpTip: review required label is rendered as a button', async () => {
+    mockFetchGraph.mockResolvedValue(makeGraph({
+      nodes: [
+        makeNode({ nodeId: 'compound:creatine', label: 'Creatine', nodeType: 'compound' }),
+        makeNode({ nodeId: 'compound:beta-alanine', label: 'Beta-Alanine', nodeType: 'compound' }),
+      ],
+      edges: [makeEdge({ needsReview: true })],
+    }));
+    render(<CompoundRelationshipsSection compoundName="Creatine" />);
+    await waitFor(() => {
+      const buttons = screen.getAllByRole('button');
+      expect(buttons.some(b => b.textContent?.includes('Awaiting research review'))).toBe(true);
     });
   });
 });
