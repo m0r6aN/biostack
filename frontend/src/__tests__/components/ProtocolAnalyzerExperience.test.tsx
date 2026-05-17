@@ -82,9 +82,12 @@ describe('ProtocolAnalyzerExperience', () => {
     await waitFor(() => {
       expect(screen.getByText('What this means')).toBeInTheDocument();
     });
-    // BioStack must not present a "Why this is better" section when no
-    // counterfactual variant beats the baseline. Empty improvement cards
-    // create the false impression that the optimizer ran.
+    // BioStack must not present an "Alternative scenarios" section when no
+    // counterfactual variant beats the baseline. Empty cards would create the
+    // false impression that the comparison ran.
+    expect(screen.queryByText('Alternative scenarios')).not.toBeInTheDocument();
+    expect(screen.queryByText('Original vs BioStack alternative')).not.toBeInTheDocument();
+    // The retired prescriptive labels must never reappear.
     expect(screen.queryByText('Why this is better')).not.toBeInTheDocument();
     expect(screen.queryByText('Original vs BioStack Version')).not.toBeInTheDocument();
   });
@@ -136,7 +139,7 @@ describe('ProtocolAnalyzerExperience', () => {
     expect(draft).toMatchObject({
       sourceAnalysisId: history[0].id,
       goal: 'healing',
-      name: 'healing optimized protocol',
+      name: 'healing alternative protocol',
     });
     expect(pushMock).toHaveBeenCalledWith('/auth/signin?callbackUrl=/protocol-console');
     expect(eventDetails).toContainEqual(
@@ -150,6 +153,28 @@ describe('ProtocolAnalyzerExperience', () => {
         locked: true,
       }),
     );
+  });
+
+  it('renders alternative-scenario labels and never the retired prescriptive labels', async () => {
+    restoreAnalyzerResult(restorableResult());
+
+    render(<ProtocolAnalyzerExperience />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Alternative scenarios')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Original vs BioStack alternative')).toBeInTheDocument();
+    // Visible language guard for this surface.
+    expect(screen.queryByText('Why this is better')).not.toBeInTheDocument();
+    expect(screen.queryByText('Best swap')).not.toBeInTheDocument();
+    expect(screen.queryByText('Best removal')).not.toBeInTheDocument();
+    expect(screen.queryByText(/Optimize the stack/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Strong base with room to tighten/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/cleaner ways to structure/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/cleaner version/)).not.toBeInTheDocument();
+    // Recommendation-style "Replace X →" / "Swap X -> Y" patterns must not appear.
+    expect(screen.queryByText(/^Swap .+ -> /)).not.toBeInTheDocument();
+    expect(screen.queryByText(/^Replace .+ → /)).not.toBeInTheDocument();
   });
 
   it('converts the current analysis when no optimized variant exists', async () => {

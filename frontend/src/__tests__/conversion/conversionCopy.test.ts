@@ -17,7 +17,7 @@ const ALL_NEW_COPY = [
   'Counterfactual scenarios',
   'No compound cap',
   // Billing — Commander card
-  'Track how your protocols evolve — detect trends and drift, predict what comes next, and get structured reviews across all your protocol runs.',
+  'Track how your protocols evolve — detect trends and drift, anticipate the next phase from prior runs, and get structured reviews across all your protocol runs.',
   'Trend and drift detection',
   'Sequence expectation modeling',
   'Structured protocol reviews',
