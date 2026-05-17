@@ -1,6 +1,7 @@
 'use client';
 
 import { InteractionIntelligence } from '@/lib/types';
+import { HelpTip } from '@/components/ui/HelpTip';
 
 interface InteractionIntelligenceCardProps {
   intelligence: InteractionIntelligence;
@@ -51,15 +52,15 @@ export function InteractionIntelligenceCard({
 
       <div className="mt-4 grid gap-3 sm:grid-cols-3">
         <div className="rounded-lg border border-emerald-400/15 bg-emerald-500/10 p-3">
-          <p className="text-xs uppercase tracking-[0.16em] text-emerald-200/60">Synergies</p>
+          <p className="text-xs uppercase tracking-[0.16em] text-emerald-200/60"><HelpTip tipKey="synergy">Synergies</HelpTip></p>
           <p className="mt-2 text-2xl font-bold text-emerald-100">{summary.synergies}</p>
         </div>
         <div className="rounded-lg border border-amber-400/15 bg-amber-500/10 p-3">
-          <p className="text-xs uppercase tracking-[0.16em] text-amber-200/60">Redundancies</p>
+          <p className="text-xs uppercase tracking-[0.16em] text-amber-200/60"><HelpTip tipKey="redundancy">Redundancies</HelpTip></p>
           <p className="mt-2 text-2xl font-bold text-amber-100">{summary.redundancies}</p>
         </div>
         <div className="rounded-lg border border-rose-400/15 bg-rose-500/10 p-3">
-          <p className="text-xs uppercase tracking-[0.16em] text-rose-200/60">Interferences</p>
+          <p className="text-xs uppercase tracking-[0.16em] text-rose-200/60"><HelpTip tipKey="interference">Interferences</HelpTip></p>
           <p className="mt-2 text-2xl font-bold text-rose-100">{summary.interferences}</p>
         </div>
       </div>
@@ -67,7 +68,7 @@ export function InteractionIntelligenceCard({
       <div className="mt-4 space-y-3">
         {bestRemoval && (
           <div className="rounded-lg border border-sky-400/20 bg-sky-500/10 p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-sky-200/60">Counterfactual</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-sky-200/60"><HelpTip tipKey="counterfactual">Counterfactual</HelpTip></p>
             <p className="mt-2 text-sm font-semibold text-white">
               Best remove-one scenario: {bestRemoval.removedCompound}
             </p>
