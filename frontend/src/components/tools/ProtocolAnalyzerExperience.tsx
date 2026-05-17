@@ -4,6 +4,7 @@ import { trackAnalyzerEvent } from '@/lib/analyzerAnalytics';
 import { saveAnalyzerAnalysis, saveAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
 import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
+import { FREE_TIER_COMPOUND_LIMIT } from '@/lib/tiers';
 import type {
     ProtocolAnalyzerArtifact,
     ProtocolAnalyzerCounterfactual,
@@ -205,15 +206,15 @@ export function ProtocolAnalyzerExperience() {
       try {
         const payload =
           input.inputType === 'Paste'
-            ? { inputType: input.inputType, inputText: input.inputText ?? '', goal: input.goal, maxCompounds: 5 as const }
+            ? { inputType: input.inputType, inputText: input.inputText ?? '', goal: input.goal, maxCompounds: FREE_TIER_COMPOUND_LIMIT }
             : input.inputType === 'Link'
-              ? { inputType: input.inputType, linkUrl: input.linkUrl ?? '', goal: input.goal, maxCompounds: 5 as const }
+              ? { inputType: input.inputType, linkUrl: input.linkUrl ?? '', goal: input.goal, maxCompounds: FREE_TIER_COMPOUND_LIMIT }
               : {
                   inputType: input.inputType,
                   file: input.file ?? undefined,
                   sourceName: input.sourceName,
                   goal: input.goal,
-                  maxCompounds: 5 as const,
+                  maxCompounds: FREE_TIER_COMPOUND_LIMIT,
                 };
 
         setResult(await apiClient.analyzeProtocol(payload));
