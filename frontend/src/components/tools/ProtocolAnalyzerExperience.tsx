@@ -168,9 +168,9 @@ export function ProtocolAnalyzerExperience() {
   const scoreInsight = getScoreInsight(result, optimizedProtocol);
   const whatThisMeans = getWhatThisMeans(result, optimizedProtocol);
   const premiumLocked = Boolean(result);
-  // BioStack only claims an improvement when there is one. If nothing crosses
-  // the meaningful-improvement threshold, we hide the comparison and the
-  // "Why this is better" section instead of presenting an empty pretense.
+  // BioStack only surfaces alternatives when one actually scores higher. If
+  // nothing crosses the meaningful-improvement threshold, we hide the comparison
+  // and the "Alternative scenarios" section instead of presenting an empty pretense.
   const hasMeaningfulImprovement = Boolean(
     optimizedProtocol || primaryRemoval || primarySwap,
   );
@@ -370,13 +370,13 @@ export function ProtocolAnalyzerExperience() {
           Analyze any protocol, in any format you actually have
         </h1>
         <p className="mt-3 max-w-3xl text-base leading-7 text-white/62">
-          Paste, upload, scan, or link any protocol. BioStack extracts the structure, scores the stack, and shows better options.
+          Paste, upload, scan, or link any protocol. BioStack extracts the structure, scores the stack, and surfaces alternative scenarios.
         </p>
         <div className="mt-4 flex flex-wrap gap-2 text-sm text-white/60">
           <FeatureChip label="Extract document text" />
           <FeatureChip label="Infer protocol structure" />
           <FeatureChip label="Detect overlap" />
-          <FeatureChip label="Optimize the stack" />
+          <FeatureChip label="Compare alternatives" />
         </div>
       </section>
 
@@ -627,27 +627,27 @@ export function ProtocolAnalyzerExperience() {
 
           {result && hasMeaningfulImprovement && (
             <section className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-              <h2 className="text-lg font-semibold text-white">Why this is better</h2>
+              <h2 className="text-lg font-semibold text-white">Alternative scenarios</h2>
               <p className="mt-2 text-sm leading-6 text-white/55">
-                BioStack is testing cleaner ways to reach the same goal with less noise.
+                BioStack is comparing other arrangements that reach the same goal with less overlap on the internal model.
               </p>
               <div className="mt-4 space-y-3">
                 {optimizedProtocol ? <WhyBetterBlocks result={result} optimized={optimizedProtocol} /> : null}
                 {primaryRemoval && (
                   <ImprovementCard
-                    title="Best removal"
+                    title="Remove-one scenario"
                     teaser={primaryRemoval}
                     empty="No obvious removal surfaced."
-                    emptyDetail="BioStack did not find a high-confidence compound to remove for this goal."
+                    emptyDetail="BioStack did not find a high-confidence compound to surface as a remove-one scenario for this goal."
                     kind="remove"
                   />
                 )}
                 {primarySwap && (
                   <ImprovementCard
-                    title="Best swap"
+                    title="What-if comparison"
                     teaser={primarySwap}
-                    empty="No strong swap surfaced."
-                    emptyDetail="BioStack did not find a higher-scoring replacement from the current knowledge set."
+                    empty="No alternative surfaced."
+                    emptyDetail="BioStack did not find an alternative that scored higher on the internal model from the current knowledge set."
                     kind="swap"
                   />
                 )}
@@ -867,18 +867,18 @@ function OriginalVsOptimizedSection({
   return (
     <section className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-lg font-semibold text-white">Original vs BioStack Version</h2>
+        <h2 className="text-lg font-semibold text-white">Original vs BioStack alternative</h2>
         <span className="rounded-lg border border-emerald-300/20 bg-emerald-400/10 px-3 py-1.5 text-sm font-semibold text-emerald-100">
-          {result.score} -&gt; {optimizedScore} ({formatDelta(delta)})
+          {result.score} vs {optimizedScore} · model delta {formatDelta(delta)}
         </span>
       </div>
       <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_auto_1fr]">
         <ProtocolComparisonList title="Original protocol" entries={result.protocol} empty="No original compounds parsed." />
-        <div className="hidden items-center justify-center text-white/35 lg:flex">-&gt;</div>
+        <div className="hidden items-center justify-center text-white/35 lg:flex">vs</div>
         <ProtocolComparisonList
-          title={optimized?.label ?? 'BioStack optimized protocol'}
+          title={optimized?.label ?? 'BioStack alternative protocol'}
           entries={optimized?.protocol ?? result.protocol}
-          empty="No optimized protocol surfaced yet."
+          empty="No alternative protocol surfaced yet."
           accent
         />
       </div>
@@ -936,32 +936,32 @@ function WhyBetterBlocks({
       title: 'Reduced pathway overlap',
       body:
         issueCompounds.length > 0
-          ? `BioStack flagged overlap around ${unique(issueCompounds).slice(0, 3).join(', ')} and tested a cleaner version.`
+          ? `BioStack flagged overlap around ${unique(issueCompounds).slice(0, 3).join(', ')} and tested an alternative arrangement.`
           : retained.length > 1
-            ? `The improved version keeps ${retained.slice(0, 3).join(', ')} while reducing noisy stack interactions.`
+            ? `The alternative arrangement keeps ${retained.slice(0, 3).join(', ')} while reducing noisy stack interactions.`
             : 'No major overlap pattern dominated this protocol.',
     },
     {
-      title: 'Removed redundant compounds',
+      title: 'Redundant compounds in this arrangement',
       body:
         removed.length > 0
-          ? `${removed.slice(0, 3).join(', ')} ${removed.length === 1 ? 'was' : 'were'} the clearest simplification target.`
-          : 'No obvious removal improved the stack under the current rules.',
+          ? `${removed.slice(0, 3).join(', ')} ${removed.length === 1 ? 'was' : 'were'} the clearest simplification target on the internal model.`
+          : 'No obvious removal moved the score on the internal model under the current rules.',
     },
     {
-      title: 'Improved goal alignment',
+      title: 'Goal alignment delta',
       body:
         swap
-          ? `${swap.candidateCompound} scored better than ${swap.originalCompound} for this goal-aware path.`
+          ? `${swap.candidateCompound} scored higher than ${swap.originalCompound} on the goal-aware internal model.`
           : optimized
-            ? `${optimized.label} scored ${optimized.score}, giving the ${goalText(optimized)} path a clearer fit.`
-            : `The current stack scored ${result.score}, with no stronger goal-aware variant available yet.`,
+            ? `${optimized.label} scored ${optimized.score} on the internal model, giving the ${goalText(optimized)} path a clearer fit.`
+            : `The current stack scored ${result.score}, with no goal-aware variant ranking higher yet.`,
     },
     {
-      title: 'Simplified protocol complexity',
+      title: 'Protocol complexity',
       body:
         optimized && optimized.protocol.length < result.protocol.length
-          ? `Compound count drops from ${result.protocol.length} to ${optimized.protocol.length}, making attribution easier.`
+          ? `Compound count drops from ${result.protocol.length} to ${optimized.protocol.length} in this arrangement, making attribution easier.`
           : `BioStack parsed ${result.protocol.length} item${result.protocol.length === 1 ? '' : 's'} and highlighted where clarity is still missing.`,
     },
   ];
@@ -993,12 +993,12 @@ function ExampleButton({ label, onClick }: { label: string; onClick: () => void 
 function AnalyzerProgressCard({ mode }: { mode: ProtocolAnalyzerInputType }) {
   const progressSteps =
     mode === 'CameraScan'
-      ? ['Reading image', 'Extracting text from photo', 'Resolving compound aliases', 'Checking pathway overlap', 'Scoring protocol', 'Testing improvements']
+      ? ['Reading image', 'Extracting text from photo', 'Resolving compound aliases', 'Checking pathway overlap', 'Scoring protocol', 'Comparing alternatives']
       : mode === 'Link'
-        ? ['Fetching shared document', 'Extracting text', 'Resolving compound aliases', 'Checking pathway overlap', 'Scoring protocol', 'Testing improvements']
+        ? ['Fetching shared document', 'Extracting text', 'Resolving compound aliases', 'Checking pathway overlap', 'Scoring protocol', 'Comparing alternatives']
         : mode === 'FileUpload'
-          ? ['Extracting text', 'Reading table structure', 'Resolving compound aliases', 'Checking pathway overlap', 'Scoring protocol', 'Testing improvements']
-          : ['Extracting text', 'Normalizing protocol rows', 'Resolving compound aliases', 'Checking pathway overlap', 'Scoring protocol', 'Testing improvements'];
+          ? ['Extracting text', 'Reading table structure', 'Resolving compound aliases', 'Checking pathway overlap', 'Scoring protocol', 'Comparing alternatives']
+          : ['Extracting text', 'Normalizing protocol rows', 'Resolving compound aliases', 'Checking pathway overlap', 'Scoring protocol', 'Comparing alternatives'];
 
   return (
     <section className="mt-4 rounded-lg border border-white/10 bg-black/20 p-4">
@@ -1132,10 +1132,10 @@ function ImprovementCard({
         <>
           <p className="mt-2 text-base font-semibold text-white">
             {kind === 'remove'
-              ? `Remove ${(teaser as ProtocolAnalyzerCounterfactual).removedCompound}`
-              : `Swap ${(teaser as ProtocolAnalyzerSwap).originalCompound} -> ${(teaser as ProtocolAnalyzerSwap).candidateCompound}`}
+              ? `Without ${(teaser as ProtocolAnalyzerCounterfactual).removedCompound}`
+              : `Compare ${(teaser as ProtocolAnalyzerSwap).originalCompound} vs ${(teaser as ProtocolAnalyzerSwap).candidateCompound}`}
           </p>
-          <p className="mt-1 text-sm text-emerald-100/85">New score {Math.round(teaser.variantScore)} ({formatDelta(teaser.deltaScore)})</p>
+          <p className="mt-1 text-sm text-emerald-100/85">Internal model score {Math.round(teaser.variantScore)} · model delta {formatDelta(teaser.deltaScore)}</p>
           <p className="mt-2 text-sm leading-6 text-white/58">{teaser.recommendation}</p>
         </>
       ) : (
@@ -1160,9 +1160,9 @@ function SimplifiedProtocolCard({ protocol }: { protocol: ProtocolAnalyzerResult
         </>
       ) : (
         <>
-          <p className="mt-2 text-base font-semibold text-white">No cleaner version beat the current stack.</p>
+          <p className="mt-2 text-base font-semibold text-white">No alternative scored above the current stack on the internal model.</p>
           <p className="mt-2 text-sm leading-6 text-white/55">
-            This protocol may already be compact, or the system needs more profile context before simplifying it safely.
+            This protocol may already be compact, or the system needs more profile context before surfacing a simpler arrangement.
           </p>
         </>
       )}
@@ -1173,18 +1173,18 @@ function SimplifiedProtocolCard({ protocol }: { protocol: ProtocolAnalyzerResult
 function GoalAwareCard({ option }: { option: ProtocolAnalyzerGoalAwareOption | null }) {
   return (
     <article className="rounded-lg border border-white/10 bg-black/20 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">Goal-aware optimization</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">Goal-aware alternative</p>
       {option ? (
         <>
-          <p className="mt-2 text-base font-semibold text-white">Best fit for {option.goal}</p>
-          <p className="mt-1 text-sm text-emerald-100/85">Score {option.score}</p>
+          <p className="mt-2 text-base font-semibold text-white">Closest fit for {option.goal}</p>
+          <p className="mt-1 text-sm text-emerald-100/85">Internal model score {option.score}</p>
           <p className="mt-2 text-sm leading-6 text-white/58">{option.reasons?.[0] ?? 'BioStack found a goal-aware variant, but did not return a detailed reason.'}</p>
         </>
       ) : (
         <>
-          <p className="mt-2 text-base font-semibold text-white">Goal-aware optimization needs more context.</p>
+          <p className="mt-2 text-base font-semibold text-white">Goal-aware alternative needs more context.</p>
           <p className="mt-2 text-sm leading-6 text-white/55">
-            Add profile details or unlock full optimization to compare stronger alternatives for this goal.
+            Add profile details or unlock full analysis to compare alternative scenarios for this goal.
           </p>
         </>
       )}
@@ -1231,9 +1231,9 @@ function buildParserWarnings(result: ProtocolAnalyzerResult | null): string[] {
 }
 
 function scoreSummary(score: number): string {
-  if (score >= 80) return 'Strong base with room to tighten the protocol further.';
-  if (score >= 60) return 'Solid starting point, but there are cleaner ways to structure it.';
-  return 'Mixed stack with avoidable redundancy or weak attribution clarity.';
+  if (score >= 80) return 'Few overlaps detected and clear attribution across compounds.';
+  if (score >= 60) return 'Workable structure with some redundancy or attribution gaps.';
+  return 'Multiple overlaps or weak attribution issues detected in the parsed stack.';
 }
 
 function getScoreLabel(score: number | undefined): string {
@@ -1273,7 +1273,7 @@ function getScoreInsight(result: ProtocolAnalyzerResult | null, optimized: Optim
   }
 
   if (removal && removal.deltaScore > 0) {
-    return `Removing ${removal.removedCompound} may improve clarity by ${formatDelta(removal.deltaScore)} points.`;
+    return `Without ${removal.removedCompound}, the internal model score shifts by ${formatDelta(removal.deltaScore)} points.`;
   }
 
   if (excessive) {
@@ -1281,7 +1281,7 @@ function getScoreInsight(result: ProtocolAnalyzerResult | null, optimized: Optim
   }
 
   if (optimized && optimized.score > result.score) {
-    return `BioStack found a cleaner version that scores ${formatDelta(optimized.score - result.score)} points higher.`;
+    return `BioStack found an alternative arrangement with an internal model delta of ${formatDelta(optimized.score - result.score)} points.`;
   }
 
   if (result.protocol.length <= 3 && result.score >= 55) {
@@ -1298,7 +1298,7 @@ function getWhatThisMeans(result: ProtocolAnalyzerResult | null, optimized: Opti
 
   const issueCompounds = unique(result.issues.flatMap((issue) => issue.compounds).filter(Boolean));
   if (optimized && optimized.score > result.score && optimized.protocol.length < result.protocol.length) {
-    return 'BioStack found a cleaner path toward the same goal with fewer overlapping signals.';
+    return 'BioStack found an alternative arrangement with fewer overlapping signals on the internal model.';
   }
 
   if (issueCompounds.length > 1) {
@@ -1306,7 +1306,7 @@ function getWhatThisMeans(result: ProtocolAnalyzerResult | null, optimized: Opti
   }
 
   if ((result.counterfactuals?.bestSwapOne?.length ?? 0) > 0) {
-    return 'BioStack found a possible replacement path worth comparing before committing this protocol to tracking.';
+    return 'BioStack found an alternative arrangement worth comparing before committing this protocol to tracking.';
   }
 
   return 'This protocol appears relatively lean, but saving it lets you track whether the expected effects show up over time.';
@@ -1340,7 +1340,7 @@ function pickOptimizedProtocol(result: ProtocolAnalyzerResult | null): Optimized
   const simplified = counterfactuals?.bestSimplifiedProtocol;
   if (simplified && simplified.score > result.score) {
     return {
-      label: 'BioStack simplified protocol',
+      label: 'BioStack simplified arrangement',
       protocol: simplified.compounds,
       score: simplified.score,
       removed: simplified.removed,
@@ -1350,7 +1350,7 @@ function pickOptimizedProtocol(result: ProtocolAnalyzerResult | null): Optimized
   const goalAware = counterfactuals?.goalAwareOptions?.[0];
   if (goalAware && goalAware.score > result.score) {
     return {
-      label: `BioStack version for ${goalAware.goal}`,
+      label: `BioStack arrangement for ${goalAware.goal}`,
       protocol: goalAware.compounds,
       score: goalAware.score,
       removed: result.protocol
@@ -1428,5 +1428,5 @@ function unique(values: string[]): string[] {
 }
 
 function goalText(optimized: OptimizedProtocolView): string {
-  return optimized.label.replace(/^BioStack version for /, '');
+  return optimized.label.replace(/^BioStack arrangement for /, '');
 }
