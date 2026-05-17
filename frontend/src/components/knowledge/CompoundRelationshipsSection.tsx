@@ -103,7 +103,7 @@ export function CompoundRelationshipsSection({ compoundName, aliases }: Props) {
 
         edges.sort((a, b) => {
           if (b.tierRank !== a.tierRank) return b.tierRank - a.tierRank;
-          if (b.needsReview !== a.needsReview) return b.needsReview ? 1 : -1;
+          if (a.needsReview !== b.needsReview) return a.needsReview ? -1 : 1;
           return a.counterpartLabel.localeCompare(b.counterpartLabel);
         });
 
