@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { track } from '@/lib/telemetry';
 import type { InteractionIntelligence } from '@/lib/types';
 import { CompoundLink } from '@/components/knowledge/CompoundLink';
+import { HelpTip } from '@/components/ui/HelpTip';
 
 interface CounterfactualLabProps {
   intelligence: InteractionIntelligence | null;
@@ -23,7 +24,9 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
   if (!intelligence) {
     return (
       <div className={cn('rounded-3xl border border-white/5 bg-white/[0.02] p-5', className)}>
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-3">Counterfactual Lab</p>
+        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-3">
+          <HelpTip tipKey="counterfactual">Counterfactual</HelpTip> Lab
+        </p>
         <p className="text-sm text-white/40">Stack intelligence data is required to run counterfactual variants.</p>
       </div>
     );
@@ -51,7 +54,9 @@ export function CounterfactualLab({ intelligence, onHighlightCompound, className
     <div className={cn('rounded-3xl border border-white/8 bg-white/[0.02]', className)}>
       {/* Header */}
       <div className="px-5 pt-5 pb-3">
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-1">Counterfactual Lab</p>
+        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-1">
+          <HelpTip tipKey="counterfactual">Counterfactual</HelpTip> Lab
+        </p>
         <p className="text-xs text-white/40">Explore what the stack would look like with different configurations. These are not recommendations.</p>
       </div>
 
