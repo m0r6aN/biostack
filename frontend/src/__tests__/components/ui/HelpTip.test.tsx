@@ -52,4 +52,18 @@ describe('HelpTip', () => {
     await userEvent.click(trigger);
     expect(trigger).toHaveAttribute('aria-expanded', 'true');
   });
+
+  it('dismisses on outside click', async () => {
+    render(
+      <div>
+        <HelpTip tipKey="synergy">Synergy</HelpTip>
+        <button>Outside</button>
+      </div>
+    );
+    await userEvent.click(screen.getByRole('button', { name: /synergy/i }));
+    expect(screen.getByRole('tooltip')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: /outside/i }));
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+  });
 });

@@ -36,12 +36,9 @@ export function HelpTip({ tipKey, children, className }: HelpTipProps) {
       if (e.key === 'Escape') setOpen(false);
     }
     function handleMouseDown(e: MouseEvent) {
-      if (
-        triggerRef.current && !triggerRef.current.contains(e.target as Node) &&
-        panelRef.current && !panelRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
+      const inTrigger = triggerRef.current?.contains(e.target as Node) ?? false;
+      const inPanel   = panelRef.current?.contains(e.target as Node) ?? false;
+      if (!inTrigger && !inPanel) setOpen(false);
     }
 
     document.addEventListener('keydown', handleKeyDown);
@@ -53,20 +50,11 @@ export function HelpTip({ tipKey, children, className }: HelpTipProps) {
   }, [open]);
 
   return (
-    <>
-      <style>{`
-        .htip:hover > .htip-text,
-        .htip:focus-visible > .htip-text {
-          text-shadow: 0 0 8px rgba(148,163,184,0.55);
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .htip > .htip-text { text-shadow: none !important; }
-        }
-      `}</style>
-      <span
+    <span
         ref={triggerRef}
         role="button"
         tabIndex={0}
+        aria-haspopup="true"
         aria-expanded={open}
         aria-describedby={open ? panelId : undefined}
         onClick={() => setOpen(v => !v)}
@@ -100,6 +88,5 @@ export function HelpTip({ tipKey, children, className }: HelpTipProps) {
           </div>
         )}
       </span>
-    </>
   );
 }
