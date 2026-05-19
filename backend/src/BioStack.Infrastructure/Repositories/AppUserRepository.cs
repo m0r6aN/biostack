@@ -42,6 +42,13 @@ public sealed class AppUserRepository : IAppUserRepository
         await _context.SaveChangesAsync(ct);
         return existing ?? user;
     }
+
+    public async Task UpdateConsentAsync(AppUser user, CancellationToken ct = default)
+    {
+        // The caller is expected to have loaded the entity via GetByIdAsync, so it is tracked.
+        _context.AppUsers.Update(user);
+        await _context.SaveChangesAsync(ct);
+    }
 }
 
 public interface IAppUserRepository
@@ -50,4 +57,5 @@ public interface IAppUserRepository
     Task<AppUser?> FindByEmailAsync(string email, CancellationToken ct = default);
     Task<AppUser?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<AppUser>  UpsertAsync(AppUser user, CancellationToken ct = default);
+    Task UpdateConsentAsync(AppUser user, CancellationToken ct = default);
 }

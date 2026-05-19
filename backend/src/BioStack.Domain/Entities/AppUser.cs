@@ -30,6 +30,9 @@ public sealed class AppUser
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
     public DateTime LastSeenAtUtc { get; set; } = DateTime.UtcNow;
 
+    public DateTime? ConsentAcceptedAtUtc { get; set; }
+    public string? ConsentVersion { get; set; }
+
     // Profiles owned by this user
     public ICollection<PersonProfile> Profiles { get; set; } = new List<PersonProfile>();
     public ICollection<AuthIdentity> AuthIdentities { get; set; } = new List<AuthIdentity>();

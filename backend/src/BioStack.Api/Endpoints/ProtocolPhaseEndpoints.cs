@@ -1,5 +1,6 @@
 namespace BioStack.Api.Endpoints;
 
+using BioStack.Api.Auth;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 
@@ -15,7 +16,8 @@ public static class ProtocolPhaseEndpoints
             .WithName("GetPhases");
 
         group.MapPost("/", CreatePhase)
-            .WithName("CreatePhase");
+            .WithName("CreatePhase")
+            .RequireConsent();
     }
 
     private static async Task<IResult> GetPhases(Guid profileId, IProtocolPhaseService phaseService, CancellationToken ct)

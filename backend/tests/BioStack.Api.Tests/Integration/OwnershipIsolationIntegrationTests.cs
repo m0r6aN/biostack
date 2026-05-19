@@ -220,6 +220,8 @@ public sealed class OwnershipIsolationIntegrationTests : IAsyncLifetime
         var link = doc.RootElement.EnumerateArray().First().GetProperty("link").GetString()!;
         var uri = new Uri(link);
         await client.GetAsync($"{uri.AbsolutePath}{uri.Query}");
+        var consent = await client.PostAsJsonAsync("/api/v1/consent", new { }, JsonOptions);
+        Assert.Equal(HttpStatusCode.OK, consent.StatusCode);
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
         return await db.AppUsers.Where(user => user.Email == email).Select(user => user.Id).SingleAsync();

@@ -1,5 +1,6 @@
 namespace BioStack.Api.Endpoints;
 
+using BioStack.Api.Auth;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
@@ -25,7 +26,8 @@ public static class ProtocolEndpoints
             .WithName("GetProtocols");
 
         profileGroup.MapPost("", SaveCurrentStack)
-            .WithName("SaveCurrentStackAsProtocol");
+            .WithName("SaveCurrentStackAsProtocol")
+            .RequireConsent();
 
         profileGroup.MapGet("/current-stack-intelligence", GetCurrentStackIntelligence)
             .WithName("GetCurrentStackIntelligence");
@@ -56,22 +58,28 @@ public static class ProtocolEndpoints
             .WithName("GetProtocolSequenceExpectation");
 
         protocolGroup.MapPost("/{id}/review/complete", CompleteReview)
-            .WithName("CompleteProtocolReview");
+            .WithName("CompleteProtocolReview")
+            .RequireConsent();
 
         protocolGroup.MapPost("/{id}/computations", RecordComputation)
-            .WithName("RecordProtocolComputation");
+            .WithName("RecordProtocolComputation")
+            .RequireConsent();
 
         protocolGroup.MapPost("/{id}/runs", StartRun)
-            .WithName("StartProtocolRun");
+            .WithName("StartProtocolRun")
+            .RequireConsent();
 
         protocolGroup.MapPost("/runs/{runId}/complete", CompleteRun)
-            .WithName("CompleteProtocolRun");
+            .WithName("CompleteProtocolRun")
+            .RequireConsent();
 
         protocolGroup.MapPost("/runs/{runId}/abandon", AbandonRun)
-            .WithName("AbandonProtocolRun");
+            .WithName("AbandonProtocolRun")
+            .RequireConsent();
 
         protocolGroup.MapPost("/runs/{runId}/evolve", EvolveFromRun)
-            .WithName("EvolveProtocolFromRun");
+            .WithName("EvolveProtocolFromRun")
+            .RequireConsent();
     }
 
     private static async Task<IResult> GetProtocols(Guid profileId, IProtocolService protocolService, CancellationToken ct)

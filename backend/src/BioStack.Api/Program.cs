@@ -280,6 +280,8 @@ builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IOwnershipGuard, OwnershipGuard>();
+builder.Services.AddScoped<IConsentGate, ConsentGate>();
+builder.Services.AddScoped<BioStack.Api.Auth.RequireConsentFilter>();
 builder.Services.AddScoped<IFeatureGate, FeatureGate>();
 builder.Services.AddScoped<IBillingService, BillingService>();
 builder.Services.AddScoped<ICompoundService, CompoundService>();
@@ -365,6 +367,7 @@ app.MapGet("/health/keon", async (IKeonRuntimeClient keon, CancellationToken ct)
 .WithName("KeonRuntimeHealth");
 
 app.MapAuthEndpoints();
+app.MapConsentEndpoints();
 app.MapBillingEndpoints();
 app.MapProfileEndpoints();
 app.MapCompoundEndpoints();

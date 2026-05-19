@@ -1,5 +1,6 @@
 namespace BioStack.Api.Endpoints;
 
+using BioStack.Api.Auth;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 
@@ -15,16 +16,19 @@ public static class ProfileEndpoints
             .WithName("GetAllProfiles");
 
         group.MapPost("/", CreateProfile)
-            .WithName("CreateProfile");
+            .WithName("CreateProfile")
+            .RequireConsent();
 
         group.MapGet("/{id}", GetProfile)
             .WithName("GetProfile");
 
         group.MapPut("/{id}", UpdateProfile)
-            .WithName("UpdateProfile");
+            .WithName("UpdateProfile")
+            .RequireConsent();
 
         group.MapDelete("/{id}", DeleteProfile)
-            .WithName("DeleteProfile");
+            .WithName("DeleteProfile")
+            .RequireConsent();
     }
 
     private static async Task<IResult> GetAllProfiles(IProfileService profileService, CancellationToken ct)

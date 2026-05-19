@@ -189,6 +189,22 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
             Assert.True(activeSession.ExpiresAtUtc > DateTime.UtcNow);
         }
 
+        // Server consent gate: brand-new authenticated users must record consent before
+        // creating any data. Posting to /api/v1/profiles without consent now returns 403.
+        var blockedBeforeConsent = await _client.PostAsJsonAsync("/api/v1/profiles", new CreateProfileRequest(
+            "Magic Link User",
+            Sex.Unspecified,
+            82.5m,
+            34,
+            "Validate first-run flow",
+            "Created after passwordless sign-in"));
+        Assert.Equal(HttpStatusCode.Forbidden, blockedBeforeConsent.StatusCode);
+        var blockedBody = await blockedBeforeConsent.Content.ReadFromJsonAsync<JsonElement>(JsonOptions);
+        Assert.Equal("consent_required", blockedBody.GetProperty("code").GetString());
+
+        var consentResponse = await _client.PostAsJsonAsync("/api/v1/consent", new { });
+        Assert.Equal(HttpStatusCode.OK, consentResponse.StatusCode);
+
         var profileResponse = await _client.PostAsJsonAsync("/api/v1/profiles", new CreateProfileRequest(
             "Magic Link User",
             Sex.Unspecified,
