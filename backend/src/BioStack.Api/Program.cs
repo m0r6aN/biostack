@@ -292,6 +292,7 @@ builder.Services.AddScoped<ITimelineService, TimelineService>();
 builder.Services.AddScoped<ICalculatorService, CalculatorService>();
 builder.Services.AddScoped<IKnowledgeService, KnowledgeService>();
 builder.Services.AddScoped<ITrustLedgerService, TrustLedgerService>();
+builder.Services.AddScoped<IKnowledgeSourceIntakeService, KnowledgeSourceIntakeService>();
 builder.Services.AddScoped<IInteractionIntelligenceService, InteractionIntelligenceService>();
 builder.Services.AddScoped<IOverlapService, OverlapService>();
 builder.Services.AddSingleton<IBlendDecomposerService, BlendDecomposerService>();

@@ -1,5 +1,7 @@
 namespace BioStack.Api.Endpoints;
 
+using BioStack.Application.Services;
+using BioStack.Contracts.Requests;
 using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Knowledge;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +38,22 @@ public static class AdminEndpoints
             {
                 loggerFactory.CreateLogger("AdminEndpoints").LogError(ex, "Knowledge ingest failed");
                 return Results.Problem("Knowledge ingestion failed. Check server logs for details.");
+            }
+        });
+
+        group.MapPost("/knowledge-source-intake", async (
+            [FromBody] AdminKnowledgeSourceIntakeRequest request,
+            [FromServices] IKnowledgeSourceIntakeService intakeService,
+            CancellationToken ct) =>
+        {
+            try
+            {
+                var response = await intakeService.CreateAsync(request, ct);
+                return Results.Ok(response);
+            }
+            catch (ArgumentException ex)
+            {
+                return Results.BadRequest(new { Message = ex.Message });
             }
         });
 

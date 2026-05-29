@@ -31,6 +31,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<StripeWebhookEvent> StripeWebhookEvents { get; set; }
     public DbSet<BioStack.Domain.Governance.SpineEntry> SpineEntries { get; set; }
+    public DbSet<KnowledgeSourceIntakeRequest> KnowledgeSourceIntakeRequests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -426,6 +427,25 @@ public sealed class BioStackDbContext : DbContext
             entity.HasIndex(e => e.ReceiptUri).IsUnique();
             entity.HasIndex(e => e.SubjectUri);
             entity.HasIndex(e => e.ActorId);
+        });
+
+        modelBuilder.Entity<KnowledgeSourceIntakeRequest>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.SourceType).HasMaxLength(32).IsRequired();
+            entity.Property(e => e.SourceUrl).HasMaxLength(2048).IsRequired();
+            entity.Property(e => e.OptionalInstructions).HasMaxLength(8000);
+            entity.Property(e => e.RequestedOutputs).HasConversion(
+                v => string.Join("|", v),
+                v => string.IsNullOrWhiteSpace(v)
+                    ? new List<string>()
+                    : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
+            entity.Property(e => e.Status).HasMaxLength(64).IsRequired();
+            entity.Property(e => e.FailureReason).HasMaxLength(2000);
+            entity.Property(e => e.CreatedAtUtc).IsRequired();
+            entity.Property(e => e.UpdatedAtUtc);
+            entity.HasIndex(e => e.Status);
+            entity.HasIndex(e => e.CreatedAtUtc);
         });
     }
 }
