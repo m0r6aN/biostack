@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using BioStack.Api;
 using BioStack.Contracts.Requests;
-using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
@@ -78,10 +77,10 @@ public sealed class AdminKnowledgeSourceIntakeIntegrationTests : IAsyncLifetime
         }
     }
 
-    [Fact(Skip = "Deferred until reusable admin-auth integration helper exists; current harness returns 403.")]
+    [Fact]
     public async Task VideoUrl_HappyPath_PersistsQueuedIntake()
     {
-        await SignInAdminAsync("admin-video@example.com");
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-video@example.com");
 
         var request = new AdminKnowledgeSourceIntakeRequest(
             SourceType: KnowledgeSourceType.VideoUrl,
@@ -114,10 +113,10 @@ public sealed class AdminKnowledgeSourceIntakeIntegrationTests : IAsyncLifetime
         Assert.Equal("queued", entity.Status);
     }
 
-    [Fact(Skip = "Deferred until reusable admin-auth integration helper exists; current harness returns 403.")]
+    [Fact]
     public async Task ChannelUrl_HappyPath_PersistsChannelFilters()
     {
-        await SignInAdminAsync("admin-channel@example.com");
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-channel@example.com");
 
         var request = new AdminKnowledgeSourceIntakeRequest(
             SourceType: KnowledgeSourceType.ChannelUrl,
@@ -146,10 +145,46 @@ public sealed class AdminKnowledgeSourceIntakeIntegrationTests : IAsyncLifetime
         Assert.Equal("queued", entity.Status);
     }
 
-    [Fact(Skip = "Deferred until reusable admin-auth integration helper exists; current harness returns 403.")]
+    [Fact]
+    public async Task UnauthorizedRequest_ReturnsUnauthorizedOrForbidden()
+    {
+        var request = new AdminKnowledgeSourceIntakeRequest(
+            SourceType: KnowledgeSourceType.VideoUrl,
+            SourceUrl: "https://www.youtube.com/watch?v=SpzHHYvCNGU",
+            OptionalInstructions: null,
+            RequestedOutputs: new[] { RequestedOutputArea.Claims },
+            ChannelOptions: null);
+
+        var response = await _client.PostAsJsonAsync("/api/v1/admin/knowledge-source-intake", request, JsonOptions);
+
+        Assert.True(
+            response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden,
+            $"Expected unauthorized or forbidden, got {(int)response.StatusCode} {response.StatusCode}.");
+    }
+
+    [Fact]
+    public async Task NonAdminRequest_ReturnsUnauthorizedOrForbidden()
+    {
+        await SignInNonAdminAsync("non-admin-intake@example.com");
+
+        var request = new AdminKnowledgeSourceIntakeRequest(
+            SourceType: KnowledgeSourceType.VideoUrl,
+            SourceUrl: "https://www.youtube.com/watch?v=SpzHHYvCNGU",
+            OptionalInstructions: null,
+            RequestedOutputs: new[] { RequestedOutputArea.Claims },
+            ChannelOptions: null);
+
+        var response = await _client.PostAsJsonAsync("/api/v1/admin/knowledge-source-intake", request, JsonOptions);
+
+        Assert.True(
+            response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden,
+            $"Expected unauthorized or forbidden, got {(int)response.StatusCode} {response.StatusCode}.");
+    }
+
+    [Fact]
     public async Task InvalidVideoUrl_ReturnsBadRequest()
     {
-        await SignInAdminAsync("admin-invalid-video@example.com");
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-invalid-video@example.com");
 
         var request = new AdminKnowledgeSourceIntakeRequest(
             SourceType: KnowledgeSourceType.VideoUrl,
@@ -162,10 +197,10 @@ public sealed class AdminKnowledgeSourceIntakeIntegrationTests : IAsyncLifetime
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
-    [Fact(Skip = "Deferred until reusable admin-auth integration helper exists; current harness returns 403.")]
+    [Fact]
     public async Task InvalidChannelUrl_ReturnsBadRequest()
     {
-        await SignInAdminAsync("admin-invalid-channel@example.com");
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-invalid-channel@example.com");
 
         var request = new AdminKnowledgeSourceIntakeRequest(
             SourceType: KnowledgeSourceType.ChannelUrl,
@@ -178,10 +213,10 @@ public sealed class AdminKnowledgeSourceIntakeIntegrationTests : IAsyncLifetime
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
-    [Fact(Skip = "Deferred until reusable admin-auth integration helper exists; current harness returns 403.")]
+    [Fact]
     public async Task MismatchedSourceTypeAndUrl_ReturnsBadRequest()
     {
-        await SignInAdminAsync("admin-mismatch@example.com");
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-mismatch@example.com");
 
         var request = new AdminKnowledgeSourceIntakeRequest(
             SourceType: KnowledgeSourceType.VideoUrl,
@@ -194,10 +229,10 @@ public sealed class AdminKnowledgeSourceIntakeIntegrationTests : IAsyncLifetime
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
-    [Fact(Skip = "Deferred until reusable admin-auth integration helper exists; current harness returns 403.")]
+    [Fact]
     public async Task MaxVideosOutOfBounds_ReturnsBadRequest()
     {
-        await SignInAdminAsync("admin-maxvideos@example.com");
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-maxvideos@example.com");
 
         var request = new AdminKnowledgeSourceIntakeRequest(
             SourceType: KnowledgeSourceType.ChannelUrl,
@@ -213,10 +248,10 @@ public sealed class AdminKnowledgeSourceIntakeIntegrationTests : IAsyncLifetime
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
-    [Fact(Skip = "Deferred until reusable admin-auth integration helper exists; current harness returns 403.")]
+    [Fact]
     public async Task InvalidDateRange_ReturnsBadRequest()
     {
-        await SignInAdminAsync("admin-daterange@example.com");
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-daterange@example.com");
 
         var request = new AdminKnowledgeSourceIntakeRequest(
             SourceType: KnowledgeSourceType.ChannelUrl,
@@ -232,34 +267,22 @@ public sealed class AdminKnowledgeSourceIntakeIntegrationTests : IAsyncLifetime
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
-    private async Task SignInAdminAsync(string email)
+
+    private async Task SignInNonAdminAsync(string email)
     {
         await _client.PostAsJsonAsync("/api/v1/auth/start", new StartAuthRequest(email, "email", "/admin"), JsonOptions);
         using var doc = await JsonDocument.ParseAsync(await _client.GetStreamAsync("/dev/auth/inbox"));
-        var link = doc.RootElement.EnumerateArray().First().GetProperty("link").GetString()!;
+        var link = doc.RootElement
+            .EnumerateArray()
+            .First(message =>
+                string.Equals(
+                    message.GetProperty("contact").GetString(),
+                    email,
+                    StringComparison.OrdinalIgnoreCase))
+            .GetProperty("link")
+            .GetString()!;
         var uri = new Uri(link);
         await _client.GetAsync($"{uri.AbsolutePath}{uri.Query}");
-
-        Guid userId;
-        using (var scope = _factory.Services.CreateScope())
-        {
-            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
-            userId = await db.AppUsers.Where(user => user.Email == email).Select(user => user.Id).SingleAsync();
-        }
-
-        using (var scope = _factory.Services.CreateScope())
-        {
-            var userRepo = scope.ServiceProvider.GetRequiredService<BioStack.Infrastructure.Repositories.IAppUserRepository>();
-            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
-            var user = await userRepo.GetByIdAsync(userId);
-            if (user is null)
-            {
-                throw new InvalidOperationException($"Expected user '{email}' to exist.");
-            }
-
-            user.Role = UserRole.Admin;
-            await db.SaveChangesAsync();
-        }
     }
 
     private sealed class IntakeResponseDto
