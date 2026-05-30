@@ -1,77 +1,80 @@
-# PR 6 Transcript Candidate Review Lifecycle Semantics TODO
+# PR 7A Durable Staged Transcript Candidate Persistence Contract TODO
 
-- [ ] Add Application-only lifecycle contract:
-  - [ ] Add `TranscriptCandidateReviewState` constants:
-    - [ ] pending_review
-    - [ ] review_deferred
-    - [ ] review_rejected
-    - [ ] review_approved_for_promotion
-  - [ ] Add `TranscriptCandidateReviewAction` constants:
-    - [ ] defer_review
-    - [ ] reject_review
-    - [ ] approve_for_promotion
-  - [ ] Add `TranscriptCandidateReviewLifecycleDecision` with fields:
+- [ ] Add Application-only staged candidate review record contract:
+  - [ ] Create `Services/TranscriptCandidateReviewRecord.cs`
+  - [ ] Include fields:
     - [ ] ArtifactId
-    - [ ] FromReviewState
-    - [ ] ToReviewState
-    - [ ] Canonicality
-    - [ ] IsPromotionEligible
-    - [ ] IsTransitionAllowed
-    - [ ] RejectionReason
-  - [ ] Add `ITranscriptCandidateReviewLifecycle`
-  - [ ] Add `TranscriptCandidateReviewLifecycle` implementation
+    - [ ] Canonicality (must be `non_canonical`)
+    - [ ] ReviewState
+    - [ ] SourceType
+    - [ ] SourceUrl
+    - [ ] Provider
+    - [ ] IsDeterministicFixture
+    - [ ] SegmentCount
+    - [ ] SegmentSnapshotSignature
+    - [ ] SourceMetadata
+    - [ ] CreatedAtUtc
+    - [ ] UpdatedAtUtc
+    - [ ] RowVersion (optional, infrastructure-agnostic `string?`)
+  - [ ] Enforce deterministic invariants:
+    - [ ] non_canonical only
+    - [ ] ReviewState constrained to lifecycle constants
+    - [ ] Required fields validated
+    - [ ] No canonical linkage/promotion/extraction/summarization/safety/medical/network fields
 
-- [ ] Implement deterministic transition semantics:
-  - [ ] pending_review + approve_for_promotion -> review_approved_for_promotion (allowed)
-  - [ ] pending_review + reject_review -> review_rejected (allowed)
-  - [ ] pending_review + defer_review -> review_deferred (allowed)
-  - [ ] review_rejected terminal for PR6 (all actions rejected with deterministic reason)
-  - [ ] review_deferred terminal for PR6 (all actions rejected with deterministic reason)
-  - [ ] review_approved_for_promotion terminal for PR6 (all actions rejected with deterministic reason)
-  - [ ] unsupported action rejected with deterministic reason
-  - [ ] unsupported state rejected with deterministic reason
-  - [ ] canonicality must remain non_canonical
-  - [ ] non-non_canonical input rejected deterministically
-  - [ ] review_approved_for_promotion remains gate signal only (no promotion execution)
+- [ ] Add Application-only staged candidate review store interface:
+  - [ ] Create `Services/ITranscriptCandidateReviewStore.cs`
+  - [ ] Keep interface minimal/boring:
+    - [ ] Upsert staged non-canonical candidate
+    - [ ] Get by ArtifactId
+    - [ ] Update review state only
+    - [ ] Minimal list/query only if necessary
+  - [ ] Ensure no method surface for:
+    - [ ] canonical KnowledgeEntry writes
+    - [ ] promotion execution
+    - [ ] extraction/summarization/safety/medical/network behavior
 
-- [ ] Add focused lifecycle tests:
-  - [ ] default pending_review baseline
-  - [ ] pending -> review_approved_for_promotion allowed
-  - [ ] pending -> review_rejected allowed
-  - [ ] pending -> review_deferred allowed
-  - [ ] review_rejected is non-promoting and terminal for PR6
-  - [ ] review_deferred is non-promoting and terminal for PR6
-  - [ ] review_approved_for_promotion does not canonicalize
-  - [ ] unsupported action fails deterministically
-  - [ ] unsupported state fails deterministically
-  - [ ] non-non_canonical input is rejected
-  - [ ] same input/action returns identical decision
-  - [ ] no persistence/DbContext/KnowledgeEntries surface
-  - [ ] no extraction/summarization/safety/medical/network/transcript fetching/YouTube API behavior
+- [ ] Add contract tests:
+  - [ ] Create `Tests/Services/TranscriptCandidateReviewStoreContractTests.cs`
+  - [ ] Assert:
+    - [ ] Store contract accepts only `non_canonical`
+    - [ ] ReviewState constrained to lifecycle constants
+    - [ ] No canonical write method
+    - [ ] No promotion execution method
+    - [ ] Artifact identity deterministic and stable
+    - [ ] SourceMetadata deterministic enough for persistence round-trip
 
-- [ ] Boundary confirmations:
-  - [ ] No DI
+- [ ] Extend existing Application tests:
+  - [ ] Update `TranscriptCandidateArtifactReviewServiceTests.cs`
+    - [ ] Reassert no forbidden behavior surface
+    - [ ] Verify stable mapping compatibility with record contract
+  - [ ] Update `TranscriptCandidateReviewLifecycleTests.cs`
+    - [ ] Reassert terminal-state invariants
+    - [ ] Reassert `approve_for_promotion` is state/eligibility only (not promotion execution)
+
+- [ ] Add architecture gate doc:
+  - [ ] Create `docs/architecture/video-channel-staged-candidate-persistence-gate.md`
+  - [ ] Must state:
+    - [ ] staged candidates separate from canonical KnowledgeEntries
+    - [ ] PR7A is contract-only
+    - [ ] PR7B is first eligible Infrastructure persistence/migration lane
+    - [ ] API waits for PR7A+PR7B validation
+    - [ ] approved_for_promotion != promotion execution
+    - [ ] non-canonical boundary mandatory until explicit future promotion workflow
+
+- [ ] Validation:
+  - [ ] Focused tests for changed/new files
+  - [ ] Full `BioStack.Application.Tests`
+  - [ ] `git diff --check`
+  - [ ] Report exact changed files, exact commands, and counts
+
+- [ ] Hard boundary confirmations:
+  - [ ] No DI changes
   - [ ] No API/endpoints
-  - [ ] No Infrastructure changes
-  - [ ] No persistence
-  - [ ] No migrations
-  - [ ] No DbSet changes
-  - [ ] No DB writes
+  - [ ] No Infrastructure implementation
+  - [ ] No DbContext/DbSet/migrations
+  - [ ] No persistence implementation / DB writes
   - [ ] No canonical KnowledgeEntries writes
   - [ ] No promotion workflow execution
-  - [ ] No extraction
-  - [ ] No summarization
-  - [ ] No safety classification
-  - [ ] No medical interpretation
-  - [ ] No network calls / transcript fetching / YouTube API
-
-- [ ] Run validation:
-  - [ ] Focused lifecycle tests
-  - [ ] Focused adjacent Application slice:
-    - [ ] TranscriptCandidateReviewLifecycleTests
-    - [ ] TranscriptCandidateArtifactReviewServiceTests
-    - [ ] TranscriptCandidateArtifactStagingServiceTests
-  - [ ] Full BioStack.Application.Tests suite
-  - [ ] `git diff --check`
-
-- [ ] Prepare final PR6 report with exact files/commands/counts and explicit boundary confirmations.
+  - [ ] No extraction/summarization/safety/medical interpretation
+  - [ ] No network calls/transcript fetching/YouTube API

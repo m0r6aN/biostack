@@ -76,6 +76,48 @@ public sealed class TranscriptCandidateArtifactReviewServiceTests
     }
 
     [Fact]
+    public void BuildReviewModel_CanMapToStableContractRecord_ForFutureDurableStagedReview()
+    {
+        var stagedDescriptor = CreateStagedDescriptor();
+        var review = _service.BuildReviewModel(stagedDescriptor);
+
+        var createdAtUtc = "2025-01-01T00:00:00Z";
+        var updatedAtUtc = "2025-01-01T00:00:00Z";
+
+        var recordA = TranscriptCandidateReviewRecord.Create(
+            artifactId: review.ArtifactId,
+            canonicality: review.Canonicality,
+            reviewState: review.ReviewState,
+            sourceType: review.SourceType,
+            sourceUrl: review.SourceUrl,
+            provider: review.Provider,
+            isDeterministicFixture: review.IsDeterministicFixture,
+            segmentCount: review.SegmentCount,
+            segmentSnapshotSignature: review.SegmentSnapshotSignature,
+            sourceMetadata: review.SourceMetadata,
+            createdAtUtc: createdAtUtc,
+            updatedAtUtc: updatedAtUtc);
+
+        var recordB = TranscriptCandidateReviewRecord.Create(
+            artifactId: review.ArtifactId,
+            canonicality: review.Canonicality,
+            reviewState: review.ReviewState,
+            sourceType: review.SourceType,
+            sourceUrl: review.SourceUrl,
+            provider: review.Provider,
+            isDeterministicFixture: review.IsDeterministicFixture,
+            segmentCount: review.SegmentCount,
+            segmentSnapshotSignature: review.SegmentSnapshotSignature,
+            sourceMetadata: review.SourceMetadata,
+            createdAtUtc: createdAtUtc,
+            updatedAtUtc: updatedAtUtc);
+
+        Assert.Equal(recordA.ArtifactId, recordB.ArtifactId);
+        Assert.Equal("non_canonical", recordA.Canonicality);
+        Assert.Equal("pending_review", recordA.ReviewState);
+    }
+
+    [Fact]
     public void BuildReviewModel_DoesNotTouchPersistenceSurface_ApiIsPureDescriptorToModel()
     {
         var stagedDescriptor = CreateStagedDescriptor();
