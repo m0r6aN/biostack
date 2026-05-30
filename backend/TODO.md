@@ -1,58 +1,77 @@
-# PR 5 Transcript Candidate Review Contract TODO
+# PR 6 Transcript Candidate Review Lifecycle Semantics TODO
 
-- [x] Add Application-only review/read contract model:
-  - [x] `TranscriptCandidateArtifactReviewModel` with fields:
-    - [x] ArtifactId
-    - [x] ReviewState (default pending_review)
-    - [x] Canonicality (explicit non_canonical)
-    - [x] SourceType
-    - [x] SourceUrl
-    - [x] SourceMetadata
-    - [x] Provider
-    - [x] IsDeterministicFixture
-    - [x] SegmentCount
-    - [x] SegmentSnapshotSignature
-- [x] Add Application-only review service contract + implementation:
-  - [x] `ITranscriptCandidateArtifactReviewService`
-  - [x] `TranscriptCandidateArtifactReviewService`
-  - [x] deterministic ArtifactId rule:
-    - [x] prefer `transcript-candidate:{SegmentSnapshotSignature}`
-    - [x] fallback stable hash over review-safe descriptor fields only:
-      - [x] ArtifactKind
-      - [x] Canonicality
-      - [x] StageStatus
-      - [x] SourceType
-      - [x] SourceUrl
-      - [x] Provider
-      - [x] SegmentCount
-      - [x] SegmentSnapshotSignature
-      - [x] sorted SourceMetadata
-- [x] Add focused Application tests:
-  - [x] review model is deterministic
-  - [x] review model is explicitly non-canonical
-  - [x] review model does not promote
-  - [x] review model does not summarize
-  - [x] review model does not extract claims or facts
-  - [x] review model does not safety classify
-  - [x] review model does not produce medical interpretation
-  - [x] review model does not touch DB/DbContext/KnowledgeEntries/persistence
-  - [x] unsupported/null/invalid staged descriptor behavior is covered cleanly
-- [ ] Keep boundaries:
+- [ ] Add Application-only lifecycle contract:
+  - [ ] Add `TranscriptCandidateReviewState` constants:
+    - [ ] pending_review
+    - [ ] review_deferred
+    - [ ] review_rejected
+    - [ ] review_approved_for_promotion
+  - [ ] Add `TranscriptCandidateReviewAction` constants:
+    - [ ] defer_review
+    - [ ] reject_review
+    - [ ] approve_for_promotion
+  - [ ] Add `TranscriptCandidateReviewLifecycleDecision` with fields:
+    - [ ] ArtifactId
+    - [ ] FromReviewState
+    - [ ] ToReviewState
+    - [ ] Canonicality
+    - [ ] IsPromotionEligible
+    - [ ] IsTransitionAllowed
+    - [ ] RejectionReason
+  - [ ] Add `ITranscriptCandidateReviewLifecycle`
+  - [ ] Add `TranscriptCandidateReviewLifecycle` implementation
+
+- [ ] Implement deterministic transition semantics:
+  - [ ] pending_review + approve_for_promotion -> review_approved_for_promotion (allowed)
+  - [ ] pending_review + reject_review -> review_rejected (allowed)
+  - [ ] pending_review + defer_review -> review_deferred (allowed)
+  - [ ] review_rejected terminal for PR6 (all actions rejected with deterministic reason)
+  - [ ] review_deferred terminal for PR6 (all actions rejected with deterministic reason)
+  - [ ] review_approved_for_promotion terminal for PR6 (all actions rejected with deterministic reason)
+  - [ ] unsupported action rejected with deterministic reason
+  - [ ] unsupported state rejected with deterministic reason
+  - [ ] canonicality must remain non_canonical
+  - [ ] non-non_canonical input rejected deterministically
+  - [ ] review_approved_for_promotion remains gate signal only (no promotion execution)
+
+- [ ] Add focused lifecycle tests:
+  - [ ] default pending_review baseline
+  - [ ] pending -> review_approved_for_promotion allowed
+  - [ ] pending -> review_rejected allowed
+  - [ ] pending -> review_deferred allowed
+  - [ ] review_rejected is non-promoting and terminal for PR6
+  - [ ] review_deferred is non-promoting and terminal for PR6
+  - [ ] review_approved_for_promotion does not canonicalize
+  - [ ] unsupported action fails deterministically
+  - [ ] unsupported state fails deterministically
+  - [ ] non-non_canonical input is rejected
+  - [ ] same input/action returns identical decision
+  - [ ] no persistence/DbContext/KnowledgeEntries surface
+  - [ ] no extraction/summarization/safety/medical/network/transcript fetching/YouTube API behavior
+
+- [ ] Boundary confirmations:
+  - [ ] No DI
+  - [ ] No API/endpoints
+  - [ ] No Infrastructure changes
   - [ ] No persistence
   - [ ] No migrations
   - [ ] No DbSet changes
-  - [ ] No Infrastructure changes
-  - [ ] No production DI changes
-  - [ ] No endpoint/API changes
+  - [ ] No DB writes
   - [ ] No canonical KnowledgeEntries writes
-  - [ ] No promotion workflow
+  - [ ] No promotion workflow execution
+  - [ ] No extraction
   - [ ] No summarization
-  - [ ] No claim/fact extraction
   - [ ] No safety classification
   - [ ] No medical interpretation
-  - [ ] No network calls / transcript fetching
-- [ ] Run validation test slices:
-  - [ ] TranscriptCandidateArtifactReviewServiceTests
-  - [ ] TranscriptCandidateArtifactStagingServiceTests
-- [ ] Run `git diff --check` and ensure clean output.
-- [ ] Prepare final PR5 validation report with explicit boundary confirmations.
+  - [ ] No network calls / transcript fetching / YouTube API
+
+- [ ] Run validation:
+  - [ ] Focused lifecycle tests
+  - [ ] Focused adjacent Application slice:
+    - [ ] TranscriptCandidateReviewLifecycleTests
+    - [ ] TranscriptCandidateArtifactReviewServiceTests
+    - [ ] TranscriptCandidateArtifactStagingServiceTests
+  - [ ] Full BioStack.Application.Tests suite
+  - [ ] `git diff --check`
+
+- [ ] Prepare final PR6 report with exact files/commands/counts and explicit boundary confirmations.
