@@ -108,6 +108,28 @@ public sealed class TranscriptCandidateReviewLifecycleTests
     }
 
     [Fact]
+    public void ApplyAction_ReviewApprovedForPromotion_IsStateEligibilityOnly_NotPromotionExecution()
+    {
+        var reviewModel = CreateReviewModel();
+
+        var decision = _lifecycle.ApplyAction(reviewModel, TranscriptCandidateReviewAction.ApproveForPromotion);
+
+        Assert.True(decision.IsTransitionAllowed);
+        Assert.Equal(TranscriptCandidateReviewState.PendingReview, decision.FromReviewState);
+        Assert.Equal(TranscriptCandidateReviewState.ReviewApprovedForPromotion, decision.ToReviewState);
+        Assert.True(decision.IsPromotionEligible);
+        Assert.Equal("non_canonical", decision.Canonicality);
+
+        Assert.DoesNotContain("execute", decision.ToReviewState, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("promote", decision.ToReviewState, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("canonical", decision.ToReviewState, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("summary", decision.ToReviewState, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("safety", decision.ToReviewState, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("medical", decision.ToReviewState, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("network", decision.ToReviewState, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
     public void ApplyAction_UnsupportedAction_FailsDeterministically()
     {
         var reviewModel = CreateReviewModel();
