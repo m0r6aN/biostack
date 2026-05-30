@@ -1,19 +1,58 @@
-# PR 4 Transcript Candidate Artifact Staging TODO
+# PR 5 Transcript Candidate Review Contract TODO
 
-- [x] Add deterministic candidate descriptor model in Application.
-- [x] Add staging service contract in Application.
-- [x] Implement pure in-memory staging service (no persistence, no promotion).
-- [x] Add focused staging tests:
-  - [x] Stage_FromResolvedTranscriptMaterial_ReturnsDeterministicCandidateDescriptor
-  - [x] Stage_IncludesSourceReferenceProviderAndSegmentSnapshotMetadata
-  - [x] Stage_DoesNotSummarizeOrExtractClaimsOrSafetyOrMedicalFields
-  - [x] Stage_DoesNotPromoteOrWriteCanonicalKnowledge
-  - [x] Stage_IsDeterministicForSameInput
+- [x] Add Application-only review/read contract model:
+  - [x] `TranscriptCandidateArtifactReviewModel` with fields:
+    - [x] ArtifactId
+    - [x] ReviewState (default pending_review)
+    - [x] Canonicality (explicit non_canonical)
+    - [x] SourceType
+    - [x] SourceUrl
+    - [x] SourceMetadata
+    - [x] Provider
+    - [x] IsDeterministicFixture
+    - [x] SegmentCount
+    - [x] SegmentSnapshotSignature
+- [x] Add Application-only review service contract + implementation:
+  - [x] `ITranscriptCandidateArtifactReviewService`
+  - [x] `TranscriptCandidateArtifactReviewService`
+  - [x] deterministic ArtifactId rule:
+    - [x] prefer `transcript-candidate:{SegmentSnapshotSignature}`
+    - [x] fallback stable hash over review-safe descriptor fields only:
+      - [x] ArtifactKind
+      - [x] Canonicality
+      - [x] StageStatus
+      - [x] SourceType
+      - [x] SourceUrl
+      - [x] Provider
+      - [x] SegmentCount
+      - [x] SegmentSnapshotSignature
+      - [x] sorted SourceMetadata
+- [x] Add focused Application tests:
+  - [x] review model is deterministic
+  - [x] review model is explicitly non-canonical
+  - [x] review model does not promote
+  - [x] review model does not summarize
+  - [x] review model does not extract claims or facts
+  - [x] review model does not safety classify
+  - [x] review model does not produce medical interpretation
+  - [x] review model does not touch DB/DbContext/KnowledgeEntries/persistence
+  - [x] unsupported/null/invalid staged descriptor behavior is covered cleanly
+- [ ] Keep boundaries:
+  - [ ] No persistence
+  - [ ] No migrations
+  - [ ] No DbSet changes
+  - [ ] No Infrastructure changes
+  - [ ] No production DI changes
+  - [ ] No endpoint/API changes
+  - [ ] No canonical KnowledgeEntries writes
+  - [ ] No promotion workflow
+  - [ ] No summarization
+  - [ ] No claim/fact extraction
+  - [ ] No safety classification
+  - [ ] No medical interpretation
+  - [ ] No network calls / transcript fetching
 - [ ] Run validation test slices:
+  - [ ] TranscriptCandidateArtifactReviewServiceTests
   - [ ] TranscriptCandidateArtifactStagingServiceTests
-  - [ ] QueuedIntakeTranscriptResolutionServiceTests
-  - [ ] TranscriptSourceMaterialProviderTests
-  - [ ] KnowledgeSourceIntakeServiceTests (if needed by touched contracts)
-  - [ ] Full Application tests (if broad contract impact)
 - [ ] Run `git diff --check` and ensure clean output.
-- [ ] Prepare final PR4 validation report with explicit boundary confirmations.
+- [ ] Prepare final PR5 validation report with explicit boundary confirmations.
