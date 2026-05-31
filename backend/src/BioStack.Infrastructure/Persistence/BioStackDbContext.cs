@@ -3,6 +3,7 @@ namespace BioStack.Infrastructure.Persistence;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using BioStack.Domain.Entities;
+using BioStack.Infrastructure.Persistence.Entities;
 
 public sealed class BioStackDbContext : DbContext
 {
@@ -32,6 +33,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<StripeWebhookEvent> StripeWebhookEvents { get; set; }
     public DbSet<BioStack.Domain.Governance.SpineEntry> SpineEntries { get; set; }
     public DbSet<KnowledgeSourceIntakeRequest> KnowledgeSourceIntakeRequests { get; set; }
+    public DbSet<StagedTranscriptCandidateReviewEntity> StagedTranscriptCandidateReviews { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -446,6 +448,35 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(e => e.UpdatedAtUtc);
             entity.HasIndex(e => e.Status);
             entity.HasIndex(e => e.CreatedAtUtc);
+        });
+
+        modelBuilder.Entity<StagedTranscriptCandidateReviewEntity>(entity =>
+        {
+            entity.ToTable("StagedTranscriptCandidateReviews");
+            entity.HasKey(e => e.ArtifactId);
+            entity.Property(e => e.ArtifactId).HasMaxLength(512).IsRequired();
+            entity.Property(e => e.Canonicality).HasMaxLength(64).IsRequired();
+            entity.Property(e => e.ReviewState).HasMaxLength(128).IsRequired();
+            entity.Property(e => e.SourceType).HasMaxLength(64).IsRequired();
+            entity.Property(e => e.SourceUrl).HasMaxLength(2048).IsRequired();
+            entity.Property(e => e.SourceMetadataJson).HasMaxLength(32768).IsRequired();
+            entity.Property(e => e.Provider).HasMaxLength(256).IsRequired();
+            entity.Property(e => e.IsDeterministicFixture).IsRequired();
+            entity.Property(e => e.SegmentCount).IsRequired();
+            entity.Property(e => e.SegmentSnapshotSignature).HasMaxLength(512).IsRequired();
+            entity.Property(e => e.CreatedAtUtc).HasMaxLength(64).IsRequired();
+            entity.Property(e => e.UpdatedAtUtc).HasMaxLength(64).IsRequired();
+            entity.HasIndex(e => e.ReviewState);
+
+            entity.ToTable(tableBuilder =>
+            {
+                tableBuilder.HasCheckConstraint(
+                    "CK_StagedTranscriptCandidateReviews_Canonicality_NonCanonical",
+                    "Canonicality = 'non_canonical'");
+                tableBuilder.HasCheckConstraint(
+                    "CK_StagedTranscriptCandidateReviews_ReviewState_Lifecycle",
+                    "ReviewState IN ('pending_review','review_deferred','review_rejected','review_approved_for_promotion')");
+            });
         });
     }
 }

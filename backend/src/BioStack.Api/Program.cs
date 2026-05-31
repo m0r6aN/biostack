@@ -277,6 +277,7 @@ builder.Services.AddSingleton<IDevMagicLinkInbox>(sp => sp.GetRequiredService<In
 
 // ── Domain services ─────────────────────────────────────────────────────────
 builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
+builder.Services.AddScoped<ITranscriptCandidateReviewStore, StagedTranscriptCandidateReviewStore>();
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IOwnershipGuard, OwnershipGuard>();
