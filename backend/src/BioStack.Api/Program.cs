@@ -278,6 +278,10 @@ builder.Services.AddSingleton<IDevMagicLinkInbox>(sp => sp.GetRequiredService<In
 // ── Domain services ─────────────────────────────────────────────────────────
 builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
 builder.Services.AddScoped<ITranscriptCandidateReviewStore, StagedTranscriptCandidateReviewStore>();
+builder.Services.Configure<YouTubeTranscriptProviderOptions>(
+    builder.Configuration.GetSection(YouTubeTranscriptProviderOptions.SectionName));
+builder.Services.AddScoped<IYouTubeTranscriptMcpClient, NullYouTubeTranscriptMcpClient>();
+builder.Services.AddScoped<ITranscriptSourceMaterialProvider, YouTubeTranscriptSourceMaterialProvider>();
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IOwnershipGuard, OwnershipGuard>();
@@ -294,6 +298,7 @@ builder.Services.AddScoped<ICalculatorService, CalculatorService>();
 builder.Services.AddScoped<IKnowledgeService, KnowledgeService>();
 builder.Services.AddScoped<ITrustLedgerService, TrustLedgerService>();
 builder.Services.AddScoped<IKnowledgeSourceIntakeService, KnowledgeSourceIntakeService>();
+builder.Services.AddScoped<IQueuedIntakeTranscriptResolutionService, QueuedIntakeTranscriptResolutionService>();
 builder.Services.AddScoped<IInteractionIntelligenceService, InteractionIntelligenceService>();
 builder.Services.AddScoped<IOverlapService, OverlapService>();
 builder.Services.AddSingleton<IBlendDecomposerService, BlendDecomposerService>();
