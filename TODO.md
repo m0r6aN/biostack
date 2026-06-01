@@ -1,17 +1,17 @@
-# TODO — Video/Channel Knowledge Worker Intake Extension
+# PR10 TODO
 
-## Completed prior planning/docs
-- [x] Draft architecture ADR for video/channel intake extension (observational-only boundary).
-- [x] Add proposed backend C# contracts for intake + extraction output (review-only claims).
-- [x] Add proposed frontend TypeScript contracts for admin intake and candidate artifacts.
-- [x] Add minimal admin UI plan document (fields, workflow, validation posture).
-- [x] Add targeted test plan document matching required scenarios.
+- [x] Add configurable YouTube transcript provider options (disabled by default)
+- [x] Add MCP client abstraction interface for YouTube transcript retrieval
+- [x] Implement YouTubeTranscriptSourceMaterialProvider behind ITranscriptSourceMaterialProvider
+- [x] Ensure disabled path is deterministic (`transcript_provider_disabled`) and makes no MCP/network call
+- [x] Wire DI/config in API startup safely when provider config is absent
+- [x] Preserve fake-provider tests (no behavior regressions)
+- [x] Add provider tests: disabled-by-default no-call behavior
+- [x] Add provider tests: enabled path maps mocked MCP output to TranscriptSourceMaterialResult
+- [x] Add provider tests confirming no canonical/promotion/extraction/safety behavior
+- [x] Run focused provider tests
+- [x] Run full BioStack.Application.Tests
+- [x] Run BioStack.Api.Tests (startup/DI safety)
+- [x] Run `git diff --check`
+- [x] Prepare final report with changed files, test commands/results, and forbidden-surface confirmations
 
-## PR 1 — Intake endpoint + persistence (queued-only)
-- [ ] Add review-bound intake entity and persistence mapping (queued initial status).
-- [ ] Add intake create service/validation (source-type URL + channel bounds).
-- [ ] Add admin endpoint accepting AdminKnowledgeSourceIntakeRequest and returning AdminKnowledgeSourceIntakeResponse.
-- [ ] Add focused integration tests for happy/error/edge cases.
-- [ ] Run focused backend/API tests and verify pass.
-- [ ] Update docs/architecture/video-channel-ingestion-test-plan.md with PR 1 completion notes.
-- [ ] Confirm extraction remains unimplemented and queued-only.
