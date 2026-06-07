@@ -1,3 +1,5 @@
+“The system generates evidence-bound, clinician-reviewable protocol hypotheses with transparent reasoning, uncertainty, contraindication checks, and required monitoring gates.”
+---
 1. Integration with Keon Collective and Keon Cortex:
 ---
 
