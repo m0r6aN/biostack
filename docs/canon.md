@@ -1,0 +1,1 @@
+“The system generates evidence-bound, clinician-reviewable protocol hypotheses with transparent reasoning, uncertainty, contraindication checks, and required monitoring gates.”
