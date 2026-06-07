@@ -222,6 +222,59 @@ public static class AdminEndpoints
 
             return Results.Ok(MapStagedReviewRecordToResponse(record));
         });
+
+        // Update the review state of a staged transcript candidate artifact.
+        // Action must be one of: approve_for_promotion | reject_review | defer_review.
+        // Approval is a state label only — it does NOT execute promotion.
+        group.MapPost("/staged-transcript-candidate-reviews/{artifactId}/review-state", async (
+            string artifactId,
+            [FromBody] AdminUpdateStagedTranscriptCandidateReviewStateRequest? request,
+            [FromServices] ITranscriptCandidateReviewStore reviewStore,
+            CancellationToken ct) =>
+        {
+            if (request is null || string.IsNullOrWhiteSpace(request.Action))
+            {
+                return Results.BadRequest(new { Message = "action is required." });
+            }
+
+            var record = await reviewStore.GetByArtifactIdAsync(artifactId, ct);
+            if (record is null)
+            {
+                return Results.NotFound();
+            }
+
+            // Construct the review model from the persisted record so the lifecycle
+            // can evaluate the transition without touching any canonical source.
+            var reviewModel = new TranscriptCandidateArtifactReviewModel(
+                ArtifactId: record.ArtifactId,
+                ReviewState: record.ReviewState,
+                Canonicality: record.Canonicality,
+                SourceType: record.SourceType,
+                SourceUrl: record.SourceUrl,
+                SourceMetadata: record.SourceMetadata,
+                Provider: record.Provider,
+                IsDeterministicFixture: record.IsDeterministicFixture,
+                SegmentCount: record.SegmentCount,
+                SegmentSnapshotSignature: record.SegmentSnapshotSignature);
+
+            // Stateless lifecycle — instantiated directly; no external dependencies.
+            var lifecycle = new TranscriptCandidateReviewLifecycle();
+            var decision = lifecycle.ApplyAction(reviewModel, request.Action);
+
+            if (!decision.IsTransitionAllowed)
+            {
+                return Results.UnprocessableEntity(new { Message = decision.RejectionReason });
+            }
+
+            var updatedRecord = await reviewStore.UpdateReviewStateAsync(
+                artifactId: record.ArtifactId,
+                expectedCurrentReviewState: decision.FromReviewState,
+                nextReviewState: decision.ToReviewState,
+                updatedAtUtc: DateTime.UtcNow.ToString("O", System.Globalization.CultureInfo.InvariantCulture),
+                cancellationToken: ct);
+
+            return Results.Ok(MapStagedReviewRecordToResponse(updatedRecord));
+        });
     }
 
     private static IReadOnlyDictionary<string, string>? FilterSafeProviderMetadata(

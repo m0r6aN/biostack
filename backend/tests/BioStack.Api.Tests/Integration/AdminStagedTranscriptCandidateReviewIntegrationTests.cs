@@ -179,6 +179,140 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
             $"Expected unauthorized or forbidden, got {(int)response.StatusCode} {response.StatusCode}.");
     }
 
+    // ── POST /review-state — 8 tests (PR13A) ────────────────────────────────
+
+    [Fact]
+    public async Task UpdateReviewState_ApproveForPromotion_OnPendingReview_Returns200AndUpdatedState()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-update-approve@example.com");
+        const string artifactId = "transcript-candidate:sig-update-approve-1";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.PendingReview);
+
+        var response = await _client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/review-state",
+            new { action = TranscriptCandidateReviewAction.ApproveForPromotion });
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<AdminStagedReviewDto>();
+        Assert.NotNull(payload);
+        Assert.Equal(artifactId, payload!.ArtifactId);
+        Assert.Equal(TranscriptCandidateReviewState.ReviewApprovedForPromotion, payload.ReviewState);
+        Assert.Equal("non_canonical", payload.Canonicality);
+        // Staged boundary: response must not expose KnowledgeEntry linkage or promotion execution fields.
+        Assert.DoesNotContain("knowledgeEntryId", payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("canonicalKnowledgeEntryId", payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("promotionStatus", payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("promotionExecutedAtUtc", payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("promotionExecutionId", payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task UpdateReviewState_RejectReview_OnPendingReview_Returns200AndUpdatedState()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-update-reject@example.com");
+        const string artifactId = "transcript-candidate:sig-update-reject-1";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.PendingReview);
+
+        var response = await _client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/review-state",
+            new { action = TranscriptCandidateReviewAction.RejectReview });
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<AdminStagedReviewDto>();
+        Assert.NotNull(payload);
+        Assert.Equal(artifactId, payload!.ArtifactId);
+        Assert.Equal(TranscriptCandidateReviewState.ReviewRejected, payload.ReviewState);
+        Assert.Equal("non_canonical", payload.Canonicality);
+    }
+
+    [Fact]
+    public async Task UpdateReviewState_DeferReview_OnPendingReview_Returns200AndUpdatedState()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-update-defer@example.com");
+        const string artifactId = "transcript-candidate:sig-update-defer-1";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.PendingReview);
+
+        var response = await _client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/review-state",
+            new { action = TranscriptCandidateReviewAction.DeferReview });
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<AdminStagedReviewDto>();
+        Assert.NotNull(payload);
+        Assert.Equal(artifactId, payload!.ArtifactId);
+        Assert.Equal(TranscriptCandidateReviewState.ReviewDeferred, payload.ReviewState);
+        Assert.Equal("non_canonical", payload.Canonicality);
+    }
+
+    [Fact]
+    public async Task UpdateReviewState_UnknownArtifact_Returns404()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-update-404@example.com");
+
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/admin/staged-transcript-candidate-reviews/transcript-candidate:does-not-exist/review-state",
+            new { action = TranscriptCandidateReviewAction.ApproveForPromotion });
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateReviewState_MissingAction_Returns400()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-update-400@example.com");
+        const string artifactId = "transcript-candidate:sig-update-noaction-1";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.PendingReview);
+
+        var response = await _client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/review-state",
+            new { action = (string?)null });
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateReviewState_UnsupportedAction_Returns422()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-update-422-unsupported@example.com");
+        const string artifactId = "transcript-candidate:sig-update-badaction-1";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.PendingReview);
+
+        var response = await _client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/review-state",
+            new { action = "promote_immediately" });
+
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateReviewState_TransitionFromTerminalState_Returns422()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-update-422-terminal@example.com");
+        const string artifactId = "transcript-candidate:sig-update-terminal-1";
+        // Seed already in a terminal state (approved).
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.ReviewApprovedForPromotion);
+
+        // Attempting any action from a terminal state must be rejected by the lifecycle.
+        var response = await _client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/review-state",
+            new { action = TranscriptCandidateReviewAction.ApproveForPromotion });
+
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateReviewState_Unauthenticated_ReturnsUnauthorizedOrForbidden()
+    {
+        // No sign-in — raw client, no session cookie.
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/admin/staged-transcript-candidate-reviews/transcript-candidate:any/review-state",
+            new { action = TranscriptCandidateReviewAction.ApproveForPromotion });
+
+        Assert.True(
+            response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden,
+            $"Expected unauthorized or forbidden, got {(int)response.StatusCode} {response.StatusCode}.");
+    }
+
     private async Task SeedReviewAsync(
         string artifactId,
         string reviewState,
