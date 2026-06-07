@@ -46,7 +46,7 @@ public sealed class StagedTranscriptCandidateReviewStoreTests : IDisposable
     }
 
     [Fact]
-    public async Task ListByReviewState_FiltersOnlyRequestedState()
+    public async Task List_FilterByReviewState_FiltersOnlyRequestedState()
     {
         var store = new StagedTranscriptCandidateReviewStore(CreateDbContext());
 
@@ -54,7 +54,8 @@ public sealed class StagedTranscriptCandidateReviewStoreTests : IDisposable
         await store.UpsertAsync(CreateRecord("transcript-candidate:sig-2", TranscriptCandidateReviewState.ReviewDeferred));
         await store.UpsertAsync(CreateRecord("transcript-candidate:sig-3", TranscriptCandidateReviewState.ReviewDeferred));
 
-        var deferred = await store.ListByReviewStateAsync(TranscriptCandidateReviewState.ReviewDeferred);
+        var deferred = await store.ListAsync(
+            new TranscriptCandidateReviewFilter(ReviewState: TranscriptCandidateReviewState.ReviewDeferred));
 
         Assert.Equal(2, deferred.Count);
         Assert.All(deferred, x => Assert.Equal(TranscriptCandidateReviewState.ReviewDeferred, x.ReviewState));

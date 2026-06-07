@@ -179,18 +179,26 @@ public static class AdminEndpoints
         });
 
         group.MapGet("/staged-transcript-candidate-reviews", async (
-            [FromQuery] string reviewState,
+            [FromQuery] string? reviewState,
+            [FromQuery] bool? promoted,
+            [FromQuery] bool? targetAssigned,
             [FromServices] ITranscriptCandidateReviewStore reviewStore,
             CancellationToken ct) =>
         {
-            if (string.IsNullOrWhiteSpace(reviewState))
+            // If reviewState is supplied, it must not be whitespace-only.
+            if (reviewState is not null && string.IsNullOrWhiteSpace(reviewState))
             {
-                return Results.BadRequest(new { Message = "reviewState is required." });
+                return Results.BadRequest(new { Message = "reviewState must not be whitespace when provided." });
             }
 
             try
             {
-                var records = await reviewStore.ListByReviewStateAsync(reviewState, ct);
+                var filter = new TranscriptCandidateReviewFilter(
+                    ReviewState: reviewState,
+                    IsPromoted: promoted,
+                    IsTargetAssigned: targetAssigned);
+
+                var records = await reviewStore.ListAsync(filter, ct);
                 var response = records.Select(MapStagedReviewRecordToResponse).ToArray();
                 return Results.Ok(response);
             }

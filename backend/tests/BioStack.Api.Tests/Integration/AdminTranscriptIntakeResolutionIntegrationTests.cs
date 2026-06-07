@@ -179,8 +179,9 @@ public sealed class AdminTranscriptIntakeResolutionIntegrationTests : IAsyncLife
         Assert.Equal(1, await db.Set<StagedTranscriptCandidateReviewEntity>().CountAsync());
 
         var reviewStore = scope.ServiceProvider.GetRequiredService<ITranscriptCandidateReviewStore>();
-        var pendingRecords = await reviewStore.ListByReviewStateAsync(
-            TranscriptCandidateReviewState.PendingReview, CancellationToken.None);
+        var pendingRecords = await reviewStore.ListAsync(
+            new TranscriptCandidateReviewFilter(ReviewState: TranscriptCandidateReviewState.PendingReview),
+            CancellationToken.None);
         Assert.Single(pendingRecords);
 
         var staged = pendingRecords[0];

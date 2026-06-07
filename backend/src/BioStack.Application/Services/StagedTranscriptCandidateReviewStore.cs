@@ -69,19 +69,36 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
         return entity is null ? null : ToRecord(entity);
     }
 
-    public async Task<IReadOnlyList<TranscriptCandidateReviewRecord>> ListByReviewStateAsync(
-        string reviewState,
+    public async Task<IReadOnlyList<TranscriptCandidateReviewRecord>> ListAsync(
+        TranscriptCandidateReviewFilter filter,
         CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrWhiteSpace(reviewState))
+        ArgumentNullException.ThrowIfNull(filter);
+
+        if (filter.ReviewState is not null && string.IsNullOrWhiteSpace(filter.ReviewState))
         {
-            throw new ArgumentException("ReviewState is required.", nameof(reviewState));
+            throw new ArgumentException("ReviewState must not be whitespace when provided.", nameof(filter));
         }
 
-        var entities = await _dbContext.StagedTranscriptCandidateReviews
+        var query = _dbContext.StagedTranscriptCandidateReviews
             .AsNoTracking()
-            .Where(x => x.ReviewState == reviewState)
-            .OrderBy(x => x.ArtifactId)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(filter.ReviewState))
+            query = query.Where(x => x.ReviewState == filter.ReviewState);
+
+        if (filter.IsPromoted.HasValue)
+            query = filter.IsPromoted.Value
+                ? query.Where(x => x.PromotedKnowledgeEntryId != null)
+                : query.Where(x => x.PromotedKnowledgeEntryId == null);
+
+        if (filter.IsTargetAssigned.HasValue)
+            query = filter.IsTargetAssigned.Value
+                ? query.Where(x => x.TargetCanonicalName != null && x.TargetCanonicalName != "")
+                : query.Where(x => x.TargetCanonicalName == null || x.TargetCanonicalName == "");
+
+        var entities = await query
+            .OrderByDescending(x => x.UpdatedAtUtc)
             .ToListAsync(cancellationToken);
 
         return entities.Select(ToRecord).ToArray();
