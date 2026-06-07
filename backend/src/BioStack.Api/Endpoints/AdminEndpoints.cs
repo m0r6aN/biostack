@@ -232,6 +232,11 @@ public static class AdminEndpoints
             [FromServices] ITranscriptCandidateReviewStore reviewStore,
             CancellationToken ct) =>
         {
+            if (string.IsNullOrWhiteSpace(artifactId))
+            {
+                return Results.BadRequest(new { Message = "artifactId is required." });
+            }
+
             if (request is null || string.IsNullOrWhiteSpace(request.Action))
             {
                 return Results.BadRequest(new { Message = "action is required." });
@@ -266,14 +271,27 @@ public static class AdminEndpoints
                 return Results.UnprocessableEntity(new { Message = decision.RejectionReason });
             }
 
-            var updatedRecord = await reviewStore.UpdateReviewStateAsync(
-                artifactId: record.ArtifactId,
-                expectedCurrentReviewState: decision.FromReviewState,
-                nextReviewState: decision.ToReviewState,
-                updatedAtUtc: DateTime.UtcNow.ToString("O", System.Globalization.CultureInfo.InvariantCulture),
-                cancellationToken: ct);
+            try
+            {
+                var updatedRecord = await reviewStore.UpdateReviewStateAsync(
+                    artifactId: record.ArtifactId,
+                    expectedCurrentReviewState: decision.FromReviewState,
+                    nextReviewState: decision.ToReviewState,
+                    updatedAtUtc: DateTime.UtcNow.ToString("O", System.Globalization.CultureInfo.InvariantCulture),
+                    cancellationToken: ct);
 
-            return Results.Ok(MapStagedReviewRecordToResponse(updatedRecord));
+                return Results.Ok(MapStagedReviewRecordToResponse(updatedRecord));
+            }
+            catch (KeyNotFoundException)
+            {
+                // Record was deleted between the read above and the write — surface as 404.
+                return Results.NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Expected-current-state mismatch from a concurrent update — write conflict.
+                return Results.Conflict(new { Message = ex.Message });
+            }
         });
     }
 
