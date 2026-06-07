@@ -368,6 +368,30 @@ public static class AdminEndpoints
                 return Results.Conflict(new { Message = ex.Message });
             }
         });
+
+        // RR-2: Promotion dry-run preview. Evaluates promotion readiness with the same
+        // semantics as execute-promotion but never writes, stamps, or mutates anything.
+        // WouldWrite is always false in the response. No request body.
+        group.MapPost("/staged-transcript-candidate-reviews/{artifactId}/promotion-preview", async (
+            string artifactId,
+            [FromServices] ITranscriptCandidatePromotionPreviewService previewService,
+            CancellationToken ct) =>
+        {
+            if (string.IsNullOrWhiteSpace(artifactId))
+            {
+                return Results.BadRequest(new { Message = "artifactId is required." });
+            }
+
+            try
+            {
+                var result = await previewService.PreviewAsync(artifactId, ct);
+                return Results.Ok(MapToPreviewResponse(result));
+            }
+            catch (KeyNotFoundException)
+            {
+                return Results.NotFound();
+            }
+        });
     }
 
     private static IReadOnlyDictionary<string, string>? FilterSafeProviderMetadata(
@@ -424,4 +448,23 @@ public static class AdminEndpoints
             TargetCanonicalName: record.TargetCanonicalName,
             PromotedKnowledgeEntryId: record.PromotedKnowledgeEntryId,
             PromotedAtUtc: record.PromotedAtUtc);
+
+    private static PromotionPreviewResponse MapToPreviewResponse(PromotionPreviewResult result)
+        => new(
+            ArtifactId: result.ArtifactId,
+            CanPromote: result.CanPromote,
+            ReviewState: result.ReviewState,
+            TargetAssigned: result.TargetAssigned,
+            TargetCanonicalName: result.TargetCanonicalName,
+            ResolvedTargetKnowledgeEntryId: result.ResolvedTargetKnowledgeEntryId,
+            AlreadyPromoted: result.AlreadyPromoted,
+            PromotedKnowledgeEntryId: result.PromotedKnowledgeEntryId,
+            EvidenceGate: new PromotionPreviewEvidenceGateDto(
+                Passed: result.EvidenceGate.Passed,
+                Tier: result.EvidenceGate.Tier,
+                CitationCount: result.EvidenceGate.CitationCount,
+                MechanismSummaryPresent: result.EvidenceGate.MechanismSummaryPresent,
+                FailureReasons: result.EvidenceGate.FailureReasons),
+            BlockingReasons: result.BlockingReasons,
+            WouldWrite: result.WouldWrite);
 }

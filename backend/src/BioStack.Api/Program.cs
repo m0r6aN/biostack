@@ -303,6 +303,7 @@ builder.Services.AddScoped<ITranscriptCandidateArtifactStagingService, Transcrip
 builder.Services.AddScoped<ITranscriptCandidateArtifactReviewService, TranscriptCandidateArtifactReviewService>();
 builder.Services.AddSingleton<IEvidenceGate, EvidenceGate>();
 builder.Services.AddScoped<ITranscriptCandidatePromotionService, TranscriptCandidatePromotionService>();
+builder.Services.AddScoped<ITranscriptCandidatePromotionPreviewService, TranscriptCandidatePromotionPreviewService>();
 builder.Services.AddScoped<IInteractionIntelligenceService, InteractionIntelligenceService>();
 builder.Services.AddScoped<IOverlapService, OverlapService>();
 builder.Services.AddSingleton<IBlendDecomposerService, BlendDecomposerService>();
