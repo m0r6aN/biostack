@@ -31,7 +31,7 @@ afterEach(() => {
 const makeStackScore = (overrides: Partial<StackScore> = {}): StackScore => ({
   score: 78,
   breakdown: { synergy: 25, redundancy: 10, conflicts: 5, evidence: 38 },
-  chips: ['Synergistic Stack', 'Recovery Optimized'],
+  chips: ['Synergistic Stack', 'Low redundancy'],
   ...overrides,
 });
 
@@ -49,7 +49,7 @@ describe('StackScoreCard', () => {
   it('renders chips', () => {
     render(<StackScoreCard score={makeStackScore()} />);
     expect(screen.getByText('Synergistic Stack')).toBeInTheDocument();
-    expect(screen.getByText('Recovery Optimized')).toBeInTheDocument();
+    expect(screen.getByText('Low redundancy')).toBeInTheDocument();
   });
 
   it('renders breakdown labels', () => {

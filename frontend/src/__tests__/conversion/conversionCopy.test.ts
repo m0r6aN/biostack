@@ -11,18 +11,19 @@ const ALL_NEW_COPY = [
   // Billing — Observer
   'Observer includes up to 8 active compounds. Existing data stays available if a paid plan ends.',
   // Billing — Operator card
+  'Protocol scoring and analysis',
   'See how your compounds interact — score your protocol, identify synergies and conflicts, and model what changes with counterfactual scenarios. Removes the active compound limit.',
   'Stack score across all compounds',
   'Synergy and conflict surface',
   'Counterfactual scenarios',
   'No compound cap',
   // Billing — Commander card
+  'Run history and trend analysis',
   'Track how your protocols evolve — detect trends and drift, anticipate the next phase from prior runs, and get structured reviews across all your protocol runs.',
   'Trend and drift detection',
   'Sequence expectation modeling',
   'Structured protocol reviews',
   'Cross-run comparison',
-  'Pattern intelligence',
   // Analyzer
   'Track whether these patterns hold',
   "Save this stack as a protocol and check in over time to see whether the synergies and conflicts playing out now actually hold.",
