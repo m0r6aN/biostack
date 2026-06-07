@@ -117,13 +117,17 @@ public sealed class TranscriptCandidateReviewStoreContractTests
     [Fact]
     public void StoreContract_ExposesNoMethodForPromotionExecution()
     {
+        // This guard ensures the store interface never gains execution methods.
+        // "Promote" (verb) and "Execute" are the blocked tokens.
+        // "Promotion" (noun) is intentionally NOT blocked: AssignPromotionTargetAsync
+        // is a label-assignment method added in PR14A and is not promotion execution.
+        // Actual execution is PR14B scope and must NOT appear here.
         var names = typeof(ITranscriptCandidateReviewStore)
             .GetMethods(BindingFlags.Public | BindingFlags.Instance)
             .Select(m => m.Name)
             .ToArray();
 
         Assert.DoesNotContain(names, name => name.Contains("Promote", StringComparison.OrdinalIgnoreCase));
-        Assert.DoesNotContain(names, name => name.Contains("Promotion", StringComparison.OrdinalIgnoreCase));
         Assert.DoesNotContain(names, name => name.Contains("Execute", StringComparison.OrdinalIgnoreCase));
     }
 
