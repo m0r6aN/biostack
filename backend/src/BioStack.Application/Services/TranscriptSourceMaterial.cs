@@ -7,6 +7,11 @@ public interface ITranscriptSourceMaterialProvider
         CancellationToken cancellationToken = default);
 }
 
+public interface ITranscriptSourceMaterialProviderFailure
+{
+    TranscriptSourceMaterialResolutionFailure Failure { get; }
+}
+
 public sealed record TranscriptSourceReference(
     string SourceType,
     string SourceUrl);
