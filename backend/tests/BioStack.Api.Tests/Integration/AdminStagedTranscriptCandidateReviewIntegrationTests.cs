@@ -179,7 +179,92 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
             $"Expected unauthorized or forbidden, got {(int)response.StatusCode} {response.StatusCode}.");
     }
 
-    // ── POST /review-state — 8 tests (PR13A) ────────────────────────────────
+    // ── GET /staged-transcript-candidate-reviews — PR13B additions ──────────
+
+    [Fact]
+    public async Task ListStagedTranscriptCandidateReviews_WhitespaceReviewState_Returns400()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-review-ws@example.com");
+
+        // URL-encode a whitespace-only value; the handler's IsNullOrWhiteSpace guard returns 400.
+        var response = await _client.GetAsync("/api/v1/admin/staged-transcript-candidate-reviews?reviewState=%20%20");
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task ListStagedTranscriptCandidateReviews_ByReviewRejected_ReturnsOnlyRejectedRecords()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-review-rejected@example.com");
+        await SeedReviewAsync("transcript-candidate:sig-rejected-1", TranscriptCandidateReviewState.ReviewRejected);
+        await SeedReviewAsync("transcript-candidate:sig-rejected-2", TranscriptCandidateReviewState.ReviewRejected);
+        await SeedReviewAsync("transcript-candidate:sig-rejected-pending", TranscriptCandidateReviewState.PendingReview);
+
+        var response = await _client.GetAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews?reviewState={TranscriptCandidateReviewState.ReviewRejected}");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<List<AdminStagedReviewDto>>();
+        Assert.NotNull(payload);
+        Assert.Equal(2, payload!.Count);
+        Assert.All(payload, item =>
+            Assert.Equal(TranscriptCandidateReviewState.ReviewRejected, item.ReviewState));
+    }
+
+    [Fact]
+    public async Task ListStagedTranscriptCandidateReviews_NoMatches_Returns200WithEmptyCollection()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-review-empty@example.com");
+
+        // Use a valid but seeded-empty state value; the store returns an empty list → 200 with [].
+        var response = await _client.GetAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews?reviewState={TranscriptCandidateReviewState.ReviewDeferred}");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<List<AdminStagedReviewDto>>();
+        Assert.NotNull(payload);
+        Assert.Empty(payload!);
+    }
+
+    [Fact]
+    public async Task GetStagedTranscriptCandidateReview_ResponseDoesNotExposeCanonicalOrPromotionFields()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-review-boundary@example.com");
+        const string artifactId = "transcript-candidate:sig-boundary-1";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.PendingReview);
+
+        var response = await _client.GetAsync($"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<AdminStagedReviewDto>();
+        Assert.NotNull(payload);
+        // Review-safe boundary: none of the following canonical or promotion fields may appear.
+        Assert.DoesNotContain("knowledgeEntryId",          payload!.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("knowledgeEntryFk",          payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("canonicalKnowledgeEntryId", payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("promotionStatus",           payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("promotionExecutedAtUtc",    payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("promotionExecutionId",      payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("summary",                   payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("safetyClassification",      payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        Assert.DoesNotContain("medicalInterpretation",     payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+        // Canonicality field must always read "non_canonical".
+        Assert.Equal("non_canonical", payload.Canonicality);
+    }
+
+    [Fact]
+    public async Task GetStagedTranscriptCandidateReview_Unauthenticated_ReturnsUnauthorizedOrForbidden()
+    {
+        // No sign-in — raw client, no session cookie.
+        var response = await _client.GetAsync(
+            "/api/v1/admin/staged-transcript-candidate-reviews/transcript-candidate:any-artifact");
+
+        Assert.True(
+            response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden,
+            $"Expected unauthorized or forbidden, got {(int)response.StatusCode} {response.StatusCode}.");
+    }
+
+    // ── POST /review-state — 9 tests (PR13A) ────────────────────────────────
 
     [Fact]
     public async Task UpdateReviewState_ApproveForPromotion_OnPendingReview_Returns200AndUpdatedState()
