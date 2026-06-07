@@ -6,6 +6,8 @@ using System.Text.Json;
 using BioStack.Api;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
+using BioStack.Domain.Entities;
+using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -523,6 +525,166 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
             $"Expected unauthorized or forbidden, got {(int)response.StatusCode} {response.StatusCode}.");
     }
 
+    // ── POST /execute-promotion — 8 tests (PR14B) ───────────────────────────
+
+    [Fact]
+    public async Task ExecutePromotion_HappyPath_Returns200_AndStampsPromotionFields()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-exec-promo-happy@example.com");
+        const string artifactId = "transcript-candidate:sig-exec-promo-happy-1";
+        const string canonicalName = "caffeine-exec-happy-1";
+        var keId = await SeedKnowledgeEntryAsync(canonicalName);
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: canonicalName);
+
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<AdminStagedReviewDto>();
+        Assert.NotNull(payload);
+        Assert.Equal(artifactId, payload!.ArtifactId);
+        Assert.Equal(keId, payload.PromotedKnowledgeEntryId);
+        Assert.NotNull(payload.PromotedAtUtc);
+        Assert.Equal(TranscriptCandidateReviewState.ReviewApprovedForPromotion, payload.ReviewState);
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_IdempotentReplay_Returns200_WithSamePromotionResult()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-exec-promo-idempotent@example.com");
+        const string artifactId = "transcript-candidate:sig-exec-promo-idempotent-1";
+        const string canonicalName = "caffeine-exec-idempotent-1";
+        var keId = await SeedKnowledgeEntryAsync(canonicalName);
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: canonicalName);
+
+        var first = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+        var second = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.OK, first.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, second.StatusCode);
+        var firstPayload = await first.Content.ReadFromJsonAsync<AdminStagedReviewDto>();
+        var secondPayload = await second.Content.ReadFromJsonAsync<AdminStagedReviewDto>();
+        Assert.NotNull(firstPayload);
+        Assert.NotNull(secondPayload);
+        Assert.Equal(keId, firstPayload!.PromotedKnowledgeEntryId);
+        Assert.Equal(firstPayload.PromotedKnowledgeEntryId, secondPayload!.PromotedKnowledgeEntryId);
+        Assert.Equal(firstPayload.PromotedAtUtc, secondPayload.PromotedAtUtc);
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_UnknownArtifactId_Returns404()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-exec-promo-404@example.com");
+
+        var response = await _client.PostAsync(
+            "/api/v1/admin/staged-transcript-candidate-reviews/transcript-candidate:does-not-exist/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_KnowledgeEntryNotFound_Returns404()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-exec-promo-ke-404@example.com");
+        const string artifactId = "transcript-candidate:sig-exec-promo-ke-404-1";
+        // Seed a review pointing to a KE that does not exist in the knowledge base.
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: "no-such-compound");
+
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_RecordNotInApprovedState_Returns409()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-exec-promo-409-state@example.com");
+        const string artifactId = "transcript-candidate:sig-exec-promo-409-state-1";
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.PendingReview,
+            isDeterministicFixture: false);
+
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_NoPromotionTargetAssigned_Returns409()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-exec-promo-409-notarget@example.com");
+        const string artifactId = "transcript-candidate:sig-exec-promo-409-notarget-1";
+        // Approved, but no targetCanonicalName assigned — target guard fires.
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: null);
+
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_DeterministicFixtureRecord_Returns409()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-exec-promo-409-fixture@example.com");
+        const string artifactId = "transcript-candidate:sig-exec-promo-409-fixture-1";
+        // Fixture guard fires before KE lookup; no KE needs to exist.
+        // UpsertAsync bypasses the PR14A guard, creating an artificial state that exercises
+        // the defense-in-depth fixture check in TranscriptCandidatePromotionService.
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: true,
+            targetCanonicalName: "caffeine-fixture-guard");
+
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_Unauthenticated_ReturnsUnauthorizedOrForbidden()
+    {
+        // No sign-in — raw client, no session cookie.
+        var response = await _client.PostAsync(
+            "/api/v1/admin/staged-transcript-candidate-reviews/transcript-candidate:any/execute-promotion",
+            null);
+
+        Assert.True(
+            response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden,
+            $"Expected unauthorized or forbidden, got {(int)response.StatusCode} {response.StatusCode}.");
+    }
+
     private Task SeedReviewAsync(
         string artifactId,
         string reviewState,
@@ -533,6 +695,7 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
         string artifactId,
         string reviewState,
         bool isDeterministicFixture,
+        string? targetCanonicalName = null,
         IReadOnlyDictionary<string, string>? metadata = null)
     {
         using var scope = _factory.Services.CreateScope();
@@ -554,9 +717,24 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
                 ["kind"] = "transcript",
             },
             createdAtUtc: "2026-05-30T00:00:00Z",
-            updatedAtUtc: "2026-05-30T00:00:00Z");
+            updatedAtUtc: "2026-05-30T00:00:00Z",
+            targetCanonicalName: targetCanonicalName);
 
         await store.UpsertAsync(record);
+    }
+
+    private async Task<Guid> SeedKnowledgeEntryAsync(string canonicalName)
+    {
+        using var scope = _factory.Services.CreateScope();
+        var knowledgeSource = scope.ServiceProvider.GetRequiredService<IKnowledgeSource>();
+        var entry = new KnowledgeEntry
+        {
+            Id = Guid.NewGuid(),
+            CanonicalName = canonicalName,
+            SourceReferences = new List<string>(),
+        };
+        await knowledgeSource.UpsertCompoundAsync(entry);
+        return entry.Id;
     }
 
     private async Task SignInNonAdminAsync(string email)
