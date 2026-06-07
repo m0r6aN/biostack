@@ -293,6 +293,44 @@ public static class AdminEndpoints
                 return Results.Conflict(new { Message = ex.Message });
             }
         });
+
+        // Assign a promotion target (canonical name) to an approved staged transcript candidate.
+        // Record must be in state review_approved_for_promotion and must not be a deterministic fixture.
+        // This does NOT write to KnowledgeEntry — it is a label assignment only.
+        group.MapPost("/staged-transcript-candidate-reviews/{artifactId}/promotion-target", async (
+            string artifactId,
+            [FromBody] AdminAssignPromotionTargetRequest? request,
+            [FromServices] ITranscriptCandidateReviewStore reviewStore,
+            CancellationToken ct) =>
+        {
+            if (string.IsNullOrWhiteSpace(artifactId))
+            {
+                return Results.BadRequest(new { Message = "artifactId is required." });
+            }
+
+            if (request is null || string.IsNullOrWhiteSpace(request.TargetCanonicalName))
+            {
+                return Results.BadRequest(new { Message = "targetCanonicalName is required." });
+            }
+
+            try
+            {
+                var updatedRecord = await reviewStore.AssignPromotionTargetAsync(
+                    artifactId: artifactId,
+                    targetCanonicalName: request.TargetCanonicalName,
+                    cancellationToken: ct);
+
+                return Results.Ok(MapStagedReviewRecordToResponse(updatedRecord));
+            }
+            catch (KeyNotFoundException)
+            {
+                return Results.NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Results.Conflict(new { Message = ex.Message });
+            }
+        });
     }
 
     private static IReadOnlyDictionary<string, string>? FilterSafeProviderMetadata(
@@ -345,5 +383,8 @@ public static class AdminEndpoints
             SegmentSnapshotSignature: record.SegmentSnapshotSignature,
             SourceMetadata: record.SourceMetadata,
             CreatedAtUtc: record.CreatedAtUtc,
-            UpdatedAtUtc: record.UpdatedAtUtc);
+            UpdatedAtUtc: record.UpdatedAtUtc,
+            TargetCanonicalName: record.TargetCanonicalName,
+            PromotedKnowledgeEntryId: record.PromotedKnowledgeEntryId,
+            PromotedAtUtc: record.PromotedAtUtc);
 }

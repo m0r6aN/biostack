@@ -14,4 +14,7 @@ public sealed class StagedTranscriptCandidateReviewEntity
     public string SegmentSnapshotSignature { get; set; } = string.Empty;
     public string CreatedAtUtc { get; set; } = string.Empty;
     public string UpdatedAtUtc { get; set; } = string.Empty;
+    public string? TargetCanonicalName { get; set; }
+    public Guid? PromotedKnowledgeEntryId { get; set; }
+    public string? PromotedAtUtc { get; set; }
 }

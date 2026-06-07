@@ -466,6 +466,9 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(e => e.SegmentSnapshotSignature).HasMaxLength(512).IsRequired();
             entity.Property(e => e.CreatedAtUtc).HasMaxLength(64).IsRequired();
             entity.Property(e => e.UpdatedAtUtc).HasMaxLength(64).IsRequired();
+            entity.Property(e => e.TargetCanonicalName).HasMaxLength(512).IsRequired(false);
+            entity.Property(e => e.PromotedKnowledgeEntryId).HasColumnType("TEXT").IsRequired(false);
+            entity.Property(e => e.PromotedAtUtc).HasMaxLength(64).IsRequired(false);
             entity.HasIndex(e => e.ReviewState);
 
             entity.ToTable(tableBuilder =>

@@ -45,6 +45,9 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
             existing.SegmentSnapshotSignature = normalized.SegmentSnapshotSignature;
             existing.CreatedAtUtc = normalized.CreatedAtUtc;
             existing.UpdatedAtUtc = normalized.UpdatedAtUtc;
+            existing.TargetCanonicalName = normalized.TargetCanonicalName;
+            existing.PromotedKnowledgeEntryId = normalized.PromotedKnowledgeEntryId;
+            existing.PromotedAtUtc = normalized.PromotedAtUtc;
         }
 
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -142,6 +145,50 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
         return ToRecord(entity);
     }
 
+    public async Task<TranscriptCandidateReviewRecord> AssignPromotionTargetAsync(
+        string artifactId,
+        string targetCanonicalName,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(artifactId))
+        {
+            throw new ArgumentException("ArtifactId is required.", nameof(artifactId));
+        }
+
+        if (string.IsNullOrWhiteSpace(targetCanonicalName))
+        {
+            throw new ArgumentException("TargetCanonicalName is required.", nameof(targetCanonicalName));
+        }
+
+        var entity = await _dbContext.StagedTranscriptCandidateReviews
+            .SingleOrDefaultAsync(x => x.ArtifactId == artifactId, cancellationToken);
+
+        if (entity is null)
+        {
+            throw new KeyNotFoundException($"No staged transcript candidate review record found for artifactId '{artifactId}'.");
+        }
+
+        if (!string.Equals(entity.ReviewState, TranscriptCandidateReviewState.ReviewApprovedForPromotion, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"Promotion target can only be assigned to records in state '{TranscriptCandidateReviewState.ReviewApprovedForPromotion}'. " +
+                $"Current state: '{entity.ReviewState}'.");
+        }
+
+        if (entity.IsDeterministicFixture)
+        {
+            throw new InvalidOperationException(
+                "Promotion target cannot be assigned to a deterministic fixture record.");
+        }
+
+        entity.TargetCanonicalName = targetCanonicalName;
+        entity.UpdatedAtUtc = DateTime.UtcNow.ToString("O", System.Globalization.CultureInfo.InvariantCulture);
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return ToRecord(entity);
+    }
+
     private static TranscriptCandidateReviewRecord NormalizeRecord(TranscriptCandidateReviewRecord record)
         => TranscriptCandidateReviewRecord.Create(
             artifactId: record.ArtifactId,
@@ -156,7 +203,10 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
             sourceMetadata: record.SourceMetadata,
             createdAtUtc: record.CreatedAtUtc,
             updatedAtUtc: record.UpdatedAtUtc,
-            rowVersion: null);
+            rowVersion: null,
+            targetCanonicalName: record.TargetCanonicalName,
+            promotedKnowledgeEntryId: record.PromotedKnowledgeEntryId,
+            promotedAtUtc: record.PromotedAtUtc);
 
     private static StagedTranscriptCandidateReviewEntity ToEntity(TranscriptCandidateReviewRecord record)
         => new()
@@ -173,6 +223,9 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
             SegmentSnapshotSignature = record.SegmentSnapshotSignature,
             CreatedAtUtc = record.CreatedAtUtc,
             UpdatedAtUtc = record.UpdatedAtUtc,
+            TargetCanonicalName = record.TargetCanonicalName,
+            PromotedKnowledgeEntryId = record.PromotedKnowledgeEntryId,
+            PromotedAtUtc = record.PromotedAtUtc,
         };
 
     private static TranscriptCandidateReviewRecord ToRecord(StagedTranscriptCandidateReviewEntity entity)
@@ -189,7 +242,10 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
             sourceMetadata: DeserializeMetadata(entity.SourceMetadataJson),
             createdAtUtc: entity.CreatedAtUtc,
             updatedAtUtc: entity.UpdatedAtUtc,
-            rowVersion: null);
+            rowVersion: null,
+            targetCanonicalName: entity.TargetCanonicalName,
+            promotedKnowledgeEntryId: entity.PromotedKnowledgeEntryId,
+            promotedAtUtc: entity.PromotedAtUtc);
 
     private static string SerializeMetadata(IReadOnlyDictionary<string, string> metadata)
     {
