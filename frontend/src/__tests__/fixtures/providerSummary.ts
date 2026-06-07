@@ -5,7 +5,7 @@ export const providerSummaryGeneratedAt = new Date('2026-02-10T15:30:00Z');
 const makeProviderSummaryStackScore = (overrides: Partial<StackScore> = {}): StackScore => ({
   score: 78,
   breakdown: { synergy: 25, redundancy: 10, conflicts: 5, evidence: 38 },
-  chips: ['Synergistic Stack', 'Recovery Optimized'],
+  chips: ['Synergistic Stack', 'Low redundancy'],
   ...overrides,
 });
 

@@ -100,7 +100,7 @@ export function ProtocolContinuityStrip({ protocol, review, patterns, drift, seq
 
       {protocol.evolvedFromRunId && (
         <p className="mt-3 rounded-lg border border-sky-400/15 bg-sky-500/[0.06] px-3 py-2 text-sm text-sky-100/80">
-          This draft was evolved from an observed run.
+          This draft was branched from an observed run.
         </p>
       )}
     </section>

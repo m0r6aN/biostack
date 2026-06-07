@@ -353,7 +353,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/70">Start here</p>
               <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                Dose it right. Mix correctly. Blend safely.
+                Dose it right. Mix correctly. Check compatibility.
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-white/62 sm:text-lg">
                 Free calculators, reconstitution guidance, and compatibility checks. No account required.
