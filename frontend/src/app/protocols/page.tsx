@@ -104,7 +104,7 @@ export default function ProtocolsPage() {
 
   return (
     <div className="w-full">
-      <Header title="Protocols" subtitle="Simulate, save, track, compare, evolve" actions={<ProfileSwitcher />} />
+      <Header title="Protocols" subtitle="Simulate, save, track, compare, branch" actions={<ProfileSwitcher />} />
 
       <div className="max-w-6xl space-y-6 p-8">
         <ActiveProfileChip />

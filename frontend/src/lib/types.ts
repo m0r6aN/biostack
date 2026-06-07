@@ -939,3 +939,45 @@ export interface SrbEnvelopeRequest {
     providerReviewPressure: number;
   };
 }
+
+// ── AP-2: Staged transcript candidate reviews & promotion preview ─────────
+
+export interface StagedTranscriptCandidateReview {
+  artifactId: string;
+  canonicality: string;
+  reviewState: string;
+  sourceType: string;
+  sourceUrl: string;
+  provider: string;
+  isDeterministicFixture: boolean;
+  segmentCount: number;
+  segmentSnapshotSignature: string;
+  sourceMetadata: Record<string, string>;
+  createdAtUtc: string;
+  updatedAtUtc: string;
+  targetCanonicalName: string | null;
+  promotedKnowledgeEntryId: string | null;
+  promotedAtUtc: string | null;
+}
+
+export interface PromotionPreviewEvidenceGate {
+  passed: boolean;
+  tier: string | null;
+  citationCount: number;
+  mechanismSummaryPresent: boolean;
+  failureReasons: string[];
+}
+
+export interface PromotionPreview {
+  artifactId: string;
+  canPromote: boolean;
+  reviewState: string;
+  targetAssigned: boolean;
+  targetCanonicalName: string | null;
+  resolvedTargetKnowledgeEntryId: string | null;
+  alreadyPromoted: boolean;
+  promotedKnowledgeEntryId: string | null;
+  evidenceGate: PromotionPreviewEvidenceGate;
+  blockingReasons: string[];
+  wouldWrite: boolean;
+}

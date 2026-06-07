@@ -33,7 +33,7 @@ describe('HomePage hero', () => {
     expect(screen.getByRole('link', { name: /I already have a stack/ })).toHaveAttribute('href', '/map');
     expect(screen.getByRole('link', { name: /I work with clients/ })).toHaveAttribute('href', '/providers');
     expect(screen.getByRole('link', { name: /Analyze a protocol/ })).toHaveAttribute('href', '/tools/analyzer');
-    expect(screen.getByRole('link', { name: 'Need help with dosage or mixing? → Start here' })).toHaveAttribute('href', '/tools');
+    expect(screen.getByRole('link', { name: 'Need to calculate dose volume or reconstitution? → Start here' })).toHaveAttribute('href', '/tools');
     expect(screen.getByText('Starter')).toBeInTheDocument();
     expect(screen.getByText('Set up compound tracking without rebuilding a spreadsheet.')).toBeInTheDocument();
     expect(screen.getByText('Experienced')).toBeInTheDocument();

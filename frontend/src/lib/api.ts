@@ -37,6 +37,8 @@ import {
     ReconstitutionRequest,
     TimelineEvent,
     VolumeRequest,
+    StagedTranscriptCandidateReview,
+    PromotionPreview,
 } from './types';
 
 export class ApiError extends Error {
@@ -486,6 +488,53 @@ export class ApiClient {
   async getReceiptsByActor(actorId: string): Promise<DecisionReceiptResponse[]> {
     const encoded = encodeURIComponent(actorId);
     return this.request<DecisionReceiptResponse[]>(`/api/v1/receipts?actor=${encoded}`);
+  }
+
+  // ── AP-2: Staged transcript candidate reviews ─────────────────────────
+
+  async getStagedReviews(
+    filters?: { reviewState?: string; promoted?: boolean; targetAssigned?: boolean },
+    authHeaders?: Record<string, string>
+  ): Promise<StagedTranscriptCandidateReview[]> {
+    const params = new URLSearchParams();
+    if (filters?.reviewState) params.set('reviewState', filters.reviewState);
+    if (filters?.promoted !== undefined) params.set('promoted', String(filters.promoted));
+    if (filters?.targetAssigned !== undefined) params.set('targetAssigned', String(filters.targetAssigned));
+    const qs = params.toString();
+    return this.request<StagedTranscriptCandidateReview[]>(
+      `/api/v1/admin/staged-transcript-candidate-reviews${qs ? `?${qs}` : ''}`,
+      { headers: authHeaders }
+    );
+  }
+
+  async getStagedReview(
+    artifactId: string,
+    authHeaders?: Record<string, string>
+  ): Promise<StagedTranscriptCandidateReview> {
+    return this.request<StagedTranscriptCandidateReview>(
+      `/api/v1/admin/staged-transcript-candidate-reviews/${encodeURIComponent(artifactId)}`,
+      { headers: authHeaders }
+    );
+  }
+
+  async getPromotionPreview(
+    artifactId: string,
+    authHeaders?: Record<string, string>
+  ): Promise<PromotionPreview> {
+    return this.request<PromotionPreview>(
+      `/api/v1/admin/staged-transcript-candidate-reviews/${encodeURIComponent(artifactId)}/promotion-preview`,
+      { method: 'POST', headers: authHeaders }
+    );
+  }
+
+  async executePromotion(
+    artifactId: string,
+    authHeaders?: Record<string, string>
+  ): Promise<StagedTranscriptCandidateReview> {
+    return this.request<StagedTranscriptCandidateReview>(
+      `/api/v1/admin/staged-transcript-candidate-reviews/${encodeURIComponent(artifactId)}/execute-promotion`,
+      { method: 'POST', headers: authHeaders }
+    );
   }
 }
 

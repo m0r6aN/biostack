@@ -107,3 +107,35 @@ describe('/protocols/[id] provider summary access', () => {
     });
   });
 });
+
+describe('/protocols/[id] branch-from-run button', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.mocked(apiClient.getProtocolReview).mockResolvedValue(null);
+    vi.mocked(apiClient.getProtocolPatterns).mockResolvedValue(null);
+    vi.mocked(apiClient.getProtocolDrift).mockResolvedValue(null);
+    vi.mocked(apiClient.getProtocolSequenceExpectation).mockResolvedValue(null);
+  });
+
+  it('renders "Branch from run" and not "Evolve from run" when a completed run exists', async () => {
+    vi.mocked(apiClient.getProtocol).mockResolvedValue(
+      makeSavedProviderSummaryProtocol({
+        actualComparison: {
+          simulation: { timeline: [], insights: [] },
+          run: {
+            id: 'run-1', protocolId: 'protocol-2', personId: 'person-1',
+            protocolName: 'Recovery Protocol', protocolVersion: 2,
+            startedAtUtc: '2026-01-03T00:00:00Z', endedAtUtc: '2026-02-01T00:00:00Z',
+            status: 'completed', notes: '',
+          },
+          runSummary: null, observations: [], actualTrends: [], insights: [], highlights: [],
+        },
+      }),
+    );
+
+    await renderPage();
+
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Branch from run' })).toBeInTheDocument());
+    expect(screen.queryByRole('button', { name: 'Evolve from run' })).not.toBeInTheDocument();
+  });
+});

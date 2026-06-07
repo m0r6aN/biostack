@@ -208,7 +208,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
                 disabled={evolving}
                 className="rounded-lg border border-emerald-400/25 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-100 hover:border-emerald-300/45 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {evolving ? 'Creating draft' : 'Evolve from run'}
+                {evolving ? 'Creating draft' : 'Branch from run'}
               </button>
             )}
             {protocol?.activeRun ? (
