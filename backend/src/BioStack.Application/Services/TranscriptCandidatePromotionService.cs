@@ -26,13 +26,16 @@ public sealed class TranscriptCandidatePromotionService : ITranscriptCandidatePr
 {
     private readonly ITranscriptCandidateReviewStore _reviewStore;
     private readonly IKnowledgeSource _knowledgeSource;
+    private readonly IEvidenceGate _evidenceGate;
 
     public TranscriptCandidatePromotionService(
         ITranscriptCandidateReviewStore reviewStore,
-        IKnowledgeSource knowledgeSource)
+        IKnowledgeSource knowledgeSource,
+        IEvidenceGate evidenceGate)
     {
         _reviewStore = reviewStore;
         _knowledgeSource = knowledgeSource;
+        _evidenceGate = evidenceGate;
     }
 
     public async Task<TranscriptCandidateReviewRecord> ExecutePromotionAsync(
@@ -77,6 +80,21 @@ public sealed class TranscriptCandidatePromotionService : ITranscriptCandidatePr
         if (record.PromotedKnowledgeEntryId is not null && record.PromotedAtUtc is not null)
         {
             return record;
+        }
+
+        // KE-4 Evidence gate — fail-closed; evaluated after idempotency so replays bypass the check.
+        var gateRequest = new EvidenceGateRequest(
+            ReviewState: record.ReviewState,
+            TargetCanonicalName: record.TargetCanonicalName,
+            IsDeterministicFixture: record.IsDeterministicFixture,
+            SourceMetadata: record.SourceMetadata);
+
+        var gateResult = _evidenceGate.Evaluate(gateRequest);
+        if (!gateResult.IsGateOpen)
+        {
+            throw new EvidenceGateViolationException(
+                rejectionCode: gateResult.RejectionCode!,
+                message: gateResult.RejectionReason!);
         }
 
         // Look up the target knowledge entry.

@@ -725,7 +725,8 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
             artifactId,
             TranscriptCandidateReviewState.ReviewApprovedForPromotion,
             isDeterministicFixture: false,
-            targetCanonicalName: canonicalName);
+            targetCanonicalName: canonicalName,
+            metadata: ValidEvidenceMetadata());
 
         var response = await _client.PostAsync(
             $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
@@ -751,7 +752,8 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
             artifactId,
             TranscriptCandidateReviewState.ReviewApprovedForPromotion,
             isDeterministicFixture: false,
-            targetCanonicalName: canonicalName);
+            targetCanonicalName: canonicalName,
+            metadata: ValidEvidenceMetadata());
 
         var first = await _client.PostAsync(
             $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
@@ -789,11 +791,13 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
         await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-exec-promo-ke-404@example.com");
         const string artifactId = "transcript-candidate:sig-exec-promo-ke-404-1";
         // Seed a review pointing to a KE that does not exist in the knowledge base.
+        // Evidence metadata is valid so the gate passes; the KE lookup then returns 404.
         await SeedReviewAsync(
             artifactId,
             TranscriptCandidateReviewState.ReviewApprovedForPromotion,
             isDeterministicFixture: false,
-            targetCanonicalName: "no-such-compound");
+            targetCanonicalName: "no-such-compound",
+            metadata: ValidEvidenceMetadata());
 
         var response = await _client.PostAsync(
             $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
@@ -859,6 +863,106 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
     }
 
+    // ── KE-4 Evidence Gate failure tests ─────────────────────────────────────
+
+    [Fact]
+    public async Task ExecutePromotion_EvidenceGate_MissingEvidenceTier_Returns409()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-gate-no-tier@example.com");
+        const string artifactId = "transcript-candidate:sig-gate-no-tier-1";
+        var metadata = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["citations"] = "https://example.test/study-1",
+            // intentionally omit evidenceTier
+        };
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: "caffeine-gate-no-tier",
+            metadata: metadata);
+
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_EvidenceGate_MissingCitations_Returns409()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-gate-no-citations@example.com");
+        const string artifactId = "transcript-candidate:sig-gate-no-citations-1";
+        var metadata = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["evidenceTier"] = "observational",
+            // intentionally omit citations
+        };
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: "caffeine-gate-no-citations",
+            metadata: metadata);
+
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_EvidenceGate_MechanisticTierMissingMechanismSummary_Returns409()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-gate-no-mechanism@example.com");
+        const string artifactId = "transcript-candidate:sig-gate-no-mechanism-1";
+        var metadata = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["evidenceTier"] = "mechanistic",
+            ["citations"]    = "https://example.test/study-1",
+            // intentionally omit mechanismSummary
+        };
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: "caffeine-gate-no-mechanism",
+            metadata: metadata);
+
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_EvidenceGate_UnsafeLanguageInMechanismSummary_Returns409()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-gate-unsafe-lang@example.com");
+        const string artifactId = "transcript-candidate:sig-gate-unsafe-lang-1";
+        var metadata = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["evidenceTier"]     = "mechanistic",
+            ["citations"]        = "https://example.test/study-1",
+            ["mechanismSummary"] = "you should take this compound every morning", // banned phrase
+        };
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: "caffeine-gate-unsafe-lang",
+            metadata: metadata);
+
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            null);
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+    }
+
     [Fact]
     public async Task ExecutePromotion_Unauthenticated_ReturnsUnauthorizedOrForbidden()
     {
@@ -914,6 +1018,17 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
 
         await store.UpsertAsync(record);
     }
+
+    /// <summary>
+    /// Returns the minimum valid evidence metadata that satisfies the KE-4 Evidence Gate
+    /// for an observational tier record (no mechanismSummary required).
+    /// </summary>
+    private static IReadOnlyDictionary<string, string> ValidEvidenceMetadata()
+        => new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["evidenceTier"] = "observational",
+            ["citations"]    = "https://example.test/study-1",
+        };
 
     private async Task<Guid> SeedKnowledgeEntryAsync(string canonicalName)
     {
