@@ -149,12 +149,18 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
     }
 
     [Fact]
-    public async Task MissingReviewStateQuery_ReturnsBadRequest()
+    public async Task List_NoQueryParams_Returns200WithAllRecords()
     {
-        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-review-badrequest@example.com");
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-review-allrecords@example.com");
+        await SeedReviewAsync("transcript-candidate:all-1", TranscriptCandidateReviewState.PendingReview);
+        await SeedReviewAsync("transcript-candidate:all-2", TranscriptCandidateReviewState.ReviewDeferred);
 
         var response = await _client.GetAsync("/api/v1/admin/staged-transcript-candidate-reviews");
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<List<AdminStagedReviewDto>>();
+        Assert.NotNull(payload);
+        Assert.Equal(2, payload!.Count);
     }
 
     [Fact]
@@ -226,6 +232,187 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
         var payload = await response.Content.ReadFromJsonAsync<List<AdminStagedReviewDto>>();
         Assert.NotNull(payload);
         Assert.Empty(payload!);
+    }
+
+    // ── GET /staged-transcript-candidate-reviews — PR15 additions (read-side observability) ──
+
+    [Fact]
+    public async Task List_PromotedTrue_ReturnsOnlyPromotedRecords()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-pr15-promoted-true@example.com");
+        var promotedId = Guid.NewGuid();
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-prom-yes-1",
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: "caffeine",
+            promotedKnowledgeEntryId: promotedId,
+            promotedAtUtc: "2026-06-07T10:00:00Z");
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-prom-no-1",
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false);
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-prom-no-2",
+            TranscriptCandidateReviewState.PendingReview,
+            isDeterministicFixture: false);
+
+        var response = await _client.GetAsync("/api/v1/admin/staged-transcript-candidate-reviews?promoted=true");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<List<AdminStagedReviewDto>>();
+        Assert.NotNull(payload);
+        var item = Assert.Single(payload!);
+        Assert.Equal(promotedId, item.PromotedKnowledgeEntryId);
+    }
+
+    [Fact]
+    public async Task List_PromotedFalse_ReturnsOnlyUnpromotedRecords()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-pr15-promoted-false@example.com");
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-unprom-promoted-1",
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: "caffeine",
+            promotedKnowledgeEntryId: Guid.NewGuid(),
+            promotedAtUtc: "2026-06-07T10:00:00Z");
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-unprom-pending-1",
+            TranscriptCandidateReviewState.PendingReview,
+            isDeterministicFixture: false);
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-unprom-approved-1",
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false);
+
+        var response = await _client.GetAsync("/api/v1/admin/staged-transcript-candidate-reviews?promoted=false");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<List<AdminStagedReviewDto>>();
+        Assert.NotNull(payload);
+        Assert.Equal(2, payload!.Count);
+        Assert.All(payload, item => Assert.Null(item.PromotedKnowledgeEntryId));
+    }
+
+    [Fact]
+    public async Task List_TargetAssignedTrue_ReturnsOnlyTargetAssignedRecords()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-pr15-target-true@example.com");
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-target-yes-1",
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: "bpc-157");
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-target-no-1",
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false);
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-target-no-2",
+            TranscriptCandidateReviewState.PendingReview,
+            isDeterministicFixture: false);
+
+        var response = await _client.GetAsync("/api/v1/admin/staged-transcript-candidate-reviews?targetAssigned=true");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<List<AdminStagedReviewDto>>();
+        Assert.NotNull(payload);
+        var item = Assert.Single(payload!);
+        Assert.Equal("bpc-157", item.TargetCanonicalName);
+    }
+
+    [Fact]
+    public async Task List_TargetAssignedFalse_ReturnsOnlyRecordsWithoutTarget()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-pr15-target-false@example.com");
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-notarget-with-1",
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: "tb-500");
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-notarget-without-1",
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false);
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-notarget-without-2",
+            TranscriptCandidateReviewState.PendingReview,
+            isDeterministicFixture: false);
+
+        var response = await _client.GetAsync("/api/v1/admin/staged-transcript-candidate-reviews?targetAssigned=false");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<List<AdminStagedReviewDto>>();
+        Assert.NotNull(payload);
+        Assert.Equal(2, payload!.Count);
+        Assert.All(payload, item => Assert.Null(item.TargetCanonicalName));
+    }
+
+    [Fact]
+    public async Task List_CompoundFilter_ApprovedAndNotPromoted_ReturnsIntersection()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-pr15-compound@example.com");
+        // Approved + promoted (should NOT appear)
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-cmp-approved-promoted-1",
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: "caffeine",
+            promotedKnowledgeEntryId: Guid.NewGuid(),
+            promotedAtUtc: "2026-06-07T10:00:00Z");
+        // Approved + unpromoted (should appear)
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-cmp-approved-unpromoted-1",
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false);
+        // Pending + unpromoted (should NOT appear — state filter excludes it)
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-cmp-pending-unpromoted-1",
+            TranscriptCandidateReviewState.PendingReview,
+            isDeterministicFixture: false);
+
+        var response = await _client.GetAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews?reviewState={TranscriptCandidateReviewState.ReviewApprovedForPromotion}&promoted=false");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<List<AdminStagedReviewDto>>();
+        Assert.NotNull(payload);
+        var item = Assert.Single(payload!);
+        Assert.Equal("transcript-candidate:pr15-cmp-approved-unpromoted-1", item.ArtifactId);
+        Assert.Null(item.PromotedKnowledgeEntryId);
+    }
+
+    [Fact]
+    public async Task List_ResultsOrderedByUpdatedAtDescending()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-pr15-ordering@example.com");
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-ord-middle-1",
+            TranscriptCandidateReviewState.PendingReview,
+            isDeterministicFixture: false,
+            updatedAtUtc: "2026-06-05T00:00:00Z");
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-ord-oldest-1",
+            TranscriptCandidateReviewState.PendingReview,
+            isDeterministicFixture: false,
+            updatedAtUtc: "2026-06-01T00:00:00Z");
+        await SeedReviewAsync(
+            "transcript-candidate:pr15-ord-newest-1",
+            TranscriptCandidateReviewState.PendingReview,
+            isDeterministicFixture: false,
+            updatedAtUtc: "2026-06-07T00:00:00Z");
+
+        var response = await _client.GetAsync("/api/v1/admin/staged-transcript-candidate-reviews");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<List<AdminStagedReviewDto>>();
+        Assert.NotNull(payload);
+        Assert.Equal(3, payload!.Count);
+        // Results must arrive newest-first (UpdatedAtUtc descending).
+        Assert.Equal("transcript-candidate:pr15-ord-newest-1",  payload[0].ArtifactId);
+        Assert.Equal("transcript-candidate:pr15-ord-middle-1",  payload[1].ArtifactId);
+        Assert.Equal("transcript-candidate:pr15-ord-oldest-1",  payload[2].ArtifactId);
     }
 
     [Fact]
@@ -696,7 +883,10 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
         string reviewState,
         bool isDeterministicFixture,
         string? targetCanonicalName = null,
-        IReadOnlyDictionary<string, string>? metadata = null)
+        IReadOnlyDictionary<string, string>? metadata = null,
+        Guid? promotedKnowledgeEntryId = null,
+        string? promotedAtUtc = null,
+        string? updatedAtUtc = null)
     {
         using var scope = _factory.Services.CreateScope();
         var store = scope.ServiceProvider.GetRequiredService<ITranscriptCandidateReviewStore>();
@@ -717,8 +907,10 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
                 ["kind"] = "transcript",
             },
             createdAtUtc: "2026-05-30T00:00:00Z",
-            updatedAtUtc: "2026-05-30T00:00:00Z",
-            targetCanonicalName: targetCanonicalName);
+            updatedAtUtc: updatedAtUtc ?? "2026-05-30T00:00:00Z",
+            targetCanonicalName: targetCanonicalName,
+            promotedKnowledgeEntryId: promotedKnowledgeEntryId,
+            promotedAtUtc: promotedAtUtc);
 
         await store.UpsertAsync(record);
     }

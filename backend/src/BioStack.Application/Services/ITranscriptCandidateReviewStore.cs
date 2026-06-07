@@ -8,8 +8,8 @@ public interface ITranscriptCandidateReviewStore
         string artifactId,
         CancellationToken cancellationToken = default);
 
-    Task<IReadOnlyList<TranscriptCandidateReviewRecord>> ListByReviewStateAsync(
-        string reviewState,
+    Task<IReadOnlyList<TranscriptCandidateReviewRecord>> ListAsync(
+        TranscriptCandidateReviewFilter filter,
         CancellationToken cancellationToken = default);
 
     Task<TranscriptCandidateReviewRecord> UpdateReviewStateAsync(
