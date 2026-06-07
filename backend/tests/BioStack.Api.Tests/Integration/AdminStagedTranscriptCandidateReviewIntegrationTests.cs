@@ -271,6 +271,23 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
     }
 
     [Fact]
+    public async Task UpdateReviewState_MissingBody_Returns400()
+    {
+        // Distinct from MissingAction: this covers the `request is null` path
+        // when no body is sent at all (empty JSON content), not `{ "action": null }`.
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-update-400-nobody@example.com");
+        const string artifactId = "transcript-candidate:sig-update-nobody-1";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.PendingReview);
+
+        var emptyJson = new StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/review-state",
+            emptyJson);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
     public async Task UpdateReviewState_UnsupportedAction_Returns422()
     {
         await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-update-422-unsupported@example.com");
