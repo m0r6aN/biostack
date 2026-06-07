@@ -13,7 +13,10 @@ public sealed record TranscriptCandidateReviewRecord(
     IReadOnlyDictionary<string, string> SourceMetadata,
     string CreatedAtUtc,
     string UpdatedAtUtc,
-    string? RowVersion = null)
+    string? RowVersion = null,
+    string? TargetCanonicalName = null,
+    Guid? PromotedKnowledgeEntryId = null,
+    string? PromotedAtUtc = null)
 {
     public const string NonCanonical = "non_canonical";
 
@@ -38,7 +41,10 @@ public sealed record TranscriptCandidateReviewRecord(
         IReadOnlyDictionary<string, string> sourceMetadata,
         string createdAtUtc,
         string updatedAtUtc,
-        string? rowVersion = null)
+        string? rowVersion = null,
+        string? targetCanonicalName = null,
+        Guid? promotedKnowledgeEntryId = null,
+        string? promotedAtUtc = null)
     {
         if (string.IsNullOrWhiteSpace(artifactId))
         {
@@ -115,7 +121,10 @@ public sealed record TranscriptCandidateReviewRecord(
             SourceMetadata: sortedMetadata,
             CreatedAtUtc: createdAtUtc,
             UpdatedAtUtc: updatedAtUtc,
-            RowVersion: rowVersion);
+            RowVersion: rowVersion,
+            TargetCanonicalName: targetCanonicalName,
+            PromotedKnowledgeEntryId: promotedKnowledgeEntryId,
+            PromotedAtUtc: promotedAtUtc);
     }
 
     public TranscriptCandidateReviewRecord WithReviewState(
@@ -143,6 +152,27 @@ public sealed record TranscriptCandidateReviewRecord(
             ReviewState = reviewState,
             UpdatedAtUtc = updatedAtUtc,
             RowVersion = rowVersion,
+        };
+    }
+
+    public TranscriptCandidateReviewRecord WithPromotionTarget(
+        string targetCanonicalName,
+        string updatedAtUtc)
+    {
+        if (string.IsNullOrWhiteSpace(targetCanonicalName))
+        {
+            throw new ArgumentException("TargetCanonicalName is required.", nameof(targetCanonicalName));
+        }
+
+        if (string.IsNullOrWhiteSpace(updatedAtUtc))
+        {
+            throw new ArgumentException("UpdatedAtUtc is required.", nameof(updatedAtUtc));
+        }
+
+        return this with
+        {
+            TargetCanonicalName = targetCanonicalName,
+            UpdatedAtUtc = updatedAtUtc,
         };
     }
 }

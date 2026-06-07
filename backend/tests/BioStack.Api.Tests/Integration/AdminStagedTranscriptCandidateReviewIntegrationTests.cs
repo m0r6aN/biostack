@@ -415,9 +415,124 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
             $"Expected unauthorized or forbidden, got {(int)response.StatusCode} {response.StatusCode}.");
     }
 
+    // ── POST /promotion-target — 7 tests (PR14A) ────────────────────────────
+
+    [Fact]
+    public async Task AssignPromotionTarget_ApprovedNonFixtureRecord_Returns200AndSetsTargetCanonicalName()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-promo-target-happy@example.com");
+        const string artifactId = "transcript-candidate:sig-promo-target-happy-1";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.ReviewApprovedForPromotion, isDeterministicFixture: false);
+
+        var response = await _client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/promotion-target",
+            new { targetCanonicalName = "caffeine" });
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var payload = await response.Content.ReadFromJsonAsync<AdminStagedReviewDto>();
+        Assert.NotNull(payload);
+        Assert.Equal(artifactId, payload!.ArtifactId);
+        Assert.Equal("caffeine", payload.TargetCanonicalName);
+        Assert.Equal(TranscriptCandidateReviewState.ReviewApprovedForPromotion, payload.ReviewState);
+        Assert.Equal("non_canonical", payload.Canonicality);
+        Assert.Null(payload.PromotedKnowledgeEntryId);
+        Assert.Null(payload.PromotedAtUtc);
+    }
+
+    [Fact]
+    public async Task AssignPromotionTarget_WhitespaceTargetCanonicalName_Returns400()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-promo-target-ws@example.com");
+        const string artifactId = "transcript-candidate:sig-promo-target-ws-1";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.ReviewApprovedForPromotion, isDeterministicFixture: false);
+
+        var response = await _client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/promotion-target",
+            new { targetCanonicalName = "   " });
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AssignPromotionTarget_MissingBody_Returns400()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-promo-target-nobody@example.com");
+        const string artifactId = "transcript-candidate:sig-promo-target-nobody-1";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.ReviewApprovedForPromotion, isDeterministicFixture: false);
+
+        var emptyJson = new StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/promotion-target",
+            emptyJson);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AssignPromotionTarget_UnknownArtifactId_Returns404()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-promo-target-404@example.com");
+
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/admin/staged-transcript-candidate-reviews/transcript-candidate:does-not-exist/promotion-target",
+            new { targetCanonicalName = "caffeine" });
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AssignPromotionTarget_RecordNotInApprovedState_Returns409()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-promo-target-409-state@example.com");
+        const string artifactId = "transcript-candidate:sig-promo-target-409-state-1";
+        // Seed in pending_review — not eligible for promotion target assignment.
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.PendingReview, isDeterministicFixture: false);
+
+        var response = await _client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/promotion-target",
+            new { targetCanonicalName = "caffeine" });
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AssignPromotionTarget_DeterministicFixtureRecord_Returns409()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-promo-target-409-fixture@example.com");
+        const string artifactId = "transcript-candidate:sig-promo-target-409-fixture-1";
+        // Seed approved but deterministic fixture — fixtures cannot receive a promotion target.
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.ReviewApprovedForPromotion, isDeterministicFixture: true);
+
+        var response = await _client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/promotion-target",
+            new { targetCanonicalName = "caffeine" });
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AssignPromotionTarget_Unauthenticated_ReturnsUnauthorizedOrForbidden()
+    {
+        // No sign-in — raw client, no session cookie.
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/admin/staged-transcript-candidate-reviews/transcript-candidate:any/promotion-target",
+            new { targetCanonicalName = "caffeine" });
+
+        Assert.True(
+            response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden,
+            $"Expected unauthorized or forbidden, got {(int)response.StatusCode} {response.StatusCode}.");
+    }
+
+    private Task SeedReviewAsync(
+        string artifactId,
+        string reviewState,
+        IReadOnlyDictionary<string, string>? metadata = null)
+        => SeedReviewAsync(artifactId, reviewState, isDeterministicFixture: true, metadata: metadata);
+
     private async Task SeedReviewAsync(
         string artifactId,
         string reviewState,
+        bool isDeterministicFixture,
         IReadOnlyDictionary<string, string>? metadata = null)
     {
         using var scope = _factory.Services.CreateScope();
@@ -430,7 +545,7 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
             sourceType: "video",
             sourceUrl: $"https://example.test/{artifactId}",
             provider: "fixture",
-            isDeterministicFixture: true,
+            isDeterministicFixture: isDeterministicFixture,
             segmentCount: 4,
             segmentSnapshotSignature: artifactId.Replace("transcript-candidate:", "", StringComparison.Ordinal),
             sourceMetadata: metadata ?? new Dictionary<string, string>(StringComparer.Ordinal)
@@ -475,6 +590,9 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
         public Dictionary<string, string> SourceMetadata { get; set; } = new(StringComparer.Ordinal);
         public string CreatedAtUtc { get; set; } = string.Empty;
         public string UpdatedAtUtc { get; set; } = string.Empty;
+        public string? TargetCanonicalName { get; set; }
+        public Guid? PromotedKnowledgeEntryId { get; set; }
+        public string? PromotedAtUtc { get; set; }
 
         [System.Text.Json.Serialization.JsonExtensionData]
         public Dictionary<string, JsonElement> Extra { get; set; } = new(StringComparer.Ordinal);

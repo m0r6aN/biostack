@@ -19,4 +19,9 @@ public interface ITranscriptCandidateReviewStore
         string updatedAtUtc,
         string? expectedRowVersion = null,
         CancellationToken cancellationToken = default);
+
+    Task<TranscriptCandidateReviewRecord> AssignPromotionTargetAsync(
+        string artifactId,
+        string targetCanonicalName,
+        CancellationToken cancellationToken = default);
 }

@@ -12,4 +12,7 @@ public sealed record AdminStagedTranscriptCandidateReviewResponse(
     string SegmentSnapshotSignature,
     IReadOnlyDictionary<string, string> SourceMetadata,
     string CreatedAtUtc,
-    string UpdatedAtUtc);
+    string UpdatedAtUtc,
+    string? TargetCanonicalName,
+    Guid? PromotedKnowledgeEntryId,
+    string? PromotedAtUtc);
