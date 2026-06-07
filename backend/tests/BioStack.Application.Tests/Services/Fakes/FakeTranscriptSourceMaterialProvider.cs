@@ -26,13 +26,3 @@ internal sealed class FakeTranscriptSourceMaterialProvider : ITranscriptSourceMa
     }
 }
 
-internal sealed class TranscriptSourceMaterialProviderException : Exception
-{
-    public TranscriptSourceMaterialProviderException(TranscriptSourceMaterialResolutionFailure failure)
-        : base(failure.Message)
-    {
-        Failure = failure;
-    }
-
-    public TranscriptSourceMaterialResolutionFailure Failure { get; }
-}
