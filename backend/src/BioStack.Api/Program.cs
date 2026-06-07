@@ -301,6 +301,7 @@ builder.Services.AddScoped<IKnowledgeSourceIntakeService, KnowledgeSourceIntakeS
 builder.Services.AddScoped<IQueuedIntakeTranscriptResolutionService, QueuedIntakeTranscriptResolutionService>();
 builder.Services.AddScoped<ITranscriptCandidateArtifactStagingService, TranscriptCandidateArtifactStagingService>();
 builder.Services.AddScoped<ITranscriptCandidateArtifactReviewService, TranscriptCandidateArtifactReviewService>();
+builder.Services.AddScoped<ITranscriptCandidatePromotionService, TranscriptCandidatePromotionService>();
 builder.Services.AddScoped<IInteractionIntelligenceService, InteractionIntelligenceService>();
 builder.Services.AddScoped<IOverlapService, OverlapService>();
 builder.Services.AddSingleton<IBlendDecomposerService, BlendDecomposerService>();

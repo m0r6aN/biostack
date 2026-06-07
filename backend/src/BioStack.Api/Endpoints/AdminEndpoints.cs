@@ -331,6 +331,35 @@ public static class AdminEndpoints
                 return Results.Conflict(new { Message = ex.Message });
             }
         });
+
+        // Execute promotion: look up the KnowledgeEntry by the assigned target canonical name,
+        // append the transcript source URL to its SourceReferences, and stamp PromotedKnowledgeEntryId
+        // and PromotedAtUtc on the staged review record.
+        // Idempotent: if already promoted, returns 200 with the existing result. No request body.
+        group.MapPost("/staged-transcript-candidate-reviews/{artifactId}/execute-promotion", async (
+            string artifactId,
+            [FromServices] ITranscriptCandidatePromotionService promotionService,
+            CancellationToken ct) =>
+        {
+            if (string.IsNullOrWhiteSpace(artifactId))
+            {
+                return Results.BadRequest(new { Message = "artifactId is required." });
+            }
+
+            try
+            {
+                var updatedRecord = await promotionService.ExecutePromotionAsync(artifactId, ct);
+                return Results.Ok(MapStagedReviewRecordToResponse(updatedRecord));
+            }
+            catch (KeyNotFoundException)
+            {
+                return Results.NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Results.Conflict(new { Message = ex.Message });
+            }
+        });
     }
 
     private static IReadOnlyDictionary<string, string>? FilterSafeProviderMetadata(

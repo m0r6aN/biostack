@@ -24,4 +24,10 @@ public interface ITranscriptCandidateReviewStore
         string artifactId,
         string targetCanonicalName,
         CancellationToken cancellationToken = default);
+
+    Task<TranscriptCandidateReviewRecord> RecordPromotionCompletionAsync(
+        string artifactId,
+        Guid promotedKnowledgeEntryId,
+        string promotedAtUtc,
+        CancellationToken cancellationToken = default);
 }

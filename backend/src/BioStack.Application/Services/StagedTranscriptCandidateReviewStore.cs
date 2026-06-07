@@ -189,6 +189,44 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
         return ToRecord(entity);
     }
 
+    public async Task<TranscriptCandidateReviewRecord> RecordPromotionCompletionAsync(
+        string artifactId,
+        Guid promotedKnowledgeEntryId,
+        string promotedAtUtc,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(artifactId))
+        {
+            throw new ArgumentException("ArtifactId is required.", nameof(artifactId));
+        }
+
+        if (promotedKnowledgeEntryId == Guid.Empty)
+        {
+            throw new ArgumentException("PromotedKnowledgeEntryId must not be empty.", nameof(promotedKnowledgeEntryId));
+        }
+
+        if (string.IsNullOrWhiteSpace(promotedAtUtc))
+        {
+            throw new ArgumentException("PromotedAtUtc is required.", nameof(promotedAtUtc));
+        }
+
+        var entity = await _dbContext.StagedTranscriptCandidateReviews
+            .SingleOrDefaultAsync(x => x.ArtifactId == artifactId, cancellationToken);
+
+        if (entity is null)
+        {
+            throw new KeyNotFoundException($"No staged transcript candidate review record found for artifactId '{artifactId}'.");
+        }
+
+        entity.PromotedKnowledgeEntryId = promotedKnowledgeEntryId;
+        entity.PromotedAtUtc = promotedAtUtc;
+        entity.UpdatedAtUtc = promotedAtUtc;
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return ToRecord(entity);
+    }
+
     private static TranscriptCandidateReviewRecord NormalizeRecord(TranscriptCandidateReviewRecord record)
         => TranscriptCandidateReviewRecord.Create(
             artifactId: record.ArtifactId,
