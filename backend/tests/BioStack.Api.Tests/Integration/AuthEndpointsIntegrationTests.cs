@@ -311,6 +311,20 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task RedirectAllowlist_AllowsProtocolPortal()
+    {
+        await StartAsync("portal-redirect@example.com", "/my-protocol");
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var challenge = await db.AuthChallenges
+            .Include(c => c.Identity)
+            .SingleAsync(c => c.Identity.ValueNormalized == "portal-redirect@example.com");
+
+        Assert.Equal("/my-protocol", challenge.RedirectPath);
+    }
+
+    [Fact]
     public async Task DevInbox_ReturnsLatestLink()
     {
         await StartAsync("inbox@example.com", "/timeline");

@@ -28,6 +28,7 @@ public static class AuthEndpoints
         "/profiles",
         "/compounds",
         "/protocols",
+        "/my-protocol",
         "/checkins",
         "/timeline",
         "/calculators",
