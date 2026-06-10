@@ -179,6 +179,22 @@ input[type="range"]::-webkit-slider-thumb {
   }
 }
 
+/* Modal / toast entrance — used by the protocol portal */
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-pop {
+  animation: modalPopIn 0.2s ease forwards;
+}
+
 @keyframes powderAmountLabelFade {
   0%, 18% {
     opacity: 1;
@@ -277,7 +293,8 @@ input[type="range"]::-webkit-slider-thumb {
   .biostack-loading .biostack-plate-2,
   .biostack-loading .biostack-plate-3,
   .biostack-loading .biostack-signal-path,
-  .powder-amount-label {
+  .powder-amount-label,
+  .modal-pop {
     animation: none !important;
     transition: none !important;
   }
