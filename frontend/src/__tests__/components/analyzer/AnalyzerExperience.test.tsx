@@ -204,10 +204,15 @@ describe('AnalyzerExperience', () => {
     render(<AnalyzerExperience />);
 
     // v3 with no result → input stage; goal=healing migrates to the 'recovery'
-    // category, so its chip should render as selected (aria via class is hard to
-    // assert; instead assert the input stage is up and the textarea preserved).
-    const textarea = (await screen.findByRole('textbox')) as HTMLTextAreaElement;
-    expect(textarea.value).toBe('x');
+    // category. The migration runs inside useAnalyzerSession's setTimeout(0), so
+    // the first render shows the empty default snapshot. Wait for the migrated
+    // value to propagate rather than reading it off the first findBy resolution
+    // (which would race against the timer and flake as `expected '' to be 'x'`).
+    let textarea!: HTMLTextAreaElement;
+    await waitFor(() => {
+      textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
+      expect(textarea.value).toBe('x');
+    });
     // Recovery & Repair chip is present (category from migrated goal).
     expect(screen.getByRole('button', { name: 'Recovery & Repair' })).toBeInTheDocument();
   });
@@ -215,6 +220,7 @@ describe('AnalyzerExperience', () => {
   // 4 ─ Analyze happy path: payload includes goal token, secondaryGoals, maxCompounds
   it('runs analysis from Paste mode and transitions to the report stage', async () => {
     const user = userEvent.setup();
+    const captured = captureAnalyzerEvents();
     analyzeProtocolMock.mockResolvedValue(makeResult({ score: 72 }));
 
     render(<AnalyzerExperience />);
@@ -235,8 +241,12 @@ describe('AnalyzerExperience', () => {
     expect(payload.secondaryGoals).toEqual([]);
     expect(typeof payload.maxCompounds).toBe('number');
 
+    // The analysis-started analytics event fires on the analyze click.
+    expect(captured.names()).toContain('analyzer_analysis_started');
+
     // Lands on the report stage.
     expect(await screen.findByLabelText(/BioStack score 72 out of 100/i)).toBeInTheDocument();
+    captured.dispose();
   });
 
   // 4b ─ Analyze with no goal selected sends an empty goal token
@@ -364,6 +374,7 @@ describe('AnalyzerExperience', () => {
     const convertButtons = screen.getAllByRole('button', { name: 'Convert to BioStack Protocol' });
     await user.click(convertButtons[0]);
 
+    expect(saveAnalyzerAnalysisMock).toHaveBeenCalledTimes(1);
     expect(saveAnalyzerProtocolDraftMock).toHaveBeenCalledTimes(1);
     expect(pushMock).toHaveBeenCalledWith('/protocol-console');
   });
@@ -386,7 +397,36 @@ describe('AnalyzerExperience', () => {
     captured.dispose();
   });
 
-  // 12 ─ Alternative-scenarios language guard (ported): no retired prescriptive labels
+  // 13 ─ Clear button empties the input and drops the result (clearInput)
+  it('clears the input text and result when Clear is clicked', async () => {
+    const user = userEvent.setup();
+    seedV4WithResult(makeResult({ score: 72 }));
+
+    render(<AnalyzerExperience />);
+    // Restore onto the report stage, then Edit back to the input stage where the
+    // text (and the underlying result) are still present.
+    await screen.findByLabelText(/BioStack score 72 out of 100/i);
+    await user.click(screen.getByRole('button', { name: 'Edit' }));
+
+    let textarea!: HTMLTextAreaElement;
+    await waitFor(() => {
+      textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
+      expect(textarea.value).toBe('BPC-157 500mcg daily');
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Clear' }));
+
+    // Input text is emptied.
+    await waitFor(() => {
+      expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe('');
+    });
+    // Result is dropped: the report stage (score gauge) is gone and we stay on
+    // the input stage.
+    expect(screen.queryByLabelText(/BioStack score/i)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Analyze Protocol' })).toBeInTheDocument();
+  });
+
+  // 14 ─ Alternative-scenarios language guard (ported): no retired prescriptive labels
   it('never renders retired prescriptive labels in the report', async () => {
     seedV4WithResult(makeResult({ score: 72 }));
 
