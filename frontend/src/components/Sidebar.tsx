@@ -19,6 +19,16 @@ function IconProtocolConsole() {
   );
 }
 
+function IconMyProtocol() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <rect x="3" y="2" width="10" height="12" rx="1.5" />
+      <path d="M6 1.5h4v2H6z" />
+      <path d="M5 8l1.5 1.5L8 7l1 2 2-2.5" />
+    </svg>
+  );
+}
+
 function IconProfiles() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
@@ -128,6 +138,7 @@ function IconResearch() {
 
 const navItems = [
   { label: 'Mission Control',      href: '/protocol-console', icon: <IconProtocolConsole />, adminOnly: false, exact: false },
+  { label: 'My Protocol',          href: '/my-protocol',      icon: <IconMyProtocol />,      adminOnly: false, exact: false },
   { label: 'Profiles',             href: '/profiles',         icon: <IconProfiles />,        adminOnly: false, exact: false },
   { label: 'Compounds',            href: '/compounds',        icon: <IconCompounds />,        adminOnly: false, exact: false },
   { label: 'Protocol Lab',         href: '/protocols',        icon: <IconProtocols />,        adminOnly: false, exact: false },

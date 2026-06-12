@@ -39,6 +39,7 @@ import {
     VolumeRequest,
     StagedTranscriptCandidateReview,
     PromotionPreview,
+    ProtocolPortalData,
 } from './types';
 
 export class ApiError extends Error {
@@ -535,6 +536,31 @@ export class ApiClient {
       `/api/v1/admin/staged-transcript-candidate-reviews/${encodeURIComponent(artifactId)}/execute-promotion`,
       { method: 'POST', headers: authHeaders }
     );
+  }
+
+  // ── Client-facing protocol portal (/my-protocol) ──────────────────────
+
+  /** Aggregated portal payload for a profile's active protocol. */
+  async getProtocolPortal(profileId: string): Promise<ProtocolPortalData> {
+    return this.request<ProtocolPortalData>(
+      `/api/v1/profiles/${profileId}/protocol/portal`
+    );
+  }
+
+  /** Log the day's scheduled doses as taken. */
+  async logProtocolDoses(profileId: string, dateIso: string): Promise<void> {
+    return this.request(`/api/v1/profiles/${profileId}/protocol/doses/log`, {
+      method: 'POST',
+      body: JSON.stringify({ date: dateIso }),
+    });
+  }
+
+  /** Send a message to the care team. */
+  async sendCareTeamMessage(profileId: string, message: string): Promise<void> {
+    return this.request(`/api/v1/profiles/${profileId}/care-team/message`, {
+      method: 'POST',
+      body: JSON.stringify({ message }),
+    });
   }
 }
 

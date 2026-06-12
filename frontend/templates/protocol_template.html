@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Personalized Protocol • Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+
+        :root {
+            --primary: #0F172A;
+        }
+
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+
+        .font-display {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        .protocol-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-tab {
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab.active {
+            background-color: #0F172A;
+            color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-day {
+            transition: all 0.2s ease;
+        }
+
+        .calendar-day:hover {
+            background-color: #F8FAFC;
+            transform: translateY(-1px);
+        }
+
+        .calendar-day.active {
+            background-color: #0F172A;
+            color: white;
+            border-color: #0F172A;
+        }
+
+        .section-header {
+            font-size: 1.1rem;
+            letter-spacing: -.025em;
+        }
+
+        .metric-value {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .substance-row {
+            transition: background-color 0.1s ease;
+        }
+
+        .substance-row:hover {
+            background-color: #F8FAFC;
+        }
+
+        .modal {
+            animation: modalPopIn 0.2s ease forwards;
+        }
+
+        @keyframes modalPopIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .protocol-badge {
+            background: linear-gradient(135deg, #0F172A 0%, #1E2937 100%);
+        }
+
+        .info-pill {
+            background-color: #F1F5F9;
+            color: #475569;
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <!-- Top Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="px-8 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-slate-900 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-flask text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-display text-2xl font-semibold tracking-tighter">Protocol</span>
+                        <span class="text-slate-400 text-sm font-medium ml-1">Portal</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-x-4">
+                    <!-- User Info -->
+                    <div class="flex items-center gap-x-3">
+                        <div class="text-right">
+                            <div class="font-semibold text-sm">Alex Rivera</div>
+                            <div class="text-xs text-slate-500">Client • Started Jan 12, 2026</div>
+                        </div>
+                        <div class="w-9 h-9 bg-slate-200 rounded-full overflow-hidden ring-2 ring-white">
+                            <img src="https://i.pravatar.cc/36?img=68" alt="Alex Rivera" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <button onclick="showContactModal()"
+                            class="px-4 py-2 text-sm font-medium bg-white border border-slate-300 hover:bg-slate-50 rounded-2xl flex items-center gap-x-2 text-slate-700 transition-colors">
+                        <i class="fa-solid fa-headset text-xs"></i>
+                        <span class="hidden md:inline">Contact Care Team</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-screen-2xl mx-auto px-8 py-8">
+
+        <!-- Dashboard Header -->
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-y-4 mb-8">
+            <div>
+                <div class="flex items-center gap-x-3">
+                    <h1 class="font-display text-4xl font-semibold tracking-tighter">Your Personalized Protocol</h1>
+                    <div class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-3xl flex items-center gap-x-1.5">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Active</span>
+                    </div>
+                </div>
+                <p class="text-slate-600 mt-1 text-lg">Metabolic Optimization + Longevity + Tissue Repair</p>
+            </div>
+
+            <div class="flex items-center gap-x-3">
+                <!-- Phase Badge -->
+                <div class="bg-white border border-slate-200 rounded-3xl px-5 py-2 flex items-center gap-x-3 shadow-sm">
+                    <div>
+                        <div class="text-xs text-slate-500 font-medium">CURRENT PHASE</div>
+                        <div class="font-semibold text-slate-900">Phase 1 — Week 3 of 12</div>
+                    </div>
+                    <div class="h-8 w-px bg-slate-200"></div>
+                    <button onclick="switchToPhase(2)"
+                            class="text-xs px-3 py-1.5 bg-slate-900 text-white rounded-2xl hover:bg-slate-800 transition-colors text-nowrap">
+                        View Phase 2 →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-3xl p-5 border border-slate-200">
+                <div class="text-xs font-medium text-slate-500">RETATRUTIDE DOSE</div>
+                <div class="mt-1 flex items-baseline gap-x-1">
+                    <span class="text-3xl font-semibold">2 mg</span>
+                    <span class="text-sm text-slate-500">/ week</span>
+                </div>
+                <div class="text-emerald-600 text-xs mt-1 flex items-center gap-x-1">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <span>Stable • Next increase pending labs</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-5 border border-slate-200">
+                <div class="text-xs font-medium text-slate-500">NEXT LABS DUE</div>
+                <div class="mt-1">
+                    <span class="text-3xl font-semibold">Feb 18</span>
+                </div>
+                <div class="text-xs text-amber-600 mt-1">5 days remaining</div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-5 border border-slate-200">
+                <div class="text-xs font-medium text-slate-500">ADHERENCE (LAST 7 DAYS)</div>
+                <div class="mt-1 flex items-baseline gap-x-2">
+                    <span class="text-3xl font-semibold">94%</span>
+                </div>
+                <div class="text-emerald-600 text-xs">Excellent</div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-5 border border-slate-200">
+                <div class="text-xs font-medium text-slate-500">WEIGHT TREND</div>
+                <div class="mt-1 flex items-baseline gap-x-2">
+                    <span class="text-3xl font-semibold">-6.4</span>
+                    <span class="text-sm text-slate-500">lbs</span>
+                </div>
+                <div class="text-emerald-600 text-xs">Since start • 3.2 lbs this week</div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="flex border-b border-slate-200 mb-6 overflow-x-auto pb-1">
+            <div onclick="showTab('dashboard')" class="nav-tab active cursor-pointer px-5 py-3 text-sm font-medium flex items-center gap-x-2 border-b-2 border-slate-900" id="tab-dashboard">
+                <i class="fa-solid fa-home w-4"></i>
+                <span>Dashboard</span>
+            </div>
+            <div onclick="showTab('calendar')" class="nav-tab cursor-pointer px-5 py-3 text-sm font-medium flex items-center gap-x-2 text-slate-600 hover:text-slate-900" id="tab-calendar">
+                <i class="fa-solid fa-calendar w-4"></i>
+                <span>Calendar &amp; Schedule</span>
+            </div>
+            <div onclick="showTab('diet')" class="nav-tab cursor-pointer px-5 py-3 text-sm font-medium flex items-center gap-x-2 text-slate-600 hover:text-slate-900" id="tab-diet">
+                <i class="fa-solid fa-apple-alt w-4"></i>
+                <span>Diet &amp; Lifestyle</span>
+            </div>
+            <div onclick="showTab('supplements')" class="nav-tab cursor-pointer px-5 py-3 text-sm font-medium flex items-center gap-x-2 text-slate-600 hover:text-slate-900" id="tab-supplements">
+                <i class="fa-solid fa-pills w-4"></i>
+                <span>Supplementation</span>
+            </div>
+            <div onclick="showTab('monitoring')" class="nav-tab cursor-pointer px-5 py-3 text-sm font-medium flex items-center gap-x-2 text-slate-600 hover:text-slate-900" id="tab-monitoring">
+                <i class="fa-solid fa-chart-line w-4"></i>
+                <span>Monitoring &amp; Labs</span>
+            </div>
+            <div onclick="showTab('progress')" class="nav-tab cursor-pointer px-5 py-3 text-sm font-medium flex items-center gap-x-2 text-slate-600 hover:text-slate-900" id="tab-progress">
+                <i class="fa-solid fa-tachometer-alt w-4"></i>
+                <span>Progress &amp; Milestones</span>
+            </div>
+            <div onclick="showTab('resources')" class="nav-tab cursor-pointer px-5 py-3 text-sm font-medium flex items-center gap-x-2 text-slate-600 hover:text-slate-900" id="tab-resources">
+                <i class="fa-solid fa-book w-4"></i>
+                <span>Resources</span>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT -->
+
+        <!-- DASHBOARD TAB -->
+        <div id="content-dashboard" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Today's Schedule -->
+                <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="font-semibold text-lg">Today’s Schedule</h3>
+                            <p class="text-sm text-slate-500">Monday, February 10, 2026 • Week 3, Phase 1</p>
+                        </div>
+                        <button onclick="showTab('calendar')"
+                                class="text-xs px-4 py-2 rounded-2xl border border-slate-300 hover:bg-slate-50 flex items-center gap-x-2 text-slate-700">
+                            <span>Full Calendar</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
+                            <div class="flex items-center gap-x-3">
+                                <i class="fa-solid fa-syringe text-emerald-600 w-5"></i>
+                                <div>
+                                    <div class="font-medium">Retatrutide</div>
+                                    <div class="text-xs text-slate-500">2 mg subcutaneous</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-mono text-sm font-medium">08:00 AM</div>
+                                <div class="text-xs text-emerald-600">Completed</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
+                            <div class="flex items-center gap-x-3">
+                                <i class="fa-solid fa-flask text-violet-600 w-5"></i>
+                                <div>
+                                    <div class="font-medium">MOTS-c</div>
+                                    <div class="text-xs text-slate-500">5 mg subcutaneous</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-mono text-sm font-medium">08:15 AM</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
+                            <div class="flex items-center gap-x-3">
+                                <i class="fa-solid fa-syringe text-blue-600 w-5"></i>
+                                <div>
+                                    <div class="font-medium">BPC-157</div>
+                                    <div class="text-xs text-slate-500">250 mcg</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-mono text-sm font-medium">08:00 AM &amp; 08:00 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-3xl border border-slate-200 p-6">
+                    <h3 class="font-semibold text-lg mb-4">Quick Actions</h3>
+                    <div class="space-y-2">
+                        <button onclick="logDose()"
+                                class="w-full flex items-center justify-center gap-x-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 transition-colors text-white rounded-2xl text-sm font-medium">
+                            <i class="fa-solid fa-check"></i>
+                            <span>Log Today’s Doses</span>
+                        </button>
+
+                        <button onclick="showTab('monitoring')"
+                                class="w-full flex items-center justify-center gap-x-2 px-4 py-3 border border-slate-300 hover:bg-slate-50 rounded-2xl text-sm font-medium">
+                            <i class="fa-solid fa-vial"></i>
+                            <span>View Latest Labs</span>
+                        </button>
+
+                        <button onclick="showContactModal()"
+                                class="w-full flex items-center justify-center gap-x-2 px-4 py-3 border border-slate-300 hover:bg-slate-50 rounded-2xl text-sm font-medium">
+                            <i class="fa-solid fa-comment-medical"></i>
+                            <span>Message Care Team</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CALENDAR TAB -->
+        <div id="content-calendar" class="tab-content hidden">
+            <div class="bg-white rounded-3xl border border-slate-200 p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="font-semibold text-xl">Weekly Schedule</h3>
+                        <p class="text-sm text-slate-500">Week 3 • Phase 1 • Retatrutide 2 mg/week</p>
+                    </div>
+                    <div class="flex items-center gap-x-2 text-sm">
+                        <button onclick="previousWeek()" class="px-3 py-1.5 border border-slate-300 rounded-2xl hover:bg-slate-50">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <span class="font-medium px-3">Feb 9 – Feb 15, 2026</span>
+                        <button onclick="nextWeek()" class="px-3 py-1.5 border border-slate-300 rounded-2xl hover:bg-slate-50">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Calendar Grid -->
+                <div class="grid grid-cols-7 gap-3">
+                    <!-- Day Headers -->
+                    <div class="text-center text-xs font-semibold text-slate-500 py-2">SUN</div>
+                    <div class="text-center text-xs font-semibold text-slate-500 py-2">MON</div>
+                    <div class="text-center text-xs font-semibold text-slate-500 py-2">TUE</div>
+                    <div class="text-center text-xs font-semibold text-slate-500 py-2">WED</div>
+                    <div class="text-center text-xs font-semibold text-slate-500 py-2">THU</div>
+                    <div class="text-center text-xs font-semibold text-slate-500 py-2">FRI</div>
+                    <div class="text-center text-xs font-semibold text-slate-500 py-2">SAT</div>
+
+                    <!-- Sample Days -->
+                    <div onclick="showDayModal(0)" class="calendar-day border border-slate-200 rounded-3xl p-3 text-center cursor-pointer">
+                        <div class="text-xs text-slate-400">9</div>
+                        <div class="text-sm font-medium mt-1">Sun</div>
+                    </div>
+                    <div onclick="showDayModal(1)" class="calendar-day border border-slate-900 bg-slate-900 text-white rounded-3xl p-3 text-center cursor-pointer active">
+                        <div class="text-xs text-emerald-300">10</div>
+                        <div class="text-sm font-medium mt-1">Mon</div>
+                        <div class="text-[10px] mt-1 bg-white/20 rounded px-1.5 py-px">3 items</div>
+                    </div>
+                    <div onclick="showDayModal(2)" class="calendar-day border border-slate-200 rounded-3xl p-3 text-center cursor-pointer">
+                        <div class="text-xs text-slate-400">11</div>
+                        <div class="text-sm font-medium mt-1">Tue</div>
+                    </div>
+                    <div onclick="showDayModal(3)" class="calendar-day border border-slate-200 rounded-3xl p-3 text-center cursor-pointer">
+                        <div class="text-xs text-slate-400">12</div>
+                        <div class="text-sm font-medium mt-1">Wed</div>
+                    </div>
+                    <div onclick="showDayModal(4)" class="calendar-day border border-slate-200 rounded-3xl p-3 text-center cursor-pointer">
+                        <div class="text-xs text-slate-400">13</div>
+                        <div class="text-sm font-medium mt-1">Thu</div>
+                        <div class="text-[10px] mt-1 bg-emerald-100 text-emerald-700 rounded px-1.5 py-px">MOTS-c</div>
+                    </div>
+                    <div onclick="showDayModal(5)" class="calendar-day border border-slate-200 rounded-3xl p-3 text-center cursor-pointer">
+                        <div class="text-xs text-slate-400">14</div>
+                        <div class="text-sm font-medium mt-1">Fri</div>
+                    </div>
+                    <div onclick="showDayModal(6)" class="calendar-day border border-slate-200 rounded-3xl p-3 text-center cursor-pointer">
+                        <div class="text-xs text-slate-400">15</div>
+                        <div class="text-sm font-medium mt-1">Sat</div>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-xs text-slate-500 flex items-center gap-x-2">
+                    <i class="fa-solid fa-info-circle"></i>
+                    <span>Click any day to view full scheduled substances and times.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIET & LIFESTYLE TAB -->
+        <div id="content-diet" class="tab-content hidden">
+            <div class="bg-white rounded-3xl border border-slate-200 p-8">
+                <h3 class="font-semibold text-2xl mb-1">Diet &amp; Lifestyle Framework</h3>
+                <p class="text-slate-600 mb-6">High-protein, anti-inflammatory, nutrient-dense foundation</p>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold mb-3 flex items-center gap-x-2">
+                            <i class="fa-solid fa-utensils text-emerald-600"></i>
+                            <span>Daily Nutrition Targets</span>
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex justify-between"><span class="text-slate-600">Protein</span> <span class="font-semibold">1.8–2.2 g/kg ideal body weight</span></li>
+                            <li class="flex justify-between"><span class="text-slate-600">Fiber</span> <span class="font-semibold">35–45 g</span></li>
+                            <li class="flex justify-between"><span class="text-slate-600">Hydration</span> <span class="font-semibold">3.5–4.5 L</span></li>
+                            <li class="flex justify-between"><span class="text-slate-600">Alcohol</span> <span class="font-semibold text-red-600">Minimize / Eliminate</span></li>
+                        </ul>
+
+                        <div class="mt-6">
+                            <h4 class="font-semibold mb-2">Why This Matters</h4>
+                            <p class="text-sm text-slate-600">Preserves lean mass during Retatrutide-driven fat loss, supports liver detoxification, reduces inflammation (enhancing MOTS-c and NAD+ effectiveness), and provides stable energy.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold mb-3 flex items-center gap-x-2">
+                            <i class="fa-solid fa-dumbbell text-violet-600"></i>
+                            <span>Lifestyle Requirements</span>
+                        </h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex gap-x-3">
+                                <div class="w-5 text-center"><i class="fa-solid fa-check text-emerald-500"></i></div>
+                                <div>Resistance training 3–4× per week</div>
+                            </div>
+                            <div class="flex gap-x-3">
+                                <div class="w-5 text-center"><i class="fa-solid fa-check text-emerald-500"></i></div>
+                                <div>Zone 2 cardio (supports natural MOTS-c production)</div>
+                            </div>
+                            <div class="flex gap-x-3">
+                                <div class="w-5 text-center"><i class="fa-solid fa-check text-emerald-500"></i></div>
+                                <div>7–9 hours quality sleep nightly</div>
+                            </div>
+                            <div class="flex gap-x-3">
+                                <div class="w-5 text-center"><i class="fa-solid fa-check text-emerald-500"></i></div>
+                                <div>Stress management &amp; circadian alignment</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUPPLEMENTS TAB -->
+        <div id="content-supplements" class="tab-content hidden">
+            <div class="bg-white rounded-3xl border border-slate-200 p-8">
+                <h3 class="font-semibold text-2xl mb-1">Daily Supplementation Guide</h3>
+                <p class="text-slate-600 mb-6">Foundational support — always active</p>
+
+                <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 text-sm">
+                    <div class="space-y-4">
+                        <div><strong class="block">L-Carnitine — 3 g daily</strong> <span class="text-xs text-slate-500">Fatty acid transport • Synergizes with MOTS-c</span></div>
+                        <div><strong class="block">Phosphatidylcholine — 3 g daily</strong> <span class="text-xs text-slate-500">Cell membrane integrity &amp; liver fat export</span></div>
+                        <div><strong class="block">Vitamin E — 400 IU daily</strong> <span class="text-xs text-slate-500">Protects mitochondrial &amp; liver membranes</span></div>
+                        <div><strong class="block">Selenium — 200 mcg daily</strong> <span class="text-xs text-slate-500">Glutathione peroxidase support</span></div>
+                        <div><strong class="block">TUDCA — 500 mg with 2 largest meals (1,000 mg total)</strong> <span class="text-xs text-emerald-600 font-medium">Most important for Retatrutide biliary protection</span></div>
+                    </div>
+                    <div class="space-y-4">
+                        <div><strong class="block">NAC — 1,000 mg daily</strong> <span class="text-xs text-slate-500">Glutathione replenishment &amp; oxidative stress reduction</span></div>
+                        <div><strong class="block">Methyl B-Complex + B12 + Folate</strong> <span class="text-xs text-slate-500">Liver methylation &amp; detoxification</span></div>
+                        <div><strong class="block">Magnesium Glycinate — 500 mg (evening)</strong> <span class="text-xs text-slate-500">Sleep quality + enzymatic cofactor</span></div>
+                        <div><strong class="block">Zinc — 30 mg daily</strong> <span class="text-xs text-slate-500">Liver detoxification enzyme support</span></div>
+
+                        <div class="pt-3 border-t">
+                            <div class="text-xs text-slate-500">Additional (recommended):</div>
+                            <div class="text-sm">Omega-3 (2–4 g), Creatine 5 g, CoQ10 200–300 mg</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MONITORING TAB -->
+        <div id="content-monitoring" class="tab-content hidden">
+            <div class="bg-white rounded-3xl border border-slate-200 p-8">
+                <h3 class="font-semibold text-2xl mb-4">Monitoring &amp; Lab Protocol</h3>
+
+                <div class="mb-6">
+                    <h4 class="font-semibold mb-2">Baseline (Completed)</h4>
+                    <div class="text-sm text-slate-600">Full CMP, lipid panel, HbA1c, HOMA-IR, GGT, ferritin, Vitamin D, liver ultrasound with elastography.</div>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-3">Recurring Labs (Every 5–6 Weeks)</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+                        <div class="bg-slate-50 px-4 py-3 rounded-2xl">Fasting insulin + glucose + HOMA-IR</div>
+                        <div class="bg-slate-50 px-4 py-3 rounded-2xl">GGT, ALT, AST</div>
+                        <div class="bg-slate-50 px-4 py-3 rounded-2xl">Triglycerides &amp; TG/HDL ratio</div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-5 bg-amber-50 border border-amber-200 rounded-3xl">
+                    <div class="font-semibold text-amber-800 mb-2 flex items-center gap-x-2">
+                        <i class="fa-solid fa-exclamation-triangle"></i>
+                        <span>Adjustment Rules</span>
+                    </div>
+                    <ul class="text-sm space-y-1.5 text-amber-700">
+                        <li>• <strong>GGT rising</strong> → Cut Retatrutide dose by 50%. Reassess in 5–6 weeks.</li>
+                        <li>• <strong>TG/HDL ratio worsening</strong> → Increase L-Carnitine to 4 g + protein. Cut Retatrutide by 50%.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROGRESS TAB -->
+        <div id="content-progress" class="tab-content hidden">
+            <div class="bg-white rounded-3xl border border-slate-200 p-8">
+                <h3 class="font-semibold text-2xl mb-6">Expected Milestones</h3>
+
+                <div class="space-y-6">
+                    <div class="flex gap-x-4">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex-shrink-0 flex items-center justify-center text-emerald-600 font-bold">1</div>
+                        <div>
+                            <div class="font-semibold">Weeks 1–4 (Current)</div>
+                            <div class="text-sm text-slate-600">Appetite regulation, early fat loss (3–8%), stable liver markers, improved recovery.</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-x-4">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex-shrink-0 flex items-center justify-center text-emerald-600 font-bold">2</div>
+                        <div>
+                            <div class="font-semibold">Weeks 5–12</div>
+                            <div class="text-sm text-slate-600">Significant fat loss, visible body recomposition, muscle preservation, enhanced insulin sensitivity.</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-x-4">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex-shrink-0 flex items-center justify-center text-emerald-600 font-bold">3</div>
+                        <div>
+                            <div class="font-semibold">Month 4+</div>
+                            <div class="text-sm text-slate-600">Optimized body composition, sustainable metabolic health, foundational longevity support established.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESOURCES TAB -->
+        <div id="content-resources" class="tab-content hidden">
+            <div class="bg-white rounded-3xl border border-slate-200 p-8">
+                <h3 class="font-semibold text-2xl mb-4">Resources &amp; Additional Information</h3>
+
+                <div class="prose prose-sm max-w-none text-slate-600">
+                    <h4 class="font-semibold text-slate-900">About BRP (Emerging Compound)</h4>
+                    <p>BRP (BRINP2-related peptide) is a 12-amino-acid peptide discovered in 2025 that suppresses appetite via hypothalamic pathways distinct from GLP-1 agonists. Early data showed strong fat loss with minimal nausea or muscle loss. It is currently advancing toward human trials and may become a valuable future option in this protocol.</p>
+
+                    <h4 class="font-semibold text-slate-900 mt-6">Protocol Philosophy</h4>
+                    <p>This system is deliberately layered and governed. Each compound either protects the system (liver support) or amplifies the others (MOTS-c + Retatrutide synergy, TB-500 + BPC-157 for muscle preservation during fat loss, Epitalon for circadian/metabolic foundation).</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Day Detail Modal -->
+    <div id="dayModal" onclick="if (event.target.id === 'dayModal') hideDayModal()" class="hidden fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-lg w-full p-6 modal">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div id="modal-day-title" class="font-semibold text-2xl"></div>
+                    <div id="modal-day-subtitle" class="text-sm text-slate-500"></div>
+                </div>
+                <button onclick="hideDayModal()" class="text-3xl leading-none text-slate-400 hover:text-slate-600">&times;</button>
+            </div>
+
+            <div id="modal-schedule-content" class="space-y-4 text-sm">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <div class="mt-6 pt-4 border-t text-xs text-slate-500">
+                All times are suggested. Adjust based on your routine while maintaining consistency.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#0F172A');
+        }
+
+        // Tab switching
+        function showTab(tab) {
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+
+            // Show selected
+            document.getElementById('content-' + tab).classList.remove('hidden');
+
+            // Update active nav
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active', 'border-b-2', 'border-slate-900'));
+            const activeTab = document.getElementById('tab-' + tab);
+            if (activeTab) {
+                activeTab.classList.add('active', 'border-b-2', 'border-slate-900');
+            }
+        }
+
+        // Day Modal Data
+        const daySchedules = {
+            1: { // Monday
+                title: "Monday, February 10",
+                subtitle: "Week 3 • Phase 1",
+                items: [
+                    { time: "07:45 AM", name: "Morning Foundations", detail: "L-Carnitine 3g, Phosphatidylcholine 3g, Vitamin E, Selenium, NAC, B-Complex, Zinc" },
+                    { time: "08:00 AM", name: "Retatrutide", detail: "2 mg subcutaneous" },
+                    { time: "08:15 AM", name: "MOTS-c", detail: "5 mg subcutaneous" },
+                    { time: "08:30 AM", name: "GHK-Cu", detail: "1 mg subcutaneous" },
+                    { time: "08:30 AM", name: "BPC-157", detail: "250 mcg (AM dose)" },
+                    { time: "With Breakfast & Lunch", name: "TUDCA", detail: "500 mg with each large meal (total 1,000 mg)" },
+                    { time: "08:00 PM", name: "BPC-157", detail: "250 mcg (PM dose)" },
+                    { time: "09:00 PM", name: "Evening Stack", detail: "Magnesium Glycinate 500 mg" }
+                ]
+            },
+            4: { // Thursday
+                title: "Thursday, February 13",
+                subtitle: "Week 3 • Phase 1 • MOTS-c Day",
+                items: [
+                    { time: "07:45 AM", name: "Morning Foundations", detail: "L-Carnitine 3g, Phosphatidylcholine 3g, Vitamin E, Selenium, NAC, B-Complex, Zinc" },
+                    { time: "08:00 AM", name: "Retatrutide", detail: "2 mg subcutaneous" },
+                    { time: "08:15 AM", name: "MOTS-c", detail: "5 mg subcutaneous" },
+                    { time: "08:30 AM", name: "GHK-Cu", detail: "1 mg subcutaneous" },
+                    { time: "08:30 AM", name: "BPC-157", detail: "250 mcg" },
+                    { time: "08:45 AM", name: "TB-500", detail: "2.5 mg subcutaneous (maintenance)" },
+                    { time: "With Breakfast & Lunch", name: "TUDCA", detail: "500 mg with each large meal" },
+                    { time: "08:00 PM", name: "BPC-157", detail: "250 mcg" },
+                    { time: "09:00 PM", name: "Evening Stack", detail: "Magnesium Glycinate 500 mg" }
+                ]
+            }
+        };
+
+        function showDayModal(dayIndex) {
+            const modal = document.getElementById('dayModal');
+            const content = document.getElementById('modal-schedule-content');
+            const titleEl = document.getElementById('modal-day-title');
+            const subtitleEl = document.getElementById('modal-day-subtitle');
+
+            let schedule = daySchedules[dayIndex];
+
+            // Default schedule for other days
+            if (!schedule) {
+                schedule = {
+                    title: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayIndex] + ", February " + (9 + dayIndex),
+                    subtitle: "Week 3 • Phase 1",
+                    items: [
+                        { time: "07:45 AM", name: "Morning Foundations", detail: "L-Carnitine, PC, Vitamin E, Selenium, NAC, B-Complex, Zinc" },
+                        { time: "08:30 AM", name: "GHK-Cu", detail: "1 mg subcutaneous" },
+                        { time: "08:30 AM", name: "BPC-157", detail: "250 mcg" },
+                        { time: "With Breakfast & Lunch", name: "TUDCA", detail: "500 mg per large meal" },
+                        { time: "08:00 PM", name: "BPC-157", detail: "250 mcg" },
+                        { time: "09:00 PM", name: "Magnesium Glycinate", detail: "500 mg" }
+                    ]
+                };
+            }
+
+            titleEl.textContent = schedule.title;
+            subtitleEl.textContent = schedule.subtitle;
+
+            content.innerHTML = schedule.items.map(item => `
+                <div class="flex justify-between items-start border-b border-slate-100 pb-3 last:border-none last:pb-0">
+                    <div>
+                        <div class="font-semibold">${item.name}</div>
+                        <div class="text-xs text-slate-500">${item.detail}</div>
+                    </div>
+                    <div class="font-mono text-xs text-right text-slate-500 whitespace-nowrap pt-0.5">${item.time}</div>
+                </div>
+            `).join('');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function hideDayModal() {
+            const modal = document.getElementById('dayModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        // Demo functions
+        function switchToPhase(phase) {
+            const phaseEl = document.querySelector('.bg-white.border.border-slate-200.rounded-3xl.px-5');
+            if (phaseEl) {
+                phaseEl.innerHTML = `
+                    <div>
+                        <div class="text-xs text-slate-500 font-medium">CURRENT PHASE</div>
+                        <div class="font-semibold text-slate-900">Phase ${phase} — Week 1 of 8</div>
+                    </div>
+                    <div class="h-8 w-px bg-slate-200"></div>
+                    <button onclick="switchToPhase(1)" class="text-xs px-3 py-1.5 bg-slate-900 text-white rounded-2xl hover:bg-slate-800 transition-colors">
+                        Back to Phase 1
+                    </button>
+                `;
+            }
+            alert("Phase " + phase + " view would load full updated calendar and dosing in a real implementation.");
+        }
+
+        function logDose() {
+            const btns = event.currentTarget;
+            const originalText = event.target.innerHTML;
+            event.target.innerHTML = `<i class="fa-solid fa-check mr-2"></i> Doses Logged`;
+            event.target.disabled = true;
+
+            setTimeout(() => {
+                if (event.target) {
+                    event.target.innerHTML = originalText;
+                    event.target.disabled = false;
+                }
+                // Show toast
+                showToast("Doses successfully logged for today.");
+            }, 1800);
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-3xl text-sm shadow-xl flex items-center gap-x-2 z-[200]`;
+            toast.innerHTML = `
+                <i class="fa-solid fa-check-circle text-emerald-400"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transition = 'all 0.3s ease';
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2800);
+        }
+
+        function previousWeek() {
+            alert("Previous week view would load here in production.");
+        }
+
+        function nextWeek() {
+            alert("Next week view would load here in production.");
+        }
+
+        function showContactModal() {
+            const modalHTML = `
+                <div class="fixed inset-0 bg-black/60 z-[110] flex items-center justify-center p-4" onclick="this.remove()">
+                    <div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-md w-full p-7">
+                        <h3 class="font-semibold text-xl mb-1">Message Your Care Team</h3>
+                        <p class="text-sm text-slate-600 mb-5">Questions about dosing, labs, or how you're feeling? We're here.</p>
+
+                        <textarea class="w-full border border-slate-300 rounded-2xl p-4 text-sm h-28" placeholder="Type your message here..."></textarea>
+
+                        <div class="flex justify-end gap-x-3 mt-4">
+                            <button onclick="this.closest('.fixed').remove()" class="px-5 py-2.5 text-sm font-medium border border-slate-300 rounded-2xl">Cancel</button>
+                            <button onclick="submitMessage(this)" class="px-5 py-2.5 bg-slate-900 text-white text-sm font-medium rounded-2xl">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function submitMessage(element) {
+            const container = element.closest('.fixed');
+            container.innerHTML = `
+                <div class="bg-white rounded-3xl max-w-md w-full p-7 text-center">
+                    <i class="fa-solid fa-check-circle text-emerald-500 text-4xl mb-3"></i>
+                    <h3 class="font-semibold">Message Sent</h3>
+                    <p class="text-sm text-slate-600 mt-1">Our team will respond within 24 hours.</p>
+                </div>
+            `;
+            setTimeout(() => container.remove(), 2200);
+        }
+
+        // Initialize everything
+        function initializePortal() {
+            initializeTailwind();
+
+            // Show dashboard by defau
+            document.getElementById('content-dashboard').classList.remove('hidden');
+            document.getElementById('tab-dashboard').classList.add('active', 'border-b-2', 'border-slate-900');
+
+            // Keyboard support for modal
+            document.addEventListener('keydown', function(e) {
+                if (e.key === "Escape") {
+                    const modal = document.getElementById('dayModal');
+                    if (!modal.classList.contains('hidden')) {
+                        hideDayModal();
+                    }
+                }
+            });
+
+            // Demo toast on load (optional - remove in production)
+            // setTimeout(() => { showToast("Welcome back. Your protocol is on track."); }, 4500);
+
+            console.log('%c[Protocol Portal] Client-facing HTML template initialized successfully.', 'color:#64748b');
+        }
+
+        // Boot
+        window.onload = initializePortal;
+    </script>
+</body>
+</html>
