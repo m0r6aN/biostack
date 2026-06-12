@@ -103,6 +103,40 @@ function mergePanelContent(
   };
 }
 
+function buildEvidencePreviewContent(base: StackIntelligencePanelContent): StackIntelligencePanelContent {
+  const compounds = base.stats?.find(([label]) => label === 'Items' || label === 'Compounds')?.[1] ?? 'Selected inputs';
+  const relationship = base.stats?.find(([label]) => label === 'Relationship check')?.[1] ?? 'Evidence preview';
+
+  return {
+    subtext: 'Evidence view is included in Operator.',
+    stageLabels: ['Evidence tiers', 'Source types', 'Mechanism summaries'],
+    stats: [
+      ['Inputs', compounds],
+      ['Evidence tier', relationship.includes('detected') ? 'Tiered preview' : 'Included in Operator'],
+      ['Confidence', 'Available after upgrade'],
+    ],
+    relationshipGroups: [
+      {
+        type: 'Context',
+        label: 'Evidence view',
+        detail: 'See evidence tiers, source types, mechanism summaries, and confidence notes.',
+      },
+      {
+        type: 'Support',
+        label: 'Included in Operator',
+        detail: 'Upgrade after the free analysis preview when you want the full evidence breakdown.',
+      },
+    ],
+    insightLabel: 'Evidence preview',
+    summary: 'Evidence metadata is separated from the list view.',
+    insights: [
+      'Evidence tiers and source context are shown in Operator.',
+      'Free analysis still shows the parsed list and first findings before signup.',
+    ],
+    nextAction: 'Review pricing before unlocking the evidence view.',
+  };
+}
+
 function relationshipTone(type: StackIntelligencePanelContent['relationshipGroups'][number]['type']) {
   if (type === 'Context') {
     return 'border-white/12 bg-white/[0.045] text-white/78';
@@ -161,7 +195,7 @@ export function StackIntelligencePanel({
   const mergedContent = useMemo(
     () => ({
       simple: mergePanelContent(helperContent, contentOverrides?.simple),
-      technical: mergePanelContent(helperContent, contentOverrides?.technical),
+      technical: mergePanelContent(buildEvidencePreviewContent(helperContent), contentOverrides?.technical),
     }),
     [contentOverrides, helperContent]
   );

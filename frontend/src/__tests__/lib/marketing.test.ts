@@ -39,9 +39,11 @@ describe('marketing content', () => {
     expect(landingFeatures.some((feature) => feature.includes('Unified timeline'))).toBe(true);
   });
 
-  it('Observer tier highlight reflects the current free-tier compound limit', () => {
+  it('Observer tier highlights the free analyzer and local-save value', () => {
     const observer = pricingTiers.find((t) => t.name === 'Observer')!;
-    expect(observer.highlights.some((h) => h.includes('8'))).toBe(true);
+    expect(observer.highlights).toContain('Free calculators');
+    expect(observer.highlights).toContain('Basic analyzer score');
+    expect(observer.highlights).toContain('Local saved analysis');
     expect(observer.highlights.every((h) => !h.includes(' 5 '))).toBe(true);
   });
 });

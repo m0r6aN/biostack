@@ -110,12 +110,20 @@ export function LandingHero() {
           ))}
         </div>
 
-        <Link
-          href="/tools"
-          className="w-fit text-sm font-medium text-white/62 underline-offset-4 transition-colors hover:text-white/82 hover:underline sm:text-base"
-        >
-          Need to calculate dose volume or reconstitution? → Start here
-        </Link>
+        <div className="flex flex-wrap gap-x-5 gap-y-2">
+          <Link
+            href="/tools"
+            className="w-fit text-sm font-medium text-white/62 underline-offset-4 transition-colors hover:text-white/82 hover:underline sm:text-base"
+          >
+            Need to calculate dose volume or reconstitution? → Start here
+          </Link>
+          <Link
+            href="/pricing"
+            className="w-fit text-sm font-medium text-emerald-100/78 underline-offset-4 transition-colors hover:text-emerald-50 hover:underline sm:text-base"
+          >
+            See free vs Operator
+          </Link>
+        </div>
       </div>
     </section>
   );

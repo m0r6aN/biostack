@@ -38,6 +38,7 @@ function SignInPageContent() {
   const searchParams = useSearchParams();
   const redirectPath = useMemo(() => resolveRedirectPath(searchParams.get('callbackUrl')), [searchParams]);
   const error = searchParams.get('error');
+  const isProtocolContinuation = redirectPath.startsWith('/protocol-console');
   const [email, setEmail] = useState('');
   const [submittedEmail, setSubmittedEmail] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -115,6 +116,13 @@ function SignInPageContent() {
                   Use your email. We will send a private sign-in link.
                 </p>
               </div>
+
+              {isProtocolContinuation && (
+                <div className="mb-5 rounded-lg border border-emerald-300/18 bg-emerald-400/[0.08] px-4 py-3 text-sm leading-6 text-emerald-50/82">
+                  <p className="font-semibold text-emerald-50">Your saved analysis will carry through sign-in.</p>
+                  <p className="mt-1">No need to restart. Continue to create your BioStack protocol.</p>
+                </div>
+              )}
 
               {error && (
                 <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">

@@ -31,7 +31,7 @@ export function MobileStickyCta() {
         isVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0'
       }`}
     >
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-4 gap-2">
         <Link
           href="/start"
           className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-sm font-semibold text-slate-950"
@@ -43,6 +43,12 @@ export function MobileStickyCta() {
           className="flex min-h-12 items-center justify-center rounded-lg border border-sky-300/16 bg-sky-400/[0.06] px-2 text-sm font-semibold text-white"
         >
           Map
+        </Link>
+        <Link
+          href="/pricing"
+          className="flex min-h-12 items-center justify-center rounded-lg border border-emerald-300/16 bg-emerald-300/[0.06] px-2 text-sm font-semibold text-white"
+        >
+          Pricing
         </Link>
         <Link
           href="/providers"

@@ -1,7 +1,7 @@
 import type { InteractionFlag, KnowledgeEntry } from '@/lib/types';
 
 export type RecommendationContextTag = 'recovery' | 'energy' | 'mitochondrial' | 'performance';
-export type RecommendationSurface = 'compound-detail' | 'knowledge-search' | 'overlap-results';
+export type RecommendationSurface = 'compound-detail' | 'knowledge-detail' | 'knowledge-search' | 'overlap-results';
 
 interface RecommendationSource {
   id: string;
@@ -47,6 +47,7 @@ const CONTEXT_KEYWORDS: Record<RecommendationContextTag, string[]> = {
 
 const SURFACE_SOURCE_OFFSET: Record<RecommendationSurface, number> = {
   'compound-detail': 0,
+  'knowledge-detail': 0,
   'knowledge-search': 1,
   'overlap-results': 2,
 };
@@ -155,6 +156,24 @@ const SECTION_COPY: Record<RecommendationSurface, Record<string, RecommendationS
     mitochondrial: {
       title: 'Common additions',
       description: 'Here are a few common examples people look at in similar mitochondrial-support contexts.',
+    },
+  },
+  'knowledge-detail': {
+    default: {
+      title: 'Common additions',
+      description: 'Optional examples people often explore after reading this compound detail.',
+    },
+    recovery: {
+      title: 'Common additions',
+      description: 'People exploring this recovery-oriented detail often look at these examples next.',
+    },
+    energy: {
+      title: 'Common additions',
+      description: 'People exploring this energy-support detail often look at these examples next.',
+    },
+    mitochondrial: {
+      title: 'Common additions',
+      description: 'People exploring this mitochondrial-support detail often look at these examples next.',
     },
   },
   'knowledge-search': {

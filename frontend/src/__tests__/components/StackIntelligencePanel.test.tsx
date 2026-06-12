@@ -1,5 +1,5 @@
 import { StackIntelligencePanel, panelContent } from '@/components/marketing/StackIntelligencePanel';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 describe('StackIntelligencePanel', () => {
@@ -29,6 +29,10 @@ describe('StackIntelligencePanel', () => {
 
     fireEvent.click(screen.getByRole('tab', { name: 'Evidence' }));
     expect(screen.getByRole('tab', { name: 'Evidence' })).toHaveAttribute('aria-selected', 'true');
-    expect(await screen.findByText('One earned relationship outcome emitted.')).toBeInTheDocument();
+    expect(await screen.findByText('Evidence view')).toBeInTheDocument();
+    expect(screen.getByText('Included in Operator')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText('One earned relationship outcome emitted.')).not.toBeInTheDocument();
+    });
   });
 });

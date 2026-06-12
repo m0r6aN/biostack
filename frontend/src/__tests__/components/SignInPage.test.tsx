@@ -3,16 +3,18 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const fetchMock = vi.fn();
+let callbackUrl = 'http%3A%2F%2Flocalhost%3A3043%2Fprofiles';
 
 vi.stubGlobal('fetch', fetchMock);
 
 vi.mock('next/navigation', () => ({
-  useSearchParams: () => new URLSearchParams('callbackUrl=http%3A%2F%2Flocalhost%3A3043%2Fprofiles'),
+  useSearchParams: () => new URLSearchParams(`callbackUrl=${callbackUrl}`),
 }));
 
 describe('SignInPage', () => {
   beforeEach(() => {
     fetchMock.mockReset();
+    callbackUrl = 'http%3A%2F%2Flocalhost%3A3043%2Fprofiles';
   });
 
   it('starts passwordless email auth and moves to the inbox step', async () => {
@@ -56,5 +58,14 @@ describe('SignInPage', () => {
 
     expect(await screen.findByText('We could not send that sign-in link. Try again in a moment.')).toBeInTheDocument();
     expect(screen.queryByText('Check your inbox')).not.toBeInTheDocument();
+  });
+
+  it('reassures analyzer conversions that saved work carries through sign-in', () => {
+    callbackUrl = '%2Fprotocol-console';
+
+    render(<SignInPage />);
+
+    expect(screen.getByText('Your saved analysis will carry through sign-in.')).toBeInTheDocument();
+    expect(screen.getByText('No need to restart. Continue to create your BioStack protocol.')).toBeInTheDocument();
   });
 });

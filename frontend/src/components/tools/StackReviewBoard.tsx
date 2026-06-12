@@ -22,7 +22,11 @@
 import type {
     SrbCognitiveDensityEnvelope,
     SrbDeterministicFinding,
-    SrbKnownPattern
+    SrbKnownPattern,
+    SrbPerspectiveFinding,
+    SrbPerspectiveReview,
+    SrbContradictionReview,
+    SrbConfidenceProfile,
 } from '@/lib/types';
 
 export interface StackReviewBoardProps {

@@ -1,4 +1,5 @@
 import { LandingHero } from '@/components/marketing/LandingHero';
+import { IntelligenceProofSection } from '@/components/marketing/IntelligenceProofSection';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 
@@ -22,6 +23,7 @@ export default function HomePage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
         />
         <LandingHero />
+        <IntelligenceProofSection />
 
         <section className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:py-10">
           <div className="rounded-lg border border-white/8 bg-white/[0.025] px-4 py-4 sm:flex sm:items-center sm:justify-between sm:gap-6 sm:px-5">

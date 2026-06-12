@@ -18,6 +18,9 @@ export function MarketingNav() {
             <Link href="/tools" className="transition-colors hover:text-white">
               Tools
             </Link>
+            <Link href="/pricing" className="transition-colors hover:text-white">
+              Pricing
+            </Link>
             <Link href="/providers" className="transition-colors hover:text-white">
               Provider
             </Link>

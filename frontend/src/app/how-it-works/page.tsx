@@ -1,3 +1,4 @@
+import { IntelligenceProofSection } from '@/components/marketing/IntelligenceProofSection';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import Link from 'next/link';
@@ -73,6 +74,8 @@ export default function HowItWorksPage() {
             ))}
           </div>
         </section>
+
+        <IntelligenceProofSection compact />
 
         <section className="mx-auto grid max-w-7xl gap-5 px-5 py-10 sm:px-8 lg:py-14">
           {sections.map((section) => (

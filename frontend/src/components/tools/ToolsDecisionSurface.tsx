@@ -1,7 +1,6 @@
 'use client';
 
 import { SyringeDrawVisualizer } from '@/components/calculators/SyringeDrawVisualizer';
-import { PowderAmountGuide } from '@/components/calculators/PowderAmountGuide';
 import {
   deleteAnonymousToolArtifact,
   readAnonymousToolPayload,
@@ -12,6 +11,7 @@ import {
 } from '@/lib/anonymousTools';
 import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
+import { getCompoundSearchSuggestions, resolveCompoundSearchCommit } from '@/lib/compoundSearch';
 import { useProfile } from '@/lib/context';
 import {
   calculateUnifiedDosing,
@@ -25,7 +25,7 @@ import {
 } from '@/lib/dosingCalculator';
 import { type CompoundRecord, type InteractionFlag, type KnowledgeEntry } from '@/lib/types';
 import Link from 'next/link';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 type SurfaceMode = ToolMode;
 type BlendStatus = 'compatible' | 'caution' | 'avoid' | 'unknown';
@@ -491,6 +491,48 @@ function CompoundChooser({
   recentCompounds: string[];
   isAuthenticated: boolean;
 }) {
+  const [draft, setDraft] = useState(compound);
+  const [debouncedDraft, setDebouncedDraft] = useState(compound);
+
+  useEffect(() => {
+    setDraft(compound);
+    setDebouncedDraft(compound);
+  }, [compound]);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setDebouncedDraft(draft), 180);
+    return () => window.clearTimeout(timeout);
+  }, [draft]);
+
+  const trimmedDraft = debouncedDraft.trim();
+  const suggestions = useMemo(() => {
+    if (trimmedDraft.length < 2) {
+      return [];
+    }
+
+    return getCompoundSearchSuggestions(trimmedDraft, knowledgeNames);
+  }, [knowledgeNames, trimmedDraft]);
+
+  const hasSearchIntent = draft.trim().length >= 2;
+  const isSearching = hasSearchIntent && draft.trim() !== debouncedDraft.trim();
+
+  function commitCompound(value = draft) {
+    const normalized = value.trim();
+    if (!normalized) {
+      return;
+    }
+
+    const next = resolveCompoundSearchCommit(normalized, knowledgeNames);
+    setDraft(next);
+    setDebouncedDraft(next);
+    onSelect(next);
+  }
+
+  function submitSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    commitCompound();
+  }
+
   return (
     <section className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
       {isAuthenticated && stackCompounds.length > 0 && (
@@ -511,11 +553,54 @@ function CompoundChooser({
         ))}
       </div>
 
-      <label className="mt-4 block">
-        <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-white/40">Search all compounds</span>
-        <input list="biostack-compounds" value={compound} onChange={(event) => onSelect(event.target.value)} placeholder="Search or enter compound" className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45" />
-        <datalist id="biostack-compounds">{knowledgeNames.map((name) => <option key={name} value={name} />)}</datalist>
-      </label>
+      <form className="mt-4" onSubmit={submitSearch}>
+        <label className="block">
+          <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-white/40">Search all compounds</span>
+          <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
+            <input
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              onFocus={(event) => event.currentTarget.select()}
+              placeholder="Search or enter compound"
+              className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45"
+            />
+            <button
+              type="submit"
+              className="min-h-12 rounded-lg border border-emerald-300/25 bg-emerald-400/10 px-4 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/45 hover:text-white"
+            >
+              Search
+            </button>
+          </div>
+        </label>
+      </form>
+
+      {hasSearchIntent && (
+        <div className="mt-3 rounded-lg border border-white/10 bg-black/18 p-3">
+          {isSearching ? (
+            <p className="text-sm text-white/52">Searching...</p>
+          ) : suggestions.length > 0 ? (
+            <>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/38">Matches found</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {suggestions.map((name) => (
+                  <button
+                    key={name}
+                    type="button"
+                    onClick={() => commitCompound(name)}
+                    className="rounded-lg border border-white/10 px-3 py-1.5 text-sm text-white/68 transition-colors hover:border-emerald-300/30 hover:text-white"
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : knowledgeNames.length === 0 ? (
+            <p className="text-sm leading-6 text-white/52">Compound search is temporarily unavailable.</p>
+          ) : (
+            <p className="text-sm leading-6 text-white/52">No recognized compound found. You can still submit this text as a custom compound.</p>
+          )}
+        </div>
+      )}
 
       {recentCompounds.length > 0 && (
         <div className="mt-4">

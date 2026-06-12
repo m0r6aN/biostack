@@ -81,10 +81,11 @@ export const pricingTiers: PricingTier[] = [
     ctaLabel: 'Build My Protocol',
     href: '/onboarding',
     highlights: [
-      'Track up to 8 active compounds',
-      'Basic knowledge library access',
-      'Core check-ins',
       'Free calculators',
+      'Basic analyzer score',
+      'One finding preview',
+      'Local saved analysis',
+      'Overlap detection teaser',
     ],
   },
   {
@@ -99,11 +100,12 @@ export const pricingTiers: PricingTier[] = [
     href: '/auth/signin',
     featured: true,
     highlights: [
-      'Unlimited compounds',
-      'Full timeline history',
-      'Reconstitution and volume calculators',
-      'All check-in fields',
-      'Protocol phases and overlap insights',
+      'Full analysis breakdown',
+      'Redundancy and interference detail',
+      'Evidence view',
+      'Protocol conversion',
+      'Saved protocol console',
+      'Longitudinal tracking',
     ],
   },
   {
