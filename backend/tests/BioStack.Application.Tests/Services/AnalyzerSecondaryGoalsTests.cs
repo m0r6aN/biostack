@@ -28,6 +28,15 @@ public sealed class AnalyzerSecondaryGoalsTests
     }
 
     [Fact]
+    public void BuildAnalysisContext_AllBlankSecondaryGoals_YieldsEmptyList()
+    {
+        var service = CreateNormalizationService();
+        var context = service.BuildAnalysisContext(
+            "healing", new[] { "", "  " }, null, null, null, null);
+        Assert.Empty(context.SecondaryGoals);
+    }
+
+    [Fact]
     public void GetAnalysisKey_DiffersWhenSecondaryGoalsDiffer()
     {
         var fingerprint = new ProtocolFingerprintService();

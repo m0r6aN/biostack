@@ -67,7 +67,7 @@ public sealed class ProtocolNormalizationService : IProtocolNormalizationService
             .Select(item => item?.Trim().ToLowerInvariant() ?? string.Empty)
             .Where(item => !string.IsNullOrEmpty(item))
             .Distinct(StringComparer.OrdinalIgnoreCase)
-            .OrderBy(item => item, StringComparer.Ordinal)
+            .OrderBy(item => item, StringComparer.OrdinalIgnoreCase)
             .ToList() ?? new List<string>();
 
         return new AnalysisContext(

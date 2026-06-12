@@ -176,7 +176,6 @@ public static class AnalyzeEndpoints
         {
             return null;
         }
-        var items = value.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
-        return items.Count > 0 ? items : null;
+        return value.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
     }
 }
