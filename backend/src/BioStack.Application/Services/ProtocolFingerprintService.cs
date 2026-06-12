@@ -56,6 +56,7 @@ public sealed class ProtocolFingerprintService : IProtocolFingerprintService
         var protocolHash = GetNormalizedProtocolHash(protocol);
         var contextKey = string.Join(":",
             NormalizeToken(context.Goal),
+            string.Join(",", context.SecondaryGoals.Select(NormalizeToken)),
             NormalizeToken(context.Sex),
             NormalizeToken(context.AgeBand),
             NormalizeToken(context.WeightBand),

@@ -57,13 +57,22 @@ public sealed class ProtocolNormalizationService : IProtocolNormalizationService
 
     public AnalysisContext BuildAnalysisContext(
         string? goal,
+        IEnumerable<string>? secondaryGoals,
         string? sex,
         int? age,
         double? weight,
         IEnumerable<string>? existingStackContext)
     {
+        var normalizedSecondaryGoals = secondaryGoals?
+            .Select(item => item?.Trim().ToLowerInvariant() ?? string.Empty)
+            .Where(item => !string.IsNullOrEmpty(item))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(item => item, StringComparer.Ordinal)
+            .ToList() ?? new List<string>();
+
         return new AnalysisContext(
             goal?.Trim() ?? string.Empty,
+            normalizedSecondaryGoals,
             sex?.Trim() ?? string.Empty,
             ToAgeBand(age),
             ToWeightBand(weight),
@@ -161,6 +170,6 @@ public interface IProtocolNormalizationService
 {
     string NormalizeExtractedText(string input);
     NormalizedProtocol Normalize(ProtocolParseResult parseResult);
-    AnalysisContext BuildAnalysisContext(string? goal, string? sex, int? age, double? weight, IEnumerable<string>? existingStackContext);
+    AnalysisContext BuildAnalysisContext(string? goal, IEnumerable<string>? secondaryGoals, string? sex, int? age, double? weight, IEnumerable<string>? existingStackContext);
     OptimizationContext BuildOptimizationContext(string? goal, int? maxCompounds, IEnumerable<string>? requiredCompoundIds, IEnumerable<string>? excludedCompoundIds, IEnumerable<string>? existingProfileContext, string optimizationMode = "all");
 }

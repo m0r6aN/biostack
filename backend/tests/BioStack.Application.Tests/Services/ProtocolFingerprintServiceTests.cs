@@ -34,7 +34,7 @@ public sealed class ProtocolFingerprintServiceTests
         var protocol = new NormalizedProtocol(
             new List<NormalizedProtocolCompound> { new("BPC-157", 500, "mcg", "daily", string.Empty, string.Empty, true) },
             new List<ProtocolBlendExpansionResponse>());
-        var left = new AnalysisContext("healing", string.Empty, "30-39", "180-219", new List<string>(), "v2", "v1", "v2");
+        var left = new AnalysisContext("healing", new List<string>(), string.Empty, "30-39", "180-219", new List<string>(), "v2", "v1", "v2");
         var right = left with { ScoringVersion = "v3" };
 
         Assert.NotEqual(_service.GetAnalysisKey(protocol, left), _service.GetAnalysisKey(protocol, right));
