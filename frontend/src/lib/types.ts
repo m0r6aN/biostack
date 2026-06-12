@@ -699,6 +699,29 @@ export interface ProtocolAnalyzerResult {
   artifacts: ProtocolAnalyzerArtifact[];
 }
 
+export interface TrustLedgerClaim {
+  claimText: string;
+  confidence: 'high' | 'moderate' | 'low' | 'insufficient' | string;
+  sourceRefs: string[];
+  extractedQuote: string | null;
+  reviewFlags: string[];
+}
+
+export interface TrustLedgerResponse {
+  slug: string;
+  canonicalName: string;
+  evidenceTier: string;
+  completeness: string;
+  needsReview: boolean;
+  qualityFlags: string[];
+  regulatoryBoundary: string;
+  claims: TrustLedgerClaim[];
+  conflicts: string[];
+  promotionBlockers: string[];
+  requiredNextActions: string[];
+  status: string;
+}
+
 // ── Stack Review Board types ────────────────────────────────────────────────
 
 export type SrbFindingSeverity = 'Info' | 'Warning' | 'Critical';

@@ -177,6 +177,58 @@ describe('ProtocolAnalyzerExperience', () => {
     expect(screen.queryByText(/^Replace .+ → /)).not.toBeInTheDocument();
   });
 
+  it('routes full-analysis upgrade CTAs through pricing before billing', async () => {
+    restoreAnalyzerResult(restorableResult());
+
+    render(<ProtocolAnalyzerExperience />);
+
+    await waitFor(() => {
+      expect(screen.getByText('What this means')).toBeInTheDocument();
+    });
+
+    const unlockLinks = screen.getAllByRole('link', { name: 'Unlock full analysis' });
+    expect(unlockLinks.length).toBeGreaterThan(0);
+    for (const link of unlockLinks) {
+      expect(link).toHaveAttribute('href', '/pricing?intent=analyzer');
+    }
+  });
+
+  it('surfaces positive score signals as findings instead of saying no issues exist', async () => {
+    restoreAnalyzerResult(
+      restorableResult({
+        withOptimizedVariant: false,
+        issueMessages: [],
+        scoreExplanation: { baseScore: 50, synergy: 15, redundancy: 0, interference: 0 },
+      }),
+    );
+
+    render(<ProtocolAnalyzerExperience />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Positive signal')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Synergy +15')).toBeInTheDocument();
+    expect(screen.queryByText('No issues yet.')).not.toBeInTheDocument();
+  });
+
+  it('uses neutral fit copy when no analyzer goal is selected', async () => {
+    restoreAnalyzerResult(
+      restorableResult({
+        withOptimizedVariant: false,
+        goal: '',
+        issueMessages: [],
+      }),
+      '',
+    );
+
+    render(<ProtocolAnalyzerExperience />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Select a goal to personalize the fit assessment\./)).toBeInTheDocument();
+    });
+    expect(screen.queryByText(/selected goal/i)).not.toBeInTheDocument();
+  });
+
   it('converts the current analysis when no optimized variant exists', async () => {
     const user = userEvent.setup();
     restoreAnalyzerResult(restorableResult({ withOptimizedVariant: false }));
@@ -196,19 +248,34 @@ describe('ProtocolAnalyzerExperience', () => {
   });
 });
 
-function restoreAnalyzerResult(result: ProtocolAnalyzerResult) {
+function restoreAnalyzerResult(result: ProtocolAnalyzerResult, goal = 'healing') {
   window.localStorage.setItem(
     'biostack.analyzer.session.v3',
     JSON.stringify({
       mode: 'Paste',
       inputText: 'BPC-157 500mcg daily',
-      goal: 'healing',
+      goal,
       result,
     }),
   );
 }
 
-function restorableResult({ withOptimizedVariant = true }: { withOptimizedVariant?: boolean } = {}): ProtocolAnalyzerResult {
+function restorableResult({
+  withOptimizedVariant = true,
+  goal = 'healing',
+  issueMessages = ['Some recovery overlap is present.'],
+  scoreExplanation = { baseScore: 50, synergy: 0, redundancy: -4, interference: 0 },
+}: {
+  withOptimizedVariant?: boolean;
+  goal?: string;
+  issueMessages?: string[];
+  scoreExplanation?: {
+    baseScore: number;
+    synergy: number;
+    redundancy: number;
+    interference: number;
+  };
+} = {}): ProtocolAnalyzerResult {
   return {
     protocol: [
       {
@@ -217,7 +284,7 @@ function restorableResult({ withOptimizedVariant = true }: { withOptimizedVarian
         unit: 'mcg',
         frequency: 'daily',
         duration: '8 weeks',
-        goal: 'healing',
+        goal,
         sourceText: 'BPC-157 500mcg daily',
       },
       {
@@ -226,23 +293,18 @@ function restorableResult({ withOptimizedVariant = true }: { withOptimizedVarian
         unit: 'mg',
         frequency: 'twice weekly',
         duration: '8 weeks',
-        goal: 'healing',
+        goal,
         sourceText: 'TB-500 2mg twice weekly',
       },
     ],
     score: 72,
-    scoreExplanation: {
-      positives: ['Compact protocol'],
-      penalties: [],
-    },
-    issues: [
-      {
-        type: 'redundancy',
-        severity: 'medium',
-        compounds: ['BPC-157', 'TB-500'],
-        message: 'Some recovery overlap is present.',
-      },
-    ],
+    scoreExplanation,
+    issues: issueMessages.map((message) => ({
+      type: 'redundancy',
+      severity: 'medium',
+      compounds: ['BPC-157', 'TB-500'],
+      message,
+    })),
     suggestions: [],
     decomposedBlends: [],
     unknownCompounds: [],

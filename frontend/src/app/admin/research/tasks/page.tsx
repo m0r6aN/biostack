@@ -10,7 +10,7 @@ import { buildResearchTaskExportHref, buildResearchTaskHandoffPayload } from '@/
 import type { ResearchCategoryTaxonomy, ResearchTaskQueue, ResearchTaskQueueItem, ResearchTaskQueueResolvedItem } from '@/lib/research/types';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 type TaskFilterable = {
   compoundName: string;
@@ -20,6 +20,14 @@ type TaskFilterable = {
 };
 
 export default function ResearchTasksPage() {
+  return (
+    <Suspense fallback={<ResearchTasksPageFallback />}>
+      <ResearchTasksPageContent />
+    </Suspense>
+  );
+}
+
+function ResearchTasksPageContent() {
   const searchParams = useSearchParams();
   const tokenRef = useRef<string | null>(null);
   const [taskQueue, setTaskQueue] = useState<ResearchTaskQueue | null>(null);
@@ -246,6 +254,17 @@ export default function ResearchTasksPage() {
             </div>
           )}
         </section>
+      </main>
+    </div>
+  );
+}
+
+function ResearchTasksPageFallback() {
+  return (
+    <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
+      <Header title="Research Tasks" subtitle="Evidence-generation intake queue · Internal" />
+      <main className="flex-1 p-6 max-w-6xl mx-auto w-full">
+        <p className="text-sm text-white/30">Loading...</p>
       </main>
     </div>
   );

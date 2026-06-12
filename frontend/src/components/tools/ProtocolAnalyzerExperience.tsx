@@ -2,7 +2,7 @@
 
 import { trackAnalyzerEvent } from '@/lib/analyzerAnalytics';
 import { saveAnalyzerAnalysis, saveAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
-import { apiClient } from '@/lib/api';
+import { ApiError, apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
 import { FREE_TIER_COMPOUND_LIMIT } from '@/lib/tiers';
 import type {
@@ -22,6 +22,7 @@ import type { HelpTipKey } from '@/lib/helpTips';
 const STORAGE_KEY = 'biostack.analyzer.session.v3';
 const supportedFileTypes = '.pdf,.docx,.xlsx,.csv,.txt,.jpg,.jpeg,.png,.webp';
 const maxUploadLabel = 'Up to 12 MB';
+const ANALYZER_PRICING_HREF = '/pricing?intent=analyzer';
 
 const exampleProtocols = {
   healing: `GLOW Blend (GHK-cu, BPC-157, TB-500)
@@ -65,6 +66,12 @@ type AnalyzerSessionSnapshot = {
   result?: ProtocolAnalyzerResult | null;
 };
 
+type AnalyzerFinding = {
+  label: string;
+  message: string;
+  tone: 'positive' | 'caution' | 'neutral';
+};
+
 function readAnalyzerSessionSnapshot(): AnalyzerSessionSnapshot {
   if (typeof window === 'undefined') {
     return {};
@@ -85,7 +92,7 @@ export function ProtocolAnalyzerExperience() {
   const [mode, setMode] = useState<ProtocolAnalyzerInputType>('Paste');
   const [inputText, setInputText] = useState(exampleProtocols.healing);
   const [linkUrl, setLinkUrl] = useState('');
-  const [goal, setGoal] = useState('healing');
+  const [goal, setGoal] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [result, setResult] = useState<ProtocolAnalyzerResult | null>(null);
   const [error, setError] = useState('');
@@ -103,7 +110,7 @@ export function ProtocolAnalyzerExperience() {
       setMode(restored.mode ?? 'Paste');
       setInputText(restored.inputText || exampleProtocols.healing);
       setLinkUrl(restored.linkUrl || '');
-      setGoal(restored.goal || 'healing');
+      setGoal(restored.goal ?? '');
       setResult(restored.result ?? null);
       setSessionLoaded(true);
     }, 0);
@@ -165,8 +172,10 @@ export function ProtocolAnalyzerExperience() {
   const modeConfig = modeTabs.find((tab) => tab.id === mode) ?? modeTabs[0];
   const optimizedProtocol = useMemo(() => pickOptimizedProtocol(result), [result]);
   const scoreLabel = getScoreLabel(result?.score);
-  const scoreInsight = getScoreInsight(result, optimizedProtocol);
+  const hasSelectedGoal = goal.trim().length > 0;
+  const scoreInsight = getScoreInsight(result, optimizedProtocol, hasSelectedGoal);
   const whatThisMeans = getWhatThisMeans(result, optimizedProtocol);
+  const analyzerFindings = buildAnalyzerFindings(result);
   const premiumLocked = Boolean(result);
   // BioStack only surfaces alternatives when one actually scores higher. If
   // nothing crosses the meaningful-improvement threshold, we hide the comparison
@@ -491,6 +500,7 @@ export function ProtocolAnalyzerExperience() {
                   <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/42">Goal</p>
                   <div className="grid gap-2">
                     {[
+                      ['', 'Not sure yet'],
                       ['healing', 'Healing'],
                       ['fat loss', 'Fat loss'],
                       ['longevity', 'Longevity'],
@@ -555,7 +565,7 @@ export function ProtocolAnalyzerExperience() {
             </div>
 
             {isPending && <AnalyzerProgressCard mode={mode} />}
-            {error && <p className="mt-4 text-sm leading-6 text-red-100/85">{error}</p>}
+            {error && <AnalyzerFailureState message={error} onRetry={analyzeProtocol} />}
             {showSaveNotice && (
               <p className="mt-4 text-sm leading-6 text-emerald-100/80">
                 Analysis saved locally{savedAnalysisId ? ` as ${savedAnalysisId}` : ''}. It will stay available through sign-in and protocol conversion.
@@ -588,7 +598,11 @@ export function ProtocolAnalyzerExperience() {
           {result && <ShareableSummaryStub />}
 
           <section className="grid gap-4 md:grid-cols-2">
-            <ResultList title="What BioStack found" empty="No issues yet." items={result?.issues.map((issue) => issue.message) ?? []} />
+            <FindingList
+              title="What BioStack found"
+              empty={result ? 'More findings are available in Operator.' : 'Run an analysis to see findings.'}
+              findings={analyzerFindings}
+            />
             <ResultList title="Parser notes" empty="Parser confidence looks clean." items={result?.parserWarnings ?? buildParserWarnings(result)} />
           </section>
         </div>
@@ -680,7 +694,7 @@ export function ProtocolAnalyzerExperience() {
                 Convert to BioStack Protocol
               </button>
               <Link
-                href="/billing"
+                href={ANALYZER_PRICING_HREF}
                 onClick={onUnlockClicked}
                 className="rounded-lg border border-white/10 px-4 py-2 text-sm font-semibold text-white/72 hover:border-white/20 hover:text-white"
               >
@@ -695,7 +709,7 @@ export function ProtocolAnalyzerExperience() {
         <div className="fixed inset-x-0 bottom-0 z-20 border-t border-white/10 bg-[#0B1118]/95 p-3 backdrop-blur md:hidden">
           <div className="mx-auto max-w-7xl">
             {premiumLocked ? (
-              <Link href="/billing" onClick={onUnlockClicked} className="block rounded-lg bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-slate-950">
+              <Link href={ANALYZER_PRICING_HREF} onClick={onUnlockClicked} className="block rounded-lg bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-slate-950">
                 Unlock full analysis
               </Link>
             ) : user ? (
@@ -1112,6 +1126,59 @@ function ResultList({ title, empty, items }: { title: string; empty: string; ite
   );
 }
 
+function FindingList({
+  title,
+  empty,
+  findings,
+}: {
+  title: string;
+  empty: string;
+  findings: AnalyzerFinding[];
+}) {
+  const toneClasses = {
+    positive: 'border-emerald-300/20 bg-emerald-400/[0.08] text-emerald-50',
+    caution: 'border-amber-300/20 bg-amber-400/[0.08] text-amber-50',
+    neutral: 'border-white/10 bg-black/18 text-white/72',
+  };
+
+  return (
+    <section className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+      <h2 className="text-lg font-semibold text-white">{title}</h2>
+      {findings.length > 0 ? (
+        <ul className="mt-3 space-y-2.5">
+          {findings.map((finding) => (
+            <li key={`${finding.label}-${finding.message}`} className={`rounded-lg border p-3 ${toneClasses[finding.tone]}`}>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] opacity-75">{finding.label}</p>
+              <p className="mt-1 text-sm leading-6">{finding.message}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-3 text-sm leading-6 text-white/45">{empty}</p>
+      )}
+    </section>
+  );
+}
+
+function AnalyzerFailureState({ message, onRetry }: { message: string; onRetry: () => void }) {
+  return (
+    <div className="mt-4 rounded-lg border border-amber-300/20 bg-amber-400/[0.08] p-4">
+      <p className="text-sm font-semibold text-amber-50">Analysis is temporarily unavailable.</p>
+      <p className="mt-2 text-sm leading-6 text-amber-50/78">{message}</p>
+      <p className="mt-1 text-sm leading-6 text-white/52">
+        Calculators and locally saved work still work while the intelligence service recovers.
+      </p>
+      <button
+        type="button"
+        onClick={onRetry}
+        className="mt-3 rounded-lg border border-amber-200/25 px-4 py-2 text-sm font-semibold text-amber-50 transition-colors hover:border-amber-100/45 hover:text-white"
+      >
+        Try again
+      </button>
+    </div>
+  );
+}
+
 function ImprovementCard({
   title,
   teaser,
@@ -1215,6 +1282,70 @@ function ScoreChip({ label, value, tone, helpKey }: {
   );
 }
 
+function buildAnalyzerFindings(result: ProtocolAnalyzerResult | null): AnalyzerFinding[] {
+  if (!result) return [];
+
+  const findings: AnalyzerFinding[] = [];
+  const explanation = result.scoreExplanation;
+
+  if (explanation.synergy > 0) {
+    findings.push({
+      label: 'Positive signal',
+      message: `Synergy +${Math.round(explanation.synergy)}`,
+      tone: 'positive',
+    });
+  }
+
+  if (explanation.redundancy < 0) {
+    findings.push({
+      label: 'Redundancy',
+      message: `Redundancy ${Math.round(explanation.redundancy)}`,
+      tone: 'caution',
+    });
+  }
+
+  if (explanation.interference < 0) {
+    findings.push({
+      label: 'Interference',
+      message: `Interference ${Math.round(explanation.interference)}`,
+      tone: 'caution',
+    });
+  }
+
+  for (const issue of result.issues) {
+    findings.push({
+      label: findingLabelForIssue(issue.type),
+      message: issue.message,
+      tone: issue.type === 'redundancy' || issue.type === 'overlap' ? 'caution' : 'neutral',
+    });
+  }
+
+  if (result.unknownCompounds.length > 0) {
+    findings.push({
+      label: 'Unknown or partially parsed',
+      message: `${result.unknownCompounds.length} compound${result.unknownCompounds.length === 1 ? '' : 's'} could not be fully normalized.`,
+      tone: 'neutral',
+    });
+  }
+
+  return findings;
+}
+
+function findingLabelForIssue(type: string): string {
+  switch (type) {
+    case 'redundancy':
+      return 'Redundancy';
+    case 'overlap':
+      return 'Caution';
+    case 'inefficiency':
+      return 'Caution';
+    case 'excessive_compounds':
+      return 'Caution';
+    default:
+      return 'Unknown or partially parsed';
+  }
+}
+
 function buildParserWarnings(result: ProtocolAnalyzerResult | null): string[] {
   if (!result) return [];
   const warnings: string[] = [];
@@ -1222,7 +1353,7 @@ function buildParserWarnings(result: ProtocolAnalyzerResult | null): string[] {
     warnings.push(`${result.unknownCompounds.length} compound${result.unknownCompounds.length === 1 ? '' : 's'} could not be fully normalized.`);
   }
   if (result.decomposedBlends.length > 0) {
-    warnings.push(`${result.decomposedBlends.length} blend${result.decomposedBlends.length === 1 ? '' : 's'} exploded into constituent compounds.`);
+    warnings.push(`${result.decomposedBlends.length} blend${result.decomposedBlends.length === 1 ? ' was' : 's were'} expanded into individual compounds.`);
   }
   if (result.protocol.some((entry) => !entry.frequency || entry.dose === 0)) {
     warnings.push('One or more items were only partially extracted from the source text.');
@@ -1254,7 +1385,11 @@ function getScoreBand(score: number | undefined): string {
   return 'high_concern';
 }
 
-function getScoreInsight(result: ProtocolAnalyzerResult | null, optimized: OptimizedProtocolView | null): string {
+function getScoreInsight(
+  result: ProtocolAnalyzerResult | null,
+  optimized: OptimizedProtocolView | null,
+  hasSelectedGoal: boolean,
+): string {
   if (!result) {
     return 'Run an analysis to score the protocol.';
   }
@@ -1282,6 +1417,10 @@ function getScoreInsight(result: ProtocolAnalyzerResult | null, optimized: Optim
 
   if (optimized && optimized.score > result.score) {
     return `BioStack found an alternative arrangement with an internal model delta of ${formatDelta(optimized.score - result.score)} points.`;
+  }
+
+  if (!hasSelectedGoal && result.score >= 55) {
+    return 'This stack shows a mixed fit based on detected relationships and known overlap patterns. Select a goal to personalize the fit assessment.';
   }
 
   if (result.protocol.length <= 3 && result.score >= 55) {
@@ -1383,7 +1522,21 @@ function formatAnalyzerError(error: unknown, mode: ProtocolAnalyzerInputType): s
     return 'Scan is temporarily unavailable. Upload a PDF, spreadsheet, or paste text to analyze now.';
   }
 
-  return message;
+  if (error instanceof ApiError) {
+    if (error.status === 400 || error.status === 422) {
+      return 'BioStack could not analyze that input yet. Check the protocol text and try again.';
+    }
+
+    if (error.status === 404) {
+      return 'BioStack could not reach the intelligence route for this analysis. Your input is still safe. Try again in a moment.';
+    }
+  }
+
+  if (/api error|failed to fetch|network|load failed|fetch/i.test(message)) {
+    return 'BioStack could not reach the intelligence service. Your input is still safe. Try again in a moment.';
+  }
+
+  return message || 'Analysis is temporarily unavailable. Try again in a moment.';
 }
 
 function sourceTypeLabel(result: ProtocolAnalyzerResult): string {

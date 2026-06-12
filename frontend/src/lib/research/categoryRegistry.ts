@@ -35,9 +35,9 @@ export function normalizeResearchCategory(taxonomy: ResearchCategoryTaxonomy | n
 }
 
 export function normalizeResearchCategories(taxonomy: ResearchCategoryTaxonomy | null | undefined, value: string | readonly string[]) {
-  const items = Array.isArray(value)
-    ? value
-    : value.split(',').map((item) => item.trim());
+  const items = typeof value === 'string'
+    ? value.split(',').map((item) => item.trim())
+    : value;
 
   const seen = new Set<string>();
   const normalized: string[] = [];

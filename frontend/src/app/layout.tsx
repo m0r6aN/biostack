@@ -6,7 +6,10 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'BioStack Protocol Console',
+  title: {
+    default: 'BioStack | Protocol Intelligence',
+    template: '%s',
+  },
   description:
     'Your protocol intelligence system. Track compounds, surface overlap, and turn daily signal into continuity.',
   icons: {

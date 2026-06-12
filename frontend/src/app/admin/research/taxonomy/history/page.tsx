@@ -13,7 +13,7 @@ import {
 import type { ResearchCategoryTaxonomyAuditEntry, ResearchCategoryTaxonomyAuditLog } from '@/lib/research/types';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 
 type AuditFilter = 'all' | ResearchCategoryTaxonomyAuditEntry['action'];
 
@@ -24,6 +24,14 @@ const FILTERS: Array<{ id: AuditFilter; label: string }> = [
 ];
 
 export default function ResearchTaxonomyHistoryPage() {
+  return (
+    <Suspense fallback={<ResearchTaxonomyHistoryFallback />}>
+      <ResearchTaxonomyHistoryContent />
+    </Suspense>
+  );
+}
+
+function ResearchTaxonomyHistoryContent() {
   const searchParams = useSearchParams();
   const focusedEntryId = searchParams.get('entry');
   const [auditLog, setAuditLog] = useState<ResearchCategoryTaxonomyAuditLog | null>(null);
@@ -159,6 +167,17 @@ export default function ResearchTaxonomyHistoryPage() {
             </div>
           )}
         </section>
+      </main>
+    </div>
+  );
+}
+
+function ResearchTaxonomyHistoryFallback() {
+  return (
+    <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
+      <Header title="Taxonomy Timeline" subtitle="Governance event stream · Internal" />
+      <main className="flex-1 p-6 max-w-6xl mx-auto w-full">
+        <p className="text-sm text-white/30">Loading...</p>
       </main>
     </div>
   );

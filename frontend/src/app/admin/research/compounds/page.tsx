@@ -8,7 +8,7 @@ import { fetchPromotionManifest, fetchResearchCategoryTaxonomy, fetchResearchSum
 import { toSlug } from '@/lib/research/slugs';
 import type { PromotionManifest, ResearchCategoryTaxonomy, ResearchSummary, ResearchSummaryCompound, ResearchTaskQueue } from '@/lib/research/types';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 
 type QueueTabKey = 'requested' | 'review' | 'rereview' | 'processing';
 
@@ -38,6 +38,14 @@ function sortCompounds(compounds: ResearchSummaryCompound[], sort: string): Rese
 }
 
 export default function CompoundList() {
+  return (
+    <Suspense fallback={<AdminResearchPageFallback title="Compound Review" />}>
+      <CompoundListContent />
+    </Suspense>
+  );
+}
+
+function CompoundListContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [summary, setSummary] = useState<ResearchSummary | null>(null);
@@ -202,6 +210,17 @@ export default function CompoundList() {
 
         {loading && <p className="text-sm text-white/30 px-1">Loading...</p>}
         {error && <p className="text-sm text-rose-300 px-1">{error}</p>}
+      </main>
+    </div>
+  );
+}
+
+function AdminResearchPageFallback({ title }: { title: string }) {
+  return (
+    <div className="flex-1 flex flex-col min-h-screen bg-[#0B0F14]">
+      <Header title={title} subtitle="Research pipeline triage queue · Internal" />
+      <main className="flex-1 p-4 max-w-7xl mx-auto w-full">
+        <p className="text-sm text-white/30 px-1">Loading...</p>
       </main>
     </div>
   );
