@@ -123,6 +123,28 @@ describe('RefineAnalysisPanel', () => {
     });
   });
 
+  it('prefill does not re-fire on subsequent renders', async () => {
+    const onChange = vi.fn();
+    const { rerender } = render(
+      <RefineAnalysisPanel
+        context={EMPTY_CONTEXT}
+        onChange={onChange}
+        profile={MOCK_PROFILE}
+        isAuthenticated
+      />,
+    );
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+    rerender(
+      <RefineAnalysisPanel
+        context={EMPTY_CONTEXT}
+        onChange={onChange}
+        profile={MOCK_PROFILE}
+        isAuthenticated
+      />,
+    );
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
   it('anonymous user (isAuthenticated=false, profile=null): sign-in nudge link is shown after expand', async () => {
     render(
       <RefineAnalysisPanel

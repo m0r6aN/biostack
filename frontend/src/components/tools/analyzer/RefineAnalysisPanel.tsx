@@ -65,9 +65,7 @@ export function RefineAnalysisPanel({
     trackAnalyzerEvent('analyzer_profile_nudge_clicked');
   }
 
-  const profilePrefilled =
-    (profile !== null && prefillApplied) ||
-    (profile !== null && (context.sex !== '' || context.age !== '' || context.weight !== ''));
+  const profilePrefilled = profile !== null && prefillApplied;
 
   return (
     <div className="rounded-lg border border-white/10 bg-black/20 p-3">
@@ -111,25 +109,13 @@ export function RefineAnalysisPanel({
               </Link>
             </div>
           ) : (
-            <div>
-              {!isAuthenticated ? (
-                <Link
-                  href="/auth/signin?callbackUrl=/tools/analyzer"
-                  onClick={handleNudgeClick}
-                  className="text-xs text-emerald-400/80 hover:text-emerald-400 transition-colors underline underline-offset-2"
-                >
-                  Create a profile to autofill this and track your results over time.
-                </Link>
-              ) : (
-                <Link
-                  href="/profiles"
-                  onClick={handleNudgeClick}
-                  className="text-xs text-emerald-400/80 hover:text-emerald-400 transition-colors underline underline-offset-2"
-                >
-                  Create a profile to autofill this and track your results over time.
-                </Link>
-              )}
-            </div>
+            <Link
+              href={isAuthenticated ? '/profiles' : '/auth/signin?callbackUrl=/tools/analyzer'}
+              onClick={handleNudgeClick}
+              className="text-xs text-emerald-400/80 hover:text-emerald-400 transition-colors underline underline-offset-2"
+            >
+              Create a profile to autofill this and track your results over time.
+            </Link>
           )}
 
           {/* Sex */}
