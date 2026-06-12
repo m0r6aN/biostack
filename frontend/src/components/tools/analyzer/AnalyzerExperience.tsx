@@ -305,16 +305,20 @@ export function AnalyzerExperience() {
   }
 
   function onScanRequested() {
-    setSnapshot((s) => ({ ...s, mode: 'CameraScan', result: null }));
+    // InputStage owns scan analytics (fires analyzer_scan_selected +
+    // analyzer_input_mode_selected itself) and the camera auto-open. The
+    // orchestrator only updates state here to avoid double-firing.
+    setMode('CameraScan');
     setError('');
-    trackAnalyzerEvent('analyzer_scan_selected', { inputType: 'CameraScan' });
-    trackAnalyzerEvent('analyzer_input_mode_selected', { inputType: 'CameraScan' });
+    setResult(null);
   }
 
   function saveAnalysisLocally() {
     if (!result) {
       return;
     }
+
+    const { goal } = buildAnalyzerGoalPayload(goals.primaryCategory, goals.refinementGoalIds);
 
     const analysis = saveAnalyzerAnalysis({
       inputType: mode,
@@ -326,7 +330,7 @@ export function AnalyzerExperience() {
     setSavedAnalysisId(analysis.id);
     trackAnalyzerEvent('analyzer_save_clicked', {
       inputType: result.inputType,
-      goal: goals.primaryCategory,
+      goal,
       scoreBand: getScoreBand(result.score),
       issueCount: result.issues.length,
       recommendationCount: recommendationCount(result),

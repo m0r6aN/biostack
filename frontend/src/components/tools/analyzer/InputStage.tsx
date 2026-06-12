@@ -4,7 +4,7 @@ import { trackAnalyzerEvent } from '@/lib/analyzerAnalytics';
 import type { ProtocolAnalyzerInputType, PersonProfile } from '@/lib/types';
 import type { AnalyzerGoalSelection } from '@/lib/analyzerGoals';
 import type { ChangeEvent } from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { AnalyzerGoalPicker } from './AnalyzerGoalPicker';
 import { RefineAnalysisPanel } from './RefineAnalysisPanel';
 import type { AnalyzerContextFields } from './useAnalyzerSession';
@@ -74,6 +74,16 @@ export function InputStage({
 
   const modeConfig = modeTabs.find((tab) => tab.id === mode) ?? modeTabs[0];
 
+  // When the parent clears inputs, selectedFile becomes null but the native
+  // file-input widgets still show the old filename (the parent can't reach
+  // these refs). Reset them here so the UI matches the cleared state.
+  useEffect(() => {
+    if (selectedFile === null) {
+      if (uploadInputRef.current) uploadInputRef.current.value = '';
+      if (cameraInputRef.current) cameraInputRef.current.value = '';
+    }
+  }, [selectedFile]);
+
   const analyzeDisabled =
     isPending ||
     (mode === 'Paste' && inputText.trim().length === 0) ||
@@ -89,6 +99,11 @@ export function InputStage({
     trackAnalyzerEvent('analyzer_scan_selected', { inputType: 'CameraScan' });
     trackAnalyzerEvent('analyzer_input_mode_selected', { inputType: 'CameraScan' });
     onScanRequested();
+    // The parent's onScanRequested sets mode='CameraScan', which renders the
+    // camera file input. Defer with setTimeout(...,0) so the input exists past
+    // the parent's setMode before we open the native picker (parity with the
+    // monolith's auto-open).
+    window.setTimeout(() => cameraInputRef.current?.click(), 0);
   }
 
   return (
