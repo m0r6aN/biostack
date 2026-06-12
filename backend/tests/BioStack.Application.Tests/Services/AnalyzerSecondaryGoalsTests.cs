@@ -1,6 +1,7 @@
 namespace BioStack.Application.Tests.Services;
 
 using BioStack.Application.Services;
+using BioStack.Domain.Entities;
 using Xunit;
 
 public sealed class AnalyzerSecondaryGoalsTests
@@ -49,5 +50,27 @@ public sealed class AnalyzerSecondaryGoalsTests
         Assert.NotEqual(
             fingerprint.GetAnalysisKey(protocol, without),
             fingerprint.GetAnalysisKey(protocol, with));
+    }
+
+    [Fact]
+    public void CombinedGoalAlignment_WeightsSecondaryAtHalf()
+    {
+        // KnowledgeEntry whose benefits match ONLY the secondary goal term.
+        var entry = new KnowledgeEntry
+        {
+            CanonicalName = "Retatrutide",
+            Benefits = new List<string> { "weight loss" },
+            Pathways = new List<string>(),
+            MechanismSummary = string.Empty
+        };
+
+        var primaryOnly = CounterfactualCandidateService.CombinedGoalAlignment(entry, "healing", new List<string>());
+        var withSecondary = CounterfactualCandidateService.CombinedGoalAlignment(entry, "healing", new List<string> { "weight loss" });
+
+        Assert.Equal(0d, primaryOnly);
+        Assert.True(withSecondary > 0d);
+
+        var directPrimary = CounterfactualCandidateService.CombinedGoalAlignment(entry, "weight loss", new List<string>());
+        Assert.Equal(directPrimary * 0.5d, withSecondary, precision: 10);
     }
 }

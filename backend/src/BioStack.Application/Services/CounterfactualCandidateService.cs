@@ -31,7 +31,7 @@ public sealed class CounterfactualCandidateService : ICounterfactualCandidateSer
             .Select(candidate => new ProtocolCandidate(
                 candidate.CanonicalName,
                 candidate,
-                GoalAlignment(candidate, context.Goal),
+                CombinedGoalAlignment(candidate, context.Goal, context.SecondaryGoals),
                 PathwaySimilarity(candidate, target, currentPathways),
                 BuildReason(candidate, target, context.Goal)))
             .OrderByDescending(candidate => candidate.GoalAlignmentScore + candidate.PathwaySimilarityScore)
@@ -82,6 +82,17 @@ public sealed class CounterfactualCandidateService : ICounterfactualCandidateSer
         return currentProtocol.Any(existing =>
             candidate.AvoidWith.Any(item => item.Contains(existing.CanonicalName, StringComparison.OrdinalIgnoreCase))
             || existing.AvoidWith.Any(item => item.Contains(candidate.CanonicalName, StringComparison.OrdinalIgnoreCase)));
+    }
+
+    internal static double CombinedGoalAlignment(KnowledgeEntry candidate, string goal, IReadOnlyList<string> secondaryGoals)
+    {
+        var combined = GoalAlignment(candidate, goal);
+        foreach (var secondary in secondaryGoals)
+        {
+            combined += 0.5d * GoalAlignment(candidate, secondary);
+        }
+
+        return combined;
     }
 
     private static double GoalAlignment(KnowledgeEntry candidate, string goal)

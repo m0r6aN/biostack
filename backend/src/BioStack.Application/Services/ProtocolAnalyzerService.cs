@@ -86,6 +86,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
         var analysisContext = _normalizationService.BuildAnalysisContext(request.Goal, request.SecondaryGoals, request.Sex, request.Age, request.Weight, request.ExistingStackContext);
         var optimizationContext = _normalizationService.BuildOptimizationContext(
             request.Goal,
+            request.SecondaryGoals,
             request.MaxCompounds,
             request.RequiredCompoundIds,
             request.ExcludedCompoundIds,

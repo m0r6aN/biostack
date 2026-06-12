@@ -70,6 +70,7 @@ public sealed class ProtocolFingerprintService : IProtocolFingerprintService
         var protocolHash = GetNormalizedProtocolHash(protocol);
         var constraints = string.Join(":",
             NormalizeToken(context.Goal),
+            string.Join(",", context.SecondaryGoals.OrderBy(item => item, StringComparer.OrdinalIgnoreCase).Select(NormalizeToken)),
             context.MaxCompounds,
             NormalizeToken(context.OptimizationMode),
             string.Join(",", context.RequiredCompoundIds.OrderBy(item => item, StringComparer.OrdinalIgnoreCase).Select(NormalizeToken)),

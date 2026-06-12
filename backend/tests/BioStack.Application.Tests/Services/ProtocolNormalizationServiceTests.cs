@@ -123,21 +123,21 @@ public sealed class ProtocolNormalizationServiceTests
     [Fact]
     public void BuildOptimizationContext_DefaultsMaxCompoundsToFive()
     {
-        var ctx = _sut.BuildOptimizationContext(null, null, null, null, null);
+        var ctx = _sut.BuildOptimizationContext(null, null, null, null, null, null);
         Assert.Equal(5, ctx.MaxCompounds);
     }
 
     [Fact]
     public void BuildOptimizationContext_UsesProvidedMaxCompounds()
     {
-        var ctx = _sut.BuildOptimizationContext(null, 3, null, null, null);
+        var ctx = _sut.BuildOptimizationContext(null, null, 3, null, null, null);
         Assert.Equal(3, ctx.MaxCompounds);
     }
 
     [Fact]
     public void BuildOptimizationContext_DeduplicatesRequiredCompoundIds()
     {
-        var ctx = _sut.BuildOptimizationContext(null, null,
+        var ctx = _sut.BuildOptimizationContext(null, null, null,
             new[] { "BPC-157", "bpc-157" }, null, null);
         Assert.Single(ctx.RequiredCompoundIds);
     }
@@ -145,7 +145,7 @@ public sealed class ProtocolNormalizationServiceTests
     [Fact]
     public void BuildOptimizationContext_FiltersBlankExcludedIds()
     {
-        var ctx = _sut.BuildOptimizationContext(null, null, null,
+        var ctx = _sut.BuildOptimizationContext(null, null, null, null,
             new[] { "TB-500", "", "  " }, null);
         Assert.Single(ctx.ExcludedCompoundIds);
         Assert.Equal("TB-500", ctx.ExcludedCompoundIds[0]);
@@ -154,7 +154,7 @@ public sealed class ProtocolNormalizationServiceTests
     [Fact]
     public void BuildOptimizationContext_TrimsGoal()
     {
-        var ctx = _sut.BuildOptimizationContext("  longevity  ", null, null, null, null);
+        var ctx = _sut.BuildOptimizationContext("  longevity  ", null, null, null, null, null);
         Assert.Equal("longevity", ctx.Goal);
     }
 }
