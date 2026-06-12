@@ -122,3 +122,5 @@ research/output/*
 .superpowers/
 backend/tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj.lscache
 backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj.lscache
+
+.firecrawl/
