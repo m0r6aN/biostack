@@ -337,6 +337,11 @@ export class ApiClient {
     sourceName?: string;
     file?: File;
     goal?: string;
+    secondaryGoals?: string[];
+    sex?: string;
+    age?: number;
+    weight?: number;
+    existingStackContext?: string[];
     maxCompounds?: number;
   }): Promise<ProtocolAnalyzerResult> {
     if (payload.file) {
@@ -345,6 +350,21 @@ export class ApiClient {
       formData.append('goal', payload.goal ?? '');
       if (payload.maxCompounds) {
         formData.append('maxCompounds', String(payload.maxCompounds));
+      }
+      if (payload.secondaryGoals?.length) {
+        formData.append('secondaryGoals', payload.secondaryGoals.join('\n'));
+      }
+      if (payload.sex) {
+        formData.append('sex', payload.sex);
+      }
+      if (payload.age) {
+        formData.append('age', String(payload.age));
+      }
+      if (payload.weight) {
+        formData.append('weight', String(payload.weight));
+      }
+      if (payload.existingStackContext?.length) {
+        formData.append('existingStackContext', payload.existingStackContext.join('\n'));
       }
 
       formData.append('file', payload.file, payload.sourceName ?? payload.file.name);
