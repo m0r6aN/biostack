@@ -125,6 +125,8 @@ research/output/*
 .superpowers/
 backend/tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj.lscache
 backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj.lscache
+
+.firecrawl/
 docs/BioStack_Protocol_Printable_Packet_v2.docx
 docs/BioStack_Protocol_Printable_Packet_v2.pdf
 docs/BioStack_Protocol_Quick_Reference_v2.docx
