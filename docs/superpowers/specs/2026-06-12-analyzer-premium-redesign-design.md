@@ -48,34 +48,26 @@ Mobile sticky bottom CTA bar is retained with its existing tier logic (unlock / 
 
 ## 2. Goals system
 
-### Taxonomy
-Twelve goals, defined in a single frontend module as `{ id, label, description, tokens, icon }`:
+**Amended 2026-06-12 (pre-plan):** the product already has a canonical goals taxonomy — `frontend/src/lib/goals.ts` defines 7 categories (`GOAL_CATEGORIES`) and 23 specific goals (`GOAL_DEFINITIONS`), with existing `GoalPicker` / `GoalBadge` / `GoalDisplay` components used by profiles, check-ins, and the dashboard. The analyzer reuses this taxonomy instead of introducing a new 12-goal list, so the product keeps one goal vocabulary.
 
-| Goal | Tokens sent to API (aligned to knowledge-base benefits vocabulary) |
-|---|---|
-| Healing & recovery | `healing injury recovery tissue repair` |
-| Fat loss | `fat loss weight loss` |
-| Muscle & performance | `muscle performance strength` |
-| Longevity | `longevity anti-aging` |
-| Cognitive & focus | `cognitive enhancement focus` |
-| Sleep | `sleep` |
-| Energy & metabolic | `energy metabolic health insulin sensitivity` |
-| Gut health | `gut health` |
-| Hormone support | `hormone` |
-| Skin & hair | `skin hair` |
-| Immune | `immune` |
-| Libido & sexual health | `libido sexual health` |
+### Taxonomy & selection model: categories + refine
+- **Primary** (single-select, filled chip): one of the 7 existing categories — Recovery & Repair, Energy & Metabolism, Cognitive & Neurological, Longevity & Aging, Performance, Skin & Appearance, Organ & System Health — plus "Not sure yet" (valid no-goal state, empty goal string).
+- **Refine** (optional, up to 2): picking a primary category reveals its specific goals from `GOAL_DEFINITIONS` as outline chips. Selected refinements become secondary goals at lower scoring weight.
+- Category metadata (labels, colors) comes from `GOAL_CATEGORIES`; the analyzer adds a compact picker variant, not a fork of the taxonomy.
+- Example buttons map to categories (healing → `recovery`, fat loss → `energy` + `energy-fat-loss` refinement, longevity → `longevity`).
+
+### API token mapping
+A new module `frontend/src/lib/analyzerGoals.ts` maps taxonomy keys to API token strings (the backend token-matches the goal string against knowledge-base benefits/pathways/mechanisms):
+- Per-category primary tokens (e.g. `recovery` → `"healing injury recovery tissue repair"`)
+- Per-specific-goal secondary tokens (e.g. `energy-fat-loss` → `"fat loss weight loss"`)
 
 Token strings are an implementation draft — final values must be validated against the knowledge base by the guard test (below) and adjusted to whatever actually matches.
 
-### Selection model
-- **Primary**: single-select, filled emerald chip. Drives scoring. "Not sure yet" remains a valid no-goal state (empty goal string).
-- **Secondary**: up to 2, outline chips, revealed after a primary is chosen. Inform goal-aware alternatives at lower weight.
-- Signed-in users whose profile `GoalSummary` matches a taxonomy goal get it preselected.
-- Example buttons continue to set a matching goal (healing / fat loss / longevity).
+### Profile prefill
+Signed-in users with profile goals (same goal IDs, via `profile.goals` / `getMockProfileGoalIds`) get the first goal's category preselected as primary and the specific goal as a refinement. Fallback: a profile `GoalSummary` matching a category label preselects that category.
 
 ### Guard test (backend)
-Every taxonomy goal's tokens must match at least one knowledge entry's benefits, pathways, or mechanism summary — same spirit as `StackScoreChipVocabularyTests`. Build fails if a goal would silently score zero alignment. The taxonomy token list is mirrored in a backend test fixture (or read from a shared source) so frontend and test cannot drift silently — the test file documents the frontend module path it mirrors.
+Every category token string and specific-goal token string must match at least one knowledge entry's benefits, pathways, or mechanism summary — same spirit as `StackScoreChipVocabularyTests`. Build fails if a goal would silently score zero alignment. The token map is mirrored in a backend test fixture; the test file documents the frontend module path (`frontend/src/lib/analyzerGoals.ts`) it mirrors.
 
 ## 3. Context panel ("Refine analysis")
 
@@ -105,7 +97,7 @@ Stay within the dark + emerald identity; raise the craft:
 ```
 AnalyzerExperience.tsx        — thin orchestrator: stage state, analysis call, session
 InputStage.tsx                — mode tabs + input panels (paste/upload/scan/link)
-GoalPicker.tsx                — taxonomy, primary + secondary selection
+AnalyzerGoalPicker.tsx        — category-primary + refine selection (reuses lib/goals.ts taxonomy)
 RefineAnalysisPanel.tsx       — context fields, profile prefill, profile nudge
 AnalyzingState.tsx            — staged progress + report skeleton
 ReportSummaryBar.tsx          — sticky collapsed-input bar with Edit
@@ -117,8 +109,9 @@ report/
   AlternativeScenarios.tsx
   NextSteps.tsx
 useAnalyzerSession.ts         — localStorage persistence + migration
-goals.ts                      — goal taxonomy definition
 ```
+
+Plus `frontend/src/lib/analyzerGoals.ts` (API token mapping over the existing `lib/goals.ts` taxonomy).
 
 ### Session schema
 Storage key bumps `biostack.analyzer.session.v3` → `v4`. New shape stores `{ primaryGoal, secondaryGoals, context: { sex, age, weight, existingStack } }` alongside the existing fields. v3 snapshots migrate on read: old `goal` string maps to the closest taxonomy primary (or is carried as-is if unmatched); absent fields default empty.
@@ -126,8 +119,8 @@ Storage key bumps `biostack.analyzer.session.v3` → `v4`. New shape stores `{ p
 ## 6. Backend changes
 
 Deliberately small:
-- `AnalyzeProtocolRequest`: add optional `SecondaryGoals: List<string>`, threaded through `BuildAnalysisContext`
-- `CounterfactualCandidateService.GoalAlignment`: primary goal weight 1.0, each secondary 0.5
+- `AnalyzeProtocolRequest`: add optional `SecondaryGoals: List<string>`, threaded through `BuildAnalysisContext` into `AnalysisContext` and the analysis cache key (`ProtocolFingerprintService.GetAnalysisKey`) so cached results can't ignore secondary goals
+- `CounterfactualCandidateService`: combined goal alignment — primary goal weight 1.0, each secondary goal 0.5
 - Goal-vocabulary guard test (§2)
 - No schema or DB changes
 
