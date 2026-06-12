@@ -47,6 +47,32 @@ describe('AlternativeScenarios', () => {
     expect(container.firstChild).toBeNull();
   });
 
+  it('renders null when only goalAwareOptions are present (no remove/swap/simplified, optimized=null)', () => {
+    const { container } = render(
+      <AlternativeScenarios
+        result={makeResult({
+          counterfactuals: {
+            baselineScore: 70,
+            bestRemoveOne: [],
+            bestSwapOne: [],
+            bestSimplifiedProtocol: null,
+            goalAwareOptions: [
+              {
+                goal: 'longevity',
+                compounds: [],
+                score: 74,
+                reasons: ['Closer fit for longevity.'],
+              },
+            ],
+          },
+        })}
+        optimized={null}
+      />,
+    );
+    // hasMeaningfulImprovement excludes goal-aware-only, so nothing renders.
+    expect(container.firstChild).toBeNull();
+  });
+
   it('renders "Alternative scenarios" heading when an optimized view is passed', () => {
     render(<AlternativeScenarios result={makeResult()} optimized={OPTIMIZED} />);
     expect(screen.getByText('Alternative scenarios')).toBeInTheDocument();

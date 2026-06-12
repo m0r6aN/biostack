@@ -156,7 +156,7 @@ export function FindingsSection({ result, showExtractedText, onToggleExtractedTe
       {/* Findings list + parser notes */}
       <div className="grid gap-4 md:grid-cols-2">
         <FindingList
-          title="What BioStack found"
+          title="Analysis findings"
           empty="More findings are available in Operator."
           findings={findings}
         />

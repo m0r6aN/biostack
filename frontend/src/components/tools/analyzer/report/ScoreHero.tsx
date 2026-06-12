@@ -163,6 +163,7 @@ export function ScoreHero({ result, scoreInsight, whatThisMeans }: ScoreHeroProp
       <button
         type="button"
         onClick={() => setShowWhyScore((v) => !v)}
+        aria-expanded={showWhyScore}
         className="mt-4 w-full text-sm font-semibold text-white/72 transition-colors hover:text-white"
       >
         {showWhyScore ? 'Hide score breakdown' : 'Why this score?'}

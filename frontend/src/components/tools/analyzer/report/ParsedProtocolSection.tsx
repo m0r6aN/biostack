@@ -25,6 +25,7 @@ export function ParsedProtocolSection({ result }: ParsedProtocolSectionProps) {
         <button
           type="button"
           onClick={() => setCollapsed((c) => !c)}
+          aria-expanded={!collapsed}
           className="flex items-center gap-2 text-lg font-semibold text-white transition-colors hover:text-white/80"
         >
           <span>Parsed Protocol</span>

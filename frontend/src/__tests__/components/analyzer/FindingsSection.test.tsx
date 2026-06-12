@@ -34,7 +34,7 @@ function makeResult(overrides: Partial<ProtocolAnalyzerResult> = {}): ProtocolAn
 }
 
 describe('FindingsSection', () => {
-  it('renders "What BioStack found" heading', () => {
+  it('renders the section heading and the findings list heading each once', () => {
     render(
       <FindingsSection
         result={makeResult()}
@@ -42,9 +42,9 @@ describe('FindingsSection', () => {
         onToggleExtractedText={vi.fn()}
       />,
     );
-    // The heading appears twice (section title + FindingList title), both should be in DOM.
-    const headings = screen.getAllByText('What BioStack found');
-    expect(headings.length).toBeGreaterThan(0);
+    // Section title and list title are now distinct — each appears exactly once.
+    expect(screen.getAllByText('What BioStack found')).toHaveLength(1);
+    expect(screen.getAllByText('Analysis findings')).toHaveLength(1);
   });
 
   it('renders the confidence label', () => {
