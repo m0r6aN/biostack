@@ -66,7 +66,7 @@ public sealed class ProtocolNormalizationServiceTests
     [Fact]
     public void BuildAnalysisContext_TrimsGoalAndSex()
     {
-        var ctx = _sut.BuildAnalysisContext("  recovery  ", " male ", null, null, null);
+        var ctx = _sut.BuildAnalysisContext("  recovery  ", null, " male ", null, null, null);
         Assert.Equal("recovery", ctx.Goal);
         Assert.Equal("male", ctx.Sex);
     }
@@ -82,7 +82,7 @@ public sealed class ProtocolNormalizationServiceTests
     [InlineData(75, "60-plus")]
     public void BuildAnalysisContext_CorrectlyBandsAge(int? age, string expectedBand)
     {
-        var ctx = _sut.BuildAnalysisContext(null, null, age, null, null);
+        var ctx = _sut.BuildAnalysisContext(null, null, null, age, null, null);
         Assert.Equal(expectedBand, ctx.AgeBand);
     }
 
@@ -95,14 +95,14 @@ public sealed class ProtocolNormalizationServiceTests
     [InlineData(300.0, "220-plus")]
     public void BuildAnalysisContext_CorrectlyBandsWeight(double? weight, string expectedBand)
     {
-        var ctx = _sut.BuildAnalysisContext(null, null, null, weight, null);
+        var ctx = _sut.BuildAnalysisContext(null, null, null, null, weight, null);
         Assert.Equal(expectedBand, ctx.WeightBand);
     }
 
     [Fact]
     public void BuildAnalysisContext_DeduplicatesAndSortsStackContext()
     {
-        var ctx = _sut.BuildAnalysisContext(null, null, null, null,
+        var ctx = _sut.BuildAnalysisContext(null, null, null, null, null,
             new[] { "TB-500", "BPC-157", "tb-500" });
 
         // Deduplication is case-insensitive; order is alphabetical
@@ -113,7 +113,7 @@ public sealed class ProtocolNormalizationServiceTests
     [Fact]
     public void BuildAnalysisContext_FiltersBlankStackContextItems()
     {
-        var ctx = _sut.BuildAnalysisContext(null, null, null, null,
+        var ctx = _sut.BuildAnalysisContext(null, null, null, null, null,
             new[] { "BPC-157", "", "  " });
         Assert.Single(ctx.ExistingStackContext);
     }
@@ -123,21 +123,21 @@ public sealed class ProtocolNormalizationServiceTests
     [Fact]
     public void BuildOptimizationContext_DefaultsMaxCompoundsToFive()
     {
-        var ctx = _sut.BuildOptimizationContext(null, null, null, null, null);
+        var ctx = _sut.BuildOptimizationContext(null, null, null, null, null, null);
         Assert.Equal(5, ctx.MaxCompounds);
     }
 
     [Fact]
     public void BuildOptimizationContext_UsesProvidedMaxCompounds()
     {
-        var ctx = _sut.BuildOptimizationContext(null, 3, null, null, null);
+        var ctx = _sut.BuildOptimizationContext(null, null, 3, null, null, null);
         Assert.Equal(3, ctx.MaxCompounds);
     }
 
     [Fact]
     public void BuildOptimizationContext_DeduplicatesRequiredCompoundIds()
     {
-        var ctx = _sut.BuildOptimizationContext(null, null,
+        var ctx = _sut.BuildOptimizationContext(null, null, null,
             new[] { "BPC-157", "bpc-157" }, null, null);
         Assert.Single(ctx.RequiredCompoundIds);
     }
@@ -145,7 +145,7 @@ public sealed class ProtocolNormalizationServiceTests
     [Fact]
     public void BuildOptimizationContext_FiltersBlankExcludedIds()
     {
-        var ctx = _sut.BuildOptimizationContext(null, null, null,
+        var ctx = _sut.BuildOptimizationContext(null, null, null, null,
             new[] { "TB-500", "", "  " }, null);
         Assert.Single(ctx.ExcludedCompoundIds);
         Assert.Equal("TB-500", ctx.ExcludedCompoundIds[0]);
@@ -154,7 +154,7 @@ public sealed class ProtocolNormalizationServiceTests
     [Fact]
     public void BuildOptimizationContext_TrimsGoal()
     {
-        var ctx = _sut.BuildOptimizationContext("  longevity  ", null, null, null, null);
+        var ctx = _sut.BuildOptimizationContext("  longevity  ", null, null, null, null, null);
         Assert.Equal("longevity", ctx.Goal);
     }
 }

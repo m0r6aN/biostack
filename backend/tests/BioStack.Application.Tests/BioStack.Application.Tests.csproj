@@ -27,4 +27,10 @@
     <ProjectReference Include="..\..\src\BioStack.Cognition\BioStack.Cognition.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Fixtures\BioStack_Protocol_Printable_Packet_v2.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

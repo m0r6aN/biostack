@@ -115,7 +115,8 @@ public static class AnalyzeEndpoints
                 ParseNullableInt(form["maxCompounds"]),
                 null,
                 null,
-                null);
+                ParseStringList(form["existingStackContext"]),
+                ParseStringList(form["secondaryGoals"]));
 
             var ingestion = new ProtocolIngestionRequest(
                 inputType,
@@ -167,5 +168,14 @@ public static class AnalyzeEndpoints
     private static string? EmptyToNull(string? value)
     {
         return string.IsNullOrWhiteSpace(value) ? null : value;
+    }
+
+    private static List<string>? ParseStringList(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+        return value.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
     }
 }

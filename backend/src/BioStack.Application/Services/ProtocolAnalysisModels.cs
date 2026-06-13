@@ -18,6 +18,7 @@ public sealed record NormalizedProtocolCompound(
 
 public sealed record AnalysisContext(
     string Goal,
+    List<string> SecondaryGoals,
     string Sex,
     string AgeBand,
     string WeightBand,
@@ -28,6 +29,7 @@ public sealed record AnalysisContext(
 
 public sealed record OptimizationContext(
     string Goal,
+    List<string> SecondaryGoals,
     int MaxCompounds,
     List<string> RequiredCompoundIds,
     List<string> ExcludedCompoundIds,

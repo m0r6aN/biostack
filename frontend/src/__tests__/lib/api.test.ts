@@ -158,4 +158,77 @@ describe('ApiClient', () => {
     );
   });
 
+  describe('analyzeProtocol', () => {
+    const okAnalyzeResponse = {
+      ok: true,
+      status: 200,
+      json: async () => ({ compounds: [], warnings: [], summary: '' }),
+    };
+
+    it('sends goals + context fields on the JSON path', async () => {
+      fetchMock.mockResolvedValue(okAnalyzeResponse);
+
+      await client.analyzeProtocol({
+        inputType: 'Paste',
+        inputText: 'x',
+        goal: 'healing',
+        secondaryGoals: ['fat loss'],
+        sex: 'male',
+        age: 40,
+        weight: 90,
+        existingStackContext: ['creatine'],
+      });
+
+      const [, options] = fetchMock.mock.calls[0] as [string, RequestInit];
+      const body = JSON.parse(options.body as string);
+      expect(body.goal).toBe('healing');
+      expect(body.secondaryGoals).toEqual(['fat loss']);
+      expect(body.sex).toBe('male');
+      expect(body.age).toBe(40);
+      expect(body.weight).toBe(90);
+      expect(body.existingStackContext).toEqual(['creatine']);
+    });
+
+    it('appends goals + context fields to FormData on the file path', async () => {
+      fetchMock.mockResolvedValue(okAnalyzeResponse);
+
+      const file = new File(['data'], 'test.pdf', { type: 'application/pdf' });
+
+      await client.analyzeProtocol({
+        inputType: 'FileUpload',
+        file,
+        goal: 'healing',
+        secondaryGoals: ['fat loss'],
+        sex: 'male',
+        age: 40,
+        weight: 90,
+        existingStackContext: ['creatine'],
+      });
+
+      const [, options] = fetchMock.mock.calls[0] as [string, RequestInit];
+      const formData = options.body as FormData;
+      expect(formData.get('secondaryGoals')).toBe('fat loss');
+      expect(formData.get('sex')).toBe('male');
+      expect(formData.get('age')).toBe('40');
+      expect(formData.get('weight')).toBe('90');
+      expect(formData.get('existingStackContext')).toBe('creatine');
+    });
+
+    it('does NOT append optional context fields to FormData when absent', async () => {
+      fetchMock.mockResolvedValue(okAnalyzeResponse);
+
+      const file = new File(['data'], 'test.pdf', { type: 'application/pdf' });
+
+      await client.analyzeProtocol({ inputType: 'FileUpload', file });
+
+      const [, options] = fetchMock.mock.calls[0] as [string, RequestInit];
+      const formData = options.body as FormData;
+      expect(formData.get('sex')).toBeNull();
+      expect(formData.get('age')).toBeNull();
+      expect(formData.get('weight')).toBeNull();
+      expect(formData.get('secondaryGoals')).toBeNull();
+      expect(formData.get('existingStackContext')).toBeNull();
+    });
+  });
+
 });

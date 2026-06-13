@@ -83,9 +83,10 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
         parseStopwatch.Stop();
 
         var normalizedProtocol = _normalizationService.Normalize(parseResult);
-        var analysisContext = _normalizationService.BuildAnalysisContext(request.Goal, request.Sex, request.Age, request.Weight, request.ExistingStackContext);
+        var analysisContext = _normalizationService.BuildAnalysisContext(request.Goal, request.SecondaryGoals, request.Sex, request.Age, request.Weight, request.ExistingStackContext);
         var optimizationContext = _normalizationService.BuildOptimizationContext(
             request.Goal,
+            request.SecondaryGoals,
             request.MaxCompounds,
             request.RequiredCompoundIds,
             request.ExcludedCompoundIds,
