@@ -18,8 +18,14 @@ public sealed class ProtocolNormalizationService : IProtocolNormalizationService
             .Replace('•', '-')
             .Replace('–', '-')
             .Replace('—', '-')
-            .Replace("μg", "mcg", StringComparison.OrdinalIgnoreCase)
-            .Replace("ug", "mcg", StringComparison.OrdinalIgnoreCase);
+            .Replace("μg", "mcg", StringComparison.OrdinalIgnoreCase);
+
+        // Normalize the "ug" microgram unit to "mcg" ONLY when it follows a number
+        // (e.g. "500ug" -> "500mcg"). A blind substring replace corrupts every word
+        // containing "ug" — drug -> "drmcg", through -> "thromcgh" — which then
+        // poisons compound matching, the extracted-text preview, and citations.
+        normalized = System.Text.RegularExpressions.Regex.Replace(
+            normalized, @"(?<=\d)\s*ug\b", "mcg", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
         normalized = System.Text.RegularExpressions.Regex.Replace(normalized, @"[ ]{2,}", " ");
         normalized = System.Text.RegularExpressions.Regex.Replace(normalized, @"(\r?\n){3,}", Environment.NewLine + Environment.NewLine);
