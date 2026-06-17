@@ -10,7 +10,11 @@ export type AnalyzerAnalyticsEvent =
   | 'analyzer_save_clicked'
   | 'analyzer_convert_clicked'
   | 'analyzer_example_loaded'
-  | 'analyzer_scan_selected';
+  | 'analyzer_scan_selected'
+  | 'analyzer_goal_selected'
+  | 'analyzer_context_opened'
+  | 'analyzer_context_prefilled'
+  | 'analyzer_profile_nudge_clicked';
 
 export function trackAnalyzerEvent(
   eventName: AnalyzerAnalyticsEvent,

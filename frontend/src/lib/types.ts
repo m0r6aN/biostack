@@ -1004,3 +1004,141 @@ export interface PromotionPreview {
   blockingReasons: string[];
   wouldWrite: boolean;
 }
+
+// ─── Client-facing protocol portal (/my-protocol) ───────────────────────────
+// Consumed by the PR B mock fixture and kept compatible with the API client
+// methods for the later live-data integration PR.
+
+/** Membership tier a section is gated behind (paywall not enforced yet). */
+export type ProtocolTier = 'observer' | 'operator' | 'commander';
+
+/** Visual tone for stat tiles / pills, mapped to emerald/amber/red/etc. */
+export type ProtocolAccent = 'emerald' | 'blue' | 'amber' | 'violet' | 'red' | 'neutral';
+
+export interface PortalPhase {
+  /** 1-based phase number. */
+  number: number;
+  label: string;
+  /** Current week within the phase, 1-based. */
+  currentWeek: number;
+  totalWeeks: number;
+}
+
+export interface ProtocolOverview {
+  protocolName: string;
+  objective: string;
+  status: 'active' | 'paused' | 'completed' | 'draft';
+  startedOnUtc: string;
+  clientName: string;
+  clientAvatarUrl: string | null;
+  currentPhase: PortalPhase;
+  phases: PortalPhase[];
+}
+
+export interface ProtocolStat {
+  label: string;
+  value: string;
+  unit?: string;
+  caption?: string;
+  accent: ProtocolAccent;
+}
+
+export interface ScheduleItem {
+  /** Time label, e.g. "08:00 AM" or "With Breakfast & Lunch". */
+  time: string;
+  name: string;
+  detail: string;
+  /** lucide icon key (see protocol-portal icon map). */
+  icon?: string;
+  accent?: ProtocolAccent;
+  status?: 'completed' | 'upcoming' | 'skipped';
+}
+
+export interface DaySchedule {
+  dateIso: string;
+  title: string;
+  subtitle: string;
+  items: ScheduleItem[];
+}
+
+export interface WeekDay {
+  dateIso: string;
+  /** Day-of-month label, e.g. "10". */
+  dayLabel: string;
+  /** Short weekday label, e.g. "Mon". */
+  weekdayLabel: string;
+  isToday: boolean;
+  itemCount: number;
+  /** Optional highlight tag, e.g. "MOTS-c". */
+  tag?: string;
+}
+
+export interface DietTarget {
+  label: string;
+  value: string;
+  /** When true, render as a caution (e.g. alcohol "Minimize / Eliminate"). */
+  caution?: boolean;
+}
+
+export interface DietFramework {
+  title: string;
+  summary: string;
+  targets: DietTarget[];
+  rationale: string;
+  lifestyle: string[];
+}
+
+export interface SupplementEntry {
+  name: string;
+  dose: string;
+  note?: string;
+  /** Highlight the most important entries (e.g. TUDCA). */
+  emphasis?: boolean;
+}
+
+export interface SupplementPlan {
+  title: string;
+  summary: string;
+  entries: SupplementEntry[];
+  additional: string[];
+}
+
+export interface AdjustmentRule {
+  trigger: string;
+  action: string;
+}
+
+export interface MonitoringProtocol {
+  baselineCompleted: string;
+  recurringCadence: string;
+  recurringLabs: string[];
+  adjustmentRules: AdjustmentRule[];
+}
+
+export interface Milestone {
+  /** 1-based step order. */
+  order: number;
+  period: string;
+  detail: string;
+  current?: boolean;
+}
+
+export interface ResourceEntry {
+  heading: string;
+  body: string;
+}
+
+/** Full payload backing the /my-protocol page. */
+export interface ProtocolPortalData {
+  overview: ProtocolOverview;
+  stats: ProtocolStat[];
+  today: DaySchedule;
+  week: WeekDay[];
+  /** Keyed by ISO date for the day-detail modal. */
+  daySchedules: Record<string, DaySchedule>;
+  diet: DietFramework;
+  supplements: SupplementPlan;
+  monitoring: MonitoringProtocol;
+  milestones: Milestone[];
+  resources: ResourceEntry[];
+}

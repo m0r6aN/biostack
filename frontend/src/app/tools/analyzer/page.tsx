@@ -1,6 +1,6 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
-import { ProtocolAnalyzerExperience } from '@/components/tools/ProtocolAnalyzerExperience';
+import { AnalyzerExperience } from '@/components/tools/analyzer/AnalyzerExperience';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export default function AnalyzerPage() {
   return (
     <div className="min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
-      <ProtocolAnalyzerExperience />
+      <AnalyzerExperience />
       <MarketingFooter />
     </div>
   );

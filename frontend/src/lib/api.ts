@@ -39,6 +39,7 @@ import {
     VolumeRequest,
     StagedTranscriptCandidateReview,
     PromotionPreview,
+    ProtocolPortalData,
 } from './types';
 
 export class ApiError extends Error {
@@ -336,6 +337,11 @@ export class ApiClient {
     sourceName?: string;
     file?: File;
     goal?: string;
+    secondaryGoals?: string[];
+    sex?: string;
+    age?: number;
+    weight?: number;
+    existingStackContext?: string[];
     maxCompounds?: number;
   }): Promise<ProtocolAnalyzerResult> {
     if (payload.file) {
@@ -344,6 +350,21 @@ export class ApiClient {
       formData.append('goal', payload.goal ?? '');
       if (payload.maxCompounds) {
         formData.append('maxCompounds', String(payload.maxCompounds));
+      }
+      if (payload.secondaryGoals?.length) {
+        formData.append('secondaryGoals', payload.secondaryGoals.join('\n'));
+      }
+      if (payload.sex) {
+        formData.append('sex', payload.sex);
+      }
+      if (payload.age) {
+        formData.append('age', String(payload.age));
+      }
+      if (payload.weight) {
+        formData.append('weight', String(payload.weight));
+      }
+      if (payload.existingStackContext?.length) {
+        formData.append('existingStackContext', payload.existingStackContext.join('\n'));
       }
 
       formData.append('file', payload.file, payload.sourceName ?? payload.file.name);
@@ -535,6 +556,31 @@ export class ApiClient {
       `/api/v1/admin/staged-transcript-candidate-reviews/${encodeURIComponent(artifactId)}/execute-promotion`,
       { method: 'POST', headers: authHeaders }
     );
+  }
+
+  // ── Client-facing protocol portal (/my-protocol) ──────────────────────
+
+  /** Aggregated portal payload for a profile's active protocol. */
+  async getProtocolPortal(profileId: string): Promise<ProtocolPortalData> {
+    return this.request<ProtocolPortalData>(
+      `/api/v1/profiles/${profileId}/protocol/portal`
+    );
+  }
+
+  /** Log the day's scheduled doses as taken. */
+  async logProtocolDoses(profileId: string, dateIso: string): Promise<void> {
+    return this.request(`/api/v1/profiles/${profileId}/protocol/doses/log`, {
+      method: 'POST',
+      body: JSON.stringify({ date: dateIso }),
+    });
+  }
+
+  /** Send a message to the care team. */
+  async sendCareTeamMessage(profileId: string, message: string): Promise<void> {
+    return this.request(`/api/v1/profiles/${profileId}/care-team/message`, {
+      method: 'POST',
+      body: JSON.stringify({ message }),
+    });
   }
 }
 

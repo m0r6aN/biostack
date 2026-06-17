@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 const APP_ROUTE_PREFIXES = [
   '/protocol-console',
   '/mission-control',
+  '/my-protocol',
   '/profiles',
   '/compounds',
   '/checkins',

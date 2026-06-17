@@ -23,7 +23,8 @@ public sealed record AnalyzeProtocolRequest(
     int? MaxCompounds = null,
     List<string>? RequiredCompoundIds = null,
     List<string>? ExcludedCompoundIds = null,
-    List<string>? ExistingStackContext = null)
+    List<string>? ExistingStackContext = null,
+    List<string>? SecondaryGoals = null)
 {
     public AnalyzeProtocolRequest(string inputText)
         : this(ProtocolInputType.Paste, inputText)
