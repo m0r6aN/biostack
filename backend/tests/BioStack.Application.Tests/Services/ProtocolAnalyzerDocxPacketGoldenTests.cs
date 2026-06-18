@@ -196,4 +196,35 @@ public sealed class ProtocolAnalyzerDocxPacketGoldenTests
             leaked.Count == 0,
             $"Issue compound lists reference non-compound document text: {string.Join(" | ", leaked)}");
     }
+
+    [Fact]
+    public async Task AnalyzePacket_ReportsNonHighParseConfidenceButRemainsScored()
+    {
+        var result = await AnalyzePacketAsync();
+
+        Assert.Contains(result.ParseConfidence, new[] { "low", "medium" });
+        Assert.True(result.Scored);
+        Assert.True(result.RecognizedCompoundCount > 0);
+        Assert.True(result.ParsedCompoundCount >= result.RecognizedCompoundCount);
+    }
+
+    [Fact]
+    public async Task AnalyzePacket_IssueCompoundsContainOnlyRecognizedNames()
+    {
+        var result = await AnalyzePacketAsync();
+        var recognizedNames = result.Protocol
+            .Where(entry => entry.Recognized)
+            .Select(entry => entry.CompoundName)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        var unrecognizedIssueCompounds = result.Issues
+            .SelectMany(issue => issue.Compounds)
+            .Where(compound => !recognizedNames.Contains(compound))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        Assert.True(
+            unrecognizedIssueCompounds.Count == 0,
+            $"Issue compound lists reference unrecognized names: {string.Join(" | ", unrecognizedIssueCompounds)}");
+    }
 }

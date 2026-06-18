@@ -27,6 +27,12 @@ public sealed class ProtocolParser : IProtocolParser
         @"\b\d+\s*(?:w|wk|wks|week|weeks|d|day|days|month|months)\b\s*(?:on|off)\b.*?\b(?:on|off)\b",
         RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
+    // Dosing-table schedule codes ("W1-2", "W7-15", "D3") used to label phase
+    // windows. They carry doses but are never compound names.
+    private static readonly Regex ScheduleCodePattern = new(
+        @"^[wd]\d",
+        RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
     private readonly IKnowledgeSource _knowledgeSource;
     private readonly IBlendDecomposerService _blendDecomposerService;
     private readonly IMemoryCache _memoryCache;
@@ -135,12 +141,55 @@ public sealed class ProtocolParser : IProtocolParser
             parsedUnit = NormalizeUnit(singleDoseMatch.Groups["unit"].Value);
         }
 
-        var compoundName = ResolveCompoundName(cleaned, singleDoseMatch, aliases);
+        // Recognition gate: a segment only becomes a compound entry when there is
+        // real evidence it names one. Without this gate, every prose paragraph,
+        // section header, table-structure row, note, and citation in an uploaded
+        // document is emitted as a fake "Unknown" compound (the "102 found, 4
+        // normalized" failure — see ProtocolAnalyzerDocxPacketGoldenTests).
+        //
+        //   (a) the segment contains a known compound alias, OR
+        //   (b) it carries a dose or explicit frequency AND the text before that
+        //       token is shaped like a compound name (a short, compound-like token
+        //       — not prose, a header, a schedule code, or a "label: value" fragment).
+        var aliasName = ResolveAliasName(cleaned, aliases);
+        if (aliasName is not null)
+        {
+            return new[]
+            {
+                new ProtocolEntryResponse(
+                    aliasName,
+                    parsedDose,
+                    parsedUnit,
+                    NormalizeFrequency(frequency),
+                    duration)
+            };
+        }
+
+        // A dose or an explicit frequency ("Semaglutide weekly") marks a dosing line.
+        // Duration alone is deliberately excluded: "Weeks 1-15" style phrases pair
+        // with planning prose far more often than with a real compound.
+        var frequencyMatch = FrequencyPattern.Match(cleaned);
+        if (!singleDoseMatch.Success && !frequencyMatch.Success)
+        {
+            return Array.Empty<ProtocolEntryResponse>();
+        }
+
+        // The compound name is whatever precedes the first dose/frequency token.
+        // Slicing (rather than stripping frequency words out of the whole segment)
+        // keeps headings like "Daily and Weekly Tracking Templates" from collapsing
+        // to a fake "Tracking Templates" compound: the frequency leads, so the
+        // name-slice is empty and the segment is rejected.
+        var nameCutIndex = singleDoseMatch.Success ? singleDoseMatch.Index : frequencyMatch.Index;
+        var nameSlice = BuildNameSlice(cleaned, nameCutIndex);
+        if (!IsLikelyCompoundName(nameSlice))
+        {
+            return Array.Empty<ProtocolEntryResponse>();
+        }
 
         return new[]
         {
             new ProtocolEntryResponse(
-                compoundName,
+                nameSlice,
                 parsedDose,
                 parsedUnit,
                 NormalizeFrequency(frequency),
@@ -183,25 +232,80 @@ public sealed class ProtocolParser : IProtocolParser
         return new ProtocolEntryResponse(canonicalName, bestDoseEntry.Dose, unit, frequency, duration);
     }
 
-    private static string ResolveCompoundName(string segment, Match doseMatch, IReadOnlyDictionary<string, KnowledgeEntry> aliases)
+    // Returns the canonical name when the segment contains a known compound alias,
+    // otherwise null. The longest alias wins so "BPC-157" beats a bare "BPC".
+    private static string? ResolveAliasName(string segment, IReadOnlyDictionary<string, KnowledgeEntry> aliases)
     {
         var directMatch = aliases
             .OrderByDescending(alias => alias.Key.Length)
             .FirstOrDefault(alias => ContainsAlias(segment, alias.Key));
 
-        if (directMatch.Value is not null)
-        {
-            return directMatch.Value.CanonicalName;
-        }
+        return directMatch.Value?.CanonicalName;
+    }
 
-        var nameSlice = doseMatch.Success ? segment[..doseMatch.Index] : segment;
+    // Extracts the candidate compound-name text that precedes the dose/frequency
+    // token (at cutIndex), stripping any residual frequency/duration phrases,
+    // dosing verbs, and table/label punctuation.
+    private static string BuildNameSlice(string segment, int cutIndex)
+    {
+        var nameSlice = cutIndex > 0 && cutIndex <= segment.Length ? segment[..cutIndex] : string.Empty;
         nameSlice = FrequencyPattern.Replace(nameSlice, string.Empty);
         nameSlice = DurationPattern.Replace(nameSlice, string.Empty);
         nameSlice = Regex.Replace(nameSlice, @"\b(take|inject|dose|with|for|at|on|and)\b", " ", RegexOptions.IgnoreCase);
-        nameSlice = Regex.Replace(nameSlice, @"[,:;]+", " ");
+        nameSlice = Regex.Replace(nameSlice, @"[,:;|]+", " ");
         nameSlice = Regex.Replace(nameSlice, @"\s+", " ").Trim();
 
         return nameSlice;
+    }
+
+    // A dose alone is not enough to call a segment a compound. Real compound names
+    // are short and "name-shaped" — a capitalized word (Semaglutide), an all-caps
+    // token (NAD, KPV), or an alphanumeric/hyphenated token (BPC-157, GHK-Cu,
+    // TB-500). Prose words ("planning", "titration", "up"), short Title-case
+    // function words ("At", "To"), section headers, schedule codes ("W7-15"), and
+    // bare numbers are rejected. Lowercase compound names are still caught upstream
+    // by the alias path.
+    private static bool IsLikelyCompoundName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name) || name.Length is < 2 or > 40)
+        {
+            return false;
+        }
+
+        var tokens = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (tokens.Length is 0 or > 3)
+        {
+            return false;
+        }
+
+        foreach (var token in tokens)
+        {
+            // Must contain a letter — pure numbers/ranges ("100", "2-3x") are doses.
+            if (!token.Any(char.IsLetter))
+            {
+                return false;
+            }
+
+            // Dosing-table schedule codes ("W1-2", "W7-15", "D3") are not compounds.
+            if (ScheduleCodePattern.IsMatch(token))
+            {
+                return false;
+            }
+
+            var isAlphabetic = token.All(char.IsLetter);
+
+            // All-lowercase words ("planning", "titration", "up") and 1-2 letter
+            // Title-case words ("At", "To", "In") are prose, not compound names.
+            // Tokens carrying a digit or hyphen (BPC-157, B12) bypass this — they
+            // are unambiguously compound-shaped.
+            if (isAlphabetic &&
+                (token.Equals(token.ToLowerInvariant(), StringComparison.Ordinal) || token.Length <= 2))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static string ResolveCanonicalName(string value, IReadOnlyDictionary<string, KnowledgeEntry> aliases)
@@ -259,7 +363,12 @@ public sealed class ProtocolParser : IProtocolParser
 
     private static IEnumerable<string> SplitIntoSegments(string inputText)
     {
-        return Regex.Split(inputText, @"(?:\r?\n|;|\s\+\s)")
+        // Also split on the pipe used to join table cells (DocxProtocolExtractor /
+        // SpreadsheetProtocolExtractor emit rows as "cell | cell | cell"). Splitting
+        // per cell keeps a compound name from being fused with a dose that belongs
+        // to a different column, and isolates prose/structure cells so the
+        // recognition gate can drop them.
+        return Regex.Split(inputText, @"(?:\r?\n|;|\s\+\s|\s*\|\s*)")
             .Select(segment => segment.Trim())
             .Where(segment => segment.Length > 0);
     }
