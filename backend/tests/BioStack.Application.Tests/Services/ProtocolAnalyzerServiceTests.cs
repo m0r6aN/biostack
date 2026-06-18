@@ -73,6 +73,59 @@ public sealed class ProtocolAnalyzerServiceTests
     }
 
     [Fact]
+    public async Task AnalyzeAsync_CleanKnownCompoundPaste_IsHighConfidenceAndRecognized()
+    {
+        var input = string.Join(
+            '\n',
+            "BPC-157 500mcg daily",
+            "TB-500 2mg twice weekly");
+
+        var result = await _service.AnalyzeAsync(new AnalyzeProtocolRequest(input));
+
+        Assert.Equal(2, result.ParsedCompoundCount);
+        Assert.Equal(2, result.RecognizedCompoundCount);
+        Assert.Equal("high", result.ParseConfidence);
+        Assert.True(result.Scored);
+        Assert.All(result.Protocol, entry => Assert.True(entry.Recognized));
+    }
+
+    [Fact]
+    public async Task AnalyzeAsync_ProseOnlyInput_IsNotScored()
+    {
+        var result = await _service.AnalyzeAsync(new AnalyzeProtocolRequest(
+            "This document describes goals, notes, and tracking expectations without a compound dose line."));
+
+        Assert.Equal(0, result.RecognizedCompoundCount);
+        Assert.Equal("none", result.ParseConfidence);
+        Assert.False(result.Scored);
+        Assert.Contains(result.ParserWarnings, warning =>
+            warning.Contains("couldn't confidently identify known compounds", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task AnalyzeAsync_IssueCompoundListsExcludeUnrecognizedEntries()
+    {
+        var input = string.Join(
+            '\n',
+            "BPC-157 500mcg daily",
+            "TB-500 2mg twice weekly",
+            "NAD+ 100mg daily",
+            "MOTS-C 5mg 3x weekly",
+            "CoQ10 200mg daily",
+            "Semaglutide 0.25mg weekly",
+            "Epitalon 5mg weekly");
+
+        var result = await _service.AnalyzeAsync(new AnalyzeProtocolRequest(input));
+
+        Assert.Contains(result.Protocol, entry =>
+            string.Equals(entry.CompoundName, "Epitalon", StringComparison.OrdinalIgnoreCase)
+            && !entry.Recognized);
+        Assert.Contains(result.Issues, issue => issue.Type is "inefficiency" or "excessive_compounds");
+        Assert.DoesNotContain(result.Issues.SelectMany(issue => issue.Compounds), compound =>
+            string.Equals(compound, "Epitalon", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public async Task AnalyzeAsync_FlagsOverlapScenario()
     {
         var result = await _service.AnalyzeAsync(new AnalyzeProtocolRequest("Semaglutide weekly + Tirzepatide weekly"));
