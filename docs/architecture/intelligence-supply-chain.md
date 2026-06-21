@@ -200,7 +200,7 @@ The pipeline is a **build process**, not a request-time service. Its outputs are
 
 | Task | Why not |
 |---|---|
-| Runtime generative claims about a stack | Hallucinates, can't cite, drifts into medical advice |
+| Runtime generative claims about a stack | Hallucinates, can't cite, drifts into medical authority |
 | Personalized dose recommendations | Boundary violation regardless of model |
 | Replacing deterministic safety guards | Guards must be auditable code |
 | Generating new relationships at request time | Same as guards — must be reviewed before serving |
@@ -288,7 +288,7 @@ GoalContext           enum?  { TissueRepair, MetabolicHealth, BodyComposition,
                                 Longevity, NeuroSupport, GeneralWellbeing, None }
 PhaseContext          enum?  { Loading, Maintenance, Cycling, Off, Any }
 DoseContext           string? (free text; "low/standard/high" tags later)
-MechanismRationale    string  (educational, no medical advice)
+MechanismRationale    string  (educational, no medical authority)
 EvidenceTier          EvidenceTier enum { Strong, Moderate, Limited, Anecdotal, None }
 ConfidenceScore       decimal(3,2)
 PopularityScore       decimal(3,2)?  -- for "common pairing" weighting
@@ -514,7 +514,7 @@ Goal: stop the bleeding. Do not refactor.
 | LLM hallucinates citations | Medium | High | Pipeline rejects any LLM proposal whose citations don't resolve to real DOIs/URLs; require excerpt from source |
 | Verdict drift between artifact versions confuses users | Medium | Medium | UI shows "since artifact v47" footer; changelog page; admin diffs in review queue |
 | Local-first goal vs LLM dependency | Low | Medium | Enrichment runs offline; runtime is local-only and never calls an external LLM |
-| Boundary creep into medical advice as graph grows | Medium | High | Forbidden-phrase scanner in CI; safety guard runs on every render; review queue rejects medical-tone proposals |
+| Boundary creep into medical authority as graph grows | Medium | High | Forbidden-phrase scanner in CI; safety guard runs on every render; review queue rejects medical-tone proposals |
 | Pathway whitelist ossifies into the new graph | Low | Medium | `Pathway.Domain` enum is small (≤10); rejection criteria documented; resist the urge to add per-edge pathway logic |
 | KnowledgeWorker assembly drift from Api expectations | Medium | High | Add `BioStack.Contracts.Knowledge` package; both projects compile against the contract; pipeline emits validated DTOs |
 | Underestimating the "Unknown" UX | High | Medium | Design `Unknown` UI early; A/B against current behavior to confirm it does not degrade trust |
