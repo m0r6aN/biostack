@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "protocol-intelligence-mvp-backlog",
+  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "generatedAt": "2026-06-18",
+  "outcome": "Canonical Protocol Intelligence foundation for phase-aware protocol mapping, evidence-tiered relationships, side-effect ambiguity detection, source-quality classification, GLP-1 observability, and high-risk substance guardrails.",
+  "epics": [
+    {
+      "priority": 1,
+      "id": "phase_aware_protocol_map",
+      "deliverable": "protocol-phase-taxonomy.json",
+      "acceptanceEvidence": ["all canonical phases present", "phase labels marked descriptive not instructional"]
+    },
+    {
+      "priority": 2,
+      "id": "evidence_tiered_relationship_graph",
+      "deliverable": "relationship-taxonomy.json",
+      "acceptanceEvidence": ["relationship types carry evidence fields", "runtime unknown rule present"]
+    },
+    {
+      "priority": 3,
+      "id": "side_effect_ambiguity_detector",
+      "deliverable": "side-effect-ambiguity-detector.json",
+      "acceptanceEvidence": ["recent-change inputs present", "diagnosis and causality assertions blocked"]
+    },
+    {
+      "priority": 4,
+      "id": "source_quality_tracker",
+      "deliverable": "source-quality-taxonomy.json",
+      "acceptanceEvidence": ["source classes present", "sourcing guidance blocked"]
+    },
+    {
+      "priority": 5,
+      "id": "glp1_observability_pack",
+      "deliverable": "glp1-observability-pack.json",
+      "acceptanceEvidence": ["GLP-1 observability domains present", "medication advice blocked"]
+    },
+    {
+      "priority": 6,
+      "id": "high_risk_warning_module",
+      "deliverable": "high-risk-guardrails.json",
+      "acceptanceEvidence": ["all high-risk categories warning-first", "cycles recovery PCT injection and sourcing blocked"]
+    },
+    {
+      "priority": 7,
+      "id": "promotion_target_specs",
+      "deliverable": "promotion-target-specs.json",
+      "acceptanceEvidence": ["review gates present", "forbidden output scan required"]
+    }
+  ]
+}
