@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "glp1-observability-pack",
+  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "generatedAt": "2026-06-18",
+  "boundary": "Observability only. No medication advice, dose guidance, tapering, switching, compounded sourcing, or treatment recommendations.",
+  "domains": [
+    {"id": "appetite", "displayName": "Appetite", "promptType": "subjective_trend"},
+    {"id": "gi_symptoms", "displayName": "GI symptoms", "promptType": "symptom_trend"},
+    {"id": "hydration", "displayName": "Hydration", "promptType": "intake_context"},
+    {"id": "protein_adequacy", "displayName": "Protein adequacy", "promptType": "nutrition_context"},
+    {"id": "fiber_adequacy", "displayName": "Fiber adequacy", "promptType": "nutrition_context"},
+    {"id": "lean_mass_proxy", "displayName": "Lean-mass proxy", "promptType": "strength_or_body_composition_context"},
+    {"id": "mood", "displayName": "Mood", "promptType": "subjective_trend"},
+    {"id": "alcohol_craving_notes", "displayName": "Alcohol-craving notes", "promptType": "subjective_trend"},
+    {"id": "weight_trend", "displayName": "Weight trend", "promptType": "metric_trend"},
+    {"id": "discontinuation_event", "displayName": "Discontinuation or pause event", "promptType": "timeline_event"}
+  ],
+  "sourceQualityWarnings": [
+    "compounded_product",
+    "research_chemical",
+    "gray_market",
+    "unknown_user_entered"
+  ],
+  "blockedOutputs": [
+    "medication_advice",
+    "dose_guidance",
+    "switching_guidance",
+    "tapering_instruction",
+    "compounded_sourcing",
+    "product_specific_directions"
+  ]
+}

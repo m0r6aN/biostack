@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "protocol-phase-taxonomy",
+  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "generatedAt": "2026-06-18",
+  "phases": [
+    {
+      "id": "baseline",
+      "displayName": "Baseline",
+      "purpose": "Establish stable pre-change context for later interpretation.",
+      "allowedPrompts": ["Capture stable sleep, appetite, mood, pain, blood pressure, heart rate, weight, training load, and relevant labs before interpreting change."],
+      "blockedSemantics": ["start instruction", "medical clearance", "causal proof"]
+    },
+    {
+      "id": "preparation",
+      "displayName": "Preparation",
+      "purpose": "Stabilize observation context and reduce confounders.",
+      "allowedPrompts": ["Which supports were stable before the main observed event?"],
+      "blockedSemantics": ["pre-protocol instruction", "efficacy claim"]
+    },
+    {
+      "id": "loading",
+      "displayName": "Loading",
+      "purpose": "Represent exposure or habit consistency ramp without giving dosing guidance.",
+      "allowedPrompts": ["Separate ramp effects from intervention signal."],
+      "blockedSemantics": ["dose ramp", "loading dose", "escalation instruction"]
+    },
+    {
+      "id": "active_intervention",
+      "displayName": "Active Intervention",
+      "purpose": "Mark when the main observed protocol event starts.",
+      "allowedPrompts": ["What changed within 24 hours, 7 days, and 30 days of this event?"],
+      "blockedSemantics": ["recommendation to start", "treatment plan"]
+    },
+    {
+      "id": "escalation",
+      "displayName": "Escalation",
+      "purpose": "Represent intensity or exposure changes as new observation events.",
+      "allowedPrompts": ["Did symptoms change after this intensity change?"],
+      "blockedSemantics": ["dose increase instruction", "titration guidance"]
+    },
+    {
+      "id": "support",
+      "displayName": "Support",
+      "purpose": "Track support agents or behaviors that may help observation or complicate attribution.",
+      "allowedPrompts": ["Could this support agent be masking, amplifying, or confusing attribution?"],
+      "blockedSemantics": ["support equals safety", "rescue protocol"]
+    },
+    {
+      "id": "maintenance",
+      "displayName": "Maintenance",
+      "purpose": "Track steady-state or lower-burden observation periods.",
+      "allowedPrompts": ["Which observed outcomes persisted with lower protocol complexity?"],
+      "blockedSemantics": ["long-term use recommendation"]
+    },
+    {
+      "id": "washout",
+      "displayName": "Washout",
+      "purpose": "Represent non-prescriptive pause observation for non-prescribed substances.",
+      "allowedPrompts": ["Which symptoms returned toward baseline after pausing a non-prescribed substance?"],
+      "blockedSemantics": ["instruction to stop medication", "proof of causality"]
+    },
+    {
+      "id": "recovery",
+      "displayName": "Recovery",
+      "purpose": "Track reassessment after discontinuation, adverse events, or high-risk exposure.",
+      "allowedPrompts": ["Which markers or symptoms need qualified clinician review?"],
+      "blockedSemantics": ["SERM recovery protocol", "post-cycle therapy", "DIY recovery instructions"]
+    },
+    {
+      "id": "reassessment",
+      "displayName": "Reassessment",
+      "purpose": "Review signal strength, burden, safety, cost, and evidence limits.",
+      "allowedPrompts": ["Which components have distinct mechanisms and credible evidence?"],
+      "blockedSemantics": ["recommend continue", "recommend discontinue"]
+    }
+  ]
+}

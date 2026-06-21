@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "side-effect-ambiguity-detector-spec",
+  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "generatedAt": "2026-06-18",
+  "coreQuestion": "What changed before this outcome changed?",
+  "boundary": "Observation and attribution ambiguity only. No diagnosis, treatment, stop/start guidance, tapering, escalation, or causality assertion.",
+  "inputDomains": [
+    "phase_event",
+    "start_event",
+    "stop_or_pause_event",
+    "escalation_event",
+    "support_event",
+    "source_change",
+    "symptom_onset",
+    "biomarker_change",
+    "wearable_change",
+    "subjective_note",
+    "source_quality_flag",
+    "high_risk_category_flag"
+  ],
+  "ambiguityDomains": [
+    {"id": "gi_symptoms", "examples": ["nausea", "constipation", "diarrhea", "appetite_change"]},
+    {"id": "sleep", "examples": ["sleep_latency", "sleep_quality", "next_day_fatigue"]},
+    {"id": "mood", "examples": ["anxiety", "irritability", "low_mood"]},
+    {"id": "cardiometabolic", "examples": ["heart_rate", "blood_pressure", "glucose_related_marker"]},
+    {"id": "hormone_axis", "examples": ["libido_change", "mood_change", "hormone_lab_discussion"]},
+    {"id": "liver_lipid", "examples": ["liver_marker_discussion", "lipid_marker_discussion"]},
+    {"id": "pain_function", "examples": ["pain_score", "function_score", "training_load"]},
+    {"id": "source_quality", "examples": ["identity_uncertainty", "purity_uncertainty", "label_uncertainty"]}
+  ],
+  "allowedOutputs": [
+    "recent_changes_panel",
+    "attribution_risk_banner",
+    "overlap_domains",
+    "source_quality_warning",
+    "qualified_professional_discussion_prompt",
+    "unknown_or_unresolved_state"
+  ],
+  "blockedOutputs": [
+    "diagnosis",
+    "causality_assertion",
+    "recommend_stop",
+    "recommend_start",
+    "recommend_taper",
+    "recommend_escalate",
+    "treatment_instruction",
+    "protocol_change_instruction"
+  ],
+  "requiredArtifactFields": [
+    "symptomOrOutcome",
+    "onsetWindow",
+    "recentChanges",
+    "phaseContext",
+    "overlapDomains",
+    "sourceQualityFlags",
+    "highRiskCategoryFlags",
+    "evidenceTier",
+    "confidence",
+    "userFacingBoundary",
+    "reviewStatus"
+  ],
+  "approvedLanguage": [
+    "This may complicate attribution.",
+    "BioStack found recent changes in overlapping domains.",
+    "This is an observation prompt, not a diagnosis.",
+    "Discuss concerning symptoms, medications, lab results, or high-risk substances with a qualified professional."
+  ]
+}

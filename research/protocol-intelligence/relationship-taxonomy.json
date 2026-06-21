@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "protocol-intelligence-relationship-taxonomy",
+  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "generatedAt": "2026-06-18",
+  "runtimeRule": "If no reviewed artifact resolves the relationship in context, return Unknown.",
+  "relationshipTypes": [
+    {
+      "id": "substance_affects_pathway",
+      "requiredFields": ["subject", "pathway", "direction", "mechanism", "evidenceTier", "sourceRefs"],
+      "displayConcept": "Pathway badge",
+      "safetyNotes": ["Mechanism is not human outcome proof."]
+    },
+    {
+      "id": "substance_supports_goal",
+      "requiredFields": ["subject", "goal", "claimScope", "population", "outcome", "evidenceTier", "sourceRefs"],
+      "displayConcept": "Goal map",
+      "safetyNotes": ["Must not imply user-specific recommendation."]
+    },
+    {
+      "id": "substance_requires_monitoring_with_biomarker",
+      "requiredFields": ["subject", "biomarker", "reason", "urgency", "clinicianEscalation", "sourceRefs"],
+      "displayConcept": "Monitoring card",
+      "safetyNotes": ["Monitoring domains are discussion prompts, not lab orders."]
+    },
+    {
+      "id": "substance_complicates_attribution_of_symptom",
+      "requiredFields": ["subject", "symptom", "likelyWindow", "coFactors", "overlapReason", "evidenceTier"],
+      "displayConcept": "Attribution risk banner",
+      "safetyNotes": ["Must not diagnose cause."]
+    },
+    {
+      "id": "substance_commonly_paired_with",
+      "requiredFields": ["subject", "object", "goalContext", "marketFrequency", "evidenceMismatch", "communitySignal"],
+      "displayConcept": "Commonly discussed pattern",
+      "safetyNotes": ["Community pairing is market signal only unless source-reviewed evidence supports a narrow claim."]
+    },
+    {
+      "id": "substance_commonly_separated_from",
+      "requiredFields": ["subject", "object", "separationRationale", "evidenceTier", "timingClass"],
+      "displayConcept": "Timing caution",
+      "safetyNotes": ["No dosing interval or timing instruction."]
+    },
+    {
+      "id": "substance_has_source_quality_concern",
+      "requiredFields": ["subject", "sourceClass", "regulatorNotes", "coaMetadata", "certificationMetadata"],
+      "displayConcept": "Source-quality badge",
+      "safetyNotes": ["No vendor, buying, or sourcing guidance."]
+    },
+    {
+      "id": "substance_has_regulatory_status",
+      "requiredFields": ["subject", "fdaStatus", "sportStatus", "prescriptionStatus", "countryNotes", "sourceRefs"],
+      "displayConcept": "Regulatory panel",
+      "safetyNotes": ["Regulatory status is not medical advice."]
+    },
+    {
+      "id": "substance_to_phase_role",
+      "requiredFields": ["subject", "phase", "roleLabel", "confidence", "sourceRefs"],
+      "displayConcept": "Phase lane",
+      "safetyNotes": ["Phase role is descriptive and cannot instruct use."]
+    },
+    {
+      "id": "substance_has_discontinuation_consideration",
+      "requiredFields": ["subject", "domainsToReassess", "evidenceTier", "timingUncertainty"],
+      "displayConcept": "Discontinuation checklist",
+      "safetyNotes": ["No stopping, tapering, or medication-change advice."]
+    },
+    {
+      "id": "substance_may_mask_side_effect",
+      "requiredFields": ["subject", "sideEffect", "maskingAgentOrDomain", "confidence", "sourceRefs"],
+      "displayConcept": "Masking flag",
+      "safetyNotes": ["Masking flags are observation prompts only."]
+    },
+    {
+      "id": "substance_increases_protocol_complexity",
+      "requiredFields": ["subject", "addedPathways", "weakEvidenceCount", "monitoringBurden", "sourceRisk"],
+      "displayConcept": "Complexity score",
+      "safetyNotes": ["Complexity score is not a recommendation to remove or continue substances."]
+    }
+  ],
+  "evidenceInputs": [
+    {"id": "official_regulatory_source", "weight": "very_high"},
+    {"id": "systematic_review_or_meta_analysis", "weight": "very_high"},
+    {"id": "human_randomized_controlled_trial", "weight": "high"},
+    {"id": "human_mechanistic_or_biomarker_study", "weight": "medium_high"},
+    {"id": "observational_human_evidence", "weight": "medium"},
+    {"id": "animal_evidence", "weight": "low_medium"},
+    {"id": "in_vitro_evidence", "weight": "low"},
+    {"id": "expert_or_practitioner_pattern", "weight": "low_medium"},
+    {"id": "community_anecdote", "weight": "low"},
+    {"id": "market_signal_only", "weight": "low"},
+    {"id": "speculative_hypothesis", "weight": "very_low"}
+  ]
+}
