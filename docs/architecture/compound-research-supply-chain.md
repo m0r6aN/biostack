@@ -17,7 +17,7 @@ Only reconciled evidence packets should be compiled into final substance records
 
 ## 2. Non-negotiable rules
 
-- No prescription, diagnosis, or personalized medical advice.
+- No medical authority, prescribing, diagnosis, individualized dosing, or treatment planning.
 - Every nontrivial claim must cite source IDs.
 - Low-trust sources may identify popularity or misinformation; they do not establish truth.
 - Regulatory, safety-critical, monitoring, product-specific dosing, and storage/reconstitution fields require authoritative support.
