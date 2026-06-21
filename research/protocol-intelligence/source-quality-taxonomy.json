@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-quality-taxonomy",
+  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "generatedAt": "2026-06-18",
+  "sourceClasses": [
+    {
+      "id": "fda_approved_product",
+      "displayName": "FDA-approved product",
+      "confidenceFloor": "high_when_product_specific_label_verified",
+      "warningFirst": false,
+      "blockedOutputs": ["off-label direction", "dose instruction", "product substitution"]
+    },
+    {
+      "id": "prescription_only",
+      "displayName": "Prescription-only substance",
+      "confidenceFloor": "source_dependent",
+      "warningFirst": true,
+      "blockedOutputs": ["medical advice", "start stop or taper guidance"]
+    },
+    {
+      "id": "compounded_product",
+      "displayName": "Compounded product",
+      "confidenceFloor": "source_dependent",
+      "warningFirst": true,
+      "blockedOutputs": ["compounded sourcing", "dose conversion", "switching guidance"]
+    },
+    {
+      "id": "dietary_supplement",
+      "displayName": "Dietary supplement",
+      "confidenceFloor": "moderate_when_identity_and_certification_verified",
+      "warningFirst": false,
+      "blockedOutputs": ["effectiveness guarantee", "natural equals safe"]
+    },
+    {
+      "id": "third_party_certified_supplement",
+      "displayName": "Third-party certified supplement",
+      "confidenceFloor": "moderate_for_identity_quality_not_efficacy",
+      "warningFirst": false,
+      "blockedOutputs": ["efficacy inference from certification"]
+    },
+    {
+      "id": "research_chemical",
+      "displayName": "Research chemical",
+      "confidenceFloor": "low",
+      "warningFirst": true,
+      "blockedOutputs": ["human use guidance", "sourcing guidance", "safety claim"]
+    },
+    {
+      "id": "gray_market",
+      "displayName": "Gray-market product",
+      "confidenceFloor": "low",
+      "warningFirst": true,
+      "blockedOutputs": ["vendor recommendation", "purity confidence", "sourcing guidance"]
+    },
+    {
+      "id": "investigational_compound",
+      "displayName": "Investigational compound",
+      "confidenceFloor": "source_dependent",
+      "warningFirst": true,
+      "blockedOutputs": ["safe or effective for human use", "protocol builder"]
+    },
+    {
+      "id": "banned_in_sport",
+      "displayName": "Banned-in-sport substance",
+      "confidenceFloor": "high_when_current_policy_verified",
+      "warningFirst": true,
+      "blockedOutputs": ["performance-use normalization", "avoid-detection guidance"]
+    },
+    {
+      "id": "unknown_user_entered",
+      "displayName": "Unknown or user-entered source",
+      "confidenceFloor": "unknown",
+      "warningFirst": true,
+      "blockedOutputs": ["identity confidence", "safety confidence", "sourcing guidance"]
+    }
+  ]
+}
