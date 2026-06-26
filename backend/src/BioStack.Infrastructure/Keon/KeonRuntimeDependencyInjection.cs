@@ -34,6 +34,7 @@ public static class KeonRuntimeDependencyInjection
         }
 
         services.AddScoped<ISpineRepository, SpineRepository>();
+        services.AddScoped<IRuntimeReceiptFactory, RuntimeReceiptFactory>();
 
         return services;
     }

@@ -3,7 +3,9 @@ namespace BioStack.Api.Tests.Integration;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
+using BioStack.Infrastructure.Governance;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +14,15 @@ using Xunit;
 [Trait("Category", "Integration")]
 public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
 {
+    private static readonly Guid TestUserId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+
     private WebApplicationFactory<Program> _factory = null!;
     private HttpClient _client = null!;
+
+    private sealed class FixedCurrentUserAccessor : ICurrentUserAccessor
+    {
+        public Guid GetCurrentUserId() => TestUserId;
+    }
 
     public async Task InitializeAsync()
     {
@@ -39,6 +48,10 @@ public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
                             .RequireAssertion(_ => true)
                             .Build();
                     });
+
+                    // Auth is bypassed, so no principal/claims exist — supply a fixed acting
+                    // user so receipt issuance can resolve a real (non-system) actor.
+                    services.AddScoped<ICurrentUserAccessor, FixedCurrentUserAccessor>();
                 });
             });
 
@@ -157,5 +170,30 @@ public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
 
         var reviews = doc.RootElement.GetProperty("perspectiveReviews");
         Assert.Equal(4, reviews.EnumerateObject().Count());
+    }
+
+    [Fact]
+    public async Task GenerateEnvelope_AppendsReceipt_WithUserActorAndCompoundEvidenceRefs()
+    {
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/stack-review/envelope", BuildValidRequest());
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var spine = scope.ServiceProvider.GetRequiredService<ISpineRepository>();
+
+        // The acting user — not a hardcoded "biostack-system" — owns the receipt.
+        var entries = await spine.GetByActorAsync($"user:{TestUserId}");
+        var entry = Assert.Single(entries);
+
+        Assert.Equal("deliberation.stack-review.completed", entry.ReceiptClass);
+        Assert.Equal("biostack-public", entry.TenantId);
+        Assert.NotEqual("biostack-system", entry.ActorId);
+
+        // Evidence refs must be populated (the reviewed compounds), never empty.
+        var refs = JsonSerializer.Deserialize<List<string>>(entry.EvidenceRefsJson)!;
+        Assert.NotEmpty(refs);
+        Assert.Contains("compound:magnesium-glycinate", refs);
+        Assert.Contains("compound:ashwagandha", refs);
     }
 }
