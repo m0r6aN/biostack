@@ -420,6 +420,7 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(e => e.ActorId).IsRequired();
             entity.Property(e => e.TimestampUtc).IsRequired();
             entity.Property(e => e.Decision).IsRequired();
+            entity.Property(e => e.ReceiptClass).IsRequired().HasDefaultValue("legacy.unclassified");
             entity.Property(e => e.PolicyHashValue).IsRequired();
             entity.Property(e => e.PolicyHashVersion).IsRequired();
             entity.Property(e => e.InputHash).IsRequired();

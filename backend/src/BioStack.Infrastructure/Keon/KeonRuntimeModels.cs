@@ -46,7 +46,8 @@ public sealed record DecisionReceipt(
     PolicyHash PolicyHash,
     string InputHash,
     IReadOnlyList<string> EvidenceRefs,
-    string EffectStatus);   // "commentary-only" | "non-effecting"
+    string EffectStatus,            // "commentary-only" | "non-effecting"
+    string ReceiptClass = "");     // taxonomy class, e.g. "deliberation.stack-review.completed"
 
 public sealed record ReceiptRequest(
     string SubjectUri,
@@ -55,7 +56,8 @@ public sealed record ReceiptRequest(
     string Decision,
     string InputHash,
     IReadOnlyList<string> EvidenceRefs,
-    string EffectStatus);
+    string EffectStatus,
+    string ReceiptClass = "");     // see <see cref="ReceiptClass"/>
 
 // ── Evidence Gate ─────────────────────────────────────────────────────────────
 

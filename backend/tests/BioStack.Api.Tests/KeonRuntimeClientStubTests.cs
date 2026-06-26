@@ -45,10 +45,12 @@ public class KeonRuntimeClientStubTests
             Decision: "commentary-only",
             InputHash: "abc123",
             EvidenceRefs: [],
-            EffectStatus: "non-effecting");
+            EffectStatus: "non-effecting",
+            ReceiptClass: ReceiptClass.ProtocolReviewCompleted);
         var receipt = await sut.IssueReceiptAsync(request);
         Assert.StartsWith("keon://receipt/stub-", receipt.ReceiptUri);
         Assert.Equal("non-effecting", receipt.EffectStatus);
+        Assert.Equal(ReceiptClass.ProtocolReviewCompleted, receipt.ReceiptClass);
     }
 
     [Fact]

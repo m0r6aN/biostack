@@ -74,6 +74,7 @@ public static class ReceiptEndpoints
             actorId = e.ActorId,
             timestampUtc = e.TimestampUtc,
             decision = e.Decision,
+            receiptClass = e.ReceiptClass,
             policyHash = new
             {
                 value = e.PolicyHashValue,

@@ -6,6 +6,7 @@ using BioStack.Cognition;
 using BioStack.Cognition.Models;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
+using BioStack.Infrastructure.Keon;
 using Keon.Collective;
 
 public static class StackReviewEndpoints
@@ -25,6 +26,8 @@ public static class StackReviewEndpoints
         IStackReviewBoardService srbService,
         IKnowledgeService knowledgeService,
         DoctrineSanitizer sanitizer,
+        IRuntimeReceiptFactory receipts,
+        ICurrentUserAccessor currentUser,
         CancellationToken ct)
     {
         StackDeliberationEnvelope envelope;
@@ -44,6 +47,24 @@ public static class StackReviewEndpoints
         }
 
         var cognitiveEnvelope = await srbService.ReviewStackAsync(envelope, ct);
+
+        // Issue a Decision Receipt — the Stack Review Board deliberated over the stack. The
+        // receipt binds to each reviewed compound (evidence) and the reasoning-graph artifact,
+        // proving governed reasoning before the commentary is surfaced. Slugs are the most
+        // stable identifier available on a client-supplied payload (no knowledge-entry id).
+        var evidenceRefs = envelope.Compounds
+            .Select(c => ReceiptRefs.Compound(c.Slug))
+            .Append(ReceiptRefs.CompoundGraph(cognitiveEnvelope.ReasoningGraphRef.GraphId))
+            .ToList();
+
+        await receipts.IssueAndAppendAsync(new ReceiptContext(
+            ReceiptClass: ReceiptClass.DeliberationStackReviewCompleted,
+            SubjectUri: $"stack-review:{cognitiveEnvelope.ReasoningGraphRef.GraphId}",
+            Actor: ReceiptActor.User(currentUser.GetCurrentUserId()),
+            EvidenceRefs: evidenceRefs,
+            Decision: "commentary-only",
+            EffectStatus: "commentary-only",
+            InputHashSeed: cognitiveEnvelope.ReasoningGraphRef.GraphId), ct);
 
         var response = MapToResponse(envelope, cognitiveEnvelope, sanitizer);
         return Results.Ok(response);
