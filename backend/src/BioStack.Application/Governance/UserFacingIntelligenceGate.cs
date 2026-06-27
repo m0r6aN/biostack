@@ -123,10 +123,11 @@ public sealed class UserFacingIntelligenceGate(
         if (!string.IsNullOrWhiteSpace(request.RequestText) && IsUnsafeRequest(request.RequestText))
         {
             // The request itself asks for prohibited guidance — refuse outright with safe text.
+            // Preserve 1:1 mapping with TextFields: each field becomes the refusal text.
             status = SafetyStatus.Refused;
             reasonCodes.Add(SafetyReasonCode.UnsafeRequest);
             warnings.Add(RefusalText);
-            safeText = [RefusalText];
+            safeText = Enumerable.Repeat(RefusalText, request.TextFields.Count).ToList();
         }
         else
         {

@@ -10,6 +10,7 @@ public static class HighRiskCategory
     public const string Sarm = "sarm";
     public const string Serm = "serm";
     public const string InvestigationalPeptide = "investigational-peptide";
+    public const string InvestigationalResearchChemical = "investigational-research-chemical";
     public const string GrayMarketPeptide = "gray-market-peptide";
     public const string CompoundedGlp1 = "compounded-glp1";
     public const string PrescriptionOnly = "prescription-only";
@@ -53,10 +54,10 @@ public sealed class HighRiskCategoryGate
         ("andarine", HighRiskCategory.Sarm), ("yk-11", HighRiskCategory.Sarm), ("yk11", HighRiskCategory.Sarm),
         ("s-23", HighRiskCategory.Sarm), ("s23", HighRiskCategory.Sarm), ("sarm", HighRiskCategory.Sarm),
         // GH secretagogues / metabolic agents commonly sold alongside SARMs as research chemicals.
-        ("cardarine", HighRiskCategory.InvestigationalPeptide), ("gw-501516", HighRiskCategory.InvestigationalPeptide),
-        ("gw501516", HighRiskCategory.InvestigationalPeptide), ("stenabolic", HighRiskCategory.InvestigationalPeptide),
-        ("sr9009", HighRiskCategory.InvestigationalPeptide), ("mk-677", HighRiskCategory.InvestigationalPeptide),
-        ("mk677", HighRiskCategory.InvestigationalPeptide), ("ibutamoren", HighRiskCategory.InvestigationalPeptide),
+        ("cardarine", HighRiskCategory.InvestigationalResearchChemical), ("gw-501516", HighRiskCategory.InvestigationalResearchChemical),
+        ("gw501516", HighRiskCategory.InvestigationalResearchChemical), ("stenabolic", HighRiskCategory.InvestigationalResearchChemical),
+        ("sr9009", HighRiskCategory.InvestigationalResearchChemical), ("mk-677", HighRiskCategory.InvestigationalResearchChemical),
+        ("mk677", HighRiskCategory.InvestigationalResearchChemical), ("ibutamoren", HighRiskCategory.InvestigationalResearchChemical),
         // ── SERMs ──
         ("tamoxifen", HighRiskCategory.Serm), ("nolvadex", HighRiskCategory.Serm),
         ("raloxifene", HighRiskCategory.Serm), ("clomiphene", HighRiskCategory.Serm),
@@ -124,6 +125,8 @@ public sealed class HighRiskCategoryGate
                 "SERMs are prescription medicines; this is educational context only, not a recommendation to use them.",
             [HighRiskCategory.InvestigationalPeptide] =
                 "This is an investigational/research peptide; safety in humans is not established and source quality should be treated as a risk.",
+            [HighRiskCategory.InvestigationalResearchChemical] =
+                "This is an investigational research chemical; safety in humans is not established and identity/source quality should be treated as a risk.",
             [HighRiskCategory.GrayMarketPeptide] =
                 "Gray-market peptides carry significant identity and purity risk; BioStack cannot verify what a given product actually contains.",
             [HighRiskCategory.CompoundedGlp1] =

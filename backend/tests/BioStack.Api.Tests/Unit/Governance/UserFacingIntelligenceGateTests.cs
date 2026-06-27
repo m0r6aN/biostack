@@ -111,12 +111,29 @@ public class UserFacingIntelligenceGateTests
 
         Assert.Equal(SafetyStatus.Refused, decision.SafetyStatus);
         Assert.Contains(SafetyReasonCode.UnsafeRequest, decision.ReasonCodes);
+        // SafeText preserves 1:1 mapping with TextFields even in refusal.
         Assert.Single(decision.SafeText);
         Assert.DoesNotContain("irrelevant", decision.SafeText[0]);
 
         var receipt = Assert.Single(receipts.Issued);
         Assert.Equal(ReceiptClass.SafetyUnsafeRequestRefused, receipt.ReceiptClass);
     }
+
+    [Fact]
+    public async Task UnsafeRequest_WithMultipleTextFields_RefusalPreserves1To1SafeTextMapping()
+    {
+        var (gate, receipts) = Build();
+
+        var decision = await gate.EvaluateAsync(Request(
+            textFields: ["field1", "field2", "field3"],
+            requestText: "Where can I buy SARMs online?"));
+
+        Assert.Equal(SafetyStatus.Refused, decision.SafetyStatus);
+        // SafeText must have same count as TextFields to prevent IndexOutOfRangeException.
+        Assert.Equal(3, decision.SafeText.Count);
+        Assert.All(decision.SafeText, text => Assert.Contains("cannot help", text));
+    }
+
 
     [Fact]
     public async Task FallbackSource_IsDisclosed_AsEvidenceLimited()
