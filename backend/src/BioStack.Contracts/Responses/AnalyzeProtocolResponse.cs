@@ -34,9 +34,9 @@ public sealed record ProtocolEntryResponse(
     string Unit,
     string Frequency,
     string Duration,
-    // True when this entry maps to a known compound in the knowledge base. Defaults true so
-    // existing parser call sites are unaffected; the analyzer overwrites it per entry.
-    bool Recognized = true);
+    // True when this entry maps to a known compound in the knowledge base. Defaults false
+    // to ensure unknown compounds are explicitly marked; the analyzer sets it per entry.
+    bool Recognized = false);
 
 public sealed record ProtocolIssueResponse(
     string Type,
