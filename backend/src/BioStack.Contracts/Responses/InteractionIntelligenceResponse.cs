@@ -9,7 +9,11 @@ public sealed record InteractionIntelligenceResponse(
     List<InteractionFindingResponse> TopFindings,
     List<InteractionResultResponse> Interactions,
     List<InteractionCounterfactualResponse> Counterfactuals,
-    List<InteractionSwapRecommendationResponse> Swaps
+    List<InteractionSwapRecommendationResponse> Swaps,
+    // Lane C: discloses whether the evaluation drew on the reviewed compound graph ("graph") or
+    // only the denormalized KnowledgeEntry fallback ("fallback"), plus the graph artifact hash used.
+    string Source = IntelligenceSource.Fallback,
+    string? GraphArtifactHash = null
 );
 
 public sealed record InteractionSummaryResponse(
@@ -38,7 +42,11 @@ public sealed record InteractionResultResponse(
     double Confidence,
     List<string> SharedPathways,
     string Reason,
-    bool HintBacked
+    bool HintBacked,
+    // Lane C: "graph" when this pair came from the reviewed compound graph, "fallback" when derived
+    // from KnowledgeEntry string fields (weaker confidence). GraphArtifactHash set only when graph-backed.
+    string Source = IntelligenceSource.Fallback,
+    string? GraphArtifactHash = null
 );
 
 public sealed record InteractionCounterfactualResponse(
