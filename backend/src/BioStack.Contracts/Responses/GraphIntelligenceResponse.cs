@@ -41,7 +41,13 @@ public sealed record CompoundRelationshipsResponse(
     string Source,
     string? GraphArtifactHash,
     DateTime? GeneratedAtUtc,
-    IReadOnlyList<GraphRelationshipResponse> Relationships);
+    IReadOnlyList<GraphRelationshipResponse> Relationships,
+    // Lane H safety-gate metadata (additive). Set when the response passes the user-facing
+    // intelligence gate; SafetyStatus is "allowed" until the gate evaluates the output.
+    string SafetyStatus = Responses.SafetyStatus.Allowed,
+    IReadOnlyList<string>? Warnings = null,
+    IReadOnlyList<string>? PolicyRefs = null,
+    string? SafetyReceiptId = null);
 
 /// <summary>
 /// Pairwise compatibility across a set of compounds, assembled from the reviewed graph where edges
@@ -52,4 +58,10 @@ public sealed record CompoundCompatibilityResponse(
     string Source,
     string? GraphArtifactHash,
     DateTime? GeneratedAtUtc,
-    IReadOnlyList<GraphRelationshipResponse> Relationships);
+    IReadOnlyList<GraphRelationshipResponse> Relationships,
+    // Lane H safety-gate metadata (additive). Set when the response passes the user-facing
+    // intelligence gate; SafetyStatus is "allowed" until the gate evaluates the output.
+    string SafetyStatus = Responses.SafetyStatus.Allowed,
+    IReadOnlyList<string>? Warnings = null,
+    IReadOnlyList<string>? PolicyRefs = null,
+    string? SafetyReceiptId = null);
