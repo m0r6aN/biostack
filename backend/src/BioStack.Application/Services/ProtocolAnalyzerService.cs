@@ -119,10 +119,16 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
         }
         var scored = recognizedCompoundCount > 0;
 
+        // When no compounds are recognized, clear score/explanation to avoid misleading consumers
+        var finalScore = scored ? analysis.Score : 0;
+        var finalScoreExplanation = scored
+            ? analysis.ScoreExplanation
+            : new ProtocolScoreExplanationResponse(0, 0, 0, 0);
+
         var response = new AnalyzeProtocolResponse(
             responseProtocol,
-            analysis.Score,
-            analysis.ScoreExplanation,
+            finalScore,
+            finalScoreExplanation,
             analysis.Issues.Take(5).ToList(),
             suggestions,
             parseResult.BlendExpansions,
@@ -274,7 +280,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
             .Where(entry => parseResult.KnowledgeByCompound.ContainsKey(entry.CompoundName))
             .ToList();
 
-        if (interactionIntelligence.Summary.Synergies == 0 && parseResult.Entries.Count > 1)
+        if (interactionIntelligence.Summary.Synergies == 0 && recognizedEntries.Count > 1)
         {
             issues.Add(new ProtocolIssueResponse(
                 "inefficiency",
@@ -282,7 +288,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
                 recognizedEntries.Select(entry => entry.CompoundName).ToList()));
         }
 
-        if (parseResult.Entries.Count > 5)
+        if (recognizedEntries.Count > 5)
         {
             issues.Add(new ProtocolIssueResponse(
                 "excessive_compounds",
