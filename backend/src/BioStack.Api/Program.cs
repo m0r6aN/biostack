@@ -277,6 +277,7 @@ builder.Services.AddSingleton<IDevMagicLinkInbox>(sp => sp.GetRequiredService<In
 
 // ── Domain services ─────────────────────────────────────────────────────────
 builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
+builder.Services.AddScoped<ICompoundGraphStore, CompoundGraphStore>();
 builder.Services.AddScoped<ITranscriptCandidateReviewStore, StagedTranscriptCandidateReviewStore>();
 builder.Services.Configure<YouTubeTranscriptProviderOptions>(
     builder.Configuration.GetSection(YouTubeTranscriptProviderOptions.SectionName));
@@ -307,6 +308,7 @@ builder.Services.AddSingleton<IEvidenceGate, EvidenceGate>();
 builder.Services.AddScoped<ITranscriptCandidatePromotionService, TranscriptCandidatePromotionService>();
 builder.Services.AddScoped<ITranscriptCandidatePromotionPreviewService, TranscriptCandidatePromotionPreviewService>();
 builder.Services.AddScoped<IInteractionIntelligenceService, InteractionIntelligenceService>();
+builder.Services.AddScoped<BioStack.Application.Services.Intelligence.IGraphIntelligenceService, BioStack.Application.Services.Intelligence.GraphIntelligenceService>();
 builder.Services.AddScoped<IOverlapService, OverlapService>();
 builder.Services.AddSingleton<IBlendDecomposerService, BlendDecomposerService>();
 builder.Services.AddSingleton<IProtocolFingerprintService, ProtocolFingerprintService>();
@@ -392,6 +394,7 @@ app.MapProtocolPortalEndpoints();
 app.MapTimelineEndpoints();
 app.MapCalculatorEndpoints();
 app.MapKnowledgeEndpoints();
+app.MapIntelligenceEndpoints();
 app.MapTrustLedgerEndpoints();
 app.MapStackReviewEndpoints();
 app.MapPolicyGateEndpoints();
