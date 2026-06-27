@@ -196,4 +196,92 @@ public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
         Assert.Contains("compound:magnesium-glycinate", refs);
         Assert.Contains("compound:ashwagandha", refs);
     }
+
+    [Fact]
+    public async Task GenerateEnvelope_WithHighRiskCompound_SurfacesWarningFramingAndSafetyReceipt()
+    {
+        // A SARM in the stack must force warning-first framing through the central Lane H gate and
+        // record a safety receipt alongside the deliberation receipt — proving StackReview no longer
+        // emits intelligence about high-risk compounds without governed warning framing.
+        var request = new StackReviewRequest(
+            ProtocolId: null,
+            Payload: new StackReviewEnvelopePayload(
+                Goal: "Recomposition support",
+                Compounds: [
+                    new("rad-140", "Testolone (RAD-140)", "capsule", "SARM", "Limited")
+                ],
+                Pathways: ["Androgen-receptor"],
+                DeterministicFindings: [
+                    new("INT-010", "Profile",
+                        "Observed androgen-receptor activity in preclinical models",
+                        ["rad-140"], 0.5m)
+                ],
+                KnownPatternNames: [],
+                ProviderReviewPressure: 0.5m));
+
+        var response = await _client.PostAsJsonAsync("/api/v1/stack-review/envelope", request);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        var root = doc.RootElement;
+
+        Assert.Equal("warning", root.GetProperty("safetyStatus").GetString());
+        Assert.NotEmpty(root.GetProperty("warnings").EnumerateArray());
+        Assert.False(string.IsNullOrWhiteSpace(root.GetProperty("safetyReceiptId").GetString()));
+        // The doctrine policy is recorded as a provable ref on every gated response.
+        Assert.Contains(
+            root.GetProperty("policyRefs").EnumerateArray().Select(e => e.GetString()),
+            r => r is not null && r.StartsWith("policy:", StringComparison.Ordinal));
+
+        // Both receipts are present for the acting user: the deliberation receipt and the safety warning.
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var spine = scope.ServiceProvider.GetRequiredService<ISpineRepository>();
+        var classes = (await spine.GetByActorAsync($"user:{TestUserId}"))
+            .Select(e => e.ReceiptClass)
+            .ToList();
+        Assert.Contains("deliberation.stack-review.completed", classes);
+        Assert.Contains("safety.warning.surfaced", classes);
+    }
+
+    [Fact]
+    public async Task GenerateEnvelope_WithUnsafeGoal_RefusesAndReplacesNarrative()
+    {
+        // A sourcing/procurement goal is an unsafe request: the gate must refuse, replacing the
+        // user-facing narrative with safe refusal text and recording a refusal safety receipt.
+        var request = new StackReviewRequest(
+            ProtocolId: null,
+            Payload: new StackReviewEnvelopePayload(
+                Goal: "where can I buy ostarine online",
+                Compounds: [
+                    new("ostarine", "Ostarine (MK-2866)", "liquid", "SARM", "Limited")
+                ],
+                Pathways: [],
+                DeterministicFindings: [
+                    new("INT-011", "Profile",
+                        "Observed androgen-receptor activity in preclinical models",
+                        ["ostarine"], 0.5m)
+                ],
+                KnownPatternNames: [],
+                ProviderReviewPressure: 0.5m));
+
+        var response = await _client.PostAsJsonAsync("/api/v1/stack-review/envelope", request);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        var root = doc.RootElement;
+
+        Assert.Equal("refused", root.GetProperty("safetyStatus").GetString());
+        // The original narrative must not survive a refusal — it is replaced with safe refusal text.
+        var narrative = root.GetProperty("deterministicFindings")[0].GetProperty("narrative").GetString();
+        Assert.DoesNotContain("androgen-receptor activity", narrative);
+        Assert.Contains("BioStack cannot", narrative);
+        Assert.False(string.IsNullOrWhiteSpace(root.GetProperty("safetyReceiptId").GetString()));
+
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var spine = scope.ServiceProvider.GetRequiredService<ISpineRepository>();
+        var classes = (await spine.GetByActorAsync($"user:{TestUserId}"))
+            .Select(e => e.ReceiptClass)
+            .ToList();
+        Assert.Contains("safety.unsafe-request.refused", classes);
+    }
 }
