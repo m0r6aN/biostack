@@ -2,6 +2,7 @@ namespace BioStack.Application.Services;
 
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
+using BioStack.Domain.Entities.Graph;
 using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Repositories;
@@ -24,13 +25,22 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
 
     private readonly IKnowledgeSource _knowledgeSource;
     private readonly ICompoundInteractionHintRepository _hintRepository;
+    private readonly ICompoundGraphStore? _graphStore;
+
+    // Cache of the active graph artifact hash for the lifetime of this (scoped) service so pairwise
+    // graph lookups don't re-query the active artifact for every pair. Null until first resolved;
+    // _graphHashResolved guards the "no active graph" case from being re-checked.
+    private string? _activeGraphHash;
+    private bool _graphHashResolved;
 
     public InteractionIntelligenceService(
         IKnowledgeSource knowledgeSource,
-        ICompoundInteractionHintRepository hintRepository)
+        ICompoundInteractionHintRepository hintRepository,
+        ICompoundGraphStore? graphStore = null)
     {
         _knowledgeSource = knowledgeSource;
         _hintRepository = hintRepository;
+        _graphStore = graphStore;
     }
 
     public async Task<InteractionIntelligenceResponse> EvaluateByNamesAsync(
@@ -112,7 +122,15 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             ? await BuildSwapsAsync(entries, compositeScore, summary, interactions, cancellationToken)
             : new List<InteractionSwapRecommendationResponse>();
 
-        return new InteractionIntelligenceResponse(summary, score, compositeScore, topFindings, interactions, counterfactuals, swaps);
+        // Disclose graph provenance at the top level: graph-backed when any pair resolved from the
+        // reviewed graph, with the artifact hash that informed the answer.
+        var graphBacked = interactions
+            .FirstOrDefault(result => result.Source == IntelligenceSource.Graph && result.GraphArtifactHash is not null);
+        var overallSource = graphBacked is not null ? IntelligenceSource.Graph : IntelligenceSource.Fallback;
+
+        return new InteractionIntelligenceResponse(
+            summary, score, compositeScore, topFindings, interactions, counterfactuals, swaps,
+            overallSource, graphBacked?.GraphArtifactHash);
     }
 
     private async Task<InteractionResultResponse> EvaluatePairAsync(
@@ -124,6 +142,14 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             .Intersect(compoundB.Pathways, StringComparer.OrdinalIgnoreCase)
             .OrderBy(pathway => pathway, StringComparer.OrdinalIgnoreCase)
             .ToList();
+
+        // Lane C: the reviewed compound graph is the preferred truth source. If it has an edge for
+        // this pair, use it (graph-backed) instead of re-deriving from KnowledgeEntry string fields.
+        var graphResult = await TryEvaluateFromGraphAsync(compoundA, compoundB, sharedPathways, cancellationToken);
+        if (graphResult is not null)
+        {
+            return graphResult;
+        }
 
         var hint = await _hintRepository.FindPairAsync(compoundA.CanonicalName, compoundB.CanonicalName, cancellationToken);
         if (hint is not null)
@@ -222,6 +248,96 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             sharedPathways,
             "No significant overlap detected from the current rule set.",
             HintBacked: false);
+    }
+
+    private async Task<InteractionResultResponse?> TryEvaluateFromGraphAsync(
+        KnowledgeEntry compoundA,
+        KnowledgeEntry compoundB,
+        List<string> sharedPathways,
+        CancellationToken cancellationToken)
+    {
+        if (_graphStore is null)
+        {
+            return null;
+        }
+
+        var edge = await _graphStore.FindRelationshipAsync(
+            compoundA.CanonicalName, compoundB.CanonicalName, cancellationToken);
+        if (edge is null)
+        {
+            return null;
+        }
+
+        var graphHash = await GetActiveGraphHashAsync(cancellationToken);
+
+        return new InteractionResultResponse(
+            compoundA.CanonicalName,
+            compoundB.CanonicalName,
+            MapRelationshipTypeToInteraction(edge.RelationshipType),
+            MapGraphConfidence(edge.Confidence),
+            sharedPathways,
+            string.IsNullOrWhiteSpace(edge.Reason)
+                ? "Reviewed compound-graph relationship."
+                : edge.Reason!,
+            HintBacked: false,
+            Source: IntelligenceSource.Graph,
+            GraphArtifactHash: graphHash);
+    }
+
+    private async Task<string?> GetActiveGraphHashAsync(CancellationToken cancellationToken)
+    {
+        if (_graphHashResolved)
+        {
+            return _activeGraphHash;
+        }
+
+        if (_graphStore is not null)
+        {
+            var artifact = await _graphStore.GetActiveArtifactAsync(cancellationToken);
+            _activeGraphHash = artifact?.ArtifactHash;
+        }
+
+        _graphHashResolved = true;
+        return _activeGraphHash;
+    }
+
+    private static InteractionType MapRelationshipTypeToInteraction(string relationshipType)
+    {
+        return relationshipType switch
+        {
+            GraphRelationshipType.SynergizesWith => InteractionType.Synergistic,
+            GraphRelationshipType.PairsWellWith => InteractionType.Synergistic,
+            GraphRelationshipType.RedundantWith => InteractionType.Redundant,
+            GraphRelationshipType.ConflictsWith => InteractionType.Interfering,
+            GraphRelationshipType.AvoidWith => InteractionType.Interfering,
+            GraphRelationshipType.OpposesEffect => InteractionType.Interfering,
+            GraphRelationshipType.SharedPathwayAdditiveRisk => InteractionType.Interfering,
+            _ => InteractionType.Neutral,
+        };
+    }
+
+    private static double MapGraphConfidence(string? confidence)
+    {
+        if (string.IsNullOrWhiteSpace(confidence))
+        {
+            return 0.65d;
+        }
+
+        // Numeric confidence (e.g. "0.82") is preserved as-is when parseable.
+        if (double.TryParse(confidence, System.Globalization.NumberStyles.Float,
+                System.Globalization.CultureInfo.InvariantCulture, out var numeric))
+        {
+            return Math.Round(Math.Clamp(numeric, 0d, 1d), 2);
+        }
+
+        return confidence.Trim().ToLowerInvariant() switch
+        {
+            "strong" or "high" => 0.85d,
+            "moderate" or "medium" => 0.70d,
+            "limited" or "low" => 0.55d,
+            "anecdotal" or "insufficient" or "unknown" => 0.40d,
+            _ => 0.65d,
+        };
     }
 
     private static bool HasNamedMatch(IEnumerable<string> candidates, KnowledgeEntry target)
