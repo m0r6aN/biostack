@@ -1,7 +1,7 @@
 # Protocol Intelligence Artifact Index
 
 Date: 2026-06-18
-Source research: `research/output/2026-06-18-biostack-knowledge-engine-market-research.md`
+Source research: `research/protocol-intelligence/biostack-ai-model-data-asset-research-memo.md`
 
 This index maps the market-research memo into durable BioStack operating artifacts. The memo remains preserved as source research; these files are the compiled product infrastructure.
 

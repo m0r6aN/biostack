@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
   "recordType": "protocol-intelligence-promotion-target-specs",
-  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "sourceResearch": "research/protocol-intelligence/biostack-ai-model-data-asset-research-memo.md",
   "generatedAt": "2026-06-18",
   "globalRequirements": {
-    "runtimeVisibilityRequires": ["structured_artifact", "source_refs", "evidence_tier", "confidence", "review_status_approved", "forbidden_output_scan_passed"],
+    "runtimeVisibilityRequires": ["structuredArtifact", "sourceRefs", "evidenceTier", "confidence", "reviewStatusApproved", "forbiddenOutputScanPassed"],
     "humanReviewRequiredFor": ["high_risk_category", "regulatory_status", "safety_warning", "prescription_only", "hormone_axis", "glp1", "sarm", "serm", "peptide", "source_quality", "adverse_effect", "contradiction"],
-    "blockedOutputs": ["clinical_dosing_instructions", "injection_instructions", "sarm_cycle_design", "serm_recovery_protocols", "post_cycle_therapy_instructions", "sourcing_guidance", "unsafe_investigational_claims", "anecdote_as_proof", "high_risk_protocol_builder", "start_stop_taper_combine_escalate_recommendations"]
+    "blockedOutputs": ["clinical_dosing_instructions", "injection_instructions", "sarm_cycle_design", "serm_recovery_protocols", "post_cycle_therapy_instructions", "sourcing_guidance", "claims_investigational_peptides_safe_or_effective", "claims_community_anecdotes_prove_efficacy", "high_risk_protocol_builder_flows", "recommend_start_stop_taper_combine_or_escalate"]
   },
   "targets": [
     {
@@ -21,7 +21,7 @@
       "id": "relationship_artifact",
       "displayName": "Relationship Artifact",
       "purpose": "Capture evidence-tiered protocol intelligence relationships without runtime inference.",
-      "requiredFields": ["relationshipType", "subject", "object", "phaseContext", "goalContext", "evidenceTier", "confidence", "sourceRefs", "sourceAuthorityMix", "safetyConcernLevel", "productHandling", "reviewStatus"],
+      "requiredFields": ["relationshipType", "subject", "object", "phaseContext", "goalContext", "evidenceTier", "confidence", "sourceRefs", "sourceAuthorityMix", "safetyConcernLevel", "productHandling", "reviewStatus", "userFacingExplanation"],
       "reviewGate": "human_review_required",
       "forbiddenOutputScanRequired": true
     },
@@ -29,7 +29,7 @@
       "id": "side_effect_ambiguity_artifact",
       "displayName": "Side-Effect Ambiguity Artifact",
       "purpose": "Identify recent changes and overlapping domains that may complicate attribution.",
-      "requiredFields": ["symptom", "onsetWindow", "recentChanges", "overlapDomains", "sourceQualityFlags", "evidenceTier", "confidence", "boundaryText"],
+      "requiredFields": ["symptomOrOutcome", "onsetWindow", "recentChanges", "phaseContext", "overlapDomains", "sourceQualityFlags", "highRiskCategoryFlags", "evidenceTier", "confidence", "userFacingBoundary", "reviewStatus"],
       "reviewGate": "human_review_required_when_high_risk_or_severe_symptom",
       "forbiddenOutputScanRequired": true
     },

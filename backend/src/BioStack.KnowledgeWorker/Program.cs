@@ -48,7 +48,9 @@ var builder = Host.CreateDefaultBuilder(args)
 
         // ── Provider policy (Npgsql-only, fail-closed in Production) ─────────
         var isProd = context.HostingEnvironment.IsProduction();
-        if (mode != RunMode.Research && mode != RunMode.PromotionImportDryRun)
+        if (mode != RunMode.Research &&
+            mode != RunMode.PromotionImportDryRun &&
+            mode != RunMode.ProtocolIntelligenceEvaluation)
         {
             var connectionString = ProductionSafetyGuard.EnforcePostgresOnly(context.Configuration, isProd);
 
@@ -97,6 +99,7 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddScoped<IRefreshJob,      RefreshJob>();
         services.AddScoped<IResearchJob,     ResearchJob>();
         services.AddScoped<IPromotionImportDryRunJob, PromotionImportDryRunJob>();
+        services.AddScoped<IProtocolIntelligenceEvaluationWorker, ProtocolIntelligenceEvaluationWorker>();
 
         // ── Hosted one-shot worker ───────────────────────────────────────────
         services.AddHostedService<IngestionWorker>();
@@ -109,7 +112,9 @@ var effectiveMode = ResolveConfiguredRunMode(host.Services.GetRequiredService<IC
 // ── Postgres connectivity check ──────────────────────────────────────────────
 // Fail fast if the database is unreachable before handing off to the hosted service.
 var startupLogger = host.Services.GetRequiredService<ILogger<Program>>();
-if (effectiveMode != RunMode.Research && effectiveMode != RunMode.PromotionImportDryRun)
+if (effectiveMode != RunMode.Research &&
+    effectiveMode != RunMode.PromotionImportDryRun &&
+    effectiveMode != RunMode.ProtocolIntelligenceEvaluation)
 {
     try
     {

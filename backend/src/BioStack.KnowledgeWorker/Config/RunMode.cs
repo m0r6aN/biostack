@@ -32,4 +32,10 @@ public enum RunMode
     /// database writes.
     /// </summary>
     PromotionImportDryRun = 4,
+
+    /// <summary>
+    /// Offline Protocol Intelligence release-gate evaluation. Runs deterministic safety,
+    /// citation, license, and review-gate checks and writes JSON results without database access.
+    /// </summary>
+    ProtocolIntelligenceEvaluation = 5,
 }

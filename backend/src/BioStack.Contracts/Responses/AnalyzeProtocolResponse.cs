@@ -15,7 +15,11 @@ public sealed record AnalyzeProtocolResponse(
     List<string> ParserWarnings,
     bool LowConfidenceExtraction,
     string? ExtractedTextPreview,
-    List<ProtocolIngestionArtifactResponse> Artifacts);
+    List<ProtocolIngestionArtifactResponse> Artifacts,
+    int ParsedCompoundCount = 0,
+    int RecognizedCompoundCount = 0,
+    string ParseConfidence = "none",
+    bool Scored = false);
 
 public sealed record ProtocolIngestionArtifactResponse(
     string Kind,
@@ -27,7 +31,8 @@ public sealed record ProtocolEntryResponse(
     double Dose,
     string Unit,
     string Frequency,
-    string Duration);
+    string Duration,
+    bool Recognized = true);
 
 public sealed record ProtocolIssueResponse(
     string Type,

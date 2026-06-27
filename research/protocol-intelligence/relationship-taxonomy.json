@@ -1,79 +1,79 @@
 {
   "schemaVersion": "1.0.0",
   "recordType": "protocol-intelligence-relationship-taxonomy",
-  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "sourceResearch": "research/protocol-intelligence/biostack-ai-model-data-asset-research-memo.md",
   "generatedAt": "2026-06-18",
   "runtimeRule": "If no reviewed artifact resolves the relationship in context, return Unknown.",
   "relationshipTypes": [
     {
       "id": "substance_affects_pathway",
-      "requiredFields": ["subject", "pathway", "direction", "mechanism", "evidenceTier", "sourceRefs"],
+      "requiredFields": ["subject", "pathway", "direction", "mechanism", "evidenceTier", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Pathway badge",
       "safetyNotes": ["Mechanism is not human outcome proof."]
     },
     {
       "id": "substance_supports_goal",
-      "requiredFields": ["subject", "goal", "claimScope", "population", "outcome", "evidenceTier", "sourceRefs"],
+      "requiredFields": ["subject", "goal", "claimScope", "population", "outcome", "evidenceTier", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Goal map",
       "safetyNotes": ["Must not imply user-specific recommendation."]
     },
     {
       "id": "substance_requires_monitoring_with_biomarker",
-      "requiredFields": ["subject", "biomarker", "reason", "urgency", "clinicianEscalation", "sourceRefs"],
+      "requiredFields": ["subject", "biomarker", "reason", "urgency", "clinicianEscalation", "evidenceTier", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Monitoring card",
       "safetyNotes": ["Monitoring domains are discussion prompts, not lab orders."]
     },
     {
       "id": "substance_complicates_attribution_of_symptom",
-      "requiredFields": ["subject", "symptom", "likelyWindow", "coFactors", "overlapReason", "evidenceTier"],
+      "requiredFields": ["subject", "symptom", "likelyWindow", "coFactors", "overlapReason", "evidenceTier", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Attribution risk banner",
       "safetyNotes": ["Must not diagnose cause."]
     },
     {
       "id": "substance_commonly_paired_with",
-      "requiredFields": ["subject", "object", "goalContext", "marketFrequency", "evidenceMismatch", "communitySignal"],
+      "requiredFields": ["subject", "object", "goalContext", "marketFrequency", "evidenceMismatch", "communitySignal", "evidenceTier", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Commonly discussed pattern",
       "safetyNotes": ["Community pairing is market signal only unless source-reviewed evidence supports a narrow claim."]
     },
     {
       "id": "substance_commonly_separated_from",
-      "requiredFields": ["subject", "object", "separationRationale", "evidenceTier", "timingClass"],
+      "requiredFields": ["subject", "object", "separationRationale", "evidenceTier", "timingClass", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Timing caution",
       "safetyNotes": ["No dosing interval or timing instruction."]
     },
     {
       "id": "substance_has_source_quality_concern",
-      "requiredFields": ["subject", "sourceClass", "regulatorNotes", "coaMetadata", "certificationMetadata"],
+      "requiredFields": ["subject", "sourceClass", "regulatorNotes", "coaMetadata", "certificationMetadata", "evidenceTier", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Source-quality badge",
       "safetyNotes": ["No vendor, buying, or sourcing guidance."]
     },
     {
       "id": "substance_has_regulatory_status",
-      "requiredFields": ["subject", "fdaStatus", "sportStatus", "prescriptionStatus", "countryNotes", "sourceRefs"],
+      "requiredFields": ["subject", "fdaStatus", "sportStatus", "prescriptionStatus", "countryNotes", "evidenceTier", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Regulatory panel",
       "safetyNotes": ["Regulatory status is not medical advice."]
     },
     {
       "id": "substance_to_phase_role",
-      "requiredFields": ["subject", "phase", "roleLabel", "confidence", "sourceRefs"],
+      "requiredFields": ["subject", "phase", "roleLabel", "evidenceTier", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Phase lane",
       "safetyNotes": ["Phase role is descriptive and cannot instruct use."]
     },
     {
       "id": "substance_has_discontinuation_consideration",
-      "requiredFields": ["subject", "domainsToReassess", "evidenceTier", "timingUncertainty"],
+      "requiredFields": ["subject", "domainsToReassess", "evidenceTier", "timingUncertainty", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Discontinuation checklist",
       "safetyNotes": ["No stopping, tapering, or medication-change advice."]
     },
     {
       "id": "substance_may_mask_side_effect",
-      "requiredFields": ["subject", "sideEffect", "maskingAgentOrDomain", "confidence", "sourceRefs"],
+      "requiredFields": ["subject", "sideEffect", "maskingAgentOrDomain", "evidenceTier", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Masking flag",
       "safetyNotes": ["Masking flags are observation prompts only."]
     },
     {
       "id": "substance_increases_protocol_complexity",
-      "requiredFields": ["subject", "addedPathways", "weakEvidenceCount", "monitoringBurden", "sourceRisk"],
+      "requiredFields": ["subject", "addedPathways", "weakEvidenceCount", "monitoringBurden", "sourceRisk", "evidenceTier", "confidence", "sourceRefs", "reviewStatus", "userFacingExplanation"],
       "displayConcept": "Complexity score",
       "safetyNotes": ["Complexity score is not a recommendation to remove or continue substances."]
     }

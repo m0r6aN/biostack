@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "recordType": "glp1-observability-pack",
-  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "sourceResearch": "research/protocol-intelligence/biostack-ai-model-data-asset-research-memo.md",
   "generatedAt": "2026-06-18",
   "boundary": "Observability only. No medication advice, dose guidance, tapering, switching, compounded sourcing, or treatment recommendations.",
   "domains": [

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "recordType": "high-risk-protocol-intelligence-guardrails",
-  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "sourceResearch": "research/protocol-intelligence/biostack-ai-model-data-asset-research-memo.md",
   "generatedAt": "2026-06-18",
   "categories": [
     {
@@ -9,49 +9,49 @@
       "displayName": "SARMs",
       "warningFirst": true,
       "requiredWarnings": ["regulatory_status", "hormone_axis", "liver_lipid_cardiovascular_risk_domains", "misinformation_risk"],
-      "blockedOutputs": ["cycle_design", "body_recomposition_protocol", "sourcing_guidance", "post_cycle_therapy"]
+      "blockedOutputs": ["sarm_cycle_design", "high_risk_protocol_builder_flows", "sourcing_guidance", "post_cycle_therapy_instructions"]
     },
     {
       "id": "serms",
       "displayName": "SERMs",
       "warningFirst": true,
       "requiredWarnings": ["prescription_boundary", "approved_use_context", "serious_warning_context", "off_label_community_use_boundary"],
-      "blockedOutputs": ["recovery_protocol", "post_cycle_therapy", "dose_instruction", "start_stop_guidance"]
+      "blockedOutputs": ["serm_recovery_protocols", "post_cycle_therapy_instructions", "clinical_dosing_instructions", "recommend_start_stop_taper_combine_or_escalate"]
     },
     {
       "id": "investigational_peptides",
       "displayName": "Investigational peptides",
       "warningFirst": true,
       "requiredWarnings": ["weak_or_absent_human_safety_evidence", "regulatory_status", "source_quality_uncertainty", "sports_policy_when_applicable"],
-      "blockedOutputs": ["safe_effective_claim", "injection_instruction", "protocol_builder", "sourcing_guidance"]
+      "blockedOutputs": ["claims_investigational_peptides_safe_or_effective", "injection_instructions", "high_risk_protocol_builder_flows", "sourcing_guidance"]
     },
     {
       "id": "gray_market_substances",
       "displayName": "Gray-market substances",
       "warningFirst": true,
       "requiredWarnings": ["identity_uncertainty", "purity_uncertainty", "label_accuracy_uncertainty"],
-      "blockedOutputs": ["vendor_recommendation", "source_ranking", "purchase_guidance"]
+      "blockedOutputs": ["sourcing_guidance"]
     },
     {
       "id": "compounded_glp1s",
       "displayName": "Compounded GLP-1s",
       "warningFirst": true,
       "requiredWarnings": ["compounded_product_boundary", "regulatory_warning_context", "product_identity_uncertainty"],
-      "blockedOutputs": ["dose_conversion", "switching_guidance", "tapering_instruction", "sourcing_guidance"]
+      "blockedOutputs": ["clinical_dosing_instructions", "recommend_start_stop_taper_combine_or_escalate", "sourcing_guidance"]
     },
     {
       "id": "prescription_only_substances",
       "displayName": "Prescription-only substances",
       "warningFirst": true,
       "requiredWarnings": ["qualified_professional_context", "label_specificity", "contraindication_and_warning_context"],
-      "blockedOutputs": ["medical_direction", "start_stop_taper_guidance", "substitution_guidance"]
+      "blockedOutputs": ["clinical_dosing_instructions", "recommend_start_stop_taper_combine_or_escalate"]
     },
     {
       "id": "banned_in_sport_substances",
       "displayName": "Banned-in-sport substances",
       "warningFirst": true,
       "requiredWarnings": ["current_policy_verification", "sport_specific_context", "regulatory_status_separation"],
-      "blockedOutputs": ["performance_use_normalization", "avoid_detection_guidance"]
+      "blockedOutputs": ["high_risk_protocol_builder_flows", "recommend_start_stop_taper_combine_or_escalate"]
     }
   ],
   "globalBlockedOutputs": [
