@@ -15,7 +15,13 @@ public sealed record AnalyzeProtocolResponse(
     List<string> ParserWarnings,
     bool LowConfidenceExtraction,
     string? ExtractedTextPreview,
-    List<ProtocolIngestionArtifactResponse> Artifacts);
+    List<ProtocolIngestionArtifactResponse> Artifacts,
+    // Honest-parsing signals (additive). Describe how much of the input BioStack could
+    // confidently map to known compounds — observational metadata, not user-facing narrative.
+    int ParsedCompoundCount = 0,
+    int RecognizedCompoundCount = 0,
+    string ParseConfidence = "none",
+    bool Scored = false);
 
 public sealed record ProtocolIngestionArtifactResponse(
     string Kind,
@@ -27,7 +33,10 @@ public sealed record ProtocolEntryResponse(
     double Dose,
     string Unit,
     string Frequency,
-    string Duration);
+    string Duration,
+    // True when this entry maps to a known compound in the knowledge base. Defaults true so
+    // existing parser call sites are unaffected; the analyzer overwrites it per entry.
+    bool Recognized = true);
 
 public sealed record ProtocolIssueResponse(
     string Type,

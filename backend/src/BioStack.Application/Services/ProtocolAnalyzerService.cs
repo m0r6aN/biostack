@@ -109,9 +109,18 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
         counterfactualStopwatch.Stop();
 
         var suggestions = _suggestionService.Suggest(parseResult, analysis.Issues, counterfactuals);
+        var responseProtocol = MarkRecognizedEntries(parseResult);
+        var parsedCompoundCount = responseProtocol.Count;
+        var recognizedCompoundCount = responseProtocol.Count(entry => entry.Recognized);
+        var parseConfidence = ResolveParseConfidence(parsedCompoundCount, recognizedCompoundCount);
+        if (request.InputType == ProtocolInputType.FileUpload && parseConfidence == "high")
+        {
+            parseConfidence = "medium";
+        }
+        var scored = recognizedCompoundCount > 0;
 
         var response = new AnalyzeProtocolResponse(
-            parseResult.Entries,
+            responseProtocol,
             analysis.Score,
             analysis.ScoreExplanation,
             analysis.Issues.Take(5).ToList(),
@@ -125,7 +134,11 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
             BuildParserWarnings(parseResult, analysis.UnknownCompounds),
             ingestion.LowConfidence,
             CreateExtractedTextPreview(ingestion.NormalizedText),
-            ingestion.Artifacts.Select(artifact => new BioStack.Contracts.Responses.ProtocolIngestionArtifactResponse(artifact.Kind, artifact.Label, artifact.Preview)).ToList());
+            ingestion.Artifacts.Select(artifact => new BioStack.Contracts.Responses.ProtocolIngestionArtifactResponse(artifact.Kind, artifact.Label, artifact.Preview)).ToList(),
+            parsedCompoundCount,
+            recognizedCompoundCount,
+            parseConfidence,
+            scored);
 
         await _persistenceHook.RecordAsync(_fingerprintService.GetNormalizedProtocolHash(normalizedProtocol), response, cancellationToken);
 
@@ -257,12 +270,16 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
                 new List<string> { result.CompoundA, result.CompoundB }));
         }
 
+        var recognizedEntries = parseResult.Entries
+            .Where(entry => parseResult.KnowledgeByCompound.ContainsKey(entry.CompoundName))
+            .ToList();
+
         if (interactionIntelligence.Summary.Synergies == 0 && parseResult.Entries.Count > 1)
         {
             issues.Add(new ProtocolIssueResponse(
                 "inefficiency",
                 "Stack lacks strong complementary pathway signals under the current rule set.",
-                parseResult.Entries.Select(entry => entry.CompoundName).ToList()));
+                recognizedEntries.Select(entry => entry.CompoundName).ToList()));
         }
 
         if (parseResult.Entries.Count > 5)
@@ -270,7 +287,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
             issues.Add(new ProtocolIssueResponse(
                 "excessive_compounds",
                 "Large stacks are harder to attribute cleanly and usually benefit from simplification.",
-                parseResult.Entries.Select(entry => entry.CompoundName).ToList()));
+                recognizedEntries.Select(entry => entry.CompoundName).ToList()));
         }
 
         return issues
@@ -306,7 +323,33 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
             warnings.Add("One or more protocol entries were only partially parsed.");
         }
 
+        if (parseResult.Entries.Count == 0 || parseResult.KnowledgeByCompound.Count == 0)
+        {
+            warnings.Add("BioStack couldn't confidently identify known compounds in this input.");
+        }
+
         return warnings;
+    }
+
+    private static List<ProtocolEntryResponse> MarkRecognizedEntries(ProtocolParseResult parseResult)
+        => parseResult.Entries
+            .Select(entry => entry with { Recognized = parseResult.KnowledgeByCompound.ContainsKey(entry.CompoundName) })
+            .ToList();
+
+    private static string ResolveParseConfidence(int parsedCompoundCount, int recognizedCompoundCount)
+    {
+        if (parsedCompoundCount == 0 || recognizedCompoundCount == 0)
+        {
+            return "none";
+        }
+
+        if (recognizedCompoundCount == parsedCompoundCount)
+        {
+            return parsedCompoundCount <= 5 ? "high" : "medium";
+        }
+
+        var ratio = recognizedCompoundCount / (double)parsedCompoundCount;
+        return ratio >= 0.5d ? "medium" : "low";
     }
 
     private static string? CreateExtractedTextPreview(string normalizedText)
