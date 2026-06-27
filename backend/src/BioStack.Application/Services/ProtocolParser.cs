@@ -122,12 +122,14 @@ public sealed class ProtocolParser : IProtocolParser
                 }
 
                 var resolved = ResolveCanonicalName(component, aliases);
+                var recognized = aliases.ContainsKey(NormalizeLookupKey(component));
                 return new ProtocolEntryResponse(
                     resolved,
                     dose,
                     unit,
                     NormalizeFrequency(frequency),
-                    duration);
+                    duration,
+                    Recognized: recognized);
             }).ToList();
         }
 
@@ -161,7 +163,8 @@ public sealed class ProtocolParser : IProtocolParser
                     parsedDose,
                     parsedUnit,
                     NormalizeFrequency(frequency),
-                    duration)
+                    duration,
+                    Recognized: true)
             };
         }
 
@@ -229,7 +232,10 @@ public sealed class ProtocolParser : IProtocolParser
             .Select(entry => entry.Duration)
             .FirstOrDefault(value => !string.IsNullOrWhiteSpace(value)) ?? string.Empty;
 
-        return new ProtocolEntryResponse(canonicalName, bestDoseEntry.Dose, unit, frequency, duration);
+        // Recognized is true if ANY of the merged entries is recognized
+        var recognized = members.Any(entry => entry.Recognized);
+
+        return new ProtocolEntryResponse(canonicalName, bestDoseEntry.Dose, unit, frequency, duration, recognized);
     }
 
     // Returns the canonical name when the segment contains a known compound alias,

@@ -14,7 +14,7 @@ public sealed class ProtocolAnalysisCacheTests
     {
         var cache = CreateCache();
         var dto = new ParsedProtocolCacheDto(
-            new List<ProtocolEntryResponse> { new("BPC-157", 500, "mcg", "daily", string.Empty) },
+            new List<ProtocolEntryResponse> { new("BPC-157", 500, "mcg", "daily", string.Empty, Recognized: true) },
             new List<ProtocolBlendExpansionResponse>());
 
         await cache.SetParsedAsync("key-1", dto, TimeSpan.FromMinutes(5), CancellationToken.None);
