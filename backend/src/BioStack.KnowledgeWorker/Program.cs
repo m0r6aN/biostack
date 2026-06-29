@@ -1,3 +1,5 @@
+using BioStack.Application.Governance;
+using BioStack.Application.ProtocolIntelligence;
 using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Persistence;
 using BioStack.KnowledgeWorker.Config;
@@ -14,6 +16,10 @@ static RunMode ResolveConfiguredRunMode(IConfiguration configuration, bool isPro
     configuration.GetSection("Worker").Bind(options);
     return ProductionSafetyGuard.ResolveRunMode(options, isProduction);
 }
+
+// Offline modes resolve and run without a database connection.
+static bool IsOfflineMode(RunMode mode) =>
+    mode is RunMode.Research or RunMode.PromotionImportDryRun or RunMode.ProtocolIntelligenceEvaluation;
 
 var builder = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((_, config) =>
@@ -48,7 +54,7 @@ var builder = Host.CreateDefaultBuilder(args)
 
         // ── Provider policy (Npgsql-only, fail-closed in Production) ─────────
         var isProd = context.HostingEnvironment.IsProduction();
-        if (mode != RunMode.Research && mode != RunMode.PromotionImportDryRun)
+        if (!IsOfflineMode(mode))
         {
             var connectionString = ProductionSafetyGuard.EnforcePostgresOnly(context.Configuration, isProd);
 
@@ -87,8 +93,13 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddSingleton<IPromotionExporter, PromotionExporter>();
         services.AddSingleton<IPromotionImportPreviewBuilder, PromotionImportPreviewBuilder>();
 
+        // ── Protocol Intelligence build-time gate (offline; no DB, no runtime surface) ─
+        services.AddSingleton<DoctrineSanitizer>();
+        services.AddSingleton<IProtocolIntelligenceArtifactLoader, ProtocolIntelligenceArtifactLoader>();
+        services.AddSingleton<IProtocolIntelligenceGate, ProtocolIntelligenceGate>();
+
         // ── Persistence + jobs (scoped: share DbContext within a single run) ─
-        if (mode != RunMode.Research && mode != RunMode.PromotionImportDryRun)
+        if (!IsOfflineMode(mode))
         {
             services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
             services.AddScoped<ICompoundInteractionHintRepository, CompoundInteractionHintRepository>();
@@ -97,6 +108,7 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddScoped<IRefreshJob,      RefreshJob>();
         services.AddScoped<IResearchJob,     ResearchJob>();
         services.AddScoped<IPromotionImportDryRunJob, PromotionImportDryRunJob>();
+        services.AddScoped<IProtocolIntelligenceEvaluationJob, ProtocolIntelligenceEvaluationJob>();
 
         // ── Hosted one-shot worker ───────────────────────────────────────────
         services.AddHostedService<IngestionWorker>();
@@ -109,7 +121,7 @@ var effectiveMode = ResolveConfiguredRunMode(host.Services.GetRequiredService<IC
 // ── Postgres connectivity check ──────────────────────────────────────────────
 // Fail fast if the database is unreachable before handing off to the hosted service.
 var startupLogger = host.Services.GetRequiredService<ILogger<Program>>();
-if (effectiveMode != RunMode.Research && effectiveMode != RunMode.PromotionImportDryRun)
+if (!IsOfflineMode(effectiveMode))
 {
     try
     {

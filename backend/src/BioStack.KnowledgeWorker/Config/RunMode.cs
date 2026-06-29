@@ -32,4 +32,13 @@ public enum RunMode
     /// database writes.
     /// </summary>
     PromotionImportDryRun = 4,
+
+    /// <summary>
+    /// Offline Protocol Intelligence evaluation. Loads the canonical
+    /// <c>research/protocol-intelligence/*.json</c> artifacts, exercises the build-time
+    /// <c>ProtocolIntelligenceGate</c> (fail-closed conformance plus any supplied candidate
+    /// artifacts), and emits a deterministic evaluation report. Performs no database writes
+    /// and exposes no runtime surface; doctrine enforcement is delegated to DoctrineSanitizer.
+    /// </summary>
+    ProtocolIntelligenceEvaluation = 5,
 }

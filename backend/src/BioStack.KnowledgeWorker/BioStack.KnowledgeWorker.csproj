@@ -23,6 +23,8 @@
   <ItemGroup>
     <!-- BioStack.Infrastructure provides BioStackDbContext + KnowledgeEntry for publish writes -->
     <ProjectReference Include="..\BioStack.Infrastructure\BioStack.Infrastructure.csproj" />
+    <!-- BioStack.Application provides the build-time ProtocolIntelligenceGate + DoctrineSanitizer -->
+    <ProjectReference Include="..\BioStack.Application\BioStack.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
