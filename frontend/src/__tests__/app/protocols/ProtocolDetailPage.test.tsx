@@ -41,7 +41,6 @@ vi.mock('@/lib/api', () => ({
   ApiError: class ApiError extends Error { upgradeRequired = false; },
   apiClient: {
     getProtocol: vi.fn(),
-    getProtocolIntelligence: vi.fn(),
     getProtocolReview: vi.fn(),
     getProtocolPatterns: vi.fn(),
     getProtocolDrift: vi.fn(),
@@ -73,29 +72,7 @@ describe('/protocols/[id] provider summary access', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(apiClient.getProtocol).mockResolvedValue(makeSavedProviderSummaryProtocol());
-    vi.mocked(apiClient.getProtocolIntelligence).mockResolvedValue({
-      status: 'Unknown',
-      phaseMap: [],
-      relationships: [],
-      ambiguitySignals: [],
-      sourceQualityWarnings: [],
-      highRiskWarnings: [],
-      unknowns: ['No reviewed Protocol Intelligence artifact exists for this protocol context.'],
-      safetyNotes: [],
-      upgradeHooks: [],
-    });
     vi.mocked(apiClient.getProtocolReview).mockResolvedValue(null);
-    vi.mocked(apiClient.getProtocolIntelligence).mockResolvedValue({
-      status: 'Unknown',
-      phaseMap: [],
-      relationships: [],
-      ambiguitySignals: [],
-      sourceQualityWarnings: [],
-      highRiskWarnings: [],
-      unknowns: ['No reviewed Protocol Intelligence artifact exists for this protocol context.'],
-      safetyNotes: [],
-      upgradeHooks: [],
-    });
     vi.mocked(apiClient.getProtocolPatterns).mockResolvedValue(null);
     vi.mocked(apiClient.getProtocolDrift).mockResolvedValue(null);
     vi.mocked(apiClient.getProtocolSequenceExpectation).mockResolvedValue(null);

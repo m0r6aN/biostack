@@ -16,7 +16,6 @@ using BioStack.Api;
 using BioStack.Cognition;
 using BioStack.Infrastructure.Keon;
 using BioStack.Application.Governance;
-using BioStack.Application.ProtocolIntelligence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -300,10 +299,6 @@ builder.Services.AddScoped<IProtocolPortalService, ProtocolPortalService>();
 builder.Services.AddScoped<ITimelineService, TimelineService>();
 builder.Services.AddScoped<ICalculatorService, CalculatorService>();
 builder.Services.AddScoped<IKnowledgeService, KnowledgeService>();
-builder.Services.AddSingleton<IProtocolIntelligenceArtifactLoader, ProtocolIntelligenceArtifactLoader>();
-builder.Services.AddSingleton<IForbiddenOutputScanner, ForbiddenOutputScanner>();
-builder.Services.AddSingleton<IProtocolIntelligenceGate, ProtocolIntelligenceGate>();
-builder.Services.AddScoped<IProtocolIntelligenceService, ProtocolIntelligenceService>();
 builder.Services.AddScoped<ITrustLedgerService, TrustLedgerService>();
 builder.Services.AddScoped<IKnowledgeSourceIntakeService, KnowledgeSourceIntakeService>();
 builder.Services.AddScoped<IQueuedIntakeTranscriptResolutionService, QueuedIntakeTranscriptResolutionService>();
