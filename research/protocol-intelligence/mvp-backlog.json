@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "recordType": "protocol-intelligence-mvp-backlog",
-  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "sourceResearch": "research/protocol-intelligence/biostack-ai-model-data-asset-research-memo.md",
   "generatedAt": "2026-06-18",
   "outcome": "Canonical Protocol Intelligence foundation for phase-aware protocol mapping, evidence-tiered relationships, side-effect ambiguity detection, source-quality classification, GLP-1 observability, and high-risk substance guardrails.",
   "epics": [

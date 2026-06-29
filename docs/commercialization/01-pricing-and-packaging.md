@@ -111,6 +111,10 @@ The free tier must be genuinely useful to be credible. It covers basic tracking 
 | Data export (CSV/JSON) | Yes | Full protocol export |
 | Source/supplier tracking | Yes | Price paid, supplier fields |
 | Drug interaction flags | Yes | Confidence-level flags |
+| Protocol Intelligence phase map | Yes | Reviewed phase context, evidence tier, confidence, citations, and review state |
+| Reviewed relationship graph | Yes | Reviewed relationship cards only; Unknown when no reviewed artifact exists |
+| Source-quality tracker | Yes | Identity, label, source, and regulatory uncertainty context |
+| GLP-1 observability pack | Yes | Observation-first context; no medication instructions |
 
 **Rationale:** Operator unlocks the full personal protocol workflow. Everything a solo researcher needs to operate intelligently is here. No artificial limits once paid.
 
@@ -124,7 +128,8 @@ Commander is not Operator with cosmetic upgrades. It represents access to the in
 | AI Protocol Analysis | Yes | GPT/Claude-powered insight summaries |
 | Cross-session trend correlation | Yes | Detect patterns across check-in history |
 | Side effect pattern detection | Yes | Flag recurring adverse signals |
-| Protocol optimization suggestions | Yes | AI-generated adjustment prompts |
+| Longitudinal Protocol Intelligence review | Yes | Reviewed pattern and ambiguity summaries; no clinical instructions |
+| Side-effect ambiguity detector | Yes | Surfaces what changed before an outcome and what remains uncertain |
 | Biomarker correlation view | Yes | Correlate check-ins with compound events |
 | Priority support | Yes | 24-hr response SLA |
 | Early access to new features | Yes | Commander-first rollout |
@@ -132,7 +137,22 @@ Commander is not Operator with cosmetic upgrades. It represents access to the in
 | Future: PDF protocol report generation | Yes | Shareable protocol summaries |
 | Future: coach/advisor sharing (read-only) | Yes | Invite a trusted viewer |
 
-**Rationale:** AI analysis is a natural Commander exclusive because it has a real marginal cost (token usage) and delivers disproportionate value to power users. Side effect pattern detection in particular is a feature that justifies the tier on its own — it turns the check-in log into something actionable.
+**Rationale:** Commander is for deeper reviewed intelligence, ambiguity analysis, and report-ready observational summaries. It does not provide medical advice, dosing direction, sourcing guidance, diagnosis, prescribing, or treatment planning. High-risk warnings and safety guardrails remain available on every tier.
+
+### Protocol Intelligence entitlement map
+
+| Feature key | Observer | Operator | Commander |
+| --- | --- | --- | --- |
+| `protocol_intelligence_contracts` | Included | Included | Included |
+| `protocol_phase_map` | Upgrade hook | Included | Included |
+| `reviewed_relationship_graph` | Upgrade hook | Included | Included |
+| `source_quality_tracker` | Limited warnings | Included | Included |
+| `glp1_observability_pack` | Upgrade hook | Included | Included |
+| `side_effect_ambiguity_detector` | Upgrade hook | Upgrade hook | Included |
+| `longitudinal_protocol_intelligence_report` | Upgrade hook | Upgrade hook | Included |
+| `high_risk_warning_first_guardrails` | Included | Included | Included |
+
+Observer may see contract metadata, limited source-quality warnings, Unknown states, and upgrade hooks. Operator unlocks reviewed relationship and source-quality context. Commander unlocks side-effect ambiguity and longitudinal review. Safety warnings are not gated.
 
 ---
 

@@ -10,12 +10,13 @@ import { LoadingSkeleton } from '@/components/LoadingState';
 import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { ProtocolComparison } from '@/components/protocols/ProtocolComparison';
 import { ProtocolContinuityStrip } from '@/components/protocols/ProtocolContinuityStrip';
+import { ProtocolIntelligencePanel } from '@/components/protocols/ProtocolIntelligencePanel';
 import { ProtocolIntelligenceReview } from '@/components/protocols/ProtocolIntelligenceReview';
 import { ProviderObservationalSummary } from '@/components/protocols/ProviderObservationalSummary';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { ApiError, apiClient } from '@/lib/api';
-import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
+import { Protocol, ProtocolDriftSnapshot, ProtocolIntelligenceResponse, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
@@ -29,6 +30,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
   const router = useRouter();
   const [protocol, setProtocol] = useState<Protocol | null>(null);
   const [review, setReview] = useState<ProtocolReview | null>(null);
+  const [protocolIntelligence, setProtocolIntelligence] = useState<ProtocolIntelligenceResponse | null>(null);
   const [patterns, setPatterns] = useState<ProtocolPatternSnapshot | null>(null);
   const [drift, setDrift] = useState<ProtocolDriftSnapshot | null>(null);
   const [sequence, setSequence] = useState<ProtocolSequenceExpectationSnapshot | null>(null);
@@ -52,6 +54,8 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
       setCommanderLockedMessage(null);
       const protocolData = await apiClient.getProtocol(id);
       setProtocol(protocolData);
+      const protocolIntelligenceData = await apiClient.getProtocolIntelligence(id);
+      setProtocolIntelligence(protocolIntelligenceData);
 
       try {
         const [reviewData, patternData, driftData, sequenceData] = await Promise.all([
@@ -252,6 +256,9 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
         ) : protocol ? (
           <>
             <ProtocolContinuityStrip protocol={protocol} review={review} patterns={patterns} drift={drift} sequence={sequence} />
+            <section id="protocol-intelligence" className="scroll-mt-6">
+              <ProtocolIntelligencePanel intelligence={protocolIntelligence} />
+            </section>
             {commanderLockedMessage && (
               <UpgradeBanner
                 title="Pattern memory, drift analysis, and sequence intelligence unlock with Commander"

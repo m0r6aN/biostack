@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "recordType": "source-quality-taxonomy",
-  "sourceResearch": "research/output/2026-06-18-biostack-knowledge-engine-market-research.md",
+  "sourceResearch": "research/protocol-intelligence/biostack-ai-model-data-asset-research-memo.md",
   "generatedAt": "2026-06-18",
   "sourceClasses": [
     {
@@ -9,70 +9,111 @@
       "displayName": "FDA-approved product",
       "confidenceFloor": "high_when_product_specific_label_verified",
       "warningFirst": false,
-      "blockedOutputs": ["off-label direction", "dose instruction", "product substitution"]
+      "blockedOutputs": ["clinical_dosing_instructions", "recommend_start_stop_taper_combine_or_escalate"],
+      "blockedOutputDescriptions": {
+        "clinical_dosing_instructions": "Blocks off-label direction and dose instruction.",
+        "recommend_start_stop_taper_combine_or_escalate": "Blocks product substitution or user-specific change guidance."
+      }
     },
     {
       "id": "prescription_only",
       "displayName": "Prescription-only substance",
       "confidenceFloor": "source_dependent",
       "warningFirst": true,
-      "blockedOutputs": ["medical advice", "start stop or taper guidance"]
+      "blockedOutputs": ["clinical_dosing_instructions", "recommend_start_stop_taper_combine_or_escalate"],
+      "blockedOutputDescriptions": {
+        "clinical_dosing_instructions": "Blocks medical advice and dosing direction.",
+        "recommend_start_stop_taper_combine_or_escalate": "Blocks start, stop, taper, combine, or escalation guidance."
+      }
     },
     {
       "id": "compounded_product",
       "displayName": "Compounded product",
       "confidenceFloor": "source_dependent",
       "warningFirst": true,
-      "blockedOutputs": ["compounded sourcing", "dose conversion", "switching guidance"]
+      "blockedOutputs": ["sourcing_guidance", "clinical_dosing_instructions", "recommend_start_stop_taper_combine_or_escalate"],
+      "blockedOutputDescriptions": {
+        "sourcing_guidance": "Blocks compounded sourcing guidance.",
+        "clinical_dosing_instructions": "Blocks dose conversion direction.",
+        "recommend_start_stop_taper_combine_or_escalate": "Blocks switching guidance."
+      }
     },
     {
       "id": "dietary_supplement",
       "displayName": "Dietary supplement",
       "confidenceFloor": "moderate_when_identity_and_certification_verified",
       "warningFirst": false,
-      "blockedOutputs": ["effectiveness guarantee", "natural equals safe"]
+      "blockedOutputs": ["claims_community_anecdotes_prove_efficacy", "claims_investigational_peptides_safe_or_effective"],
+      "blockedOutputDescriptions": {
+        "claims_community_anecdotes_prove_efficacy": "Blocks effectiveness guarantees from weak or anecdotal signals.",
+        "claims_investigational_peptides_safe_or_effective": "Blocks natural-equals-safe or safety-overclaim language."
+      }
     },
     {
       "id": "third_party_certified_supplement",
       "displayName": "Third-party certified supplement",
       "confidenceFloor": "moderate_for_identity_quality_not_efficacy",
       "warningFirst": false,
-      "blockedOutputs": ["efficacy inference from certification"]
+      "blockedOutputs": ["claims_community_anecdotes_prove_efficacy"],
+      "blockedOutputDescriptions": {
+        "claims_community_anecdotes_prove_efficacy": "Blocks efficacy inference from identity or quality certification."
+      }
     },
     {
       "id": "research_chemical",
       "displayName": "Research chemical",
       "confidenceFloor": "low",
       "warningFirst": true,
-      "blockedOutputs": ["human use guidance", "sourcing guidance", "safety claim"]
+      "blockedOutputs": ["high_risk_protocol_builder_flows", "sourcing_guidance", "claims_investigational_peptides_safe_or_effective"],
+      "blockedOutputDescriptions": {
+        "high_risk_protocol_builder_flows": "Blocks human-use protocol guidance.",
+        "sourcing_guidance": "Blocks sourcing guidance.",
+        "claims_investigational_peptides_safe_or_effective": "Blocks safety claims for research chemicals."
+      }
     },
     {
       "id": "gray_market",
       "displayName": "Gray-market product",
       "confidenceFloor": "low",
       "warningFirst": true,
-      "blockedOutputs": ["vendor recommendation", "purity confidence", "sourcing guidance"]
+      "blockedOutputs": ["sourcing_guidance", "claims_investigational_peptides_safe_or_effective"],
+      "blockedOutputDescriptions": {
+        "sourcing_guidance": "Blocks vendor recommendations and sourcing guidance.",
+        "claims_investigational_peptides_safe_or_effective": "Blocks unsupported purity or safety confidence."
+      }
     },
     {
       "id": "investigational_compound",
       "displayName": "Investigational compound",
       "confidenceFloor": "source_dependent",
       "warningFirst": true,
-      "blockedOutputs": ["safe or effective for human use", "protocol builder"]
+      "blockedOutputs": ["claims_investigational_peptides_safe_or_effective", "high_risk_protocol_builder_flows"],
+      "blockedOutputDescriptions": {
+        "claims_investigational_peptides_safe_or_effective": "Blocks safe-or-effective claims for human use.",
+        "high_risk_protocol_builder_flows": "Blocks protocol-builder behavior."
+      }
     },
     {
       "id": "banned_in_sport",
       "displayName": "Banned-in-sport substance",
       "confidenceFloor": "high_when_current_policy_verified",
       "warningFirst": true,
-      "blockedOutputs": ["performance-use normalization", "avoid-detection guidance"]
+      "blockedOutputs": ["high_risk_protocol_builder_flows", "recommend_start_stop_taper_combine_or_escalate"],
+      "blockedOutputDescriptions": {
+        "high_risk_protocol_builder_flows": "Blocks performance-use normalization.",
+        "recommend_start_stop_taper_combine_or_escalate": "Blocks avoid-detection or change guidance."
+      }
     },
     {
       "id": "unknown_user_entered",
       "displayName": "Unknown or user-entered source",
       "confidenceFloor": "unknown",
       "warningFirst": true,
-      "blockedOutputs": ["identity confidence", "safety confidence", "sourcing guidance"]
+      "blockedOutputs": ["claims_investigational_peptides_safe_or_effective", "sourcing_guidance"],
+      "blockedOutputDescriptions": {
+        "claims_investigational_peptides_safe_or_effective": "Blocks unsupported identity, safety, or confidence claims.",
+        "sourcing_guidance": "Blocks sourcing guidance."
+      }
     }
   ]
 }

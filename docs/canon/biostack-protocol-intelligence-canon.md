@@ -1,7 +1,7 @@
 # BioStack Protocol Intelligence Canon
 
 Date: 2026-06-18
-Source research: `research/output/2026-06-18-biostack-knowledge-engine-market-research.md`
+Source research: `research/protocol-intelligence/biostack-ai-model-data-asset-research-memo.md`
 Status: Canonical product foundation
 
 ## Product Posture

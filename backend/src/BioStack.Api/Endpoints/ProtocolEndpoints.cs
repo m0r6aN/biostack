@@ -1,9 +1,13 @@
 namespace BioStack.Api.Endpoints;
 
 using BioStack.Api.Auth;
+using BioStack.Application.ProtocolIntelligence;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
+using BioStack.Domain.Enums;
+using BioStack.Domain.Governance;
+using BioStack.Infrastructure.Governance;
 using BioStack.Infrastructure.Keon;
 
 public static class ProtocolEndpoints
@@ -41,6 +45,12 @@ public static class ProtocolEndpoints
 
         protocolGroup.MapGet("/{id}", GetProtocol)
             .WithName("GetProtocol");
+
+        protocolGroup.MapGet("/{id}/intelligence", GetProtocolIntelligence)
+            .WithName("GetProtocolIntelligence");
+
+        protocolGroup.MapPost("/{id}/intelligence/preview", PreviewProtocolIntelligence)
+            .WithName("PreviewProtocolIntelligence");
 
         protocolGroup.MapGet("/{id}/review", GetProtocolReview)
             .WithName("GetProtocolReview");
@@ -167,6 +177,37 @@ public static class ProtocolEndpoints
         {
             return Results.NotFound();
         }
+    }
+
+    private static async Task<IResult> GetProtocolIntelligence(
+        Guid id,
+        IProtocolIntelligenceService protocolIntelligenceService,
+        IFeatureGate featureGate,
+        CancellationToken ct)
+    {
+        var tier = await featureGate.GetCurrentTierAsync(ct);
+        var response = protocolIntelligenceService.BuildResponse(id, tier, []);
+        return Results.Ok(response);
+    }
+
+    private static async Task<IResult> PreviewProtocolIntelligence(
+        Guid id,
+        ProtocolIntelligencePreviewRequest request,
+        IProtocolIntelligenceService protocolIntelligenceService,
+        IFeatureGate featureGate,
+        CancellationToken ct)
+    {
+        var tier = await featureGate.GetCurrentTierAsync(ct);
+        var artifacts = request.ReviewedArtifacts
+            .Select(artifact => new ProtocolIntelligenceReviewedArtifact(
+                artifact.ArtifactType,
+                artifact.Artifact.ToDictionary(
+                    pair => pair.Key,
+                    pair => ConvertJsonElement(pair.Value),
+                    StringComparer.Ordinal)))
+            .ToArray();
+        var response = protocolIntelligenceService.BuildResponse(id, tier, artifacts);
+        return Results.Ok(response);
     }
 
     private static async Task<IResult> GetProtocolReview(Guid id, IProtocolService protocolService, CancellationToken ct)
@@ -354,4 +395,28 @@ public static class ProtocolEndpoints
             return Results.NotFound();
         }
     }
+
+    private static object? ConvertJsonElement(JsonElement element)
+        => element.ValueKind switch
+        {
+            JsonValueKind.String => element.GetString(),
+            JsonValueKind.Number when element.TryGetInt64(out var integer) => integer,
+            JsonValueKind.Number when element.TryGetDouble(out var number) => number,
+            JsonValueKind.True => true,
+            JsonValueKind.False => false,
+            JsonValueKind.Array => element.EnumerateArray().Select(ConvertJsonElement).ToArray(),
+            JsonValueKind.Null => null,
+            JsonValueKind.Object => element.EnumerateObject().ToDictionary(
+                property => property.Name,
+                property => ConvertJsonElement(property.Value),
+                StringComparer.Ordinal),
+            _ => element.ToString()
+        };
+
+    private sealed record ProtocolIntelligencePreviewRequest(
+        IReadOnlyList<ProtocolIntelligencePreviewArtifact> ReviewedArtifacts);
+
+    private sealed record ProtocolIntelligencePreviewArtifact(
+        string ArtifactType,
+        Dictionary<string, JsonElement> Artifact);
 }

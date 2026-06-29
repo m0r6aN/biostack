@@ -125,6 +125,13 @@ public sealed class WorkerOptions
     public string PromotionImportDryRunOutputDirectory { get; set; } = "PromotionImportDryRunOutput";
 
     /// <summary>
+    /// JSON output path for Protocol Intelligence release-gate evaluation results.
+    /// Relative paths resolve against the worker process current directory.
+    /// </summary>
+    public string ProtocolIntelligenceEvaluationOutputPath { get; set; } =
+        "ProtocolIntelligenceEvaluationOutput/evaluation-results.json";
+
+    /// <summary>
     /// Trust threshold values used by the publish decision engine.
     /// </summary>
     public TrustThresholdOptions TrustThresholds { get; set; } = new();
