@@ -1,12 +1,25 @@
 namespace BioStack.Application.ProtocolIntelligence;
 
+using BioStack.Application.Governance;
+
 public interface IProtocolIntelligenceGate
 {
     PromotionGateResult Evaluate(PromotionGateRequest request);
 }
 
+/// <summary>
+/// Build-time promotion gate for Protocol Intelligence artifacts. Decides whether a candidate
+/// artifact may enter the knowledge graph: it must declare its required fields, be approved
+/// (with human review where the taxonomy demands it), and carry no doctrine violations in any
+/// user-facing field.
+///
+/// This gate is offline/build-time only. It emits no narrative and exposes no runtime surface.
+/// Forbidden-output enforcement is delegated entirely to <see cref="DoctrineSanitizer"/> — the
+/// single canonical authority. There is no parallel scanner or phrase list.
+/// </summary>
 public sealed class ProtocolIntelligenceGate : IProtocolIntelligenceGate
 {
+    // Fields whose contents are eligible to surface to a user and therefore must be doctrine-clean.
     private static readonly string[] UserFacingScanFields =
     [
         "userFacingExplanation",
@@ -25,14 +38,14 @@ public sealed class ProtocolIntelligenceGate : IProtocolIntelligenceGate
     ];
 
     private readonly IProtocolIntelligenceArtifactLoader _loader;
-    private readonly IForbiddenOutputScanner _scanner;
+    private readonly DoctrineSanitizer _sanitizer;
 
     public ProtocolIntelligenceGate(
         IProtocolIntelligenceArtifactLoader loader,
-        IForbiddenOutputScanner scanner)
+        DoctrineSanitizer sanitizer)
     {
         _loader = loader;
-        _scanner = scanner;
+        _sanitizer = sanitizer;
     }
 
     public PromotionGateResult Evaluate(PromotionGateRequest request)
@@ -41,11 +54,11 @@ public sealed class ProtocolIntelligenceGate : IProtocolIntelligenceGate
         var artifacts = _loader.Load();
         var blockingReasons = new List<string>();
         var missing = new List<string>();
-        var forbiddenMatches = new HashSet<string>(StringComparer.Ordinal);
+        var doctrineViolationFields = new SortedSet<string>(StringComparer.Ordinal);
 
         if (!artifacts.PromotionTargets.TryGetValue(request.ArtifactType, out var target))
         {
-            return new PromotionGateResult(false, ["unknown_artifact_type"], [], [], false);
+            return new PromotionGateResult(false, [GateReasons.UnknownArtifactType], [], [], false);
         }
 
         foreach (var field in target.RequiredFields)
@@ -76,39 +89,40 @@ public sealed class ProtocolIntelligenceGate : IProtocolIntelligenceGate
         var requiresHumanReview = RequiresHumanReview(request, target);
         if (!string.Equals(reviewStatus, "approved", StringComparison.Ordinal))
         {
-            blockingReasons.Add("review_status_not_approved");
+            blockingReasons.Add(GateReasons.ReviewStatusNotApproved);
             if (requiresHumanReview)
             {
-                blockingReasons.Add("human_review_required");
+                blockingReasons.Add(GateReasons.HumanReviewRequired);
             }
         }
 
         if (missing.Count > 0)
         {
-            blockingReasons.Add("required_fields_missing");
+            blockingReasons.Add(GateReasons.RequiredFieldsMissing);
         }
 
         if (target.ForbiddenOutputScanRequired)
         {
             foreach (var field in UserFacingScanFields)
             {
-                foreach (var match in _scanner.Scan(GetString(request.Artifact, field)))
+                var value = GetString(request.Artifact, field);
+                if (!string.IsNullOrWhiteSpace(value) && _sanitizer.ContainsBannedPhrase(value))
                 {
-                    forbiddenMatches.Add(match);
+                    doctrineViolationFields.Add(field);
                 }
             }
         }
 
-        if (forbiddenMatches.Count > 0)
+        if (doctrineViolationFields.Count > 0)
         {
-            blockingReasons.Add("forbidden_output_match");
+            blockingReasons.Add(GateReasons.DoctrineViolation);
         }
 
         return new PromotionGateResult(
             CanPromote: blockingReasons.Count == 0,
             BlockingReasons: blockingReasons.Distinct(StringComparer.Ordinal).ToArray(),
             RequiredFieldsMissing: missing.Distinct(StringComparer.Ordinal).ToArray(),
-            ForbiddenOutputMatches: forbiddenMatches.OrderBy(id => id, StringComparer.Ordinal).ToArray(),
+            DoctrineViolationFields: doctrineViolationFields.ToArray(),
             RequiresHumanReview: requiresHumanReview);
     }
 

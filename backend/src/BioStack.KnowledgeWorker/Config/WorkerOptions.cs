@@ -125,11 +125,21 @@ public sealed class WorkerOptions
     public string PromotionImportDryRunOutputDirectory { get; set; } = "PromotionImportDryRunOutput";
 
     /// <summary>
-    /// JSON output path for Protocol Intelligence release-gate evaluation results.
-    /// Relative paths resolve against the worker process current directory.
+    /// Optional single candidate-artifact path used by <see cref="RunMode.ProtocolIntelligenceEvaluation" />.
+    /// Each candidate file is a JSON object: <c>{ "artifactType": "...", "artifact": { ... }, "claimTags": [ ... ] }</c>.
+    /// When omitted, the evaluation runs corpus-integrity + gate fail-closed conformance only.
     /// </summary>
-    public string ProtocolIntelligenceEvaluationOutputPath { get; set; } =
-        "ProtocolIntelligenceEvaluationOutput/evaluation-results.json";
+    public string? ProtocolIntelligenceCandidatePath { get; set; }
+
+    /// <summary>
+    /// Optional directory of candidate-artifact JSON files used by <see cref="RunMode.ProtocolIntelligenceEvaluation" />.
+    /// </summary>
+    public string? ProtocolIntelligenceCandidateDirectory { get; set; }
+
+    /// <summary>
+    /// Output directory for Protocol Intelligence evaluation reports.
+    /// </summary>
+    public string ProtocolIntelligenceEvaluationOutputDirectory { get; set; } = "ProtocolIntelligenceEvaluationOutput";
 
     /// <summary>
     /// Trust threshold values used by the publish decision engine.

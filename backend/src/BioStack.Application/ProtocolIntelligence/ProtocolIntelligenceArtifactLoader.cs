@@ -7,6 +7,11 @@ public interface IProtocolIntelligenceArtifactLoader
     ProtocolIntelligenceArtifactSet Load();
 }
 
+/// <summary>
+/// Loads the canonical Protocol Intelligence taxonomy/promotion-target artifacts from
+/// <c>research/protocol-intelligence/*.json</c>. These JSON files are validation inputs
+/// to the build-time gate — never runtime truth and never user-facing output.
+/// </summary>
 public sealed class ProtocolIntelligenceArtifactLoader : IProtocolIntelligenceArtifactLoader
 {
     private readonly string _repositoryRoot;
