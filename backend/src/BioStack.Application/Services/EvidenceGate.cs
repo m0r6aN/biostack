@@ -1,6 +1,7 @@
 namespace BioStack.Application.Services;
 
 using BioStack.Application.Governance;
+using BioStack.Application.ProtocolIntelligence;
 
 /// <summary>
 /// KE-4: Supported evidence tier code constants for transcript source metadata.
@@ -104,6 +105,12 @@ public sealed class EvidenceGate : IEvidenceGate
 
     // DoctrineSanitizer is stateless; allocate once per gate instance.
     private static readonly DoctrineSanitizer Sanitizer = new();
+    private readonly IProtocolIntelligenceGate? _protocolIntelligenceGate;
+
+    public EvidenceGate(IProtocolIntelligenceGate? protocolIntelligenceGate = null)
+    {
+        _protocolIntelligenceGate = protocolIntelligenceGate;
+    }
 
     public EvidenceGateResult Evaluate(EvidenceGateRequest request)
     {
@@ -186,6 +193,34 @@ public sealed class EvidenceGate : IEvidenceGate
                 return Reject(
                     "unsafe_recommendation_language",
                     $"Source metadata field '{key}' contains unsafe recommendation language.");
+            }
+        }
+
+        if (_protocolIntelligenceGate is not null &&
+            request.SourceMetadata.TryGetValue("artifactType", out var artifactType) &&
+            !string.IsNullOrWhiteSpace(artifactType))
+        {
+            var artifact = request.SourceMetadata.ToDictionary(
+                pair => pair.Key,
+                pair => (object?)pair.Value,
+                StringComparer.Ordinal);
+            artifact.TryAdd(
+                "reviewStatus",
+                string.Equals(request.ReviewState, TranscriptCandidateReviewState.ReviewApprovedForPromotion, StringComparison.Ordinal)
+                    ? "approved"
+                    : request.ReviewState);
+            if (!artifact.ContainsKey("sourceRefs") && request.SourceMetadata.TryGetValue("citations", out var protocolCitations))
+            {
+                artifact["sourceRefs"] = protocolCitations
+                    .Split([',', '\n', '\r'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            }
+
+            var protocolGate = _protocolIntelligenceGate.Evaluate(new PromotionGateRequest(artifactType, artifact));
+            if (!protocolGate.CanPromote)
+            {
+                return Reject(
+                    "protocol_intelligence_gate_failed",
+                    $"Protocol Intelligence gate failed: {string.Join(", ", protocolGate.BlockingReasons)}");
             }
         }
 

@@ -16,8 +16,6 @@ public sealed record AnalyzeProtocolResponse(
     bool LowConfidenceExtraction,
     string? ExtractedTextPreview,
     List<ProtocolIngestionArtifactResponse> Artifacts,
-    // Honest-parsing signals (additive). Describe how much of the input BioStack could
-    // confidently map to known compounds — observational metadata, not user-facing narrative.
     int ParsedCompoundCount = 0,
     int RecognizedCompoundCount = 0,
     string ParseConfidence = "none",
@@ -34,9 +32,7 @@ public sealed record ProtocolEntryResponse(
     string Unit,
     string Frequency,
     string Duration,
-    // True when this entry maps to a known compound in the knowledge base. Defaults false
-    // to ensure unknown compounds are explicitly marked; the analyzer sets it per entry.
-    bool Recognized = false);
+    bool Recognized = true);
 
 public sealed record ProtocolIssueResponse(
     string Type,

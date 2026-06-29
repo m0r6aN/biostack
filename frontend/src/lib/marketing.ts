@@ -83,6 +83,8 @@ export const pricingTiers: PricingTier[] = [
     highlights: [
       'Free calculators',
       'Basic analyzer score',
+      'Protocol Intelligence contract metadata',
+      'Unknown states and safety warnings',
       'One finding preview',
       'Local saved analysis',
       'Overlap detection teaser',
@@ -95,7 +97,7 @@ export const pricingTiers: PricingTier[] = [
     annualEffective: '$8/mo effective',
     description: 'For people actively running protocols - not just tracking them.',
     detail:
-      'Everything you need to track compounds, log results, and understand how your protocol fits together.',
+      'Everything you need to track compounds, log results, and view reviewed protocol relationships without medical-authority copy.',
     ctaLabel: 'Choose Operator',
     href: '/auth/signin',
     featured: true,
@@ -103,6 +105,9 @@ export const pricingTiers: PricingTier[] = [
       'Full analysis breakdown',
       'Redundancy and interference detail',
       'Evidence view',
+      'Reviewed relationship graph',
+      'Source-quality tracker',
+      'GLP-1 observability basics',
       'Protocol conversion',
       'Saved protocol console',
       'Longitudinal tracking',
@@ -115,12 +120,14 @@ export const pricingTiers: PricingTier[] = [
     annualEffective: '$19/mo effective',
     description: 'For deeper analysis and longitudinal pattern detection.',
     detail:
-      'Advanced insight tools for people managing more complex protocols over time.',
+      'Advanced reviewed intelligence for ambiguity analysis and longitudinal observational reports.',
     ctaLabel: 'See Commander',
     href: '/auth/signin',
     highlights: [
       'Automated cross-run analysis',
       'Trend and pattern detection',
+      'Side-effect ambiguity detector',
+      'Longitudinal Protocol Intelligence report hooks',
       'Cross-session comparison',
       'Reported-effect pattern surfacing',
       'Priority support',
