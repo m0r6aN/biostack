@@ -21,9 +21,6 @@ public static class KnowledgeEndpoints
 
         group.MapPost("/interaction-check", CheckInteractions)
             .WithName("CheckInteractions");
-
-        group.MapGet("/protocol-intelligence/contracts", GetProtocolIntelligenceContracts)
-            .WithName("GetProtocolIntelligenceContracts");
     }
 
     private static async Task<IResult> GetAllCompounds(IKnowledgeService knowledgeService, CancellationToken ct)
@@ -52,7 +49,4 @@ public static class KnowledgeEndpoints
         var result = await interactionIntelligenceService.EvaluateByNamesAsync(request.CompoundNames, ct);
         return Results.Ok(result);
     }
-
-    private static IResult GetProtocolIntelligenceContracts(IProtocolIntelligenceService protocolIntelligenceService)
-        => Results.Ok(protocolIntelligenceService.GetContracts());
 }

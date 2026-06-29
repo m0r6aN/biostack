@@ -26,7 +26,6 @@ import {
     ProtocolConsolePayload,
     ProtocolAnalyzerResult,
     Protocol,
-    ProtocolIntelligenceResponse,
     ProtocolComputationRecord,
     ProtocolDriftSnapshot,
     ProtocolPatternSnapshot,
@@ -213,10 +212,6 @@ export class ApiClient {
 
   async getProtocol(protocolId: string): Promise<Protocol> {
     return this.request<Protocol>(`/api/v1/protocols/${protocolId}`);
-  }
-
-  async getProtocolIntelligence(protocolId: string): Promise<ProtocolIntelligenceResponse> {
-    return this.request<ProtocolIntelligenceResponse>(`/api/v1/protocols/${protocolId}/intelligence`);
   }
 
   async getProtocolReview(protocolId: string): Promise<ProtocolReview> {
