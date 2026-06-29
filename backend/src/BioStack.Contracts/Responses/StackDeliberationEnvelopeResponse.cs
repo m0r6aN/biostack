@@ -21,7 +21,13 @@ public sealed record StackDeliberationEnvelopeResponse(
     // 6. KE-7: Witness Narrative
     WitnessNarrativeResponse WitnessNarrative,
     // 7. KE-8: Reasoning Graph (full node/edge detail)
-    ReasoningGraphResponse ReasoningGraphFull);
+    ReasoningGraphResponse ReasoningGraphFull,
+    // Lane H safety-gate metadata (additive). Set when the deliberation output passes the central
+    // user-facing intelligence gate; SafetyStatus is "allowed" until the gate evaluates the output.
+    string SafetyStatus = Responses.SafetyStatus.Allowed,
+    IReadOnlyList<string>? Warnings = null,
+    IReadOnlyList<string>? PolicyRefs = null,
+    string? SafetyReceiptId = null);
 
 public sealed record DeterministicFindingResponse(
     string FindingId,

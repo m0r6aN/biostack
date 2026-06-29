@@ -91,7 +91,7 @@ public sealed class ProtocolAnalyzerCachingTests
         parser
             .Setup(service => service.ParseAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new ProtocolParseResult(
-                new List<ProtocolEntryResponse> { new("BPC-157", 500, "mcg", "daily", string.Empty) },
+                new List<ProtocolEntryResponse> { new("BPC-157", 500, "mcg", "daily", string.Empty, Recognized: true) },
                 new Dictionary<string, KnowledgeEntry>(StringComparer.OrdinalIgnoreCase)
                 {
                     ["BPC-157"] = new KnowledgeEntry { CanonicalName = "BPC-157", Benefits = new List<string>(), Pathways = new List<string>() }

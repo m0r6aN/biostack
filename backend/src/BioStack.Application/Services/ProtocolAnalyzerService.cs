@@ -282,7 +282,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
                 recognizedEntries.Select(entry => entry.CompoundName).ToList()));
         }
 
-        if (parseResult.Entries.Count > 5)
+        if (recognizedEntries.Count > 5)
         {
             issues.Add(new ProtocolIssueResponse(
                 "excessive_compounds",

@@ -3,6 +3,7 @@ namespace BioStack.Infrastructure.Persistence;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using BioStack.Domain.Entities;
+using BioStack.Domain.Entities.Graph;
 using BioStack.Infrastructure.Persistence.Entities;
 
 public sealed class BioStackDbContext : DbContext
@@ -34,6 +35,9 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<BioStack.Domain.Governance.SpineEntry> SpineEntries { get; set; }
     public DbSet<KnowledgeSourceIntakeRequest> KnowledgeSourceIntakeRequests { get; set; }
     public DbSet<StagedTranscriptCandidateReviewEntity> StagedTranscriptCandidateReviews { get; set; }
+    public DbSet<CompoundGraphArtifact> CompoundGraphArtifacts { get; set; }
+    public DbSet<CompoundGraphRelationship> CompoundGraphRelationships { get; set; }
+    public DbSet<CompoundGraphFinding> CompoundGraphFindings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -420,6 +424,7 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(e => e.ActorId).IsRequired();
             entity.Property(e => e.TimestampUtc).IsRequired();
             entity.Property(e => e.Decision).IsRequired();
+            entity.Property(e => e.ReceiptClass).IsRequired().HasDefaultValue("legacy.unclassified");
             entity.Property(e => e.PolicyHashValue).IsRequired();
             entity.Property(e => e.PolicyHashVersion).IsRequired();
             entity.Property(e => e.InputHash).IsRequired();
@@ -480,6 +485,67 @@ public sealed class BioStackDbContext : DbContext
                     "CK_StagedTranscriptCandidateReviews_ReviewState_Lifecycle",
                     "ReviewState IN ('pending_review','review_deferred','review_rejected','review_approved_for_promotion')");
             });
+        });
+
+        modelBuilder.Entity<CompoundGraphArtifact>(entity =>
+        {
+            entity.HasKey(a => a.Id);
+            entity.Property(a => a.ArtifactHash).HasMaxLength(128).IsRequired();
+            entity.Property(a => a.BuilderVersion).HasMaxLength(64).IsRequired();
+            entity.Property(a => a.GeneratedAtUtc).IsRequired();
+            entity.Property(a => a.SourceManifestHash).HasMaxLength(128);
+            entity.Property(a => a.ReviewState).HasMaxLength(64).IsRequired();
+            // No HasDefaultValue("{}") here: a "{}" DDL default trips ExecuteSqlRaw's composite-format
+            // parsing on the SQLite create-script path. The C# initializer + Postgres migration default
+            // cover the default instead.
+            entity.Property(a => a.MetadataJson).IsRequired();
+            entity.Property(a => a.IsActive).IsRequired();
+            entity.Property(a => a.CreatedAtUtc).IsRequired();
+            entity.HasIndex(a => a.ArtifactHash).IsUnique();
+            entity.HasIndex(a => a.IsActive);
+            entity.HasMany(a => a.Relationships)
+                .WithOne(r => r.GraphArtifact)
+                .HasForeignKey(r => r.GraphArtifactId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany(a => a.Findings)
+                .WithOne(f => f.GraphArtifact)
+                .HasForeignKey(f => f.GraphArtifactId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<CompoundGraphRelationship>(entity =>
+        {
+            entity.HasKey(r => r.Id);
+            entity.Property(r => r.SubjectCompound).HasMaxLength(255).IsRequired();
+            entity.Property(r => r.SubjectSlug).HasMaxLength(255).IsRequired();
+            entity.Property(r => r.ObjectCompound).HasMaxLength(255).IsRequired();
+            entity.Property(r => r.ObjectSlug).HasMaxLength(255).IsRequired();
+            entity.Property(r => r.RelationshipType).HasMaxLength(64).IsRequired();
+            entity.Property(r => r.Directionality).HasMaxLength(32).IsRequired();
+            entity.Property(r => r.Confidence).HasMaxLength(64);
+            entity.Property(r => r.EvidenceTier).HasMaxLength(64);
+            entity.Property(r => r.SourceRefsJson).IsRequired().HasDefaultValue("[]");
+            entity.Property(r => r.Reason).HasMaxLength(2000);
+            entity.Property(r => r.SafetyConcernLevel).HasMaxLength(32).IsRequired();
+            entity.Property(r => r.ReviewState).HasMaxLength(64).IsRequired();
+            entity.Property(r => r.CreatedAtUtc).IsRequired();
+            entity.HasIndex(r => new { r.GraphArtifactId, r.SubjectSlug });
+            entity.HasIndex(r => new { r.GraphArtifactId, r.ObjectSlug });
+        });
+
+        modelBuilder.Entity<CompoundGraphFinding>(entity =>
+        {
+            entity.HasKey(f => f.Id);
+            entity.Property(f => f.FindingType).HasMaxLength(128).IsRequired();
+            entity.Property(f => f.Severity).HasMaxLength(32).IsRequired();
+            entity.Property(f => f.SubjectCompound).HasMaxLength(255);
+            entity.Property(f => f.ObjectCompound).HasMaxLength(255);
+            entity.Property(f => f.Pathway).HasMaxLength(255);
+            entity.Property(f => f.Reason).HasMaxLength(2000).IsRequired();
+            entity.Property(f => f.EvidenceRefsJson).IsRequired().HasDefaultValue("[]");
+            entity.Property(f => f.RecommendedAction).HasMaxLength(255);
+            entity.Property(f => f.CreatedAtUtc).IsRequired();
+            entity.HasIndex(f => f.GraphArtifactId);
         });
     }
 }

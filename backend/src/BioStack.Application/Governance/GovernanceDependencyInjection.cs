@@ -12,6 +12,12 @@ public static class GovernanceDependencyInjection
     public static IServiceCollection AddGovernance(this IServiceCollection services)
     {
         services.AddScoped<PolicyGate>();
+
+        // Lane H: central user-facing output safety gate + the high-risk category classifier it uses.
+        // The high-risk gate is stateless and deterministic (singleton); the output gate issues
+        // receipts via the scoped IRuntimeReceiptFactory, so it is registered scoped.
+        services.AddSingleton<HighRiskCategoryGate>();
+        services.AddScoped<IUserFacingIntelligenceGate, UserFacingIntelligenceGate>();
         return services;
     }
 }

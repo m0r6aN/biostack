@@ -3,7 +3,9 @@ namespace BioStack.Api.Tests.Integration;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
+using BioStack.Infrastructure.Governance;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +14,15 @@ using Xunit;
 [Trait("Category", "Integration")]
 public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
 {
+    private static readonly Guid TestUserId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+
     private WebApplicationFactory<Program> _factory = null!;
     private HttpClient _client = null!;
+
+    private sealed class FixedCurrentUserAccessor : ICurrentUserAccessor
+    {
+        public Guid GetCurrentUserId() => TestUserId;
+    }
 
     public async Task InitializeAsync()
     {
@@ -39,6 +48,10 @@ public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
                             .RequireAssertion(_ => true)
                             .Build();
                     });
+
+                    // Auth is bypassed, so no principal/claims exist — supply a fixed acting
+                    // user so receipt issuance can resolve a real (non-system) actor.
+                    services.AddScoped<ICurrentUserAccessor, FixedCurrentUserAccessor>();
                 });
             });
 
@@ -157,5 +170,118 @@ public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
 
         var reviews = doc.RootElement.GetProperty("perspectiveReviews");
         Assert.Equal(4, reviews.EnumerateObject().Count());
+    }
+
+    [Fact]
+    public async Task GenerateEnvelope_AppendsReceipt_WithUserActorAndCompoundEvidenceRefs()
+    {
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/stack-review/envelope", BuildValidRequest());
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var spine = scope.ServiceProvider.GetRequiredService<ISpineRepository>();
+
+        // The acting user — not a hardcoded "biostack-system" — owns the receipt.
+        var entries = await spine.GetByActorAsync($"user:{TestUserId}");
+        var entry = Assert.Single(entries);
+
+        Assert.Equal("deliberation.stack-review.completed", entry.ReceiptClass);
+        Assert.Equal("biostack-public", entry.TenantId);
+        Assert.NotEqual("biostack-system", entry.ActorId);
+
+        // Evidence refs must be populated (the reviewed compounds), never empty.
+        var refs = JsonSerializer.Deserialize<List<string>>(entry.EvidenceRefsJson)!;
+        Assert.NotEmpty(refs);
+        Assert.Contains("compound:magnesium-glycinate", refs);
+        Assert.Contains("compound:ashwagandha", refs);
+    }
+
+    [Fact]
+    public async Task GenerateEnvelope_WithHighRiskCompound_SurfacesWarningFramingAndSafetyReceipt()
+    {
+        // A SARM in the stack must force warning-first framing through the central Lane H gate and
+        // record a safety receipt alongside the deliberation receipt — proving StackReview no longer
+        // emits intelligence about high-risk compounds without governed warning framing.
+        var request = new StackReviewRequest(
+            ProtocolId: null,
+            Payload: new StackReviewEnvelopePayload(
+                Goal: "Recomposition support",
+                Compounds: [
+                    new("rad-140", "Testolone (RAD-140)", "capsule", "SARM", "Limited")
+                ],
+                Pathways: ["Androgen-receptor"],
+                DeterministicFindings: [
+                    new("INT-010", "Profile",
+                        "Observed androgen-receptor activity in preclinical models",
+                        ["rad-140"], 0.5m)
+                ],
+                KnownPatternNames: [],
+                ProviderReviewPressure: 0.5m));
+
+        var response = await _client.PostAsJsonAsync("/api/v1/stack-review/envelope", request);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        var root = doc.RootElement;
+
+        Assert.Equal("warning", root.GetProperty("safetyStatus").GetString());
+        Assert.NotEmpty(root.GetProperty("warnings").EnumerateArray());
+        Assert.False(string.IsNullOrWhiteSpace(root.GetProperty("safetyReceiptId").GetString()));
+        // The doctrine policy is recorded as a provable ref on every gated response.
+        Assert.Contains(
+            root.GetProperty("policyRefs").EnumerateArray().Select(e => e.GetString()),
+            r => r is not null && r.StartsWith("policy:", StringComparison.Ordinal));
+
+        // Both receipts are present for the acting user: the deliberation receipt and the safety warning.
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var spine = scope.ServiceProvider.GetRequiredService<ISpineRepository>();
+        var classes = (await spine.GetByActorAsync($"user:{TestUserId}"))
+            .Select(e => e.ReceiptClass)
+            .ToList();
+        Assert.Contains("deliberation.stack-review.completed", classes);
+        Assert.Contains("safety.warning.surfaced", classes);
+    }
+
+    [Fact]
+    public async Task GenerateEnvelope_WithUnsafeGoal_RefusesAndReplacesNarrative()
+    {
+        // A sourcing/procurement goal is an unsafe request: the gate must refuse, replacing the
+        // user-facing narrative with safe refusal text and recording a refusal safety receipt.
+        var request = new StackReviewRequest(
+            ProtocolId: null,
+            Payload: new StackReviewEnvelopePayload(
+                Goal: "where can I buy ostarine online",
+                Compounds: [
+                    new("ostarine", "Ostarine (MK-2866)", "liquid", "SARM", "Limited")
+                ],
+                Pathways: [],
+                DeterministicFindings: [
+                    new("INT-011", "Profile",
+                        "Observed androgen-receptor activity in preclinical models",
+                        ["ostarine"], 0.5m)
+                ],
+                KnownPatternNames: [],
+                ProviderReviewPressure: 0.5m));
+
+        var response = await _client.PostAsJsonAsync("/api/v1/stack-review/envelope", request);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        var root = doc.RootElement;
+
+        Assert.Equal("refused", root.GetProperty("safetyStatus").GetString());
+        // The original narrative must not survive a refusal — it is replaced with safe refusal text.
+        var narrative = root.GetProperty("deterministicFindings")[0].GetProperty("narrative").GetString();
+        Assert.DoesNotContain("androgen-receptor activity", narrative);
+        Assert.Contains("BioStack cannot", narrative);
+        Assert.False(string.IsNullOrWhiteSpace(root.GetProperty("safetyReceiptId").GetString()));
+
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var spine = scope.ServiceProvider.GetRequiredService<ISpineRepository>();
+        var classes = (await spine.GetByActorAsync($"user:{TestUserId}"))
+            .Select(e => e.ReceiptClass)
+            .ToList();
+        Assert.Contains("safety.unsafe-request.refused", classes);
     }
 }

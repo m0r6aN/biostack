@@ -40,7 +40,8 @@ internal sealed class KeonRuntimeClientStub(KeonRuntimeOptions options) : IKeonR
             PolicyHash: StubHash,
             InputHash: request.InputHash,
             EvidenceRefs: request.EvidenceRefs,
-            EffectStatus: request.EffectStatus));
+            EffectStatus: request.EffectStatus,
+            ReceiptClass: request.ReceiptClass));
     }
 
     public Task<DecisionReceipt?> GetReceiptAsync(string receiptUri, CancellationToken ct = default)
