@@ -40,6 +40,16 @@ public sealed class ProtocolIntelligenceEvaluationJobTests
             Assert.Equal(0, report["CandidatesEvaluated"]!.GetValue<int>());
             Assert.Equal(0, report["BlockedCandidates"]!.GetValue<int>());
             Assert.True(report["CanPromoteAll"]!.GetValue<bool>());
+
+            Assert.Equal("1.1.0", report["ReportVersion"]!.GetValue<string>());
+            var summary = report["Summary"]!;
+            Assert.Equal("1.1.0", summary["SchemaVersion"]!.GetValue<string>());
+            Assert.Equal(6, summary["PromotionTargetsEvaluated"]!.GetValue<int>());
+            Assert.Equal(0, summary["StructuralViolationCount"]!.GetValue<int>());
+            Assert.Equal(0, summary["CandidatesEvaluated"]!.GetValue<int>());
+            Assert.Equal(0, summary["CandidatesPassed"]!.GetValue<int>());
+            Assert.Equal(0, summary["CandidatesFailed"]!.GetValue<int>());
+            Assert.True(summary["CanPromoteAll"]!.GetValue<bool>());
         }
         finally
         {
@@ -96,12 +106,20 @@ public sealed class ProtocolIntelligenceEvaluationJobTests
 
             var candidate = report["CandidateResults"]!.AsArray()[0]!;
             Assert.False(candidate["CanPromote"]!.GetValue<bool>());
+            Assert.Equal("failed", candidate["Status"]!.GetValue<string>());
             Assert.Contains(
                 candidate["BlockingReasons"]!.AsArray(),
                 reason => reason!.GetValue<string>() == GateReasons.DoctrineViolation);
             Assert.Contains(
                 candidate["DoctrineViolationFields"]!.AsArray(),
                 field => field!.GetValue<string>() == "userFacingExplanation");
+            Assert.Contains(
+                candidate["FailureDetails"]!.AsArray(),
+                detail => detail!.GetValue<string>().Contains("doctrine_violation", StringComparison.Ordinal));
+
+            var summary = report["Summary"]!;
+            Assert.Equal(0, summary["CandidatesPassed"]!.GetValue<int>());
+            Assert.Equal(1, summary["CandidatesFailed"]!.GetValue<int>());
         }
         finally
         {
@@ -156,8 +174,18 @@ public sealed class ProtocolIntelligenceEvaluationJobTests
 
             var candidate = report["CandidateResults"]!.AsArray()[0]!;
             Assert.True(candidate["CanPromote"]!.GetValue<bool>());
+            Assert.Equal("passed", candidate["Status"]!.GetValue<string>());
             // The relationship taxonomy demands human review even when approved.
             Assert.True(candidate["RequiresHumanReview"]!.GetValue<bool>());
+            Assert.Contains(
+                candidate["Warnings"]!.AsArray(),
+                warning => warning!.GetValue<string>() == "requires_human_review_before_promotion");
+            Assert.Empty(candidate["FailureDetails"]!.AsArray());
+
+            var summary = report["Summary"]!;
+            Assert.Equal(1, summary["CandidatesPassed"]!.GetValue<int>());
+            Assert.Equal(0, summary["CandidatesFailed"]!.GetValue<int>());
+            Assert.Equal(1, summary["CandidatesWithWarnings"]!.GetValue<int>());
         }
         finally
         {
