@@ -298,6 +298,7 @@ builder.Services.AddSingleton<IProtocolPortalBaseline, ProtocolPortalBaseline>()
 builder.Services.AddScoped<IProtocolPortalService, ProtocolPortalService>();
 builder.Services.AddScoped<IProtocolOperationsReportService, ProtocolOperationsReportService>();
 builder.Services.AddScoped<IProtocolOperationsReportExportService, ProtocolOperationsReportExportService>();
+builder.Services.AddScoped<IProtocolOperationsExportBundleService, ProtocolOperationsExportBundleService>();
 builder.Services.AddScoped<ITimelineService, TimelineService>();
 builder.Services.AddScoped<ICalculatorService, CalculatorService>();
 builder.Services.AddScoped<IKnowledgeService, KnowledgeService>();
