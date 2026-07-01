@@ -1,6 +1,6 @@
 
 > **PHASE 2 DIRECTIVE APPLIED - STRATEGIC OVERLAY:** 
-> BioStack is the definitive **Protocol Intelligence Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
+> BioStack is a protocol operations and observability platform for human biology. It is not a Protocol Operations runtime surface, peptide app, or supplement log.
 > *Core Moat:* Synergy/interaction mapping, pathway overlap detection, timeline correlation engine, evidence-tier knowledge base.
 > *Aha Moment:* Within 60 seconds of onboarding, users input 1-3 compounds and see pathway overlap, synergies, conflicts, and timeline initialization.
 > *Monetization:* Users pay for reduced mistakes, increased clarity, confidence, and better outcomes through understanding.
@@ -19,7 +19,7 @@
 **Monetization Sharpening:** Users are paying for reduced mistakes, increased clarity, better outcomes through understanding, and confidence in their stacks. Avoid positioning this as just paying for 'more features'.
 
 
-BioStack Mission Control is a premium protocol intelligence tool for a self-directed, high-agency user base. These users spend hundreds to thousands of dollars on compounds, expect precision tooling, and are accustomed to paying for quality. The pricing strategy reflects that: free to enter, affordable to stay, premium to go deep.
+BioStack Mission Control is a premium protocol operations tool for a self-directed, high-agency user base. These users spend hundreds to thousands of dollars on compounds, expect precision tooling, and are accustomed to paying for quality. The pricing strategy reflects that: free to enter, affordable to stay, premium to go deep.
 
 **Recommended launch structure: three tiers — Observer (Free), Operator (Pro), and Commander (Elite).**
 
@@ -111,7 +111,6 @@ The free tier must be genuinely useful to be credible. It covers basic tracking 
 | Data export (CSV/JSON) | Yes | Full protocol export |
 | Source/supplier tracking | Yes | Price paid, supplier fields |
 | Drug interaction flags | Yes | Confidence-level flags |
-| Protocol Intelligence phase map | Yes | Reviewed phase context, evidence tier, confidence, citations, and review state |
 | Reviewed relationship graph | Yes | Reviewed relationship cards only; Unknown when no reviewed artifact exists |
 | Source-quality tracker | Yes | Identity, label, source, and regulatory uncertainty context |
 | GLP-1 observability pack | Yes | Observation-first context; no medication instructions |
@@ -128,7 +127,7 @@ Commander is not Operator with cosmetic upgrades. It represents access to the in
 | AI Protocol Analysis | Yes | GPT/Claude-powered insight summaries |
 | Cross-session trend correlation | Yes | Detect patterns across check-in history |
 | Side effect pattern detection | Yes | Flag recurring adverse signals |
-| Longitudinal Protocol Intelligence review | Yes | Reviewed pattern and ambiguity summaries; no clinical instructions |
+| Longitudinal observational review | Yes | Reviewed pattern and ambiguity summaries; no clinical instructions |
 | Side-effect ambiguity detector | Yes | Surfaces what changed before an outcome and what remains uncertain |
 | Biomarker correlation view | Yes | Correlate check-ins with compound events |
 | Priority support | Yes | 24-hr response SLA |
@@ -139,20 +138,17 @@ Commander is not Operator with cosmetic upgrades. It represents access to the in
 
 **Rationale:** Commander is for deeper reviewed intelligence, ambiguity analysis, and report-ready observational summaries. It does not provide medical advice, dosing direction, sourcing guidance, diagnosis, prescribing, or treatment planning. High-risk warnings and safety guardrails remain available on every tier.
 
-### Protocol Intelligence entitlement map
+### Runtime entitlement map
 
 | Feature key | Observer | Operator | Commander |
 | --- | --- | --- | --- |
-| `protocol_intelligence_contracts` | Included | Included | Included |
-| `protocol_phase_map` | Upgrade hook | Included | Included |
 | `reviewed_relationship_graph` | Upgrade hook | Included | Included |
 | `source_quality_tracker` | Limited warnings | Included | Included |
 | `glp1_observability_pack` | Upgrade hook | Included | Included |
 | `side_effect_ambiguity_detector` | Upgrade hook | Upgrade hook | Included |
-| `longitudinal_protocol_intelligence_report` | Upgrade hook | Upgrade hook | Included |
 | `high_risk_warning_first_guardrails` | Included | Included | Included |
 
-Observer may see contract metadata, limited source-quality warnings, Unknown states, and upgrade hooks. Operator unlocks reviewed relationship and source-quality context. Commander unlocks side-effect ambiguity and longitudinal review. Safety warnings are not gated.
+Observer may see limited source-quality warnings, Unknown states, and upgrade hooks. Operator unlocks reviewed relationship and source-quality context. Commander unlocks side-effect ambiguity and longitudinal observational review. Safety warnings are not gated. Protocol Operations artifact evaluation remains offline/build-time only and is not a runtime entitlement.
 
 ---
 
@@ -247,7 +243,7 @@ These are add-ons or premium expansions that can layer on top of existing tiers 
 **Who:** Operator users who want access to more than 12 months of historical data (if data retention limits are enforced for cost reasons).  
 **Trigger:** Power users who have been on the platform 12+ months.
 
-### Add-on 2: Protocol Intelligence Report
+### Add-on 2: Protocol Operations Report
 **Price:** $9 one-time per report  
 **What:** A generated PDF protocol summary including compound timeline, check-in trends, phase breakdown, and observation notes. Suitable for sharing with an advisor or for personal records.  
 **Who:** Any paid user.  
@@ -343,7 +339,7 @@ unpaid    → revert to Observer
 - Ship side effect pattern detection
 - Open Commander publicly with full feature set
 - Goal: 15% of paying users on Commander by month 9
-- Begin Protocol Intelligence Report as one-time purchase
+- Begin Protocol Operations Report as one-time purchase
 
 ### Phase 3 — Retention & Expansion (Months 6–12)
 

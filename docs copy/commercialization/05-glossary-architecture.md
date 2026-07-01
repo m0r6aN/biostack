@@ -1,6 +1,6 @@
 
 > **PHASE 2 DIRECTIVE APPLIED - STRATEGIC OVERLAY:** 
-> BioStack is the definitive **Protocol Intelligence Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
+> BioStack is the definitive **Protocol Operations Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
 > *Core Moat:* Synergy/interaction mapping, pathway overlap detection, timeline correlation engine, evidence-tier knowledge base.
 > *Aha Moment:* Within 60 seconds of onboarding, users input 1-3 compounds and see pathway overlap, synergies, conflicts, and timeline initialization.
 > *Monetization:* Users pay for reduced mistakes, increased clarity, confidence, and better outcomes through understanding.
@@ -390,9 +390,9 @@ Every glossary page must contain at least one direct link to a product feature. 
 | Interaction flag | Pathway Overlap Detector |
 | Synergy | Pathway Overlap Detector |
 | Evidence tier | Knowledge Base |
-| Biomarker | Check-in & Biomarker Protocol Intelligence Platform |
+| Biomarker | Check-in & Biomarker Protocol Operations Platform |
 | Timeline correlation | Unified Timeline |
-| Check-in | Check-in & Biomarker Protocol Intelligence Platform |
+| Check-in | Check-in & Biomarker Protocol Operations Platform |
 | Half-life | Protocol Builder / Schedule |
 | Dosage | Reconstitution Calculator |
 
@@ -443,7 +443,7 @@ These 15 pages represent the highest expected ROI: search volume that reaches th
 **Rationale:** The compound search term with the highest commercial intent. A user searching "peptide protocol" is ready to plan. This page is the gateway to BioStack's Protocol Builder.
 
 ### 8. NAD+
-**Rationale:** Mainstream crossover term with enormous search volume. Most content on NAD+ is either supplement marketing or academic. BioStack can own the "protocol intelligence" angle: how to track NAD+ alongside other compounds, observe biomarker response, understand evidence tiers.
+**Rationale:** Mainstream crossover term with enormous search volume. Most content on NAD+ is either supplement marketing or academic. BioStack can own the "protocol operations" angle: how to track NAD+ alongside other compounds, observe biomarker response, understand evidence tiers.
 
 ### 9. GLP-1
 **Rationale:** Highest-volume compound term in the health optimization space right now (2025–2026). BioStack's angle is protocol management and biomarker tracking — not weight loss claims. This page positions BioStack for a massive emerging user segment.

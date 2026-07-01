@@ -55,18 +55,15 @@ public sealed class BillingService : IBillingService
             subscription?.CancelAtPeriodEnd ?? false,
             subscription?.CurrentPeriodEndUtc,
             new Dictionary<string, bool>
-            {
-                [FeatureCodes.PaidIntelligence] = tier >= ProductTier.Operator,
-                [FeatureCodes.CommanderIntelligence] = tier >= ProductTier.Commander,
-                [FeatureCodes.ProtocolIntelligenceContracts] = true,
-                [FeatureCodes.ProtocolPhaseMap] = tier >= ProductTier.Operator,
-                [FeatureCodes.ReviewedRelationshipGraph] = tier >= ProductTier.Operator,
-                [FeatureCodes.SourceQualityTracker] = tier >= ProductTier.Operator,
-                [FeatureCodes.Glp1ObservabilityPack] = tier >= ProductTier.Operator,
-                [FeatureCodes.SideEffectAmbiguityDetector] = tier >= ProductTier.Commander,
-                [FeatureCodes.LongitudinalProtocolIntelligenceReport] = tier >= ProductTier.Commander,
-                [FeatureCodes.HighRiskWarningFirstGuardrails] = true
-            },
+                {
+                    [FeatureCodes.PaidIntelligence] = tier >= ProductTier.Operator,
+                    [FeatureCodes.CommanderIntelligence] = tier >= ProductTier.Commander,
+                    [FeatureCodes.ReviewedRelationshipGraph] = tier >= ProductTier.Operator,
+                    [FeatureCodes.SourceQualityTracker] = tier >= ProductTier.Operator,
+                    [FeatureCodes.Glp1ObservabilityPack] = tier >= ProductTier.Operator,
+                    [FeatureCodes.SideEffectAmbiguityDetector] = tier >= ProductTier.Commander,
+                    [FeatureCodes.HighRiskWarningFirstGuardrails] = true
+                },
             new Dictionary<string, int?>
             {
                 [FeatureCodes.ActiveCompounds] = tier == ProductTier.Observer ? FeatureGate.ObserverActiveCompoundLimit : null

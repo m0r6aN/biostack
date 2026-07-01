@@ -9,13 +9,10 @@ public static class FeatureCodes
     public const string ActiveCompounds = "active_compounds";
     public const string PaidIntelligence = "paid_intelligence";
     public const string CommanderIntelligence = "commander_intelligence";
-    public const string ProtocolIntelligenceContracts = "protocol_intelligence_contracts";
-    public const string ProtocolPhaseMap = "protocol_phase_map";
     public const string ReviewedRelationshipGraph = "reviewed_relationship_graph";
     public const string SourceQualityTracker = "source_quality_tracker";
     public const string Glp1ObservabilityPack = "glp1_observability_pack";
     public const string SideEffectAmbiguityDetector = "side_effect_ambiguity_detector";
-    public const string LongitudinalProtocolIntelligenceReport = "longitudinal_protocol_intelligence_report";
     public const string HighRiskWarningFirstGuardrails = "high_risk_warning_first_guardrails";
 }
 
@@ -59,13 +56,10 @@ public sealed class FeatureGate : IFeatureGate
         {
             FeatureCodes.PaidIntelligence => tier >= ProductTier.Operator,
             FeatureCodes.CommanderIntelligence => tier >= ProductTier.Commander,
-            FeatureCodes.ProtocolIntelligenceContracts => true,
-            FeatureCodes.ProtocolPhaseMap => tier >= ProductTier.Operator,
             FeatureCodes.ReviewedRelationshipGraph => tier >= ProductTier.Operator,
             FeatureCodes.SourceQualityTracker => tier >= ProductTier.Operator,
             FeatureCodes.Glp1ObservabilityPack => tier >= ProductTier.Operator,
             FeatureCodes.SideEffectAmbiguityDetector => tier >= ProductTier.Commander,
-            FeatureCodes.LongitudinalProtocolIntelligenceReport => tier >= ProductTier.Commander,
             FeatureCodes.HighRiskWarningFirstGuardrails => true,
             _ => true
         };

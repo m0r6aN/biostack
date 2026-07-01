@@ -1,6 +1,6 @@
 
 > **PHASE 2 DIRECTIVE APPLIED - STRATEGIC OVERLAY:** 
-> BioStack is the definitive **Protocol Intelligence Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
+> BioStack is the definitive **Protocol Operations Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
 > *Core Moat:* Synergy/interaction mapping, pathway overlap detection, timeline correlation engine, evidence-tier knowledge base.
 > *Aha Moment:* Within 60 seconds of onboarding, users input 1-3 compounds and see pathway overlap, synergies, conflicts, and timeline initialization.
 > *Monetization:* Users pay for reduced mistakes, increased clarity, confidence, and better outcomes through understanding.
@@ -19,7 +19,7 @@
 **Monetization Sharpening:** Users are paying for reduced mistakes, increased clarity, better outcomes through understanding, and confidence in their stacks. Avoid positioning this as just paying for 'more features'.
 
 
-BioStack Mission Control is a premium protocol intelligence tool for a self-directed, high-agency user base. These users spend hundreds to thousands of dollars on compounds, expect precision tooling, and are accustomed to paying for quality. The pricing strategy reflects that: free to enter, affordable to stay, premium to go deep.
+BioStack Mission Control is a premium protocol operations tool for a self-directed, high-agency user base. These users spend hundreds to thousands of dollars on compounds, expect precision tooling, and are accustomed to paying for quality. The pricing strategy reflects that: free to enter, affordable to stay, premium to go deep.
 
 **Recommended launch structure: three tiers — Observer (Free), Operator (Pro), and Commander (Elite).**
 
@@ -227,7 +227,7 @@ These are add-ons or premium expansions that can layer on top of existing tiers 
 **Who:** Operator users who want access to more than 12 months of historical data (if data retention limits are enforced for cost reasons).  
 **Trigger:** Power users who have been on the platform 12+ months.
 
-### Add-on 2: Protocol Intelligence Report
+### Add-on 2: Protocol Operations Report
 **Price:** $9 one-time per report  
 **What:** A generated PDF protocol summary including compound timeline, check-in trends, phase breakdown, and observation notes. Suitable for sharing with an advisor or for personal records.  
 **Who:** Any paid user.  
@@ -323,7 +323,7 @@ unpaid    → revert to Observer
 - Ship side effect pattern detection
 - Open Commander publicly with full feature set
 - Goal: 15% of paying users on Commander by month 9
-- Begin Protocol Intelligence Report as one-time purchase
+- Begin Protocol Operations Report as one-time purchase
 
 ### Phase 3 — Retention & Expansion (Months 6–12)
 

@@ -104,13 +104,13 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
         Assert.NotNull(current);
         Assert.Equal("Observer", current.Tier);
         Assert.Equal(limit, current.Limits["active_compounds"]);
-        Assert.True(current.Features[FeatureCodes.ProtocolIntelligenceContracts]);
-        Assert.False(current.Features[FeatureCodes.ProtocolPhaseMap]);
+        Assert.False(current.Features.ContainsKey("protocol_intelligence_contracts"));
+        Assert.False(current.Features.ContainsKey("protocol_phase_map"));
         Assert.False(current.Features[FeatureCodes.ReviewedRelationshipGraph]);
         Assert.False(current.Features[FeatureCodes.SourceQualityTracker]);
         Assert.False(current.Features[FeatureCodes.Glp1ObservabilityPack]);
         Assert.False(current.Features[FeatureCodes.SideEffectAmbiguityDetector]);
-        Assert.False(current.Features[FeatureCodes.LongitudinalProtocolIntelligenceReport]);
+        Assert.False(current.Features.ContainsKey("longitudinal_protocol_intelligence_report"));
         Assert.True(current.Features[FeatureCodes.HighRiskWarningFirstGuardrails]);
 
         await UpsertSubscriptionAsync(userId, ProductTier.Operator, "operator", SubscriptionStatus.Active, DateTime.UtcNow.AddDays(20), cancelAtPeriodEnd: false);
@@ -121,13 +121,13 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
         Assert.NotNull(current);
         Assert.Equal("Operator", current.Tier);
         Assert.True(current.CancelAtPeriodEnd);
-        Assert.True(current.Features[FeatureCodes.ProtocolIntelligenceContracts]);
-        Assert.True(current.Features[FeatureCodes.ProtocolPhaseMap]);
+        Assert.False(current.Features.ContainsKey("protocol_intelligence_contracts"));
+        Assert.False(current.Features.ContainsKey("protocol_phase_map"));
         Assert.True(current.Features[FeatureCodes.ReviewedRelationshipGraph]);
         Assert.True(current.Features[FeatureCodes.SourceQualityTracker]);
         Assert.True(current.Features[FeatureCodes.Glp1ObservabilityPack]);
         Assert.False(current.Features[FeatureCodes.SideEffectAmbiguityDetector]);
-        Assert.False(current.Features[FeatureCodes.LongitudinalProtocolIntelligenceReport]);
+        Assert.False(current.Features.ContainsKey("longitudinal_protocol_intelligence_report"));
         Assert.True(current.Features[FeatureCodes.HighRiskWarningFirstGuardrails]);
         Assert.Equal(HttpStatusCode.Created, (await CreateCompoundAsync(profile.Id, "compound-canceling")).StatusCode);
 
@@ -135,13 +135,13 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
         current = await _client.GetFromJsonAsync<CurrentSubscriptionResponse>("/api/v1/billing/subscription", JsonOptions);
         Assert.NotNull(current);
         Assert.Equal("Commander", current.Tier);
-        Assert.True(current.Features[FeatureCodes.ProtocolIntelligenceContracts]);
-        Assert.True(current.Features[FeatureCodes.ProtocolPhaseMap]);
+        Assert.False(current.Features.ContainsKey("protocol_intelligence_contracts"));
+        Assert.False(current.Features.ContainsKey("protocol_phase_map"));
         Assert.True(current.Features[FeatureCodes.ReviewedRelationshipGraph]);
         Assert.True(current.Features[FeatureCodes.SourceQualityTracker]);
         Assert.True(current.Features[FeatureCodes.Glp1ObservabilityPack]);
         Assert.True(current.Features[FeatureCodes.SideEffectAmbiguityDetector]);
-        Assert.True(current.Features[FeatureCodes.LongitudinalProtocolIntelligenceReport]);
+        Assert.False(current.Features.ContainsKey("longitudinal_protocol_intelligence_report"));
         Assert.True(current.Features[FeatureCodes.HighRiskWarningFirstGuardrails]);
 
         await UpsertSubscriptionAsync(userId, ProductTier.Operator, "operator", SubscriptionStatus.Active, DateTime.UtcNow.AddDays(-1), cancelAtPeriodEnd: true);

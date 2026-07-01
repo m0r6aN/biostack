@@ -1,6 +1,6 @@
 
 > **PHASE 2 DIRECTIVE APPLIED - STRATEGIC OVERLAY:** 
-> BioStack is the definitive **Protocol Intelligence Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
+> BioStack is the definitive **Protocol Operations Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
 > *Core Moat:* Synergy/interaction mapping, pathway overlap detection, timeline correlation engine, evidence-tier knowledge base.
 > *Aha Moment:* Within 60 seconds of onboarding, users input 1-3 compounds and see pathway overlap, synergies, conflicts, and timeline initialization.
 > *Monetization:* Users pay for reduced mistakes, increased clarity, confidence, and better outcomes through understanding.
@@ -827,8 +827,8 @@ All copy must be approved before the associated page is deployed to production.
 |-------|------|-------------------|--------|
 | Landing page meta title | Title tag | "protocol tracking", "bio-observability" | Needed |
 | Landing page meta description | Meta | product-level description, ≤160 chars | Needed |
-| Pricing page meta title + description | Title + meta | "BioStack pricing", "protocol Protocol Intelligence Platform subscription" | Needed |
-| FAQ page meta title + description | Title + meta | "BioStack FAQ", "peptide Protocol Intelligence Platform questions" | Needed |
+| Pricing page meta title + description | Title + meta | "BioStack pricing", "protocol Protocol Operations Platform subscription" | Needed |
+| FAQ page meta title + description | Title + meta | "BioStack FAQ", "peptide Protocol Operations Platform questions" | Needed |
 | Reconstitution Calculator title + description | Title + meta | "peptide reconstitution calculator", "BAC water calculator" | Needed |
 | Volume Calculator title + description | Title + meta | "peptide volume calculator", "injection volume calculator" | Needed |
 | Unit Converter title + description | Title + meta | "mcg to mg converter", "peptide unit conversion" | Needed |

@@ -1,6 +1,6 @@
 
 > **PHASE 2 DIRECTIVE APPLIED - STRATEGIC OVERLAY:** 
-> BioStack is the definitive **Protocol Intelligence Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
+> BioStack is the definitive **Protocol Operations Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
 > *Core Moat:* Synergy/interaction mapping, pathway overlap detection, timeline correlation engine, evidence-tier knowledge base.
 > *Aha Moment:* Within 60 seconds of onboarding, users input 1-3 compounds and see pathway overlap, synergies, conflicts, and timeline initialization.
 > *Monetization:* Users pay for reduced mistakes, increased clarity, confidence, and better outcomes through understanding.
@@ -473,7 +473,7 @@ Identify 10–15 high-traffic forums, communities, and resource aggregators in t
 ### Comparison Pages
 
 **Format:** Honest, structured comparison with clear criteria. Not a pure advocacy piece — AI systems penalize obvious promotional framing.
-**Target queries:** "biohacking protocol Protocol Intelligence Platform", "best peptide Intelligence Layer", "alternative to spreadsheet for tracking compounds"
+**Target queries:** "biohacking protocol Protocol Operations Platform", "best peptide Intelligence Layer", "alternative to spreadsheet for tracking compounds"
 **Conversion path:** Comparison section → "Try BioStack Free" CTA
 **Key topics to cover:**
 - BioStack vs. spreadsheet (precision, interaction detection, calculator integration, timeline correlation)

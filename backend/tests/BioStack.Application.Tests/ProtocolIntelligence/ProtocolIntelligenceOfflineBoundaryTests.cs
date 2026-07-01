@@ -53,6 +53,24 @@ public sealed class ProtocolIntelligenceOfflineBoundaryTests
         new(
             "frontend source-quality PI panel",
             @"\bSourceQualityPanel\b"),
+        new(
+            "runtime Protocol Intelligence contract entitlement key",
+            @"[""']protocol_intelligence_contracts[""']"),
+        new(
+            "runtime Protocol Intelligence phase-map entitlement key",
+            @"[""']protocol_phase_map[""']"),
+        new(
+            "runtime longitudinal Protocol Intelligence report entitlement key",
+            @"[""']longitudinal_protocol_intelligence_report[""']"),
+        new(
+            "runtime Protocol Intelligence contract feature flag",
+            @"FeatureCodes\.ProtocolIntelligenceContracts|const string ProtocolIntelligenceContracts\b"),
+        new(
+            "runtime Protocol Intelligence phase-map feature flag",
+            @"FeatureCodes\.ProtocolPhaseMap|const string ProtocolPhaseMap\b"),
+        new(
+            "runtime longitudinal Protocol Intelligence report feature flag",
+            @"FeatureCodes\.LongitudinalProtocolIntelligenceReport|const string LongitudinalProtocolIntelligenceReport\b"),
     ];
 
     [Fact]

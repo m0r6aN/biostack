@@ -143,7 +143,7 @@ export function ProtocolConsole() {
   if (!currentProfileId) {
     return (
       <div className="w-full">
-        <Header title="Protocol Console" subtitle="Protocol Intelligence" />
+        <Header title="Protocol Console" subtitle="Protocol Operations" />
         <div className="p-8">
           <EmptyState
             title="No Profile Selected"
@@ -161,7 +161,7 @@ export function ProtocolConsole() {
   if (error) {
     return (
       <div className="w-full">
-        <Header title="Protocol Console" subtitle="Protocol Intelligence" />
+        <Header title="Protocol Console" subtitle="Protocol Operations" />
         <div className="p-8">
           <ErrorState message={error} onRetry={loadProtocolConsoleData} />
         </div>
@@ -173,7 +173,7 @@ export function ProtocolConsole() {
 
   return (
     <div className="w-full">
-      <Header title="Mission Control" subtitle="Protocol Intelligence" actions={<ProfileSwitcher />} />
+      <Header title="Mission Control" subtitle="Protocol Operations" actions={<ProfileSwitcher />} />
 
       <div className="p-8 space-y-6">
         {loading ? (
