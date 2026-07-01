@@ -29,23 +29,28 @@ public sealed class ProtocolOperationsReportService : IProtocolOperationsReportS
     private readonly ICheckInRepository _checkInRepository;
     private readonly ITimelineEventRepository _timelineRepository;
     private readonly IProtocolPortalBaseline _baseline;
+    private readonly IOwnershipGuard _ownershipGuard;
 
     public ProtocolOperationsReportService(
         IProtocolRepository protocolRepository,
         ICompoundRecordRepository compoundRepository,
         ICheckInRepository checkInRepository,
         ITimelineEventRepository timelineRepository,
-        IProtocolPortalBaseline baseline)
+        IProtocolPortalBaseline baseline,
+        IOwnershipGuard ownershipGuard)
     {
         _protocolRepository = protocolRepository;
         _compoundRepository = compoundRepository;
         _checkInRepository = checkInRepository;
         _timelineRepository = timelineRepository;
         _baseline = baseline;
+        _ownershipGuard = ownershipGuard;
     }
 
     public async Task<ProtocolOperationsReport> GetReportAsync(Guid profileId, CancellationToken ct = default)
     {
+        await _ownershipGuard.EnsureProfileOwnedAsync(profileId, ct);
+
         var protocols = (await _protocolRepository.GetByPersonIdAsync(profileId, ct)).ToList();
         var activeProtocol = protocols
             .Where(p => !p.IsDraft)
