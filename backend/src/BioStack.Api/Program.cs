@@ -392,6 +392,7 @@ app.MapCheckInEndpoints();
 app.MapProtocolEndpoints();
 app.MapProtocolPhaseEndpoints();
 app.MapProtocolPortalEndpoints();
+app.MapProtocolOperationsReportEndpoints();
 app.MapTimelineEndpoints();
 app.MapCalculatorEndpoints();
 app.MapKnowledgeEndpoints();
