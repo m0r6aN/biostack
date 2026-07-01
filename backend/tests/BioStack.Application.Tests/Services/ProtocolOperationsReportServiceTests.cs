@@ -73,7 +73,8 @@ public sealed class ProtocolOperationsReportServiceTests
             compoundRepo.Object,
             checkInRepo.Object,
             timelineRepo.Object,
-            new ProtocolPortalBaseline());
+            new ProtocolPortalBaseline(),
+            BuildOwnershipGuard());
 
         var report = await service.GetReportAsync(ProfileId);
 
@@ -148,7 +149,16 @@ public sealed class ProtocolOperationsReportServiceTests
             compoundRepo.Object,
             checkInRepo.Object,
             timelineRepo.Object,
-            new ProtocolPortalBaseline());
+            new ProtocolPortalBaseline(),
+            BuildOwnershipGuard());
+    }
+
+    private static IOwnershipGuard BuildOwnershipGuard()
+    {
+        var guard = new Mock<IOwnershipGuard>();
+        guard.Setup(g => g.EnsureProfileOwnedAsync(ProfileId, It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        return guard.Object;
     }
 
     private static List<TimelineEvent> SeededTimeline() =>
