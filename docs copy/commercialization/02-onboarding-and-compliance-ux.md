@@ -1,6 +1,6 @@
 
 > **PHASE 2 DIRECTIVE APPLIED - STRATEGIC OVERLAY:** 
-> BioStack is the definitive **Protocol Intelligence Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
+> BioStack is the definitive **Protocol Operations Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
 > *Core Moat:* Synergy/interaction mapping, pathway overlap detection, timeline correlation engine, evidence-tier knowledge base.
 > *Aha Moment:* Within 60 seconds of onboarding, users input 1-3 compounds and see pathway overlap, synergies, conflicts, and timeline initialization.
 > *Monetization:* Users pay for reduced mistakes, increased clarity, confidence, and better outcomes through understanding.
@@ -227,7 +227,7 @@ Each screen is a full-page modal layered over the dark dashboard background, whi
 
 ## Screen 6 — The Aha Moment / Dashboard Reveal
 
-**Visual:** The onboarding modal shatters or elegantly fades out. The system dynamically renders a **Protocol Intelligence Map** in real-time. Nodes connect. Overlaps are highlighted. Synergies glow. Conflicts blink amber. This is the "Holy Shit" moment.
+**Visual:** The onboarding modal shatters or elegantly fades out. The system dynamically renders a **Protocol Operations Map** in real-time. Nodes connect. Overlaps are highlighted. Synergies glow. Conflicts blink amber. This is the "Holy Shit" moment.
 
 ---
 

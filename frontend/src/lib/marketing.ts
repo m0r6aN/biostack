@@ -60,7 +60,7 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'How is BioStack different from a spreadsheet?',
     answer:
-      'Spreadsheets do not calculate reconstitution math, detect pathway overlaps, or align check-ins and compound events in a unified timeline. BioStack is built for protocol intelligence rather than passive storage.',
+      'Spreadsheets do not calculate reconstitution math, detect pathway overlaps, or align check-ins and compound events in a unified timeline. BioStack is built for protocol operations rather than passive storage.',
   },
   {
     question: 'What daily metrics can I track?',
@@ -83,7 +83,7 @@ export const pricingTiers: PricingTier[] = [
     highlights: [
       'Free calculators',
       'Basic analyzer score',
-      'Protocol Intelligence contract metadata',
+      'Evidence-tiered knowledge previews',
       'Unknown states and safety warnings',
       'One finding preview',
       'Local saved analysis',
@@ -127,7 +127,7 @@ export const pricingTiers: PricingTier[] = [
       'Automated cross-run analysis',
       'Trend and pattern detection',
       'Side-effect ambiguity detector',
-      'Longitudinal Protocol Intelligence report hooks',
+      'Longitudinal observational report hooks',
       'Cross-session comparison',
       'Reported-effect pattern surfacing',
       'Priority support',

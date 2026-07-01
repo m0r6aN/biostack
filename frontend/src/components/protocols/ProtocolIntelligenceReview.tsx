@@ -19,7 +19,7 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
   if (!review) {
     return (
       <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Intelligence Review</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Review</p>
         <h2 className="mt-2 text-2xl font-black text-white">Review pending</h2>
         <p className="mt-2 max-w-2xl text-sm text-white/50">Review available after this lineage has run history.</p>
       </section>
@@ -36,7 +36,7 @@ export function ProtocolIntelligenceReview({ review, patterns, drift, sequence }
     <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
       <div className="grid gap-5 lg:grid-cols-[1fr_280px]">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Intelligence Review</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Protocol Review</p>
           <h2 className="mt-2 text-2xl font-black text-white">Lineage observations</h2>
           <p className="mt-2 max-w-2xl text-sm text-white/50">
             Rule-based synthesis across versions, runs, and attached check-ins. Observed patterns only.

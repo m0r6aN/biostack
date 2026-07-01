@@ -1,6 +1,6 @@
 
 > **PHASE 2 DIRECTIVE APPLIED - STRATEGIC OVERLAY:** 
-> BioStack is the definitive **Protocol Intelligence Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
+> BioStack is the definitive **Protocol Operations Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
 > *Core Moat:* Synergy/interaction mapping, pathway overlap detection, timeline correlation engine, evidence-tier knowledge base.
 > *Aha Moment:* Within 60 seconds of onboarding, users input 1-3 compounds and see pathway overlap, synergies, conflicts, and timeline initialization.
 > *Monetization:* Users pay for reduced mistakes, increased clarity, confidence, and better outcomes through understanding.
@@ -20,7 +20,7 @@
 
 | # | Headline |
 |---|----------|
-| A | **Protocol Intelligence for People Who Take This Seriously.** |
+| A | **Protocol Operations for People Who Take This Seriously.** |
 | B | **Your Stack Deserves a System. Not a Spreadsheet.** |
 | C | **Every Compound. Every Check-In. One Mission Control.** |
 
@@ -59,7 +59,7 @@
 ## SECTION 1: HERO
 
 ### Headline
-**Protocol Intelligence for People Who Take This Seriously.**
+**Protocol Operations for People Who Take This Seriously.**
 
 ### Subheadline
 Track compounds with precision. Detect pathway overlaps. Spot patterns in your data. BioStack is the operating system your protocol has been missing.
@@ -103,7 +103,7 @@ WHAT BIOSTACK PROVIDES
 ### Headline
 **One system. Every layer of your protocol.**
 
-BioStack is a protocol intelligence platform — not a generic health Protocol Intelligence Platform, not a symptom journal, not a supplement reminder app. It's purpose-built for the complexity of managing compounds, cycles, and the biological data that tells you what's actually happening.
+BioStack is a protocol operations platform — not a generic health Protocol Operations Platform, not a symptom journal, not a supplement reminder app. It's purpose-built for the complexity of managing compounds, cycles, and the biological data that tells you what's actually happening.
 
 **Precision math** for dose calculation and unit conversion. **Pathway intelligence** that detects overlaps and interaction flags across your active stack. **A unified timeline** that makes every event — every compound start, stop, phase change, and check-in — visible and navigable in one place.
 
@@ -352,7 +352,7 @@ BioStack is that infrastructure.
 
 Precision math. Pathway intelligence. Daily observability. A unified timeline that turns protocol data into pattern recognition. Every compound documented. Every check-in logged. Every event visible.
 
-This is what protocol intelligence looks like.
+This is what protocol operations looks like.
 
 **→ Enter Mission Control**
 

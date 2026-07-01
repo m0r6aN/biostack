@@ -1,6 +1,6 @@
 
 > **PHASE 2 DIRECTIVE APPLIED - STRATEGIC OVERLAY:** 
-> BioStack is the definitive **Protocol Intelligence Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
+> BioStack is the definitive **Protocol Operations Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
 > *Core Moat:* Synergy/interaction mapping, pathway overlap detection, timeline correlation engine, evidence-tier knowledge base.
 > *Aha Moment:* Within 60 seconds of onboarding, users input 1-3 compounds and see pathway overlap, synergies, conflicts, and timeline initialization.
 > *Monetization:* Users pay for reduced mistakes, increased clarity, confidence, and better outcomes through understanding.
@@ -149,7 +149,7 @@ Your BioStack data is stored securely and is private to your account. BioStack d
 ---
 
 **Q: How is BioStack different from a spreadsheet?**
-Spreadsheets don't calculate reconstitution math, don't detect pathway overlaps, don't have a compound Knowledge Base, and don't surface patterns in your check-in data. BioStack does all of that in one place, structured for protocols — not general data entry. The difference is protocol intelligence versus passive data storage.
+Spreadsheets don't calculate reconstitution math, don't detect pathway overlaps, don't have a compound Knowledge Base, and don't surface patterns in your check-in data. BioStack does all of that in one place, structured for protocols — not general data entry. The difference is protocol operations versus passive data storage.
 
 ---
 
@@ -216,7 +216,7 @@ The safety of your compound protocol is a separate question entirely, and it dep
 
 BioStack is built for serious, self-directed individuals who manage complex compound protocols and need a structured system to do it properly. The typical BioStack user has already done substantial research, is managing a multi-compound stack, and has outgrown spreadsheets and notes apps. They understand the compounds they're working with and want precision tooling to match that level of seriousness.
 
-BioStack is not designed for casual supplement tracking or general wellness logging. It is a protocol intelligence platform built for people who treat self-experimentation as a discipline — who want to know exactly what they're taking, precisely how it's dosed, how compounds may interact, and what the data is showing them over time.
+BioStack is not designed for casual supplement tracking or general wellness logging. It is a protocol operations platform built for people who treat self-experimentation as a discipline — who want to know exactly what they're taking, precisely how it's dosed, how compounds may interact, and what the data is showing them over time.
 
 If that describes you, BioStack was built for you.
 
@@ -238,7 +238,7 @@ The platform is organized around a simple premise: the gap between managing a se
 
 Spreadsheets can hold data but cannot interpret it. Notes apps can capture observations but cannot correlate them. Neither calculates reconstitution math, detects pathway overlaps, surfaces compound evidence, or organizes check-ins alongside compound timelines in a way that reveals patterns.
 
-BioStack is purpose-built for protocol intelligence. Every feature exists to serve the specific workflow of a self-experimenter managing a compound stack: logging compounds with full context, calculating doses with precision, understanding what compounds may be doing in relation to each other, and observing the pattern of daily markers against a clear protocol timeline. A spreadsheet requires you to build that system yourself, imperfectly. BioStack is the system.
+BioStack is purpose-built for protocol operations. Every feature exists to serve the specific workflow of a self-experimenter managing a compound stack: logging compounds with full context, calculating doses with precision, understanding what compounds may be doing in relation to each other, and observing the pattern of daily markers against a clear protocol timeline. A spreadsheet requires you to build that system yourself, imperfectly. BioStack is the system.
 
 ---
 
@@ -494,7 +494,7 @@ Operator is the tier designed for anyone running an active, ongoing compound pro
 
 **Q: What is the Commander (Elite) plan for?**
 
-Commander is the maximum-depth tier at $29/month (or $228/year, equivalent to $19/month). It includes everything in Operator plus: AI-assisted protocol intelligence (in development), advanced compound analysis tools, priority access to new Knowledge Base entries, early access to B2B and research-oriented features, and dedicated support.
+Commander is the maximum-depth tier at $29/month (or $228/year, equivalent to $19/month). It includes everything in Operator plus: AI-assisted protocol operations (in development), advanced compound analysis tools, priority access to new Knowledge Base entries, early access to B2B and research-oriented features, and dedicated support.
 
 Commander is designed for advanced researchers, coaches managing protocol clients, and power users who push into the deepest capabilities BioStack offers. It is not the right tier for most individual users — Operator covers the full personal protocol workflow. Commander is for those who want everything, including what is still being built.
 

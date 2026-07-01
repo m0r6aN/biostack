@@ -20,7 +20,7 @@
 
 ### What BioStack Is
 
-BioStack Mission Control is a personal protocol intelligence platform built for serious self-experimenters who manage complex compound stacks — peptides, pharmaceuticals, coenzymes, and supplements. It is not a supplement reminder app, a generic health tracker, or a symptom journal. It is purpose-built infrastructure for people who treat their protocols like systems: precision dose math, pathway overlap detection, evidence-tiered compound intelligence, and a unified timeline that turns scattered data into observable patterns.
+BioStack Mission Control is a personal protocol operations platform built for serious self-experimenters who manage complex compound stacks — peptides, pharmaceuticals, coenzymes, and supplements. It is not a supplement reminder app, a generic health tracker, or a symptom journal. It is purpose-built infrastructure for people who treat their protocols like systems: precision dose math, pathway overlap detection, evidence-tiered compound intelligence, and a unified timeline that turns scattered data into observable patterns.
 
 ### Core Positioning (3 sentences)
 
@@ -222,7 +222,7 @@ If consent screen drop-off exceeds 15%, revisit framing — not legal substance.
 
 **SECTION 1: HERO**
 
-Headline: Protocol Intelligence for People Who Take This Seriously.
+Headline: Protocol Operations for People Who Take This Seriously.
 
 Subheadline: Track compounds with precision. Detect pathway overlaps. Spot patterns in your data. BioStack is the operating system your protocol has been missing.
 
@@ -334,7 +334,7 @@ If the precision matters to you, the rest of BioStack will too.
 
 Headline: Your protocol is already this complex. Your system should be too.
 
-Precision math. Pathway intelligence. Daily observability. A unified timeline that turns protocol data into pattern recognition. Every compound documented. Every check-in logged. Every event visible. This is what protocol intelligence looks like.
+Precision math. Pathway intelligence. Daily observability. A unified timeline that turns protocol data into pattern recognition. Every compound documented. Every check-in logged. Every event visible. This is what protocol operations looks like.
 
 CTA: → Enter Mission Control
 
@@ -375,7 +375,7 @@ Pathway Overlap detection analyzes your compound stack and identifies when two o
 Your BioStack data is stored securely and is private to your account. BioStack does not sell personal data, does not share protocol information with third parties, and treats your compound log and check-in history as strictly confidential. Full data export and deletion are supported.
 
 **Q: How is BioStack different from a spreadsheet?**  
-Spreadsheets don’t calculate reconstitution math, don’t detect pathway overlaps, don’t have a compound Knowledge Base, and don’t surface patterns in your check-in data. BioStack does all of that in one place, structured for protocols — not general data entry. The difference is protocol intelligence versus passive data storage.
+Spreadsheets don’t calculate reconstitution math, don’t detect pathway overlaps, don’t have a compound Knowledge Base, and don’t surface patterns in your check-in data. BioStack does all of that in one place, structured for protocols — not general data entry. The difference is protocol operations versus passive data storage.
 
 **Q: What daily metrics can I track?**  
 BioStack’s daily check-in covers 15+ metrics: weight, sleep quality, energy levels, appetite, recovery, focus, thought clarity, skin quality, digestion, strength, endurance, joint pain, eyesight, mood, and side effects. All data appears in your unified timeline, aligned with compound start and stop dates for direct pattern correlation.
@@ -529,7 +529,7 @@ A one-page, printable reference card covering common reconstitution ratios, BAC 
 
 **Email delivery:** PDF link + single CTA: “Your free BioStack account saves every calculation automatically.”
 
-**Secondary sequence:** After PDF download, auto-enroll in a 5-email “Protocol Intelligence Starter” sequence over 7 days: (1) evidence tiers, (2) check-in baseline tracking, (3) pathway overlap checker, (4) protocol phases, (5) worked 30-day example + account creation CTA.
+**Secondary sequence:** After PDF download, auto-enroll in a 5-email “Protocol Operations Starter” sequence over 7 days: (1) evidence tiers, (2) check-in baseline tracking, (3) pathway overlap checker, (4) protocol phases, (5) worked 30-day example + account creation CTA.
 
 ### Funnel Map: First Visit to Paid
 

@@ -1,6 +1,6 @@
 
 > **PHASE 2 DIRECTIVE APPLIED - STRATEGIC OVERLAY:** 
-> BioStack is the definitive **Protocol Intelligence Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
+> BioStack is the definitive **Protocol Operations Platform** for human biology. It is NOT a tracker, peptide app, or supplement log. It is an observability engine for compounds and outcomes. 
 > *Core Moat:* Synergy/interaction mapping, pathway overlap detection, timeline correlation engine, evidence-tier knowledge base.
 > *Aha Moment:* Within 60 seconds of onboarding, users input 1-3 compounds and see pathway overlap, synergies, conflicts, and timeline initialization.
 > *Monetization:* Users pay for reduced mistakes, increased clarity, confidence, and better outcomes through understanding.
@@ -37,7 +37,7 @@ This document maps the complete funnel from cold traffic to retained subscriber,
 
 ---
 
-### Option B — "Protocol Intelligence Starter Guide" (Email Course)
+### Option B — "Protocol Operations Starter Guide" (Email Course)
 **What it is:** A 5-email sequence delivered over 7 days covering: (1) how to think about evidence tiers when evaluating compounds, (2) how to track check-ins to establish a baseline, (3) how to use pathway overlap checking to spot interaction risks, (4) how to build a named protocol phase, (5) a worked example of a full BioStack protocol from setup to 30-day review.
 
 **Why it attracts the right user:** People who want structure, not just a calculator hit. This attracts the "protocol builder" persona — someone who's serious about tracking outcomes, not just individual doses.
@@ -292,7 +292,7 @@ The threshold: features with ongoing operational cost, or features that deliver 
 ### Stage 5 — Conversion (Free → Account)
 **Goal:** User creates account, logs first compound, runs first saved calculation.
 **Channel:** Onboarding sequence, in-app prompts
-**BioStack touchpoints:** Compound Protocol Intelligence Platform, Reconstitution Calculator (authenticated), first check-in prompt
+**BioStack touchpoints:** Compound Protocol Operations Platform, Reconstitution Calculator (authenticated), first check-in prompt
 **Message/Hook:** "You've logged [Compound]. Now set your first check-in baseline — it takes 2 minutes and tells you everything about how this protocol is working."
 
 ### Stage 6 — Conversion (Free Account → Paid)
@@ -342,13 +342,13 @@ This sequence is honest. It does not over-promise. It delivers exactly what it s
 
 ### Habit Loops Built Into the Product
 
-**Daily check-in loop:** The Check-in Protocol Intelligence Platform logs 15+ daily metrics. The value of a single check-in is low. The value of 30 consecutive check-ins is extremely high — it produces a personal dataset that reveals how a specific protocol is performing. The product should communicate this compounding value clearly: "Day 7 of your protocol. You've logged 5 check-ins. 25 more to see your first trend analysis." The loop: Log → See your data accumulate → Want to see the trend → Log again.
+**Daily check-in loop:** The Check-in Protocol Operations Platform logs 15+ daily metrics. The value of a single check-in is low. The value of 30 consecutive check-ins is extremely high — it produces a personal dataset that reveals how a specific protocol is performing. The product should communicate this compounding value clearly: "Day 7 of your protocol. You've logged 5 check-ins. 25 more to see your first trend analysis." The loop: Log → See your data accumulate → Want to see the trend → Log again.
 
 **Calculation log as ritual:** Every reconstitution event logged creates a permanent record. Users who reconstitute regularly will return to BioStack for every mixing session. The calculator is not a one-time use — it is a repeated action tied to a real-world behavior.
 
 **Protocol phase transitions:** When a user starts a new protocol phase, they receive an in-app prompt to review the previous phase's check-in data. This creates a natural reflection point — and a reason to log more check-ins during the current phase.
 
-**Knowledge Base as reference:** Users who have compounds in their Protocol Intelligence Platform will return to BioStack to check interaction flags when they consider adding a new compound. The Knowledge Base becomes a reference layer embedded in their decision-making process.
+**Knowledge Base as reference:** Users who have compounds in their Protocol Operations Platform will return to BioStack to check interaction flags when they consider adding a new compound. The Knowledge Base becomes a reference layer embedded in their decision-making process.
 
 ### Re-Engagement Email Triggers
 
@@ -365,9 +365,9 @@ This sequence is honest. It does not over-promise. It delivers exactly what it s
 
 After account creation, deliver a 5-step in-app discovery sequence over the first 10 days:
 
-1. **Day 0 (account creation):** "Add your first compound. It takes 30 seconds." — Compound Protocol Intelligence Platform
+1. **Day 0 (account creation):** "Add your first compound. It takes 30 seconds." — Compound Protocol Operations Platform
 2. **Day 1:** "Run your first reconstitution calculation and save it to your log." — Calculator (authenticated)
-3. **Day 3:** "Log your first check-in. 15 metrics, 2 minutes, your baseline for everything." — Check-in Protocol Intelligence Platform
+3. **Day 3:** "Log your first check-in. 15 metrics, 2 minutes, your baseline for everything." — Check-in Protocol Operations Platform
 4. **Day 5:** "Check for pathway overlaps in your current stack." — Pathway Overlap Checker
 5. **Day 10:** "Review your protocol timeline — every event, one view." — Unified Timeline
 

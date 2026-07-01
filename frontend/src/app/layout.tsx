@@ -7,11 +7,11 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'BioStack | Protocol Intelligence',
+    default: 'BioStack | Protocol Operations',
     template: '%s',
   },
   description:
-    'Your protocol intelligence system. Track compounds, surface overlap, and turn daily signal into continuity.',
+    'Your protocol operations system. Track compounds, surface overlap, and turn daily signal into continuity.',
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
