@@ -20,6 +20,9 @@ public static class ProtocolOperationsReportEndpoints
 
         group.MapGet("/operations-report/export", GetOperationsReportExport)
             .WithName("GetProtocolOperationsReportExport");
+
+        group.MapGet("/operations-report/export/bundle", GetOperationsReportExportBundle)
+            .WithName("GetProtocolOperationsReportExportBundle");
     }
 
     private static async Task<IResult> GetOperationsReport(
@@ -45,6 +48,21 @@ public static class ProtocolOperationsReportEndpoints
         try
         {
             return Results.Ok(await service.GetExportAsync(profileId, ct));
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
+    }
+
+    private static async Task<IResult> GetOperationsReportExportBundle(
+        Guid profileId,
+        IProtocolOperationsExportBundleService service,
+        CancellationToken ct)
+    {
+        try
+        {
+            return Results.Ok(await service.GetBundleAsync(profileId, ct));
         }
         catch (InvalidOperationException)
         {
