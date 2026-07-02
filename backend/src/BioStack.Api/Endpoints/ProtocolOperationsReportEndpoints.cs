@@ -3,8 +3,8 @@ namespace BioStack.Api.Endpoints;
 using BioStack.Application.Services;
 
 /// <summary>
-/// Read-only, observational protocol operations report. Surfaces factual counts and
-/// recent activity for a profile's protocol — no recommendations, diagnosis, dosing
+/// Read-only, observational protocol operations report. Surfaces factual counts
+/// recent activity for profile's protocol - no recommendations, diagnosis, dosing
 /// instructions, treatment advice, or Protocol Intelligence narrative.
 /// </summary>
 public static class ProtocolOperationsReportEndpoints
@@ -15,7 +15,11 @@ public static class ProtocolOperationsReportEndpoints
             .WithTags("Protocol Operations Report")
             .RequireAuthorization();
 
-        group.MapGet("/operations-report", GetOperationsReport).WithName("GetProtocolOperationsReport");
+        group.MapGet("/operations-report", GetOperationsReport)
+            .WithName("GetProtocolOperationsReport");
+
+        group.MapGet("/operations-report/export", GetOperationsReportExport)
+            .WithName("GetProtocolOperationsReportExport");
     }
 
     private static async Task<IResult> GetOperationsReport(
@@ -26,6 +30,21 @@ public static class ProtocolOperationsReportEndpoints
         try
         {
             return Results.Ok(await service.GetReportAsync(profileId, ct));
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.NotFound();
+        }
+    }
+
+    private static async Task<IResult> GetOperationsReportExport(
+        Guid profileId,
+        IProtocolOperationsReportExportService service,
+        CancellationToken ct)
+    {
+        try
+        {
+            return Results.Ok(await service.GetExportAsync(profileId, ct));
         }
         catch (InvalidOperationException)
         {
