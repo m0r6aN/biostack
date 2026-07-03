@@ -4,8 +4,9 @@ using BioStack.Application.Services;
 
 /// <summary>
 /// Read-only, observational protocol operations report. Surfaces factual counts
-/// recent activity for profile's protocol - no recommendations, diagnosis, dosing
-/// instructions, treatment advice, or Protocol Intelligence narrative.
+/// and recent activity for a profile's protocol with no recommendations,
+/// diagnosis, dosing instructions, treatment advice, or Protocol Intelligence
+/// narrative.
 /// </summary>
 public static class ProtocolOperationsReportEndpoints
 {

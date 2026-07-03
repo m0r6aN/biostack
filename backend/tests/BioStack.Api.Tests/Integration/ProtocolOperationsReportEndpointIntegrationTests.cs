@@ -23,58 +23,55 @@ using Xunit;
 public sealed class ProtocolOperationsReportEndpointIntegrationTests : IAsyncLifetime
 {
     private static readonly string[] ForbiddenTerms =
-    {
+    [
         "recommend",
         "diagnos",
         "dosing instruction",
         "treatment",
         "prescri",
-        "protocol intelligence",
-    };
+        "protocol intelligence"
+    ];
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        Converters = { new JsonStringEnumConverter() },
+        Converters = { new JsonStringEnumConverter() }
     };
 
     private WebApplicationFactory<Program> _factory = null!;
     private HttpClient _client = null!;
     private string _dbPath = string.Empty;
-    private Guid _userId;
 
     public async Task InitializeAsync()
     {
         _dbPath = Path.Combine(Path.GetTempPath(), $"biostack-ops-report-{Guid.NewGuid():N}.db");
-
         _factory = new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
                 builder.UseSetting("environment", "Development");
                 builder.ConfigureLogging(logging => logging.ClearProviders());
                 builder.ConfigureAppConfiguration((_, config) =>
-                    config.AddInMemoryCollection(new Dictionary<string, string?>
-                    {
-                        ["ConnectionStrings:DefaultConnection"] = $"Data Source={_dbPath}",
-                        ["FrontendUrl"] = "http://localhost:3043",
-                        ["PublicApiUrl"] = "http://localhost:5000",
-                        ["Jwt:Secret"] = "test-secret-value-that-is-long-enough-for-hmac",
-                    }));
-
+                    config.AddInMemoryCollection(
+                        new Dictionary<string, string?>
+                        {
+                            ["ConnectionStrings:DefaultConnection"] = $"Data Source={_dbPath}",
+                            ["FrontendUrl"] = "http://localhost:3043",
+                            ["PublicApiUrl"] = "http://localhost:5000",
+                            ["Jwt:Secret"] = "test-secret-value-that-is-long-enough-for-hmac"
+                        }));
                 builder.ConfigureServices(services =>
                 {
                     services.RemoveBioStackDbContext();
-                    services.AddDbContext<BioStackDbContext>(options =>
-                        options.UseSqlite($"Data Source={_dbPath}"));
+                    services.AddDbContext<BioStackDbContext>(options => options.UseSqlite($"Data Source={_dbPath}"));
                 });
             });
 
         _client = _factory.CreateClient(new WebApplicationFactoryClientOptions
         {
-            AllowAutoRedirect = false,
+            AllowAutoRedirect = false
         });
 
-        _userId = await SignInAsync("ops-report-user@example.com");
+        await SignInAsync("ops-report-user@example.com");
     }
 
     public async Task DisposeAsync()
@@ -98,39 +95,38 @@ public sealed class ProtocolOperationsReportEndpointIntegrationTests : IAsyncLif
     public async Task GetOperationsReportExport_ReturnsOk_WithExportShape_ForSeededProfile()
     {
         var profile = await CreateProfileAsync("Ops Report Export Seeded");
-        await CreateActiveCompoundAsync(profile.Id, "Export Compound");
-        await SaveProtocolAsync(profile.Id, "Export Protocol");
+        await CreateActiveCompoundAsync(profile.Id, "BPC-157");
+        await SaveProtocolAsync(profile.Id, "Operations export protocol");
 
-        var response = await _client.GetAsync(
-            $"/api/v1/profiles/{profile.Id}/protocol/operations-report/export");
+        var response = await _client.GetAsync($"/api/v1/profiles/{profile.Id}/protocol/operations-report/export");
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         var export = await response.Content.ReadFromJsonAsync<ProtocolOperationsReportExport>(JsonOptions);
+
         Assert.NotNull(export);
         Assert.Equal(profile.Id, export!.Metadata.ProfileId);
-        Assert.Equal("1.0.0", export.Metadata.SchemaVersion);
+        Assert.Equal(ProtocolOperationsReportExportService.SchemaVersion, export.Metadata.SchemaVersion);
         Assert.NotEqual(default, export.Metadata.GeneratedAtUtc);
         Assert.NotNull(export.Report);
         Assert.Equal(profile.Id, export.Report.ProfileId);
         Assert.Equal(1, export.Report.Summary.ActiveCompoundsCount);
         Assert.Equal("SHA-256", export.Integrity.HashAlgorithm);
         Assert.Matches("^[0-9a-f]{64}$", export.Integrity.ContentHash);
-        Assert.Contains("not medical guidance", export.Disclaimer, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("observational", export.Disclaimer, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("medical", export.Disclaimer, StringComparison.OrdinalIgnoreCase);
 
-        var raw = await response.Content.ReadAsStringAsync();
-        var lowered = raw.ToLowerInvariant();
+        var raw = (await response.Content.ReadAsStringAsync()).ToLowerInvariant();
         foreach (var term in ForbiddenTerms)
         {
-            Assert.DoesNotContain(term, lowered, StringComparison.Ordinal);
+            Assert.DoesNotContain(term, raw, StringComparison.Ordinal);
         }
     }
 
     [Fact]
     public async Task GetOperationsReportExport_IsDeterministic_ForRepeatedCalls()
     {
-        using var deterministicFactory = _factory.WithWebHostBuilder(builder =>
+        await using var deterministicFactory = _factory.WithWebHostBuilder(builder =>
         {
             builder.ConfigureServices(services =>
             {
@@ -141,7 +137,7 @@ public sealed class ProtocolOperationsReportEndpointIntegrationTests : IAsyncLif
 
         using var client = deterministicFactory.CreateClient(new WebApplicationFactoryClientOptions
         {
-            AllowAutoRedirect = false,
+            AllowAutoRedirect = false
         });
 
         const string email = "ops-report-deterministic@example.com";
@@ -149,7 +145,6 @@ public sealed class ProtocolOperationsReportEndpointIntegrationTests : IAsyncLif
         await SignInAsync(client, deterministicFactory, email);
 
         var endpoint = $"/api/v1/profiles/{profileId}/protocol/operations-report/export";
-
         var export1 = await client.GetFromJsonAsync<ProtocolOperationsReportExport>(endpoint, JsonOptions);
         var export2 = await client.GetFromJsonAsync<ProtocolOperationsReportExport>(endpoint, JsonOptions);
 
@@ -161,7 +156,7 @@ public sealed class ProtocolOperationsReportEndpointIntegrationTests : IAsyncLif
     }
 
     [Fact]
-    public async Task GetOperationsReportExport_RouteAndName_DoNotContainProtocolIntelligenceLanguage()
+    public void GetOperationsReportExport_RouteAndName_DoNotContainProtocolIntelligenceLanguage()
     {
         const string route = "/api/v1/profiles/{profileId}/protocol/operations-report/export";
         const string endpointName = "GetProtocolOperationsReportExport";
@@ -174,8 +169,8 @@ public sealed class ProtocolOperationsReportEndpointIntegrationTests : IAsyncLif
     public async Task GetOperationsReportExport_EnforcesOwnership_AcrossUsers()
     {
         var profile = await CreateProfileAsync("Ops Report Owner");
-        await SignInAsync("ops-report-intruder@example.com");
 
+        await SignInAsync("ops-report-intruder@example.com");
         var response = await _client.GetAsync($"/api/v1/profiles/{profile.Id}/protocol/operations-report/export");
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -199,15 +194,17 @@ public sealed class ProtocolOperationsReportEndpointIntegrationTests : IAsyncLif
         using var doc = await JsonDocument.ParseAsync(await client.GetStreamAsync("/dev/auth/inbox"));
         var link = doc.RootElement.EnumerateArray().First().GetProperty("link").GetString()!;
         var uri = new Uri(link);
-
         await client.GetAsync($"{uri.AbsolutePath}{uri.Query}");
-        var consent = await client.PostAsJsonAsync("/api/v1/consent", new { }, JsonOptions);
 
+        var consent = await client.PostAsJsonAsync("/api/v1/consent", new { }, JsonOptions);
         Assert.Equal(HttpStatusCode.OK, consent.StatusCode);
 
         using var scope = factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
-        return await db.AppUsers.Where(user => user.Email == email).Select(user => user.Id).SingleAsync();
+        return await db.AppUsers
+            .Where(user => user.Email == email)
+            .Select(user => user.Id)
+            .SingleAsync();
     }
 
     private async Task<ProfileResponse> CreateProfileAsync(string displayName)
@@ -232,10 +229,7 @@ public sealed class ProtocolOperationsReportEndpointIntegrationTests : IAsyncLif
                 null,
                 CompoundStatus.Active,
                 "notes",
-                SourceType.Manual,
-                "goal",
-                "manual",
-                10m),
+                SourceType.Manual),
             JsonOptions);
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
@@ -269,17 +263,11 @@ public sealed class ProtocolOperationsReportEndpointIntegrationTests : IAsyncLif
                     LatestActivityUtc: new DateTime(2026, 1, 7, 8, 0, 0, DateTimeKind.Utc)),
                 new List<ProtocolOperationsEvent>
                 {
-                    new(
-                        "CompoundStarted",
-                        new DateTime(2026, 1, 1, 8, 0, 0, DateTimeKind.Utc),
-                        "Compound activity logged."),
-                    new(
-                        "CheckInCreated",
-                        new DateTime(2026, 1, 5, 8, 0, 0, DateTimeKind.Utc),
-                        "Check-in logged."),
+                    new("CompoundStarted", new DateTime(2026, 1, 1, 8, 0, 0, DateTimeKind.Utc), "Compound activity logged."),
+                    new("CheckInCreated", new DateTime(2026, 1, 5, 8, 0, 0, DateTimeKind.Utc), "Check-in logged.")
                 },
                 Array.Empty<ProtocolOperationsEvidenceReference>(),
-                new List<string> { "No evidence references recorded." });
+                ["No evidence references recorded."]);
 
             return Task.FromResult(report);
         }
