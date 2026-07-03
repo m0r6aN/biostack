@@ -6,6 +6,7 @@ using BioStack.Contracts.Responses;
 
 public static class ProtocolOperationsExportBundleVerifierCli
 {
+    private const string ReceiptJsonFlag = "--receipt-json";
     private const string VerifiedStatus = "verified";
     private const string VerificationFailedStatus = "verification-failed";
     private const string MissingFileStatus = "missing-file";
@@ -18,7 +19,7 @@ public static class ProtocolOperationsExportBundleVerifierCli
     {
         PropertyNameCaseInsensitive = false,
         ReadCommentHandling = JsonCommentHandling.Disallow,
-        AllowTrailingCommas = false
+        AllowTrailingCommas = false,
     };
 
     public static int Run(string[] args, TextWriter stdout, TextWriter stderr)
@@ -27,58 +28,45 @@ public static class ProtocolOperationsExportBundleVerifierCli
         ArgumentNullException.ThrowIfNull(stdout);
         ArgumentNullException.ThrowIfNull(stderr);
 
-        if (args.Length != 1 || string.IsNullOrWhiteSpace(args[0]))
+        if (!TryParseArguments(args, out var options, out var argumentErrors))
         {
-            WriteSummary(
+            return WriteFailure(
                 stdout,
+                options.EmitReceiptJson,
                 status: InvalidInputStatus,
-                schemaVersion: null,
-                expectedBundleSha256: null,
-                actualBundleSha256: null,
-                expectedReportExportSha256: null,
-                actualReportExportSha256: null,
-                checks: [],
-                errors: ["input-path-required"]);
-
-            return 2;
+                bundle: null,
+                result: null,
+                errors: argumentErrors,
+                exitCode: 2);
         }
 
-        var path = args[0];
-        if (!File.Exists(path))
+        if (!File.Exists(options.InputPath))
         {
-            WriteSummary(
+            return WriteFailure(
                 stdout,
+                options.EmitReceiptJson,
                 status: MissingFileStatus,
-                schemaVersion: null,
-                expectedBundleSha256: null,
-                actualBundleSha256: null,
-                expectedReportExportSha256: null,
-                actualReportExportSha256: null,
-                checks: [],
-                errors: ["input-file-missing"]);
-
-            return 3;
+                bundle: null,
+                result: null,
+                errors: ["input-file-missing"],
+                exitCode: 3);
         }
 
         string json;
         try
         {
-            json = File.ReadAllText(path);
+            json = File.ReadAllText(options.InputPath);
         }
         catch (Exception) when (IsInputFailure())
         {
-            WriteSummary(
+            return WriteFailure(
                 stdout,
+                options.EmitReceiptJson,
                 status: InvalidInputStatus,
-                schemaVersion: null,
-                expectedBundleSha256: null,
-                actualBundleSha256: null,
-                expectedReportExportSha256: null,
-                actualReportExportSha256: null,
-                checks: [],
-                errors: ["input-read-failed"]);
-
-            return 4;
+                bundle: null,
+                result: null,
+                errors: ["input-read-failed"],
+                exitCode: 4);
         }
 
         ProtocolOperationsExportBundle? bundle;
@@ -88,54 +76,168 @@ public static class ProtocolOperationsExportBundleVerifierCli
         }
         catch (JsonException)
         {
-            WriteSummary(
+            return WriteFailure(
                 stdout,
+                options.EmitReceiptJson,
                 status: InvalidJsonStatus,
-                schemaVersion: null,
-                expectedBundleSha256: null,
-                actualBundleSha256: null,
-                expectedReportExportSha256: null,
-                actualReportExportSha256: null,
-                checks: [],
-                errors: ["input-json-invalid"]);
-
-            return 5;
+                bundle: null,
+                result: null,
+                errors: ["input-json-invalid"],
+                exitCode: 5);
+        }
+        catch (Exception) when (IsDeserializationFailure())
+        {
+            return WriteFailure(
+                stdout,
+                options.EmitReceiptJson,
+                status: InvalidInputStatus,
+                bundle: null,
+                result: null,
+                errors: ["input-deserialization-failed"],
+                exitCode: 6);
         }
 
         if (bundle is null)
         {
+            return WriteFailure(
+                stdout,
+                options.EmitReceiptJson,
+                status: InvalidInputStatus,
+                bundle: null,
+                result: null,
+                errors: ["input-bundle-missing"],
+                exitCode: 6);
+        }
+
+        var result = new ProtocolOperationsExportBundleVerifier().Verify(bundle);
+        var status = result.IsValid ? VerifiedStatus : VerificationFailedStatus;
+        var exitCode = result.IsValid ? 0 : 1;
+
+        try
+        {
+            if (options.EmitReceiptJson)
+            {
+                ProtocolOperationsExportBundleVerificationReceiptJson.Write(
+                    stdout,
+                    status,
+                    bundle,
+                    result,
+                    errorsOverride: null);
+            }
+            else
+            {
+                WriteSummary(
+                    stdout,
+                    status,
+                    result.SchemaVersion,
+                    result.ExpectedBundleSha256,
+                    result.ActualBundleSha256,
+                    result.ExpectedReportExportSha256,
+                    result.ActualReportExportSha256,
+                    result.Checks,
+                    result.Errors);
+            }
+        }
+        catch (Exception)
+        {
+            return WriteFailure(
+                stdout,
+                options.EmitReceiptJson,
+                status: InvalidInputStatus,
+                bundle: null,
+                result: null,
+                errors: ["receipt-generation-failed"],
+                exitCode: 7);
+        }
+
+        return exitCode;
+    }
+
+    private static bool TryParseArguments(string[] args, out CliOptions options, out string[] errors)
+    {
+        var emitReceiptJson = false;
+        string? inputPath = null;
+        var parseErrors = new List<string>();
+
+        foreach (var arg in args)
+        {
+            if (string.Equals(arg, ReceiptJsonFlag, StringComparison.Ordinal))
+            {
+                if (emitReceiptJson)
+                {
+                    parseErrors.Add("receipt-json-flag-duplicated");
+                }
+
+                emitReceiptJson = true;
+                continue;
+            }
+
+            if (string.IsNullOrWhiteSpace(arg))
+            {
+                parseErrors.Add("input-path-required");
+                continue;
+            }
+
+            if (arg.StartsWith("--", StringComparison.Ordinal))
+            {
+                parseErrors.Add("unknown-argument");
+                continue;
+            }
+
+            if (inputPath is not null)
+            {
+                parseErrors.Add("input-path-duplicated");
+                continue;
+            }
+
+            inputPath = arg;
+        }
+
+        if (string.IsNullOrWhiteSpace(inputPath))
+        {
+            parseErrors.Add("input-path-required");
+        }
+
+        options = new CliOptions(inputPath ?? string.Empty, emitReceiptJson);
+        errors = parseErrors.ToArray();
+        return errors.Length == 0;
+    }
+
+    private static bool IsInputFailure() =>
+        true;
+
+    private static bool IsDeserializationFailure() =>
+        true;
+
+    private static int WriteFailure(
+        TextWriter stdout,
+        bool emitReceiptJson,
+        string status,
+        ProtocolOperationsExportBundle? bundle,
+        ProtocolOperationsExportBundleVerificationResult? result,
+        IReadOnlyList<string> errors,
+        int exitCode)
+    {
+        if (emitReceiptJson)
+        {
+            ProtocolOperationsExportBundleVerificationReceiptJson.Write(stdout, status, bundle, result, errors);
+        }
+        else
+        {
             WriteSummary(
                 stdout,
-                status: InvalidInputStatus,
+                status,
                 schemaVersion: null,
                 expectedBundleSha256: null,
                 actualBundleSha256: null,
                 expectedReportExportSha256: null,
                 actualReportExportSha256: null,
                 checks: [],
-                errors: ["input-bundle-missing"]);
-
-            return 6;
+                errors);
         }
 
-        var result = new ProtocolOperationsExportBundleVerifier().Verify(bundle);
-
-        WriteSummary(
-            stdout,
-            status: result.IsValid ? VerifiedStatus : VerificationFailedStatus,
-            schemaVersion: result.SchemaVersion,
-            expectedBundleSha256: result.ExpectedBundleSha256,
-            actualBundleSha256: result.ActualBundleSha256,
-            expectedReportExportSha256: result.ExpectedReportExportSha256,
-            actualReportExportSha256: result.ActualReportExportSha256,
-            checks: result.Checks,
-            errors: result.Errors);
-
-        return result.IsValid ? 0 : 1;
+        return exitCode;
     }
-
-    private static bool IsInputFailure() =>
-        true;
 
     private static void WriteSummary(
         TextWriter stdout,
@@ -169,6 +271,7 @@ public static class ProtocolOperationsExportBundleVerifierCli
         }
 
         stdout.WriteLine("errors:");
+
         if (errors.Count == 0)
         {
             stdout.WriteLine($"- {None}");
@@ -183,4 +286,6 @@ public static class ProtocolOperationsExportBundleVerifierCli
 
     private static string FormatValue(string? value) =>
         string.IsNullOrWhiteSpace(value) ? Unavailable : value;
+
+    private sealed record CliOptions(string InputPath, bool EmitReceiptJson);
 }

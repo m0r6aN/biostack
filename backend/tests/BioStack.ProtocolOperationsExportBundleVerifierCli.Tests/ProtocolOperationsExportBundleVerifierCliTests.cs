@@ -1,6 +1,8 @@
 namespace BioStack.ProtocolOperationsExportBundleVerifierCli.Tests;
 
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using BioStack.ProtocolOperationsExportBundleVerifierCli;
 using Xunit;
 
@@ -52,6 +54,206 @@ public sealed class ProtocolOperationsExportBundleVerifierCliTests
     }
 
     [Fact]
+    public void Run_ReturnsReceiptJson_ForValidGoldenFixture()
+    {
+        var fixturePath = CreateTempBundleFile(ReadFixtureJson());
+
+        var result = InvokeCli("--receipt-json", fixturePath);
+        using var receipt = ParseReceipt(result.StandardOutput);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(string.Empty, result.StandardError);
+        Assert.Equal("biostack.protocol-operations-export-bundle.verification-receipt", ReadString(receipt, "receiptSchemaId"));
+        Assert.Equal("1.0.0", ReadString(receipt, "receiptSchemaVersion"));
+        Assert.Equal("biostack.protocol-operations-export-bundle.verifier", ReadString(receipt, "verifierSchemaId"));
+        Assert.Equal("1.0.0", ReadString(receipt, "verifierSchemaVersion"));
+        Assert.Equal("biostack.protocol-operations-export-bundle", ReadString(receipt, "bundleSchemaId"));
+        Assert.Equal("1.0.0", ReadString(receipt, "bundleSchemaVersion"));
+        Assert.Equal("verified", ReadString(receipt, "status"));
+        Assert.Equal(ExpectedBundleSha256, ReadString(receipt, "computedBundleContentHash"));
+        Assert.Equal(ExpectedBundleSha256, ReadString(receipt, "suppliedBundleContentHash"));
+        Assert.Equal(ExpectedReportExportSha256, ReadString(receipt, "computedReportExportContentHash"));
+        Assert.Equal(ExpectedReportExportSha256, ReadString(receipt, "suppliedReportExportContentHash"));
+        Assert.Equal(
+            [
+                "bundle-non-null",
+                "schema-version",
+                "required-metadata",
+                "json-artifact-descriptor",
+                "embedded-report-export",
+                "embedded-report-export-hash",
+                "preserved-report-export-hash",
+                "bundle-sha256",
+                "observational-boundary",
+            ],
+            ReadStringArray(receipt, "checks"));
+        Assert.Empty(ReadStringArray(receipt, "errors"));
+        Assert.Equal("true", receipt.RootElement.GetProperty("boundaries").GetProperty("observationalOnly").GetBoolean().ToString().ToLowerInvariant());
+        Assert.Equal("true", receipt.RootElement.GetProperty("boundaries").GetProperty("nonMedical").GetBoolean().ToString().ToLowerInvariant());
+        Assert.Equal("true", receipt.RootElement.GetProperty("boundaries").GetProperty("noPersistence").GetBoolean().ToString().ToLowerInvariant());
+        Assert.Equal("true", receipt.RootElement.GetProperty("boundaries").GetProperty("noPdf").GetBoolean().ToString().ToLowerInvariant());
+        Assert.Equal("true", receipt.RootElement.GetProperty("boundaries").GetProperty("noRuntimeExpansion").GetBoolean().ToString().ToLowerInvariant());
+        Assert.Equal(
+            ComputeExpectedVerificationResultContentHash(receipt.RootElement),
+            ReadString(receipt, "verificationResultContentHash"));
+        Assert.Equal(
+            ComputeExpectedReceiptContentHash(receipt.RootElement),
+            ReadString(receipt, "receiptContentHash"));
+    }
+
+    [Fact]
+    public void Run_ReceiptJson_IsByteForByteDeterministic_ForRepeatedValidGoldenFixtureRuns()
+    {
+        var fixturePath = CreateTempBundleFile(ReadFixtureJson());
+
+        var result1 = InvokeCli("--receipt-json", fixturePath);
+        var result2 = InvokeCli("--receipt-json", fixturePath);
+
+        Assert.Equal(0, result1.ExitCode);
+        Assert.Equal(0, result2.ExitCode);
+        Assert.Equal(result1.StandardOutput, result2.StandardOutput);
+    }
+
+    [Fact]
+    public void Run_ReturnsDeterministicFailureReceipt_ForTamperedBundle()
+    {
+        var fixturePath = CreateTempBundleFile(
+            ReadFixtureJson().Replace(ExpectedBundleSha256, new string('b', 64), StringComparison.Ordinal));
+
+        var result = InvokeCli("--receipt-json", fixturePath);
+        using var receipt = ParseReceipt(result.StandardOutput);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal("verification-failed", ReadString(receipt, "status"));
+        Assert.Equal(ExpectedBundleSha256, ReadString(receipt, "computedBundleContentHash"));
+        Assert.Equal(new string('b', 64), ReadString(receipt, "suppliedBundleContentHash"));
+        Assert.Equal(
+            ["bundle-sha256-mismatch"],
+            ReadStringArray(receipt, "errors"));
+        Assert.Equal(
+            ComputeExpectedVerificationResultContentHash(receipt.RootElement),
+            ReadString(receipt, "verificationResultContentHash"));
+        Assert.Equal(
+            ComputeExpectedReceiptContentHash(receipt.RootElement),
+            ReadString(receipt, "receiptContentHash"));
+    }
+
+    [Fact]
+    public void Run_ReturnsDeterministicFailureReceipt_ForPersistenceBoundaryViolation()
+    {
+        var fixturePath = CreateTempBundleFile(
+            ReadFixtureJson().Replace(
+                "Observational history is limited to recorded events.",
+                "Bundle persisted to C:\\\\exports\\\\protocol-operations-report.json.",
+                StringComparison.Ordinal));
+
+        var result = InvokeCli("--receipt-json", fixturePath);
+        using var receipt = ParseReceipt(result.StandardOutput);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal("verification-failed", ReadString(receipt, "status"));
+        Assert.Contains("persisted-output-claim-not-allowed", ReadStringArray(receipt, "errors"));
+        Assert.Equal(
+            ComputeExpectedVerificationResultContentHash(receipt.RootElement),
+            ReadString(receipt, "verificationResultContentHash"));
+        Assert.Equal(
+            ComputeExpectedReceiptContentHash(receipt.RootElement),
+            ReadString(receipt, "receiptContentHash"));
+    }
+
+    [Fact]
+    public void Run_ReturnsDeterministicFailureReceipt_ForProtocolIntelligenceRuntimeBoundaryViolation()
+    {
+        var fixturePath = CreateTempBundleFile(
+            ReadFixtureJson().Replace(
+                "Observational history is limited to recorded events.",
+                "Protocol Intelligence runtime generated export.",
+                StringComparison.Ordinal));
+
+        var result = InvokeCli("--receipt-json", fixturePath);
+        using var receipt = ParseReceipt(result.StandardOutput);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal("verification-failed", ReadString(receipt, "status"));
+        Assert.Contains("protocol-intelligence-runtime-language-not-allowed", ReadStringArray(receipt, "errors"));
+    }
+
+    [Fact]
+    public void Run_ReturnsDeterministicFailureReceipt_ForMedicalAdviceBoundaryViolation()
+    {
+        var fixturePath = CreateTempBundleFile(
+            ReadFixtureJson().Replace(
+                "Observational history is limited to recorded events.",
+                "Take 25 mg nightly.",
+                StringComparison.Ordinal));
+
+        var result = InvokeCli("--receipt-json", fixturePath);
+        using var receipt = ParseReceipt(result.StandardOutput);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal("verification-failed", ReadString(receipt, "status"));
+        Assert.Contains("medical-advice-language-not-allowed", ReadStringArray(receipt, "errors"));
+    }
+
+    [Fact]
+    public void Run_ReturnsMinimalFailureReceiptWithoutBundleClaims_WhenFileIsMissing()
+    {
+        var missingPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid():N}.json");
+
+        var result = InvokeCli("--receipt-json", missingPath);
+        using var receipt = ParseReceipt(result.StandardOutput);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal("missing-file", ReadString(receipt, "status"));
+        Assert.Equal("biostack.protocol-operations-export-bundle.verification-receipt", ReadString(receipt, "receiptSchemaId"));
+        Assert.Equal("1.0.0", ReadString(receipt, "receiptSchemaVersion"));
+        Assert.Equal(["input-file-missing"], ReadStringArray(receipt, "errors"));
+        Assert.True(receipt.RootElement.GetProperty("bundleSchemaId").ValueKind is JsonValueKind.Null);
+        Assert.True(receipt.RootElement.GetProperty("bundleSchemaVersion").ValueKind is JsonValueKind.Null);
+        Assert.True(receipt.RootElement.GetProperty("computedBundleContentHash").ValueKind is JsonValueKind.Null);
+        Assert.True(receipt.RootElement.GetProperty("suppliedBundleContentHash").ValueKind is JsonValueKind.Null);
+        Assert.True(receipt.RootElement.GetProperty("computedReportExportContentHash").ValueKind is JsonValueKind.Null);
+        Assert.True(receipt.RootElement.GetProperty("suppliedReportExportContentHash").ValueKind is JsonValueKind.Null);
+    }
+
+    [Fact]
+    public void Run_ReturnsMinimalFailureReceiptWithoutBundleClaims_WhenJsonIsInvalid()
+    {
+        var fixturePath = CreateTempBundleFile("{ not-json");
+
+        var result = InvokeCli("--receipt-json", fixturePath);
+        using var receipt = ParseReceipt(result.StandardOutput);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal("invalid-json", ReadString(receipt, "status"));
+        Assert.Equal(["input-json-invalid"], ReadStringArray(receipt, "errors"));
+        Assert.True(receipt.RootElement.GetProperty("bundleSchemaId").ValueKind is JsonValueKind.Null);
+        Assert.True(receipt.RootElement.GetProperty("bundleSchemaVersion").ValueKind is JsonValueKind.Null);
+        Assert.True(receipt.RootElement.GetProperty("computedBundleContentHash").ValueKind is JsonValueKind.Null);
+        Assert.True(receipt.RootElement.GetProperty("suppliedBundleContentHash").ValueKind is JsonValueKind.Null);
+        Assert.True(receipt.RootElement.GetProperty("computedReportExportContentHash").ValueKind is JsonValueKind.Null);
+        Assert.True(receipt.RootElement.GetProperty("suppliedReportExportContentHash").ValueKind is JsonValueKind.Null);
+    }
+
+    [Fact]
+    public void Run_ReceiptJson_DoesNotIncludeHostOrPathSpecificData()
+    {
+        var fixturePath = CreateTempBundleFile(ReadFixtureJson());
+
+        var result = InvokeCli("--receipt-json", fixturePath);
+
+        Assert.DoesNotContain(fixturePath, result.StandardOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain(Path.GetDirectoryName(fixturePath)!, result.StandardOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain(Environment.CurrentDirectory, result.StandardOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain(Environment.MachineName, result.StandardOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain(Environment.UserName, result.StandardOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain("GeneratedAtUtc", result.StandardOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain("T12:00:00Z", result.StandardOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain("PATH", result.StandardOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain("\"stackTrace\"", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void Run_ReturnsNonZero_WhenBundleHashIsTampered()
     {
         var fixturePath = CreateTempBundleFile(
@@ -68,7 +270,7 @@ public sealed class ProtocolOperationsExportBundleVerifierCliTests
     public void Run_ReturnsNonZero_WhenReportHashIsTampered()
     {
         var fixturePath = CreateTempBundleFile(
-            ReadFixtureJson().Replace(ExpectedReportExportSha256, new string('c', 64), StringComparison.Ordinal));
+            ReadFixtureJson().Replace(ExpectedReportExportSha256, new string('a', 64), StringComparison.Ordinal));
 
         var result = InvokeCli(fixturePath);
 
@@ -160,7 +362,7 @@ public sealed class ProtocolOperationsExportBundleVerifierCliTests
     [Fact]
     public void Run_ReturnsNonZero_WhenJsonIsInvalid()
     {
-        var fixturePath = CreateTempBundleFile("{ not-json }");
+        var fixturePath = CreateTempBundleFile("{ not-json");
 
         var result = InvokeCli(fixturePath);
 
@@ -185,7 +387,7 @@ public sealed class ProtocolOperationsExportBundleVerifierCliTests
                 "- bundle-sha256-mismatch",
                 "- embedded-report-export-sha256-mismatch",
                 "- json-artifact-content-hash-mismatch",
-                "- persisted-output-claim-not-allowed"
+                "- persisted-output-claim-not-allowed",
             ],
             ReadErrorLines(result.StandardOutput));
     }
@@ -203,12 +405,84 @@ public sealed class ProtocolOperationsExportBundleVerifierCliTests
         Assert.Equal(originalJson, fileJson);
     }
 
-    private static (int ExitCode, string StandardOutput, string StandardError) InvokeCli(string path)
+    private static (int ExitCode, string StandardOutput, string StandardError) InvokeCli(params string[] args)
     {
         var stdout = new StringWriter();
         var stderr = new StringWriter();
-        var exitCode = ProtocolOperationsExportBundleVerifierCli.Run([path], stdout, stderr);
+        var exitCode = ProtocolOperationsExportBundleVerifierCli.Run(args, stdout, stderr);
         return (exitCode, stdout.ToString(), stderr.ToString());
+    }
+
+    private static JsonDocument ParseReceipt(string output) => JsonDocument.Parse(output);
+
+    private static string ReadString(JsonDocument document, string propertyName)
+        => document.RootElement.GetProperty(propertyName).GetString() ?? string.Empty;
+
+    private static string[] ReadStringArray(JsonDocument document, string propertyName)
+        => document.RootElement.GetProperty(propertyName).EnumerateArray().Select(element => element.GetString() ?? string.Empty).ToArray();
+
+    private static string ComputeExpectedVerificationResultContentHash(JsonElement root)
+    {
+        var json = JsonSerializer.Serialize(
+            new
+            {
+                status = root.GetProperty("status").GetString(),
+                verifierSchemaId = root.GetProperty("verifierSchemaId").GetString(),
+                verifierSchemaVersion = root.GetProperty("verifierSchemaVersion").GetString(),
+                computedBundleContentHash = ReadOptionalString(root, "computedBundleContentHash"),
+                suppliedBundleContentHash = ReadOptionalString(root, "suppliedBundleContentHash"),
+                computedReportExportContentHash = ReadOptionalString(root, "computedReportExportContentHash"),
+                suppliedReportExportContentHash = ReadOptionalString(root, "suppliedReportExportContentHash"),
+                checks = root.GetProperty("checks").EnumerateArray().Select(element => element.GetString()).ToArray(),
+                errors = root.GetProperty("errors").EnumerateArray().Select(element => element.GetString()).ToArray(),
+            });
+
+        return ComputeSha256(json);
+    }
+
+    private static string ComputeExpectedReceiptContentHash(JsonElement root)
+    {
+        var boundaries = root.GetProperty("boundaries");
+        var json = JsonSerializer.Serialize(
+            new
+            {
+                receiptSchemaId = root.GetProperty("receiptSchemaId").GetString(),
+                receiptSchemaVersion = root.GetProperty("receiptSchemaVersion").GetString(),
+                verifierSchemaId = root.GetProperty("verifierSchemaId").GetString(),
+                verifierSchemaVersion = root.GetProperty("verifierSchemaVersion").GetString(),
+                status = root.GetProperty("status").GetString(),
+                bundleSchemaId = ReadOptionalString(root, "bundleSchemaId"),
+                bundleSchemaVersion = ReadOptionalString(root, "bundleSchemaVersion"),
+                computedBundleContentHash = ReadOptionalString(root, "computedBundleContentHash"),
+                suppliedBundleContentHash = ReadOptionalString(root, "suppliedBundleContentHash"),
+                computedReportExportContentHash = ReadOptionalString(root, "computedReportExportContentHash"),
+                suppliedReportExportContentHash = ReadOptionalString(root, "suppliedReportExportContentHash"),
+                checks = root.GetProperty("checks").EnumerateArray().Select(element => element.GetString()).ToArray(),
+                errors = root.GetProperty("errors").EnumerateArray().Select(element => element.GetString()).ToArray(),
+                boundaries = new
+                {
+                    observationalOnly = boundaries.GetProperty("observationalOnly").GetBoolean(),
+                    nonMedical = boundaries.GetProperty("nonMedical").GetBoolean(),
+                    noPersistence = boundaries.GetProperty("noPersistence").GetBoolean(),
+                    noPdf = boundaries.GetProperty("noPdf").GetBoolean(),
+                    noRuntimeExpansion = boundaries.GetProperty("noRuntimeExpansion").GetBoolean(),
+                },
+                verificationResultContentHash = root.GetProperty("verificationResultContentHash").GetString(),
+            });
+
+        return ComputeSha256(json);
+    }
+
+    private static string? ReadOptionalString(JsonElement root, string propertyName)
+    {
+        var property = root.GetProperty(propertyName);
+        return property.ValueKind is JsonValueKind.Null ? null : property.GetString();
+    }
+
+    private static string ComputeSha256(string value)
+    {
+        var hash = SHA256.HashData(Encoding.UTF8.GetBytes(value));
+        return Convert.ToHexStringLower(hash);
     }
 
     private static string CreateTempBundleFile(string content)
