@@ -31,6 +31,9 @@
     <Content Include="Fixtures\BioStack_Protocol_Printable_Packet_v2.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Fixtures\ProtocolOperationsExportBundle\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
