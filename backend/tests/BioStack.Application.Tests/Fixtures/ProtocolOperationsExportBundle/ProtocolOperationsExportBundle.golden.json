@@ -1,0 +1,66 @@
+{
+  "Metadata": {
+    "SchemaVersion": "1.0.0",
+    "GeneratedAtUtc": "2026-01-09T12:00:00Z",
+    "ProfileId": "33333333-3333-3333-3333-333333333333",
+    "ProtocolId": "44444444-4444-4444-4444-444444444444"
+  },
+  "ReportExport": {
+    "Metadata": {
+      "SchemaVersion": "1.0.0",
+      "GeneratedAtUtc": "2026-01-08T12:00:00Z",
+      "ProfileId": "33333333-3333-3333-3333-333333333333",
+      "ProtocolId": "44444444-4444-4444-4444-444444444444"
+    },
+    "Report": {
+      "ProfileId": "33333333-3333-3333-3333-333333333333",
+      "ProtocolId": "44444444-4444-4444-4444-444444444444",
+      "GeneratedAtUtc": "2026-01-08T12:00:00Z",
+      "Summary": {
+        "ActiveCompoundsCount": 1,
+        "LoggedDosesCount": 1,
+        "CheckInCount": 1,
+        "MonitoringEntryCount": 3,
+        "MilestoneCount": 1,
+        "EvidenceReferenceCount": 0,
+        "LatestActivityUtc": "2026-01-07T08:00:00Z"
+      },
+      "RecentEvents": [
+        {
+          "EventType": "CompoundStarted",
+          "OccurredAtUtc": "2026-01-01T08:00:00Z",
+          "Description": "Compound activity logged."
+        },
+        {
+          "EventType": "CheckInCreated",
+          "OccurredAtUtc": "2026-01-05T08:00:00Z",
+          "Description": "Check-in logged."
+        }
+      ],
+      "EvidenceReferences": [],
+      "Warnings": [
+        "Observational history is limited to recorded events."
+      ]
+    },
+    "Integrity": {
+      "HashAlgorithm": "SHA-256",
+      "ContentHash": "61cf6bec473668ef2562dfaba7e579e269e499801ae0ab33010bb62868a0b779"
+    },
+    "Disclaimer": "This export is a factual, observational summary of logged protocol activity counts and events. It is not medical guidance, does not direct care decisions, and is not a substitute for professional consultation."
+  },
+  "Artifacts": [
+    {
+      "ArtifactId": "protocol-operations-report-export-json",
+      "MediaType": "application/json",
+      "Role": "report-export",
+      "SchemaVersion": "1.0.0",
+      "ContentHash": "61cf6bec473668ef2562dfaba7e579e269e499801ae0ab33010bb62868a0b779"
+    }
+  ],
+  "Integrity": {
+    "HashAlgorithm": "SHA-256",
+    "BundleContentHash": "744054e7ead52b5473aec8e88e22ff5ffc37658a30061fbbd800c3b339c14c19",
+    "ReportExportContentHash": "61cf6bec473668ef2562dfaba7e579e269e499801ae0ab33010bb62868a0b779"
+  },
+  "Disclaimer": "This non-medical export bundle is an observational record package for review only. It does not provide clinical guidance or care planning."
+}
