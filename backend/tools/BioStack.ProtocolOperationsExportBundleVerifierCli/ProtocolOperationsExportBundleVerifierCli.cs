@@ -7,6 +7,7 @@ using BioStack.Contracts.Responses;
 public static class ProtocolOperationsExportBundleVerifierCli
 {
     private const string ReceiptJsonFlag = "--receipt-json";
+    private const string VerifyReceiptJsonFlag = "--verify-receipt-json";
     private const string VerifiedStatus = "verified";
     private const string VerificationFailedStatus = "verification-failed";
     private const string MissingFileStatus = "missing-file";
@@ -30,21 +31,33 @@ public static class ProtocolOperationsExportBundleVerifierCli
 
         if (!TryParseArguments(args, out var options, out var argumentErrors))
         {
-            return WriteFailure(
-                stdout,
-                options.EmitReceiptJson,
-                status: InvalidInputStatus,
-                bundle: null,
-                result: null,
-                errors: argumentErrors,
-                exitCode: 2);
+            return options.Mode is CliMode.VerifyReceiptJson
+                ? WriteReceiptVerificationInvalid(stdout, InvalidInputStatus, argumentErrors)
+                : WriteBundleFailure(
+                    stdout,
+                    options.Mode is CliMode.EmitReceiptJson,
+                    status: InvalidInputStatus,
+                    bundle: null,
+                    result: null,
+                    errors: argumentErrors,
+                    exitCode: 2);
         }
 
+        return options.Mode switch
+        {
+            CliMode.VerifyReceiptJson => RunReceiptVerification(options.InputPath, stdout),
+            CliMode.EmitReceiptJson or CliMode.VerifyBundle => RunBundleVerification(options, stdout),
+            _ => WriteBundleFailure(stdout, emitReceiptJson: false, InvalidInputStatus, null, null, ["unknown-mode"], 2),
+        };
+    }
+
+    private static int RunBundleVerification(CliOptions options, TextWriter stdout)
+    {
         if (!File.Exists(options.InputPath))
         {
-            return WriteFailure(
+            return WriteBundleFailure(
                 stdout,
-                options.EmitReceiptJson,
+                options.Mode is CliMode.EmitReceiptJson,
                 status: MissingFileStatus,
                 bundle: null,
                 result: null,
@@ -59,9 +72,9 @@ public static class ProtocolOperationsExportBundleVerifierCli
         }
         catch (Exception) when (IsInputFailure())
         {
-            return WriteFailure(
+            return WriteBundleFailure(
                 stdout,
-                options.EmitReceiptJson,
+                options.Mode is CliMode.EmitReceiptJson,
                 status: InvalidInputStatus,
                 bundle: null,
                 result: null,
@@ -76,9 +89,9 @@ public static class ProtocolOperationsExportBundleVerifierCli
         }
         catch (JsonException)
         {
-            return WriteFailure(
+            return WriteBundleFailure(
                 stdout,
-                options.EmitReceiptJson,
+                options.Mode is CliMode.EmitReceiptJson,
                 status: InvalidJsonStatus,
                 bundle: null,
                 result: null,
@@ -87,9 +100,9 @@ public static class ProtocolOperationsExportBundleVerifierCli
         }
         catch (Exception) when (IsDeserializationFailure())
         {
-            return WriteFailure(
+            return WriteBundleFailure(
                 stdout,
-                options.EmitReceiptJson,
+                options.Mode is CliMode.EmitReceiptJson,
                 status: InvalidInputStatus,
                 bundle: null,
                 result: null,
@@ -99,9 +112,9 @@ public static class ProtocolOperationsExportBundleVerifierCli
 
         if (bundle is null)
         {
-            return WriteFailure(
+            return WriteBundleFailure(
                 stdout,
-                options.EmitReceiptJson,
+                options.Mode is CliMode.EmitReceiptJson,
                 status: InvalidInputStatus,
                 bundle: null,
                 result: null,
@@ -115,18 +128,13 @@ public static class ProtocolOperationsExportBundleVerifierCli
 
         try
         {
-            if (options.EmitReceiptJson)
+            if (options.Mode is CliMode.EmitReceiptJson)
             {
-                ProtocolOperationsExportBundleVerificationReceiptJson.Write(
-                    stdout,
-                    status,
-                    bundle,
-                    result,
-                    errorsOverride: null);
+                ProtocolOperationsExportBundleVerificationReceiptJson.Write(stdout, status, bundle, result, errorsOverride: null);
             }
             else
             {
-                WriteSummary(
+                WriteBundleSummary(
                     stdout,
                     status,
                     result.SchemaVersion,
@@ -140,9 +148,9 @@ public static class ProtocolOperationsExportBundleVerifierCli
         }
         catch (Exception)
         {
-            return WriteFailure(
+            return WriteBundleFailure(
                 stdout,
-                options.EmitReceiptJson,
+                options.Mode is CliMode.EmitReceiptJson,
                 status: InvalidInputStatus,
                 bundle: null,
                 result: null,
@@ -153,9 +161,38 @@ public static class ProtocolOperationsExportBundleVerifierCli
         return exitCode;
     }
 
+    private static int RunReceiptVerification(string inputPath, TextWriter stdout)
+    {
+        if (!File.Exists(inputPath))
+        {
+            return WriteReceiptVerificationInvalid(stdout, MissingFileStatus, ["input-file-missing"]);
+        }
+
+        string json;
+        try
+        {
+            json = File.ReadAllText(inputPath);
+        }
+        catch (Exception) when (IsInputFailure())
+        {
+            return WriteReceiptVerificationInvalid(stdout, InvalidInputStatus, ["input-read-failed"]);
+        }
+
+        var verification = ProtocolOperationsExportBundleVerificationReceiptJsonVerifier.Verify(json);
+        if (!verification.IsValid)
+        {
+            return WriteReceiptVerificationInvalid(stdout, verification.Status, verification.Errors);
+        }
+
+        stdout.WriteLine("Protocol Operations Export Bundle Verification Receipt: VALID");
+        stdout.WriteLine($"Status: {verification.Status}");
+        stdout.WriteLine($"ReceiptContentHash: {verification.ReceiptContentHash}");
+        return 0;
+    }
+
     private static bool TryParseArguments(string[] args, out CliOptions options, out string[] errors)
     {
-        var emitReceiptJson = false;
+        var mode = CliMode.VerifyBundle;
         string? inputPath = null;
         var parseErrors = new List<string>();
 
@@ -163,12 +200,25 @@ public static class ProtocolOperationsExportBundleVerifierCli
         {
             if (string.Equals(arg, ReceiptJsonFlag, StringComparison.Ordinal))
             {
-                if (emitReceiptJson)
+                if (mode is not CliMode.VerifyBundle)
                 {
-                    parseErrors.Add("receipt-json-flag-duplicated");
+                    parseErrors.Add("mode-conflict");
+                    continue;
                 }
 
-                emitReceiptJson = true;
+                mode = CliMode.EmitReceiptJson;
+                continue;
+            }
+
+            if (string.Equals(arg, VerifyReceiptJsonFlag, StringComparison.Ordinal))
+            {
+                if (mode is not CliMode.VerifyBundle)
+                {
+                    parseErrors.Add("mode-conflict");
+                    continue;
+                }
+
+                mode = CliMode.VerifyReceiptJson;
                 continue;
             }
 
@@ -198,18 +248,16 @@ public static class ProtocolOperationsExportBundleVerifierCli
             parseErrors.Add("input-path-required");
         }
 
-        options = new CliOptions(inputPath ?? string.Empty, emitReceiptJson);
+        options = new CliOptions(inputPath ?? string.Empty, mode);
         errors = parseErrors.ToArray();
         return errors.Length == 0;
     }
 
-    private static bool IsInputFailure() =>
-        true;
+    private static bool IsInputFailure() => true;
 
-    private static bool IsDeserializationFailure() =>
-        true;
+    private static bool IsDeserializationFailure() => true;
 
-    private static int WriteFailure(
+    private static int WriteBundleFailure(
         TextWriter stdout,
         bool emitReceiptJson,
         string status,
@@ -224,7 +272,7 @@ public static class ProtocolOperationsExportBundleVerifierCli
         }
         else
         {
-            WriteSummary(
+            WriteBundleSummary(
                 stdout,
                 status,
                 schemaVersion: null,
@@ -239,7 +287,15 @@ public static class ProtocolOperationsExportBundleVerifierCli
         return exitCode;
     }
 
-    private static void WriteSummary(
+    private static int WriteReceiptVerificationInvalid(TextWriter stdout, string status, IReadOnlyList<string> errors)
+    {
+        stdout.WriteLine("Protocol Operations Export Bundle Verification Receipt: INVALID");
+        stdout.WriteLine($"Status: {status}");
+        stdout.WriteLine($"Errors: {string.Join(", ", errors)}");
+        return 1;
+    }
+
+    private static void WriteBundleSummary(
         TextWriter stdout,
         string status,
         string? schemaVersion,
@@ -287,5 +343,12 @@ public static class ProtocolOperationsExportBundleVerifierCli
     private static string FormatValue(string? value) =>
         string.IsNullOrWhiteSpace(value) ? Unavailable : value;
 
-    private sealed record CliOptions(string InputPath, bool EmitReceiptJson);
+    private sealed record CliOptions(string InputPath, CliMode Mode);
+
+    private enum CliMode
+    {
+        VerifyBundle,
+        EmitReceiptJson,
+        VerifyReceiptJson,
+    }
 }

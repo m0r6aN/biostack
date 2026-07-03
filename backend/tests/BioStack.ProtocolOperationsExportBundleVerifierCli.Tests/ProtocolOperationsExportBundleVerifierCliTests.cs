@@ -3,6 +3,7 @@ namespace BioStack.ProtocolOperationsExportBundleVerifierCli.Tests;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using BioStack.ProtocolOperationsExportBundleVerifierCli;
 using Xunit;
 
@@ -102,6 +103,36 @@ public sealed class ProtocolOperationsExportBundleVerifierCliTests
     }
 
     [Fact]
+    public void Run_VerifiesValidSuccessReceiptJson()
+    {
+        var fixturePath = CreateTempBundleFile(ReadFixtureJson());
+        var receiptPath = CreateTempBundleFile(InvokeCli("--receipt-json", fixturePath).StandardOutput);
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            JoinLines(
+                "Protocol Operations Export Bundle Verification Receipt: VALID",
+                "Status: verified",
+                $"ReceiptContentHash: {ReadString(ParseReceipt(File.ReadAllText(receiptPath)), "receiptContentHash")}"),
+            result.StandardOutput);
+    }
+
+    [Fact]
+    public void Run_VerifiesValidSupportedFailureReceiptJson()
+    {
+        var receiptJson = InvokeCli("--receipt-json", Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid():N}.json")).StandardOutput;
+        var receiptPath = CreateTempBundleFile(receiptJson);
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("Protocol Operations Export Bundle Verification Receipt: VALID", result.StandardOutput, StringComparison.Ordinal);
+        Assert.Contains("Status: missing-file", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void Run_ReceiptJson_IsByteForByteDeterministic_ForRepeatedValidGoldenFixtureRuns()
     {
         var fixturePath = CreateTempBundleFile(ReadFixtureJson());
@@ -111,6 +142,208 @@ public sealed class ProtocolOperationsExportBundleVerifierCliTests
 
         Assert.Equal(0, result1.ExitCode);
         Assert.Equal(0, result2.ExitCode);
+        Assert.Equal(result1.StandardOutput, result2.StandardOutput);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_FailsClosed_WhenReceiptFileIsMissing()
+    {
+        var missingPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid():N}.json");
+
+        var result = InvokeCli("--verify-receipt-json", missingPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal(
+            JoinLines(
+                "Protocol Operations Export Bundle Verification Receipt: INVALID",
+                "Status: missing-file",
+                "Errors: input-file-missing"),
+            result.StandardOutput);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_FailsClosed_WhenReceiptJsonIsInvalid()
+    {
+        var receiptPath = CreateTempBundleFile("{ not-json");
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal(
+            JoinLines(
+                "Protocol Operations Export Bundle Verification Receipt: INVALID",
+                "Status: invalid-json",
+                "Errors: input-json-invalid"),
+            result.StandardOutput);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenReceiptSchemaIdDrifts()
+    {
+        var receiptPath = CreateTempBundleFile(TamperReceipt("receiptSchemaId", "drifted-receipt-schema-id"));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("receipt-schema-id-mismatch", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenReceiptSchemaVersionDrifts()
+    {
+        var receiptPath = CreateTempBundleFile(TamperReceipt("receiptSchemaVersion", "9.9.9"));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("receipt-schema-version-mismatch", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenReceiptContentHashIsTampered()
+    {
+        var receiptPath = CreateTempBundleFile(TamperReceipt("receiptContentHash", new string('a', 64)));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("receipt-content-hash-mismatch", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenStatusIsTampered()
+    {
+        var receiptPath = CreateTempBundleFile(TamperReceipt("status", "persist this runtime output"));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("receipt-status-invalid", result.StandardOutput, StringComparison.Ordinal);
+        Assert.Contains("persisted-output-claim-not-allowed", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenChecksAreReordered()
+    {
+        var receiptPath = CreateTempBundleFile(TamperReceiptArrayOrder("checks"));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("verification-result-content-hash-mismatch", result.StandardOutput, StringComparison.Ordinal);
+        Assert.Contains("receipt-content-hash-mismatch", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenErrorsAreReordered()
+    {
+        var fixturePath = CreateTempBundleFile(
+            ReadFixtureJson().Replace(
+                "Observational history is limited to recorded events.",
+                "Bundle persisted to C:\\\\exports\\\\protocol-operations-report.json.",
+                StringComparison.Ordinal));
+        var failureReceipt = InvokeCli("--receipt-json", fixturePath).StandardOutput;
+        var receiptPath = CreateTempBundleFile(TamperReceiptArrayOrder("errors", failureReceipt));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("verification-result-content-hash-mismatch", result.StandardOutput, StringComparison.Ordinal);
+        Assert.Contains("receipt-content-hash-mismatch", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenBoundaryFieldIsRemoved()
+    {
+        var receiptPath = CreateTempBundleFile(RemoveReceiptProperty("boundaries", "noPdf"));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("receipt-boundaries-missing", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenPdfWordingIsIntroduced()
+    {
+        var receiptPath = CreateTempBundleFile(TamperReceipt("status", "pdf-generated"));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("pdf-claim-not-allowed", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenRuntimeWordingIsIntroduced()
+    {
+        var receiptPath = CreateTempBundleFile(TamperReceipt("status", "Protocol Intelligence runtime output"));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("protocol-intelligence-runtime-language-not-allowed", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("recommendation")]
+    [InlineData("diagnosis")]
+    [InlineData("Take 25 mg nightly.")]
+    [InlineData("treatment plan")]
+    [InlineData("prescription")]
+    public void Run_VerifyReceiptJson_Fails_WhenMedicalAdviceLanguageIsIntroduced(string forbiddenValue)
+    {
+        var receiptPath = CreateTempBundleFile(TamperReceipt("status", forbiddenValue));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("medical-advice-language-not-allowed", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenSuccessReceiptIsMissingBundleHashBinding()
+    {
+        var receiptPath = CreateTempBundleFile(TamperReceiptToNull("computedBundleContentHash"));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("success-receipt-bundle-hash-missing", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_Fails_WhenSuccessReceiptIsMissingReportHashBinding()
+    {
+        var receiptPath = CreateTempBundleFile(TamperReceiptToNull("computedReportExportContentHash"));
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("success-receipt-report-export-hash-missing", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_AllowsFailureReceiptWithoutUnavailableBindings()
+    {
+        var receiptJson = InvokeCli("--receipt-json", Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid():N}.json")).StandardOutput;
+        var receiptPath = CreateTempBundleFile(receiptJson);
+
+        var result = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("Status: missing-file", result.StandardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Run_VerifyReceiptJson_IsDeterministicAcrossRepeatedRuns()
+    {
+        var receiptPath = CreateTempBundleFile(InvokeCli("--receipt-json", CreateTempBundleFile(ReadFixtureJson())).StandardOutput);
+
+        var result1 = InvokeCli("--verify-receipt-json", receiptPath);
+        var result2 = InvokeCli("--verify-receipt-json", receiptPath);
+
+        Assert.Equal(0, result1.ExitCode);
         Assert.Equal(result1.StandardOutput, result2.StandardOutput);
     }
 
@@ -415,6 +648,9 @@ public sealed class ProtocolOperationsExportBundleVerifierCliTests
 
     private static JsonDocument ParseReceipt(string output) => JsonDocument.Parse(output);
 
+    private static string ReadString(JsonElement element, string propertyName)
+        => element.GetProperty(propertyName).GetString() ?? string.Empty;
+
     private static string ReadString(JsonDocument document, string propertyName)
         => document.RootElement.GetProperty(propertyName).GetString() ?? string.Empty;
 
@@ -490,6 +726,46 @@ public sealed class ProtocolOperationsExportBundleVerifierCliTests
         var path = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid():N}.json");
         File.WriteAllText(path, content, Encoding.UTF8);
         return path;
+    }
+
+    private static string TamperReceipt(string propertyName, string replacementValue)
+        => TamperReceipt(propertyName, replacementValue, InvokeCli("--receipt-json", CreateTempBundleFile(ReadFixtureJson())).StandardOutput);
+
+    private static string TamperReceipt(string propertyName, string replacementValue, string receiptJson)
+    {
+        using var document = ParseReceipt(receiptJson);
+        var payload = JsonSerializer.Deserialize<Dictionary<string, object?>>(receiptJson)!;
+        payload[propertyName] = replacementValue;
+        return JsonSerializer.Serialize(payload);
+    }
+
+    private static string TamperReceiptToNull(string propertyName)
+    {
+        var receiptJson = InvokeCli("--receipt-json", CreateTempBundleFile(ReadFixtureJson())).StandardOutput;
+        var payload = JsonSerializer.Deserialize<Dictionary<string, object?>>(receiptJson)!;
+        payload[propertyName] = null;
+        return JsonSerializer.Serialize(payload);
+    }
+
+    private static string TamperReceiptArrayOrder(string propertyName)
+        => TamperReceiptArrayOrder(propertyName, InvokeCli("--receipt-json", CreateTempBundleFile(ReadFixtureJson())).StandardOutput);
+
+    private static string TamperReceiptArrayOrder(string propertyName, string receiptJson)
+    {
+        using var document = ParseReceipt(receiptJson);
+        var payload = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(receiptJson)!;
+        var array = payload[propertyName].EnumerateArray().Select(element => element.GetString()).Reverse().ToArray();
+        var serializedPayload = JsonSerializer.Deserialize<Dictionary<string, object?>>(receiptJson)!;
+        serializedPayload[propertyName] = array;
+        return JsonSerializer.Serialize(serializedPayload);
+    }
+
+    private static string RemoveReceiptProperty(string objectPropertyName, string nestedPropertyName)
+    {
+        var receiptJson = InvokeCli("--receipt-json", CreateTempBundleFile(ReadFixtureJson())).StandardOutput;
+        var payload = JsonNode.Parse(receiptJson)!.AsObject();
+        payload[objectPropertyName]!.AsObject().Remove(nestedPropertyName);
+        return payload.ToJsonString();
     }
 
     private static string ReadFixtureJson()
