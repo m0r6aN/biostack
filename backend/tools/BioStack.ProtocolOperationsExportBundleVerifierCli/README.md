@@ -70,6 +70,24 @@ Verify a receipt file without the original bundle:
 dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli -- --verify-receipt-json ./receipt.json
 ```
 
+## Offline Kit Guard
+
+Run the focused offline verification guard locally from the repository root:
+
+```bash
+pwsh ./backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/verify-offline-kit.ps1
+```
+
+This command runs the minimum verifier-kit validation set:
+
+- `dotnet build backend/BioStack.sln`
+- `dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --filter ProtocolOperationsExportBundle`
+- `dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --filter ProtocolOperationsExportBundleGoldenFixture`
+- `dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --filter ProtocolIntelligenceOfflineBoundaryTests`
+- `dotnet test backend/tests/BioStack.ProtocolOperationsExportBundleVerifierCli.Tests/BioStack.ProtocolOperationsExportBundleVerifierCli.Tests.csproj`
+- `dotnet list backend/BioStack.sln package --include-transitive --vulnerable`
+- `git diff --check`
+
 ## Boundary Notes
 
 - Receipt verification is receipt-only validation. It does not require the original bundle file to remain present.
