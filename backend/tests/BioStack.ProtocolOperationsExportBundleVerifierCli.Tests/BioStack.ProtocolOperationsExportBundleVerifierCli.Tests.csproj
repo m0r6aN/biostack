@@ -21,6 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Shared\OfflineVerificationBoundaryLanguageCorpus.cs" Link="Shared\OfflineVerificationBoundaryLanguageCorpus.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\tools\BioStack.ProtocolOperationsExportBundleVerifierCli\BioStack.ProtocolOperationsExportBundleVerifierCli.csproj" />
   </ItemGroup>
 
