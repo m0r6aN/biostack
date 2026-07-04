@@ -1,0 +1,110 @@
+{
+  "manifestSchemaId": "biostack.protocol-operations-offline-kit-inventory-manifest",
+  "manifestSchemaVersion": "1.0.0",
+  "manifestScope": "protocol_operations_offline_kit_inventory_manifest",
+  "manifestPosture": {
+    "backendOnly": true,
+    "testOwned": true,
+    "inventoryOnly": true,
+    "nonProductSurface": true
+  },
+  "components": [
+    {
+      "id": "auditor-packet-design-note",
+      "type": "design-note",
+      "expectedLocation": "docs/superpowers/specs/protocol-operations-offline-auditor-packet-design.md",
+      "required": false,
+      "hashSurface": null,
+      "boundaryPosture": "design-note-non-product"
+    },
+    {
+      "id": "boundary-language-expectations",
+      "type": "test-guard",
+      "expectedLocation": "backend/tests/BioStack.Application.Tests/ProtocolIntelligence/ProtocolIntelligenceOfflineBoundaryTests.cs",
+      "required": true,
+      "hashSurface": null,
+      "boundaryPosture": "test-guard-non-product"
+    },
+    {
+      "id": "cli-help-usage",
+      "type": "cli-surface",
+      "expectedLocation": "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/ProtocolOperationsExportBundleVerifierCli.cs",
+      "required": true,
+      "hashSurface": null,
+      "boundaryPosture": "supplied-artifact-inspection-only"
+    },
+    {
+      "id": "cli-result-json",
+      "type": "cli-output",
+      "expectedLocation": "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/ProtocolOperationsExportBundleVerificationResultJson.cs",
+      "required": true,
+      "hashSurface": "verificationResultContentHash",
+      "boundaryPosture": "supplied-artifact-inspection-only"
+    },
+    {
+      "id": "dependency-boundary-guard",
+      "type": "test-guard",
+      "expectedLocation": "backend/tests/BioStack.Application.Tests/ProtocolOperationsOfflineVerificationDependencyBoundaryTests.cs",
+      "required": true,
+      "hashSurface": null,
+      "boundaryPosture": "test-guard-non-product"
+    },
+    {
+      "id": "docs-drilldown",
+      "type": "docs",
+      "expectedLocation": "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/README.md",
+      "required": true,
+      "hashSurface": null,
+      "boundaryPosture": "documentation-non-authority"
+    },
+    {
+      "id": "export-bundle-contract",
+      "type": "contract",
+      "expectedLocation": "backend/src/BioStack.Application/Services/ProtocolOperationsExportBundleService.cs",
+      "required": true,
+      "hashSurface": "BundleContentHash",
+      "boundaryPosture": "supplied-artifact-inspection-only"
+    },
+    {
+      "id": "release-checklist",
+      "type": "docs",
+      "expectedLocation": "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RELEASE_CHECKLIST.md",
+      "required": true,
+      "hashSurface": null,
+      "boundaryPosture": "documentation-non-authority"
+    },
+    {
+      "id": "verification-receipt-contract",
+      "type": "contract",
+      "expectedLocation": "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/ProtocolOperationsExportBundleVerificationReceiptJson.cs",
+      "required": true,
+      "hashSurface": "receiptContentHash",
+      "boundaryPosture": "supplied-artifact-inspection-only"
+    },
+    {
+      "id": "verifier-cli",
+      "type": "tool",
+      "expectedLocation": "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/ProtocolOperationsExportBundleVerifierCli.cs",
+      "required": true,
+      "hashSurface": null,
+      "boundaryPosture": "supplied-artifact-inspection-only"
+    }
+  ],
+  "forbiddenComponentTypes": [
+    "api-endpoint-artifact",
+    "database-persistence-artifact",
+    "frontend-artifact",
+    "medical-guidance-artifact",
+    "pdf-generator-artifact",
+    "runtime-protocol-intelligence-artifact"
+  ],
+  "boundaries": {
+    "noMedicalAdvice": true,
+    "noPdfGeneration": true,
+    "noPersistenceOrDatabaseState": true,
+    "noProtocolIntelligenceRuntimeBehavior": true,
+    "noApiEndpointSurface": true,
+    "noFrontendSurface": true,
+    "suppliedArtifactInspectionOnly": true
+  }
+}
