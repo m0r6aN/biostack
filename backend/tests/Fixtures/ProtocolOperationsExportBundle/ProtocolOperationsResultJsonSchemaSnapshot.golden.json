@@ -1,0 +1,97 @@
+{
+  "schemaSnapshotId": "biostack.protocol-operations-export-bundle.result-json.schema-snapshot",
+  "schemaSnapshotVersion": "1.0.0",
+  "bundleResult": {
+    "artifactTypeChecked": "protocol-operations-export-bundle",
+    "schemaIdChecked": "biostack.protocol-operations-export-bundle",
+    "validStatus": "verified",
+    "invalidStatus": "verification-failed",
+    "orderedProperties": [
+      "status",
+      "artifactTypeChecked",
+      "schemaIdChecked",
+      "schemaVersionChecked",
+      "expectedBundleContentHash",
+      "actualBundleContentHash",
+      "expectedReportExportContentHash",
+      "actualReportExportContentHash",
+      "checks",
+      "errors"
+    ],
+    "hashFieldNames": [
+      "expectedBundleContentHash",
+      "actualBundleContentHash",
+      "expectedReportExportContentHash",
+      "actualReportExportContentHash"
+    ],
+    "checksOrder": [
+      "bundle-non-null",
+      "schema-version",
+      "required-metadata",
+      "json-artifact-descriptor",
+      "embedded-report-export",
+      "embedded-report-export-hash",
+      "preserved-report-export-hash",
+      "bundle-sha256",
+      "observational-boundary"
+    ]
+  },
+  "receiptResult": {
+    "artifactTypeChecked": "protocol-operations-export-bundle-verification-receipt",
+    "receiptSchemaIdChecked": "biostack.protocol-operations-export-bundle.verification-receipt",
+    "verifierSchemaIdChecked": "biostack.protocol-operations-export-bundle.verifier",
+    "bundleSchemaIdChecked": "biostack.protocol-operations-export-bundle",
+    "validStatus": "verified",
+    "invalidStatus": "invalid-json",
+    "orderedProperties": [
+      "status",
+      "artifactTypeChecked",
+      "receiptSchemaIdChecked",
+      "receiptSchemaVersionChecked",
+      "verifierSchemaIdChecked",
+      "verifierSchemaVersionChecked",
+      "bundleSchemaIdChecked",
+      "bundleSchemaVersionChecked",
+      "computedBundleContentHash",
+      "suppliedBundleContentHash",
+      "computedReportExportContentHash",
+      "suppliedReportExportContentHash",
+      "verificationResultContentHash",
+      "receiptContentHash",
+      "checks",
+      "errors",
+      "boundaries"
+    ],
+    "boundariesProperties": [
+      "observationalOnly",
+      "nonMedical",
+      "noPersistence",
+      "noPdf",
+      "noRuntimeExpansion"
+    ],
+    "hashFieldNames": [
+      "computedBundleContentHash",
+      "suppliedBundleContentHash",
+      "computedReportExportContentHash",
+      "suppliedReportExportContentHash",
+      "verificationResultContentHash",
+      "receiptContentHash"
+    ]
+  },
+  "forbiddenPropertyNameSubstrings": [
+    "path",
+    "machinename",
+    "hostname",
+    "username",
+    "timestamp",
+    "generatedat",
+    "databasestate",
+    "pdfauthenticity",
+    "runtimeexecution",
+    "medicalauthority",
+    "diagnosis",
+    "treatment",
+    "dosing",
+    "prescription"
+  ]
+}
