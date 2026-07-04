@@ -33,8 +33,10 @@ This mode verifies a previously emitted receipt JSON file and prints a stable re
 The tool:
 
 - does not generate PDFs
+- does not make PDF authenticity claims
 - does not write files unless stdout is redirected by caller
 - does not access persistence/database
+- does not verify persistence or database state
 - does not call export-generation services
 - does not replay original bundle verification during receipt verification
 - does not expand Protocol Intelligence runtime behavior
