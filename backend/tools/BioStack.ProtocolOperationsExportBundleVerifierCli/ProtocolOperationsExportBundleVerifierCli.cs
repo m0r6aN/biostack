@@ -29,10 +29,16 @@ public static class ProtocolOperationsExportBundleVerifierCli
         ArgumentNullException.ThrowIfNull(stdout);
         ArgumentNullException.ThrowIfNull(stderr);
 
+        if (args.Length == 1 && IsHelpFlag(args[0]))
+        {
+            WriteHelp(stdout);
+            return 0;
+        }
+
         if (!TryParseArguments(args, out var options, out var argumentErrors))
         {
             return options.Mode is CliMode.VerifyReceiptJson
-                ? WriteReceiptVerificationInvalid(stdout, InvalidInputStatus, argumentErrors)
+                ? WriteReceiptVerificationInvalid(stdout, InvalidInputStatus, argumentErrors, exitCode: 2)
                 : WriteBundleFailure(
                     stdout,
                     options.Mode is CliMode.EmitReceiptJson,
@@ -53,6 +59,18 @@ public static class ProtocolOperationsExportBundleVerifierCli
 
     private static int RunBundleVerification(CliOptions options, TextWriter stdout)
     {
+        if (Directory.Exists(options.InputPath))
+        {
+            return WriteBundleFailure(
+                stdout,
+                options.Mode is CliMode.EmitReceiptJson,
+                status: InvalidInputStatus,
+                bundle: null,
+                result: null,
+                errors: ["input-path-is-directory"],
+                exitCode: 4);
+        }
+
         if (!File.Exists(options.InputPath))
         {
             return WriteBundleFailure(
@@ -163,6 +181,15 @@ public static class ProtocolOperationsExportBundleVerifierCli
 
     private static int RunReceiptVerification(string inputPath, TextWriter stdout)
     {
+        if (Directory.Exists(inputPath))
+        {
+            return WriteReceiptVerificationInvalid(
+                stdout,
+                InvalidInputStatus,
+                ["input-path-is-directory"],
+                exitCode: 2);
+        }
+
         if (!File.Exists(inputPath))
         {
             return WriteReceiptVerificationInvalid(stdout, MissingFileStatus, ["input-file-missing"]);
@@ -253,6 +280,10 @@ public static class ProtocolOperationsExportBundleVerifierCli
         return errors.Length == 0;
     }
 
+    private static bool IsHelpFlag(string arg) =>
+        string.Equals(arg, "--help", StringComparison.Ordinal)
+        || string.Equals(arg, "-h", StringComparison.Ordinal);
+
     private static bool IsInputFailure() => true;
 
     private static bool IsDeserializationFailure() => true;
@@ -287,12 +318,25 @@ public static class ProtocolOperationsExportBundleVerifierCli
         return exitCode;
     }
 
-    private static int WriteReceiptVerificationInvalid(TextWriter stdout, string status, IReadOnlyList<string> errors)
+    private static int WriteReceiptVerificationInvalid(
+        TextWriter stdout,
+        string status,
+        IReadOnlyList<string> errors,
+        int exitCode = 1)
     {
         stdout.WriteLine("Protocol Operations Export Bundle Verification Receipt: INVALID");
         stdout.WriteLine($"Status: {status}");
         stdout.WriteLine($"Errors: {string.Join(", ", errors)}");
-        return 1;
+        return exitCode;
+    }
+
+    private static void WriteHelp(TextWriter stdout)
+    {
+        stdout.WriteLine("Usage:");
+        stdout.WriteLine("  BioStack.ProtocolOperationsExportBundleVerifierCli <bundle-json-path>");
+        stdout.WriteLine("  BioStack.ProtocolOperationsExportBundleVerifierCli --receipt-json <bundle-json-path>");
+        stdout.WriteLine("  BioStack.ProtocolOperationsExportBundleVerifierCli --verify-receipt-json <receipt-json-path>");
+        stdout.WriteLine("  BioStack.ProtocolOperationsExportBundleVerifierCli --help");
     }
 
     private static void WriteBundleSummary(
