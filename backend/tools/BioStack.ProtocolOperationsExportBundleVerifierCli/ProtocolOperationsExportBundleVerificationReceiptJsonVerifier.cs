@@ -22,7 +22,9 @@ internal static class ProtocolOperationsExportBundleVerificationReceiptJsonVerif
     {
         if (string.IsNullOrWhiteSpace(json))
         {
-            return new ReceiptVerificationResult(false, ProtocolOperationsExportBundleVerificationReceiptJson.InvalidInputStatus, string.Empty, ["input-json-invalid"]);
+            return ReceiptVerificationResult.ForFailure(
+                ProtocolOperationsExportBundleVerificationReceiptJson.InvalidInputStatus,
+                ["input-json-invalid"]);
         }
 
         ProtocolOperationsExportBundleVerificationReceipt receipt;
@@ -32,7 +34,9 @@ internal static class ProtocolOperationsExportBundleVerificationReceiptJsonVerif
         }
         catch (JsonException)
         {
-            return new ReceiptVerificationResult(false, ProtocolOperationsExportBundleVerificationReceiptJson.InvalidJsonStatus, string.Empty, ["input-json-invalid"]);
+            return ReceiptVerificationResult.ForFailure(
+                ProtocolOperationsExportBundleVerificationReceiptJson.InvalidJsonStatus,
+                ["input-json-invalid"]);
         }
 
         var errors = new List<string>();
@@ -52,10 +56,32 @@ internal static class ProtocolOperationsExportBundleVerificationReceiptJsonVerif
         }
 
         return new ReceiptVerificationResult(
-            errors.Count == 0,
-            string.IsNullOrWhiteSpace(receipt.Status) ? ProtocolOperationsExportBundleVerificationReceiptJson.InvalidInputStatus : receipt.Status,
-            receipt.ReceiptContentHash ?? string.Empty,
-            errors);
+            IsValid: errors.Count == 0,
+            Status: string.IsNullOrWhiteSpace(receipt.Status)
+                ? ProtocolOperationsExportBundleVerificationReceiptJson.InvalidInputStatus
+                : receipt.Status,
+            ReceiptContentHash: receipt.ReceiptContentHash ?? string.Empty,
+            ReceiptSchemaId: receipt.ReceiptSchemaId,
+            ReceiptSchemaVersion: receipt.ReceiptSchemaVersion,
+            VerifierSchemaId: receipt.VerifierSchemaId,
+            VerifierSchemaVersion: receipt.VerifierSchemaVersion,
+            BundleSchemaId: receipt.BundleSchemaId,
+            BundleSchemaVersion: receipt.BundleSchemaVersion,
+            ComputedBundleContentHash: receipt.ComputedBundleContentHash,
+            SuppliedBundleContentHash: receipt.SuppliedBundleContentHash,
+            ComputedReportExportContentHash: receipt.ComputedReportExportContentHash,
+            SuppliedReportExportContentHash: receipt.SuppliedReportExportContentHash,
+            VerificationResultContentHash: receipt.VerificationResultContentHash,
+            Checks: receipt.Checks ?? [],
+            Errors: errors,
+            Boundaries: receipt.Boundaries is null
+                ? null
+                : new ReceiptVerificationBoundaries(
+                    receipt.Boundaries.ObservationalOnly,
+                    receipt.Boundaries.NonMedical,
+                    receipt.Boundaries.NoPersistence,
+                    receipt.Boundaries.NoPdf,
+                    receipt.Boundaries.NoRuntimeExpansion));
     }
 
     private static void ValidateStructure(ProtocolOperationsExportBundleVerificationReceipt receipt, ICollection<string> errors)
@@ -83,8 +109,8 @@ internal static class ProtocolOperationsExportBundleVerificationReceiptJsonVerif
             errors.Add("verifier-schema-version-mismatch");
         }
 
-        if (!ProtocolOperationsExportBundleVerificationReceiptJson.IsSuccessStatus(receipt.Status)
-            && !ProtocolOperationsExportBundleVerificationReceiptJson.IsFailureStatus(receipt.Status))
+        if (!ProtocolOperationsExportBundleVerificationReceiptJson.IsSuccessStatus(receipt.Status) &&
+            !ProtocolOperationsExportBundleVerificationReceiptJson.IsFailureStatus(receipt.Status))
         {
             errors.Add("receipt-status-invalid");
         }
@@ -94,86 +120,88 @@ internal static class ProtocolOperationsExportBundleVerificationReceiptJsonVerif
             errors.Add("receipt-fields-missing");
         }
 
-        if (receipt.Boundaries is null
-            || !receipt.Boundaries.ObservationalOnly
-            || !receipt.Boundaries.NonMedical
-            || !receipt.Boundaries.NoPersistence
-            || !receipt.Boundaries.NoPdf
-            || !receipt.Boundaries.NoRuntimeExpansion)
+        if (receipt.Boundaries is null ||
+            !receipt.Boundaries.ObservationalOnly ||
+            !receipt.Boundaries.NonMedical ||
+            !receipt.Boundaries.NoPersistence ||
+            !receipt.Boundaries.NoPdf ||
+            !receipt.Boundaries.NoRuntimeExpansion)
         {
             errors.Add("receipt-boundaries-missing");
         }
 
         if (ProtocolOperationsExportBundleVerificationReceiptJson.IsSuccessStatus(receipt.Status))
         {
-            if (receiptErrors.Count > 0)
+            if (receiptErrors.Count != 0)
             {
                 errors.Add("success-receipt-errors-present");
             }
 
-            if (string.IsNullOrWhiteSpace(receipt.ComputedBundleContentHash)
-                || string.IsNullOrWhiteSpace(receipt.SuppliedBundleContentHash))
+            if (string.IsNullOrWhiteSpace(receipt.ComputedBundleContentHash) ||
+                string.IsNullOrWhiteSpace(receipt.SuppliedBundleContentHash))
             {
                 errors.Add("success-receipt-bundle-hash-missing");
             }
 
-            if (string.IsNullOrWhiteSpace(receipt.ComputedReportExportContentHash)
-                || string.IsNullOrWhiteSpace(receipt.SuppliedReportExportContentHash))
+            if (string.IsNullOrWhiteSpace(receipt.ComputedReportExportContentHash) ||
+                string.IsNullOrWhiteSpace(receipt.SuppliedReportExportContentHash))
             {
                 errors.Add("success-receipt-report-export-hash-missing");
             }
 
-            if ((!string.IsNullOrWhiteSpace(receipt.ComputedBundleContentHash)
-                    && !string.IsNullOrWhiteSpace(receipt.SuppliedBundleContentHash)
-                    && !string.Equals(receipt.ComputedBundleContentHash, receipt.SuppliedBundleContentHash, StringComparison.Ordinal))
-                || (!string.IsNullOrWhiteSpace(receipt.ComputedReportExportContentHash)
-                    && !string.IsNullOrWhiteSpace(receipt.SuppliedReportExportContentHash)
-                    && !string.Equals(receipt.ComputedReportExportContentHash, receipt.SuppliedReportExportContentHash, StringComparison.Ordinal))
-                || receiptErrors.Count > 0)
+            if ((!string.IsNullOrWhiteSpace(receipt.ComputedBundleContentHash) &&
+                 !string.IsNullOrWhiteSpace(receipt.SuppliedBundleContentHash) &&
+                 !string.Equals(receipt.ComputedBundleContentHash, receipt.SuppliedBundleContentHash, StringComparison.Ordinal)) ||
+                (!string.IsNullOrWhiteSpace(receipt.ComputedReportExportContentHash) &&
+                 !string.IsNullOrWhiteSpace(receipt.SuppliedReportExportContentHash) &&
+                 !string.Equals(receipt.ComputedReportExportContentHash, receipt.SuppliedReportExportContentHash, StringComparison.Ordinal)) ||
+                receiptErrors.Count != 0)
             {
                 errors.Add("success-receipt-captured-result-not-successful");
             }
         }
 
-        if (receipt.Status == ProtocolOperationsExportBundleVerificationReceiptJson.VerificationFailedStatus)
+        if (string.Equals(receipt.Status, ProtocolOperationsExportBundleVerificationReceiptJson.VerificationFailedStatus, StringComparison.Ordinal))
         {
-            if (string.IsNullOrWhiteSpace(receipt.ComputedBundleContentHash)
-                || string.IsNullOrWhiteSpace(receipt.SuppliedBundleContentHash))
+            if (string.IsNullOrWhiteSpace(receipt.ComputedBundleContentHash) ||
+                string.IsNullOrWhiteSpace(receipt.SuppliedBundleContentHash))
             {
                 errors.Add("failure-receipt-bundle-hash-missing");
             }
 
-            if (string.IsNullOrWhiteSpace(receipt.ComputedReportExportContentHash)
-                || string.IsNullOrWhiteSpace(receipt.SuppliedReportExportContentHash))
+            if (string.IsNullOrWhiteSpace(receipt.ComputedReportExportContentHash) ||
+                string.IsNullOrWhiteSpace(receipt.SuppliedReportExportContentHash))
             {
                 errors.Add("failure-receipt-report-export-hash-missing");
             }
         }
 
-        if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status)
-            && !ExpectedChecks.SequenceEqual(receiptChecks))
+        if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status) &&
+            !ExpectedChecks.SequenceEqual(receiptChecks))
         {
             errors.Add("receipt-check-order-mismatch");
         }
 
-        if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status)
-            && string.IsNullOrWhiteSpace(receipt.BundleSchemaId))
+        if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status) &&
+            string.IsNullOrWhiteSpace(receipt.BundleSchemaId))
         {
             errors.Add("receipt-bundle-schema-id-missing");
         }
-        else if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status)
-            && !string.Equals(receipt.BundleSchemaId, ProtocolOperationsExportBundleVerificationReceiptJson.BundleSchemaId, StringComparison.Ordinal))
+
+        if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status) &&
+            !string.Equals(receipt.BundleSchemaId, ProtocolOperationsExportBundleVerificationReceiptJson.BundleSchemaId, StringComparison.Ordinal))
         {
             errors.Add("receipt-bundle-schema-id-mismatch");
         }
 
-        if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status)
-            && string.IsNullOrWhiteSpace(receipt.BundleSchemaVersion))
+        if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status) &&
+            string.IsNullOrWhiteSpace(receipt.BundleSchemaVersion))
         {
             errors.Add("receipt-bundle-schema-version-missing");
         }
-        else if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status)
-            && !string.Equals(receipt.BundleSchemaVersion, ProtocolOperationsExportBundleService.SchemaVersion, StringComparison.Ordinal))
+
+        if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status) &&
+            !string.Equals(receipt.BundleSchemaVersion, ProtocolOperationsExportBundleService.SchemaVersion, StringComparison.Ordinal))
         {
             errors.Add("receipt-bundle-schema-version-mismatch");
         }
@@ -184,4 +212,45 @@ internal sealed record ReceiptVerificationResult(
     bool IsValid,
     string Status,
     string ReceiptContentHash,
-    IReadOnlyList<string> Errors);
+    string? ReceiptSchemaId,
+    string? ReceiptSchemaVersion,
+    string? VerifierSchemaId,
+    string? VerifierSchemaVersion,
+    string? BundleSchemaId,
+    string? BundleSchemaVersion,
+    string? ComputedBundleContentHash,
+    string? SuppliedBundleContentHash,
+    string? ComputedReportExportContentHash,
+    string? SuppliedReportExportContentHash,
+    string? VerificationResultContentHash,
+    IReadOnlyList<string> Checks,
+    IReadOnlyList<string> Errors,
+    ReceiptVerificationBoundaries? Boundaries)
+{
+    internal static ReceiptVerificationResult ForFailure(string status, IReadOnlyList<string> errors) =>
+        new(
+            IsValid: false,
+            Status: status,
+            ReceiptContentHash: string.Empty,
+            ReceiptSchemaId: null,
+            ReceiptSchemaVersion: null,
+            VerifierSchemaId: null,
+            VerifierSchemaVersion: null,
+            BundleSchemaId: null,
+            BundleSchemaVersion: null,
+            ComputedBundleContentHash: null,
+            SuppliedBundleContentHash: null,
+            ComputedReportExportContentHash: null,
+            SuppliedReportExportContentHash: null,
+            VerificationResultContentHash: null,
+            Checks: [],
+            Errors: errors,
+            Boundaries: null);
+}
+
+internal sealed record ReceiptVerificationBoundaries(
+    bool ObservationalOnly,
+    bool NonMedical,
+    bool NoPersistence,
+    bool NoPdf,
+    bool NoRuntimeExpansion);

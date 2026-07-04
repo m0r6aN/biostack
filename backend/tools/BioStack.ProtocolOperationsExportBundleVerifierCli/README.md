@@ -54,6 +54,19 @@ BioStack.ProtocolOperationsExportBundleVerifierCli <bundle.json> --receipt-json
 This mode verifies a local `ProtocolOperationsExportBundle` JSON file and emits
 machine-readable deterministic receipt JSON to stdout.
 
+### Verify Bundle Or Receipt And Emit Machine-Readable Result JSON
+
+```bash
+BioStack.ProtocolOperationsExportBundleVerifierCli --result-json <bundle.json>
+BioStack.ProtocolOperationsExportBundleVerifierCli --result-json --verify-receipt-json <receipt.json>
+```
+
+This mode keeps verification local and deterministic while emitting inspection
+result JSON for automation, CI, auditors, or future trust-pack tooling. It does
+not replace `--receipt-json`; it reports verification results for bundle or
+receipt verification without changing the default human-readable stdout
+behavior.
+
 ### Verify An Emitted Receipt Without The Original Bundle
 
 ```bash
@@ -88,12 +101,21 @@ Verify a receipt file without the original bundle:
 dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli -- --verify-receipt-json ./local/offline/protocol-operations-export-bundle.receipt.json
 ```
 
+Verify bundle or receipt with machine-readable result JSON:
+
+```bash
+dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli -- --result-json ./local/offline/protocol-operations-export-bundle.json
+dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli -- --result-json --verify-receipt-json ./local/offline/protocol-operations-export-bundle.receipt.json
+```
+
 Minimal placeholder examples:
 
 ```bash
 dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli -- ./bundle.json
 dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli -- ./bundle.json --receipt-json > receipt.json
+dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli -- --result-json ./bundle.json
 dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli -- --verify-receipt-json ./receipt.json
+dotnet run --project backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli -- --result-json --verify-receipt-json ./receipt.json
 ```
 
 The shorter invocation form is also supported when the CLI executable is already
@@ -224,10 +246,13 @@ The minimum verifier-kit validation set is:
 - `dotnet list backend/BioStack.sln package --include-transitive --vulnerable`
 - `git diff --check`
 
+Release gate checklist:
+
+- `./backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RELEASE_CHECKLIST.md`
+
 ## Boundary Notes
 
-- Receipt verification is receipt-only validation. The original bundle file does
-  not need to remain present.
+- Receipt verification is receipt-only validation. It does not require the original bundle file to remain present.
 - Receipt output is deterministic by design and excludes machine-specific or
   environment-specific values.
 - The CLI is limited to educational, observational verification of local export
