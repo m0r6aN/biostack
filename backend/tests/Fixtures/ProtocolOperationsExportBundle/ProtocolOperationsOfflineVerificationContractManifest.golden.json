@@ -1,0 +1,91 @@
+{
+  "manifestSchemaId": "biostack.protocol-operations-offline-verification-contract-manifest",
+  "manifestSchemaVersion": "1.0.0",
+  "manifestScope": "protocol_operations_offline_verification_contract_manifest",
+  "manifestPosture": {
+    "backendOnly": true,
+    "testOwned": true,
+    "driftGuard": true,
+    "nonProductSurface": true
+  },
+  "bundle": {
+    "schemaId": "biostack.protocol-operations-export-bundle",
+    "schemaVersion": "1.0.0",
+    "hashAlgorithm": "SHA-256",
+    "topLevelFields": [
+      "Metadata",
+      "ReportExport",
+      "Artifacts",
+      "Integrity",
+      "Disclaimer"
+    ],
+    "metadataFields": [
+      "SchemaVersion",
+      "GeneratedAtUtc",
+      "ProfileId",
+      "ProtocolId"
+    ],
+    "artifactFields": [
+      "ArtifactId",
+      "MediaType",
+      "Role",
+      "SchemaVersion",
+      "ContentHash"
+    ],
+    "integrityFields": [
+      "HashAlgorithm",
+      "BundleContentHash",
+      "ReportExportContentHash"
+    ]
+  },
+  "receipt": {
+    "receiptSchemaId": "biostack.protocol-operations-export-bundle.verification-receipt",
+    "receiptSchemaVersion": "1.0.0",
+    "verifierSchemaId": "biostack.protocol-operations-export-bundle.verifier",
+    "verifierSchemaVersion": "1.0.0",
+    "boundaryFields": [
+      "observationalOnly",
+      "nonMedical",
+      "noPersistence",
+      "noPdf",
+      "noRuntimeExpansion"
+    ],
+    "hashFields": [
+      "computedBundleContentHash",
+      "suppliedBundleContentHash",
+      "computedReportExportContentHash",
+      "suppliedReportExportContentHash",
+      "verificationResultContentHash",
+      "receiptContentHash"
+    ]
+  },
+  "cli": {
+    "verifyBundleJsonMode": "positional-bundle-json-input",
+    "emitReceiptJsonFlag": "--receipt-json",
+    "verifyReceiptJsonFlag": "--verify-receipt-json"
+  },
+  "hashSurfaces": {
+    "bundleContentHashField": "BundleContentHash",
+    "embeddedReportExportContentHashField": "ReportExportContentHash",
+    "verificationResultContentHashField": "verificationResultContentHash",
+    "receiptContentHashField": "receiptContentHash",
+    "verificationChecksOrder": [
+      "bundle-non-null",
+      "schema-version",
+      "required-metadata",
+      "json-artifact-descriptor",
+      "embedded-report-export",
+      "embedded-report-export-hash",
+      "preserved-report-export-hash",
+      "bundle-sha256",
+      "observational-boundary"
+    ],
+    "verificationErrorsOrder": []
+  },
+  "boundaries": {
+    "noMedicalAdvice": true,
+    "noPdfGeneration": true,
+    "noPersistenceDatabaseOrFileWriteClaimsExceptReceiptEmission": true,
+    "noProtocolIntelligenceRuntimeBehavior": true
+  }
+}
