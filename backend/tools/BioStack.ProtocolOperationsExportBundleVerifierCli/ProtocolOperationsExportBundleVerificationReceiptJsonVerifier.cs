@@ -1,9 +1,23 @@
 namespace BioStack.ProtocolOperationsExportBundleVerifierCli;
 
 using System.Text.Json;
+using BioStack.Application.Services;
 
 internal static class ProtocolOperationsExportBundleVerificationReceiptJsonVerifier
 {
+    private static readonly string[] ExpectedChecks =
+    [
+        "bundle-non-null",
+        "schema-version",
+        "required-metadata",
+        "json-artifact-descriptor",
+        "embedded-report-export",
+        "embedded-report-export-hash",
+        "preserved-report-export-hash",
+        "bundle-sha256",
+        "observational-boundary",
+    ];
+
     public static ReceiptVerificationResult Verify(string json)
     {
         if (string.IsNullOrWhiteSpace(json))
@@ -46,6 +60,9 @@ internal static class ProtocolOperationsExportBundleVerificationReceiptJsonVerif
 
     private static void ValidateStructure(ProtocolOperationsExportBundleVerificationReceipt receipt, ICollection<string> errors)
     {
+        var receiptChecks = receipt.Checks ?? [];
+        var receiptErrors = receipt.Errors ?? [];
+
         if (!string.Equals(receipt.ReceiptSchemaId, ProtocolOperationsExportBundleVerificationReceiptJson.ReceiptSchemaId, StringComparison.Ordinal))
         {
             errors.Add("receipt-schema-id-mismatch");
@@ -89,6 +106,11 @@ internal static class ProtocolOperationsExportBundleVerificationReceiptJsonVerif
 
         if (ProtocolOperationsExportBundleVerificationReceiptJson.IsSuccessStatus(receipt.Status))
         {
+            if (receiptErrors.Count > 0)
+            {
+                errors.Add("success-receipt-errors-present");
+            }
+
             if (string.IsNullOrWhiteSpace(receipt.ComputedBundleContentHash)
                 || string.IsNullOrWhiteSpace(receipt.SuppliedBundleContentHash))
             {
@@ -99,6 +121,17 @@ internal static class ProtocolOperationsExportBundleVerificationReceiptJsonVerif
                 || string.IsNullOrWhiteSpace(receipt.SuppliedReportExportContentHash))
             {
                 errors.Add("success-receipt-report-export-hash-missing");
+            }
+
+            if ((!string.IsNullOrWhiteSpace(receipt.ComputedBundleContentHash)
+                    && !string.IsNullOrWhiteSpace(receipt.SuppliedBundleContentHash)
+                    && !string.Equals(receipt.ComputedBundleContentHash, receipt.SuppliedBundleContentHash, StringComparison.Ordinal))
+                || (!string.IsNullOrWhiteSpace(receipt.ComputedReportExportContentHash)
+                    && !string.IsNullOrWhiteSpace(receipt.SuppliedReportExportContentHash)
+                    && !string.Equals(receipt.ComputedReportExportContentHash, receipt.SuppliedReportExportContentHash, StringComparison.Ordinal))
+                || receiptErrors.Count > 0)
+            {
+                errors.Add("success-receipt-captured-result-not-successful");
             }
         }
 
@@ -118,15 +151,31 @@ internal static class ProtocolOperationsExportBundleVerificationReceiptJsonVerif
         }
 
         if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status)
+            && !ExpectedChecks.SequenceEqual(receiptChecks))
+        {
+            errors.Add("receipt-check-order-mismatch");
+        }
+
+        if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status)
             && string.IsNullOrWhiteSpace(receipt.BundleSchemaId))
         {
             errors.Add("receipt-bundle-schema-id-missing");
+        }
+        else if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status)
+            && !string.Equals(receipt.BundleSchemaId, ProtocolOperationsExportBundleVerificationReceiptJson.BundleSchemaId, StringComparison.Ordinal))
+        {
+            errors.Add("receipt-bundle-schema-id-mismatch");
         }
 
         if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status)
             && string.IsNullOrWhiteSpace(receipt.BundleSchemaVersion))
         {
             errors.Add("receipt-bundle-schema-version-missing");
+        }
+        else if (!ProtocolOperationsExportBundleVerificationReceiptJson.AllowsMissingBindings(receipt.Status)
+            && !string.Equals(receipt.BundleSchemaVersion, ProtocolOperationsExportBundleService.SchemaVersion, StringComparison.Ordinal))
+        {
+            errors.Add("receipt-bundle-schema-version-mismatch");
         }
     }
 }
