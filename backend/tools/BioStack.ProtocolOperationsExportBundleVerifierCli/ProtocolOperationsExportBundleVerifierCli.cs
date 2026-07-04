@@ -8,6 +8,7 @@ public static class ProtocolOperationsExportBundleVerifierCli
 {
     private const string ReceiptJsonFlag = "--receipt-json";
     private const string VerifyReceiptJsonFlag = "--verify-receipt-json";
+    private const string ResultJsonFlag = "--result-json";
     private const string VerifiedStatus = "verified";
     private const string VerificationFailedStatus = "verification-failed";
     private const string MissingFileStatus = "missing-file";
@@ -38,12 +39,12 @@ public static class ProtocolOperationsExportBundleVerifierCli
         if (!TryParseArguments(args, out var options, out var argumentErrors))
         {
             return options.Mode is CliMode.VerifyReceiptJson
-                ? WriteReceiptVerificationInvalid(stdout, InvalidInputStatus, argumentErrors, exitCode: 2)
+                ? WriteReceiptVerificationFailure(stdout, options.EmitResultJson, InvalidInputStatus, argumentErrors, exitCode: 2)
                 : WriteBundleFailure(
                     stdout,
                     options.Mode is CliMode.EmitReceiptJson,
+                    options.EmitResultJson,
                     status: InvalidInputStatus,
-                    bundle: null,
                     result: null,
                     errors: argumentErrors,
                     exitCode: 2);
@@ -51,9 +52,9 @@ public static class ProtocolOperationsExportBundleVerifierCli
 
         return options.Mode switch
         {
-            CliMode.VerifyReceiptJson => RunReceiptVerification(options.InputPath, stdout),
+            CliMode.VerifyReceiptJson => RunReceiptVerification(options, stdout),
             CliMode.EmitReceiptJson or CliMode.VerifyBundle => RunBundleVerification(options, stdout),
-            _ => WriteBundleFailure(stdout, emitReceiptJson: false, InvalidInputStatus, null, null, ["unknown-mode"], 2),
+            _ => WriteBundleFailure(stdout, emitReceiptJson: false, emitResultJson: false, InvalidInputStatus, null, ["unknown-mode"], 2),
         };
     }
 
@@ -64,8 +65,8 @@ public static class ProtocolOperationsExportBundleVerifierCli
             return WriteBundleFailure(
                 stdout,
                 options.Mode is CliMode.EmitReceiptJson,
+                options.EmitResultJson,
                 status: InvalidInputStatus,
-                bundle: null,
                 result: null,
                 errors: ["input-path-is-directory"],
                 exitCode: 4);
@@ -76,8 +77,8 @@ public static class ProtocolOperationsExportBundleVerifierCli
             return WriteBundleFailure(
                 stdout,
                 options.Mode is CliMode.EmitReceiptJson,
+                options.EmitResultJson,
                 status: MissingFileStatus,
-                bundle: null,
                 result: null,
                 errors: ["input-file-missing"],
                 exitCode: 3);
@@ -93,8 +94,8 @@ public static class ProtocolOperationsExportBundleVerifierCli
             return WriteBundleFailure(
                 stdout,
                 options.Mode is CliMode.EmitReceiptJson,
+                options.EmitResultJson,
                 status: InvalidInputStatus,
-                bundle: null,
                 result: null,
                 errors: ["input-read-failed"],
                 exitCode: 4);
@@ -110,8 +111,8 @@ public static class ProtocolOperationsExportBundleVerifierCli
             return WriteBundleFailure(
                 stdout,
                 options.Mode is CliMode.EmitReceiptJson,
+                options.EmitResultJson,
                 status: InvalidJsonStatus,
-                bundle: null,
                 result: null,
                 errors: ["input-json-invalid"],
                 exitCode: 5);
@@ -121,8 +122,8 @@ public static class ProtocolOperationsExportBundleVerifierCli
             return WriteBundleFailure(
                 stdout,
                 options.Mode is CliMode.EmitReceiptJson,
+                options.EmitResultJson,
                 status: InvalidInputStatus,
-                bundle: null,
                 result: null,
                 errors: ["input-deserialization-failed"],
                 exitCode: 6);
@@ -133,8 +134,8 @@ public static class ProtocolOperationsExportBundleVerifierCli
             return WriteBundleFailure(
                 stdout,
                 options.Mode is CliMode.EmitReceiptJson,
+                options.EmitResultJson,
                 status: InvalidInputStatus,
-                bundle: null,
                 result: null,
                 errors: ["input-bundle-missing"],
                 exitCode: 6);
@@ -149,6 +150,10 @@ public static class ProtocolOperationsExportBundleVerifierCli
             if (options.Mode is CliMode.EmitReceiptJson)
             {
                 ProtocolOperationsExportBundleVerificationReceiptJson.Write(stdout, status, bundle, result, errorsOverride: null);
+            }
+            else if (options.EmitResultJson)
+            {
+                ProtocolOperationsExportBundleVerificationResultJson.WriteBundleVerificationResult(stdout, status, result, errorsOverride: null);
             }
             else
             {
@@ -169,8 +174,8 @@ public static class ProtocolOperationsExportBundleVerifierCli
             return WriteBundleFailure(
                 stdout,
                 options.Mode is CliMode.EmitReceiptJson,
+                options.EmitResultJson,
                 status: InvalidInputStatus,
-                bundle: null,
                 result: null,
                 errors: ["receipt-generation-failed"],
                 exitCode: 7);
@@ -179,33 +184,48 @@ public static class ProtocolOperationsExportBundleVerifierCli
         return exitCode;
     }
 
-    private static int RunReceiptVerification(string inputPath, TextWriter stdout)
+    private static int RunReceiptVerification(CliOptions options, TextWriter stdout)
     {
-        if (Directory.Exists(inputPath))
+        if (Directory.Exists(options.InputPath))
         {
-            return WriteReceiptVerificationInvalid(
+            return WriteReceiptVerificationFailure(
                 stdout,
+                options.EmitResultJson,
                 InvalidInputStatus,
                 ["input-path-is-directory"],
                 exitCode: 2);
         }
 
-        if (!File.Exists(inputPath))
+        if (!File.Exists(options.InputPath))
         {
-            return WriteReceiptVerificationInvalid(stdout, MissingFileStatus, ["input-file-missing"]);
+            return WriteReceiptVerificationFailure(
+                stdout,
+                options.EmitResultJson,
+                MissingFileStatus,
+                ["input-file-missing"]);
         }
 
         string json;
         try
         {
-            json = File.ReadAllText(inputPath);
+            json = File.ReadAllText(options.InputPath);
         }
         catch (Exception) when (IsInputFailure())
         {
-            return WriteReceiptVerificationInvalid(stdout, InvalidInputStatus, ["input-read-failed"]);
+            return WriteReceiptVerificationFailure(
+                stdout,
+                options.EmitResultJson,
+                InvalidInputStatus,
+                ["input-read-failed"]);
         }
 
         var verification = ProtocolOperationsExportBundleVerificationReceiptJsonVerifier.Verify(json);
+        if (options.EmitResultJson)
+        {
+            ProtocolOperationsExportBundleVerificationResultJson.WriteReceiptVerificationResult(stdout, verification);
+            return verification.IsValid ? 0 : 1;
+        }
+
         if (!verification.IsValid)
         {
             return WriteReceiptVerificationInvalid(stdout, verification.Status, verification.Errors);
@@ -220,14 +240,27 @@ public static class ProtocolOperationsExportBundleVerifierCli
     private static bool TryParseArguments(string[] args, out CliOptions options, out string[] errors)
     {
         var mode = CliMode.VerifyBundle;
+        var emitResultJson = false;
         string? inputPath = null;
         var parseErrors = new List<string>();
 
         foreach (var arg in args)
         {
+            if (string.Equals(arg, ResultJsonFlag, StringComparison.Ordinal))
+            {
+                if (emitResultJson || mode is CliMode.EmitReceiptJson)
+                {
+                    parseErrors.Add("mode-conflict");
+                    continue;
+                }
+
+                emitResultJson = true;
+                continue;
+            }
+
             if (string.Equals(arg, ReceiptJsonFlag, StringComparison.Ordinal))
             {
-                if (mode is not CliMode.VerifyBundle)
+                if (mode is not CliMode.VerifyBundle || emitResultJson)
                 {
                     parseErrors.Add("mode-conflict");
                     continue;
@@ -275,14 +308,14 @@ public static class ProtocolOperationsExportBundleVerifierCli
             parseErrors.Add("input-path-required");
         }
 
-        options = new CliOptions(inputPath ?? string.Empty, mode);
+        options = new CliOptions(inputPath ?? string.Empty, mode, emitResultJson);
         errors = parseErrors.ToArray();
         return errors.Length == 0;
     }
 
     private static bool IsHelpFlag(string arg) =>
-        string.Equals(arg, "--help", StringComparison.Ordinal)
-        || string.Equals(arg, "-h", StringComparison.Ordinal);
+        string.Equals(arg, "--help", StringComparison.Ordinal) ||
+        string.Equals(arg, "-h", StringComparison.Ordinal);
 
     private static bool IsInputFailure() => true;
 
@@ -291,15 +324,19 @@ public static class ProtocolOperationsExportBundleVerifierCli
     private static int WriteBundleFailure(
         TextWriter stdout,
         bool emitReceiptJson,
+        bool emitResultJson,
         string status,
-        ProtocolOperationsExportBundle? bundle,
         ProtocolOperationsExportBundleVerificationResult? result,
         IReadOnlyList<string> errors,
         int exitCode)
     {
         if (emitReceiptJson)
         {
-            ProtocolOperationsExportBundleVerificationReceiptJson.Write(stdout, status, bundle, result, errors);
+            ProtocolOperationsExportBundleVerificationReceiptJson.Write(stdout, status, bundle: null, result: null, errorsOverride: errors);
+        }
+        else if (emitResultJson)
+        {
+            ProtocolOperationsExportBundleVerificationResultJson.WriteBundleVerificationResult(stdout, status, result, errors);
         }
         else
         {
@@ -312,7 +349,28 @@ public static class ProtocolOperationsExportBundleVerifierCli
                 expectedReportExportSha256: null,
                 actualReportExportSha256: null,
                 checks: [],
-                errors);
+                errors: errors);
+        }
+
+        return exitCode;
+    }
+
+    private static int WriteReceiptVerificationFailure(
+        TextWriter stdout,
+        bool emitResultJson,
+        string status,
+        IReadOnlyList<string> errors,
+        int exitCode = 1)
+    {
+        if (emitResultJson)
+        {
+            ProtocolOperationsExportBundleVerificationResultJson.WriteReceiptVerificationResult(
+                stdout,
+                ReceiptVerificationResult.ForFailure(status, errors));
+        }
+        else
+        {
+            WriteReceiptVerificationInvalid(stdout, status, errors, exitCode);
         }
 
         return exitCode;
@@ -334,8 +392,10 @@ public static class ProtocolOperationsExportBundleVerifierCli
     {
         stdout.WriteLine("Usage:");
         stdout.WriteLine("  BioStack.ProtocolOperationsExportBundleVerifierCli <bundle-json-path>");
+        stdout.WriteLine("  BioStack.ProtocolOperationsExportBundleVerifierCli --result-json <bundle-json-path>");
         stdout.WriteLine("  BioStack.ProtocolOperationsExportBundleVerifierCli --receipt-json <bundle-json-path>");
         stdout.WriteLine("  BioStack.ProtocolOperationsExportBundleVerifierCli --verify-receipt-json <receipt-json-path>");
+        stdout.WriteLine("  BioStack.ProtocolOperationsExportBundleVerifierCli --result-json --verify-receipt-json <receipt-json-path>");
         stdout.WriteLine("  BioStack.ProtocolOperationsExportBundleVerifierCli --help");
     }
 
@@ -357,7 +417,6 @@ public static class ProtocolOperationsExportBundleVerifierCli
         stdout.WriteLine($"expected-report-export-sha256: {FormatValue(expectedReportExportSha256)}");
         stdout.WriteLine($"actual-report-export-sha256: {FormatValue(actualReportExportSha256)}");
         stdout.WriteLine("checks:");
-
         if (checks.Count == 0)
         {
             stdout.WriteLine($"- {None}");
@@ -371,7 +430,6 @@ public static class ProtocolOperationsExportBundleVerifierCli
         }
 
         stdout.WriteLine("errors:");
-
         if (errors.Count == 0)
         {
             stdout.WriteLine($"- {None}");
@@ -387,7 +445,7 @@ public static class ProtocolOperationsExportBundleVerifierCli
     private static string FormatValue(string? value) =>
         string.IsNullOrWhiteSpace(value) ? Unavailable : value;
 
-    private sealed record CliOptions(string InputPath, CliMode Mode);
+    private sealed record CliOptions(string InputPath, CliMode Mode, bool EmitResultJson);
 
     private enum CliMode
     {
