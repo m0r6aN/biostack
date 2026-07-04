@@ -224,10 +224,13 @@ The minimum verifier-kit validation set is:
 - `dotnet list backend/BioStack.sln package --include-transitive --vulnerable`
 - `git diff --check`
 
+Release gate checklist:
+
+- `./backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RELEASE_CHECKLIST.md`
+
 ## Boundary Notes
 
-- Receipt verification is receipt-only validation. The original bundle file does
-  not need to remain present.
+- Receipt verification is receipt-only validation. It does not require the original bundle file to remain present.
 - Receipt output is deterministic by design and excludes machine-specific or
   environment-specific values.
 - The CLI is limited to educational, observational verification of local export
