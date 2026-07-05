@@ -184,7 +184,69 @@ public sealed class AdminSourceLaneGovernanceIntegrationTests : IAsyncLifetime
         Assert.False(await db.KnowledgeEntries.AnyAsync(x => x.CanonicalName == "bypass-fence-test"));
     }
 
-    private WebApplicationFactory<Program> BuildFactory(bool enableProvider)
+    [Fact]
+    public async Task AdminKnowledgeIngest_EnabledWithoutOverrideHeader_ReturnsForbidden()
+    {
+        await using var factory = BuildFactory(enableProvider: true, enableKnowledgeIngest: true);
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        await AdminAuthTestHelper.SignInAsAdminAsync(client, factory, "admin-source-lane-ingest-no-override@example.com");
+
+        var entries = new[]
+        {
+            new KnowledgeEntry
+            {
+                Id = Guid.NewGuid(),
+                CanonicalName = "override-header-missing-test",
+                SourceReferences = new List<string> { "https://example.test/source" },
+            },
+        };
+
+        var missingHeaderResponse = await client.PostAsJsonAsync("/api/v1/admin/knowledge/ingest", entries, JsonOptions);
+        Assert.Equal(HttpStatusCode.Forbidden, missingHeaderResponse.StatusCode);
+
+        client.DefaultRequestHeaders.Add("X-BioStack-Admin-Override", "wrong-value");
+        var wrongHeaderResponse = await client.PostAsJsonAsync("/api/v1/admin/knowledge/ingest", entries, JsonOptions);
+        Assert.Equal(HttpStatusCode.Forbidden, wrongHeaderResponse.StatusCode);
+
+        await using var scope = factory.Services.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        Assert.False(await db.KnowledgeEntries.AnyAsync(x => x.CanonicalName == "override-header-missing-test"));
+        Assert.False(await db.SpineEntries.AnyAsync(e => e.ReceiptClass == "admin.override.performed"));
+    }
+
+    [Fact]
+    public async Task AdminKnowledgeIngest_EnabledWithOverrideHeader_IngestsAndEmitsOverrideReceipt()
+    {
+        await using var factory = BuildFactory(enableProvider: true, enableKnowledgeIngest: true);
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        await AdminAuthTestHelper.SignInAsAdminAsync(client, factory, "admin-source-lane-ingest-override@example.com");
+
+        client.DefaultRequestHeaders.Add("X-BioStack-Admin-Override", "canonical-knowledge-ingest");
+        var response = await client.PostAsJsonAsync(
+            "/api/v1/admin/knowledge/ingest",
+            new[]
+            {
+                new KnowledgeEntry
+                {
+                    Id = Guid.NewGuid(),
+                    CanonicalName = "override-ingest-test",
+                    SourceReferences = new List<string> { "https://example.test/source" },
+                },
+            },
+            JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        await using var scope = factory.Services.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        Assert.True(await db.KnowledgeEntries.AnyAsync(x => x.CanonicalName == "override-ingest-test"));
+
+        var overrideReceiptCount = await db.SpineEntries
+            .CountAsync(e => e.ReceiptClass == "admin.override.performed");
+        Assert.Equal(1, overrideReceiptCount);
+    }
+
+    private WebApplicationFactory<Program> BuildFactory(bool enableProvider, bool enableKnowledgeIngest = false)
         => new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
@@ -201,6 +263,7 @@ public sealed class AdminSourceLaneGovernanceIntegrationTests : IAsyncLifetime
                         ["Stripe:CommanderPriceId"] = "price_commander",
                         ["Stripe:WebhookSecret"] = "whsec_test",
                         ["TranscriptProviders:YouTube:Enabled"] = enableProvider ? "true" : "false",
+                        ["Admin:KnowledgeIngest:Enabled"] = enableKnowledgeIngest ? "true" : "false",
                     }));
                 builder.ConfigureServices(services =>
                 {

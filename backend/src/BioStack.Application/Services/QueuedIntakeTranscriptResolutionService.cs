@@ -49,8 +49,21 @@ public sealed class QueuedIntakeTranscriptResolutionService : IQueuedIntakeTrans
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        if (!string.Equals(intakeRequest.Status, "queued", StringComparison.OrdinalIgnoreCase) &&
-            !string.Equals(intakeRequest.Status, "failed", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(intakeRequest.Status, "resolved", StringComparison.OrdinalIgnoreCase))
+        {
+            // A resolved intake whose staging step never completed is otherwise unrecoverable via
+            // the API; allow re-resolution only while no staged candidate references it.
+            var hasStagedCandidate = await _dbContext.StagedTranscriptCandidateReviews
+                .AnyAsync(x => x.IntakeRequestId == intakeRequest.Id, cancellationToken);
+
+            if (hasStagedCandidate)
+            {
+                throw new InvalidOperationException(
+                    $"Intake '{intakeRequest.Id}' is already resolved and staged; transcript resolution cannot be repeated.");
+            }
+        }
+        else if (!string.Equals(intakeRequest.Status, "queued", StringComparison.OrdinalIgnoreCase) &&
+                 !string.Equals(intakeRequest.Status, "failed", StringComparison.OrdinalIgnoreCase))
         {
             throw new InvalidOperationException(
                 $"Only queued or failed intake requests are supported for transcript resolution. Intake '{intakeRequest.Id}' status is '{intakeRequest.Status}'.");

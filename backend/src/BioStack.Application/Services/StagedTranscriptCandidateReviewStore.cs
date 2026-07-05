@@ -258,7 +258,7 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
             sourceMetadata: record.SourceMetadata,
             createdAtUtc: record.CreatedAtUtc,
             updatedAtUtc: record.UpdatedAtUtc,
-            rowVersion: record.RowVersion,
+            rowVersion: null,
             targetCanonicalName: record.TargetCanonicalName,
             promotedKnowledgeEntryId: record.PromotedKnowledgeEntryId,
             promotedAtUtc: record.PromotedAtUtc,

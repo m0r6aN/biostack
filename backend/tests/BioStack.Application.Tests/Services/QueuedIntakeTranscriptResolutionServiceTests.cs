@@ -5,6 +5,7 @@ using BioStack.Application.Tests.Fixtures;
 using BioStack.Application.Tests.Services.Fakes;
 using BioStack.Contracts.Requests;
 using BioStack.Infrastructure.Persistence;
+using BioStack.Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
@@ -149,6 +150,72 @@ public sealed class QueuedIntakeTranscriptResolutionServiceTests : IDisposable
         Assert.Equal("resolved", reloaded.Status);
         Assert.Null(reloaded.FailureReason);
         Assert.NotNull(reloaded.UpdatedAtUtc);
+    }
+
+    [Fact]
+    public async Task ResolvedIntake_WithoutStagedCandidate_ResolvesAgainForRecovery()
+    {
+        var createResponse = await _intakeService.CreateAsync(new AdminKnowledgeSourceIntakeRequest(
+            SourceType: KnowledgeSourceType.VideoUrl,
+            SourceUrl: Tb500TranscriptFixture.SourceUrl,
+            OptionalInstructions: null,
+            RequestedOutputs: new[] { RequestedOutputArea.SourceMetadata },
+            ChannelOptions: null));
+
+        var intake = await _dbContext.KnowledgeSourceIntakeRequests
+            .SingleAsync(x => x.Id == createResponse.IntakeRequestId);
+
+        intake.Status = "resolved";
+        await _dbContext.SaveChangesAsync();
+
+        var resolved = await _resolver.ResolveAsync(intake);
+
+        Assert.Equal(Tb500TranscriptFixture.SourceUrl, resolved.SourceReference.SourceUrl);
+        Assert.False(_provider.NetworkAttempted);
+
+        var reloaded = await _dbContext.KnowledgeSourceIntakeRequests
+            .SingleAsync(x => x.Id == createResponse.IntakeRequestId);
+        Assert.Equal("resolved", reloaded.Status);
+        Assert.Null(reloaded.FailureReason);
+        Assert.NotNull(reloaded.UpdatedAtUtc);
+    }
+
+    [Fact]
+    public async Task ResolvedIntake_WithStagedCandidate_RejectsBeforeProviderCall()
+    {
+        var createResponse = await _intakeService.CreateAsync(new AdminKnowledgeSourceIntakeRequest(
+            SourceType: KnowledgeSourceType.VideoUrl,
+            SourceUrl: Tb500TranscriptFixture.SourceUrl,
+            OptionalInstructions: null,
+            RequestedOutputs: new[] { RequestedOutputArea.SourceMetadata },
+            ChannelOptions: null));
+
+        var intake = await _dbContext.KnowledgeSourceIntakeRequests
+            .SingleAsync(x => x.Id == createResponse.IntakeRequestId);
+
+        intake.Status = "resolved";
+        await _dbContext.SaveChangesAsync();
+
+        _dbContext.StagedTranscriptCandidateReviews.Add(new StagedTranscriptCandidateReviewEntity
+        {
+            ArtifactId = $"transcript-candidate:{createResponse.IntakeRequestId:N}",
+            Canonicality = "non_canonical",
+            ReviewState = "pending_review",
+            SourceType = "video_url",
+            SourceUrl = Tb500TranscriptFixture.SourceUrl,
+            Provider = "fixture",
+            SegmentCount = 1,
+            SegmentSnapshotSignature = "signature",
+            CreatedAtUtc = "2026-07-05T00:00:00Z",
+            UpdatedAtUtc = "2026-07-05T00:00:00Z",
+            IntakeRequestId = createResponse.IntakeRequestId,
+        });
+        await _dbContext.SaveChangesAsync();
+
+        var exception = await Assert.ThrowsAsync<InvalidOperationException>(() => _resolver.ResolveAsync(intake));
+
+        Assert.Contains("already resolved and staged", exception.Message, StringComparison.Ordinal);
+        Assert.False(_provider.NetworkAttempted);
     }
 
     [Fact]

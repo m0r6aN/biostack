@@ -33,13 +33,13 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
-                b.Property<int>("IsDeterministicFixture")
-                    .HasColumnType("INTEGER");
+                    b.Property<int>("IsDeterministicFixture")
+                        .HasColumnType("INTEGER");
 
-                b.Property<Guid?>("IntakeRequestId")
-                    .HasColumnType("TEXT");
+                    b.Property<Guid?>("IntakeRequestId")
+                        .HasColumnType("TEXT");
 
-                b.Property<string>("Provider")
+                    b.Property<string>("Provider")
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
@@ -90,9 +90,9 @@ namespace BioStack.Infrastructure.Persistence.Migrations
 
                     b.HasKey("ArtifactId");
 
-                b.HasIndex("ReviewState");
+                    b.HasIndex("ReviewState");
 
-                b.HasIndex("IntakeRequestId");
+                    b.HasIndex("IntakeRequestId");
 
                     b.ToTable("StagedTranscriptCandidateReviews", null, t =>
                         {
