@@ -1,0 +1,249 @@
+{
+  "catalogSchemaId": "biostack.protocol-operations-offline-verification-result-code-catalog",
+  "catalogSchemaVersion": "1.0.0",
+  "entries": [
+    {
+      "code": "POBOUNDARY_MEDICAL_LANGUAGE_FORBIDDEN",
+      "severity": "error",
+      "artifactSurface": "bundle",
+      "meaning": "Serialized bundle or receipt text matched a disallowed clinical-language word pattern.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": "medical-language",
+      "mappedTokens": ["medical-advice-language-not-allowed"]
+    },
+    {
+      "code": "POBOUNDARY_PDF_CLAIM_FORBIDDEN",
+      "severity": "error",
+      "artifactSurface": "receipt",
+      "meaning": "Serialized receipt text matched a disallowed PDF-reference word pattern.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": "pdf-claim",
+      "mappedTokens": ["pdf-claim-not-allowed", "pdf-artifact-not-allowed"]
+    },
+    {
+      "code": "POBOUNDARY_PERSISTENCE_CLAIM_FORBIDDEN",
+      "severity": "error",
+      "artifactSurface": "bundle",
+      "meaning": "Serialized bundle or receipt text matched a disallowed local-path or storage-location word pattern.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": "persistence-claim",
+      "mappedTokens": ["persisted-output-claim-not-allowed"]
+    },
+    {
+      "code": "POBOUNDARY_RUNTIME_CLAIM_FORBIDDEN",
+      "severity": "error",
+      "artifactSurface": "bundle",
+      "meaning": "Serialized bundle or receipt text contained a disallowed reference phrase naming an execution engine.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": "runtime-claim",
+      "mappedTokens": ["protocol-intelligence-runtime-language-not-allowed"]
+    },
+    {
+      "code": "POBUNDLE_ARTIFACT_DESCRIPTOR_MISMATCH",
+      "severity": "error",
+      "artifactSurface": "bundle",
+      "meaning": "Bundle artifact descriptor list is missing the expected JSON artifact entry or contains an incorrect descriptor.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": [
+        "json-artifact-descriptor-missing",
+        "json-artifact-descriptor-incorrect",
+        "artifact-descriptor-missing",
+        "json-artifact-schema-version-mismatch"
+      ]
+    },
+    {
+      "code": "POBUNDLE_BOUNDARY_LANGUAGE_DRIFT",
+      "severity": "error",
+      "artifactSurface": "bundle",
+      "meaning": "Bundle or embedded report-export disclaimer text does not match the expected fixed disclaimer wording.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": [
+        "bundle-disclaimer-missing",
+        "bundle-disclaimer-mismatch",
+        "embedded-report-export-disclaimer-missing",
+        "embedded-report-export-disclaimer-mismatch"
+      ]
+    },
+    {
+      "code": "POBUNDLE_HASH_MISMATCH",
+      "severity": "error",
+      "artifactSurface": "bundle",
+      "meaning": "Computed bundle content hash does not match the supplied bundle content hash.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": [
+        "bundle-sha256-mismatch",
+        "bundle-sha256-missing",
+        "bundle-integrity-missing",
+        "bundle-hash-algorithm-missing",
+        "bundle-hash-algorithm-mismatch"
+      ]
+    },
+    {
+      "code": "POBUNDLE_REPORT_HASH_MISMATCH",
+      "severity": "error",
+      "artifactSurface": "bundle",
+      "meaning": "Computed report-export content hash does not match the supplied report-export content hash at the embedded, preserved, or JSON-artifact binding point.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": [
+        "embedded-report-export-sha256-mismatch",
+        "preserved-report-export-sha256-mismatch",
+        "json-artifact-content-hash-mismatch",
+        "embedded-report-export-sha256-missing",
+        "preserved-report-export-sha256-missing",
+        "embedded-report-export-hash-algorithm-missing",
+        "embedded-report-export-hash-algorithm-mismatch"
+      ]
+    },
+    {
+      "code": "POBUNDLE_SCHEMA_ID_MISMATCH",
+      "severity": "error",
+      "artifactSurface": "bundle",
+      "meaning": "Bundle payload is absent, so no schema identifier could be located.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": ["bundle-missing", "metadata-missing"]
+    },
+    {
+      "code": "POBUNDLE_SCHEMA_VERSION_MISMATCH",
+      "severity": "error",
+      "artifactSurface": "bundle",
+      "meaning": "Bundle or embedded report-export schema version is missing or does not match the expected schema version.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": [
+        "schema-version-missing",
+        "schema-version-mismatch",
+        "embedded-report-export-schema-version-missing",
+        "embedded-report-export-schema-version-mismatch",
+        "embedded-report-export-missing",
+        "embedded-report-export-metadata-missing",
+        "embedded-report-content-missing",
+        "embedded-report-export-integrity-missing",
+        "bundle-generated-at-missing",
+        "bundle-profile-id-missing",
+        "embedded-report-export-generated-at-missing",
+        "embedded-report-export-profile-id-missing"
+      ]
+    },
+    {
+      "code": "POCLI_ARGUMENT_INVALID",
+      "severity": "error",
+      "artifactSurface": "cli",
+      "meaning": "Command-line argument parsing rejected the supplied arguments as structurally invalid.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": [
+        "input-path-required",
+        "unknown-argument",
+        "mode-conflict",
+        "input-path-duplicated",
+        "input-path-is-directory",
+        "unknown-mode"
+      ]
+    },
+    {
+      "code": "POCLI_INPUT_FILE_MISSING",
+      "severity": "error",
+      "artifactSurface": "cli",
+      "meaning": "Command-line input path did not resolve to an existing file.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": ["input-file-missing", "missing-file"]
+    },
+    {
+      "code": "POCLI_INPUT_JSON_INVALID",
+      "severity": "error",
+      "artifactSurface": "cli",
+      "meaning": "Command-line input file content did not parse as well-formed JSON.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": ["input-json-invalid", "invalid-json", "input-read-failed", "input-deserialization-failed", "input-bundle-missing"]
+    },
+    {
+      "code": "POCLI_RESULT_JSON_CONTRACT_DRIFT",
+      "severity": "error",
+      "artifactSurface": "cli",
+      "meaning": "Command-line result-JSON emission failed to produce the expected contract shape.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": ["receipt-generation-failed", "invalid-input"]
+    },
+    {
+      "code": "PORECEIPT_CAPTURED_RESULT_HASH_MISMATCH",
+      "severity": "error",
+      "artifactSurface": "receipt",
+      "meaning": "Receipt-captured computed hash does not match the receipt-captured supplied hash for the bundle or report-export binding.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": [
+        "success-receipt-bundle-hash-missing",
+        "success-receipt-report-export-hash-missing",
+        "failure-receipt-bundle-hash-missing",
+        "failure-receipt-report-export-hash-missing"
+      ]
+    },
+    {
+      "code": "PORECEIPT_CAPTURED_RESULT_STATUS_INVALID",
+      "severity": "error",
+      "artifactSurface": "receipt",
+      "meaning": "Receipt status is not one of the recognized success or failure status values, or a success-status receipt carries an inconsistent captured result.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": [
+        "receipt-status-invalid",
+        "receipt-fields-missing",
+        "receipt-boundaries-missing",
+        "success-receipt-errors-present",
+        "success-receipt-captured-result-not-successful",
+        "receipt-check-order-mismatch",
+        "timestamp-not-allowed",
+        "host-data-not-allowed"
+      ]
+    },
+    {
+      "code": "PORECEIPT_HASH_MISMATCH",
+      "severity": "error",
+      "artifactSurface": "receipt",
+      "meaning": "Computed receipt content hash does not match the supplied receipt content hash.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": ["receipt-content-hash-mismatch", "verification-result-content-hash-mismatch"]
+    },
+    {
+      "code": "PORECEIPT_ID_MISMATCH",
+      "severity": "error",
+      "artifactSurface": "receipt",
+      "meaning": "Receipt-bound bundle schema identifier is missing or does not match the expected bundle schema identifier.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": ["receipt-bundle-schema-id-missing", "receipt-bundle-schema-id-mismatch"]
+    },
+    {
+      "code": "PORECEIPT_SCHEMA_ID_MISMATCH",
+      "severity": "error",
+      "artifactSurface": "receipt",
+      "meaning": "Receipt or verifier schema identifier does not match the expected schema identifier.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": ["receipt-schema-id-mismatch", "verifier-schema-id-mismatch"]
+    },
+    {
+      "code": "PORECEIPT_SCHEMA_VERSION_MISMATCH",
+      "severity": "error",
+      "artifactSurface": "receipt",
+      "meaning": "Receipt, verifier, or bound bundle schema version is missing or does not match the expected schema version.",
+      "pathExpectation": "failure-path",
+      "boundaryPostureCategory": null,
+      "mappedTokens": [
+        "receipt-schema-version-mismatch",
+        "verifier-schema-version-mismatch",
+        "receipt-bundle-schema-version-missing",
+        "receipt-bundle-schema-version-mismatch"
+      ]
+    }
+  ]
+}
