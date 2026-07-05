@@ -66,12 +66,36 @@
       "boundaryPosture": "supplied-artifact-inspection-only"
     },
     {
+      "id": "install-runbook",
+      "type": "docs",
+      "expectedLocation": "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RUNBOOK.md",
+      "required": true,
+      "hashSurface": null,
+      "boundaryPosture": "documentation-non-authority"
+    },
+    {
       "id": "release-checklist",
       "type": "docs",
       "expectedLocation": "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RELEASE_CHECKLIST.md",
       "required": true,
       "hashSurface": null,
       "boundaryPosture": "documentation-non-authority"
+    },
+    {
+      "id": "result-code-catalog",
+      "type": "test-guard",
+      "expectedLocation": "backend/tests/Fixtures/ProtocolOperationsExportBundle/ProtocolOperationsOfflineVerificationResultCodeCatalog.golden.json",
+      "required": true,
+      "hashSurface": null,
+      "boundaryPosture": "test-guard-non-product"
+    },
+    {
+      "id": "smoke-scripts",
+      "type": "script",
+      "expectedLocation": "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/smoke-offline-kit.sh",
+      "required": true,
+      "hashSurface": null,
+      "boundaryPosture": "test-guard-non-product"
     },
     {
       "id": "verification-receipt-contract",
