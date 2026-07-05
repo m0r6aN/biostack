@@ -22,7 +22,10 @@ public sealed class ProtocolOperationsExportBundleOfflineKitInventoryManifestTes
         "dependency-boundary-guard",
         "docs-drilldown",
         "export-bundle-contract",
+        "install-runbook",
         "release-checklist",
+        "result-code-catalog",
+        "smoke-scripts",
         "verification-receipt-contract",
         "verifier-cli",
     ];
