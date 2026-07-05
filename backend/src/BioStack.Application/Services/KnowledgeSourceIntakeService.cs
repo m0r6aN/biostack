@@ -32,10 +32,13 @@ public sealed class KnowledgeSourceIntakeService : IKnowledgeSourceIntakeService
         var sourceTypeValue = ToSourceTypeValue(request.SourceType);
         var sourceUrl = request.SourceUrl.Trim();
 
-        var existing = await _dbContext.KnowledgeSourceIntakeRequests
-            .SingleOrDefaultAsync(
-                x => x.SourceUrl == sourceUrl && x.SourceType == sourceTypeValue && x.Status == "queued",
-                cancellationToken);
+        // Ordered client-side: the SQLite provider cannot translate ORDER BY on DateTimeOffset,
+        // and the duplicate set for a single (SourceUrl, SourceType) is tiny. Oldest queued wins.
+        var existing = (await _dbContext.KnowledgeSourceIntakeRequests
+                .Where(x => x.SourceUrl == sourceUrl && x.SourceType == sourceTypeValue && x.Status == "queued")
+                .ToListAsync(cancellationToken))
+            .OrderBy(x => x.CreatedAtUtc)
+            .FirstOrDefault();
 
         if (existing is not null)
         {

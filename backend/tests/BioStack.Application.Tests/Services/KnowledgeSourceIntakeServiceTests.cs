@@ -2,6 +2,7 @@ namespace BioStack.Application.Tests.Services;
 
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
+using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -193,6 +194,48 @@ public sealed class KnowledgeSourceIntakeServiceTests : IDisposable
         var count = await _dbContext.KnowledgeSourceIntakeRequests
             .CountAsync(x => x.SourceUrl == "https://www.youtube.com/watch?v=SpzHHYvCNGU");
         Assert.Equal(1, count);
+    }
+
+    [Fact]
+    public async Task CreateAsync_PreExistingDuplicateQueuedRows_DeduplicatesToOldestWithoutThrowing()
+    {
+        const string sourceUrl = "https://www.youtube.com/watch?v=SpzHHYvCNGU";
+        var oldest = new KnowledgeSourceIntakeRequest
+        {
+            Id = Guid.NewGuid(),
+            SourceType = "video_url",
+            SourceUrl = sourceUrl,
+            RequestedOutputs = new List<string> { "claims" },
+            Status = "queued",
+            CreatedAtUtc = new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero),
+        };
+        var newer = new KnowledgeSourceIntakeRequest
+        {
+            Id = Guid.NewGuid(),
+            SourceType = "video_url",
+            SourceUrl = sourceUrl,
+            RequestedOutputs = new List<string> { "claims" },
+            Status = "queued",
+            CreatedAtUtc = new DateTimeOffset(2026, 2, 1, 0, 0, 0, TimeSpan.Zero),
+        };
+        await _dbContext.KnowledgeSourceIntakeRequests.AddRangeAsync(oldest, newer);
+        await _dbContext.SaveChangesAsync();
+
+        var request = new AdminKnowledgeSourceIntakeRequest(
+            SourceType: KnowledgeSourceType.VideoUrl,
+            SourceUrl: sourceUrl,
+            OptionalInstructions: null,
+            RequestedOutputs: new[] { RequestedOutputArea.Claims },
+            ChannelOptions: null);
+
+        var response = await _service.CreateAsync(request);
+
+        Assert.Equal(oldest.Id, response.IntakeRequestId);
+        Assert.True(response.Deduplicated);
+
+        var count = await _dbContext.KnowledgeSourceIntakeRequests
+            .CountAsync(x => x.SourceUrl == sourceUrl);
+        Assert.Equal(2, count);
     }
 
     [Fact]
