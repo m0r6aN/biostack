@@ -48,6 +48,34 @@ public sealed class QueuedIntakeTranscriptResolutionServiceTests : IDisposable
         Assert.Equal(Tb500TranscriptFixture.Provider, resolved.Provider);
         Assert.NotEmpty(resolved.Segments);
         Assert.False(_provider.NetworkAttempted);
+
+        var intake = await _dbContext.KnowledgeSourceIntakeRequests
+            .SingleAsync(x => x.Id == createResponse.IntakeRequestId);
+        Assert.Equal("resolved", intake.Status);
+        Assert.Null(intake.FailureReason);
+        Assert.NotNull(intake.UpdatedAtUtc);
+    }
+
+    [Fact]
+    public async Task ResolveById_ProviderFailure_PersistsFailedStatusAndReason()
+    {
+        var createResponse = await _intakeService.CreateAsync(new AdminKnowledgeSourceIntakeRequest(
+            SourceType: KnowledgeSourceType.VideoUrl,
+            SourceUrl: "https://www.youtube.com/watch?v=missing-fixture",
+            OptionalInstructions: null,
+            RequestedOutputs: new[] { RequestedOutputArea.SourceMetadata },
+            ChannelOptions: null));
+
+        var ex = await Assert.ThrowsAsync<TranscriptSourceMaterialProviderException>(
+            () => _resolver.ResolveAsync(createResponse.IntakeRequestId));
+
+        Assert.Equal("transcript_source_not_found", ex.Failure.Code);
+        var intake = await _dbContext.KnowledgeSourceIntakeRequests
+            .SingleAsync(x => x.Id == createResponse.IntakeRequestId);
+        Assert.Equal("failed", intake.Status);
+        Assert.Contains("transcript_source_not_found", intake.FailureReason, StringComparison.Ordinal);
+        Assert.Contains("No deterministic transcript fixture exists", intake.FailureReason, StringComparison.Ordinal);
+        Assert.NotNull(intake.UpdatedAtUtc);
     }
 
     [Fact]

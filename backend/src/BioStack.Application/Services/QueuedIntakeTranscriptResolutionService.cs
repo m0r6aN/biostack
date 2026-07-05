@@ -65,7 +65,23 @@ public sealed class QueuedIntakeTranscriptResolutionService : IQueuedIntakeTrans
             SourceType: intakeRequest.SourceType,
             SourceUrl: intakeRequest.SourceUrl);
 
-        return await _transcriptSourceMaterialProvider.ResolveAsync(sourceReference, cancellationToken);
+        try
+        {
+            var result = await _transcriptSourceMaterialProvider.ResolveAsync(sourceReference, cancellationToken);
+            intakeRequest.Status = "resolved";
+            intakeRequest.FailureReason = null;
+            intakeRequest.UpdatedAtUtc = DateTimeOffset.UtcNow;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return result;
+        }
+        catch (Exception ex) when (ex is ITranscriptSourceMaterialProviderFailure providerFailure)
+        {
+            intakeRequest.Status = "failed";
+            intakeRequest.FailureReason = $"{providerFailure.Failure.Code}: {providerFailure.Failure.Message}";
+            intakeRequest.UpdatedAtUtc = DateTimeOffset.UtcNow;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            throw;
+        }
     }
 
     private static bool IsTranscriptSourceType(string sourceType)
