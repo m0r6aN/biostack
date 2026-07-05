@@ -117,8 +117,38 @@ public sealed class QueuedIntakeTranscriptResolutionServiceTests : IDisposable
 
         var exception = await Assert.ThrowsAsync<InvalidOperationException>(() => _resolver.ResolveAsync(intake));
 
-        Assert.Contains("Only queued intake requests are supported", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("Only queued or failed intake requests are supported", exception.Message, StringComparison.Ordinal);
         Assert.False(_provider.NetworkAttempted);
+    }
+
+    [Fact]
+    public async Task FailedIntake_RetrySucceeds_AdvancesToResolvedAndClearsFailureReason()
+    {
+        var createResponse = await _intakeService.CreateAsync(new AdminKnowledgeSourceIntakeRequest(
+            SourceType: KnowledgeSourceType.VideoUrl,
+            SourceUrl: Tb500TranscriptFixture.SourceUrl,
+            OptionalInstructions: null,
+            RequestedOutputs: new[] { RequestedOutputArea.SourceMetadata },
+            ChannelOptions: null));
+
+        var intake = await _dbContext.KnowledgeSourceIntakeRequests
+            .SingleAsync(x => x.Id == createResponse.IntakeRequestId);
+
+        intake.Status = "failed";
+        intake.FailureReason = "transcript_source_not_found: previous attempt failed";
+        await _dbContext.SaveChangesAsync();
+
+        var resolved = await _resolver.ResolveAsync(intake);
+
+        Assert.Equal(Tb500TranscriptFixture.SourceType, resolved.SourceReference.SourceType);
+        Assert.Equal(Tb500TranscriptFixture.SourceUrl, resolved.SourceReference.SourceUrl);
+        Assert.False(_provider.NetworkAttempted);
+
+        var reloaded = await _dbContext.KnowledgeSourceIntakeRequests
+            .SingleAsync(x => x.Id == createResponse.IntakeRequestId);
+        Assert.Equal("resolved", reloaded.Status);
+        Assert.Null(reloaded.FailureReason);
+        Assert.NotNull(reloaded.UpdatedAtUtc);
     }
 
     [Fact]

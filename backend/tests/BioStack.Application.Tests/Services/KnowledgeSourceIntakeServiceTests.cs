@@ -172,6 +172,56 @@ public sealed class KnowledgeSourceIntakeServiceTests : IDisposable
         Assert.Null(intake.FailureReason);
     }
 
+    [Fact]
+    public async Task CreateAsync_DuplicateQueuedRequest_ReturnsExistingIntakeAndMarksDeduplicated()
+    {
+        var request = new AdminKnowledgeSourceIntakeRequest(
+            SourceType: KnowledgeSourceType.VideoUrl,
+            SourceUrl: "https://www.youtube.com/watch?v=SpzHHYvCNGU",
+            OptionalInstructions: null,
+            RequestedOutputs: new[] { RequestedOutputArea.Claims },
+            ChannelOptions: null);
+
+        var firstResponse = await _service.CreateAsync(request);
+        Assert.False(firstResponse.Deduplicated);
+
+        var secondResponse = await _service.CreateAsync(request);
+
+        Assert.Equal(firstResponse.IntakeRequestId, secondResponse.IntakeRequestId);
+        Assert.True(secondResponse.Deduplicated);
+
+        var count = await _dbContext.KnowledgeSourceIntakeRequests
+            .CountAsync(x => x.SourceUrl == "https://www.youtube.com/watch?v=SpzHHYvCNGU");
+        Assert.Equal(1, count);
+    }
+
+    [Fact]
+    public async Task CreateAsync_DuplicateUrlWithNonQueuedExisting_CreatesNewRequestAndDoesNotDeduplicate()
+    {
+        var request = new AdminKnowledgeSourceIntakeRequest(
+            SourceType: KnowledgeSourceType.VideoUrl,
+            SourceUrl: "https://www.youtube.com/watch?v=SpzHHYvCNGU",
+            OptionalInstructions: null,
+            RequestedOutputs: new[] { RequestedOutputArea.Claims },
+            ChannelOptions: null);
+
+        var firstResponse = await _service.CreateAsync(request);
+
+        var existing = await _dbContext.KnowledgeSourceIntakeRequests
+            .SingleAsync(x => x.Id == firstResponse.IntakeRequestId);
+        existing.Status = "failed";
+        await _dbContext.SaveChangesAsync();
+
+        var secondResponse = await _service.CreateAsync(request);
+
+        Assert.False(secondResponse.Deduplicated);
+        Assert.NotEqual(firstResponse.IntakeRequestId, secondResponse.IntakeRequestId);
+
+        var count = await _dbContext.KnowledgeSourceIntakeRequests
+            .CountAsync(x => x.SourceUrl == "https://www.youtube.com/watch?v=SpzHHYvCNGU");
+        Assert.Equal(2, count);
+    }
+
     public void Dispose()
     {
         _dbContext.Dispose();

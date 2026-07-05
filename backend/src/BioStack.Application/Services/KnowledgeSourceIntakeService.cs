@@ -29,11 +29,29 @@ public sealed class KnowledgeSourceIntakeService : IKnowledgeSourceIntakeService
     {
         ValidateRequest(request);
 
+        var sourceTypeValue = ToSourceTypeValue(request.SourceType);
+        var sourceUrl = request.SourceUrl.Trim();
+
+        var existing = await _dbContext.KnowledgeSourceIntakeRequests
+            .SingleOrDefaultAsync(
+                x => x.SourceUrl == sourceUrl && x.SourceType == sourceTypeValue && x.Status == "queued",
+                cancellationToken);
+
+        if (existing is not null)
+        {
+            return new AdminKnowledgeSourceIntakeResponse(
+                IntakeRequestId: existing.Id,
+                Status: existing.Status,
+                CreatedAtUtc: existing.CreatedAtUtc,
+                Message: "Duplicate request: existing queued intake request returned.",
+                Deduplicated: true);
+        }
+
         var entity = new KnowledgeSourceIntakeRequest
         {
             Id = Guid.NewGuid(),
-            SourceType = ToSourceTypeValue(request.SourceType),
-            SourceUrl = request.SourceUrl.Trim(),
+            SourceType = sourceTypeValue,
+            SourceUrl = sourceUrl,
             OptionalInstructions = string.IsNullOrWhiteSpace(request.OptionalInstructions)
                 ? null
                 : request.OptionalInstructions.Trim(),

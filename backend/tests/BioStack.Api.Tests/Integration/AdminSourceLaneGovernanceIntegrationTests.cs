@@ -129,6 +129,38 @@ public sealed class AdminSourceLaneGovernanceIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task KnowledgeSourceIntake_DuplicateSubmission_ReturnsSameIdAndSkipsSecondReceipt()
+    {
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-source-lane-intake-dedupe@example.com");
+
+        var request = new AdminKnowledgeSourceIntakeRequest(
+            SourceType: KnowledgeSourceType.VideoUrl,
+            SourceUrl: "https://www.youtube.com/watch?v=source-lane-dedupe",
+            OptionalInstructions: null,
+            RequestedOutputs: new[] { RequestedOutputArea.SourceMetadata },
+            ChannelOptions: null);
+
+        var firstResponse = await _client.PostAsJsonAsync("/api/v1/admin/knowledge-source-intake", request, JsonOptions);
+        Assert.Equal(HttpStatusCode.OK, firstResponse.StatusCode);
+        var firstIntake = await firstResponse.Content.ReadFromJsonAsync<IntakeResponseDto>(JsonOptions);
+        Assert.NotNull(firstIntake);
+
+        var secondResponse = await _client.PostAsJsonAsync("/api/v1/admin/knowledge-source-intake", request, JsonOptions);
+        Assert.Equal(HttpStatusCode.OK, secondResponse.StatusCode);
+        var secondIntake = await secondResponse.Content.ReadFromJsonAsync<IntakeResponseDto>(JsonOptions);
+        Assert.NotNull(secondIntake);
+
+        Assert.Equal(firstIntake!.IntakeRequestId, secondIntake!.IntakeRequestId);
+
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var receiptCount = await db.SpineEntries
+            .CountAsync(e => e.ReceiptClass == "source.intake.received"
+                && e.SubjectUri == $"source-intake:{firstIntake.IntakeRequestId:N}");
+        Assert.Equal(1, receiptCount);
+    }
+
+    [Fact]
     public async Task AdminKnowledgeIngest_IsFencedOffByDefault()
     {
         await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-source-lane-ingest-fence@example.com");

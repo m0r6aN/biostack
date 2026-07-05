@@ -49,10 +49,11 @@ public sealed class QueuedIntakeTranscriptResolutionService : IQueuedIntakeTrans
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        if (!string.Equals(intakeRequest.Status, "queued", StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(intakeRequest.Status, "queued", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(intakeRequest.Status, "failed", StringComparison.OrdinalIgnoreCase))
         {
             throw new InvalidOperationException(
-                $"Only queued intake requests are supported for transcript resolution. Intake '{intakeRequest.Id}' status is '{intakeRequest.Status}'.");
+                $"Only queued or failed intake requests are supported for transcript resolution. Intake '{intakeRequest.Id}' status is '{intakeRequest.Status}'.");
         }
 
         if (!IsTranscriptSourceType(intakeRequest.SourceType))

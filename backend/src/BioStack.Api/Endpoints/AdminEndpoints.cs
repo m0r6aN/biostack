@@ -94,19 +94,22 @@ public static class AdminEndpoints
             try
             {
                 var response = await intakeService.CreateAsync(request, ct);
-                await receipts.IssueAndAppendAsync(new ReceiptContext(
-                    ReceiptClass: ReceiptClass.SourceIntakeReceived,
-                    SubjectUri: $"source-intake:{response.IntakeRequestId:N}",
-                    Actor: ReceiptActor.User(currentUser.GetCurrentUserId()),
-                    EvidenceRefs:
-                    [
-                        ReceiptRefs.SourceIntake(response.IntakeRequestId.ToString("N")),
-                        ReceiptRefs.Source(request.SourceUrl.Trim()),
-                    ],
-                    Decision: "queued",
-                    EffectStatus: "non-canonical",
-                    InputHashSeed: $"{response.IntakeRequestId:N}|{request.SourceType}|{request.SourceUrl.Trim()}"),
-                    ct);
+                if (!response.Deduplicated)
+                {
+                    await receipts.IssueAndAppendAsync(new ReceiptContext(
+                        ReceiptClass: ReceiptClass.SourceIntakeReceived,
+                        SubjectUri: $"source-intake:{response.IntakeRequestId:N}",
+                        Actor: ReceiptActor.User(currentUser.GetCurrentUserId()),
+                        EvidenceRefs:
+                        [
+                            ReceiptRefs.SourceIntake(response.IntakeRequestId.ToString("N")),
+                            ReceiptRefs.Source(request.SourceUrl.Trim()),
+                        ],
+                        Decision: "queued",
+                        EffectStatus: "non-canonical",
+                        InputHashSeed: $"{response.IntakeRequestId:N}|{request.SourceType}|{request.SourceUrl.Trim()}"),
+                        ct);
+                }
 
                 return Results.Ok(response);
             }
