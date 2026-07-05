@@ -92,7 +92,7 @@ public sealed class AdminTranscriptIntakeResolutionIntegrationTests : IAsyncLife
 
         var payload = await response.Content.ReadFromJsonAsync<MessageDto>(JsonOptions);
         Assert.NotNull(payload);
-        Assert.Contains("Only queued intake requests are supported", payload!.Message, StringComparison.Ordinal);
+        Assert.Contains("Only queued or failed intake requests are supported", payload!.Message, StringComparison.Ordinal);
     }
 
     [Fact]
