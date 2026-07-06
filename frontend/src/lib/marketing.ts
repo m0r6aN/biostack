@@ -5,6 +5,7 @@ export interface MarketingFaq {
 
 export interface PricingTier {
   name: string;
+  tagline: string;
   monthly: string;
   annual: string;
   annualEffective: string;
@@ -72,6 +73,7 @@ export const featuredFaqs: MarketingFaq[] = [
 export const pricingTiers: PricingTier[] = [
   {
     name: 'Observer',
+    tagline: 'Free',
     monthly: '$0',
     annual: '$0/year',
     annualEffective: '$0/mo',
@@ -92,6 +94,7 @@ export const pricingTiers: PricingTier[] = [
   },
   {
     name: 'Operator',
+    tagline: 'Track & Analyze',
     monthly: '$12/mo',
     annual: '$96/year',
     annualEffective: '$8/mo effective',
@@ -115,6 +118,7 @@ export const pricingTiers: PricingTier[] = [
   },
   {
     name: 'Commander',
+    tagline: 'Longitudinal Intelligence',
     monthly: '$29/mo',
     annual: '$228/year',
     annualEffective: '$19/mo effective',

@@ -121,7 +121,7 @@ export function LandingHero() {
             href="/pricing"
             className="w-fit text-sm font-medium text-emerald-100/78 underline-offset-4 transition-colors hover:text-emerald-50 hover:underline sm:text-base"
           >
-            See free vs Operator
+            See free vs paid plans
           </Link>
         </div>
       </div>

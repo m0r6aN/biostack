@@ -149,7 +149,7 @@ export default function ProtocolsPage() {
                   </>
                 ) : (
                   <LockedTierCard
-                    eyebrow="Operator"
+                    eyebrow="Operator — Track & Analyze"
                     title="See how your protocol fits together"
                     detail={stackLockedMessage ?? 'Score your active stack, surface synergies and conflicts, and run counterfactual scenarios — all included in Operator.'}
                   />
@@ -160,7 +160,7 @@ export default function ProtocolsPage() {
                 <SimulationTimeline simulation={currentStack.simulation} />
               ) : (
                 <LockedTierCard
-                  eyebrow="Operator"
+                  eyebrow="Operator — Track & Analyze"
                   title="Protocol simulation unlocks with Operator"
                   detail="Model compound timing across phases, visualize your protocol's structure, and see how your stack is projected to play out over time."
                   large
