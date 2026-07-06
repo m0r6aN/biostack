@@ -176,7 +176,7 @@ export function ProtocolConsole() {
 
   return (
     <div className="w-full">
-      <Header title="Mission Control" subtitle="Protocol Operations" actions={<ProfileSwitcher />} />
+      <Header title="Protocol Console" subtitle="Protocol Operations" actions={<ProfileSwitcher />} />
 
       <div className="p-8 space-y-6">
         {loading ? (
@@ -227,7 +227,7 @@ export function ProtocolConsole() {
                 {missionLockedMessage && (
                   <UpgradeNotice
                     eyebrow="Commander — Longitudinal Intelligence"
-                    title="Mission control is locked on this tier"
+                    title="Protocol Console is locked on this tier"
                     detail={missionLockedMessage}
                   />
                 )}
@@ -294,7 +294,7 @@ export function ProtocolConsole() {
                 {missionLockedMessage && (
                   <UpgradeNotice
                     eyebrow="Commander — Longitudinal Intelligence"
-                    title="Mission control is locked on this tier"
+                    title="Protocol Console is locked on this tier"
                     detail={missionLockedMessage}
                   />
                 )}
