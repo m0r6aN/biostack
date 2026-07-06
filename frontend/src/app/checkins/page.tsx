@@ -14,9 +14,11 @@ import { useProfile } from '@/lib/context';
 import { buildDay7Review } from '@/lib/day7Review';
 import { getEarnedSuggestion } from '@/lib/earnedSuggestions';
 import { CheckIn, CompoundRecord, CreateCheckInRequest, GoalDefinition, InteractionFlag } from '@/lib/types';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export default function CheckInsPage() {
+  const router = useRouter();
   const { currentProfileId, profiles } = useProfile();
   const currentProfile = profiles.find((profile) => profile.id === currentProfileId);
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
@@ -94,9 +96,10 @@ export default function CheckInsPage() {
         <Header title="Check-ins" />
         <div className="p-8">
           <EmptyState
-            title="No Profile Selected"
-            description="Select a profile to record check-ins"
+            title="Let's set up your first profile"
+            description="Your profile personalizes overlap checks and keeps your protocol in one place."
             icon="📊"
+            action={{ label: 'Create profile', onClick: () => router.push('/profiles') }}
           />
         </div>
       </div>

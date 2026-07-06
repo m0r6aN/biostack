@@ -115,6 +115,9 @@ function SignInPageContent() {
                 <p className="mt-2 text-sm leading-6 text-white/45">
                   Use your email. We will send a private sign-in link.
                 </p>
+                <p className="mt-3 text-sm leading-6 text-white/55">
+                  Create a free profile to save your analysis and track how your stack changes over time. No card required.
+                </p>
               </div>
 
               {isProtocolContinuation && (

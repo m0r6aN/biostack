@@ -9,6 +9,10 @@ vi.mock('next/link', () => ({
   default: ({ href, children, ...props }: { href: string; children: ReactNode }) => <a href={href} {...props}>{children}</a>,
 }));
 
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn() }),
+}));
+
 vi.mock('@/components/Header', () => ({
   Header: ({ title, actions }: { title: string; actions?: ReactNode }) => (
     <header>
