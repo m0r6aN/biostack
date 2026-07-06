@@ -99,22 +99,22 @@ describe('NextSteps', () => {
 
   it('renders the profile nudge when hasProfile=false (authenticated)', () => {
     render(<NextSteps {...makeProps({ isAuthenticated: true, hasProfile: false })} />);
-    expect(screen.getByText(/create a profile/i)).toBeInTheDocument();
+    expect(screen.getByText(/create a free profile/i)).toBeInTheDocument();
     // Authenticated with no profile → link to /profiles
-    const nudgeLink = screen.getByRole('link', { name: /create a profile/i });
+    const nudgeLink = screen.getByRole('link', { name: /create a free profile/i });
     expect(nudgeLink).toHaveAttribute('href', '/profiles');
   });
 
   it('renders the profile nudge when isAuthenticated=false', () => {
     render(<NextSteps {...makeProps({ isAuthenticated: false, hasProfile: false })} />);
-    expect(screen.getByText(/create a profile/i)).toBeInTheDocument();
+    expect(screen.getByText(/create a free profile/i)).toBeInTheDocument();
     // Anonymous → sign-in link
-    const nudgeLink = screen.getByRole('link', { name: /create a profile/i });
+    const nudgeLink = screen.getByRole('link', { name: /create a free profile/i });
     expect(nudgeLink).toHaveAttribute('href', '/auth/signin?callbackUrl=/tools/analyzer');
   });
 
   it('does NOT render the profile nudge when hasProfile=true', () => {
     render(<NextSteps {...makeProps({ isAuthenticated: true, hasProfile: true })} />);
-    expect(screen.queryByText(/create a profile/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/create a free profile/i)).not.toBeInTheDocument();
   });
 });

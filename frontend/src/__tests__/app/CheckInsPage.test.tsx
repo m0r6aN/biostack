@@ -9,6 +9,10 @@ vi.mock('@/lib/context', () => ({
   useProfile: () => useProfileMock(),
 }));
 
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn() }),
+}));
+
 vi.mock('@/lib/settings', () => ({
   useSettings: () => ({ settings: { weightUnit: 'metric' } }),
 }));

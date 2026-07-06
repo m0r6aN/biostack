@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useProfile } from '@/lib/context';
 import { ApiError, apiClient } from '@/lib/api';
@@ -40,6 +41,7 @@ import { StackGraphMini } from '@/components/mission/StackGraphMini';
 import { isEnabled } from '@/lib/flags';
 
 export function ProtocolConsole() {
+  const router = useRouter();
   const { currentProfileId, setProfiles } = useProfile();
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
@@ -146,9 +148,10 @@ export function ProtocolConsole() {
         <Header title="Protocol Console" subtitle="Protocol Operations" />
         <div className="p-8">
           <EmptyState
-            title="No Profile Selected"
-            description="Create or select a profile to start observing your protocol."
+            title="Let's set up your first profile"
+            description="Your profile personalizes overlap checks and keeps your protocol in one place."
             icon="👤"
+            action={{ label: 'Create profile', onClick: () => router.push('/profiles') }}
           />
         </div>
       </div>

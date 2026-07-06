@@ -11,9 +11,11 @@ import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelli
 import { ApiError, apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function CompoundsPage() {
+  const router = useRouter();
   const { currentProfileId } = useProfile();
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
   const [loading, setLoading] = useState(true);
@@ -74,9 +76,10 @@ export default function CompoundsPage() {
         <Header title="Compounds" />
         <div className="p-8">
           <EmptyState
-            title="No Profile Selected"
-            description="Select a profile to view and manage compounds"
+            title="Let's set up your first profile"
+            description="Your profile personalizes overlap checks and keeps your protocol in one place."
             icon="👤"
+            action={{ label: 'Create profile', onClick: () => router.push('/profiles') }}
           />
         </div>
       </div>
