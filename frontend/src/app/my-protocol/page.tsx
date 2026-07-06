@@ -85,7 +85,7 @@ export default function MyProtocolPage() {
 
       <div className="mx-auto max-w-7xl space-y-8 p-5 sm:p-8">
         <div className="rounded-2xl border border-amber-400/20 bg-amber-500/[0.08] px-4 py-3 text-sm text-amber-100/85">
-          Preview fixture: /my-protocol is mock-backed in this PR. Values shown here are UI review data, not production protocol records.
+          Preview fixture: /my-protocol is mock-backed in this PR. Values shown here are UI review data, not production protocol records, and the tier badges below are not yet enforced — all tabs render regardless of plan.
         </div>
 
         <ProtocolOverviewHero
