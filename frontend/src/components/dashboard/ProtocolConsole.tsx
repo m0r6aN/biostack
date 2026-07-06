@@ -226,14 +226,14 @@ export function ProtocolConsole() {
                 {/* Upgrade notices */}
                 {missionLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Commander"
+                    eyebrow="Commander — Longitudinal Intelligence"
                     title="Mission control is locked on this tier"
                     detail={missionLockedMessage}
                   />
                 )}
                 {stackLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Operator"
+                    eyebrow="Operator — Track & Analyze"
                     title="Live stack intelligence is locked on Observer"
                     detail={stackLockedMessage}
                   />
@@ -293,7 +293,7 @@ export function ProtocolConsole() {
                 <ProtocolConsoleOverview mission={mission} />
                 {missionLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Commander"
+                    eyebrow="Commander — Longitudinal Intelligence"
                     title="Mission control is locked on this tier"
                     detail={missionLockedMessage}
                   />
@@ -306,7 +306,7 @@ export function ProtocolConsole() {
                 </div>
                 {stackLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Operator"
+                    eyebrow="Operator — Track & Analyze"
                     title="Live stack intelligence is locked on Observer"
                     detail={stackLockedMessage}
                   />

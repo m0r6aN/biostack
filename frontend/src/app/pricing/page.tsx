@@ -33,7 +33,9 @@ export default function PricingPage() {
               }`}
             >
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-semibold text-white">{tier.name}</h2>
+                <h2 className="text-2xl font-semibold text-white">
+                  {tier.name} <span className="text-white/45 font-normal">— {tier.tagline}</span>
+                </h2>
                 {tier.featured && (
                   <span className="rounded-full border border-emerald-300/20 px-3 py-1 text-xs uppercase tracking-[0.2em] text-emerald-200">
                     Most Popular

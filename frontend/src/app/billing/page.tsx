@@ -5,6 +5,7 @@ import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { apiClient } from '@/lib/api';
+import { pricingTiers } from '@/lib/marketing';
 import { CurrentSubscription } from '@/lib/types';
 import { useEffect, useState } from 'react';
 
@@ -13,10 +14,14 @@ function formatPeriodEnd(value: string | null) {
   return new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(value));
 }
 
+function tierTagline(tierName: string) {
+  return pricingTiers.find((t) => t.name === tierName)?.tagline ?? '';
+}
+
 function stateCopy(subscription: CurrentSubscription) {
   if (subscription.tier === 'Observer') {
     return {
-      label: 'Observer',
+      label: `Observer — ${tierTagline('Observer')}`,
       title: 'Core tracking is active.',
       detail: 'Observer includes up to 8 active compounds. Existing data stays available if a paid plan ends.',
     };
@@ -24,14 +29,14 @@ function stateCopy(subscription: CurrentSubscription) {
 
   if (subscription.cancelAtPeriodEnd) {
     return {
-      label: `${subscription.tier} canceling`,
+      label: `${subscription.tier} — ${tierTagline(subscription.tier)} canceling`,
       title: `${subscription.tier} access continues until ${formatPeriodEnd(subscription.currentPeriodEndUtc)}.`,
       detail: 'After the period ends, the account returns to Observer. Data stays saved, and new gated actions lock again if you are over the free limit.',
     };
   }
 
   return {
-    label: subscription.tier,
+    label: `${subscription.tier} — ${tierTagline(subscription.tier)}`,
     title: `${subscription.tier} is active.`,
     detail: subscription.tier === 'Commander'
       ? 'Advanced protocol review, pattern, drift, sequence, and mission-control surfaces are unlocked.'
@@ -139,11 +144,11 @@ export default function BillingPage() {
 
             <section className="grid gap-4 md:grid-cols-2">
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Operator</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Operator — {tierTagline('Operator')}</p>
                 <h3 className="mt-2 text-xl font-semibold text-white">Protocol scoring and analysis</h3>
                 <p className="mt-2 text-sm leading-6 text-white/55">See how your compounds interact — score your protocol, identify synergies and conflicts, and model what changes with counterfactual scenarios. Removes the active compound limit.</p>
                 <ul aria-label="Operator plan features" className="mt-3 space-y-1.5">
-                  {['Stack score across all compounds', 'Synergy and conflict surface', 'Counterfactual scenarios', 'No compound cap'].map((item) => (
+                  {pricingTiers.find((t) => t.name === 'Operator')!.highlights.map((item) => (
                     <li key={item} className="flex items-center gap-2 text-xs text-white/50">
                       <span className="h-1 w-1 flex-none rounded-full bg-emerald-400/60" />
                       {item}
@@ -160,11 +165,11 @@ export default function BillingPage() {
               </div>
 
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Commander</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/35">Commander — {tierTagline('Commander')}</p>
                 <h3 className="mt-2 text-xl font-semibold text-white">Run history and trend analysis</h3>
                 <p className="mt-2 text-sm leading-6 text-white/55">Track how your protocols evolve — detect trends and drift, anticipate the next phase from prior runs, and get structured reviews across all your protocol runs.</p>
                 <ul aria-label="Commander plan features" className="mt-3 space-y-1.5">
-                  {['Trend and drift detection', 'Sequence expectation modeling', 'Structured protocol reviews', 'Cross-run comparison'].map((item) => (
+                  {pricingTiers.find((t) => t.name === 'Commander')!.highlights.map((item) => (
                     <li key={item} className="flex items-center gap-2 text-xs text-white/50">
                       <span className="h-1 w-1 flex-none rounded-full bg-emerald-400/60" />
                       {item}
