@@ -126,7 +126,6 @@ export const pricingTiers: PricingTier[] = [
     highlights: [
       'Automated cross-run analysis',
       'Trend and pattern detection',
-      'Side-effect ambiguity detector',
       'Longitudinal observational report hooks',
       'Cross-session comparison',
       'Reported-effect pattern surfacing',

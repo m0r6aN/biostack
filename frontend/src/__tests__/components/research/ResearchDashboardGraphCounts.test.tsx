@@ -19,6 +19,8 @@ vi.mock('@/components/ui/GlassCard', () => ({
   ),
 }));
 
+vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false }));
+
 vi.mock('@/lib/research/loader', () => ({
   fetchResearchSummary: vi.fn().mockResolvedValue({
     draftSubstanceCount: 0,

@@ -194,42 +194,42 @@ describe('CohesionTimelinePanel', () => {
 
   it('renders check_in event with sky dot class', () => {
     const { container } = render(<CohesionTimelinePanel events={[makeEvent({ eventType: 'check_in' })]} />);
-    expect(container.querySelector('.bg-sky-300')).not.toBeNull();
+    expect(container.querySelector('.bg-sky-400')).not.toBeNull();
   });
 
   it('renders computation event with amber dot class', () => {
     const { container } = render(<CohesionTimelinePanel events={[makeEvent({ eventType: 'computation' })]} />);
-    expect(container.querySelector('.bg-amber-300')).not.toBeNull();
+    expect(container.querySelector('.bg-amber-400')).not.toBeNull();
   });
 
   it('renders run_ prefixed event with emerald dot class', () => {
     const { container } = render(<CohesionTimelinePanel events={[makeEvent({ eventType: 'run_started' })]} />);
-    expect(container.querySelector('.bg-emerald-300')).not.toBeNull();
+    expect(container.querySelector('.bg-emerald-400')).not.toBeNull();
   });
 
   it('renders evolution event with fuchsia dot class', () => {
     const { container } = render(<CohesionTimelinePanel events={[makeEvent({ eventType: 'evolution' })]} />);
-    expect(container.querySelector('.bg-fuchsia-300')).not.toBeNull();
+    expect(container.querySelector('.bg-fuchsia-400')).not.toBeNull();
   });
 
   it('renders review_completed event', () => {
     const { container } = render(<CohesionTimelinePanel events={[makeEvent({ eventType: 'review_completed' })]} />);
-    expect(container.querySelector('.bg-lime-300')).not.toBeNull();
+    expect(container.querySelector('.bg-lime-400')).not.toBeNull();
   });
 
   it('renders timelineBadges for "matches prior pattern" detail', () => {
     render(<CohesionTimelinePanel events={[makeEvent({ detail: 'matches prior pattern timing' })]} />);
-    expect(screen.getByText('matches pattern')).toBeInTheDocument();
+    expect(screen.getByText('Aligned')).toBeInTheDocument();
   });
 
   it('renders timelineBadges for "outside typical timing" detail', () => {
     render(<CohesionTimelinePanel events={[makeEvent({ detail: 'outside typical timing by 2 days' })]} />);
-    expect(screen.getByText('outside typical timing')).toBeInTheDocument();
+    expect(screen.getByText('Late')).toBeInTheDocument();
   });
 
   it('renders timelineBadges for sequence break detail', () => {
     render(<CohesionTimelinePanel events={[makeEvent({ detail: 'sequence diverging from expected' })]} />);
-    expect(screen.getByText('sequence break')).toBeInTheDocument();
+    expect(screen.getByText('Diverging')).toBeInTheDocument();
   });
 
   it('renders sequence snapshot status when provided', () => {
