@@ -18,6 +18,9 @@ export function MarketingNav() {
             <Link href="/tools" className="transition-colors hover:text-white">
               Tools
             </Link>
+            <Link href="/knowledge" className="transition-colors hover:text-white">
+              Compounds & Evidence
+            </Link>
             <Link href="/pricing" className="transition-colors hover:text-white">
               Pricing
             </Link>
@@ -31,10 +34,10 @@ export function MarketingNav() {
 
           <div className="flex items-center gap-3">
             <Link
-              href="/map"
+              href="/tools/analyzer"
               className="hidden rounded-full border border-white/12 px-4 py-2 text-sm text-white/75 transition-colors hover:text-white sm:inline-flex"
             >
-              Map Stack
+              Analyze My Stack
             </Link>
             <Link
               href="/start"
