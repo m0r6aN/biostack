@@ -5,7 +5,7 @@ using Xunit;
 public sealed class ProtocolOperationsOfflineVerificationReleaseChecklistTests
 {
     private const string ChecklistRelativePath =
-        @"backend\tools\BioStack.ProtocolOperationsExportBundleVerifierCli\OFFLINE_VERIFICATION_RELEASE_CHECKLIST.md";
+        "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/OFFLINE_VERIFICATION_RELEASE_CHECKLIST.md";
 
     [Fact]
     public void ReleaseChecklist_ExistsInOfflineVerificationDocsArea()
