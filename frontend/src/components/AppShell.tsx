@@ -1,6 +1,7 @@
 'use client';
 
 import { Sidebar } from '@/components/Sidebar';
+import { useAuth } from '@/lib/AuthProvider';
 import { usePathname } from 'next/navigation';
 
 const APP_ROUTE_PREFIXES = [
@@ -21,7 +22,11 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
-  const isAppRoute = APP_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+  const { user } = useAuth();
+  const isKnowledgeRoute = pathname.startsWith('/knowledge');
+  const isAppRoute =
+    APP_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix)) &&
+    (!isKnowledgeRoute || Boolean(user));
 
   if (!isAppRoute) {
     return <>{children}</>;

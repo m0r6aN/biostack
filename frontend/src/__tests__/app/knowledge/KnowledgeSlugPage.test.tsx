@@ -11,6 +11,15 @@ vi.mock('@/lib/AuthProvider', () => ({
   }),
 }));
 
+// --- Marketing chrome mock ---
+vi.mock('@/components/marketing/MarketingNav', () => ({
+  MarketingNav: () => <nav data-testid="marketing-nav" />,
+}));
+
+vi.mock('@/components/marketing/MarketingFooter', () => ({
+  MarketingFooter: () => <footer data-testid="marketing-footer" />,
+}));
+
 // --- API client mock ---
 vi.mock('@/lib/api', () => ({
   apiClient: {
@@ -38,6 +47,7 @@ vi.mock('next/link', () => ({
 }));
 
 import { apiClient } from '@/lib/api';
+import { useAuth } from '@/lib/AuthProvider';
 import KnowledgeSlugPage from '@/app/knowledge/[slug]/page';
 
 const mockGetEntry = vi.mocked(apiClient.getKnowledgeEntry);
@@ -105,5 +115,22 @@ describe('/knowledge/[slug] page', () => {
     mockGetEntry.mockReturnValue(new Promise(() => {})); // never resolves
     render(<KnowledgeSlugPage params={{ slug: 'creatine' }} />);
     expect(screen.queryByTestId('relationships-section')).not.toBeInTheDocument();
+  });
+
+  it('renders marketing chrome for anonymous visitors', async () => {
+    vi.mocked(useAuth).mockReturnValue({
+      user: null,
+      loading: false,
+      refresh: vi.fn(),
+      logout: vi.fn(),
+    });
+    mockGetEntry.mockResolvedValue(mockEntry);
+
+    render(<KnowledgeSlugPage params={{ slug: 'creatine' }} />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('marketing-nav')).toBeInTheDocument();
+      expect(screen.getByTestId('marketing-footer')).toBeInTheDocument();
+    });
   });
 });

@@ -3,9 +3,12 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { apiClient } from '@/lib/api';
+import { useAuth } from '@/lib/AuthProvider';
 import { KnowledgeEntry } from '@/lib/types';
 import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
 import { CompoundRelationshipsSection } from '@/components/knowledge/CompoundRelationshipsSection';
+import { MarketingFooter } from '@/components/marketing/MarketingFooter';
+import { MarketingNav } from '@/components/marketing/MarketingNav';
 
 function DossierSkeleton() {
   return (
@@ -50,6 +53,7 @@ interface PageProps {
 
 export default function CompoundDossierPage({ params }: PageProps) {
   const { slug } = params;
+  const { user, loading: authLoading } = useAuth();
   const [entry, setEntry] = useState<KnowledgeEntry | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -74,7 +78,11 @@ export default function CompoundDossierPage({ params }: PageProps) {
     return () => { cancelled = true; };
   }, [slug]);
 
-  return (
+  if (authLoading) {
+    return null;
+  }
+
+  const content = (
     <main className="min-h-screen bg-[#0a0a0b] py-8 px-4">
       <nav className="max-w-3xl mx-auto mb-6">
         <Link
@@ -105,4 +113,16 @@ export default function CompoundDossierPage({ params }: PageProps) {
       ) : null}
     </main>
   );
+
+  if (!user) {
+    return (
+      <div>
+        <MarketingNav />
+        {content}
+        <MarketingFooter />
+      </div>
+    );
+  }
+
+  return content;
 }

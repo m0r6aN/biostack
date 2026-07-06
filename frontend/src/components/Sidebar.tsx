@@ -145,7 +145,7 @@ const navItems = [
   { label: 'Observations',         href: '/checkins',         icon: <IconCheckins />,         adminOnly: false, exact: false },
   { label: 'Timeline',             href: '/timeline',         icon: <IconTimeline />,         adminOnly: false, exact: false },
   { label: 'Tools',                href: '/tools',            icon: <IconCalculators />,      adminOnly: false, exact: false },
-  { label: 'Compound Intelligence',href: '/knowledge',        icon: <IconKnowledge />,        adminOnly: false, exact: false },
+  { label: 'Compounds & Evidence', href: '/knowledge',        icon: <IconKnowledge />,        adminOnly: false, exact: false },
   { label: 'Billing',              href: '/billing',          icon: <IconBilling />,          adminOnly: false, exact: false },
   { label: 'Admin',                href: '/admin',            icon: <IconAdmin />,            adminOnly: true,  exact: true  },
   { label: 'Research',             href: '/admin/research',   icon: <IconResearch />,         adminOnly: false, exact: false },

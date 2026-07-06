@@ -13,6 +13,9 @@ export function MarketingFooter() {
           <Link href="/tools" className="transition-colors hover:text-white">
             Tools
           </Link>
+          <Link href="/knowledge" className="transition-colors hover:text-white">
+            Compounds & Evidence
+          </Link>
           <Link href="/providers" className="transition-colors hover:text-white">
             Provider
           </Link>
