@@ -457,7 +457,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             <p className="mt-3 text-xs leading-5 text-white/42">Math-only output. Not medical advice. Verify against your source.</p>
             <div className="mt-4 flex flex-wrap gap-3 text-sm">
               <Link href="/start" className="font-semibold text-emerald-200 hover:text-white">New to this? Start here</Link>
-              <Link href="/map" className="font-semibold text-white/65 hover:text-white">Already have a stack? Open map</Link>
+              <Link href="/start?mode=existing" className="font-semibold text-white/65 hover:text-white">Already have a stack? Open map</Link>
             </div>
             <button type="button" onClick={() => setShowSaved((current) => !current)} className="mt-4 w-full rounded-lg border border-white/10 px-4 py-3 text-sm font-semibold text-white/72 transition-colors hover:border-white/20 hover:text-white">
               Saved calculations ({savedCalculations.length})

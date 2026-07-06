@@ -106,7 +106,7 @@ export default function HowItWorksPage() {
               Start a Protocol
             </Link>
             <Link
-              href="/map"
+              href="/start?mode=existing"
               className="rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24"
             >
               Map My Stack

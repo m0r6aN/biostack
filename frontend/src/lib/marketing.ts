@@ -79,7 +79,7 @@ export const pricingTiers: PricingTier[] = [
     detail:
       'A simple place to track what you’re taking and stop relying on notes, memory, or scattered apps.',
     ctaLabel: 'Build My Protocol',
-    href: '/onboarding',
+    href: '/start',
     highlights: [
       'Free calculators',
       'Basic analyzer score',

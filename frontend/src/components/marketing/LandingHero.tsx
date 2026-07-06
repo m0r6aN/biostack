@@ -26,7 +26,7 @@ const entryPaths = [
     label: 'Experienced',
     title: 'I already have a stack',
     body: 'Map active compounds, overlap signals, and timeline context.',
-    href: '/map',
+    href: '/start?mode=existing',
     tone: 'sky',
     signal: 'Fast analysis',
     action: 'Map',
