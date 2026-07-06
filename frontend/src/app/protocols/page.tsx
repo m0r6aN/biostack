@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ActiveProfileChip } from '@/components/ActiveProfileChip';
 import { EmptyState } from '@/components/EmptyState';
@@ -16,6 +17,7 @@ import { useProfile } from '@/lib/context';
 import { CurrentStackIntelligence, Protocol } from '@/lib/types';
 
 export default function ProtocolsPage() {
+  const router = useRouter();
   const { currentProfileId } = useProfile();
   const [protocols, setProtocols] = useState<Protocol[]>([]);
   const [currentStack, setCurrentStack] = useState<CurrentStackIntelligence | null>(null);
@@ -85,7 +87,12 @@ export default function ProtocolsPage() {
       <div className="w-full">
         <Header title="Protocols" actions={<ProfileSwitcher />} />
         <div className="p-8">
-          <EmptyState title="No Profile Selected" description="Select a profile to save and simulate protocols." icon="🧬" />
+          <EmptyState
+            title="Let's set up your first profile"
+            description="Your profile personalizes overlap checks and keeps your protocol in one place."
+            icon="🧬"
+            action={{ label: 'Create profile', onClick: () => router.push('/profiles') }}
+          />
         </div>
       </div>
     );

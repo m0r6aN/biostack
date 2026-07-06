@@ -78,9 +78,9 @@ export function NextSteps({
       {(!isAuthenticated || !hasProfile) && (
         <p className="mt-4 text-sm leading-6 text-white/55">
           <Link href={nudgeHref} className="underline decoration-white/30 underline-offset-2 hover:text-white">
-            Create a profile
+            Create a free profile
           </Link>{' '}
-          to autofill this and track your results over time.
+          to save this analysis and track how your stack changes over time. No card required.
         </p>
       )}
     </section>
