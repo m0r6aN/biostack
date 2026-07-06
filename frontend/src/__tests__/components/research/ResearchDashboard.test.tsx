@@ -17,6 +17,8 @@ vi.mock('@/components/ui/GlassCard', () => ({
   ),
 }));
 
+vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false }));
+
 vi.mock('@/lib/research/loader', () => ({
   fetchResearchSummary: vi.fn().mockResolvedValue({
     draftSubstanceCount: 3,
@@ -51,6 +53,7 @@ vi.mock('@/lib/research/loader', () => ({
     },
     items: [],
   }),
+  fetchCompoundGraph: vi.fn().mockResolvedValue(null),
   fetchDryRunReport: vi.fn().mockResolvedValue({
     reportVersion: '1.0.0', generatedAtUtc: '', previewPath: '', aggregatePath: '',
     safeToApply: true, refusalReasons: [],

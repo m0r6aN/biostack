@@ -81,7 +81,7 @@ export function CohesionTimelinePanel({ events, sequence, drift }: CohesionTimel
         <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Cohesion Timeline</p>
         <div className="mt-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4">
           <p className="text-sm text-white/50 leading-relaxed">
-            Protocol events will appear here as runs progress. Alignment annotations require at least one completed run.
+            Protocol events from runs, check-ins, and computations will appear here as data is collected. Alignment annotations require at least one completed run.
           </p>
           {!hasSnapshots && (
             <p className="mt-2 text-xs text-white/30">Start a protocol run to begin collecting timeline data.</p>
@@ -100,7 +100,7 @@ export function CohesionTimelinePanel({ events, sequence, drift }: CohesionTimel
             Recent sequence
             {sequence?.currentStatus && (
               <span className="ml-2 text-sm font-normal text-white/40">
-                — {sequence.currentStatus.state}
+                Current sequence status: {sequence.currentStatus.state}
               </span>
             )}
           </h2>
