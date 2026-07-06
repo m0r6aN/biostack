@@ -39,10 +39,10 @@ export function MobileStickyCta() {
           Start
         </Link>
         <Link
-          href="/map"
+          href="/tools/analyzer"
           className="flex min-h-12 items-center justify-center rounded-lg border border-sky-300/16 bg-sky-400/[0.06] px-2 text-sm font-semibold text-white"
         >
-          Map
+          Analyze
         </Link>
         <Link
           href="/pricing"
