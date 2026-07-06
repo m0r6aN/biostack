@@ -4,9 +4,9 @@ using Xunit;
 
 public sealed class ProtocolOperationsExportBundleVerifierCliOfflineKitGuardTests
 {
-    private const string ReadmeRelativePath = @"backend\tools\BioStack.ProtocolOperationsExportBundleVerifierCli\README.md";
-    private const string ScriptRelativePath = @"backend\tools\BioStack.ProtocolOperationsExportBundleVerifierCli\verify-offline-kit.ps1";
-    private const string WorkflowRelativePath = @".github\workflows\protocol-operations-offline-verification-kit.yml";
+    private const string ReadmeRelativePath = "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/README.md";
+    private const string ScriptRelativePath = "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/verify-offline-kit.ps1";
+    private const string WorkflowRelativePath = ".github/workflows/protocol-operations-offline-verification-kit.yml";
 
     [Fact]
     public void Readme_DocumentsOfflineKitVerificationCommand()

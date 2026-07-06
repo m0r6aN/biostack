@@ -9,7 +9,7 @@ using Xunit;
 public sealed class ProtocolOperationsExportBundleVerifierCliRoundTripTests
 {
     private const string FixtureFileName = "ProtocolOperationsExportBundle.golden.json";
-    private const string ReadmeRelativePath = @"backend\tools\BioStack.ProtocolOperationsExportBundleVerifierCli\README.md";
+    private const string ReadmeRelativePath = "backend/tools/BioStack.ProtocolOperationsExportBundleVerifierCli/README.md";
 
     [Fact]
     public void Readme_DocumentsSupportedModesAndGuarantees()
