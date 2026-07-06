@@ -212,6 +212,32 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
+        {entry.benefits.length > 0 && (
+          <div>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Benefits</p>
+            <div className="flex flex-wrap gap-2">
+              {entry.benefits.map((benefit, i) => (
+                <span key={i} className="text-xs px-2.5 py-1 rounded-full border border-emerald-400/20 bg-emerald-500/10 text-emerald-300">
+                  {benefit}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {entry.drugInteractions.length > 0 && (
+          <div>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Drug Interactions</p>
+            <div className="flex flex-wrap gap-2">
+              {entry.drugInteractions.map((interaction, i) => (
+                <span key={i} className="text-xs px-2.5 py-1 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-300">
+                  {interaction}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         {entry.sourceReferences.length > 0 && (
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">References</p>
