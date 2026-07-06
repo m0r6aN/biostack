@@ -739,6 +739,10 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 />
               </div>
 
+              <p className="mt-5 text-sm leading-6 text-white/50">
+                Create a free profile to save your analysis and track how your stack changes over time. No card required.
+              </p>
+
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
                   href="/profiles"

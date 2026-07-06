@@ -21,7 +21,7 @@ describe('marketing content', () => {
     expect(featured).toHaveLength(1);
     expect(featured[0].name).toBe('Operator');
     expect(featured[0].annualEffective).toContain('$8');
-    expect(pricingTiers[0].href).toBe('/onboarding');
+    expect(pricingTiers[0].href).toBe('/start');
   });
 
   it('keeps each pricing tier actionable and benefit-oriented', () => {

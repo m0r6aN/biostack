@@ -145,4 +145,44 @@ describe('CompoundIntelligenceCard', () => {
     expect(container.textContent ?? '').not.toContain('Profile context may warrant closer review');
     expect(container.textContent ?? '').not.toContain('Published MOTS-C context can vary with biological age');
   });
+
+  it('renders benefits as chips when present', () => {
+    render(
+      <CompoundIntelligenceCard
+        entry={baseEntry}
+      />
+    );
+
+    expect(screen.getByText('Benefits')).toBeInTheDocument();
+    expect(screen.getByText('Energy support')).toBeInTheDocument();
+  });
+
+  it('renders drug interactions as chips when present', () => {
+    render(
+      <CompoundIntelligenceCard
+        entry={{
+          ...baseEntry,
+          drugInteractions: ['Warfarin'],
+        }}
+      />
+    );
+
+    expect(screen.getByText('Drug Interactions')).toBeInTheDocument();
+    expect(screen.getByText('Warfarin')).toBeInTheDocument();
+  });
+
+  it('omits benefits and drug interactions sections when their arrays are empty', () => {
+    render(
+      <CompoundIntelligenceCard
+        entry={{
+          ...baseEntry,
+          benefits: [],
+          drugInteractions: [],
+        }}
+      />
+    );
+
+    expect(screen.queryByText('Benefits')).not.toBeInTheDocument();
+    expect(screen.queryByText('Drug Interactions')).not.toBeInTheDocument();
+  });
 });

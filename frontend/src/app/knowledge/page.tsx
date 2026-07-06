@@ -5,11 +5,15 @@ import { LoadingState } from '@/components/LoadingState';
 import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
 import { OverlapResults } from '@/components/knowledge/OverlapResults';
 import { GlassCard } from '@/components/ui/GlassCard';
+import { MarketingFooter } from '@/components/marketing/MarketingFooter';
+import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { apiClient } from '@/lib/api';
+import { useAuth } from '@/lib/AuthProvider';
 import { InteractionFlag, KnowledgeEntry } from '@/lib/types';
 import { useState } from 'react';
 
 export default function KnowledgePage() {
+  const { user, loading: authLoading } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<KnowledgeEntry[]>([]);
   const [searching, setSearching] = useState(false);
@@ -70,9 +74,17 @@ export default function KnowledgePage() {
     setOverlapResults([]);
   };
 
+  if (authLoading) {
+    return null;
+  }
+
   return (
     <div className="w-full min-h-screen">
-      <Header title="Knowledge Base" subtitle="Intelligence · Pathway analysis" />
+      {user ? (
+        <Header title="Knowledge Base" subtitle="Intelligence · Pathway analysis" />
+      ) : (
+        <MarketingNav />
+      )}
 
       <div className="p-8 space-y-8 max-w-5xl">
 
@@ -241,6 +253,8 @@ export default function KnowledgePage() {
         </GlassCard>
 
       </div>
+
+      {!user && <MarketingFooter />}
     </div>
   );
 }

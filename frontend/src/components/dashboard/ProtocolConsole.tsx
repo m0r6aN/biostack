@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useProfile } from '@/lib/context';
 import { ApiError, apiClient } from '@/lib/api';
@@ -40,6 +41,7 @@ import { StackGraphMini } from '@/components/mission/StackGraphMini';
 import { isEnabled } from '@/lib/flags';
 
 export function ProtocolConsole() {
+  const router = useRouter();
   const { currentProfileId, setProfiles } = useProfile();
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
@@ -146,9 +148,10 @@ export function ProtocolConsole() {
         <Header title="Protocol Console" subtitle="Protocol Operations" />
         <div className="p-8">
           <EmptyState
-            title="No Profile Selected"
-            description="Create or select a profile to start observing your protocol."
+            title="Let's set up your first profile"
+            description="Your profile personalizes overlap checks and keeps your protocol in one place."
             icon="👤"
+            action={{ label: 'Create profile', onClick: () => router.push('/profiles') }}
           />
         </div>
       </div>
@@ -173,7 +176,7 @@ export function ProtocolConsole() {
 
   return (
     <div className="w-full">
-      <Header title="Mission Control" subtitle="Protocol Operations" actions={<ProfileSwitcher />} />
+      <Header title="Protocol Console" subtitle="Protocol Operations" actions={<ProfileSwitcher />} />
 
       <div className="p-8 space-y-6">
         {loading ? (
@@ -223,14 +226,14 @@ export function ProtocolConsole() {
                 {/* Upgrade notices */}
                 {missionLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Commander"
-                    title="Mission control is locked on this tier"
+                    eyebrow="Commander — Longitudinal Intelligence"
+                    title="Protocol Console is locked on this tier"
                     detail={missionLockedMessage}
                   />
                 )}
                 {stackLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Operator"
+                    eyebrow="Operator — Track & Analyze"
                     title="Live stack intelligence is locked on Observer"
                     detail={stackLockedMessage}
                   />
@@ -290,8 +293,8 @@ export function ProtocolConsole() {
                 <ProtocolConsoleOverview mission={mission} />
                 {missionLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Commander"
-                    title="Mission control is locked on this tier"
+                    eyebrow="Commander — Longitudinal Intelligence"
+                    title="Protocol Console is locked on this tier"
                     detail={missionLockedMessage}
                   />
                 )}
@@ -303,7 +306,7 @@ export function ProtocolConsole() {
                 </div>
                 {stackLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Operator"
+                    eyebrow="Operator — Track & Analyze"
                     title="Live stack intelligence is locked on Observer"
                     detail={stackLockedMessage}
                   />

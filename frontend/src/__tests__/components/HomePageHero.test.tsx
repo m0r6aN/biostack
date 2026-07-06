@@ -30,11 +30,11 @@ describe('HomePage hero', () => {
     expect(screen.queryByText(/What to take\. How to use it\./)).not.toBeInTheDocument();
     expect(screen.queryByText(/optimize over time/)).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /I am getting started/ })).toHaveAttribute('href', '/start');
-    expect(screen.getByRole('link', { name: /I already have a stack/ })).toHaveAttribute('href', '/map');
+    expect(screen.getByRole('link', { name: /I already have a stack/ })).toHaveAttribute('href', '/start?mode=existing');
     expect(screen.getByRole('link', { name: /I work with clients/ })).toHaveAttribute('href', '/providers');
     expect(screen.getByRole('link', { name: /Analyze a protocol/ })).toHaveAttribute('href', '/tools/analyzer');
     expect(screen.getByRole('link', { name: 'Need to calculate dose volume or reconstitution? → Start here' })).toHaveAttribute('href', '/tools');
-    expect(screen.getByRole('link', { name: 'See free vs Operator' })).toHaveAttribute('href', '/pricing');
+    expect(screen.getByRole('link', { name: 'See free vs paid plans' })).toHaveAttribute('href', '/pricing');
     expect(screen.getByText('Starter')).toBeInTheDocument();
     expect(screen.getByText('Set up compound tracking without rebuilding a spreadsheet.')).toBeInTheDocument();
     expect(screen.getByText('Experienced')).toBeInTheDocument();
