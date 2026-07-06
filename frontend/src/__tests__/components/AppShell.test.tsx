@@ -1,8 +1,9 @@
 import { AppShell } from '@/components/AppShell';
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const usePathnameMock = vi.fn();
+const useAuthMock = vi.fn();
 
 vi.mock('next/navigation', () => ({
   usePathname: () => usePathnameMock(),
@@ -12,7 +13,15 @@ vi.mock('@/components/Sidebar', () => ({
   Sidebar: () => <aside>Sidebar</aside>,
 }));
 
+vi.mock('@/lib/AuthProvider', () => ({
+  useAuth: () => useAuthMock(),
+}));
+
 describe('AppShell', () => {
+  beforeEach(() => {
+    useAuthMock.mockReturnValue({ user: { id: '1', email: 'test@test.com', displayName: 'Test', role: 0 } });
+  });
+
   it('renders app chrome on app routes', () => {
     usePathnameMock.mockReturnValue('/protocol-console');
 
@@ -63,5 +72,33 @@ describe('AppShell', () => {
     );
 
     expect(screen.queryByLabelText('App-wide disclaimer')).not.toBeInTheDocument();
+  });
+
+  it('does not render app chrome on /knowledge for anonymous visitors', () => {
+    useAuthMock.mockReturnValue({ user: null });
+    usePathnameMock.mockReturnValue('/knowledge');
+
+    render(
+      <AppShell>
+        <div>Knowledge content</div>
+      </AppShell>
+    );
+
+    expect(screen.queryByText('Sidebar')).not.toBeInTheDocument();
+    expect(screen.getByText('Knowledge content')).toBeInTheDocument();
+  });
+
+  it('renders app chrome on /knowledge for authenticated users', () => {
+    useAuthMock.mockReturnValue({ user: { id: '1', email: 'test@test.com', displayName: 'Test', role: 0 } });
+    usePathnameMock.mockReturnValue('/knowledge');
+
+    render(
+      <AppShell>
+        <div>Knowledge content</div>
+      </AppShell>
+    );
+
+    expect(screen.getByText('Sidebar')).toBeInTheDocument();
+    expect(screen.getByText('Knowledge content')).toBeInTheDocument();
   });
 });
