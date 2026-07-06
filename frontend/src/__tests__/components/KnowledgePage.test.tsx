@@ -7,6 +7,15 @@ vi.mock('@/components/Header', () => ({
   Header: ({ title }: { title: string }) => <header>{title}</header>,
 }));
 
+vi.mock('@/lib/AuthProvider', () => ({
+  useAuth: () => ({
+    user: { id: '1', email: 'test@test.com', displayName: 'Test', role: 0 },
+    loading: false,
+    refresh: vi.fn(),
+    logout: vi.fn(),
+  }),
+}));
+
 vi.mock('@/components/knowledge/CompoundIntelligenceCard', () => ({
   CompoundIntelligenceCard: ({ entry }: { entry: { canonicalName: string } }) => (
     <div>{entry.canonicalName}</div>
