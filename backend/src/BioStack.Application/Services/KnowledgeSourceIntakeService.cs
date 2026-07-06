@@ -29,11 +29,32 @@ public sealed class KnowledgeSourceIntakeService : IKnowledgeSourceIntakeService
     {
         ValidateRequest(request);
 
+        var sourceTypeValue = ToSourceTypeValue(request.SourceType);
+        var sourceUrl = request.SourceUrl.Trim();
+
+        // Ordered client-side: the SQLite provider cannot translate ORDER BY on DateTimeOffset,
+        // and the duplicate set for a single (SourceUrl, SourceType) is tiny. Oldest queued wins.
+        var existing = (await _dbContext.KnowledgeSourceIntakeRequests
+                .Where(x => x.SourceUrl == sourceUrl && x.SourceType == sourceTypeValue && x.Status == "queued")
+                .ToListAsync(cancellationToken))
+            .OrderBy(x => x.CreatedAtUtc)
+            .FirstOrDefault();
+
+        if (existing is not null)
+        {
+            return new AdminKnowledgeSourceIntakeResponse(
+                IntakeRequestId: existing.Id,
+                Status: existing.Status,
+                CreatedAtUtc: existing.CreatedAtUtc,
+                Message: "Duplicate request: existing queued intake request returned.",
+                Deduplicated: true);
+        }
+
         var entity = new KnowledgeSourceIntakeRequest
         {
             Id = Guid.NewGuid(),
-            SourceType = ToSourceTypeValue(request.SourceType),
-            SourceUrl = request.SourceUrl.Trim(),
+            SourceType = sourceTypeValue,
+            SourceUrl = sourceUrl,
             OptionalInstructions = string.IsNullOrWhiteSpace(request.OptionalInstructions)
                 ? null
                 : request.OptionalInstructions.Trim(),

@@ -17,4 +17,5 @@ public sealed class StagedTranscriptCandidateReviewEntity
     public string? TargetCanonicalName { get; set; }
     public Guid? PromotedKnowledgeEntryId { get; set; }
     public string? PromotedAtUtc { get; set; }
+    public Guid? IntakeRequestId { get; set; }
 }

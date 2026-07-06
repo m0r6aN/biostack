@@ -474,7 +474,9 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(e => e.TargetCanonicalName).HasMaxLength(512).IsRequired(false);
             entity.Property(e => e.PromotedKnowledgeEntryId).HasColumnType("TEXT").IsRequired(false);
             entity.Property(e => e.PromotedAtUtc).HasMaxLength(64).IsRequired(false);
+            entity.Property(e => e.IntakeRequestId).HasColumnType("TEXT").IsRequired(false);
             entity.HasIndex(e => e.ReviewState);
+            entity.HasIndex(e => e.IntakeRequestId);
 
             entity.ToTable(tableBuilder =>
             {

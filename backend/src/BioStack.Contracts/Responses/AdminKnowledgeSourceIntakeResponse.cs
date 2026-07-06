@@ -7,7 +7,8 @@ public sealed record AdminKnowledgeSourceIntakeResponse(
     Guid IntakeRequestId,
     string Status,
     DateTimeOffset CreatedAtUtc,
-    string Message);
+    string Message,
+    bool Deduplicated = false);
 
 /// <summary>
 /// Snapshot view for admin intake request tracking.

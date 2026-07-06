@@ -15,4 +15,5 @@ public sealed record AdminStagedTranscriptCandidateReviewResponse(
     string UpdatedAtUtc,
     string? TargetCanonicalName,
     Guid? PromotedKnowledgeEntryId,
-    string? PromotedAtUtc);
+    string? PromotedAtUtc,
+    Guid? IntakeRequestId);

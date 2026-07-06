@@ -22,7 +22,6 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
     public async Task UpsertAsync(TranscriptCandidateReviewRecord record, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(record);
-
         var normalized = NormalizeRecord(record);
 
         var existing = await _dbContext.StagedTranscriptCandidateReviews
@@ -48,6 +47,7 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
             existing.TargetCanonicalName = normalized.TargetCanonicalName;
             existing.PromotedKnowledgeEntryId = normalized.PromotedKnowledgeEntryId;
             existing.PromotedAtUtc = normalized.PromotedAtUtc;
+            existing.IntakeRequestId = normalized.IntakeRequestId;
         }
 
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -77,7 +77,7 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
 
         if (filter.ReviewState is not null && string.IsNullOrWhiteSpace(filter.ReviewState))
         {
-            throw new ArgumentException("ReviewState must not be whitespace when provided.", nameof(filter));
+            throw new ArgumentException("ReviewState cannot be whitespace.", nameof(filter));
         }
 
         var query = _dbContext.StagedTranscriptCandidateReviews
@@ -85,17 +85,23 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(filter.ReviewState))
+        {
             query = query.Where(x => x.ReviewState == filter.ReviewState);
+        }
 
         if (filter.IsPromoted.HasValue)
+        {
             query = filter.IsPromoted.Value
                 ? query.Where(x => x.PromotedKnowledgeEntryId != null)
                 : query.Where(x => x.PromotedKnowledgeEntryId == null);
+        }
 
         if (filter.IsTargetAssigned.HasValue)
+        {
             query = filter.IsTargetAssigned.Value
-                ? query.Where(x => x.TargetCanonicalName != null && x.TargetCanonicalName != "")
-                : query.Where(x => x.TargetCanonicalName == null || x.TargetCanonicalName == "");
+                ? query.Where(x => x.TargetCanonicalName != null && x.TargetCanonicalName != string.Empty)
+                : query.Where(x => x.TargetCanonicalName == null || x.TargetCanonicalName == string.Empty);
+        }
 
         var entities = await query
             .OrderByDescending(x => x.UpdatedAtUtc)
@@ -148,17 +154,14 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
 
         if (!string.IsNullOrWhiteSpace(expectedRowVersion))
         {
-            throw new InvalidOperationException(
-                "RowVersion-based concurrency is not enabled for this infrastructure store.");
+            throw new InvalidOperationException("RowVersion-based concurrency is not enabled for the infrastructure store.");
         }
 
         var nextRecord = ToRecord(entity).WithReviewState(nextReviewState, updatedAtUtc);
-
         entity.ReviewState = nextRecord.ReviewState;
         entity.UpdatedAtUtc = nextRecord.UpdatedAtUtc;
 
         await _dbContext.SaveChangesAsync(cancellationToken);
-
         return ToRecord(entity);
     }
 
@@ -194,15 +197,13 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
 
         if (entity.IsDeterministicFixture)
         {
-            throw new InvalidOperationException(
-                "Promotion target cannot be assigned to a deterministic fixture record.");
+            throw new InvalidOperationException("Promotion target cannot be assigned to deterministic fixture record.");
         }
 
         entity.TargetCanonicalName = targetCanonicalName;
         entity.UpdatedAtUtc = DateTime.UtcNow.ToString("O", System.Globalization.CultureInfo.InvariantCulture);
 
         await _dbContext.SaveChangesAsync(cancellationToken);
-
         return ToRecord(entity);
     }
 
@@ -240,7 +241,6 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
         entity.UpdatedAtUtc = promotedAtUtc;
 
         await _dbContext.SaveChangesAsync(cancellationToken);
-
         return ToRecord(entity);
     }
 
@@ -261,7 +261,8 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
             rowVersion: null,
             targetCanonicalName: record.TargetCanonicalName,
             promotedKnowledgeEntryId: record.PromotedKnowledgeEntryId,
-            promotedAtUtc: record.PromotedAtUtc);
+            promotedAtUtc: record.PromotedAtUtc,
+            intakeRequestId: record.IntakeRequestId);
 
     private static StagedTranscriptCandidateReviewEntity ToEntity(TranscriptCandidateReviewRecord record)
         => new()
@@ -281,6 +282,7 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
             TargetCanonicalName = record.TargetCanonicalName,
             PromotedKnowledgeEntryId = record.PromotedKnowledgeEntryId,
             PromotedAtUtc = record.PromotedAtUtc,
+            IntakeRequestId = record.IntakeRequestId,
         };
 
     private static TranscriptCandidateReviewRecord ToRecord(StagedTranscriptCandidateReviewEntity entity)
@@ -300,7 +302,8 @@ public sealed class StagedTranscriptCandidateReviewStore : ITranscriptCandidateR
             rowVersion: null,
             targetCanonicalName: entity.TargetCanonicalName,
             promotedKnowledgeEntryId: entity.PromotedKnowledgeEntryId,
-            promotedAtUtc: entity.PromotedAtUtc);
+            promotedAtUtc: entity.PromotedAtUtc,
+            intakeRequestId: entity.IntakeRequestId);
 
     private static string SerializeMetadata(IReadOnlyDictionary<string, string> metadata)
     {

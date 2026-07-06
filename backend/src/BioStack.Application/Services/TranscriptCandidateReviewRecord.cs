@@ -16,7 +16,8 @@ public sealed record TranscriptCandidateReviewRecord(
     string? RowVersion = null,
     string? TargetCanonicalName = null,
     Guid? PromotedKnowledgeEntryId = null,
-    string? PromotedAtUtc = null)
+    string? PromotedAtUtc = null,
+    Guid? IntakeRequestId = null)
 {
     public const string NonCanonical = "non_canonical";
 
@@ -44,7 +45,8 @@ public sealed record TranscriptCandidateReviewRecord(
         string? rowVersion = null,
         string? targetCanonicalName = null,
         Guid? promotedKnowledgeEntryId = null,
-        string? promotedAtUtc = null)
+        string? promotedAtUtc = null,
+        Guid? intakeRequestId = null)
     {
         if (string.IsNullOrWhiteSpace(artifactId))
         {
@@ -124,7 +126,8 @@ public sealed record TranscriptCandidateReviewRecord(
             RowVersion: rowVersion,
             TargetCanonicalName: targetCanonicalName,
             PromotedKnowledgeEntryId: promotedKnowledgeEntryId,
-            PromotedAtUtc: promotedAtUtc);
+            PromotedAtUtc: promotedAtUtc,
+            IntakeRequestId: intakeRequestId);
     }
 
     public TranscriptCandidateReviewRecord WithReviewState(
