@@ -30,7 +30,7 @@ import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
 import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
 import { ObservationSignalsPanel } from '@/components/dashboard/ObservationSignalsPanel';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
-// Mission Control 2.0 components
+// Protocol Dashboard 2.0 components
 import { OperatingStateHero } from '@/components/mission/OperatingStateHero';
 import { NextObservationCard } from '@/components/mission/NextObservationCard';
 import { ProtocolWeather } from '@/components/mission/ProtocolWeather';
@@ -173,7 +173,7 @@ export function ProtocolConsole() {
 
   return (
     <div className="w-full">
-      <Header title="Mission Control" subtitle="Protocol Operations" actions={<ProfileSwitcher />} />
+      <Header title="Protocol Dashboard" subtitle="Protocol Operations" actions={<ProfileSwitcher />} />
 
       <div className="p-8 space-y-6">
         {loading ? (
@@ -181,7 +181,7 @@ export function ProtocolConsole() {
         ) : (
           <>
             {mc2 ? (
-              /* ── Mission Control 2.0 Layout ───────────────────────────── */
+              /* ── Protocol Dashboard 2.0 Layout ───────────────────────────── */
               <>
                 {/* Hero: single operating state */}
                 <OperatingStateHero payload={mission} compounds={compounds} />
@@ -212,7 +212,7 @@ export function ProtocolConsole() {
                   />
                 )}
 
-                {/* Observation Debt Inbox */}
+                {/* Check-ins Due Inbox */}
                 <ObservationDebtInbox
                   payload={mission}
                   checkIns={checkIns}

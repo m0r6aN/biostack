@@ -33,26 +33,26 @@ export function MobileStickyCta() {
     >
       <div className="grid grid-cols-4 gap-2">
         <Link
-          href="/start"
-          className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-sm font-semibold text-slate-950"
+          href="/tools/analyzer"
+          className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950"
         >
-          Start
+          Analyze
         </Link>
         <Link
-          href="/map"
-          className="flex min-h-12 items-center justify-center rounded-lg border border-sky-300/16 bg-sky-400/[0.06] px-2 text-sm font-semibold text-white"
+          href="/knowledge"
+          className="flex min-h-12 items-center justify-center rounded-lg border border-cyan-300/16 bg-cyan-400/[0.06] px-2 text-center text-sm font-semibold text-white"
         >
-          Map
+          Evidence
         </Link>
         <Link
           href="/pricing"
-          className="flex min-h-12 items-center justify-center rounded-lg border border-emerald-300/16 bg-emerald-300/[0.06] px-2 text-sm font-semibold text-white"
+          className="flex min-h-12 items-center justify-center rounded-lg border border-emerald-300/16 bg-emerald-300/[0.06] px-2 text-center text-sm font-semibold text-white"
         >
           Pricing
         </Link>
         <Link
           href="/providers"
-          className="flex min-h-12 items-center justify-center rounded-lg border border-amber-300/16 bg-amber-300/[0.06] px-2 text-sm font-semibold text-white"
+          className="flex min-h-12 items-center justify-center rounded-lg border border-amber-300/16 bg-amber-300/[0.06] px-2 text-center text-sm font-semibold text-white"
         >
           Provider
         </Link>

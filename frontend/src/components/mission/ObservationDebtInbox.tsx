@@ -39,7 +39,7 @@ export function ObservationDebtInbox({ payload, checkIns, compounds, goals, clas
           </span>
           <div>
             <p className="text-sm font-semibold text-white/80">Inbox clear</p>
-            <p className="text-xs text-white/40">No observation debt detected. All signal paths current.</p>
+            <p className="text-xs text-white/40">No check-ins due. All signal paths current.</p>
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@ export function ObservationDebtInbox({ payload, checkIns, compounds, goals, clas
       {/* Header */}
       <div className="flex items-center justify-between px-5 pt-5 pb-3">
         <div className="flex items-center gap-2.5">
-          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Observation Debt</p>
+          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Check-ins Due</p>
           <span className="text-[10px] font-bold text-white/30 bg-white/5 rounded-full px-2 py-0.5">{items.length}</span>
         </div>
         <p className="text-[10px] text-white/25">Ranked by impact</p>

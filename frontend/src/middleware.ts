@@ -9,6 +9,7 @@ const PUBLIC_PREFIX_ROUTES = [
   '/onboarding',
   '/start',
   '/map',
+  '/knowledge',
   '/providers',
   '/calculators',
   '/tools',

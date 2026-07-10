@@ -35,10 +35,10 @@ export function ProtocolWeather({ driftSnapshot, className }: ProtocolWeatherPro
   return (
     <div className={cn('rounded-3xl border bg-white/[0.02] p-5', t.border, className)}>
       <div className="flex items-center justify-between mb-4">
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Protocol Weather</p>
+        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Protocol Status</p>
         <WhyDrawer
-          surface="Protocol Weather"
-          title="How is drift state calculated?"
+          surface="Protocol Status"
+          title="How is protocol status calculated?"
           inputs={whyInputs}
           reasoning={reasoning}
           caveats={['Drift reflects timing and cadence patterns, not biomarker outcomes.']}

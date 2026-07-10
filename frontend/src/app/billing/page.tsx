@@ -34,8 +34,8 @@ function stateCopy(subscription: CurrentSubscription) {
     label: subscription.tier,
     title: `${subscription.tier} is active.`,
     detail: subscription.tier === 'Commander'
-      ? 'Advanced protocol review, pattern, drift, sequence, and mission-control surfaces are unlocked.'
-      : 'Protocol scoring, analysis tools, and unlimited active compounds are unlocked.',
+      ? 'Commander - Longitudinal Intelligence: advanced observational patterns, sequence context, and cross-run comparisons are unlocked.'
+      : 'Operator - Track & Analyze: protocol analysis tools and expanded active-compound tracking are unlocked.',
   };
 }
 

@@ -21,7 +21,7 @@ describe('marketing content', () => {
     expect(featured).toHaveLength(1);
     expect(featured[0].name).toBe('Operator');
     expect(featured[0].annualEffective).toContain('$8');
-    expect(pricingTiers[0].href).toBe('/onboarding');
+    expect(pricingTiers[0].href).toBe('/start');
   });
 
   it('keeps each pricing tier actionable and benefit-oriented', () => {
@@ -43,7 +43,7 @@ describe('marketing content', () => {
     const observer = pricingTiers.find((t) => t.name === 'Observer')!;
     expect(observer.highlights).toContain('Free calculators');
     expect(observer.highlights).toContain('Basic analyzer score');
-    expect(observer.highlights).toContain('Local saved analysis');
+    expect(observer.highlights).toContain('Local tool history');
     expect(observer.highlights.every((h) => !h.includes(' 5 '))).toBe(true);
   });
 });

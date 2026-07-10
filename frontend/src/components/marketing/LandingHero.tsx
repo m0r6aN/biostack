@@ -23,13 +23,13 @@ const entryPaths = [
     path: 'starter',
   },
   {
-    label: 'Experienced',
-    title: 'I already have a stack',
-    body: 'Map active compounds, overlap signals, and timeline context.',
-    href: '/map',
+    label: 'Existing stack',
+    title: 'Analyze My Stack',
+    body: 'Review active compounds, overlap signals, and timeline context for free.',
+    href: '/tools/analyzer',
     tone: 'sky',
-    signal: 'Fast analysis',
-    action: 'Map',
+    signal: 'Free analysis',
+    action: 'Analyze',
     path: 'experienced',
   },
   {
@@ -121,7 +121,7 @@ export function LandingHero() {
             href="/pricing"
             className="w-fit text-sm font-medium text-emerald-100/78 underline-offset-4 transition-colors hover:text-emerald-50 hover:underline sm:text-base"
           >
-            See free vs Operator
+            See Observer, Operator, and Commander
           </Link>
         </div>
       </div>

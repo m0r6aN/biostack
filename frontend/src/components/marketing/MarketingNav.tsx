@@ -1,5 +1,5 @@
-import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import Link from 'next/link';
+import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import { MobileStickyCta } from './MobileStickyCta';
 
 export function MarketingNav() {
@@ -10,13 +10,15 @@ export function MarketingNav() {
           <Link href="/" aria-label="BioStack home">
             <BioStackLogo variant="horizontal" theme="dark" size="md" animated hoverable />
           </Link>
-
           <nav className="hidden items-center gap-6 text-sm text-white/55 md:flex">
             <Link href="/how-it-works" className="transition-colors hover:text-white">
               How it works
             </Link>
             <Link href="/tools" className="transition-colors hover:text-white">
               Tools
+            </Link>
+            <Link href="/knowledge" className="transition-colors hover:text-white">
+              Compounds & Evidence
             </Link>
             <Link href="/pricing" className="transition-colors hover:text-white">
               Pricing
@@ -28,24 +30,22 @@ export function MarketingNav() {
               Safety
             </Link>
           </nav>
-
           <div className="flex items-center gap-3">
             <Link
-              href="/map"
+              href="/tools/analyzer"
               className="hidden rounded-full border border-white/12 px-4 py-2 text-sm text-white/75 transition-colors hover:text-white sm:inline-flex"
             >
-              Map Stack
+              Analyze My Stack
             </Link>
             <Link
               href="/start"
               className="rounded-full border border-emerald-300/30 bg-emerald-400/12 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/50 hover:text-white"
             >
-              Start free
+              Start Free
             </Link>
           </div>
         </div>
       </header>
-
       <MobileStickyCta />
     </>
   );

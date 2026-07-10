@@ -17,6 +17,7 @@ using BioStack.Api;
 using BioStack.Cognition;
 using BioStack.Infrastructure.Keon;
 using BioStack.Application.Governance;
+using Keon.Kompress;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,12 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpClient("protocol-link-extractor");
 builder.Services.AddHttpClient("protocol-ocr");
 builder.Services.Configure<ProtocolOcrOptions>(builder.Configuration.GetSection("Analyzer:Ocr"));
+builder.Services.AddKompress(options =>
+{
+    options.StorePath = builder.Configuration["Kompress:StorePath"]
+        ?? Path.Combine(AppContext.BaseDirectory, "data", "kompress.db");
+    options.TenantId = builder.Configuration["Kompress:TenantId"] ?? "biostack";
+});
 
 var redisConfiguration = builder.Configuration["Redis:Configuration"];
 if (!string.IsNullOrWhiteSpace(redisConfiguration))
@@ -408,6 +415,7 @@ app.MapReceiptEndpoints();
 app.MapAnalyzeEndpoints();
 app.MapLeadEndpoints();
 app.MapAdminEndpoints();
+app.MapKompressEndpoints();
 
 if (app.Environment.IsDevelopment())
     app.MapDevAuthEndpoints();

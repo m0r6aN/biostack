@@ -17,8 +17,8 @@ export default function PricingPage() {
             Simple pricing for smarter protocol tracking
           </h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-white/62">
-            Start free with the essentials. Upgrade when you want better tracking, deeper insights,
-            and a clearer understanding of how your stack is working.
+            Start with Observer - Free. Upgrade to Operator - Track & Analyze or Commander -
+            Longitudinal Intelligence when you need deeper observational workflows.
           </p>
         </section>
 

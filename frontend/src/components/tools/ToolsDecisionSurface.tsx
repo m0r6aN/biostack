@@ -241,7 +241,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
     setSaveMessage(
       user
         ? 'Saved with your current tool data on this device.'
-        : 'Saved on this device. Create a profile to keep it permanently across devices.'
+: 'Saved on this device. Create a free profile to save this analysis and track how your stack changes over time. No card required.'
     );
   }
 
@@ -313,6 +313,9 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
     setSavedPayload(payload);
 
     if (!user || !activeProfileId) {
+      setSaveMessage(
+        'Create a free profile to save this analysis and track how your stack changes over time. No card required.'
+      );
       window.location.href = '/auth/signin?callbackUrl=/profiles?bootstrap=tools';
       return;
     }

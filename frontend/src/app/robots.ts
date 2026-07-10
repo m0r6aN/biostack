@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: ['/', '/start', '/map', '/providers', '/tools', '/how-it-works', '/safety', '/pricing', '/faq'],
-        disallow: ['/protocol-console', '/mission-control', '/profiles', '/compounds', '/checkins', '/timeline', '/knowledge', '/admin'],
+        allow: ['/', '/start', '/providers', '/tools', '/knowledge', '/how-it-works', '/safety', '/pricing', '/faq'],
+        disallow: ['/protocol-console', '/mission-control', '/profiles', '/compounds', '/billing', '/checkins', '/timeline', '/admin'],
       },
     ],
     sitemap: 'https://biostack.app/sitemap.xml',
