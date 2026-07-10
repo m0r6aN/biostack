@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
 import { deriveObservationDebt, type ObservationDebtItem } from '@/lib/derive/observationDebt';
-import { cn } from '@/lib/utils';
 import { track } from '@/lib/telemetry';
-import type { ProtocolConsolePayload, CheckIn, CompoundRecord, GoalDefinition } from '@/lib/types';
+import type { CheckIn, CompoundRecord, GoalDefinition, ProtocolConsolePayload } from '@/lib/types';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { useState } from 'react';
 
 interface ObservationDebtInboxProps {
   payload: ProtocolConsolePayload | null;
@@ -51,6 +51,7 @@ export function ObservationDebtInbox({ payload, checkIns, compounds, goals, clas
       {/* Header */}
       <div className="flex items-center justify-between px-5 pt-5 pb-3">
         <div className="flex items-center gap-2.5">
+          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Check-ins Due</p>
           <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Check-ins Due</p>
           <span className="text-[10px] font-bold text-white/30 bg-white/5 rounded-full px-2 py-0.5">{items.length}</span>
         </div>

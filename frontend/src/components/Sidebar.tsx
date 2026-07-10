@@ -200,7 +200,7 @@ export function Sidebar() {
         </div>
         <div className="px-6 py-2">
           <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.3em] pl-0.5">
-            Mission Control
+            Protocol Console
           </p>
         </div>
 

@@ -13,6 +13,7 @@ const PUBLIC_PREFIX_ROUTES = [
   '/providers',
   '/calculators',
   '/tools',
+  '/knowledge',
   '/how-it-works',
   '/safety',
   '/terms',

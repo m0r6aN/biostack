@@ -10,7 +10,7 @@ export function DriftRegimePanel({ drift, patterns, compact = false }: DriftRegi
   if (!drift) {
     return (
       <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Drift & Regime</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35" title="How much your inputs and results are changing versus your baseline">Drift & Regime</p>
         <h2 className="mt-2 text-xl font-black text-white">No drift snapshot</h2>
         <p className="mt-2 text-sm text-white/50">Drift classification appears after protocol run context is available.</p>
       </section>
@@ -24,7 +24,7 @@ export function DriftRegimePanel({ drift, patterns, compact = false }: DriftRegi
     <section className="rounded-lg border border-white/[0.08] bg-[#101820]/95 p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Drift & Regime</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35" title="How much your inputs and results are changing versus your baseline">Drift & Regime</p>
           <h2 className="mt-2 text-xl font-black text-white">Current regime: {formatValue(regime)}</h2>
           <p className="mt-2 text-sm text-white/50">{baselineText(drift, patterns)}</p>
         </div>

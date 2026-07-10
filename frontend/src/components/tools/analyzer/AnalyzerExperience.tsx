@@ -460,7 +460,6 @@ export function AnalyzerExperience() {
           <ParsedProtocolSection result={result} />
           {optimizedProtocol && <ComparisonSection result={result} optimized={optimizedProtocol} />}
           <AlternativeScenarios result={result} optimized={optimizedProtocol} />
-          <ShareableSummaryStub />
           <NextSteps
             result={result}
             savedAnalysisId={savedAnalysisId}
@@ -499,15 +498,4 @@ export function AnalyzerExperience() {
 
 function FeatureChip({ label }: { label: string }) {
   return <span className="rounded-lg border border-white/10 px-3 py-1.5">{label}</span>;
-}
-
-function ShareableSummaryStub() {
-  return (
-    <section className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-4 opacity-80">
-      <h2 className="text-base font-semibold text-white">Shareable protocol summary</h2>
-      <p className="mt-2 text-sm leading-6 text-white/50">
-        Coming soon: share a BioStack protocol score card without exposing private details.
-      </p>
-    </section>
-  );
 }

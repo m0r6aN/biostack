@@ -78,7 +78,7 @@ export function CohesionTimelinePanel({ events, sequence, drift }: CohesionTimel
   if (!hasData) {
     return (
       <section className="rounded-3xl border border-white/8 bg-[#121923]/90 p-5">
-        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Cohesion Timeline</p>
+        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest" title="How consistently your protocol holds together over time">Cohesion Timeline</p>
         <div className="mt-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4">
           <p className="text-sm text-white/50 leading-relaxed">
             Protocol events from runs, check-ins, and computations will appear here as data is collected. Alignment annotations require at least one completed run.
@@ -95,7 +95,7 @@ export function CohesionTimelinePanel({ events, sequence, drift }: CohesionTimel
     <section className="rounded-3xl border border-white/8 bg-[#121923]/90 p-5">
       <div className="flex items-center justify-between gap-3 mb-5">
         <div>
-          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-1">Cohesion Timeline</p>
+          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-1" title="How consistently your protocol holds together over time">Cohesion Timeline</p>
           <h2 className="text-base font-bold text-white/90">
             Recent sequence
             {sequence?.currentStatus && (

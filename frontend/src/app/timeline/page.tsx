@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useProfile } from '@/lib/context';
 import { apiClient } from '@/lib/api';
 import { TimelineEvent } from '@/lib/types';
@@ -13,6 +14,7 @@ import { Header } from '@/components/Header';
 import { ActiveProfileChip } from '@/components/ActiveProfileChip';
 
 export default function TimelinePage() {
+  const router = useRouter();
   const { currentProfileId } = useProfile();
   const [allEvents, setAllEvents] = useState<TimelineEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,9 +53,10 @@ export default function TimelinePage() {
         <Header title="Timeline" />
         <div className="p-8">
           <EmptyState
-            title="No Profile Selected"
-            description="Select a profile to view timeline"
+            title="Let's set up your first profile"
+            description="Your profile personalizes overlap checks and keeps your protocol in one place."
             icon="📅"
+            action={{ label: 'Create profile', onClick: () => router.push('/profiles') }}
           />
         </div>
       </div>

@@ -1,9 +1,24 @@
 'use client';
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { useProfile } from '@/lib/context';
+import { ActiveCompoundsCard } from '@/components/dashboard/ActiveCompoundsCard';
+import { ActiveGoalsCard } from '@/components/dashboard/ActiveGoalsCard';
+import { CohesionTimelinePanel } from '@/components/dashboard/CohesionTimelinePanel';
+import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
+import { LatestCheckInCard } from '@/components/dashboard/LatestCheckInCard';
+import { ObservationSignalsPanel } from '@/components/dashboard/ObservationSignalsPanel';
+import { OverlapFlagsBanner } from '@/components/dashboard/OverlapFlagsBanner';
+import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
+import { ProtocolConsoleOverview } from '@/components/dashboard/ProtocolConsoleOverview';
+import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
+import { StatCard } from '@/components/dashboard/StatCard';
+import { TimelineSnapshot } from '@/components/dashboard/TimelineSnapshot';
+import { EmptyState } from '@/components/EmptyState';
+import { ErrorState } from '@/components/ErrorState';
+import { Header } from '@/components/Header';
+import { LoadingSkeleton } from '@/components/LoadingState';
+import { ProfileSwitcher } from '@/components/ProfileSwitcher';
 import { ApiError, apiClient } from '@/lib/api';
+import { useProfile } from '@/lib/context';
 import {
   CheckIn,
   CompoundRecord,
@@ -13,33 +28,19 @@ import {
   ProtocolConsolePayload,
   TimelineEvent,
 } from '@/lib/types';
-import { Header } from '@/components/Header';
-import { LoadingSkeleton } from '@/components/LoadingState';
-import { ErrorState } from '@/components/ErrorState';
-import { EmptyState } from '@/components/EmptyState';
-import { StatCard } from '@/components/dashboard/StatCard';
-import { ActiveCompoundsCard } from '@/components/dashboard/ActiveCompoundsCard';
-import { ActiveGoalsCard } from '@/components/dashboard/ActiveGoalsCard';
-import { LatestCheckInCard } from '@/components/dashboard/LatestCheckInCard';
-import { TimelineSnapshot } from '@/components/dashboard/TimelineSnapshot';
-import { OverlapFlagsBanner } from '@/components/dashboard/OverlapFlagsBanner';
-import { CohesionTimelinePanel } from '@/components/dashboard/CohesionTimelinePanel';
-import { ProtocolConsoleOverview } from '@/components/dashboard/ProtocolConsoleOverview';
-import { PatternMemoryPanel } from '@/components/dashboard/PatternMemoryPanel';
-import { DriftRegimePanel } from '@/components/dashboard/DriftRegimePanel';
-import { SequenceExpectationPanel } from '@/components/dashboard/SequenceExpectationPanel';
-import { ObservationSignalsPanel } from '@/components/dashboard/ObservationSignalsPanel';
-import { ProfileSwitcher } from '@/components/ProfileSwitcher';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 // Protocol Dashboard 2.0 components
-import { OperatingStateHero } from '@/components/mission/OperatingStateHero';
 import { NextObservationCard } from '@/components/mission/NextObservationCard';
+import { ObservationDebtInbox } from '@/components/mission/ObservationDebtInbox';
+import { OperatingStateHero } from '@/components/mission/OperatingStateHero';
 import { ProtocolWeather } from '@/components/mission/ProtocolWeather';
 import { StackClarityMeter } from '@/components/mission/StackClarityMeter';
-import { ObservationDebtInbox } from '@/components/mission/ObservationDebtInbox';
 import { StackGraphMini } from '@/components/mission/StackGraphMini';
 import { isEnabled } from '@/lib/flags';
 
 export function ProtocolConsole() {
+  const router = useRouter();
   const { currentProfileId, setProfiles } = useProfile();
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
@@ -146,9 +147,10 @@ export function ProtocolConsole() {
         <Header title="Protocol Console" subtitle="Protocol Operations" />
         <div className="p-8">
           <EmptyState
-            title="No Profile Selected"
-            description="Create or select a profile to start observing your protocol."
+            title="Let's set up your first profile"
+            description="Your profile personalizes overlap checks and keeps your protocol in one place."
             icon="👤"
+            action={{ label: 'Create profile', onClick: () => router.push('/profiles') }}
           />
         </div>
       </div>
@@ -223,14 +225,14 @@ export function ProtocolConsole() {
                 {/* Upgrade notices */}
                 {missionLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Commander"
-                    title="Mission control is locked on this tier"
+                    eyebrow="Commander — Longitudinal Intelligence"
+                    title="Protocol Console is locked on this tier"
                     detail={missionLockedMessage}
                   />
                 )}
                 {stackLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Operator"
+                    eyebrow="Operator — Track & Analyze"
                     title="Live stack intelligence is locked on Observer"
                     detail={stackLockedMessage}
                   />
@@ -290,8 +292,8 @@ export function ProtocolConsole() {
                 <ProtocolConsoleOverview mission={mission} />
                 {missionLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Commander"
-                    title="Mission control is locked on this tier"
+                    eyebrow="Commander — Longitudinal Intelligence"
+                    title="Protocol Console is locked on this tier"
                     detail={missionLockedMessage}
                   />
                 )}
@@ -303,7 +305,7 @@ export function ProtocolConsole() {
                 </div>
                 {stackLockedMessage && (
                   <UpgradeNotice
-                    eyebrow="Operator"
+                    eyebrow="Operator — Track & Analyze"
                     title="Live stack intelligence is locked on Observer"
                     detail={stackLockedMessage}
                   />

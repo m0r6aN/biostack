@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
+import Link from 'next/link';
 
 const workflow = [
   'Client connects a BioStack profile or shares an observational summary.',
