@@ -31,10 +31,12 @@ describe('providers page readiness', () => {
     expect(screen.getByText(/What providers can do/i)).toBeInTheDocument();
     expect(screen.getByText(/What BioStack does not do/i)).toBeInTheDocument();
     expect(screen.getByText(/Data ownership and privacy/i)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Request Provider Access' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Request Provider Pilot Access' })).toHaveAttribute(
       'href',
-      '/auth/signin?intent=provider'
+      '#provider-access-request'
     );
+    expect(screen.getByRole('heading', { name: 'Request provider pilot access' })).toBeInTheDocument();
+    expect(screen.getByText(/Do not include client, health, compound, or protocol details/i)).toBeInTheDocument();
     expect(screen.getByText('Is BioStack a medical device or EHR?')).toBeInTheDocument();
     expect(screen.getByText('Does BioStack give dosing or treatment recommendations?')).toBeInTheDocument();
     expect(screen.getByText('Can clients revoke access?')).toBeInTheDocument();

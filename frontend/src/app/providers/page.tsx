@@ -1,18 +1,19 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
+import { ProviderAccessForm } from '@/components/marketing/ProviderAccessForm';
 import Link from 'next/link';
 
 const workflow = [
-  'Client connects a BioStack profile or shares an observational summary.',
-  'Provider reviews current protocol records, change history, and check-in trends.',
-  'Provider uses structured notes and exports to support non-prescriptive follow-up conversations.',
+  'Submit contact information for the provider pilot review queue.',
+  'BioStack reviews fit and follows up with the request owner.',
+  'Approved pilot participants receive the tested scope and data-sharing boundaries before access.',
 ];
 
 const providerCapabilities = [
-  'View multiple client protocol records from one workspace',
-  'See client-reported changes, check-ins, and evidence-linked compound context',
-  'Organize observational summaries without replacing clinical systems',
-  'Export or share read-only summaries when the client permits it',
+  'Multi-client protocol organization (pilot scope; not generally available)',
+  'Permissioned observational summaries (pilot scope; not generally available)',
+  'Evidence-linked compound context without clinical decision support',
+  'Revocable client sharing and exports are requirements for the pilot, not launch promises',
 ];
 
 const boundaries = [
@@ -35,7 +36,7 @@ const faqs = [
   {
     question: 'Can I manage multiple clients?',
     answer:
-      'Provider access is intended for multi-client observability, including client lists, protocol summaries, and change history where client permission is active.',
+      'Not in the generally available product today. Multi-client observability is a provider pilot requirement and will only be offered after its access and client-permission controls are verified.',
   },
   {
     question: 'Who owns client data?',
@@ -45,17 +46,17 @@ const faqs = [
   {
     question: 'Can clients revoke access?',
     answer:
-      'Yes. Provider access is designed around client permission, and clients should be able to stop sharing their BioStack profile with a provider.',
+      'Revocation is a required pilot control. BioStack will not represent provider sharing as available until clients can grant and revoke access reliably.',
   },
   {
     question: 'Can I export or share observational summaries?',
     answer:
-      'Yes, provider workflows are intended to support observational summaries and exports when the client permits sharing.',
+      'Saved users can prepare observational summaries for their own use. Provider workspace exports remain pilot scope and are not generally available.',
   },
   {
     question: 'What does BioStack cost for providers?',
     answer:
-      'Provider pricing is handled through provider access requests while the client/protocol observability workflow is finalized.',
+      'No public provider price is offered yet. Pricing and access terms will be shared only with qualified pilot participants after the workflow and privacy controls are verified.',
   },
   {
     question: 'What happens if a client stops using BioStack?',
@@ -78,15 +79,15 @@ export default function ProvidersPage() {
               Client protocol observability without clinical overreach.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/62 sm:text-lg">
-              BioStack helps providers review client-reported compounds, changes, evidence context,
-              and check-ins in one organized workspace.
+              BioStack is validating a provider pilot for permissioned, observational workflows.
+              General multi-client access is not available yet.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/auth/signin?intent=provider"
+                href="#provider-access-request"
                 className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
               >
-                Request Provider Access
+                Request Provider Pilot Access
               </Link>
               <Link
                 href="/knowledge"
@@ -97,7 +98,7 @@ export default function ProvidersPage() {
             </div>
           </div>
           <div className="rounded-lg border border-white/10 bg-white/[0.035] p-6">
-            <h2 className="text-lg font-semibold text-white">Example provider workflow</h2>
+            <h2 className="text-lg font-semibold text-white">Provider pilot request workflow</h2>
             <ol className="mt-5 space-y-4">
               {workflow.map((item, index) => (
                 <li key={item} className="flex gap-3 text-sm leading-6 text-white/68">
@@ -109,6 +110,10 @@ export default function ProvidersPage() {
               ))}
             </ol>
           </div>
+        </section>
+
+        <section id="provider-access-request" className="mt-12 scroll-mt-24">
+          <ProviderAccessForm />
         </section>
 
         <section className="mt-12 grid gap-4 md:grid-cols-3">
