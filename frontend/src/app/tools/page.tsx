@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Dose, Mix, and Compatibility Tools | BioStack',
-  description: 'Free dosage, reconstitution, unit conversion, and compatibility tools. No account required.',
+  description: 'Free volume, concentration, unit-conversion, and compatibility calculations. No account required.',
 };
 
 export default function ToolsPage() {
