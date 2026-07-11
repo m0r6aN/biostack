@@ -17,7 +17,7 @@ export function MarketingFooter() {
             Compounds & Evidence
           </Link>
           <Link href="/providers" className="transition-colors hover:text-white">
-            Provider
+            For Providers
           </Link>
           <Link href="/safety" className="transition-colors hover:text-white">
             Safety

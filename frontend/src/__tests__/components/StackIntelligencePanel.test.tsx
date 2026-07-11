@@ -30,7 +30,7 @@ describe('StackIntelligencePanel', () => {
     fireEvent.click(screen.getByRole('tab', { name: 'Evidence' }));
     expect(screen.getByRole('tab', { name: 'Evidence' })).toHaveAttribute('aria-selected', 'true');
     expect(await screen.findByText('Evidence view')).toBeInTheDocument();
-    expect(screen.getByText('Included in Operator')).toBeInTheDocument();
+    expect(screen.getByText('Public evidence + paid analysis')).toBeInTheDocument();
     await waitFor(() => {
       expect(screen.queryByText('One earned relationship outcome emitted.')).not.toBeInTheDocument();
     });

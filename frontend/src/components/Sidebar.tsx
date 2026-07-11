@@ -134,6 +134,15 @@ function IconResearch() {
   );
 }
 
+function IconReceipts() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <path d="M3 2.5h10v11l-2-1.25L9 13.5l-2-1.25L5 13.5l-2-1.25z" />
+      <path d="M5.5 5.5h5M5.5 8h5" />
+    </svg>
+  );
+}
+
 // ─── Nav items ────────────────────────────────────────────────────────────────
 
 const navItems = [
@@ -146,9 +155,10 @@ const navItems = [
   { label: 'Timeline',             href: '/timeline',         icon: <IconTimeline />,         adminOnly: false, exact: false },
   { label: 'Tools',                href: '/tools',            icon: <IconCalculators />,      adminOnly: false, exact: false },
   { label: 'Compounds & Evidence',href: '/knowledge',        icon: <IconKnowledge />,        adminOnly: false, exact: false },
+  { label: 'Audit Receipts',       href: '/governance/receipts', icon: <IconReceipts />,      adminOnly: false, exact: false },
   { label: 'Billing',              href: '/billing',          icon: <IconBilling />,          adminOnly: false, exact: false },
   { label: 'Admin',                href: '/admin',            icon: <IconAdmin />,            adminOnly: true,  exact: true  },
-  { label: 'Research',             href: '/admin/research',   icon: <IconResearch />,         adminOnly: false, exact: false },
+  { label: 'Research',             href: '/admin/research',   icon: <IconResearch />,         adminOnly: true,  exact: false },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────

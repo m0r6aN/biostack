@@ -35,6 +35,22 @@ describe('AppShell', () => {
     expect(screen.getByText('Protocol Console content')).toBeInTheDocument();
   });
 
+  it.each(['/protocols', '/billing', '/governance/receipts'])(
+    'renders app chrome on authenticated product route %s',
+    (pathname) => {
+      usePathnameMock.mockReturnValue(pathname);
+
+      render(
+        <AppShell>
+          <div>Authenticated product content</div>
+        </AppShell>
+      );
+
+      expect(screen.getByText('Sidebar')).toBeInTheDocument();
+      expect(screen.getByText('Authenticated product content')).toBeInTheDocument();
+    }
+  );
+
   it('does not render app chrome on public routes', () => {
     usePathnameMock.mockReturnValue('/pricing');
 

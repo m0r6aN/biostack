@@ -6,8 +6,7 @@ import { ModalShell } from './ModalShell';
 
 interface ContactCareTeamModalProps {
   onClose: () => void;
-  /** Optional submit handler; PR B mock mode leaves this unset. */
-  onSubmit?: (message: string) => Promise<void> | void;
+  onSubmit: (message: string) => Promise<void> | void;
 }
 
 export function ContactCareTeamModal({ onClose, onSubmit }: ContactCareTeamModalProps) {
@@ -19,7 +18,7 @@ export function ContactCareTeamModal({ onClose, onSubmit }: ContactCareTeamModal
     if (!message.trim() || sending) return;
     setSending(true);
     try {
-      await onSubmit?.(message.trim());
+      await onSubmit(message.trim());
       setSent(true);
       setTimeout(onClose, 2000);
     } finally {
@@ -33,10 +32,10 @@ export function ContactCareTeamModal({ onClose, onSubmit }: ContactCareTeamModal
         <div className="py-4 text-center">
           <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-400" />
           <h2 id="care-sent-title" className="mt-3 font-semibold text-white">
-            Message Captured
+            Note Saved
           </h2>
           <p className="mt-1 text-sm text-white/55">
-            Preview only — this does not notify the care team yet.
+            The note was added to your BioStack protocol record.
           </p>
         </div>
       </ModalShell>
@@ -47,10 +46,10 @@ export function ContactCareTeamModal({ onClose, onSubmit }: ContactCareTeamModal
     <ModalShell onClose={onClose} labelledBy="care-modal-title">
       <div className="pr-8">
         <h2 id="care-modal-title" className="text-xl font-semibold tracking-tight text-white">
-          Message Your Care Team
+          Care Team Note
         </h2>
         <p className="mt-1 text-sm text-white/55">
-          Questions about dosing, labs, or how you&rsquo;re feeling? We&rsquo;re here.
+          Save an observational update or question with your protocol record. This does not send a notification.
         </p>
       </div>
 
@@ -75,7 +74,7 @@ export function ContactCareTeamModal({ onClose, onSubmit }: ContactCareTeamModal
           disabled={!message.trim() || sending}
           className="rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {sending ? 'Capturing' : 'Capture Message'}
+          {sending ? 'Saving' : 'Save Note'}
         </button>
       </div>
     </ModalShell>

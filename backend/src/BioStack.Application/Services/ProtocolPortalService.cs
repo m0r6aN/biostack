@@ -80,6 +80,10 @@ public sealed class ProtocolPortalService : IProtocolPortalService
     public async Task<ProtocolPortalResponse> GetPortalAsync(Guid profileId, CancellationToken ct = default)
     {
         var ctx = await LoadContextAsync(profileId, ct);
+        await EnsureCommanderAsync(
+            "portal_aggregate_commander",
+            "the complete protocol portal aggregate",
+            ct);
         var meta = new Dictionary<string, PortalSectionMetaResponse>();
 
         var overview = BuildOverviewSection(ctx);

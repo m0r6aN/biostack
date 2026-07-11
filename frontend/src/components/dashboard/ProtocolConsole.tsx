@@ -29,6 +29,7 @@ import {
   TimelineEvent,
 } from '@/lib/types';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 // Protocol Dashboard 2.0 components
 import { NextObservationCard } from '@/components/mission/NextObservationCard';

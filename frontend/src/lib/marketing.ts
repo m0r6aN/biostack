@@ -46,7 +46,7 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'Is there a free plan?',
     answer:
-      'Yes. Observer is free forever and includes basic tracking, knowledge base preview, and free public calculators. Upgrade to Operator for the full protocol workflow.',
+      'Yes. Observer is free forever and includes basic tracking, the public compounds and evidence library, and free public calculators. Upgrade to Operator for full stack analysis and the expanded protocol workflow.',
   },
   {
     question: 'What is Pathway Overlap detection?',

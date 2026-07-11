@@ -40,6 +40,15 @@ import {
     StagedTranscriptCandidateReview,
     PromotionPreview,
     ProtocolPortalData,
+    ProtocolOverview,
+    ProtocolStat,
+    DaySchedule,
+    WeekDay,
+    DietFramework,
+    SupplementPlan,
+    MonitoringProtocol,
+    Milestone,
+    ResourceEntry,
 } from './types';
 
 export class ApiError extends Error {
@@ -565,6 +574,46 @@ export class ApiClient {
     return this.request<ProtocolPortalData>(
       `/api/v1/profiles/${profileId}/protocol/portal`
     );
+  }
+
+  /** Observer-safe overview and operational stats for the selected profile. */
+  async getProtocolPortalActive(profileId: string): Promise<{
+    overview: ProtocolOverview;
+    stats: ProtocolStat[];
+  }> {
+    return this.request(`/api/v1/profiles/${profileId}/protocol/active`);
+  }
+
+  /** Observer-safe schedule for one specific day. */
+  async getProtocolPortalSchedule(profileId: string, dateIso?: string): Promise<DaySchedule> {
+    const query = dateIso ? `?date=${encodeURIComponent(dateIso)}` : '';
+    return this.request(`/api/v1/profiles/${profileId}/protocol/schedule${query}`);
+  }
+
+  /** Operator-only weekly calendar. */
+  async getProtocolPortalWeek(profileId: string, startIso?: string): Promise<WeekDay[]> {
+    const query = startIso ? `?start=${encodeURIComponent(startIso)}` : '';
+    return this.request(`/api/v1/profiles/${profileId}/protocol/schedule/week${query}`);
+  }
+
+  async getProtocolPortalDiet(profileId: string): Promise<DietFramework> {
+    return this.request(`/api/v1/profiles/${profileId}/protocol/diet`);
+  }
+
+  async getProtocolPortalSupplements(profileId: string): Promise<SupplementPlan> {
+    return this.request(`/api/v1/profiles/${profileId}/protocol/supplements`);
+  }
+
+  async getProtocolPortalMonitoring(profileId: string): Promise<MonitoringProtocol> {
+    return this.request(`/api/v1/profiles/${profileId}/protocol/monitoring`);
+  }
+
+  async getProtocolPortalMilestones(profileId: string): Promise<Milestone[]> {
+    return this.request(`/api/v1/profiles/${profileId}/protocol/milestones`);
+  }
+
+  async getProtocolPortalResources(profileId: string): Promise<ResourceEntry[]> {
+    return this.request(`/api/v1/profiles/${profileId}/protocol/resources`);
   }
 
   /** Log the day's scheduled doses as taken. */

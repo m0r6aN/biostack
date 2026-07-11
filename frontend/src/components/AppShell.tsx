@@ -10,9 +10,13 @@ const APP_ROUTE_PREFIXES = [
   '/my-protocol',
   '/profiles',
   '/compounds',
+  '/protocols',
   '/checkins',
   '/timeline',
   '/knowledge',
+  '/billing',
+  '/governance',
+  '/receipts',
   '/admin',
 ];
 

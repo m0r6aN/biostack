@@ -82,6 +82,7 @@ public sealed class ProtocolPortalEndpointsIntegrationTests : IAsyncLifetime
     public async Task GetPortal_ReturnsOk_WithFlatShapeAndSectionMeta()
     {
         var profile = await CreateProfileAsync("Portal Aggregate");
+        await UpsertSubscriptionAsync(_userId, ProductTier.Commander);
 
         var response = await _client.GetAsync($"/api/v1/profiles/{profile.Id}/protocol/portal");
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -111,6 +112,7 @@ public sealed class ProtocolPortalEndpointsIntegrationTests : IAsyncLifetime
     {
         // Fresh profile: no compounds, no check-ins, no dose logs.
         var profile = await CreateProfileAsync("Honest Empty State");
+        await UpsertSubscriptionAsync(_userId, ProductTier.Commander);
 
         var portal = await _client.GetFromJsonAsync<ProtocolPortalResponse>(
             $"/api/v1/profiles/{profile.Id}/protocol/portal", JsonOptions);
@@ -147,6 +149,7 @@ public sealed class ProtocolPortalEndpointsIntegrationTests : IAsyncLifetime
     {
         var profile = await CreateProfileAsync("Real Adherence");
         await CreateActiveCompoundAsync(profile.Id, "Retatrutide");
+        await UpsertSubscriptionAsync(_userId, ProductTier.Commander);
 
         var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
         var log = await _client.PostAsJsonAsync(
@@ -178,6 +181,21 @@ public sealed class ProtocolPortalEndpointsIntegrationTests : IAsyncLifetime
         Assert.NotNull(active);
         Assert.Equal("Active Section", active!.Overview.ClientName);
         Assert.NotEmpty(active.Stats);
+    }
+
+    [Fact]
+    public async Task GetPortal_Returns402ForObserver()
+    {
+        var profile = await CreateProfileAsync("Observer Aggregate Gate");
+
+        var response = await _client.GetAsync($"/api/v1/profiles/{profile.Id}/protocol/portal");
+
+        Assert.Equal(HttpStatusCode.PaymentRequired, response.StatusCode);
+        var error = await response.Content.ReadFromJsonAsync<ProductErrorResponse>(JsonOptions);
+        Assert.NotNull(error);
+        Assert.True(error!.UpgradeRequired);
+        Assert.Equal("Observer", error.Tier);
+        Assert.Equal("portal_aggregate_commander", error.Code);
     }
 
     [Fact]
@@ -282,6 +300,7 @@ public sealed class ProtocolPortalEndpointsIntegrationTests : IAsyncLifetime
         // mock leakage (e.g. copying frontend/src/lib/mock/protocolPortal.ts values
         // while porting the shape) on the production aggregate path.
         var profile = await CreateProfileAsync("No Mock Leakage");
+        await UpsertSubscriptionAsync(_userId, ProductTier.Commander);
 
         var raw = await _client.GetStringAsync($"/api/v1/profiles/{profile.Id}/protocol/portal");
         var portal = JsonSerializer.Deserialize<ProtocolPortalResponse>(raw, JsonOptions);

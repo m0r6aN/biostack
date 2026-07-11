@@ -1006,10 +1006,10 @@ export interface PromotionPreview {
 }
 
 // ─── Client-facing protocol portal (/my-protocol) ───────────────────────────
-// Consumed by the PR B mock fixture and kept compatible with the API client
-// methods for the later live-data integration PR.
+// Consumed by the live protocol portal and retained by the deterministic fixture
+// for isolated component previews and tests.
 
-/** Membership tier a section is gated behind (paywall not enforced yet). */
+/** Membership tier required by a protocol-portal section. */
 export type ProtocolTier = 'observer' | 'operator' | 'commander';
 
 /** Visual tone for stat tiles / pills, mapped to emerald/amber/red/etc. */

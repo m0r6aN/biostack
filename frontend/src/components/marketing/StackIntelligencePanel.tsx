@@ -108,12 +108,12 @@ function buildEvidencePreviewContent(base: StackIntelligencePanelContent): Stack
   const relationship = base.stats?.find(([label]) => label === 'Relationship check')?.[1] ?? 'Evidence preview';
 
   return {
-    subtext: 'Evidence view is included in Operator.',
+    subtext: 'Public dossiers stay free. Operator adds the full stack-level evidence breakdown.',
     stageLabels: ['Evidence tiers', 'Source types', 'Mechanism summaries'],
     stats: [
       ['Inputs', compounds],
-      ['Evidence tier', relationship.includes('detected') ? 'Tiered preview' : 'Included in Operator'],
-      ['Confidence', 'Available after upgrade'],
+      ['Evidence tier', relationship.includes('detected') ? 'Tiered preview' : 'Public dossiers available'],
+      ['Confidence', 'Full stack view in Operator'],
     ],
     relationshipGroups: [
       {
@@ -123,17 +123,17 @@ function buildEvidencePreviewContent(base: StackIntelligencePanelContent): Stack
       },
       {
         type: 'Support',
-        label: 'Included in Operator',
-        detail: 'Upgrade after the free analysis preview when you want the full evidence breakdown.',
+        label: 'Public evidence + paid analysis',
+        detail: 'Browse individual compound dossiers free. Upgrade when you want evidence mapped across the full stack.',
       },
     ],
     insightLabel: 'Evidence preview',
     summary: 'Evidence metadata is separated from the list view.',
     insights: [
-      'Evidence tiers and source context are shown in Operator.',
+      'Evidence tiers and source context are public in individual compound dossiers.',
       'Free analysis still shows the parsed list and first findings before signup.',
     ],
-    nextAction: 'Review pricing before unlocking the evidence view.',
+    nextAction: 'Browse public evidence or compare plans for the full stack view.',
   };
 }
 
