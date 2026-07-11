@@ -12,8 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/safety',
     '/pricing',
     '/faq',
-    '/terms',
-    '/privacy',
     '/tools',
     '/tools/reconstitution-calculator',
     '/tools/volume-calculator',
