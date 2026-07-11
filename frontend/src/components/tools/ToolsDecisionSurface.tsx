@@ -1,6 +1,7 @@
 'use client';
 
 import { SyringeDrawVisualizer } from '@/components/calculators/SyringeDrawVisualizer';
+import { VialVisualizer } from '@/components/calculators/VialVisualizer';
 import {
   deleteAnonymousToolArtifact,
   readAnonymousToolPayload,
@@ -43,14 +44,14 @@ const RECENT_COMPOUNDS_KEY = 'biostack.tools.recentCompounds.v1';
 
 const modeCopy: Record<SurfaceMode, { label: string; title: string; description: string }> = {
   dose: {
-    label: 'Dose it right',
-    title: 'Dose volume',
-    description: 'Use powder, solution volume, and target dose to get a draw amount.',
+    label: 'Calculate volume',
+    title: 'Calculated volume',
+    description: 'Use entered label values to calculate a volume. This tool provides math only.',
   },
   mix: {
-    label: 'Mix correctly',
-    title: 'Reconstitution',
-    description: 'Calculate concentration and keep handling steps next to the result.',
+    label: 'Calculate concentration',
+    title: 'Powder and liquid math',
+    description: 'Calculate concentration from the entered powder and liquid values without preparation instructions.',
   },
   convert: {
     label: 'Convert units',
@@ -80,7 +81,6 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   const [trackState, setTrackState] = useState<'idle' | 'tracking'>('idle');
   const [mobileOpen, setMobileOpen] = useState({
     reconstitution: false,
-    storage: false,
     blend: false,
     email: false,
   });
@@ -110,30 +110,32 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
     }
   }, [conversion]);
 
-  const reconstitutionInstructions = useMemo(() => {
+  const calculationWarnings = useMemo(() => {
+    if (!dosing.result) return [];
+    const warnings: string[] = [];
+    const targetToVialRatio = dosing.result.dosePerAdministrationMcg / dosing.result.powderAmountMcg;
+    if (input.powderUnit !== input.desiredDoseUnit && targetToVialRatio >= 0.1) {
+      warnings.push(`The vial and calculated amount use different units (${input.powderUnit} and ${input.desiredDoseUnit}). Confirm the units match the labels you are reading.`);
+    }
+    if (targetToVialRatio >= 1 || targetToVialRatio <= 0.0001) {
+      warnings.push('The calculated amount differs from the vial amount by a large order of magnitude. Recheck the entered numbers and units.');
+    }
+    return warnings;
+  }, [dosing.result, input.desiredDoseUnit, input.powderUnit]);
+
+  const calculationNotes = useMemo(() => {
     const solutionVolume = formatNumber(input.diluentVolumeMl, 2);
     return [
-      'Clean vial tops with alcohol.',
-      `Draw ${solutionVolume} mL of solution.`,
-      'Insert the needle into the vial.',
-      'Tilt the vial slightly.',
-      'Slowly inject solution down the inside wall so it dissolves gently.',
-      'Do not shake.',
-      'Gently swirl until dissolved.',
-      'Discard the used needle appropriately.',
+      `The entered liquid volume is ${solutionVolume} mL.`,
+      'Concentration is calculated as powder amount divided by liquid volume.',
+      'The result is a mathematical equivalence, not a preparation or administration instruction.',
     ];
   }, [input.diluentVolumeMl]);
-
-  const storageInstructions = [
-    'Store reconstituted solution in the refrigerator.',
-    'Avoid door shelves because of temperature fluctuation and shaking.',
-    'Store unmixed powder cold for longevity.',
-  ];
 
   const primaryAnswer = dosing.result
     ? `Calculated draw: ${formatNumber(dosing.result.u100UnitsPerAdministration, 1)} units on a U-100 syringe`
     : 'Enter valid numbers to calculate';
-  const secondaryAnswer = dosing.result ? `${formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL per dose` : dosing.error;
+  const secondaryAnswer = dosing.result ? `${formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL for the entered amount` : dosing.error;
   const blendResult = useMemo(
     () => summarizeBlend(compatibilityState, compatibility, compound, additionalCompound, knowledge),
     [additionalCompound, compatibility, compatibilityState, compound, knowledge]
@@ -359,7 +361,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
                 Dose it right. Mix correctly. Check compatibility.
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-white/62 sm:text-lg">
-                Free calculators, reconstitution guidance, and compatibility checks. No account required.
+                Free volume, concentration, unit-conversion, and compatibility calculations. No account required.
               </p>
             </div>
           )}
@@ -392,9 +394,9 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             ) : (
               <div className="mt-5 space-y-5">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <NumberWithUnitFieldWithInfo label="Powder amount" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} infoImageSrc="/images/vial.jpg" infoImageAlt="Vial measurement guide" />
-                  <NumberField label="Solution volume" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
-                  <NumberWithUnitField label="Desired dose" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
+                  <NumberWithUnitFieldWithInfo label="Powder amount" help="How much powder is printed on the vial?" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} infoImageSrc="/images/vial.jpg" infoImageAlt="How to read a vial label reference" />
+                  <NumberField label="Solution volume" help="How much liquid was added?" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
+                  <NumberWithUnitField label="Amount to calculate" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
                 </div>
 
                 <details className="rounded-lg border border-white/[0.08] bg-black/15 p-4">
@@ -415,7 +417,23 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <ResultPanel mode={mode} primary={mode === 'convert' ? `${formatNumber(conversionResult.value, 4)} ${conversion.toUnit}` : primaryAnswer} secondary={mode === 'convert' ? `${formatNumber(conversion.amount)} ${conversion.fromUnit}` : secondaryAnswer} hasError={mode === 'convert' ? Boolean(conversionResult.error) : Boolean(dosing.error)} />
-          {mode !== 'convert' && dosing.result && <SyringeDrawVisualizer result={dosing.result} />}
+          {mode !== 'convert' && (
+            <VialVisualizer powderAmount={input.powderAmount} powderUnit={input.powderUnit} diluentVolumeMl={input.diluentVolumeMl} mode={mode} concentrationSource={input.concentrationSource} />
+          )}
+          {mode !== 'convert' && <SyringeDrawVisualizer result={dosing.result} error={dosing.error} />}
+          {mode !== 'convert' && dosing.result && (
+            <section aria-labelledby="calculation-summary-title" className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+              <h3 id="calculation-summary-title" className="text-base font-semibold text-white">Calculation summary</h3>
+              <p className="mt-2 text-sm leading-6 text-white/65">
+                {formatNumber(input.powderAmount)} {input.powderUnit} in {formatNumber(input.diluentVolumeMl)} mL gives a concentration of {formatNumber(dosing.result.concentrationMcgPerMl)} mcg/mL. The calculated amount of {formatDose(dosing.result.dosePerAdministrationMcg)} corresponds to {formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL, or {formatNumber(dosing.result.u100UnitsPerAdministration, 1)} U-100 units.
+              </p>
+              {calculationWarnings.length > 0 && (
+                <ul aria-label="Calculation checks" className="mt-3 space-y-2">
+                  {calculationWarnings.map((warning) => <li key={warning} role="alert" className="rounded-md border border-amber-300/25 bg-amber-400/10 px-3 py-2 text-sm leading-5 text-amber-100">{warning}</li>)}
+                </ul>
+              )}
+            </section>
+          )}
           {mode !== 'convert' && dosing.result && (
             <div className="grid gap-3 sm:grid-cols-2">
               <Metric label="Dose" value={formatDose(dosing.result.dosePerAdministrationMcg)} detail="per administration" />
@@ -425,14 +443,8 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
           {stackInsights.length > 0 && <InsightPanel title="Stack insights" items={stackInsights} />}
 
           {mode !== 'convert' && dosing.result && input.concentrationSource === 'reconstitution' && (
-            <MobileAccordion title="Reconstitution steps" open={mobileOpen.reconstitution} onToggle={() => setMobileOpen((current) => ({ ...current, reconstitution: !current.reconstitution }))}>
-              <InstructionList items={reconstitutionInstructions} />
-            </MobileAccordion>
-          )}
-
-          {mode !== 'convert' && dosing.result && input.concentrationSource === 'reconstitution' && (
-            <MobileAccordion title="Storage" open={mobileOpen.storage} onToggle={() => setMobileOpen((current) => ({ ...current, storage: !current.storage }))}>
-              <InstructionList items={storageInstructions} />
+            <MobileAccordion title="How the math works" open={mobileOpen.reconstitution} onToggle={() => setMobileOpen((current) => ({ ...current, reconstitution: !current.reconstitution }))}>
+              <InstructionList items={calculationNotes} />
             </MobileAccordion>
           )}
 
@@ -753,10 +765,11 @@ function Metric({ label, value, detail }: { label: string; value: string; detail
   );
 }
 
-function NumberField({ label, value, onChange, suffix, step = '0.1' }: { label: string; value: number; onChange: (value: number) => void; suffix?: string; step?: string }) {
+function NumberField({ label, help, value, onChange, suffix, step = '0.1' }: { label: string; help?: string; value: number; onChange: (value: number) => void; suffix?: string; step?: string }) {
   return (
     <label className="block">
       <span className="mb-2 block text-sm text-white/62">{label}</span>
+      {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
         <input type="number" min="0" step={step} value={Number.isNaN(value) ? '' : value} onChange={(event) => onChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
         {suffix && <span className="border-l border-white/10 px-3 py-3 text-sm text-white/50">{suffix}</span>}
@@ -776,10 +789,11 @@ function SelectField<TValue extends string>({ label, value, values, onChange }: 
   );
 }
 
-function NumberWithUnitField<TUnit extends string>({ label, value, unit, units, onValueChange, onUnitChange }: { label: string; value: number; unit: TUnit; units: TUnit[]; onValueChange: (value: number) => void; onUnitChange: (unit: TUnit) => void }) {
+function NumberWithUnitField<TUnit extends string>({ label, help, value, unit, units, onValueChange, onUnitChange }: { label: string; help?: string; value: number; unit: TUnit; units: TUnit[]; onValueChange: (value: number) => void; onUnitChange: (unit: TUnit) => void }) {
   return (
     <label className="block">
       <span className="mb-2 block text-sm text-white/62">{label}</span>
+      {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
         <input type="number" min="0" step="0.1" value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
         <select value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
@@ -790,7 +804,7 @@ function NumberWithUnitField<TUnit extends string>({ label, value, unit, units, 
   );
 }
 
-function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit, units, onValueChange, onUnitChange, infoImageSrc, infoImageAlt }: { label: string; value: number; unit: TUnit; units: TUnit[]; onValueChange: (value: number) => void; onUnitChange: (unit: TUnit) => void; infoImageSrc: string; infoImageAlt: string }) {
+function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value, unit, units, onValueChange, onUnitChange, infoImageSrc, infoImageAlt }: { label: string; help?: string; value: number; unit: TUnit; units: TUnit[]; onValueChange: (value: number) => void; onUnitChange: (unit: TUnit) => void; infoImageSrc: string; infoImageAlt: string }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -825,6 +839,7 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, value, unit,
           </svg>
         </button>
       </span>
+      {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
         <input type="number" min="0" step="0.1" value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
         <select value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
