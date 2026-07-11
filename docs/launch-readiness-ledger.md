@@ -10,9 +10,43 @@ This is the single current launch ledger. A row may use only `verified`, `failed
 
 ## Release decision
 
-BioStack is not qualified for production launch. The latest main deployment workflow failed before build/deploy, the production dependency restore path cannot obtain `Keon.Kompress`, legal policies are unapproved placeholders, the frontend has no consent-recording experience, no durable backup/restore evidence exists, and live auth, database, health, monitoring, rollback, accessibility, analytics, SEO, and support acceptance have not been demonstrated.
+BioStack is not qualified for production launch. The latest hosted main deployment workflow still failed before build/deploy; this branch repairs the `Keon.Kompress` restore path and high-severity transitive dependency locally, but no hosted run exists for the release SHA. Legal policies are unapproved placeholders, the frontend has no consent-recording experience, no durable backup/restore evidence exists, and live Stripe, auth, database, health, monitoring, rollback, accessibility, analytics, SEO, and support acceptance have not been demonstrated.
 
 Release may be reconsidered only after every `failed` row is corrected and reverified, every release-blocking `blocked` row has external evidence attached, and the release owner records a new decision. Rows marked `not tested` are not passes.
+
+## Lane 1 — calculator visuals and beginner clarity
+
+| Requirement | Status | Evidence | External owner/action | Release impact |
+|---|---|---|---|---|
+| Syringe and vial visuals are prominent on active `/tools` dose and mix modes | verified | `SyringeDrawVisualizer`, `VialVisualizer`, and direct rendering in `ToolsDecisionSurface`; invalid inputs omit the meter/fill, over-capacity is announced, and both mL and U-100 units are stated. | QA owner: retain route-level regression coverage. | Required implementation is present on the production route rather than an orphan preview. |
+| Beginner field help, worded summary, and unit/magnitude checks | verified | `ToolsDecisionSurface` restates powder, liquid, amount, concentration, mL, and U-100 units and keeps warnings math-only/non-prescriptive. | Product/safety owner: approve final wording. | Reduces first-use interpretation risk without adding administration instructions. |
+| Focused calculator tests pass on the integrated branch | blocked | The calculator lane added zero/invalid, fractional, 10/50/100/over-capacity, accessibility, 375px/desktop, and active-route tests. Multiple primary-checkout Vitest runs emitted no result and left orphaned workers; they were terminated and are not counted as passes. | Frontend/CI owner: run the exact focused files in clean Node 22 CI and attach results. | Release blocker: integrated calculator behavior is not test-qualified. |
+| Browser verification at mobile, tablet, and desktop widths | not tested | No successful integrated browser run was available. | Accessibility/QA owner: verify 375px, tablet, and desktop visibility, keyboard flow, text equivalents, and no console errors. | Release blocker for the customer-facing calculator acceptance gate. |
+
+## Lane 2 — payment path
+
+| Requirement | Status | Evidence | External owner/action | Release impact |
+|---|---|---|---|---|
+| Advertised packaging matches implemented checkout intervals | verified | Leadership fallback is monthly-only; `frontend/src/lib/marketing.ts`, pricing/billing surfaces, and commercialization docs no longer advertise annual checkout. Focused commercial-lane pricing tests passed. | Product owner: retain monthly-only until annual price IDs and contracts are implemented. | Removes the monthly/annual contradiction. |
+| Checkout success and cancellation states are explicit | verified | `frontend/src/app/billing/page.tsx` renders dedicated `checkout=success` and `checkout=cancelled` messages. | QA owner: exercise both return URLs from Stripe test mode. | Local UI seam exists; live redirect behavior remains untested. |
+| Webhook signature, idempotency, renewal, failure, cancellation, expiry, and downgrade | not tested | Signature and stored Stripe-event idempotency code exist, but no complete deployed lifecycle or replay evidence was produced for this release. | Billing owner: execute Stripe test/live lifecycle matrix and verify fail-closed Observer downgrade. | Revenue and entitlement blocker. |
+| Production Stripe products, monthly prices, secrets, URLs, and Customer Portal | blocked | Required configuration keys are documented, but no production values or live portal evidence were available to this session. | Billing/platform owner: configure Operator/Commander monthly prices, secret/webhook secret, checkout/portal URLs, and portal policy. | Direct revenue blocker. |
+| Authorized live transaction and refund/cancellation cycle | not tested | No real charge, refund, cancellation, renewal, or payment-failure exercise was performed. | Billing/release owner: run and document an authorized low-value live cycle before public launch. | Mandatory launch gate. |
+
+## Lane 4 — provider conversion
+
+| Requirement | Status | Evidence | External owner/action | Release impact |
+|---|---|---|---|---|
+| Provider request creates a durable, reviewable, privacy-minimal lead | verified | `ProviderAccessEndpoints`, `ProviderAccessRequest` entity/migration, consent version/timestamp, normalized email, idempotency/unique-email handling, honeypot, rate limit, admin list/update, confirmation UI; 4 focused integration tests and focused frontend tests passed in the isolated commercial lane. | QA/security owner: rerun after integration and verify deployed persistence/rate-limit headers. | The former no-op provider CTA now has a real server-backed path. |
+| Provider request avoids health/protocol detail and overclaiming | verified | Form captures contact/organization/role/consent only; provider copy labels multi-client, export, sharing, and revocation workflows as pilot rather than available functionality. | Privacy/product owner: approve final intake fields and pilot terms. | Maintains the non-prescriptive/privacy boundary. |
+| Internal notification, follow-up ownership, and operational SLA | blocked | Admin queue/status/owner fields exist; no notification destination, staffed owner, or response SLA is configured. | Provider-operations owner: assign queue ownership, notification, response target, and escalation. | Provider revenue blocker until requests are actively handled. |
+
+## Lane 5 — unfinished customer-facing surfaces
+
+| Requirement | Status | Evidence | External owner/action | Release impact |
+|---|---|---|---|---|
+| Printable-reference-card no-op CTA is removed | verified | Commercial lane removed the empty `Email me a printable reference card` control from `ToolsDecisionSurface`. | Product owner: only restore after a durable consented lead flow exists. | Removes a conversion-critical no-op. |
+| All public/paid TODO, mock, preview, coming-soon, and no-op surfaces are qualified | not tested | This release fixed the named provider/printable-card paths and prior portal mock/tier work is on main, but no complete deployed crawl and entitlement-by-claim inventory was performed. | Product/QA owner: complete route/CTA/paid-claim crawl against the candidate. | Release blocker for honest paid claims. |
 
 ## Lane 3 — authentication, onboarding, and ownership
 
@@ -42,8 +76,8 @@ Release may be reconsidered only after every `failed` row is corrected and rever
 |---|---|---|---|---|
 | Production secrets are supplied outside source control | blocked | `.env.example` documents required variables and GitHub deploy uses repository secrets/OIDC. Checked-in `backend/src/BioStack.Api/appsettings.json` contains development-looking JWT/callback/database values; actual production secret rotation and GitHub/Azure configuration were not inspected. | Security/platform owner: confirm all non-development values are unused in production, rotate if ever exposed, and validate secret inventory. | Release blocker until attested and verified. |
 | Secret scanning workflow configuration is present | blocked | `.github/workflows/secret-scan.yml`; this audit adds the previously missing `.gitleaks.toml` extending Gitleaks defaults. Gitleaks is not installed locally, so configuration parsing was not tested in this lane. | Security owner: run Gitleaks in hosted CI, require the workflow, and obtain a green PR/main run. | Configuration gap is corrected, but release evidence remains blocked on a hosted pass. |
-| Current deploy workflow passes | failed | `gh run view 29162842576 --log-failed`: 2026-07-11 run failed restoring `Keon.Kompress` with `NU1101`; no image build or deployment occurred. | Backend/platform owner: make the package available deterministically to clean Linux CI, then rerun. | Release blocker. |
-| Production dependency set has no known high-severity advisory | failed | Local `dotnet restore` emitted `NU1903` for `Microsoft.Bcl.Memory 9.0.4` and advisory `GHSA-73j8-2gch-69rq`. | Security/backend owner: resolve or formally risk-accept the advisory and enforce vulnerability auditing in CI. | Release blocker pending remediation or recorded risk acceptance. |
+| Current deploy workflow passes | failed | Hosted run `29162842576` failed restoring `Keon.Kompress`; this branch vendors the four pinned packages, configures the repository feed, copies all solution projects into Docker restore, and passed 1,063 backend tests plus an API Docker build locally. No hosted run exists for this SHA. | Backend/platform owner: obtain a green hosted workflow for the exact release SHA. | Release blocker remains until hosted evidence exists. |
+| Production dependency set has no known high-severity advisory | verified | `Microsoft.Bcl.Memory` is pinned to 10.0.9 (patched floor is 10.0.4 for GHSA-73j8-2gch-69rq); `dotnet list BioStack.sln package --vulnerable --include-transitive --no-restore` reported no vulnerable packages, and 252 API tests passed with zero warnings. | Security/backend owner: enforce vulnerability auditing in CI. | The identified high-severity dependency is remediated locally. |
 | Deployment is gated before Azure mutation | verified | `.github/workflows/deploy.yml` runs backend and frontend tests before Azure login and container-app updates. | Platform owner: add environment protection/manual production approval if required by policy. | Prevented the failed build from deploying. |
 | Production database is PostgreSQL | verified | `backend/src/BioStack.Api/Program.cs` rejects missing/non-Postgres production configuration and runs EF migrations; `.env.example` documents provider/connection variables. | DBA/platform owner: validate the actual target, least privilege, TLS, capacity, and migration plan. | Code fails closed; live database remains blocked below. |
 | Live database connectivity and migrations | not tested | No production connection or deployment was exercised. | DBA: run migration rehearsal and smoke test against a release-like database. | Release blocker until passed. |
@@ -101,7 +135,19 @@ rtk gh run list --workflow sonarcloud.yml --limit 5
   five listed runs: failed
 
 rtk dotnet restore tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --verbosity minimal
-  passed locally; NU1903 high-severity advisory for Microsoft.Bcl.Memory 9.0.4
+  historical audit result: passed with NU1903 for Microsoft.Bcl.Memory 9.0.4
+
+rtk dotnet test BioStack.sln --verbosity minimal -m:1
+  1,063 passed across 18 projects (CI repair lane)
+
+rtk dotnet list BioStack.sln package --vulnerable --include-transitive --no-restore
+  no vulnerable packages after direct Microsoft.Bcl.Memory 10.0.9 pin
+
+rtk dotnet test tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-restore --verbosity minimal -m:1
+  252 passed, 0 warnings after dependency remediation
+
+rtk docker build --file Dockerfile --tag biostack-api:ci-kompress-restore .
+  passed; clean solution restore and API publish completed inside Linux image build
 
 rtk dotnet test tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-restore --filter FullyQualifiedName~ConsentGateIntegrationTests --verbosity minimal
   14 passed
@@ -117,6 +163,9 @@ rtk npm ci
 
 rtk npm test -- --pool=threads --maxWorkers=1 src/__tests__/middleware.public-routes.test.ts src/__tests__/app/start/page.test.tsx
   unavailable: clean install did not complete; vitest/config could not be resolved
+
+rtk npx vitest run <calculator-and-commercial-focused-files> --pool=forks --maxWorkers=1
+  integrated primary checkout: no result; bounded runs timed out and orphan workers were terminated
 
 rtk proxy gitleaks version
   unavailable: gitleaks is not installed locally
