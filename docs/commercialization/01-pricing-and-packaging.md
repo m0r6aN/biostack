@@ -236,7 +236,8 @@ When ready, the B2B tier ("BioStack Clinic" or "BioStack Practice") addresses a 
 These are add-ons or premium expansions that can layer on top of existing tiers without requiring tier changes.
 
 ### Add-on 1: Extended Protocol History Archive
-**Price:** $2/month  
+**Price:** $2/month
+
 **Who:** Operator users who want access to more than 12 months of historical data (if data retention limits are enforced for cost reasons).  
 **Trigger:** Power users who have been on the platform 12+ months.
 

@@ -1,9 +1,13 @@
 # BioStack launch readiness ledger
 
-**Directive lane:** 0 (launch qualification)  
-**Audit scope:** lanes 3, 6, 7, 8, and 9  
-**Evidence baseline:** `main@235fb72883f8210c05f7855cb2ab6bf9e20d4841`  
-**Audit date:** 2026-07-11  
+**Directive lane:** 0 (launch qualification)
+
+**Audit scope:** lanes 3, 6, 7, 8, and 9
+
+**Evidence baseline:** `main@235fb72883f8210c05f7855cb2ab6bf9e20d4841`
+
+**Audit date:** 2026-07-11
+
 **Current recommendation:** **NO-GO**
 
 This is the single current launch ledger. A row may use only `verified`, `failed`, `blocked`, `obsolete`, or `not tested`. `verified` means the cited deterministic repository check passed; it does not imply a live-environment, legal, security, accessibility, or business approval. External owners are roles, not recorded human approvals.
