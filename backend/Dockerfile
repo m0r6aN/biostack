@@ -2,6 +2,8 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 COPY BioStack.sln .
+COPY NuGet.Config .
+COPY packages/ packages/
 COPY src/BioStack.Domain/BioStack.Domain.csproj src/BioStack.Domain/
 COPY src/BioStack.Contracts/BioStack.Contracts.csproj src/BioStack.Contracts/
 COPY src/BioStack.Application/BioStack.Application.csproj src/BioStack.Application/
@@ -14,6 +16,8 @@ COPY tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj tests/BioStack.Api.Tests
 COPY tests/BioStack.Domain.Tests/BioStack.Domain.Tests.csproj tests/BioStack.Domain.Tests/
 COPY tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj tests/BioStack.Application.Tests/
 COPY tests/BioStack.KnowledgeWorker.Tests/BioStack.KnowledgeWorker.Tests.csproj tests/BioStack.KnowledgeWorker.Tests/
+COPY tools/BioStack.ProtocolOperationsExportBundleVerifierCli/BioStack.ProtocolOperationsExportBundleVerifierCli.csproj tools/BioStack.ProtocolOperationsExportBundleVerifierCli/
+COPY tests/BioStack.ProtocolOperationsExportBundleVerifierCli.Tests/BioStack.ProtocolOperationsExportBundleVerifierCli.Tests.csproj tests/BioStack.ProtocolOperationsExportBundleVerifierCli.Tests/
 RUN dotnet restore BioStack.sln
 
 COPY . .

@@ -48,8 +48,7 @@ export default function PricingPage() {
 
               <div className="mt-5 border-y border-white/8 py-4">
                 <p className="text-3xl font-semibold text-white">{tier.monthly}</p>
-                <p className="mt-2 text-sm text-white/50">or {tier.annual}</p>
-                <p className="mt-1 text-sm text-emerald-200/85">{tier.annualEffective}</p>
+                <p className="mt-2 text-sm text-white/50">Monthly billing</p>
               </div>
 
               <p className="mt-5 text-xs font-semibold uppercase tracking-[0.2em] text-white/38">

@@ -7,8 +7,6 @@ export interface PricingTier {
   name: string;
   tagline: string;
   monthly: string;
-  annual: string;
-  annualEffective: string;
   description: string;
   detail: string;
   ctaLabel: string;
@@ -75,20 +73,18 @@ export const pricingTiers: PricingTier[] = [
     name: 'Observer',
     tagline: 'Free',
     monthly: '$0',
-    annual: '$0/year',
-    annualEffective: '$0/mo',
-description: 'Free.',
+    description: 'Free.',
     detail:
       'A simple place to track what you’re taking and stop relying on notes, memory, or scattered apps.',
-ctaLabel: 'Start Free',
-href: '/start',
+    ctaLabel: 'Start Free',
+    href: '/start',
     highlights: [
       'Free calculators',
       'Basic analyzer score',
-'Public compounds and evidence library',
+      'Public compounds and evidence library',
       'Unknown states and safety warnings',
       'One finding preview',
-'Local tool history',
+      'Local tool history',
       'Overlap detection teaser',
     ],
   },
@@ -96,8 +92,6 @@ href: '/start',
     name: 'Operator',
     tagline: 'Track & Analyze',
     monthly: '$12/mo',
-    annual: '$96/year',
-    annualEffective: '$8/mo effective',
     description: 'Track & Analyze.',
     detail:
       'Everything you need to track compounds, log results, and view reviewed protocol relationships without medical-authority copy.',
@@ -120,8 +114,6 @@ href: '/start',
     name: 'Commander',
     tagline: 'Longitudinal Intelligence',
     monthly: '$29/mo',
-    annual: '$228/year',
-    annualEffective: '$19/mo effective',
     description: 'Longitudinal Intelligence.',
     detail:
       'Advanced reviewed intelligence for ambiguity analysis and longitudinal observational reports.',
