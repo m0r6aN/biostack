@@ -490,12 +490,11 @@ describe('UnifiedDosingCalculator', () => {
   it('renders a syringe draw visualizer mapped to U-100 units', () => {
     render(<UnifiedDosingCalculator />);
 
-    const syringe = screen.getByRole('meter', { name: /u-100 syringe draw visualizer/i });
-    expect(syringe).toHaveAttribute('data-orientation', 'horizontal');
+    const syringe = screen.getByRole('meter', { name: /calculated draw/i });
     expect(syringe).toHaveAttribute('aria-valuenow', '10');
     expect(syringe).toHaveAttribute('aria-valuemax', '100');
-    expect(screen.getByText('Calculated draw')).toBeInTheDocument();
-    expect(screen.getByText('10 units filled on a U-100 syringe')).toBeInTheDocument();
+    expect(screen.getByText('Calculated U-100 syringe draw')).toBeInTheDocument();
+    expect(screen.getByText(/= 10 U-100 units/)).toBeInTheDocument();
   });
 
   it('warns when the calculated draw exceeds one U-100 syringe', () => {
@@ -503,9 +502,9 @@ describe('UnifiedDosingCalculator', () => {
 
     fireEvent.change(screen.getByLabelText('Desired dose'), { target: { value: '3000' } });
 
-    const syringe = screen.getByRole('meter', { name: /u-100 syringe draw visualizer/i });
+    const syringe = screen.getByRole('meter', { name: /calculated draw/i });
     expect(syringe).toHaveAttribute('aria-valuenow', '100');
-    expect(screen.getByText('Draw exceeds one U-100 syringe.')).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toHaveTextContent('above the 100-unit capacity');
   });
 });
 
