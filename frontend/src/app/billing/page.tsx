@@ -49,6 +49,7 @@ export default function BillingPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
+  const [checkoutState, setCheckoutState] = useState<'success' | 'cancelled' | null>(null);
 
   const load = async () => {
     try {
@@ -63,6 +64,8 @@ export default function BillingPage() {
   };
 
   useEffect(() => {
+    const returnedState = new URLSearchParams(window.location.search).get('checkout');
+    setCheckoutState(returnedState === 'success' || returnedState === 'cancelled' ? returnedState : null);
     void load();
   }, []);
 
@@ -98,6 +101,20 @@ export default function BillingPage() {
       <Header title="Billing" />
 
       <div className="max-w-4xl space-y-6 p-4 sm:p-8">
+        {checkoutState === 'success' && (
+          <section role="status" className="rounded-lg border border-emerald-300/20 bg-emerald-400/[0.08] p-5">
+            <h2 className="font-semibold text-emerald-50">Checkout returned successfully</h2>
+            <p className="mt-2 text-sm leading-6 text-emerald-50/70">
+              Stripe is processing the subscription. This page will show paid access after the verified webhook updates your account.
+            </p>
+          </section>
+        )}
+        {checkoutState === 'cancelled' && (
+          <section role="status" className="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+            <h2 className="font-semibold text-white">Checkout canceled</h2>
+            <p className="mt-2 text-sm leading-6 text-white/60">No plan change was requested. You can continue on your current plan.</p>
+          </section>
+        )}
         {loading ? (
           <LoadingSkeleton />
         ) : error ? (

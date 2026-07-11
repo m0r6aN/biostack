@@ -50,13 +50,13 @@ Without auth, there is no revenue path. Without the public calculator, there is 
 
 ### Recommended Tier Model
 
-| Tier | Price (Monthly) | Price (Annual) | Effective Monthly | Target User |
-|------|-----------------|----------------|-------------------|-------------|
-| **Observer** (Free) | $0 | $0 | $0 | New users, explorers, casual trackers |
-| **Operator** (Pro) | $12/mo | $96/yr | $8.00 | Serious self-experimenters — the primary revenue tier |
-| **Commander** (Elite) | $29/mo | $228/yr | $19.00 | Power users, advanced researchers, data-obsessed protocol builders |
+| Tier | Monthly Price | Target User |
+|------|---------------|-------------|
+| **Observer** (Free) | $0 | New users, explorers, casual trackers |
+| **Operator** (Pro) | $12/mo | Serious self-experimenters — the primary revenue tier |
+| **Commander** (Elite) | $29/mo | Power users, advanced researchers, data-obsessed protocol builders |
 
-Annual is the default-selected billing option on the pricing page. The $8/month effective rate for Operator annual is the primary price anchor.
+Monthly billing is the only supported launch interval. Do not advertise another interval until its Stripe and checkout contracts exist.
 
 ### Feature Gating Summary
 
@@ -100,9 +100,7 @@ Annual is the default-selected billing option on the pricing page. The $8/month 
 | Label | Amount | Interval | Trial |
 |-------|--------|----------|-------|
 | Operator Monthly | $12.00 | monthly | 7 days (optional — decision required, see Section J) |
-| Operator Annual | $96.00 | yearly | 7 days (optional) |
 | Commander Monthly | $29.00 | monthly | None |
-| Commander Annual | $228.00 | yearly | None |
 
 **Required webhooks at launch:** `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.payment_failed`, `invoice.payment_succeeded`
 
@@ -306,7 +304,7 @@ Headline: Built for the people who already know what they’re doing — and nee
 
 Headline: One platform. Built for serious use.
 
-Free to start with Observer — includes unit conversion, basic tracking, and knowledge base preview. Upgrade to Operator ($12/month, or $8/month on the annual plan) for the full protocol workflow: unlimited compounds, precision calculators, all 16 check-in fields, pathway overlap analysis, and protocol phases. Commander ($29/month, or $19/month annually) adds AI-assisted protocol analysis and advanced pattern detection.
+Free to start with Observer. Upgrade to Operator ($12/month) or Commander ($29/month) for the verified capabilities listed on the current pricing surface.
 
 CTA: → See full pricing
 
@@ -648,7 +646,7 @@ Phases 5–7 (Tools, SEO Infrastructure, Content) run in parallel after Phase 1 
 **Phase 2 — Public Marketing Layer** (unblocks conversion)
 1. Next.js `(marketing)` route group with public nav layout
 2. Landing page (`app/(marketing)/page.tsx`) — copy from doc 03 with pricing section corrected per Section D
-3. Pricing page — Observer/Operator/Commander cards, monthly/annual toggle, annual default-selected, full feature comparison table
+3. Pricing page — Observer/Operator/Commander cards, monthly-only prices, full feature comparison table
 4. Terms of Service and Privacy Policy pages (legal copy needed — see Section J)
 
 **Phase 3 — Stripe Integration** (unblocks revenue)

@@ -23,6 +23,8 @@ import {
     ProfileGoal,
     CurrentStackIntelligence,
     CurrentSubscription,
+    ProviderAccessConfirmation,
+    ProviderAccessRequest,
     ProtocolConsolePayload,
     ProtocolAnalyzerResult,
     Protocol,
@@ -443,6 +445,13 @@ export class ApiClient {
     return this.request('/api/v1/leads/capture', {
       method: 'POST',
       body: JSON.stringify({ email, source }),
+    });
+  }
+
+  async requestProviderAccess(request: ProviderAccessRequest): Promise<ProviderAccessConfirmation> {
+    return this.request<ProviderAccessConfirmation>('/api/v1/provider-access/requests', {
+      method: 'POST',
+      body: JSON.stringify(request),
     });
   }
 

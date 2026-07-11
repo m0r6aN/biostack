@@ -285,7 +285,7 @@ Phases 5–7 can run in parallel after Phase 1 is complete.
 
 **Requirements:**
 - 3-column pricing card layout: Observer / Operator / Commander
-- Monthly/Annual toggle; Annual selected by default; show savings badge ("Save 33%")
+- Monthly-only launch pricing; do not render an unsupported interval toggle
 - Feature comparison table below cards (full matrix from doc 01)
 - FAQ accordion below comparison table (5–7 billing-related questions)
 - CTA for each paid tier triggers Stripe Checkout (`POST /api/billing/checkout-session`)
@@ -293,8 +293,8 @@ Phases 5–7 can run in parallel after Phase 1 is complete.
 - "Currently on [tier]" state for authenticated users
 
 **Acceptance Criteria:**
-- Prices match doc 01: Observer $0 / Operator $12mo/$96yr / Commander $29mo/$228yr
-- Annual toggle correctly updates displayed prices and checkout session price IDs
+- Prices match doc 01: Observer $0 / Operator $12mo / Commander $29mo
+- Each paid tier maps to its single monthly checkout price ID
 - Stripe Checkout opens in same tab (not popup) on paid tier CTA click
 - Authenticated users see their current tier highlighted
 - Unauthenticated users hitting a paid tier CTA are prompted to register first, then continue to checkout
@@ -443,12 +443,10 @@ Phases 5–7 can run in parallel after Phase 1 is complete.
 
 **Tasks:**
 - Create Stripe products in dashboard: "BioStack Operator" and "BioStack Commander"
-- Create prices: monthly + annual for each product
+- Create one monthly price for each product
 - Store price IDs in environment variables:
   - `STRIPE_OPERATOR_MONTHLY_PRICE_ID`
-  - `STRIPE_OPERATOR_ANNUAL_PRICE_ID`
   - `STRIPE_COMMANDER_MONTHLY_PRICE_ID`
-  - `STRIPE_COMMANDER_ANNUAL_PRICE_ID`
   - `STRIPE_WEBHOOK_SECRET`
   - `STRIPE_SECRET_KEY`
 - Update `.env.example` with all new Stripe env vars (values blank)
@@ -463,7 +461,7 @@ Phases 5–7 can run in parallel after Phase 1 is complete.
 
 **Request:**
 ```json
-{ "priceId": "price_xxx", "billingInterval": "monthly|annual" }
+{ "planCode": "operator|commander" }
 ```
 
 **Server actions:**
@@ -1015,9 +1013,7 @@ JWT_AUDIENCE                       # e.g., "biostack-users"
 STRIPE_SECRET_KEY                  # sk_live_xxx (sk_test_xxx for dev)
 STRIPE_WEBHOOK_SECRET              # whsec_xxx
 STRIPE_OPERATOR_MONTHLY_PRICE_ID   # price_xxx
-STRIPE_OPERATOR_ANNUAL_PRICE_ID    # price_xxx
 STRIPE_COMMANDER_MONTHLY_PRICE_ID  # price_xxx
-STRIPE_COMMANDER_ANNUAL_PRICE_ID   # price_xxx
 ```
 
 **Frontend (`frontend/.env.local`):**

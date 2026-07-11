@@ -118,6 +118,28 @@ describe('ApiClient', () => {
     );
   });
 
+  it('posts provider access requests to the public provider queue endpoint', async () => {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      status: 202,
+      json: async () => ({ requestId: 'request-1', status: 'pending', submittedAtUtc: '2026-07-11T12:00:00Z' }),
+    });
+
+    const payload = {
+      email: 'provider@example.com',
+      name: 'Provider Name',
+      organization: 'Example Practice',
+      role: 'Owner',
+      consent: true,
+    };
+    await client.requestProviderAccess(payload);
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://api.example.test/api/v1/provider-access/requests',
+      expect.objectContaining({ method: 'POST', body: JSON.stringify(payload) })
+    );
+  });
+
   it('falls back to local goal definitions when the goals endpoint fails', async () => {
     fetchMock.mockResolvedValue({
       ok: false,
