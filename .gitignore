@@ -27,6 +27,7 @@ output/
 *.sln.docstates
 .vs/
 **/.nuget/
+/.nuget-ci/
 /packages/
 TestResults/
 *.nupkg
