@@ -13,7 +13,7 @@ jobs:
   deploy:
     name: Build & Deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -43,9 +43,13 @@ jobs:
 
       - name: Run frontend tests
         working-directory: frontend
-        # Bound worker concurrency so the launch suite fits reliably on the
-        # hosted runner instead of exhausting the Node heap before deployment.
-        run: npm test -- --pool=threads --maxWorkers=2 --no-file-parallelism
+        # Use the forks pool with explicit heap headroom: the threads pool caps
+        # each worker's heap via worker_threads resource limits, and the suite's
+        # accumulated jsdom memory kills the final test file with
+        # ERR_WORKER_OUT_OF_MEMORY on the hosted runner.
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: npm test -- --pool=forks --maxWorkers=2 --no-file-parallelism
 
       # ── Azure login via OIDC (no long-lived secrets) ───────────────────────
       - name: Azure login
