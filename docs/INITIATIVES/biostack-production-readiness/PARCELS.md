@@ -12,6 +12,7 @@
 | SEC-RECEIPT-001 | Security / receipt authorization | Release hardening | blocked-on-KEO-64 | `D:/Repos/BioStack-sec-receipts` | `codex/sec-receipt-authorization` | medium: receipt API/UI |
 | SEC-LINK-001 | Security / analyzer egress | Release hardening | ready | `D:/Repos/BioStack-sec-link-analyzer` | `codex/sec-link-analyzer` | medium: analyzer/API composition |
 | SEC-PROVIDER-001 | Security / provider intake | Release hardening | ready | `D:/Repos/BioStack-sec-provider-access` | `codex/sec-provider-access` | low-medium: provider API |
+| SEC-AUTH-001 | Security / authentication | Release hardening | ready | `D:/Repos/BioStack-sec-magic-link` | `codex/sec-magic-link-atomic` | medium: auth endpoint |
 | PR-REL-001 | Release | Release | blocked | isolated required | TBD | high: ledger/evidence |
 
 Dependency order: `PR-DOC-001 -> PR-CI-001 -> integration/hardening parcels -> PR-SEC-001 -> PR-REL-001`.
