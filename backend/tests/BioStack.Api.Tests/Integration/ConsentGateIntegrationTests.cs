@@ -145,6 +145,50 @@ public sealed class ConsentGateIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task PostConsent_ClientSelectedVersion_RecordsCurrentServerVersion()
+    {
+        await SignInAsync("invented-consent@example.com");
+
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/consent",
+            new RecordConsentRequest("attacker-invented-v999"),
+            JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadFromJsonAsync<ConsentStatusResponse>(JsonOptions);
+        Assert.NotNull(body);
+        Assert.True(body.Accepted);
+        Assert.Equal("bio-observational-v1", body.ConsentVersion);
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var storedVersion = await db.AppUsers
+            .Where(user => user.Email == "invented-consent@example.com")
+            .Select(user => user.ConsentVersion)
+            .SingleAsync();
+        Assert.Equal("bio-observational-v1", storedVersion);
+    }
+
+    [Fact]
+    public async Task StaleStoredConsent_ReportsNotAcceptedAndBlocksMutation()
+    {
+        await SignInAsync("stale-consent@example.com");
+        await SetConsentDirectAsync("stale-consent@example.com", "bio-observational-v0");
+
+        var status = await _client.GetFromJsonAsync<ConsentStatusResponse>("/api/v1/consent", JsonOptions);
+        Assert.NotNull(status);
+        Assert.False(status.Accepted);
+        Assert.NotNull(status.ConsentAcceptedAtUtc);
+        Assert.Equal("bio-observational-v0", status.ConsentVersion);
+
+        var response = await _client.PostAsJsonAsync("/api/v1/profiles",
+            new CreateProfileRequest("Stale", Sex.Unspecified, 70m, 30, "g", "n"), JsonOptions);
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        var body = await response.Content.ReadFromJsonAsync<JsonElement>(JsonOptions);
+        Assert.Equal("consent_required", body.GetProperty("code").GetString());
+    }
+
+    [Fact]
     public async Task ProfileWrite_AnonymousStill401_NotConsentRequired()
     {
         var response = await _client.PostAsJsonAsync("/api/v1/profiles",
@@ -313,6 +357,16 @@ public sealed class ConsentGateIntegrationTests : IAsyncLifetime
         var user = await db.AppUsers.SingleAsync(u => u.Email == email);
         user.ConsentAcceptedAtUtc = null;
         user.ConsentVersion = null;
+        await db.SaveChangesAsync();
+    }
+
+    private async Task SetConsentDirectAsync(string email, string version)
+    {
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var user = await db.AppUsers.SingleAsync(u => u.Email == email);
+        user.ConsentAcceptedAtUtc = DateTime.UtcNow;
+        user.ConsentVersion = version;
         await db.SaveChangesAsync();
     }
 

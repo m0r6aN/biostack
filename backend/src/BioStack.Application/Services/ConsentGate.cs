@@ -26,7 +26,8 @@ public sealed class ConsentGate : IConsentGate
             ?? throw new InvalidOperationException("Authenticated user not found.");
 
         return new ConsentStatus(
-            user.ConsentAcceptedAtUtc.HasValue && !string.IsNullOrWhiteSpace(user.ConsentVersion),
+            user.ConsentAcceptedAtUtc.HasValue &&
+                string.Equals(user.ConsentVersion, CurrentConsentVersion, StringComparison.Ordinal),
             user.ConsentAcceptedAtUtc,
             user.ConsentVersion);
     }
@@ -43,9 +44,10 @@ public sealed class ConsentGate : IConsentGate
         var user = await _userRepository.GetByIdAsync(userId, cancellationToken)
             ?? throw new InvalidOperationException("Authenticated user not found.");
 
-        var version = string.IsNullOrWhiteSpace(requestedVersion)
-            ? CurrentConsentVersion
-            : requestedVersion.Trim();
+        // The request value is compatibility-only. Evidence must always bind to the
+        // disclosure version selected by the server, never a client-invented value.
+        _ = requestedVersion;
+        var version = CurrentConsentVersion;
 
         // Idempotent: if already accepted for the same or newer version, return existing record.
         if (user.ConsentAcceptedAtUtc.HasValue &&
