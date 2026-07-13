@@ -8,5 +8,6 @@ public sealed record CurrentSubscriptionResponse(
     bool CancelAtPeriodEnd,
     DateTime? CurrentPeriodEndUtc,
     Dictionary<string, bool> Features,
-    Dictionary<string, int?> Limits
+    Dictionary<string, int?> Limits,
+    string ContractVersion
 );

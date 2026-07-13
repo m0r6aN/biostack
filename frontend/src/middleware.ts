@@ -1,25 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-
-const PUBLIC_PREFIX_ROUTES = [
-  '/auth',
-  '/api',
-  '/pricing',
-  '/faq',
-  '/onboarding',
-  '/start',
-  '/map',
-  '/knowledge',
-  '/providers',
-  '/calculators',
-  '/tools',
-  '/how-it-works',
-  '/safety',
-  '/terms',
-  '/privacy',
-  '/robots.txt',
-  '/sitemap.xml',
-];
+import { publicRoutePrefixes } from '@/lib/productContract';
 
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -28,7 +9,7 @@ export default function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/tools', req.url), 308);
   }
 
-  if (pathname === '/' || PUBLIC_PREFIX_ROUTES.some((p) => pathname.startsWith(p))) {
+  if (pathname === '/' || publicRoutePrefixes.some((p) => pathname.startsWith(p))) {
     return NextResponse.next();
   }
 

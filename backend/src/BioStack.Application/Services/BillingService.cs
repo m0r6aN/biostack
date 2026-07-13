@@ -54,20 +54,17 @@ public sealed class BillingService : IBillingService
             tier > ProductTier.Observer,
             subscription?.CancelAtPeriodEnd ?? false,
             subscription?.CurrentPeriodEndUtc,
-            new Dictionary<string, bool>
-                {
-                    [FeatureCodes.PaidIntelligence] = tier >= ProductTier.Operator,
-                    [FeatureCodes.CommanderIntelligence] = tier >= ProductTier.Commander,
-                    [FeatureCodes.ReviewedRelationshipGraph] = tier >= ProductTier.Operator,
-                    [FeatureCodes.SourceQualityTracker] = tier >= ProductTier.Operator,
-                    [FeatureCodes.Glp1ObservabilityPack] = tier >= ProductTier.Operator,
-                    [FeatureCodes.SideEffectAmbiguityDetector] = tier >= ProductTier.Commander,
-                    [FeatureCodes.HighRiskWarningFirstGuardrails] = true
-                },
-            new Dictionary<string, int?>
-            {
-                [FeatureCodes.ActiveCompounds] = tier == ProductTier.Observer ? FeatureGate.ObserverActiveCompoundLimit : null
-            });
+            ProductContract.Current.Features
+                .Where(feature => feature.Key != FeatureCodes.ActiveCompounds)
+                .ToDictionary(
+                    feature => feature.Key,
+                    feature => ProductContract.Current.IsFeatureEnabled(feature.Key, tier)),
+            ProductContract.Current.Features
+                .Where(feature => feature.Value.Limits.Count > 0)
+                .ToDictionary(
+                    feature => feature.Key,
+                    feature => ProductContract.Current.GetLimit(feature.Key, tier)),
+            ProductContract.Current.Version);
     }
 
     public async Task<BillingSessionResponse> CreateCheckoutSessionAsync(string planCode, CancellationToken cancellationToken = default)
@@ -309,12 +306,23 @@ public sealed class BillingService : IBillingService
     private PlanDescriptor ResolvePaidPlan(string planCode)
     {
         var normalized = planCode.Trim().ToLowerInvariant();
-        var plan = normalized switch
+        ProductPlanContract definition;
+        try
         {
-            "operator" => new PlanDescriptor("operator", ProductTier.Operator, _configuration["Stripe:OperatorPriceId"] ?? string.Empty),
-            "commander" => new PlanDescriptor("commander", ProductTier.Commander, _configuration["Stripe:CommanderPriceId"] ?? string.Empty),
-            _ => throw new InvalidOperationException("Unknown paid plan.")
-        };
+            definition = ProductContract.Current.GetPlan(normalized);
+        }
+        catch (InvalidOperationException)
+        {
+            throw new InvalidOperationException("Unknown paid plan.");
+        }
+
+        if (string.IsNullOrWhiteSpace(definition.StripePriceConfigurationKey))
+            throw new InvalidOperationException("Observer does not require checkout.");
+
+        var plan = new PlanDescriptor(
+            definition.Code,
+            ProductContract.Current.GetTier(definition),
+            _configuration[definition.StripePriceConfigurationKey] ?? string.Empty);
 
         if (string.IsNullOrWhiteSpace(plan.PriceId))
             throw new InvalidOperationException($"Stripe price id is not configured for {plan.ProductCode}.");
@@ -324,10 +332,13 @@ public sealed class BillingService : IBillingService
 
     private PlanDescriptor ResolvePlanFromPrice(string priceId)
     {
-        if (!string.IsNullOrWhiteSpace(priceId) && priceId == _configuration["Stripe:CommanderPriceId"])
-            return new PlanDescriptor("commander", ProductTier.Commander, priceId);
-        if (!string.IsNullOrWhiteSpace(priceId) && priceId == _configuration["Stripe:OperatorPriceId"])
-            return new PlanDescriptor("operator", ProductTier.Operator, priceId);
+        foreach (var definition in ProductContract.Current.Billing.Plans.Where(plan => !string.IsNullOrWhiteSpace(plan.StripePriceConfigurationKey)))
+        {
+            if (!string.IsNullOrWhiteSpace(priceId) && priceId == _configuration[definition.StripePriceConfigurationKey!])
+            {
+                return new PlanDescriptor(definition.Code, ProductContract.Current.GetTier(definition), priceId);
+            }
+        }
 
         return new PlanDescriptor("observer", ProductTier.Observer, priceId);
     }

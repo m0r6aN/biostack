@@ -2,6 +2,7 @@
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import { getApiBaseUrl } from '@/lib/apiBase';
+import { canonicalRoutes } from '@/lib/productContract';
 import { useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useEffect, useMemo, useState } from 'react';
 
@@ -9,7 +10,7 @@ const API_URL = getApiBaseUrl();
 
 function resolveRedirectPath(callbackUrl: string | null) {
   if (!callbackUrl) {
-    return '/protocol-console';
+    return canonicalRoutes.postSignInDefault;
   }
 
   if (callbackUrl.startsWith('/')) {
@@ -18,9 +19,9 @@ function resolveRedirectPath(callbackUrl: string | null) {
 
   try {
     const parsed = new URL(callbackUrl);
-    return `${parsed.pathname}${parsed.search}${parsed.hash}` || '/protocol-console';
+    return `${parsed.pathname}${parsed.search}${parsed.hash}` || canonicalRoutes.postSignInDefault;
   } catch {
-    return '/protocol-console';
+    return canonicalRoutes.postSignInDefault;
   }
 }
 

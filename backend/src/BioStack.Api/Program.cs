@@ -402,9 +402,9 @@ app.MapScalarApiReference(options =>
     options.WithTheme(ScalarTheme.Moon);
 });
 
-app.MapHealthChecks("/health");
+app.MapHealthChecks(ProductContract.Current.Health.LivenessPath);
 
-app.MapGet("/health/keon", async (IKeonRuntimeClient keon, CancellationToken ct) =>
+app.MapGet(ProductContract.Current.Health.KeonDependencyPath, async (IKeonRuntimeClient keon, CancellationToken ct) =>
 {
     var status = await keon.CheckHealthAsync(ct);
     return status.IsHealthy

@@ -84,7 +84,7 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
     [Fact]
     public async Task Observer_IsBlockedBeyondActiveCompoundLimit_AndPaidStatesCanExceedUntilExpired()
     {
-        var limit = FeatureGate.ObserverActiveCompoundLimit;
+        var limit = ProductContract.Current.GetLimit(FeatureCodes.ActiveCompounds, ProductTier.Observer)!.Value;
         var userId = await SignInAsync("tier-user@example.com");
         var profile = await CreateProfileAsync("Tier User");
 
@@ -102,6 +102,7 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
 
         var current = await _client.GetFromJsonAsync<CurrentSubscriptionResponse>("/api/v1/billing/subscription", JsonOptions);
         Assert.NotNull(current);
+        Assert.Equal(ProductContract.Current.Version, current.ContractVersion);
         Assert.Equal("Observer", current.Tier);
         Assert.Equal(limit, current.Limits["active_compounds"]);
         Assert.False(current.Features.ContainsKey("protocol_intelligence_contracts"));

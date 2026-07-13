@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using BioStack.Api.Auth;
+using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
@@ -34,7 +35,8 @@ public static class AuthEndpoints
         "/calculators",
         "/knowledge",
         "/admin",
-        "/onboarding",
+        ProductContract.Current.Routes.Canonical["onboarding"],
+        ProductContract.Current.Routes.Canonical["analyzer"],
         "/"
     ];
 
@@ -294,14 +296,15 @@ public static class AuthEndpoints
             redirectPath.StartsWith("//", StringComparison.Ordinal) ||
             redirectPath.Contains('\\'))
         {
-            return "/mission-control";
+            return ProductContract.Current.Routes.Canonical["postSignInDefault"];
         }
 
-        var pathOnly = redirectPath.Split('?', '#')[0];
+        var normalizedRoute = ProductContract.Current.NormalizeRouteAlias(redirectPath);
+        var pathOnly = normalizedRoute.Split('?', '#')[0];
         return RedirectAllowlist.Any(allowed =>
             allowed == "/" ? pathOnly == "/" : pathOnly.Equals(allowed, StringComparison.OrdinalIgnoreCase) || pathOnly.StartsWith($"{allowed}/", StringComparison.OrdinalIgnoreCase))
-            ? redirectPath
-            : "/mission-control";
+            ? normalizedRoute
+            : ProductContract.Current.Routes.Canonical["postSignInDefault"];
     }
 
     private static string GenerateToken()

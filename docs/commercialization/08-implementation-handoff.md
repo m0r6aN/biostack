@@ -915,7 +915,7 @@ All items in this checklist must be checked off before the production environmen
 ### Infrastructure
 - [ ] Production environment variables set (all Stripe keys, JWT secret, app URL, DB connection)
 - [ ] Database migrations applied to production database
-- [ ] Health check endpoint returns 200 (`GET /api/health`)
+- [ ] Liveness endpoint returns 200 (`GET /health`); Keon dependency status is available at `GET /health/keon`
 - [ ] Error monitoring configured (Sentry or equivalent)
 - [ ] Logging configured and shipping to persistent store
 - [ ] Backup strategy in place for production database
@@ -952,7 +952,8 @@ Complete list of all new backend routes required for launch, beyond what already
 | POST | `/api/billing/webhook` | No (Stripe signature) | Stripe | P0 |
 | GET | `/api/billing/portal-session` | Yes | Stripe | P1 |
 | POST | `/api/leads/capture` | No | Tools | P1 |
-| GET | `/api/health` | No | Infra | P0 |
+| GET | `/health` | No | Infra | P0 |
+| GET | `/health/keon` | No | Infra | P0 |
 
 ---
 

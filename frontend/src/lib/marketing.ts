@@ -1,3 +1,5 @@
+import { formatMonthlyPrice, getProductPlan, ProductPlanCode } from '@/lib/productContract';
+
 export interface MarketingFaq {
   question: string;
   answer: string;
@@ -68,16 +70,12 @@ export const featuredFaqs: MarketingFaq[] = [
   },
 ];
 
-export const pricingTiers: PricingTier[] = [
-  {
-    name: 'Observer',
-    tagline: 'Free',
-    monthly: '$0',
+const pricingContent: Record<ProductPlanCode, Omit<PricingTier, 'name' | 'tagline' | 'monthly' | 'href'>> = {
+  observer: {
     description: 'Free.',
     detail:
       'A simple place to track what you’re taking and stop relying on notes, memory, or scattered apps.',
     ctaLabel: 'Start Free',
-    href: '/start',
     highlights: [
       'Free calculators',
       'Public compounds and evidence library',
@@ -89,15 +87,11 @@ export const pricingTiers: PricingTier[] = [
       'Local tool history',
     ],
   },
-  {
-    name: 'Operator',
-    tagline: 'Track & Analyze',
-    monthly: '$12/mo',
+  operator: {
     description: 'Track & Analyze.',
     detail:
       'Everything you need to track compounds, log results, and view reviewed protocol relationships without medical-authority copy.',
     ctaLabel: 'Choose Operator',
-    href: '/auth/signin',
     featured: true,
     highlights: [
       'Full protocol analysis',
@@ -107,15 +101,11 @@ export const pricingTiers: PricingTier[] = [
       'Progress and milestone tracking',
     ],
   },
-  {
-    name: 'Commander',
-    tagline: 'Longitudinal Intelligence',
-    monthly: '$29/mo',
+  commander: {
     description: 'Longitudinal Intelligence.',
     detail:
       'Advanced reviewed intelligence for ambiguity analysis and longitudinal observational reports.',
     ctaLabel: 'See Commander',
-    href: '/auth/signin',
     highlights: [
       'Protocol review across run history',
       'Pattern memory snapshots',
@@ -125,7 +115,18 @@ export const pricingTiers: PricingTier[] = [
       'Cross-protocol mission control',
     ],
   },
-];
+};
+
+export const pricingTiers: PricingTier[] = (['observer', 'operator', 'commander'] as const).map((code) => {
+  const plan = getProductPlan(code);
+  return {
+    ...pricingContent[code],
+    name: plan.displayName,
+    tagline: plan.tagline,
+    monthly: formatMonthlyPrice(plan),
+    href: plan.marketingCtaPath,
+  };
+});
 
 export const landingFeatures = [
   'Compound tracking with precision structure',

@@ -9,7 +9,7 @@ function requestFor(pathname: string, cookie?: string) {
 }
 
 describe('middleware public route access', () => {
-  it.each(['/knowledge', '/knowledge/creatine'])(
+  it.each(['/knowledge', '/knowledge/creatine', '/start', '/onboarding', '/map', '/tools/analyzer'])(
     'allows anonymous evidence browsing at %s',
     (pathname) => {
       const response = middleware(requestFor(pathname));

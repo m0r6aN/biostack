@@ -23,6 +23,8 @@ describe('marketing content', () => {
     expect(featured[0].monthly).toBe('$12/mo');
     expect(pricingTiers.every((tier) => !('annual' in tier))).toBe(true);
     expect(pricingTiers[0].href).toBe('/start');
+    expect(pricingTiers[1].href).toBe('/billing?plan=operator');
+    expect(pricingTiers[2].href).toBe('/billing?plan=commander');
   });
 
   it('keeps each pricing tier actionable and benefit-oriented', () => {

@@ -21,6 +21,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check authoritative product contract
+        run: node scripts/sync-product-contract.mjs --check
+
       # ── Backend tests ──────────────────────────────────────────────────────
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
