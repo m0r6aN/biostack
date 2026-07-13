@@ -29,7 +29,12 @@ public sealed class ConsentGate : IConsentGate
             user.ConsentAcceptedAtUtc.HasValue &&
                 string.Equals(user.ConsentVersion, CurrentConsentVersion, StringComparison.Ordinal),
             user.ConsentAcceptedAtUtc,
-            user.ConsentVersion);
+            user.ConsentVersion,
+            user.ConsentDeclinedAtUtc.HasValue &&
+                string.Equals(user.ConsentDeclinedVersion, CurrentConsentVersion, StringComparison.Ordinal),
+            user.ConsentDeclinedAtUtc,
+            user.ConsentDeclinedVersion,
+            CurrentConsentVersion);
     }
 
     public async Task<bool> IsConsentGrantedAsync(CancellationToken cancellationToken = default)
@@ -53,15 +58,53 @@ public sealed class ConsentGate : IConsentGate
         if (user.ConsentAcceptedAtUtc.HasValue &&
             string.Equals(user.ConsentVersion, version, StringComparison.Ordinal))
         {
-            return new ConsentStatus(true, user.ConsentAcceptedAtUtc, user.ConsentVersion);
+            return ToStatus(user);
         }
 
         user.ConsentAcceptedAtUtc = DateTime.UtcNow;
         user.ConsentVersion = version;
+        user.ConsentDeclinedAtUtc = null;
+        user.ConsentDeclinedVersion = null;
         await _userRepository.UpdateConsentAsync(user, cancellationToken);
 
-        return new ConsentStatus(true, user.ConsentAcceptedAtUtc, user.ConsentVersion);
+        return ToStatus(user);
     }
+
+    public async Task<ConsentStatus> DeclineAsync(string? requestedVersion, CancellationToken cancellationToken = default)
+    {
+        var userId = _currentUserAccessor.GetCurrentUserId();
+        var user = await _userRepository.GetByIdAsync(userId, cancellationToken)
+            ?? throw new InvalidOperationException("Authenticated user not found.");
+
+        _ = requestedVersion;
+        if (user.ConsentAcceptedAtUtc is null &&
+            user.ConsentDeclinedAtUtc.HasValue &&
+            string.Equals(user.ConsentDeclinedVersion, CurrentConsentVersion, StringComparison.Ordinal))
+        {
+            return ToStatus(user);
+        }
+
+        var now = DateTime.UtcNow;
+        user.ConsentAcceptedAtUtc = null;
+        user.ConsentVersion = null;
+        user.ConsentDeclinedAtUtc = now;
+        user.ConsentDeclinedVersion = CurrentConsentVersion;
+        await _userRepository.UpdateConsentAsync(user, cancellationToken);
+
+        return ToStatus(user);
+    }
+
+    private static ConsentStatus ToStatus(BioStack.Domain.Entities.AppUser user)
+        => new(
+            user.ConsentAcceptedAtUtc.HasValue &&
+                string.Equals(user.ConsentVersion, CurrentConsentVersion, StringComparison.Ordinal),
+            user.ConsentAcceptedAtUtc,
+            user.ConsentVersion,
+            user.ConsentDeclinedAtUtc.HasValue &&
+                string.Equals(user.ConsentDeclinedVersion, CurrentConsentVersion, StringComparison.Ordinal),
+            user.ConsentDeclinedAtUtc,
+            user.ConsentDeclinedVersion,
+            CurrentConsentVersion);
 }
 
 public interface IConsentGate
@@ -69,6 +112,14 @@ public interface IConsentGate
     Task<ConsentStatus> GetStatusAsync(CancellationToken cancellationToken = default);
     Task<bool> IsConsentGrantedAsync(CancellationToken cancellationToken = default);
     Task<ConsentStatus> RecordAsync(string? requestedVersion, CancellationToken cancellationToken = default);
+    Task<ConsentStatus> DeclineAsync(string? requestedVersion, CancellationToken cancellationToken = default);
 }
 
-public sealed record ConsentStatus(bool Accepted, DateTime? ConsentAcceptedAtUtc, string? ConsentVersion);
+public sealed record ConsentStatus(
+    bool Accepted,
+    DateTime? ConsentAcceptedAtUtc,
+    string? ConsentVersion,
+    bool Declined,
+    DateTime? ConsentDeclinedAtUtc,
+    string? ConsentDeclinedVersion,
+    string CurrentVersion);

@@ -11,16 +11,23 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/auth/verify',
-        destination: `${apiUrl}/auth/verify`,
-      },
-      {
         source: '/api/v1/:path*',
         destination: `${apiUrl}/api/v1/:path*`,
       },
       {
         source: '/api/analyze/:path*',
         destination: `${apiUrl}/api/analyze/:path*`,
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/auth/verify',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store' },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+        ],
       },
     ];
   },

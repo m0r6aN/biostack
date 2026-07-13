@@ -17,6 +17,9 @@ public static class ConsentEndpoints
 
         group.MapPost("/", RecordConsent)
             .WithName("RecordConsent");
+
+        group.MapPost("/decline", DeclineConsent)
+            .WithName("DeclineConsent");
     }
 
     private static async Task<IResult> GetConsent(IConsentGate consentGate, CancellationToken ct)
@@ -24,7 +27,7 @@ public static class ConsentEndpoints
         try
         {
             var status = await consentGate.GetStatusAsync(ct);
-            return Results.Ok(new ConsentStatusResponse(status.Accepted, status.ConsentAcceptedAtUtc, status.ConsentVersion));
+            return Results.Ok(ToResponse(status));
         }
         catch (UnauthorizedAccessException)
         {
@@ -41,7 +44,7 @@ public static class ConsentEndpoints
         try
         {
             var status = await consentGate.RecordAsync(request?.ConsentVersion, ct);
-            return Results.Ok(new ConsentStatusResponse(status.Accepted, status.ConsentAcceptedAtUtc, status.ConsentVersion));
+            return Results.Ok(ToResponse(status));
         }
         catch (UnauthorizedAccessException)
         {
@@ -52,4 +55,31 @@ public static class ConsentEndpoints
             return Results.Unauthorized();
         }
     }
+
+    private static async Task<IResult> DeclineConsent(RecordConsentRequest? request, IConsentGate consentGate, CancellationToken ct)
+    {
+        try
+        {
+            var status = await consentGate.DeclineAsync(request?.ConsentVersion, ct);
+            return Results.Ok(ToResponse(status));
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return Results.Unauthorized();
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.Unauthorized();
+        }
+    }
+
+    private static ConsentStatusResponse ToResponse(ConsentStatus status)
+        => new(
+            status.Accepted,
+            status.ConsentAcceptedAtUtc,
+            status.ConsentVersion,
+            status.Declined,
+            status.ConsentDeclinedAtUtc,
+            status.ConsentDeclinedVersion,
+            status.CurrentVersion);
 }

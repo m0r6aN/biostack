@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { getApiBaseUrl } from './apiBase';
+import { publicRoutePrefixes } from './productContract';
 
 export type AuthUser = {
   id: string;
@@ -25,6 +26,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const redirectExpiredProtectedSession = useCallback(() => {
+    const { pathname, search } = window.location;
+    const isPublic = pathname === '/' || publicRoutePrefixes.some((prefix) => pathname.startsWith(prefix));
+    if (isPublic) {
+      return;
+    }
+
+    const callbackUrl = `${pathname}${search}`;
+    window.location.replace(`/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}&error=session-expired`);
+  }, []);
+
   const refresh = useCallback(async () => {
     try {
       const res = await fetch(`${API_URL}/api/v1/auth/session`, {
@@ -41,12 +53,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const session = (await res.json()) as { authenticated: boolean; user: AuthUser | null };
       setUser(session.authenticated ? session.user : null);
+      if (!session.authenticated) {
+        redirectExpiredProtectedSession();
+      }
     } catch {
       setUser(null);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [redirectExpiredProtectedSession]);
 
   const logout = useCallback(async () => {
     await fetch(`${API_URL}/api/v1/auth/logout`, {

@@ -49,16 +49,23 @@ public static class AuthEndpoints
             .WithName("StartPasswordlessAuth")
             .RequireRateLimiting("auth-start");
 
+        group.MapPost("/verify", VerifyApi)
+            .WithName("VerifyMagicLink")
+            .RequireRateLimiting("auth-verify");
+
         group.MapGet("/session", GetSession)
             .WithName("GetAuthSession");
 
         group.MapPost("/logout", Logout)
             .WithName("Logout");
 
-        app.MapGet("/auth/verify", Verify)
-            .WithTags("Auth")
-            .WithName("VerifyMagicLink")
-            .RequireRateLimiting("auth-verify");
+        if (app.Environment.IsDevelopment())
+        {
+            app.MapGet("/auth/verify", VerifyDevelopmentRedirect)
+                .WithTags("Auth")
+                .WithName("VerifyMagicLinkDevelopmentRedirect")
+                .RequireRateLimiting("auth-verify");
+        }
     }
 
     private static async Task<IResult> Start(
@@ -67,11 +74,21 @@ public static class AuthEndpoints
         IAppUserRepository userRepo,
         IMagicLinkDelivery delivery,
         IConfiguration config,
+        ILoggerFactory loggerFactory,
+        IWebHostEnvironment environment,
         HttpContext http,
         CancellationToken ct)
     {
-        var redirectPath = NormalizeRedirectPath(request.RedirectPath);
+        var normalizedRedirect = NormalizeRedirectPath(request.RedirectPath);
+        var redirectPath = normalizedRedirect.Path;
         var contact = NormalizeEmail(request.Contact);
+
+        if (normalizedRedirect.UsedFallback && !string.IsNullOrWhiteSpace(request.RedirectPath))
+        {
+            loggerFactory.CreateLogger("BioStack.AuthFlow").LogWarning(
+                new EventId(6901, "AuthReturnPathRejected"),
+                "Rejected an unapproved auth return path and used the canonical fallback.");
+        }
 
         if (request.Channel != EmailChannel || contact is null)
         {
@@ -108,6 +125,14 @@ public static class AuthEndpoints
             identity.UserId = user.Id;
         }
 
+        await db.AuthChallenges
+            .Where(c =>
+                c.IdentityId == identity.Id &&
+                c.Channel == EmailChannel &&
+                c.ChallengeType == MagicLinkType &&
+                c.ConsumedAtUtc == null)
+            .ExecuteUpdateAsync(setters => setters.SetProperty(c => c.ConsumedAtUtc, now), ct);
+
         var rawToken = GenerateToken();
         var challenge = new AuthChallenge
         {
@@ -125,17 +150,33 @@ public static class AuthEndpoints
         db.AuthChallenges.Add(challenge);
         await db.SaveChangesAsync(ct);
 
-        // Magic link must point to the FRONTEND /auth/verify page, not the backend endpoint.
-        // This prevents email scanners (Gmail, Outlook, etc.) from pre-fetching the backend
-        // GET /auth/verify URL and consuming the one-time token before the user clicks it.
+        // Magic links point to the frontend, never a state-changing GET endpoint. Outside
+        // development the token uses a URL fragment, which browsers do not send in the
+        // initial HTTP request or Referer header. The frontend exchanges it by POST.
         var frontendBaseUrl = (config["FrontendUrl"] ?? config["Auth:FrontendUrl"] ?? "http://localhost:3043").TrimEnd('/');
-        var magicLink = $"{frontendBaseUrl}/auth/verify?token={Uri.EscapeDataString(rawToken)}";
+        var tokenDelimiter = environment.IsDevelopment() ? "?token=" : "#token=";
+        var magicLink = $"{frontendBaseUrl}/auth/verify{tokenDelimiter}{Uri.EscapeDataString(rawToken)}";
         await delivery.SendAsync(contact, magicLink, redirectPath, challenge.ExpiresAtUtc, ct);
 
         return Results.Ok(new { message = "If that email can sign in, we sent a link." });
     }
 
-    private static async Task<IResult> Verify(
+    private static async Task<IResult> VerifyApi(
+        VerifyAuthRequest request,
+        BioStackDbContext db,
+        HttpContext http,
+        CancellationToken ct)
+    {
+        var redirectPath = await VerifyAndSignInAsync(request.Token, db, http, ct);
+        if (redirectPath is null)
+        {
+            return Results.BadRequest(new { code = "invalid_link", message = "This sign-in link is invalid, expired, or already used." });
+        }
+
+        return Results.Ok(new VerifyAuthResponse(redirectPath));
+    }
+
+    private static async Task<IResult> VerifyDevelopmentRedirect(
         string? token,
         BioStackDbContext db,
         IConfiguration config,
@@ -143,11 +184,25 @@ public static class AuthEndpoints
         CancellationToken ct)
     {
         var frontendUrl = (config["FrontendUrl"] ?? config["Auth:FrontendUrl"] ?? "http://localhost:3043").TrimEnd('/');
-        var failureRedirect = $"{frontendUrl}/auth/signin?error=invalid-link";
+        var redirectPath = await VerifyAndSignInAsync(token, db, http, ct);
+        return Results.Redirect(redirectPath is null
+            ? $"{frontendUrl}/auth/signin?error=invalid-link"
+            : $"{frontendUrl}{redirectPath}");
+    }
+
+    private static async Task<string?> VerifyAndSignInAsync(
+        string? token,
+        BioStackDbContext db,
+        HttpContext http,
+        CancellationToken ct)
+    {
+        http.Response.Headers.CacheControl = "no-store";
+        http.Response.Headers.Pragma = "no-cache";
+        http.Response.Headers.Append("Referrer-Policy", "no-referrer");
 
         if (string.IsNullOrWhiteSpace(token))
         {
-            return Results.Redirect(failureRedirect);
+            return null;
         }
 
         var tokenHash = HashSecret(token);
@@ -173,7 +228,7 @@ public static class AuthEndpoints
                 .ExecuteUpdateAsync(
                     setters => setters.SetProperty(c => c.AttemptCount, c => c.AttemptCount + 1),
                     ct);
-            return Results.Redirect(failureRedirect);
+            return null;
         }
 
         var challenge = await db.AuthChallenges
@@ -213,7 +268,15 @@ public static class AuthEndpoints
                 AllowRefresh = false,
             });
 
-        return Results.Redirect($"{frontendUrl}{NormalizeRedirectPath(challenge.RedirectPath)}");
+        var redirectPath = NormalizeRedirectPath(challenge.RedirectPath).Path;
+        var hasCurrentConsent = user.ConsentAcceptedAtUtc.HasValue &&
+            string.Equals(user.ConsentVersion, ConsentGate.CurrentConsentVersion, StringComparison.Ordinal);
+        if (!hasCurrentConsent)
+        {
+            redirectPath = $"/onboarding/consent?returnTo={Uri.EscapeDataString(redirectPath)}";
+        }
+
+        return redirectPath;
     }
 
     private static IResult GetSession(HttpContext http)
@@ -289,22 +352,26 @@ public static class AuthEndpoints
         return normalized;
     }
 
-    private static string NormalizeRedirectPath(string? redirectPath)
+    private static NormalizedRedirectPath NormalizeRedirectPath(string? redirectPath)
     {
         if (string.IsNullOrWhiteSpace(redirectPath) ||
             !redirectPath.StartsWith("/", StringComparison.Ordinal) ||
             redirectPath.StartsWith("//", StringComparison.Ordinal) ||
             redirectPath.Contains('\\'))
         {
-            return ProductContract.Current.Routes.Canonical["postSignInDefault"];
+            return new NormalizedRedirectPath(
+                ProductContract.Current.Routes.Canonical["postSignInDefault"],
+                !string.IsNullOrWhiteSpace(redirectPath));
         }
 
         var normalizedRoute = ProductContract.Current.NormalizeRouteAlias(redirectPath);
         var pathOnly = normalizedRoute.Split('?', '#')[0];
-        return RedirectAllowlist.Any(allowed =>
+        var isAllowed = RedirectAllowlist.Any(allowed =>
             allowed == "/" ? pathOnly == "/" : pathOnly.Equals(allowed, StringComparison.OrdinalIgnoreCase) || pathOnly.StartsWith($"{allowed}/", StringComparison.OrdinalIgnoreCase))
-            ? normalizedRoute
-            : ProductContract.Current.Routes.Canonical["postSignInDefault"];
+            ;
+        return isAllowed
+            ? new NormalizedRedirectPath(normalizedRoute, false)
+            : new NormalizedRedirectPath(ProductContract.Current.Routes.Canonical["postSignInDefault"], true);
     }
 
     private static string GenerateToken()
@@ -325,4 +392,6 @@ public static class AuthEndpoints
             .TrimEnd('=')
             .Replace('+', '-')
             .Replace('/', '_');
+
+    private sealed record NormalizedRedirectPath(string Path, bool UsedFallback);
 }

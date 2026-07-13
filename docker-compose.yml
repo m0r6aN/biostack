@@ -33,7 +33,8 @@ services:
       - Jwt__Secret=${Jwt__Secret:?Jwt__Secret must be set (min 32 random chars). Copy .env.example to .env and fill it in.}
       - Auth__CallbackSecret=${Auth__CallbackSecret:?Auth__CallbackSecret must be set. Must match AUTH_CALLBACK_SECRET. See .env.example.}
       - PublicApiUrl=${PublicApiUrl:-http://localhost:5000}
-      - FrontendUrl=${FrontendUrl:-http://localhost:3043}
+      - FrontendUrl=${FrontendUrl:?FrontendUrl must be an HTTPS origin in production.}
+      - Cors__AllowedOrigins__0=${Cors__AllowedOrigins__0:?Cors__AllowedOrigins__0 must include the FrontendUrl origin.}
       - Stripe__SecretKey=${Stripe__SecretKey:?Stripe__SecretKey is required for production billing.}
       - Stripe__WebhookSecret=${Stripe__WebhookSecret:?Stripe__WebhookSecret is required for signed production webhooks.}
       - Stripe__OperatorPriceId=${Stripe__OperatorPriceId:?Stripe__OperatorPriceId is required.}
@@ -49,6 +50,8 @@ services:
       - Smtp__FromEmail=${Smtp__FromEmail:-}
       - Smtp__FromName=${Smtp__FromName:-BioStack}
       - Smtp__MagicLinkSubject=${Smtp__MagicLinkSubject:-Your BioStack sign-in link}
+      - AzureCommunicationEmail__ConnectionString=${AzureCommunicationEmail__ConnectionString:-}
+      - AzureCommunicationEmail__SenderAddress=${AzureCommunicationEmail__SenderAddress:-}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 30s

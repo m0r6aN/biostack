@@ -1,11 +1,8 @@
 'use client';
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
-import { getApiBaseUrl } from '@/lib/apiBase';
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useRef } from 'react';
-
-const API_URL = getApiBaseUrl();
+import { Suspense, useEffect, useRef, useState } from 'react';
 
 /**
  * Magic-link landing page.
@@ -20,19 +17,46 @@ const API_URL = getApiBaseUrl();
  */
 function VerifyPageContent() {
   const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const queryToken = searchParams.get('token');
   const redirected = useRef(false);
+  const [tokenState, setTokenState] = useState<'checking' | 'present' | 'missing'>('checking');
 
   useEffect(() => {
+    const fragmentToken = new URLSearchParams(window.location.hash.replace(/^#/, '')).get('token');
+    const token = queryToken ?? fragmentToken;
     if (!token || redirected.current) {
+      setTokenState('missing');
       return;
     }
+    setTokenState('present');
     redirected.current = true;
 
-    // Navigate the browser to the backend verify endpoint.
-    // The backend will set the session cookie and redirect back to the app.
-    window.location.href = `${API_URL}/api/auth/verify?token=${encodeURIComponent(token)}`;
-  }, [token]);
+    // Remove the one-time token from browser history before exchanging it. The
+    // exchange is a POST so link scanners cannot consume the token with a GET.
+    window.history.replaceState(null, '', '/auth/verify');
+
+    void fetch('/api/v1/auth/verify', {
+      method: 'POST',
+      credentials: 'include',
+      cache: 'no-store',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }),
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error('invalid-link');
+        }
+
+        const result = (await response.json()) as { redirectPath?: string };
+        const redirectPath = result.redirectPath;
+        if (!redirectPath?.startsWith('/') || redirectPath.startsWith('//') || redirectPath.includes('\\')) {
+          throw new Error('invalid-return-path');
+        }
+
+        window.location.replace(redirectPath);
+      })
+      .catch(() => window.location.replace('/auth/signin?error=invalid-link'));
+  }, [queryToken]);
 
   return (
     <main className="min-h-screen bg-[#0B0F14] px-4 py-8 text-white/90">
@@ -42,7 +66,7 @@ function VerifyPageContent() {
         </div>
 
         <section className="rounded-lg border border-white/[0.07] bg-white/[0.035] p-6 shadow-2xl sm:p-8 text-center">
-          {token ? (
+          {tokenState !== 'missing' ? (
             <>
               <div className="mb-4 flex justify-center">
                 {/* Spinner */}

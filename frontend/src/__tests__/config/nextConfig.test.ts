@@ -18,4 +18,20 @@ describe('next config API rewrites', () => {
       ]),
     );
   });
+
+  it('prevents verify-page token referrers and caching', async () => {
+    const headers = await nextConfig.headers?.();
+
+    expect(headers).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          source: '/auth/verify',
+          headers: expect.arrayContaining([
+            { key: 'Cache-Control', value: 'no-store' },
+            { key: 'Referrer-Policy', value: 'no-referrer' },
+          ]),
+        }),
+      ]),
+    );
+  });
 });
