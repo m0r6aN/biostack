@@ -1,21 +1,26 @@
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { Shield, ArrowLeft, AlertCircle } from 'lucide-react';
-import { getApiBaseUrl } from '@/lib/apiBase';
-import type { DecisionReceiptResponse } from '@/lib/types';
+import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
+import Link from "next/link";
+import { Shield, ArrowLeft, AlertCircle } from "lucide-react";
+import { getApiBaseUrl } from "@/lib/apiBase";
+import type { DecisionReceiptResponse } from "@/lib/types";
 
 interface ReceiptPageProps {
   params: Promise<{ uri: string }>;
 }
 
-async function fetchReceipt(encodedUri: string): Promise<DecisionReceiptResponse | null> {
+async function fetchReceipt(
+  encodedUri: string,
+): Promise<DecisionReceiptResponse | null> {
   const decoded = decodeURIComponent(encodedUri);
   const reEncoded = encodeURIComponent(decoded);
   const base = getApiBaseUrl();
+  const cookieHeader = (await cookies()).toString();
 
   try {
     const res = await fetch(`${base}/api/v1/receipts/${reEncoded}`, {
-      cache: 'no-store',
+      cache: "no-store",
+      headers: cookieHeader ? { Cookie: cookieHeader } : undefined,
     });
     if (res.status === 404) return null;
     if (!res.ok) throw new Error(`API error ${res.status}`);
@@ -37,21 +42,21 @@ function FieldRow({ label, value }: { label: string; value: string }) {
 }
 
 function EffectStatusPill({ status }: { status: string }) {
-  const isNonEffecting = status === 'non-effecting';
+  const isNonEffecting = status === "non-effecting";
   return (
     <span
       className={[
-        'inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium',
+        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium",
         isNonEffecting
-          ? 'border-blue-500/30 bg-blue-500/10 text-blue-400'
-          : 'border-white/10 bg-white/5 text-white/50',
-      ].join(' ')}
+          ? "border-blue-500/30 bg-blue-500/10 text-blue-400"
+          : "border-white/10 bg-white/5 text-white/50",
+      ].join(" ")}
     >
       <span
         className={[
-          'w-2 h-2 rounded-full shrink-0',
-          isNonEffecting ? 'bg-blue-400' : 'bg-white/40',
-        ].join(' ')}
+          "w-2 h-2 rounded-full shrink-0",
+          isNonEffecting ? "bg-blue-400" : "bg-white/40",
+        ].join(" ")}
       />
       {status}
     </span>
@@ -120,7 +125,9 @@ export default async function ReceiptPage({ params }: ReceiptPageProps) {
             Evidence References
           </h2>
           {receipt.evidenceRefs.length === 0 ? (
-            <p className="text-xs text-white/30 italic">No evidence references attached.</p>
+            <p className="text-xs text-white/30 italic">
+              No evidence references attached.
+            </p>
           ) : (
             <ul className="space-y-2">
               {receipt.evidenceRefs.map((ref: string, i: number) => (
