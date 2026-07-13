@@ -93,7 +93,7 @@ describe('PR 1 launch-risk surfaces — banned prescriptive copy', () => {
     // And the new strings are present.
     expect(commander!.highlights).toContain('Automated cross-run analysis');
     expect(commander!.highlights).toContain('Reported-effect pattern surfacing');
-    expect(commander!.description).toBe('For deeper analysis and longitudinal pattern detection.');
+    expect(commander!.description).toBe('Longitudinal Intelligence.');
   });
 
   it('Commander tier highlights do not contain prescriptive recommendation verbs', () => {

@@ -4,7 +4,7 @@
 
 **Audit scope:** lanes 3, 6, 7, 8, and 9
 
-**Evidence baseline:** `main@235fb72883f8210c05f7855cb2ab6bf9e20d4841`
+**Evidence baseline:** `main@a37726a4df9b73378e46232b849f409db67d12df`
 
 **Audit date:** 2026-07-11
 
@@ -80,7 +80,7 @@ Release may be reconsidered only after every `failed` row is corrected and rever
 |---|---|---|---|---|
 | Production secrets are supplied outside source control | blocked | `.env.example` documents required variables and GitHub deploy uses repository secrets/OIDC. Checked-in `backend/src/BioStack.Api/appsettings.json` contains development-looking JWT/callback/database values; actual production secret rotation and GitHub/Azure configuration were not inspected. | Security/platform owner: confirm all non-development values are unused in production, rotate if ever exposed, and validate secret inventory. | Release blocker until attested and verified. |
 | Secret scanning workflow configuration is present | blocked | `.github/workflows/secret-scan.yml`; this audit adds the previously missing `.gitleaks.toml` extending Gitleaks defaults. Gitleaks is not installed locally, so configuration parsing was not tested in this lane. | Security owner: run Gitleaks in hosted CI, require the workflow, and obtain a green PR/main run. | Configuration gap is corrected, but release evidence remains blocked on a hosted pass. |
-| Current deploy workflow passes | failed | Hosted run `29162842576` failed restoring `Keon.Kompress`; this branch vendors the four pinned packages, configures the repository feed, copies all solution projects into Docker restore, and passed 1,063 backend tests plus an API Docker build locally. No hosted run exists for this SHA. | Backend/platform owner: obtain a green hosted workflow for the exact release SHA. | Release blocker remains until hosted evidence exists. |
+| Current deploy workflow passes | failed | Hosted run `29166449446` at `a37726a` passed backend tests, then failed frontend tests with three stale assertions plus a worker heap OOM/timeout. Azure login, image build/push, and app-update steps were skipped. | Frontend/platform owner: repair the assertion drift and bound worker memory/concurrency, then obtain a green hosted workflow for the exact release SHA. | Release blocker remains; the latest run did not deploy. |
 | Production dependency set has no known high-severity advisory | verified | `Microsoft.Bcl.Memory` is pinned to 10.0.9 (patched floor is 10.0.4 for GHSA-73j8-2gch-69rq); `dotnet list BioStack.sln package --vulnerable --include-transitive --no-restore` reported no vulnerable packages, and 252 API tests passed with zero warnings. | Security/backend owner: enforce vulnerability auditing in CI. | The identified high-severity dependency is remediated locally. |
 | Deployment is gated before Azure mutation | verified | `.github/workflows/deploy.yml` runs backend and frontend tests before Azure login and container-app updates. | Platform owner: add environment protection/manual production approval if required by policy. | Prevented the failed build from deploying. |
 | Production database is PostgreSQL | verified | `backend/src/BioStack.Api/Program.cs` rejects missing/non-Postgres production configuration and runs EF migrations; `.env.example` documents provider/connection variables. | DBA/platform owner: validate the actual target, least privilege, TLS, capacity, and migration plan. | Code fails closed; live database remains blocked below. |
@@ -110,12 +110,12 @@ Release may be reconsidered only after every `failed` row is corrected and rever
 
 | Requirement | Status | Evidence | External owner/action | Release impact |
 |---|---|---|---|---|
-| Main deployment workflow is green | failed | Latest run `29162842576` failed; earlier recent deployment runs also failed in `gh run list --limit 15`. | Engineering/platform owner: repair restore and obtain a green run for the exact release SHA. | Release blocker. |
+| Main deployment workflow is green | failed | Latest run `29166449446` at `a37726a` failed in frontend tests: Commander description expectation drift, stale `/map` and `/onboarding` redirect expectations, and a worker heap OOM/timeout. Azure mutation steps were skipped. | Engineering/platform owner: repair the frontend gate and obtain a green run for the exact release SHA. | Release blocker. |
 | Secret scan is green and required | blocked | Historical runs failed because `.gitleaks.toml` was absent. Local config is repaired here, but no hosted run exists for this commit and branch protection was not verified. | Security/repo owner: run it, make it required, triage findings, and record green evidence. | Release blocker until hosted evidence exists. |
 | Static security/quality analysis is configured and green | failed | `.github/workflows/sonarcloud.yml` has empty `sonar.projectKey` and `sonar.organization`; recent listed runs failed. | Security/repo owner: configure the project or replace/remove the nonfunctional workflow with an approved scanner. | Release blocker for claimed scan coverage. |
 | Production approval, environment protection, and separation of duties | blocked | Deploy triggers directly on pushes to `main`; repository environment rules/branch protection/human approvers were not inspected or approved in this lane. | Repo/platform owner: configure protected production environment and named approval policy. | Release blocker for controlled production change. |
 | Post-deploy smoke test and automatic halt/rollback | failed | Deploy workflow ends after container-app image updates; no health check, user-journey smoke, traffic validation, or rollback step exists. | Platform/QA owner: add release-SHA health/smoke checks and defined failure handling. | Release blocker. |
-| Offline verification kit workflow | verified | Latest listed `Protocol Operations Offline Verification Kit` run `29162842618` passed. | Release owner: treat this as evidence only for its stated offline-kit scope. | Does not offset failed production launch controls. |
+| Offline verification kit workflow | verified | `Protocol Operations Offline Verification Kit` run `29166449452` passed at `a37726a`. | Release owner: treat this as evidence only for its stated offline-kit scope. | Does not offset failed production launch controls. |
 
 ## Deterministic verification record
 
@@ -126,10 +126,10 @@ rtk git rev-parse HEAD
   235fb72883f8210c05f7855cb2ab6bf9e20d4841 (pre-change baseline)
 
 rtk gh run list --limit 15
-  latest deploy 29162842576: failed
-  latest offline verification kit 29162842618: passed
+  latest deploy 29166449446: failed at frontend tests; Azure mutation steps skipped
+  latest offline verification kit 29166449452: passed
 
-rtk gh run view 29162842576 --log-failed
+rtk gh run view 29166449446 --log-failed
   NU1101: Keon.Kompress unavailable from nuget.org
 
 rtk gh run list --workflow secret-scan.yml --limit 5

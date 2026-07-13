@@ -2,3 +2,18 @@ title = "BioStack secret scanning"
 
 [extend]
 useDefault = true
+
+[[rules]]
+id = "biostack-base-appsettings-secret"
+description = "Non-empty secret-bearing value in base API appsettings"
+path = '''(^|/)backend/src/BioStack\.Api/appsettings\.json$'''
+regex = '''(?i)"(?:DefaultConnection|Secret|CallbackSecret|BearerToken|SecretKey|WebhookSecret)"\s*:\s*"[^"\s]+"'''
+tags = ["configuration", "secret"]
+
+[allowlist]
+description = "Documented placeholders and generated artifacts"
+paths = [
+  '''(^|/)\.env\.example$''',
+  '''(^|/)backend/src/BioStack\.Api/appsettings\.Development\.json$''',
+  '''(^|/)(bin|obj|publish-test)/'''
+]

@@ -56,10 +56,10 @@ describe('/map redirect', () => {
     vi.clearAllMocks();
   });
 
-  it('redirects to /start?mode=existing', () => {
+  it('redirects to the canonical analyzer', () => {
     MapPage();
 
-    expect(redirect).toHaveBeenCalledWith('/start?mode=existing');
+    expect(redirect).toHaveBeenCalledWith('/tools/analyzer');
     expect(redirect).toHaveBeenCalledTimes(1);
   });
 });
@@ -82,10 +82,10 @@ describe('/onboarding redirect', () => {
     expect(redirect).toHaveBeenCalledWith('/start');
   });
 
-  it('redirects to /start?mode=existing when ?mode=existing is provided', async () => {
+  it('redirects to /start when legacy mode is provided', async () => {
     await OnboardingPage({ searchParams: Promise.resolve({ mode: 'existing' }) });
 
-    expect(redirect).toHaveBeenCalledWith('/start?mode=existing');
+    expect(redirect).toHaveBeenCalledWith('/start');
   });
 
   it('redirects to /start (not preserving mode) for an unrecognized mode value', async () => {
