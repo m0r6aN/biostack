@@ -31,5 +31,5 @@ jobs:
 
       - name: Check PR diff whitespace
         run: |
-          git fetch origin main --depth=1
+          git fetch origin main
           git diff --check origin/main...HEAD
