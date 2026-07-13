@@ -9,6 +9,7 @@
 | PR-DATA-001 | Data/platform | Hardening | blocked | isolated required | TBD | high: migrations/ops |
 | PR-PROV-001 | Provider operations | Hardening | blocked | isolated required | TBD | medium |
 | PR-SEC-001 | Security | Release | proposed | review scope required | TBD | high |
+| SEC-RECEIPT-001 | Security / receipt authorization | Release hardening | blocked-on-KEO-64 | `D:/Repos/BioStack-sec-receipts` | `codex/sec-receipt-authorization` | medium: receipt API/UI |
 | PR-REL-001 | Release | Release | blocked | isolated required | TBD | high: ledger/evidence |
 
 Dependency order: `PR-DOC-001 -> PR-CI-001 -> integration/hardening parcels -> PR-SEC-001 -> PR-REL-001`.

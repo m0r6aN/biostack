@@ -1,58 +1,61 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { Shield, Loader2, AlertCircle } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { apiClient } from '@/lib/api';
-import { isEnabled } from '@/lib/flags';
-import { ReceiptDrawer } from '@/components/governance/ReceiptDrawer';
-import { Header } from '@/components/Header';
-import type { DecisionReceiptResponse } from '@/lib/types';
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Shield, Loader2, AlertCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { apiClient } from "@/lib/api";
+import { useAuth } from "@/lib/AuthProvider";
+import { isEnabled } from "@/lib/flags";
+import { ReceiptDrawer } from "@/components/governance/ReceiptDrawer";
+import { Header } from "@/components/Header";
+import type { DecisionReceiptResponse } from "@/lib/types";
 
 type SubjectFilter =
-  | 'all'
-  | 'protocol'
-  | 'compound'
-  | 'review'
-  | 'export'
-  | 'analyzer-conversion'
-  | 'promotion';
+  | "all"
+  | "protocol"
+  | "compound"
+  | "review"
+  | "export"
+  | "analyzer-conversion"
+  | "promotion";
 
 const FILTER_PILLS: { id: SubjectFilter; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'protocol', label: 'Protocol' },
-  { id: 'compound', label: 'Compound' },
-  { id: 'review', label: 'Review' },
-  { id: 'export', label: 'Export' },
-  { id: 'analyzer-conversion', label: 'Analyzer' },
-  { id: 'promotion', label: 'Promotion' },
+  { id: "all", label: "All" },
+  { id: "protocol", label: "Protocol" },
+  { id: "compound", label: "Compound" },
+  { id: "review", label: "Review" },
+  { id: "export", label: "Export" },
+  { id: "analyzer-conversion", label: "Analyzer" },
+  { id: "promotion", label: "Promotion" },
 ];
 
 function actionLabel(subjectUri: string): string {
-  const prefix = subjectUri.split(':')[0] ?? '';
+  const prefix = subjectUri.split(":")[0] ?? "";
   const labels: Record<string, string> = {
-    protocol: 'Protocol Review',
-    compound: 'Compound Classification',
-    review: 'Stack Review',
-    export: 'Data Export',
-    'analyzer-conversion': 'Analyzer Conversion',
-    promotion: 'Promotion Gate',
+    protocol: "Protocol Review",
+    compound: "Compound Classification",
+    review: "Stack Review",
+    export: "Data Export",
+    "analyzer-conversion": "Analyzer Conversion",
+    promotion: "Promotion Gate",
   };
-  return labels[prefix] ?? 'Governed Effect';
+  return labels[prefix] ?? "Governed Effect";
 }
 
 function DecisionPill({ decision }: { decision: string }) {
   const styles: Record<string, string> = {
-    allowed: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400',
-    blocked: 'border-red-500/30 bg-red-500/10 text-red-400',
-    escalate: 'border-amber-500/30 bg-amber-500/10 text-amber-400',
+    allowed: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
+    blocked: "border-red-500/30 bg-red-500/10 text-red-400",
+    escalate: "border-amber-500/30 bg-amber-500/10 text-amber-400",
   };
-  const cls = styles[decision.toLowerCase()] ?? 'border-white/10 bg-white/5 text-white/50';
+  const cls =
+    styles[decision.toLowerCase()] ??
+    "border-white/10 bg-white/5 text-white/50";
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider',
+        "inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
         cls,
       )}
     >
@@ -62,20 +65,20 @@ function DecisionPill({ decision }: { decision: string }) {
 }
 
 function EffectPill({ status }: { status: string }) {
-  const isNonEffecting = status === 'non-effecting';
+  const isNonEffecting = status === "non-effecting";
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium',
+        "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium",
         isNonEffecting
-          ? 'border-blue-500/30 bg-blue-500/10 text-blue-400'
-          : 'border-white/10 bg-white/5 text-white/50',
+          ? "border-blue-500/30 bg-blue-500/10 text-blue-400"
+          : "border-white/10 bg-white/5 text-white/50",
       )}
     >
       <span
         className={cn(
-          'w-1.5 h-1.5 rounded-full shrink-0',
-          isNonEffecting ? 'bg-blue-400' : 'bg-white/40',
+          "w-1.5 h-1.5 rounded-full shrink-0",
+          isNonEffecting ? "bg-blue-400" : "bg-white/40",
         )}
       />
       {status}
@@ -86,8 +89,8 @@ function EffectPill({ status }: { status: string }) {
 function formatTimestamp(iso: string): string {
   try {
     return new Date(iso).toLocaleString(undefined, {
-      dateStyle: 'medium',
-      timeStyle: 'short',
+      dateStyle: "medium",
+      timeStyle: "short",
     });
   } catch {
     return iso;
@@ -95,7 +98,7 @@ function formatTimestamp(iso: string): string {
 }
 
 export default function AuditReceiptFeedPage() {
-  if (!isEnabled('decisionTheater')) {
+  if (!isEnabled("decisionTheater")) {
     return null;
   }
 
@@ -104,23 +107,33 @@ export default function AuditReceiptFeedPage() {
 
 function AuditReceiptFeedContent() {
   const searchParams = useSearchParams();
-  const subjectParam = searchParams.get('subject');
+  const subjectParam = searchParams.get("subject");
+  const { user, loading: authLoading } = useAuth();
 
   const [receipts, setReceipts] = useState<DecisionReceiptResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeFilter, setActiveFilter] = useState<SubjectFilter>('all');
-  const [drawerUri, setDrawerUri] = useState<string>('');
+  const [activeFilter, setActiveFilter] = useState<SubjectFilter>("all");
+  const [drawerUri, setDrawerUri] = useState<string>("");
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
+    if (authLoading) return;
+
     let cancelled = false;
     setLoading(true);
     setError(null);
 
+    if (!user) {
+      setReceipts([]);
+      setLoading(false);
+      setError("Sign in to view your audit receipts.");
+      return;
+    }
+
     const fetch = subjectParam
       ? apiClient.getReceiptsBySubject(subjectParam)
-      : apiClient.getReceiptsByActor('biostack-system');
+      : apiClient.getReceiptsByActor(`user:${user.id}`);
 
     fetch
       .then((data) => {
@@ -128,18 +141,22 @@ function AuditReceiptFeedContent() {
       })
       .catch((err: unknown) => {
         if (!cancelled) {
-          setError(err instanceof Error ? err.message : 'Failed to load receipts');
+          setError(
+            err instanceof Error ? err.message : "Failed to load receipts",
+          );
         }
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
 
-    return () => { cancelled = true; };
-  }, [subjectParam]);
+    return () => {
+      cancelled = true;
+    };
+  }, [authLoading, subjectParam, user]);
 
   const filtered =
-    activeFilter === 'all'
+    activeFilter === "all"
       ? receipts
       : receipts.filter((r) => r.subjectUri.startsWith(`${activeFilter}:`));
 
@@ -169,10 +186,10 @@ function AuditReceiptFeedContent() {
               onClick={() => setActiveFilter(pill.id)}
               aria-pressed={activeFilter === pill.id}
               className={cn(
-                'rounded-full border px-3 py-1 text-xs font-medium transition-colors',
+                "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
                 activeFilter === pill.id
-                  ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
-                  : 'border-white/10 bg-white/[0.03] text-white/40 hover:border-white/20 hover:text-white/60',
+                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300"
+                  : "border-white/10 bg-white/[0.03] text-white/40 hover:border-white/20 hover:text-white/60",
               )}
             >
               {pill.label}
@@ -199,7 +216,8 @@ function AuditReceiptFeedContent() {
           <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
             <Shield className="w-8 h-8 text-white/20" aria-hidden />
             <p className="text-sm text-white/40">
-              No governed actions yet — receipts appear here when governed effects are produced.
+              No governed actions yet — receipts appear here when governed
+              effects are produced.
             </p>
           </div>
         )}
@@ -212,10 +230,10 @@ function AuditReceiptFeedContent() {
                   type="button"
                   onClick={() => openDrawer(receipt.receiptUri)}
                   className={cn(
-                    'w-full text-left rounded-lg border border-white/[0.07] bg-white/[0.02]',
-                    'px-4 py-3 transition-colors',
-                    'hover:border-white/[0.14] hover:bg-white/[0.04]',
-                    'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500/50',
+                    "w-full text-left rounded-lg border border-white/[0.07] bg-white/[0.02]",
+                    "px-4 py-3 transition-colors",
+                    "hover:border-white/[0.14] hover:bg-white/[0.04]",
+                    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500/50",
                   )}
                   aria-label={`View receipt for ${actionLabel(receipt.subjectUri)}`}
                 >
