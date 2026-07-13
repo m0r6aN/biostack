@@ -15,6 +15,7 @@
 | SEC-AUTH-001 | Security / authentication | Release hardening | ready | `D:/Repos/BioStack-sec-magic-link` | `codex/sec-magic-link-atomic` | medium: auth endpoint |
 | SEC-CONSENT-001 | Security / consent evidence | Release hardening | ready | `D:/Repos/BioStack-sec-consent` | `codex/sec-consent-version` | low-medium: consent service |
 | SEC-CONTAINER-001 | Security / container hardening | Release hardening | ready | `D:/Repos/BioStack-sec-container` | `codex/sec-backend-container` | low: backend Dockerfile |
+| SEC-DEPS-001 | Security / frontend dependencies | Release hardening | completed | `D:/Repos/BioStack-sec-frontend-deps` | `codex/sec-frontend-postcss` | medium: package lock |
 | PR-REL-001 | Release | Release | blocked | isolated required | TBD | high: ledger/evidence |
 
 Dependency order: `PR-DOC-001 -> PR-CI-001 -> integration/hardening parcels -> PR-SEC-001 -> PR-REL-001`.
