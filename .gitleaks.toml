@@ -15,5 +15,20 @@ description = "Documented placeholders and generated artifacts"
 paths = [
   '''(^|/)\.env\.example$''',
   '''(^|/)backend/src/BioStack\.Api/appsettings\.Development\.json$''',
-  '''(^|/)(bin|obj|publish-test)/'''
+  '''(^|/)(bin|obj|publish-test)/''',
+  '''(^|/)frontend/\.next/'''
+]
+
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+description = "Documented licensed-source prose is not an access credential"
+condition = "AND"
+regexTarget = "line"
+regexes = [
+  '''\| High-Risk Category Guardrails \|.*Global DRO under permitted access, DrugBank/NatMed if licensed \|'''
+]
+paths = [
+  '''(^|/)docs/product/knowledge-engine-capability-map\.md$'''
 ]
