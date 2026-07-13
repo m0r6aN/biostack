@@ -76,6 +76,7 @@ public sealed class ProviderAccessEndpointsIntegrationTests : IAsyncLifetime
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
         var stored = await db.ProviderAccessRequests.SingleAsync();
+        Assert.NotEqual(stored.Id, confirmation.RequestId);
         Assert.Equal("provider@example.com", stored.Email);
         Assert.Equal("provider-access-v1", stored.ConsentVersion);
         Assert.NotEqual(default, stored.ConsentRecordedAtUtc);
@@ -95,7 +96,7 @@ public sealed class ProviderAccessEndpointsIntegrationTests : IAsyncLifetime
             Consent = true,
         };
 
-        await _client.PostAsJsonAsync("/api/v1/provider-access/requests", payload);
+        var created = await _client.PostAsJsonAsync("/api/v1/provider-access/requests", payload);
         var duplicate = await _client.PostAsJsonAsync("/api/v1/provider-access/requests", payload);
         var rejected = await _client.PostAsJsonAsync("/api/v1/provider-access/requests", new
         {
@@ -104,9 +105,73 @@ public sealed class ProviderAccessEndpointsIntegrationTests : IAsyncLifetime
 
         Assert.Equal(HttpStatusCode.Accepted, duplicate.StatusCode);
         Assert.Equal(HttpStatusCode.BadRequest, rejected.StatusCode);
+        var createdAcknowledgement = await created.Content.ReadFromJsonAsync<ProviderAccessConfirmationResponse>();
+        var duplicateAcknowledgement = await duplicate.Content.ReadFromJsonAsync<ProviderAccessConfirmationResponse>();
+        Assert.NotNull(createdAcknowledgement);
+        Assert.NotNull(duplicateAcknowledgement);
+        Assert.NotEqual(createdAcknowledgement.RequestId, duplicateAcknowledgement.RequestId);
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
         Assert.Equal(1, await db.ProviderAccessRequests.CountAsync());
+        var stored = await db.ProviderAccessRequests.SingleAsync();
+        Assert.NotEqual(stored.Id, createdAcknowledgement.RequestId);
+        Assert.NotEqual(stored.Id, duplicateAcknowledgement.RequestId);
+    }
+
+    [Fact]
+    public async Task CreateRequest_DuplicateClosedEmail_DoesNotReopenOrOverwrite()
+    {
+        const string email = "closed-provider@example.com";
+        await _client.PostAsJsonAsync("/api/v1/provider-access/requests", new
+        {
+            Email = email,
+            Name = "Original Provider",
+            Organization = "Original Practice",
+            Role = "Owner",
+            Consent = true,
+        });
+
+        Guid storedId;
+        DateTime consentRecordedAt;
+        DateTime updatedAt;
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            var stored = await db.ProviderAccessRequests.SingleAsync();
+            stored.Status = "closed";
+            stored.Owner = "commercial-owner";
+            stored.UpdatedAtUtc = DateTime.UtcNow;
+            await db.SaveChangesAsync();
+            storedId = stored.Id;
+            consentRecordedAt = stored.ConsentRecordedAtUtc;
+            updatedAt = stored.UpdatedAtUtc;
+        }
+
+        var duplicate = await _client.PostAsJsonAsync("/api/v1/provider-access/requests", new
+        {
+            Email = email,
+            Name = "Attacker Replacement",
+            Organization = "Replacement Organization",
+            Role = "Replacement Role",
+            Consent = true,
+        });
+
+        Assert.Equal(HttpStatusCode.Accepted, duplicate.StatusCode);
+        var acknowledgement = await duplicate.Content.ReadFromJsonAsync<ProviderAccessConfirmationResponse>();
+        Assert.NotNull(acknowledgement);
+        Assert.Equal("pending", acknowledgement.Status);
+        Assert.NotEqual(storedId, acknowledgement.RequestId);
+
+        using var verificationScope = _factory.Services.CreateScope();
+        var verificationDb = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var unchanged = await verificationDb.ProviderAccessRequests.SingleAsync();
+        Assert.Equal("Original Provider", unchanged.Name);
+        Assert.Equal("Original Practice", unchanged.Organization);
+        Assert.Equal("Owner", unchanged.Role);
+        Assert.Equal("closed", unchanged.Status);
+        Assert.Equal("commercial-owner", unchanged.Owner);
+        Assert.Equal(consentRecordedAt, unchanged.ConsentRecordedAtUtc);
+        Assert.Equal(updatedAt, unchanged.UpdatedAtUtc);
     }
 
     [Fact]
@@ -120,11 +185,16 @@ public sealed class ProviderAccessEndpointsIntegrationTests : IAsyncLifetime
             Role = "Owner",
             Consent = true,
         });
-        var confirmation = await created.Content.ReadFromJsonAsync<ProviderAccessConfirmationResponse>();
-        Assert.NotNull(confirmation);
+        Assert.Equal(HttpStatusCode.Accepted, created.StatusCode);
+        Guid persistedRequestId;
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            persistedRequestId = await db.ProviderAccessRequests.Select(item => item.Id).SingleAsync();
+        }
 
         await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, "admin-provider-queue@example.com");
-        var update = await _client.PatchAsJsonAsync($"/api/v1/admin/provider-access/requests/{confirmation.RequestId}", new
+        var update = await _client.PatchAsJsonAsync($"/api/v1/admin/provider-access/requests/{persistedRequestId}", new
         {
             Status = "contacted",
             Owner = "commercial-owner",
