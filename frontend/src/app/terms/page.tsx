@@ -1,5 +1,14 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Terms of Service | BioStack',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function TermsPage() {
   return (

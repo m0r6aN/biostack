@@ -92,6 +92,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddRateLimiter(options =>
 {
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
     options.AddPolicy("auth-start", httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
             httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
@@ -109,6 +110,16 @@ builder.Services.AddRateLimiter(options =>
             {
                 PermitLimit = 10,
                 Window = TimeSpan.FromMinutes(10),
+                QueueLimit = 0,
+            }));
+
+    options.AddPolicy("provider-access", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 5,
+                Window = TimeSpan.FromHours(1),
                 QueueLimit = 0,
             }));
 });
@@ -414,6 +425,7 @@ app.MapPolicyGateEndpoints();
 app.MapReceiptEndpoints();
 app.MapAnalyzeEndpoints();
 app.MapLeadEndpoints();
+app.MapProviderAccessEndpoints();
 app.MapAdminEndpoints();
 app.MapKompressEndpoints();
 

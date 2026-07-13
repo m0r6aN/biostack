@@ -38,33 +38,30 @@ The naming reinforces the Mission Control aesthetic and positions each tier as a
 | Billing | Price |
 |---------|-------|
 | Monthly | $0 |
-| Annual | $0 |
 
 ### Tier 2 — Operator (Pro)
 
-**Price:** $12/month or $96/year (~33% annual discount)**
+**Price:** $12/month
 
 **Purpose:** The obvious tier for anyone serious. Covers the full personal protocol workflow. This is where 80%+ of paying users should land.
 
-| Billing | Price | Effective Monthly |
-|---------|-------|-------------------|
-| Monthly | $12/mo | $12.00 |
-| Annual | $96/yr | $8.00 |
+| Billing | Price |
+|---------|-------|
+| Monthly | $12/mo |
 
-The $12/month price point is deliberate: it clears the "cost of a single supplement order" threshold easily, making the value proposition trivially obvious. Annual at $96 is a meaningful $48 savings and should be the default-selected option on the billing screen.
+The $12/month price point is the launch contract and the only supported paid interval.
 
 ### Tier 3 — Commander (Elite)
 
-**Price:** $29/month or $228/year (~34% annual discount)
+**Price:** $29/month
 
 **Purpose:** Maximum depth, early access to AI-assisted intelligence, and future B2B preview features. Targets advanced researchers, coaches, and protocol-obsessed users.
 
-| Billing | Price | Effective Monthly |
-|---------|-------|-------------------|
-| Monthly | $29/mo | $29.00 |
-| Annual | $228/yr | $19.00 |
+| Billing | Price |
+|---------|-------|
+| Monthly | $29/mo |
 
-$29/month is positioned below "software I have to justify" and above "casual tool." Annual at $228 is under $250, an important psychological ceiling for individual software subscriptions.
+$29/month is the only supported Commander launch interval.
 
 ---
 
@@ -191,7 +188,7 @@ A 14-day free trial of Operator creates pressure that self-directed, research-or
 
 **Operator Trial Option (soft recommendation for launch):** Consider offering new signups a 7-day Operator trial on account creation — no credit card required. This lets users experience calculators and full check-ins before hitting any wall. After 7 days, they revert to Observer. This dramatically increases conversion intent because users experience the delta firsthand.
 
-**Annual Plan Incentive:** On first upgrade, offer the first month free on annual plans ("Pay for 11, get 12"). This creates a strong annual lock-in without discounting the monthly price.
+**Launch interval:** Monthly only. Do not offer interval-specific incentives until another billing interval is implemented.
 
 **What Not to Do:**
 - Do not offer a free trial of Commander at launch. Save that for when Commander features are mature.
@@ -239,7 +236,8 @@ When ready, the B2B tier ("BioStack Clinic" or "BioStack Practice") addresses a 
 These are add-ons or premium expansions that can layer on top of existing tiers without requiring tier changes.
 
 ### Add-on 1: Extended Protocol History Archive
-**Price:** $2/month or $18/year  
+**Price:** $2/month
+
 **Who:** Operator users who want access to more than 12 months of historical data (if data retention limits are enforced for cost reasons).  
 **Trigger:** Power users who have been on the platform 12+ months.
 
@@ -252,7 +250,7 @@ These are add-ons or premium expansions that can layer on top of existing tiers 
 ### Add-on 3: Priority Onboarding Call
 **Price:** $49 one-time  
 **What:** 30-minute guided onboarding session with a BioStack team member. Walk through stack entry, calculator setup, and check-in cadence.  
-**Who:** New Commander annual subscribers (offer as upgrade at checkout). Also available standalone.
+**Who:** Commander subscribers after the core monthly subscription is active. Also available standalone.
 
 ### Add-on 4: Knowledge Base Expansion Packs (Future)
 **Price:** $4–6/month per pack  
@@ -279,14 +277,12 @@ Observer (Free) requires no Stripe product. Handle in application logic.
 | Price Label | Product | Amount | Currency | Interval | Trial Period |
 |-------------|---------|--------|----------|----------|--------------|
 | Operator Monthly | `prod_biostack_operator` | $12.00 | USD | monthly | 7 days (optional) |
-| Operator Annual | `prod_biostack_operator` | $96.00 | USD | yearly | 7 days (optional) |
 | Commander Monthly | `prod_biostack_commander` | $29.00 | USD | monthly | None |
-| Commander Annual | `prod_biostack_commander` | $228.00 | USD | yearly | None |
 
 ### Stripe Configuration Notes
 
 - **Trial config:** If implementing the 7-day Operator trial, set `trial_period_days: 7` on Operator prices. Collect payment method at trial start (Stripe handles this via `payment_method_collection: always` on the checkout session).
-- **Annual billing:** Use `interval: year` with `interval_count: 1`. Do not use 12x monthly prices — use a single annual charge for clean revenue recognition.
+- **Billing interval:** Launch uses `interval: month` only.
 - **Billing anchor:** Default Stripe behavior (charge on signup date) is acceptable for launch. Do not customize billing anchors until there is a reason to.
 - **Currency:** USD only at launch. Add GBP and EUR when international user share exceeds 20%.
 - **Proration:** Enable proration for mid-cycle upgrades (Observer → Operator, Operator → Commander). Disable for downgrades — make downgrades effective at period end to reduce revenue leakage.
@@ -319,7 +315,7 @@ unpaid    → revert to Observer
 ### Phase 0 — Pre-Launch (Now → Month 1)
 
 - Implement auth + multi-tenancy foundation
-- Implement Stripe Checkout for Operator monthly/annual
+- Implement Stripe Checkout for Operator monthly
 - Gate calculators behind Operator check
 - Gate compound count at 5 for Observer
 - Implement 7-day Operator trial flow
@@ -331,7 +327,7 @@ unpaid    → revert to Observer
 - Commander tier soft-launch (invite-only or waitlist) — do not distract from Operator conversions
 - Goal: 500 paying Operator users by month 6
 - Instrument conversion funnel (trial start → paid, free → paid, calculator hit → upgrade)
-- A/B test annual plan default selection (pre-select annual vs. monthly on billing screen)
+- A/B test monthly checkout messaging without introducing unsupported intervals
 
 ### Phase 2 — Commander Hardening (Months 4–9)
 
@@ -343,10 +339,10 @@ unpaid    → revert to Observer
 
 ### Phase 3 — Retention & Expansion (Months 6–12)
 
-- Launch annual renewal campaigns (email drip for monthly → annual conversion)
+- Review retention campaigns after monthly renewal behavior is measured
 - Introduce add-on upsells (Protocol Report, Priority Onboarding)
 - Begin knowledge base expansion pack scoping
-- Goal: 30% annual plan mix, <5% monthly churn
+- Goal: establish a measured monthly retention baseline and <5% monthly churn
 
 ### Phase 4 — B2B Signal Testing (Month 9–15)
 
@@ -370,6 +366,6 @@ Launch with Observer (free) and Operator ($12/$96) only. Add Commander ($29/$228
 
 The calculators are the product's sharpest hook. A user who needs to reconstitute a peptide and encounters a paywall at exactly that moment is a user who converts. Build the checkout flow to be frictionless from that moment: one click, card entry, immediate access, no confirmation screens in between.
 
-Annual pricing should be the default-selected option. The $8/month effective rate for Operator annual is a compelling anchor against the $12 monthly option. Most users who intend to stick around will choose annual when it is presented clearly.
+Do not advertise or select an annual interval until annual Stripe price identifiers and checkout contracts are implemented and verified.
 
 Do not over-engineer the free tier. Keep it real, keep it limited, and make the upgrade path obvious at the right moment.

@@ -101,6 +101,25 @@ namespace BioStack.Infrastructure.Persistence.Migrations
                             t.HasCheckConstraint("CK_StagedTranscriptCandidateReviews_ReviewState_Lifecycle", "ReviewState IN ('pending_review','review_deferred','review_rejected','review_approved_for_promotion')");
                         });
                 });
+
+            modelBuilder.Entity("BioStack.Domain.Entities.ProviderAccessRequest", b =>
+                {
+                    b.Property<Guid>("Id").HasColumnType("TEXT");
+                    b.Property<DateTime>("ConsentRecordedAtUtc").HasColumnType("TEXT");
+                    b.Property<string>("ConsentVersion").IsRequired().HasMaxLength(64).HasColumnType("TEXT");
+                    b.Property<DateTime>("CreatedAtUtc").HasColumnType("TEXT");
+                    b.Property<string>("Email").IsRequired().HasMaxLength(255).HasColumnType("TEXT");
+                    b.Property<string>("Name").IsRequired().HasMaxLength(160).HasColumnType("TEXT");
+                    b.Property<string>("Organization").IsRequired().HasMaxLength(200).HasColumnType("TEXT");
+                    b.Property<string>("Owner").HasMaxLength(160).HasColumnType("TEXT");
+                    b.Property<string>("Role").IsRequired().HasMaxLength(120).HasColumnType("TEXT");
+                    b.Property<string>("Status").IsRequired().HasMaxLength(32).HasColumnType("TEXT");
+                    b.Property<DateTime>("UpdatedAtUtc").HasColumnType("TEXT");
+                    b.HasKey("Id");
+                    b.HasIndex("Email").IsUnique();
+                    b.HasIndex("Status", "Owner", "CreatedAtUtc");
+                    b.ToTable("ProviderAccessRequests");
+                });
 #pragma warning restore 612, 618
         }
     }

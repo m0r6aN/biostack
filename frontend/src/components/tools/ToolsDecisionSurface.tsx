@@ -82,7 +82,6 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   const [mobileOpen, setMobileOpen] = useState({
     reconstitution: false,
     blend: false,
-    email: false,
   });
 
   const activeProfileId = currentProfileId ?? profiles[0]?.id ?? null;
@@ -480,9 +479,6 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             {showSaved && <SavedCalculationsPanel items={savedCalculations} onOpen={openSaved} onDelete={deleteSaved} />}
           </section>
 
-          <MobileAccordion title="Email me a printable reference card" open={mobileOpen.email} onToggle={() => setMobileOpen((current) => ({ ...current, email: !current.email }))}>
-            <p className="text-sm leading-6 text-white/45">Optional. The tool works without email.</p>
-          </MobileAccordion>
         </aside>
       </section>
     </main>

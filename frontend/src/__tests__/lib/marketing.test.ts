@@ -20,7 +20,8 @@ describe('marketing content', () => {
     const featured = pricingTiers.filter((tier) => tier.featured);
     expect(featured).toHaveLength(1);
     expect(featured[0].name).toBe('Operator');
-    expect(featured[0].annualEffective).toContain('$8');
+    expect(featured[0].monthly).toBe('$12/mo');
+    expect(pricingTiers.every((tier) => !('annual' in tier))).toBe(true);
     expect(pricingTiers[0].href).toBe('/start');
   });
 

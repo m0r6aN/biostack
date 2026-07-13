@@ -86,7 +86,7 @@ The following ten categories organize the full FAQ system. Each category targets
 - What does Operator (Pro) include?
 - What is the Commander (Elite) plan for?
 - Can I cancel at any time?
-- Is there an annual discount?
+- What billing interval is available?
 
 **9. Data & Privacy**
 - Where is my BioStack data stored?
@@ -486,7 +486,7 @@ The Observer plan exists to make BioStack accessible at zero cost and to let the
 
 **Q: What does Operator (Pro) include?**
 
-Operator is the primary paid tier at $12/month (or $96/year, equivalent to $8/month). It includes everything in Observer plus: unlimited compound tracking, full Knowledge Base access with unlimited lookups, the full Pathway Overlap Checker with interaction flags, unlimited timeline history, protocol phase management, priority check-in data export, and early access to new features as they ship.
+Operator is the primary paid tier at $12/month. It includes everything in Observer plus: unlimited compound tracking, full Knowledge Base access with unlimited lookups, the full Pathway Overlap Checker with interaction flags, unlimited timeline history, protocol phase management, priority check-in data export, and early access to new features as they ship.
 
 Operator is the tier designed for anyone running an active, ongoing compound protocol. At $12/month — less than the cost of most single supplement orders — it is positioned to be an obvious decision for anyone BioStack is built for.
 
@@ -494,7 +494,7 @@ Operator is the tier designed for anyone running an active, ongoing compound pro
 
 **Q: What is the Commander (Elite) plan for?**
 
-Commander is the maximum-depth tier at $29/month (or $228/year, equivalent to $19/month). It includes everything in Operator plus: AI-assisted protocol operations (in development), advanced compound analysis tools, priority access to new Knowledge Base entries, early access to B2B and research-oriented features, and dedicated support.
+Commander is the maximum-depth tier at $29/month. It includes everything in Operator plus the verified Commander capabilities listed on the current pricing surface.
 
 Commander is designed for advanced researchers, coaches managing protocol clients, and power users who push into the deepest capabilities BioStack offers. It is not the right tier for most individual users — Operator covers the full personal protocol workflow. Commander is for those who want everything, including what is still being built.
 
@@ -504,15 +504,13 @@ Commander is designed for advanced researchers, coaches managing protocol client
 
 Yes. BioStack subscriptions can be cancelled at any time from your account settings. There are no cancellation fees, no minimum commitment periods, and no penalties for downgrading from a paid tier to Observer. When you cancel, your paid access continues through the end of your current billing period, after which your account reverts to the Observer plan and your data is retained.
 
-Annual subscribers who cancel mid-year are not charged for the remaining months, and their paid access continues through the end of the annual period they have already paid for.
+Paid access continues through the end of the current monthly billing period.
 
 ---
 
-**Q: Is there an annual discount?**
+**Q: What billing interval is available?**
 
-Yes. Both paid tiers offer a meaningful annual discount. Operator drops from $12/month to $8/month effective ($96/year), saving $48 annually. Commander drops from $29/month to $19/month effective ($228/year), saving $120 annually. Annual billing is the default-recommended option on the upgrade screen.
-
-Annual billing makes the most sense for users who are running ongoing protocols — which is most of BioStack's user base. If you are in the middle of an active protocol cycle, annual billing locks in the lower rate for a full year of operation.
+BioStack launches with monthly billing only. No other billing interval or interval discount is currently offered.
 
 ---
 

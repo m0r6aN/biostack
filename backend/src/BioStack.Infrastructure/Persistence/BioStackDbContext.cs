@@ -30,6 +30,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<CompoundInteractionHint> CompoundInteractionHints { get; set; }
     public DbSet<KnowledgeEntry> KnowledgeEntries { get; set; }
     public DbSet<LeadCapture> LeadCaptures { get; set; }
+    public DbSet<ProviderAccessRequest> ProviderAccessRequests { get; set; }
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<StripeWebhookEvent> StripeWebhookEvents { get; set; }
     public DbSet<BioStack.Domain.Governance.SpineEntry> SpineEntries { get; set; }
@@ -390,6 +391,20 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(l => l.Email).HasMaxLength(255).IsRequired();
             entity.Property(l => l.Source).HasMaxLength(255).IsRequired();
             entity.HasIndex(l => new { l.Email, l.Source }).IsUnique();
+        });
+
+        modelBuilder.Entity<ProviderAccessRequest>(entity =>
+        {
+            entity.HasKey(request => request.Id);
+            entity.Property(request => request.Email).HasMaxLength(255).IsRequired();
+            entity.Property(request => request.Name).HasMaxLength(160).IsRequired();
+            entity.Property(request => request.Organization).HasMaxLength(200).IsRequired();
+            entity.Property(request => request.Role).HasMaxLength(120).IsRequired();
+            entity.Property(request => request.Status).HasMaxLength(32).IsRequired();
+            entity.Property(request => request.Owner).HasMaxLength(160);
+            entity.Property(request => request.ConsentVersion).HasMaxLength(64).IsRequired();
+            entity.HasIndex(request => request.Email).IsUnique();
+            entity.HasIndex(request => new { request.Status, request.Owner, request.CreatedAtUtc });
         });
 
         modelBuilder.Entity<Subscription>(entity =>

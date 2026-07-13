@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Communication.Email" Version="1.1.0" />
     <PackageReference Include="Keon.Kompress" Version="0.1.0" />
+    <PackageReference Include="Microsoft.Bcl.Memory" Version="10.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.0" />
