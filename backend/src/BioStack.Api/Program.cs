@@ -37,7 +37,18 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient();
-builder.Services.AddHttpClient("protocol-link-extractor");
+builder.Services
+    .AddHttpClient("protocol-link-extractor", client =>
+    {
+        client.Timeout = TimeSpan.FromSeconds(20);
+    })
+    .ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
+    {
+        AllowAutoRedirect = false,
+        ConnectCallback = LinkProtocolExtractor.ConnectToPublicEndpointAsync,
+        PooledConnectionLifetime = TimeSpan.FromMinutes(2),
+        UseProxy = false,
+    });
 builder.Services.AddHttpClient("protocol-ocr");
 builder.Services.Configure<ProtocolOcrOptions>(builder.Configuration.GetSection("Analyzer:Ocr"));
 builder.Services.AddKompress(options =>

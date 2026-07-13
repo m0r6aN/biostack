@@ -3,6 +3,7 @@ namespace BioStack.Application.Services;
 using System.IO.Compression;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -497,6 +498,9 @@ public sealed class ImageOcrProtocolExtractor : IProtocolTextExtractor
 
 public sealed class LinkProtocolExtractor : IProtocolTextExtractor
 {
+    public const int MaxLinkResponseBytes = 12 * 1024 * 1024;
+    private const int MaxRedirects = 3;
+
     private static readonly HashSet<string> UnsupportedHosts = new(StringComparer.OrdinalIgnoreCase)
     {
         "docs.google.com",
@@ -524,56 +528,73 @@ public sealed class LinkProtocolExtractor : IProtocolTextExtractor
             throw new ProtocolIngestionException("Enter a valid document URL.");
         }
 
-        if (!string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
-        {
-            throw new ProtocolIngestionException("Only secure HTTPS document links are supported.");
-        }
-
-        if (UnsupportedHosts.Contains(uri.Host))
-        {
-            throw new ProtocolIngestionException("That shared document source is not supported yet. Try exporting the file and uploading it directly.");
-        }
-
         var client = _httpClientFactory.CreateClient("protocol-link-extractor");
+        using var fetchTimeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        fetchTimeout.CancelAfter(TimeSpan.FromSeconds(30));
+        var fetchToken = fetchTimeout.Token;
         try
         {
-            using var response = await client.GetAsync(uri, cancellationToken);
-            if (response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden)
+            var currentUri = uri;
+            for (var redirectCount = 0; ; redirectCount++)
             {
-                throw new ProtocolIngestionException("That document requires authentication. Use a public share link or upload the file directly.");
+                await ValidateDestinationAsync(currentUri, fetchToken);
+
+                using var outboundRequest = new HttpRequestMessage(HttpMethod.Get, currentUri);
+                using var response = await client.SendAsync(
+                    outboundRequest,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    fetchToken);
+
+                if (IsRedirect(response.StatusCode))
+                {
+                    if (redirectCount >= MaxRedirects || response.Headers.Location is null)
+                    {
+                        throw new ProtocolIngestionException("That document link redirected too many times.");
+                    }
+
+                    currentUri = response.Headers.Location.IsAbsoluteUri
+                        ? response.Headers.Location
+                        : new Uri(currentUri, response.Headers.Location);
+                    continue;
+                }
+
+                if (response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden)
+                {
+                    throw new ProtocolIngestionException("That document requires authentication. Use a public share link or upload the file directly.");
+                }
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new ProtocolIngestionException("We could not fetch that shared document.");
+                }
+
+                var contentType = response.Content.Headers.ContentType?.MediaType;
+                var bytes = await ReadBoundedContentAsync(response.Content, fetchToken);
+                var nestedRequest = new ProtocolIngestionRequest(
+                    GuessInputType(contentType),
+                    null,
+                    currentUri.ToString(),
+                    request.SourceName ?? Path.GetFileName(currentUri.LocalPath),
+                    contentType,
+                    bytes);
+
+                if (string.Equals(contentType, "text/plain", StringComparison.OrdinalIgnoreCase))
+                {
+                    return new ProtocolExtractionResult(
+                        Encoding.UTF8.GetString(bytes),
+                        Array.Empty<string>(),
+                        Array.Empty<ProtocolIngestionArtifact>(),
+                        false);
+                }
+
+                var extractor = CreateNestedExtractor(nestedRequest);
+                if (extractor is null)
+                {
+                    throw new ProtocolIngestionException("That link points to a source we cannot extract yet. Upload the file directly for now.");
+                }
+
+                return await extractor.ExtractAsync(nestedRequest, cancellationToken);
             }
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new ProtocolIngestionException("We could not fetch that shared document.");
-            }
-
-            var contentType = response.Content.Headers.ContentType?.MediaType;
-            var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
-            var nestedRequest = new ProtocolIngestionRequest(
-                GuessInputType(contentType),
-                null,
-                request.LinkUrl,
-                request.SourceName ?? Path.GetFileName(uri.LocalPath),
-                contentType,
-                bytes);
-
-            if (string.Equals(contentType, "text/plain", StringComparison.OrdinalIgnoreCase))
-            {
-                return new ProtocolExtractionResult(
-                    Encoding.UTF8.GetString(bytes),
-                    Array.Empty<string>(),
-                    Array.Empty<ProtocolIngestionArtifact>(),
-                    false);
-            }
-
-            var extractor = CreateNestedExtractor(nestedRequest);
-            if (extractor is null)
-            {
-                throw new ProtocolIngestionException("That link points to a source we cannot extract yet. Upload the file directly for now.");
-            }
-
-            return await extractor.ExtractAsync(nestedRequest, cancellationToken);
         }
         catch (ProtocolIngestionException)
         {
@@ -583,6 +604,162 @@ public sealed class LinkProtocolExtractor : IProtocolTextExtractor
         {
             throw new ProtocolIngestionException("We could not reach that URL. Check the link and try again.");
         }
+        catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+        {
+            throw new ProtocolIngestionException("That document took too long to download. Try uploading the file directly.");
+        }
+    }
+
+    public static async ValueTask<Stream> ConnectToPublicEndpointAsync(
+        SocketsHttpConnectionContext context,
+        CancellationToken cancellationToken)
+    {
+        IPAddress[] addresses;
+        try
+        {
+            addresses = await ResolvePublicAddressesAsync(context.DnsEndPoint.Host, cancellationToken);
+        }
+        catch (Exception ex) when (ex is SocketException or ProtocolIngestionException)
+        {
+            throw new HttpRequestException("The document host did not resolve to a public address.", ex);
+        }
+
+        Exception? lastError = null;
+        foreach (var address in addresses)
+        {
+            var socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                await socket.ConnectAsync(address, context.DnsEndPoint.Port, cancellationToken);
+                return new NetworkStream(socket, ownsSocket: true);
+            }
+            catch (Exception ex) when (ex is SocketException or OperationCanceledException)
+            {
+                socket.Dispose();
+                lastError = ex;
+                if (ex is OperationCanceledException)
+                    throw;
+            }
+        }
+
+        throw new HttpRequestException("The document host could not be reached at a validated public address.", lastError);
+    }
+
+    private static async Task ValidateDestinationAsync(Uri uri, CancellationToken cancellationToken)
+    {
+        if (!string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
+            throw new ProtocolIngestionException("Only secure HTTPS document links are supported.");
+
+        if (!string.IsNullOrEmpty(uri.UserInfo) || uri.Port != 443)
+            throw new ProtocolIngestionException("Document links must use public HTTPS on the standard port.");
+
+        if (UnsupportedHosts.Contains(uri.Host))
+            throw new ProtocolIngestionException("That shared document source is not supported yet. Try exporting the file and uploading it directly.");
+
+        try
+        {
+            await ResolvePublicAddressesAsync(uri.DnsSafeHost, cancellationToken);
+        }
+        catch (SocketException)
+        {
+            throw new ProtocolIngestionException("We could not resolve that document host.");
+        }
+    }
+
+    private static async Task<IPAddress[]> ResolvePublicAddressesAsync(string host, CancellationToken cancellationToken)
+    {
+        var normalizedHost = host.TrimEnd('.');
+        if (string.Equals(normalizedHost, "localhost", StringComparison.OrdinalIgnoreCase) ||
+            normalizedHost.EndsWith(".localhost", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new ProtocolIngestionException("Only public internet document links are supported.");
+        }
+
+        var addresses = IPAddress.TryParse(normalizedHost, out var literal)
+            ? new[] { literal! }
+            : await Dns.GetHostAddressesAsync(normalizedHost, cancellationToken);
+
+        if (addresses.Length == 0 || addresses.Any(address => !IsPublicUnicast(address)))
+            throw new ProtocolIngestionException("Only public internet document links are supported.");
+
+        return addresses;
+    }
+
+    private static bool IsPublicUnicast(IPAddress address)
+    {
+        if (address.IsIPv4MappedToIPv6)
+            address = address.MapToIPv4();
+
+        if (IPAddress.IsLoopback(address) ||
+            address.Equals(IPAddress.Any) ||
+            address.Equals(IPAddress.None) ||
+            address.Equals(IPAddress.IPv6Any) ||
+            address.Equals(IPAddress.IPv6None))
+        {
+            return false;
+        }
+
+        var bytes = address.GetAddressBytes();
+        if (address.AddressFamily == AddressFamily.InterNetwork)
+        {
+            return bytes[0] != 0 &&
+                   bytes[0] != 10 &&
+                   !(bytes[0] == 100 && bytes[1] is >= 64 and <= 127) &&
+                   bytes[0] != 127 &&
+                   !(bytes[0] == 169 && bytes[1] == 254) &&
+                   !(bytes[0] == 172 && bytes[1] is >= 16 and <= 31) &&
+                   !(bytes[0] == 192 && bytes[1] == 0 && bytes[2] == 0) &&
+                   !(bytes[0] == 192 && bytes[1] == 0 && bytes[2] == 2) &&
+                   !(bytes[0] == 192 && bytes[1] == 168) &&
+                   !(bytes[0] == 198 && bytes[1] is 18 or 19) &&
+                   !(bytes[0] == 198 && bytes[1] == 51 && bytes[2] == 100) &&
+                   !(bytes[0] == 203 && bytes[1] == 0 && bytes[2] == 113) &&
+                   bytes[0] < 224;
+        }
+
+        if (address.AddressFamily == AddressFamily.InterNetworkV6)
+        {
+            return !address.IsIPv6LinkLocal &&
+                   !address.IsIPv6Multicast &&
+                   !address.IsIPv6SiteLocal &&
+                   !bytes.Take(12).All(value => value == 0) &&
+                   (bytes[0] & 0xfe) != 0xfc &&
+                   !(bytes[0] == 0x00 && bytes[1] == 0x64 && bytes[2] == 0xff && bytes[3] == 0x9b) &&
+                   !(bytes[0] == 0x20 && bytes[1] == 0x01 && bytes[2] == 0x0d && bytes[3] == 0xb8);
+        }
+
+        return false;
+    }
+
+    private static bool IsRedirect(HttpStatusCode statusCode) =>
+        statusCode is HttpStatusCode.MovedPermanently or
+            HttpStatusCode.Found or
+            HttpStatusCode.SeeOther or
+            HttpStatusCode.TemporaryRedirect or
+            HttpStatusCode.PermanentRedirect;
+
+    private static async Task<byte[]> ReadBoundedContentAsync(HttpContent content, CancellationToken cancellationToken)
+    {
+        if (content.Headers.ContentLength > MaxLinkResponseBytes)
+            throw new ProtocolIngestionException("That document is too large. Upload a file smaller than 12 MB.");
+
+        await using var source = await content.ReadAsStreamAsync(cancellationToken);
+        using var destination = new MemoryStream();
+        var buffer = new byte[81920];
+
+        while (true)
+        {
+            var read = await source.ReadAsync(buffer, cancellationToken);
+            if (read == 0)
+                break;
+
+            if (destination.Length + read > MaxLinkResponseBytes)
+                throw new ProtocolIngestionException("That document is too large. Upload a file smaller than 12 MB.");
+
+            await destination.WriteAsync(buffer.AsMemory(0, read), cancellationToken);
+        }
+
+        return destination.ToArray();
     }
 
     private static ProtocolInputType GuessInputType(string? contentType)
