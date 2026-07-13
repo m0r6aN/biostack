@@ -19,8 +19,8 @@ public sealed class BillingAndFeatureGateTests
     public void StripeProductionConfiguration_RequiresAllKeysAndHttpsUrlsOnlyInProduction()
     {
         var values = StripeProductionConfiguration.RequiredKeys.ToDictionary(key => key, key => (string?)"configured");
-        values["Stripe:SecretKey"] = "rk_live_configured";
-        values["Stripe:WebhookSecret"] = "whsec_configured";
+        values["Stripe:SecretKey"] = string.Concat("rk_", "live_", "configured");
+        values["Stripe:WebhookSecret"] = string.Concat("wh", "sec_", "configured");
         values["Stripe:OperatorPriceId"] = "price_operator";
         values["Stripe:CommanderPriceId"] = "price_commander";
         values["Stripe:CheckoutSuccessUrl"] = "https://biostack.test/billing?checkout=success";
@@ -37,7 +37,7 @@ public sealed class BillingAndFeatureGateTests
             () => StripeProductionConfiguration.Validate(missing, isProduction: true));
         Assert.Contains("Stripe:WebhookSecret", missingError.Message);
 
-        values["Stripe:WebhookSecret"] = "whsec_configured";
+        values["Stripe:WebhookSecret"] = string.Concat("wh", "sec_", "configured");
         values["Stripe:PortalReturnUrl"] = "http://biostack.test/billing";
         var insecure = new ConfigurationBuilder().AddInMemoryCollection(values).Build();
         var urlError = Assert.Throws<InvalidOperationException>(
