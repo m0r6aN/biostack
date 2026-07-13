@@ -6,9 +6,14 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 vi.mock('@/components/marketing/MarketingNav', () => ({ MarketingNav: () => <nav>Navigation</nav> }));
 vi.mock('@/components/marketing/MarketingFooter', () => ({ MarketingFooter: () => <footer>Footer</footer> }));
 vi.mock('@/lib/AuthProvider', () => ({ useAuth: () => ({ user: null }) }));
-vi.mock('@/lib/context', () => ({
-  useProfile: () => ({ currentProfileId: null, profiles: [], setProfiles: vi.fn(), setCurrentProfileId: vi.fn() }),
-}));
+vi.mock('@/lib/context', () => {
+  const setProfiles = vi.fn();
+  const setCurrentProfileId = vi.fn();
+
+  return {
+    useProfile: () => ({ currentProfileId: null, profiles: [], setProfiles, setCurrentProfileId }),
+  };
+});
 vi.mock('@/lib/api', () => ({
   apiClient: {
     getAllKnowledgeCompounds: vi.fn().mockResolvedValue([]),
