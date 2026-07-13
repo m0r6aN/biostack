@@ -2,6 +2,8 @@ namespace BioStack.Api.Tests.Integration;
 
 using System.Net;
 using System.Net.Http.Json;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using BioStack.Api;
@@ -18,6 +20,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Stripe;
 using Xunit;
 
 [Trait("Category", "Integration")]
@@ -71,9 +75,9 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
         await _factory.DisposeAsync();
         try
         {
-            if (File.Exists(_dbPath))
+            if (System.IO.File.Exists(_dbPath))
             {
-                File.Delete(_dbPath);
+                System.IO.File.Delete(_dbPath);
             }
         }
         catch (IOException)
@@ -158,6 +162,59 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
         Assert.Equal(limit + 2, await db.CompoundRecords.CountAsync(compound => compound.PersonId == profile.Id));
     }
 
+    [Fact]
+    public async Task SignedWebhook_IsIdempotentAndPersistsOneSubscription()
+    {
+        var userId = Guid.NewGuid();
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            db.AppUsers.Add(new AppUser
+            {
+                Id = userId,
+                Provider = "email",
+                ProviderKey = "signed-webhook@example.com",
+                Email = "signed-webhook@example.com",
+                DisplayName = "Signed Webhook User",
+                CreatedAtUtc = DateTime.UtcNow,
+                LastSeenAtUtc = DateTime.UtcNow
+            });
+            await db.SaveChangesAsync();
+        }
+
+        var stripeEvent = SubscriptionEvent("evt_signed_idempotent", userId, "price_operator");
+        var first = await PostSignedStripeEventAsync(stripeEvent);
+        var replay = await PostSignedStripeEventAsync(stripeEvent);
+
+        Assert.Equal(HttpStatusCode.OK, first.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, replay.StatusCode);
+        using var verificationScope = _factory.Services.CreateScope();
+        var verificationDb = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        Assert.Equal(1, await verificationDb.Subscriptions.CountAsync());
+        var receipt = await verificationDb.StripeWebhookEvents.SingleAsync();
+        Assert.Equal(StripeWebhookProcessingStatuses.Processed, receipt.ProcessingStatus);
+        Assert.Equal(1, receipt.AttemptCount);
+    }
+
+    [Fact]
+    public async Task SignedWebhook_QuarantinesUnknownPrice_AndInvalidSignatureWritesNothing()
+    {
+        var stripeEvent = SubscriptionEvent("evt_unknown_signed", Guid.NewGuid(), "price_not_approved");
+
+        var invalid = await PostStripeEventAsync(stripeEvent, "t=1,v1=invalid");
+        Assert.Equal(HttpStatusCode.BadRequest, invalid.StatusCode);
+
+        var quarantined = await PostSignedStripeEventAsync(stripeEvent);
+        Assert.Equal(HttpStatusCode.Conflict, quarantined.StatusCode);
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var receipt = await db.StripeWebhookEvents.SingleAsync();
+        Assert.Equal(StripeWebhookProcessingStatuses.Quarantined, receipt.ProcessingStatus);
+        Assert.Equal("unknown_stripe_price", receipt.FailureCode);
+        Assert.Equal(1, receipt.AttemptCount);
+    }
+
     private async Task<Guid> SignInAsync(string email)
     {
         await _client.PostAsJsonAsync("/api/v1/auth/start", new StartAuthRequest(email, "email", "/profiles"), JsonOptions);
@@ -188,7 +245,7 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
             null,
             CompoundStatus.Active,
             "notes",
-            SourceType.Manual), JsonOptions);
+            BioStack.Domain.Enums.SourceType.Manual), JsonOptions);
 
     private async Task UpsertSubscriptionAsync(Guid userId, ProductTier tier, string productCode, SubscriptionStatus status, DateTime periodEndUtc, bool cancelAtPeriodEnd)
     {
@@ -197,7 +254,7 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
         var subscription = await db.Subscriptions.FirstOrDefaultAsync(item => item.AppUserId == userId);
         if (subscription is null)
         {
-            subscription = new Subscription
+            subscription = new BioStack.Domain.Entities.Subscription
             {
                 Id = Guid.NewGuid(),
                 AppUserId = userId,
@@ -218,4 +275,62 @@ public sealed class BillingTierIntegrationTests : IAsyncLifetime
         subscription.UpdatedAtUtc = DateTime.UtcNow;
         await db.SaveChangesAsync();
     }
+
+    private Task<HttpResponseMessage> PostSignedStripeEventAsync(Event stripeEvent)
+    {
+        var json = JsonConvert.SerializeObject(stripeEvent);
+        var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        var signedPayload = Encoding.UTF8.GetBytes($"{timestamp}.{json}");
+        var signature = Convert.ToHexString(HMACSHA256.HashData(Encoding.UTF8.GetBytes("whsec_test"), signedPayload)).ToLowerInvariant();
+        return PostStripeEventJsonAsync(json, $"t={timestamp},v1={signature}");
+    }
+
+    private Task<HttpResponseMessage> PostStripeEventAsync(Event stripeEvent, string signature)
+        => PostStripeEventJsonAsync(JsonConvert.SerializeObject(stripeEvent), signature);
+
+    private async Task<HttpResponseMessage> PostStripeEventJsonAsync(string json, string signature)
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Post, "/api/v1/billing/stripe/webhook")
+        {
+            Content = new StringContent(json, Encoding.UTF8, "application/json")
+        };
+        request.Headers.TryAddWithoutValidation("Stripe-Signature", signature);
+        return await _client.SendAsync(request);
+    }
+
+    private static Event SubscriptionEvent(string eventId, Guid userId, string priceId)
+        => new()
+        {
+            Id = eventId,
+            Object = "event",
+            ApiVersion = StripeConfiguration.ApiVersion,
+            Created = DateTime.UtcNow,
+            Livemode = false,
+            PendingWebhooks = 1,
+            Type = "customer.subscription.updated",
+            Data = new EventData
+            {
+                Object = new Stripe.Subscription
+                {
+                    Id = $"sub_{eventId}",
+                    Object = "subscription",
+                    CustomerId = $"cus_{eventId}",
+                    Status = "active",
+                    CancelAtPeriodEnd = false,
+                    Metadata = new Dictionary<string, string> { ["appUserId"] = userId.ToString() },
+                    Items = new StripeList<SubscriptionItem>
+                    {
+                        Data =
+                        [
+                            new SubscriptionItem
+                            {
+                                Price = new Price { Id = priceId, Object = "price" },
+                                CurrentPeriodStart = DateTime.UtcNow.AddDays(-1),
+                                CurrentPeriodEnd = DateTime.UtcNow.AddDays(30)
+                            }
+                        ]
+                    }
+                }
+            }
+        };
 }

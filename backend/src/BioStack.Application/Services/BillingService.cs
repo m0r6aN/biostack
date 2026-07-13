@@ -81,8 +81,8 @@ public sealed class BillingService : IBillingService
             Mode = "subscription",
             Customer = customerId,
             ClientReferenceId = user.Id.ToString(),
-            SuccessUrl = _configuration["Stripe:CheckoutSuccessUrl"] ?? $"{_configuration["FrontendUrl"] ?? "http://localhost:3043"}/billing?checkout=success",
-            CancelUrl = _configuration["Stripe:CheckoutCancelUrl"] ?? $"{_configuration["FrontendUrl"] ?? "http://localhost:3043"}/billing?checkout=cancelled",
+            SuccessUrl = GetConfiguredUrl("Stripe:CheckoutSuccessUrl", "/billing?checkout=success"),
+            CancelUrl = GetConfiguredUrl("Stripe:CheckoutCancelUrl", "/billing?checkout=cancelled"),
             LineItems =
             [
                 new CheckoutSessionLineItemOptions
@@ -124,40 +124,93 @@ public sealed class BillingService : IBillingService
         var session = await service.CreateAsync(new Stripe.BillingPortal.SessionCreateOptions
         {
             Customer = subscription.StripeCustomerId,
-            ReturnUrl = _configuration["Stripe:PortalReturnUrl"] ?? $"{_configuration["FrontendUrl"] ?? "http://localhost:3043"}/billing"
+            ReturnUrl = GetConfiguredUrl("Stripe:PortalReturnUrl", "/billing")
         }, cancellationToken: cancellationToken);
 
         return new BillingSessionResponse(session.Url);
     }
 
-    public async Task ProcessStripeEventAsync(Event stripeEvent, CancellationToken cancellationToken = default)
-    {
-        if (await _db.StripeWebhookEvents.AnyAsync(e => e.StripeEventId == stripeEvent.Id, cancellationToken))
-            return;
+    public async Task<IReadOnlyList<StripeWebhookReceiptResponse>> GetQuarantinedStripeEventsAsync(CancellationToken cancellationToken = default)
+        => await _db.StripeWebhookEvents
+            .AsNoTracking()
+            .Where(receipt => receipt.ProcessingStatus == StripeWebhookProcessingStatuses.Quarantined)
+            .OrderByDescending(receipt => receipt.LastAttemptAtUtc)
+            .Select(receipt => new StripeWebhookReceiptResponse(
+                receipt.StripeEventId,
+                receipt.EventType,
+                receipt.ProcessingStatus,
+                receipt.FailureCode,
+                receipt.AttemptCount,
+                receipt.LastAttemptAtUtc))
+            .ToListAsync(cancellationToken);
 
-        switch (stripeEvent.Type)
+    public async Task<StripeWebhookProcessingResult> ProcessStripeEventAsync(Event stripeEvent, CancellationToken cancellationToken = default)
+    {
+        var receipt = await _db.StripeWebhookEvents
+            .SingleOrDefaultAsync(e => e.StripeEventId == stripeEvent.Id, cancellationToken);
+        if (receipt?.ProcessingStatus == StripeWebhookProcessingStatuses.Processed)
+            return StripeWebhookProcessingResult.AlreadyProcessed;
+
+        var now = DateTime.UtcNow;
+
+        try
         {
-            case "checkout.session.completed":
-                await ProcessCheckoutCompletedAsync(stripeEvent, cancellationToken);
-                break;
-            case "customer.subscription.created":
-            case "customer.subscription.updated":
-            case "customer.subscription.deleted":
-                await ProcessSubscriptionEventAsync(stripeEvent, cancellationToken);
-                break;
-            case "invoice.payment_failed":
-                await ProcessPaymentFailedAsync(stripeEvent, cancellationToken);
-                break;
+            switch (stripeEvent.Type)
+            {
+                case "checkout.session.completed":
+                    await ProcessCheckoutCompletedAsync(stripeEvent, cancellationToken);
+                    break;
+                case "customer.subscription.created":
+                case "customer.subscription.updated":
+                case "customer.subscription.deleted":
+                    await ProcessSubscriptionEventAsync(stripeEvent, cancellationToken);
+                    break;
+                case "invoice.payment_failed":
+                    await ProcessPaymentFailedAsync(stripeEvent, cancellationToken);
+                    break;
+                case "invoice.payment_succeeded":
+                    await ProcessPaymentSucceededAsync(stripeEvent, cancellationToken);
+                    break;
+            }
+        }
+        catch (UnknownStripePriceException)
+        {
+            receipt ??= new StripeWebhookEvent
+            {
+                Id = Guid.NewGuid(),
+                StripeEventId = stripeEvent.Id,
+                EventType = stripeEvent.Type,
+                AttemptCount = 0,
+            };
+            if (_db.Entry(receipt).State == EntityState.Detached)
+                _db.StripeWebhookEvents.Add(receipt);
+
+            receipt.ProcessingStatus = StripeWebhookProcessingStatuses.Quarantined;
+            receipt.FailureCode = "unknown_stripe_price";
+            receipt.AttemptCount++;
+            receipt.LastAttemptAtUtc = now;
+            receipt.ProcessedAtUtc = now;
+            await _db.SaveChangesAsync(cancellationToken);
+            return StripeWebhookProcessingResult.Quarantined;
         }
 
-        _db.StripeWebhookEvents.Add(new StripeWebhookEvent
+        receipt ??= new StripeWebhookEvent
         {
             Id = Guid.NewGuid(),
             StripeEventId = stripeEvent.Id,
             EventType = stripeEvent.Type,
-            ProcessedAtUtc = DateTime.UtcNow
-        });
+            AttemptCount = 0,
+        };
+        if (_db.Entry(receipt).State == EntityState.Detached)
+            _db.StripeWebhookEvents.Add(receipt);
+
+        receipt.ProcessingStatus = StripeWebhookProcessingStatuses.Processed;
+        receipt.FailureCode = null;
+        receipt.AttemptCount++;
+        receipt.LastAttemptAtUtc = now;
+        receipt.ProcessedAtUtc = now;
         await _db.SaveChangesAsync(cancellationToken);
+        return StripeWebhookProcessingResult.Processed;
     }
 
     public async Task ReconcileSubscriptionAsync(
@@ -171,10 +224,32 @@ public sealed class BillingService : IBillingService
         bool cancelAtPeriodEnd,
         CancellationToken cancellationToken = default)
     {
-        var plan = ResolvePlanFromPrice(stripePriceId);
         var subscription = await _db.Subscriptions
             .FirstOrDefaultAsync(s => s.StripeSubscriptionId == stripeSubscriptionId, cancellationToken);
         var now = DateTime.UtcNow;
+        PlanDescriptor plan;
+        try
+        {
+            plan = ResolvePlanFromPrice(stripePriceId);
+        }
+        catch (UnknownStripePriceException)
+        {
+            if (subscription is not null)
+            {
+                subscription.ProductCode = "observer";
+                subscription.Tier = ProductTier.Observer;
+                subscription.StripeCustomerId = stripeCustomerId;
+                subscription.StripePriceId = stripePriceId;
+                subscription.Status = MapStripeStatus(stripeStatus);
+                subscription.CurrentPeriodStartUtc = currentPeriodStartUtc;
+                subscription.CurrentPeriodEndUtc = currentPeriodEndUtc;
+                subscription.CancelAtPeriodEnd = cancelAtPeriodEnd;
+                subscription.UpdatedAtUtc = now;
+                await _db.SaveChangesAsync(cancellationToken);
+            }
+
+            throw;
+        }
 
         if (subscription is null)
         {
@@ -271,6 +346,26 @@ public sealed class BillingService : IBillingService
         await _db.SaveChangesAsync(cancellationToken);
     }
 
+    private async Task ProcessPaymentSucceededAsync(Event stripeEvent, CancellationToken cancellationToken)
+    {
+        var subscriptionId = stripeEvent.Data.Object switch
+        {
+            Invoice invoice => invoice.Parent?.SubscriptionDetails?.SubscriptionId,
+            _ => null
+        };
+
+        if (string.IsNullOrWhiteSpace(subscriptionId))
+            return;
+
+        var subscription = await _db.Subscriptions.FirstOrDefaultAsync(s => s.StripeSubscriptionId == subscriptionId, cancellationToken);
+        if (subscription is null || subscription.CurrentPeriodEndUtc is not null && subscription.CurrentPeriodEndUtc <= DateTime.UtcNow)
+            return;
+
+        subscription.Status = SubscriptionStatus.Active;
+        subscription.UpdatedAtUtc = DateTime.UtcNow;
+        await _db.SaveChangesAsync(cancellationToken);
+    }
+
     private async Task UpsertFromStripeSubscriptionAsync(StripeSubscription stripeSubscription, CancellationToken cancellationToken)
     {
         var appUserId = await ResolveAppUserIdAsync(stripeSubscription, cancellationToken);
@@ -340,7 +435,7 @@ public sealed class BillingService : IBillingService
             }
         }
 
-        return new PlanDescriptor("observer", ProductTier.Observer, priceId);
+        throw new UnknownStripePriceException(priceId);
     }
 
     private static SubscriptionStatus MapStripeStatus(string status)
@@ -359,6 +454,18 @@ public sealed class BillingService : IBillingService
         };
     }
 
+    private string GetConfiguredUrl(string configurationKey, string fallbackPath)
+    {
+        var configured = _configuration[configurationKey];
+        if (!string.IsNullOrWhiteSpace(configured))
+            return configured;
+
+        var frontendUrl = string.IsNullOrWhiteSpace(_configuration["FrontendUrl"])
+            ? "http://localhost:3043"
+            : _configuration["FrontendUrl"]!.TrimEnd('/');
+        return $"{frontendUrl}{fallbackPath}";
+    }
+
     private sealed record PlanDescriptor(string ProductCode, ProductTier Tier, string PriceId);
 }
 
@@ -367,6 +474,25 @@ public interface IBillingService
     Task<CurrentSubscriptionResponse> GetCurrentSubscriptionAsync(CancellationToken cancellationToken = default);
     Task<BillingSessionResponse> CreateCheckoutSessionAsync(string planCode, CancellationToken cancellationToken = default);
     Task<BillingSessionResponse> CreatePortalSessionAsync(CancellationToken cancellationToken = default);
-    Task ProcessStripeEventAsync(Event stripeEvent, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<StripeWebhookReceiptResponse>> GetQuarantinedStripeEventsAsync(CancellationToken cancellationToken = default);
+    Task<StripeWebhookProcessingResult> ProcessStripeEventAsync(Event stripeEvent, CancellationToken cancellationToken = default);
     Task ReconcileSubscriptionAsync(Guid appUserId, string stripeCustomerId, string stripeSubscriptionId, string stripePriceId, string stripeStatus, DateTime? currentPeriodStartUtc, DateTime? currentPeriodEndUtc, bool cancelAtPeriodEnd, CancellationToken cancellationToken = default);
 }
+
+public enum StripeWebhookProcessingResult
+{
+    Processed,
+    AlreadyProcessed,
+    Quarantined
+}
+
+public sealed class UnknownStripePriceException(string? priceId)
+    : InvalidOperationException($"Stripe price '{priceId ?? "<missing>"}' is not present in the approved product contract configuration.");
+
+public sealed record StripeWebhookReceiptResponse(
+    string StripeEventId,
+    string EventType,
+    string ProcessingStatus,
+    string? FailureCode,
+    int AttemptCount,
+    DateTime LastAttemptAtUtc);
