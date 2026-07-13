@@ -10,4 +10,6 @@
 | SG6 | Logging/analytics leakage | structured logging and telemetry payload review | blocked | yes |
 | SG7 | Public safety/legal claims | non-prescriptive copy, legal/privacy and consent approval | blocked | yes |
 
+`29cbc98` remediates the tracked base-config secret defaults and makes missing production injection fail closed. SG2 and SG5 remain blocked until prior values are rotated or formally invalidated as needed, the hosted Gitleaks job passes, and billing/webhook security evidence exists.
+
 A dedicated defensive security review is required before release. No waiver exists. Waivers require named authority, scope, expiry, rationale, compensating controls, and release-owner acceptance.
