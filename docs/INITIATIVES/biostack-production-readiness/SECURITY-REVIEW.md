@@ -2,9 +2,9 @@
 
 ## Verdict
 
-**HOLD / not release-ready** for local remediation candidate `565805a` (verified code state `fb0ed84`; review baseline `2bdb7ba`).
+**HOLD / not release-ready** for hosted remediation candidate `c96bc3b` (verified application/dependency state `fb0ed84`; review baseline `2bdb7ba`).
 
-The local candidate remediates and integrates SR-01, SR-02, SR-03, SR-05, SR-06, SR-08, and SR-09, with full backend/frontend tests, a production frontend build, and a clean production dependency audit. Release remains blocked by historical secret rotation and history closeout (SR-04), deployed proxy identity verification (SR-07), hosted workflow/live-environment evidence, and the broader release gates. No production secret value is reproduced in this report.
+The candidate remediates and integrates SR-01, SR-02, SR-03, SR-05, SR-06, SR-08, and SR-09. On immutable SHA `c96bc3b`, hosted backend/frontend validation, production dependency audit, production frontend build, offline verification, and current-tree Gitleaks all pass. Release remains blocked by historical secret rotation and full-history closeout (SR-04), deployed proxy identity verification (SR-07), live-environment evidence, and the broader release gates. No production secret value is reproduced in this report.
 
 ## Scope and Method
 
@@ -143,8 +143,10 @@ This was a defensive source/configuration review with focused automated tests an
 | SR-09 backend container user | `afb3ff9` |
 | KEO-64 frontend validation repair | `44eac22` |
 | KEO-64 offline-verification fetch repair | `565805a` |
+| KEO-64 PR-only hosted validation | `fe9184b` |
+| Current-tree Gitleaks allowlist closeout | `c96bc3b` |
 
-`fb0ed84` is the exact application/dependency state used for the full local test, audit, and production-build evidence. `565805a` adds only the one-line workflow fetch correction; that workflow still requires a hosted run.
+`fb0ed84` is the exact application/dependency state used for the full local test, audit, and production-build evidence. Hosted runs `29283101748`, `29283101730`, and `29283101738` pass on `c96bc3b`. The hosted Gitleaks result scans the current checkout; it is not proof that the historical credential was rotated or that full Git history is clean.
 
 ## Positive Controls Confirmed
 
@@ -170,7 +172,9 @@ This was a defensive source/configuration review with focused automated tests an
 | Full frontend regression suite | 125 files; 900 tests passed |
 | Frontend production build | Passed TypeScript and generated 51 static pages |
 | Frontend production dependency audit | Zero vulnerabilities; nested Next.js PostCSS resolved to 8.5.10 |
-| Current-tree secret scan | One documented phrase false positive; no confirmed current secret value |
+| Hosted candidate validation | Run `29283101748` passed on `c96bc3b`; backend, install, audit, frontend tests, and production build passed; Azure/image/deploy steps skipped |
+| Hosted offline verification | Run `29283101730` passed on `c96bc3b` |
+| Hosted current-tree secret scan | Run `29283101738` passed on `c96bc3b` after a narrow prose/generated-artifact allowlist |
 | Pre-remediation tree secret scan | One confirmed callback secret plus the documented phrase false positive |
 | Full-history secret scan | Timed out; unverified |
 

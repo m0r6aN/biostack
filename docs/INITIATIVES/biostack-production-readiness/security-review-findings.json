@@ -3,7 +3,7 @@
   "reviewId": "KEO-65",
   "reviewDate": "2026-07-13",
   "commit": "2bdb7ba",
-  "remediationCandidate": "565805a",
+  "remediationCandidate": "c96bc3b",
   "verifiedCodeCommit": "fb0ed84",
   "verdict": "hold",
   "findings": [
@@ -25,7 +25,10 @@
     "frontendProductionBuild": { "status": "passed", "staticPages": 51 },
     "dotnetVulnerablePackages": { "status": "passed", "reported": 0 },
     "frontendProductionAudit": { "status": "passed", "moderate": 0, "resolvedPostcss": "8.5.10" },
-    "currentTreeSecretScan": { "status": "false-positive-only" },
+    "currentTreeSecretScan": { "status": "passed-with-narrow-allowlist" },
+    "hostedCurrentTreeSecretScan": { "status": "passed", "run": 29283101738, "commit": "c96bc3b" },
+    "hostedCandidateValidation": { "status": "passed", "run": 29283101748, "commit": "c96bc3b", "productionSteps": "skipped" },
+    "hostedOfflineVerification": { "status": "passed", "run": 29283101730, "commit": "c96bc3b" },
     "preRemediationSecretScan": { "status": "confirmed-historical-secret" },
     "fullHistorySecretScan": { "status": "unverified-timeout" }
   },

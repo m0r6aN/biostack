@@ -13,5 +13,6 @@
 | E9 | `b389db7` | local `claude/keo-64-release-ci` | repairs the calculator TypeScript blocker and stabilizes the profile mock; exact frontend suite and production build pass | no hosted workflow or browser session proof |
 | E10 | `fb0ed84` | local `codex/security-integration` | integrates seven KEO-65 remediations plus patched PostCSS; 1,088 backend and 900 frontend tests pass; production build and audit pass | not pushed/deployed; SR-04, SR-07 and broader release gates remain open |
 | E11 | `565805a` | local `codex/security-integration` | adds the one-line offline-verification fetch correction on top of verified code state `fb0ed84` | hosted workflow not run; no deployment evidence |
+| E12 | GitHub Actions runs `29283101748`, `29283101730`, `29283101738` | hosted, `c96bc3b` | backend/frontend/audit/build, offline kit, and current-tree Gitleaks pass on one immutable SHA | Azure/image/deploy steps skipped; not full-history or live proof |
 
 Evidence must not contain secrets, tokens, health payloads, payment details, or direct PII. Links and summaries must identify limitations.

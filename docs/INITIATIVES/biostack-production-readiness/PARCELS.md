@@ -3,7 +3,7 @@
 | Parcel | Track | Wave | Status | Worktree | Branch | Collision risk |
 |---|---|---|---|---|---|---|
 | PR-DOC-001 | Evidence/release | Foundation | in-progress | `D:/Repos/BioStack-release-governance` | `codex/production-readiness-phase2` | low; docs only |
-| PR-CI-001 | Frontend/platform | W1 | integrated-local | `D:/Repos/BioStack-keo64-claude` | `claude/keo-64-release-ci` | high: CI/tests |
+| PR-CI-001 | Frontend/platform | W1 | hosted-passed | `D:/Repos/BioStack-security-integration` | `codex/security-integration` | high: CI/tests |
 | PR-AUTH-001 | Frontend/API | Integration | proposed | isolated required | TBD | high: auth boundary |
 | PR-BILL-001 | Billing | Integration | blocked | isolated required | TBD | high: billing/config |
 | PR-DATA-001 | Data/platform | Hardening | blocked | isolated required | TBD | high: migrations/ops |
