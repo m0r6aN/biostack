@@ -149,6 +149,41 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Verify_ConcurrentConsumers_IssuesExactlyOneSession()
+    {
+        await StartAsync("concurrent-session@example.com", "/profiles");
+        var pathAndQuery = ReadPathAndQuery(await LatestMagicLinkAsync());
+        using var firstClient = _factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false,
+        });
+        using var secondClient = _factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false,
+        });
+
+        var responses = await Task.WhenAll(
+            firstClient.GetAsync(pathAndQuery),
+            secondClient.GetAsync(pathAndQuery));
+
+        Assert.All(responses, response => Assert.Equal(HttpStatusCode.Redirect, response.StatusCode));
+        Assert.Single(responses, response =>
+            string.Equals(response.Headers.Location?.ToString(), "http://localhost:3043/profiles", StringComparison.Ordinal));
+        Assert.Single(responses, response =>
+            response.Headers.Location?.ToString().Contains("error=invalid-link", StringComparison.Ordinal) == true);
+        Assert.Single(responses, response =>
+            response.Headers.TryGetValues("Set-Cookie", out var values) &&
+            values.Any(value => value.Contains("biostack_session", StringComparison.Ordinal)));
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        Assert.Equal(1, await db.Sessions.CountAsync());
+        var challenge = await db.AuthChallenges.SingleAsync();
+        Assert.NotNull(challenge.ConsumedAtUtc);
+        Assert.Equal(2, challenge.AttemptCount);
+    }
+
+    [Fact]
     public async Task Session_WithoutCookie_ReturnsAnonymousContract()
     {
         var response = await _client.GetAsync("/api/v1/auth/session");

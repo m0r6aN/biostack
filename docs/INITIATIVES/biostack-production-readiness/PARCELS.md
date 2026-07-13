@@ -9,6 +9,7 @@
 | PR-DATA-001 | Data/platform | Hardening | blocked | isolated required | TBD | high: migrations/ops |
 | PR-PROV-001 | Provider operations | Hardening | blocked | isolated required | TBD | medium |
 | PR-SEC-001 | Security | Release | proposed | review scope required | TBD | high |
+| SEC-AUTH-001 | Security / authentication | Release hardening | ready | `D:/Repos/BioStack-sec-magic-link` | `codex/sec-magic-link-atomic` | medium: auth endpoint |
 | PR-REL-001 | Release | Release | blocked | isolated required | TBD | high: ledger/evidence |
 
 Dependency order: `PR-DOC-001 -> PR-CI-001 -> integration/hardening parcels -> PR-SEC-001 -> PR-REL-001`.
