@@ -9,6 +9,7 @@
 | PR-DATA-001 | Data/platform | Hardening | blocked | isolated required | TBD | high: migrations/ops |
 | PR-PROV-001 | Provider operations | Hardening | blocked | isolated required | TBD | medium |
 | PR-SEC-001 | Security | Release | proposed | review scope required | TBD | high |
+| SEC-CONTAINER-001 | Security / container hardening | Release hardening | ready | `D:/Repos/BioStack-sec-container` | `codex/sec-backend-container` | low: backend Dockerfile |
 | PR-REL-001 | Release | Release | blocked | isolated required | TBD | high: ledger/evidence |
 
 Dependency order: `PR-DOC-001 -> PR-CI-001 -> integration/hardening parcels -> PR-SEC-001 -> PR-REL-001`.
