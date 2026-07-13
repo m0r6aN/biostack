@@ -26,7 +26,7 @@ import {
 } from '@/lib/dosingCalculator';
 import { type CompoundRecord, type InteractionFlag, type KnowledgeEntry } from '@/lib/types';
 import Link from 'next/link';
-import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 type SurfaceMode = ToolMode;
 type BlendStatus = 'compatible' | 'caution' | 'avoid' | 'unknown';
@@ -803,14 +803,24 @@ function NumberWithUnitField<TUnit extends string>({ label, help, value, unit, u
 function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value, unit, units, onValueChange, onUnitChange, infoImageSrc, infoImageAlt }: { label: string; help?: string; value: number; unit: TUnit; units: TUnit[]; onValueChange: (value: number) => void; onUnitChange: (unit: TUnit) => void; infoImageSrc: string; infoImageAlt: string }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogId = useId();
+  const dialogTitleId = useId();
+
+  const closeDialog = useCallback(() => {
+    setOpen(false);
+    window.requestAnimationFrame(() => triggerRef.current?.focus());
+  }, []);
 
   useEffect(() => {
     if (!open) return;
+    closeRef.current?.focus();
     function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) closeDialog();
     }
     function handleKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') closeDialog();
     }
     document.addEventListener('mousedown', handleClick);
     document.addEventListener('keydown', handleKey);
@@ -818,15 +828,18 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
       document.removeEventListener('mousedown', handleClick);
       document.removeEventListener('keydown', handleKey);
     };
-  }, [open]);
+  }, [closeDialog, open]);
 
   return (
     <div ref={ref} className="block">
       <span className="mb-2 flex items-center gap-1.5 text-sm text-white/62">
         {label}
         <button
+          ref={triggerRef}
           type="button"
           aria-label="View vial measurement guide"
+          aria-expanded={open}
+          aria-controls={open ? dialogId : undefined}
           onClick={() => setOpen((v) => !v)}
           className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full text-white/40 transition-colors hover:text-emerald-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
         >
@@ -843,12 +856,14 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
         </select>
       </div>
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setOpen(false)}>
-          <div className="relative max-h-[90dvh] max-w-sm w-full overflow-hidden rounded-xl border border-white/10 bg-[#121923] shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={closeDialog}>
+          <div id={dialogId} role="dialog" aria-modal="true" aria-labelledby={dialogTitleId} className="relative max-h-[90dvh] max-w-sm w-full overflow-hidden rounded-xl border border-white/10 bg-[#121923] shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <h2 id={dialogTitleId} className="sr-only">How to read a vial label</h2>
             <button
+              ref={closeRef}
               type="button"
               aria-label="Close"
-              onClick={() => setOpen(false)}
+              onClick={closeDialog}
               className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-black/40 text-white/60 transition-colors hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
             >
               <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4" aria-hidden="true">
