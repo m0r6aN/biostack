@@ -1,4 +1,5 @@
 import ToolsPage from '@/app/tools/page';
+import { calculateUnifiedDosing, DEFAULT_UNIFIED_DOSING_INPUT, formatNumber } from '@/lib/dosingCalculator';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -19,7 +20,7 @@ describe('active /tools calculator visuals', () => {
     window.localStorage.clear();
   });
 
-  it.each([375, 1280])('keeps the vial, syringe, beginner help, and worded summary visible at %spx', (width) => {
+  it.each([375, 768, 1280])('keeps the vial, syringe, beginner help, and worded summary visible at %spx', (width) => {
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: width });
     render(<ToolsPage />);
 
@@ -31,6 +32,33 @@ describe('active /tools calculator visuals', () => {
     expect(screen.getByRole('heading', { name: 'Calculation summary' })).toBeVisible();
     expect(screen.getByText(/5 mg in 2 mL gives a concentration of 2,500 mcg\/mL/)).toBeVisible();
     expect(screen.getByRole('button', { name: 'View vial measurement guide' })).toBeEnabled();
+  });
+
+  it('restates the active-route result from calculateUnifiedDosing', () => {
+    const expected = calculateUnifiedDosing(DEFAULT_UNIFIED_DOSING_INPUT);
+    render(<ToolsPage />);
+
+    expect(screen.getByRole('heading', { name: 'Calculation summary' }).nextElementSibling).toHaveTextContent(
+      `${formatNumber(expected.concentrationMcgPerMl)} mcg/mL`
+    );
+    expect(screen.getByRole('meter', { name: /calculated draw/i }).getAttribute('aria-valuetext')).toContain(
+      `${formatNumber(expected.u100UnitsPerAdministration, 1)} U-100 units`
+    );
+  });
+
+  it('exposes the vial reference as a labelled keyboard-dismissible dialog and restores focus', async () => {
+    render(<ToolsPage />);
+    const trigger = screen.getByRole('button', { name: 'View vial measurement guide' });
+    fireEvent.click(trigger);
+
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('dialog', { name: 'How to read a vial label' })).toBeVisible();
+    expect(screen.getByRole('button', { name: 'Close' })).toHaveFocus();
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+    await new Promise((resolve) => window.requestAnimationFrame(resolve));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
   });
 
   it('keeps both visuals prominent after switching to mix mode', () => {
