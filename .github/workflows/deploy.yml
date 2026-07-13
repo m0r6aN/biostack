@@ -13,6 +13,7 @@ jobs:
   deploy:
     name: Build & Deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
@@ -42,7 +43,9 @@ jobs:
 
       - name: Run frontend tests
         working-directory: frontend
-        run: npm test
+        # Bound worker concurrency so the launch suite fits reliably on the
+        # hosted runner instead of exhausting the Node heap before deployment.
+        run: npm test -- --pool=threads --maxWorkers=2 --no-file-parallelism
 
       # ── Azure login via OIDC (no long-lived secrets) ───────────────────────
       - name: Azure login
