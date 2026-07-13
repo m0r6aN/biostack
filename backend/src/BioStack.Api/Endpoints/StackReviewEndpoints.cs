@@ -34,27 +34,17 @@ public static class StackReviewEndpoints
     private static async Task<IResult> GenerateEnvelope(
         StackReviewRequest request,
         IStackReviewBoardService srbService,
-        IKnowledgeService knowledgeService,
         IUserFacingIntelligenceGate gate,
         IRuntimeReceiptFactory receipts,
         ICurrentUserAccessor currentUser,
         CancellationToken ct)
     {
-        StackDeliberationEnvelope envelope;
+        if (request.Payload is null)
+        {
+            return Results.BadRequest("Provide Payload.");
+        }
 
-        if (request.Payload is not null)
-        {
-            envelope = BuildEnvelopeFromPayload(request.Payload);
-        }
-        else if (request.ProtocolId.HasValue)
-        {
-            return Results.BadRequest(
-                "ProtocolId resolution not yet implemented. Supply a Payload instead.");
-        }
-        else
-        {
-            return Results.BadRequest("Provide either ProtocolId or Payload.");
-        }
+        var envelope = BuildEnvelopeFromPayload(request.Payload);
 
         var cognitiveEnvelope = await srbService.ReviewStackAsync(envelope, ct);
 

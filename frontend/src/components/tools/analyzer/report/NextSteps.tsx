@@ -14,6 +14,7 @@ export interface NextStepsProps {
   showSaveNotice: boolean;
   isAuthenticated: boolean;
   hasProfile: boolean;
+  showUpgrade: boolean;
   onSave: () => void;
   onConvert: () => void;
   onUnlockClicked: () => void;
@@ -25,6 +26,7 @@ export function NextSteps({
   showSaveNotice,
   isAuthenticated,
   hasProfile,
+  showUpgrade,
   onSave,
   onConvert,
   onUnlockClicked,
@@ -58,13 +60,15 @@ export function NextSteps({
         >
           Convert to BioStack Protocol
         </button>
-        <Link
-          href={ANALYZER_PRICING_HREF}
-          onClick={onUnlockClicked}
-          className="rounded-lg border border-white/10 px-4 py-2 text-sm font-semibold text-white/72 hover:border-white/20 hover:text-white"
-        >
-          Unlock full analysis
-        </Link>
+        {showUpgrade && (
+          <Link
+            href={ANALYZER_PRICING_HREF}
+            onClick={onUnlockClicked}
+            className="rounded-lg border border-white/10 px-4 py-2 text-sm font-semibold text-white/72 hover:border-white/20 hover:text-white"
+          >
+            View Operator access
+          </Link>
+        )}
       </div>
 
       {/* Save notice — copy from monolith ~570-572 */}

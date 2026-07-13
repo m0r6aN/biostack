@@ -16,7 +16,7 @@ interface HeaderProps {
  * Premium system command header — shared across all pages.
  *
  * Structure:
- *   [title + subtitle]  ···  [LOCAL chip]  [profile chip]  [actions?]
+ *   [title + subtitle]  ···  [profile chip]  [actions?]
  *
  * Always sticky, glass-surfaced, brand-aligned.
  */
@@ -66,15 +66,8 @@ export function Header({ title, subtitle, actions, className }: HeaderProps) {
           </div>
         </div>
 
-        {/* ── Right: System status + profile + actions ────────────────── */}
+        {/* ── Right: Profile + actions ────────────────────────────────── */}
         <div className="flex items-center gap-2.5 shrink-0">
-
-          {/* LOCAL status chip — always visible */}
-          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border border-white/[0.07] bg-white/[0.03]">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_5px_rgba(34,197,94,0.55)]" />
-            <span className="text-[10px] font-semibold text-white/38 tracking-[0.14em]">LOCAL</span>
-          </div>
-
           {/* Profile chip — shown when a profile is active and no custom actions */}
           {currentProfile && !actions && (
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/[0.07] bg-white/[0.03]">

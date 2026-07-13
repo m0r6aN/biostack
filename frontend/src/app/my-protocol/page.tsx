@@ -224,10 +224,10 @@ export default function MyProtocolPage() {
     }
   }
 
-  async function handleSaveCareTeamNote(message: string) {
+  async function handleSaveCareTeamNote(note: string) {
     if (!currentProfileId) return;
     try {
-      await apiClient.sendCareTeamMessage(currentProfileId, message);
+      await apiClient.saveCareTeamNote(currentProfileId, note);
     } catch (cause) {
       setToast('The care-team note could not be saved.');
       throw cause;
@@ -300,7 +300,7 @@ export default function MyProtocolPage() {
               onViewCalendar={() => setActiveTab('calendar')}
               onViewLabs={() => setActiveTab('monitoring')}
               onLogDoses={() => void handleLogDoses()}
-              onMessageCareTeam={() => setContactOpen(true)}
+              onSaveCareTeamNote={() => setContactOpen(true)}
             />
           )}
 

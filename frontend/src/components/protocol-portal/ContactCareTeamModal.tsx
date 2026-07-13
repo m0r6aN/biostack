@@ -6,27 +6,27 @@ import { ModalShell } from './ModalShell';
 
 interface ContactCareTeamModalProps {
   onClose: () => void;
-  onSubmit: (message: string) => Promise<void> | void;
+  onSubmit: (note: string) => Promise<void> | void;
 }
 
 export function ContactCareTeamModal({ onClose, onSubmit }: ContactCareTeamModalProps) {
-  const [message, setMessage] = useState('');
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [note, setNote] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
 
-  async function handleSend() {
-    if (!message.trim() || sending) return;
-    setSending(true);
+  async function handleSave() {
+    if (!note.trim() || saving) return;
+    setSaving(true);
     try {
-      await onSubmit(message.trim());
-      setSent(true);
+      await onSubmit(note.trim());
+      setSaved(true);
       setTimeout(onClose, 2000);
     } finally {
-      setSending(false);
+      setSaving(false);
     }
   }
 
-  if (sent) {
+  if (saved) {
     return (
       <ModalShell onClose={onClose} labelledBy="care-sent-title">
         <div className="py-4 text-center">
@@ -54,9 +54,9 @@ export function ContactCareTeamModal({ onClose, onSubmit }: ContactCareTeamModal
       </div>
 
       <textarea
-        value={message}
-        onChange={(event) => setMessage(event.target.value)}
-        placeholder="Type your message here..."
+        value={note}
+        onChange={(event) => setNote(event.target.value)}
+        placeholder="Write a note for your protocol record..."
         className="mt-5 h-28 w-full resize-none rounded-xl border border-white/[0.08] bg-black/20 p-4 text-sm text-white outline-none placeholder:text-white/30 focus:border-emerald-400/50"
       />
 
@@ -70,11 +70,11 @@ export function ContactCareTeamModal({ onClose, onSubmit }: ContactCareTeamModal
         </button>
         <button
           type="button"
-          onClick={handleSend}
-          disabled={!message.trim() || sending}
+          onClick={handleSave}
+          disabled={!note.trim() || saving}
           className="rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {sending ? 'Saving' : 'Save Note'}
+          {saving ? 'Saving' : 'Save Note'}
         </button>
       </div>
     </ModalShell>

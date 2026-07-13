@@ -153,4 +153,10 @@ describe('Header', () => {
     render(<WithAll><Header title="Page" /></WithAll>);
     expect(await screen.findByLabelText('Toggle navigation')).toBeInTheDocument();
   });
+
+  it('does not claim server-backed pages are local-only', async () => {
+    render(<WithAll><Header title="Page" /></WithAll>);
+    expect(await screen.findByText('Page')).toBeInTheDocument();
+    expect(screen.queryByText('LOCAL')).not.toBeInTheDocument();
+  });
 });

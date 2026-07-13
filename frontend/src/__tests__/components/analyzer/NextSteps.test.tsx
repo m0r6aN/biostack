@@ -45,6 +45,7 @@ function makeProps(overrides: Partial<React.ComponentProps<typeof NextSteps>> = 
     showSaveNotice: false,
     isAuthenticated: true,
     hasProfile: true,
+    showUpgrade: true,
     onSave: vi.fn(),
     onConvert: vi.fn(),
     onUnlockClicked: vi.fn(),
@@ -53,11 +54,11 @@ function makeProps(overrides: Partial<React.ComponentProps<typeof NextSteps>> = 
 }
 
 describe('NextSteps', () => {
-  it('renders all three CTAs', () => {
+  it('renders the upgrade CTA when the result belongs to a non-entitled account', () => {
     render(<NextSteps {...makeProps()} />);
     expect(screen.getByRole('button', { name: /save analysis/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /convert to biostack protocol/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /unlock full analysis/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /view operator access/i })).toBeInTheDocument();
   });
 
   it('clicking Save Analysis fires onSave', () => {
@@ -74,17 +75,22 @@ describe('NextSteps', () => {
     expect(onConvert).toHaveBeenCalledOnce();
   });
 
-  it('clicking Unlock full analysis fires onUnlockClicked', () => {
+  it('clicking View Operator access fires onUnlockClicked', () => {
     const onUnlockClicked = vi.fn();
     render(<NextSteps {...makeProps({ onUnlockClicked })} />);
-    fireEvent.click(screen.getByRole('link', { name: /unlock full analysis/i }));
+    fireEvent.click(screen.getByRole('link', { name: /view operator access/i }));
     expect(onUnlockClicked).toHaveBeenCalledOnce();
   });
 
-  it('Unlock full analysis link points to /pricing?intent=analyzer', () => {
+  it('View Operator access points to /pricing?intent=analyzer', () => {
     render(<NextSteps {...makeProps()} />);
-    const link = screen.getByRole('link', { name: /unlock full analysis/i });
+    const link = screen.getByRole('link', { name: /view operator access/i });
     expect(link).toHaveAttribute('href', '/pricing?intent=analyzer');
+  });
+
+  it('does not show an unlock CTA for an entitled result', () => {
+    render(<NextSteps {...makeProps({ showUpgrade: false })} />);
+    expect(screen.queryByRole('link', { name: /view operator access/i })).not.toBeInTheDocument();
   });
 
   it('shows save notice when showSaveNotice=true', () => {

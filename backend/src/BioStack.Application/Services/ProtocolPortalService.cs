@@ -19,7 +19,7 @@ public sealed class ProtocolPortalService : IProtocolPortalService
     // Marker stored on TimelineEvent.RelatedEntityType so dose logs and care-team
     // messages can be persisted (real) without a new table/migration.
     public const string DoseLogMarker = "ProtocolPortalDoseLog";
-    public const string CareTeamMessageMarker = "ProtocolPortalCareTeamMessage";
+    public const string CareTeamNoteMarker = "ProtocolPortalCareTeamNote";
 
     private const int AdherenceWindowDays = 7;
 
@@ -220,37 +220,37 @@ public sealed class ProtocolPortalService : IProtocolPortalService
         await _timelineRepository.SaveChangesAsync(ct);
     }
 
-    public async Task SendCareTeamMessageAsync(Guid profileId, CareTeamMessageRequest request, CancellationToken ct = default)
+    public async Task SaveCareTeamNoteAsync(Guid profileId, CareTeamMessageRequest request, CancellationToken ct = default)
     {
         await _ownershipGuard.EnsureProfileOwnedAsync(profileId, ct);
 
         if (string.IsNullOrWhiteSpace(request.Message))
-            throw new InvalidOperationException("A non-empty message is required.");
+            throw new InvalidOperationException("A non-empty note is required.");
 
         var message = request.Message.Trim();
         if (message.Length > 2000)
-            throw new InvalidOperationException("Message is too long (2000 character maximum).");
+            throw new InvalidOperationException("Note is too long (2000 character maximum).");
 
-        // Lightweight rate-limit: reject if a message was recorded in the last 10s.
+        // Lightweight rate-limit: reject if a note was recorded in the last 10s.
         var recent = (await _timelineRepository.GetByPersonIdAsync(profileId, ct))
-            .Where(e => e.RelatedEntityType == CareTeamMessageMarker)
+            .Where(e => e.RelatedEntityType == CareTeamNoteMarker)
             .OrderByDescending(e => e.OccurredAtUtc)
             .FirstOrDefault();
         if (recent is not null && DateTime.UtcNow - recent.OccurredAtUtc < TimeSpan.FromSeconds(10))
-            throw new InvalidOperationException("Please wait a moment before sending another message.");
+            throw new InvalidOperationException("Please wait a moment before saving another note.");
 
-        // TODO: route to an actual care-team channel/notification. For now the message
-        // is persisted as a timeline event so it is not silently dropped.
+        // This surface deliberately stores a protocol-record note only. It does not identify a
+        // recipient, deliver a message, or send a notification.
         var @event = new TimelineEvent
         {
             Id = Guid.NewGuid(),
             PersonId = profileId,
             EventType = EventType.NoteAdded,
-            Title = "Care-team message",
+            Title = "Care-team note",
             Description = message,
             OccurredAtUtc = DateTime.UtcNow,
             RelatedEntityId = null,
-            RelatedEntityType = CareTeamMessageMarker,
+            RelatedEntityType = CareTeamNoteMarker,
         };
 
         await _timelineRepository.AddAsync(@event, ct);
@@ -687,5 +687,5 @@ public interface IProtocolPortalService
     Task<IReadOnlyList<MilestoneResponse>> GetMilestonesAsync(Guid profileId, CancellationToken ct = default);
     Task<IReadOnlyList<ResourceEntryResponse>> GetResourcesAsync(Guid profileId, CancellationToken ct = default);
     Task LogDosesAsync(Guid profileId, LogProtocolDosesRequest request, CancellationToken ct = default);
-    Task SendCareTeamMessageAsync(Guid profileId, CareTeamMessageRequest request, CancellationToken ct = default);
+    Task SaveCareTeamNoteAsync(Guid profileId, CareTeamMessageRequest request, CancellationToken ct = default);
 }

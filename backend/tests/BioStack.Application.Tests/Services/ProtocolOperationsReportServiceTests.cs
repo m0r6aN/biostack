@@ -203,10 +203,10 @@ public sealed class ProtocolOperationsReportServiceTests
             Id = Guid.NewGuid(),
             PersonId = ProfileId,
             EventType = EventType.NoteAdded,
-            Title = "Care-team message",
+                Title = "Care-team note",
             Description = "Just checking in, feeling good this week.",
             OccurredAtUtc = new DateTime(2026, 1, 7, 8, 0, 0, DateTimeKind.Utc),
-            RelatedEntityType = ProtocolPortalService.CareTeamMessageMarker,
+                RelatedEntityType = ProtocolPortalService.CareTeamNoteMarker,
         },
     ];
 }

@@ -634,10 +634,11 @@ export class ApiClient {
   }
 
   /** Send a message to the care team. */
-  async sendCareTeamMessage(profileId: string, message: string): Promise<void> {
+  /** Stores a note on the protocol record. This compatibility route does not deliver a message. */
+  async saveCareTeamNote(profileId: string, note: string): Promise<void> {
     return this.request(`/api/v1/profiles/${profileId}/care-team/message`, {
       method: 'POST',
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message: note }),
     });
   }
 }

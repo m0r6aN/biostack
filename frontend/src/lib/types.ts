@@ -967,7 +967,6 @@ export interface SrbEnvelopeDeterministicFindingRequest {
 }
 
 export interface SrbEnvelopeRequest {
-  protocolId: null;
   payload: {
     goal: string;
     compounds: SrbEnvelopeCompoundRef[];

@@ -26,10 +26,12 @@ vi.mock('@/lib/AuthProvider', () => ({
 
 const analyzeProtocolMock = vi.fn();
 const getProfilesMock = vi.fn();
+const getCurrentSubscriptionMock = vi.fn();
 vi.mock('@/lib/api', () => ({
   apiClient: {
     analyzeProtocol: (...args: unknown[]) => analyzeProtocolMock(...args),
     getProfiles: (...args: unknown[]) => getProfilesMock(...args),
+    getCurrentSubscription: (...args: unknown[]) => getCurrentSubscriptionMock(...args),
   },
   ApiError: class ApiError extends Error {
     status: number;
@@ -131,6 +133,12 @@ function captureAnalyzerEvents() {
   };
 }
 
+async function waitForAnalyzerAccess() {
+  await waitFor(() => {
+    expect(screen.queryByText('Checking Protocol Analyzer access…')).not.toBeInTheDocument();
+  });
+}
+
 // Seed a v4 snapshot so the component restores directly onto the report stage.
 function seedV4WithResult(result: ProtocolAnalyzerResult, primaryCategory: string | null = 'recovery') {
   window.localStorage.setItem(
@@ -152,10 +160,21 @@ beforeEach(() => {
   analyzeProtocolMock.mockReset();
   getProfilesMock.mockReset();
   getProfilesMock.mockResolvedValue([]);
+  getCurrentSubscriptionMock.mockReset();
+  getCurrentSubscriptionMock.mockResolvedValue({
+    tier: 'Operator',
+    status: 'Active',
+    productCode: 'operator',
+    isPaid: true,
+    cancelAtPeriodEnd: false,
+    currentPeriodEndUtc: null,
+    features: { paid_intelligence: true },
+    limits: { active_compounds: null },
+  });
   saveAnalyzerAnalysisMock.mockReset();
   saveAnalyzerAnalysisMock.mockReturnValue({ id: 'analysis_test_1' });
   saveAnalyzerProtocolDraftMock.mockReset();
-  authState.user = null;
+  authState.user = { id: 'operator-user', email: 'operator@example.com' };
   authState.loading = false;
 });
 
@@ -225,6 +244,8 @@ describe('AnalyzerExperience', () => {
 
     render(<AnalyzerExperience />);
 
+    await waitForAnalyzerAccess();
+
     // Select the Recovery & Repair goal so a token is sent.
     await user.click(screen.getByRole('button', { name: 'Recovery & Repair' }));
 
@@ -256,6 +277,8 @@ describe('AnalyzerExperience', () => {
 
     render(<AnalyzerExperience />);
 
+    await waitForAnalyzerAccess();
+
     await user.type(screen.getByRole('textbox'), 'BPC-157 500mcg daily');
     await user.click(screen.getByRole('button', { name: 'Analyze Protocol' }));
 
@@ -271,6 +294,8 @@ describe('AnalyzerExperience', () => {
     analyzeProtocolMock.mockRejectedValueOnce(new Error('network down'));
 
     render(<AnalyzerExperience />);
+
+    await waitForAnalyzerAccess();
 
     await user.type(screen.getByRole('textbox'), 'BPC-157 500mcg daily');
     await user.click(screen.getByRole('button', { name: 'Analyze Protocol' }));
@@ -293,6 +318,8 @@ describe('AnalyzerExperience', () => {
     analyzeProtocolMock.mockResolvedValue(makeResult({ score: 72 }));
 
     render(<AnalyzerExperience />);
+
+    await waitForAnalyzerAccess();
 
     await user.click(screen.getByRole('button', { name: 'Healing stack' }));
 
@@ -320,17 +347,27 @@ describe('AnalyzerExperience', () => {
     expect(screen.getByRole('button', { name: 'Analyze Protocol' })).toBeInTheDocument();
   });
 
-  // 8 ─ Unlock click fires analyzer_unlock_clicked
-  it('fires analyzer_unlock_clicked when the Unlock full analysis link is clicked', async () => {
+  // 8 ─ Observer upgrade click fires analyzer_unlock_clicked
+  it('shows an Operator-access CTA for Observer results and tracks the click', async () => {
     const user = userEvent.setup();
     const captured = captureAnalyzerEvents();
+    getCurrentSubscriptionMock.mockResolvedValue({
+      tier: 'Observer',
+      status: 'None',
+      productCode: 'observer',
+      isPaid: false,
+      cancelAtPeriodEnd: false,
+      currentPeriodEndUtc: null,
+      features: { paid_intelligence: false },
+      limits: { active_compounds: 8 },
+    });
     seedV4WithResult(makeResult({ score: 72 }));
 
     render(<AnalyzerExperience />);
     await screen.findByLabelText(/BioStack score 72 out of 100/i);
 
     // NextSteps renders the unlock link (there may also be a mobile sticky one).
-    const unlockLinks = screen.getAllByRole('link', { name: 'Unlock full analysis' });
+    const unlockLinks = await screen.findAllByRole('link', { name: 'View Operator access' });
     expect(unlockLinks.length).toBeGreaterThan(0);
     for (const link of unlockLinks) {
       expect(link).toHaveAttribute('href', '/pricing?intent=analyzer');
@@ -339,6 +376,27 @@ describe('AnalyzerExperience', () => {
     await user.click(unlockLinks[0]);
     expect(captured.names()).toContain('analyzer_unlock_clicked');
     captured.dispose();
+  });
+
+  it('does not tell an entitled Operator to unlock a server-returned result', async () => {
+    seedV4WithResult(makeResult({ score: 72 }));
+
+    render(<AnalyzerExperience />);
+    await screen.findByLabelText(/BioStack score 72 out of 100/i);
+    await waitFor(() => expect(getCurrentSubscriptionMock).toHaveBeenCalled());
+
+    expect(screen.queryByRole('link', { name: 'View Operator access' })).not.toBeInTheDocument();
+  });
+
+  it('gates anonymous visitors before protocol input is accepted', async () => {
+    authState.user = null;
+    authState.loading = false;
+
+    render(<AnalyzerExperience />);
+
+    expect(screen.getByText('Protocol Analyzer requires an Operator or Commander subscription.')).toBeInTheDocument();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(analyzeProtocolMock).not.toHaveBeenCalled();
   });
 
   // 9 ─ Convert unauthenticated → router.push to sign-in
