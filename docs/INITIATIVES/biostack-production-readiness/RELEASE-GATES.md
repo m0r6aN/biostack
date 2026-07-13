@@ -16,3 +16,5 @@
 ## Verdict
 
 **NO-GO / HOLD.** Any unknown, pending, blocked, or failing blocking gate prevents release.
+
+Local candidate `565805a` contains the application/dependency state validated at `fb0ed84` plus the one-line offline-verification fetch repair. The combined backend/frontend regression suites, frontend production build, and production dependency audit pass locally. This closes the known local KEO-64 build/test blocker and the locally remediated KEO-65 code findings; it does not replace a green hosted workflow, immutable deployed SHA, live smoke evidence, secret-rotation/history evidence, proxy verification, operational drills, or named human approvals.

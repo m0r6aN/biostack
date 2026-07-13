@@ -84,7 +84,8 @@ Receipt evidence remains inspectable by the actor who produced it and by adminis
 - Targeted frontend formatting: **passed**.
 - Production frontend build: application compilation passed, then repository-wide type checking stopped on pre-existing KEO-64 failure `frontend/src/components/tools/ToolsDecisionSurface.tsx:283` (`reconstitutionInstructions` is undefined).
 - Diff hygiene: `git diff --check` passed.
-- Integration status: **blocked on KEO-64 production-build repair**, not represented as fully verified.
+- Integrated candidate verification: KEO-64 repair `44eac22` removed the repository-wide type blocker; combined frontend production build passed at `fb0ed84`.
+- Integration status: **integrated and locally verified**; hosted workflow and live authorization checks remain release-gate evidence.
 
 ## Collision Risk
 Medium: shared receipt endpoint and frontend audit surfaces. Keep isolated until integration review.

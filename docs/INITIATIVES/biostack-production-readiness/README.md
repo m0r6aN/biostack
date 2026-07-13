@@ -4,7 +4,7 @@ Durable coordination state for initiative `biostack-production-readiness`.
 
 **Status:** active, release blocked. **Recommendation:** **NO-GO / HOLD**.
 
-The evidence baseline is `main@a37726a4df9b73378e46232b849f409db67d12df`. Markdown is the approved persistence surface for this documentation-only parcel; no runtime coordinator database is introduced.
+The hosted evidence baseline remains `main@a37726a4df9b73378e46232b849f409db67d12df`. The latest local remediation candidate is `565805a` on `codex/security-integration`; its application/dependency state was validated at `fb0ed84`, and the later commit adds only the offline-verification fetch correction. It has not been pushed, deployed, or verified live. Markdown is the approved persistence surface for this initiative; no runtime coordinator database is introduced.
 
 ## State index
 

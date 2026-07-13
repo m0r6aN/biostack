@@ -3,26 +3,31 @@
   "reviewId": "KEO-65",
   "reviewDate": "2026-07-13",
   "commit": "2bdb7ba",
+  "remediationCandidate": "565805a",
+  "verifiedCodeCommit": "fb0ed84",
   "verdict": "hold",
   "findings": [
-    { "id": "SR-01", "severity": "high", "title": "Receipt API public and cross-user disclosure", "status": "remediation-pending-integration", "parcel": "SEC-RECEIPT-001" },
-    { "id": "SR-02", "severity": "high", "title": "Link analyzer SSRF and unbounded response consumption", "status": "open" },
-    { "id": "SR-03", "severity": "high", "title": "Provider-access enumeration and unauthorized reopen", "status": "open" },
+    { "id": "SR-01", "severity": "high", "title": "Receipt API public and cross-user disclosure", "status": "remediated-local", "parcel": "SEC-RECEIPT-001" },
+    { "id": "SR-02", "severity": "high", "title": "Link analyzer SSRF and unbounded response consumption", "status": "remediated-local", "parcel": "SEC-LINK-001" },
+    { "id": "SR-03", "severity": "high", "title": "Provider-access enumeration and unauthorized reopen", "status": "remediated-local", "parcel": "SEC-PROVIDER-001" },
     { "id": "SR-04", "severity": "high", "title": "Historical callback secret rotation and history closeout", "status": "owner-action-required" },
-    { "id": "SR-05", "severity": "medium", "title": "Non-atomic magic-link consumption", "status": "open" },
-    { "id": "SR-06", "severity": "medium", "title": "Vulnerable PostCSS dependency", "status": "open" },
+    { "id": "SR-05", "severity": "medium", "title": "Non-atomic magic-link consumption", "status": "remediated-local", "parcel": "SEC-AUTH-001" },
+    { "id": "SR-06", "severity": "medium", "title": "Vulnerable PostCSS dependency", "status": "remediated-local", "parcel": "SEC-DEPS-001" },
     { "id": "SR-07", "severity": "medium", "title": "Proxy-unaware rate-limit identity", "status": "deployment-verification-required" },
-    { "id": "SR-08", "severity": "medium", "title": "Client-selected consent version", "status": "open" },
-    { "id": "SR-09", "severity": "medium", "title": "Backend container runs as root", "status": "open" },
+    { "id": "SR-08", "severity": "medium", "title": "Client-selected consent version", "status": "remediated-local", "parcel": "SEC-CONSENT-001" },
+    { "id": "SR-09", "severity": "medium", "title": "Backend container runs as root", "status": "remediated-local", "parcel": "SEC-CONTAINER-001" },
     { "id": "SR-10", "severity": "low", "title": "Lead capture abuse controls", "status": "open" }
   ],
   "verification": {
-    "focusedSecurityTests": { "status": "passed", "passed": 29, "warnings": 4 },
+    "focusedSecurityTests": { "status": "passed", "passed": 57 },
+    "fullBackendSuite": { "status": "passed", "passed": 1088, "projects": 5 },
+    "fullFrontendSuite": { "status": "passed", "passed": 900, "files": 125 },
+    "frontendProductionBuild": { "status": "passed", "staticPages": 51 },
     "dotnetVulnerablePackages": { "status": "passed", "reported": 0 },
-    "frontendProductionAudit": { "status": "failed", "moderate": 2, "advisory": "GHSA-qx2v-qp2m-jg93" },
+    "frontendProductionAudit": { "status": "passed", "moderate": 0, "resolvedPostcss": "8.5.10" },
     "currentTreeSecretScan": { "status": "false-positive-only" },
     "preRemediationSecretScan": { "status": "confirmed-historical-secret" },
     "fullHistorySecretScan": { "status": "unverified-timeout" }
   },
-  "releaseBlockingFindingIds": ["SR-01", "SR-02", "SR-03", "SR-04", "SR-05", "SR-06", "SR-07", "SR-08", "SR-09"]
+  "releaseBlockingFindingIds": ["SR-04", "SR-07"]
 }
