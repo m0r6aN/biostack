@@ -285,6 +285,12 @@ builder.Services.AddDbContext<BioStackDbContext>(options =>
     if (usePostgres)
     {
         options.UseNpgsql(connectionString);
+
+        if (builder.Environment.IsProduction())
+        {
+            ProductionMigrationBaselineConfiguration.Configure(options);
+        }
+
         return;
     }
 
