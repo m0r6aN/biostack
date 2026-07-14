@@ -1,0 +1,82 @@
+name: Structural Evaluation Report Artifact
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  structural-evaluation-report:
+    name: Generate offline structural evaluation report
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Verify structural report contract
+        run: >-
+          dotnet test
+          backend/tests/BioStack.KnowledgeWorker.Tests/BioStack.KnowledgeWorker.Tests.csproj
+          -m:1
+          --filter FullyQualifiedName~StructuralEvaluationReportBuilderTests
+
+      - name: Generate deterministic offline report
+        run: |
+          output_directory="$RUNNER_TEMP/biostack-structural-evaluation-report"
+          report_path="$output_directory/biostack-structural-evaluation-report.v1.json"
+
+          dotnet run \
+            --project backend/tools/BioStack.StructuralEvaluationReportCli/BioStack.StructuralEvaluationReportCli.csproj \
+            -- \
+            --repository-root "$GITHUB_WORKSPACE" \
+            --output-directory "$output_directory"
+
+          first_sha256="$(sha256sum "$report_path" | cut -d ' ' -f 1)"
+
+          dotnet run \
+            --project backend/tools/BioStack.StructuralEvaluationReportCli/BioStack.StructuralEvaluationReportCli.csproj \
+            -- \
+            --repository-root "$GITHUB_WORKSPACE" \
+            --output-directory "$output_directory"
+
+          second_sha256="$(sha256sum "$report_path" | cut -d ' ' -f 1)"
+          test "$first_sha256" = "$second_sha256"
+
+      - name: Verify non-authoritative report boundary
+        run: |
+          report_path="$RUNNER_TEMP/biostack-structural-evaluation-report/biostack-structural-evaluation-report.v1.json"
+          jq -e '
+            .reportVersion == "1.1.0" and
+            .reportKind == "offline-structural-evaluation" and
+            .payload.evaluationStatus == "partial" and
+            .payload.policyStatus == "pending-approval" and
+            .payload.overallVerdict == "not_evaluated" and
+            .payload.comparison.overallVerdict == "not_evaluated" and
+            .payload.comparison.candidateDeclarationsTrusted == false and
+            .payload.comparison.effectAuthority == "none" and
+            .payload.modelInvoked == false and
+            .payload.networkAccessed == false and
+            ([.payload.metrics[].status] | all(. == "observed" or . == "not_evaluated"))
+          ' "$report_path"
+
+      - name: Upload offline report
+        uses: actions/upload-artifact@v4
+        with:
+          name: biostack-structural-evaluation-report-${{ github.sha }}
+          path: ${{ runner.temp }}/biostack-structural-evaluation-report/biostack-structural-evaluation-report.v1.json
+          if-no-files-found: error
+          compression-level: 0
