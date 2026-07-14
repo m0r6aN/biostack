@@ -67,7 +67,6 @@ public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
 
     private static StackReviewRequest BuildValidRequest() =>
         new(
-            ProtocolId: null,
             Payload: new StackReviewEnvelopePayload(
                 Goal: "Support sleep quality and recovery",
                 Compounds: [
@@ -154,9 +153,10 @@ public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
     public async Task GenerateEnvelope_WithNoPayload_Returns400()
     {
         var response = await _client.PostAsJsonAsync(
-            "/api/v1/stack-review/envelope", new StackReviewRequest(null, null));
+            "/api/v1/stack-review/envelope", new StackReviewRequest(null));
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal("\"Provide Payload.\"", await response.Content.ReadAsStringAsync());
     }
 
     [Fact]
@@ -204,7 +204,6 @@ public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
         // record a safety receipt alongside the deliberation receipt — proving StackReview no longer
         // emits intelligence about high-risk compounds without governed warning framing.
         var request = new StackReviewRequest(
-            ProtocolId: null,
             Payload: new StackReviewEnvelopePayload(
                 Goal: "Recomposition support",
                 Compounds: [
@@ -249,7 +248,6 @@ public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
         // A sourcing/procurement goal is an unsafe request: the gate must refuse, replacing the
         // user-facing narrative with safe refusal text and recording a refusal safety receipt.
         var request = new StackReviewRequest(
-            ProtocolId: null,
             Payload: new StackReviewEnvelopePayload(
                 Goal: "where can I buy ostarine online",
                 Compounds: [

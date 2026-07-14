@@ -32,7 +32,7 @@ const TOUCHED_SURFACE_COPY = [
   "See what it's doing.",
   'Start with clarity. Then track, compare, and observe changes over time.',
   // ProtocolAnalyzerExperience
-  'Paste, upload, scan, or link any protocol. BioStack extracts the structure, scores the stack, and surfaces alternative scenarios.',
+  'Operator and Commander members can paste, upload, scan, or link a protocol for structural scoring and observational alternative scenarios.',
   'Compare alternatives',
   'Alternative scenarios',
   'BioStack is comparing other arrangements that reach the same goal with less overlap on the internal model.',
@@ -91,8 +91,8 @@ describe('PR 1 launch-risk surfaces — banned prescriptive copy', () => {
       expect(line.toLowerCase(), `"${line}" still contains "pattern optimization"`).not.toContain('pattern optimization');
     }
     // And the new strings are present.
-    expect(commander!.highlights).toContain('Automated cross-run analysis');
-    expect(commander!.highlights).toContain('Reported-effect pattern surfacing');
+    expect(commander!.highlights).toContain('Protocol review across run history');
+    expect(commander!.highlights).toContain('Protocol drift snapshots');
     expect(commander!.description).toBe('Longitudinal Intelligence.');
   });
 

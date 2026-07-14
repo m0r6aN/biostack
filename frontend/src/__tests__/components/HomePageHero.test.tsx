@@ -38,11 +38,13 @@ describe('HomePage hero', () => {
     expect(screen.getByText('Starter')).toBeInTheDocument();
     expect(screen.getByText('Set up compound tracking without rebuilding a spreadsheet.')).toBeInTheDocument();
     expect(screen.getByText('Existing stack')).toBeInTheDocument();
-    expect(screen.getByText('Review active compounds, overlap signals, and timeline context for free.')).toBeInTheDocument();
+    expect(screen.getByText('Review active compounds, overlap signals, and timeline context with Operator.')).toBeInTheDocument();
     expect(screen.getByText('Provider')).toBeInTheDocument();
-    expect(screen.getByText('Track client protocol changes, notes, and check-ins.')).toBeInTheDocument();
+    expect(screen.getByText('Request access to the provider pilot for permissioned observational workflows.')).toBeInTheDocument();
     expect(screen.getByText('Analyzer')).toBeInTheDocument();
-    expect(screen.getByText('Paste, upload, scan, or link any stack and see what BioStack finds.')).toBeInTheDocument();
+    expect(screen.getByText('Operator and Commander members can review a pasted, uploaded, scanned, or linked stack.')).toBeInTheDocument();
+    expect(screen.getByText('Pilot request')).toBeInTheDocument();
+    expect(screen.queryByText('Multi-client')).not.toBeInTheDocument();
     expect(screen.queryByText('Protocol Surface')).not.toBeInTheDocument();
     expect(screen.queryByText('Stop guessing what to take—or what your stack is actually doing.')).not.toBeInTheDocument();
     expect(screen.queryByText('Track peptides, compounds, and layered protocols')).not.toBeInTheDocument();

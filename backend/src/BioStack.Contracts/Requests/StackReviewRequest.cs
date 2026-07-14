@@ -2,12 +2,11 @@ namespace BioStack.Contracts.Requests;
 
 /// <summary>
 /// Input for POST /api/v1/stack-review/envelope.
-/// Supply either ProtocolId (resolved server-side) or an explicit envelope payload.
+/// The endpoint reviews the explicit, caller-supplied envelope payload. It does not resolve or bind
+/// the deliberation to a persisted BioStack protocol.
 /// </summary>
 public sealed record StackReviewRequest(
-    /// <summary>When provided, the server loads InteractionIntelligence for this protocol.</summary>
-    Guid? ProtocolId,
-    /// <summary>Direct envelope payload, overrides ProtocolId if both are supplied.</summary>
+    /// <summary>Explicit ad-hoc review payload.</summary>
     StackReviewEnvelopePayload? Payload);
 
 public sealed record StackReviewEnvelopePayload(

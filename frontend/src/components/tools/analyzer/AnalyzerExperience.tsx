@@ -8,7 +8,7 @@ import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
 import { getMockProfileGoalIds } from '@/lib/goals';
 import { FREE_TIER_COMPOUND_LIMIT } from '@/lib/tiers';
-import type { PersonProfile, ProtocolAnalyzerInputType, ProtocolAnalyzerResult } from '@/lib/types';
+import type { CurrentSubscription, PersonProfile, ProtocolAnalyzerInputType, ProtocolAnalyzerResult } from '@/lib/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
@@ -36,6 +36,13 @@ import { useAnalyzerSession } from './useAnalyzerSession';
 import type { AnalyzerContextFields } from './useAnalyzerSession';
 
 const ANALYZER_PRICING_HREF = '/pricing?intent=analyzer';
+const PAID_ANALYZER_FEATURE = 'paid_intelligence';
+
+type AnalyzerAccess = 'checking' | 'entitled' | 'operator-required' | 'unavailable';
+
+function hasAnalyzerEntitlement(subscription: CurrentSubscription) {
+  return subscription.features[PAID_ANALYZER_FEATURE] === true;
+}
 
 // Maps the exampleProtocols keys to the legacy analytics goal label the monolith
 // sent (monolith ~261): fatLoss → 'fat loss', otherwise the example name.
@@ -67,6 +74,9 @@ export function AnalyzerExperience() {
   const [editing, setEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [profile, setProfile] = useState<PersonProfile | null>(null);
+  const [analyzerAccess, setAnalyzerAccess] = useState<AnalyzerAccess>(
+    authLoading ? 'checking' : user ? 'checking' : 'operator-required',
+  );
 
   const prefillDoneRef = useRef(false);
   const viewedFiredRef = useRef(false);
@@ -84,9 +94,42 @@ export function AnalyzerExperience() {
   const optimizedProtocol = useMemo(() => pickOptimizedProtocol(result), [result]);
   const scoreInsight = getScoreInsight(result, optimizedProtocol, goals.primaryCategory !== null);
   const whatThisMeans = getWhatThisMeans(result, optimizedProtocol);
-  const premiumLocked = Boolean(result);
+  const premiumLocked = Boolean(result) && analyzerAccess === 'operator-required';
   const hasProfile = profile !== null;
   const isAuthenticated = Boolean(user);
+
+  // The analyzer API is server-gated by paid_intelligence. Resolve that same
+  // entitlement before accepting protocol input so Observer and anonymous
+  // visitors are not invited into a flow the server will reject.
+  useEffect(() => {
+    if (authLoading) {
+      setAnalyzerAccess('checking');
+      return;
+    }
+
+    if (!user) {
+      setAnalyzerAccess('operator-required');
+      return;
+    }
+
+    let cancelled = false;
+    setAnalyzerAccess('checking');
+    void apiClient.getCurrentSubscription()
+      .then((subscription) => {
+        if (!cancelled) {
+          setAnalyzerAccess(hasAnalyzerEntitlement(subscription) ? 'entitled' : 'operator-required');
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setAnalyzerAccess('unavailable');
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [authLoading, user?.id]);
 
   // ── Profile fetch + goal prefill (once, when authed) ─────────────────────────
   useEffect(() => {
@@ -190,6 +233,11 @@ export function AnalyzerExperience() {
     contextFields: AnalyzerContextFields;
     exampleType?: keyof typeof exampleProtocols;
   }) {
+    if (analyzerAccess !== 'entitled') {
+      setError('Operator or Commander access is required to run Protocol Analyzer.');
+      return;
+    }
+
     setError('');
     setShowSaveNotice(false);
     setSavedAnalysisId('');
@@ -411,7 +459,7 @@ export function AnalyzerExperience() {
           Analyze any protocol, in any format you actually have
         </h1>
         <p className="mt-3 max-w-3xl text-base leading-7 text-white/62">
-          Paste, upload, scan, or link any protocol. BioStack extracts the structure, scores the stack, and surfaces alternative scenarios.
+          Operator and Commander members can paste, upload, scan, or link a protocol for structural scoring and observational alternative scenarios.
         </p>
         <div className="mt-4 flex flex-wrap gap-2 text-sm text-white/60">
           <FeatureChip label="Extract document text" />
@@ -422,28 +470,35 @@ export function AnalyzerExperience() {
       </section>
 
       {stage === 'input' && (
-        <InputStage
-          mode={mode}
-          inputText={inputText}
-          linkUrl={linkUrl}
-          selectedFile={selectedFile}
-          goals={goals}
-          context={context}
-          profile={profile}
-          isAuthenticated={isAuthenticated}
-          isPending={isPending}
-          error={error}
-          onModeChange={handleModeChange}
-          onInputTextChange={setInputText}
-          onLinkUrlChange={setLinkUrl}
-          onFileSelected={handleFileSelected}
-          onGoalsChange={setGoals}
-          onContextChange={setContext}
-          onAnalyze={analyzeProtocol}
-          onClear={clearInput}
-          onLoadExample={loadExample}
-          onScanRequested={onScanRequested}
-        />
+        <>
+          {analyzerAccess !== 'entitled' && (
+            <AnalyzerAccessNotice access={analyzerAccess} isAuthenticated={isAuthenticated} />
+          )}
+          {(analyzerAccess === 'entitled' || analyzerAccess === 'checking') && (
+            <InputStage
+              mode={mode}
+              inputText={inputText}
+              linkUrl={linkUrl}
+              selectedFile={selectedFile}
+              goals={goals}
+              context={context}
+              profile={profile}
+              isAuthenticated={isAuthenticated}
+              isPending={isPending || analyzerAccess !== 'entitled'}
+              error={error}
+              onModeChange={handleModeChange}
+              onInputTextChange={setInputText}
+              onLinkUrlChange={setLinkUrl}
+              onFileSelected={handleFileSelected}
+              onGoalsChange={setGoals}
+              onContextChange={setContext}
+              onAnalyze={analyzeProtocol}
+              onClear={clearInput}
+              onLoadExample={loadExample}
+              onScanRequested={onScanRequested}
+            />
+          )}
+        </>
       )}
 
       {stage === 'analyzing' && <AnalyzingState mode={mode} />}
@@ -466,6 +521,7 @@ export function AnalyzerExperience() {
             showSaveNotice={showSaveNotice}
             isAuthenticated={isAuthenticated}
             hasProfile={hasProfile}
+            showUpgrade={premiumLocked}
             onSave={saveAnalysisLocally}
             onConvert={convertToProtocol}
             onUnlockClicked={onUnlockClicked}
@@ -473,12 +529,12 @@ export function AnalyzerExperience() {
         </div>
       )}
 
-      {stage === 'report' && result && (
+      {stage === 'report' && result && analyzerAccess !== 'checking' && analyzerAccess !== 'unavailable' && (
         <div className="fixed inset-x-0 bottom-0 z-20 border-t border-white/10 bg-[#0B1118]/95 p-3 backdrop-blur md:hidden">
           <div className="mx-auto max-w-3xl">
             {premiumLocked ? (
               <Link href={ANALYZER_PRICING_HREF} onClick={onUnlockClicked} className="block rounded-lg bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-slate-950">
-                Unlock full analysis
+                View Operator access
               </Link>
             ) : user ? (
               <button type="button" onClick={convertToProtocol} className="block w-full rounded-lg bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-slate-950">
@@ -498,4 +554,37 @@ export function AnalyzerExperience() {
 
 function FeatureChip({ label }: { label: string }) {
   return <span className="rounded-lg border border-white/10 px-3 py-1.5">{label}</span>;
+}
+
+function AnalyzerAccessNotice({
+  access,
+  isAuthenticated,
+}: {
+  access: AnalyzerAccess;
+  isAuthenticated: boolean;
+}) {
+  if (access === 'checking') {
+    return (
+      <p role="status" className="mb-5 rounded-lg border border-white/10 bg-white/[0.035] p-4 text-sm text-white/65">
+        Checking Protocol Analyzer access…
+      </p>
+    );
+  }
+
+  if (access === 'unavailable') {
+    return (
+      <p role="alert" className="mb-5 rounded-lg border border-amber-300/20 bg-amber-300/[0.06] p-4 text-sm text-amber-50/80">
+        Protocol Analyzer access could not be verified. Try again after your subscription status is available.
+      </p>
+    );
+  }
+
+  return (
+    <div className="mb-5 rounded-lg border border-emerald-300/20 bg-emerald-400/[0.06] p-4 text-sm text-emerald-50/80">
+      <p>Protocol Analyzer requires an Operator or Commander subscription.</p>
+      <Link href={isAuthenticated ? ANALYZER_PRICING_HREF : '/auth/signin?callbackUrl=/tools/analyzer'} className="mt-2 inline-block font-semibold underline underline-offset-4">
+        {isAuthenticated ? 'View Operator access' : 'Sign in to check access'}
+      </Link>
+    </div>
+  );
 }

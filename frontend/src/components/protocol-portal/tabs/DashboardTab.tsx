@@ -12,7 +12,7 @@ interface DashboardTabProps {
   onViewCalendar: () => void;
   onViewLabs: () => void;
   onLogDoses: () => void;
-  onMessageCareTeam: () => void;
+  onSaveCareTeamNote: () => void;
 }
 
 export function DashboardTab({
@@ -20,7 +20,7 @@ export function DashboardTab({
   onViewCalendar,
   onViewLabs,
   onLogDoses,
-  onMessageCareTeam,
+  onSaveCareTeamNote,
 }: DashboardTabProps) {
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -61,8 +61,8 @@ export function DashboardTab({
           <SecondaryAction icon={<TestTube className="h-4 w-4" />} label="View Latest Labs" onClick={onViewLabs} />
           <SecondaryAction
             icon={<MessageSquarePlus className="h-4 w-4" />}
-            label="Message Care Team"
-            onClick={onMessageCareTeam}
+            label="Save Care Team Note"
+            onClick={onSaveCareTeamNote}
           />
         </div>
       </GlassCard>

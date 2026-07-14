@@ -10,8 +10,6 @@ import { CognitiveHeatGauge } from '@/components/governance/CognitiveHeatGauge';
 import { ConfidenceProfileCard } from '@/components/governance/ConfidenceProfileCard';
 import { ClaimBadgeStack } from '@/components/governance/ClaimBadgeStack';
 import { GovernedSentence } from '@/components/governance/GovernedSentence';
-import { ReceiptBadge } from '@/components/governance/ReceiptBadge';
-import { ReceiptDrawer } from '@/components/governance/ReceiptDrawer';
 import { WitnessNarrativePanel } from '@/components/governance/WitnessNarrativePanel';
 import { ReasoningGraphViewer } from '@/components/governance/ReasoningGraphViewer';
 import { cn } from '@/lib/utils';
@@ -20,7 +18,6 @@ import type {
   SrbEnvelopeResponse,
   SrbEnvelopeDeterministic,
   SrbEnvelopeFinding,
-  ProtocolReviewCompletedEvent,
 } from '@/lib/types';
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -147,9 +144,6 @@ export default function DecisionTheaterPage() {
   const [error, setError] = useState<string | null>(null);
 
   const [activeTab, setActiveTab] = useState<Tab>('Optimizer');
-  const [completing, setCompleting] = useState(false);
-  const [completedEvent, setCompletedEvent] = useState<ProtocolReviewCompletedEvent | null>(null);
-  const [receiptDrawerOpen, setReceiptDrawerOpen] = useState(false);
 
   // Load protocol
   useEffect(() => {
@@ -189,7 +183,6 @@ export default function DecisionTheaterPage() {
       }));
 
       const result = await apiClient.postStackReviewEnvelope({
-        protocolId: null,
         payload: {
           goal: p.name,
           compounds,
@@ -211,29 +204,17 @@ export default function DecisionTheaterPage() {
     if (protocol) generateEnvelope(protocol);
   }, [protocol, generateEnvelope]);
 
-  // Complete review
-  async function handleCompleteReview() {
-    if (!protocolId || !protocol) return;
-    setCompleting(true);
-    try {
-      const event = await apiClient.completeProtocolReview(protocolId, protocol.activeRun?.id ?? null, 'Reviewed via Decision Theater');
-      setCompletedEvent(event);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to complete review');
-    } finally {
-      setCompleting(false);
-    }
-  }
-
-  // Export review memo
+  // Export a clearly qualified ad-hoc snapshot. The server does not bind this deliberation to the
+  // persisted protocol, so this artifact must not claim canonical protocol-review completion.
   function handleExportMemo() {
     if (!envelope || !protocol) return;
     const memo = {
-      protocolId,
-      protocolName: protocol.name,
+      contextProtocolId: protocolId,
+      contextProtocolName: protocol.name,
+      sourceMode: 'client-supplied-protocol-snapshot',
+      protocolBound: false,
       generatedAtUtc: new Date().toISOString(),
       effectStatus: 'commentary-only',
-      receiptUri: completedEvent?.receiptUri ?? null,
       deterministicFindings: envelope.deterministicFindings,
       perspectiveReviews: envelope.perspectiveReviews,
       contradictionReview: envelope.contradictionReview,
@@ -292,7 +273,7 @@ export default function DecisionTheaterPage() {
             ← protocol
           </Link>
           <div className="flex-1 min-w-0">
-            <p className="text-[9px] font-bold uppercase tracking-widest text-white/20">Decision Theater</p>
+            <p className="text-[9px] font-bold uppercase tracking-widest text-white/20">Decision Theater Preview</p>
             <h1 className="text-sm font-semibold text-white/90 truncate">
               {protocol?.name ?? 'Loading…'}
             </h1>
@@ -301,31 +282,6 @@ export default function DecisionTheaterPage() {
           {/* Cognitive Heat — always visible */}
           {envelope && (
             <CognitiveHeatGauge heat={heat} compact />
-          )}
-
-          {/* Complete Review button */}
-          {completedEvent ? (
-            <div className="flex items-center gap-2">
-              <ReceiptBadge
-                receiptUri={completedEvent.receiptUri ?? 'keon://receipt/pending'}
-                effectStatus="commentary-only"
-                onClick={() => setReceiptDrawerOpen(true)}
-              />
-              <span className="text-[10px] text-white/30">Review complete</span>
-            </div>
-          ) : (
-            <button
-              onClick={handleCompleteReview}
-              disabled={completing || !envelope}
-              className={cn(
-                'px-4 py-2 rounded-lg text-[11px] font-semibold transition-all',
-                'border border-emerald-400/30 bg-emerald-500/10 text-emerald-300',
-                'hover:bg-emerald-500/20 hover:border-emerald-400/50',
-                'disabled:opacity-40 disabled:cursor-not-allowed',
-              )}
-            >
-              {completing ? 'Completing…' : 'Complete Review'}
-            </button>
           )}
 
           <button
@@ -340,6 +296,10 @@ export default function DecisionTheaterPage() {
 
       {/* Body */}
       <div className="max-w-5xl mx-auto px-6 py-8">
+        <div className="mb-6 rounded-xl border border-amber-400/20 bg-amber-500/5 px-4 py-3 text-xs leading-relaxed text-amber-100/70">
+          This preview reviews a client-supplied snapshot of the displayed protocol. It is commentary only,
+          is not server-bound to the protocol record, and does not complete a protocol review.
+        </div>
         {loadingEnvelope && (
           <div className="flex items-center justify-center py-24 text-white/30 text-sm">
             Generating deliberation envelope…
@@ -439,14 +399,6 @@ export default function DecisionTheaterPage() {
         )}
       </div>
 
-      {/* Receipt drawer */}
-      {completedEvent?.receiptUri && (
-        <ReceiptDrawer
-          receiptUri={completedEvent.receiptUri}
-          open={receiptDrawerOpen}
-          onClose={() => setReceiptDrawerOpen(false)}
-        />
-      )}
     </div>
   );
 }

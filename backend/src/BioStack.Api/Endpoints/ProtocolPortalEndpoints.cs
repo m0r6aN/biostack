@@ -209,7 +209,7 @@ public static class ProtocolPortalEndpoints
     {
         try
         {
-            await service.SendCareTeamMessageAsync(profileId, request, ct);
+            await service.SaveCareTeamNoteAsync(profileId, request, ct);
             return Results.NoContent();
         }
         catch (InvalidOperationException ex)

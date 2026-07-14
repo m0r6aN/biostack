@@ -131,7 +131,7 @@ function buildEvidencePreviewContent(base: StackIntelligencePanelContent): Stack
     summary: 'Evidence metadata is separated from the list view.',
     insights: [
       'Evidence tiers and source context are public in individual compound dossiers.',
-      'Free analysis still shows the parsed list and first findings before signup.',
+      'Protocol analysis is available after Operator or Commander access is verified.',
     ],
     nextAction: 'Browse public evidence or compare plans for the full stack view.',
   };

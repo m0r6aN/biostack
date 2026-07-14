@@ -40,11 +40,33 @@ describe('marketing content', () => {
     expect(landingFeatures.some((feature) => feature.includes('Unified timeline'))).toBe(true);
   });
 
-  it('Observer tier highlights the free analyzer and local-save value', () => {
+  it('Observer tier does not advertise the paid analyzer', () => {
     const observer = pricingTiers.find((t) => t.name === 'Observer')!;
     expect(observer.highlights).toContain('Free calculators');
-    expect(observer.highlights).toContain('Basic analyzer score');
+    expect(observer.highlights).toContain('Up to 8 active compounds');
     expect(observer.highlights).toContain('Local tool history');
+    expect(observer.highlights.join(' ').toLowerCase()).not.toContain('analyzer');
     expect(observer.highlights.every((h) => !h.includes(' 5 '))).toBe(true);
+  });
+
+  it('paid highlights are limited to shipped, server-gated customer surfaces', () => {
+    const operator = pricingTiers.find((t) => t.name === 'Operator')!;
+    const commander = pricingTiers.find((t) => t.name === 'Commander')!;
+
+    expect(operator.highlights).toEqual([
+      'Full protocol analysis',
+      'Current-stack relationship intelligence',
+      'Weekly protocol calendar',
+      'Diet and lifestyle framework',
+      'Progress and milestone tracking',
+    ]);
+    expect(commander.highlights).toEqual([
+      'Protocol review across run history',
+      'Pattern memory snapshots',
+      'Protocol drift snapshots',
+      'Sequence expectation snapshots',
+      'Monitoring and lab view',
+      'Cross-protocol mission control',
+    ]);
   });
 });

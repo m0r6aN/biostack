@@ -126,7 +126,7 @@
                     <button onclick="showContactModal()"
                             class="px-4 py-2 text-sm font-medium bg-white border border-slate-300 hover:bg-slate-50 rounded-2xl flex items-center gap-x-2 text-slate-700 transition-colors">
                         <i class="fa-solid fa-headset text-xs"></i>
-                        <span class="hidden md:inline">Contact Care Team</span>
+                        <span class="hidden md:inline">Care Team Note Preview</span>
                     </button>
                 </div>
             </div>
@@ -317,7 +317,7 @@
                         <button onclick="showContactModal()"
                                 class="w-full flex items-center justify-center gap-x-2 px-4 py-3 border border-slate-300 hover:bg-slate-50 rounded-2xl text-sm font-medium">
                             <i class="fa-solid fa-comment-medical"></i>
-                            <span>Message Care Team</span>
+                            <span>Care Team Note Preview</span>
                         </button>
                     </div>
                 </div>
@@ -741,31 +741,16 @@
             const modalHTML = `
                 <div class="fixed inset-0 bg-black/60 z-[110] flex items-center justify-center p-4" onclick="this.remove()">
                     <div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-md w-full p-7">
-                        <h3 class="font-semibold text-xl mb-1">Message Your Care Team</h3>
-                        <p class="text-sm text-slate-600 mb-5">Questions about dosing, labs, or how you're feeling? We're here.</p>
-
-                        <textarea class="w-full border border-slate-300 rounded-2xl p-4 text-sm h-28" placeholder="Type your message here..."></textarea>
+                        <h3 class="font-semibold text-xl mb-1">Care Team Note Preview</h3>
+                        <p class="text-sm text-slate-600 mb-5">This static template does not save a note, deliver a message, or send a notification.</p>
 
                         <div class="flex justify-end gap-x-3 mt-4">
-                            <button onclick="this.closest('.fixed').remove()" class="px-5 py-2.5 text-sm font-medium border border-slate-300 rounded-2xl">Cancel</button>
-                            <button onclick="submitMessage(this)" class="px-5 py-2.5 bg-slate-900 text-white text-sm font-medium rounded-2xl">Send Message</button>
+                            <button onclick="this.closest('.fixed').remove()" class="px-5 py-2.5 text-sm font-medium border border-slate-300 rounded-2xl">Close Preview</button>
                         </div>
                     </div>
                 </div>
             `;
             document.body.insertAdjacentHTML('beforeend', modalHTML);
-        }
-
-        function submitMessage(element) {
-            const container = element.closest('.fixed');
-            container.innerHTML = `
-                <div class="bg-white rounded-3xl max-w-md w-full p-7 text-center">
-                    <i class="fa-solid fa-check-circle text-emerald-500 text-4xl mb-3"></i>
-                    <h3 class="font-semibold">Message Sent</h3>
-                    <p class="text-sm text-slate-600 mt-1">Our team will respond within 24 hours.</p>
-                </div>
-            `;
-            setTimeout(() => container.remove(), 2200);
         }
 
         // Initialize everything

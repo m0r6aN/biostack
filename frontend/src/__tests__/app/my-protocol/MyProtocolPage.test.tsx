@@ -35,7 +35,7 @@ vi.mock('@/lib/api', () => ({
     getProtocolPortalMilestones: vi.fn(),
     getProtocolPortalMonitoring: vi.fn(),
     logProtocolDoses: vi.fn(),
-    sendCareTeamMessage: vi.fn(),
+    saveCareTeamNote: vi.fn(),
   },
 }));
 
@@ -56,10 +56,10 @@ vi.mock('@/components/protocol-portal/ProtocolTabBar', () => ({
   ),
 }));
 vi.mock('@/components/protocol-portal/tabs/DashboardTab', () => ({
-  DashboardTab: ({ onLogDoses, onMessageCareTeam }: { onLogDoses: () => void; onMessageCareTeam: () => void }) => (
+  DashboardTab: ({ onLogDoses, onSaveCareTeamNote }: { onLogDoses: () => void; onSaveCareTeamNote: () => void }) => (
     <div>
       <button onClick={onLogDoses}>Log live doses</button>
-      <button onClick={onMessageCareTeam}>Open care note</button>
+      <button onClick={onSaveCareTeamNote}>Open care note</button>
     </div>
   ),
 }));
@@ -117,7 +117,7 @@ describe('/my-protocol live integration', () => {
     vi.mocked(apiClient.getProtocolPortalMilestones).mockResolvedValue([]);
     vi.mocked(apiClient.getProtocolPortalMonitoring).mockResolvedValue({ baselineCompleted: '', recurringCadence: '', recurringLabs: [], adjustmentRules: [] });
     vi.mocked(apiClient.logProtocolDoses).mockResolvedValue(undefined);
-    vi.mocked(apiClient.sendCareTeamMessage).mockResolvedValue(undefined);
+    vi.mocked(apiClient.saveCareTeamNote).mockResolvedValue(undefined);
   });
 
   it('loads live Observer endpoints and does not download the full paid aggregate', async () => {
@@ -176,6 +176,6 @@ describe('/my-protocol live integration', () => {
 
     await user.click(screen.getByRole('button', { name: 'Open care note' }));
     await user.click(screen.getByRole('button', { name: 'Save care note' }));
-    await waitFor(() => expect(apiClient.sendCareTeamMessage).toHaveBeenCalledWith('profile-1', 'Observed update'));
+    await waitFor(() => expect(apiClient.saveCareTeamNote).toHaveBeenCalledWith('profile-1', 'Observed update'));
   });
 });

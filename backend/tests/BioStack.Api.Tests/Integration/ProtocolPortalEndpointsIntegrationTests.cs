@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using BioStack.Api;
+using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
@@ -270,14 +271,23 @@ public sealed class ProtocolPortalEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task SendCareTeamMessage_ReturnsNoContent()
+    public async Task SaveCareTeamNote_ReturnsNoContent()
     {
         var profile = await CreateProfileAsync("Care Team");
 
         var response = await _client.PostAsJsonAsync(
             $"/api/v1/profiles/{profile.Id}/care-team/message",
-            new CareTeamMessageRequest("Feeling great this week, thanks."), JsonOptions);
+            new CareTeamMessageRequest("  Feeling great this week, thanks.  "), JsonOptions);
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var note = await db.TimelineEvents.SingleAsync(e =>
+            e.PersonId == profile.Id && e.RelatedEntityType == ProtocolPortalService.CareTeamNoteMarker);
+
+        Assert.Equal(EventType.NoteAdded, note.EventType);
+        Assert.Equal("Care-team note", note.Title);
+        Assert.Equal("Feeling great this week, thanks.", note.Description);
     }
 
     [Fact]
