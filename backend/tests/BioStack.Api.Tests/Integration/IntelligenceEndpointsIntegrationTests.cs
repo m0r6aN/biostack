@@ -3,11 +3,15 @@ namespace BioStack.Api.Tests.Integration;
 using System.Net;
 using System.Text.Json;
 using BioStack.Application.Services;
+using BioStack.Domain.Entities;
 using BioStack.Domain.Entities.Graph;
+using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Governance;
 using BioStack.Infrastructure.Knowledge;
+using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -59,6 +63,20 @@ public class IntelligenceEndpointsIntegrationTests : IAsyncLifetime
 
         // Seed a reviewed graph so the compatibility endpoint is graph-backed.
         await using var scope = _factory.Services.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        db.AppUsers.Add(new AppUser
+        {
+            Id = TestUserId,
+            Provider = "email",
+            ProviderKey = "intelligence@example.com",
+            Email = "intelligence@example.com",
+            DisplayName = "Intelligence User",
+            CreatedAtUtc = DateTime.UtcNow,
+            LastSeenAtUtc = DateTime.UtcNow,
+        });
+        db.Subscriptions.Add(NewSubscription(ProductTier.Operator, DateTime.UtcNow.AddDays(30)));
+        await db.SaveChangesAsync();
+
         var store = scope.ServiceProvider.GetRequiredService<ICompoundGraphStore>();
         await store.PublishAsync(
             new CompoundGraphArtifact
@@ -146,4 +164,63 @@ public class IntelligenceEndpointsIntegrationTests : IAsyncLifetime
         Assert.Equal(GraphHash, root.GetProperty("graphArtifactHash").GetString());
         Assert.NotEmpty(root.GetProperty("relationships").EnumerateArray());
     }
+
+    [Fact]
+    public async Task RelationshipGraph_RequiresOperator_AndFailsClosedAfterDowngrade()
+    {
+        var paths = new[]
+        {
+            "/api/v1/intelligence/compounds/Creatine/relationships",
+            "/api/v1/intelligence/compatibility?compounds=Creatine&compounds=Beta-Alanine",
+        };
+
+        await SetSubscriptionAsync(ProductTier.Observer, DateTime.UtcNow.AddDays(30));
+        foreach (var path in paths)
+        {
+            var blocked = await _client.GetAsync(path);
+            Assert.Equal(HttpStatusCode.PaymentRequired, blocked.StatusCode);
+        }
+
+        await SetSubscriptionAsync(ProductTier.Operator, DateTime.UtcNow.AddDays(30));
+        foreach (var path in paths)
+        {
+            Assert.Equal(HttpStatusCode.OK, (await _client.GetAsync(path)).StatusCode);
+        }
+
+        await SetSubscriptionAsync(ProductTier.Operator, DateTime.UtcNow.AddMinutes(-1));
+        foreach (var path in paths)
+        {
+            var blocked = await _client.GetAsync(path);
+            Assert.Equal(HttpStatusCode.PaymentRequired, blocked.StatusCode);
+        }
+    }
+
+    private async Task SetSubscriptionAsync(ProductTier tier, DateTime periodEndUtc)
+    {
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var subscription = await db.Subscriptions.SingleAsync(item => item.AppUserId == TestUserId);
+        subscription.Tier = tier;
+        subscription.ProductCode = tier.ToString().ToLowerInvariant();
+        subscription.StripePriceId = tier == ProductTier.Commander ? "price_commander" : "price_operator";
+        subscription.CurrentPeriodEndUtc = periodEndUtc;
+        subscription.UpdatedAtUtc = DateTime.UtcNow;
+        await db.SaveChangesAsync();
+    }
+
+    private static Subscription NewSubscription(ProductTier tier, DateTime periodEndUtc) => new()
+    {
+        Id = Guid.NewGuid(),
+        AppUserId = TestUserId,
+        Tier = tier,
+        ProductCode = tier.ToString().ToLowerInvariant(),
+        Status = SubscriptionStatus.Active,
+        CurrentPeriodStartUtc = DateTime.UtcNow.AddDays(-1),
+        CurrentPeriodEndUtc = periodEndUtc,
+        StripeCustomerId = "cus_intelligence",
+        StripeSubscriptionId = "sub_intelligence",
+        StripePriceId = tier == ProductTier.Commander ? "price_commander" : "price_operator",
+        CreatedAtUtc = DateTime.UtcNow,
+        UpdatedAtUtc = DateTime.UtcNow,
+    };
 }

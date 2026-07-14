@@ -279,6 +279,10 @@ public static class ProtocolEndpoints
                 receiptUri = receipt.ReceiptUri,
             });
         }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
+        }
         catch (InvalidOperationException)
         {
             return Results.NotFound();

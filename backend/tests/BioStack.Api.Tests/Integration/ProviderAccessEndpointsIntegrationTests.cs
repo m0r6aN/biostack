@@ -2,7 +2,9 @@ namespace BioStack.Api.Tests.Integration;
 
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using BioStack.Api;
+using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
@@ -206,5 +208,79 @@ public sealed class ProviderAccessEndpointsIntegrationTests : IAsyncLifetime
         var item = Assert.Single(queue!);
         Assert.Equal("contacted", item.Status);
         Assert.Equal("commercial-owner", item.Owner);
+    }
+
+    [Fact]
+    public async Task AdminQueue_RejectsAnonymousAndOrdinaryUsers()
+    {
+        var requestId = Guid.NewGuid();
+        Assert.Equal(
+            HttpStatusCode.Unauthorized,
+            (await _client.GetAsync("/api/v1/admin/provider-access/requests/")).StatusCode);
+        Assert.Equal(
+            HttpStatusCode.Unauthorized,
+            (await _client.PatchAsJsonAsync($"/api/v1/admin/provider-access/requests/{requestId}", new
+            {
+                Status = "contacted",
+                Owner = "owner",
+            })).StatusCode);
+
+        await SignInAsync("ordinary-provider-queue@example.com");
+
+        Assert.Equal(
+            HttpStatusCode.Forbidden,
+            (await _client.GetAsync("/api/v1/admin/provider-access/requests/")).StatusCode);
+        Assert.Equal(
+            HttpStatusCode.Forbidden,
+            (await _client.PatchAsJsonAsync($"/api/v1/admin/provider-access/requests/{requestId}", new
+            {
+                Status = "contacted",
+                Owner = "owner",
+            })).StatusCode);
+    }
+
+    [Fact]
+    public async Task AdminDemotion_TakesEffectOnTheActiveCookie()
+    {
+        const string email = "demoted-provider-admin@example.com";
+        await AdminAuthTestHelper.SignInAsAdminAsync(_client, _factory, email);
+
+        Guid userId;
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            userId = await db.AppUsers
+                .Where(user => user.Email == email)
+                .Select(user => user.Id)
+                .SingleAsync();
+        }
+
+        Assert.Equal(
+            HttpStatusCode.OK,
+            (await _client.GetAsync("/api/v1/admin/provider-access/requests/")).StatusCode);
+        Assert.Equal(
+            HttpStatusCode.OK,
+            (await _client.PostAsync($"/api/v1/admin/users/{userId}/demote", null)).StatusCode);
+        Assert.Equal(
+            HttpStatusCode.Forbidden,
+            (await _client.GetAsync("/api/v1/admin/provider-access/requests/")).StatusCode);
+    }
+
+    private async Task SignInAsync(string email)
+    {
+        await _client.PostAsJsonAsync(
+            "/api/v1/auth/start",
+            new StartAuthRequest(email, "email", "/providers"));
+        using var inbox = await JsonDocument.ParseAsync(await _client.GetStreamAsync("/dev/auth/inbox"));
+        var link = inbox.RootElement
+            .EnumerateArray()
+            .First(message => string.Equals(
+                message.GetProperty("contact").GetString(),
+                email,
+                StringComparison.OrdinalIgnoreCase))
+            .GetProperty("link")
+            .GetString()!;
+        var uri = new Uri(link);
+        await _client.GetAsync($"{uri.AbsolutePath}{uri.Query}");
     }
 }

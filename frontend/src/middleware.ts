@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { publicRoutePrefixes } from '@/lib/productContract';
+import { isPublicRoutePath } from '@/lib/productContract';
 
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -9,7 +9,7 @@ export default function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/tools', req.url), 308);
   }
 
-  if (pathname === '/' || publicRoutePrefixes.some((p) => pathname.startsWith(p))) {
+  if (isPublicRoutePath(pathname)) {
     return NextResponse.next();
   }
 

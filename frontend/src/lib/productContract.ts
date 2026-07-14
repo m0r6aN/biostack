@@ -21,6 +21,16 @@ export const routeAliases = contract.routes.aliases;
 export const publicRoutePrefixes = contract.routes.publicPrefixes;
 export const healthRoutes = contract.health;
 
+export function isPublicRoutePath(pathname: string) {
+  if (pathname === '/') {
+    return true;
+  }
+
+  return publicRoutePrefixes.some((prefix) =>
+    pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
+
 export function getProductPlan(code: ProductPlanCode) {
   const plan = productPlans.find((candidate) => candidate.code === code);
   if (!plan) {

@@ -3,9 +3,12 @@ namespace BioStack.Api.Tests.Integration;
 using System.Net;
 using System.Text.Json;
 using BioStack.Application.Services;
+using BioStack.Domain.Entities;
 using BioStack.Domain.Entities.Graph;
+using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Governance;
 using BioStack.Infrastructure.Knowledge;
+using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,6 +62,34 @@ public class IntelligenceSafetyGateIntegrationTests : IAsyncLifetime
         _client = _factory.CreateClient();
 
         await using var scope = _factory.Services.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        db.AppUsers.Add(new AppUser
+        {
+            Id = TestUserId,
+            Provider = "email",
+            ProviderKey = "intelligence-safety@example.com",
+            Email = "intelligence-safety@example.com",
+            DisplayName = "Intelligence Safety User",
+            CreatedAtUtc = DateTime.UtcNow,
+            LastSeenAtUtc = DateTime.UtcNow,
+        });
+        db.Subscriptions.Add(new Subscription
+        {
+            Id = Guid.NewGuid(),
+            AppUserId = TestUserId,
+            Tier = ProductTier.Operator,
+            ProductCode = "operator",
+            Status = SubscriptionStatus.Active,
+            CurrentPeriodStartUtc = DateTime.UtcNow.AddDays(-1),
+            CurrentPeriodEndUtc = DateTime.UtcNow.AddDays(30),
+            StripeCustomerId = "cus_intelligence_safety",
+            StripeSubscriptionId = "sub_intelligence_safety",
+            StripePriceId = "price_operator",
+            CreatedAtUtc = DateTime.UtcNow,
+            UpdatedAtUtc = DateTime.UtcNow,
+        });
+        await db.SaveChangesAsync();
+
         var store = scope.ServiceProvider.GetRequiredService<ICompoundGraphStore>();
         await store.PublishAsync(
             new CompoundGraphArtifact

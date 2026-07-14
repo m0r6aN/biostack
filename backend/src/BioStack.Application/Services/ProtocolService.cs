@@ -652,6 +652,7 @@ public sealed class ProtocolService : IProtocolService
         if (protocol is null)
             throw new InvalidOperationException($"Protocol with ID {protocolId} not found");
         await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
+        await _featureGate.EnsureEnabledAsync(FeatureCodes.CommanderIntelligence, cancellationToken);
 
         if (request.RunId is not null)
         {

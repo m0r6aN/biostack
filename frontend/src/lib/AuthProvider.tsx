@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { getApiBaseUrl } from './apiBase';
-import { publicRoutePrefixes } from './productContract';
+import { isPublicRoutePath } from './productContract';
 
 export type AuthUser = {
   id: string;
@@ -28,8 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const redirectExpiredProtectedSession = useCallback(() => {
     const { pathname, search } = window.location;
-    const isPublic = pathname === '/' || publicRoutePrefixes.some((prefix) => pathname.startsWith(prefix));
-    if (isPublic) {
+    if (isPublicRoutePath(pathname)) {
       return;
     }
 

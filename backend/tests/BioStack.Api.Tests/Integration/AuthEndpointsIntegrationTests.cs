@@ -393,6 +393,42 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         Assert.False(session.Authenticated);
     }
 
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task Session_ServerStateInvalidation_FailsClosed(bool revoke)
+    {
+        var email = revoke ? "revoked-session@example.com" : "expired-session@example.com";
+        await StartAsync(email, "/profiles");
+        await _client.GetAsync(ReadPathAndQuery(await LatestMagicLinkAsync()));
+
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            var session = await db.Sessions
+                .Include(item => item.User)
+                .SingleAsync(item => item.User.Email == email && item.RevokedAtUtc == null);
+            if (revoke)
+            {
+                session.RevokedAtUtc = DateTime.UtcNow;
+            }
+            else
+            {
+                session.ExpiresAtUtc = DateTime.UtcNow.AddMinutes(-1);
+            }
+
+            await db.SaveChangesAsync();
+        }
+
+        var sessionResponse = await _client.GetFromJsonAsync<AuthSessionResponse>("/api/v1/auth/session");
+        Assert.NotNull(sessionResponse);
+        Assert.False(sessionResponse.Authenticated);
+        Assert.Null(sessionResponse.User);
+
+        var protectedResponse = await _client.GetAsync("/api/v1/profiles");
+        Assert.Equal(HttpStatusCode.Unauthorized, protectedResponse.StatusCode);
+    }
+
     [Fact]
     public async Task RedirectAllowlist_IsEnforced()
     {

@@ -28,4 +28,14 @@ describe('middleware public route access', () => {
       expect(response.headers.get('location')).toContain('/auth/signin');
     }
   );
+
+  it.each(['/knowledge-private', '/toolshed', '/apiary']) (
+    'does not treat a near-prefix route %s as public',
+    (pathname) => {
+      const response = middleware(requestFor(pathname));
+
+      expect(response.status).toBe(307);
+      expect(response.headers.get('location')).toContain('/auth/signin');
+    },
+  );
 });

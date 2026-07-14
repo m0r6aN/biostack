@@ -19,6 +19,11 @@ using BioStack.Infrastructure.Knowledge;
 /// </summary>
 public static class IntelligenceEndpoints
 {
+    private static IResult ProductGate(FeatureLimitExceededException ex) =>
+        Results.Json(
+            new ProductErrorResponse(ex.Code, ex.Message, ex.Tier.ToString(), ex.Limit, true),
+            statusCode: StatusCodes.Status402PaymentRequired);
+
     public static void MapIntelligenceEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/api/v1/intelligence")
@@ -35,6 +40,7 @@ public static class IntelligenceEndpoints
     private static async Task<IResult> GetCompoundRelationships(
         string compound,
         IGraphIntelligenceService graphIntelligence,
+        IFeatureGate featureGate,
         IUserFacingIntelligenceGate gate,
         IRuntimeReceiptFactory receipts,
         ICurrentUserAccessor currentUser,
@@ -43,6 +49,15 @@ public static class IntelligenceEndpoints
         if (string.IsNullOrWhiteSpace(compound))
         {
             return Results.BadRequest("A compound name is required.");
+        }
+
+        try
+        {
+            await featureGate.EnsureEnabledAsync(FeatureCodes.ReviewedRelationshipGraph, ct);
+        }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
         }
 
         var response = await graphIntelligence.GetRelationshipsForCompoundAsync(compound, ct);
@@ -80,6 +95,7 @@ public static class IntelligenceEndpoints
     private static async Task<IResult> GetCompatibility(
         HttpContext httpContext,
         IGraphIntelligenceService graphIntelligence,
+        IFeatureGate featureGate,
         IUserFacingIntelligenceGate gate,
         IRuntimeReceiptFactory receipts,
         ICurrentUserAccessor currentUser,
@@ -93,6 +109,15 @@ public static class IntelligenceEndpoints
         if (compounds.Count < 2)
         {
             return Results.BadRequest("Provide at least two 'compounds' query values.");
+        }
+
+        try
+        {
+            await featureGate.EnsureEnabledAsync(FeatureCodes.ReviewedRelationshipGraph, ct);
+        }
+        catch (FeatureLimitExceededException ex)
+        {
+            return ProductGate(ex);
         }
 
         var response = await graphIntelligence.GetCompatibilityAsync(compounds, ct);
