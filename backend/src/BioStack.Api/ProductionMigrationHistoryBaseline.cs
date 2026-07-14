@@ -90,7 +90,10 @@ public static class ProductionMigrationHistoryBaseline
             transaction,
             "SELECT \"MigrationId\" FROM \"__EFMigrationsHistory\";",
             cancellationToken);
-        if (appliedMigrations.Count > 0)
+        var missingBaselineMigrations = BaselineMigrationIds
+            .Where(migrationId => !appliedMigrations.Contains(migrationId))
+            .ToArray();
+        if (missingBaselineMigrations.Length == 0)
         {
             await transaction.CommitAsync(cancellationToken);
             return;
@@ -116,17 +119,18 @@ public static class ProductionMigrationHistoryBaseline
         if (missing.Count > 0)
         {
             throw new InvalidOperationException(
-                "Production migration history is empty, but the legacy schema does not match the approved baseline. " +
+                "Production migration history is missing approved baseline rows, but the legacy schema does not match that baseline. " +
                 $"Missing: {string.Join(", ", missing)}");
         }
 
-        foreach (var migrationId in BaselineMigrationIds)
+        foreach (var migrationId in missingBaselineMigrations)
         {
             await using var insert = connection.CreateCommand();
             insert.Transaction = transaction;
             insert.CommandText = """
                 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-                VALUES (@migrationId, '10.0.0');
+                VALUES (@migrationId, '10.0.0')
+                ON CONFLICT ("MigrationId") DO NOTHING;
                 """;
             var parameter = insert.CreateParameter();
             parameter.ParameterName = "migrationId";
@@ -137,7 +141,8 @@ public static class ProductionMigrationHistoryBaseline
 
         await transaction.CommitAsync(cancellationToken);
         logger.LogWarning(
-            "Reconciled an empty production migration history after validating {TableCount} tables, {ColumnCount} columns, and {IndexCount} indexes. Baseline ends at {MigrationId}; later migrations remain pending.",
+            "Reconciled {MigrationCount} missing production migration-history rows after validating {TableCount} tables, {ColumnCount} columns, and {IndexCount} indexes. Existing history rows were preserved; baseline ends at {MigrationId}; later migrations remain pending.",
+            missingBaselineMigrations.Length,
             RequiredTables.Length,
             RequiredColumns.Length,
             RequiredIndexes.Length,

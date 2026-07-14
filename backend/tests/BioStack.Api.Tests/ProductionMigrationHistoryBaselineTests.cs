@@ -46,6 +46,23 @@ public sealed class ProductionMigrationHistoryBaselineTests
             migration => migration.Contains("ConsentDecline", StringComparison.Ordinal));
     }
 
+    [Fact]
+    public void BaselineMigrationIds_CanBeAddedWithoutReplacingLegacyHistory()
+    {
+        var migrationIds = ReadRequiredValues("BaselineMigrationIds");
+        var applied = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "20260401000000_LegacyEnsureCreatedBaseline",
+            migrationIds.First(),
+        };
+
+        var missing = migrationIds.Where(id => !applied.Contains(id)).ToArray();
+
+        Assert.Equal(migrationIds.Count - 1, missing.Length);
+        Assert.Contains("20260401000000_LegacyEnsureCreatedBaseline", applied);
+        Assert.DoesNotContain(migrationIds.First(), missing);
+    }
+
     private static HashSet<string> ReadRequiredValues(string fieldName)
     {
         var field = typeof(ProductionMigrationHistoryBaseline).GetField(
