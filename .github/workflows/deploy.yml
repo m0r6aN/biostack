@@ -24,6 +24,9 @@ jobs:
       - name: Check authoritative product contract
         run: node scripts/sync-product-contract.mjs --check
 
+      - name: Test deployment readiness guard
+        run: node --test scripts/verify-containerapp-deployment.test.mjs
+
       # ── Backend tests ──────────────────────────────────────────────────────
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -112,6 +115,15 @@ jobs:
             --resource-group ${{ secrets.RESOURCE_GROUP }} \
             --image ${{ secrets.ACR_LOGIN_SERVER }}/biostack-api:${{ github.sha }}
 
+      - name: Verify API revision readiness
+        if: github.event_name != 'pull_request'
+        run: |
+          node scripts/verify-containerapp-deployment.mjs \
+            --name ${{ secrets.API_APP_NAME }} \
+            --resource-group ${{ secrets.RESOURCE_GROUP }} \
+            --expected-image ${{ secrets.ACR_LOGIN_SERVER }}/biostack-api:${{ github.sha }} \
+            --health-path /health
+
       - name: Update frontend container app
         if: github.event_name != 'pull_request'
         run: |
@@ -119,3 +131,12 @@ jobs:
             --name ${{ secrets.WEB_APP_NAME }} \
             --resource-group ${{ secrets.RESOURCE_GROUP }} \
             --image ${{ secrets.ACR_LOGIN_SERVER }}/biostack-web:${{ github.sha }}
+
+      - name: Verify frontend revision readiness
+        if: github.event_name != 'pull_request'
+        run: |
+          node scripts/verify-containerapp-deployment.mjs \
+            --name ${{ secrets.WEB_APP_NAME }} \
+            --resource-group ${{ secrets.RESOURCE_GROUP }} \
+            --expected-image ${{ secrets.ACR_LOGIN_SERVER }}/biostack-web:${{ github.sha }} \
+            --health-path /
