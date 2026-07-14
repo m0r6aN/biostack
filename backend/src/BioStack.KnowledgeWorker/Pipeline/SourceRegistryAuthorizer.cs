@@ -22,7 +22,6 @@ public sealed class SourceRegistryAuthorizer : ISourceRegistryAuthorizer
         var packet = JsonNode.Parse(evidencePacket.ToJsonString())!;
         var root = packet.AsObject();
         var registry = SourceRegistryIndex.Build(sourceRegistry);
-        var packetSources = ReadPacketSources(root);
         var reviewReasons = new List<string>();
         var qualityFlags = new List<string>();
 
@@ -39,12 +38,19 @@ public sealed class SourceRegistryAuthorizer : ISourceRegistryAuthorizer
             var authorized = false;
             foreach (var sourceRef in sourceRefs)
             {
-                packetSources.TryGetValue(sourceRef, out var packetSourceType);
-                var entry = registry.Resolve(sourceRef, packetSourceType);
+                var entry = registry.Resolve(sourceRef);
                 if (entry is null)
                 {
                     reviewReasons.Add($"Claim '{claimId}' source '{sourceRef}' is not mapped to the source registry.");
                     qualityFlags.Add("source-registry-unmapped-source");
+                    continue;
+                }
+
+                if (!entry.IsEnabled)
+                {
+                    reviewReasons.Add(
+                        $"Claim '{claimId}' source '{sourceRef}' is disabled pending approved rights, active operations, and enabled acquisition.");
+                    qualityFlags.Add("source-registry-source-disabled");
                     continue;
                 }
 
@@ -85,20 +91,6 @@ public sealed class SourceRegistryAuthorizer : ISourceRegistryAuthorizer
         _ => null,
     };
 
-    private static Dictionary<string, string> ReadPacketSources(JsonObject root)
-    {
-        var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var sourceNode in root["sources"]?.AsArray() ?? new JsonArray())
-        {
-            if (sourceNode is null) continue;
-            var source = sourceNode.AsObject();
-            var id = ReadString(source["sourceId"]);
-            if (id.Length == 0) continue;
-            result[id] = ReadString(source["sourceType"]);
-        }
-        return result;
-    }
-
     private static void ApplyOpsFlags(JsonObject root, List<string> reviewReasons, List<string> qualityFlags)
     {
         var ops = root["ops"]?.AsObject() ?? new JsonObject();
@@ -137,82 +129,166 @@ public sealed class SourceRegistryAuthorizer : ISourceRegistryAuthorizer
         return arr;
     }
 
-    private sealed record SourceRegistryEntry(string SourceId, string SourceType, IReadOnlyList<string> AuthorizedFieldUse);
+    private sealed record SourceRegistryEntry(
+        string SourceId,
+        IReadOnlyList<string> Aliases,
+        string RightsReviewStatus,
+        string LegalBasisOrLicense,
+        string TermsUrl,
+        string RightsVerifiedAtUtc,
+        IReadOnlyList<string> AllowedUses,
+        string RightsReviewedByRole,
+        string OperationalStatus,
+        string OwnerRole,
+        string SecurityOwnerRole,
+        string OperationsLastReviewedAtUtc,
+        bool AcquisitionEnabled,
+        string AcquisitionMethod,
+        string RobotsPolicyStatus,
+        string ApiTermsStatus,
+        string RateLimitPolicy,
+        string AccessNotes,
+        IReadOnlyList<string> AuthorizedFieldUse)
+    {
+        public IReadOnlyList<string> ProvenanceRequiredFields { get; init; } = Array.Empty<string>();
+        public string RefreshMode { get; init; } = string.Empty;
+        public string RefreshCadence { get; init; } = string.Empty;
+        public string CorrectionProcedure { get; init; } = string.Empty;
+        public string RetractionProcedure { get; init; } = string.Empty;
+        public string RemovalProcedure { get; init; } = string.Empty;
+        public string RemediationContactRole { get; init; } = string.Empty;
+        public IReadOnlyList<string> PermittedContent { get; init; } = Array.Empty<string>();
+
+        public bool IsEnabled =>
+            string.Equals(RightsReviewStatus, "approved", StringComparison.OrdinalIgnoreCase)
+            && HasText(LegalBasisOrLicense)
+            && HasAbsoluteUri(TermsUrl)
+            && HasTimestamp(RightsVerifiedAtUtc)
+            && AllowedUses.Count > 0
+            && HasText(RightsReviewedByRole)
+            && string.Equals(OperationalStatus, "active", StringComparison.OrdinalIgnoreCase)
+            && HasText(OwnerRole)
+            && HasText(SecurityOwnerRole)
+            && HasTimestamp(OperationsLastReviewedAtUtc)
+            && AcquisitionEnabled
+            && !string.Equals(AcquisitionMethod, "none", StringComparison.OrdinalIgnoreCase)
+            && IsReviewedOrNotApplicable(RobotsPolicyStatus)
+            && IsReviewedOrNotApplicable(ApiTermsStatus)
+            && HasText(RateLimitPolicy)
+            && HasText(AccessNotes)
+            && AuthorizedFieldUse.Count > 0
+            && ProvenanceRequiredFields.Count > 0
+            && IsActiveRefreshMode(RefreshMode)
+            && HasText(RefreshCadence)
+            && HasText(CorrectionProcedure)
+            && HasText(RetractionProcedure)
+            && HasText(RemovalProcedure)
+            && HasText(RemediationContactRole)
+            && PermittedContent.Count > 0;
+
+        private static bool HasText(string value) => !string.IsNullOrWhiteSpace(value);
+
+        private static bool HasAbsoluteUri(string value)
+            => Uri.TryCreate(value, UriKind.Absolute, out _);
+
+        private static bool HasTimestamp(string value)
+            => DateTimeOffset.TryParse(value, out _);
+
+        private static bool IsReviewedOrNotApplicable(string value)
+            => string.Equals(value, "approved", StringComparison.OrdinalIgnoreCase)
+               || string.Equals(value, "not-applicable", StringComparison.OrdinalIgnoreCase);
+
+        private static bool IsActiveRefreshMode(string value)
+            => string.Equals(value, "scheduled", StringComparison.OrdinalIgnoreCase)
+               || string.Equals(value, "manual", StringComparison.OrdinalIgnoreCase);
+    }
 
     private sealed class SourceRegistryIndex
     {
-        private readonly IReadOnlyDictionary<string, SourceRegistryEntry> _byId;
-        private readonly IReadOnlyDictionary<string, SourceRegistryEntry> _byType;
+        private readonly IReadOnlyDictionary<string, SourceRegistryEntry?> _byReference;
 
-        private SourceRegistryIndex(
-            IReadOnlyDictionary<string, SourceRegistryEntry> byId,
-            IReadOnlyDictionary<string, SourceRegistryEntry> byType)
+        private SourceRegistryIndex(IReadOnlyDictionary<string, SourceRegistryEntry?> byReference)
         {
-            _byId = byId;
-            _byType = byType;
+            _byReference = byReference;
         }
 
         public static SourceRegistryIndex Build(JsonNode sourceRegistry)
         {
-            var byId = new Dictionary<string, SourceRegistryEntry>(StringComparer.OrdinalIgnoreCase);
-            var byType = new Dictionary<string, SourceRegistryEntry>(StringComparer.OrdinalIgnoreCase);
+            var byReference = new Dictionary<string, SourceRegistryEntry?>(StringComparer.OrdinalIgnoreCase);
             foreach (var sourceNode in sourceRegistry["sources"]?.AsArray() ?? new JsonArray())
             {
                 if (sourceNode is null) continue;
                 var source = sourceNode.AsObject();
+                var identity = source["identity"]?.AsObject() ?? new JsonObject();
+                var rights = source["rights"]?.AsObject() ?? new JsonObject();
+                var operations = source["operations"]?.AsObject() ?? new JsonObject();
+                var acquisition = source["acquisition"]?.AsObject() ?? new JsonObject();
+                var evidencePolicy = source["evidencePolicy"]?.AsObject() ?? new JsonObject();
+                var provenance = source["provenanceRequirements"]?.AsObject() ?? new JsonObject();
+                var refresh = source["refreshPolicy"]?.AsObject() ?? new JsonObject();
+                var remediation = source["remediation"]?.AsObject() ?? new JsonObject();
+                var dataBoundary = source["dataBoundary"]?.AsObject() ?? new JsonObject();
                 var entry = new SourceRegistryEntry(
-                    ReadString(source["sourceId"]),
-                    ReadString(source["sourceType"]),
-                    ReadStringArray(source["authorizedFieldUse"]));
+                    ReadString(identity["sourceId"]),
+                    ReadStringArray(identity["aliases"]),
+                    ReadString(rights["reviewStatus"]),
+                    ReadString(rights["legalBasisOrLicense"]),
+                    ReadString(rights["termsUrl"]),
+                    ReadString(rights["verifiedAtUtc"]),
+                    ReadStringArray(rights["allowedUses"]),
+                    ReadString(rights["reviewedByRole"]),
+                    ReadString(operations["status"]),
+                    ReadString(operations["ownerRole"]),
+                    ReadString(operations["securityOwnerRole"]),
+                    ReadString(operations["lastReviewedAtUtc"]),
+                    ReadBool(acquisition["enabled"]),
+                    ReadString(acquisition["method"]),
+                    ReadString(acquisition["robotsPolicyStatus"]),
+                    ReadString(acquisition["apiTermsStatus"]),
+                    ReadString(acquisition["rateLimitPolicy"]),
+                    ReadString(acquisition["accessNotes"]),
+                    ReadStringArray(evidencePolicy["authorizedFieldUse"]))
+                {
+                    ProvenanceRequiredFields = ReadStringArray(provenance["requiredFields"]),
+                    RefreshMode = ReadString(refresh["mode"]),
+                    RefreshCadence = ReadString(refresh["cadence"]),
+                    CorrectionProcedure = ReadString(remediation["correctionProcedure"]),
+                    RetractionProcedure = ReadString(remediation["retractionProcedure"]),
+                    RemovalProcedure = ReadString(remediation["removalProcedure"]),
+                    RemediationContactRole = ReadString(remediation["contactRole"]),
+                    PermittedContent = ReadStringArray(dataBoundary["permittedContent"]),
+                };
                 if (entry.SourceId.Length == 0) continue;
-                byId[entry.SourceId] = entry;
-                if (!byType.ContainsKey(entry.SourceType)) byType[entry.SourceType] = entry;
+                AddReference(byReference, entry.SourceId, entry);
+                foreach (var alias in entry.Aliases)
+                {
+                    AddReference(byReference, alias, entry);
+                }
             }
-            return new SourceRegistryIndex(byId, byType);
+            return new SourceRegistryIndex(byReference);
         }
 
-        public SourceRegistryEntry? Resolve(string sourceRef, string? packetSourceType)
+        public SourceRegistryEntry? Resolve(string sourceRef)
         {
-            if (_byId.TryGetValue(sourceRef, out var exact)) return exact;
-            if (TryPrefix(sourceRef, out var mapped) && _byId.TryGetValue(mapped, out var mappedEntry)) return mappedEntry;
-            foreach (var (id, entry) in _byId)
-            {
-                if (sourceRef.StartsWith(id + "-", StringComparison.OrdinalIgnoreCase)) return entry;
-            }
-            if (!string.IsNullOrWhiteSpace(packetSourceType) && _byType.TryGetValue(packetSourceType, out var typeEntry)) return typeEntry;
-            return null;
+            return _byReference.TryGetValue(sourceRef, out var entry) ? entry : null;
         }
 
-        private static bool TryPrefix(string sourceRef, out string sourceId)
+        private static void AddReference(
+            IDictionary<string, SourceRegistryEntry?> references,
+            string reference,
+            SourceRegistryEntry entry)
         {
-            var mappings = new (string Prefix, string SourceId)[]
+            if (string.IsNullOrWhiteSpace(reference)) return;
+            if (references.TryGetValue(reference, out var existing))
             {
-                ("dailymed-", "dailymed"),
-                ("fda-", "fda"),
-                ("pubchem-", "pubchem"),
-                ("clinicaltrials-", "clinicaltrials"),
-                ("nih-ods-", "nih-ods"),
-                ("nih-nccih-", "nih-nccih"),
-                ("nccih-", "nih-nccih"),
-                ("issn-", "issn-position-stands"),
-                ("drugbank-", "drugbank"),
-                ("wada-", "wada"),
-                ("nejm-", "peer-reviewed-paper"),
-                ("jama-", "peer-reviewed-paper"),
-                ("pubmed-", "peer-reviewed-paper"),
-                ("pmc-", "peer-reviewed-review"),
-                ("frontiers-", "peer-reviewed-review"),
-            };
-
-            foreach (var (prefix, id) in mappings)
-            {
-                if (!sourceRef.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) continue;
-                sourceId = id;
-                return true;
+                if (existing is null || !ReferenceEquals(existing, entry))
+                {
+                    references[reference] = null;
+                }
+                return;
             }
 
-            sourceId = string.Empty;
-            return false;
+            references[reference] = entry;
         }
     }
 }
