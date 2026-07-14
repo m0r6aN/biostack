@@ -10,7 +10,7 @@ using System.Text.Json;
 /// </summary>
 public sealed class StructuralEvaluationReportBuilder
 {
-    public const string CurrentReportVersion = "1.0.0";
+    public const string CurrentReportVersion = "1.1.0";
     public const string ReportFileName = "biostack-structural-evaluation-report.v1.json";
 
     private static readonly JsonSerializerOptions SerializerOptions = new()
@@ -20,10 +20,12 @@ public sealed class StructuralEvaluationReportBuilder
     };
 
     private readonly StructuralEvaluationSnapshotBuilder _snapshotBuilder;
+    private readonly StructuralEvaluationComparator _comparisonBuilder;
 
     public StructuralEvaluationReportBuilder(string? repositoryRoot = null)
     {
         _snapshotBuilder = new StructuralEvaluationSnapshotBuilder(repositoryRoot);
+        _comparisonBuilder = new StructuralEvaluationComparator(repositoryRoot);
     }
 
     public StructuralEvaluationReport Build()
@@ -54,10 +56,16 @@ public sealed class StructuralEvaluationReportBuilder
     private StructuralEvaluationReportPayload BuildPayload()
     {
         var snapshot = _snapshotBuilder.Build();
+        var comparison = _comparisonBuilder.Build();
         var metrics = new[]
         {
             Observed("structural_coverage", "deterministic_counts_and_case_set_differences_recorded"),
-            NotEvaluated("citation_provenance_integrity", "requires_structured_candidate_output_and_approved_source_truth"),
+            Observed(
+                "structural_declaration_comparison",
+                "deterministic_expected_candidate_declaration_equality_recorded"),
+            NotEvaluated(
+                "citation_provenance_integrity",
+                "requires_approved_source_resolution_and_provenance_policy"),
             NotEvaluated("cost", "requires_pinned_runtime_telemetry_and_approved_accounting_policy"),
             NotEvaluated("evidence_tier_consistency", "requires_structured_candidate_output_and_approved_tier_rules"),
             NotEvaluated("factuality", "requires_approved_semantic_truth_sources_and_scoring_rules"),
@@ -72,11 +80,12 @@ public sealed class StructuralEvaluationReportBuilder
         };
 
         return new StructuralEvaluationReportPayload(
-            Scope: "offline-structural-only",
+            Scope: "offline-structural-and-declaration-comparison",
             EvaluationStatus: "partial",
             PolicyStatus: "pending-approval",
             OverallVerdict: "not_evaluated",
             Snapshot: snapshot,
+            Comparison: comparison,
             Metrics: metrics.OrderBy(metric => metric.MetricId, StringComparer.Ordinal).ToArray(),
             ModelInvoked: false,
             NetworkAccessed: false);
@@ -107,6 +116,7 @@ public sealed record StructuralEvaluationReportPayload(
     string PolicyStatus,
     string OverallVerdict,
     StructuralEvaluationSnapshot Snapshot,
+    StructuralEvaluationComparison Comparison,
     IReadOnlyList<StructuralEvaluationMetricState> Metrics,
     bool ModelInvoked,
     bool NetworkAccessed);
