@@ -111,6 +111,156 @@ public class ResearchEvidenceProcessingTests
     }
 
     [Fact]
+    public void SourceRegistryAuthorizer_Accepts_Explicitly_Declared_Alias()
+    {
+        var packet = LoadEvidencePacket();
+        packet["sources"]![0]!["sourceId"] = "declared-creatine-alias";
+        packet["claims"]![0]!["sourceRefs"] = new JsonArray("declared-creatine-alias");
+        var registry = JsonNode.Parse(File.ReadAllText(TestPaths.FixturePath("source-registry.sample.json")))!;
+
+        var result = new SourceRegistryAuthorizer().Authorize(packet, registry);
+
+        Assert.DoesNotContain("source-registry-unmapped-source", result.QualityFlags);
+        Assert.DoesNotContain("source-registry-field-mismatch", result.QualityFlags);
+    }
+
+    [Fact]
+    public void SourceRegistryAuthorizer_Does_Not_Resolve_By_Prefix_Or_Source_Type()
+    {
+        var packet = LoadEvidencePacket();
+        packet["sources"]![0]!["sourceId"] = "pubchem-creatine-undeclared";
+        packet["claims"]![0]!["sourceRefs"] = new JsonArray("pubchem-creatine-undeclared");
+        var registry = JsonNode.Parse(File.ReadAllText(TestPaths.FixturePath("source-registry.sample.json")))!;
+
+        var result = new SourceRegistryAuthorizer().Authorize(packet, registry);
+
+        Assert.Contains("source-registry-unmapped-source", result.QualityFlags);
+        Assert.Contains(result.ReviewReasons, r => r.Contains("not mapped to the source registry"));
+    }
+
+    [Theory]
+    [InlineData("rights")]
+    [InlineData("operations")]
+    [InlineData("acquisition")]
+    public void SourceRegistryAuthorizer_Fails_Closed_When_Source_Is_Not_Fully_Enabled(string gate)
+    {
+        var packet = LoadEvidencePacket();
+        var registry = JsonNode.Parse(File.ReadAllText(TestPaths.FixturePath("source-registry.sample.json")))!;
+        var source = registry["sources"]![0]!;
+        switch (gate)
+        {
+            case "rights":
+                source["rights"]!["reviewStatus"] = "pending-human-legal";
+                break;
+            case "operations":
+                source["operations"]!["status"] = "disabled";
+                break;
+            case "acquisition":
+                source["acquisition"]!["enabled"] = false;
+                break;
+        }
+
+        var result = new SourceRegistryAuthorizer().Authorize(packet, registry);
+
+        Assert.Contains("source-registry-source-disabled", result.QualityFlags);
+        Assert.Contains("source-registry-field-mismatch", result.QualityFlags);
+        Assert.Contains(result.ReviewReasons, r => r.Contains("disabled pending approved rights"));
+    }
+
+    [Theory]
+    [InlineData("rights-legal-basis")]
+    [InlineData("rights-terms-url")]
+    [InlineData("rights-verified-at")]
+    [InlineData("rights-allowed-uses")]
+    [InlineData("rights-reviewed-by")]
+    [InlineData("operations-owner")]
+    [InlineData("operations-security-owner")]
+    [InlineData("operations-reviewed-at")]
+    [InlineData("acquisition-method")]
+    [InlineData("acquisition-robots")]
+    [InlineData("acquisition-api-terms")]
+    [InlineData("acquisition-rate-limit")]
+    [InlineData("acquisition-access-notes")]
+    [InlineData("evidence-authorized-use")]
+    [InlineData("provenance-required-fields")]
+    [InlineData("refresh-mode")]
+    [InlineData("refresh-cadence")]
+    [InlineData("remediation-correction")]
+    [InlineData("remediation-retraction")]
+    [InlineData("remediation-removal")]
+    [InlineData("remediation-contact")]
+    [InlineData("data-boundary-permitted-content")]
+    public void SourceRegistryAuthorizer_Fails_Closed_When_Activation_Evidence_Is_Missing(string prerequisite)
+    {
+        var packet = LoadEvidencePacket();
+        var registry = JsonNode.Parse(File.ReadAllText(TestPaths.FixturePath("source-registry.sample.json")))!;
+        var source = registry["sources"]![0]!;
+        switch (prerequisite)
+        {
+            case "rights-legal-basis": source["rights"]!["legalBasisOrLicense"] = null; break;
+            case "rights-terms-url": source["rights"]!["termsUrl"] = null; break;
+            case "rights-verified-at": source["rights"]!["verifiedAtUtc"] = null; break;
+            case "rights-allowed-uses": source["rights"]!["allowedUses"] = new JsonArray(); break;
+            case "rights-reviewed-by": source["rights"]!["reviewedByRole"] = null; break;
+            case "operations-owner": source["operations"]!["ownerRole"] = null; break;
+            case "operations-security-owner": source["operations"]!["securityOwnerRole"] = null; break;
+            case "operations-reviewed-at": source["operations"]!["lastReviewedAtUtc"] = null; break;
+            case "acquisition-method": source["acquisition"]!["method"] = "none"; break;
+            case "acquisition-robots": source["acquisition"]!["robotsPolicyStatus"] = "not-reviewed"; break;
+            case "acquisition-api-terms": source["acquisition"]!["apiTermsStatus"] = "not-reviewed"; break;
+            case "acquisition-rate-limit": source["acquisition"]!["rateLimitPolicy"] = null; break;
+            case "acquisition-access-notes": source["acquisition"]!["accessNotes"] = null; break;
+            case "evidence-authorized-use": source["evidencePolicy"]!["authorizedFieldUse"] = new JsonArray(); break;
+            case "provenance-required-fields": source["provenanceRequirements"]!["requiredFields"] = new JsonArray(); break;
+            case "refresh-mode": source["refreshPolicy"]!["mode"] = "disabled-until-approved"; break;
+            case "refresh-cadence": source["refreshPolicy"]!["cadence"] = null; break;
+            case "remediation-correction": source["remediation"]!["correctionProcedure"] = string.Empty; break;
+            case "remediation-retraction": source["remediation"]!["retractionProcedure"] = string.Empty; break;
+            case "remediation-removal": source["remediation"]!["removalProcedure"] = string.Empty; break;
+            case "remediation-contact": source["remediation"]!["contactRole"] = null; break;
+            case "data-boundary-permitted-content": source["dataBoundary"]!["permittedContent"] = new JsonArray(); break;
+        }
+
+        var result = new SourceRegistryAuthorizer().Authorize(packet, registry);
+
+        Assert.Contains("source-registry-source-disabled", result.QualityFlags);
+        Assert.Contains("source-registry-field-mismatch", result.QualityFlags);
+    }
+
+    [Fact]
+    public void SourceRegistryAuthorizer_Pilot_Registry_Leaves_Declared_Alias_Disabled()
+    {
+        var packet = LoadEvidencePacket();
+        var repositoryRoot = Directory.GetParent(TestPaths.BackendRoot())!.FullName;
+        var registryPath = Path.Combine(repositoryRoot, "research", "input", "sources", "pilot-source-registry.json");
+        var registry = JsonNode.Parse(File.ReadAllText(registryPath))!;
+
+        var result = new SourceRegistryAuthorizer().Authorize(packet, registry);
+
+        Assert.DoesNotContain("source-registry-unmapped-source", result.QualityFlags);
+        Assert.Contains("source-registry-source-disabled", result.QualityFlags);
+        Assert.Contains("source-registry-field-mismatch", result.QualityFlags);
+    }
+
+    [Fact]
+    public void SourceRegistryAuthorizer_Fails_Closed_For_Duplicate_Alias()
+    {
+        var packet = LoadEvidencePacket();
+        packet["sources"]![0]!["sourceId"] = "shared-alias";
+        packet["claims"]![0]!["sourceRefs"] = new JsonArray("shared-alias");
+        var registry = JsonNode.Parse(File.ReadAllText(TestPaths.FixturePath("source-registry.sample.json")))!;
+        registry["sources"]![0]!["identity"]!["aliases"]!.AsArray().Add("shared-alias");
+        var duplicate = JsonNode.Parse(registry["sources"]![0]!.ToJsonString())!;
+        duplicate["identity"]!["sourceId"] = "second-source";
+        duplicate["identity"]!["aliases"] = new JsonArray("shared-alias");
+        registry["sources"]!.AsArray().Add(duplicate);
+
+        var result = new SourceRegistryAuthorizer().Authorize(packet, registry);
+
+        Assert.Contains("source-registry-unmapped-source", result.QualityFlags);
+    }
+
+    [Fact]
     public void SourceRegistryAuthorizer_Flags_Claim_When_Source_Is_Not_Authorized_For_Field()
     {
         var packet = LoadEvidencePacket();

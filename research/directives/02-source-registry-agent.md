@@ -23,6 +23,13 @@ Return one JSON document matching `backend/src/BioStack.KnowledgeWorker/Schemas/
 
 ## Rules
 
+- New or changed real-world sources must start with `rights.reviewStatus=pending-human-legal`,
+  `operations.status=disabled`, and `acquisition.enabled=false`.
+- A discovery agent must not assert a license, approve rights, activate operations, or enable
+  acquisition. Those transitions require separately recorded human legal, security, and
+  operational decisions.
+- `identity.aliases` must enumerate exact source item references that may resolve to the
+  registry entry. Source-type and prefix matching are not authorization.
 - Low-trust sources are useful for popularity/misinformation monitoring only.
 - Do not authorize D/X sources for regulatory, dosing, contraindication, warning, or monitoring fields.
 - Capture limitations explicitly.

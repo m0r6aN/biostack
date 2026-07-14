@@ -1,46 +1,77 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "2.0.0",
   "recordType": "source-registry",
-  "generatedAt": "2026-05-04T00:00:00Z",
-  "agentId": "source-agent-pilot",
+  "generatedAt": "2026-07-13T00:00:00Z",
+  "agentId": "synthetic-source-registry-test-fixture",
   "sources": [
     {
-      "sourceId": "pubchem",
-      "name": "PubChem",
-      "publisher": "National Center for Biotechnology Information",
-      "url": "https://pubchem.ncbi.nlm.nih.gov/",
-      "sourceType": "database",
-      "authorityTier": "C1",
-      "reliabilityScore": 4,
-      "jurisdictions": ["US", "global"],
-      "categoriesCovered": ["identity", "small-molecules", "supplements"],
-      "structuredAccess": {
-        "hasApi": true,
-        "hasBulkExport": true,
-        "requiresAccount": false,
-        "accessNotes": "Useful for identifiers and chemical metadata; not a clinical authority."
+      "identity": {
+        "sourceId": "pubchem-creatine",
+        "aliases": ["declared-creatine-alias"],
+        "name": "Synthetic source fixture",
+        "publisher": null,
+        "primaryUrl": null,
+        "sourceType": "database",
+        "jurisdictions": [],
+        "categoriesCovered": ["test-only"]
       },
-      "authorizedFieldUse": ["identity", "mechanism"],
-      "limitations": ["Does not establish clinical efficacy, dosing, or safety-critical guidance."]
-    },
-    {
-      "sourceId": "pubmed",
-      "name": "PubMed",
-      "publisher": "National Library of Medicine",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/",
-      "sourceType": "database",
-      "authorityTier": "C1",
-      "reliabilityScore": 4,
-      "jurisdictions": ["US", "global"],
-      "categoriesCovered": ["papers", "reviews", "human-studies"],
-      "structuredAccess": {
-        "hasApi": true,
+      "rights": {
+        "reviewStatus": "approved",
+        "legalBasisOrLicense": "Synthetic test fixture only; no real-world rights assertion.",
+        "termsUrl": "https://example.invalid/synthetic-test-terms",
+        "verifiedAtUtc": "2026-07-13T00:00:00Z",
+        "allowedUses": ["automated-tests-only"],
+        "prohibitedUses": ["production-use"],
+        "redistributionConstraints": ["test-fixture-only"],
+        "reviewedByRole": "automated-test-fixture"
+      },
+      "operations": {
+        "status": "active",
+        "ownerRole": "automated-test-fixture",
+        "securityOwnerRole": "automated-test-fixture",
+        "lastReviewedAtUtc": "2026-07-13T00:00:00Z"
+      },
+      "acquisition": {
+        "enabled": true,
+        "method": "other",
+        "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "accessNotes": "Bibliographic index; individual paper quality must be assessed separately."
+        "robotsPolicyStatus": "not-applicable",
+        "apiTermsStatus": "not-applicable",
+        "rateLimitPolicy": "not-applicable-to-synthetic-fixture",
+        "accessNotes": "No network or external acquisition occurs in this fixture."
       },
-      "authorizedFieldUse": ["mechanism", "efficacy-claims", "interactions"],
-      "limitations": ["Index presence is not evidence quality; claims require paper-level extraction."]
+      "evidencePolicy": {
+        "authorityTier": "C1",
+        "reliabilityScore": 4,
+        "authorizedFieldUse": ["identity", "mechanism"],
+        "humanReviewRequirement": "not-applicable",
+        "limitations": ["Synthetic automated-test behavior only."]
+      },
+      "provenanceRequirements": {
+        "requiredFields": ["sourceRegistryId"],
+        "citationIdentifierTypes": []
+      },
+      "refreshPolicy": {
+        "mode": "manual",
+        "cadence": "manual-test-fixture-update",
+        "stalenessAction": "not-applicable",
+        "lastSuccessfulRefreshAtUtc": null
+      },
+      "remediation": {
+        "correctionProcedure": "Update the deterministic fixture.",
+        "retractionProcedure": "Remove the deterministic fixture.",
+        "removalProcedure": "Remove the deterministic fixture.",
+        "contactRole": "automated-test-fixture"
+      },
+      "dataBoundary": {
+        "permittedContent": ["synthetic-test-data"],
+        "restrictedContent": ["production-data"],
+        "privateDataAllowed": false,
+        "copyrightedFullTextStorageAllowed": false,
+        "trainingUseAllowed": false
+      }
     }
   ]
 }
