@@ -1,4 +1,5 @@
 using System.Text;
+using System.Security.Claims;
 using System.Threading.RateLimiting;
 using BioStack.Api.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -199,14 +200,37 @@ builder.Services
 
             var db = context.HttpContext.RequestServices.GetRequiredService<BioStackDbContext>();
             var tokenHash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(sessionToken)));
-            var session = await db.Sessions.FirstOrDefaultAsync(s =>
-                s.TokenHash == tokenHash &&
-                s.RevokedAtUtc == null &&
-                s.ExpiresAtUtc > DateTime.UtcNow);
+            var session = await db.Sessions
+                .Include(s => s.User)
+                .FirstOrDefaultAsync(s =>
+                    s.TokenHash == tokenHash &&
+                    s.RevokedAtUtc == null &&
+                    s.ExpiresAtUtc > DateTime.UtcNow);
 
             if (session is null)
             {
                 context.RejectPrincipal();
+                return;
+            }
+
+            if (context.Principal?.Identity is not ClaimsIdentity identity)
+            {
+                context.RejectPrincipal();
+                return;
+            }
+
+            var currentRole = ((int)session.User.Role).ToString();
+            var roleClaim = identity.FindFirst("role");
+            if (!string.Equals(roleClaim?.Value, currentRole, StringComparison.Ordinal))
+            {
+                if (roleClaim is not null)
+                {
+                    identity.RemoveClaim(roleClaim);
+                }
+
+                identity.AddClaim(new Claim("role", currentRole));
+                context.ReplacePrincipal(new ClaimsPrincipal(identity));
+                context.ShouldRenew = true;
             }
         };
     })

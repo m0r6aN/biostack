@@ -47,6 +47,35 @@ describe('AuthProvider session handling', () => {
     });
   });
 
+  it('routes an expired cookie on a near-prefix page back through sign-in', async () => {
+    const replace = vi.fn();
+    vi.stubGlobal('location', {
+      pathname: '/knowledge-private',
+      search: '',
+      replace,
+    });
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: async () => ({ authenticated: false, user: null }),
+      }),
+    );
+
+    render(
+      <AuthProvider>
+        <AuthProbe />
+      </AuthProvider>,
+    );
+
+    await waitFor(() => {
+      expect(replace).toHaveBeenCalledWith(
+        '/auth/signin?callbackUrl=%2Fknowledge-private&error=session-expired',
+      );
+    });
+  });
+
   it('treats 401 session responses as anonymous state', async () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: false,
