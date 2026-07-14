@@ -427,6 +427,8 @@ public sealed class BioStackDbContext : DbContext
             entity.HasKey(e => e.Id);
             entity.Property(e => e.StripeEventId).HasMaxLength(255).IsRequired();
             entity.Property(e => e.EventType).HasMaxLength(255).IsRequired();
+            entity.Property(e => e.ProcessingStatus).HasMaxLength(32).IsRequired();
+            entity.Property(e => e.FailureCode).HasMaxLength(128);
             entity.HasIndex(e => e.StripeEventId).IsUnique();
         });
 

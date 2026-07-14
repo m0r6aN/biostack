@@ -2,6 +2,7 @@ namespace BioStack.Api.Endpoints;
 
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
+using Microsoft.AspNetCore.Mvc;
 using Stripe;
 
 public static class BillingEndpoints
@@ -24,7 +25,13 @@ public static class BillingEndpoints
         app.MapPost("/api/v1/billing/stripe/webhook", StripeWebhook)
             .WithTags("Billing")
             .AllowAnonymous()
+            .WithMetadata(new RequestSizeLimitAttribute(1_048_576))
             .WithName("StripeBillingWebhook");
+
+        app.MapGet("/api/v1/admin/billing/stripe/events/quarantined", GetQuarantinedStripeEvents)
+            .WithTags("Billing", "Admin")
+            .RequireAuthorization("AdminOnly")
+            .WithName("GetQuarantinedStripeBillingEvents");
     }
 
     private static async Task<IResult> GetSubscription(IBillingService billingService, CancellationToken ct)
@@ -59,6 +66,9 @@ public static class BillingEndpoints
         }
     }
 
+    private static async Task<IResult> GetQuarantinedStripeEvents(IBillingService billingService, CancellationToken ct)
+        => Results.Ok(await billingService.GetQuarantinedStripeEventsAsync(ct));
+
     private static async Task<IResult> StripeWebhook(HttpRequest request, IConfiguration configuration, IBillingService billingService, CancellationToken ct)
     {
         var secret = configuration["Stripe:WebhookSecret"];
@@ -74,8 +84,10 @@ public static class BillingEndpoints
         try
         {
             var stripeEvent = EventUtility.ConstructEvent(json, signature, secret);
-            await billingService.ProcessStripeEventAsync(stripeEvent, ct);
-            return Results.Ok();
+            var result = await billingService.ProcessStripeEventAsync(stripeEvent, ct);
+            return result == StripeWebhookProcessingResult.Quarantined
+                ? Results.Conflict(new { error = "Stripe event was quarantined for an unapproved price and must be replayed after configuration is corrected." })
+                : Results.Ok(new { status = result.ToString() });
         }
         catch (StripeException)
         {
