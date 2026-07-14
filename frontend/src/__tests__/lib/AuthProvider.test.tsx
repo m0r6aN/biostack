@@ -15,6 +15,36 @@ function AuthProbe() {
 describe('AuthProvider session handling', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
+  it('routes an expired cookie on a protected page back through sign-in with its return path', async () => {
+    const replace = vi.fn();
+    vi.stubGlobal('location', {
+      pathname: '/profiles',
+      search: '?bootstrap=tools',
+      replace,
+    });
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: async () => ({ authenticated: false, user: null }),
+      }),
+    );
+
+    render(
+      <AuthProvider>
+        <AuthProbe />
+      </AuthProvider>,
+    );
+
+    await waitFor(() => {
+      expect(replace).toHaveBeenCalledWith(
+        '/auth/signin?callbackUrl=%2Fprofiles%3Fbootstrap%3Dtools&error=session-expired',
+      );
+    });
   });
 
   it('treats 401 session responses as anonymous state', async () => {

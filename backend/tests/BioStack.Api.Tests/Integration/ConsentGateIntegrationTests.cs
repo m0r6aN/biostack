@@ -170,6 +170,50 @@ public sealed class ConsentGateIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task DeclineConsent_RecordsCurrentVersionAndAcceptanceClearsDecline()
+    {
+        await SignInAsync("decline@example.com");
+
+        var declinedResponse = await _client.PostAsJsonAsync(
+            "/api/v1/consent/decline",
+            new RecordConsentRequest("attacker-invented-v999"),
+            JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, declinedResponse.StatusCode);
+        var declined = await declinedResponse.Content.ReadFromJsonAsync<ConsentStatusResponse>(JsonOptions);
+        Assert.NotNull(declined);
+        Assert.False(declined.Accepted);
+        Assert.True(declined.Declined);
+        Assert.Equal("bio-observational-v1", declined.CurrentVersion);
+        Assert.Equal("bio-observational-v1", declined.ConsentDeclinedVersion);
+        Assert.NotNull(declined.ConsentDeclinedAtUtc);
+
+        var repeatedResponse = await _client.PostAsJsonAsync(
+            "/api/v1/consent/decline",
+            new RecordConsentRequest(declined.CurrentVersion),
+            JsonOptions);
+        var repeated = await repeatedResponse.Content.ReadFromJsonAsync<ConsentStatusResponse>(JsonOptions);
+        Assert.Equal(declined.ConsentDeclinedAtUtc, repeated?.ConsentDeclinedAtUtc);
+
+        var blocked = await _client.PostAsJsonAsync(
+            "/api/v1/profiles",
+            new CreateProfileRequest("Declined", Sex.Unspecified, 70m, 30, "goal", "notes"),
+            JsonOptions);
+        Assert.Equal(HttpStatusCode.Forbidden, blocked.StatusCode);
+
+        var acceptedResponse = await _client.PostAsJsonAsync(
+            "/api/v1/consent",
+            new RecordConsentRequest(declined.CurrentVersion),
+            JsonOptions);
+        var accepted = await acceptedResponse.Content.ReadFromJsonAsync<ConsentStatusResponse>(JsonOptions);
+        Assert.NotNull(accepted);
+        Assert.True(accepted.Accepted);
+        Assert.False(accepted.Declined);
+        Assert.Null(accepted.ConsentDeclinedAtUtc);
+        Assert.Null(accepted.ConsentDeclinedVersion);
+    }
+
+    [Fact]
     public async Task StaleStoredConsent_ReportsNotAcceptedAndBlocksMutation()
     {
         await SignInAsync("stale-consent@example.com");

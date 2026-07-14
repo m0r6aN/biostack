@@ -55,6 +55,7 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(u => u.StripeCustomerId).HasMaxLength(255);
             entity.Property(u => u.Role).HasConversion<int>();
             entity.Property(u => u.ConsentVersion).HasMaxLength(64);
+            entity.Property(u => u.ConsentDeclinedVersion).HasMaxLength(64);
             entity.HasIndex(u => new { u.Provider, u.ProviderKey }).IsUnique();
             entity.HasIndex(u => u.Email);
             entity.HasIndex(u => u.StripeCustomerId);

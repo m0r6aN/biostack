@@ -32,6 +32,8 @@ public sealed class AppUser
 
     public DateTime? ConsentAcceptedAtUtc { get; set; }
     public string? ConsentVersion { get; set; }
+    public DateTime? ConsentDeclinedAtUtc { get; set; }
+    public string? ConsentDeclinedVersion { get; set; }
 
     // Profiles owned by this user
     public ICollection<PersonProfile> Profiles { get; set; } = new List<PersonProfile>();

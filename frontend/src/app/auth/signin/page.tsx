@@ -17,12 +17,7 @@ function resolveRedirectPath(callbackUrl: string | null) {
     return callbackUrl;
   }
 
-  try {
-    const parsed = new URL(callbackUrl);
-    return `${parsed.pathname}${parsed.search}${parsed.hash}` || canonicalRoutes.postSignInDefault;
-  } catch {
-    return canonicalRoutes.postSignInDefault;
-  }
+  return canonicalRoutes.postSignInDefault;
 }
 
 function maskEmail(email: string) {
@@ -130,7 +125,9 @@ function SignInPageContent() {
 
               {error && (
                 <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
-                  That sign-in link is expired or already used. Send yourself a new one.
+                  {error === 'session-expired'
+                    ? 'Your session expired. Sign in again to continue where you left off.'
+                    : 'That sign-in link is expired or already used. Send yourself a new one.'}
                 </div>
               )}
 

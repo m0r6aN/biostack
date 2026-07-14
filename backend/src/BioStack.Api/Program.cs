@@ -25,6 +25,7 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
 StripeProductionConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
+ProductionAuthConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
 
 var stripeSecretKey = builder.Configuration["Stripe:SecretKey"];
 if (!string.IsNullOrWhiteSpace(stripeSecretKey))

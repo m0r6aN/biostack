@@ -106,6 +106,42 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task VerifyApi_ExchangesTokenByPostAndDoesNotExposeTokenInRedirect()
+    {
+        await StartAsync("post-exchange@example.com", "/profiles?bootstrap=tools");
+        var token = ReadToken(await LatestMagicLinkAsync());
+
+        var verified = await _client.PostAsJsonAsync("/api/v1/auth/verify", new VerifyAuthRequest(token), JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, verified.StatusCode);
+        var result = await verified.Content.ReadFromJsonAsync<VerifyAuthResponse>(JsonOptions);
+        Assert.NotNull(result);
+        Assert.Equal("/onboarding/consent?returnTo=%2Fprofiles%3Fbootstrap%3Dtools", result.RedirectPath);
+        Assert.DoesNotContain(token, result.RedirectPath);
+        Assert.Contains("no-store", verified.Headers.CacheControl?.ToString());
+        Assert.Contains("biostack_session", string.Join(";", verified.Headers.GetValues("Set-Cookie")));
+
+        var reused = await _client.PostAsJsonAsync("/api/v1/auth/verify", new VerifyAuthRequest(token), JsonOptions);
+        Assert.Equal(HttpStatusCode.BadRequest, reused.StatusCode);
+    }
+
+    [Fact]
+    public async Task StartAuth_ResendInvalidatesEarlierUnusedLink()
+    {
+        await StartAsync("resend@example.com", "/profiles");
+        var firstToken = ReadToken(await LatestMagicLinkAsync());
+        await StartAsync("resend@example.com", "/profiles");
+        var secondToken = ReadToken(await LatestMagicLinkAsync());
+
+        Assert.NotEqual(firstToken, secondToken);
+        var earlier = await _client.PostAsJsonAsync("/api/v1/auth/verify", new VerifyAuthRequest(firstToken), JsonOptions);
+        Assert.Equal(HttpStatusCode.BadRequest, earlier.StatusCode);
+
+        var latest = await _client.PostAsJsonAsync("/api/v1/auth/verify", new VerifyAuthRequest(secondToken), JsonOptions);
+        Assert.Equal(HttpStatusCode.OK, latest.StatusCode);
+    }
+
+    [Fact]
     public async Task Verify_RejectsExpiredTokenAndPreventsReuse()
     {
         await StartAsync("expired@example.com");
@@ -136,7 +172,7 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         var verified = await _client.GetAsync(pathAndQuery);
 
         Assert.Equal(HttpStatusCode.Redirect, verified.StatusCode);
-        Assert.Equal("http://localhost:3043/profiles", verified.Headers.Location?.ToString());
+        Assert.Equal("http://localhost:3043/onboarding/consent?returnTo=%2Fprofiles", verified.Headers.Location?.ToString());
         Assert.Contains("biostack_session", string.Join(";", verified.Headers.GetValues("Set-Cookie")));
 
         var session = await _client.GetFromJsonAsync<AuthSessionResponse>("/api/v1/auth/session");
@@ -169,7 +205,10 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
 
         Assert.All(responses, response => Assert.Equal(HttpStatusCode.Redirect, response.StatusCode));
         Assert.Single(responses, response =>
-            string.Equals(response.Headers.Location?.ToString(), "http://localhost:3043/profiles", StringComparison.Ordinal));
+            string.Equals(
+                response.Headers.Location?.ToString(),
+                "http://localhost:3043/onboarding/consent?returnTo=%2Fprofiles",
+                StringComparison.Ordinal));
         Assert.Single(responses, response =>
             response.Headers.Location?.ToString().Contains("error=invalid-link", StringComparison.Ordinal) == true);
         Assert.Single(responses, response =>
@@ -205,7 +244,7 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         var verified = await _client.GetAsync(ReadPathAndQuery(link));
 
         Assert.Equal(HttpStatusCode.Redirect, verified.StatusCode);
-        Assert.Equal("http://localhost:3043/profiles", verified.Headers.Location?.ToString());
+        Assert.Equal("http://localhost:3043/onboarding/consent?returnTo=%2Fprofiles", verified.Headers.Location?.ToString());
 
         var session = await _client.GetFromJsonAsync<AuthSessionResponse>("/api/v1/auth/session");
         Assert.NotNull(session);
@@ -314,6 +353,28 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         Assert.NotNull(computation);
         Assert.Equal(protocol.Id, computation.ProtocolId);
         Assert.Equal("reconstitution", computation.Type);
+    }
+
+    [Fact]
+    public async Task VerifyApi_ReturningUserWithCurrentConsentKeepsApprovedReturnPath()
+    {
+        await StartAsync("returning@example.com", "/profiles");
+        var firstToken = ReadToken(await LatestMagicLinkAsync());
+        var firstSignIn = await _client.PostAsJsonAsync("/api/v1/auth/verify", new VerifyAuthRequest(firstToken), JsonOptions);
+        Assert.Equal(HttpStatusCode.OK, firstSignIn.StatusCode);
+
+        var consent = await _client.PostAsJsonAsync("/api/v1/consent", new { }, JsonOptions);
+        Assert.Equal(HttpStatusCode.OK, consent.StatusCode);
+        await _client.PostAsync("/api/v1/auth/logout", null);
+
+        await StartAsync("returning@example.com", "/profiles?bootstrap=tools");
+        var returningToken = ReadToken(await LatestMagicLinkAsync());
+        var returning = await _client.PostAsJsonAsync("/api/v1/auth/verify", new VerifyAuthRequest(returningToken), JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, returning.StatusCode);
+        var result = await returning.Content.ReadFromJsonAsync<VerifyAuthResponse>(JsonOptions);
+        Assert.NotNull(result);
+        Assert.Equal("/profiles?bootstrap=tools", result.RedirectPath);
     }
 
     [Fact]

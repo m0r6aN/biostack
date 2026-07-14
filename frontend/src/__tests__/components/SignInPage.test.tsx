@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const fetchMock = vi.fn();
-let callbackUrl = 'http%3A%2F%2Flocalhost%3A3043%2Fprofiles';
+let callbackUrl = '%2Fprofiles';
 
 vi.stubGlobal('fetch', fetchMock);
 
@@ -14,7 +14,7 @@ vi.mock('next/navigation', () => ({
 describe('SignInPage', () => {
   beforeEach(() => {
     fetchMock.mockReset();
-    callbackUrl = 'http%3A%2F%2Flocalhost%3A3043%2Fprofiles';
+    callbackUrl = '%2Fprofiles';
   });
 
   it('starts passwordless email auth and moves to the inbox step', async () => {
@@ -67,5 +67,27 @@ describe('SignInPage', () => {
 
     expect(screen.getByText('Your saved analysis will carry through sign-in.')).toBeInTheDocument();
     expect(screen.getByText('No need to restart. Continue to create your BioStack protocol.')).toBeInTheDocument();
+  });
+
+  it('does not translate an absolute callback URL into a local return path', async () => {
+    callbackUrl = 'https%3A%2F%2Fevil.example%2Fprofiles';
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({}) });
+
+    render(<SignInPage />);
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'user@example.com' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledWith(
+        '/api/v1/auth/start',
+        expect.objectContaining({
+          body: JSON.stringify({
+            contact: 'user@example.com',
+            channel: 'email',
+            redirectPath: '/protocol-console',
+          }),
+        }),
+      );
+    });
   });
 });
