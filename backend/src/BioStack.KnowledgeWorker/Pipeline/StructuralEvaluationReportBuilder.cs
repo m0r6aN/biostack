@@ -10,7 +10,7 @@ using System.Text.Json;
 /// </summary>
 public sealed class StructuralEvaluationReportBuilder
 {
-    public const string CurrentReportVersion = "1.1.0";
+    public const string CurrentReportVersion = "1.2.0";
     public const string ReportFileName = "biostack-structural-evaluation-report.v1.json";
 
     private static readonly JsonSerializerOptions SerializerOptions = new()
@@ -21,11 +21,13 @@ public sealed class StructuralEvaluationReportBuilder
 
     private readonly StructuralEvaluationSnapshotBuilder _snapshotBuilder;
     private readonly StructuralEvaluationComparator _comparisonBuilder;
+    private readonly CorpusIdentityInventoryBuilder _corpusInventoryBuilder;
 
     public StructuralEvaluationReportBuilder(string? repositoryRoot = null)
     {
         _snapshotBuilder = new StructuralEvaluationSnapshotBuilder(repositoryRoot);
         _comparisonBuilder = new StructuralEvaluationComparator(repositoryRoot);
+        _corpusInventoryBuilder = new CorpusIdentityInventoryBuilder(repositoryRoot);
     }
 
     public StructuralEvaluationReport Build()
@@ -57,8 +59,12 @@ public sealed class StructuralEvaluationReportBuilder
     {
         var snapshot = _snapshotBuilder.Build();
         var comparison = _comparisonBuilder.Build();
+        var corpusInventory = _corpusInventoryBuilder.Build();
         var metrics = new[]
         {
+            Observed(
+                "governed_corpus_identity_inventory",
+                "deterministic_repository_identity_provenance_and_authorization_state_recorded"),
             Observed("structural_coverage", "deterministic_counts_and_case_set_differences_recorded"),
             Observed(
                 "structural_declaration_comparison",
@@ -80,12 +86,13 @@ public sealed class StructuralEvaluationReportBuilder
         };
 
         return new StructuralEvaluationReportPayload(
-            Scope: "offline-structural-and-declaration-comparison",
+            Scope: "offline-structural-declaration-and-corpus-inventory",
             EvaluationStatus: "partial",
             PolicyStatus: "pending-approval",
             OverallVerdict: "not_evaluated",
             Snapshot: snapshot,
             Comparison: comparison,
+            CorpusInventory: corpusInventory,
             Metrics: metrics.OrderBy(metric => metric.MetricId, StringComparer.Ordinal).ToArray(),
             ModelInvoked: false,
             NetworkAccessed: false);
@@ -117,6 +124,7 @@ public sealed record StructuralEvaluationReportPayload(
     string OverallVerdict,
     StructuralEvaluationSnapshot Snapshot,
     StructuralEvaluationComparison Comparison,
+    CorpusIdentityInventorySnapshot CorpusInventory,
     IReadOnlyList<StructuralEvaluationMetricState> Metrics,
     bool ModelInvoked,
     bool NetworkAccessed);

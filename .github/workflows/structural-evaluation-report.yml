@@ -60,16 +60,34 @@ jobs:
         run: |
           report_path="$RUNNER_TEMP/biostack-structural-evaluation-report/biostack-structural-evaluation-report.v1.json"
           jq -e '
-            .reportVersion == "1.1.0" and
+            .reportVersion == "1.2.0" and
             .reportKind == "offline-structural-evaluation" and
+            .payload.scope == "offline-structural-declaration-and-corpus-inventory" and
             .payload.evaluationStatus == "partial" and
             .payload.policyStatus == "pending-approval" and
             .payload.overallVerdict == "not_evaluated" and
             .payload.comparison.overallVerdict == "not_evaluated" and
             .payload.comparison.candidateDeclarationsTrusted == false and
             .payload.comparison.effectAuthority == "none" and
+            .payload.corpusInventory.snapshotVersion == "1.0.0" and
+            .payload.corpusInventory.seedRecordCount == 49 and
+            .payload.corpusInventory.candidateRecordCount == 16 and
+            .payload.corpusInventory.evidencePacketCount == 16 and
+            .payload.corpusInventory.sourceRegistryRecordCount == 13 and
+            .payload.corpusInventory.seedCandidateOverlapCount == 10 and
+            (.payload.corpusInventory.identityTokenCollisions | length) == 2 and
+            (.payload.corpusInventory.externalIdentifierCollisions | length) == 0 and
+            .payload.corpusInventory.approvedRightsSourceCount == 0 and
+            .payload.corpusInventory.activeOperationsSourceCount == 0 and
+            .payload.corpusInventory.acquisitionEnabledSourceCount == 0 and
+            .payload.corpusInventory.registryAuthorizedEvidencePacketCount == 0 and
+            .payload.corpusInventory.modelInvoked == false and
+            .payload.corpusInventory.networkAccessed == false and
             .payload.modelInvoked == false and
             .payload.networkAccessed == false and
+            any(.payload.metrics[];
+              .metricId == "governed_corpus_identity_inventory" and
+              .status == "observed") and
             ([.payload.metrics[].status] | all(. == "observed" or . == "not_evaluated"))
           ' "$report_path"
 
