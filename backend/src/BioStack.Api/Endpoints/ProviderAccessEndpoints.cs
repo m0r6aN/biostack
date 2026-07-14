@@ -42,8 +42,7 @@ public static class ProviderAccessEndpoints
         // Honeypot submissions receive the same response shape but are not persisted.
         if (!string.IsNullOrWhiteSpace(request.Website))
         {
-            return Results.Accepted(value: new ProviderAccessConfirmationResponse(
-                Guid.NewGuid(), "pending", DateTime.UtcNow));
+            return Results.Accepted(value: CreateAcknowledgement());
         }
 
         var email = request.Email.Trim().ToLowerInvariant();
@@ -71,21 +70,7 @@ public static class ProviderAccessEndpoints
 
         if (existing is not null)
         {
-            if (existing.Status == "closed")
-            {
-                var reopenedAt = DateTime.UtcNow;
-                existing.Name = name;
-                existing.Organization = organization;
-                existing.Role = role;
-                existing.Status = "pending";
-                existing.Owner = null;
-                existing.ConsentVersion = ConsentVersion;
-                existing.ConsentRecordedAtUtc = reopenedAt;
-                existing.UpdatedAtUtc = reopenedAt;
-                await db.SaveChangesAsync(ct);
-            }
-
-            return Results.Accepted(value: ToConfirmation(existing));
+            return Results.Accepted(value: CreateAcknowledgement());
         }
 
         var now = DateTime.UtcNow;
@@ -112,12 +97,11 @@ public static class ProviderAccessEndpoints
         {
             // A concurrent request for the same normalized email won the unique-index race.
             db.Entry(entity).State = EntityState.Detached;
-            var concurrent = await db.ProviderAccessRequests.AsNoTracking()
-                .SingleAsync(item => item.Email == email, ct);
-            return Results.Accepted(value: ToConfirmation(concurrent));
+            if (!await db.ProviderAccessRequests.AsNoTracking().AnyAsync(item => item.Email == email, ct))
+                throw;
         }
 
-        return Results.Accepted(value: ToConfirmation(entity));
+        return Results.Accepted(value: CreateAcknowledgement());
     }
 
     private static async Task<IResult> ListRequests(
@@ -184,8 +168,8 @@ public static class ProviderAccessEndpoints
         return Results.Ok(ToReview(entity));
     }
 
-    private static ProviderAccessConfirmationResponse ToConfirmation(ProviderAccessRequest entity)
-        => new(entity.Id, entity.Status, entity.ConsentRecordedAtUtc);
+    private static ProviderAccessConfirmationResponse CreateAcknowledgement()
+        => new(Guid.NewGuid(), "pending", DateTime.UtcNow);
 
     private static ProviderAccessReviewResponse ToReview(ProviderAccessRequest entity)
         => new(

@@ -10,6 +10,12 @@
 | PR-SEC-001 | local, `29cbc98` | serial API build; JSON/config assertions; production startup without injected secret; diff check | build/config checks passed and production failed closed; Gitleaks and external rotation remain blocked |
 | PR-CI-001 | local source/diff, `ef4c15c` | stale expectation reconciliation; bounded worker configuration; diff check | diff clean; local dependency install timed out, so hosted rerun is required |
 | PR-CALC-002 | local source/diff, `8ebb9ba` | tablet/numeric/keyboard/dialog coverage; diff check | implementation complete; focused Vitest still hangs and no tracked browser harness exists |
+| KEO-64 local closeout | local, `b389db7` on `claude/keo-64-release-ci` | exact frontend suite; production build; diff check | 124 files and 898 tests passed; production build passed; undefined instruction references and unstable test mock repaired |
+| KEO-65 integrated code state | local, `fb0ed84` on `codex/security-integration` | clean npm install; production audit; exact frontend suite; production build; serial backend build and full tests; diff check | PostCSS 8.5.10; 0 audit vulnerabilities; 125 frontend files/900 tests; 51 static pages; 15 backend projects/0 errors; 1,088 backend tests; diff clean |
+| KEO-64 workflow closeout | local, `565805a` on `codex/security-integration` | inspect one-line offline-verification fetch change; diff check | local source/diff pass; hosted workflow rerun required |
+| KEO-64 hosted closeout | GitHub Actions, `c96bc3b` | runs `29283101748`, `29283101730`, `29283101738` | backend/frontend/audit/build, offline kit, and current-tree Gitleaks passed on one SHA; all production mutation steps skipped |
+
+The integrated candidate now has hosted CI evidence but no deployment, revision, traffic, or live-smoke evidence. Hosted current-tree Gitleaks does not close historical credential rotation or the unverified full-history scan. RG1 and the release verdict remain unchanged.
 
 ## Required verification record
 

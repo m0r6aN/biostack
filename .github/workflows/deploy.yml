@@ -3,6 +3,8 @@ name: Deploy to Azure Container Apps
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -41,14 +43,23 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      - name: Audit production frontend dependencies
+        working-directory: frontend
+        run: npm audit --omit=dev --audit-level=moderate
+
       - name: Run frontend tests
         working-directory: frontend
         # Bound worker concurrency so the launch suite fits reliably on the
         # hosted runner instead of exhausting the Node heap before deployment.
         run: npm test -- --pool=threads --maxWorkers=2 --no-file-parallelism
 
+      - name: Build production frontend
+        working-directory: frontend
+        run: npm run build
+
       # ── Azure login via OIDC (no long-lived secrets) ───────────────────────
       - name: Azure login
+        if: github.event_name != 'pull_request'
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -57,10 +68,12 @@ jobs:
 
       # ── Authenticate Docker to ACR ─────────────────────────────────────────
       - name: Log in to ACR
+        if: github.event_name != 'pull_request'
         run: az acr login --name ${{ secrets.ACR_NAME }}
 
       # ── Build & push API image ─────────────────────────────────────────────
       - name: Build & push API
+        if: github.event_name != 'pull_request'
         working-directory: backend
         run: |
           IMAGE=${{ secrets.ACR_LOGIN_SERVER }}/biostack-api
@@ -74,6 +87,7 @@ jobs:
 
       # ── Build & push frontend image ────────────────────────────────────────
       - name: Build & push frontend
+        if: github.event_name != 'pull_request'
         working-directory: frontend
         run: |
           IMAGE=${{ secrets.ACR_LOGIN_SERVER }}/biostack-web
@@ -88,6 +102,7 @@ jobs:
 
       # ── Update container apps to new images ────────────────────────────────
       - name: Update API container app
+        if: github.event_name != 'pull_request'
         run: |
           az containerapp update \
             --name ${{ secrets.API_APP_NAME }} \
@@ -95,6 +110,7 @@ jobs:
             --image ${{ secrets.ACR_LOGIN_SERVER }}/biostack-api:${{ github.sha }}
 
       - name: Update frontend container app
+        if: github.event_name != 'pull_request'
         run: |
           az containerapp update \
             --name ${{ secrets.WEB_APP_NAME }} \

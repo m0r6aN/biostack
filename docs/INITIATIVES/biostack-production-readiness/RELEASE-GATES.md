@@ -16,3 +16,5 @@
 ## Verdict
 
 **NO-GO / HOLD.** Any unknown, pending, blocked, or failing blocking gate prevents release.
+
+Candidate `c96bc3b` passes hosted backend/frontend validation, the production dependency audit, production frontend build, offline verification, and current-tree Gitleaks in runs `29283101748`, `29283101730`, and `29283101738`. This closes KEO-64's CI/build scope and the locally remediated KEO-65 code findings. RG1 remains blocked because every production mutation step was intentionally skipped and there is no deployed revision/traffic/live-smoke evidence. Historical credential rotation/full-history proof, proxy verification, operational drills, and named human approvals also remain open.

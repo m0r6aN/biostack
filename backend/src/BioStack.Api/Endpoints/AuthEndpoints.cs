@@ -150,25 +150,35 @@ public static class AuthEndpoints
 
         var tokenHash = HashSecret(token);
         var now = DateTime.UtcNow;
+        var claimed = await db.AuthChallenges
+            .Where(c =>
+                c.TokenHash == tokenHash &&
+                c.Channel == EmailChannel &&
+                c.ChallengeType == MagicLinkType &&
+                c.ConsumedAtUtc == null &&
+                c.ExpiresAtUtc > now)
+            .ExecuteUpdateAsync(setters => setters
+                .SetProperty(c => c.ConsumedAtUtc, now)
+                .SetProperty(c => c.AttemptCount, c => c.AttemptCount + 1), ct);
+
+        if (claimed != 1)
+        {
+            await db.AuthChallenges
+                .Where(c =>
+                    c.TokenHash == tokenHash &&
+                    c.Channel == EmailChannel &&
+                    c.ChallengeType == MagicLinkType)
+                .ExecuteUpdateAsync(
+                    setters => setters.SetProperty(c => c.AttemptCount, c => c.AttemptCount + 1),
+                    ct);
+            return Results.Redirect(failureRedirect);
+        }
+
         var challenge = await db.AuthChallenges
             .Include(c => c.Identity)
             .ThenInclude(i => i.User)
-            .FirstOrDefaultAsync(c => c.TokenHash == tokenHash && c.Channel == EmailChannel && c.ChallengeType == MagicLinkType, ct);
+            .SingleAsync(c => c.TokenHash == tokenHash && c.Channel == EmailChannel && c.ChallengeType == MagicLinkType, ct);
 
-        if (challenge is null)
-        {
-            return Results.Redirect(failureRedirect);
-        }
-
-        challenge.AttemptCount++;
-
-        if (challenge.ConsumedAtUtc is not null || challenge.ExpiresAtUtc <= now)
-        {
-            await db.SaveChangesAsync(ct);
-            return Results.Redirect(failureRedirect);
-        }
-
-        challenge.ConsumedAtUtc = now;
         if (!challenge.Identity.IsVerified)
         {
             challenge.Identity.IsVerified = true;

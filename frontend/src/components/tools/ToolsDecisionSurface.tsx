@@ -280,8 +280,8 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
         u100UnitsPerAdministration: dosing.result.u100UnitsPerAdministration,
         formula: dosing.result.formula,
       },
-      reconstitutionInstructions: input.concentrationSource === 'reconstitution' ? reconstitutionInstructions : [],
-      storageInstructions: input.concentrationSource === 'reconstitution' ? storageInstructions : [],
+      reconstitutionInstructions: [],
+      storageInstructions: [],
       compatibilityFindings: compatibility,
     });
   }

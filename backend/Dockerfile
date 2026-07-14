@@ -28,6 +28,7 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /app/data && chown -R app:app /app
 
 ENV ASPNETCORE_URLS=http://+:5000
 ENV ASPNETCORE_ENVIRONMENT=Production
@@ -35,5 +36,7 @@ EXPOSE 5000
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:5000/health || exit 1
+
+USER app
 
 ENTRYPOINT ["dotnet", "BioStack.Api.dll"]
