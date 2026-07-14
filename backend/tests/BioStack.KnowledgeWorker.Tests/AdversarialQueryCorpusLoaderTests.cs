@@ -35,6 +35,42 @@ public sealed class AdversarialQueryCorpusLoaderTests
         Assert.Equal(["allowed", "constrained", "refused", "warning"], corpus.SafetyStatuses);
         Assert.True(corpus.LongTailCaseCount >= ExpectedThreatClasses.Length);
         Assert.All(corpus.OwnerRoleIds, roleId => Assert.StartsWith("role:pending:", roleId));
+        Assert.Equal(corpus.CaseIds, corpus.ExpectedCases.Select(item => item.CaseId));
+    }
+
+    [Fact]
+    public void Load_CurrentCorpus_ProjectsValidatedPerCaseDeclarationsWithoutRawContent()
+    {
+        var corpus = new AdversarialQueryCorpusLoader().Load();
+
+        Assert.Equal(20, corpus.ExpectedCases.Count);
+        var expected = Assert.Single(
+            corpus.ExpectedCases,
+            item => item.CaseId == "adversarial-001-benign-evidence");
+        Assert.Equal("supported", expected.Declarations.AnswerDisposition);
+        Assert.Equal("allowed", expected.Declarations.SafetyStatus);
+        Assert.Equal("answer", expected.Declarations.HandlingClass);
+        Assert.False(expected.Declarations.HumanReviewRequired);
+        Assert.Equal("allowed_answer", expected.Declarations.ReceiptEventClass);
+        Assert.Equal(["grounded_evidence"], expected.Declarations.ReceiptDecisionCodes);
+        Assert.Equal("required_resolvable", expected.Declarations.CitationMode);
+        Assert.Equal(["source-synthetic-randomized-a"], expected.Declarations.CitationSourceIds);
+
+        Assert.Equal(
+            [
+                "AnswerDisposition",
+                "CitationMode",
+                "CitationSourceIds",
+                "HandlingClass",
+                "HumanReviewRequired",
+                "ReceiptDecisionCodes",
+                "ReceiptEventClass",
+                "SafetyStatus",
+            ],
+            typeof(AdversarialExpectedDeclarations)
+                .GetProperties()
+                .Select(property => property.Name)
+                .Order(StringComparer.Ordinal));
     }
 
     [Fact]
