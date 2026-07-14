@@ -20,22 +20,28 @@ public sealed class StructuralEvaluationReportBuilderTests
     {
         var report = new StructuralEvaluationReportBuilder().Build();
 
-        Assert.Equal("1.0.0", report.ReportVersion);
+        Assert.Equal("1.1.0", report.ReportVersion);
         Assert.Equal("offline-structural-evaluation", report.ReportKind);
-        Assert.Equal("offline-structural-only", report.Payload.Scope);
+        Assert.Equal("offline-structural-and-declaration-comparison", report.Payload.Scope);
         Assert.Equal("partial", report.Payload.EvaluationStatus);
         Assert.Equal("pending-approval", report.Payload.PolicyStatus);
         Assert.Equal("not_evaluated", report.Payload.OverallVerdict);
         Assert.False(report.Payload.ModelInvoked);
         Assert.False(report.Payload.NetworkAccessed);
+        Assert.Equal("partial", report.Payload.Comparison.CandidateCoverageStatus);
+        Assert.Equal("not_evaluated", report.Payload.Comparison.OverallVerdict);
+        Assert.False(report.Payload.Comparison.CandidateDeclarationsTrusted);
+        Assert.Equal("none", report.Payload.Comparison.EffectAuthority);
+        Assert.Equal(4, report.Payload.Comparison.CandidateCaseCount);
 
-        var structural = Assert.Single(
-            report.Payload.Metrics,
-            metric => metric.MetricId == "structural_coverage");
-        Assert.Equal("observed", structural.Status);
+        var observed = report.Payload.Metrics
+            .Where(metric => metric.Status == "observed")
+            .Select(metric => metric.MetricId)
+            .ToArray();
+        Assert.Equal(["structural_coverage", "structural_declaration_comparison"], observed);
 
         var unavailable = report.Payload.Metrics
-            .Where(metric => metric.MetricId != "structural_coverage")
+            .Where(metric => metric.Status != "observed")
             .ToArray();
         Assert.NotEmpty(unavailable);
         Assert.All(unavailable, metric => Assert.Equal("not_evaluated", metric.Status));
@@ -69,8 +75,11 @@ public sealed class StructuralEvaluationReportBuilderTests
         Assert.Equal(first, second);
         Assert.Null(json["generatedAtUtc"]);
         Assert.Equal("not_evaluated", (string?)json["payload"]?["overallVerdict"]);
+        Assert.Equal("not_evaluated", (string?)json["payload"]?["comparison"]?["overallVerdict"]);
+        Assert.False((bool)json["payload"]?["comparison"]?["candidateDeclarationsTrusted"]!);
         Assert.False((bool)json["payload"]?["modelInvoked"]!);
         Assert.False((bool)json["payload"]?["networkAccessed"]!);
+        Assert.Null(json["payload"]?["comparison"]?["generatedAtUtc"]);
     }
 
     [Fact]
