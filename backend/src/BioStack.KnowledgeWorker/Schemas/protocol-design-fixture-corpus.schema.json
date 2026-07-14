@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biostack.local/schemas/protocol-design-fixture-corpus.schema.json",
+  "title": "BioStack Protocol Design Fixture Corpus",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "recordType",
+    "schemaVersion",
+    "artifactVersion",
+    "taxonomyVersion",
+    "matrixVersion",
+    "sourceResearch",
+    "sourceCanon",
+    "runtimeTruth",
+    "ownerAssignmentState",
+    "dataPolicy",
+    "coveragePolicy",
+    "fixtures"
+  ],
+  "properties": {
+    "recordType": { "const": "biostack-protocol-design-fixture-corpus" },
+    "schemaVersion": { "$ref": "#/$defs/version" },
+    "artifactVersion": { "$ref": "#/$defs/version" },
+    "taxonomyVersion": { "$ref": "#/$defs/version" },
+    "matrixVersion": { "$ref": "#/$defs/version" },
+    "sourceResearch": { "type": "string", "minLength": 1 },
+    "sourceCanon": { "type": "string", "minLength": 1 },
+    "runtimeTruth": { "const": false },
+    "ownerAssignmentState": { "const": "pending-human-assignment" },
+    "dataPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identityPolicy",
+        "medicalInstructionPolicy",
+        "modelInvocationExpected",
+        "networkAccessExpected"
+      ],
+      "properties": {
+        "identityPolicy": { "const": "synthetic-only" },
+        "medicalInstructionPolicy": { "const": "unsafe-requests-only-as-refusal-inputs" },
+        "modelInvocationExpected": { "const": false },
+        "networkAccessExpected": { "const": false }
+      }
+    },
+    "coveragePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mandatoryInputTypes",
+        "mandatoryBehaviorClasses",
+        "mandatoryCoverageTags",
+        "requireEveryTaxonomyCase"
+      ],
+      "properties": {
+        "mandatoryInputTypes": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/inputType" }
+        },
+        "mandatoryBehaviorClasses": {
+          "type": "array",
+          "minItems": 5,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/behaviorClass" }
+        },
+        "mandatoryCoverageTags": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "requireEveryTaxonomyCase": { "const": true }
+      }
+    },
+    "fixtures": {
+      "type": "array",
+      "minItems": 16,
+      "items": { "$ref": "#/$defs/fixture" }
+    }
+  },
+  "$defs": {
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "pendingRoleId": {
+      "type": "string",
+      "pattern": "^role:pending:[a-z0-9][a-z0-9-]*$"
+    },
+    "inputType": {
+      "enum": ["camera_scan", "file_upload", "link", "paste"]
+    },
+    "behaviorClass": {
+      "enum": ["normalization", "observation", "refusal", "uncertainty", "warning"]
+    },
+    "nullableString": {
+      "type": ["string", "null"]
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "ownerRoleId",
+        "coverageCaseId",
+        "title",
+        "unsafeRequest",
+        "coverageTags",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "ownerRoleId": { "$ref": "#/$defs/pendingRoleId" },
+        "coverageCaseId": { "$ref": "#/$defs/id" },
+        "title": { "type": "string", "minLength": 1 },
+        "unsafeRequest": { "type": "boolean" },
+        "coverageTags": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "inputType",
+            "inputText",
+            "linkUrl",
+            "sourceName",
+            "contentType",
+            "offlineExtractedText",
+            "request"
+          ],
+          "properties": {
+            "inputType": { "$ref": "#/$defs/inputType" },
+            "inputText": { "$ref": "#/$defs/nullableString" },
+            "linkUrl": { "$ref": "#/$defs/nullableString" },
+            "sourceName": { "$ref": "#/$defs/nullableString" },
+            "contentType": { "$ref": "#/$defs/nullableString" },
+            "offlineExtractedText": { "type": "string", "minLength": 1 },
+            "request": { "type": "string", "minLength": 1 }
+          }
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "behaviorClass",
+            "answerDisposition",
+            "safetyStatus",
+            "humanReviewRequired",
+            "summary",
+            "mustIncludeConcepts",
+            "forbiddenOutput"
+          ],
+          "properties": {
+            "behaviorClass": { "$ref": "#/$defs/behaviorClass" },
+            "answerDisposition": { "$ref": "#/$defs/id" },
+            "safetyStatus": { "$ref": "#/$defs/id" },
+            "humanReviewRequired": { "type": "boolean" },
+            "summary": { "type": "string", "minLength": 1 },
+            "mustIncludeConcepts": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "forbiddenOutput": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
