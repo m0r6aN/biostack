@@ -128,6 +128,7 @@ public sealed partial class AdversarialQueryCorpusLoader
         var representedDispositions = new HashSet<string>(StringComparer.Ordinal);
         var representedSafetyStatuses = new HashSet<string>(StringComparer.Ordinal);
         var ownerRoleIds = new SortedSet<string>(StringComparer.Ordinal);
+        var expectedCases = new List<AdversarialExpectedCase>(cases.Count);
         var longTailCaseCount = 0;
 
         foreach (var caseNode in cases)
@@ -189,6 +190,7 @@ public sealed partial class AdversarialQueryCorpusLoader
             ValidateExpectedBehavior(caseId, threatClass, expected);
             ValidateExpectedLanguage(caseId, expected);
             ValidateCitationPolicy(caseId, threatClass, expected, sourceIds);
+            expectedCases.Add(ProjectExpectedCase(caseId, expected));
         }
 
         EnsureRepresented(representedCases, matrixExpectations.Keys, "KEO-73 coverage cases");
@@ -212,7 +214,25 @@ public sealed partial class AdversarialQueryCorpusLoader
             AnswerDispositions: representedDispositions.Order(StringComparer.Ordinal).ToArray(),
             SafetyStatuses: representedSafetyStatuses.Order(StringComparer.Ordinal).ToArray(),
             OwnerRoleIds: ownerRoleIds.ToArray(),
+            ExpectedCases: expectedCases,
             LongTailCaseCount: longTailCaseCount);
+    }
+
+    private static AdversarialExpectedCase ProjectExpectedCase(string caseId, JsonObject expected)
+    {
+        var receipt = RequiredObject(expected["receipt"], $"{caseId}.expected.receipt");
+        var citations = RequiredObject(expected["citations"], $"{caseId}.expected.citations");
+        return new AdversarialExpectedCase(
+            CaseId: caseId,
+            Declarations: new AdversarialExpectedDeclarations(
+                AnswerDisposition: RequiredString(expected, "answerDisposition"),
+                SafetyStatus: RequiredString(expected, "safetyStatus"),
+                HandlingClass: RequiredString(expected, "handlingClass"),
+                HumanReviewRequired: RequiredBoolean(expected, "humanReviewRequired"),
+                ReceiptEventClass: RequiredString(receipt, "eventClass"),
+                ReceiptDecisionCodes: RequiredArray(receipt, "decisionCodes").Select(StringValue).ToArray(),
+                CitationMode: RequiredString(citations, "mode"),
+                CitationSourceIds: RequiredArray(citations, "sourceIds").Select(StringValue).ToArray()));
     }
 
     private static void ValidateDataPolicy(JsonObject policy)
@@ -573,4 +593,19 @@ public sealed record AdversarialQueryCorpus(
     IReadOnlyList<string> AnswerDispositions,
     IReadOnlyList<string> SafetyStatuses,
     IReadOnlyList<string> OwnerRoleIds,
+    IReadOnlyList<AdversarialExpectedCase> ExpectedCases,
     int LongTailCaseCount);
+
+public sealed record AdversarialExpectedCase(
+    string CaseId,
+    AdversarialExpectedDeclarations Declarations);
+
+public sealed record AdversarialExpectedDeclarations(
+    string AnswerDisposition,
+    string SafetyStatus,
+    string HandlingClass,
+    bool HumanReviewRequired,
+    string ReceiptEventClass,
+    IReadOnlyList<string> ReceiptDecisionCodes,
+    string CitationMode,
+    IReadOnlyList<string> CitationSourceIds);
