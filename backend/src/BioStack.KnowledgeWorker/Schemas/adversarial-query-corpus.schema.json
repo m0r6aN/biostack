@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biostack.local/schemas/adversarial-query-corpus.schema.json",
+  "title": "BioStack Adversarial Query Evaluation Corpus",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "recordType",
+    "schemaVersion",
+    "artifactVersion",
+    "taxonomyVersion",
+    "matrixVersion",
+    "fixtureCorpusVersion",
+    "sourceResearch",
+    "sourceCanon",
+    "runtimeTruth",
+    "ownerAssignmentState",
+    "dataPolicy",
+    "coveragePolicy",
+    "syntheticSources",
+    "cases"
+  ],
+  "properties": {
+    "recordType": { "const": "biostack-adversarial-query-corpus" },
+    "schemaVersion": { "$ref": "#/$defs/version" },
+    "artifactVersion": { "$ref": "#/$defs/version" },
+    "taxonomyVersion": { "$ref": "#/$defs/version" },
+    "matrixVersion": { "$ref": "#/$defs/version" },
+    "fixtureCorpusVersion": { "$ref": "#/$defs/version" },
+    "sourceResearch": { "type": "string", "minLength": 1 },
+    "sourceCanon": { "type": "string", "minLength": 1 },
+    "runtimeTruth": { "const": false },
+    "ownerAssignmentState": { "const": "pending-human-assignment" },
+    "dataPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identityPolicy",
+        "unsafeContentPolicy",
+        "expectedOutputPolicy",
+        "modelInvocationExpected",
+        "networkAccessExpected"
+      ],
+      "properties": {
+        "identityPolicy": { "const": "synthetic-only" },
+        "unsafeContentPolicy": { "const": "non-operational-test-inputs-only" },
+        "expectedOutputPolicy": { "const": "non-prescriptive-refusal-or-evidence-bounded" },
+        "modelInvocationExpected": { "const": false },
+        "networkAccessExpected": { "const": false }
+      }
+    },
+    "coveragePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mandatoryThreatClasses",
+        "mandatoryAnswerDispositions",
+        "mandatorySafetyStatuses",
+        "requireEveryTaxonomyCase",
+        "requireEvaluationReceipt"
+      ],
+      "properties": {
+        "mandatoryThreatClasses": {
+          "type": "array",
+          "minItems": 9,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/threatClass" }
+        },
+        "mandatoryAnswerDispositions": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "mandatorySafetyStatuses": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "requireEveryTaxonomyCase": { "const": true },
+        "requireEvaluationReceipt": { "const": true }
+      }
+    },
+    "syntheticSources": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/syntheticSource" }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 16,
+      "items": { "$ref": "#/$defs/case" }
+    }
+  },
+  "$defs": {
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+    "pendingRoleId": { "type": "string", "pattern": "^role:pending:[a-z0-9][a-z0-9-]*$" },
+    "threatClass": {
+      "enum": [
+        "ambiguous",
+        "benign",
+        "contradictory_context",
+        "malicious_prompt_injection",
+        "out_of_scope",
+        "policy_evasion",
+        "privacy_sensitive",
+        "unsafe_request",
+        "unsupported_claim"
+      ]
+    },
+    "syntheticSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sourceClass", "locator"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "sourceClass": { "enum": ["label", "observational", "randomized"] },
+        "locator": { "type": "string", "format": "uri" }
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "ownerRoleId",
+        "title",
+        "threatClass",
+        "longTail",
+        "coverageCaseId",
+        "relatedFixtureIds",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "ownerRoleId": { "$ref": "#/$defs/pendingRoleId" },
+        "title": { "type": "string", "minLength": 1 },
+        "threatClass": { "$ref": "#/$defs/threatClass" },
+        "longTail": { "type": "boolean" },
+        "coverageCaseId": { "$ref": "#/$defs/id" },
+        "relatedFixtureIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["query", "syntheticContext"],
+          "properties": {
+            "query": { "type": "string", "minLength": 1 },
+            "syntheticContext": { "type": "string", "minLength": 1 }
+          }
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "answerDisposition",
+            "safetyStatus",
+            "humanReviewRequired",
+            "handlingClass",
+            "warnings",
+            "refusal",
+            "receipt",
+            "citations",
+            "mustIncludeConcepts",
+            "forbiddenOutput"
+          ],
+          "properties": {
+            "answerDisposition": { "$ref": "#/$defs/id" },
+            "safetyStatus": { "$ref": "#/$defs/id" },
+            "humanReviewRequired": { "type": "boolean" },
+            "handlingClass": { "enum": ["answer", "constrain", "refuse", "unknown", "unsupported"] },
+            "warnings": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "refusal": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["required", "reasonClass", "safeAlternative"],
+              "properties": {
+                "required": { "type": "boolean" },
+                "reasonClass": { "type": ["string", "null"] },
+                "safeAlternative": { "type": "string", "minLength": 1 }
+              }
+            },
+            "receipt": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["required", "eventClass", "decisionCodes"],
+              "properties": {
+                "required": { "const": true },
+                "eventClass": {
+                  "enum": [
+                    "allowed_answer",
+                    "constrained_answer",
+                    "safety_refusal",
+                    "unknown_answer",
+                    "unsupported_boundary",
+                    "warning_answer"
+                  ]
+                },
+                "decisionCodes": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": { "$ref": "#/$defs/id" }
+                }
+              }
+            },
+            "citations": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["mode", "sourceIds"],
+              "properties": {
+                "mode": {
+                  "enum": ["none", "prohibited_unverified", "required_if_claims", "required_resolvable"]
+                },
+                "sourceIds": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": { "$ref": "#/$defs/id" }
+                }
+              }
+            },
+            "mustIncludeConcepts": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "forbiddenOutput": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
