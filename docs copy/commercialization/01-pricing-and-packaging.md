@@ -278,7 +278,7 @@ Observer (Free) requires no Stripe product. Handle in application logic.
   - `customer.subscription.created` — provision tier access
   - `customer.subscription.updated` — handle upgrades/downgrades
   - `customer.subscription.deleted` — downgrade to Observer
-  - `invoice.payment_failed` — grace period logic (7-day grace, then downgrade)
+  - `invoice.payment_failed` — mark `past_due` and downgrade to Observer immediately
   - `invoice.payment_succeeded` — confirm billing and log
 - **Metadata to store on Stripe Customer object:**
   - `app_user_id` (internal UUID)
@@ -291,7 +291,7 @@ Map Stripe subscription status to app entitlements in the backend:
 ```
 active    → full tier access
 trialing  → full tier access (Operator only during trial)
-past_due  → full tier access (grace period, max 7 days)
+past_due  → revert to Observer immediately (no grace period)
 canceled  → revert to Observer
 unpaid    → revert to Observer
 ```

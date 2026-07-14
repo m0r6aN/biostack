@@ -105,8 +105,8 @@ Monthly billing is the only supported launch interval. Do not advertise another 
 **Required webhooks at launch:** `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.payment_failed`, `invoice.payment_succeeded`
 
 **Entitlement map:**
-- `active` / `trialing` / `past_due` (7-day grace) — full tier access
-- `canceled` / `unpaid` — revert to Observer
+- `active` / `trialing` — full tier access
+- `past_due` / `canceled` / `unpaid` — revert to Observer immediately
 
 **Proration:** Enable for upgrades; disable for downgrades (effective at period end).
 

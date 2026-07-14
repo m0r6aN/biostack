@@ -64,6 +64,7 @@ export interface CurrentSubscription {
   currentPeriodEndUtc: string | null;
   features: Record<string, boolean>;
   limits: Record<string, number | null>;
+  contractVersion?: string;
 }
 
 export interface ProviderAccessRequest {

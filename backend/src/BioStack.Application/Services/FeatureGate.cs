@@ -18,7 +18,6 @@ public static class FeatureCodes
 
 public sealed class FeatureGate : IFeatureGate
 {
-    public const int ObserverActiveCompoundLimit = 8;
     private readonly BioStackDbContext _db;
     private readonly ICurrentUserAccessor _currentUserAccessor;
 
@@ -41,36 +40,21 @@ public sealed class FeatureGate : IFeatureGate
         if (subscription is null)
             return ProductTier.Observer;
 
-        var now = DateTime.UtcNow;
-        var paidThrough = subscription.CurrentPeriodEndUtc is not null && subscription.CurrentPeriodEndUtc > now;
-        var hasPaidAccess = subscription.Status is SubscriptionStatus.Active or SubscriptionStatus.Trialing
-            && (subscription.CurrentPeriodEndUtc is null || paidThrough);
-
-        return hasPaidAccess ? subscription.Tier : ProductTier.Observer;
+        return ProductContract.Current.HasPaidAccess(subscription.Status, subscription.CurrentPeriodEndUtc, DateTime.UtcNow)
+            ? subscription.Tier
+            : ProductTier.Observer;
     }
 
     public async Task<bool> IsEnabledAsync(string featureCode, CancellationToken cancellationToken = default)
     {
         var tier = await GetCurrentTierAsync(cancellationToken);
-        return featureCode switch
-        {
-            FeatureCodes.PaidIntelligence => tier >= ProductTier.Operator,
-            FeatureCodes.CommanderIntelligence => tier >= ProductTier.Commander,
-            FeatureCodes.ReviewedRelationshipGraph => tier >= ProductTier.Operator,
-            FeatureCodes.SourceQualityTracker => tier >= ProductTier.Operator,
-            FeatureCodes.Glp1ObservabilityPack => tier >= ProductTier.Operator,
-            FeatureCodes.SideEffectAmbiguityDetector => tier >= ProductTier.Commander,
-            FeatureCodes.HighRiskWarningFirstGuardrails => true,
-            _ => true
-        };
+        return ProductContract.Current.IsFeatureEnabled(featureCode, tier);
     }
 
     public async Task<int?> GetLimitAsync(string featureCode, CancellationToken cancellationToken = default)
     {
         var tier = await GetCurrentTierAsync(cancellationToken);
-        return featureCode == FeatureCodes.ActiveCompounds && tier == ProductTier.Observer
-            ? ObserverActiveCompoundLimit
-            : null;
+        return ProductContract.Current.GetLimit(featureCode, tier);
     }
 
     public async Task EnsureEnabledAsync(string featureCode, CancellationToken cancellationToken = default)

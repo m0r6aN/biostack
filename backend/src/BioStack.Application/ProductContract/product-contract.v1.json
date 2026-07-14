@@ -1,0 +1,112 @@
+{
+  "contractVersion": "1.0.0",
+  "effectiveDate": "2026-07-13",
+  "billing": {
+    "interval": "month",
+    "currency": "usd",
+    "pastDueGraceDays": 0,
+    "paidAccessStatuses": [
+      "Active",
+      "Trialing"
+    ],
+    "plans": [
+      {
+        "code": "observer",
+        "tier": "Observer",
+        "displayName": "Observer",
+        "tagline": "Free",
+        "monthlyPriceCents": 0,
+        "stripePriceConfigurationKey": null,
+        "marketingCtaPath": "/start"
+      },
+      {
+        "code": "operator",
+        "tier": "Operator",
+        "displayName": "Operator",
+        "tagline": "Track & Analyze",
+        "monthlyPriceCents": 1200,
+        "stripePriceConfigurationKey": "Stripe:OperatorPriceId",
+        "marketingCtaPath": "/billing?plan=operator"
+      },
+      {
+        "code": "commander",
+        "tier": "Commander",
+        "displayName": "Commander",
+        "tagline": "Longitudinal Intelligence",
+        "monthlyPriceCents": 2900,
+        "stripePriceConfigurationKey": "Stripe:CommanderPriceId",
+        "marketingCtaPath": "/billing?plan=commander"
+      }
+    ]
+  },
+  "features": {
+    "active_compounds": {
+      "minimumTier": "Observer",
+      "limits": {
+        "Observer": 8
+      }
+    },
+    "paid_intelligence": {
+      "minimumTier": "Operator",
+      "limits": {}
+    },
+    "commander_intelligence": {
+      "minimumTier": "Commander",
+      "limits": {}
+    },
+    "reviewed_relationship_graph": {
+      "minimumTier": "Operator",
+      "limits": {}
+    },
+    "source_quality_tracker": {
+      "minimumTier": "Operator",
+      "limits": {}
+    },
+    "glp1_observability_pack": {
+      "minimumTier": "Operator",
+      "limits": {}
+    },
+    "side_effect_ambiguity_detector": {
+      "minimumTier": "Commander",
+      "limits": {}
+    },
+    "high_risk_warning_first_guardrails": {
+      "minimumTier": "Observer",
+      "limits": {}
+    }
+  },
+  "routes": {
+    "publicPrefixes": [
+      "/auth",
+      "/api",
+      "/pricing",
+      "/faq",
+      "/onboarding",
+      "/start",
+      "/map",
+      "/knowledge",
+      "/providers",
+      "/calculators",
+      "/tools",
+      "/how-it-works",
+      "/safety",
+      "/terms",
+      "/privacy",
+      "/robots.txt",
+      "/sitemap.xml"
+    ],
+    "canonical": {
+      "onboarding": "/start",
+      "analyzer": "/tools/analyzer",
+      "postSignInDefault": "/protocol-console"
+    },
+    "aliases": {
+      "/onboarding": "/start",
+      "/map": "/tools/analyzer"
+    }
+  },
+  "health": {
+    "livenessPath": "/health",
+    "keonDependencyPath": "/health/keon"
+  }
+}

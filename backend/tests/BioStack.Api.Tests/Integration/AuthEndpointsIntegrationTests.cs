@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using BioStack.Api;
+using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Enums;
@@ -342,7 +343,24 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
             .Include(c => c.Identity)
             .SingleAsync(c => c.Identity.ValueNormalized == "redirect@example.com");
 
-        Assert.Equal("/mission-control", challenge.RedirectPath);
+        Assert.Equal(ProductContract.Current.Routes.Canonical["postSignInDefault"], challenge.RedirectPath);
+    }
+
+    [Theory]
+    [InlineData("/onboarding", "/start")]
+    [InlineData("/map", "/tools/analyzer")]
+    public async Task RedirectAllowlist_NormalizesContractAliases(string requested, string expected)
+    {
+        var email = $"alias-{Guid.NewGuid():N}@example.com";
+        await StartAsync(email, requested);
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var challenge = await db.AuthChallenges
+            .Include(c => c.Identity)
+            .SingleAsync(c => c.Identity.ValueNormalized == email);
+
+        Assert.Equal(expected, challenge.RedirectPath);
     }
 
     [Fact]

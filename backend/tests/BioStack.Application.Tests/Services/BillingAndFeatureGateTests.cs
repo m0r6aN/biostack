@@ -34,8 +34,9 @@ public sealed class BillingAndFeatureGateTests
         await db.SaveChangesAsync();
 
         Assert.Equal(ProductTier.Observer, await gate.GetCurrentTierAsync());
-        Assert.Equal(FeatureGate.ObserverActiveCompoundLimit, await gate.GetLimitAsync(FeatureCodes.ActiveCompounds));
+        Assert.Equal(ProductContract.Current.GetLimit(FeatureCodes.ActiveCompounds, ProductTier.Observer), await gate.GetLimitAsync(FeatureCodes.ActiveCompounds));
         Assert.False(await gate.IsEnabledAsync(FeatureCodes.PaidIntelligence));
+        Assert.False(await gate.IsEnabledAsync("unknown_feature"));
 
         db.Subscriptions.Add(new AppSubscription
         {
@@ -57,6 +58,60 @@ public sealed class BillingAndFeatureGateTests
         Assert.Equal(ProductTier.Commander, await gate.GetCurrentTierAsync());
         Assert.Null(await gate.GetLimitAsync(FeatureCodes.ActiveCompounds));
         Assert.True(await gate.IsEnabledAsync(FeatureCodes.CommanderIntelligence));
+    }
+
+    [Fact]
+    public async Task FeatureGate_PastDueDowngradesImmediatelyUnderContract()
+    {
+        var userId = Guid.NewGuid();
+        await using var db = CreateDbContext();
+        var accessor = CurrentUser(userId);
+        db.AppUsers.Add(new AppUser
+        {
+            Id = userId,
+            Provider = "email",
+            ProviderKey = "past-due@example.com",
+            Email = "past-due@example.com",
+            DisplayName = "Past Due User",
+            CreatedAtUtc = DateTime.UtcNow,
+            LastSeenAtUtc = DateTime.UtcNow
+        });
+        db.Subscriptions.Add(new AppSubscription
+        {
+            Id = Guid.NewGuid(),
+            AppUserId = userId,
+            ProductCode = "operator",
+            Tier = ProductTier.Operator,
+            StripeCustomerId = "cus_past_due",
+            StripeSubscriptionId = "sub_past_due",
+            StripePriceId = "price_operator",
+            Status = SubscriptionStatus.PastDue,
+            CurrentPeriodEndUtc = DateTime.UtcNow.AddDays(7),
+            CreatedAtUtc = DateTime.UtcNow,
+            UpdatedAtUtc = DateTime.UtcNow
+        });
+        await db.SaveChangesAsync();
+
+        var gate = new FeatureGate(db, accessor.Object);
+
+        Assert.Equal(0, ProductContract.Current.Billing.PastDueGraceDays);
+        Assert.Equal(ProductTier.Observer, await gate.GetCurrentTierAsync());
+        Assert.False(await gate.IsEnabledAsync(FeatureCodes.PaidIntelligence));
+    }
+
+    [Fact]
+    public void ProductContract_DefinesCanonicalPlansRoutesAndHealth()
+    {
+        var contract = ProductContract.Current;
+
+        Assert.Equal("1.0.0", contract.Version);
+        Assert.Equal("month", contract.Billing.Interval);
+        Assert.Equal(["observer", "operator", "commander"], contract.Billing.Plans.Select(plan => plan.Code));
+        Assert.Equal(1200, contract.GetPlan("operator").MonthlyPriceCents);
+        Assert.Equal("/start", contract.Routes.Canonical["onboarding"]);
+        Assert.Equal("/tools/analyzer", contract.Routes.Canonical["analyzer"]);
+        Assert.Equal("/health", contract.Health.LivenessPath);
+        Assert.Equal("/health/keon", contract.Health.KeonDependencyPath);
     }
 
     [Fact]

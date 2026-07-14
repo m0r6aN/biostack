@@ -7,6 +7,7 @@
 | D3 | `a37726a` is the current evidence baseline | active | Coordinator reconciliation |
 | D4 | Latest failed deployment did not mutate Azure because pre-deploy tests failed | observed | Run `29166449446` |
 | D5 | Legal placeholders remain contained/noindex, not approved policy | active | Legal/privacy approval required |
+| D6 | Product contract v1.0.0 is authoritative: monthly-only; `PastDue` has zero grace; `/start` and `/tools/analyzer` are canonical; `/health` and `/health/keon` are probes | implemented; hosted/live verification pending | `contracts/product-contract.v1.json`; KEO-67 |
 
 ## Open decisions
 
