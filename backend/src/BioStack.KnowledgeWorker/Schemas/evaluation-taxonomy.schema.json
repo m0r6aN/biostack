@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biostack.local/schemas/evaluation-taxonomy.schema.json",
+  "title": "BioStack Evaluation Taxonomy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "recordType",
+    "schemaVersion",
+    "artifactVersion",
+    "sourceResearch",
+    "runtimeTruth",
+    "ownerAssignmentState",
+    "coveragePolicy",
+    "answerDispositions",
+    "safetyStatuses",
+    "dimensions"
+  ],
+  "properties": {
+    "recordType": { "const": "biostack-evaluation-taxonomy" },
+    "schemaVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "artifactVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "sourceResearch": { "type": "string", "minLength": 1 },
+    "runtimeTruth": { "const": false },
+    "ownerAssignmentState": { "const": "pending-human-assignment" },
+    "coveragePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mandatoryDimensionIds",
+        "mandatoryAnswerDispositionIds",
+        "mandatorySafetyStatusIds",
+        "representEveryValue",
+        "requireDeclaredValuePairs"
+      ],
+      "properties": {
+        "mandatoryDimensionIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "mandatoryAnswerDispositionIds": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "mandatorySafetyStatusIds": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "representEveryValue": { "const": true },
+        "requireDeclaredValuePairs": { "const": true }
+      }
+    },
+    "answerDispositions": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/labeledValue" }
+    },
+    "safetyStatuses": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/labeledValue" }
+    },
+    "dimensions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "ownerRoleId", "values"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "ownerRoleId": { "$ref": "#/$defs/pendingRoleId" },
+          "values": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#/$defs/labeledValue" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "pendingRoleId": {
+      "type": "string",
+      "pattern": "^role:pending:[a-z0-9][a-z0-9-]*$"
+    },
+    "labeledValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "description"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "description": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

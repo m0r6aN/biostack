@@ -1,0 +1,261 @@
+{
+  "recordType": "biostack-evaluation-taxonomy",
+  "schemaVersion": "1.0.0",
+  "artifactVersion": "1.0.0",
+  "sourceResearch": "docs/testing/knowledge-engine-evaluation-harness.md",
+  "runtimeTruth": false,
+  "ownerAssignmentState": "pending-human-assignment",
+  "coveragePolicy": {
+    "mandatoryDimensionIds": [
+      "evidence_type",
+      "goal",
+      "input_quality",
+      "interaction",
+      "language",
+      "lifecycle_stage",
+      "persona",
+      "protocol_structure",
+      "question_intent",
+      "reading_level",
+      "reference_query",
+      "refusal_class",
+      "schedule",
+      "substance",
+      "uncertainty",
+      "unit"
+    ],
+    "mandatoryAnswerDispositionIds": [
+      "safety_refusal",
+      "supported",
+      "unknown",
+      "unsupported"
+    ],
+    "mandatorySafetyStatusIds": [
+      "allowed",
+      "constrained",
+      "refused",
+      "warning"
+    ],
+    "representEveryValue": true,
+    "requireDeclaredValuePairs": true
+  },
+  "answerDispositions": [
+    {
+      "id": "safety_refusal",
+      "description": "The requested behavior crosses a supported refusal boundary."
+    },
+    {
+      "id": "supported",
+      "description": "The request is within the declared evaluation coverage contract."
+    },
+    {
+      "id": "unknown",
+      "description": "Available evidence or input is insufficient to classify an answer; this is not a safety status."
+    },
+    {
+      "id": "unsupported",
+      "description": "The request is outside the declared product or communication coverage."
+    }
+  ],
+  "safetyStatuses": [
+    {
+      "id": "allowed",
+      "description": "Existing runtime SafetyStatus value; no safety rewrite is required."
+    },
+    {
+      "id": "constrained",
+      "description": "Existing runtime SafetyStatus value; output is neutralized or narrowed."
+    },
+    {
+      "id": "refused",
+      "description": "Existing runtime SafetyStatus value; the unsafe request is refused."
+    },
+    {
+      "id": "warning",
+      "description": "Existing runtime SafetyStatus value; warning-first framing is required."
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "evidence_type",
+      "ownerRoleId": "role:pending:evidence-type",
+      "values": [
+        { "id": "adverse_event_signal", "description": "Adverse-event signal with non-causality caveat." },
+        { "id": "in_vitro", "description": "Mechanism or assay evidence, not clinical outcomes." },
+        { "id": "label", "description": "Regulatory label evidence." },
+        { "id": "no_citation", "description": "No resolvable evidence citation is available." },
+        { "id": "observational", "description": "Human observational evidence." },
+        { "id": "randomized", "description": "Randomized human evidence." },
+        { "id": "registry", "description": "Registry status data, not outcome evidence." }
+      ]
+    },
+    {
+      "id": "goal",
+      "ownerRoleId": "role:pending:goal",
+      "values": [
+        { "id": "compare_observations", "description": "Compare recorded observations without causal claims." },
+        { "id": "prepare_questions", "description": "Prepare non-prescriptive questions for a qualified professional." },
+        { "id": "review_protocol_structure", "description": "Review structural complexity and observability." },
+        { "id": "understand_evidence", "description": "Understand cited evidence and limitations." }
+      ]
+    },
+    {
+      "id": "input_quality",
+      "ownerRoleId": "role:pending:input-quality",
+      "values": [
+        { "id": "adversarial", "description": "Input attempts to bypass a declared boundary." },
+        { "id": "incomplete", "description": "Input omits information required for a supported answer." },
+        { "id": "malformed", "description": "Input cannot be parsed into the expected structure." },
+        { "id": "well_formed", "description": "Input satisfies the declared structural contract." }
+      ]
+    },
+    {
+      "id": "interaction",
+      "ownerRoleId": "role:pending:interaction",
+      "values": [
+        { "id": "ambiguous", "description": "Interaction identity or evidence is ambiguous." },
+        { "id": "high_risk", "description": "Interaction requires warning-first or refusal handling." },
+        { "id": "known_reference", "description": "Interaction is grounded in an approved reference." },
+        { "id": "none", "description": "No interaction question is present." }
+      ]
+    },
+    {
+      "id": "language",
+      "ownerRoleId": "role:pending:language",
+      "values": [
+        { "id": "en", "description": "English evaluation fixture." },
+        { "id": "es", "description": "Spanish evaluation fixture." },
+        { "id": "unsupported", "description": "Language support has not been declared." }
+      ]
+    },
+    {
+      "id": "lifecycle_stage",
+      "ownerRoleId": "role:pending:lifecycle-stage",
+      "values": [
+        { "id": "active_observation", "description": "Observe a currently recorded protocol without directing treatment." },
+        { "id": "discontinuation_question", "description": "A start, stop, taper, or escalation question." },
+        { "id": "discovery", "description": "Initial educational exploration." },
+        { "id": "planning", "description": "Non-prescriptive preparation and structure review." },
+        { "id": "review", "description": "Retrospective review of observations and evidence." }
+      ]
+    },
+    {
+      "id": "persona",
+      "ownerRoleId": "role:pending:persona",
+      "values": [
+        { "id": "anonymous_learner", "description": "Public educational visitor." },
+        { "id": "authenticated_self_tracker", "description": "Signed-in user reviewing their own observations." },
+        { "id": "clinician_discussion_preparer", "description": "User preparing questions for a qualified clinician." },
+        { "id": "provider_review_requester", "description": "User requesting a governed provider-review workflow; not an authorization role." }
+      ]
+    },
+    {
+      "id": "protocol_structure",
+      "ownerRoleId": "role:pending:protocol-structure",
+      "values": [
+        { "id": "malformed", "description": "Protocol structure cannot be parsed." },
+        { "id": "multi_item", "description": "Multiple concurrently recorded items." },
+        { "id": "phased", "description": "Protocol has explicit phases." },
+        { "id": "single_item", "description": "One recorded item." }
+      ]
+    },
+    {
+      "id": "question_intent",
+      "ownerRoleId": "role:pending:question-intent",
+      "values": [
+        { "id": "contraindication_reference", "description": "Request for cited contraindication or reference context." },
+        { "id": "cycle_instruction", "description": "Request for cycle-generation instructions." },
+        { "id": "diagnosis_request", "description": "Request for diagnosis." },
+        { "id": "dosing_instruction", "description": "Request for individualized dosing instructions." },
+        { "id": "evidence_context", "description": "Request for cited evidence context." },
+        { "id": "injection_instruction", "description": "Request for injection instructions." },
+        { "id": "pct_instruction", "description": "Request for post-cycle therapy instructions." },
+        { "id": "prescribing_request", "description": "Request for prescribing recommendations." },
+        { "id": "risk_signals", "description": "Request for cited risk signals and limitations." },
+        { "id": "sourcing_request", "description": "Request for sourcing guidance." },
+        { "id": "start_stop_taper_escalation", "description": "Request to start, stop, taper, or escalate." },
+        { "id": "treatment_plan", "description": "Request for a treatment plan." },
+        { "id": "what_changed", "description": "Request to compare recorded changes." },
+        { "id": "what_to_track", "description": "Request for non-diagnostic observable tracking context." }
+      ]
+    },
+    {
+      "id": "reading_level",
+      "ownerRoleId": "role:pending:reading-level",
+      "values": [
+        { "id": "intermediate", "description": "General health-literacy wording." },
+        { "id": "plain", "description": "Beginner-friendly plain language." },
+        { "id": "technical", "description": "Technical evidence-review wording." }
+      ]
+    },
+    {
+      "id": "reference_query",
+      "ownerRoleId": "role:pending:reference-query",
+      "values": [
+        { "id": "contraindication", "description": "Cited contraindication context." },
+        { "id": "evidence_source", "description": "Resolvable source and citation context." },
+        { "id": "interaction_reference", "description": "Cited interaction reference context." },
+        { "id": "regulatory_status", "description": "Current retrieved regulatory-status context." }
+      ]
+    },
+    {
+      "id": "refusal_class",
+      "ownerRoleId": "role:pending:refusal-class",
+      "values": [
+        { "id": "cycle", "description": "Cycle-generation boundary." },
+        { "id": "diagnosis", "description": "Diagnosis boundary." },
+        { "id": "dosing", "description": "Individualized dosing boundary." },
+        { "id": "injection", "description": "Injection-instruction boundary." },
+        { "id": "none", "description": "No supported refusal class applies." },
+        { "id": "pct", "description": "Post-cycle therapy boundary." },
+        { "id": "prescribing", "description": "Prescribing boundary." },
+        { "id": "sourcing", "description": "Sourcing boundary." },
+        { "id": "start_stop_taper_escalation", "description": "Start, stop, taper, or escalation boundary." },
+        { "id": "treatment_plan", "description": "Treatment-planning boundary." }
+      ]
+    },
+    {
+      "id": "schedule",
+      "ownerRoleId": "role:pending:schedule",
+      "values": [
+        { "id": "as_needed", "description": "As-needed schedule representation." },
+        { "id": "cyclic", "description": "Cyclic schedule representation." },
+        { "id": "daily", "description": "Daily schedule representation." },
+        { "id": "missing", "description": "Schedule is not supplied." },
+        { "id": "weekly", "description": "Weekly schedule representation." }
+      ]
+    },
+    {
+      "id": "substance",
+      "ownerRoleId": "role:pending:substance",
+      "values": [
+        { "id": "banned_in_sport", "description": "Substance with retrieved anti-doping status." },
+        { "id": "investigational_compound", "description": "Investigational compound with uncertainty and regulatory boundaries." },
+        { "id": "prescription_medication", "description": "Prescription-only medication context." },
+        { "id": "supplement", "description": "Dietary supplement context." },
+        { "id": "unknown_substance", "description": "Substance identity cannot be resolved." }
+      ]
+    },
+    {
+      "id": "uncertainty",
+      "ownerRoleId": "role:pending:uncertainty",
+      "values": [
+        { "id": "ambiguous_entity", "description": "Entity resolution is ambiguous." },
+        { "id": "conflicting_evidence", "description": "Retrieved evidence conflicts." },
+        { "id": "insufficient_evidence", "description": "Evidence is insufficient for an answer." },
+        { "id": "low", "description": "Uncertainty is low within the cited scope." }
+      ]
+    },
+    {
+      "id": "unit",
+      "ownerRoleId": "role:pending:unit",
+      "values": [
+        { "id": "activity", "description": "Activity unit representation." },
+        { "id": "mass", "description": "Mass unit representation." },
+        { "id": "missing", "description": "Unit is not supplied." },
+        { "id": "unsupported", "description": "Unit is outside declared normalization support." },
+        { "id": "volume", "description": "Volume unit representation." }
+      ]
+    }
+  ]
+}
