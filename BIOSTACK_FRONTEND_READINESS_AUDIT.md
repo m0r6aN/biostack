@@ -1,64 +1,97 @@
 # BioStack Frontend Readiness Audit
 
 **Prepared for:** Clint
-**Date:** July 6, 2026
+**Original audit date:** July 6, 2026
+**Updated:** July 12, 2026 — re-verified against `origin/main` (commit `a37726a`, PR #181 "codex/production-readiness" merged 2026-07-11)
 **Scope:** Product-experience audit of the BioStack Next.js frontend (`frontend/src`). UI, UX, IA, product flow, nomenclature, conversion clarity, free-vs-paid clarity, provider value, data surfacing. Not a code review.
-**Method:** Static read of routes, components, middleware, feature gates, copy, and the intelligence/knowledge data model. No live/browser walkthrough was run, so dynamic issues (real auth-loop behavior, actual API responses) are flagged as "verify live" where relevant.
+**Method:** Static read of routes, components, middleware, feature gates, copy, and the intelligence/knowledge data model, diffed against the original audit's findings. No live/browser walkthrough was run, so dynamic issues (real auth-loop behavior, actual API responses) are still flagged as "verify live" where relevant.
+
+---
+
+## 0. What Changed Since July 6 (delta summary)
+
+Since the original audit, `codex/production-readiness` shipped and merged to `main` (PRs #180, #181). **Every P0 finding from the original audit is now resolved except one.** This is a genuinely large jump in readiness.
+
+**Resolved:**
+- Evidence library (`/knowledge`) is now public — added to `middleware.ts`'s `PUBLIC_PREFIX_ROUTES`.
+- `TierGate` now does real tier-rank enforcement (was a documented no-op).
+- `/my-protocol` pulls from `apiClient` — the hardcoded mock fixture and its "Preview fixture" banner are gone.
+- "Map Stack" is gone; nav CTA is now "Analyze My Stack" → `/tools/analyzer`, enforced by a regression test (`MarketingNavReadiness.test.tsx`).
+- Tier vocabulary is now identical across pricing and billing: "Observer — Free," "Operator — Track & Analyze," "Commander — Longitudinal Intelligence."
+- `/providers` grew from 3 bullets to a real landing page (165 lines) with a working `ProviderAccessForm` wired to a new backend endpoint (`ProviderAccessEndpoints.cs` + DB migration) and a substantive FAQ (data ownership, revocation, medical-device disclaimer, multi-client).
+- Nav (marketing + sidebar) now surfaces "Compounds & Evidence" and "Audit Receipts" — both were previously orphaned.
+- Sidebar name drift fixed: "Dashboard" (not "Mission Control"), "My Protocol," "Compounds," "Protocols," "Check-ins" — one name per concept.
+- Sidebar "Research" is now `adminOnly: true` (was leaking an admin surface to all signed-in users).
+- `benefits[]` and `drugInteractions[]` now render (`CompoundIntelligenceCard.tsx`).
+- Signin page and onboarding's "Finish Setup" both now carry the recommended pre-wall value line: *"Create a free profile to save your analysis and track how your stack changes over time. No card required."*
+- Empty "No Profile Selected" state now routes into profile creation ("Let's set up your first profile" → Create profile).
+- "Coming soon" analyzer stub is gone.
+- Cohesion and Drift panels now carry plain-language tooltips.
+
+**Still open:**
+- **`/compounds` remains gated** — only `/knowledge` was added to the public route list. If `/compounds` is meant to be a second public surface (per the original recommendation), it still redirects anonymous visitors to sign-in.
+- **Onboarding is still three routes** (`/start`, `/map`, `/onboarding`) — not collapsed to one canonical flow with a mode toggle.
+- **Homepage/how-it-works proof panel (`IntelligenceProofSection`) is still hardcoded** ("BPC-157 + TB-500" is a static string, not pulled from the live engine).
+- **`Observation Debt` internal component/variable naming is unchanged** — the on-screen comment was updated to "Check-ins Due Inbox" but no user-visible heading was found; worth a quick manual check live.
+- **No real protocol→schedule pipeline was added** — `CalendarTab` inside `/my-protocol` is real now (no longer mock-fixture-backed), but a dedicated free/basic weekly-schedule build-out wasn't part of this merge; verify live whether the calendar renders real data end-to-end.
 
 ---
 
 ## 1. Executive Summary
 
-**Verdict: Not ready for paid conversion. Not ready for provider acquisition. Mostly ready as a free tools destination.**
+**Updated verdict: Ready for provider acquisition. Close to ready for paid conversion. Ready as a free tools + evidence destination.**
 
-BioStack is two products wearing one coat. There is a genuinely premium, evidence-aware intelligence engine underneath (rich `KnowledgeEntry` model with evidence tiers, pathways, citations, drug interactions, optimization guidelines; overlap detection; drift/pattern/sequence panels; cohesion timelines). And there is a marketing/onboarding surface that mostly speaks in **vague stack language and internal vocabulary** ("Map Stack," "Mission Control," "Operator/Commander," "Cohesion," "Drift," "Observation Debt"). The gap between the two is the core problem: **the beast is real, but the storefront barely shows it.**
+The core thesis of the original audit — "the beast is real, but the storefront barely shows it" — has largely been addressed. The evidence-aware intelligence engine is no longer hidden: `/knowledge` is public, compound dossiers render benefits and drug interactions, the tier story is unified, gating is real, and the provider path is now an actual product surface with a working intake form backed by a real database table.
 
-The single most important finding, and the one you flagged as the likely money leak, is confirmed:
+The single most important finding from the original audit was:
 
-> **The entire evidence/knowledge library is behind the auth wall.** `/knowledge` and `/compounds` are NOT in the middleware public list. An anonymous visitor — the exact person deciding whether to trust you — can never see a citation, an evidence tier, a mechanism summary, or a pathway map. Your most credibility-building asset is invisible to the people who most need to see it. This is backend brilliance trapped behind frontend fog, literally gated by a redirect.
+> **The entire evidence/knowledge library is behind the auth wall.**
 
-Second-order problems that block paid conversion:
+That finding is now **half-resolved**: `/knowledge` is public. `/compounds` — the compound *management* surface, distinct from the `/knowledge` dossier library — is still gated. Confirm whether that's intentional (compounds-as-personal-data vs. knowledge-as-reference-library is a defensible split) or an oversight from the original recommendation.
 
-- **Free vs paid is genuinely unclear.** Three different vocabularies describe the tiers (homepage "free vs Operator," pricing "Observer/Operator/Commander," billing "Operator/Commander" with different feature lists than pricing). A visitor cannot answer "what do I actually get for $12?"
-- **Paid gating is largely inert or faked.** `TierGate` is a documented no-op. `/my-protocol` is a hardcoded mock fixture with a visible "Preview fixture" banner. Selling "Operator unlocks this" against screens that are demonstrably fake is a product-risk gap.
-- **The primary nav CTA "Map Stack" is undefined even to you.** It sits beside "Start free," implying it costs money, and routes to a near-duplicate of "Start free."
-- **Provider path is a stub.** Three bullet points, no FAQ, no workflow, no business case, no pricing. Providers have no reason to sign up.
+Remaining gaps before calling this fully paid-conversion-ready:
 
-The good news: most of the highest-impact fixes are copy, IA, and un-gating decisions — not new engineering. Un-gate the knowledge base, unify the tier vocabulary, rename two CTAs, and build one honest provider page, and readiness jumps materially.
+- **Duplicate onboarding routes** (`/start`, `/map`, `/onboarding`) still exist — minor confusion risk, not a trust or money issue.
+- **The homepage's proof-of-intelligence panel is still a hardcoded example**, not a live pull from the engine — a missed credibility opportunity now that the real thing is public and could be linked or sampled instead.
+- **Auth-loop and calendar-data-liveness claims still need a live browser pass** — this audit remains a static read; the two items above plus the auth callback loop should be smoke-tested before a launch announcement.
 
----
-
-## 2. Top 10 UX/IA Risks (ranked by customer-loss risk)
-
-1. **Evidence library is auth-walled.** Anonymous visitors cannot browse `/knowledge` or `/compounds`. The trust engine is invisible pre-signup. *(P0)*
-2. **Free vs paid is described three incompatible ways** across homepage, pricing, and billing. Buyers can't form a purchase decision. *(P0)*
-3. **"Map Stack" CTA is meaningless and implies paid.** Confuses the primary nav; duplicates "Start free." *(P0)*
-4. **Paywalled value is shown against fake screens.** `/my-protocol` is a mock with a "Preview fixture" banner; `TierGate` doesn't gate. Erodes trust at the exact moment of upgrade consideration. *(P0)*
-5. **Provider path is a non-offer.** No FAQ, no workflow, no value case, no pricing. Zero provider conversion. *(P1)*
-6. **Two parallel onboarding flows (`/start`, `/map`) that are nearly identical** and a third (`/onboarding`) that duplicates them. "Now what?" and choice paralysis. *(P1)*
-7. **Onboarding dead-ends into a sign-in wall with "Finish Setup" → `/profiles`,** which is auth-gated by middleware. Value is built, then the door slams. *(P1)*
-8. **Internal vocabulary everywhere** ("Cohesion," "Drift," "Observation Debt," "Mission Control," "Operator/Commander") with no glossary or tooltips. Beginners bounce. *(P1)*
-9. **Nav omits the knowledge base and pricing-critical proof.** Logged-out nav has no "Compounds/Evidence" entry; the flagship asset isn't even linkable. *(P1)*
-10. **Empty/no-profile states dead-end** ("No Profile Selected") instead of routing users into profile creation. Authenticated users can get stuck. *(P2)*
+The good news: what's left is small, well-scoped, and mostly polish rather than architecture. This is a materially different, launch-adjacent posture compared to July 6.
 
 ---
 
-## 3. Funnel Walkthroughs
+## 2. Top 10 UX/IA Risks (ranked by customer-loss risk) — updated status
+
+1. ~~Evidence library is auth-walled.~~ **PARTIALLY RESOLVED.** `/knowledge` is public. `/compounds` is still gated — confirm intent. *(was P0, now P2 if intentional / P0 if not)*
+2. ~~Free vs paid is described three incompatible ways.~~ **RESOLVED.** Pricing and billing now share one tier vocabulary. *(closed)*
+3. ~~"Map Stack" CTA is meaningless.~~ **RESOLVED.** Renamed "Analyze My Stack," regression-tested. *(closed)*
+4. ~~Paywalled value is shown against fake screens.~~ **RESOLVED.** `/my-protocol` is live-data-backed; `TierGate` enforces tier rank. *(closed)*
+5. ~~Provider path is a non-offer.~~ **RESOLVED.** Real landing page, working intake form, backend-persisted, substantive FAQ. *(closed)*
+6. **Onboarding still has three near-identical routes** (`/start`, `/map`, `/onboarding`). Not collapsed. *(P2 — was P1; downgraded since nav CTAs now disambiguate entry points)*
+7. ~~Onboarding dead-ends into a sign-in wall without warning.~~ **RESOLVED.** "Finish Setup" now shows the value line before the wall. *(closed — verify the auth-loop live)*
+8. **Internal vocabulary mostly addressed.** Cohesion and Drift now have tooltips; "Mission Control" is gone from user-facing sidebar (now "Dashboard"); tier names carry plain descriptors everywhere checked. "Observation Debt" heading not confirmed fixed — verify live. *(P2 — was P1)*
+9. ~~Nav omits the knowledge base.~~ **RESOLVED.** "Compounds & Evidence" and "Audit Receipts" both linked in marketing nav / sidebar. *(closed)*
+10. ~~Empty/no-profile states dead-end.~~ **RESOLVED.** Routes into profile creation with the recommended copy. *(closed)*
+
+**New/carried-forward item:** Homepage/how-it-works proof panel (`IntelligenceProofSection`) still hardcodes its example instead of pulling a live engine result — now the top open item, since it's a missed-credibility gap rather than a hidden-value gap. *(P1)*
+
+---
+
+## 3. Funnel Walkthroughs (updated)
 
 ### A. New visitor → free value
-Homepage hero is strong and offers four persona cards (Analyzer / Starter / Experienced / Provider) plus a tools link. **This works.** A visitor can reach `/tools` (public, no account) and get a real dose/mix/convert result. The break: nothing routes them to the evidence library (auth-walled), and the hero's secondary link "See free vs Operator" introduces a tier name ("Operator") with no prior context. **Grade: B-.** Free tools land; proof-of-intelligence doesn't.
+Homepage hero is unchanged and still strong. **Updated:** the evidence library is no longer auth-walled, so a visitor who wants proof before signing up can now reach `/knowledge` directly. **Grade: B+.** Free tools land; proof-of-intelligence is now reachable too, though the homepage doesn't yet link a live example (see §7).
 
 ### B. Free anonymous user → saved protocol/profile
-Analyzer and onboarding both save to `localStorage` (good — value before signup). But "Finish Setup" and "Convert to BioStack Protocol" both route to `/profiles` or `/protocol-console`, which middleware redirects to `/auth/signin`. The sign-in page *does* preserve callback + local state (nicely handled, see `resolveRedirectPath` and the "your saved analysis will carry through" banner). **The mechanics are decent; the framing is a surprise wall.** User builds a list, gets told "See what is known," clicks Finish, hits email-link auth. **Grade: C+.** Works, but the wall arrives without warning.
+Same architecture as before (`localStorage` before signup, callback-preserving signin), but **the wall now has a warning.** Both onboarding's "Finish Setup" and the signin page carry the value line before the redirect. **Grade: B.** Still a wall, but no longer a surprise.
 
 ### C. Free profile user → paid upgrade
-This is the weakest funnel. Upgrade prompts exist (`LockedTierCard`, `UpgradeNotice`) and are placed at reasonable moments (live stack intelligence, simulation, mission control). But: (a) the value proposition differs between `/pricing` and `/billing`; (b) the marquee paid surface `/my-protocol` is a labeled mock; (c) `TierGate` is inert so "locked" sections may actually render for free, undercutting scarcity. **Grade: D.** The seams are visible.
+**Updated: no longer the weakest funnel.** `TierGate` now enforces tier rank instead of being inert, and `/my-protocol` is live-data-backed rather than a labeled mock. Pricing and billing quote the same tier language. **Grade: B-.** The seams that made this feel fake are closed; remaining polish is upgrade-CTA placement, not trust.
 
 ### D. User → saved protocol → schedule/check-ins
-There is a real check-ins flow (`/checkins`) with trends, a Day-7 review, and overlap-aware suggestions — this is good. There is a weekly calendar view, but only inside the **mock** `/my-protocol` portal (`CalendarTab` behind an inert `TierGate`). **There is no real save-protocol-to-schedule path.** A user can save a protocol snapshot (`/protocols`) and log check-ins, but cannot turn a protocol into a live schedule with a weekly view. **Grade: C-.** Pieces exist; the connective scheduling tissue is mock-only.
+Unchanged real check-ins flow (`/checkins`). The weekly calendar (`CalendarTab`) inside `/my-protocol` is no longer sitting behind an inert gate on top of a mock — both the gate and the data source are real now. **Verify live** whether the calendar actually has a save-protocol-to-schedule pipeline behind it or just consumes whatever `apiClient` returns for that endpoint. **Grade: B- (up from C-)**, pending live confirmation.
 
 ### E. Provider visitor → trust/value → sign-up/request access
-`/providers` is three bullets and two CTAs that dump the provider back into the *consumer* onboarding (`/start`, `/map`). No provider FAQ, no workflow, no multi-client demo, no pricing, no data-ownership language, no "request access." **Grade: F.** There is no provider offer to convert against.
+**Updated: this funnel now exists.** `/providers` has a real hero, workflow explanation, explicit "what BioStack does not do" boundary, a `ProviderAccessForm` that posts to a real backend endpoint and persists to a DB table, and a FAQ covering data ownership, revocation, and medical-device status. **Grade: B (up from F).** This is a genuine request-access flow now, not a dead end.
 
 ---
 
@@ -71,35 +104,34 @@ There is a real check-ins flow (`/checkins`) with trends, a Day-7 review, and ov
 | `/tools` | Dose/Mix/Convert calculators | Public | Public | Strong |
 | `/tools/analyzer` | Protocol analyzer (paste/upload/scan/link) | Public | Public | Strong |
 | `/tools/reconstitution-calculator`, `/tools/volume-calculator`, `/tools/unit-converter` | Deep-links into the tools surface | Public | Public | OK (thin wrappers) |
-| `/pricing` | Plans (Observer/Operator/Commander) | Public | Public | **Conflicting w/ billing** |
-| `/providers` | Provider landing | Providers | Public | **Stub** |
+| `/pricing` | Plans (Observer/Operator/Commander) | Public | Public | **Fixed — matches billing** |
+| `/providers` | Provider landing | Providers | Public | **Rebuilt — real offer + form** |
 | `/safety` | Safety boundary | Public | Public | Good |
 | `/faq` | FAQ (10 Qs) | Public | Public | Good, consumer-only |
-| `/start` | New-user onboarding | Public | Public | Duplicates `/map` |
-| `/map` | Existing-user onboarding | Public | Public | Duplicates `/start` |
-| `/onboarding` | Onboarding (mode param) | Public | Public | **Third duplicate** |
+| `/start` | New-user onboarding | Public | Public | Still duplicates `/map` |
+| `/map` | Existing-user onboarding | Public | Public | Still duplicates `/start` |
+| `/onboarding` | Onboarding (mode param) | Public | Public | Still a third duplicate |
 | `/terms`, `/privacy` | Legal | Public | Public | (assumed OK) |
-| `/auth/signin`, `/auth/verify` | Magic-link auth | All | Public | Good state-preservation |
-| `/protocol-console` | "Mission Control" dashboard | Authed | **Gated** | Dense, powerful |
+| `/auth/signin`, `/auth/verify` | Magic-link auth | All | Public | Good state-preservation; now has value line |
+| `/protocol-console` | Dashboard | Authed | **Gated** | Dense, powerful; sidebar label fixed to "Dashboard" |
 | `/mission-control` | Redirect → `/protocol-console` | — | — | Legacy redirect (fine) |
-| `/my-protocol` | Protocol portal (calendar/labs/milestones) | Authed | Gated | **Mock fixture** |
+| `/my-protocol` | Protocol portal (calendar/labs/milestones) | Authed | Gated | **Fixed — apiClient-backed, no mock banner** |
 | `/profiles`, `/profiles/[id]` | Profile CRUD | Authed | Gated | OK |
-| `/compounds` | Compound management | Authed | **Gated** | Should be partly public |
+| `/compounds` | Compound management | Authed | **Still gated** | Not added to public list — confirm intent |
 | `/protocols`, `/protocols/[id]`, `/protocols/[id]/review` | Saved protocols, detail, review | Authed | Gated | Good, real intelligence |
 | `/checkins` | Daily observations | Authed | Gated | Strong |
 | `/timeline` | Unified event stream | Authed | Gated | Good |
-| `/knowledge`, `/knowledge/[slug]` | **Evidence library / compound dossiers** | Should be public | **Gated** | **Flagship, hidden** |
-| `/billing` | Subscription mgmt | Authed | Gated | Conflicts w/ pricing |
-| `/governance/receipts`, `/receipts/[uri]` | Audit/provenance receipts | Authed | Gated | Orphaned (not in nav) |
-| `/admin`, `/admin/research/*` | Admin + research pipeline | Admin | Gated | Correct |
-| `/checkins`, `/timeline`, etc. | — | — | — | — |
+| `/knowledge`, `/knowledge/[slug]` | **Evidence library / compound dossiers** | Public | **Now public** | **Fixed — flagship, visible** |
+| `/billing` | Subscription mgmt | Authed | Gated | **Fixed — matches pricing** |
+| `/governance/receipts`, `/receipts/[uri]` | Audit/provenance receipts | Authed | Gated | **Fixed — linked in sidebar as "Audit Receipts"** |
+| `/admin`, `/admin/research/*` | Admin + research pipeline | Admin | Gated | Correct; `/admin/research` now properly `adminOnly: true` |
 
-**IA flags:**
-- **Duplicate routes:** `/start`, `/map`, `/onboarding` are three doors to one experience (`OnboardingExperience` with a `mode` prop). Collapse to one canonical route.
-- **Hidden high-value routes:** `/knowledge` (evidence library) and `/governance/receipts` (provenance/trust) exist and are invisible in nav. The receipts route is a *trust asset* nobody can find.
-- **Auth over-pressure:** `/knowledge` and `/compounds` should have public read tiers.
-- **Nav item mislabeled/misrouted:** Sidebar "Research" (`/admin/research`) has `adminOnly: false`, exposing an admin surface in the nav to every signed-in user. Verify intended; likely should be `adminOnly: true`.
-- **Sidebar vs page name drift:** Sidebar labels the dashboard "Mission Control," routes to `/protocol-console`, whose `<Header>` says "Mission Control," but the file/route is `protocol-console`. Three names for one thing.
+**IA flags — updated:**
+- **Duplicate routes still open:** `/start`, `/map`, `/onboarding` remain three doors to one experience. Not collapsed in this merge. *(P2)*
+- ~~Hidden high-value routes.~~ **RESOLVED.** `/knowledge` and `/governance/receipts` are both linked in nav now.
+- **Auth pressure partially relieved:** `/knowledge` is public; `/compounds` is not. Decide and document whether that split is intentional.
+- ~~Nav item mislabeled/misrouted.~~ **RESOLVED.** Sidebar "Research" is `adminOnly: true`.
+- ~~Sidebar vs page name drift.~~ **RESOLVED.** Sidebar now says "Dashboard," "My Protocol," "Compounds," "Protocols," "Check-ins" — one name per concept, matching page headers where checked.
 
 ---
 
@@ -152,10 +184,11 @@ The current copy scatters features across pricing, billing, and marketing with c
 | Exports / provider summary sharing | — | — | ✅ basic | ✅ full | ✅ |
 | Evidence changelog / provenance receipts | — | — | ✅ | ✅ | ✅ |
 
-**Product-risk gaps (UI promises not clearly supported):**
-- `/my-protocol` (calendar, labs, milestones) is a **mock fixture** — do not sell it as live until wired.
-- `TierGate` is **inert** — "locked" sections may render regardless of tier. Either enforce or stop implying gating.
-- Billing lists Operator features ("counterfactual scenarios," "no compound cap") that differ from the pricing page's Operator list. Reconcile to one source of truth.
+**Product-risk gaps — status update:**
+- ~~`/my-protocol` is a mock fixture.~~ **RESOLVED** — pulls from `apiClient`, no "Preview fixture" banner found anywhere in the codebase.
+- ~~`TierGate` is inert.~~ **RESOLVED** — real tier-rank comparison, renders an honest "Compare plans" upgrade card when locked.
+- ~~Billing/pricing feature lists differ.~~ **RESOLVED** — both now use identical tier naming and taglines ("Operator — Track & Analyze," "Commander — Longitudinal Intelligence").
+- **Live-verify:** confirm the weekly schedule inside `CalendarTab` reflects a real save-protocol-to-schedule pipeline and isn't just a differently-sourced placeholder — this audit is a static read and can't confirm end-to-end data flow.
 
 ---
 
@@ -171,61 +204,49 @@ frequency, preferredTimeOfDay, weeklyDosageSchedule[], drugInteractions[],
 optimizationProtein/Carbs/Supplements/Sleep/Exercise
 ```
 
-Findings:
+Findings — updated:
 
-1. **The whole library is gated.** `/knowledge` + `/compounds` are not public. Citations (`sourceReferences`), evidence tiers, mechanism summaries, and pathways — your entire trust case — are invisible to anonymous visitors. **This alone likely suppresses conversion and SEO.** Un-gate read access.
-2. **`benefits[]` and `drugInteractions[]` are never rendered anywhere** in the user-facing components (confirmed by grep). Drug interactions in particular are a high-trust, high-engagement field sitting completely dark.
-3. **Provenance/receipts (`/governance/receipts`, `/receipts/[uri]`) are orphaned** — not linked from any nav. Audit/verification is a premium trust signal that no user can find.
-4. **Marketing panels show *stubs of* intelligence, not the real thing.** `StackIntelligencePanel` on the homepage/how-it-works uses hardcoded "BPC-157 + TB-500 tissue-repair overlap" copy and an "included in Operator" evidence teaser rather than pulling a live example from the actual engine. The proof section proves less than the engine can.
-5. **Analyzer results are strong but the report's richest layers hide behind an inert paywall** and a "Shareable summary — coming soon" stub. The "coming soon" card on a conversion surface reads as unfinished.
-6. **Compound dossier page (`/knowledge/[slug]`) is genuinely good** (citations, pathways, notes, relationships) — it's the best data-surfacing surface you have, and it's the one nobody without an account can reach. Promote it to a public, SEO-indexed, linkable asset. This is the single biggest lever in the audit.
+1. ~~The whole library is gated.~~ **PARTIALLY RESOLVED.** `/knowledge` is public. `/compounds` is still gated. Citations, evidence tiers, mechanism summaries, and pathways are now visible to anonymous visitors via `/knowledge`. Confirm whether `/compounds` (the management surface) needs a public read tier too, or whether `/knowledge` alone satisfies the original intent.
+2. ~~`benefits[]` and `drugInteractions[]` are never rendered.~~ **RESOLVED** — both render in `CompoundIntelligenceCard.tsx`.
+3. ~~Provenance/receipts are orphaned.~~ **RESOLVED** — `/governance/receipts` is now linked in the sidebar as "Audit Receipts."
+4. **Still open: marketing panels show a stub, not the real thing.** `IntelligenceProofSection` (homepage/how-it-works) still hardcodes `compoundNames={['BPC-157', 'TB-500']}` and a static label rather than pulling a live example from the now-public `/knowledge` data. This is now the single biggest remaining lever — you have a real public dossier to link to or sample from, and the homepage still shows a canned example next to it.
+5. ~~"Coming soon" stub on analyzer report.~~ **RESOLVED** — no "coming soon" strings found anywhere in `frontend/src`.
+6. **Compound dossier page is now public and SEO-reachable.** This was "the single biggest lever in the audit" in the original write-up — it has been pulled. Worth a follow-up SEO metadata pass (title tags, structured data) now that it's indexable, but the core un-gating is done.
 
-**One-line takeaway:** You built a research-grade evidence layer and then hid the front door. Open `/knowledge` to the public, render `benefits` + `drugInteractions`, surface receipts as a trust badge, and feed one real engine example into the homepage panel.
+**Updated one-line takeaway:** The front door is open now — `/knowledge` renders citations, evidence tiers, `benefits`, and `drugInteractions`, and receipts are linked as a trust badge. The one thing still hiding the real engine is the homepage proof panel, which still shows a canned example instead of linking into the library that now actually exists.
 
 ---
 
 ## 8. Protocol Intelligence Assessment
 
-**Does it feel like a flagship? Not yet — because it's mostly behind auth and mocks, and it speaks in code names.**
+**Updated: closer to flagship — the dossier is public and the gate is real, but the homepage still undersells it.**
 
-- The **definitions are rich and structured** (dossier page proves it), connected to evidence tiers, pathways, relationships, and profile context (demographics only, safely non-prescriptive — good).
-- But intelligence is **surfaced inconsistently**: full and credible in the authed dossier; stubbed and hardcoded in the public proof panel; locked (via inert gate) or mocked in the portal.
-- **Uncertainty is represented** (evidence tiers, "unknown states," "reference only" disclaimers) — this is done tastefully and on-brand for the safety posture.
-- **Beginners are served** on `/start` ("a protocol is just the list of things you take") but **advanced depth is buried**; the compound dossier and overlap detail should be one click from the marketing surface.
+- The **definitions are rich and structured** (dossier page proves it), connected to evidence tiers, pathways, relationships, and profile context — unchanged, still good.
+- Intelligence surfacing is now **mostly consistent**: full and credible in the (now public) dossier; enforced correctly in the portal via real `TierGate`. The one remaining inconsistency is the homepage proof panel, still stubbed and hardcoded.
+- **Uncertainty is represented** (evidence tiers, "unknown states," "reference only" disclaimers) — unchanged, still tasteful.
+- **Beginners are served** on `/start`; advanced depth (compound dossier, overlap detail) is now one click away via the "Compounds & Evidence" nav link — previously it wasn't linked at all.
 
-**To make it flagship:**
-- Public, indexed compound dossiers with visible citations and evidence tiers.
-- A live "See what BioStack catches" panel driven by the real engine, not hardcoded strings.
-- Render every rich field (benefits, drug interactions, pathways) with progressive disclosure ("What does this mean?").
-- Name it something a human recognizes ("Evidence & Interactions") instead of "Compound Intelligence."
+**Remaining to fully reach flagship:**
+- Feed a live engine example into the homepage/how-it-works proof panel instead of the hardcoded "BPC-157 + TB-500" string.
+- Add SEO metadata (structured data, unique titles/descriptions) to the now-public dossier pages to capture the acquisition value of un-gating.
+- ~~Render every rich field with progressive disclosure.~~ Largely done — `benefits`/`drugInteractions` render now.
 
 ---
 
 ## 9. Provider Readiness Assessment
 
-Current `/providers` = 3 bullets + 2 consumer CTAs. **This cannot convert a provider.**
+**Updated: `/providers` is now a real product surface (165 lines, up from 3 bullets).** Confirmed present:
 
-**Recommended provider page structure:**
-1. Hero: outcome-focused ("Give clients a clearer picture of what they're taking — without giving medical advice").
-2. What providers can do: multi-client protocol organization, structured intake, shared observational summaries, check-in visibility.
-3. Business value: reduced intake friction, fewer "what am I on again?" conversations, an evidence-aware shared reference.
-4. Explicit boundary: what BioStack does **not** do (no prescribing, dosing, diagnosis, or clinical decisioning; provider stays the clinician).
-5. Example workflow: invite client → client logs stack → provider reviews summary → check-ins over time.
-6. Data ownership & privacy language.
-7. Provider pricing / "Request access" CTA (distinct from consumer "Start free").
-8. Provider FAQ.
+- A working `ProviderAccessForm` component that posts to a real backend endpoint (`ProviderAccessEndpoints.cs`), persisted via a new `ProviderAccessRequest` entity and EF migration (`AddProviderAccessRequests`) — this is a genuine "request access" flow, not a mailto link.
+- An explicit boundary statement: *"BioStack is not a medical device, EHR, prescribing system, or treatment planner."*
+- FAQ entries confirmed present covering: medical-device/EHR status, multi-client management, data ownership ("Clients own their profile data. Provider access is permissioned..."), and revocation ("Revocation is a required pilot control. BioStack will not represent provider sharing as available until clients can grant and revoke access reliably.") — notably, that last line is honest about a real limitation rather than overselling.
 
-**Missing provider FAQ questions to add:**
-- Is BioStack a medical device or EHR? (No — observational/organizational.)
-- Can I manage multiple clients from one account?
-- Who owns client data, and can clients revoke access?
-- What can clients see vs. what can I see?
-- Does BioStack give dosing or treatment recommendations? (No.)
-- How do clients get invited / onboarded?
-- Can I export or share an observational summary?
-- Is there a BAA / what's the compliance posture?
-- What does it cost per provider / per client?
-- What happens to client data if a client stops using BioStack?
+**Remaining gaps against the original checklist (verify live):**
+- Confirm the hero framing is outcome-focused (not re-checked line-by-line here).
+- Confirm example workflow (invite → log → review → check-in) is spelled out step-by-step on the page.
+- Confirm pricing-per-provider is stated, or if it's intentionally a "request access, we'll follow up" pilot model — the revocation FAQ answer suggests this may still be a pilot/waitlist posture rather than self-serve, which is a reasonable and honest choice for a feature with unresolved access-control questions.
+
+**Net:** this went from an F (no offer to convert against) to a legitimate B-range request-access flow with honest limitations disclosed rather than hidden.
 
 ---
 
@@ -233,13 +254,13 @@ Current `/providers` = 3 bullets + 2 consumer CTAs. **This cannot convert a prov
 
 **The infrastructure is better than the framing.** The signin page preserves `callbackUrl`, masks email, has resend cooldown, and shows a reassuring "your saved analysis will carry through" banner. Local state (analyzer/onboarding/tools) is persisted before auth. That's the right architecture.
 
-**Problems:**
-- **Premature wall via routing, not messaging.** Onboarding's "Finish Setup" → `/profiles` and analyzer's "Convert" → `/protocol-console` both hit the middleware redirect with **no prior signal** that an account is required. The user experiences it as a surprise wall after doing work.
-- **No "why" at the wall.** The signin page explains *how* (email link) but not *what you unlock*. Add a one-line value reason at the point of auth.
-- **Loop risk (verify live):** middleware redirects any non-public route to `/auth/signin?callbackUrl=…`. If a magic-link lands the user back on a gated route before the session cookie is readable, you can bounce. The previous "infinite loop" history means this needs a live test: signin → email link → `/auth/verify` → callback route, confirming the `biostack_session` cookie is set before the callback resolves.
-- **CTA taxonomy is muddy.** "Start free," "Sign in," "Map Stack," "Build My Protocol," "Choose Operator," "Finish Setup," "Convert to BioStack Protocol" — users can't tell which create accounts, which cost money, and which are free tools. Consolidate to a small, consistent verb set.
+**Problems — updated:**
+- ~~Premature wall via routing, not messaging.~~ **RESOLVED.** Onboarding's "Finish Setup" now shows *"Create a free profile to save your analysis and track how your stack changes over time. No card required"* directly above the button, before the redirect.
+- ~~No "why" at the wall.~~ **RESOLVED.** Signin page carries the same value line plus *"Your saved analysis will carry through sign-in."*
+- **Loop risk still needs a live test.** No code change was found in `middleware.ts`'s cookie-check logic; this remains a "verify live" item exactly as before — signin → email link → `/auth/verify` → callback route, confirming `biostack_session` is set before the callback resolves.
+- **CTA taxonomy improved but not fully consolidated.** "Map Stack" is gone (replaced by "Analyze My Stack" / "Start Free" per the nav test). Not independently re-verified: whether "Choose Operator," "Finish Setup," and "Convert to BioStack Protocol" still coexist without a shared verb pattern — worth a follow-up copy pass, but no longer a P0/P1 trust issue since the two biggest offenders (Map Stack, silent wall) are fixed.
 
-**Recommendation:** Keep all tools + evidence library + onboarding fully anonymous. Only prompt sign-in at the *save-to-account* moment, and when you do, say why ("Create a free profile to save this and track it over time").
+**Still recommended:** Keep all tools + evidence library + onboarding fully anonymous (now true for `/knowledge`; still confirm `/compounds`). Sign-in now explains why — the remaining work is the live loop test.
 
 ---
 
@@ -272,50 +293,48 @@ Current `/providers` = 3 bullets + 2 consumer CTAs. **This cannot convert a prov
 
 ## 13. CTA & Header Recommendation
 
-**"Map Stack" should be renamed or removed.** It communicates nothing (you confirmed this), and its placement beside "Start free" implies it is *not* free — while it actually routes to a near-duplicate of "Start free."
+**RESOLVED.** "Map Stack" is gone. Confirmed via `MarketingNavReadiness.test.tsx`: nav now shows "Compounds & Evidence" → `/knowledge`, "Analyze My Stack" → `/tools/analyzer`, "Start Free" → `/start`, and explicitly asserts "Map Stack" is *not* in the document.
 
-**Recommended header CTA structure:**
+**Not independently re-verified in this pass:** mobile sticky-bar CTA count, logged-in "Go to Dashboard" wording, and paid-state CTA — these weren't part of the merged commits' file list and likely didn't change. Spot-check live if mobile CTA clutter was a concern.
 
-- **Logged-out desktop:** Primary = **"Analyze my stack"** (→ `/tools/analyzer`, the strongest free proof). Secondary/text = **"Start free"** (→ onboarding). Nav links: How it works · Tools · Evidence *(new, → public knowledge)* · Pricing · For Providers · Safety.
-- **Logged-out mobile:** single primary **"Analyze my stack"**; move "Start free" into the sticky bar. Drop the 4-up sticky CTA (Start/Map/Pricing/Provider) down to 2 clear actions.
-- **Logged-in free:** Primary = **"Go to Dashboard"**; secondary = **"Upgrade"** only near value moments, not globally.
-- **Paid:** Primary = **"Dashboard"**; no upgrade nag.
-- **Providers:** distinct **"Request provider access."**
-
-Kill the third onboarding route; make "Start free" and "Analyze my stack" the only two entry verbs.
+**Still open:** the third onboarding route (`/onboarding`) alongside `/start` and `/map` — the original recommendation to collapse to one canonical route with a mode toggle wasn't part of this merge.
 
 ---
 
-## 14. Quick Wins (copy / IA / nav / tooltip / route)
+## 14. Quick Wins (copy / IA / nav / tooltip / route) — status
 
-1. **Un-gate `/knowledge` and `/knowledge/[slug]` for read** — add to middleware public prefixes. Highest ROI change in the audit.
-2. **Rename "Map Stack" → "Analyze my stack"** (nav + mobile sticky) and point it at `/tools/analyzer`.
-3. **Add "Evidence" to the top nav** linking to the (now public) knowledge base.
-4. **Reconcile tier names** — put "(Free)" next to Observer and one-word descriptors on Operator/Commander everywhere they appear.
-5. **Make billing's Operator/Commander feature lists identical to pricing's.**
-6. **Remove or finish the "Shareable summary — coming soon" stub** on the analyzer report.
-7. **Fix sidebar/page name drift** (Observations↔Check-ins, Protocol Lab↔Protocols, Compound Intelligence↔Knowledge, Mission Control↔Protocol Console).
-8. **Add a value line to the signin page** ("Create a free profile to save this and track it over time").
-9. **Collapse `/start`, `/map`, `/onboarding`** to one canonical route with a mode toggle.
-10. **Set Sidebar "Research" to `adminOnly: true`** (verify intent).
-11. **Render `drugInteractions` and `benefits`** in the compound dossier (data already loaded).
-12. **Link `/governance/receipts`** somewhere as a "provenance / audit" trust badge.
+1. ✅ **Un-gate `/knowledge` for read.** Done. (`/compounds` still open — was originally grouped with `/knowledge`; confirm if it needs the same treatment.)
+2. ✅ **Rename "Map Stack" → "Analyze my stack."** Done, test-enforced.
+3. ✅ **Add evidence to the top nav.** Done ("Compounds & Evidence").
+4. ✅ **Reconcile tier names.** Done — identical across pricing/billing.
+5. ✅ **Match billing's feature lists to pricing's.** Done.
+6. ✅ **Remove the "coming soon" stub.** Done — no longer present anywhere.
+7. ✅ **Fix sidebar/page name drift.** Done — "Dashboard," "My Protocol," "Compounds," "Protocols," "Check-ins" standardized.
+8. ✅ **Add a value line to the signin page.** Done.
+9. ❌ **Collapse `/start`, `/map`, `/onboarding`.** Still open.
+10. ✅ **Set Sidebar "Research" to `adminOnly: true`.** Done.
+11. ✅ **Render `drugInteractions` and `benefits`.** Done.
+12. ✅ **Link `/governance/receipts`.** Done — "Audit Receipts" in sidebar.
+
+**11 of 12 quick wins from the original audit are done.** The one remaining (#9) is low-risk — it's a route-consolidation cleanup, not a trust or conversion blocker.
 
 ---
 
-## 15. Strategic Fixes
+## 15. Strategic Fixes — status
 
-1. **Public, SEO-indexed evidence library** with per-compound dossiers as the top-of-funnel trust + acquisition engine.
-2. **Honest paid gating:** replace inert `TierGate` with real enforcement, and replace the `/my-protocol` mock with live data (or clearly label it "Preview" outside the paywall and stop implying it's what you buy).
-3. **Unify the tier story** into one source of truth consumed by pricing, billing, and marketing.
-4. **Build a real provider product surface** (page + FAQ + multi-client workflow + request-access + pricing).
-5. **Build the free basic scheduler** (saved protocol → weekly view → manual logs) to anchor retention, then layer paid analytics.
-6. **Feed real engine output into marketing panels** instead of hardcoded examples.
-7. **Glossary + progressive-disclosure tooltips** across the intelligence vocabulary so beginners aren't gatekept by code names.
+1. ✅ **Public, SEO-indexed evidence library.** `/knowledge` is public; SEO metadata pass not separately confirmed — worth a follow-up check.
+2. ✅ **Honest paid gating.** `TierGate` enforces; `/my-protocol` is live-data-backed.
+3. ✅ **Unify the tier story.** Done across pricing/billing (marketing homepage copy not independently re-checked).
+4. ✅ **Build a real provider product surface.** Done — page, form, backend, FAQ.
+5. ⚠️ **Build the free basic scheduler.** Not confirmed as a distinct deliverable in this merge — `/my-protocol`'s `CalendarTab` is real-data-backed now, but whether there's a dedicated free/basic tier scheduler vs. paid analytics split wasn't verifiable statically. Verify live.
+6. ❌ **Feed real engine output into marketing panels.** Still hardcoded. Now the top strategic item remaining.
+7. ✅ **Glossary + progressive-disclosure tooltips.** Cohesion and Drift confirmed tooltipped; "Observation Debt" heading not confirmed — verify live.
 
 ---
 
 ## 16. Suggested Copy Improvements
+
+*(Note: the nav CTA, signin value line, "Finish Setup" pre-wall copy, empty-profile state, and pricing tier labels below have all shipped verbatim or near-verbatim on `main`. Left in place below for reference/traceability.)*
 
 **Nav CTA (replace "Map Stack"):**
 > **Analyze my stack** — free, no account
@@ -343,55 +362,55 @@ Kill the third onboarding route; make "Start free" and "Analyze my stack" the on
 
 ---
 
-## 17. Prioritized Backlog
+## 17. Prioritized Backlog — updated (July 12, 2026)
 
 **P0 — customer-losing / confidence-breaking**
-- Un-gate the evidence library (`/knowledge`, `/compounds` read) — public + indexed.
-- Reconcile free-vs-paid into one consistent story (pricing = billing = marketing).
-- Rename/remove "Map Stack"; fix CTA taxonomy.
-- Stop selling paid value against mock (`/my-protocol`) and inert (`TierGate`) screens — enforce or relabel.
-- Live-test the auth callback loop end to end.
+- ~~Un-gate the evidence library.~~ ✅ Done for `/knowledge`. **Remaining: decide + implement `/compounds` public read tier if intended.**
+- ~~Reconcile free-vs-paid into one consistent story.~~ ✅ Done.
+- ~~Rename/remove "Map Stack"; fix CTA taxonomy.~~ ✅ Done.
+- ~~Stop selling paid value against mock/inert screens.~~ ✅ Done.
+- **Live-test the auth callback loop end to end.** Still open — no code evidence either way; needs a live browser pass.
 
 **P1 — conversion / readiness blocker**
-- Build the real provider page + FAQ + request-access.
-- Collapse the three onboarding routes; warn before the sign-in wall.
-- Add "Evidence" to nav; render `drugInteractions`/`benefits`; surface receipts as trust.
-- Feed a real engine example into the homepage proof panel.
+- ~~Build the real provider page + FAQ + request-access.~~ ✅ Done.
+- **Collapse the three onboarding routes** (`/start`, `/map`, `/onboarding`). Still open, downgraded to P1 since the silent-wall problem is fixed.
+- ~~Add "Evidence" to nav; render `drugInteractions`/`benefits`; surface receipts as trust.~~ ✅ Done.
+- **Feed a real engine example into the homepage proof panel.** Still open — now the top open item overall.
 
 **P2 — important polish**
-- Fix all sidebar/page name drift; standardize on plain nouns.
-- Glossary + tooltips for Cohesion/Drift/Observation Debt/Stack Score.
-- Route empty/no-profile states into profile creation.
-- Calculator "how this was calculated" + "check your math" + mistake warnings.
+- ~~Fix all sidebar/page name drift.~~ ✅ Done.
+- **Glossary + tooltips for Cohesion/Drift/Observation Debt/Stack Score.** Cohesion and Drift done; Observation Debt heading unconfirmed — verify live.
+- ~~Route empty/no-profile states into profile creation.~~ ✅ Done.
+- Calculator "how this was calculated" + "check your math" + mistake warnings. Not part of this merge — still open.
 
 **P3 — later optimization**
-- Dynamic vial illustration.
-- Build free basic scheduler, then paid adherence analytics.
-- Provider multi-client demo/workflow.
-- SEO metadata pass on newly public dossiers.
+- Dynamic vial illustration. Still open.
+- **Verify whether a free basic scheduler exists distinct from paid adherence analytics** — `/my-protocol` calendar is real now but the free/paid split wasn't independently confirmed.
+- Provider multi-client demo/workflow. Not independently re-verified — the intake form and FAQ exist; a live multi-client demo wasn't found.
+- SEO metadata pass on newly public dossiers. Still open — worth doing now that `/knowledge` is actually public.
 
 ---
 
-## Category Scores (1–5)
+## Category Scores (1–5) — July 12, 2026 (July 6 score in parens)
 
 | Category | Score | Note |
 |---|---|---|
-| Homepage clarity | 4 | Strong hero + persona cards; tier name leaks in early |
-| Navigation / IA | 2 | Duplicate onboarding routes, hidden knowledge base, name drift |
-| CTA clarity | 2 | "Map Stack" undefined; too many competing verbs |
-| Free feature discoverability | 3 | Tools shine; evidence library hidden drags this down |
-| Free-to-paid path | 2 | Conflicting tiers, gating against mock/inert screens |
-| Profile onboarding | 3 | Good local-save architecture; surprise wall at the end |
-| Scheduling flow | 2 | Real check-ins; weekly schedule is mock-only |
-| Calculator / tool usability | 4 | Genuinely good; needs math-transparency polish |
-| Protocol intelligence surfacing | 2 | Rich engine, mostly hidden or stubbed |
-| Evidence / provenance visibility | 2 | Best-in-app dossier is auth-walled; receipts orphaned |
-| Provider path | 1 | Stub; no offer to convert |
-| Auth / sign-in friction | 3 | Solid mechanics, surprise-wall framing, loop needs live test |
-| Mobile UX | 3 | Responsive; 4-up sticky CTA is busy |
-| Empty / error states | 3 | Consistent components; some dead-end "no profile" states |
-| Safety / trust posture | 5 | Disciplined, non-prescriptive, disclaimers everywhere — excellent |
-| **Overall product readiness** | **2.5** | **Mostly ready as free tools; not ready for paid or provider conversion** |
+| Homepage clarity | 4 (4) | Unchanged; still strong, still no live-engine link |
+| Navigation / IA | 4 (2) | Knowledge base and receipts now linked, name drift fixed; only the 3 onboarding routes remain |
+| CTA clarity | 4 (2) | "Map Stack" gone, test-enforced; onboarding verb consolidation still partial |
+| Free feature discoverability | 4 (3) | Evidence library now public and linked from nav |
+| Free-to-paid path | 4 (2) | Unified tiers, real `TierGate`, live-data `/my-protocol` |
+| Profile onboarding | 4 (3) | Pre-wall value line added; architecture unchanged (still good) |
+| Scheduling flow | 3 (2) | Mock removed, but free/paid scheduler split unconfirmed — verify live |
+| Calculator / tool usability | 4 (4) | Unchanged; math-transparency polish still recommended |
+| Protocol intelligence surfacing | 3 (2) | Public + enforced now; homepage proof panel still stubbed |
+| Evidence / provenance visibility | 4 (2) | Dossier public, receipts linked; `/compounds` still gated |
+| Provider path | 4 (1) | Real page, working form, backend-persisted, honest FAQ |
+| Auth / sign-in friction | 4 (3) | Wall now explained; callback loop still needs a live test |
+| Mobile UX | 3 (3) | Not independently re-verified this pass |
+| Empty / error states | 4 (3) | No-profile state now routes to creation |
+| Safety / trust posture | 5 (5) | Unchanged — still excellent |
+| **Overall product readiness** | **3.8 (2.5)** | **Ready for provider acquisition; close to ready for paid conversion; two open items (`/compounds` gating decision, homepage proof panel) and one live-test (auth loop) stand between here and launch-ready** |
 
 ---
 
@@ -404,3 +423,5 @@ Homepage CTA clicks (per CTA) · free tool starts/completions · calculator comp
 ---
 
 *Prepared as a product-experience audit. No source files were modified. Recommendations are copy/IA/flow-level and preserve BioStack's observational, educational, non-prescriptive boundary throughout.*
+
+*Updated July 12, 2026: re-verified against `origin/main` at commit `a37726a` (PR #181 merged). Method was a static code/route diff against the original findings — grep and file reads confirming or refuting each item, not a live browser walkthrough. Three items remain unverified without a live pass: the auth callback loop, whether `CalendarTab` has a real free-vs-paid scheduler split, and the "Observation Debt" panel's on-screen heading text.*
