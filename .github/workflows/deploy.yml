@@ -124,6 +124,46 @@ jobs:
             --expected-image ${{ secrets.ACR_LOGIN_SERVER }}/biostack-api:${{ github.sha }} \
             --health-path /health
 
+      - name: Ensure API custom-domain TLS binding
+        if: github.event_name != 'pull_request'
+        env:
+          API_CUSTOM_DOMAIN: api.biostack.cc
+        run: |
+          set -euo pipefail
+
+          ENVIRONMENT_ID="$(az containerapp show \
+            --name ${{ secrets.API_APP_NAME }} \
+            --resource-group ${{ secrets.RESOURCE_GROUP }} \
+            --query properties.managedEnvironmentId \
+            --output tsv)"
+          CERTIFICATE_ID="$(az containerapp show \
+            --name ${{ secrets.API_APP_NAME }} \
+            --resource-group ${{ secrets.RESOURCE_GROUP }} \
+            --query "properties.configuration.ingress.customDomains[?name=='${API_CUSTOM_DOMAIN}'].certificateId | [0]" \
+            --output tsv)"
+
+          if [ -z "$CERTIFICATE_ID" ]; then
+            az containerapp hostname bind \
+              --name ${{ secrets.API_APP_NAME }} \
+              --resource-group ${{ secrets.RESOURCE_GROUP }} \
+              --environment "$ENVIRONMENT_ID" \
+              --hostname "$API_CUSTOM_DOMAIN" \
+              --validation-method CNAME \
+              --output none
+          fi
+
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --retry 30 \
+            --retry-all-errors \
+            --retry-delay 10 \
+            --retry-max-time 600 \
+            --connect-timeout 10 \
+            --max-time 30 \
+            "https://${API_CUSTOM_DOMAIN}/health"
+
       - name: Update frontend container app
         if: github.event_name != 'pull_request'
         run: |
