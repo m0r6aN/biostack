@@ -497,6 +497,11 @@ try
         // EnsureCreated must run before any bootstrapper creates a table. EF treats
         // a partially populated relational database as already initialized and will
         // otherwise skip creation of the remaining model tables on a fresh sandbox.
+        if (builder.Configuration.GetValue<bool>("Database:ResetOnStartup"))
+        {
+            db.Database.EnsureDeleted();
+        }
+
         db.Database.EnsureCreated();
 
         if (db.Database.IsSqlite())
