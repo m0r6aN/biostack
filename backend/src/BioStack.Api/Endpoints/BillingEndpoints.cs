@@ -83,7 +83,13 @@ public static class BillingEndpoints
 
         try
         {
-            var stripeEvent = EventUtility.ConstructEvent(json, signature, secret);
+            // Signature validation remains mandatory; tolerate newer Stripe event API
+            // versions so an SDK upgrade is not misreported as a bad signature.
+            var stripeEvent = EventUtility.ConstructEvent(
+                json,
+                signature,
+                secret,
+                throwOnApiVersionMismatch: false);
             var result = await billingService.ProcessStripeEventAsync(stripeEvent, ct);
             return result == StripeWebhookProcessingResult.Quarantined
                 ? Results.Conflict(new { error = "Stripe event was quarantined for an unapproved price and must be replayed after configuration is corrected." })
