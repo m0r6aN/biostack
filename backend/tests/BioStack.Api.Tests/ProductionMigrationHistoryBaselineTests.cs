@@ -26,8 +26,7 @@ public sealed class ProductionMigrationHistoryBaselineTests
             new HashSet<string>(StringComparer.Ordinal));
 
         Assert.Contains("table:AppUsers", missing);
-        Assert.Contains("column:AppUsers.ConsentVersion", missing);
-        Assert.Contains("index:IX_ProviderAccessRequests_Email", missing);
+        Assert.Contains("index:IX_AppUsers_Email", missing);
     }
 
     [Fact]
@@ -36,7 +35,7 @@ public sealed class ProductionMigrationHistoryBaselineTests
         var migrationIds = ReadRequiredValues("BaselineMigrationIds");
 
         Assert.Equal(
-            "20260711183500_AddProviderAccessRequests",
+            "20260422125251_RecoverBillingTierEnforcement",
             migrationIds.Order(StringComparer.Ordinal).Last());
         Assert.DoesNotContain(
             migrationIds,
@@ -53,14 +52,13 @@ public sealed class ProductionMigrationHistoryBaselineTests
         var applied = new HashSet<string>(StringComparer.Ordinal)
         {
             "20260401000000_LegacyEnsureCreatedBaseline",
-            migrationIds.First(),
         };
 
         var missing = migrationIds.Where(id => !applied.Contains(id)).ToArray();
 
-        Assert.Equal(migrationIds.Count - 1, missing.Length);
+        Assert.Single(missing);
         Assert.Contains("20260401000000_LegacyEnsureCreatedBaseline", applied);
-        Assert.DoesNotContain(migrationIds.First(), missing);
+        Assert.Contains(migrationIds.First(), missing);
     }
 
     private static HashSet<string> ReadRequiredValues(string fieldName)

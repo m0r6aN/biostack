@@ -9,52 +9,63 @@ public static class ProductionMigrationHistoryBaseline
     internal static readonly string[] BaselineMigrationIds =
     [
         "20260422125251_RecoverBillingTierEnforcement",
-        "20260511000000_AddGovernedSpine",
-        "20260517000000_AddUserConsent",
-        "20260530000000_PR8_AddStagedTranscriptCandidateReviewPersistence",
-        "20260607000000_PR14A_AddPromotionTargetToStagedTranscriptCandidateReviews",
-        "20260626000000_AddReceiptClassToSpine",
-        "20260626100000_AddCompoundGraphArtifacts",
-        "20260705000000_PR172_AddSourceLaneLaunchGuardrails",
-        "20260711183500_AddProviderAccessRequests",
     ];
 
     private static readonly string[] RequiredTables =
     [
         "AppUsers", "AuthChallenges", "AuthIdentities", "CheckIns",
-        "CompoundGraphArtifacts", "CompoundGraphFindings", "CompoundGraphRelationships",
         "CompoundInteractionHints", "CompoundRecords", "InteractionFlags", "KnowledgeEntries",
         "LeadCaptures", "PersonProfiles", "ProtocolComputationRecords", "ProtocolItems",
         "ProtocolPhases", "ProtocolReviewCompletedEvents", "ProtocolRuns", "Protocols",
-        "ProviderAccessRequests", "Sessions", "SpineEntries", "StagedTranscriptCandidateReviews",
-        "StripeWebhookEvents", "Subscriptions", "TimelineEvents",
+        "Sessions", "StripeWebhookEvents", "Subscriptions", "TimelineEvents",
     ];
 
     private static readonly (string Table, string Column)[] RequiredColumns =
-    [
-        ("AppUsers", "ConsentAcceptedAtUtc"),
-        ("AppUsers", "ConsentVersion"),
-        ("SpineEntries", "ReceiptClass"),
-        ("StagedTranscriptCandidateReviews", "TargetCanonicalName"),
-        ("StagedTranscriptCandidateReviews", "PromotedKnowledgeEntryId"),
-        ("StagedTranscriptCandidateReviews", "PromotedAtUtc"),
-        ("StagedTranscriptCandidateReviews", "IntakeRequestId"),
-    ];
+    [];
 
     private static readonly string[] RequiredIndexes =
     [
-        "IX_SpineEntries_ActorId",
-        "IX_SpineEntries_ReceiptUri",
-        "IX_SpineEntries_SubjectUri",
-        "IX_StagedTranscriptCandidateReviews_ReviewState",
-        "IX_StagedTranscriptCandidateReviews_IntakeRequestId",
-        "IX_CompoundGraphArtifacts_ArtifactHash",
-        "IX_CompoundGraphArtifacts_IsActive",
-        "IX_CompoundGraphRelationships_GraphArtifactId_SubjectSlug",
-        "IX_CompoundGraphRelationships_GraphArtifactId_ObjectSlug",
-        "IX_CompoundGraphFindings_GraphArtifactId",
-        "IX_ProviderAccessRequests_Email",
-        "IX_ProviderAccessRequests_Status_Owner_CreatedAtUtc",
+        "IX_AppUsers_Email",
+        "IX_AppUsers_Provider_ProviderKey",
+        "IX_AppUsers_StripeCustomerId",
+        "IX_AuthChallenges_ExpiresAtUtc",
+        "IX_AuthChallenges_IdentityId",
+        "IX_AuthChallenges_TokenHash",
+        "IX_AuthIdentities_Type_ValueNormalized",
+        "IX_AuthIdentities_UserId",
+        "IX_CheckIns_Date",
+        "IX_CheckIns_PersonId",
+        "IX_CheckIns_ProtocolRunId",
+        "IX_CompoundInteractionHints_CompoundA_CompoundB",
+        "IX_CompoundRecords_PersonId",
+        "IX_LeadCaptures_Email_Source",
+        "IX_PersonProfiles_OwnerId",
+        "IX_ProtocolComputationRecords_ProtocolId",
+        "IX_ProtocolComputationRecords_ProtocolRunId",
+        "IX_ProtocolComputationRecords_TimestampUtc",
+        "IX_ProtocolItems_CompoundRecordId",
+        "IX_ProtocolItems_ProtocolId",
+        "IX_ProtocolPhases_PersonId",
+        "IX_ProtocolReviewCompletedEvents_CompletedAtUtc",
+        "IX_ProtocolReviewCompletedEvents_ProtocolId",
+        "IX_ProtocolReviewCompletedEvents_ProtocolRunId",
+        "IX_ProtocolRuns_PersonId",
+        "IX_ProtocolRuns_PersonId_Status",
+        "IX_ProtocolRuns_ProtocolId",
+        "IX_Protocols_EvolvedFromRunId",
+        "IX_Protocols_OriginProtocolId",
+        "IX_Protocols_ParentProtocolId",
+        "IX_Protocols_PersonId",
+        "IX_Protocols_PersonId_OriginProtocolId_Version",
+        "IX_Sessions_ExpiresAtUtc",
+        "IX_Sessions_TokenHash",
+        "IX_Sessions_UserId",
+        "IX_StripeWebhookEvents_StripeEventId",
+        "IX_Subscriptions_AppUserId",
+        "IX_Subscriptions_StripeCustomerId",
+        "IX_Subscriptions_StripeSubscriptionId",
+        "IX_TimelineEvents_OccurredAtUtc",
+        "IX_TimelineEvents_PersonId",
     ];
 
     public static async Task ReconcileAsync(
@@ -141,10 +152,9 @@ public static class ProductionMigrationHistoryBaseline
 
         await transaction.CommitAsync(cancellationToken);
         logger.LogWarning(
-            "Reconciled {MigrationCount} missing production migration-history rows after validating {TableCount} tables, {ColumnCount} columns, and {IndexCount} indexes. Existing history rows were preserved; baseline ends at {MigrationId}; later migrations remain pending.",
+            "Reconciled {MigrationCount} missing production migration-history row after validating {TableCount} original tables and {IndexCount} original indexes. Existing history rows were preserved; baseline ends at {MigrationId}; every later migration remains pending.",
             missingBaselineMigrations.Length,
             RequiredTables.Length,
-            RequiredColumns.Length,
             RequiredIndexes.Length,
             BaselineMigrationIds[^1]);
     }
