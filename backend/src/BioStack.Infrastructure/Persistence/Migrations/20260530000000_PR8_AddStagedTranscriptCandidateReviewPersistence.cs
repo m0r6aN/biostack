@@ -28,8 +28,8 @@ public partial class PR8_AddStagedTranscriptCandidateReviewPersistence : Migrati
             constraints: table =>
             {
                 table.PrimaryKey("PK_StagedTranscriptCandidateReviews", x => x.ArtifactId);
-                table.CheckConstraint("CK_StagedTranscriptCandidateReviews_Canonicality_NonCanonical", "Canonicality = 'non_canonical'");
-                table.CheckConstraint("CK_StagedTranscriptCandidateReviews_ReviewState_Lifecycle", "ReviewState IN ('pending_review','review_deferred','review_rejected','review_approved_for_promotion')");
+                table.CheckConstraint("CK_StagedTranscriptCandidateReviews_Canonicality_NonCanonical", "\"Canonicality\" = 'non_canonical'");
+                table.CheckConstraint("CK_StagedTranscriptCandidateReviews_ReviewState_Lifecycle", "\"ReviewState\" IN ('pending_review','review_deferred','review_rejected','review_approved_for_promotion')");
             });
 
         migrationBuilder.CreateIndex(

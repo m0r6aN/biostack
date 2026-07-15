@@ -285,6 +285,12 @@ builder.Services.AddDbContext<BioStackDbContext>(options =>
     if (usePostgres)
     {
         options.UseNpgsql(connectionString);
+
+        if (builder.Environment.IsProduction())
+        {
+            ProductionMigrationBaselineConfiguration.Configure(options);
+        }
+
         return;
     }
 
@@ -478,6 +484,11 @@ try
 
     if (app.Environment.IsProduction())
     {
+        var migrationLogger = scope.ServiceProvider
+            .GetRequiredService<ILoggerFactory>()
+            .CreateLogger("ProductionMigrationHistoryBaseline");
+        await ProductionMigrationHistoryBaseline.ReconcileAsync(db, migrationLogger);
+
         // Apply pending EF migrations on startup so fresh deployments self-migrate.
         db.Database.Migrate();
     }
