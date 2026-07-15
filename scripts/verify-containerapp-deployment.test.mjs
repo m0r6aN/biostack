@@ -80,12 +80,18 @@ test("deployment workflow gates each update before advancing", () => {
   );
   const apiUpdate = workflow.indexOf("- name: Update API container app");
   const apiVerify = workflow.indexOf("- name: Verify API revision readiness");
+  const apiTls = workflow.indexOf(
+    "- name: Ensure API custom-domain TLS binding",
+  );
   const webUpdate = workflow.indexOf("- name: Update frontend container app");
   const webVerify = workflow.indexOf("- name: Verify frontend revision readiness");
 
   assert.ok(apiUpdate >= 0 && apiUpdate < apiVerify);
-  assert.ok(apiVerify < webUpdate && webUpdate < webVerify);
+  assert.ok(apiVerify < apiTls && apiTls < webUpdate && webUpdate < webVerify);
   assert.match(workflow, /biostack-api:\$\{\{ github\.sha \}\}/);
   assert.match(workflow, /biostack-web:\$\{\{ github\.sha \}\}/);
   assert.match(workflow, /--health-path \/health/);
+  assert.match(workflow, /az containerapp hostname bind/);
+  assert.match(workflow, /API_CUSTOM_DOMAIN: api\.biostack\.cc/);
+  assert.match(workflow, /"https:\/\/\$\{API_CUSTOM_DOMAIN\}\/health"/);
 });
