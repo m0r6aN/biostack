@@ -64,6 +64,21 @@ Every user-facing function must declare its guidance class, intended user and us
 
 Numeric values must identify one of these origins: `user-entered`, `label-or-prescription-transcribed`, `source-studied`, `biostack-recommended`, or `deterministically-derived`. Presentation must not allow a prefilled or recommended value to masquerade as neutral arithmetic.
 
+The closed initial substance/function-risk vocabulary is:
+
+- `ordinary`
+- `prescription-treatment-involved`
+- `investigational-or-unapproved`
+- `gray-market-or-identity-uncertain`
+- `injection-or-sterile-preparation`
+- `interaction-or-contraindication-signal`
+- `minor-or-age-uncertain`
+- `pregnancy-or-lactation`
+- `acute-red-flag-or-emergency`
+- `controlled-or-illegal-sourcing`
+
+More than one label may apply. P2 must define deterministic applicability criteria and allowed, degraded, refused, and escalated behavior for each label. It may refine criteria but may not add, remove, or redefine a label in a way that changes allowed product behavior without a charter amendment and review. `acute-red-flag-or-emergency` always preempts ordinary guidance. `controlled-or-illegal-sourcing` always suppresses sourcing, evasion, and concealment assistance. Other labels calibrate evidence, explanation, validation, review, and escalation rather than automatically suppressing useful guidance.
+
 ## Locked decisions
 
 ### Shared delivery architecture
@@ -84,7 +99,7 @@ Numeric values must identify one of these origins: `user-entered`, `label-or-pre
 
 - **D12 — Useful guidance is in scope.** Safety governance calibrates useful guidance; it does not collapse BioStack into a passive library.
 - **D13 — Personalized numerical guidance is allowed.** BioStack may originate profile-aware dose, reconstitution, schedule, and support recommendations when the function contract, evidence, provenance, validation, uncertainty, and escalation requirements are satisfied. This does not authorize diagnosis, prescribing, clinician impersonation, or unsupervised alteration of prescribed treatment.
-- **D14 — Three orthogonal classification axes.** Delivery risk, product guidance class, and substance/function risk are independently recorded and may all be multi-label. The most restrictive applicable control wins; no label erases another label's obligations.
+- **D14 — Three orthogonal classification axes.** Delivery risk, product guidance class, and substance/function risk are independently recorded and may all be multi-label. Controls compose field by field: union required sections, checks, stop conditions, and evidence; take the maximum reviewer count; allow standing authorization only when every applicable label permits it; apply every triggered human-approval condition; and stop on incompatible controls. “Most restrictive wins” applies only to a genuine scalar conflict. No label erases another label's obligations.
 - **D15 — Function-specific review.** Regulatory and legal status is assessed per user-facing function, intended use, user, automation, output, and claim. Broad disclaimers or product-level labels do not settle function-level status. Active specs record `unreviewed`, `review-required`, `reviewed`, or `not-applicable` and name the human owner when review is required.
 - **D16 — Evidence namespaces are distinct.** `scientific-evidence`, `recommendation-rationale`, `delivery-evidence`, and Keon receipt facts use distinct contracts and must not be conflated.
 - **D17 — Existing release hold is preserved.** This goal cannot supersede, waive, or mark passing any gate in `docs/INITIATIVES/biostack-production-readiness/`. Governed-delivery closure is not production-readiness evidence unless a release gate explicitly accepts it.
@@ -92,7 +107,7 @@ Numeric values must identify one of these origins: `user-entered`, `label-or-pre
 
 ## BioStack governance overlay
 
-Risk classification is multi-label. For reviewer count, authorization, stop conditions, checks, and closure evidence, the strongest applicable requirement wins.
+Risk classification is multi-label. Composition uses D14's deterministic fieldwise fold: unions for additive obligations, maximum reviewer count, intersection for authorization eligibility, all triggered human approvals, and stop on incompatibility.
 
 | Delivery class | Required spec additions | Minimum deterministic checks | Reviewers | Standing authorization eligibility | Mandatory stop conditions | Required closure evidence |
 |---|---|---|---:|---|---|---|
@@ -112,8 +127,10 @@ Specialized context is injected only when a parcel's declared classes and surfac
 `P0` denotes product-doctrine recovery priority, not execution order. Its implementation must wait for the minimum governance spine that will govern it.
 
 1. **P1 — Governance bootstrap** (`standard`, architecture): materialize Goal Charter lifecycle, directory conventions, `docs/specs/INDEX.md`, active/done directories, minimal core pointers, and repository-agent pointers.
-2. **P2 — Risk taxonomy and routing** (architecture, all classes): encode the three classification axes, multi-label composition, strongest-control rule, required sections, checks, reviewer counts, authorization eligibility, stops, and closure evidence.
-3. **P3 — Parcel contract and templates** (`standard`, architecture): BioStack parcel schema, required capability/claim fields, explicit no-`TBD` rule, and templates.
+2. **P2 — Risk taxonomy and routing** (architecture, risk-sensitive): define all three classification axes without inheriting every delivery-class label; encode multi-label applicability, D14's fieldwise fold, required sections, checks, reviewer counts, authorization eligibility, stops, and closure evidence. P2 requires two independent reviews and remains within the P1-P7 standing authorization only while it changes governance semantics and no product allowed-output decision.
+3. **P3 — Parcel contract and templates** (`standard`, architecture), split at the capability-contract boundary:
+   - **P3-A:** generic extensible parcel schema, explicit no-`TBD` rule, templates, and extension points. It must not invent product capability semantics.
+   - **P3-B:** after P0-B freezes the Product Capability and Safety Contract, bind the parcel schema to required capability, claim, provenance, missingness, function-review, and escalation fields.
 4. **P4 — Deterministic validation** (`standard`, architecture): dependency-light spec linter plus focused positive and negative fixtures, including multi-label and missing-field cases.
 5. **P6 — Closure and evidence contracts** (`trust-path`, architecture): acceptance-to-delivery-evidence mapping, review-record contract, closure manifest, and distinct evidence namespaces.
 6. **P7 — Independent review enforcement** (`trust-path`, architecture): one- and two-review enforcement, reviewer independence/read-only records, disagreement reproduction, and rework tripwires.
@@ -121,16 +138,20 @@ Specialized context is injected only when a parcel's declared classes and surfac
    - **P0-A:** canon precedence and contradiction inventory.
    - **P0-B:** machine-readable Product Capability and Safety Contract, including numeric provenance and function-review status.
    - **P0-C:** allowed, degraded, refused, and escalated policy fixtures proving that useful guidance survives enforcement.
-   - **P0-D:** controlled reconciliation of README, canon, evidence methodology, guardrails, ADR, product contract, marketing/provider copy, and affected tests.
+   - **P0-D:** reconciliation umbrella governed by P0-A's frozen precedence manifest; it is not dispatched to one builder. Its non-overlapping serialized parcels are:
+     - **P0-D1:** core product doctrine, accepted ADR, and canonical protocol-intelligence policy.
+     - **P0-D2:** scientific-evidence methodology and safety guardrails, after P0-D1.
+     - **P0-D3:** product contract plus README, marketing, provider, and other user-facing copy, after P0-D2.
+     - **P0-D4:** enforcement and regression tests, after P0-D3.
 8. **P5 — CI governance** (`standard`, architecture): active-spec dispatch guard and serialized governance checks on shared CI surfaces.
 9. **P8 — Keon-compatible BioStack receipt adapter** (`trust-path`, `privacy`): consume a pinned Keon-owned contract fixture/version and map only privacy-minimized BioStack domain facts. No generalized receipt infrastructure.
-10. **P9 — End-to-end capstone goal** (multi-class umbrella): run one real BioStack initiative through the complete governed chain. Its ratified target journey is profile-aware protocol guidance to evidence-ranked options, schedule/support planning, reconstitution/dose calculation, syringe visualization, monitoring, and reassessment. Before dispatch, shape independent subordinate parcels for capability inventory, profile/privacy, scientific-evidence and rationale, numeric provenance/calculation, escalation, frontend/backend integration, and environment scenarios. Any required production work must have independent product value and explicit acceptance criteria; P9 is not one builder parcel.
+10. **P9 — End-to-end capstone goal** (multi-class umbrella): run one real BioStack initiative through the complete governed chain. The ratified product north star is profile-aware protocol guidance to evidence-ranked options, schedule/support planning, reconstitution/dose calculation, syringe visualization, monitoring, and reassessment. **P9-0 capability inventory and gap classification precedes target scope and Gate 2.** Existing capabilities may enter the capstone directly. Missing capabilities enter only when they have independent product value, explicit acceptance criteria, non-overlapping subordinate specs, and explicit Gate 2 approval; they do not become governed-delivery exit requirements merely because they appear in the north star. Subsequent subordinate parcels cover only the approved target: profile/privacy, scientific-evidence and rationale, numeric provenance/calculation, escalation, frontend/backend integration, and environment scenarios. P9 is never one builder parcel.
 
 Dependency spine:
 
-`plan-review closure -> P1 -> P2 -> P3 -> P4 -> P6 -> P7 -> P0-A -> P0-B -> P0-C -> P0-D -> P5`
+`plan-review closure -> P1 -> P2 -> P3-A -> P0-A -> P0-B -> P3-B -> P4 -> P6 -> P7 -> P0-C -> P0-D1 -> P0-D2 -> P0-D3 -> P0-D4 -> P5`
 
-`P8` may begin after P7 when its pinned external contract and privacy mapping are approved. `P9` begins only after P5 and P8 close and its subordinate parcel set receives Gate 2 approval.
+`P8` may begin after P7 when its pinned external contract and privacy mapping are approved. `P9-0` begins only after P5 and P8 close. The remaining P9 target is fixed only after P9-0 and explicit Gate 2 approval of its non-overlapping subordinate parcel set.
 
 ## Standing authorizations
 
