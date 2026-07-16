@@ -77,7 +77,7 @@ The closed initial substance/function-risk vocabulary is:
 - `acute-red-flag-or-emergency`
 - `controlled-or-illegal-sourcing`
 
-More than one label may apply. P2 must define deterministic applicability criteria and allowed, degraded, refused, and escalated behavior for each label. It may refine criteria but may not add, remove, or redefine a label in a way that changes allowed product behavior without a charter amendment and review. `acute-red-flag-or-emergency` always preempts ordinary guidance. `controlled-or-illegal-sourcing` always suppresses sourcing, evasion, and concealment assistance. Other labels calibrate evidence, explanation, validation, review, and escalation rather than automatically suppressing useful guidance.
+More than one label may apply. P2 defines the schema and fieldwise composition mechanics for label applicability but does not decide product allowed outputs. After P0-A freezes canon precedence, P0-B defines deterministic applicability criteria and allowed, degraded, refused, and escalated behavior for each label; P0-C proves that behavior with fixtures. No parcel may add, remove, or redefine a label in a way that changes allowed product behavior without a charter amendment and review. `acute-red-flag-or-emergency` always preempts ordinary guidance. `controlled-or-illegal-sourcing` always suppresses sourcing, evasion, and concealment assistance. Other labels calibrate evidence, explanation, validation, review, and escalation rather than automatically suppressing useful guidance.
 
 ## Locked decisions
 
@@ -127,7 +127,7 @@ Specialized context is injected only when a parcel's declared classes and surfac
 `P0` denotes product-doctrine recovery priority, not execution order. Its implementation must wait for the minimum governance spine that will govern it.
 
 1. **P1 — Governance bootstrap** (`standard`, architecture): materialize Goal Charter lifecycle, directory conventions, `docs/specs/INDEX.md`, active/done directories, minimal core pointers, and repository-agent pointers.
-2. **P2 — Risk taxonomy and routing** (architecture, risk-sensitive): define all three classification axes without inheriting every delivery-class label; encode multi-label applicability, D14's fieldwise fold, required sections, checks, reviewer counts, authorization eligibility, stops, and closure evidence. P2 requires two independent reviews and remains within the P1-P7 standing authorization only while it changes governance semantics and no product allowed-output decision.
+2. **P2 — Risk taxonomy and routing mechanics** (architecture, risk-sensitive): define all three classification-axis schemas without inheriting every delivery-class label; encode the closed label vocabulary, applicability fields, D14's fieldwise fold, required sections, checks, reviewer counts, authorization eligibility, stops, and closure evidence. P2 does not bind substance/function labels to product allowed outputs. It requires two independent reviews and remains within the P1-P7 standing authorization only while it changes governance mechanics and no product allowed-output decision.
 3. **P3 — Parcel contract and templates** (`standard`, architecture), split at the capability-contract boundary:
    - **P3-A:** generic extensible parcel schema, explicit no-`TBD` rule, templates, and extension points. It must not invent product capability semantics.
    - **P3-B:** after P0-B freezes the Product Capability and Safety Contract, bind the parcel schema to required capability, claim, provenance, missingness, function-review, and escalation fields.
@@ -136,8 +136,8 @@ Specialized context is injected only when a parcel's declared classes and surfac
 6. **P7 — Independent review enforcement** (`trust-path`, architecture): one- and two-review enforcement, reviewer independence/read-only records, disagreement reproduction, and rework tripwires.
 7. **P0 — Product Doctrine Recovery** (`health-boundary`, `privacy`, `legal-policy`, `knowledge-promotion`, architecture), split into independently dispatchable subparcels:
    - **P0-A:** canon precedence and contradiction inventory.
-   - **P0-B:** machine-readable Product Capability and Safety Contract, including numeric provenance and function-review status.
-   - **P0-C:** allowed, degraded, refused, and escalated policy fixtures proving that useful guidance survives enforcement.
+   - **P0-B:** machine-readable Product Capability and Safety Contract, including per-label applicability and allowed/degraded/refused/escalated behavior, numeric provenance, and function-review status.
+   - **P0-C:** policy fixtures proving the P0-B allowed, degraded, refused, and escalated behavior and that useful guidance survives enforcement.
    - **P0-D:** reconciliation umbrella governed by P0-A's frozen precedence manifest; it is not dispatched to one builder. Its non-overlapping serialized parcels are:
      - **P0-D1:** core product doctrine, accepted ADR, and canonical protocol-intelligence policy.
      - **P0-D2:** scientific-evidence methodology and safety guardrails, after P0-D1.
