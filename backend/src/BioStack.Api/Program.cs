@@ -480,7 +480,6 @@ try
 {
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
-    await InteractionSchemaBootstrapper.EnsureCompoundInteractionHintsTableAsync(db);
 
     if (app.Environment.IsProduction())
     {
@@ -491,9 +490,18 @@ try
 
         // Apply pending EF migrations on startup so fresh deployments self-migrate.
         db.Database.Migrate();
+        await InteractionSchemaBootstrapper.EnsureCompoundInteractionHintsTableAsync(db);
     }
     else
     {
+        // EnsureCreated must run before any bootstrapper creates a table. EF treats
+        // a partially populated relational database as already initialized and will
+        // otherwise skip creation of the remaining model tables on a fresh sandbox.
+        if (builder.Configuration.GetValue<bool>("Database:ResetOnStartup"))
+        {
+            db.Database.EnsureDeleted();
+        }
+
         db.Database.EnsureCreated();
 
         if (db.Database.IsSqlite())
@@ -510,6 +518,7 @@ try
         }
 
         var hintRepository = scope.ServiceProvider.GetRequiredService<ICompoundInteractionHintRepository>();
+        await InteractionSchemaBootstrapper.EnsureCompoundInteractionHintsTableAsync(db);
         await CompoundInteractionHintCatalog.SeedDefaultsAsync(hintRepository);
     }
 }
