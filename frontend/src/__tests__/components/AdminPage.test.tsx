@@ -1,15 +1,11 @@
 import AdminPage from '@/app/admin/page';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const fetchMock = vi.fn();
 
 vi.mock('@/components/Header', () => ({
   Header: ({ title }: { title: string }) => <div>{title}</div>,
-}));
-
-vi.mock('@/components/ui/Button', () => ({
-  Button: ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => <button {...props}>{children}</button>,
 }));
 
 vi.mock('@/components/ui/GlassCard', () => ({
@@ -22,7 +18,7 @@ describe('AdminPage', () => {
     vi.stubGlobal('fetch', fetchMock);
   });
 
-  it('shows ingest fetch failures as ingest errors instead of invalid JSON', async () => {
+  it('fetches read-only statistics without exposing or calling bulk ingest', async () => {
     fetchMock
       .mockResolvedValueOnce({
         ok: true,
@@ -30,9 +26,8 @@ describe('AdminPage', () => {
       })
       .mockResolvedValueOnce({
         ok: true,
-        json: async () => ({ profiles: 0, knowledgeEntries: 0, totalCompoundRecords: 0, totalCheckIns: 0 }),
-      })
-      .mockRejectedValueOnce(new TypeError('Failed to fetch'));
+        json: async () => ({ profiles: 3, knowledgeEntries: 7, totalCompoundRecords: 11, totalCheckIns: 13 }),
+      });
 
     render(<AdminPage />);
 
@@ -40,16 +35,16 @@ describe('AdminPage', () => {
       expect(fetchMock).toHaveBeenCalledTimes(2);
     });
 
-    fireEvent.change(screen.getByRole('textbox'), {
-      target: { value: '{"canonicalName":"Semaglutide"}' },
-    });
-
-    fireEvent.click(screen.getByRole('button', { name: 'Perform Upsert' }));
-
-    await waitFor(() => {
-      expect(screen.getByText('✘ Ingest failed: Failed to fetch')).toBeInTheDocument();
-    });
-
-    expect(screen.queryByText(/Invalid JSON:/i)).not.toBeInTheDocument();
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
+      expect.stringContaining('/api/v1/admin/stats'),
+      { headers: { Authorization: 'Bearer dev-token' } },
+    );
+    expect(screen.getByText('Knowledge Governance')).toBeInTheDocument();
+    expect(screen.getByText('Canonical bulk ingest disabled')).toBeInTheDocument();
+    expect(screen.queryByText('Bulk Knowledge Ingest')).not.toBeInTheDocument();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Perform Upsert' })).not.toBeInTheDocument();
+    expect(fetchMock.mock.calls.some(([url]) => String(url).includes('/api/v1/admin/knowledge/ingest'))).toBe(false);
   });
 });
