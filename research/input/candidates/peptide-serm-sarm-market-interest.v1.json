@@ -1,0 +1,1969 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-candidate-batch",
+  "batch": {
+    "batchId": "peptide-serm-sarm-market-interest-2026-07-24-v1",
+    "category": "peptide-serm-sarm-market-interest",
+    "generatedAt": "2026-07-24T00:00:00Z",
+    "agentId": "biostack-market-coverage-coordinator",
+    "notes": [
+      "Metadata-only candidate universe for governed coverage planning; not publication-ready facts.",
+      "Discovery source IDs are routing hints only. Every real registry source remains pending-human-legal, disabled, and non-acquiring.",
+      "No source content, clinical claim, dosing guidance, approval decision, or promotion authority is present."
+    ]
+  },
+  "candidates": [
+    {
+      "canonicalNameCandidate": "Semaglutide",
+      "aliases": [
+        "Ozempic",
+        "Wegovy",
+        "Rybelsus"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Tirzepatide",
+      "aliases": [
+        "Mounjaro",
+        "Zepbound"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Retatrutide",
+      "aliases": [
+        "LY3437943",
+        "triple G"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Liraglutide",
+      "aliases": [
+        "Victoza",
+        "Saxenda"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Dulaglutide",
+      "aliases": [
+        "Trulicity"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Exenatide",
+      "aliases": [
+        "Byetta",
+        "Bydureon"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Pramlintide",
+      "aliases": [
+        "Symlin"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Cagrilintide",
+      "aliases": [
+        "Cagri"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Survodutide",
+      "aliases": [
+        "BI 456906"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Pemvidutide",
+      "aliases": [
+        "ALT-801"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Maridebart cafraglutide",
+      "aliases": [
+        "MariTide",
+        "AMG 133"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Biologic",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Mazdutide",
+      "aliases": [
+        "IBI362",
+        "LY3305677"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Amycretin",
+      "aliases": [
+        "NNC0487-0111"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "VK2735",
+      "aliases": [],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "BPC-157",
+      "aliases": [
+        "BPC 157",
+        "BPC-157 acetate"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "TB-500",
+      "aliases": [
+        "TB500",
+        "thymosin beta-4 fragment"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required",
+        "identity-ambiguity-review"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "CJC-1295",
+      "aliases": [
+        "CJC-1295 DAC"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required",
+        "identity-ambiguity-review"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Ipamorelin",
+      "aliases": [
+        "ipamorelin acetate"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "GHK-Cu",
+      "aliases": [
+        "copper tripeptide-1",
+        "copper peptide"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "AOD-9604",
+      "aliases": [
+        "AOD 9604",
+        "hGH fragment 176-191"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "MOTS-c",
+      "aliases": [
+        "MOTS-C",
+        "mitochondrial-derived peptide"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Bremelanotide",
+      "aliases": [
+        "PT-141",
+        "Vyleesi"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Tesamorelin",
+      "aliases": [
+        "Egrifta SV",
+        "Egrifta WR"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Sermorelin",
+      "aliases": [
+        "Geref",
+        "GRF 1-29"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Melanotan II",
+      "aliases": [
+        "MT-II",
+        "Melanotan 2"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Setmelanotide",
+      "aliases": [
+        "Imcivree"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Elamipretide",
+      "aliases": [
+        "Forzinity",
+        "SS-31",
+        "MTP-131",
+        "Bendavia"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Afamelanotide",
+      "aliases": [
+        "Scenesse",
+        "Melanotan I"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Thymosin alpha-1",
+      "aliases": [
+        "thymalfasin",
+        "Zadaxin"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "KPV",
+      "aliases": [
+        "Lys-Pro-Val",
+        "alpha-MSH(11-13)"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "LL-37",
+      "aliases": [
+        "cathelicidin LL-37"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "GHRP-2",
+      "aliases": [
+        "pralmorelin"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "GHRP-6",
+      "aliases": [
+        "growth hormone-releasing peptide-6"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Hexarelin",
+      "aliases": [
+        "examorelin"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "IGF-1 LR3",
+      "aliases": [
+        "Long R3 IGF-I"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Mecasermin",
+      "aliases": [
+        "Increlex",
+        "rhIGF-1"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "PEG-MGF",
+      "aliases": [
+        "pegylated mechano growth factor"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Semax",
+      "aliases": [
+        "ACTH(4-7)-PGP"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Selank",
+      "aliases": [
+        "TP-7"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Epitalon",
+      "aliases": [
+        "Epithalon",
+        "AEDG peptide"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Kisspeptin-10",
+      "aliases": [
+        "KP-10",
+        "metastin(45-54)"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Oxytocin",
+      "aliases": [
+        "Pitocin"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Hormone",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Chorionic gonadotropin",
+      "aliases": [
+        "hCG",
+        "Pregnyl",
+        "Novarel"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Hormone",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Somatropin",
+      "aliases": [
+        "HGH",
+        "recombinant human growth hormone"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Hormone",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Gonadorelin",
+      "aliases": [
+        "GnRH",
+        "Factrel"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Hormone",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Glutathione",
+      "aliases": [
+        "GSH"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Emideltide",
+      "aliases": [
+        "DSIP",
+        "delta sleep-inducing peptide"
+      ],
+      "category": "peptide-market-interest",
+      "classification": "Peptide",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 4,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Enclomiphene",
+      "aliases": [
+        "trans-clomiphene",
+        "Androxal",
+        "Enclomid"
+      ],
+      "category": "serm-market-interest",
+      "classification": "SERM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "dailymed",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Clomiphene",
+      "aliases": [
+        "clomifene",
+        "Clomid"
+      ],
+      "category": "serm-market-interest",
+      "classification": "SERM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "dailymed",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Tamoxifen",
+      "aliases": [
+        "Nolvadex"
+      ],
+      "category": "serm-market-interest",
+      "classification": "SERM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "dailymed",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Raloxifene",
+      "aliases": [
+        "Evista"
+      ],
+      "category": "serm-market-interest",
+      "classification": "SERM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "dailymed",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Ospemifene",
+      "aliases": [
+        "Osphena"
+      ],
+      "category": "serm-market-interest",
+      "classification": "SERM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "dailymed",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Toremifene",
+      "aliases": [
+        "Fareston"
+      ],
+      "category": "serm-market-interest",
+      "classification": "SERM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "dailymed",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Bazedoxifene",
+      "aliases": [
+        "Duavee component"
+      ],
+      "category": "serm-market-interest",
+      "classification": "SERM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "dailymed",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Lasofoxifene",
+      "aliases": [
+        "Fablyn"
+      ],
+      "category": "serm-market-interest",
+      "classification": "SERM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "dailymed",
+        "clinicaltrials",
+        "pubmed"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Ostarine",
+      "aliases": [
+        "enobosarm",
+        "MK-2866",
+        "GTx-024"
+      ],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Ligandrol",
+      "aliases": [
+        "LGD-4033",
+        "VK5211"
+      ],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Testolone",
+      "aliases": [
+        "RAD-140"
+      ],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Andarine",
+      "aliases": [
+        "S-4",
+        "GTx-007"
+      ],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "S-23",
+      "aliases": [
+        "S23"
+      ],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "YK-11",
+      "aliases": [
+        "YK11"
+      ],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "ACP-105",
+      "aliases": [],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "AC-262536",
+      "aliases": [],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "LGD-3303",
+      "aliases": [],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "RAD-150",
+      "aliases": [
+        "TLB-150",
+        "RAD-140 benzoate"
+      ],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required",
+        "identity-ambiguity-review"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "GSK2881078",
+      "aliases": [],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Vosilasarm",
+      "aliases": [
+        "EP0062"
+      ],
+      "category": "sarm-market-interest",
+      "classification": "SARM",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Ibutamoren",
+      "aliases": [
+        "MK-677",
+        "MK-0677",
+        "Nutrobal"
+      ],
+      "category": "sarm-adjacent-misclassification",
+      "classification": "Research Compound",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required",
+        "commercially-misclassified-as-sarm"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Cardarine",
+      "aliases": [
+        "GW501516",
+        "GW1516",
+        "Endurobol"
+      ],
+      "category": "sarm-adjacent-misclassification",
+      "classification": "Research Compound",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 5,
+        "emergingInterest": 4,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required",
+        "commercially-misclassified-as-sarm"
+      ]
+    },
+    {
+      "canonicalNameCandidate": "Stenabolic",
+      "aliases": [
+        "SR9009"
+      ],
+      "category": "sarm-adjacent-misclassification",
+      "classification": "Research Compound",
+      "compoundFamily": null,
+      "inclusionRationale": "Market-interest and alias-normalization coverage candidate. Evidence, regulatory status, and any user-facing statement require source-authorized human review.",
+      "prioritySignals": {
+        "popularity": 3,
+        "emergingInterest": 3,
+        "clinicalRelevance": 3,
+        "safetyRisk": 5,
+        "misinformationRisk": 5,
+        "sourceAvailability": 3
+      },
+      "discoverySources": [
+        "fda",
+        "pubmed",
+        "wada",
+        "community-monitoring"
+      ],
+      "reviewFlags": [
+        "source-registry-pending",
+        "human-review-required",
+        "commercially-misclassified-as-sarm"
+      ]
+    }
+  ]
+}

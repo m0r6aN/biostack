@@ -500,10 +500,10 @@ public sealed class BioStackDbContext : DbContext
             {
                 tableBuilder.HasCheckConstraint(
                     "CK_StagedTranscriptCandidateReviews_Canonicality_NonCanonical",
-                    "Canonicality = 'non_canonical'");
+                    "\"Canonicality\" = 'non_canonical'");
                 tableBuilder.HasCheckConstraint(
                     "CK_StagedTranscriptCandidateReviews_ReviewState_Lifecycle",
-                    "ReviewState IN ('pending_review','review_deferred','review_rejected','review_approved_for_promotion')");
+                    "\"ReviewState\" IN ('pending_review','review_deferred','review_rejected','review_approved_for_promotion')");
             });
         });
 
