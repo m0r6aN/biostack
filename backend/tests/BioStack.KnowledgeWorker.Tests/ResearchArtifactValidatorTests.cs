@@ -112,7 +112,7 @@ public class ResearchArtifactValidatorTests
     }
 
     [Fact]
-    public void Recommended_Seven_Source_Decisions_Have_Exact_Assignments_And_Remain_Fail_Closed()
+    public void Recommended_Seven_Source_Decisions_Keep_Stage_Specific_Gates_Without_Blanket_Suppression()
     {
         var repositoryRoot = Directory.GetParent(TestPaths.BackendRoot())!.FullName;
         var decisionPath = Path.Combine(
@@ -150,8 +150,45 @@ public class ResearchArtifactValidatorTests
             var roleId = owner!["roleId"]!.GetValue<string>();
             Assert.Equal(expectedOwners[roleId], owner["personName"]!.GetValue<string>());
             Assert.Equal("assigned", owner["assignmentStatus"]!.GetValue<string>());
-            Assert.Equal("pending", owner["approvalStatus"]!.GetValue<string>());
         }
+
+        var doctrine = artifact.Node["productDoctrine"]!;
+        Assert.Equal("product-owner-confirmed", doctrine["status"]!.GetValue<string>());
+        Assert.Equal("Clint Morgan", doctrine["confirmedBy"]!.GetValue<string>());
+        Assert.Equal(
+            "observational-educational-evidence-aware-non-prescriptive",
+            doctrine["stance"]!.GetValue<string>());
+        Assert.Contains(
+            "does not automatically require less useful information",
+            doctrine["governingPrinciple"]!.GetValue<string>(),
+            StringComparison.Ordinal);
+
+        var stageGates = artifact.Node["stageGates"]!;
+        Assert.True(stageGates["blanketSuppressionProhibited"]!.GetValue<bool>());
+        Assert.Equal(
+            ["legalRights"],
+            stageGates["sourceActivationRequiredApprovals"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray());
+        Assert.Equal(
+            ["securityData"],
+            stageGates["sourceActivationConditionalApprovals"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray());
+        Assert.Contains(
+            "untrusted-bulk-archive-or-parser",
+            stageGates["securityDataTriggers"]!.AsArray()
+                .Select(value => value!.GetValue<string>()));
+        Assert.Equal(
+            ["evidence"],
+            stageGates["canonicalClaimPromotionRequiredApprovals"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray());
+        Assert.Equal(
+            ["product"],
+            stageGates["productCapabilityReviewRequiredApprovals"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray());
 
         var sources = artifact.Node["sources"]!.AsArray();
         Assert.Equal(7, sources.Count);
@@ -163,33 +200,224 @@ public class ResearchArtifactValidatorTests
 
         foreach (var source in sources)
         {
-            Assert.Equal("pending-human-signoff", source!["decisionStatus"]!.GetValue<string>());
+            Assert.Equal("selected-pending-source-activation-review", source!["decisionStatus"]!.GetValue<string>());
             Assert.False(source["activationReady"]!.GetValue<bool>());
-            Assert.Equal("pending-human-legal", source["rights"]!["reviewStatus"]!.GetValue<string>());
+            Assert.Equal("review-required", source["rights"]!["reviewStatus"]!.GetValue<string>());
             Assert.Empty(source["rights"]!["allowedUses"]!.AsArray());
+            Assert.NotEmpty(source["rights"]!["proposedUses"]!.AsArray());
             Assert.Null(source["rights"]!["legalBasisOrLicense"]);
             Assert.Null(source["rights"]!["reviewedBy"]);
             Assert.Equal("disabled", source["operations"]!["status"]!.GetValue<string>());
             Assert.False(source["acquisition"]!["enabled"]!.GetValue<bool>());
             Assert.Equal("none", source["acquisition"]!["method"]!.GetValue<string>());
-            Assert.Equal("not-reviewed", source["acquisition"]!["robotsPolicyStatus"]!.GetValue<string>());
-            Assert.Equal("not-reviewed", source["acquisition"]!["apiTermsStatus"]!.GetValue<string>());
+            Assert.Equal("review-required", source["acquisition"]!["apiTermsStatus"]!.GetValue<string>());
             Assert.Equal("disabled-until-approved", source["refresh"]!["mode"]!.GetValue<string>());
+            Assert.Equal(
+                "mark-stale-and-restrict-current-status-claims",
+                source["refresh"]!["stalenessAction"]!.GetValue<string>());
             Assert.False(source["dataBoundary"]!["trainingUseAllowed"]!.GetValue<bool>());
+            Assert.Equal(
+                "claim-level-before-canonical-promotion",
+                source["evidenceBoundary"]!["humanReviewRequirement"]!.GetValue<string>());
+            var permittedContent = source["dataBoundary"]!["proposedPermittedContent"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray();
+            Assert.Contains(
+                permittedContent,
+                value => value.Contains("dose ranges", StringComparison.Ordinal)
+                    && value.Contains("uncertainty", StringComparison.Ordinal));
+            Assert.Contains(
+                permittedContent,
+                value => value.Contains("Comparisons", StringComparison.Ordinal)
+                    && value.Contains("without diagnosis, prescribing, or individualized directives", StringComparison.Ordinal));
 
             var approvals = source["approvals"]!.AsObject();
             Assert.Equal(4, approvals.Count);
-            Assert.All(approvals, approval =>
-            {
-                Assert.Equal("pending", approval.Value!["status"]!.GetValue<string>());
-                Assert.Null(approval.Value["decidedAtUtc"]);
-                Assert.Empty(approval.Value["decisionNotes"]!.AsArray());
-            });
             Assert.Equal("Clint Morgan", approvals["product"]!["assigneeName"]!.GetValue<string>());
+            Assert.Equal("product-capability", approvals["product"]!["decisionScope"]!.GetValue<string>());
+            Assert.Equal("product-capability-review", approvals["product"]!["blockingStage"]!.GetValue<string>());
+            Assert.Equal("reviewed", approvals["product"]!["reviewStatus"]!.GetValue<string>());
+            Assert.Equal("approved", approvals["product"]!["decision"]!.GetValue<string>());
+            Assert.NotNull(approvals["product"]!["decidedAtUtc"]);
+            Assert.NotEmpty(approvals["product"]!["decisionNotes"]!.AsArray());
             Assert.Equal("Johnathan Harper", approvals["legalRights"]!["assigneeName"]!.GetValue<string>());
+            Assert.Equal("legal-rights", approvals["legalRights"]!["decisionScope"]!.GetValue<string>());
+            Assert.Equal("source-activation", approvals["legalRights"]!["blockingStage"]!.GetValue<string>());
             Assert.Equal("Ellison Nemoy", approvals["evidence"]!["assigneeName"]!.GetValue<string>());
+            Assert.Equal("evidence-promotion", approvals["evidence"]!["decisionScope"]!.GetValue<string>());
+            Assert.Equal("canonical-claim-promotion", approvals["evidence"]!["blockingStage"]!.GetValue<string>());
             Assert.Equal("Pradic Patel", approvals["securityData"]!["assigneeName"]!.GetValue<string>());
+            Assert.Equal("security-data", approvals["securityData"]!["decisionScope"]!.GetValue<string>());
+            Assert.Equal("source-activation", approvals["securityData"]!["blockingStage"]!.GetValue<string>());
+            foreach (var key in new[] { "legalRights", "evidence" })
+            {
+                Assert.Equal("review-required", approvals[key]!["reviewStatus"]!.GetValue<string>());
+                Assert.Null(approvals[key]!["decision"]);
+                Assert.Null(approvals[key]!["decidedAtUtc"]);
+            }
+            Assert.Empty(source["securityDataTriggersDetected"]!.AsArray());
+            Assert.Equal("not-applicable", approvals["securityData"]!["reviewStatus"]!.GetValue<string>());
+            Assert.Null(approvals["securityData"]!["decision"]);
+            Assert.Null(approvals["securityData"]!["decidedAtUtc"]);
+            Assert.NotEmpty(approvals["securityData"]!["decisionNotes"]!.AsArray());
         }
+    }
+
+    [Fact]
+    public void Validator_Can_Represent_A_Reviewed_Source_Activation_Without_Approving_Claim_Promotion()
+    {
+        var repositoryRoot = Directory.GetParent(TestPaths.BackendRoot())!.FullName;
+        var decisionPath = Path.Combine(
+            repositoryRoot,
+            "research",
+            "source-authorization",
+            "recommended-seven-source-decisions.v1.json");
+        var artifact = new ResearchArtifactLoader().Load(
+            ResearchArtifactKind.SourceAuthorizationDecisionBatch,
+            decisionPath);
+        var source = artifact.Node["sources"]![0]!;
+        source["decisionStatus"] = "approved";
+        source["activationReady"] = true;
+        source["rights"]!["reviewStatus"] = "reviewed";
+        source["rights"]!["legalBasisOrLicense"] = "CC0 for the selected openFDA data class";
+        source["rights"]!["allowedUses"] = new JsonArray("candidate retrieval", "factual-field storage");
+        source["rights"]!["reviewedBy"] = "Johnathan Harper";
+        source["rights"]!["verifiedAtUtc"] = "2026-07-25T13:15:00Z";
+        source["operations"]!["status"] = "approved";
+        source["operations"]!["lastReviewedAtUtc"] = "2026-07-25T13:15:00Z";
+        source["acquisition"]!["enabled"] = true;
+        source["acquisition"]!["method"] = "api";
+        source["acquisition"]!["apiTermsStatus"] = "reviewed";
+        source["refresh"]!["mode"] = "manual";
+        var legalApproval = source["approvals"]!["legalRights"]!;
+        legalApproval["reviewStatus"] = "reviewed";
+        legalApproval["decision"] = "approved-with-controls";
+        legalApproval["decidedAtUtc"] = "2026-07-25T13:15:00Z";
+        legalApproval["decisionNotes"] = new JsonArray("Limited to the selected openFDA data class.");
+        var securityApproval = source["approvals"]!["securityData"]!;
+        securityApproval["reviewStatus"] = "not-applicable";
+        securityApproval["decision"] = null;
+        var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+
+        var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
+
+        Assert.True(result.IsValid, result.Summary());
+        Assert.Equal(
+            "review-required",
+            source["approvals"]!["evidence"]!["reviewStatus"]!.GetValue<string>());
+        Assert.Null(source["approvals"]!["evidence"]!["decision"]);
+    }
+
+    [Fact]
+    public void Validator_Rejects_Activation_With_Unresolved_Rights()
+    {
+        var artifact = LoadSevenSourceDecisionArtifact();
+        var source = artifact.Node["sources"]![0]!;
+        source["decisionStatus"] = "approved";
+        source["activationReady"] = true;
+        source["operations"]!["status"] = "approved";
+        source["acquisition"]!["enabled"] = true;
+        source["acquisition"]!["method"] = "api";
+        var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+
+        var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
+
+        Assert.False(result.IsValid);
+    }
+
+    [Fact]
+    public void Validator_Rejects_Reviewed_Approval_Without_Decision_And_Date()
+    {
+        var artifact = LoadSevenSourceDecisionArtifact();
+        var legalApproval = artifact.Node["sources"]![0]!["approvals"]!["legalRights"]!;
+        legalApproval["reviewStatus"] = "reviewed";
+        var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+
+        var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
+
+        Assert.False(result.IsValid);
+    }
+
+    [Fact]
+    public void Validator_Accepts_Detected_Security_Trigger_With_Review_Pending_While_Inactive()
+    {
+        var artifact = LoadSevenSourceDecisionArtifact();
+        var source = artifact.Node["sources"]![0]!;
+        source["securityDataTriggersDetected"] =
+            new JsonArray("untrusted-bulk-archive-or-parser");
+        var securityApproval = source["approvals"]!["securityData"]!;
+        securityApproval["reviewStatus"] = "review-required";
+        securityApproval["decision"] = null;
+        securityApproval["decidedAtUtc"] = null;
+        var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+
+        var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
+
+        Assert.True(result.IsValid, result.Summary());
+    }
+
+    [Fact]
+    public void Validator_Rejects_Activation_With_Security_Trigger_And_Review_Pending()
+    {
+        var artifact = LoadSevenSourceDecisionArtifact();
+        var source = artifact.Node["sources"]![0]!;
+        source["securityDataTriggersDetected"] =
+            new JsonArray("untrusted-bulk-archive-or-parser");
+        var securityApproval = source["approvals"]!["securityData"]!;
+        securityApproval["reviewStatus"] = "review-required";
+        securityApproval["decision"] = null;
+        securityApproval["decidedAtUtc"] = null;
+        source["decisionStatus"] = "approved";
+        source["activationReady"] = true;
+        source["operations"]!["status"] = "approved";
+        source["acquisition"]!["enabled"] = true;
+        source["acquisition"]!["method"] = "api";
+        var legalApproval = source["approvals"]!["legalRights"]!;
+        legalApproval["reviewStatus"] = "reviewed";
+        legalApproval["decision"] = "approved-with-controls";
+        legalApproval["decidedAtUtc"] = "2026-07-25T13:15:00Z";
+        legalApproval["decisionNotes"] = new JsonArray("Limited to the reviewed data class.");
+        source["rights"]!["reviewStatus"] = "reviewed";
+        source["rights"]!["legalBasisOrLicense"] = "Reviewed public-data terms";
+        source["rights"]!["allowedUses"] = new JsonArray("candidate retrieval");
+        source["rights"]!["reviewedBy"] = "Johnathan Harper";
+        source["rights"]!["verifiedAtUtc"] = "2026-07-25T13:15:00Z";
+        var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+
+        var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
+
+        Assert.False(result.IsValid);
+    }
+
+    [Fact]
+    public void Validator_Rejects_Cross_Wired_Approval_Scope()
+    {
+        var artifact = LoadSevenSourceDecisionArtifact();
+        artifact.Node["sources"]![0]!["approvals"]!["product"]!["decisionScope"] = "legal-rights";
+        var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+
+        var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
+
+        Assert.False(result.IsValid);
+    }
+
+    [Fact]
+    public void Validator_Rejects_Enabled_Acquisition_After_Rights_Rejection()
+    {
+        var artifact = LoadSevenSourceDecisionArtifact();
+        var source = artifact.Node["sources"]![0]!;
+        var legalApproval = source["approvals"]!["legalRights"]!;
+        legalApproval["reviewStatus"] = "reviewed";
+        legalApproval["decision"] = "rejected";
+        legalApproval["decidedAtUtc"] = "2026-07-25T13:15:00Z";
+        legalApproval["decisionNotes"] = new JsonArray("The proposed content class and use were rejected.");
+        source["acquisition"]!["enabled"] = true;
+        source["acquisition"]!["method"] = "api";
+        var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+
+        var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
+
+        Assert.False(result.IsValid);
     }
 
     [Theory]
@@ -268,5 +496,18 @@ public class ResearchArtifactValidatorTests
     {
         var loader = new ResearchArtifactLoader();
         return loader.Load(kind, TestPaths.FixturePath(fixtureName));
+    }
+
+    private static LoadedResearchArtifact LoadSevenSourceDecisionArtifact()
+    {
+        var repositoryRoot = Directory.GetParent(TestPaths.BackendRoot())!.FullName;
+        var decisionPath = Path.Combine(
+            repositoryRoot,
+            "research",
+            "source-authorization",
+            "recommended-seven-source-decisions.v1.json");
+        return new ResearchArtifactLoader().Load(
+            ResearchArtifactKind.SourceAuthorizationDecisionBatch,
+            decisionPath);
     }
 }

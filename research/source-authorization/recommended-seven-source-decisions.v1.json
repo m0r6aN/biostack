@@ -1,8 +1,8 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "recordType": "source-authorization-decision-batch",
-  "generatedAt": "2026-07-25T00:00:00Z",
-  "assignmentDisclaimer": "Assignment identifies the responsible human reviewer; it is not approval, activation, or authorization to acquire source data.",
+  "generatedAt": "2026-07-25T13:15:00Z",
+  "assignmentDisclaimer": "Assignment identifies the responsible human reviewer. Each approval applies only to its declared stage; assignment is not approval, and a pending later-stage review does not block an earlier authorized stage.",
   "registryBinding": {
     "schemaVersion": "2.0.0",
     "sha256": "0a625778407fc85f3e32ed620b578bf4fe37cd37acb09c938776d9ed82aa7163",
@@ -12,33 +12,29 @@
     {
       "roleId": "product-owner",
       "personName": "Clint Morgan",
-      "assignmentStatus": "assigned",
-      "approvalStatus": "pending"
+      "assignmentStatus": "assigned"
     },
     {
       "roleId": "legal-rights-approver",
       "personName": "Johnathan Harper",
-      "assignmentStatus": "assigned",
-      "approvalStatus": "pending"
+      "assignmentStatus": "assigned"
     },
     {
       "roleId": "evidence-reviewer",
       "personName": "Ellison Nemoy",
-      "assignmentStatus": "assigned",
-      "approvalStatus": "pending"
+      "assignmentStatus": "assigned"
     },
     {
       "roleId": "security-data-owner",
       "personName": "Pradic Patel",
-      "assignmentStatus": "assigned",
-      "approvalStatus": "pending"
+      "assignmentStatus": "assigned"
     }
   ],
   "sources": [
     {
       "sourceId": "fda",
       "sourceName": "U.S. Food and Drug Administration",
-      "decisionStatus": "pending-human-signoff",
+      "decisionStatus": "selected-pending-source-activation-review",
       "activationReady": false,
       "documentation": {
         "officialFirstPartyUrls": [
@@ -61,9 +57,9 @@
         ]
       },
       "rights": {
-        "reviewStatus": "pending-human-legal",
+        "reviewStatus": "review-required",
         "legalBasisOrLicense": null,
-        "termsUrl": null,
+        "termsUrl": "https://open.fda.gov/terms/",
         "allowedUses": [],
         "prohibitedUses": [
           "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
@@ -72,7 +68,11 @@
           "No source content may be redistributed until the applicable terms and content-specific restrictions are reviewed."
         ],
         "reviewedBy": null,
-        "verifiedAtUtc": null
+        "verifiedAtUtc": null,
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ]
       },
       "operations": {
         "status": "disabled",
@@ -87,9 +87,9 @@
         "hasApi": true,
         "hasBulkExport": true,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
-        "apiTermsStatus": "not-reviewed",
-        "rateLimitPolicy": null,
+        "robotsPolicyStatus": "not-applicable",
+        "apiTermsStatus": "review-required",
+        "rateLimitPolicy": "Honor the documented openFDA per-minute and daily request limits.",
         "accessNotes": "API and bulk capability are technical observations only; select an exact endpoint and approve its terms before retrieval."
       },
       "evidenceBoundary": {
@@ -103,10 +103,10 @@
           "interactions",
           "misinformation-monitoring"
         ],
-        "humanReviewRequirement": "always",
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
         "limitations": [
           "A regulator page must not be generalized beyond the cited product, communication, date, and jurisdiction.",
-          "Regulatory evidence is observational source material until claim-level human review."
+          "Higher-risk or weaker evidence requires stronger warnings, explanation, uncertainty, validation, review, and escalation rather than automatic suppression of useful information."
         ]
       },
       "provenance": {
@@ -127,7 +127,7 @@
       "refresh": {
         "mode": "disabled-until-approved",
         "proposedCadence": "Daily checks for watched communications and a weekly baseline review.",
-        "stalenessAction": "block-use",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
       },
       "remediation": {
@@ -138,10 +138,12 @@
       },
       "dataBoundary": {
         "proposedPermittedContent": [
-          "Source URLs, page identifiers, publication or update dates, and claim-specific excerpts approved by legal review."
+          "Source-grounded factual and contextual information needed for informed decision-making, including identity, mechanisms, studied uses, populations, forms, routes, dose ranges, timing, frequency, duration, outcomes, adverse events, interactions, warnings, regulatory status, and uncertainty when available.",
+          "Comparisons, contradictions, evidence strength, source quality, monitoring considerations, and lower-risk context presented descriptively with citations and without diagnosis, prescribing, or individualized directives."
         ],
         "restrictedContent": [
-          "Unreviewed bulk content, uncited summaries, personalized medical guidance, and claims outside the cited communication."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "privateDataAllowed": false,
         "copyrightedFullTextStorageAllowed": false,
@@ -150,39 +152,56 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
-          "status": "pending",
-          "decidedAtUtc": null,
-          "decisionNotes": []
+          "decidedAtUtc": "2026-07-25T13:15:00Z",
+          "decisionNotes": [
+            "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
+          ],
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "evidence": {
           "assigneeName": "Ellison Nemoy",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [
+            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+          ],
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null
         }
       },
       "unresolvedQuestions": [
         "Which exact FDA APIs, datasets, and web content classes are approved for the first acquisition phase?",
         "What terms, attribution, rate limits, and redistribution rules apply to each selected endpoint?",
         "What retention period is approved for retrieved source snapshots?"
-      ]
+      ],
+      "securityDataTriggersDetected": []
     },
     {
       "sourceId": "pubchem",
       "sourceName": "PubChem",
-      "decisionStatus": "pending-human-signoff",
+      "decisionStatus": "selected-pending-source-activation-review",
       "activationReady": false,
       "documentation": {
         "officialFirstPartyUrls": [
@@ -204,9 +223,9 @@
         ]
       },
       "rights": {
-        "reviewStatus": "pending-human-legal",
+        "reviewStatus": "review-required",
         "legalBasisOrLicense": null,
-        "termsUrl": null,
+        "termsUrl": "https://www.ncbi.nlm.nih.gov/home/about/policies/",
         "allowedUses": [],
         "prohibitedUses": [
           "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
@@ -215,7 +234,11 @@
           "No compound record or derived dataset may be redistributed until record-level attribution and upstream-source constraints are reviewed."
         ],
         "reviewedBy": null,
-        "verifiedAtUtc": null
+        "verifiedAtUtc": null,
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ]
       },
       "operations": {
         "status": "disabled",
@@ -230,8 +253,8 @@
         "hasApi": true,
         "hasBulkExport": true,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
-        "apiTermsStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
+        "apiTermsStatus": "review-required",
         "rateLimitPolicy": null,
         "accessNotes": "API and bulk capability are technical observations only; approve endpoint, fields, attribution, and rate policy before retrieval."
       },
@@ -241,10 +264,11 @@
           "identity",
           "mechanism"
         ],
-        "humanReviewRequirement": "always",
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
         "limitations": [
           "Compound metadata does not establish clinical efficacy, dosing, contraindications, monitoring, or regulatory status.",
-          "Upstream depositor and linked-record provenance must remain distinguishable from PubChem aggregation."
+          "Upstream depositor and linked-record provenance must remain distinguishable from PubChem aggregation.",
+          "Higher-risk or weaker evidence requires stronger warnings, explanation, uncertainty, validation, review, and escalation rather than automatic suppression of useful information."
         ]
       },
       "provenance": {
@@ -267,7 +291,7 @@
       "refresh": {
         "mode": "disabled-until-approved",
         "proposedCadence": "Monthly baseline refresh and manual refresh for an actively reviewed compound.",
-        "stalenessAction": "block-use",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
       },
       "remediation": {
@@ -278,10 +302,12 @@
       },
       "dataBoundary": {
         "proposedPermittedContent": [
-          "Stable compound identifiers, names, structures, source URLs, update dates, and reviewed mechanism metadata."
+          "Source-grounded factual and contextual information needed for informed decision-making, including identity, mechanisms, studied uses, populations, forms, routes, dose ranges, timing, frequency, duration, outcomes, adverse events, interactions, warnings, regulatory status, and uncertainty when available.",
+          "Comparisons, contradictions, evidence strength, source quality, monitoring considerations, and lower-risk context presented descriptively with citations and without diagnosis, prescribing, or individualized directives."
         ],
         "restrictedContent": [
-          "Unreviewed linked-source text, clinical conclusions, dosing content, and bulk redistribution."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "privateDataAllowed": false,
         "copyrightedFullTextStorageAllowed": false,
@@ -290,39 +316,56 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
-          "status": "pending",
-          "decidedAtUtc": null,
-          "decisionNotes": []
+          "decidedAtUtc": "2026-07-25T13:15:00Z",
+          "decisionNotes": [
+            "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
+          ],
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "evidence": {
           "assigneeName": "Ellison Nemoy",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [
+            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+          ],
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null
         }
       },
       "unresolvedQuestions": [
         "Which PubChem fields and upstream deposit sources may BioStack store and display?",
         "What attribution and derived-dataset restrictions apply to the selected record fields?",
         "What request-rate and bulk-download controls are required?"
-      ]
+      ],
+      "securityDataTriggersDetected": []
     },
     {
       "sourceId": "pubmed",
       "sourceName": "PubMed",
-      "decisionStatus": "pending-human-signoff",
+      "decisionStatus": "selected-pending-source-activation-review",
       "activationReady": false,
       "documentation": {
         "officialFirstPartyUrls": [
@@ -341,9 +384,9 @@
         ]
       },
       "rights": {
-        "reviewStatus": "pending-human-legal",
+        "reviewStatus": "review-required",
         "legalBasisOrLicense": null,
-        "termsUrl": null,
+        "termsUrl": "https://www.nlm.nih.gov/databases/download.html",
         "allowedUses": [],
         "prohibitedUses": [
           "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
@@ -352,7 +395,11 @@
           "Citation metadata, abstracts, and linked full text must remain separate and follow their respective rights boundaries."
         ],
         "reviewedBy": null,
-        "verifiedAtUtc": null
+        "verifiedAtUtc": null,
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ]
       },
       "operations": {
         "status": "disabled",
@@ -367,9 +414,9 @@
         "hasApi": true,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
-        "apiTermsStatus": "not-reviewed",
-        "rateLimitPolicy": null,
+        "robotsPolicyStatus": "not-applicable",
+        "apiTermsStatus": "review-required",
+        "rateLimitPolicy": "Honor the documented NCBI E-utilities request limits and API-key rules.",
         "accessNotes": "API capability is a technical observation only; approve exact metadata, abstract, and linked-content boundaries before retrieval."
       },
       "evidenceBoundary": {
@@ -379,10 +426,11 @@
           "efficacy-claims",
           "interactions"
         ],
-        "humanReviewRequirement": "always",
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
         "limitations": [
           "Indexing does not establish study quality, applicability, or clinical certainty.",
-          "Every promoted claim requires claim-level linkage to the underlying publication and evidence grading."
+          "Every promoted claim requires claim-level linkage to the underlying publication and evidence grading.",
+          "Higher-risk or weaker evidence requires stronger warnings, explanation, uncertainty, validation, review, and escalation rather than automatic suppression of useful information."
         ]
       },
       "provenance": {
@@ -409,7 +457,7 @@
       "refresh": {
         "mode": "disabled-until-approved",
         "proposedCadence": "Daily metadata refresh for active topics and a monthly baseline re-query.",
-        "stalenessAction": "block-use",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
       },
       "remediation": {
@@ -420,10 +468,12 @@
       },
       "dataBoundary": {
         "proposedPermittedContent": [
-          "Citation identifiers, bibliographic metadata, query provenance, and rights-approved abstract fields."
+          "Source-grounded factual and contextual information needed for informed decision-making, including identity, mechanisms, studied uses, populations, forms, routes, dose ranges, timing, frequency, duration, outcomes, adverse events, interactions, warnings, regulatory status, and uncertainty when available.",
+          "Comparisons, contradictions, evidence strength, source quality, monitoring considerations, and lower-risk context presented descriptively with citations and without diagnosis, prescribing, or individualized directives."
         ],
         "restrictedContent": [
-          "Publisher full text without source-specific authorization, ungraded conclusions, and personalized medical guidance."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "privateDataAllowed": false,
         "copyrightedFullTextStorageAllowed": false,
@@ -432,39 +482,56 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
-          "status": "pending",
-          "decidedAtUtc": null,
-          "decisionNotes": []
+          "decidedAtUtc": "2026-07-25T13:15:00Z",
+          "decisionNotes": [
+            "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
+          ],
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "evidence": {
           "assigneeName": "Ellison Nemoy",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [
+            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+          ],
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null
         }
       },
       "unresolvedQuestions": [
         "Which citation, abstract, and linked-full-text fields are approved for storage and display?",
         "What API identification, request-rate, caching, and retention controls are required?",
         "How will retraction and correction notices invalidate downstream claims?"
-      ]
+      ],
+      "securityDataTriggersDetected": []
     },
     {
       "sourceId": "clinicaltrials",
       "sourceName": "ClinicalTrials.gov",
-      "decisionStatus": "pending-human-signoff",
+      "decisionStatus": "selected-pending-source-activation-review",
       "activationReady": false,
       "documentation": {
         "officialFirstPartyUrls": [
@@ -485,9 +552,9 @@
         ]
       },
       "rights": {
-        "reviewStatus": "pending-human-legal",
+        "reviewStatus": "review-required",
         "legalBasisOrLicense": null,
-        "termsUrl": null,
+        "termsUrl": "https://clinicaltrials.gov/about-site/terms-conditions",
         "allowedUses": [],
         "prohibitedUses": [
           "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
@@ -496,7 +563,11 @@
           "Registry data must remain labeled as registry data and must not be represented as peer-reviewed outcome evidence."
         ],
         "reviewedBy": null,
-        "verifiedAtUtc": null
+        "verifiedAtUtc": null,
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ]
       },
       "operations": {
         "status": "disabled",
@@ -511,8 +582,8 @@
         "hasApi": true,
         "hasBulkExport": true,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
-        "apiTermsStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
+        "apiTermsStatus": "review-required",
         "rateLimitPolicy": null,
         "accessNotes": "API and bulk capability are technical observations only; approve exact endpoints, fields, and update handling before retrieval."
       },
@@ -523,10 +594,11 @@
           "efficacy-claims",
           "interactions"
         ],
-        "humanReviewRequirement": "always",
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
         "limitations": [
           "Registration and recruitment status do not establish efficacy, safety, or completion.",
-          "Outcome claims require separate publication evidence and evidence grading."
+          "Outcome claims require separate publication evidence and evidence grading.",
+          "Higher-risk or weaker evidence requires stronger warnings, explanation, uncertainty, validation, review, and escalation rather than automatic suppression of useful information."
         ]
       },
       "provenance": {
@@ -551,7 +623,7 @@
       "refresh": {
         "mode": "disabled-until-approved",
         "proposedCadence": "Weekly refresh for watched studies and a monthly baseline refresh.",
-        "stalenessAction": "block-use",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
       },
       "remediation": {
@@ -562,10 +634,12 @@
       },
       "dataBoundary": {
         "proposedPermittedContent": [
-          "NCT identifiers, study status, phase, interventions, conditions, update dates, and source URLs."
+          "Source-grounded factual and contextual information needed for informed decision-making, including identity, mechanisms, studied uses, populations, forms, routes, dose ranges, timing, frequency, duration, outcomes, adverse events, interactions, warnings, regulatory status, and uncertainty when available.",
+          "Comparisons, contradictions, evidence strength, source quality, monitoring considerations, and lower-risk context presented descriptively with citations and without diagnosis, prescribing, or individualized directives."
         ],
         "restrictedContent": [
-          "Efficacy conclusions inferred from registration, unstated outcome claims, and personalized medical guidance."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "privateDataAllowed": false,
         "copyrightedFullTextStorageAllowed": false,
@@ -574,39 +648,56 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
-          "status": "pending",
-          "decidedAtUtc": null,
-          "decisionNotes": []
+          "decidedAtUtc": "2026-07-25T13:15:00Z",
+          "decisionNotes": [
+            "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
+          ],
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "evidence": {
           "assigneeName": "Ellison Nemoy",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [
+            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+          ],
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null
         }
       },
       "unresolvedQuestions": [
         "Which registry fields are approved for storage, display, and export?",
         "What update cadence and change-detection policy will prevent stale study status?",
         "How will linked publications be resolved and reviewed as separate evidence sources?"
-      ]
+      ],
+      "securityDataTriggersDetected": []
     },
     {
       "sourceId": "dailymed",
       "sourceName": "DailyMed",
-      "decisionStatus": "pending-human-signoff",
+      "decisionStatus": "selected-pending-source-activation-review",
       "activationReady": false,
       "documentation": {
         "officialFirstPartyUrls": [
@@ -626,9 +717,9 @@
         ]
       },
       "rights": {
-        "reviewStatus": "pending-human-legal",
+        "reviewStatus": "review-required",
         "legalBasisOrLicense": null,
-        "termsUrl": null,
+        "termsUrl": "https://www.nlm.nih.gov/web_policies.html",
         "allowedUses": [],
         "prohibitedUses": [
           "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
@@ -637,7 +728,11 @@
           "Every displayed field must remain associated with its exact SPL set ID, label version, product, and effective date."
         ],
         "reviewedBy": null,
-        "verifiedAtUtc": null
+        "verifiedAtUtc": null,
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ]
       },
       "operations": {
         "status": "disabled",
@@ -652,8 +747,8 @@
         "hasApi": true,
         "hasBulkExport": true,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
-        "apiTermsStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
+        "apiTermsStatus": "review-required",
         "rateLimitPolicy": null,
         "accessNotes": "API and bulk capability are technical observations only; approve label fields, attribution, update handling, and retention before retrieval."
       },
@@ -669,10 +764,11 @@
           "monitoring",
           "interactions"
         ],
-        "humanReviewRequirement": "always",
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
         "limitations": [
           "Label evidence is specific to the labeled product, version, formulation, route, and jurisdiction.",
-          "Label content must not be converted into personalized prescribing or treatment guidance."
+          "Label content must not be converted into personalized prescribing or treatment guidance.",
+          "Higher-risk or weaker evidence requires stronger warnings, explanation, uncertainty, validation, review, and escalation rather than automatic suppression of useful information."
         ]
       },
       "provenance": {
@@ -700,7 +796,7 @@
       "refresh": {
         "mode": "disabled-until-approved",
         "proposedCadence": "Weekly label refresh and an immediate refresh for watched products after an observed label update.",
-        "stalenessAction": "block-use",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
       },
       "remediation": {
@@ -711,10 +807,12 @@
       },
       "dataBoundary": {
         "proposedPermittedContent": [
-          "SPL identifiers, NDCs, label versions, effective dates, section identifiers, and rights-approved section content."
+          "Source-grounded factual and contextual information needed for informed decision-making, including identity, mechanisms, studied uses, populations, forms, routes, dose ranges, timing, frequency, duration, outcomes, adverse events, interactions, warnings, regulatory status, and uncertainty when available.",
+          "Comparisons, contradictions, evidence strength, source quality, monitoring considerations, and lower-risk context presented descriptively with citations and without diagnosis, prescribing, or individualized directives."
         ],
         "restrictedContent": [
-          "Cross-product generalizations, compounded-product claims, personalized prescribing, and uncited label text."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "privateDataAllowed": false,
         "copyrightedFullTextStorageAllowed": false,
@@ -723,39 +821,56 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
-          "status": "pending",
-          "decidedAtUtc": null,
-          "decisionNotes": []
+          "decidedAtUtc": "2026-07-25T13:15:00Z",
+          "decisionNotes": [
+            "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
+          ],
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "evidence": {
           "assigneeName": "Ellison Nemoy",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [
+            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+          ],
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null
         }
       },
       "unresolvedQuestions": [
         "Which label sections may BioStack store, quote, display, and export?",
         "What attribution and update requirements apply to displayed SPL content?",
         "How will label supersession invalidate previously extracted fields?"
-      ]
+      ],
+      "securityDataTriggersDetected": []
     },
     {
       "sourceId": "nih-ods",
       "sourceName": "NIH Office of Dietary Supplements Fact Sheets",
-      "decisionStatus": "pending-human-signoff",
+      "decisionStatus": "selected-pending-source-activation-review",
       "activationReady": false,
       "documentation": {
         "officialFirstPartyUrls": [
@@ -773,9 +888,9 @@
         ]
       },
       "rights": {
-        "reviewStatus": "pending-human-legal",
+        "reviewStatus": "review-required",
         "legalBasisOrLicense": null,
-        "termsUrl": null,
+        "termsUrl": "https://ods.od.nih.gov/HealthInformation/ODS_Frequently_Asked_Questions/",
         "allowedUses": [],
         "prohibitedUses": [
           "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
@@ -784,7 +899,11 @@
           "Source text and derived summaries may not be stored or redistributed until page-level reuse and attribution requirements are reviewed."
         ],
         "reviewedBy": null,
-        "verifiedAtUtc": null
+        "verifiedAtUtc": null,
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ]
       },
       "operations": {
         "status": "disabled",
@@ -799,8 +918,8 @@
         "hasApi": true,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
-        "apiTermsStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
+        "apiTermsStatus": "review-required",
         "rateLimitPolicy": null,
         "accessNotes": "ODS publishes an API surface, but the pilot registry records no approved API route; approve its exact scope, terms, robots treatment, and operational limits before retrieval."
       },
@@ -812,10 +931,11 @@
           "efficacy-claims",
           "interactions"
         ],
-        "humanReviewRequirement": "always",
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
         "limitations": [
           "ODS is not a product label and cannot independently support safety-critical or product-specific dosing claims.",
-          "Consumer fact-sheet summaries must remain distinguishable from underlying studies and labels."
+          "Consumer fact-sheet summaries must remain distinguishable from underlying studies and labels.",
+          "Higher-risk or weaker evidence requires stronger warnings, explanation, uncertainty, validation, review, and escalation rather than automatic suppression of useful information."
         ]
       },
       "provenance": {
@@ -839,7 +959,7 @@
       "refresh": {
         "mode": "disabled-until-approved",
         "proposedCadence": "Monthly update check and manual refresh when the source records a page update.",
-        "stalenessAction": "block-use",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
       },
       "remediation": {
@@ -850,10 +970,12 @@
       },
       "dataBoundary": {
         "proposedPermittedContent": [
-          "Page URLs, titles, section identifiers, update dates, and rights-approved claim-specific excerpts."
+          "Source-grounded factual and contextual information needed for informed decision-making, including identity, mechanisms, studied uses, populations, forms, routes, dose ranges, timing, frequency, duration, outcomes, adverse events, interactions, warnings, regulatory status, and uncertainty when available.",
+          "Comparisons, contradictions, evidence strength, source quality, monitoring considerations, and lower-risk context presented descriptively with citations and without diagnosis, prescribing, or individualized directives."
         ],
         "restrictedContent": [
-          "Unreviewed page copies, individualized dosing, treatment plans, and product-label assertions."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "privateDataAllowed": false,
         "copyrightedFullTextStorageAllowed": false,
@@ -862,27 +984,43 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
-          "status": "pending",
-          "decidedAtUtc": null,
-          "decisionNotes": []
+          "decidedAtUtc": "2026-07-25T13:15:00Z",
+          "decisionNotes": [
+            "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
+          ],
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "evidence": {
           "assigneeName": "Ellison Nemoy",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [
+            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+          ],
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null
         }
       },
       "unresolvedQuestions": [
@@ -890,12 +1028,13 @@
         "What page-reuse, quotation, attribution, and caching terms apply?",
         "Is automated retrieval permitted, and under what robots and rate constraints?",
         "Which claims require additional label or primary-literature evidence before promotion?"
-      ]
+      ],
+      "securityDataTriggersDetected": []
     },
     {
       "sourceId": "nih-nccih",
       "sourceName": "NIH National Center for Complementary and Integrative Health",
-      "decisionStatus": "pending-human-signoff",
+      "decisionStatus": "selected-pending-source-activation-review",
       "activationReady": false,
       "documentation": {
         "officialFirstPartyUrls": [
@@ -912,9 +1051,9 @@
         ]
       },
       "rights": {
-        "reviewStatus": "pending-human-legal",
+        "reviewStatus": "review-required",
         "legalBasisOrLicense": null,
-        "termsUrl": null,
+        "termsUrl": "https://www.nccih.nih.gov/tools/privacy",
         "allowedUses": [],
         "prohibitedUses": [
           "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
@@ -923,7 +1062,11 @@
           "Source text and derived summaries may not be stored or redistributed until page-level reuse and attribution requirements are reviewed."
         ],
         "reviewedBy": null,
-        "verifiedAtUtc": null
+        "verifiedAtUtc": null,
+        "proposedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ]
       },
       "operations": {
         "status": "disabled",
@@ -938,8 +1081,8 @@
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
-        "apiTermsStatus": "not-reviewed",
+        "robotsPolicyStatus": "review-required",
+        "apiTermsStatus": "review-required",
         "rateLimitPolicy": null,
         "accessNotes": "The registered source has no approved API or bulk route; any future page retrieval requires explicit legal, robots, and operational review."
       },
@@ -950,10 +1093,11 @@
           "efficacy-claims",
           "interactions"
         ],
-        "humanReviewRequirement": "always",
+        "humanReviewRequirement": "claim-level-before-canonical-promotion",
         "limitations": [
           "NCCIH consumer summaries cannot independently support product-specific dosing, regulatory, or safety-critical claims.",
-          "Summary statements must remain linked to the exact page, section, and update date."
+          "Summary statements must remain linked to the exact page, section, and update date.",
+          "Higher-risk or weaker evidence requires stronger warnings, explanation, uncertainty, validation, review, and escalation rather than automatic suppression of useful information."
         ]
       },
       "provenance": {
@@ -977,7 +1121,7 @@
       "refresh": {
         "mode": "disabled-until-approved",
         "proposedCadence": "Monthly update check and manual refresh when the source records a page update.",
-        "stalenessAction": "block-use",
+        "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
       },
       "remediation": {
@@ -988,10 +1132,12 @@
       },
       "dataBoundary": {
         "proposedPermittedContent": [
-          "Page URLs, titles, section identifiers, update dates, and rights-approved claim-specific excerpts."
+          "Source-grounded factual and contextual information needed for informed decision-making, including identity, mechanisms, studied uses, populations, forms, routes, dose ranges, timing, frequency, duration, outcomes, adverse events, interactions, warnings, regulatory status, and uncertainty when available.",
+          "Comparisons, contradictions, evidence strength, source quality, monitoring considerations, and lower-risk context presented descriptively with citations and without diagnosis, prescribing, or individualized directives."
         ],
         "restrictedContent": [
-          "Unreviewed page copies, personalized treatment guidance, product-label assertions, and regulatory conclusions."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "privateDataAllowed": false,
         "copyrightedFullTextStorageAllowed": false,
@@ -1000,34 +1146,90 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
-          "status": "pending",
-          "decidedAtUtc": null,
-          "decisionNotes": []
+          "decidedAtUtc": "2026-07-25T13:15:00Z",
+          "decisionNotes": [
+            "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
+          ],
+          "decisionScope": "product-capability",
+          "blockingStage": "product-capability-review",
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "legal-rights",
+          "blockingStage": "source-activation",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "evidence": {
           "assigneeName": "Ellison Nemoy",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [],
+          "decisionScope": "evidence-promotion",
+          "blockingStage": "canonical-claim-promotion",
+          "reviewStatus": "review-required",
+          "decision": null
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "status": "pending",
           "decidedAtUtc": null,
-          "decisionNotes": []
+          "decisionNotes": [
+            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+          ],
+          "decisionScope": "security-data",
+          "blockingStage": "source-activation",
+          "reviewStatus": "not-applicable",
+          "decision": null
         }
       },
       "unresolvedQuestions": [
         "What page-reuse, quotation, attribution, and caching terms apply?",
         "Is automated retrieval permitted, and under what robots and rate constraints?",
         "Which claims require separate label, guideline, or primary-literature evidence before promotion?"
-      ]
+      ],
+      "securityDataTriggersDetected": []
     }
-  ]
+  ],
+  "productDoctrine": {
+    "status": "product-owner-confirmed",
+    "confirmedBy": "Clint Morgan",
+    "confirmedAtUtc": "2026-07-25T13:15:00Z",
+    "purpose": "Help people make the most informed decisions reasonably possible in the interest of their safety and success.",
+    "stance": "observational-educational-evidence-aware-non-prescriptive",
+    "governingPrinciple": "High risk requires more evidence, explanation, validation, review, and escalation. It does not automatically require less useful information.",
+    "allowedInformation": [
+      "Source-grounded benefits, risks, mechanisms, regulatory status, evidence quality, studied populations, forms, routes, dose ranges, timing, frequency, duration, outcomes, adverse events, interactions, monitoring considerations, contradictions, and uncertainty.",
+      "Comparative and historical protocol context, including what was studied and what remains unknown, when clearly labeled as information rather than individualized direction."
+    ],
+    "prohibitedStances": [
+      "Diagnosis, prescription, clinician impersonation, treatment-direction, or individualized commands to start, stop, increase, decrease, taper, or otherwise alter a prescribed treatment.",
+      "Guarantees of safety, efficacy, or outcomes; concealment of uncertainty or material risk; and illegal sourcing, evasion, or concealment assistance."
+    ]
+  },
+  "stageGates": {
+    "sourceActivationRequiredApprovals": [
+      "legalRights"
+    ],
+    "canonicalClaimPromotionRequiredApprovals": [
+      "evidence"
+    ],
+    "productCapabilityReviewRequiredApprovals": [
+      "product"
+    ],
+    "blanketSuppressionProhibited": true,
+    "policy": "Review applies at the relevant stage. Source activation does not authorize claim promotion or medical authority, and a pending later-stage review must not suppress useful information at an earlier authorized stage.",
+    "sourceActivationConditionalApprovals": [
+      "securityData"
+    ],
+    "securityDataTriggers": [
+      "credentials-or-restricted-access",
+      "private-or-personal-data",
+      "new-egress-or-storage-boundary",
+      "untrusted-bulk-archive-or-parser",
+      "executable-or-active-content"
+    ]
+  }
 }

@@ -61,11 +61,17 @@
       "method": "Pinned source-registry SHA-256 verification",
       "status": "passed",
       "evidence_ref": "research/input/sources/pilot-source-registry.json"
+    },
+    {
+      "method": "Product-doctrine reconciliation against the product-owner correction and ratified governing principle",
+      "status": "passed",
+      "evidence_ref": "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-RECOMMENDED-SEVEN-SOURCE-DECISION-CONTRACT-001.md"
     }
   ],
   "retry_count": 0,
   "escalation_history": [
-    "Local candidate output was revised and validated by the coordinator and independent frontier agents."
+    "Local candidate output was revised and validated by the coordinator and independent frontier agents.",
+    "The product owner rejected blanket suppression; the contract was amended so review gates apply only at their governed stage and high risk increases context and review rather than reducing useful information."
   ],
   "outcome": "partial"
 }

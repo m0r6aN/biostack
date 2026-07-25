@@ -9,6 +9,8 @@
     "recordType",
     "generatedAt",
     "assignmentDisclaimer",
+    "productDoctrine",
+    "stageGates",
     "registryBinding",
     "owners",
     "sources"
@@ -16,7 +18,7 @@
   "properties": {
     "schemaVersion": {
       "type": "string",
-      "const": "1.0.0"
+      "const": "1.1.0"
     },
     "recordType": {
       "type": "string",
@@ -28,7 +30,13 @@
     },
     "assignmentDisclaimer": {
       "type": "string",
-      "const": "Assignment identifies the responsible human reviewer; it is not approval, activation, or authorization to acquire source data."
+      "const": "Assignment identifies the responsible human reviewer. Each approval applies only to its declared stage; assignment is not approval, and a pending later-stage review does not block an earlier authorized stage."
+    },
+    "productDoctrine": {
+      "$ref": "#/$defs/productDoctrine"
+    },
+    "stageGates": {
+      "$ref": "#/$defs/stageGates"
     },
     "registryBinding": {
       "type": "object",
@@ -82,10 +90,119 @@
       },
       "uniqueItems": true
     },
+    "productDoctrine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "confirmedBy",
+        "confirmedAtUtc",
+        "purpose",
+        "stance",
+        "governingPrinciple",
+        "allowedInformation",
+        "prohibitedStances"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "product-owner-confirmed"
+        },
+        "confirmedBy": {
+          "type": "string",
+          "const": "Clint Morgan"
+        },
+        "confirmedAtUtc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "purpose": {
+          "type": "string",
+          "const": "Help people make the most informed decisions reasonably possible in the interest of their safety and success."
+        },
+        "stance": {
+          "type": "string",
+          "const": "observational-educational-evidence-aware-non-prescriptive"
+        },
+        "governingPrinciple": {
+          "type": "string",
+          "const": "High risk requires more evidence, explanation, validation, review, and escalation. It does not automatically require less useful information."
+        },
+        "allowedInformation": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/stringArray"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        },
+        "prohibitedStances": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/stringArray"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        }
+      }
+    },
+    "stageGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceActivationRequiredApprovals",
+        "sourceActivationConditionalApprovals",
+        "securityDataTriggers",
+        "canonicalClaimPromotionRequiredApprovals",
+        "productCapabilityReviewRequiredApprovals",
+        "blanketSuppressionProhibited",
+        "policy"
+      ],
+      "properties": {
+        "sourceActivationRequiredApprovals": {
+          "type": "array",
+          "const": ["legalRights"]
+        },
+        "sourceActivationConditionalApprovals": {
+          "type": "array",
+          "const": ["securityData"]
+        },
+        "securityDataTriggers": {
+          "type": "array",
+          "const": [
+            "credentials-or-restricted-access",
+            "private-or-personal-data",
+            "new-egress-or-storage-boundary",
+            "untrusted-bulk-archive-or-parser",
+            "executable-or-active-content"
+          ]
+        },
+        "canonicalClaimPromotionRequiredApprovals": {
+          "type": "array",
+          "const": ["evidence"]
+        },
+        "productCapabilityReviewRequiredApprovals": {
+          "type": "array",
+          "const": ["product"]
+        },
+        "blanketSuppressionProhibited": {
+          "type": "boolean",
+          "const": true
+        },
+        "policy": {
+          "type": "string",
+          "const": "Review applies at the relevant stage. Source activation does not authorize claim promotion or medical authority, and a pending later-stage review must not suppress useful information at an earlier authorized stage."
+        }
+      }
+    },
     "owner": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["roleId", "personName", "assignmentStatus", "approvalStatus"],
+      "required": ["roleId", "personName", "assignmentStatus"],
       "properties": {
         "roleId": {
           "type": "string",
@@ -102,33 +219,87 @@
         "assignmentStatus": {
           "type": "string",
           "const": "assigned"
-        },
-        "approvalStatus": {
-          "type": "string",
-          "const": "pending"
         }
       }
     },
     "approval": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["assigneeName", "status", "decidedAtUtc", "decisionNotes"],
+      "required": ["assigneeName", "decisionScope", "blockingStage", "reviewStatus", "decision", "decidedAtUtc", "decisionNotes"],
       "properties": {
         "assigneeName": {
           "$ref": "#/$defs/nonEmptyString"
         },
-        "status": {
+        "decisionScope": {
           "type": "string",
-          "const": "pending"
+          "enum": ["product-capability", "legal-rights", "evidence-promotion", "security-data"]
+        },
+        "blockingStage": {
+          "type": "string",
+          "enum": ["product-capability-review", "source-activation", "canonical-claim-promotion"]
+        },
+        "reviewStatus": {
+          "type": "string",
+          "enum": ["unreviewed", "review-required", "reviewed", "not-applicable"]
+        },
+        "decision": {
+          "type": ["string", "null"],
+          "enum": ["approved", "approved-with-controls", "rejected", null]
         },
         "decidedAtUtc": {
-          "type": "null"
+          "type": ["string", "null"],
+          "format": "date-time"
         },
         "decisionNotes": {
-          "type": "array",
-          "maxItems": 0
+          "$ref": "#/$defs/stringArray"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "reviewStatus": {
+                "const": "reviewed"
+              }
+            },
+            "required": ["reviewStatus"]
+          },
+          "then": {
+            "properties": {
+              "decision": {
+                "enum": ["approved", "approved-with-controls", "rejected"]
+              },
+              "decidedAtUtc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "decisionNotes": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "reviewStatus": {
+                "enum": ["unreviewed", "review-required", "not-applicable"]
+              }
+            },
+            "required": ["reviewStatus"]
+          },
+          "then": {
+            "properties": {
+              "decision": {
+                "type": "null"
+              },
+              "decidedAtUtc": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     },
     "approvals": {
       "type": "object",
@@ -136,16 +307,72 @@
       "required": ["product", "legalRights", "evidence", "securityData"],
       "properties": {
         "product": {
-          "$ref": "#/$defs/approval"
+          "allOf": [
+            {
+              "$ref": "#/$defs/approval"
+            },
+            {
+              "properties": {
+                "decisionScope": {
+                  "const": "product-capability"
+                },
+                "blockingStage": {
+                  "const": "product-capability-review"
+                }
+              }
+            }
+          ]
         },
         "legalRights": {
-          "$ref": "#/$defs/approval"
+          "allOf": [
+            {
+              "$ref": "#/$defs/approval"
+            },
+            {
+              "properties": {
+                "decisionScope": {
+                  "const": "legal-rights"
+                },
+                "blockingStage": {
+                  "const": "source-activation"
+                }
+              }
+            }
+          ]
         },
         "evidence": {
-          "$ref": "#/$defs/approval"
+          "allOf": [
+            {
+              "$ref": "#/$defs/approval"
+            },
+            {
+              "properties": {
+                "decisionScope": {
+                  "const": "evidence-promotion"
+                },
+                "blockingStage": {
+                  "const": "canonical-claim-promotion"
+                }
+              }
+            }
+          ]
         },
         "securityData": {
-          "$ref": "#/$defs/approval"
+          "allOf": [
+            {
+              "$ref": "#/$defs/approval"
+            },
+            {
+              "properties": {
+                "decisionScope": {
+                  "const": "security-data"
+                },
+                "blockingStage": {
+                  "const": "source-activation"
+                }
+              }
+            }
+          ]
         }
       }
     },
@@ -183,6 +410,7 @@
         "legalBasisOrLicense",
         "termsUrl",
         "allowedUses",
+        "proposedUses",
         "prohibitedUses",
         "redistributionConstraints",
         "reviewedBy",
@@ -191,17 +419,27 @@
       "properties": {
         "reviewStatus": {
           "type": "string",
-          "const": "pending-human-legal"
+          "enum": ["unreviewed", "review-required", "reviewed", "not-applicable"]
         },
         "legalBasisOrLicense": {
-          "type": "null"
+          "$ref": "#/$defs/nullableString"
         },
         "termsUrl": {
-          "type": "null"
+          "type": ["string", "null"],
+          "format": "uri"
         },
         "allowedUses": {
-          "type": "array",
-          "maxItems": 0
+          "$ref": "#/$defs/stringArray"
+        },
+        "proposedUses": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/stringArray"
+            },
+            {
+              "minItems": 1
+            }
+          ]
         },
         "prohibitedUses": {
           "allOf": [
@@ -224,10 +462,11 @@
           ]
         },
         "reviewedBy": {
-          "type": "null"
+          "$ref": "#/$defs/nullableString"
         },
         "verifiedAtUtc": {
-          "type": "null"
+          "type": ["string", "null"],
+          "format": "date-time"
         }
       }
     },
@@ -238,7 +477,7 @@
       "properties": {
         "status": {
           "type": "string",
-          "const": "disabled"
+          "enum": ["disabled", "approved", "suspended"]
         },
         "ownerRole": {
           "type": "string",
@@ -249,7 +488,8 @@
           "const": "security-data-owner"
         },
         "lastReviewedAtUtc": {
-          "type": "null"
+          "type": ["string", "null"],
+          "format": "date-time"
         }
       }
     },
@@ -270,12 +510,11 @@
       ],
       "properties": {
         "enabled": {
-          "type": "boolean",
-          "const": false
+          "type": "boolean"
         },
         "method": {
           "type": "string",
-          "const": "none"
+          "enum": ["none", "api", "bulk-download", "manual-review"]
         },
         "reviewCandidateMethod": {
           "type": "string",
@@ -292,14 +531,14 @@
         },
         "robotsPolicyStatus": {
           "type": "string",
-          "const": "not-reviewed"
+          "enum": ["not-reviewed", "review-required", "reviewed", "not-applicable"]
         },
         "apiTermsStatus": {
           "type": "string",
-          "const": "not-reviewed"
+          "enum": ["not-reviewed", "review-required", "reviewed", "not-applicable"]
         },
         "rateLimitPolicy": {
-          "type": "null"
+          "$ref": "#/$defs/nullableString"
         },
         "accessNotes": {
           "$ref": "#/$defs/nonEmptyString"
@@ -320,7 +559,7 @@
         },
         "humanReviewRequirement": {
           "type": "string",
-          "const": "always"
+          "const": "claim-level-before-canonical-promotion"
         },
         "limitations": {
           "allOf": [
@@ -359,17 +598,18 @@
       "properties": {
         "mode": {
           "type": "string",
-          "const": "disabled-until-approved"
+          "enum": ["disabled-until-approved", "manual", "scheduled", "suspended"]
         },
         "proposedCadence": {
           "$ref": "#/$defs/nonEmptyString"
         },
         "stalenessAction": {
           "type": "string",
-          "const": "block-use"
+          "const": "mark-stale-and-restrict-current-status-claims"
         },
         "lastSuccessfulRefreshAtUtc": {
-          "type": "null"
+          "type": ["string", "null"],
+          "format": "date-time"
         }
       }
     },
@@ -455,6 +695,7 @@
         "refresh",
         "remediation",
         "dataBoundary",
+        "securityDataTriggersDetected",
         "approvals",
         "unresolvedQuestions"
       ],
@@ -476,11 +717,15 @@
         },
         "decisionStatus": {
           "type": "string",
-          "const": "pending-human-signoff"
+          "enum": [
+            "selected-pending-source-activation-review",
+            "approved",
+            "rejected",
+            "suspended"
+          ]
         },
         "activationReady": {
-          "type": "boolean",
-          "const": false
+          "type": "boolean"
         },
         "documentation": {
           "$ref": "#/$defs/documentation"
@@ -509,6 +754,20 @@
         "dataBoundary": {
           "$ref": "#/$defs/dataBoundary"
         },
+        "securityDataTriggersDetected": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "credentials-or-restricted-access",
+              "private-or-personal-data",
+              "new-egress-or-storage-boundary",
+              "untrusted-bulk-archive-or-parser",
+              "executable-or-active-content"
+            ]
+          }
+        },
         "approvals": {
           "$ref": "#/$defs/approvals"
         },
@@ -522,7 +781,234 @@
             }
           ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "activationReady": {
+                "const": true
+              }
+            },
+            "required": ["activationReady"]
+          },
+          "then": {
+            "properties": {
+              "decisionStatus": {
+                "const": "approved"
+              },
+              "rights": {
+                "properties": {
+                  "reviewStatus": {
+                    "const": "reviewed"
+                  },
+                  "legalBasisOrLicense": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "allowedUses": {
+                    "minItems": 1
+                  },
+                  "reviewedBy": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "verifiedAtUtc": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              "operations": {
+                "properties": {
+                  "status": {
+                    "const": "approved"
+                  }
+                }
+              },
+              "acquisition": {
+                "properties": {
+                  "enabled": {
+                    "const": true
+                  },
+                  "method": {
+                    "enum": ["api", "bulk-download", "manual-review"]
+                  },
+                  "apiTermsStatus": {
+                    "enum": ["reviewed", "not-applicable"]
+                  }
+                }
+              },
+              "approvals": {
+                "properties": {
+                  "legalRights": {
+                    "properties": {
+                      "reviewStatus": {
+                        "const": "reviewed"
+                      },
+                      "decision": {
+                        "enum": ["approved", "approved-with-controls"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "acquisition": {
+                "properties": {
+                  "enabled": {
+                    "const": true
+                  }
+                },
+                "required": ["enabled"]
+              }
+            },
+            "required": ["acquisition"]
+          },
+          "then": {
+            "properties": {
+              "activationReady": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "securityDataTriggersDetected": {
+                "minItems": 1
+              }
+            },
+            "required": ["securityDataTriggersDetected"]
+          },
+          "then": {
+            "properties": {
+              "approvals": {
+                "properties": {
+                  "securityData": {
+                    "properties": {
+                      "reviewStatus": {
+                        "enum": ["review-required", "reviewed"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "activationReady": {
+                    "const": true
+                  }
+                },
+                "required": ["activationReady"]
+              },
+              {
+                "properties": {
+                  "securityDataTriggersDetected": {
+                    "minItems": 1
+                  }
+                },
+                "required": ["securityDataTriggersDetected"]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "approvals": {
+                "properties": {
+                  "securityData": {
+                    "properties": {
+                      "reviewStatus": {
+                        "const": "reviewed"
+                      },
+                      "decision": {
+                        "enum": ["approved", "approved-with-controls"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "securityDataTriggersDetected": {
+                "maxItems": 0
+              }
+            },
+            "required": ["securityDataTriggersDetected"]
+          },
+          "then": {
+            "properties": {
+              "approvals": {
+                "properties": {
+                  "securityData": {
+                    "properties": {
+                      "reviewStatus": {
+                        "const": "not-applicable"
+                      },
+                      "decision": {
+                        "type": "null"
+                      },
+                      "decidedAtUtc": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "approvals": {
+                "properties": {
+                  "legalRights": {
+                    "properties": {
+                      "decision": {
+                        "const": "rejected"
+                      }
+                    },
+                    "required": ["decision"]
+                  }
+                },
+                "required": ["legalRights"]
+              }
+            },
+            "required": ["approvals"]
+          },
+          "then": {
+            "properties": {
+              "activationReady": {
+                "const": false
+              },
+              "acquisition": {
+                "properties": {
+                  "enabled": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }
