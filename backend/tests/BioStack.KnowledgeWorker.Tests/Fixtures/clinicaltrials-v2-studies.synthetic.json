@@ -1,0 +1,96 @@
+{
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT00000001",
+          "organization": {
+            "fullName": "Synthetic Trial Registry Organization",
+            "class": "OTHER"
+          },
+          "briefTitle": "Synthetic Registered Intervention Study",
+          "officialTitle": "Synthetic Protocol Metadata for Adapter Testing"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING",
+          "studyFirstPostDateStruct": {
+            "date": "2026-01-10",
+            "type": "ACTUAL"
+          },
+          "lastUpdateSubmitDate": "2026-07-20",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-07-22",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "leadSponsor": {
+            "name": "Synthetic Sponsor",
+            "class": "INDUSTRY"
+          }
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Synthetic metabolic condition"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "PHASE2"
+          ]
+        },
+        "armsInterventionsModule": {
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Retatrutide",
+              "otherNames": [
+                "SYNTHETIC-TRIPLE-AGONIST"
+              ]
+            },
+            {
+              "type": "DRUG",
+              "name": "Synthetic comparator",
+              "otherNames": [
+                "SYNTHETIC-CONTROL"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Synthetic primary outcome name",
+              "description": "This synthetic description must not be emitted.",
+              "timeFrame": "Synthetic week 24"
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "Synthetic secondary outcome name",
+              "description": "This synthetic description must not be emitted.",
+              "timeFrame": "Synthetic week 12"
+            }
+          ]
+        }
+      },
+      "resultsSection": {
+        "outcomeMeasuresModule": {
+          "outcomeMeasures": [
+            {
+              "title": "Synthetic measured result that must not be emitted",
+              "groups": [
+                {
+                  "id": "FG000",
+                  "title": "Synthetic result group"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "totalCount": 1
+}
