@@ -1,0 +1,69 @@
+{
+  "header": {
+    "type": "esummary",
+    "version": "0.3"
+  },
+  "result": {
+    "uids": [
+      "111",
+      "222"
+    ],
+    "111": {
+      "uid": "111",
+      "pubdate": "2025 Jul 01",
+      "source": "Synthetic Journal",
+      "title": "Synthetic semaglutide mechanism citation.",
+      "volume": "12",
+      "issue": "3",
+      "pages": "10-20",
+      "elocationid": "e12345",
+      "lang": [
+        "eng"
+      ],
+      "pubtype": [
+        "Journal Article",
+        "Randomized Controlled Trial"
+      ],
+      "articleids": [
+        {
+          "idtype": "pubmed",
+          "value": "111"
+        },
+        {
+          "idtype": "doi",
+          "value": "10.0000/synthetic.111"
+        },
+        {
+          "idtype": "pmc",
+          "value": "PMC111"
+        }
+      ],
+      "abstract": "Excluded synthetic abstract.",
+      "authors": [
+        {
+          "name": "Excluded Author"
+        }
+      ]
+    },
+    "222": {
+      "uid": "222",
+      "pubdate": "2024 Dec",
+      "sortpubdate": "2099/01/01 00:00",
+      "source": "Synthetic Evidence Review",
+      "title": "Synthetic semaglutide interaction citation.",
+      "lang": [
+        "eng",
+        "spa"
+      ],
+      "pubtype": [
+        "Review"
+      ],
+      "articleids": [
+        {
+          "idtype": "pubmed",
+          "value": "222"
+        }
+      ]
+    }
+  }
+}
