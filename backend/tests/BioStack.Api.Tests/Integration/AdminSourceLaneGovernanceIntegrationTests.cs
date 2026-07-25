@@ -182,40 +182,11 @@ public sealed class AdminSourceLaneGovernanceIntegrationTests : IAsyncLifetime
         await using var scope = _factory.Services.CreateAsyncScope();
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
         Assert.False(await db.KnowledgeEntries.AnyAsync(x => x.CanonicalName == "bypass-fence-test"));
-    }
-
-    [Fact]
-    public async Task AdminKnowledgeIngest_EnabledWithoutOverrideHeader_ReturnsForbidden()
-    {
-        await using var factory = BuildFactory(enableProvider: true, enableKnowledgeIngest: true);
-        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
-        await AdminAuthTestHelper.SignInAsAdminAsync(client, factory, "admin-source-lane-ingest-no-override@example.com");
-
-        var entries = new[]
-        {
-            new KnowledgeEntry
-            {
-                Id = Guid.NewGuid(),
-                CanonicalName = "override-header-missing-test",
-                SourceReferences = new List<string> { "https://example.test/source" },
-            },
-        };
-
-        var missingHeaderResponse = await client.PostAsJsonAsync("/api/v1/admin/knowledge/ingest", entries, JsonOptions);
-        Assert.Equal(HttpStatusCode.Forbidden, missingHeaderResponse.StatusCode);
-
-        client.DefaultRequestHeaders.Add("X-BioStack-Admin-Override", "wrong-value");
-        var wrongHeaderResponse = await client.PostAsJsonAsync("/api/v1/admin/knowledge/ingest", entries, JsonOptions);
-        Assert.Equal(HttpStatusCode.Forbidden, wrongHeaderResponse.StatusCode);
-
-        await using var scope = factory.Services.CreateAsyncScope();
-        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
-        Assert.False(await db.KnowledgeEntries.AnyAsync(x => x.CanonicalName == "override-header-missing-test"));
         Assert.False(await db.SpineEntries.AnyAsync(e => e.ReceiptClass == "admin.override.performed"));
     }
 
     [Fact]
-    public async Task AdminKnowledgeIngest_EnabledWithOverrideHeader_IngestsAndEmitsOverrideReceipt()
+    public async Task AdminKnowledgeIngest_EnabledWithFormerOverrideHeader_ReturnsNotFoundAndWritesNothing()
     {
         await using var factory = BuildFactory(enableProvider: true, enableKnowledgeIngest: true);
         using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
@@ -235,15 +206,15 @@ public sealed class AdminSourceLaneGovernanceIntegrationTests : IAsyncLifetime
             },
             JsonOptions);
 
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
 
         await using var scope = factory.Services.CreateAsyncScope();
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
-        Assert.True(await db.KnowledgeEntries.AnyAsync(x => x.CanonicalName == "override-ingest-test"));
+        Assert.False(await db.KnowledgeEntries.AnyAsync(x => x.CanonicalName == "override-ingest-test"));
 
         var overrideReceiptCount = await db.SpineEntries
             .CountAsync(e => e.ReceiptClass == "admin.override.performed");
-        Assert.Equal(1, overrideReceiptCount);
+        Assert.Equal(0, overrideReceiptCount);
     }
 
     private WebApplicationFactory<Program> BuildFactory(bool enableProvider, bool enableKnowledgeIngest = false)

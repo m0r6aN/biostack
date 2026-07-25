@@ -3,86 +3,20 @@ namespace BioStack.Api.Endpoints;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
-using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Keon;
 using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Persistence;
 using BioStack.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 
 public static class AdminEndpoints
 {
-    private const string KnowledgeIngestOverrideHeader = "X-BioStack-Admin-Override";
-    private const string KnowledgeIngestOverrideValue = "canonical-knowledge-ingest";
-
     public static void MapAdminEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/api/v1/admin")
             .WithTags("Admin")
             .RequireAuthorization("AdminOnly");
-
-        group.MapPost("/knowledge/ingest", async (
-            [FromBody] List<KnowledgeEntry> entries,
-            HttpRequest httpRequest,
-            [FromServices] IConfiguration configuration,
-            [FromServices] IKnowledgeSource knowledgeSource,
-            [FromServices] IMemoryCache memoryCache,
-            [FromServices] ILoggerFactory loggerFactory,
-            [FromServices] IRuntimeReceiptFactory receipts,
-            [FromServices] ICurrentUserAccessor currentUser,
-            CancellationToken ct) =>
-        {
-            var enabled = configuration.GetValue<bool>("Admin:KnowledgeIngest:Enabled");
-            if (!enabled)
-            {
-                return Results.NotFound();
-            }
-
-            if (!httpRequest.Headers.TryGetValue(KnowledgeIngestOverrideHeader, out var overrideHeader) ||
-                !string.Equals(overrideHeader.ToString(), KnowledgeIngestOverrideValue, StringComparison.Ordinal))
-            {
-                return Results.Forbid();
-            }
-
-            if (entries is null || entries.Count == 0)
-            {
-                return Results.BadRequest("No entries provided");
-            }
-
-            var evidenceRefs = entries
-                .Where(e => !string.IsNullOrWhiteSpace(e.CanonicalName))
-                .Select(e => ReceiptRefs.Compound(e.CanonicalName))
-                .Distinct(StringComparer.Ordinal)
-                .ToList();
-            if (evidenceRefs.Count == 0)
-            {
-                evidenceRefs.Add("admin-override:knowledge-ingest");
-            }
-
-            await receipts.IssueAndAppendAsync(new ReceiptContext(
-                ReceiptClass: ReceiptClass.AdminOverridePerformed,
-                SubjectUri: "admin:knowledge-ingest",
-                Actor: ReceiptActor.User(currentUser.GetCurrentUserId()),
-                EvidenceRefs: evidenceRefs,
-                Decision: "admin-override",
-                EffectStatus: "canonical-write",
-                InputHashSeed: string.Join("|", entries.Select(e => e.CanonicalName).Order(StringComparer.Ordinal))),
-                ct);
-
-            try
-            {
-                var count = await knowledgeSource.IngestBulkAsync(entries, ct);
-                memoryCache.Remove("analyzer:knowledge:aliases");
-                return Results.Ok(new { Message = $"Successfully ingested {count} compounds", Count = count });
-            }
-            catch (Exception ex)
-            {
-                loggerFactory.CreateLogger("AdminEndpoints").LogError(ex, "Knowledge ingest failed");
-                return Results.Problem("Knowledge ingestion failed. Check server logs for details.");
-            }
-        });
 
         group.MapPost("/knowledge-source-intake", async (
             [FromBody] AdminKnowledgeSourceIntakeRequest request,
