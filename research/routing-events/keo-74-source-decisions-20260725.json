@@ -1,0 +1,71 @@
+{
+  "event_id": "keo-74-source-decisions-20260725",
+  "timestamp": "2026-07-25T13:00:16Z",
+  "task_id": "KEO-74-RECOMMENDED-SEVEN-SOURCE-DECISION-CONTRACT-001",
+  "event_type": "complete",
+  "selected": {
+    "kind": "model",
+    "id": "qwen2.5-coder:14b",
+    "provider": "ollama",
+    "execution_class": "local"
+  },
+  "rationale": [
+    "Used the newly available local coding model for a bounded candidate-only source-packet structure task.",
+    "Kept source research, legal boundaries, schema design, implementation, and acceptance under independent frontier-agent and deterministic validation."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "local-model-authority",
+      "reason": "A local model was not permitted to approve legal rights, activate sources, or serve as final evidence authority."
+    },
+    {
+      "id": "single-agent-unreviewed",
+      "reason": "The legal-adjacent source contract required independent official-source and fail-closed review."
+    }
+  ],
+  "effort": "medium",
+  "context": {
+    "estimated_tokens": 700,
+    "artifact_refs": [
+      "research/source-authorization/recommended-seven-source-decisions.v1.json",
+      "backend/src/BioStack.KnowledgeWorker/Schemas/source-authorization-decision.schema.json",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-RECOMMENDED-SEVEN-SOURCE-DECISION-CONTRACT-001.md"
+    ],
+    "data_classification": "public"
+  },
+  "permissions": [
+    "candidate-structure-only",
+    "no-source-approval",
+    "no-acquisition",
+    "no-external-side-effects"
+  ],
+  "tools_granted": [],
+  "cost": {
+    "currency": "USD",
+    "estimated": 0,
+    "actual": 0,
+    "confidence": "high"
+  },
+  "validation": [
+    {
+      "method": "Independent first-party source review",
+      "status": "passed",
+      "evidence_ref": "research/source-authorization/recommended-seven-source-decisions.v1.json"
+    },
+    {
+      "method": "Schema and fail-closed invariant tests",
+      "status": "passed",
+      "evidence_ref": "backend/tests/BioStack.KnowledgeWorker.Tests/ResearchArtifactValidatorTests.cs"
+    },
+    {
+      "method": "Pinned source-registry SHA-256 verification",
+      "status": "passed",
+      "evidence_ref": "research/input/sources/pilot-source-registry.json"
+    }
+  ],
+  "retry_count": 0,
+  "escalation_history": [
+    "Local candidate output was revised and validated by the coordinator and independent frontier agents."
+  ],
+  "outcome": "partial"
+}
