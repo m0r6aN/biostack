@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "research-request-batch",
+  "batch": {
+    "batchId": "source-acquisition-planning-fixture",
+    "requesterId": "synthetic-offline-test",
+    "requestedAt": "2026-07-25T00:00:00Z",
+    "notes": [
+      "Synthetic planning input only. It contains no retrieved source content and authorizes no acquisition."
+    ]
+  },
+  "requests": [
+    {
+      "requestId": "planning-semaglutide-001",
+      "compoundName": "Semaglutide",
+      "aliases": [
+        "Ozempic",
+        "Wegovy",
+        "Semaglutide"
+      ],
+      "categories": [
+        "peptide-market-interest"
+      ],
+      "classification": "Peptide",
+      "priority": "high",
+      "requesterId": "synthetic-offline-test",
+      "requestedAt": "2026-07-25T00:00:00Z",
+      "rationale": "Exercise deterministic planning for a peptide target.",
+      "notes": []
+    },
+    {
+      "requestId": "planning-ostarine-001",
+      "compoundName": "Ostarine",
+      "aliases": [
+        "MK-2866",
+        "Enobosarm"
+      ],
+      "categories": [
+        "sarm-market-interest"
+      ],
+      "classification": "SARM",
+      "priority": "high",
+      "requesterId": "synthetic-offline-test",
+      "requestedAt": "2026-07-25T00:00:00Z",
+      "rationale": "Exercise deterministic planning for a SARM target.",
+      "notes": []
+    }
+  ]
+}
