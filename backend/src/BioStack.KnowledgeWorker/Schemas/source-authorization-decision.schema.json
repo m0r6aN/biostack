@@ -49,7 +49,7 @@
         },
         "sha256": {
           "type": "string",
-          "const": "0a625778407fc85f3e32ed620b578bf4fe37cd37acb09c938776d9ed82aa7163"
+          "const": "3c8425e090f31ea17eb4d6a10f8ea8a5e2f352f753f3c5312fc7fcce80d03e28"
         },
         "registryPath": {
           "type": "string",

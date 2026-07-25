@@ -45,10 +45,10 @@ public sealed class StructuralEvaluationReportBuilderTests
         Assert.Empty(report.Payload.CorpusInventory.EvidenceWithoutCandidateCanonicalIds);
         Assert.Equal(2, report.Payload.CorpusInventory.IdentityTokenCollisions.Count);
         Assert.Empty(report.Payload.CorpusInventory.ExternalIdentifierCollisions);
-        Assert.Equal(0, report.Payload.CorpusInventory.ApprovedRightsSourceCount);
-        Assert.Equal(0, report.Payload.CorpusInventory.ActiveOperationsSourceCount);
-        Assert.Equal(0, report.Payload.CorpusInventory.AcquisitionEnabledSourceCount);
-        Assert.Equal(0, report.Payload.CorpusInventory.RegistryAuthorizedEvidencePacketCount);
+        Assert.Equal(7, report.Payload.CorpusInventory.ApprovedRightsSourceCount);
+        Assert.Equal(7, report.Payload.CorpusInventory.ActiveOperationsSourceCount);
+        Assert.Equal(7, report.Payload.CorpusInventory.AcquisitionEnabledSourceCount);
+        Assert.Equal(6, report.Payload.CorpusInventory.RegistryAuthorizedEvidencePacketCount);
         Assert.False(report.Payload.CorpusInventory.ModelInvoked);
         Assert.False(report.Payload.CorpusInventory.NetworkAccessed);
 
@@ -101,8 +101,8 @@ public sealed class StructuralEvaluationReportBuilderTests
         Assert.Equal("not_evaluated", (string?)json["payload"]?["overallVerdict"]);
         Assert.Equal("not_evaluated", (string?)json["payload"]?["comparison"]?["overallVerdict"]);
         Assert.False((bool)json["payload"]?["comparison"]?["candidateDeclarationsTrusted"]!);
-        Assert.Equal(0, (int)json["payload"]?["corpusInventory"]?["approvedRightsSourceCount"]!);
-        Assert.Equal(0, (int)json["payload"]?["corpusInventory"]?["registryAuthorizedEvidencePacketCount"]!);
+        Assert.Equal(7, (int)json["payload"]?["corpusInventory"]?["approvedRightsSourceCount"]!);
+        Assert.Equal(6, (int)json["payload"]?["corpusInventory"]?["registryAuthorizedEvidencePacketCount"]!);
         Assert.False((bool)json["payload"]?["corpusInventory"]?["modelInvoked"]!);
         Assert.False((bool)json["payload"]?["corpusInventory"]?["networkAccessed"]!);
         Assert.Null(json["payload"]?["corpusInventory"]?["generatedAtUtc"]);

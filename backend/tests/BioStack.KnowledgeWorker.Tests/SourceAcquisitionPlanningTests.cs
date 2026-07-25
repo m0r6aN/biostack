@@ -11,7 +11,7 @@ public class SourceAcquisitionPlanningTests
     private const string ReviewedAt = "2026-07-25T13:15:00Z";
 
     [Fact]
-    public void ActivationPolicy_PilotRegistry_Leaves_RecommendedSeven_Disabled()
+    public void ActivationPolicy_PilotRegistry_Activates_Approved_RecommendedSeven()
     {
         var index = new SourceRegistryActivationPolicy().Build(LoadPilotRegistry());
 
@@ -20,20 +20,14 @@ public class SourceAcquisitionPlanningTests
             .ToList();
 
         Assert.All(selected, snapshot => Assert.NotNull(snapshot));
-        Assert.All(selected, snapshot => Assert.False(snapshot!.CanAcquire));
-        Assert.All(
-            selected,
-            snapshot => Assert.Contains("rights-review-not-approved", snapshot!.BlockingReasons));
-        Assert.All(
-            selected,
-            snapshot => Assert.Contains("operations-not-active", snapshot!.BlockingReasons));
-        Assert.All(
-            selected,
-            snapshot => Assert.Contains("acquisition-disabled", snapshot!.BlockingReasons));
+        Assert.All(selected, snapshot => Assert.True(
+            snapshot!.CanAcquire,
+            string.Join(Environment.NewLine, snapshot.BlockingReasons)));
+        Assert.All(selected, snapshot => Assert.Empty(snapshot!.BlockingReasons));
     }
 
     [Fact]
-    public void PlanBuilder_CurrentArtifacts_Produce_Only_Blocked_Intents()
+    public void PlanBuilder_CurrentArtifacts_Produce_Ready_Intents()
     {
         var requests = LoadMarketInterestRequests();
         var requestCount = ResearchRequestIndex.FromBatches(new[] { requests }).All().Count();
@@ -45,19 +39,14 @@ public class SourceAcquisitionPlanningTests
             PilotRegistrySha256());
 
         Assert.Equal(requestCount * 7, plan.Intents.Count);
-        Assert.Equal(0, plan.ReadyCount);
-        Assert.Equal(plan.Intents.Count, plan.BlockedCount);
+        Assert.Equal(plan.Intents.Count, plan.ReadyCount);
+        Assert.Equal(0, plan.BlockedCount);
         Assert.All(
             plan.Intents,
             intent =>
             {
-                Assert.Equal(SourceAcquisitionDisposition.Blocked, intent.Disposition);
-                Assert.Contains(
-                    intent.BlockingReasons,
-                    reason => reason.EndsWith(":rights-review-not-approved", StringComparison.Ordinal));
-                Assert.Contains(
-                    intent.BlockingReasons,
-                    reason => reason.EndsWith(":source-decision-not-activation-ready", StringComparison.Ordinal));
+                Assert.Equal(SourceAcquisitionDisposition.Ready, intent.Disposition);
+                Assert.Empty(intent.BlockingReasons);
             });
     }
 
@@ -85,7 +74,7 @@ public class SourceAcquisitionPlanningTests
         Assert.Contains("sourceItemId", intent.RequiredProvenanceFields);
         Assert.Equal("2.0.0", intent.RegistrySchemaVersion);
         Assert.Equal(
-            "0a625778407fc85f3e32ed620b578bf4fe37cd37acb09c938776d9ed82aa7163",
+            "3c8425e090f31ea17eb4d6a10f8ea8a5e2f352f753f3c5312fc7fcce80d03e28",
             intent.RegistryBindingSha256);
     }
 

@@ -67,13 +67,33 @@ public class ResearchArtifactValidatorTests
         Assert.True(result.IsValid, result.Summary());
         var sources = artifact.Node["sources"]!.AsArray();
         Assert.Equal(13, sources.Count);
-        Assert.All(sources, source =>
+        var approvedSourceIds = new HashSet<string>(StringComparer.Ordinal)
         {
-            Assert.Equal("pending-human-legal", source!["rights"]!["reviewStatus"]!.GetValue<string>());
+            "fda",
+            "pubchem",
+            "pubmed",
+            "clinicaltrials",
+            "dailymed",
+            "nih-ods",
+            "nih-nccih",
+        };
+        foreach (var source in sources)
+        {
+            var sourceId = source!["identity"]!["sourceId"]!.GetValue<string>();
+            if (approvedSourceIds.Contains(sourceId))
+            {
+                Assert.Equal("approved", source["rights"]!["reviewStatus"]!.GetValue<string>());
+                Assert.Equal("active", source["operations"]!["status"]!.GetValue<string>());
+                Assert.True(source["acquisition"]!["enabled"]!.GetValue<bool>());
+                Assert.NotEmpty(source["rights"]!["allowedUses"]!.AsArray());
+                continue;
+            }
+
+            Assert.Equal("pending-human-legal", source["rights"]!["reviewStatus"]!.GetValue<string>());
             Assert.Equal("disabled", source["operations"]!["status"]!.GetValue<string>());
             Assert.False(source["acquisition"]!["enabled"]!.GetValue<bool>());
             Assert.Empty(source["rights"]!["allowedUses"]!.AsArray());
-        });
+        }
     }
 
     [Fact]
@@ -108,7 +128,7 @@ public class ResearchArtifactValidatorTests
         Assert.Equal(
             registrySha256,
             artifact.Node["registryBinding"]!["sha256"]!.GetValue<string>());
-        Assert.Equal("0a625778407fc85f3e32ed620b578bf4fe37cd37acb09c938776d9ed82aa7163", registrySha256);
+        Assert.Equal("3c8425e090f31ea17eb4d6a10f8ea8a5e2f352f753f3c5312fc7fcce80d03e28", registrySha256);
     }
 
     [Fact]
@@ -200,18 +220,25 @@ public class ResearchArtifactValidatorTests
 
         foreach (var source in sources)
         {
-            Assert.Equal("selected-pending-source-activation-review", source!["decisionStatus"]!.GetValue<string>());
-            Assert.False(source["activationReady"]!.GetValue<bool>());
-            Assert.Equal("review-required", source["rights"]!["reviewStatus"]!.GetValue<string>());
-            Assert.Empty(source["rights"]!["allowedUses"]!.AsArray());
+            Assert.Equal("approved", source!["decisionStatus"]!.GetValue<string>());
+            Assert.True(source["activationReady"]!.GetValue<bool>());
+            Assert.Equal("reviewed", source["rights"]!["reviewStatus"]!.GetValue<string>());
+            Assert.NotEmpty(source["rights"]!["allowedUses"]!.AsArray());
             Assert.NotEmpty(source["rights"]!["proposedUses"]!.AsArray());
-            Assert.Null(source["rights"]!["legalBasisOrLicense"]);
-            Assert.Null(source["rights"]!["reviewedBy"]);
-            Assert.Equal("disabled", source["operations"]!["status"]!.GetValue<string>());
-            Assert.False(source["acquisition"]!["enabled"]!.GetValue<bool>());
-            Assert.Equal("none", source["acquisition"]!["method"]!.GetValue<string>());
-            Assert.Equal("review-required", source["acquisition"]!["apiTermsStatus"]!.GetValue<string>());
-            Assert.Equal("disabled-until-approved", source["refresh"]!["mode"]!.GetValue<string>());
+            Assert.False(string.IsNullOrWhiteSpace(
+                source["rights"]!["legalBasisOrLicense"]!.GetValue<string>()));
+            Assert.Equal("Johnathan Harper", source["rights"]!["reviewedBy"]!.GetValue<string>());
+            Assert.NotNull(source["rights"]!["verifiedAtUtc"]);
+            Assert.Equal("approved", source["operations"]!["status"]!.GetValue<string>());
+            Assert.NotNull(source["operations"]!["lastReviewedAtUtc"]);
+            Assert.True(source["acquisition"]!["enabled"]!.GetValue<bool>());
+            Assert.Equal(
+                source["acquisition"]!["reviewCandidateMethod"]!.GetValue<string>(),
+                source["acquisition"]!["method"]!.GetValue<string>());
+            Assert.Contains(
+                source["acquisition"]!["apiTermsStatus"]!.GetValue<string>(),
+                new[] { "reviewed", "not-applicable" });
+            Assert.Equal("manual", source["refresh"]!["mode"]!.GetValue<string>());
             Assert.Equal(
                 "mark-stale-and-restrict-current-status-claims",
                 source["refresh"]!["stalenessAction"]!.GetValue<string>());
@@ -243,18 +270,19 @@ public class ResearchArtifactValidatorTests
             Assert.Equal("Johnathan Harper", approvals["legalRights"]!["assigneeName"]!.GetValue<string>());
             Assert.Equal("legal-rights", approvals["legalRights"]!["decisionScope"]!.GetValue<string>());
             Assert.Equal("source-activation", approvals["legalRights"]!["blockingStage"]!.GetValue<string>());
+            Assert.Equal("reviewed", approvals["legalRights"]!["reviewStatus"]!.GetValue<string>());
+            Assert.Equal("approved", approvals["legalRights"]!["decision"]!.GetValue<string>());
+            Assert.NotNull(approvals["legalRights"]!["decidedAtUtc"]);
+            Assert.NotEmpty(approvals["legalRights"]!["decisionNotes"]!.AsArray());
             Assert.Equal("Ellison Nemoy", approvals["evidence"]!["assigneeName"]!.GetValue<string>());
             Assert.Equal("evidence-promotion", approvals["evidence"]!["decisionScope"]!.GetValue<string>());
             Assert.Equal("canonical-claim-promotion", approvals["evidence"]!["blockingStage"]!.GetValue<string>());
             Assert.Equal("Pradic Patel", approvals["securityData"]!["assigneeName"]!.GetValue<string>());
             Assert.Equal("security-data", approvals["securityData"]!["decisionScope"]!.GetValue<string>());
             Assert.Equal("source-activation", approvals["securityData"]!["blockingStage"]!.GetValue<string>());
-            foreach (var key in new[] { "legalRights", "evidence" })
-            {
-                Assert.Equal("review-required", approvals[key]!["reviewStatus"]!.GetValue<string>());
-                Assert.Null(approvals[key]!["decision"]);
-                Assert.Null(approvals[key]!["decidedAtUtc"]);
-            }
+            Assert.Equal("review-required", approvals["evidence"]!["reviewStatus"]!.GetValue<string>());
+            Assert.Null(approvals["evidence"]!["decision"]);
+            Assert.Null(approvals["evidence"]!["decidedAtUtc"]);
             Assert.Empty(source["securityDataTriggersDetected"]!.AsArray());
             Assert.Equal("not-applicable", approvals["securityData"]!["reviewStatus"]!.GetValue<string>());
             Assert.Null(approvals["securityData"]!["decision"]);
@@ -313,11 +341,11 @@ public class ResearchArtifactValidatorTests
     {
         var artifact = LoadSevenSourceDecisionArtifact();
         var source = artifact.Node["sources"]![0]!;
-        source["decisionStatus"] = "approved";
-        source["activationReady"] = true;
-        source["operations"]!["status"] = "approved";
-        source["acquisition"]!["enabled"] = true;
-        source["acquisition"]!["method"] = "api";
+        source["rights"]!["reviewStatus"] = "review-required";
+        source["rights"]!["legalBasisOrLicense"] = null;
+        source["rights"]!["allowedUses"] = new JsonArray();
+        source["rights"]!["reviewedBy"] = null;
+        source["rights"]!["verifiedAtUtc"] = null;
         var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
 
         var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
@@ -331,6 +359,9 @@ public class ResearchArtifactValidatorTests
         var artifact = LoadSevenSourceDecisionArtifact();
         var legalApproval = artifact.Node["sources"]![0]!["approvals"]!["legalRights"]!;
         legalApproval["reviewStatus"] = "reviewed";
+        legalApproval["decision"] = null;
+        legalApproval["decidedAtUtc"] = null;
+        legalApproval["decisionNotes"] = new JsonArray();
         var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
 
         var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
@@ -349,6 +380,12 @@ public class ResearchArtifactValidatorTests
         securityApproval["reviewStatus"] = "review-required";
         securityApproval["decision"] = null;
         securityApproval["decidedAtUtc"] = null;
+        source["decisionStatus"] = "selected-pending-source-activation-review";
+        source["activationReady"] = false;
+        source["operations"]!["status"] = "disabled";
+        source["acquisition"]!["enabled"] = false;
+        source["acquisition"]!["method"] = "none";
+        source["refresh"]!["mode"] = "disabled-until-approved";
         var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
 
         var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
