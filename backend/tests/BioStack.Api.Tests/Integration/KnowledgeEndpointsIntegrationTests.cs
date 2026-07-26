@@ -1,8 +1,12 @@
 namespace BioStack.Api.Tests.Integration;
 
 using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 using BioStack.Api;
+using BioStack.Contracts.Requests;
+using BioStack.Domain.Entities;
+using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
@@ -86,5 +90,121 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
 
         Assert.Equal(JsonValueKind.Array, doc.RootElement.ValueKind);
         Assert.True(doc.RootElement.GetArrayLength() > 0);
+    }
+
+    [Fact]
+    public async Task GetCompound_PublicSerializationPreservesEvidenceAndOmitsIndividualizedActionFields()
+    {
+        await UpsertAsync(new KnowledgeEntry
+        {
+            CanonicalName = "PublicBoundaryProbe",
+            EvidenceTier = EvidenceTier.Moderate,
+            SourceReferences = new List<string> { "https://example.invalid/evidence" },
+            MechanismSummary = "Observed mechanism.",
+            PairsWellWith = new List<string> { "Pairing recommendation" },
+            AvoidWith = new List<string> { "Reported caution" },
+            CompatibleBlends = new List<string> { "Blend recommendation" },
+            VialCompatibility = "Co-vial direction",
+            RecommendedDosage = "250 mcg",
+            StandardDosageRange = "250-500 mcg",
+            MaxReportedDose = "500 mcg",
+            Frequency = "Twice daily",
+            PreferredTimeOfDay = "Morning",
+            WeeklyDosageSchedule = new List<string> { "Week 1: 250 mcg" },
+            IncrementalEscalationSteps = new List<string> { "Increase after one week" },
+            TieredDosing = new TieredDosingData(),
+            DrugInteractions = new List<string> { "Observed interaction" },
+            OptimizationProtein = "2 g/kg/day",
+            OptimizationCarbs = "200 g/day",
+            OptimizationSupplements = new List<string> { "Supplement recommendation" },
+            OptimizationSleep = "8 hours",
+            OptimizationExercise = "Train daily"
+        });
+
+        var response = await _client.GetAsync("/api/v1/knowledge/compounds/PublicBoundaryProbe");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        var root = doc.RootElement;
+
+        Assert.Equal("Moderate", root.GetProperty("evidenceTier").GetString());
+        Assert.Equal(
+            "https://example.invalid/evidence",
+            Assert.Single(root.GetProperty("sourceReferences").EnumerateArray()).GetString());
+        Assert.Equal("Observed mechanism.", root.GetProperty("mechanismSummary").GetString());
+        Assert.Equal(
+            "Reported caution",
+            Assert.Single(root.GetProperty("avoidWith").EnumerateArray()).GetString());
+        Assert.Equal(
+            "Observed interaction",
+            Assert.Single(root.GetProperty("drugInteractions").EnumerateArray()).GetString());
+
+        var withheldProperties = new[]
+        {
+            "pairsWellWith",
+            "compatibleBlends",
+            "vialCompatibility",
+            "recommendedDosage",
+            "standardDosageRange",
+            "maxReportedDose",
+            "frequency",
+            "preferredTimeOfDay",
+            "weeklyDosageSchedule",
+            "incrementalEscalationSteps",
+            "tieredDosing",
+            "optimizationProtein",
+            "optimizationCarbs",
+            "optimizationSupplements",
+            "optimizationSleep",
+            "optimizationExercise"
+        };
+
+        Assert.All(withheldProperties, property => Assert.False(root.TryGetProperty(property, out _), property));
+    }
+
+    [Fact]
+    public async Task InteractionCheck_LegacyPairingMetadataIsUnknownAndDoesNotReturnActionScenarios()
+    {
+        await UpsertAsync(
+            new KnowledgeEntry
+            {
+                CanonicalName = "PublicPairA",
+                PairsWellWith = new List<string> { "PublicPairB" }
+            },
+            new KnowledgeEntry
+            {
+                CanonicalName = "PublicPairB",
+                CompatibleBlends = new List<string> { "PublicPairA" }
+            });
+
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/knowledge/interaction-check",
+            new OverlapCheckRequest(new List<string> { "PublicPairA", "PublicPairB" }));
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var responseText = await response.Content.ReadAsStringAsync();
+        using var doc = JsonDocument.Parse(responseText);
+        var root = doc.RootElement;
+        var interaction = Assert.Single(root.GetProperty("interactions").EnumerateArray());
+
+        Assert.Equal("Unknown", interaction.GetProperty("type").GetString());
+        Assert.Equal(
+            "Source data reports this pairing, but does not establish compatibility or safety.",
+            interaction.GetProperty("reason").GetString());
+        Assert.Equal(0, root.GetProperty("summary").GetProperty("synergies").GetInt32());
+        Assert.Empty(root.GetProperty("counterfactuals").EnumerateArray());
+        Assert.Empty(root.GetProperty("swaps").EnumerateArray());
+        Assert.DoesNotContain("Removing", responseText, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("Replacing", responseText, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private async Task UpsertAsync(params KnowledgeEntry[] entries)
+    {
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var knowledgeSource = scope.ServiceProvider.GetRequiredService<IKnowledgeSource>();
+        foreach (var entry in entries)
+        {
+            await knowledgeSource.UpsertCompoundAsync(entry);
+        }
     }
 }

@@ -6,5 +6,6 @@ public enum InteractionType
     Synergistic = 1,
     Redundant = 2,
     Interfering = 3,
-    Complementary = 4
+    Complementary = 4,
+    Unknown = 5
 }
