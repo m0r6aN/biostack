@@ -48,6 +48,12 @@ public enum RunMode
     /// and writes normalized review-required candidates and minimal receipts only.
     /// </summary>
     SourceAcquisition = 6,
+
+    /// <summary>
+    /// Source-free and database-free retention enforcement for source-acquisition
+    /// artifacts. It never invokes an acquisition adapter or a source endpoint.
+    /// </summary>
+    SourceAcquisitionRetention = 7,
 }
 
 public static class WorkerRunModePolicy
@@ -55,6 +61,7 @@ public static class WorkerRunModePolicy
     public static bool IsDatabaseFree(RunMode mode) =>
         mode is RunMode.Research
             or RunMode.SourceAcquisition
+            or RunMode.SourceAcquisitionRetention
             or RunMode.PromotionImportDryRun
             or RunMode.ProtocolIntelligenceEvaluation;
 }

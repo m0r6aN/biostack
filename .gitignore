@@ -46,6 +46,8 @@ TestResults/
 **/*.dockerignore
 .Dockerfile*
 **/*Dockerfile*
+!/.dockerignore
+!backend/KnowledgeWorker.Dockerfile
 
 # Environment/Secrets
 .env*

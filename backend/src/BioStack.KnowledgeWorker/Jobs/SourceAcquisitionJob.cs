@@ -15,6 +15,7 @@ public sealed class SourceAcquisitionJob : ISourceAcquisitionJob
     private readonly ISourceAcquisitionExecutionPreflight _preflight;
     private readonly ISourceAcquisitionAdapterFactory _adapterFactory;
     private readonly ISourceAcquisitionRunner _runner;
+    private readonly bool _isProduction;
 
     public SourceAcquisitionJob(
         WorkerOptions options,
@@ -23,6 +24,45 @@ public sealed class SourceAcquisitionJob : ISourceAcquisitionJob
         ISourceAcquisitionExecutionPreflight preflight,
         ISourceAcquisitionAdapterFactory adapterFactory,
         ISourceAcquisitionRunner runner)
+        : this(
+            options,
+            validator,
+            planBuilder,
+            preflight,
+            adapterFactory,
+            runner,
+            isProduction: false)
+    {
+    }
+
+    public SourceAcquisitionJob(
+        WorkerOptions options,
+        IResearchArtifactValidator validator,
+        ISourceAcquisitionPlanBuilder planBuilder,
+        ISourceAcquisitionExecutionPreflight preflight,
+        ISourceAcquisitionAdapterFactory adapterFactory,
+        ISourceAcquisitionRunner runner,
+        IHostEnvironment environment)
+        : this(
+            options,
+            validator,
+            planBuilder,
+            preflight,
+            adapterFactory,
+            runner,
+            environment?.IsProduction()
+                ?? throw new ArgumentNullException(nameof(environment)))
+    {
+    }
+
+    private SourceAcquisitionJob(
+        WorkerOptions options,
+        IResearchArtifactValidator validator,
+        ISourceAcquisitionPlanBuilder planBuilder,
+        ISourceAcquisitionExecutionPreflight preflight,
+        ISourceAcquisitionAdapterFactory adapterFactory,
+        ISourceAcquisitionRunner runner,
+        bool isProduction)
     {
         _options = options ?? throw new ArgumentNullException(nameof(options));
         _validator = validator ?? throw new ArgumentNullException(nameof(validator));
@@ -30,13 +70,14 @@ public sealed class SourceAcquisitionJob : ISourceAcquisitionJob
         _preflight = preflight ?? throw new ArgumentNullException(nameof(preflight));
         _adapterFactory = adapterFactory ?? throw new ArgumentNullException(nameof(adapterFactory));
         _runner = runner ?? throw new ArgumentNullException(nameof(runner));
+        _isProduction = isProduction;
     }
 
     public async Task<JobRunResult> RunAsync(
         IngestionContext context,
         CancellationToken cancellationToken = default)
     {
-        ValidateConfiguration(_options);
+        ValidateConfiguration(_options, _isProduction);
 
         var request = await LoadValidatedAsync(
             _options.SourceAcquisitionResearchRequestPath!,
@@ -82,7 +123,13 @@ public sealed class SourceAcquisitionJob : ISourceAcquisitionJob
             _options.ResearchOutputDirectory,
             _options.SourceAcquisitionCycleId!,
             _options.SourceAcquisitionCandidateRetentionDays!.Value,
-            _options.SourceAcquisitionReceiptRetentionDays!.Value);
+            _options.SourceAcquisitionReceiptRetentionDays!.Value,
+            _options.SourceAcquisitionStorageProvider,
+            _options.SourceAcquisitionBlobServiceUri,
+            _options.SourceAcquisitionBlobContainerName,
+            _options.SourceAcquisitionBlobPrefix,
+            _options.SourceAcquisitionManagedIdentityClientId,
+            _isProduction);
         var run = await _runner.RunAsync(
             plan,
             preflight,
@@ -197,7 +244,9 @@ public sealed class SourceAcquisitionJob : ISourceAcquisitionJob
         return buffer.ToArray();
     }
 
-    private static void ValidateConfiguration(WorkerOptions options)
+    private static void ValidateConfiguration(
+        WorkerOptions options,
+        bool isProduction)
     {
         if (string.IsNullOrWhiteSpace(options.SourceAcquisitionResearchRequestPath)
             || string.IsNullOrWhiteSpace(options.SourceAcquisitionDecisionPath)
@@ -220,6 +269,17 @@ public sealed class SourceAcquisitionJob : ISourceAcquisitionJob
         {
             throw new InvalidOperationException(
                 "Source acquisition requires positive explicit retention values.");
+        }
+        if (isProduction
+            && (!string.Equals(
+                    options.SourceAcquisitionStorageProvider,
+                    "AzureBlob",
+                    StringComparison.OrdinalIgnoreCase)
+                || options.SourceAcquisitionCandidateRetentionDays != 30
+                || options.SourceAcquisitionReceiptRetentionDays != 30))
+        {
+            throw new InvalidOperationException(
+                "Production source acquisition requires AzureBlob storage and exact 30/30-day retention.");
         }
         if (!string.IsNullOrWhiteSpace(options.SourceAcquisitionPubMedApiKey))
         {

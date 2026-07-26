@@ -124,6 +124,27 @@ public sealed class WorkerOptions
     /// <summary>Approved positive retention period for minimal acquisition receipts.</summary>
     public int? SourceAcquisitionReceiptRetentionDays { get; set; }
 
+    /// <summary>
+    /// Artifact store for source acquisition. <c>File</c> remains the local and
+    /// test default; <c>AzureBlob</c> is the only production-supported value.
+    /// </summary>
+    public string SourceAcquisitionStorageProvider { get; set; } = "File";
+
+    /// <summary>HTTPS service endpoint, for example https://account.blob.core.windows.net.</summary>
+    public string? SourceAcquisitionBlobServiceUri { get; set; }
+
+    /// <summary>Fixed private container dedicated to source-acquisition artifacts.</summary>
+    public string? SourceAcquisitionBlobContainerName { get; set; }
+
+    /// <summary>Fixed, relative blob-name prefix. It cannot be changed by a cycle or intent.</summary>
+    public string SourceAcquisitionBlobPrefix { get; set; } = "source-acquisition";
+
+    /// <summary>
+    /// Optional client ID for the job's user-assigned managed identity. No other
+    /// credential type is accepted for the production Blob runtime.
+    /// </summary>
+    public string? SourceAcquisitionManagedIdentityClientId { get; set; }
+
     /// <summary>Required NCBI E-utilities tool identifier; never persisted or logged.</summary>
     public string? SourceAcquisitionPubMedTool { get; set; }
 

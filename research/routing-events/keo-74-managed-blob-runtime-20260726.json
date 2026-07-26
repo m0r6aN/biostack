@@ -1,0 +1,133 @@
+{
+  "event_id": "keo-74-managed-blob-runtime-20260726",
+  "timestamp": "2026-07-26T14:06:20Z",
+  "task_id": "KEO-74-MANAGED-BLOB-SOURCE-ACQUISITION-RUNTIME-018",
+  "event_type": "complete",
+  "selected": {
+    "kind": "agent",
+    "id": "codex-isolated-author",
+    "provider": "openai",
+    "execution_class": "host"
+  },
+  "rationale": [
+    "Used an isolated Codex implementation lane because the change combines durable artifact semantics, retention enforcement, container packaging, CI publication, and least-privilege Azure infrastructure.",
+    "Private-only ACR publication is restricted to a dedicated VNet-connected self-hosted runner, while deployment requires existing private-endpoint, private-DNS-link, and Container Apps subnet evidence.",
+    "Used separate independent runtime and infrastructure security reviews; both closed without blocking findings after bounded repairs. No live Azure resource, deployment, role assignment, database, or source endpoint was touched."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "azure-files-key-mount",
+      "reason": "Azure Files mounting would require storage-account-key access and would not preserve the approved managed-identity-only storage boundary."
+    },
+    {
+      "id": "blob-lifecycle-delete",
+      "reason": "Platform lifecycle deletion cannot create the required content-free tombstone before deletion and could not preserve the governed crash-resume semantics."
+    },
+    {
+      "id": "single-manual-job-retention",
+      "reason": "Expiry tied only to a later acquisition rerun cannot guarantee the approved 30-day candidate and receipt retention."
+    },
+    {
+      "id": "single-agent-self-certification",
+      "reason": "The implementation changes security-sensitive storage, identity, deletion, and deployment boundaries and therefore requires independent review."
+    },
+    {
+      "id": "github-hosted-private-acr-publisher",
+      "reason": "A GitHub-hosted runner has no authorized route to a public-network-disabled ACR and must not be used for publication."
+    }
+  ],
+  "effort": "high",
+  "context": {
+    "estimated_tokens": 22000,
+    "artifact_refs": [
+      "backend/src/BioStack.KnowledgeWorker/Pipeline/AzureBlobSourceAcquisitionArtifactStore.cs",
+      "backend/src/BioStack.KnowledgeWorker/Pipeline/SourceAcquisitionRetention.cs",
+      "backend/tests/BioStack.KnowledgeWorker.Tests/SourceAcquisitionStorageTests.cs",
+      ".github/workflows/source-acquisition-worker.yml",
+      "infra/azure/source-acquisition-jobs.bicep",
+      "infra/azure/source-acquisition-role.bicep",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-MANAGED-BLOB-SOURCE-ACQUISITION-RUNTIME-018.md"
+    ],
+    "data_classification": "internal"
+  },
+  "permissions": [
+    "isolated-worktree-write",
+    "backend-runtime-and-tests",
+    "container-build-and-ci-contract",
+    "offline-infrastructure-template",
+    "no-live-azure",
+    "no-deployment",
+    "no-role-assignment",
+    "no-live-source-calls",
+    "no-database-or-promotion",
+    "no-commit-push-or-pr"
+  ],
+  "tools_granted": [
+    "filesystem",
+    "dotnet-build-and-test",
+    "docker-build",
+    "azure-bicep-compile",
+    "git-read"
+  ],
+  "cost": {
+    "currency": "USD",
+    "estimated": null,
+    "actual": null,
+    "confidence": "low"
+  },
+  "validation": [
+    {
+      "method": "Azure Blob storage and retention tests",
+      "status": "passed",
+      "evidence_ref": "14 storage tests and 16 runtime tests passed; 0 failed and 0 skipped"
+    },
+    {
+      "method": "Full KnowledgeWorker regression suite",
+      "status": "passed",
+      "evidence_ref": "TestResults/keo74-repair-final5/knowledge-worker-full-final5.trx: 864 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Worker container image build",
+      "status": "passed",
+      "evidence_ref": "Pinned final image sha256:2ad78d6aa2721cf63cf355fa39721c72962ccb4feff297606b91de079a4e9f38; non-root app user; required inputs present; appsettings absent"
+    },
+    {
+      "method": "Azure Bicep compilation",
+      "status": "passed",
+      "evidence_ref": "Both source-acquisition-role.bicep and source-acquisition-jobs.bicep compiled with az bicep build --stdout"
+    },
+    {
+      "method": "Private ACR network evidence gate",
+      "status": "passed",
+      "evidence_ref": "Bicep requires approved ACR private endpoint, exact privatelink.azurecr.io zone/link, and matching current Container Apps infrastructure-subnet VNet"
+    },
+    {
+      "method": "Workflow parse and publisher routing",
+      "status": "passed",
+      "evidence_ref": "YAML parsed; verify uses ubuntu-24.04; publish requires self-hosted/linux/x64/biostack-private-acr and private RFC1918 ACR resolution"
+    },
+    {
+      "method": "Runner and toolchain drift",
+      "status": "partial",
+      "evidence_ref": "Low residual: Ubuntu image plus Azure CLI, Docker, and self-hosted runner servicing can drift; actions, SDK, Bicep, and container bases are pinned"
+    },
+    {
+      "method": "Independent managed-Blob security and boundary review",
+      "status": "passed",
+      "evidence_ref": "Runtime and IaC re-reviews reported no blocking findings; Azure-specific test depth and runner/toolchain servicing drift remain documented Low"
+    },
+    {
+      "method": "Whitespace and patch integrity check",
+      "status": "passed",
+      "evidence_ref": "git diff --check"
+    }
+  ],
+  "retry_count": 5,
+  "escalation_history": [
+    "Offline storage tests exposed and drove repairs for test imports and tombstone crash-resume behavior.",
+    "Bicep validation rejected the first multiline digest assertion; the expression was simplified and recompiled successfully.",
+    "The worker image build rejected host-generated Windows object artifacts; a tracked root .dockerignore now excludes host build outputs.",
+    "Overlapping long test runs caused one assembly-lock build failure; owned test processes were stopped and the final suite was rerun once from final no-build binaries with a complete passing TRX."
+  ],
+  "outcome": "accepted"
+}
