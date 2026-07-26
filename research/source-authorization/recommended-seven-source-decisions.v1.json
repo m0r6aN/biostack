@@ -1,8 +1,8 @@
 {
-  "schemaVersion": "1.1.0",
+  "schemaVersion": "1.2.0",
   "recordType": "source-authorization-decision-batch",
-  "generatedAt": "2026-07-26T10:40:42Z",
-  "assignmentDisclaimer": "Assignment identifies the responsible human reviewer. Each approval applies only to its declared stage; assignment is not approval, and a pending later-stage review does not block an earlier authorized stage.",
+  "generatedAt": "2026-07-26T12:22:29Z",
+  "assignmentDisclaimer": "Assignment identifies the responsible human reviewer. Role assignments are unique, but one person may hold multiple roles; that overlap does not satisfy any distinct-person or independent-review requirement. Each approval applies only to its declared stage; assignment is not approval, and a pending later-stage review does not block an earlier authorized stage.",
   "registryBinding": {
     "schemaVersion": "2.0.0",
     "sha256": "3c8425e090f31ea17eb4d6a10f8ea8a5e2f352f753f3c5312fc7fcce80d03e28",
@@ -12,6 +12,7 @@
     {
       "roleId": "product-owner",
       "personName": "Clint Morgan",
+      "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
       "assignmentStatus": "assigned"
     },
     {
@@ -21,7 +22,8 @@
     },
     {
       "roleId": "evidence-reviewer",
-      "personName": "Ellison Nemoy",
+      "personName": "Clint Morgan",
+      "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
       "assignmentStatus": "assigned"
     },
     {
@@ -156,6 +158,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -178,9 +181,12 @@
           "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -197,7 +203,7 @@
             "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
             "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
             "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
-            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
@@ -337,6 +343,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -359,9 +366,12 @@
           "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -378,7 +388,7 @@
             "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
             "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
             "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
-            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
@@ -520,6 +530,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -542,9 +553,12 @@
           "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -561,7 +575,7 @@
             "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
             "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
             "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
-            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
@@ -703,6 +717,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -725,9 +740,12 @@
           "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -744,7 +762,7 @@
             "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
             "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
             "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
-            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
@@ -893,6 +911,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -915,9 +934,12 @@
           "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -934,7 +956,7 @@
             "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
             "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
             "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
-            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
@@ -1073,6 +1095,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -1095,9 +1118,12 @@
           "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -1114,7 +1140,7 @@
             "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
             "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
             "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
-            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
@@ -1252,6 +1278,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -1274,9 +1301,13 @@
           "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time.",
+            "Clint Morgan is also the assigned NCCIH manual-capture operator. He cannot independently review his own capture; the NCCIH manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -1293,7 +1324,7 @@
             "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
             "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
             "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
-            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",

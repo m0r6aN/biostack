@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "reviewer-owner-transfer-receipt",
+  "receiptId": "keo-74-reviewer-owner-transfer-017-20260726",
+  "receivedAtUtc": "2026-07-26T12:22:29Z",
+  "timestampBasis": "receipt-time-not-original-decision-time",
+  "originalDecisionAtUtc": null,
+  "decisionSource": "user-supplied-in-authorized-task",
+  "transfer": {
+    "departingPersonName": "Ellison Nemoy",
+    "successor": {
+      "personName": "Clint Morgan",
+      "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0"
+    },
+    "responsibilityIds": [
+      "evidence-reviewer",
+      "nih-nccih-manual-reviewer"
+    ]
+  },
+  "bindings": [
+    {
+      "artifactPath": "research/source-authorization/recommended-seven-source-decisions.v1.json",
+      "sha256": "a5ad6ef136b3b7628416ea4fc516548dbf3d3fb1f0a77ff74a60e74d54968ea2"
+    },
+    {
+      "artifactPath": "backend/src/BioStack.KnowledgeWorker/Schemas/source-authorization-decision.schema.json",
+      "sha256": "a9b094fc8d6ac87916cf7858124a16f8d00562ba338365d93418d0f211edf4db"
+    }
+  ],
+  "invariants": {
+    "assignmentIsApproval": false,
+    "canonicalClaimPromotionRequiresEvidenceReview": true,
+    "nccihOperatorPersonName": "Clint Morgan",
+    "nccihReviewerOwnerPersonName": "Clint Morgan",
+    "nccihDistinctReviewerRequired": true,
+    "nccihCurrentDisposition": "blocked-pending-distinct-authorized-reviewer",
+    "noLiveOrRuntimeAuthorizationGranted": true
+  },
+  "notes": [
+    "The original transfer decision time was not supplied. receivedAtUtc records when the transfer was received for binding in this repository and must not be represented as the original decision time.",
+    "Clint Morgan owns the evidence-review responsibility after this transfer, but he is not an independent reviewer of NCCIH captures he performs as the assigned operator.",
+    "The existing fail-closed NCCIH guard requiring different operator and reviewer identifiers remains unchanged. A distinct authorized person must perform the reviewer action before an operator-created NCCIH candidate can be ready."
+  ]
+}
