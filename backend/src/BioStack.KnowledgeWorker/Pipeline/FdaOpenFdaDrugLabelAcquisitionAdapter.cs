@@ -2,6 +2,7 @@ namespace BioStack.KnowledgeWorker.Pipeline;
 
 using System.Net;
 using System.Net.Http.Headers;
+using System.Globalization;
 using System.Text;
 using System.Text.Json;
 
@@ -10,6 +11,9 @@ public sealed class FdaOpenFdaDrugLabelAcquisitionAdapter : ISourceAcquisitionAd
     public const string TransformationVersion = "fda-openfda-drug-label-v1";
     public const string PlanningAdapterId = "fda-planning-v1";
     public const string FixedEndpoint = "https://api.fda.gov/drug/label.json";
+    public const string OpenFdaTermsUrl = "https://open.fda.gov/terms/";
+    public const string FdaWebsitePoliciesUrl =
+        "https://www.fda.gov/about-fda/about-website/website-policies";
     public const int ResultLimit = 100;
     public const int DefaultMaximumResponseBytes = 2 * 1024 * 1024;
 
@@ -57,6 +61,29 @@ public sealed class FdaOpenFdaDrugLabelAcquisitionAdapter : ISourceAcquisitionAd
         "adverse_reactions",
         "drug_interactions",
     ];
+
+    private static readonly IReadOnlyDictionary<string, string> FieldUseByField =
+        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["set_id"] = "identity",
+            ["version"] = "identity",
+            ["openfda.generic_name"] = "identity",
+            ["openfda.brand_name"] = "identity",
+            ["openfda.substance_name"] = "identity",
+            ["openfda.manufacturer_name"] = "identity",
+            ["openfda.route"] = "identity",
+            ["openfda.dosage_form"] = "identity",
+            ["openfda.application_number"] = "regulatory",
+            ["openfda.product_ndc"] = "regulatory",
+            ["openfda.product_type"] = "regulatory",
+            ["indications_and_usage"] = "approved-indications",
+            ["contraindications"] = "contraindications-warnings",
+            ["warnings"] = "contraindications-warnings",
+            ["boxed_warning"] = "contraindications-warnings",
+            ["warnings_and_cautions"] = "contraindications-warnings",
+            ["adverse_reactions"] = "contraindications-warnings",
+            ["drug_interactions"] = "interactions",
+        };
 
     private readonly HttpClient _httpClient;
     private readonly string _expectedRegistrySha256;
@@ -166,55 +193,26 @@ public sealed class FdaOpenFdaDrugLabelAcquisitionAdapter : ISourceAcquisitionAd
 
     private void ValidateIntent(SourceAcquisitionIntent intent, DateTimeOffset retrievedAtUtc)
     {
-        if (intent is null) throw new ArgumentNullException(nameof(intent));
-        if (intent.Disposition != SourceAcquisitionDisposition.Ready
-            || intent.BlockingReasons.Count > 0)
-        {
-            throw new SourceAcquisitionException(
-                "intent-not-ready",
-                "Only blocker-free Ready intents may be acquired.");
-        }
-        if (!string.Equals(intent.SourceId, SourceId, StringComparison.OrdinalIgnoreCase))
-        {
-            throw new SourceAcquisitionException(
-                "source-not-supported",
-                "This adapter accepts FDA intents only.");
-        }
-        if (!string.Equals(intent.AdapterId, PlanningAdapterId, StringComparison.Ordinal))
-        {
-            throw new SourceAcquisitionException(
-                "planning-adapter-mismatch",
-                $"This adapter requires planning adapter '{PlanningAdapterId}'.");
-        }
-        if (!string.Equals(intent.CandidateMethod, "api", StringComparison.OrdinalIgnoreCase))
-        {
-            throw new SourceAcquisitionException(
-                "acquisition-method-not-supported",
-                "This adapter accepts API acquisition intents only.");
-        }
-        if (!string.Equals(
-                intent.RegistryBindingSha256,
+        SourceAcquisitionIntentGuard.Validate(
+            intent,
+            retrievedAtUtc,
+            new SourceAcquisitionIntentRequirements(
+                SourceId,
+                "FDA",
+                PlanningAdapterId,
+                "api",
                 _expectedRegistrySha256,
-                StringComparison.Ordinal))
-        {
-            throw new SourceAcquisitionException(
-                "source-registry-sha256-mismatch",
-                "The acquisition intent is not bound to the expected source registry.");
-        }
-        if (retrievedAtUtc.Offset != TimeSpan.Zero)
-        {
-            throw new SourceAcquisitionException(
-                "retrieval-timestamp-not-utc",
-                "The retrieval timestamp must use a UTC offset.");
-        }
+                RequiredProvenanceFields));
 
-        var providedProvenance = intent.RequiredProvenanceFields
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        if (RequiredProvenanceFields.Any(field => !providedProvenance.Contains(field)))
+        if (intent.AuthorizedFieldUses is null
+            || !intent.AuthorizedFieldUses.Any(use =>
+                FieldUseByField.Values.Contains(
+                    use,
+                    StringComparer.OrdinalIgnoreCase)))
         {
             throw new SourceAcquisitionException(
-                "required-provenance-missing",
-                "The acquisition intent is missing FDA-required provenance fields.");
+                "authorized-field-use-not-supported",
+                "The FDA adapter requires at least one supported authorized field use.");
         }
     }
 
@@ -327,6 +325,7 @@ public sealed class FdaOpenFdaDrugLabelAcquisitionAdapter : ISourceAcquisitionAd
             {
                 var sourceItemId = ReadRequiredString(item, "id");
                 if (!seenIds.Add(sourceItemId)) continue;
+                var effectiveTime = ReadRequiredEffectiveTime(item);
 
                 var fields = new Dictionary<string, IReadOnlyList<string>>(
                     StringComparer.OrdinalIgnoreCase);
@@ -369,21 +368,81 @@ public sealed class FdaOpenFdaDrugLabelAcquisitionAdapter : ISourceAcquisitionAd
                     AddArray(fields, item, "drug_interactions", "drug_interactions");
                 }
 
-                candidates.Add(new SourceAcquisitionCandidate(
+                var sourceUrl = BuildRecordUri(sourceItemId).AbsoluteUri;
+                var representedUses = fields.Keys
+                    .Select(field => FieldUseByField[field])
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .OrderBy(use => use, StringComparer.Ordinal)
+                    .ToList();
+                var provenance = new Dictionary<string, SourceProvenanceValue>(
+                    StringComparer.OrdinalIgnoreCase)
+                {
+                    ["labelId"] = SourceProvenanceValue.Present(sourceItemId),
+                    ["effectiveTime"] =
+                        SourceProvenanceValue.Present(effectiveTime),
+                };
+                AddOptionalPresentProvenance(
+                    provenance,
+                    item,
+                    "set_id",
+                    "labelSetId");
+                AddOptionalPresentProvenance(
+                    provenance,
+                    item,
+                    "version",
+                    "labelVersion");
+
+                var candidate = new SourceAcquisitionCandidate(
                     RequestId: intent.RequestId,
                     CompoundName: intent.CompoundName,
                     SourceRegistryId: "fda",
                     SourceItemId: sourceItemId,
-                    SourceUrl: BuildRecordUri(sourceItemId).AbsoluteUri,
+                    SourceUrl: sourceUrl,
                     QueryUrl: requestUri.AbsoluteUri,
-                    SourcePublicationOrUpdateDate: ReadOptionalString(item, "effective_time"),
+                    SourcePublicationOrUpdateDate: effectiveTime,
                     RetrievedAtUtc: retrievedAtUtc,
                     RightsReviewStatusAtRetrieval: "reviewed",
                     RegistryBindingSha256: intent.RegistryBindingSha256,
                     TransformationPipelineVersion: TransformationVersion,
                     HumanReviewStatus: "review-required",
                     EvidenceLimitations: EvidenceLimitations,
-                    Fields: fields));
+                    Fields: fields)
+                {
+                    AuthorizedFieldUses = representedUses,
+                    SourceSpecificProvenance = provenance,
+                    RightsAttributions = BuildRightsAttributions(
+                        fields.Keys,
+                        sourceUrl),
+                    DocumentProvenance =
+                    [
+                        new SourceDocumentProvenance(
+                            Title: $"openFDA drug label record {sourceItemId}",
+                            Section: "Allowlisted openFDA drug-label fields",
+                            PublishedDate: string.Empty,
+                            UpdatedDate: effectiveTime),
+                    ],
+                    ReuseBoundary = new SourceReuseBoundary(
+                        Acknowledgement:
+                            "Source: U.S. FDA openFDA drug-label record. Label content is submitted by manufacturers or distributors; inclusion does not imply FDA verification, approval, or endorsement.",
+                        ExcludedContentClasses:
+                        [
+                            "GMDN and other separately restricted data",
+                            "photographs, media, and third-party content",
+                            "copyrighted full text beyond the reviewed openFDA boundary",
+                            "unallowlisted label sections and raw response bodies",
+                            "individualized diagnosis, prescribing, dosing, or treatment guidance",
+                        ],
+                        NonEndorsementRequired: true),
+                    ManualCaptureAudit = null,
+                };
+
+                SourceAcquisitionCandidateGuard.ValidateRequiredProvenance(
+                    candidate,
+                    intent.RequiredProvenanceFields,
+                    "fda",
+                    intent.RegistryBindingSha256);
+                ValidateCandidateEnvelope(candidate);
+                candidates.Add(candidate);
             }
 
             var total = ReadTotal(document.RootElement);
@@ -401,6 +460,279 @@ public sealed class FdaOpenFdaDrugLabelAcquisitionAdapter : ISourceAcquisitionAd
         return new Uri(
             $"{FixedEndpoint}?search={Uri.EscapeDataString(exactIdSearch)}&limit=1",
             UriKind.Absolute);
+    }
+
+    private static IReadOnlyList<SourceRightsAttribution> BuildRightsAttributions(
+        IEnumerable<string> emittedFields,
+        string sourceUrl)
+    {
+        var fields = emittedFields
+            .OrderBy(field => field, StringComparer.Ordinal)
+            .ToList();
+        var openFdaMetadataFields = fields
+            .Where(field =>
+                field.StartsWith("openfda.", StringComparison.OrdinalIgnoreCase)
+                || field is "set_id" or "version")
+            .ToList();
+        var labelSectionFields = fields
+            .Except(openFdaMetadataFields, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+        var attributions = new List<SourceRightsAttribution>();
+
+        if (openFdaMetadataFields.Count > 0)
+        {
+            attributions.Add(new SourceRightsAttribution(
+                Scope:
+                    "Allowlisted openFDA drug-label record metadata and identity or regulatory fields only.",
+                Provider: "U.S. Food and Drug Administration (FDA) / openFDA",
+                SourceUrl: sourceUrl,
+                TermsUrl: OpenFdaTermsUrl,
+                RightsStatus: "reviewed",
+                CoveredFields: openFdaMetadataFields));
+        }
+        if (labelSectionFields.Count > 0)
+        {
+            attributions.Add(new SourceRightsAttribution(
+                Scope:
+                    "Allowlisted FDA drug-label sections submitted by the manufacturer or distributor.",
+                Provider:
+                    "U.S. Food and Drug Administration (FDA) / label submitter",
+                SourceUrl: sourceUrl,
+                TermsUrl: FdaWebsitePoliciesUrl,
+                RightsStatus: "reviewed",
+                CoveredFields: labelSectionFields));
+        }
+
+        return attributions;
+    }
+
+    internal static void ValidateCandidateEnvelope(
+        SourceAcquisitionCandidate candidate)
+    {
+        ArgumentNullException.ThrowIfNull(candidate);
+
+        if (!IsValidEffectiveTime(candidate.SourcePublicationOrUpdateDate)
+            || !string.Equals(
+                candidate.TransformationPipelineVersion,
+                TransformationVersion,
+                StringComparison.Ordinal))
+        {
+            throw new SourceAcquisitionException(
+                "candidate-date-or-transformation-invalid",
+                "FDA candidates require a valid effective_time and the exact transformation version.");
+        }
+
+        if (candidate.Fields is null || candidate.Fields.Count == 0)
+        {
+            throw new SourceAcquisitionException(
+                "candidate-authorized-field-use-invalid",
+                "FDA candidates require at least one allowlisted emitted field.");
+        }
+        var representedUses = new HashSet<string>(
+            StringComparer.OrdinalIgnoreCase);
+        foreach (var field in candidate.Fields.Keys)
+        {
+            if (!FieldUseByField.TryGetValue(field, out var use))
+            {
+                throw new SourceAcquisitionException(
+                    "candidate-authorized-field-use-invalid",
+                    $"FDA candidate field '{field}' has no reviewed field-use mapping.");
+            }
+            representedUses.Add(use);
+        }
+        if (candidate.AuthorizedFieldUses is null
+            || candidate.AuthorizedFieldUses.Count == 0
+            || candidate.AuthorizedFieldUses.Count != representedUses.Count
+            || candidate.AuthorizedFieldUses.Any(
+                use => string.IsNullOrWhiteSpace(use))
+            || !representedUses.SetEquals(candidate.AuthorizedFieldUses))
+        {
+            throw new SourceAcquisitionException(
+                "candidate-authorized-field-use-invalid",
+                "FDA candidate authorized field uses must exactly match emitted fields.");
+        }
+
+        var provenance = candidate.SourceSpecificProvenance;
+        var provenanceValid = provenance is not null
+                              && provenance.Count >= 2
+                              && provenance.All(pair =>
+                                  IsSubstantive(pair.Key)
+                                  && pair.Value is not null
+                                  && string.Equals(
+                                      pair.Value.Availability,
+                                      "present",
+                                      StringComparison.Ordinal)
+                                  && pair.Value.Values is not null
+                                  && pair.Value.Values.Count > 0
+                                  && pair.Value.Values.All(IsSubstantive)
+                                  && string.IsNullOrWhiteSpace(
+                                      pair.Value.UnavailableReason))
+                              && HasExactProvenance(
+                                  provenance,
+                                  "labelId",
+                                  candidate.SourceItemId)
+                              && HasExactProvenance(
+                                  provenance,
+                                  "effectiveTime",
+                                  candidate.SourcePublicationOrUpdateDate);
+        if (!provenanceValid)
+        {
+            throw new SourceAcquisitionException(
+                "candidate-source-provenance-invalid",
+                "FDA candidate source-specific provenance is incomplete or non-substantive.");
+        }
+
+        var rights = candidate.RightsAttributions;
+        if (rights is null
+            || rights.Count == 0
+            || rights.Any(attribution =>
+                !IsSubstantive(attribution.Scope)
+                || !IsSubstantive(attribution.Provider)
+                || !IsSafeHttpsUri(attribution.SourceUrl)
+                || !IsSafeHttpsUri(attribution.TermsUrl)
+                || !string.Equals(
+                    attribution.RightsStatus,
+                    "reviewed",
+                    StringComparison.Ordinal)
+                || attribution.CoveredFields is null
+                || attribution.CoveredFields.Count == 0
+                || attribution.CoveredFields.Any(
+                    field => !IsSubstantive(field))))
+        {
+            throw new SourceAcquisitionException(
+                "candidate-rights-attribution-invalid",
+                "FDA candidate rights attributions must be reviewed and substantive.");
+        }
+
+        var coveredFields = rights
+            .SelectMany(attribution => attribution.CoveredFields)
+            .ToList();
+        var emittedFieldSet = candidate.Fields.Keys
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var coveredFieldSet = coveredFields
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        if (coveredFields.Count != emittedFieldSet.Count
+            || coveredFieldSet.Count != emittedFieldSet.Count
+            || !coveredFieldSet.SetEquals(emittedFieldSet))
+        {
+            throw new SourceAcquisitionException(
+                "candidate-rights-covered-fields-mismatch",
+                "FDA rights attributions must cover each emitted field exactly once.");
+        }
+
+        var boundary = candidate.ReuseBoundary;
+        var exclusions = boundary?.ExcludedContentClasses;
+        var boundaryValid = boundary is not null
+                            && IsSubstantive(boundary.Acknowledgement)
+                            && boundary.NonEndorsementRequired
+                            && exclusions is not null
+                            && exclusions.Count >= 5
+                            && exclusions.All(IsSubstantive)
+                            && ContainsExclusion(exclusions, "GMDN")
+                            && ContainsExclusion(exclusions, "media")
+                            && ContainsExclusion(exclusions, "third-party")
+                            && ContainsExclusion(exclusions, "copyrighted full text")
+                            && ContainsExclusion(exclusions, "individualized");
+        if (!boundaryValid)
+        {
+            throw new SourceAcquisitionException(
+                "candidate-reuse-boundary-invalid",
+                "FDA candidates require the reviewed non-endorsement and exclusion boundary.");
+        }
+
+        if (candidate.ManualCaptureAudit is not null)
+        {
+            throw new SourceAcquisitionException(
+                "candidate-manual-capture-audit-unexpected",
+                "Automated FDA candidates cannot carry a manual-capture audit.");
+        }
+
+        if (candidate.DocumentProvenance is null
+            || candidate.DocumentProvenance.Count != 1
+            || candidate.DocumentProvenance.Any(document =>
+                !IsSubstantive(document.Title)
+                || !IsSubstantive(document.Section)
+                || !string.IsNullOrWhiteSpace(document.PublishedDate)
+                || !string.Equals(
+                    document.UpdatedDate,
+                    candidate.SourcePublicationOrUpdateDate,
+                    StringComparison.Ordinal)))
+        {
+            throw new SourceAcquisitionException(
+                "candidate-document-provenance-invalid",
+                "FDA candidates require substantive label-document provenance.");
+        }
+    }
+
+    private static bool HasExactProvenance(
+        IReadOnlyDictionary<string, SourceProvenanceValue> provenance,
+        string key,
+        string expectedValue)
+        => provenance.TryGetValue(key, out var value)
+           && value.Values.Count == 1
+           && string.Equals(
+               value.Values[0],
+               expectedValue,
+               StringComparison.Ordinal);
+
+    private static bool ContainsExclusion(
+        IReadOnlyList<string> exclusions,
+        string fragment)
+        => exclusions.Any(exclusion =>
+            exclusion.Contains(fragment, StringComparison.OrdinalIgnoreCase));
+
+    private static bool IsSubstantive(string? value)
+        => !string.IsNullOrWhiteSpace(value);
+
+    private static bool IsSafeHttpsUri(string value)
+        => Uri.TryCreate(value, UriKind.Absolute, out var uri)
+           && string.Equals(
+               uri.Scheme,
+               Uri.UriSchemeHttps,
+               StringComparison.OrdinalIgnoreCase)
+           && uri.UserInfo.Length == 0;
+
+    private static bool IsValidEffectiveTime(string? value)
+        => value is not null
+           && DateTime.TryParseExact(
+               value,
+               "yyyyMMdd",
+               CultureInfo.InvariantCulture,
+               DateTimeStyles.None,
+               out _);
+
+    private static string ReadRequiredEffectiveTime(JsonElement item)
+    {
+        if (!item.TryGetProperty("effective_time", out var property)
+            || property.ValueKind != JsonValueKind.String
+            || string.IsNullOrWhiteSpace(property.GetString()))
+        {
+            throw new SourceAcquisitionException(
+                "source-publication-date-missing",
+                "openFDA result is missing required field 'effective_time'.");
+        }
+
+        var value = property.GetString()!.Trim();
+        if (!IsValidEffectiveTime(value))
+        {
+            throw new SourceAcquisitionException(
+                "source-publication-date-invalid",
+                "openFDA effective_time must be a valid calendar date in yyyyMMdd format.");
+        }
+        return value;
+    }
+
+    private static void AddOptionalPresentProvenance(
+        IDictionary<string, SourceProvenanceValue> provenance,
+        JsonElement item,
+        string propertyName,
+        string outputName)
+    {
+        var value = ReadOptionalString(item, propertyName);
+        if (value.Length > 0)
+        {
+            provenance[outputName] = SourceProvenanceValue.Present(value);
+        }
     }
 
     private static int ReadTotal(JsonElement root)

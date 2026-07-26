@@ -109,6 +109,143 @@ public class FdaOpenFdaDrugLabelAcquisitionAdapterTests
     }
 
     [Fact]
+    public async Task Acquire_Emits_RuntimeCompatible_Provenance_And_Rights_Envelope()
+    {
+        var intent = ReadyIntent(["Semaglutide"]);
+        var candidate = await AcquireFixtureCandidateAsync(intent);
+
+        Assert.Equal(
+            [
+                "approved-indications",
+                "contraindications-warnings",
+                "identity",
+                "interactions",
+                "regulatory",
+            ],
+            candidate.AuthorizedFieldUses);
+        Assert.Equal(
+            ["label-semaglutide-001"],
+            candidate.SourceSpecificProvenance["labelId"].Values);
+        Assert.Equal(
+            ["20260701"],
+            candidate.SourceSpecificProvenance["effectiveTime"].Values);
+        Assert.Equal(
+            ["set-semaglutide-001"],
+            candidate.SourceSpecificProvenance["labelSetId"].Values);
+        Assert.Equal(
+            ["7"],
+            candidate.SourceSpecificProvenance["labelVersion"].Values);
+        Assert.All(
+            candidate.SourceSpecificProvenance.Values,
+            value =>
+            {
+                Assert.Equal("present", value.Availability);
+                Assert.NotEmpty(value.Values);
+                Assert.Empty(value.UnavailableReason);
+            });
+
+        Assert.Equal(2, candidate.RightsAttributions.Count);
+        Assert.All(
+            candidate.RightsAttributions,
+            attribution =>
+            {
+                Assert.Equal("reviewed", attribution.RightsStatus);
+                Assert.Contains("FDA", attribution.Provider);
+                Assert.StartsWith("https://", attribution.SourceUrl);
+                Assert.StartsWith("https://", attribution.TermsUrl);
+                Assert.NotEmpty(attribution.CoveredFields);
+            });
+        Assert.Equal(
+            candidate.Fields.Keys.Order(StringComparer.OrdinalIgnoreCase),
+            candidate.RightsAttributions
+                .SelectMany(attribution => attribution.CoveredFields)
+                .Order(StringComparer.OrdinalIgnoreCase));
+        Assert.Equal(
+            candidate.Fields.Count,
+            candidate.RightsAttributions
+                .SelectMany(attribution => attribution.CoveredFields)
+                .Count());
+
+        var document = Assert.Single(candidate.DocumentProvenance);
+        Assert.Contains(candidate.SourceItemId, document.Title);
+        Assert.Empty(document.PublishedDate);
+        Assert.Equal(candidate.SourcePublicationOrUpdateDate, document.UpdatedDate);
+        Assert.True(candidate.ReuseBoundary.NonEndorsementRequired);
+        Assert.Contains("does not imply", candidate.ReuseBoundary.Acknowledgement);
+        Assert.Contains(
+            candidate.ReuseBoundary.ExcludedContentClasses,
+            exclusion => exclusion.Contains("GMDN", StringComparison.Ordinal));
+        Assert.Contains(
+            candidate.ReuseBoundary.ExcludedContentClasses,
+            exclusion => exclusion.Contains("third-party", StringComparison.Ordinal));
+        Assert.Contains(
+            candidate.ReuseBoundary.ExcludedContentClasses,
+            exclusion => exclusion.Contains(
+                "individualized",
+                StringComparison.Ordinal));
+        Assert.Null(candidate.ManualCaptureAudit);
+
+        SourceAcquisitionCandidateGuard.ValidateRequiredProvenance(
+            candidate,
+            intent.RequiredProvenanceFields,
+            expectedSourceRegistryId: "fda",
+            expectedRegistrySha256: RegistrySha256);
+        FdaOpenFdaDrugLabelAcquisitionAdapter.ValidateCandidateEnvelope(candidate);
+    }
+
+    [Theory]
+    [InlineData("missing", "source-publication-date-missing")]
+    [InlineData("blank", "source-publication-date-missing")]
+    [InlineData("wrong-format", "source-publication-date-invalid")]
+    [InlineData("invalid-calendar-date", "source-publication-date-invalid")]
+    public async Task Acquire_Rejects_Missing_Or_Invalid_EffectiveTime(
+        string scenario,
+        string expectedCode)
+    {
+        var effectiveTime = scenario switch
+        {
+            "missing" => string.Empty,
+            "blank" => ",\"effective_time\":\" \"",
+            "wrong-format" => ",\"effective_time\":\"2026-07-01\"",
+            "invalid-calendar-date" => ",\"effective_time\":\"20260230\"",
+            _ => throw new ArgumentOutOfRangeException(nameof(scenario)),
+        };
+        var body =
+            "{\"meta\":{\"results\":{\"total\":1}},\"results\":[{\"id\":\"label-1\""
+            + effectiveTime
+            + "}]}";
+        var adapter = CreateAdapter(new RecordingHandler(_ => JsonResponse(body)));
+
+        var exception = await Assert.ThrowsAsync<SourceAcquisitionException>(
+            () => adapter.AcquireAsync(ReadyIntent(["Semaglutide"]), RetrievedAt));
+
+        Assert.Equal(expectedCode, exception.Code);
+    }
+
+    [Theory]
+    [InlineData("missing-rights", "candidate-rights-attribution-invalid")]
+    [InlineData("unreviewed-rights", "candidate-rights-attribution-invalid")]
+    [InlineData("missing-provenance", "candidate-source-provenance-invalid")]
+    [InlineData("covered-field-gap", "candidate-rights-covered-fields-mismatch")]
+    [InlineData("unrepresented-use", "candidate-authorized-field-use-invalid")]
+    [InlineData("missing-transformation", "candidate-date-or-transformation-invalid")]
+    [InlineData("fabricated-published-date", "candidate-document-provenance-invalid")]
+    public async Task CandidateEnvelope_Rejects_Incomplete_Or_Mismatched_Metadata(
+        string mutation,
+        string expectedCode)
+    {
+        var candidate = await AcquireFixtureCandidateAsync(
+            ReadyIntent(["Semaglutide"]));
+        var mutated = MutateCandidate(candidate, mutation);
+
+        var exception = Assert.Throws<SourceAcquisitionException>(
+            () => FdaOpenFdaDrugLabelAcquisitionAdapter
+                .ValidateCandidateEnvelope(mutated));
+
+        Assert.Equal(expectedCode, exception.Code);
+    }
+
+    [Fact]
     public async Task Acquire_Emits_Only_Field_Groups_Authorized_By_Intent()
     {
         var body = await File.ReadAllTextAsync(
@@ -322,6 +459,79 @@ public class FdaOpenFdaDrugLabelAcquisitionAdapterTests
             RegistrySha256,
             maximumResponseBytes,
             new FdaOpenFdaRequestGate(TimeProvider.System));
+
+    private static async Task<SourceAcquisitionCandidate>
+        AcquireFixtureCandidateAsync(SourceAcquisitionIntent intent)
+    {
+        var body = await File.ReadAllTextAsync(
+            TestPaths.FixturePath("openfda-drug-label.synthetic.json"));
+        var adapter = CreateAdapter(
+            new RecordingHandler(_ => JsonResponse(body)));
+        return Assert.Single(
+            (await adapter.AcquireAsync(intent, RetrievedAt)).Candidates);
+    }
+
+    private static SourceAcquisitionCandidate MutateCandidate(
+        SourceAcquisitionCandidate candidate,
+        string mutation)
+        => mutation switch
+        {
+            "missing-rights" => candidate with { RightsAttributions = [] },
+            "unreviewed-rights" => candidate with
+            {
+                RightsAttributions =
+                [
+                    candidate.RightsAttributions[0] with
+                    {
+                        RightsStatus = "review-required",
+                    },
+                    candidate.RightsAttributions[1],
+                ],
+            },
+            "missing-provenance" => candidate with
+            {
+                SourceSpecificProvenance =
+                    new Dictionary<string, SourceProvenanceValue>(),
+            },
+            "covered-field-gap" => candidate with
+            {
+                RightsAttributions =
+                [
+                    candidate.RightsAttributions[0] with
+                    {
+                        CoveredFields = candidate.RightsAttributions[0]
+                            .CoveredFields
+                            .Skip(1)
+                            .ToList(),
+                    },
+                    candidate.RightsAttributions[1],
+                ],
+            },
+            "unrepresented-use" => candidate with
+            {
+                AuthorizedFieldUses =
+                    candidate.AuthorizedFieldUses.Concat(["monitoring"]).ToList(),
+            },
+            "missing-transformation" => candidate with
+            {
+                TransformationPipelineVersion = string.Empty,
+            },
+            "fabricated-published-date" => candidate with
+            {
+                DocumentProvenance =
+                [
+                    candidate.DocumentProvenance[0] with
+                    {
+                        PublishedDate =
+                            candidate.SourcePublicationOrUpdateDate,
+                    },
+                ],
+            },
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(mutation),
+                mutation,
+                "Unknown candidate mutation."),
+        };
 
     private static SourceAcquisitionIntent ReadyIntent(IReadOnlyList<string> searchTerms)
         => new(
