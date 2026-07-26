@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.1.0",
   "recordType": "source-authorization-decision-batch",
-  "generatedAt": "2026-07-25T15:24:14Z",
+  "generatedAt": "2026-07-26T10:40:42Z",
   "assignmentDisclaimer": "Assignment identifies the responsible human reviewer. Each approval applies only to its declared stage; assignment is not approval, and a pending later-stage review does not block an earlier authorized stage.",
   "registryBinding": {
     "schemaVersion": "2.0.0",
@@ -188,14 +188,21 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
@@ -203,7 +210,10 @@
         "How should record-level exclusions such as GMDN restrictions be represented in candidate metadata?",
         "What retention period should apply to normalized candidate snapshots when raw responses are not persisted?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "pubchem",
@@ -359,14 +369,21 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
@@ -374,7 +391,10 @@
         "How should contributor-level attribution and license restrictions be represented in candidate metadata?",
         "When should the approved API lane graduate to a separately reviewed bulk-download lane?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "pubmed",
@@ -532,14 +552,21 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
@@ -547,7 +574,10 @@
         "What cache and normalized-candidate retention window should the first API adapter enforce?",
         "How will retraction and correction notices invalidate downstream claims?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "clinicaltrials",
@@ -705,14 +735,21 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
@@ -720,7 +757,10 @@
         "What update cadence and change-detection policy will prevent stale study status?",
         "How will linked publications be resolved and reviewed as separate evidence sources?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "dailymed",
@@ -885,14 +925,21 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
@@ -900,7 +947,10 @@
         "How should SPL attribution and version provenance be presented with normalized candidates?",
         "How will label supersession invalidate previously extracted fields?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "nih-ods",
@@ -1055,14 +1105,21 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
@@ -1071,7 +1128,10 @@
         "What conservative request ceiling and cache window should the first API adapter enforce?",
         "Which claims require additional label or primary-literature evidence before promotion?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "nih-nccih",
@@ -1224,14 +1284,21 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "NCCIH manual capture is assigned to operator Clint Morgan and independent reviewer Ellison Nemoy."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
@@ -1239,7 +1306,9 @@
         "What reviewer checklist should be required before manually captured NCCIH text becomes a candidate?",
         "Which claims require separate label, guideline, or primary-literature evidence before promotion?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary"
+      ]
     }
   ],
   "productDoctrine": {

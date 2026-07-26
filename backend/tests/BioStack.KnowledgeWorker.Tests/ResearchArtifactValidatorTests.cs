@@ -283,11 +283,81 @@ public class ResearchArtifactValidatorTests
             Assert.Equal("review-required", approvals["evidence"]!["reviewStatus"]!.GetValue<string>());
             Assert.Null(approvals["evidence"]!["decision"]);
             Assert.Null(approvals["evidence"]!["decidedAtUtc"]);
-            Assert.Empty(source["securityDataTriggersDetected"]!.AsArray());
-            Assert.Equal("not-applicable", approvals["securityData"]!["reviewStatus"]!.GetValue<string>());
-            Assert.Null(approvals["securityData"]!["decision"]);
-            Assert.Null(approvals["securityData"]!["decidedAtUtc"]);
-            Assert.NotEmpty(approvals["securityData"]!["decisionNotes"]!.AsArray());
+            var sourceId = source["sourceId"]!.GetValue<string>();
+            var securityTriggers = source["securityDataTriggersDetected"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray();
+            Assert.Contains("new-egress-or-storage-boundary", securityTriggers);
+            if (sourceId == "nih-nccih")
+            {
+                Assert.Equal(["new-egress-or-storage-boundary"], securityTriggers);
+            }
+            else
+            {
+                Assert.Equal(
+                    [
+                        "new-egress-or-storage-boundary",
+                        "untrusted-bulk-archive-or-parser",
+                    ],
+                    securityTriggers);
+            }
+
+            Assert.Equal(
+                "reviewed",
+                approvals["securityData"]!["reviewStatus"]!.GetValue<string>());
+            Assert.Equal(
+                "approved-with-controls",
+                approvals["securityData"]!["decision"]!.GetValue<string>());
+            Assert.Equal(
+                "2026-07-26T10:40:42Z",
+                approvals["securityData"]!["decidedAtUtc"]!.GetValue<string>());
+            var securityNotes = approvals["securityData"]!["decisionNotes"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray();
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains(
+                    "not the original decision time",
+                    StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains(
+                    "ResearchOutput/source-acquisition/v1",
+                    StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains(
+                    "Raw response bodies",
+                    StringComparison.Ordinal)
+                    && note.Contains("database writes", StringComparison.Ordinal)
+                    && note.Contains("promotion", StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains("disabled redirects", StringComparison.Ordinal)
+                    && note.Contains("no automatic retry", StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains("worker service identity", StringComparison.Ordinal)
+                    && note.Contains("evidence reviewer", StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains(
+                    "explicit positive runtime configuration value with no default",
+                    StringComparison.Ordinal)
+                    && note.Contains("content-free tombstone", StringComparison.Ordinal)
+                    && note.Contains("quarantined", StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains("BioStackKnowledgeWorker", StringComparison.Ordinal)
+                    && note.Contains(
+                        "must not be committed",
+                        StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains("operator Clint Morgan", StringComparison.Ordinal)
+                    && note.Contains(
+                        "independent reviewer Ellison Nemoy",
+                        StringComparison.Ordinal));
         }
     }
 
@@ -322,9 +392,6 @@ public class ResearchArtifactValidatorTests
         legalApproval["decision"] = "approved-with-controls";
         legalApproval["decidedAtUtc"] = "2026-07-25T13:15:00Z";
         legalApproval["decisionNotes"] = new JsonArray("Limited to the selected openFDA data class.");
-        var securityApproval = source["approvals"]!["securityData"]!;
-        securityApproval["reviewStatus"] = "not-applicable";
-        securityApproval["decision"] = null;
         var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
 
         var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
@@ -375,7 +442,9 @@ public class ResearchArtifactValidatorTests
         var artifact = LoadSevenSourceDecisionArtifact();
         var source = artifact.Node["sources"]![0]!;
         source["securityDataTriggersDetected"] =
-            new JsonArray("untrusted-bulk-archive-or-parser");
+            new JsonArray(
+                "new-egress-or-storage-boundary",
+                "untrusted-bulk-archive-or-parser");
         var securityApproval = source["approvals"]!["securityData"]!;
         securityApproval["reviewStatus"] = "review-required";
         securityApproval["decision"] = null;
@@ -399,7 +468,9 @@ public class ResearchArtifactValidatorTests
         var artifact = LoadSevenSourceDecisionArtifact();
         var source = artifact.Node["sources"]![0]!;
         source["securityDataTriggersDetected"] =
-            new JsonArray("untrusted-bulk-archive-or-parser");
+            new JsonArray(
+                "new-egress-or-storage-boundary",
+                "untrusted-bulk-archive-or-parser");
         var securityApproval = source["approvals"]!["securityData"]!;
         securityApproval["reviewStatus"] = "review-required";
         securityApproval["decision"] = null;
