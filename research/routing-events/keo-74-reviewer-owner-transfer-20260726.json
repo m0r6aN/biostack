@@ -1,0 +1,99 @@
+{
+  "event_id": "keo-74-reviewer-owner-transfer-20260726",
+  "timestamp": "2026-07-26T12:37:17Z",
+  "task_id": "KEO-74-REVIEWER-OWNER-TRANSFER-017",
+  "event_type": "complete",
+  "selected": {
+    "kind": "agent",
+    "id": "codex-isolated-author",
+    "provider": "openai",
+    "execution_class": "host"
+  },
+  "rationale": [
+    "Used a Codex author isolated to the dedicated reviewer-transfer worktree because the change updates governance identity bindings, separation-of-duties language, receipt evidence, and invariant tests.",
+    "Kept an independent read-only reviewer lane separate from authorship; it verified the receipt bindings, assignment-versus-approval semantics, and NCCIH separation of duties after the author completed the change."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "single-agent-self-certification",
+      "reason": "The author cannot honestly serve as the independent reviewer of the same governance and separation-of-duties change."
+    },
+    {
+      "id": "live-or-runtime-validation",
+      "reason": "The authorized scope was repository-only reviewer and owner metadata, documentation, artifacts, and tests; Blob, Azure, runtime, live source, database, and promotion calls were prohibited."
+    }
+  ],
+  "effort": "medium",
+  "context": {
+    "estimated_tokens": 6500,
+    "artifact_refs": [
+      "research/source-authorization/keo-74-reviewer-owner-transfer-receipt.v1.json",
+      "research/source-authorization/recommended-seven-source-decisions.v1.json",
+      "backend/src/BioStack.KnowledgeWorker/Schemas/source-authorization-decision.schema.json",
+      "backend/tests/BioStack.KnowledgeWorker.Tests/ResearchArtifactValidatorTests.cs",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-REVIEWER-OWNER-TRANSFER-017.md"
+    ],
+    "data_classification": "internal"
+  },
+  "permissions": [
+    "isolated-worktree-write",
+    "reviewer-owner-metadata-and-tests",
+    "governance-docs-and-binding-receipt",
+    "no-blob",
+    "no-azure",
+    "no-runtime-or-live-calls",
+    "no-database",
+    "no-promotion",
+    "no-commit-push-or-pr"
+  ],
+  "tools_granted": [
+    "filesystem",
+    "dotnet-test",
+    "git-read",
+    "independent-read-only-review"
+  ],
+  "cost": {
+    "currency": "USD",
+    "estimated": null,
+    "actual": null,
+    "confidence": "low"
+  },
+  "validation": [
+    {
+      "method": "Source-authorization artifact and transfer-receipt suite",
+      "status": "passed",
+      "evidence_ref": "35 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "NCCIH manual-review workflow suite",
+      "status": "passed",
+      "evidence_ref": "71 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Full KnowledgeWorker regression suite",
+      "status": "passed",
+      "evidence_ref": "850 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Receipt SHA-256 binding verification",
+      "status": "passed",
+      "evidence_ref": "research/source-authorization/keo-74-reviewer-owner-transfer-receipt.v1.json"
+    },
+    {
+      "method": "Independent reviewer-transfer governance and separation-of-duties review",
+      "status": "passed",
+      "evidence_ref": "no blocking findings; canonical routing-event schema validation passed after execution_class repair"
+    },
+    {
+      "method": "Whitespace and patch integrity check",
+      "status": "passed",
+      "evidence_ref": "git diff --check"
+    }
+  ],
+  "retry_count": 1,
+  "escalation_history": [
+    "The first focused test compile found one receipt-binding path construction error in test code; the author corrected that test-only error and reran all focused and full suites successfully.",
+    "Independent review found one invalid routing execution_class value; it was corrected from isolated-worktree to host and the canonical schema then validated."
+  ],
+  "outcome": "accepted"
+}

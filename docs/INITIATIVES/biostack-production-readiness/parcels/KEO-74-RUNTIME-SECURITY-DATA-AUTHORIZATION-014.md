@@ -44,13 +44,17 @@ Each source records `securityData.reviewStatus` as `reviewed` and
   quarantine for corrupt or orphan artifacts.
 - PubMed: non-secret tool identity `BioStackKnowledgeWorker`; contact email must
   come from external runtime configuration and is not committed.
-- NCCIH: operator Clint Morgan and independent reviewer Ellison Nemoy.
+- NCCIH at this receipt: operator Clint Morgan and independent reviewer Ellison
+  Nemoy. The later reviewer-owner transfer receipt supersedes Ellison's
+  assignment with Clint Morgan, but Clint cannot independently review a capture
+  he performs as NCCIH operator. The lane is therefore blocked pending a
+  distinct authorized reviewer for the reviewer action.
 
 ## Structural evidence
 
 The canonical artifact validator now asserts the exact seven-source trigger,
 approval, timestamp-basis, boundary, transport, access, retention, lifecycle,
-PubMed identity, and NCCIH reviewer structure.
+PubMed identity, and the fail-closed NCCIH distinct-reviewer structure.
 
 The existing source-authorization schema already models the approved trigger
 values and requires reviewed security/data approval for an activation-ready

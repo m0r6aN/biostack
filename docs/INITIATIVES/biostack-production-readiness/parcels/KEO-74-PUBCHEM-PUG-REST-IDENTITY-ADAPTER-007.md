@@ -62,7 +62,9 @@ The candidate guard then validates every registry-required field, including `pub
 - Tests use synthetic fixtures and a recording message handler; no live request is made.
 - No runtime registration, scheduler, persistence, database, canonical-ingest, promotion, publication, frontend, or deployment path is wired.
 - PubChem identity metadata does not establish clinical efficacy, safety, dosing, contraindications, or suitability.
-- Evidence review by Ellison Nemoy remains required before canonical promotion.
+- Evidence-review responsibility is assigned to Clint Morgan
+  (`461a4112-8e91-41cb-afef-6889b8f48ff0`); canonical promotion remains
+  review-gated.
 
 ## Verification
 

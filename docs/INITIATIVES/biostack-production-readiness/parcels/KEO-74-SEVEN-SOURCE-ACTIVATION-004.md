@@ -48,7 +48,9 @@ Six sources use their reviewed public API candidate method. `nih-nccih` remains 
 - No HTTP request is made.
 - No raw source content is stored.
 - No database, worker scheduling, intake, promotion, or deployment path is changed.
-- Evidence review by Ellison Nemoy remains required before canonical claim promotion.
+- Evidence-review responsibility is assigned to Clint Morgan
+  (`461a4112-8e91-41cb-afef-6889b8f48ff0`); canonical claim promotion remains
+  review-gated.
 - Security/data review by Pradic Patel remains conditional on a declared trigger.
 
 ## Verification
