@@ -228,7 +228,7 @@ public class ResearchEvidenceProcessingTests
     }
 
     [Fact]
-    public void SourceRegistryAuthorizer_Pilot_Registry_Leaves_Declared_Alias_Disabled()
+    public void SourceRegistryAuthorizer_Pilot_Registry_Authorizes_Approved_Declared_Alias()
     {
         var packet = LoadEvidencePacket();
         var repositoryRoot = Directory.GetParent(TestPaths.BackendRoot())!.FullName;
@@ -238,8 +238,9 @@ public class ResearchEvidenceProcessingTests
         var result = new SourceRegistryAuthorizer().Authorize(packet, registry);
 
         Assert.DoesNotContain("source-registry-unmapped-source", result.QualityFlags);
-        Assert.Contains("source-registry-source-disabled", result.QualityFlags);
-        Assert.Contains("source-registry-field-mismatch", result.QualityFlags);
+        Assert.DoesNotContain("source-registry-source-disabled", result.QualityFlags);
+        Assert.DoesNotContain("source-registry-field-mismatch", result.QualityFlags);
+        Assert.Empty(result.ReviewReasons);
     }
 
     [Fact]

@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "results": {
+      "skip": 0,
+      "limit": 100,
+      "total": 3
+    }
+  },
+  "results": [
+    {
+      "id": "label-semaglutide-001",
+      "set_id": "set-semaglutide-001",
+      "version": "7",
+      "effective_time": "20260701",
+      "openfda": {
+        "generic_name": ["SEMAGLUTIDE"],
+        "brand_name": ["SYNTHETIC EXAMPLE"],
+        "substance_name": ["SEMAGLUTIDE"],
+        "manufacturer_name": ["Synthetic Fixture Manufacturer"],
+        "route": ["SUBCUTANEOUS"],
+        "dosage_form": ["INJECTION, SOLUTION"],
+        "application_number": ["NDA000000"],
+        "product_ndc": ["00000-0000"],
+        "product_type": ["HUMAN PRESCRIPTION DRUG"]
+      },
+      "indications_and_usage": ["Synthetic studied-use fixture text."],
+      "contraindications": ["Synthetic contraindication fixture text."],
+      "warnings": ["Synthetic warning fixture text."],
+      "boxed_warning": ["Synthetic boxed-warning fixture text."],
+      "warnings_and_cautions": ["Synthetic caution fixture text."],
+      "adverse_reactions": ["Synthetic adverse-reaction fixture text."],
+      "drug_interactions": ["Synthetic interaction fixture text."],
+      "dosage_and_administration": ["This field must not be emitted."],
+      "gmdn_terms": ["This restricted field must not be emitted."],
+      "unexpected_field": ["This unreviewed field must not be emitted."]
+    },
+    {
+      "id": "label-semaglutide-001",
+      "effective_time": "20260702",
+      "openfda": {
+        "generic_name": ["DUPLICATE MUST NOT WIN"]
+      }
+    }
+  ]
+}

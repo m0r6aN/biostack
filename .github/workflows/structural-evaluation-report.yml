@@ -77,10 +77,10 @@ jobs:
             .payload.corpusInventory.seedCandidateOverlapCount == 10 and
             (.payload.corpusInventory.identityTokenCollisions | length) == 2 and
             (.payload.corpusInventory.externalIdentifierCollisions | length) == 0 and
-            .payload.corpusInventory.approvedRightsSourceCount == 0 and
-            .payload.corpusInventory.activeOperationsSourceCount == 0 and
-            .payload.corpusInventory.acquisitionEnabledSourceCount == 0 and
-            .payload.corpusInventory.registryAuthorizedEvidencePacketCount == 0 and
+            .payload.corpusInventory.approvedRightsSourceCount == 7 and
+            .payload.corpusInventory.activeOperationsSourceCount == 7 and
+            .payload.corpusInventory.acquisitionEnabledSourceCount == 7 and
+            .payload.corpusInventory.registryAuthorizedEvidencePacketCount == 6 and
             .payload.corpusInventory.modelInvoked == false and
             .payload.corpusInventory.networkAccessed == false and
             .payload.modelInvoked == false and

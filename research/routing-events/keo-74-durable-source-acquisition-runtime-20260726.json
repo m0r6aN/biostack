@@ -1,0 +1,88 @@
+{
+  "event_id": "keo-74-durable-source-acquisition-runtime-20260726",
+  "timestamp": "2026-07-26T11:35:45Z",
+  "task_id": "KEO-74-DURABLE-SOURCE-ACQUISITION-RUNTIME-015",
+  "event_type": "complete",
+  "selected": {
+    "kind": "agent",
+    "id": "codex-host-subagents",
+    "provider": "openai",
+    "execution_class": "host"
+  },
+  "rationale": [
+    "Used isolated implementation and fresh-context review lanes because the durable runtime crosses network, retention, provenance, and crash-recovery boundaries.",
+    "Used deterministic focused and full test suites for acceptance and kept live source calls, database writes, deployment, and promotion out of the implementation lanes."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "qwen2.5-coder:14b-primary-runtime-author",
+      "reason": "The local model was reserved for lower-risk bounded work; this high-risk durability and retention boundary required independently reviewed host-agent implementation."
+    },
+    {
+      "id": "single-agent-unreviewed",
+      "reason": "Independent review found and drove repairs for candidate validation, incomplete-run resume, and quarantine retention edge cases."
+    },
+    {
+      "id": "live-call-validation",
+      "reason": "Adapter transport was excluded until the runtime, FDA parity, merged source set, and execution storage boundary are separately accepted."
+    }
+  ],
+  "effort": "high",
+  "context": {
+    "estimated_tokens": 24000,
+    "artifact_refs": [
+      "backend/src/BioStack.KnowledgeWorker/Pipeline/SourceAcquisitionRuntime.cs",
+      "backend/tests/BioStack.KnowledgeWorker.Tests/SourceAcquisitionRuntimeTests.cs",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-DURABLE-SOURCE-ACQUISITION-RUNTIME-015.md"
+    ],
+    "data_classification": "internal"
+  },
+  "permissions": [
+    "isolated-worktree-write",
+    "bounded-runtime-and-test-files",
+    "no-live-source-calls",
+    "no-database",
+    "no-deployment",
+    "no-promotion",
+    "no-merge"
+  ],
+  "tools_granted": [
+    "filesystem",
+    "dotnet-test",
+    "git-read"
+  ],
+  "cost": {
+    "currency": "USD",
+    "estimated": null,
+    "actual": null,
+    "confidence": "low"
+  },
+  "validation": [
+    {
+      "method": "Focused durable runtime suite",
+      "status": "passed",
+      "evidence_ref": "backend/tests/BioStack.KnowledgeWorker.Tests/SourceAcquisitionRuntimeTests.cs"
+    },
+    {
+      "method": "Full KnowledgeWorker regression suite",
+      "status": "passed",
+      "evidence_ref": "837 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Independent fresh-context runtime and boundary review",
+      "status": "passed",
+      "evidence_ref": "KEO-74-DURABLE-SOURCE-ACQUISITION-RUNTIME-015"
+    },
+    {
+      "method": "Whitespace and patch integrity check",
+      "status": "passed",
+      "evidence_ref": "git diff --check"
+    }
+  ],
+  "retry_count": 2,
+  "escalation_history": [
+    "Independent review rejected the first implementation until persisted candidate invariants, truncated status, corrupt artifact handling, and original failure status were repaired.",
+    "Independent review rejected the first repair until expired partial failures preserved halt semantics and quarantined candidate content obeyed bounded retention."
+  ],
+  "outcome": "accepted"
+}

@@ -22,10 +22,10 @@ public sealed class CorpusIdentityInventoryBuilderTests
         Assert.Equal(6, snapshot.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(snapshot.CandidatesMissingEvidenceCanonicalIds);
         Assert.Empty(snapshot.EvidenceWithoutCandidateCanonicalIds);
-        Assert.Equal(0, snapshot.ApprovedRightsSourceCount);
-        Assert.Equal(0, snapshot.ActiveOperationsSourceCount);
-        Assert.Equal(0, snapshot.AcquisitionEnabledSourceCount);
-        Assert.Equal(0, snapshot.RegistryAuthorizedEvidencePacketCount);
+        Assert.Equal(7, snapshot.ApprovedRightsSourceCount);
+        Assert.Equal(7, snapshot.ActiveOperationsSourceCount);
+        Assert.Equal(7, snapshot.AcquisitionEnabledSourceCount);
+        Assert.Equal(6, snapshot.RegistryAuthorizedEvidencePacketCount);
         Assert.Equal(2, snapshot.IdentityTokenCollisions.Count);
         Assert.Equal(
             ["creatine", "creatine-monohydrate"],

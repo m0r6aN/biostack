@@ -103,6 +103,39 @@ public sealed class WorkerOptions
     /// </summary>
     public string ResearchOutputDirectory { get; set; } = "ResearchOutput";
 
+    /// <summary>Exact research-request batch used by SourceAcquisition mode.</summary>
+    public string? SourceAcquisitionResearchRequestPath { get; set; }
+
+    /// <summary>Exact approved source-decision batch used by SourceAcquisition mode.</summary>
+    public string? SourceAcquisitionDecisionPath { get; set; }
+
+    /// <summary>Exact activated source registry used by SourceAcquisition mode.</summary>
+    public string? SourceAcquisitionRegistryPath { get; set; }
+
+    /// <summary>
+    /// Caller-supplied stable cycle ID. It has no default so a restart can resume the
+    /// same cycle without accidentally suppressing a later refresh cycle.
+    /// </summary>
+    public string? SourceAcquisitionCycleId { get; set; }
+
+    /// <summary>Approved positive retention period for normalized candidate artifacts.</summary>
+    public int? SourceAcquisitionCandidateRetentionDays { get; set; }
+
+    /// <summary>Approved positive retention period for minimal acquisition receipts.</summary>
+    public int? SourceAcquisitionReceiptRetentionDays { get; set; }
+
+    /// <summary>Required NCBI E-utilities tool identifier; never persisted or logged.</summary>
+    public string? SourceAcquisitionPubMedTool { get; set; }
+
+    /// <summary>Required NCBI E-utilities contact; never persisted or logged.</summary>
+    public string? SourceAcquisitionPubMedContactEmail { get; set; }
+
+    /// <summary>
+    /// Unsupported fail-closed sentinel. Any configured value is rejected because the
+    /// approved PubMed lane is the no-key public API lane.
+    /// </summary>
+    public string? SourceAcquisitionPubMedApiKey { get; set; }
+
     /// <summary>
     /// Maximum independent source families to pursue automatically for partial review follow-up
     /// before leaving the item gated for human review.
