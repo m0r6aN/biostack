@@ -793,6 +793,36 @@ public sealed class SourceAcquisitionRuntimeTests
         Assert.DoesNotContain(removedContent, retainedJson, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public async Task Lease_loss_cancels_before_transport_or_artifact_mutation()
+    {
+        using var temp = new TempDirectory();
+        var campaign = CreateCampaign();
+        var transportCalls = 0;
+        var adapters = CreateAdapters((_, _) =>
+        {
+            Interlocked.Increment(ref transportCalls);
+            return Task.FromResult(
+                EmptyBatch(SourceAcquisitionBatchStatus.NoMatch));
+        });
+        var store = new LeaseLostArtifactStore();
+        var runner = new SourceAcquisitionRunner(
+            new ManualTimeProvider(
+                new DateTimeOffset(2026, 7, 26, 1, 0, 0, TimeSpan.Zero)),
+            _ => store);
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            runner.RunAsync(
+                campaign.Plan,
+                campaign.Preflight,
+                adapters,
+                Bindings(),
+                Configuration(temp.Path, "cycle-lease-loss")));
+
+        Assert.Equal(0, transportCalls);
+        Assert.Equal(0, store.MutationCount);
+    }
+
     private static Campaign CreateCampaign()
     {
         var sourceContracts = new[]
@@ -927,6 +957,77 @@ public sealed class SourceAcquisitionRuntimeTests
             DateTimeOffset retrievedAtUtc,
             CancellationToken cancellationToken = default) =>
             acquire(intent, cancellationToken);
+    }
+
+    private sealed class LeaseLostArtifactStore
+        : ISourceAcquisitionArtifactStore
+    {
+        public string Location => "fake://lease-lost";
+        public int MutationCount { get; private set; }
+
+        public Task<ISourceAcquisitionRunLease> AcquireRunLeaseAsync(
+            CancellationToken cancellationToken) =>
+            Task.FromResult<ISourceAcquisitionRunLease>(
+                new AlreadyLostLease());
+
+        public Task<SourceAcquisitionAttemptArtifact?> TryReadAttemptAsync(
+            string intentId,
+            SourceAcquisitionIntent intent,
+            SourceAcquisitionPreflightEntry entry,
+            SourceAcquisitionInputBindings bindings,
+            SourceAcquisitionRuntimeConfiguration configuration,
+            DateTimeOffset nowUtc,
+            CancellationToken cancellationToken) =>
+            throw new InvalidOperationException(
+                "Lease loss must stop before reads.");
+
+        public Task WriteAttemptAndCheckpointAsync(
+            SourceAcquisitionAttemptArtifact attempt,
+            CancellationToken cancellationToken)
+        {
+            MutationCount++;
+            throw new InvalidOperationException(
+                "Lease loss must stop before writes.");
+        }
+
+        public Task EnsureCheckpointAsync(
+            SourceAcquisitionAttemptArtifact attempt,
+            CancellationToken cancellationToken)
+        {
+            MutationCount++;
+            throw new InvalidOperationException(
+                "Lease loss must stop before writes.");
+        }
+
+        public Task WriteDerivedArtifactsAsync(
+            SourceAcquisitionRunManifest manifest,
+            SourceAcquisitionReviewQueue reviewQueue,
+            CancellationToken cancellationToken)
+        {
+            MutationCount++;
+            throw new InvalidOperationException(
+                "Lease loss must stop before writes.");
+        }
+    }
+
+    private sealed class AlreadyLostLease : ISourceAcquisitionRunLease
+    {
+        private readonly CancellationTokenSource _lost = CreateLost();
+
+        public CancellationToken LeaseLost => _lost.Token;
+
+        public ValueTask DisposeAsync()
+        {
+            _lost.Dispose();
+            return ValueTask.CompletedTask;
+        }
+
+        private static CancellationTokenSource CreateLost()
+        {
+            var source = new CancellationTokenSource();
+            source.Cancel();
+            return source;
+        }
     }
 
     private sealed class CapturingRunner(string outputDirectory)

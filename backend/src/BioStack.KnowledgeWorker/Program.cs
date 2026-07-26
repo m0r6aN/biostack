@@ -87,6 +87,7 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddSingleton<ISourceAcquisitionExecutionPreflight, SourceAcquisitionExecutionPreflight>();
         services.AddSingleton<ISourceAcquisitionAdapterFactory, SourceAcquisitionAdapterFactory>();
         services.AddSingleton<ISourceAcquisitionRunner, SourceAcquisitionRunner>();
+        services.AddSingleton<ISourceAcquisitionRetentionService, SourceAcquisitionRetentionService>();
         services.AddSingleton<IPromotionManifestBuilder, PromotionManifestBuilder>();
         services.AddSingleton<IRelationshipPacketAuthorizer, RelationshipPacketAuthorizer>();
         services.AddSingleton<ICompoundGraphBuilder, CompoundGraphBuilder>();
@@ -109,6 +110,7 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddScoped<IRefreshJob,      RefreshJob>();
         services.AddScoped<IResearchJob,     ResearchJob>();
         services.AddScoped<ISourceAcquisitionJob, SourceAcquisitionJob>();
+        services.AddScoped<ISourceAcquisitionRetentionJob, SourceAcquisitionRetentionJob>();
         services.AddScoped<IPromotionImportDryRunJob, PromotionImportDryRunJob>();
         services.AddScoped<IProtocolIntelligenceEvaluationJob, ProtocolIntelligenceEvaluationJob>();
 

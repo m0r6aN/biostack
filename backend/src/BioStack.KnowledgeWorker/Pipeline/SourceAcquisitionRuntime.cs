@@ -30,7 +30,48 @@ public sealed record SourceAcquisitionRuntimeConfiguration(
     string ResearchOutputDirectory,
     string CycleId,
     int CandidateRetentionDays,
-    int ReceiptRetentionDays);
+    int ReceiptRetentionDays,
+    string StorageProvider = "File",
+    string? BlobServiceUri = null,
+    string? BlobContainerName = null,
+    string BlobPrefix = "source-acquisition",
+    string? ManagedIdentityClientId = null,
+    bool IsProduction = false);
+
+internal interface ISourceAcquisitionRunLease : IAsyncDisposable
+{
+    CancellationToken LeaseLost { get; }
+}
+
+internal interface ISourceAcquisitionArtifactStore
+{
+    string Location { get; }
+
+    Task<ISourceAcquisitionRunLease> AcquireRunLeaseAsync(
+        CancellationToken cancellationToken);
+
+    Task<SourceAcquisitionAttemptArtifact?> TryReadAttemptAsync(
+        string intentId,
+        SourceAcquisitionIntent intent,
+        SourceAcquisitionPreflightEntry entry,
+        SourceAcquisitionInputBindings bindings,
+        SourceAcquisitionRuntimeConfiguration configuration,
+        DateTimeOffset nowUtc,
+        CancellationToken cancellationToken);
+
+    Task WriteAttemptAndCheckpointAsync(
+        SourceAcquisitionAttemptArtifact attempt,
+        CancellationToken cancellationToken);
+
+    Task EnsureCheckpointAsync(
+        SourceAcquisitionAttemptArtifact attempt,
+        CancellationToken cancellationToken);
+
+    Task WriteDerivedArtifactsAsync(
+        SourceAcquisitionRunManifest manifest,
+        SourceAcquisitionReviewQueue reviewQueue,
+        CancellationToken cancellationToken);
+}
 
 public sealed record SourceAcquisitionAttemptArtifact(
     string SchemaVersion,
@@ -196,8 +237,8 @@ public interface ISourceAcquisitionRunner
 
 public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
 {
-    private const string SchemaVersion = "source-acquisition-runtime-v1";
-    private static readonly JsonSerializerOptions JsonOptions = new()
+    internal const string SchemaVersion = "source-acquisition-runtime-v1";
+    internal static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = true,
@@ -205,15 +246,29 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
     };
 
     private readonly TimeProvider _timeProvider;
+    private readonly Func<
+        SourceAcquisitionRuntimeConfiguration,
+        ISourceAcquisitionArtifactStore> _storeFactory;
 
     public SourceAcquisitionRunner()
-        : this(TimeProvider.System)
+        : this(TimeProvider.System, CreateStore)
     {
     }
 
     internal SourceAcquisitionRunner(TimeProvider timeProvider)
+        : this(timeProvider, CreateStore)
+    {
+    }
+
+    internal SourceAcquisitionRunner(
+        TimeProvider timeProvider,
+        Func<
+            SourceAcquisitionRuntimeConfiguration,
+            ISourceAcquisitionArtifactStore> storeFactory)
     {
         _timeProvider = timeProvider ?? throw new ArgumentNullException(nameof(timeProvider));
+        _storeFactory = storeFactory
+                        ?? throw new ArgumentNullException(nameof(storeFactory));
     }
 
     public async Task<SourceAcquisitionRunResult> RunAsync(
@@ -225,8 +280,13 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
         CancellationToken cancellationToken = default)
     {
         ValidateArguments(plan, preflight, adapters, inputBindings, configuration);
-        var store = new SourceAcquisitionArtifactStore(configuration);
-        await using var runLock = store.AcquireRunLock();
+        var store = _storeFactory(configuration);
+        await using var runLease = await store.AcquireRunLeaseAsync(cancellationToken);
+        using var leaseBoundCancellation =
+            CancellationTokenSource.CreateLinkedTokenSource(
+                cancellationToken,
+                runLease.LeaseLost);
+        var runCancellationToken = leaseBoundCancellation.Token;
 
         var intents = plan.Intents.ToDictionary(
             intent => (intent.RequestId, intent.SourceId),
@@ -237,7 +297,7 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
 
         foreach (var entry in preflight.Entries.OrderBy(item => item.StableOrdinal))
         {
-            cancellationToken.ThrowIfCancellationRequested();
+            runCancellationToken.ThrowIfCancellationRequested();
             var intent = intents[(entry.RequestId!, entry.SourceId!)];
             var intentId = ComputeIntentId(
                 configuration.CycleId,
@@ -251,13 +311,13 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
                 inputBindings,
                 configuration,
                 _timeProvider.GetUtcNow(),
-                cancellationToken);
+                runCancellationToken);
             if (existing is not null)
             {
                 attempts.Add(existing);
                 if (existing.Status != "expired")
                 {
-                    await store.EnsureCheckpointAsync(existing, cancellationToken);
+                    await store.EnsureCheckpointAsync(existing, runCancellationToken);
                 }
                 if (EffectiveStatus(existing) is
                     "rate-limited" or "backpressure" or "error" or "truncated")
@@ -302,7 +362,7 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
                     adapters,
                     inputBindings,
                     configuration,
-                    cancellationToken);
+                    runCancellationToken);
                 if (attempt.Status is
                     "rate-limited" or "backpressure" or "error" or "truncated")
                 {
@@ -310,7 +370,7 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
                 }
             }
 
-            await store.WriteAttemptAndCheckpointAsync(attempt, cancellationToken);
+            await store.WriteAttemptAndCheckpointAsync(attempt, runCancellationToken);
             attempts.Add(attempt);
         }
 
@@ -319,9 +379,21 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
             .ToList();
         var manifest = BuildManifest(configuration.CycleId, inputBindings, preflight, ordered);
         var reviewQueue = BuildReviewQueue(configuration.CycleId, ordered);
-        await store.WriteDerivedArtifactsAsync(manifest, reviewQueue, cancellationToken);
-        return new SourceAcquisitionRunResult(manifest, store.CycleDirectory);
+        await store.WriteDerivedArtifactsAsync(
+            manifest,
+            reviewQueue,
+            runCancellationToken);
+        return new SourceAcquisitionRunResult(manifest, store.Location);
     }
+
+    private static ISourceAcquisitionArtifactStore CreateStore(
+        SourceAcquisitionRuntimeConfiguration configuration) =>
+            string.Equals(
+                configuration.StorageProvider,
+                "AzureBlob",
+                StringComparison.OrdinalIgnoreCase)
+                ? new AzureBlobSourceAcquisitionArtifactStore(configuration)
+                : new SourceAcquisitionArtifactStore(configuration);
 
     private async Task<SourceAcquisitionAttemptArtifact> AcquireAsync(
         SourceAcquisitionIntent intent,
@@ -507,7 +579,7 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
             []);
     }
 
-    private static IReadOnlyList<SourceAcquisitionCandidate> NormalizeCandidates(
+    internal static IReadOnlyList<SourceAcquisitionCandidate> NormalizeCandidates(
         IReadOnlyList<SourceAcquisitionCandidate> candidates,
         SourceAcquisitionIntent intent)
     {
@@ -887,6 +959,32 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
             throw new InvalidOperationException(
                 "Positive candidate and receipt retention values are required.");
         }
+        var fileStore = string.Equals(
+            configuration.StorageProvider,
+            "File",
+            StringComparison.OrdinalIgnoreCase);
+        var blobStore = string.Equals(
+            configuration.StorageProvider,
+            "AzureBlob",
+            StringComparison.OrdinalIgnoreCase);
+        if (!fileStore && !blobStore)
+        {
+            throw new InvalidOperationException(
+                "Source acquisition storage provider must be File or AzureBlob.");
+        }
+        if (configuration.IsProduction
+            && (!blobStore
+                || configuration.CandidateRetentionDays != 30
+                || configuration.ReceiptRetentionDays != 30))
+        {
+            throw new InvalidOperationException(
+                "Production source acquisition requires AzureBlob storage and exact 30/30-day retention.");
+        }
+        if (blobStore)
+        {
+            AzureBlobSourceAcquisitionArtifactStore.ValidateConfiguration(
+                configuration);
+        }
     }
 
     private static string? Sanitize(string? value, int maximumLength)
@@ -899,7 +997,7 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
         return sanitized.Length == 0 ? null : sanitized;
     }
 
-    private static bool IsSha256(string value) =>
+    internal static bool IsSha256(string value) =>
         value.Length == 64
         && value.All(character =>
             character is >= '0' and <= '9'
@@ -926,6 +1024,7 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
     }
 
     private sealed class SourceAcquisitionArtifactStore
+        : ISourceAcquisitionArtifactStore
     {
         private readonly string _rootDirectory;
 
@@ -946,18 +1045,24 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
 
         public string CycleDirectory { get; }
 
-        public FileStream AcquireRunLock()
+        public string Location => CycleDirectory;
+
+        public Task<ISourceAcquisitionRunLease> AcquireRunLeaseAsync(
+            CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var path = Path.Combine(CycleDirectory, "run.lock");
             try
             {
-                return new FileStream(
-                    path,
-                    FileMode.OpenOrCreate,
-                    FileAccess.ReadWrite,
-                    FileShare.None,
-                    1,
-                    FileOptions.WriteThrough);
+                ISourceAcquisitionRunLease lease = new FileRunLease(
+                    new FileStream(
+                        path,
+                        FileMode.OpenOrCreate,
+                        FileAccess.ReadWrite,
+                        FileShare.None,
+                        1,
+                        FileOptions.WriteThrough));
+                return Task.FromResult(lease);
             }
             catch (IOException exception)
             {
@@ -965,6 +1070,14 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
                     "Another source-acquisition runner holds the cycle lock.",
                     exception);
             }
+        }
+
+        private sealed class FileRunLease(FileStream stream)
+            : ISourceAcquisitionRunLease
+        {
+            public CancellationToken LeaseLost => CancellationToken.None;
+
+            public ValueTask DisposeAsync() => stream.DisposeAsync();
         }
 
         public async Task<SourceAcquisitionAttemptArtifact?> TryReadAttemptAsync(
@@ -1283,6 +1396,30 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
                 attemptPath,
                 SourceAcquisitionRuntimeLimits.MaximumAttemptBytes,
                 cancellationToken);
+            var existingTombstonePath = TombstonePath(attempt.IntentId);
+            if (File.Exists(existingTombstonePath))
+            {
+                var existingBytes = await ReadBoundedAsync(
+                    existingTombstonePath,
+                    64 * 1024,
+                    cancellationToken);
+                var existing =
+                    JsonSerializer.Deserialize<SourceAcquisitionTombstone>(
+                        existingBytes,
+                        JsonOptions)
+                    ?? throw new InvalidOperationException(
+                        "An existing retention tombstone is invalid.");
+                if (!TombstoneMatchesAttempt(
+                        existing,
+                        attempt,
+                        Sha256(attemptBytes)))
+                {
+                    throw new InvalidOperationException(
+                        "An existing retention tombstone does not match the immutable attempt.");
+                }
+                RemoveExpiredContent(attempt.IntentId);
+                return existing;
+            }
             var tombstone = new SourceAcquisitionTombstone(
                 SchemaVersion,
                 attempt.CycleId,
@@ -1303,6 +1440,24 @@ public sealed partial class SourceAcquisitionRunner : ISourceAcquisitionRunner
             RemoveExpiredContent(attempt.IntentId);
             return tombstone;
         }
+
+        private static bool TombstoneMatchesAttempt(
+            SourceAcquisitionTombstone tombstone,
+            SourceAcquisitionAttemptArtifact attempt,
+            string attemptSha256) =>
+            tombstone.SchemaVersion == SchemaVersion
+            && tombstone.CycleId == attempt.CycleId
+            && tombstone.IntentId == attempt.IntentId
+            && tombstone.StableOrdinal == attempt.StableOrdinal
+            && tombstone.SourceId == attempt.SourceId
+            && tombstone.RequestId == attempt.RequestId
+            && tombstone.OriginalStatus == attempt.Status
+            && tombstone.AttemptSha256 == attemptSha256
+            && tombstone.CompletedAtUtc == attempt.CompletedAtUtc
+            && tombstone.RetainUntilUtc == attempt.RetainUntilUtc
+            && tombstone.RemovedAtUtc >= attempt.RetainUntilUtc
+            && tombstone.RemovedAtUtc.Offset == TimeSpan.Zero
+            && tombstone.RemovalReason == "retention-expired";
 
         private void RemoveExpiredContent(string intentId)
         {

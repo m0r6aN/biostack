@@ -36,7 +36,8 @@ public static class ProductionSafetyGuard
         {
             throw new InvalidOperationException(
                 "Worker:RunMode must be set to 'Seed', 'Refresh', 'Research', 'PromotionImportDryRun', " +
-                "'ProtocolIntelligenceEvaluation', or 'SourceAcquisition' in Production. " +
+                "'ProtocolIntelligenceEvaluation', 'SourceAcquisition', or " +
+                "'SourceAcquisitionRetention' in Production. " +
                 "The worker runs one-shot under Azure Container App Jobs and does not " +
                 "accept implicit defaults in Production.");
         }
