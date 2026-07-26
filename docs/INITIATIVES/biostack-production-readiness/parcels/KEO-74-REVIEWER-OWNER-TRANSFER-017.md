@@ -44,6 +44,12 @@ No runtime guard is changed. NCCIH operator-created candidates remain blocked
 until a distinct authorized person is assigned and performs the reviewer
 action. The transfer does not name Clint Morgan as an independent reviewer.
 
+The later immutable overlay
+`research/source-authorization/keo-74-nccih-manual-capture-reviewer-receipt.v1.json`
+assigns Sandy Morgan as that distinct manual-capture reviewer. It does not
+change this transfer receipt, Clint Morgan's overall evidence-review ownership,
+or the requirement that a distinct reviewer actually perform the review.
+
 ## Scope
 
 This parcel changes only reviewer/owner metadata, its schema and invariant

@@ -78,15 +78,19 @@ identifiers and review notes. Completion requires:
 
 Any mismatch fails closed. `QueryUrl` is always null.
 
-## Reviewer-owner transfer
+## Reviewer assignments
 
 Evidence-review responsibility is assigned to Clint Morgan, Entra object id
 `461a4112-8e91-41cb-afef-6889b8f48ff0`, by the receipt-time binding in
 `research/source-authorization/keo-74-reviewer-owner-transfer-receipt.v1.json`.
-Clint Morgan is also the assigned NCCIH operator, so he is not an independent
-reviewer of a capture he performs. The existing distinct-identifier guard is
-unchanged, and operator-created NCCIH candidates remain blocked until a
-distinct authorized reviewer performs the reviewer action.
+Clint Morgan remains the assigned NCCIH operator and overall evidence-review
+owner. Sandy Morgan is assigned as the distinct NCCIH manual-capture reviewer
+by the receipt-time overlay in
+`research/source-authorization/keo-74-nccih-manual-capture-reviewer-receipt.v1.json`.
+No Sandy Morgan Entra object id was supplied or invented. The existing
+distinct-identifier guard is unchanged, and operator-created NCCIH candidates
+remain blocked until Sandy Morgan performs the reviewer action using a
+substantive reviewer identifier distinct from the operator identifier.
 
 ## Provenance, rights, and reuse
 
