@@ -41,4 +41,20 @@ public enum RunMode
     /// and exposes no runtime surface; doctrine enforcement is delegated to DoctrineSanitizer.
     /// </summary>
     ProtocolIntelligenceEvaluation = 5,
+
+    /// <summary>
+    /// Governed, DB-free source acquisition. Loads the exact approved research request,
+    /// source-decision, and registry artifacts, performs the strict activation preflight,
+    /// and writes normalized review-required candidates and minimal receipts only.
+    /// </summary>
+    SourceAcquisition = 6,
+}
+
+public static class WorkerRunModePolicy
+{
+    public static bool IsDatabaseFree(RunMode mode) =>
+        mode is RunMode.Research
+            or RunMode.SourceAcquisition
+            or RunMode.PromotionImportDryRun
+            or RunMode.ProtocolIntelligenceEvaluation;
 }

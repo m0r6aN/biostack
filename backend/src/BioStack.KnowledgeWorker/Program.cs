@@ -18,9 +18,6 @@ static RunMode ResolveConfiguredRunMode(IConfiguration configuration, bool isPro
 }
 
 // Offline modes resolve and run without a database connection.
-static bool IsOfflineMode(RunMode mode) =>
-    mode is RunMode.Research or RunMode.PromotionImportDryRun or RunMode.ProtocolIntelligenceEvaluation;
-
 var builder = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((_, config) =>
     {
@@ -54,7 +51,7 @@ var builder = Host.CreateDefaultBuilder(args)
 
         // ── Provider policy (Npgsql-only, fail-closed in Production) ─────────
         var isProd = context.HostingEnvironment.IsProduction();
-        if (!IsOfflineMode(mode))
+        if (!WorkerRunModePolicy.IsDatabaseFree(mode))
         {
             var connectionString = ProductionSafetyGuard.EnforcePostgresOnly(context.Configuration, isProd);
 
@@ -86,6 +83,10 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddSingleton<IResearchReviewQueueBuilder, ResearchReviewQueueBuilder>();
         services.AddSingleton<IResearchSummaryBuilder, ResearchSummaryBuilder>();
         services.AddSingleton<IResearchTaskQueueBuilder, ResearchTaskQueueBuilder>();
+        services.AddSingleton<ISourceAcquisitionPlanBuilder, SourceAcquisitionPlanBuilder>();
+        services.AddSingleton<ISourceAcquisitionExecutionPreflight, SourceAcquisitionExecutionPreflight>();
+        services.AddSingleton<ISourceAcquisitionAdapterFactory, SourceAcquisitionAdapterFactory>();
+        services.AddSingleton<ISourceAcquisitionRunner, SourceAcquisitionRunner>();
         services.AddSingleton<IPromotionManifestBuilder, PromotionManifestBuilder>();
         services.AddSingleton<IRelationshipPacketAuthorizer, RelationshipPacketAuthorizer>();
         services.AddSingleton<ICompoundGraphBuilder, CompoundGraphBuilder>();
@@ -99,7 +100,7 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddSingleton<IProtocolIntelligenceGate, ProtocolIntelligenceGate>();
 
         // ── Persistence + jobs (scoped: share DbContext within a single run) ─
-        if (!IsOfflineMode(mode))
+        if (!WorkerRunModePolicy.IsDatabaseFree(mode))
         {
             services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
             services.AddScoped<ICompoundInteractionHintRepository, CompoundInteractionHintRepository>();
@@ -107,6 +108,7 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddScoped<ISeedJob,         SeedJob>();
         services.AddScoped<IRefreshJob,      RefreshJob>();
         services.AddScoped<IResearchJob,     ResearchJob>();
+        services.AddScoped<ISourceAcquisitionJob, SourceAcquisitionJob>();
         services.AddScoped<IPromotionImportDryRunJob, PromotionImportDryRunJob>();
         services.AddScoped<IProtocolIntelligenceEvaluationJob, ProtocolIntelligenceEvaluationJob>();
 
@@ -121,7 +123,7 @@ var effectiveMode = ResolveConfiguredRunMode(host.Services.GetRequiredService<IC
 // ── Postgres connectivity check ──────────────────────────────────────────────
 // Fail fast if the database is unreachable before handing off to the hosted service.
 var startupLogger = host.Services.GetRequiredService<ILogger<Program>>();
-if (!IsOfflineMode(effectiveMode))
+if (!WorkerRunModePolicy.IsDatabaseFree(effectiveMode))
 {
     try
     {
