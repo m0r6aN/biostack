@@ -35,9 +35,9 @@ public class KeonRuntimeClientStubTests
     }
 
     [Fact]
-    public async Task IssueReceipt_ReturnsReceiptWithNonEffectingStatus()
+    public async Task IssueReceipt_WhenRuntimeOffline_FailsClosedWithoutKeonAuthorityClaim()
     {
-        var sut = new KeonRuntimeClientStub(new KeonRuntimeOptions());
+        var sut = new KeonRuntimeClientStub(new KeonRuntimeOptions { StubAllowAll = true });
         var request = new ReceiptRequest(
             SubjectUri: "biostack://protocol/123",
             TenantId: "biostack-public",
@@ -47,10 +47,12 @@ public class KeonRuntimeClientStubTests
             EvidenceRefs: [],
             EffectStatus: "non-effecting",
             ReceiptClass: ReceiptClass.ProtocolReviewCompleted);
-        var receipt = await sut.IssueReceiptAsync(request);
-        Assert.StartsWith("keon://receipt/stub-", receipt.ReceiptUri);
-        Assert.Equal("non-effecting", receipt.EffectStatus);
-        Assert.Equal(ReceiptClass.ProtocolReviewCompleted, receipt.ReceiptClass);
+
+        var error = await Assert.ThrowsAsync<KeonRuntimeUnavailableException>(
+            () => sut.IssueReceiptAsync(request));
+
+        Assert.Contains("no Decision Receipt was issued", error.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("keon://", error.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]

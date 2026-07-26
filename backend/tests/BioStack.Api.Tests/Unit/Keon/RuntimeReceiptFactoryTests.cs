@@ -123,6 +123,30 @@ public class RuntimeReceiptFactoryTests
         Assert.Equal(h1, h2); // deterministic for the same seed
     }
 
+    [Fact]
+    public async Task IssueAndAppend_WhenRuntimeOffline_DoesNotAppendOrClaimKeonReceipt()
+    {
+        var spine = new RecordingSpine();
+        var factory = new RuntimeReceiptFactory(
+            new KeonRuntimeClientStub(new KeonRuntimeOptions { StubAllowAll = true }),
+            spine);
+        var context = new ReceiptContext(
+            ReceiptClass: ReceiptClass.ProtocolReviewCompleted,
+            SubjectUri: "protocol:offline/review",
+            Actor: ReceiptActor.User(Guid.Empty),
+            EvidenceRefs: [ReceiptRefs.Protocol(Guid.Empty)],
+            Decision: "commentary-only",
+            EffectStatus: "non-effecting",
+            InputHashSeed: "offline-seed");
+
+        var error = await Assert.ThrowsAsync<KeonRuntimeUnavailableException>(
+            () => factory.IssueAndAppendAsync(context));
+
+        Assert.Empty(spine.Appended);
+        Assert.Contains("no Decision Receipt was issued", error.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("keon://", error.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
     // ── Fakes ──────────────────────────────────────────────────────────────────
 
     private sealed class EchoKeonClient : IKeonRuntimeClient
