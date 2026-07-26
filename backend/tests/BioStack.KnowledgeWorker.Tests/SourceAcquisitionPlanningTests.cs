@@ -183,7 +183,9 @@ public class SourceAcquisitionPlanningTests
         if (approvalName == "securityData")
         {
             fda["securityDataTriggersDetected"] =
-                new JsonArray("untrusted-bulk-archive-or-parser");
+                new JsonArray(
+                    "new-egress-or-storage-boundary",
+                    "untrusted-bulk-archive-or-parser");
             approval["reviewStatus"] = "reviewed";
             approval["decision"] = "approved-with-controls";
             approval["decidedAtUtc"] = ReviewedAt;
@@ -238,6 +240,11 @@ public class SourceAcquisitionPlanningTests
         AuthorizeSyntheticPlanningState(registry, decisions);
         var securityApproval =
             SourceDecision(decisions, "fda")["approvals"]!["securityData"]!;
+        SourceDecision(decisions, "fda")["securityDataTriggersDetected"] =
+            new JsonArray();
+        securityApproval["reviewStatus"] = "not-applicable";
+        securityApproval["decision"] = null;
+        securityApproval["decidedAtUtc"] = null;
         securityApproval[mutation] = mutation == "decision"
             ? "approved"
             : ReviewedAt;
@@ -262,6 +269,8 @@ public class SourceAcquisitionPlanningTests
         AuthorizeSyntheticPlanningState(registry, decisions);
         var securityApproval =
             SourceDecision(decisions, "fda")["approvals"]!["securityData"]!;
+        SourceDecision(decisions, "fda")["securityDataTriggersDetected"] =
+            new JsonArray();
         securityApproval["reviewStatus"] = "reviewed";
         securityApproval["decision"] = "approved";
         securityApproval["decidedAtUtc"] = ReviewedAt;
@@ -324,7 +333,9 @@ public class SourceAcquisitionPlanningTests
         var fda = decisions["sources"]!.AsArray()
             .Single(source => source!["sourceId"]!.GetValue<string>() == "fda")!;
         fda["securityDataTriggersDetected"] =
-            new JsonArray("untrusted-bulk-archive-or-parser");
+            new JsonArray(
+                "new-egress-or-storage-boundary",
+                "untrusted-bulk-archive-or-parser");
         fda["approvals"]!["securityData"]!["reviewStatus"] = "review-required";
         fda["approvals"]!["securityData"]!["decision"] = null;
         fda["approvals"]!["securityData"]!["decidedAtUtc"] = null;
