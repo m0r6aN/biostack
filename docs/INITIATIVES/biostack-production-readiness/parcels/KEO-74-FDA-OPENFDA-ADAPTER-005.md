@@ -57,7 +57,9 @@ The adapter does not emit arbitrary response fields, GMDN content, or `dosage_an
 - No raw response is persisted.
 - No job, scheduler, database, canonical-ingest, promotion, publication, frontend, or deployment path is wired.
 - No automatic pagination, concurrency, or retry is implemented.
-- Evidence review by Ellison Nemoy remains required before any candidate can become canonical.
+- Evidence-review responsibility is assigned to Clint Morgan
+  (`461a4112-8e91-41cb-afef-6889b8f48ff0`); review remains required before any
+  candidate can become canonical.
 
 ## Verification
 

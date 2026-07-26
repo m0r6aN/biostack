@@ -94,7 +94,9 @@ interactions, or suitability.
   canonical-ingest, promotion, publication, frontend, or deployment change.
 - No individualized medical guidance, dosing direction, or product-specific
   conclusion.
-- Evidence review by Ellison Nemoy remains required before canonical promotion.
+- Evidence-review responsibility is assigned to Clint Morgan
+  (`461a4112-8e91-41cb-afef-6889b8f48ff0`); canonical promotion remains
+  review-gated.
 
 ## Independent-review closure
 

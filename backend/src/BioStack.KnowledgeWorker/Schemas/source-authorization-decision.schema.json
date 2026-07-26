@@ -18,7 +18,7 @@
   "properties": {
     "schemaVersion": {
       "type": "string",
-      "const": "1.1.0"
+      "const": "1.2.0"
     },
     "recordType": {
       "type": "string",
@@ -30,7 +30,7 @@
     },
     "assignmentDisclaimer": {
       "type": "string",
-      "const": "Assignment identifies the responsible human reviewer. Each approval applies only to its declared stage; assignment is not approval, and a pending later-stage review does not block an earlier authorized stage."
+      "const": "Assignment identifies the responsible human reviewer. Role assignments are unique, but one person may hold multiple roles; that overlap does not satisfy any distinct-person or independent-review requirement. Each approval applies only to its declared stage; assignment is not approval, and a pending later-stage review does not block an earlier authorized stage."
     },
     "productDoctrine": {
       "$ref": "#/$defs/productDoctrine"
@@ -82,6 +82,10 @@
     },
     "nullableString": {
       "type": ["string", "null"]
+    },
+    "entraObjectId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
     },
     "stringArray": {
       "type": "array",
@@ -216,6 +220,9 @@
         "personName": {
           "$ref": "#/$defs/nonEmptyString"
         },
+        "entraObjectId": {
+          "$ref": "#/$defs/entraObjectId"
+        },
         "assignmentStatus": {
           "type": "string",
           "const": "assigned"
@@ -229,6 +236,9 @@
       "properties": {
         "assigneeName": {
           "$ref": "#/$defs/nonEmptyString"
+        },
+        "assigneeEntraObjectId": {
+          "$ref": "#/$defs/entraObjectId"
         },
         "decisionScope": {
           "type": "string",
