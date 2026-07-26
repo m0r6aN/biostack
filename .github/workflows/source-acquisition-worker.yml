@@ -1,0 +1,151 @@
+name: Source Acquisition Worker
+
+on:
+  pull_request:
+    paths:
+      - ".dockerignore"
+      - ".github/workflows/source-acquisition-worker.yml"
+      - "backend/KnowledgeWorker.Dockerfile"
+      - "backend/NuGet.Config"
+      - "backend/packages/**"
+      - "backend/src/BioStack.Application/**"
+      - "backend/src/BioStack.Contracts/**"
+      - "backend/src/BioStack.Domain/**"
+      - "backend/src/BioStack.Infrastructure/**"
+      - "backend/src/BioStack.KnowledgeWorker/**"
+      - "backend/tests/BioStack.KnowledgeWorker.Tests/**"
+      - "infra/azure/source-acquisition-jobs.bicep"
+      - "infra/azure/source-acquisition-role.bicep"
+      - "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-MANAGED-BLOB-SOURCE-ACQUISITION-RUNTIME-018.md"
+      - "research/input/sources/pilot-source-registry.json"
+      - "research/research-requests/market-interest-coverage-2026-07-24.v1.json"
+      - "research/routing-events/keo-74-managed-blob-runtime-20260726.json"
+      - "research/source-authorization/recommended-seven-source-decisions.v1.json"
+  push:
+    branches: [main]
+    paths:
+      - ".dockerignore"
+      - ".github/workflows/source-acquisition-worker.yml"
+      - "backend/KnowledgeWorker.Dockerfile"
+      - "backend/NuGet.Config"
+      - "backend/packages/**"
+      - "backend/src/BioStack.Application/**"
+      - "backend/src/BioStack.Contracts/**"
+      - "backend/src/BioStack.Domain/**"
+      - "backend/src/BioStack.Infrastructure/**"
+      - "backend/src/BioStack.KnowledgeWorker/**"
+      - "backend/tests/BioStack.KnowledgeWorker.Tests/**"
+      - "infra/azure/source-acquisition-jobs.bicep"
+      - "infra/azure/source-acquisition-role.bicep"
+      - "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-MANAGED-BLOB-SOURCE-ACQUISITION-RUNTIME-018.md"
+      - "research/input/sources/pilot-source-registry.json"
+      - "research/research-requests/market-interest-coverage-2026-07-24.v1.json"
+      - "research/routing-events/keo-74-managed-blob-runtime-20260726.json"
+      - "research/source-authorization/recommended-seven-source-decisions.v1.json"
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish the verified image to ACR without deploying it"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
+        with:
+          dotnet-version: "10.0.100"
+
+      - name: Verify source-acquisition storage and runtime
+        run: >-
+          dotnet test
+          backend/tests/BioStack.KnowledgeWorker.Tests/BioStack.KnowledgeWorker.Tests.csproj
+          --filter "FullyQualifiedName~SourceAcquisitionStorageTests|FullyQualifiedName~SourceAcquisitionRuntimeTests"
+          --disable-build-servers
+
+      - name: Validate scheduled-job templates
+        run: |
+          az bicep install --version v0.41.2
+          az bicep version
+          az bicep build --file infra/azure/source-acquisition-role.bicep
+          az bicep build --file infra/azure/source-acquisition-jobs.bicep
+
+      - name: Build worker image
+        run: >-
+          docker build
+          --file backend/KnowledgeWorker.Dockerfile
+          --tag biostack-knowledge-worker:${{ github.sha }}
+          .
+
+  publish:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish
+    needs: verify
+    runs-on: [self-hosted, linux, x64, biostack-private-acr]
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Build verified worker image
+        run: >-
+          docker build
+          --file backend/KnowledgeWorker.Dockerfile
+          --tag biostack-knowledge-worker:${{ github.sha }}
+          .
+
+      - name: Azure login
+        uses: azure/login@1384c340ab2dda50fed2bee3041d1d87018aa5e8
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Fail closed unless ACR resolves only through private DNS
+        shell: bash
+        env:
+          ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+        run: |
+          set -euo pipefail
+          mapfile -t addresses < <(
+            getent ahostsv4 "$ACR_LOGIN_SERVER" |
+              awk '{print $1}' |
+              sort -u
+          )
+          if (( ${#addresses[@]} == 0 )); then
+            echo "The dedicated publisher cannot resolve the private ACR." >&2
+            exit 1
+          fi
+          for address in "${addresses[@]}"; do
+            if [[ ! "$address" =~ ^10\. ]] &&
+               [[ ! "$address" =~ ^192\.168\. ]] &&
+               [[ ! "$address" =~ ^172\.(1[6-9]|2[0-9]|3[01])\. ]]; then
+              echo "ACR resolved outside RFC1918 private address space." >&2
+              exit 1
+            fi
+          done
+
+      - name: Publish immutable worker image
+        shell: bash
+        run: |
+          set -euo pipefail
+          az acr login --name "${{ secrets.ACR_NAME }}"
+          image="${{ secrets.ACR_LOGIN_SERVER }}/biostack-knowledge-worker:${{ github.sha }}"
+          docker tag "biostack-knowledge-worker:${{ github.sha }}" "$image"
+          docker push "$image"
+          digest="$(docker inspect --format='{{index .RepoDigests 0}}' "$image")"
+          if [[ ! "$digest" =~ ^[^[:space:]@]+@sha256:[0-9a-f]{64}$ ]]; then
+            echo "Published image did not resolve to a lowercase sha256 digest" >&2
+            exit 1
+          fi
+          echo "Use this immutable workerImage value with source-acquisition-jobs.bicep:"
+          echo "$digest"
