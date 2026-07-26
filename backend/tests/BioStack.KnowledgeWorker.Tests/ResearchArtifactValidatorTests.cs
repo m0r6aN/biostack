@@ -466,6 +466,102 @@ public class ResearchArtifactValidatorTests
     }
 
     [Fact]
+    public void Nccih_Manual_Capture_Reviewer_Receipt_Binds_Immutable_Overlay_Without_Approving_Evidence()
+    {
+        var repositoryRoot = Directory.GetParent(TestPaths.BackendRoot())!.FullName;
+        var receiptPath = Path.Combine(
+            repositoryRoot,
+            "research",
+            "source-authorization",
+            "keo-74-nccih-manual-capture-reviewer-receipt.v1.json");
+        var receipt = JsonNode.Parse(File.ReadAllText(receiptPath))!;
+
+        Assert.Equal(
+            "nccih-manual-capture-reviewer-authorization-receipt",
+            receipt["recordType"]!.GetValue<string>());
+        Assert.Equal("2026-07-26T16:27:48Z", receipt["receivedAtUtc"]!.GetValue<string>());
+        Assert.Equal(
+            "receipt-time-not-original-decision-time",
+            receipt["timestampBasis"]!.GetValue<string>());
+        Assert.Null(receipt["originalDecisionAtUtc"]);
+
+        var authorization = receipt["authorization"]!;
+        Assert.Equal("nih-nccih", authorization["sourceId"]!.GetValue<string>());
+        Assert.Equal(
+            "nih-nccih-manual-capture-reviewer",
+            authorization["responsibilityId"]!.GetValue<string>());
+        Assert.Equal("assigned", authorization["assignmentStatus"]!.GetValue<string>());
+        Assert.Equal("Clint Morgan", authorization["operator"]!["personName"]!.GetValue<string>());
+        Assert.Equal(
+            ClintEntraObjectId,
+            authorization["operator"]!["entraObjectId"]!.GetValue<string>());
+        Assert.Equal(
+            "Sandy Morgan",
+            authorization["distinctReviewer"]!["personName"]!.GetValue<string>());
+        Assert.Equal(
+            "name-only-user-supplied",
+            authorization["distinctReviewer"]!["identityBasis"]!.GetValue<string>());
+        Assert.Null(authorization["distinctReviewer"]!["entraObjectId"]);
+        Assert.Equal(
+            "Clint Morgan",
+            authorization["overallEvidenceReviewOwner"]!["personName"]!.GetValue<string>());
+        Assert.Equal(
+            ClintEntraObjectId,
+            authorization["overallEvidenceReviewOwner"]!["entraObjectId"]!.GetValue<string>());
+
+        foreach (var binding in receipt["bindings"]!.AsArray())
+        {
+            var relativePath = binding!["artifactPath"]!.GetValue<string>();
+            var boundPath = Path.Combine(
+                repositoryRoot,
+                relativePath.Replace('/', Path.DirectorySeparatorChar));
+            using var stream = File.OpenRead(boundPath);
+            var actualSha256 = Convert.ToHexString(SHA256.HashData(stream)).ToLowerInvariant();
+            Assert.Equal(binding["sha256"]!.GetValue<string>(), actualSha256);
+        }
+
+        var decisionArtifact = LoadSevenSourceDecisionArtifact();
+        var owners = decisionArtifact.Node["owners"]!.AsArray();
+        Assert.Contains(
+            owners,
+            owner => owner!["roleId"]!.GetValue<string>() == "evidence-reviewer"
+                && owner["personName"]!.GetValue<string>() == "Clint Morgan"
+                && owner["entraObjectId"]!.GetValue<string>() == ClintEntraObjectId);
+        var nccih = decisionArtifact.Node["sources"]!.AsArray()
+            .Single(source => source!["sourceId"]!.GetValue<string>() == "nih-nccih")!;
+        var evidenceApproval = nccih["approvals"]!["evidence"]!;
+        Assert.Equal("Clint Morgan", evidenceApproval["assigneeName"]!.GetValue<string>());
+        Assert.Equal(ClintEntraObjectId, evidenceApproval["assigneeEntraObjectId"]!.GetValue<string>());
+        Assert.Equal("review-required", evidenceApproval["reviewStatus"]!.GetValue<string>());
+        Assert.Null(evidenceApproval["decision"]);
+        Assert.Null(evidenceApproval["decidedAtUtc"]);
+
+        var nameOnlyRepresentation = LoadSevenSourceDecisionArtifact();
+        var nameOnlyNccih = nameOnlyRepresentation.Node["sources"]!.AsArray()
+            .Single(source => source!["sourceId"]!.GetValue<string>() == "nih-nccih")!;
+        var nameOnlyAssignee = nameOnlyNccih["approvals"]!["evidence"]!.AsObject();
+        nameOnlyAssignee["assigneeName"] = "Sandy Morgan";
+        nameOnlyAssignee.Remove("assigneeEntraObjectId");
+        var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+        var nameOnlyResult = validator.Validate(
+            ResearchArtifactKind.SourceAuthorizationDecisionBatch,
+            nameOnlyRepresentation.Node);
+        Assert.True(nameOnlyResult.IsValid, nameOnlyResult.Summary());
+
+        var invariants = receipt["invariants"]!;
+        Assert.False(invariants["assignmentIsApproval"]!.GetValue<bool>());
+        Assert.True(invariants["canonicalClaimPromotionRequiresEvidenceReview"]!.GetValue<bool>());
+        Assert.True(invariants["nccihDistinctReviewerRequired"]!.GetValue<bool>());
+        Assert.True(invariants["operatorReviewerIdentifiersMustDiffer"]!.GetValue<bool>());
+        Assert.Equal("pending", invariants["reviewerActionStatus"]!.GetValue<string>());
+        Assert.Equal("review-required", invariants["evidenceApprovalStatus"]!.GetValue<string>());
+        Assert.True(invariants["noEntraObjectIdInventedForSandyMorgan"]!.GetValue<bool>());
+        Assert.False(invariants["canonicalDecisionArtifactMutated"]!.GetValue<bool>());
+        Assert.False(invariants["runtimeGuardChanged"]!.GetValue<bool>());
+        Assert.True(invariants["noLiveOrRuntimeAuthorizationGranted"]!.GetValue<bool>());
+    }
+
+    [Fact]
     public void Validator_Can_Represent_A_Reviewed_Source_Activation_Without_Approving_Claim_Promotion()
     {
         var repositoryRoot = Directory.GetParent(TestPaths.BackendRoot())!.FullName;

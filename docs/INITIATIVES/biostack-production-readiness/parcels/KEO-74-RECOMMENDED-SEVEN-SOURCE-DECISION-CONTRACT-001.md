@@ -198,7 +198,11 @@ Medium. `ResearchArtifactKind.cs`, the worker project file, and shared validator
   Nemoy to Clint Morgan at the receipt time recorded in
   `keo-74-reviewer-owner-transfer-receipt.v1.json`; the transfer is not itself
   evidence approval. Clint Morgan's seven-source selection and product doctrine
-  remain recorded as approved.
+  remain recorded as approved. The later
+  `keo-74-nccih-manual-capture-reviewer-receipt.v1.json` overlay assigns Sandy
+  Morgan as the distinct NCCIH manual-capture reviewer without transferring
+  Clint Morgan's overall evidence-review ownership or recording a reviewer
+  action or evidence approval.
 - Blockers: none for contract preparation.
 - Next safe action: submit the seven source packets for content-class rights review and identify whether each planned acquisition method triggers security/data review, without suppressing useful information at unrelated stages.
 - Do not touch: source activation, acquisition, canonical ingest, promotion, database, or deployment state.
