@@ -1,6 +1,13 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { OnboardingExperience } from '@/components/marketing/OnboardingExperience';
+import { createPublicPageMetadata } from '@/lib/site';
+
+export const metadata = createPublicPageMetadata({
+  title: 'Start With BioStack',
+  description: 'Choose a new or existing protocol path and begin organizing your observational record.',
+  path: '/start',
+});
 
 interface StartPageProps {
   searchParams?: Promise<{ mode?: string }> | { mode?: string };

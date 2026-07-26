@@ -2,23 +2,11 @@ import { AppShell } from '@/components/AppShell';
 import { AuthProvider } from '@/lib/AuthProvider';
 import { ProfileProvider } from '@/lib/context';
 import { SettingsProvider } from '@/lib/settings';
+import { ROOT_METADATA } from '@/lib/site';
 import type { Metadata } from 'next';
 import './globals.css';
 
-export const metadata: Metadata = {
-  title: {
-    default: 'BioStack | Protocol Operations',
-    template: '%s',
-  },
-  description:
-    'Your protocol operations system. Track compounds, surface overlap, and turn daily signal into continuity.',
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-    ],
-  },
-};
+export const metadata: Metadata = ROOT_METADATA;
 
 export default async function RootLayout({
   children,

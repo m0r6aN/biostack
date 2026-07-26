@@ -1,6 +1,13 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { featuredFaqs } from '@/lib/marketing';
+import { createPublicPageMetadata } from '@/lib/site';
+
+export const metadata = createPublicPageMetadata({
+  title: 'Frequently Asked Questions | BioStack',
+  description: 'Read clear answers about BioStack’s observational scope, access, privacy, and product boundaries.',
+  path: '/faq',
+});
 
 export default function FaqPage() {
   const faqSchema = {

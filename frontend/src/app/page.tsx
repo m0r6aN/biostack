@@ -2,6 +2,13 @@ import { LandingHero } from '@/components/marketing/LandingHero';
 import { IntelligenceProofSection } from '@/components/marketing/IntelligenceProofSection';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
+import { createPublicPageMetadata, SITE_DESCRIPTION, SITE_TITLE } from '@/lib/site';
+
+export const metadata = createPublicPageMetadata({
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  path: '/',
+});
 
 export default function HomePage() {
   const softwareSchema = {

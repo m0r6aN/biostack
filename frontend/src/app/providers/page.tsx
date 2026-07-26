@@ -1,7 +1,14 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { ProviderAccessForm } from '@/components/marketing/ProviderAccessForm';
+import { createPublicPageMetadata } from '@/lib/site';
 import Link from 'next/link';
+
+export const metadata = createPublicPageMetadata({
+  title: 'Provider Pilot | BioStack',
+  description: 'Review the bounded provider pilot workflow for permissioned observational protocol summaries.',
+  path: '/providers',
+});
 
 const workflow = [
   'Submit contact information for the provider pilot review queue.',
