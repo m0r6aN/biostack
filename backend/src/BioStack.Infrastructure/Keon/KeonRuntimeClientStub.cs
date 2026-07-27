@@ -5,7 +5,8 @@ namespace BioStack.Infrastructure.Keon;
 /// Used when KeonRuntime:LiveMode is false (default).
 ///
 /// Policy checks are BLOCKED unless StubAllowAll=true (dev-only).
-/// Receipt issuance always succeeds (returns a synthetic stub receipt).
+/// Receipt issuance always fails closed because only Keon Runtime may issue a
+/// Keon-authoritative, retrievable Decision Receipt.
 /// </summary>
 internal sealed class KeonRuntimeClientStub(KeonRuntimeOptions options) : IKeonRuntimeClient
 {
@@ -28,21 +29,8 @@ internal sealed class KeonRuntimeClientStub(KeonRuntimeOptions options) : IKeonR
     }
 
     public Task<DecisionReceipt> IssueReceiptAsync(ReceiptRequest request, CancellationToken ct = default)
-    {
-        var uri = $"keon://receipt/stub-{Guid.NewGuid():N}";
-        return Task.FromResult(new DecisionReceipt(
-            ReceiptUri: uri,
-            SubjectUri: request.SubjectUri,
-            TenantId: request.TenantId,
-            ActorId: request.ActorId,
-            TimestampUtc: DateTime.UtcNow,
-            Decision: request.Decision,
-            PolicyHash: StubHash,
-            InputHash: request.InputHash,
-            EvidenceRefs: request.EvidenceRefs,
-            EffectStatus: request.EffectStatus,
-            ReceiptClass: request.ReceiptClass));
-    }
+        => Task.FromException<DecisionReceipt>(new KeonRuntimeUnavailableException(
+            "Keon Runtime unavailable — no Decision Receipt was issued."));
 
     public Task<DecisionReceipt?> GetReceiptAsync(string receiptUri, CancellationToken ct = default)
         => Task.FromResult<DecisionReceipt?>(null);

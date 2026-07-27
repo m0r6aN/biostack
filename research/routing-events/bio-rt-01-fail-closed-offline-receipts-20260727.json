@@ -1,0 +1,130 @@
+{
+  "event_id": "bio-rt-01-fail-closed-offline-receipts-20260727",
+  "timestamp": "2026-07-27T13:33:49.3337927Z",
+  "task_id": "KEO-195-BIO-RT-01",
+  "event_type": "complete",
+  "selected": {
+    "kind": "model",
+    "id": "qwen2.5-coder:14b",
+    "provider": "ollama-local",
+    "execution_class": "local"
+  },
+  "rationale": [
+    "Deterministic source inspection and dotnet tests implemented and validated the parcel before model review.",
+    "The installed local coder kept the internal source diff on the workstation and supplied a bounded independent review result.",
+    "Production authority remained fail closed while successful integration behavior moved to an explicit test-assembly-only client."
+    ,
+    "The immediate local parcel passed corrected model and independent reviews; live distributed commit reconciliation remains a separate release HOLD."
+  ],
+  "alternatives_rejected": [
+    {
+      "id": "production-stub-test-override",
+      "reason": "Allowing synthetic receipts from the production stub would preserve the authority-confusion vulnerability."
+    },
+    {
+      "id": "live-keon-integration",
+      "reason": "Live Keon access was forbidden and unnecessary for the isolated test-runtime contract."
+    },
+    {
+      "id": "external-frontier-review",
+      "reason": "Local deterministic evidence and a verified installed local coder were sufficient for the bounded review."
+    }
+  ],
+  "effort": "high",
+  "context": {
+    "estimated_tokens": 18000,
+    "artifact_refs": [
+      "backend/src/BioStack.Infrastructure/Keon/KeonRuntimeClientStub.cs",
+      "backend/src/BioStack.Api/Endpoints/AdminEndpoints.cs",
+      "backend/src/BioStack.Api/Endpoints/ProtocolEndpoints.cs",
+      "backend/tests/BioStack.Api.Tests/TestKeonRuntimeClient.cs",
+      "backend/tests/BioStack.Api.Tests/KeonRuntimeClientStubTests.cs",
+      "backend/tests/BioStack.Api.Tests/Unit/Keon/RuntimeReceiptFactoryTests.cs",
+      "backend/tests/BioStack.Api.Tests/Integration",
+      "docs/INITIATIVES/biostack-production-readiness/parcels/BIO-RT-01-FAIL-CLOSED-OFFLINE-RECEIPTS.md"
+    ],
+    "data_classification": "internal"
+  },
+  "permissions": [
+    "isolated-worktree-read",
+    "isolated-worktree-write",
+    "local-build",
+    "local-test",
+    "local-ollama-inference",
+    "local-git-commit",
+    "no-live-keon",
+    "no-push",
+    "no-pull-request",
+    "no-merge",
+    "no-deploy"
+  ],
+  "tools_granted": [
+    "filesystem",
+    "git-read",
+    "dotnet-build",
+    "dotnet-test",
+    "ollama-local"
+  ],
+  "cost": {
+    "currency": "USD",
+    "estimated": 0,
+    "actual": 0,
+    "confidence": "medium"
+  },
+  "validation": [
+    {
+      "method": "Focused production stub and DI registration suite",
+      "status": "passed",
+      "evidence_ref": "8 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Focused Runtime receipt factory suite",
+      "status": "passed",
+      "evidence_ref": "5 passed, 0 failed, 0 skipped"
+    },
+    {
+      "method": "Complete BioStack API regression suite",
+      "status": "passed",
+      "evidence_ref": "307 passed, 0 failed, 0 skipped; exact rebuilt-run output retained under Kompress hash 7f4dabf6ac1f3c88c9eb6a0b"
+    },
+    {
+      "method": "Test-only registration and production-artifact searches",
+      "status": "passed",
+      "evidence_ref": "Exactly eight integration registrations; no TestKeonRuntimeClient under backend/src; no keon receipt stub identifier"
+    },
+    {
+      "method": "Bounded local qwen2.5-coder:14b diff review",
+      "status": "failed",
+      "evidence_ref": "Initial PASS did not identify the caller-level persisted-effect ordering defect and was rejected by independent review"
+    },
+    {
+      "method": "Independent defensive security review",
+      "status": "failed",
+      "evidence_ref": "HOLD: governed DB writes can commit before offline receipt issuance throws, leaving unreceipted state"
+    },
+    {
+      "method": "Atomicity-focused integration suites after transaction remediation",
+      "status": "passed",
+      "evidence_ref": "78 passed, 0 failed, 0 skipped; transcript provider-failure focused suite passed 6 of 6"
+    },
+    {
+      "method": "Final corrected local qwen2.5-coder:14b review",
+      "status": "passed",
+      "evidence_ref": "PASS: fail-closed authority, transaction rollback, test regressions, and the explicit distributed residual risk were correctly identified"
+    },
+    {
+      "method": "Final independent defensive security re-review",
+      "status": "passed",
+      "evidence_ref": "PASS: five transactions, six commits, nine receipt callers, rollback and success coverage, test isolation, and honest live distributed HOLD reconfirmed"
+    }
+  ],
+  "retry_count": 3,
+  "escalation_history": [
+    "The first cold-start Ollama capability probe timed out without output.",
+    "The bounded local diff review completed with PASS but omitted the caller-level transaction boundary.",
+    "Independent review rejected PASS and blocked completion on persisted-effect ordering.",
+    "Transaction remediation passed 307 API tests, but independent re-review held on provider-failure lifecycle evidence being rolled back.",
+    "The provider-failure path was corrected to commit failed status and reason without a success receipt; final local Qwen and independent reviews passed."
+  ],
+  "outcome": "accepted"
+}

@@ -23,8 +23,10 @@ public static class AdminEndpoints
             [FromServices] IKnowledgeSourceIntakeService intakeService,
             [FromServices] IRuntimeReceiptFactory receipts,
             [FromServices] ICurrentUserAccessor currentUser,
+            [FromServices] BioStackDbContext db,
             CancellationToken ct) =>
         {
+            await using var transaction = await db.Database.BeginTransactionAsync(ct);
             try
             {
                 var response = await intakeService.CreateAsync(request, ct);
@@ -45,6 +47,7 @@ public static class AdminEndpoints
                         ct);
                 }
 
+                await transaction.CommitAsync(ct);
                 return Results.Ok(response);
             }
             catch (ArgumentException ex)
@@ -61,8 +64,10 @@ public static class AdminEndpoints
             [FromServices] ITranscriptCandidateReviewStore reviewStore,
             [FromServices] IRuntimeReceiptFactory receipts,
             [FromServices] ICurrentUserAccessor currentUser,
+            [FromServices] BioStackDbContext db,
             CancellationToken ct) =>
         {
+            await using var transaction = await db.Database.BeginTransactionAsync(ct);
             try
             {
                 var resolved = await resolutionService.ResolveAsync(intakeRequestId, ct);
@@ -115,6 +120,7 @@ public static class AdminEndpoints
                     InputHashSeed: $"{intakeRequestId:N}|{record.ArtifactId}|{record.SegmentSnapshotSignature}"),
                     ct);
 
+                await transaction.CommitAsync(ct);
                 return Results.Ok(new AdminTranscriptIntakeResolutionResponse(
                     IntakeRequestId: intakeRequestId,
                     SourceType: resolved.SourceReference.SourceType,
@@ -128,6 +134,10 @@ public static class AdminEndpoints
             }
             catch (Exception ex) when (ex is ITranscriptSourceMaterialProviderFailure providerFailure)
             {
+                // Provider failure is lifecycle evidence, not a successful governed effect.
+                // Preserve the failed status/reason while the successful resolution and
+                // staging path remains receipt-gated and atomic.
+                await transaction.CommitAsync(ct);
                 return Results.Ok(new AdminTranscriptIntakeResolutionResponse(
                     IntakeRequestId: intakeRequestId,
                     SourceType: "video_url",
@@ -265,6 +275,7 @@ public static class AdminEndpoints
             [FromServices] ITranscriptCandidateReviewStore reviewStore,
             [FromServices] IRuntimeReceiptFactory receipts,
             [FromServices] ICurrentUserAccessor currentUser,
+            [FromServices] BioStackDbContext db,
             CancellationToken ct) =>
         {
             if (string.IsNullOrWhiteSpace(artifactId))
@@ -304,6 +315,7 @@ public static class AdminEndpoints
 
             try
             {
+                await using var transaction = await db.Database.BeginTransactionAsync(ct);
                 var updatedAt = DateTime.UtcNow.ToString("O", System.Globalization.CultureInfo.InvariantCulture);
                 var updatedRecord = await reviewStore.UpdateReviewStateAsync(
                     artifactId: record.ArtifactId,
@@ -322,6 +334,7 @@ public static class AdminEndpoints
                     InputHashSeed: $"{record.ArtifactId}|{decision.FromReviewState}|{decision.ToReviewState}|{updatedAt}"),
                     ct);
 
+                await transaction.CommitAsync(ct);
                 return Results.Ok(MapStagedReviewRecordToResponse(updatedRecord));
             }
             catch (KeyNotFoundException)
@@ -373,6 +386,7 @@ public static class AdminEndpoints
             [FromServices] ITranscriptCandidatePromotionService promotionService,
             [FromServices] IRuntimeReceiptFactory receipts,
             [FromServices] ICurrentUserAccessor currentUser,
+            [FromServices] BioStackDbContext db,
             CancellationToken ct) =>
         {
             if (string.IsNullOrWhiteSpace(artifactId))
@@ -382,6 +396,7 @@ public static class AdminEndpoints
 
             try
             {
+                await using var transaction = await db.Database.BeginTransactionAsync(ct);
                 var updatedRecord = await promotionService.ExecutePromotionAsync(artifactId, ct);
                 await receipts.IssueAndAppendAsync(new ReceiptContext(
                     ReceiptClass: ReceiptClass.SourceArtifactPromoted,
@@ -392,6 +407,7 @@ public static class AdminEndpoints
                     EffectStatus: "canonical-write",
                     InputHashSeed: $"{updatedRecord.ArtifactId}|{updatedRecord.TargetCanonicalName}|{updatedRecord.PromotedKnowledgeEntryId}"),
                     ct);
+                await transaction.CommitAsync(ct);
                 return Results.Ok(MapStagedReviewRecordToResponse(updatedRecord));
             }
             catch (KeyNotFoundException)
