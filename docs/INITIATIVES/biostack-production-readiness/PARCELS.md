@@ -16,6 +16,7 @@
 | SEC-CONSENT-001 | Security / consent evidence | Release hardening | integrated-local | `D:/Repos/BioStack-sec-consent` | `codex/sec-consent-version` | low-medium: consent service |
 | SEC-CONTAINER-001 | Security / container hardening | Release hardening | integrated-local | `D:/Repos/BioStack-sec-container` | `codex/sec-backend-container` | low: backend Dockerfile |
 | SEC-DEPS-001 | Security / frontend dependencies | Release hardening | integrated-local | `D:/Repos/BioStack-sec-frontend-deps` | `codex/sec-frontend-postcss` | medium: package lock |
+| KEO-66-LIVE-INTERACTION-POSTGRES-REPAIR-029 | API / public knowledge | Hardening | in-review | `D:/Repos/BioStack-go-live-audit-021-20260726` | `codex/keo66-live-interaction-hotfix-20260727` | high: production migration |
 | PR-REL-001 | Release | Release | blocked | isolated required | TBD | high: ledger/evidence |
 
 Dependency order: `PR-DOC-001 -> PR-CI-001 -> integration/hardening parcels -> PR-SEC-001 -> PR-REL-001`.

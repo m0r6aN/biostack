@@ -59,6 +59,44 @@ public sealed class KnowledgeServicePublicBoundaryTests
         Assert.Equal(new[] { "Reported caution" }, result.AvoidWith);
     }
 
+    [Fact]
+    public async Task GetAllCompoundsAsync_DeduplicatesCanonicalNamesWithoutDeletingEvidence()
+    {
+        var sparse = CreateLegacyEntry();
+        sparse.Id = Guid.Parse("00000000-0000-0000-0000-000000000001");
+        sparse.CanonicalName = " Example ";
+        sparse.SourceReferences = new List<string>();
+        sparse.MechanismSummary = string.Empty;
+        sparse.AvoidWith = new List<string> { "Sparse-row caution" };
+        sparse.DrugInteractions = new List<string> { "Sparse-row interaction" };
+
+        var evidenceRicher = CreateLegacyEntry();
+        evidenceRicher.Id = Guid.Parse("00000000-0000-0000-0000-000000000002");
+        evidenceRicher.CanonicalName = "example";
+        evidenceRicher.SourceReferences = new List<string> { "Source A", "Source B" };
+        evidenceRicher.MechanismSummary = "Evidence-richer mechanism.";
+        evidenceRicher.AvoidWith = new List<string> { "Evidence-row caution" };
+        evidenceRicher.DrugInteractions = new List<string> { "Evidence-row interaction" };
+
+        var source = new Mock<IKnowledgeSource>();
+        source
+            .Setup(service => service.GetAllCompoundsAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<KnowledgeEntry> { sparse, evidenceRicher });
+
+        var results = (await new KnowledgeService(source.Object).GetAllCompoundsAsync()).ToList();
+
+        var result = Assert.Single(results);
+        Assert.Equal("example", result.CanonicalName);
+        Assert.Equal("Evidence-richer mechanism.", result.MechanismSummary);
+        Assert.Equal(new[] { "Source A", "Source B" }, result.SourceReferences);
+        Assert.Equal(
+            new[] { "Sparse-row caution", "Evidence-row caution" },
+            result.AvoidWith);
+        Assert.Equal(
+            new[] { "Sparse-row interaction", "Evidence-row interaction" },
+            result.DrugInteractions);
+    }
+
     private static KnowledgeEntry CreateLegacyEntry()
     {
         return new KnowledgeEntry
