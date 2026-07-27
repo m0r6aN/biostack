@@ -8,6 +8,7 @@ using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Knowledge;
+using BioStack.Infrastructure.Keon;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -47,6 +48,7 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
                 });
                 builder.ConfigureServices(services =>
                 {
+                    services.UseTestKeonRuntimeClient();
                     services.RemoveBioStackDbContext();
                     services.AddDbContext<BioStackDbContext>(options =>
                         options.UseSqlite($"Data Source={_dbPath}"));
@@ -478,6 +480,43 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
         Assert.DoesNotContain("promotionStatus", payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
         Assert.DoesNotContain("promotionExecutedAtUtc", payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
         Assert.DoesNotContain("promotionExecutionId", payload.ExtraKeys, StringComparer.OrdinalIgnoreCase);
+
+        await using var verificationScope = _factory.Services.CreateAsyncScope();
+        var db = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var persisted = await db.StagedTranscriptCandidateReviews
+            .AsNoTracking()
+            .SingleAsync(item => item.ArtifactId == artifactId);
+        Assert.Equal(TranscriptCandidateReviewState.ReviewApprovedForPromotion, persisted.ReviewState);
+        Assert.Single(await db.SpineEntries
+            .Where(entry => entry.ReceiptClass == ReceiptClass.SourceReviewStateChanged)
+            .ToListAsync());
+    }
+
+    [Fact]
+    public async Task UpdateReviewState_WhenReceiptFails_RollsBackReviewAndSpine()
+    {
+        const string artifactId = "transcript-candidate:atomic-review-failure";
+        await SeedReviewAsync(artifactId, TranscriptCandidateReviewState.PendingReview);
+        await using var factory = _factory.WithWebHostBuilder(builder =>
+            builder.ConfigureServices(services => services.UseThrowingTestKeonRuntimeClient()));
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        await AdminAuthTestHelper.SignInAsAdminAsync(
+            client,
+            factory,
+            "admin-review-atomic-failure@example.com");
+
+        var response = await client.PostAsJsonAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/review-state",
+            new { action = TranscriptCandidateReviewAction.ApproveForPromotion });
+
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        await using var verificationScope = factory.Services.CreateAsyncScope();
+        var db = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var persisted = await db.StagedTranscriptCandidateReviews
+            .AsNoTracking()
+            .SingleAsync(item => item.ArtifactId == artifactId);
+        Assert.Equal(TranscriptCandidateReviewState.PendingReview, persisted.ReviewState);
+        Assert.Empty(await db.SpineEntries.ToListAsync());
     }
 
     [Fact]
@@ -739,6 +778,59 @@ public sealed class AdminStagedTranscriptCandidateReviewIntegrationTests : IAsyn
         Assert.Equal(keId, payload.PromotedKnowledgeEntryId);
         Assert.NotNull(payload.PromotedAtUtc);
         Assert.Equal(TranscriptCandidateReviewState.ReviewApprovedForPromotion, payload.ReviewState);
+
+        await using var verificationScope = _factory.Services.CreateAsyncScope();
+        var db = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var persisted = await db.StagedTranscriptCandidateReviews
+            .AsNoTracking()
+            .SingleAsync(item => item.ArtifactId == artifactId);
+        Assert.Equal(keId, persisted.PromotedKnowledgeEntryId);
+        Assert.NotNull(persisted.PromotedAtUtc);
+        Assert.Single(await db.SpineEntries
+            .Where(entry => entry.ReceiptClass == ReceiptClass.SourceArtifactPromoted)
+            .ToListAsync());
+    }
+
+    [Fact]
+    public async Task ExecutePromotion_WhenReceiptFails_RollsBackCanonicalWritePromotionAndSpine()
+    {
+        const string artifactId = "transcript-candidate:atomic-promotion-failure";
+        const string canonicalName = "atomic-promotion-target";
+        await SeedKnowledgeEntryAsync(canonicalName);
+        await SeedReviewAsync(
+            artifactId,
+            TranscriptCandidateReviewState.ReviewApprovedForPromotion,
+            isDeterministicFixture: false,
+            targetCanonicalName: canonicalName,
+            metadata: ValidEvidenceMetadata());
+        await using var factory = _factory.WithWebHostBuilder(builder =>
+            builder.ConfigureServices(services => services.UseThrowingTestKeonRuntimeClient()));
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        await AdminAuthTestHelper.SignInAsAdminAsync(
+            client,
+            factory,
+            "admin-promotion-atomic-failure@example.com");
+
+        var response = await client.PostAsync(
+            $"/api/v1/admin/staged-transcript-candidate-reviews/{artifactId}/execute-promotion",
+            content: null);
+
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        await using var verificationScope = factory.Services.CreateAsyncScope();
+        var db = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var review = await db.StagedTranscriptCandidateReviews
+            .AsNoTracking()
+            .SingleAsync(item => item.ArtifactId == artifactId);
+        Assert.Null(review.PromotedKnowledgeEntryId);
+        Assert.Null(review.PromotedAtUtc);
+        var knowledge = await db.KnowledgeEntries
+            .AsNoTracking()
+            .SingleAsync(item => item.CanonicalName == canonicalName);
+        Assert.DoesNotContain(
+            $"https://example.test/{artifactId}",
+            knowledge.SourceReferences,
+            StringComparer.Ordinal);
+        Assert.Empty(await db.SpineEntries.ToListAsync());
     }
 
     [Fact]

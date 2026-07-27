@@ -238,6 +238,7 @@ public sealed class AdminSourceLaneGovernanceIntegrationTests : IAsyncLifetime
                     }));
                 builder.ConfigureServices(services =>
                 {
+                    services.UseTestKeonRuntimeClient();
                     services.RemoveBioStackDbContext();
                     services.AddDbContext<BioStackDbContext>(options => options.UseSqlite($"Data Source={_dbPath}"));
                     services.RemoveAll<ITranscriptSourceMaterialProvider>();

@@ -8,6 +8,8 @@ using BioStack.Domain.Enums;
 using BioStack.Domain.Governance;
 using BioStack.Infrastructure.Governance;
 using BioStack.Infrastructure.Keon;
+using BioStack.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 public static class ProtocolEndpoints
 {
@@ -246,10 +248,12 @@ public static class ProtocolEndpoints
         IProtocolService protocolService,
         IRuntimeReceiptFactory receipts,
         ICurrentUserAccessor currentUser,
+        BioStackDbContext db,
         CancellationToken ct)
     {
         try
         {
+            await using var transaction = await db.Database.BeginTransactionAsync(ct);
             var completed = await protocolService.CompleteReviewAsync(id, request, ct);
 
             // Issue a Decision Receipt — this review completion is a governed effect on the Spine.
@@ -269,6 +273,7 @@ public static class ProtocolEndpoints
                 EffectStatus: "commentary-only",
                 InputHashSeed: completed.Id.ToString("N")), ct);
 
+            await transaction.CommitAsync(ct);
             return Results.Created($"/api/v1/protocols/{id}/review/completions/{completed.Id}", new
             {
                 id = completed.Id,

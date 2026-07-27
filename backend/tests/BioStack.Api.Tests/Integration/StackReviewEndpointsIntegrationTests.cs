@@ -41,6 +41,7 @@ public class StackReviewEndpointsIntegrationTests : IAsyncLifetime
 
                 builder.ConfigureServices(services =>
                 {
+                    services.UseTestKeonRuntimeClient();
                     // Bypass auth in tests — replace default policy with passthrough
                     services.AddAuthorization(opts =>
                     {

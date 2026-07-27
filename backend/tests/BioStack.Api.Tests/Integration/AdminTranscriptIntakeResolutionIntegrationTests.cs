@@ -8,6 +8,7 @@ using BioStack.Api;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Domain.Entities;
+using BioStack.Infrastructure.Keon;
 using BioStack.Infrastructure.Persistence;
 using BioStack.Infrastructure.Persistence.Entities;
 using Microsoft.AspNetCore.Hosting;
@@ -77,6 +78,15 @@ public sealed class AdminTranscriptIntakeResolutionIntegrationTests : IAsyncLife
         var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
         Assert.Equal(0, await db.KnowledgeEntries.CountAsync());
         Assert.Equal(0, await db.Set<StagedTranscriptCandidateReviewEntity>().CountAsync());
+        var failedIntake = await db.KnowledgeSourceIntakeRequests
+            .AsNoTracking()
+            .SingleAsync(item => item.Id == intakeId);
+        Assert.Equal("failed", failedIntake.Status);
+        Assert.NotNull(failedIntake.FailureReason);
+        Assert.Contains("transcript_provider_disabled", failedIntake.FailureReason);
+        Assert.Single(await db.SpineEntries
+            .Where(entry => entry.ReceiptClass == ReceiptClass.SourceIntakeReceived)
+            .ToListAsync());
     }
 
     [Fact]
@@ -200,12 +210,80 @@ public sealed class AdminTranscriptIntakeResolutionIntegrationTests : IAsyncLife
             k.Contains("summary", StringComparison.OrdinalIgnoreCase) ||
             k.Contains("safety", StringComparison.OrdinalIgnoreCase) ||
             k.Contains("medical", StringComparison.OrdinalIgnoreCase)));
+        var receiptClasses = await db.SpineEntries
+            .Select(entry => entry.ReceiptClass)
+            .ToListAsync();
+        Assert.Contains(ReceiptClass.SourceIntakeReceived, receiptClasses);
+        Assert.Contains(ReceiptClass.SourceTranscriptResolved, receiptClasses);
+        Assert.Contains(ReceiptClass.SourceCandidateStaged, receiptClasses);
 
         try
         {
             if (File.Exists(enabledDbPath))
             {
                 File.Delete(enabledDbPath);
+            }
+        }
+        catch (IOException)
+        {
+        }
+    }
+
+    [Fact]
+    public async Task EnabledProvider_WhenSecondReceiptFails_RollsBackResolutionStageAndSpine()
+    {
+        var dbPath = Path.Combine(
+            Path.GetTempPath(),
+            $"biostack-admin-transcript-resolution-atomic-{Guid.NewGuid():N}.db");
+        await using var factory = BuildFactory(services =>
+        {
+            services.RemoveAll<ITranscriptSourceMaterialProvider>();
+            services.AddScoped<ITranscriptSourceMaterialProvider, FakeEnabledTranscriptSourceMaterialProvider>();
+            services.UseThrowingTestKeonRuntimeClient(failOnReceiptAttempt: 2);
+        }, enableProvider: true, dbPathOverride: dbPath);
+
+        Guid intakeId;
+        await using (var seedScope = factory.Services.CreateAsyncScope())
+        {
+            var db = seedScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            intakeId = Guid.NewGuid();
+            db.KnowledgeSourceIntakeRequests.Add(new KnowledgeSourceIntakeRequest
+            {
+                Id = intakeId,
+                SourceType = "video_url",
+                SourceUrl = "https://www.youtube.com/watch?v=atomic-resolution-failure",
+                RequestedOutputs = ["source_metadata"],
+                Status = "queued",
+                CreatedAtUtc = DateTimeOffset.UtcNow,
+            });
+            await db.SaveChangesAsync();
+        }
+
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        await AdminAuthTestHelper.SignInAsAdminAsync(
+            client,
+            factory,
+            "admin-resolve-atomic-failure@example.com");
+
+        var response = await client.PostAsync(
+            $"/api/v1/admin/knowledge-source-intake/{intakeId}/resolve-transcript",
+            content: null);
+
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        await using var verificationScope = factory.Services.CreateAsyncScope();
+        var verificationDb = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var intake = await verificationDb.KnowledgeSourceIntakeRequests
+            .AsNoTracking()
+            .SingleAsync(item => item.Id == intakeId);
+        Assert.Equal("queued", intake.Status);
+        Assert.Empty(await verificationDb.Set<StagedTranscriptCandidateReviewEntity>().ToListAsync());
+        Assert.Empty(await verificationDb.SpineEntries.ToListAsync());
+
+        try
+        {
+            if (File.Exists(dbPath))
+            {
+                File.Delete(dbPath);
             }
         }
         catch (IOException)
@@ -240,6 +318,7 @@ public sealed class AdminTranscriptIntakeResolutionIntegrationTests : IAsyncLife
                 });
                 builder.ConfigureServices(services =>
                 {
+                    services.UseTestKeonRuntimeClient();
                     services.RemoveBioStackDbContext();
                     services.AddDbContext<BioStackDbContext>(options => options.UseSqlite($"Data Source={dbPath}"));
                     configureServices?.Invoke(services);
