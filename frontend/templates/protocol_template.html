@@ -302,10 +302,11 @@
                 <div class="bg-white rounded-3xl border border-slate-200 p-6">
                     <h3 class="font-semibold text-lg mb-4">Quick Actions</h3>
                     <div class="space-y-2">
-                        <button onclick="logDose()"
-                                class="w-full flex items-center justify-center gap-x-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 transition-colors text-white rounded-2xl text-sm font-medium">
-                            <i class="fa-solid fa-check"></i>
-                            <span>Log Today’s Doses</span>
+                        <button type="button" disabled aria-disabled="true"
+                                title="This reference preview does not save dose activity."
+                                class="w-full flex items-center justify-center gap-x-2 px-4 py-3 bg-slate-200 text-slate-600 rounded-2xl text-sm font-medium cursor-not-allowed">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>Reference preview — dose activity is not saved</span>
                         </button>
 
                         <button onclick="showTab('monitoring')"
@@ -695,22 +696,6 @@
                 `;
             }
             alert("Phase " + phase + " view would load full updated calendar and dosing in a real implementation.");
-        }
-
-        function logDose() {
-            const btns = event.currentTarget;
-            const originalText = event.target.innerHTML;
-            event.target.innerHTML = `<i class="fa-solid fa-check mr-2"></i> Doses Logged`;
-            event.target.disabled = true;
-
-            setTimeout(() => {
-                if (event.target) {
-                    event.target.innerHTML = originalText;
-                    event.target.disabled = false;
-                }
-                // Show toast
-                showToast("Doses successfully logged for today.");
-            }, 1800);
         }
 
         function showToast(message) {
