@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using BioStack.Api;
 using BioStack.Contracts.Requests;
 using BioStack.Domain.Enums;
+using BioStack.Infrastructure.Keon;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -51,6 +52,7 @@ public sealed class AdminKnowledgeSourceIntakeIntegrationTests : IAsyncLifetime
                 });
                 builder.ConfigureServices(services =>
                 {
+                    services.UseTestKeonRuntimeClient();
                     services.RemoveBioStackDbContext();
                     services.AddDbContext<BioStackDbContext>(options =>
                         options.UseSqlite($"Data Source={_dbPath}"));
@@ -111,6 +113,61 @@ public sealed class AdminKnowledgeSourceIntakeIntegrationTests : IAsyncLifetime
         Assert.Contains("compounds_mentioned", entity.RequestedOutputs);
         Assert.Contains("safety_flags", entity.RequestedOutputs);
         Assert.Equal("queued", entity.Status);
+        Assert.Single(await db.SpineEntries
+            .Where(entry => entry.ReceiptClass == ReceiptClass.SourceIntakeReceived)
+            .ToListAsync());
+    }
+
+    [Fact]
+    public async Task VideoUrl_WhenReceiptIssuanceFails_RollsBackIntakeAndSpine()
+    {
+        await using var factory = _factory.WithWebHostBuilder(builder =>
+            builder.ConfigureServices(services => services.UseThrowingTestKeonRuntimeClient()));
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        await AdminAuthTestHelper.SignInAsAdminAsync(client, factory, "admin-intake-receipt-failure@example.com");
+
+        var response = await client.PostAsJsonAsync(
+            "/api/v1/admin/knowledge-source-intake",
+            new AdminKnowledgeSourceIntakeRequest(
+                KnowledgeSourceType.VideoUrl,
+                "https://www.youtube.com/watch?v=atomic-intake-failure",
+                null,
+                [RequestedOutputArea.Claims],
+                null),
+            JsonOptions);
+
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        await using var verificationScope = factory.Services.CreateAsyncScope();
+        var db = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        Assert.False(await db.KnowledgeSourceIntakeRequests
+            .AnyAsync(item => item.SourceUrl.Contains("atomic-intake-failure")));
+        Assert.Empty(await db.SpineEntries.ToListAsync());
+    }
+
+    [Fact]
+    public async Task VideoUrl_WhenSpineAppendFails_RollsBackIntakeAndSpine()
+    {
+        await using var factory = _factory.WithWebHostBuilder(builder =>
+            builder.ConfigureServices(services => services.UseThrowingTestSpineRepository()));
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        await AdminAuthTestHelper.SignInAsAdminAsync(client, factory, "admin-intake-spine-failure@example.com");
+
+        var response = await client.PostAsJsonAsync(
+            "/api/v1/admin/knowledge-source-intake",
+            new AdminKnowledgeSourceIntakeRequest(
+                KnowledgeSourceType.VideoUrl,
+                "https://www.youtube.com/watch?v=atomic-spine-failure",
+                null,
+                [RequestedOutputArea.Claims],
+                null),
+            JsonOptions);
+
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        await using var verificationScope = factory.Services.CreateAsyncScope();
+        var db = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        Assert.False(await db.KnowledgeSourceIntakeRequests
+            .AnyAsync(item => item.SourceUrl.Contains("atomic-spine-failure")));
+        Assert.Empty(await db.SpineEntries.ToListAsync());
     }
 
     [Fact]
