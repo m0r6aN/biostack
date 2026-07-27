@@ -33,6 +33,10 @@ jobs:
         with:
           dotnet-version: '10.x'
 
+      - name: Reject high-severity backend dependency advisories
+        working-directory: backend
+        run: dotnet restore BioStack.sln --force-evaluate -p:NuGetAudit=true -p:NuGetAuditMode=all -p:NuGetAuditLevel=high -p:WarningsAsErrors=NU1903%3BNU1904
+
       - name: Run backend tests
         working-directory: backend
         run: dotnet test --verbosity minimal
