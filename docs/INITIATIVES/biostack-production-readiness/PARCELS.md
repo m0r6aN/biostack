@@ -16,6 +16,7 @@
 | SEC-CONSENT-001 | Security / consent evidence | Release hardening | integrated-local | `D:/Repos/BioStack-sec-consent` | `codex/sec-consent-version` | low-medium: consent service |
 | SEC-CONTAINER-001 | Security / container hardening | Release hardening | integrated-local | `D:/Repos/BioStack-sec-container` | `codex/sec-backend-container` | low: backend Dockerfile |
 | SEC-DEPS-001 | Security / frontend dependencies | Release hardening | integrated-local | `D:/Repos/BioStack-sec-frontend-deps` | `codex/sec-frontend-postcss` | medium: package lock |
+| KEO-65-NUGET-HIGH-ADVISORY-GATE-030 | Security / backend dependencies | Release hardening | ready-local | `D:/Repos/BioStack-nuget-high-advisory-gate-20260727` | `codex/nuget-high-advisory-gate-20260727` | high: shared CI workflow |
 | PR-REL-001 | Release | Release | blocked | isolated required | TBD | high: ledger/evidence |
 
 Dependency order: `PR-DOC-001 -> PR-CI-001 -> integration/hardening parcels -> PR-SEC-001 -> PR-REL-001`.
