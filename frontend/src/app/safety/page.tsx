@@ -1,5 +1,12 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
+import { createPublicPageMetadata } from '@/lib/site';
+
+export const metadata = createPublicPageMetadata({
+  title: 'Safety Boundary | BioStack',
+  description: 'Understand BioStack’s observational, educational, and non-prescriptive product boundary.',
+  path: '/safety',
+});
 
 const boundaries = [
   'BioStack does not prescribe, diagnose, or recommend compounds.',

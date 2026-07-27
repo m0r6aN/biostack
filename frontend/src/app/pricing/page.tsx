@@ -1,7 +1,14 @@
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { pricingTiers } from '@/lib/marketing';
+import { createPublicPageMetadata } from '@/lib/site';
 import Link from 'next/link';
+
+export const metadata = createPublicPageMetadata({
+  title: 'Pricing | BioStack',
+  description: 'Compare BioStack plans for observational protocol tracking and longitudinal intelligence.',
+  path: '/pricing',
+});
 
 export default function PricingPage() {
   return (

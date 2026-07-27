@@ -1,7 +1,14 @@
 import { IntelligenceProofSection } from '@/components/marketing/IntelligenceProofSection';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
+import { createPublicPageMetadata } from '@/lib/site';
 import Link from 'next/link';
+
+export const metadata = createPublicPageMetadata({
+  title: 'How BioStack Works',
+  description: 'See how BioStack organizes tracking, calculations, overlap context, and protocol history.',
+  path: '/how-it-works',
+});
 
 const sections = [
   {
