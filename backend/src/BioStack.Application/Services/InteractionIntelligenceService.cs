@@ -47,6 +47,25 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
         IEnumerable<string> compoundNames,
         CancellationToken cancellationToken = default)
     {
+        var entries = await ResolveEntriesAsync(compoundNames, cancellationToken);
+        return await EvaluateAsync(entries, cancellationToken);
+    }
+
+    public async Task<InteractionIntelligenceResponse> EvaluatePublicByNamesAsync(
+        IEnumerable<string> compoundNames,
+        CancellationToken cancellationToken = default)
+    {
+        var entries = await ResolveEntriesAsync(compoundNames, cancellationToken);
+
+        // The unauthenticated surface is evidence-only. It must not calculate or
+        // return individualized remove/swap scenarios.
+        return await EvaluateAsync(entries, includeScenarios: false, cancellationToken);
+    }
+
+    private async Task<List<KnowledgeEntry>> ResolveEntriesAsync(
+        IEnumerable<string> compoundNames,
+        CancellationToken cancellationToken)
+    {
         var names = compoundNames
             .Where(name => !string.IsNullOrWhiteSpace(name))
             .Distinct(StringComparer.OrdinalIgnoreCase)
@@ -62,7 +81,7 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             }
         }
 
-        return await EvaluateAsync(entries, cancellationToken);
+        return entries;
     }
 
     public async Task<InteractionIntelligenceResponse> EvaluateAsync(
@@ -219,10 +238,10 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             return new InteractionResultResponse(
                 compoundA.CanonicalName,
                 compoundB.CanonicalName,
-                InteractionType.Synergistic,
-                0.59d,
+                InteractionType.Unknown,
+                0.30d,
                 sharedPathways,
-                "Compound metadata suggests a complementary pairing.",
+                "Source data reports this pairing, but does not establish compatibility or safety.",
                 HintBacked: false);
         }
 
@@ -243,10 +262,10 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
         return new InteractionResultResponse(
             compoundA.CanonicalName,
             compoundB.CanonicalName,
-            InteractionType.Neutral,
+            InteractionType.Unknown,
             0.30d,
             sharedPathways,
-            "No significant overlap detected from the current rule set.",
+            "The current rule set returned no interaction finding; compatibility and safety remain unknown.",
             HintBacked: false);
     }
 
@@ -306,7 +325,7 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
         return relationshipType switch
         {
             GraphRelationshipType.SynergizesWith => InteractionType.Synergistic,
-            GraphRelationshipType.PairsWellWith => InteractionType.Synergistic,
+            GraphRelationshipType.PairsWellWith => InteractionType.Unknown,
             GraphRelationshipType.RedundantWith => InteractionType.Redundant,
             GraphRelationshipType.ConflictsWith => InteractionType.Interfering,
             GraphRelationshipType.AvoidWith => InteractionType.Interfering,
@@ -381,6 +400,7 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             InteractionType.Complementary => $"{result.CompoundA} and {result.CompoundB} converge on the same outcome through distinct mechanisms.",
             InteractionType.Redundant => $"{result.CompoundA} and {result.CompoundB} appear to overlap enough that attribution may get muddy.",
             InteractionType.Interfering => $"{result.CompoundA} and {result.CompoundB} raise a review-first interaction signal.",
+            InteractionType.Unknown => $"{result.CompoundA} and {result.CompoundB} have insufficient evidence to establish compatibility or safety.",
             _ => $"{result.CompoundA} and {result.CompoundB} do not currently trigger a strong interaction signal."
         };
     }
@@ -546,9 +566,9 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
 
         return verdict switch
         {
-            "improves" => $"Removing {removedCompound} likely improves predicted stack efficiency by about {roundedPercent:0.#}%.",
-            "worsens" => $"Removing {removedCompound} likely reduces predicted stack efficiency by about {roundedPercent:0.#}%.",
-            _ => $"Removing {removedCompound} is not predicted to materially change stack efficiency."
+            "improves" => $"A modeled scenario excluding {removedCompound} increased the predicted score by about {roundedPercent:0.#}%; this is not a recommendation to change the protocol.",
+            "worsens" => $"A modeled scenario excluding {removedCompound} reduced the predicted score by about {roundedPercent:0.#}%; this is not a recommendation to change the protocol.",
+            _ => $"A modeled scenario excluding {removedCompound} did not materially change the predicted score; this is not a recommendation to change the protocol."
         };
     }
 }
@@ -556,5 +576,6 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
 public interface IInteractionIntelligenceService
 {
     Task<InteractionIntelligenceResponse> EvaluateByNamesAsync(IEnumerable<string> compoundNames, CancellationToken cancellationToken = default);
+    Task<InteractionIntelligenceResponse> EvaluatePublicByNamesAsync(IEnumerable<string> compoundNames, CancellationToken cancellationToken = default);
     Task<InteractionIntelligenceResponse> EvaluateAsync(IReadOnlyList<KnowledgeEntry> entries, CancellationToken cancellationToken = default);
 }

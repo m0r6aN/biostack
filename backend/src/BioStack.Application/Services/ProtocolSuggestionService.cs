@@ -18,7 +18,7 @@ public sealed class ProtocolSuggestionService : IProtocolSuggestionService
                 var weakest = issue.Compounds.Last();
                 suggestions.Add(new ProtocolSuggestionResponse(
                     "remove",
-                    $"Consider removing {weakest} first and reassessing the protocol score.",
+                    $"A redundancy signal includes {weakest}; excluding one compound is an observational scenario for review, not a recommended action.",
                     new List<string> { weakest }));
             }
 
@@ -26,7 +26,7 @@ public sealed class ProtocolSuggestionService : IProtocolSuggestionService
             {
                 suggestions.Add(new ProtocolSuggestionResponse(
                     "swap",
-                    $"Review whether {issue.Compounds[1]} is adding a distinct mechanism or should be swapped for a different category.",
+                    $"{issue.Compounds[1]} may not add a distinct mechanism; the available signal identifies category overlap without recommending a swap.",
                     issue.Compounds.Take(2).ToList()));
             }
 
@@ -34,7 +34,7 @@ public sealed class ProtocolSuggestionService : IProtocolSuggestionService
             {
                 suggestions.Add(new ProtocolSuggestionResponse(
                     "simplify",
-                    "Reduce the stack to the highest-confidence compounds before adding secondary mechanisms.",
+                    "The number of compounds reduces interpretability; higher-confidence and secondary mechanisms are not clearly distinguishable from the available data.",
                     issue.Compounds));
             }
 
@@ -42,7 +42,7 @@ public sealed class ProtocolSuggestionService : IProtocolSuggestionService
             {
                 suggestions.Add(new ProtocolSuggestionResponse(
                     "clarify",
-                    "Add explicit dose, unit, and frequency for each compound to improve BioStack scoring confidence.",
+                    "Dose, unit, or frequency data is incomplete, which limits BioStack scoring confidence.",
                     issue.Compounds));
             }
         }
@@ -51,23 +51,23 @@ public sealed class ProtocolSuggestionService : IProtocolSuggestionService
             .Where(counterfactual => counterfactual.DeltaScore > 0)
             .Take(2)
             .Select(counterfactual => new ProtocolSuggestionResponse(
-                "remove",
-                counterfactual.Recommendation,
+                "scenario",
+                $"A modeled scenario excluding {counterfactual.RemovedCompound} changed the predicted score by {counterfactual.DeltaScore:+0.##;-0.##;0}; this is observational and is not a recommendation to remove or change the protocol.",
                 new List<string> { counterfactual.RemovedCompound })));
 
         suggestions.AddRange(counterfactuals.BestSwapOne
             .Where(swap => swap.DeltaScore > 0)
             .Take(2)
             .Select(swap => new ProtocolSuggestionResponse(
-                "swap",
-                swap.Recommendation,
+                "scenario",
+                $"A modeled substitution scenario involving {swap.OriginalCompound} and {swap.CandidateCompound} changed the predicted score by {swap.DeltaScore:+0.##;-0.##;0}; this is observational and is not a recommendation to substitute or change the protocol.",
                 new List<string> { swap.OriginalCompound, swap.CandidateCompound })));
 
         if (suggestions.Count == 0 && parseResult.Entries.Count > 0)
         {
             suggestions.Add(new ProtocolSuggestionResponse(
                 "maintain",
-                "No major redundancy was detected in the MVP rules; keep tracking response data before escalating complexity.",
+                "The MVP rules detected no major redundancy. This observational result does not establish that the protocol is safe or optimal; response data remains necessary.",
                 parseResult.Entries.Select(entry => entry.CompoundName).ToList()));
         }
 

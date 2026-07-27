@@ -320,7 +320,7 @@ export function getContextTagsForKnowledgeEntry(entry: KnowledgeEntry) {
     entry.classification,
     ...entry.pathways,
     ...entry.benefits,
-    ...entry.pairsWellWith,
+    ...(entry.pairsWellWith ?? []),
   ]);
 }
 

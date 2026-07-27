@@ -44,24 +44,26 @@ public sealed class KnowledgeService : IKnowledgeService
             entry.Notes,
             entry.Pathways,
             entry.Benefits,
-            entry.PairsWellWith,
+            // The public knowledge contract keeps observational evidence and caution
+            // signals, but quarantines legacy fields that imply individualized action.
+            new List<string>(),
             entry.AvoidWith,
-            entry.CompatibleBlends,
-            entry.VialCompatibility,
-            entry.RecommendedDosage,
-            entry.StandardDosageRange,
-            entry.MaxReportedDose,
-            entry.Frequency,
-            entry.PreferredTimeOfDay,
-            entry.WeeklyDosageSchedule,
-            entry.IncrementalEscalationSteps,
-            entry.TieredDosing,
+            new List<string>(),
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            new List<string>(),
+            new List<string>(),
+            null,
             entry.DrugInteractions,
-            entry.OptimizationProtein,
-            entry.OptimizationCarbs,
-            entry.OptimizationSupplements,
-            entry.OptimizationSleep,
-            entry.OptimizationExercise
+            string.Empty,
+            string.Empty,
+            new List<string>(),
+            string.Empty,
+            string.Empty
         );
     }
 }

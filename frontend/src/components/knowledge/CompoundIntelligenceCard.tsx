@@ -1,11 +1,6 @@
-import { ContextualRecommendations } from '@/components/recommendations/ContextualRecommendations';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { useProfile } from '@/lib/context';
-import {
-    getContextTagsForKnowledgeEntry,
-    getRecommendationsForKnowledgeEntry,
-    type RecommendationSurface,
-} from '@/lib/recommendations';
+import type { RecommendationSurface } from '@/lib/recommendations';
 import { useSettings } from '@/lib/settings';
 import { KnowledgeEntry } from '@/lib/types';
 import { formatWeight } from '@/lib/utils';
@@ -19,14 +14,10 @@ interface CompoundIntelligenceCardProps {
 
 export function CompoundIntelligenceCard({
   entry,
-  recommendationSurface = 'compound-detail',
 }: CompoundIntelligenceCardProps) {
   const { currentProfileId, profiles } = useProfile();
   const { settings } = useSettings();
   const currentProfile = profiles.find(p => p.id === currentProfileId);
-  const recommendationTags = getContextTagsForKnowledgeEntry(entry);
-  const recommendations = getRecommendationsForKnowledgeEntry(entry, 3, recommendationSurface);
-
   return (
     <GlassCard variant="default" className="p-6 relative overflow-hidden">
       <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-emerald-500/[0.06] blur-2xl pointer-events-none" />
@@ -73,129 +64,19 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        {/* Synergies & Blends */}
-        {(entry.pairsWellWith.length > 0 || entry.avoidWith.length > 0 || entry.compatibleBlends.length > 0) && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/5">
-            {entry.pairsWellWith.length > 0 && (
-              <div>
-                <p className="text-[10px] uppercase tracking-wider text-emerald-400/60 mb-2">Pairs Well With</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {entry.pairsWellWith.map((item, i) => (
-                    <span key={i} className="text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-            {entry.avoidWith.length > 0 && (
-              <div>
-                <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">Avoid With</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {entry.avoidWith.map((item, i) => (
-                    <span key={i} className="text-[11px] px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-            {entry.compatibleBlends.length > 0 && (
-              <div className="md:col-span-2">
-                <p className="text-[10px] uppercase tracking-wider text-blue-400/60 mb-2">Compatible Blends (Vial)</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {entry.compatibleBlends.map((item, i) => (
-                    <span key={i} className="text-[11px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Reference data — disclaimer-first when a published range is present */}
-        {(entry.recommendedDosage || entry.frequency || entry.preferredTimeOfDay || entry.weeklyDosageSchedule.length > 0) && (
-          <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 border-b border-white/5 pb-1">Reference Data</p>
-            {entry.recommendedDosage && (
-              <p className="text-xs leading-5 text-white/55">
-                Reference only. Published ranges are not BioStack recommendations.
-              </p>
-            )}
-            <div className="grid grid-cols-3 gap-2 text-center">
-              {entry.recommendedDosage && (
-                <div className="p-2 rounded bg-white/5">
-                  <p className="text-[10px] text-white/40 uppercase">Published reference range (literature)</p>
-                  <p className="text-sm text-white font-medium">{entry.recommendedDosage}</p>
-                </div>
-              )}
-              {entry.frequency && (
-                <div className="p-2 rounded bg-white/5">
-                  <p className="text-[10px] text-white/40 uppercase">Frequency</p>
-                  <p className="text-sm text-white font-medium">{entry.frequency}</p>
-                </div>
-              )}
-              {entry.preferredTimeOfDay && (
-                <div className="p-2 rounded bg-white/5">
-                  <p className="text-[10px] text-white/40 uppercase">Time</p>
-                  <p className="text-sm text-white font-medium">{entry.preferredTimeOfDay}</p>
-                </div>
-              )}
+        {entry.avoidWith.length > 0 && (
+          <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
+            <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">Reported cautions in source data</p>
+            <div className="flex flex-wrap gap-1.5">
+              {entry.avoidWith.map((item, i) => (
+                <span key={i} className="text-[11px] px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20">
+                  {item}
+                </span>
+              ))}
             </div>
-            {entry.weeklyDosageSchedule.length > 0 && (
-              <div className="text-sm text-white/60 bg-white/5 p-3 rounded-lg">
-                <p className="text-[10px] uppercase text-white/40 mb-2">Published Schedule Reference</p>
-                <ul className="space-y-1">
-                  {entry.weeklyDosageSchedule.map((step, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-blue-400" />
-                      {step}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Optimization Recommendations */}
-        {(entry.optimizationProtein || entry.optimizationCarbs || entry.optimizationSupplements || entry.optimizationSleep || entry.optimizationExercise) && (
-          <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 border-b border-white/5 pb-1">Optimization Guidelines</p>
-            <div className="grid grid-cols-1 gap-2">
-              {entry.optimizationProtein && (
-                <div className="flex justify-between text-sm py-1 border-b border-white/[0.03]">
-                  <span className="text-white/40">Protein</span>
-                  <span className="text-white/80">{entry.optimizationProtein}</span>
-                </div>
-              )}
-              {entry.optimizationCarbs && (
-                <div className="flex justify-between text-sm py-1 border-b border-white/[0.03]">
-                  <span className="text-white/40">Carbs</span>
-                  <span className="text-white/80">{entry.optimizationCarbs}</span>
-                </div>
-              )}
-              {entry.optimizationSupplements && (
-                <div className="flex justify-between text-sm py-1 border-b border-white/[0.03]">
-                  <span className="text-white/40">Supplements</span>
-                  <span className="text-white/80">{entry.optimizationSupplements}</span>
-                </div>
-              )}
-              {entry.optimizationExercise && (
-                <div className="flex justify-between text-sm py-1 border-b border-white/[0.03]">
-                  <span className="text-white/40">Exercise</span>
-                  <span className="text-white/80">{entry.optimizationExercise}</span>
-                </div>
-              )}
-              {entry.optimizationSleep && (
-                <div className="flex justify-between text-sm py-1">
-                  <span className="text-white/40">Sleep</span>
-                  <span className="text-white/80">{entry.optimizationSleep}</span>
-                </div>
-              )}
-            </div>
+            <p className="mt-2 text-xs leading-5 text-white/45">
+              These are observational flags for review, not individualized instructions.
+            </p>
           </div>
         )}
 
@@ -259,11 +140,6 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        <ContextualRecommendations
-          recommendations={recommendations}
-          surface={recommendationSurface}
-          contextTags={recommendationTags}
-        />
       </div>
 
       <SafetyDisclaimer type="educational" />

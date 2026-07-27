@@ -46,7 +46,7 @@ public static class KnowledgeEndpoints
         IInteractionIntelligenceService interactionIntelligenceService,
         CancellationToken ct)
     {
-        var result = await interactionIntelligenceService.EvaluateByNamesAsync(request.CompoundNames, ct);
+        var result = await interactionIntelligenceService.EvaluatePublicByNamesAsync(request.CompoundNames, ct);
         return Results.Ok(result);
     }
 }

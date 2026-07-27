@@ -50,7 +50,7 @@ describe('CompoundIntelligenceCard', () => {
     optimizationExercise: '',
   };
 
-  it('renders contextual recommendations quietly inside the compound detail surface when relevant', () => {
+  it('renders useful observational evidence without contextual product recommendations', () => {
     render(
       <CompoundIntelligenceCard
         entry={baseEntry}
@@ -58,76 +58,44 @@ describe('CompoundIntelligenceCard', () => {
     );
 
     expect(screen.getByText('Mechanism Summary')).toBeInTheDocument();
-    expect(screen.getByText('Common additions')).toBeInTheDocument();
-    expect(screen.getByText('CoQ10')).toBeInTheDocument();
-    expect(
-      screen.getByText('Here are a few common examples people look at in similar mitochondrial-support contexts.')
-    ).toBeInTheDocument();
-    expect(screen.getAllByText(/Example source · /).length).toBeGreaterThan(0);
-    expect(screen.getByText('Some links may be affiliate links.')).toBeInTheDocument();
+    expect(screen.getByText('Energy support')).toBeInTheDocument();
+    expect(screen.queryByText('Common additions')).not.toBeInTheDocument();
+    expect(screen.queryByText('MOTS-C')).not.toBeInTheDocument();
   });
 
-  it('uses educational copy variants on knowledge-search surfaces', () => {
-    render(
-      <CompoundIntelligenceCard
-        recommendationSurface="knowledge-search"
-        entry={baseEntry}
-      />
-    );
-
-    expect(
-      screen.getByText('People exploring mitochondrial-support compounds often look at these examples next.')
-    ).toBeInTheDocument();
-  });
-
-  it('uses reference-oriented profile copy instead of prescriptive guidance', () => {
+  it('withholds dose, schedule, optimization, pairing, and blend fields from the public card', () => {
     const { container } = render(
       <CompoundIntelligenceCard
         entry={{
           ...baseEntry,
-          recommendedDosage: 'Published range: 250-500 mg',
-          frequency: 'Published schedule varies',
+          pairsWellWith: ['Pairing candidate'],
+          compatibleBlends: ['Co-vial candidate'],
+          avoidWith: ['Reported caution'],
+          recommendedDosage: '250-500 mg',
+          frequency: 'Twice daily',
+          preferredTimeOfDay: 'Morning',
+          weeklyDosageSchedule: ['Week 1: 250 mg'],
+          optimizationProtein: '2 g/kg/day',
+          optimizationCarbs: '200 g/day',
+          optimizationSupplements: 'Supplement candidate',
+          optimizationSleep: '8 hours',
+          optimizationExercise: 'Train daily',
         }}
       />
     );
 
-    // Profile Context section renders with demographics only — no adjacent dosage strings.
-    const profileContextHeader = screen.getByText('Profile Context');
-    expect(profileContextHeader).toBeInTheDocument();
-
-    // Reference Data section renders the published range under the new literature label
-    // with the "Reference only" disclaimer above it.
-    expect(screen.getByText('Reference Data')).toBeInTheDocument();
-    expect(screen.getByText('Published reference range (literature)')).toBeInTheDocument();
-    expect(screen.getByText('Reference only. Published ranges are not BioStack recommendations.')).toBeInTheDocument();
-
-    // Disclaimer must appear before the range datum in DOM order so it
-    // reads as the qualifier, not the footer.
-    const disclaimer = screen.getByText('Reference only. Published ranges are not BioStack recommendations.');
-    const rangeValue = screen.getByText('Published range: 250-500 mg');
-    expect(disclaimer.compareDocumentPosition(rangeValue) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-
-    // The Profile Context section must not contain the published range or
-    // any profile-conditional dosage messaging (decoupling guarantee).
-    const profileSection = profileContextHeader.closest('div')?.parentElement;
-    expect(profileSection).not.toBeNull();
-    expect(profileSection!.textContent ?? '').not.toContain('Published range: 250-500 mg');
-    expect(profileSection!.textContent ?? '').not.toContain('Published Range Context');
-
-    // Retired prescriptive/conditional strings must not render anywhere.
-    expect(screen.queryByText('Published Range Context')).not.toBeInTheDocument();
-    expect(screen.queryByText('General published range referenced.')).not.toBeInTheDocument();
-    expect(screen.queryByText('Profile context may warrant closer review of published ranges.')).not.toBeInTheDocument();
-    expect(screen.queryByText(/Published ranges are reference data only and are not dosing instructions/)).not.toBeInTheDocument();
-    expect(screen.queryByText('Personalized Guidance')).not.toBeInTheDocument();
-    expect(screen.queryByText('Personalized Adjustments')).not.toBeInTheDocument();
-    expect(screen.queryByText('Higher end of dosage range recommended.')).not.toBeInTheDocument();
-    expect(screen.queryByText('Standard dosage range applicable.')).not.toBeInTheDocument();
-    expect(screen.queryByText('Protocol Guidance')).not.toBeInTheDocument();
-
-    // Defensive: rendered output for this card should not contain the
-    // weight/age conditional prescriptive sentences anywhere in the DOM.
-    expect(container.textContent ?? '').not.toContain('may warrant closer review');
+    expect(screen.getByText('Reported cautions in source data')).toBeInTheDocument();
+    expect(screen.getByText('Reported caution')).toBeInTheDocument();
+    expect(screen.getByText('These are observational flags for review, not individualized instructions.')).toBeInTheDocument();
+    expect(container.textContent ?? '').not.toContain('Pairing candidate');
+    expect(container.textContent ?? '').not.toContain('Co-vial candidate');
+    expect(container.textContent ?? '').not.toContain('250-500 mg');
+    expect(container.textContent ?? '').not.toContain('Twice daily');
+    expect(container.textContent ?? '').not.toContain('Week 1: 250 mg');
+    expect(container.textContent ?? '').not.toContain('2 g/kg/day');
+    expect(container.textContent ?? '').not.toContain('Supplement candidate');
+    expect(screen.queryByText('Reference Data')).not.toBeInTheDocument();
+    expect(screen.queryByText('Optimization Guidelines')).not.toBeInTheDocument();
   });
 
   it('does not surface MOTS-C-by-age or weight-conditional prescriptive copy', () => {
