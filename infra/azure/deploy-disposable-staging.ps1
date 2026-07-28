@@ -7,7 +7,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$acrName = "$BaseName`acr"
+$acrName = "${BaseName}acr"
 $environmentName = "$BaseName-env"
 $apiAppName = "$BaseName-api"
 $webAppName = "$BaseName-web"
