@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next';
-
-const baseUrl = 'https://biostack.app';
+import { absoluteSiteUrl } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -13,11 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/pricing',
     '/faq',
     '/tools',
+    '/tools/analyzer',
     '/tools/reconstitution-calculator',
     '/tools/volume-calculator',
     '/tools/unit-converter',
   ].map((path) => ({
-    url: `${baseUrl}${path}`,
+    url: absoluteSiteUrl(path || '/'),
     lastModified: new Date(),
   }));
 }

@@ -7,6 +7,8 @@ using Xunit;
 
 public class ResearchArtifactValidatorTests
 {
+    private const string ClintEntraObjectId = "461a4112-8e91-41cb-afef-6889b8f48ff0";
+
     public static IEnumerable<object[]> ValidFixtures => new[]
     {
         new object[] { ResearchArtifactKind.CompoundCandidateBatch, "compound-candidates.sample.json" },
@@ -67,13 +69,33 @@ public class ResearchArtifactValidatorTests
         Assert.True(result.IsValid, result.Summary());
         var sources = artifact.Node["sources"]!.AsArray();
         Assert.Equal(13, sources.Count);
-        Assert.All(sources, source =>
+        var approvedSourceIds = new HashSet<string>(StringComparer.Ordinal)
         {
-            Assert.Equal("pending-human-legal", source!["rights"]!["reviewStatus"]!.GetValue<string>());
+            "fda",
+            "pubchem",
+            "pubmed",
+            "clinicaltrials",
+            "dailymed",
+            "nih-ods",
+            "nih-nccih",
+        };
+        foreach (var source in sources)
+        {
+            var sourceId = source!["identity"]!["sourceId"]!.GetValue<string>();
+            if (approvedSourceIds.Contains(sourceId))
+            {
+                Assert.Equal("approved", source["rights"]!["reviewStatus"]!.GetValue<string>());
+                Assert.Equal("active", source["operations"]!["status"]!.GetValue<string>());
+                Assert.True(source["acquisition"]!["enabled"]!.GetValue<bool>());
+                Assert.NotEmpty(source["rights"]!["allowedUses"]!.AsArray());
+                continue;
+            }
+
+            Assert.Equal("pending-human-legal", source["rights"]!["reviewStatus"]!.GetValue<string>());
             Assert.Equal("disabled", source["operations"]!["status"]!.GetValue<string>());
             Assert.False(source["acquisition"]!["enabled"]!.GetValue<bool>());
             Assert.Empty(source["rights"]!["allowedUses"]!.AsArray());
-        });
+        }
     }
 
     [Fact]
@@ -108,7 +130,7 @@ public class ResearchArtifactValidatorTests
         Assert.Equal(
             registrySha256,
             artifact.Node["registryBinding"]!["sha256"]!.GetValue<string>());
-        Assert.Equal("0a625778407fc85f3e32ed620b578bf4fe37cd37acb09c938776d9ed82aa7163", registrySha256);
+        Assert.Equal("3c8425e090f31ea17eb4d6a10f8ea8a5e2f352f753f3c5312fc7fcce80d03e28", registrySha256);
     }
 
     [Fact]
@@ -137,20 +159,43 @@ public class ResearchArtifactValidatorTests
         {
             ["product-owner"] = "Clint Morgan",
             ["legal-rights-approver"] = "Johnathan Harper",
-            ["evidence-reviewer"] = "Ellison Nemoy",
+            ["evidence-reviewer"] = "Clint Morgan",
             ["security-data-owner"] = "Pradic Patel",
         };
 
         var owners = artifact.Node["owners"]!.AsArray();
         Assert.Equal(4, owners.Count);
         Assert.Equal(4, owners.Select(owner => owner!["roleId"]!.GetValue<string>()).Distinct(StringComparer.Ordinal).Count());
-        Assert.Equal(4, owners.Select(owner => owner!["personName"]!.GetValue<string>()).Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(3, owners.Select(owner => owner!["personName"]!.GetValue<string>()).Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(
+            ["evidence-reviewer", "product-owner"],
+            owners
+                .Where(owner => owner!["personName"]!.GetValue<string>() == "Clint Morgan")
+                .Select(owner => owner!["roleId"]!.GetValue<string>())
+                .OrderBy(roleId => roleId, StringComparer.Ordinal)
+                .ToArray());
         foreach (var owner in owners)
         {
             var roleId = owner!["roleId"]!.GetValue<string>();
             Assert.Equal(expectedOwners[roleId], owner["personName"]!.GetValue<string>());
             Assert.Equal("assigned", owner["assignmentStatus"]!.GetValue<string>());
+            if (owner["personName"]!.GetValue<string>() == "Clint Morgan")
+            {
+                Assert.Equal(ClintEntraObjectId, owner["entraObjectId"]!.GetValue<string>());
+            }
+            else
+            {
+                Assert.Null(owner["entraObjectId"]);
+            }
         }
+        Assert.Contains(
+            "one person may hold multiple roles",
+            artifact.Node["assignmentDisclaimer"]!.GetValue<string>(),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "does not satisfy any distinct-person or independent-review requirement",
+            artifact.Node["assignmentDisclaimer"]!.GetValue<string>(),
+            StringComparison.Ordinal);
 
         var doctrine = artifact.Node["productDoctrine"]!;
         Assert.Equal("product-owner-confirmed", doctrine["status"]!.GetValue<string>());
@@ -200,18 +245,25 @@ public class ResearchArtifactValidatorTests
 
         foreach (var source in sources)
         {
-            Assert.Equal("selected-pending-source-activation-review", source!["decisionStatus"]!.GetValue<string>());
-            Assert.False(source["activationReady"]!.GetValue<bool>());
-            Assert.Equal("review-required", source["rights"]!["reviewStatus"]!.GetValue<string>());
-            Assert.Empty(source["rights"]!["allowedUses"]!.AsArray());
+            Assert.Equal("approved", source!["decisionStatus"]!.GetValue<string>());
+            Assert.True(source["activationReady"]!.GetValue<bool>());
+            Assert.Equal("reviewed", source["rights"]!["reviewStatus"]!.GetValue<string>());
+            Assert.NotEmpty(source["rights"]!["allowedUses"]!.AsArray());
             Assert.NotEmpty(source["rights"]!["proposedUses"]!.AsArray());
-            Assert.Null(source["rights"]!["legalBasisOrLicense"]);
-            Assert.Null(source["rights"]!["reviewedBy"]);
-            Assert.Equal("disabled", source["operations"]!["status"]!.GetValue<string>());
-            Assert.False(source["acquisition"]!["enabled"]!.GetValue<bool>());
-            Assert.Equal("none", source["acquisition"]!["method"]!.GetValue<string>());
-            Assert.Equal("review-required", source["acquisition"]!["apiTermsStatus"]!.GetValue<string>());
-            Assert.Equal("disabled-until-approved", source["refresh"]!["mode"]!.GetValue<string>());
+            Assert.False(string.IsNullOrWhiteSpace(
+                source["rights"]!["legalBasisOrLicense"]!.GetValue<string>()));
+            Assert.Equal("Johnathan Harper", source["rights"]!["reviewedBy"]!.GetValue<string>());
+            Assert.NotNull(source["rights"]!["verifiedAtUtc"]);
+            Assert.Equal("approved", source["operations"]!["status"]!.GetValue<string>());
+            Assert.NotNull(source["operations"]!["lastReviewedAtUtc"]);
+            Assert.True(source["acquisition"]!["enabled"]!.GetValue<bool>());
+            Assert.Equal(
+                source["acquisition"]!["reviewCandidateMethod"]!.GetValue<string>(),
+                source["acquisition"]!["method"]!.GetValue<string>());
+            Assert.Contains(
+                source["acquisition"]!["apiTermsStatus"]!.GetValue<string>(),
+                new[] { "reviewed", "not-applicable" });
+            Assert.Equal("manual", source["refresh"]!["mode"]!.GetValue<string>());
             Assert.Equal(
                 "mark-stale-and-restrict-current-status-claims",
                 source["refresh"]!["stalenessAction"]!.GetValue<string>());
@@ -234,6 +286,9 @@ public class ResearchArtifactValidatorTests
             var approvals = source["approvals"]!.AsObject();
             Assert.Equal(4, approvals.Count);
             Assert.Equal("Clint Morgan", approvals["product"]!["assigneeName"]!.GetValue<string>());
+            Assert.Equal(
+                ClintEntraObjectId,
+                approvals["product"]!["assigneeEntraObjectId"]!.GetValue<string>());
             Assert.Equal("product-capability", approvals["product"]!["decisionScope"]!.GetValue<string>());
             Assert.Equal("product-capability-review", approvals["product"]!["blockingStage"]!.GetValue<string>());
             Assert.Equal("reviewed", approvals["product"]!["reviewStatus"]!.GetValue<string>());
@@ -243,24 +298,267 @@ public class ResearchArtifactValidatorTests
             Assert.Equal("Johnathan Harper", approvals["legalRights"]!["assigneeName"]!.GetValue<string>());
             Assert.Equal("legal-rights", approvals["legalRights"]!["decisionScope"]!.GetValue<string>());
             Assert.Equal("source-activation", approvals["legalRights"]!["blockingStage"]!.GetValue<string>());
-            Assert.Equal("Ellison Nemoy", approvals["evidence"]!["assigneeName"]!.GetValue<string>());
+            Assert.Equal("reviewed", approvals["legalRights"]!["reviewStatus"]!.GetValue<string>());
+            Assert.Equal("approved", approvals["legalRights"]!["decision"]!.GetValue<string>());
+            Assert.NotNull(approvals["legalRights"]!["decidedAtUtc"]);
+            Assert.NotEmpty(approvals["legalRights"]!["decisionNotes"]!.AsArray());
+            Assert.Equal("Clint Morgan", approvals["evidence"]!["assigneeName"]!.GetValue<string>());
+            Assert.Equal(
+                ClintEntraObjectId,
+                approvals["evidence"]!["assigneeEntraObjectId"]!.GetValue<string>());
             Assert.Equal("evidence-promotion", approvals["evidence"]!["decisionScope"]!.GetValue<string>());
             Assert.Equal("canonical-claim-promotion", approvals["evidence"]!["blockingStage"]!.GetValue<string>());
             Assert.Equal("Pradic Patel", approvals["securityData"]!["assigneeName"]!.GetValue<string>());
             Assert.Equal("security-data", approvals["securityData"]!["decisionScope"]!.GetValue<string>());
             Assert.Equal("source-activation", approvals["securityData"]!["blockingStage"]!.GetValue<string>());
-            foreach (var key in new[] { "legalRights", "evidence" })
+            Assert.Equal("review-required", approvals["evidence"]!["reviewStatus"]!.GetValue<string>());
+            Assert.Null(approvals["evidence"]!["decision"]);
+            Assert.Null(approvals["evidence"]!["decidedAtUtc"]);
+            var evidenceNotes = approvals["evidence"]!["decisionNotes"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray();
+            Assert.Contains(
+                evidenceNotes,
+                note => note.Contains("transferred from Ellison Nemoy to Clint Morgan", StringComparison.Ordinal)
+                    && note.Contains(ClintEntraObjectId, StringComparison.Ordinal)
+                    && note.Contains("receipt time", StringComparison.Ordinal)
+                    && note.Contains("not an invented original decision time", StringComparison.Ordinal));
+            var sourceId = source["sourceId"]!.GetValue<string>();
+            var securityTriggers = source["securityDataTriggersDetected"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray();
+            Assert.Contains("new-egress-or-storage-boundary", securityTriggers);
+            if (sourceId == "nih-nccih")
             {
-                Assert.Equal("review-required", approvals[key]!["reviewStatus"]!.GetValue<string>());
-                Assert.Null(approvals[key]!["decision"]);
-                Assert.Null(approvals[key]!["decidedAtUtc"]);
+                Assert.Equal(["new-egress-or-storage-boundary"], securityTriggers);
             }
-            Assert.Empty(source["securityDataTriggersDetected"]!.AsArray());
-            Assert.Equal("not-applicable", approvals["securityData"]!["reviewStatus"]!.GetValue<string>());
-            Assert.Null(approvals["securityData"]!["decision"]);
-            Assert.Null(approvals["securityData"]!["decidedAtUtc"]);
-            Assert.NotEmpty(approvals["securityData"]!["decisionNotes"]!.AsArray());
+            else
+            {
+                Assert.Equal(
+                    [
+                        "new-egress-or-storage-boundary",
+                        "untrusted-bulk-archive-or-parser",
+                    ],
+                    securityTriggers);
+            }
+
+            Assert.Equal(
+                "reviewed",
+                approvals["securityData"]!["reviewStatus"]!.GetValue<string>());
+            Assert.Equal(
+                "approved-with-controls",
+                approvals["securityData"]!["decision"]!.GetValue<string>());
+            Assert.Equal(
+                "2026-07-26T10:40:42Z",
+                approvals["securityData"]!["decidedAtUtc"]!.GetValue<string>());
+            var securityNotes = approvals["securityData"]!["decisionNotes"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray();
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains(
+                    "not the original decision time",
+                    StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains(
+                    "ResearchOutput/source-acquisition/v1",
+                    StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains(
+                    "Raw response bodies",
+                    StringComparison.Ordinal)
+                    && note.Contains("database writes", StringComparison.Ordinal)
+                    && note.Contains("promotion", StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains("disabled redirects", StringComparison.Ordinal)
+                    && note.Contains("no automatic retry", StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains("worker service identity", StringComparison.Ordinal)
+                    && note.Contains("evidence reviewer", StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains(
+                    "explicit positive runtime configuration value with no default",
+                    StringComparison.Ordinal)
+                    && note.Contains("content-free tombstone", StringComparison.Ordinal)
+                    && note.Contains("quarantined", StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains("BioStackKnowledgeWorker", StringComparison.Ordinal)
+                    && note.Contains(
+                        "must not be committed",
+                        StringComparison.Ordinal));
+            Assert.Contains(
+                securityNotes,
+                note => note.Contains("Clint Morgan is also the assigned NCCIH operator", StringComparison.Ordinal)
+                    && note.Contains("cannot independently review his own NCCIH capture", StringComparison.Ordinal)
+                    && note.Contains("distinct authorized reviewer", StringComparison.Ordinal));
+            Assert.DoesNotContain(
+                securityNotes,
+                note => note.Contains("independent reviewer Clint Morgan", StringComparison.Ordinal));
+
+            if (sourceId == "nih-nccih")
+            {
+                Assert.Contains(
+                    evidenceNotes,
+                    note => note.Contains("cannot independently review his own capture", StringComparison.Ordinal)
+                        && note.Contains("remains blocked", StringComparison.Ordinal)
+                        && note.Contains("distinct authorized reviewer", StringComparison.Ordinal));
+            }
         }
+    }
+
+    [Fact]
+    public void Reviewer_Owner_Transfer_Receipt_Binds_Exact_Artifacts_And_Preserves_Nccih_Independence()
+    {
+        var repositoryRoot = Directory.GetParent(TestPaths.BackendRoot())!.FullName;
+        var receiptPath = Path.Combine(
+            repositoryRoot,
+            "research",
+            "source-authorization",
+            "keo-74-reviewer-owner-transfer-receipt.v1.json");
+        var receipt = JsonNode.Parse(File.ReadAllText(receiptPath))!;
+
+        Assert.Equal("reviewer-owner-transfer-receipt", receipt["recordType"]!.GetValue<string>());
+        Assert.Equal("2026-07-26T12:22:29Z", receipt["receivedAtUtc"]!.GetValue<string>());
+        Assert.Equal(
+            "receipt-time-not-original-decision-time",
+            receipt["timestampBasis"]!.GetValue<string>());
+        Assert.Null(receipt["originalDecisionAtUtc"]);
+
+        var transfer = receipt["transfer"]!;
+        Assert.Equal("Ellison Nemoy", transfer["departingPersonName"]!.GetValue<string>());
+        Assert.Equal("Clint Morgan", transfer["successor"]!["personName"]!.GetValue<string>());
+        Assert.Equal(
+            ClintEntraObjectId,
+            transfer["successor"]!["entraObjectId"]!.GetValue<string>());
+        Assert.Equal(
+            ["evidence-reviewer", "nih-nccih-manual-reviewer"],
+            transfer["responsibilityIds"]!.AsArray()
+                .Select(value => value!.GetValue<string>())
+                .ToArray());
+
+        foreach (var binding in receipt["bindings"]!.AsArray())
+        {
+            var relativePath = binding!["artifactPath"]!.GetValue<string>();
+            var boundPath = Path.Combine(
+                repositoryRoot,
+                relativePath.Replace('/', Path.DirectorySeparatorChar));
+            using var stream = File.OpenRead(boundPath);
+            var actualSha256 = Convert.ToHexString(SHA256.HashData(stream)).ToLowerInvariant();
+            Assert.Equal(binding["sha256"]!.GetValue<string>(), actualSha256);
+        }
+
+        var invariants = receipt["invariants"]!;
+        Assert.False(invariants["assignmentIsApproval"]!.GetValue<bool>());
+        Assert.True(invariants["canonicalClaimPromotionRequiresEvidenceReview"]!.GetValue<bool>());
+        Assert.Equal("Clint Morgan", invariants["nccihOperatorPersonName"]!.GetValue<string>());
+        Assert.Equal("Clint Morgan", invariants["nccihReviewerOwnerPersonName"]!.GetValue<string>());
+        Assert.True(invariants["nccihDistinctReviewerRequired"]!.GetValue<bool>());
+        Assert.Equal(
+            "blocked-pending-distinct-authorized-reviewer",
+            invariants["nccihCurrentDisposition"]!.GetValue<string>());
+        Assert.True(invariants["noLiveOrRuntimeAuthorizationGranted"]!.GetValue<bool>());
+    }
+
+    [Fact]
+    public void Nccih_Manual_Capture_Reviewer_Receipt_Binds_Immutable_Overlay_Without_Approving_Evidence()
+    {
+        var repositoryRoot = Directory.GetParent(TestPaths.BackendRoot())!.FullName;
+        var receiptPath = Path.Combine(
+            repositoryRoot,
+            "research",
+            "source-authorization",
+            "keo-74-nccih-manual-capture-reviewer-receipt.v1.json");
+        var receipt = JsonNode.Parse(File.ReadAllText(receiptPath))!;
+
+        Assert.Equal(
+            "nccih-manual-capture-reviewer-authorization-receipt",
+            receipt["recordType"]!.GetValue<string>());
+        Assert.Equal("2026-07-26T16:27:48Z", receipt["receivedAtUtc"]!.GetValue<string>());
+        Assert.Equal(
+            "receipt-time-not-original-decision-time",
+            receipt["timestampBasis"]!.GetValue<string>());
+        Assert.Null(receipt["originalDecisionAtUtc"]);
+
+        var authorization = receipt["authorization"]!;
+        Assert.Equal("nih-nccih", authorization["sourceId"]!.GetValue<string>());
+        Assert.Equal(
+            "nih-nccih-manual-capture-reviewer",
+            authorization["responsibilityId"]!.GetValue<string>());
+        Assert.Equal("assigned", authorization["assignmentStatus"]!.GetValue<string>());
+        Assert.Equal("Clint Morgan", authorization["operator"]!["personName"]!.GetValue<string>());
+        Assert.Equal(
+            ClintEntraObjectId,
+            authorization["operator"]!["entraObjectId"]!.GetValue<string>());
+        Assert.Equal(
+            "Sandy Morgan",
+            authorization["distinctReviewer"]!["personName"]!.GetValue<string>());
+        Assert.Equal(
+            "name-only-user-supplied",
+            authorization["distinctReviewer"]!["identityBasis"]!.GetValue<string>());
+        Assert.Null(authorization["distinctReviewer"]!["entraObjectId"]);
+        Assert.Equal(
+            "Clint Morgan",
+            authorization["overallEvidenceReviewOwner"]!["personName"]!.GetValue<string>());
+        Assert.Equal(
+            ClintEntraObjectId,
+            authorization["overallEvidenceReviewOwner"]!["entraObjectId"]!.GetValue<string>());
+
+        foreach (var binding in receipt["bindings"]!.AsArray())
+        {
+            var relativePath = binding!["artifactPath"]!.GetValue<string>();
+            var boundPath = Path.Combine(
+                repositoryRoot,
+                relativePath.Replace('/', Path.DirectorySeparatorChar));
+            using var stream = File.OpenRead(boundPath);
+            var actualSha256 = Convert.ToHexString(SHA256.HashData(stream)).ToLowerInvariant();
+            Assert.Equal(binding["sha256"]!.GetValue<string>(), actualSha256);
+        }
+
+        var decisionArtifact = LoadSevenSourceDecisionArtifact();
+        var owners = decisionArtifact.Node["owners"]!.AsArray();
+        Assert.Contains(
+            owners,
+            owner => owner!["roleId"]!.GetValue<string>() == "evidence-reviewer"
+                && owner["personName"]!.GetValue<string>() == "Clint Morgan"
+                && owner["entraObjectId"]!.GetValue<string>() == ClintEntraObjectId);
+        var nccih = decisionArtifact.Node["sources"]!.AsArray()
+            .Single(source => source!["sourceId"]!.GetValue<string>() == "nih-nccih")!;
+        var evidenceApproval = nccih["approvals"]!["evidence"]!;
+        Assert.Equal("Clint Morgan", evidenceApproval["assigneeName"]!.GetValue<string>());
+        Assert.Equal(ClintEntraObjectId, evidenceApproval["assigneeEntraObjectId"]!.GetValue<string>());
+        Assert.Equal("review-required", evidenceApproval["reviewStatus"]!.GetValue<string>());
+        Assert.Null(evidenceApproval["decision"]);
+        Assert.Null(evidenceApproval["decidedAtUtc"]);
+
+        var nameOnlyRepresentation = LoadSevenSourceDecisionArtifact();
+        var nameOnlyNccih = nameOnlyRepresentation.Node["sources"]!.AsArray()
+            .Single(source => source!["sourceId"]!.GetValue<string>() == "nih-nccih")!;
+        var nameOnlyAssignee = nameOnlyNccih["approvals"]!["evidence"]!.AsObject();
+        nameOnlyAssignee["assigneeName"] = "Sandy Morgan";
+        nameOnlyAssignee.Remove("assigneeEntraObjectId");
+        var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+        var nameOnlyResult = validator.Validate(
+            ResearchArtifactKind.SourceAuthorizationDecisionBatch,
+            nameOnlyRepresentation.Node);
+        Assert.True(nameOnlyResult.IsValid, nameOnlyResult.Summary());
+
+        var invariants = receipt["invariants"]!;
+        Assert.False(invariants["assignmentIsApproval"]!.GetValue<bool>());
+        Assert.True(invariants["canonicalClaimPromotionRequiresEvidenceReview"]!.GetValue<bool>());
+        Assert.True(invariants["nccihDistinctReviewerRequired"]!.GetValue<bool>());
+        Assert.True(invariants["operatorReviewerIdentifiersMustDiffer"]!.GetValue<bool>());
+        Assert.Equal("pending", invariants["reviewerActionStatus"]!.GetValue<string>());
+        Assert.Equal("review-required", invariants["evidenceApprovalStatus"]!.GetValue<string>());
+        Assert.True(invariants["noEntraObjectIdInventedForSandyMorgan"]!.GetValue<bool>());
+        Assert.False(invariants["canonicalDecisionArtifactMutated"]!.GetValue<bool>());
+        Assert.False(invariants["runtimeGuardChanged"]!.GetValue<bool>());
+        Assert.True(invariants["noLiveOrRuntimeAuthorizationGranted"]!.GetValue<bool>());
     }
 
     [Fact]
@@ -294,9 +592,6 @@ public class ResearchArtifactValidatorTests
         legalApproval["decision"] = "approved-with-controls";
         legalApproval["decidedAtUtc"] = "2026-07-25T13:15:00Z";
         legalApproval["decisionNotes"] = new JsonArray("Limited to the selected openFDA data class.");
-        var securityApproval = source["approvals"]!["securityData"]!;
-        securityApproval["reviewStatus"] = "not-applicable";
-        securityApproval["decision"] = null;
         var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
 
         var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
@@ -313,11 +608,11 @@ public class ResearchArtifactValidatorTests
     {
         var artifact = LoadSevenSourceDecisionArtifact();
         var source = artifact.Node["sources"]![0]!;
-        source["decisionStatus"] = "approved";
-        source["activationReady"] = true;
-        source["operations"]!["status"] = "approved";
-        source["acquisition"]!["enabled"] = true;
-        source["acquisition"]!["method"] = "api";
+        source["rights"]!["reviewStatus"] = "review-required";
+        source["rights"]!["legalBasisOrLicense"] = null;
+        source["rights"]!["allowedUses"] = new JsonArray();
+        source["rights"]!["reviewedBy"] = null;
+        source["rights"]!["verifiedAtUtc"] = null;
         var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
 
         var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
@@ -331,6 +626,9 @@ public class ResearchArtifactValidatorTests
         var artifact = LoadSevenSourceDecisionArtifact();
         var legalApproval = artifact.Node["sources"]![0]!["approvals"]!["legalRights"]!;
         legalApproval["reviewStatus"] = "reviewed";
+        legalApproval["decision"] = null;
+        legalApproval["decidedAtUtc"] = null;
+        legalApproval["decisionNotes"] = new JsonArray();
         var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
 
         var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
@@ -344,11 +642,19 @@ public class ResearchArtifactValidatorTests
         var artifact = LoadSevenSourceDecisionArtifact();
         var source = artifact.Node["sources"]![0]!;
         source["securityDataTriggersDetected"] =
-            new JsonArray("untrusted-bulk-archive-or-parser");
+            new JsonArray(
+                "new-egress-or-storage-boundary",
+                "untrusted-bulk-archive-or-parser");
         var securityApproval = source["approvals"]!["securityData"]!;
         securityApproval["reviewStatus"] = "review-required";
         securityApproval["decision"] = null;
         securityApproval["decidedAtUtc"] = null;
+        source["decisionStatus"] = "selected-pending-source-activation-review";
+        source["activationReady"] = false;
+        source["operations"]!["status"] = "disabled";
+        source["acquisition"]!["enabled"] = false;
+        source["acquisition"]!["method"] = "none";
+        source["refresh"]!["mode"] = "disabled-until-approved";
         var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
 
         var result = validator.Validate(ResearchArtifactKind.SourceAuthorizationDecisionBatch, artifact.Node);
@@ -362,7 +668,9 @@ public class ResearchArtifactValidatorTests
         var artifact = LoadSevenSourceDecisionArtifact();
         var source = artifact.Node["sources"]![0]!;
         source["securityDataTriggersDetected"] =
-            new JsonArray("untrusted-bulk-archive-or-parser");
+            new JsonArray(
+                "new-egress-or-storage-boundary",
+                "untrusted-bulk-archive-or-parser");
         var securityApproval = source["approvals"]!["securityData"]!;
         securityApproval["reviewStatus"] = "review-required";
         securityApproval["decision"] = null;

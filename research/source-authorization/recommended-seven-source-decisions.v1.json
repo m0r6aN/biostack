@@ -1,17 +1,18 @@
 {
-  "schemaVersion": "1.1.0",
+  "schemaVersion": "1.2.0",
   "recordType": "source-authorization-decision-batch",
-  "generatedAt": "2026-07-25T13:15:00Z",
-  "assignmentDisclaimer": "Assignment identifies the responsible human reviewer. Each approval applies only to its declared stage; assignment is not approval, and a pending later-stage review does not block an earlier authorized stage.",
+  "generatedAt": "2026-07-26T12:22:29Z",
+  "assignmentDisclaimer": "Assignment identifies the responsible human reviewer. Role assignments are unique, but one person may hold multiple roles; that overlap does not satisfy any distinct-person or independent-review requirement. Each approval applies only to its declared stage; assignment is not approval, and a pending later-stage review does not block an earlier authorized stage.",
   "registryBinding": {
     "schemaVersion": "2.0.0",
-    "sha256": "0a625778407fc85f3e32ed620b578bf4fe37cd37acb09c938776d9ed82aa7163",
+    "sha256": "3c8425e090f31ea17eb4d6a10f8ea8a5e2f352f753f3c5312fc7fcce80d03e28",
     "registryPath": "research/input/sources/pilot-source-registry.json"
   },
   "owners": [
     {
       "roleId": "product-owner",
       "personName": "Clint Morgan",
+      "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
       "assignmentStatus": "assigned"
     },
     {
@@ -21,7 +22,8 @@
     },
     {
       "roleId": "evidence-reviewer",
-      "personName": "Ellison Nemoy",
+      "personName": "Clint Morgan",
+      "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
       "assignmentStatus": "assigned"
     },
     {
@@ -34,8 +36,8 @@
     {
       "sourceId": "fda",
       "sourceName": "U.S. Food and Drug Administration",
-      "decisionStatus": "selected-pending-source-activation-review",
-      "activationReady": false,
+      "decisionStatus": "approved",
+      "activationReady": true,
       "documentation": {
         "officialFirstPartyUrls": [
           "https://www.fda.gov/",
@@ -57,40 +59,44 @@
         ]
       },
       "rights": {
-        "reviewStatus": "review-required",
-        "legalBasisOrLicense": null,
+        "reviewStatus": "reviewed",
+        "legalBasisOrLicense": "Approved under the reviewed openFDA terms for the selected public data classes; excludes GMDN and separately restricted third-party content.",
         "termsUrl": "https://open.fda.gov/terms/",
-        "allowedUses": [],
+        "allowedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
         "prohibitedUses": [
-          "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "redistributionConstraints": [
-          "No source content may be redistributed until the applicable terms and content-specific restrictions are reviewed."
+          "Exclude GMDN and other separately restricted content; preserve the source record, URL, and applicable notices."
         ],
-        "reviewedBy": null,
-        "verifiedAtUtc": null,
+        "reviewedBy": "Johnathan Harper",
+        "verifiedAtUtc": "2026-07-25T15:24:14Z",
         "proposedUses": [
           "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
           "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
         ]
       },
       "operations": {
-        "status": "disabled",
+        "status": "approved",
         "ownerRole": "product-owner",
         "securityOwnerRole": "security-data-owner",
-        "lastReviewedAtUtc": null
+        "lastReviewedAtUtc": "2026-07-25T15:24:14Z"
       },
       "acquisition": {
-        "enabled": false,
-        "method": "none",
+        "enabled": true,
+        "method": "api",
         "reviewCandidateMethod": "api",
         "hasApi": true,
         "hasBulkExport": true,
         "requiresAccount": false,
         "robotsPolicyStatus": "not-applicable",
-        "apiTermsStatus": "review-required",
-        "rateLimitPolicy": "Honor the documented openFDA per-minute and daily request limits.",
-        "accessNotes": "API and bulk capability are technical observations only; select an exact endpoint and approve its terms before retrieval."
+        "apiTermsStatus": "reviewed",
+        "rateLimitPolicy": "Use anonymous openFDA access at no more than 120 requests per minute and 900 requests per day, below the documented unauthenticated limits; honor 429 and Retry-After.",
+        "accessNotes": "Approved for the reviewed public openFDA API method and packet boundary. Source adapters must use fixed first-party endpoints, enforce field allowlists and rate limits, exclude separately restricted content, and emit review-required candidates only."
       },
       "evidenceBoundary": {
         "authorityTier": "A1",
@@ -125,7 +131,7 @@
         ]
       },
       "refresh": {
-        "mode": "disabled-until-approved",
+        "mode": "manual",
         "proposedCadence": "Daily checks for watched communications and a weekly baseline review.",
         "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
@@ -152,6 +158,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -163,17 +170,23 @@
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decidedAtUtc": "2026-07-25T15:24:14Z",
+          "decisionNotes": [
+            "Johnathan Harper approved sourceId \"fda\", as conveyed by Clint Morgan. The approval is recorded against this packet entry's existing proposed uses, documented limitations, terms URL, acquisition candidate method, and data boundary; no broader rights are inferred.",
+            "The decision timestamp records receipt in this governed packet at 2026-07-25T15:24:14Z."
+          ],
           "decisionScope": "legal-rights",
           "blockingStage": "source-activation",
-          "reviewStatus": "review-required",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -181,28 +194,38 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
-        "Which exact FDA APIs, datasets, and web content classes are approved for the first acquisition phase?",
-        "What terms, attribution, rate limits, and redistribution rules apply to each selected endpoint?",
-        "What retention period is approved for retrieved source snapshots?"
+        "Which reviewed openFDA drug dataset should the first thin adapter implement first?",
+        "How should record-level exclusions such as GMDN restrictions be represented in candidate metadata?",
+        "What retention period should apply to normalized candidate snapshots when raw responses are not persisted?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "pubchem",
       "sourceName": "PubChem",
-      "decisionStatus": "selected-pending-source-activation-review",
-      "activationReady": false,
+      "decisionStatus": "approved",
+      "activationReady": true,
       "documentation": {
         "officialFirstPartyUrls": [
           "https://pubchem.ncbi.nlm.nih.gov/",
@@ -223,40 +246,44 @@
         ]
       },
       "rights": {
-        "reviewStatus": "review-required",
-        "legalBasisOrLicense": null,
+        "reviewStatus": "reviewed",
+        "legalBasisOrLicense": "Approved under the reviewed NCBI and PubChem policies for factual fields whose record-level contributor terms permit the approved use.",
         "termsUrl": "https://www.ncbi.nlm.nih.gov/home/about/policies/",
-        "allowedUses": [],
+        "allowedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
         "prohibitedUses": [
-          "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "redistributionConstraints": [
-          "No compound record or derived dataset may be redistributed until record-level attribution and upstream-source constraints are reviewed."
+          "Preserve contributor-specific attribution and license metadata; do not redistribute fields whose upstream contributor terms do not permit it."
         ],
-        "reviewedBy": null,
-        "verifiedAtUtc": null,
+        "reviewedBy": "Johnathan Harper",
+        "verifiedAtUtc": "2026-07-25T15:24:14Z",
         "proposedUses": [
           "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
           "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
         ]
       },
       "operations": {
-        "status": "disabled",
+        "status": "approved",
         "ownerRole": "product-owner",
         "securityOwnerRole": "security-data-owner",
-        "lastReviewedAtUtc": null
+        "lastReviewedAtUtc": "2026-07-25T15:24:14Z"
       },
       "acquisition": {
-        "enabled": false,
-        "method": "none",
+        "enabled": true,
+        "method": "api",
         "reviewCandidateMethod": "api",
         "hasApi": true,
         "hasBulkExport": true,
         "requiresAccount": false,
         "robotsPolicyStatus": "not-applicable",
-        "apiTermsStatus": "review-required",
-        "rateLimitPolicy": null,
-        "accessNotes": "API and bulk capability are technical observations only; approve endpoint, fields, attribution, and rate policy before retrieval."
+        "apiTermsStatus": "reviewed",
+        "rateLimitPolicy": "Do not exceed 5 requests per second, 400 requests per minute, or 300 seconds of server processing time per minute; stop and back off on HTTP 503.",
+        "accessNotes": "Approved for the reviewed public PubChem API method and packet boundary. Source adapters must use fixed first-party endpoints, enforce contributor-level rights and attribution, field allowlists, and rate limits, and emit review-required candidates only."
       },
       "evidenceBoundary": {
         "authorityTier": "C1",
@@ -289,7 +316,7 @@
         ]
       },
       "refresh": {
-        "mode": "disabled-until-approved",
+        "mode": "manual",
         "proposedCadence": "Monthly baseline refresh and manual refresh for an actively reviewed compound.",
         "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
@@ -316,6 +343,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -327,17 +355,23 @@
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decidedAtUtc": "2026-07-25T15:24:14Z",
+          "decisionNotes": [
+            "Johnathan Harper approved sourceId \"pubchem\", as conveyed by Clint Morgan. The approval is recorded against this packet entry's existing proposed uses, documented limitations, terms URL, acquisition candidate method, and data boundary; no broader rights are inferred.",
+            "The decision timestamp records receipt in this governed packet at 2026-07-25T15:24:14Z."
+          ],
           "decisionScope": "legal-rights",
           "blockingStage": "source-activation",
-          "reviewStatus": "review-required",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -345,28 +379,38 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
-        "Which PubChem fields and upstream deposit sources may BioStack store and display?",
-        "What attribution and derived-dataset restrictions apply to the selected record fields?",
-        "What request-rate and bulk-download controls are required?"
+        "Which approved PubChem identity fields should the first thin adapter implement?",
+        "How should contributor-level attribution and license restrictions be represented in candidate metadata?",
+        "When should the approved API lane graduate to a separately reviewed bulk-download lane?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "pubmed",
       "sourceName": "PubMed",
-      "decisionStatus": "selected-pending-source-activation-review",
-      "activationReady": false,
+      "decisionStatus": "approved",
+      "activationReady": true,
       "documentation": {
         "officialFirstPartyUrls": [
           "https://pubmed.ncbi.nlm.nih.gov/",
@@ -384,40 +428,44 @@
         ]
       },
       "rights": {
-        "reviewStatus": "review-required",
-        "legalBasisOrLicense": null,
+        "reviewStatus": "reviewed",
+        "legalBasisOrLicense": "Approved under the reviewed NLM PubMed policies for citation metadata and rights-compatible abstracts or short excerpts; copyrighted full-text storage remains prohibited.",
         "termsUrl": "https://www.nlm.nih.gov/databases/download.html",
-        "allowedUses": [],
+        "allowedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
         "prohibitedUses": [
-          "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "redistributionConstraints": [
-          "Citation metadata, abstracts, and linked full text must remain separate and follow their respective rights boundaries."
+          "Do not redistribute copyrighted abstracts or full text except where record-specific rights permit; preserve PMID, DOI, PMCID, and source attribution."
         ],
-        "reviewedBy": null,
-        "verifiedAtUtc": null,
+        "reviewedBy": "Johnathan Harper",
+        "verifiedAtUtc": "2026-07-25T15:24:14Z",
         "proposedUses": [
           "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
           "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
         ]
       },
       "operations": {
-        "status": "disabled",
+        "status": "approved",
         "ownerRole": "product-owner",
         "securityOwnerRole": "security-data-owner",
-        "lastReviewedAtUtc": null
+        "lastReviewedAtUtc": "2026-07-25T15:24:14Z"
       },
       "acquisition": {
-        "enabled": false,
-        "method": "none",
+        "enabled": true,
+        "method": "api",
         "reviewCandidateMethod": "api",
         "hasApi": true,
         "hasBulkExport": false,
         "requiresAccount": false,
         "robotsPolicyStatus": "not-applicable",
-        "apiTermsStatus": "review-required",
-        "rateLimitPolicy": "Honor the documented NCBI E-utilities request limits and API-key rules.",
-        "accessNotes": "API capability is a technical observation only; approve exact metadata, abstract, and linked-content boundaries before retrieval."
+        "apiTermsStatus": "reviewed",
+        "rateLimitPolicy": "Use anonymous NCBI E-utilities access at no more than 3 requests per second; identify the client, honor 429 and Retry-After, and do not require an API key in the first lane.",
+        "accessNotes": "Approved for the reviewed public PubMed API method and packet boundary. Source adapters must limit storage to rights-compatible citation metadata, abstracts, or short excerpts, enforce rate limits, and emit review-required candidates only."
       },
       "evidenceBoundary": {
         "authorityTier": "C1",
@@ -455,7 +503,7 @@
         ]
       },
       "refresh": {
-        "mode": "disabled-until-approved",
+        "mode": "manual",
         "proposedCadence": "Daily metadata refresh for active topics and a monthly baseline re-query.",
         "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
@@ -482,6 +530,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -493,17 +542,23 @@
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decidedAtUtc": "2026-07-25T15:24:14Z",
+          "decisionNotes": [
+            "Johnathan Harper approved sourceId \"pubmed\", as conveyed by Clint Morgan. The approval is recorded against this packet entry's existing proposed uses, documented limitations, terms URL, acquisition candidate method, and data boundary; no broader rights are inferred.",
+            "The decision timestamp records receipt in this governed packet at 2026-07-25T15:24:14Z."
+          ],
           "decisionScope": "legal-rights",
           "blockingStage": "source-activation",
-          "reviewStatus": "review-required",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -511,28 +566,38 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
-        "Which citation, abstract, and linked-full-text fields are approved for storage and display?",
-        "What API identification, request-rate, caching, and retention controls are required?",
+        "Which rights-compatible citation and abstract fields should the first thin adapter implement?",
+        "What cache and normalized-candidate retention window should the first API adapter enforce?",
         "How will retraction and correction notices invalidate downstream claims?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "clinicaltrials",
       "sourceName": "ClinicalTrials.gov",
-      "decisionStatus": "selected-pending-source-activation-review",
-      "activationReady": false,
+      "decisionStatus": "approved",
+      "activationReady": true,
       "documentation": {
         "officialFirstPartyUrls": [
           "https://clinicaltrials.gov/",
@@ -552,40 +617,44 @@
         ]
       },
       "rights": {
-        "reviewStatus": "review-required",
-        "legalBasisOrLicense": null,
+        "reviewStatus": "reviewed",
+        "legalBasisOrLicense": "Approved under the reviewed ClinicalTrials.gov terms for public registry fields with submitter attribution and government-disclaimer context preserved.",
         "termsUrl": "https://clinicaltrials.gov/about-site/terms-conditions",
-        "allowedUses": [],
+        "allowedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
         "prohibitedUses": [
-          "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "redistributionConstraints": [
-          "Registry data must remain labeled as registry data and must not be represented as peer-reviewed outcome evidence."
+          "Preserve ClinicalTrials.gov attribution, record identifiers, submitter context, and the government non-endorsement disclaimer."
         ],
-        "reviewedBy": null,
-        "verifiedAtUtc": null,
+        "reviewedBy": "Johnathan Harper",
+        "verifiedAtUtc": "2026-07-25T15:24:14Z",
         "proposedUses": [
           "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
           "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
         ]
       },
       "operations": {
-        "status": "disabled",
+        "status": "approved",
         "ownerRole": "product-owner",
         "securityOwnerRole": "security-data-owner",
-        "lastReviewedAtUtc": null
+        "lastReviewedAtUtc": "2026-07-25T15:24:14Z"
       },
       "acquisition": {
-        "enabled": false,
-        "method": "none",
+        "enabled": true,
+        "method": "api",
         "reviewCandidateMethod": "api",
         "hasApi": true,
         "hasBulkExport": true,
         "requiresAccount": false,
         "robotsPolicyStatus": "not-applicable",
-        "apiTermsStatus": "review-required",
-        "rateLimitPolicy": null,
-        "accessNotes": "API and bulk capability are technical observations only; approve exact endpoints, fields, and update handling before retrieval."
+        "apiTermsStatus": "reviewed",
+        "rateLimitPolicy": "No numeric quota was published in the reviewed API documentation; serialize requests, issue one request at a time, and stop on 429 or service back-pressure.",
+        "accessNotes": "Approved for the reviewed public ClinicalTrials.gov API method and packet boundary. Source adapters must use fixed first-party endpoints, preserve submitter and disclaimer context, enforce field allowlists and update handling, and emit review-required candidates only."
       },
       "evidenceBoundary": {
         "authorityTier": "C1",
@@ -621,7 +690,7 @@
         ]
       },
       "refresh": {
-        "mode": "disabled-until-approved",
+        "mode": "manual",
         "proposedCadence": "Weekly refresh for watched studies and a monthly baseline refresh.",
         "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
@@ -648,6 +717,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -659,17 +729,23 @@
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decidedAtUtc": "2026-07-25T15:24:14Z",
+          "decisionNotes": [
+            "Johnathan Harper approved sourceId \"clinicaltrials\", as conveyed by Clint Morgan. The approval is recorded against this packet entry's existing proposed uses, documented limitations, terms URL, acquisition candidate method, and data boundary; no broader rights are inferred.",
+            "The decision timestamp records receipt in this governed packet at 2026-07-25T15:24:14Z."
+          ],
           "decisionScope": "legal-rights",
           "blockingStage": "source-activation",
-          "reviewStatus": "review-required",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -677,28 +753,38 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
-        "Which registry fields are approved for storage, display, and export?",
+        "Which approved registry fields should the first thin adapter implement?",
         "What update cadence and change-detection policy will prevent stale study status?",
         "How will linked publications be resolved and reviewed as separate evidence sources?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "dailymed",
       "sourceName": "DailyMed",
-      "decisionStatus": "selected-pending-source-activation-review",
-      "activationReady": false,
+      "decisionStatus": "approved",
+      "activationReady": true,
       "documentation": {
         "officialFirstPartyUrls": [
           "https://dailymed.nlm.nih.gov/dailymed/",
@@ -717,40 +803,44 @@
         ]
       },
       "rights": {
-        "reviewStatus": "review-required",
-        "legalBasisOrLicense": null,
+        "reviewStatus": "reviewed",
+        "legalBasisOrLicense": "Approved under the reviewed NLM and DailyMed policies for rights-cleared public Structured Product Label fields; separately restricted third-party material remains excluded.",
         "termsUrl": "https://www.nlm.nih.gov/web_policies.html",
-        "allowedUses": [],
+        "allowedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
         "prohibitedUses": [
-          "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "redistributionConstraints": [
-          "Every displayed field must remain associated with its exact SPL set ID, label version, product, and effective date."
+          "Limit redistribution to rights-cleared label fields and exclude separately restricted third-party material; preserve SPL set and version identifiers."
         ],
-        "reviewedBy": null,
-        "verifiedAtUtc": null,
+        "reviewedBy": "Johnathan Harper",
+        "verifiedAtUtc": "2026-07-25T15:24:14Z",
         "proposedUses": [
           "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
           "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
         ]
       },
       "operations": {
-        "status": "disabled",
+        "status": "approved",
         "ownerRole": "product-owner",
         "securityOwnerRole": "security-data-owner",
-        "lastReviewedAtUtc": null
+        "lastReviewedAtUtc": "2026-07-25T15:24:14Z"
       },
       "acquisition": {
-        "enabled": false,
-        "method": "none",
+        "enabled": true,
+        "method": "api",
         "reviewCandidateMethod": "api",
         "hasApi": true,
         "hasBulkExport": true,
         "requiresAccount": false,
         "robotsPolicyStatus": "not-applicable",
-        "apiTermsStatus": "review-required",
-        "rateLimitPolicy": null,
-        "accessNotes": "API and bulk capability are technical observations only; approve label fields, attribution, update handling, and retention before retrieval."
+        "apiTermsStatus": "reviewed",
+        "rateLimitPolicy": "No numeric quota was published in the reviewed web-service documentation; serialize requests, issue one request at a time, and stop on 429 or service back-pressure.",
+        "accessNotes": "Approved for the reviewed public DailyMed API method and packet boundary. Source adapters must use fixed first-party endpoints, preserve SPL identity and version provenance, enforce label-field allowlists and update handling, and emit review-required candidates only."
       },
       "evidenceBoundary": {
         "authorityTier": "A1",
@@ -794,7 +884,7 @@
         ]
       },
       "refresh": {
-        "mode": "disabled-until-approved",
+        "mode": "manual",
         "proposedCadence": "Weekly label refresh and an immediate refresh for watched products after an observed label update.",
         "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
@@ -821,6 +911,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -832,17 +923,23 @@
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decidedAtUtc": "2026-07-25T15:24:14Z",
+          "decisionNotes": [
+            "Johnathan Harper approved sourceId \"dailymed\", as conveyed by Clint Morgan. The approval is recorded against this packet entry's existing proposed uses, documented limitations, terms URL, acquisition candidate method, and data boundary; no broader rights are inferred.",
+            "The decision timestamp records receipt in this governed packet at 2026-07-25T15:24:14Z."
+          ],
           "decisionScope": "legal-rights",
           "blockingStage": "source-activation",
-          "reviewStatus": "review-required",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -850,28 +947,38 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
-        "Which label sections may BioStack store, quote, display, and export?",
-        "What attribution and update requirements apply to displayed SPL content?",
+        "Which approved label sections should the first thin adapter implement?",
+        "How should SPL attribution and version provenance be presented with normalized candidates?",
         "How will label supersession invalidate previously extracted fields?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "nih-ods",
       "sourceName": "NIH Office of Dietary Supplements Fact Sheets",
-      "decisionStatus": "selected-pending-source-activation-review",
-      "activationReady": false,
+      "decisionStatus": "approved",
+      "activationReady": true,
       "documentation": {
         "officialFirstPartyUrls": [
           "https://ods.od.nih.gov/factsheets/list-all/",
@@ -888,40 +995,44 @@
         ]
       },
       "rights": {
-        "reviewStatus": "review-required",
-        "legalBasisOrLicense": null,
+        "reviewStatus": "reviewed",
+        "legalBasisOrLicense": "Approved for ODS-authored public-domain information under the reviewed ODS reuse guidance with ODS acknowledgement; third-party material remains excluded.",
         "termsUrl": "https://ods.od.nih.gov/HealthInformation/ODS_Frequently_Asked_Questions/",
-        "allowedUses": [],
+        "allowedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
         "prohibitedUses": [
-          "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "redistributionConstraints": [
-          "Source text and derived summaries may not be stored or redistributed until page-level reuse and attribution requirements are reviewed."
+          "Acknowledge ODS and exclude separately copyrighted third-party material; preserve the source page and update date."
         ],
-        "reviewedBy": null,
-        "verifiedAtUtc": null,
+        "reviewedBy": "Johnathan Harper",
+        "verifiedAtUtc": "2026-07-25T15:24:14Z",
         "proposedUses": [
           "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
           "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
         ]
       },
       "operations": {
-        "status": "disabled",
+        "status": "approved",
         "ownerRole": "product-owner",
         "securityOwnerRole": "security-data-owner",
-        "lastReviewedAtUtc": null
+        "lastReviewedAtUtc": "2026-07-25T15:24:14Z"
       },
       "acquisition": {
-        "enabled": false,
-        "method": "none",
+        "enabled": true,
+        "method": "api",
         "reviewCandidateMethod": "api",
         "hasApi": true,
         "hasBulkExport": false,
         "requiresAccount": false,
         "robotsPolicyStatus": "not-applicable",
-        "apiTermsStatus": "review-required",
-        "rateLimitPolicy": null,
-        "accessNotes": "ODS publishes an API surface, but the pilot registry records no approved API route; approve its exact scope, terms, robots treatment, and operational limits before retrieval."
+        "apiTermsStatus": "reviewed",
+        "rateLimitPolicy": "No numeric quota was published in the reviewed ODS API documentation; serialize requests, issue one request at a time, and stop on 429 or service back-pressure.",
+        "accessNotes": "Approved for the reviewed public ODS API method and packet boundary. Source adapters must use fixed first-party endpoints, acknowledge ODS, exclude third-party material, enforce field allowlists and conservative request limits, and emit review-required candidates only."
       },
       "evidenceBoundary": {
         "authorityTier": "C2",
@@ -957,7 +1068,7 @@
         ]
       },
       "refresh": {
-        "mode": "disabled-until-approved",
+        "mode": "manual",
         "proposedCadence": "Monthly update check and manual refresh when the source records a page update.",
         "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
@@ -984,6 +1095,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -995,17 +1107,23 @@
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decidedAtUtc": "2026-07-25T15:24:14Z",
+          "decisionNotes": [
+            "Johnathan Harper approved sourceId \"nih-ods\", as conveyed by Clint Morgan. The approval is recorded against this packet entry's existing proposed uses, documented limitations, terms URL, acquisition candidate method, and data boundary; no broader rights are inferred.",
+            "The decision timestamp records receipt in this governed packet at 2026-07-25T15:24:14Z."
+          ],
           "decisionScope": "legal-rights",
           "blockingStage": "source-activation",
-          "reviewStatus": "review-required",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -1013,29 +1131,39 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
-        "Does the ODS API cover the fact-sheet fields selected for BioStack, and should the pilot registry's technical capability metadata be updated after review?",
-        "What page-reuse, quotation, attribution, and caching terms apply?",
-        "Is automated retrieval permitted, and under what robots and rate constraints?",
+        "Which approved ODS fact-sheet fields should the first thin API adapter implement?",
+        "How should ODS acknowledgement and third-party exclusions be represented in candidate metadata?",
+        "What conservative request ceiling and cache window should the first API adapter enforce?",
         "Which claims require additional label or primary-literature evidence before promotion?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary",
+        "untrusted-bulk-archive-or-parser"
+      ]
     },
     {
       "sourceId": "nih-nccih",
       "sourceName": "NIH National Center for Complementary and Integrative Health",
-      "decisionStatus": "selected-pending-source-activation-review",
-      "activationReady": false,
+      "decisionStatus": "approved",
+      "activationReady": true,
       "documentation": {
         "officialFirstPartyUrls": [
           "https://www.nccih.nih.gov/",
@@ -1051,40 +1179,44 @@
         ]
       },
       "rights": {
-        "reviewStatus": "review-required",
-        "legalBasisOrLicense": null,
+        "reviewStatus": "reviewed",
+        "legalBasisOrLicense": "Approved for NCCIH-authored public-domain text under the reviewed NCCIH policy with source acknowledgement; photographs, illustrations, and third-party material remain excluded.",
         "termsUrl": "https://www.nccih.nih.gov/tools/privacy",
-        "allowedUses": [],
+        "allowedUses": [
+          "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
+          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
+        ],
         "prohibitedUses": [
-          "All acquisition, storage, transformation, redistribution, and canonical use until human legal approval."
+          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
+          "Diagnosis, prescribing, clinician impersonation, individualized commands to start, stop, or change treatment, guaranteed safety or outcomes, and illegal sourcing, evasion, or concealment assistance."
         ],
         "redistributionConstraints": [
-          "Source text and derived summaries may not be stored or redistributed until page-level reuse and attribution requirements are reviewed."
+          "Acknowledge NCCIH and exclude photographs, illustrations, and separately copyrighted third-party material; preserve the source page and update date."
         ],
-        "reviewedBy": null,
-        "verifiedAtUtc": null,
+        "reviewedBy": "Johnathan Harper",
+        "verifiedAtUtc": "2026-07-25T15:24:14Z",
         "proposedUses": [
           "Retrieve and normalize public factual records into a provenance-preserving candidate lane using the reviewed API, bulk-download, or manual method.",
           "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
         ]
       },
       "operations": {
-        "status": "disabled",
+        "status": "approved",
         "ownerRole": "product-owner",
         "securityOwnerRole": "security-data-owner",
-        "lastReviewedAtUtc": null
+        "lastReviewedAtUtc": "2026-07-25T15:24:14Z"
       },
       "acquisition": {
-        "enabled": false,
-        "method": "none",
+        "enabled": true,
+        "method": "manual-review",
         "reviewCandidateMethod": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "review-required",
-        "apiTermsStatus": "review-required",
-        "rateLimitPolicy": null,
-        "accessNotes": "The registered source has no approved API or bulk route; any future page retrieval requires explicit legal, robots, and operational review."
+        "robotsPolicyStatus": "not-applicable",
+        "apiTermsStatus": "not-applicable",
+        "rateLimitPolicy": "Manual review only; no automated requests are authorized.",
+        "accessNotes": "Approved for manual review only within the reviewed NCCIH packet boundary. Automated retrieval, scraping, API use, and bulk acquisition remain unauthorized."
       },
       "evidenceBoundary": {
         "authorityTier": "C2",
@@ -1119,7 +1251,7 @@
         ]
       },
       "refresh": {
-        "mode": "disabled-until-approved",
+        "mode": "manual",
         "proposedCadence": "Monthly update check and manual refresh when the source records a page update.",
         "stalenessAction": "mark-stale-and-restrict-current-status-claims",
         "lastSuccessfulRefreshAtUtc": null
@@ -1146,6 +1278,7 @@
       "approvals": {
         "product": {
           "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": "2026-07-25T13:15:00Z",
           "decisionNotes": [
             "Product owner selected the recommended seven sources and confirmed the observational, educational, evidence-aware, non-prescriptive informed-decision doctrine."
@@ -1157,17 +1290,24 @@
         },
         "legalRights": {
           "assigneeName": "Johnathan Harper",
-          "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decidedAtUtc": "2026-07-25T15:24:14Z",
+          "decisionNotes": [
+            "Johnathan Harper approved sourceId \"nih-nccih\", as conveyed by Clint Morgan. The approval is recorded against this packet entry's existing proposed uses, documented limitations, terms URL, acquisition candidate method, and data boundary; no broader rights are inferred.",
+            "The decision timestamp records receipt in this governed packet at 2026-07-25T15:24:14Z."
+          ],
           "decisionScope": "legal-rights",
           "blockingStage": "source-activation",
-          "reviewStatus": "review-required",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved"
         },
         "evidence": {
-          "assigneeName": "Ellison Nemoy",
+          "assigneeName": "Clint Morgan",
+          "assigneeEntraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
           "decidedAtUtc": null,
-          "decisionNotes": [],
+          "decisionNotes": [
+            "Reviewer ownership transferred from Ellison Nemoy to Clint Morgan, Entra object id 461a4112-8e91-41cb-afef-6889b8f48ff0. The transfer timestamp is recorded by the binding receipt at 2026-07-26T12:22:29Z and is receipt time, not an invented original decision time.",
+            "Clint Morgan is also the assigned NCCIH manual-capture operator. He cannot independently review his own capture; the NCCIH manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
+          ],
           "decisionScope": "evidence-promotion",
           "blockingStage": "canonical-claim-promotion",
           "reviewStatus": "review-required",
@@ -1175,22 +1315,31 @@
         },
         "securityData": {
           "assigneeName": "Pradic Patel",
-          "decidedAtUtc": null,
+          "decidedAtUtc": "2026-07-26T10:40:42Z",
           "decisionNotes": [
-            "No declared security/data trigger applies to the planned public, read-only, no-private-data candidate lane; reassess if the method or boundary changes."
+            "Pradic Patel approved the runtime security/data controls conveyed by Clint Morgan. The original decision time was not independently supplied; decidedAtUtc records receipt in this governed packet at 2026-07-26T10:40:42Z, not the original decision time.",
+            "Approval is limited to the existing ResearchOutput/source-acquisition/v1 boundary and normalized review-required candidates plus minimal receipts.",
+            "Raw response bodies, copyrighted full text, private or personal data, secrets, database writes, canonical writes, promotion, and runtime-visible claim authority remain prohibited.",
+            "Automated API lanes must use fixed first-party endpoints, disabled redirects, bounded response bodies, serialized request budgets, and no automatic retry. These controls do not authorize automation for the NCCIH manual-review lane.",
+            "The worker service identity may write the approved boundary; the evidence reviewer may read it. No broader principal or runtime consumer is approved.",
+            "Retention must be an explicit positive runtime configuration value with no default. Writes and deletion must be atomic, deletion must leave a content-free tombstone, and corrupt or orphan artifacts must be quarantined.",
+            "PubMed uses the non-secret tool identity BioStackKnowledgeWorker. Its contact email must be supplied by external runtime configuration and must not be committed.",
+            "The 2026-07-26T12:22:29Z binding receipt supersedes Ellison Nemoy's reviewer assignment with Clint Morgan. Because Clint Morgan is also the assigned NCCIH operator, he cannot independently review his own NCCIH capture; the manual-review lane remains blocked until a distinct authorized reviewer performs the reviewer action."
           ],
           "decisionScope": "security-data",
           "blockingStage": "source-activation",
-          "reviewStatus": "not-applicable",
-          "decision": null
+          "reviewStatus": "reviewed",
+          "decision": "approved-with-controls"
         }
       },
       "unresolvedQuestions": [
-        "What page-reuse, quotation, attribution, and caching terms apply?",
-        "Is automated retrieval permitted, and under what robots and rate constraints?",
+        "How should the approved manual-review workflow capture NCCIH acknowledgement and third-party exclusions?",
+        "What reviewer checklist should be required before manually captured NCCIH text becomes a candidate?",
         "Which claims require separate label, guideline, or primary-literature evidence before promotion?"
       ],
-      "securityDataTriggersDetected": []
+      "securityDataTriggersDetected": [
+        "new-egress-or-storage-boundary"
+      ]
     }
   ],
   "productDoctrine": {

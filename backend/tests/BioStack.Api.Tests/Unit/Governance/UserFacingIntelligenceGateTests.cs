@@ -188,7 +188,7 @@ public class UserFacingIntelligenceGateTests
         {
             Issued.Add(context);
             return Task.FromResult(new DecisionReceipt(
-                ReceiptUri: $"keon://receipt/test-{Guid.NewGuid():N}",
+                ReceiptUri: $"urn:biostack:test-receipt:{Guid.NewGuid():N}",
                 SubjectUri: context.SubjectUri,
                 TenantId: context.Actor.TenantId,
                 ActorId: context.Actor.ActorId,

@@ -49,6 +49,7 @@ public class IntelligenceEndpointsIntegrationTests : IAsyncLifetime
 
                 builder.ConfigureServices(services =>
                 {
+                    services.UseTestKeonRuntimeClient();
                     services.AddAuthorization(opts =>
                     {
                         opts.DefaultPolicy = new AuthorizationPolicyBuilder()

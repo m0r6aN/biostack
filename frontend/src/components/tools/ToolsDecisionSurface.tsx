@@ -29,7 +29,7 @@ import Link from 'next/link';
 import { FormEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 type SurfaceMode = ToolMode;
-type BlendStatus = 'compatible' | 'caution' | 'avoid' | 'unknown';
+type BlendStatus = 'caution' | 'avoid' | 'unknown';
 
 interface ToolsDecisionSurfaceProps {
   initialMode?: SurfaceMode;
@@ -704,7 +704,7 @@ function BlendSafetyPanel({
           {state === 'checking' ? 'Checking...' : 'Check'}
         </button>
       </div>
-      <div className={`mt-4 rounded-lg border p-3 ${result.status === 'compatible' ? 'border-emerald-300/20 bg-emerald-500/10' : result.status === 'avoid' ? 'border-red-300/20 bg-red-500/10' : result.status === 'caution' ? 'border-amber-300/20 bg-amber-500/10' : 'border-white/10 bg-black/18'}`}>
+      <div className={`mt-4 rounded-lg border p-3 ${result.status === 'avoid' ? 'border-red-300/20 bg-red-500/10' : result.status === 'caution' ? 'border-amber-300/20 bg-amber-500/10' : 'border-white/10 bg-black/18'}`}>
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/48">{result.status}</p>
         <ul className="mt-2 space-y-1">
           {result.reasons.map((reason) => <li key={reason} className="text-sm leading-6 text-white/72">{reason}</li>)}
@@ -878,16 +878,21 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
   );
 }
 
-function summarizeBlend(state: string, findings: InteractionFlag[], compound: string, additionalCompound: string, knowledge: KnowledgeEntry[]): { status: BlendStatus; reasons: string[] } {
+export function summarizeBlend(state: string, findings: InteractionFlag[], compound: string, additionalCompound: string, knowledge: KnowledgeEntry[]): { status: BlendStatus; reasons: string[] } {
   if (state === 'error') {
-    return { status: 'unknown', reasons: ['Compatibility data unavailable.', 'Verify against your source.'] };
+    return { status: 'unknown', reasons: ['Compatibility could not be evaluated from the available data.'] };
   }
   if (state !== 'checked') {
     return { status: 'unknown', reasons: ['Run a check to see blend findings.'] };
   }
   if (findings.length === 0) {
     const pairNote = pairedNote(compound, additionalCompound, knowledge);
-    return { status: 'compatible', reasons: pairNote ? ['No known conflicts.', pairNote] : ['No known conflicts.'] };
+    return {
+      status: 'unknown',
+      reasons: pairNote
+        ? ['No overlap findings were returned; compatibility remains unknown.', pairNote]
+        : ['No overlap findings were returned; compatibility remains unknown.'],
+    };
   }
   const avoid = findings.some((item) => /avoid|contra|conflict/i.test(`${item.overlapType} ${item.description}`));
   return {
@@ -911,8 +916,9 @@ function buildStackInsights(compound: string, stackCompounds: CompoundRecord[], 
 function pairedNote(compound: string, additionalCompound: string, knowledge: KnowledgeEntry[]): string {
   const entry = knowledge.find((item) => item.canonicalName.toLowerCase() === compound.trim().toLowerCase());
   if (!entry) return '';
-  const pair = [...entry.pairsWellWith, ...entry.compatibleBlends].find((item) => item.toLowerCase().includes(additionalCompound.trim().toLowerCase()));
-  return pair ? `Often paired for ${pair}.` : '';
+  const pair = [...(entry.pairsWellWith ?? []), ...(entry.compatibleBlends ?? [])]
+    .find((item) => item.toLowerCase().includes(additionalCompound.trim().toLowerCase()));
+  return pair ? 'Source data reports this pairing, but does not establish compatibility or safety.' : '';
 }
 
 function restoreDosingInput(inputs: Record<string, unknown>): UnifiedDosingInput {

@@ -83,10 +83,12 @@ The batch must:
 
 - use record type `source-authorization-decision-batch`;
 - bind to source-registry schema `2.0.0` and SHA-256 `0a625778407fc85f3e32ed620b578bf4fe37cd37acb09c938776d9ed82aa7163`;
-- identify the four named humans separately from their approval state:
+- identify the four role assignments separately from their approval state:
   - product owner: Clint Morgan;
   - legal/rights approver: Johnathan Harper;
-  - evidence reviewer: Ellison Nemoy;
+  - evidence reviewer: originally Ellison Nemoy, superseded by Clint Morgan
+    (`461a4112-8e91-41cb-afef-6889b8f48ff0`) in
+    `keo-74-reviewer-owner-transfer-receipt.v1.json`;
   - security/data owner: Pradic Patel;
 - contain exactly `fda`, `pubchem`, `pubmed`, `clinicaltrials`, `dailymed`, `nih-ods`, and `nih-nccih`;
 - record observed first-party documentation, proposed field/content boundaries, provenance, refresh, remediation, limitations, and unresolved questions;
@@ -192,7 +194,15 @@ Medium. `ResearchArtifactKind.cs`, the worker project file, and shared validator
   - Two RTK-wrapped test invocations left orphaned build processes and timed out without results; only those task-owned processes were stopped, build servers were shut down, and the same focused suites then passed with build-server reuse disabled.
   - Restore/build reported the repository's existing `System.Security.Cryptography.Xml` `10.0.9` high-severity advisory warnings; this contract does not change dependencies.
 - Decisions needed before source activation: content-class/use legal-rights decisions from Johnathan Harper. Current public read-only packets have no declared security/data trigger; Pradic Patel's review becomes required if the acquisition method or boundary introduces one.
-- Later-stage decision: Ellison Nemoy reviews interpretive claims before canonical promotion. Clint Morgan's seven-source selection and product doctrine are recorded as approved.
+- Later-stage decision: evidence-review responsibility transferred from Ellison
+  Nemoy to Clint Morgan at the receipt time recorded in
+  `keo-74-reviewer-owner-transfer-receipt.v1.json`; the transfer is not itself
+  evidence approval. Clint Morgan's seven-source selection and product doctrine
+  remain recorded as approved. The later
+  `keo-74-nccih-manual-capture-reviewer-receipt.v1.json` overlay assigns Sandy
+  Morgan as the distinct NCCIH manual-capture reviewer without transferring
+  Clint Morgan's overall evidence-review ownership or recording a reviewer
+  action or evidence approval.
 - Blockers: none for contract preparation.
 - Next safe action: submit the seven source packets for content-class rights review and identify whether each planned acquisition method triggers security/data review, without suppressing useful information at unrelated stages.
 - Do not touch: source activation, acquisition, canonical ingest, promotion, database, or deployment state.

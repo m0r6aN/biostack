@@ -86,7 +86,11 @@ The knowledge architecture is source-first: approved sources are ingested and no
 
 ## Safety and compliance boundary
 
-BioStack is educational and observational. It may organize user-recorded data, show evidence context and uncertainty, surface source-quality or regulatory warnings, and suggest that a user discuss relevant observations with a qualified clinician.
+BioStack is for educational and observational use only. It may organize user-recorded data, show evidence context and uncertainty, surface source-quality or regulatory warnings, and suggest that a user discuss relevant observations with a qualified clinician.
+
+**Not Medical Advice.** BioStack does not provide medical dosing recommendations or clinical diagnosis.
+
+**Mathematical Logic Only.** Calculator outputs use pure mathematical formulas to make their calculations transparent; they are not clinical direction.
 
 It does not provide diagnosis, prescribing, individualized dosing, injection instructions, treatment plans, substance sourcing, cycle design, start/stop/taper/escalation advice, or claims that investigational substances are safe or effective for human use. Safety warnings and high-risk guardrails are not paid features.
 

@@ -591,19 +591,19 @@ export interface KnowledgeEntry {
   notes: string;
   pathways: string[];
   benefits: string[];
-  pairsWellWith: string[];
+  pairsWellWith?: string[];
   avoidWith: string[];
-  compatibleBlends: string[];
-  recommendedDosage: string;
-  frequency: string;
-  preferredTimeOfDay: string;
-  weeklyDosageSchedule: string[];
+  compatibleBlends?: string[];
+  recommendedDosage?: string;
+  frequency?: string;
+  preferredTimeOfDay?: string;
+  weeklyDosageSchedule?: string[];
   drugInteractions: string[];
-  optimizationProtein: string;
-  optimizationCarbs: string;
-  optimizationSupplements: string;
-  optimizationSleep: string;
-  optimizationExercise: string;
+  optimizationProtein?: string;
+  optimizationCarbs?: string;
+  optimizationSupplements?: string;
+  optimizationSleep?: string;
+  optimizationExercise?: string;
 }
 
 export interface InteractionFlag {
