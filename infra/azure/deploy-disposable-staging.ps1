@@ -65,8 +65,6 @@ if (-not (Test-AzResource @("containerapp", "env", "show", "--name", $environmen
     Invoke-AzSafe -Arguments (@("containerapp", "env", "create", "--name", $environmentName, "--resource-group", $ResourceGroup, "--location", $Location, "--tags") + $tags)
 }
 
-$acrUsername = Get-AzText -Arguments @("acr", "credential", "show", "--name", $acrName, "--resource-group", $ResourceGroup, "--query", "username", "-o", "tsv")
-$acrPassword = Get-AzText -Arguments @("acr", "credential", "show", "--name", $acrName, "--resource-group", $ResourceGroup, "--query", "passwords[0].value", "-o", "tsv")
 $jwtSecret = [Convert]::ToBase64String((1..32 | ForEach-Object { [byte](Get-Random -Maximum 256) }))
 
 if (-not (Test-AzResource @("containerapp", "show", "--name", $apiAppName, "--resource-group", $ResourceGroup))) {
@@ -74,7 +72,7 @@ if (-not (Test-AzResource @("containerapp", "show", "--name", $apiAppName, "--re
         "containerapp", "create", "--name", $apiAppName, "--resource-group", $ResourceGroup,
         "--environment", $environmentName, "--image", "$acrLoginServer/biostack-api:latest",
         "--target-port", "5000", "--ingress", "external", "--registry-server", $acrLoginServer,
-        "--registry-username", $acrUsername, "--registry-password", $acrPassword,
+        "--registry-identity", "system", "--system-assigned",
         "--secrets", "jwt-secret=$jwtSecret",
         "--env-vars", "ASPNETCORE_ENVIRONMENT=Production", "ASPNETCORE_URLS=http://+:5000",
         "Jwt__Issuer=biostack", "Jwt__Audience=biostack-ui",
@@ -94,7 +92,7 @@ if (-not (Test-AzResource @("containerapp", "show", "--name", $webAppName, "--re
         "containerapp", "create", "--name", $webAppName, "--resource-group", $ResourceGroup,
         "--environment", $environmentName, "--image", "$acrLoginServer/biostack-web:latest",
         "--target-port", "3000", "--ingress", "external", "--registry-server", $acrLoginServer,
-        "--registry-username", $acrUsername, "--registry-password", $acrPassword,
+        "--registry-identity", "system", "--system-assigned",
         "--env-vars", "NODE_ENV=production", "NEXT_PUBLIC_API_URL=$apiUrl",
         "--min-replicas", "1", "--max-replicas", "1", "--cpu", "0.5", "--memory", "1Gi", "--tags"
     ) + $tags
