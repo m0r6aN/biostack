@@ -22,7 +22,11 @@ param(
     [string]$SmtpPassword = "",
     [string]$SmtpFromEmail = "",
     [string]$SmtpFromName = "BioStack",
-    [string]$SmtpMagicLinkSubject = "Your BioStack sign-in link"
+    [string]$SmtpMagicLinkSubject = "Your BioStack sign-in link",
+    [string]$Owner = "Clint Morgan",
+    [string]$Initiative = "money-makers",
+    [string]$Environment = "staging",
+    [string]$ExpiresAt = "2026-07-30T23:59:59Z"
 )
 
 $ErrorActionPreference = "Stop"
@@ -68,13 +72,20 @@ if ($acrName.Length -gt 50) {
 $envName = "$BaseName-env"
 $apiAppName = "$BaseName-api"
 $webAppName = "$BaseName-web"
-Invoke-Az @("group", "create", "--name", $ResourceGroup, "--location", $Location)
+$resourceTags = @(
+    "owner=$Owner",
+    "initiative=$Initiative",
+    "environment=$Environment",
+    "expires-at=$ExpiresAt"
+)
+
+Invoke-Az -Arguments (@("group", "create", "--name", $ResourceGroup, "--location", $Location, "--tags") + $resourceTags)
 Invoke-Az @("provider", "register", "--namespace", "Microsoft.App")
 Invoke-Az @("provider", "register", "--namespace", "Microsoft.OperationalInsights")
 Invoke-Az @("provider", "register", "--namespace", "Microsoft.ContainerRegistry")
 Invoke-Az @("provider", "register", "--namespace", "Microsoft.Storage")
 
-Invoke-Az @("acr", "create", "--resource-group", $ResourceGroup, "--name", $acrName, "--sku", "Basic", "--admin-enabled", "true")
+Invoke-Az -Arguments (@("acr", "create", "--resource-group", $ResourceGroup, "--name", $acrName, "--sku", "Basic", "--admin-enabled", "true", "--tags") + $resourceTags)
 
 $acrLoginServer = & (Require-AzCli) acr show --name $acrName --resource-group $ResourceGroup --query loginServer -o tsv
 if ($LASTEXITCODE -ne 0) { throw "Failed to resolve ACR login server." }
@@ -87,8 +98,8 @@ if ($LASTEXITCODE -ne 0) { throw "Failed to resolve ACR password." }
 
 Invoke-Az @("acr", "build", "--resource-group", $ResourceGroup, "--registry", $acrName, "--image", "biostack-api:latest", "--file", "backend/Dockerfile", "backend")
 
-Invoke-Az @("containerapp", "env", "create", "--name", $envName, "--resource-group", $ResourceGroup, "--location", $Location)
-Invoke-Az @("containerapp", "create", "--name", $apiAppName, "--resource-group", $ResourceGroup, "--environment", $envName, "--image", "$acrLoginServer/biostack-api:latest", "--target-port", "5000", "--ingress", "external", "--registry-server", $acrLoginServer, "--registry-username", $acrUsername, "--registry-password", $acrPassword)
+Invoke-Az -Arguments (@("containerapp", "env", "create", "--name", $envName, "--resource-group", $ResourceGroup, "--location", $Location, "--tags") + $resourceTags)
+Invoke-Az -Arguments (@("containerapp", "create", "--name", $apiAppName, "--resource-group", $ResourceGroup, "--environment", $envName, "--image", "$acrLoginServer/biostack-api:latest", "--target-port", "5000", "--ingress", "external", "--registry-server", $acrLoginServer, "--registry-username", $acrUsername, "--registry-password", $acrPassword, "--tags") + $resourceTags)
 
 $apiFqdn = & (Require-AzCli) containerapp show --name $apiAppName --resource-group $ResourceGroup --query properties.configuration.ingress.fqdn -o tsv
 if ($LASTEXITCODE -ne 0) { throw "Failed to resolve API FQDN." }
@@ -170,7 +181,7 @@ Invoke-Az -Arguments $initialApiUpdateArgs
 
 Invoke-Az @("acr", "build", "--resource-group", $ResourceGroup, "--registry", $acrName, "--image", "biostack-web:latest", "--build-arg", "NEXT_PUBLIC_API_URL=$publicApiUrl", "--file", "frontend/Dockerfile", "frontend")
 
-Invoke-Az @("containerapp", "create", "--name", $webAppName, "--resource-group", $ResourceGroup, "--environment", $envName, "--image", "$acrLoginServer/biostack-web:latest", "--target-port", "3000", "--ingress", "external", "--registry-server", $acrLoginServer, "--registry-username", $acrUsername, "--registry-password", $acrPassword)
+Invoke-Az -Arguments (@("containerapp", "create", "--name", $webAppName, "--resource-group", $ResourceGroup, "--environment", $envName, "--image", "$acrLoginServer/biostack-web:latest", "--target-port", "3000", "--ingress", "external", "--registry-server", $acrLoginServer, "--registry-username", $acrUsername, "--registry-password", $acrPassword, "--tags") + $resourceTags)
 
 $webFqdn = & (Require-AzCli) containerapp show --name $webAppName --resource-group $ResourceGroup --query properties.configuration.ingress.fqdn -o tsv
 if ($LASTEXITCODE -ne 0) { throw "Failed to resolve web FQDN." }
