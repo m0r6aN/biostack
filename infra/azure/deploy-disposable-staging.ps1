@@ -49,8 +49,12 @@ function Get-AzText {
 
 function Test-AzResource {
     param([Parameter(Mandatory = $true)][string[]]$Arguments)
+    $previousErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
     & az @Arguments 1>$null 2>$null
-    return $LASTEXITCODE -eq 0
+    $exitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousErrorActionPreference
+    return $exitCode -eq 0
 }
 
 if (-not (Test-AzResource @("group", "show", "--name", $ResourceGroup))) {
