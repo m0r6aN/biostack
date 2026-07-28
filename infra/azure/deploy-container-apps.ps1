@@ -47,12 +47,21 @@ function Invoke-Az {
 
     $azCmd = Require-AzCli
     $displayArguments = @($Arguments)
-    $secretsIndex = [Array]::IndexOf($displayArguments, "--secrets")
-    if ($secretsIndex -ge 0) {
-        for ($i = $secretsIndex + 1; $i -lt $displayArguments.Count; $i++) {
-            if ($displayArguments[$i] -like "*=*") {
-                $name = $displayArguments[$i].Split("=", 2)[0]
-                $displayArguments[$i] = "$name=<redacted>"
+    $secretFlags = @("--secrets", "--registry-password", "--password", "--client-secret")
+    for ($i = 0; $i -lt $displayArguments.Count; $i++) {
+        if ($secretFlags -contains $displayArguments[$i]) {
+            for ($j = $i + 1; $j -lt $displayArguments.Count; $j++) {
+                if ($displayArguments[$j] -like "--*") {
+                    break
+                }
+
+                if ($displayArguments[$j] -like "*=*") {
+                    $name = $displayArguments[$j].Split("=", 2)[0]
+                    $displayArguments[$j] = "$name=<redacted>"
+                }
+                else {
+                    $displayArguments[$j] = "<redacted>"
+                }
             }
         }
     }
