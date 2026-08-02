@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biostack.local/schemas/scientific_research_request.schema.json",
+  "title": "ScientificResearchRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["subject_name", "workflow"],
+  "properties": {
+    "research_request_id": { "type": "string", "minLength": 1 },
+    "research_subject_type": { "type": "string", "default": "compound" },
+    "subject_name": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "known_identifiers": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "workflow": {
+      "type": "string",
+      "enum": [
+        "resolve_compound_identity",
+        "research_compound_evidence",
+        "research_published_regimens",
+        "research_adverse_events",
+        "research_mechanisms_and_targets",
+        "research_pathways",
+        "refresh_evidence_packet"
+      ]
+    },
+    "evidence_categories": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "source_allowlist": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "maximum_source_age_days": { "type": ["integer", "null"], "minimum": 1 },
+    "maximum_execution_time_seconds": { "type": "integer", "minimum": 1, "default": 600 },
+    "maximum_source_count": { "type": "integer", "minimum": 1, "default": 50 },
+    "correlation_id": { "type": "string" },
+    "requested_by_actor": { "type": "string" },
+    "purpose": { "type": "string" },
+    "data_classification": {
+      "type": "string",
+      "enum": ["public_scientific", "public_metadata"]
+    },
+    "task_class": { "type": ["string", "null"] },
+    "evidence_risk_class": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "exactness_requirement": {
+      "type": "string",
+      "enum": [
+        "verbatim_required",
+        "lossless_only",
+        "reversible_lossy_allowed",
+        "summary_candidate_only",
+        "compression_prohibited"
+      ]
+    },
+    "local_inference_permitted": { "type": "boolean" },
+    "hosted_inference_permitted": { "type": "boolean" },
+    "compression_permitted": { "type": "boolean" },
+    "compression_exactness_mode": {
+      "type": "string",
+      "enum": [
+        "verbatim_required",
+        "lossless_only",
+        "reversible_lossy_allowed",
+        "summary_candidate_only",
+        "compression_prohibited"
+      ]
+    },
+    "cross_check_required": { "type": "boolean" },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "gpu_preferred",
+            "gpu_required",
+            "cpu_only",
+            "hosted_fallback_allowed"
+          ]
+        },
+        "allow_gpu": { "type": "boolean" },
+        "allow_cpu_fallback": { "type": "boolean" },
+        "allow_hosted_fallback": { "type": "boolean" },
+        "maximum_gpu_memory_bytes": { "type": ["integer", "null"] },
+        "maximum_execution_duration_seconds": { "type": "integer" },
+        "approved_model_profile": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
