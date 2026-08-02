@@ -82,6 +82,8 @@ public sealed class ProtocolAnalyzerCachingTests
             engine ?? CreateEngineMock().Object,
             new NullProtocolAnalysisPersistenceHook(),
             ProtocolAnalyzerServiceTests.AllowAllFeatureGate().Object,
+            new BioStack.Application.Evidence.ProtocolEvidenceContextComparer(
+                new BioStack.Domain.Evidence.EvidenceContextComparisonService()),
             NullLogger<ProtocolAnalyzerService>.Instance);
     }
 

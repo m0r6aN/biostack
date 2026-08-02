@@ -92,6 +92,8 @@ public sealed class ProtocolAnalyzerDocxPacketGoldenTests
             new CounterfactualEngine(interactionIntelligence, new CounterfactualCandidateService(knowledgeSource), new CounterfactualExplainerService()),
             new NullProtocolAnalysisPersistenceHook(),
             ProtocolAnalyzerServiceTests.AllowAllFeatureGate(ProductTier.Operator).Object,
+            new BioStack.Application.Evidence.ProtocolEvidenceContextComparer(
+                new BioStack.Domain.Evidence.EvidenceContextComparisonService()),
             NullLogger<ProtocolAnalyzerService>.Instance);
     }
 
