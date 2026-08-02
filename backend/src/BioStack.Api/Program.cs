@@ -17,6 +17,7 @@ using BioStack.Api.Endpoints;
 using BioStack.Api;
 using BioStack.Cognition;
 using BioStack.Infrastructure.Keon;
+using BioStack.Application.Evidence;
 using BioStack.Application.Governance;
 using Keon.Kompress;
 
@@ -404,6 +405,7 @@ builder.Services.AddHostedService<AnalyzerPrewarmService>();
 // KeonCollective:LiveMode and KeonCollective:ControlBaseUrl in configuration.
 builder.Services.AddCollectiveIntegration(builder.Configuration);
 builder.Services.AddKeonRuntime(builder.Configuration);
+builder.Services.AddEvidenceContextComparison();
 builder.Services.AddSingleton<DoctrineSanitizer>();
 builder.Services.AddGovernance();
 
