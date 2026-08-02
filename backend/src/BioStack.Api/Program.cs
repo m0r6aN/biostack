@@ -17,6 +17,7 @@ using BioStack.Api.Endpoints;
 using BioStack.Api;
 using BioStack.Cognition;
 using BioStack.Infrastructure.Keon;
+using BioStack.Application.ScientificResearch;
 using BioStack.Application.Governance;
 using Keon.Kompress;
 

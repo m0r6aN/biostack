@@ -1,5 +1,7 @@
 namespace BioStack.Api.Endpoints;
 
+using BioStack.Application.Abstractions.ScientificResearch;
+using BioStack.Application.ScientificResearch;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
@@ -438,6 +440,178 @@ public static class AdminEndpoints
             catch (KeyNotFoundException)
             {
                 return Results.NotFound();
+            }
+        });
+
+        // Scientific research sidecar: submit jobs and stage results into the existing
+        // non-canonical review lifecycle (never direct canonical promotion).
+        group.MapPost("/research/jobs", async (
+            [FromBody] AdminSubmitScientificResearchRequest? request,
+            [FromServices] IScientificResearchProvider researchProvider,
+            CancellationToken ct) =>
+        {
+            if (request is null || string.IsNullOrWhiteSpace(request.SubjectName))
+            {
+                return Results.BadRequest(new { Message = "subjectName is required." });
+            }
+
+            if (string.IsNullOrWhiteSpace(request.Workflow))
+            {
+                return Results.BadRequest(new { Message = "workflow is required." });
+            }
+
+            try
+            {
+                var submit = new ScientificResearchRequest(
+                    ResearchRequestId: Guid.NewGuid().ToString("N"),
+                    ResearchSubjectType: "compound",
+                    SubjectName: request.SubjectName.Trim(),
+                    KnownIdentifiers: request.KnownIdentifiers
+                        ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
+                    Workflow: request.Workflow.Trim(),
+                    EvidenceCategories: (IReadOnlyList<string>)(request.EvidenceCategories
+                        ?? new List<string>()),
+                    SourceAllowlist: Array.Empty<string>(),
+                    MaximumSourceAgeDays: null,
+                    MaximumExecutionTime: TimeSpan.FromMinutes(10),
+                    MaximumSourceCount: 50,
+                    CorrelationId: string.IsNullOrWhiteSpace(request.CorrelationId)
+                        ? Guid.NewGuid().ToString("N")
+                        : request.CorrelationId.Trim(),
+                    RequestedByActor: "admin",
+                    Purpose: string.IsNullOrWhiteSpace(request.Purpose)
+                        ? "admin_research"
+                        : request.Purpose.Trim(),
+                    Execution: new ScientificExecutionProfile(
+                        ScientificExecutionMode.Auto,
+                        AllowGpu: true,
+                        AllowCpuFallback: true,
+                        AllowHostedFallback: false,
+                        MaximumGpuMemoryBytes: null,
+                        MaximumExecutionDuration: TimeSpan.FromMinutes(10),
+                        ApprovedModelProfile: null),
+                    DataClassification: "public_scientific",
+                    TaskClass: null,
+                    EvidenceRiskClass: EvidenceRiskClass.Medium,
+                    LocalInferencePermitted: true,
+                    HostedInferencePermitted: false,
+                    CompressionPermitted: true,
+                    CrossCheckRequired: false);
+
+                var handle = await researchProvider.SubmitAsync(submit, ct);
+                return Results.Accepted(
+                    $"/api/v1/admin/research/jobs/{handle.JobId}",
+                    new AdminScientificResearchJobResponse(
+                        handle.JobId,
+                        handle.ResearchRequestId,
+                        handle.Workflow,
+                        handle.Status.ToString(),
+                        handle.CorrelationId,
+                        handle.SubmittedAtUtc));
+            }
+            catch (ScientificResearchProviderDisabledException ex)
+            {
+                return Results.Json(new { Message = ex.Message, Code = "research_sidecar_disabled" }, statusCode: StatusCodes.Status503ServiceUnavailable);
+            }
+            catch (ScientificResearchProviderException ex)
+            {
+                return Results.BadRequest(new { Message = ex.Message, Code = ex.ErrorCode });
+            }
+        });
+
+        group.MapGet("/research/jobs/{jobId}", async (
+            string jobId,
+            [FromServices] IScientificResearchProvider researchProvider,
+            CancellationToken ct) =>
+        {
+            if (string.IsNullOrWhiteSpace(jobId))
+            {
+                return Results.BadRequest(new { Message = "jobId is required." });
+            }
+
+            try
+            {
+                var status = await researchProvider.GetStatusAsync(jobId, ct);
+                return Results.Ok(new AdminScientificResearchJobResponse(
+                    status.JobId,
+                    status.ResearchRequestId,
+                    status.Workflow,
+                    status.Status.ToString(),
+                    status.CorrelationId,
+                    status.SubmittedAtUtc,
+                    status.ProgressMessage,
+                    status.Partial,
+                    status.ErrorCode,
+                    status.ErrorMessage));
+            }
+            catch (ScientificResearchProviderDisabledException ex)
+            {
+                return Results.Json(new { Message = ex.Message, Code = "research_sidecar_disabled" }, statusCode: StatusCodes.Status503ServiceUnavailable);
+            }
+            catch (ScientificResearchProviderException ex) when (ex.ErrorCode == "job_not_found")
+            {
+                return Results.NotFound(new { Message = ex.Message, Code = ex.ErrorCode });
+            }
+            catch (ScientificResearchProviderException ex)
+            {
+                return Results.BadRequest(new { Message = ex.Message, Code = ex.ErrorCode });
+            }
+        });
+
+        group.MapPost("/research/jobs/{jobId}/stage", async (
+            string jobId,
+            [FromServices] IScientificResearchCandidateStagingService stagingService,
+            [FromServices] IRuntimeReceiptFactory receipts,
+            [FromServices] ICurrentUserAccessor currentUser,
+            CancellationToken ct) =>
+        {
+            if (string.IsNullOrWhiteSpace(jobId))
+            {
+                return Results.BadRequest(new { Message = "jobId is required." });
+            }
+
+            try
+            {
+                var record = await stagingService.StageFromJobAsync(jobId, ct);
+                await receipts.IssueAndAppendAsync(new ReceiptContext(
+                    ReceiptClass: ReceiptClass.SourceCandidateStaged,
+                    SubjectUri: $"research-stage:{record.ArtifactId}",
+                    Actor: ReceiptActor.User(currentUser.GetCurrentUserId()),
+                    EvidenceRefs:
+                    [
+                        ReceiptRefs.StagedArtifact(record.ArtifactId),
+                        ReceiptRefs.Source(record.SourceUrl),
+                    ],
+                    Decision: "staged_pending_review",
+                    EffectStatus: "non-canonical",
+                    InputHashSeed: $"{record.ArtifactId}|{record.SegmentSnapshotSignature}"),
+                    ct);
+
+                var workflow = record.SourceMetadata.TryGetValue("workflow", out var wf) ? wf : string.Empty;
+                var partial = record.SourceMetadata.TryGetValue("partial", out var p)
+                    && string.Equals(p, "true", StringComparison.OrdinalIgnoreCase);
+
+                return Results.Ok(new AdminScientificResearchStageResponse(
+                    ArtifactId: record.ArtifactId,
+                    ReviewState: record.ReviewState,
+                    SourceType: record.SourceType,
+                    Provider: record.Provider,
+                    JobId: jobId,
+                    Workflow: workflow,
+                    Partial: partial,
+                    CreatedAtUtc: record.CreatedAtUtc));
+            }
+            catch (ScientificResearchProviderDisabledException ex)
+            {
+                return Results.Json(new { Message = ex.Message, Code = "research_sidecar_disabled" }, statusCode: StatusCodes.Status503ServiceUnavailable);
+            }
+            catch (ScientificResearchProviderException ex) when (ex.ErrorCode is "job_not_found" or "result_not_ready")
+            {
+                return Results.Json(new { Message = ex.Message, Code = ex.ErrorCode }, statusCode: StatusCodes.Status409Conflict);
+            }
+            catch (ScientificResearchProviderException ex)
+            {
+                return Results.BadRequest(new { Message = ex.Message, Code = ex.ErrorCode });
             }
         });
     }
