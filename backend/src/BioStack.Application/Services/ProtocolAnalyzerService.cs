@@ -1,6 +1,7 @@
 namespace BioStack.Application.Services;
 
 using System.Diagnostics;
+using BioStack.Application.Evidence;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
@@ -24,6 +25,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
     private readonly ICounterfactualEngine _counterfactualEngine;
     private readonly IProtocolAnalysisPersistenceHook _persistenceHook;
     private readonly IFeatureGate _featureGate;
+    private readonly ProtocolEvidenceContextComparer _evidenceContextComparer;
     private readonly ILogger<ProtocolAnalyzerService> _logger;
 
     public ProtocolAnalyzerService(
@@ -38,6 +40,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
         ICounterfactualEngine counterfactualEngine,
         IProtocolAnalysisPersistenceHook persistenceHook,
         IFeatureGate featureGate,
+        ProtocolEvidenceContextComparer evidenceContextComparer,
         ILogger<ProtocolAnalyzerService> logger)
     {
         _parser = parser;
@@ -51,6 +54,7 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
         _counterfactualEngine = counterfactualEngine;
         _persistenceHook = persistenceHook;
         _featureGate = featureGate;
+        _evidenceContextComparer = evidenceContextComparer;
         _logger = logger;
     }
 
@@ -119,11 +123,21 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
         }
         var scored = recognizedCompoundCount > 0;
 
+        // Class B: deterministic comparison of entered amounts vs reviewed knowledge exposure context.
+        var evidenceComparisons = _evidenceContextComparer
+            .CompareProtocolEntries(responseProtocol, parseResult.KnowledgeByCompound)
+            .ToList();
+        var evidenceIssues = ProtocolEvidenceContextComparer.ToIssues(evidenceComparisons);
+        var mergedIssues = analysis.Issues
+            .Concat(evidenceIssues)
+            .Take(8)
+            .ToList();
+
         var response = new AnalyzeProtocolResponse(
             responseProtocol,
             analysis.Score,
             analysis.ScoreExplanation,
-            analysis.Issues.Take(5).ToList(),
+            mergedIssues,
             suggestions,
             parseResult.BlendExpansions,
             analysis.UnknownCompounds,
@@ -138,7 +152,8 @@ public sealed class ProtocolAnalyzerService : IProtocolAnalyzerService
             parsedCompoundCount,
             recognizedCompoundCount,
             parseConfidence,
-            scored);
+            scored,
+            evidenceComparisons);
 
         await _persistenceHook.RecordAsync(_fingerprintService.GetNormalizedProtocolHash(normalizedProtocol), response, cancellationToken);
 
