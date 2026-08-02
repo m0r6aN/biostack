@@ -221,16 +221,42 @@ public sealed class UserFacingIntelligenceGate(
             .Distinct(StringComparer.Ordinal)
             .ToList();
 
-        var receipt = await receipts.IssueAndAppendAsync(new ReceiptContext(
+        var context = new ReceiptContext(
             ReceiptClass: receiptClass,
             SubjectUri: request.SubjectUri,
             Actor: ReceiptActor.User(request.ActorUserId),
             EvidenceRefs: evidenceRefs,
             Decision: status,
-            EffectStatus: "non-effecting",
-            InputHashSeed: $"{decisionId}|{request.SubjectUri}|{string.Join(',', reasonCodes)}"), ct);
+            EffectStatus: ReceiptEffectStatus.NonEffecting,
+            InputHashSeed: $"{decisionId}|{request.SubjectUri}|{string.Join(',', reasonCodes)}");
 
-        return receipt.ReceiptUri;
+        // A provenance failure must never suppress a safety response. This receipt is
+        // non-effecting, so it degrades (unanchored / not-recorded) rather than failing closed —
+        // effect-bearing receipts still use IssueAndAppendAsync and still halt on failure.
+        // The outer catch is defence-in-depth: no receipt-layer fault may 500 a safety warning.
+        try
+        {
+            var issuance = await receipts.TryIssueAndAppendAsync(context, ct);
+
+            if (!issuance.IsAnchored)
+            {
+                logger.LogWarning(
+                    "Safety receipt degraded. Status={IssuanceStatus} OutputType={OutputType} Reason={Reason}",
+                    issuance.Status, request.OutputType, issuance.DegradationReason);
+            }
+
+            return issuance.ReceiptUri;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(
+                ex,
+                "Safety receipt issuance faulted unexpectedly; safety output preserved without a receipt. "
+                + "OutputType={OutputType} Status={Status}",
+                request.OutputType, status);
+
+            return null;
+        }
     }
 
     internal bool IsUnsafeRequest(string requestText)

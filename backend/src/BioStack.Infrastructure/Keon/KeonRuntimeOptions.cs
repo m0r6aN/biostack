@@ -24,4 +24,23 @@ public sealed class KeonRuntimeOptions
     /// Has no effect in LiveMode. NEVER set true in production.
     /// </summary>
     public bool StubAllowAll { get; set; } = false;
+
+    /// <summary>
+    /// When Keon cannot issue an authoritative receipt, allow a clearly-labelled local
+    /// "unanchored" Spine row to be written for NON-EFFECTING provenance receipts only
+    /// (safety warnings, constraints, refusals).
+    ///
+    /// Default true: preserves the audit trail and keeps the user's safety warning visible.
+    /// Set false to degrade to "warning surfaced, nothing recorded".
+    ///
+    /// NEVER applies to effect-bearing receipts — those always fail closed.
+    /// </summary>
+    public bool AllowUnanchoredSafetyReceipts { get; set; } = true;
+
+    /// <summary>
+    /// Escape hatch for running a stubbed (ungoverned) Keon runtime in Production.
+    /// Startup fails fast unless this is explicitly set, so a misconfigured deploy cannot
+    /// silently serve traffic without a live governance runtime.
+    /// </summary>
+    public bool AllowStubInProduction { get; set; } = false;
 }
