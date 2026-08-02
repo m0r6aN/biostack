@@ -404,8 +404,7 @@ builder.Services.AddHostedService<AnalyzerPrewarmService>();
 // AddCollectiveIntegration selects live vs. stub orchestrator based on
 // KeonCollective:LiveMode and KeonCollective:ControlBaseUrl in configuration.
 builder.Services.AddCollectiveIntegration(builder.Configuration);
-builder.Services.AddKeonRuntime(builder.Configuration);
-builder.Services.AddScientificResearchProvider(builder.Configuration);
+builder.Services.AddKeonRuntime(builder.Configuration, builder.Environment.IsProduction());
 builder.Services.AddSingleton<DoctrineSanitizer>();
 builder.Services.AddGovernance();
 
