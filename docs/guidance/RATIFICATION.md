@@ -48,6 +48,32 @@ The same Class B comparison pattern applies to any compound/protocol entry vs re
 | Class D personalized direction | **Prohibited** (copy-guard enforced) |
 | Sidecar candidate evidence | Still **never canonical** until review/promotion |
 
+### Structural non-promotability of sidecar output (S4)
+
+"Sidecar candidate evidence is never canonical until review/promotion" is a **policy** control.
+It is also, today, a **structural** fact of the producer. These must not be conflated.
+
+As of the scientific research sidecar foundation, every emitted claim is built such that it
+**cannot** satisfy the contract's Class A promotion requirements:
+
+| Field | Contract expectation | Sidecar reality |
+|---|---|---|
+| `evidence_class` | Required for Class A | Hardcoded `"unknown"` on every claim |
+| `source_locations` | Required for high-impact extraction | Always empty |
+| `source_ids` | Source identifiers | Holds the **tool name**, not a literature/registry source id |
+| `source_manifest` / `raw_artifact_hashes` | Provenance for promotion | Never populated |
+
+Staging into the non-canonical review lifecycle is therefore the only lawful path — not only by
+policy, but because promotion gates would reject these claims on required fields alone.
+
+**When source-location capture and real evidence-class assignment are implemented**, this
+structural barrier lifts. At that point **policy alone** (review/promotion gates, ratification
+rules, and never-write-canonical-from-sidecar) must hold the line. Do not treat the current
+structural impossibility as a substitute for those gates after the producer is upgraded.
+
+This note does **not** change contract classes, public surfaces, or version — it records an
+implementation fact so ratification sign-off is not resting on a missing feature.
+
 ## Automated verification
 
 ```bash

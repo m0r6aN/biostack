@@ -273,13 +273,13 @@ Separately, `auth.py:26` compares tokens with `!=` rather than `hmac.compare_dig
 
 ## S4 — MEDIUM — Sidecar output cannot satisfy the contract's own promotion requirements
 
-**Citations:** `executor.py:180` (`evidence_class="unknown"` hardcoded on every claim), `executor.py:181` (`source_ids=[tool_name]`), `contracts/models.py:150` (`source_locations` never populated), `contracts/models.py:169-170` (`source_manifest` / `raw_artifact_hashes` never populated).
+**Status: CLOSED (documentary).**
 
-**Failure scenario:** the contract's Class A required-fields table demands an evidence class, and its escalation rule states *"High-impact extraction without source location → Fail extraction; do not stage as valid."* Every claim the sidecar emits carries `evidence_class="unknown"` and an empty `source_locations`, and its `source_ids` holds a **tool name** rather than a source identifier. By construction, no sidecar claim can clear Class A promotion.
+**Citations:** `executor.py` (`evidence_class="unknown"` hardcoded), `source_ids` = tool name, `source_locations` / `source_manifest` never populated.
 
-As a safety posture this is correct — everything is candidate, nothing is promotable, which is exactly what the ratification package asserts. The gap is documentary: the ratification record presents "sidecar output remains candidate until review" as a *policy choice*, when it is currently also a *structural impossibility*. Those should not be conflated, because the day someone implements source-location capture, the policy is the only thing left holding the line.
+**Finding:** By construction, no sidecar claim can clear Class A promotion. That is correct as safety posture, but the ratification record had presented "candidate until review" only as *policy*, when it is also a *structural impossibility*.
 
-**Recommendation:** state explicitly in the ratification record that sidecar artifacts are structurally non-promotable today, so the policy control is not silently resting on a missing feature.
+**Fix.** `docs/guidance/RATIFICATION.md` now has an explicit **"Structural non-promotability of sidecar output (S4)"** section: policy and structure are named separately, and the note records that when source-location capture lands, policy alone must hold the line. No contract version bump — documentation of an implementation fact, not a class change.
 
 ## S5 — MEDIUM — `202 Accepted` is not asynchronous; execution blocks the event loop
 
@@ -372,7 +372,7 @@ Two consequences. First, dev enforced `config/` while a deployed wheel enforced 
 | S1 | Sidecar unauthenticated on all interfaces by default | High | **CLOSED** (#242 + follow-up) — loopback default, `_enforce_bind_auth_policy` refuses unauthenticated non-loopback binds, `hmac.compare_digest` |
 | S2 | Privacy boundary checks key names, not values | High | **CLOSED** — compound `subject_name` shape + `known_identifiers` whitelist + value scan |
 | S3 | Hosted-fallback clause has no enforcement point | High | **CLOSED** — `inference_policy` choke point + job-start escalation assert + tests |
-| S4 | Sidecar output structurally non-promotable | Medium | Open — document in ratification record |
+| S4 | Sidecar output structurally non-promotable | Medium | **CLOSED (documentary)** — structural vs policy called out in `RATIFICATION.md` |
 | S5 | `202 Accepted` blocks the event loop; timeouts unenforced | Medium | **CLOSED** — `JobRunner` background pool, 429 at capacity, per-job timeout, TTL purge |
 | S6 | All terminal statuses are `PARTIAL` | Low/Med | **CLOSED** — `pending_review` / `partial` / `failed` mapped by tool outcome |
 | S8 | Duplicate allowlist; CWD decided which one loaded | High | **CLOSED** — single packaged source, CWD never consulted, resolved path reported; legacy `config/` copy removed |
