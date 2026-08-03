@@ -60,6 +60,12 @@ public static class KeonRuntimeDependencyInjection
         services.AddScoped<ISpineRepository, SpineRepository>();
         services.AddScoped<IRuntimeReceiptFactory, RuntimeReceiptFactory>();
 
+        // F3+: signed chain-head checkpoints (signing key must not live in the Spine DB).
+        // Cadence hosted worker is registered in the API host (needs Microsoft.Extensions.Hosting).
+        services.Configure<SpineCheckpointOptions>(
+            configuration.GetSection(SpineCheckpointOptions.SectionName));
+        services.AddScoped<ISpineCheckpointService, SpineCheckpointService>();
+
         return services;
     }
 }

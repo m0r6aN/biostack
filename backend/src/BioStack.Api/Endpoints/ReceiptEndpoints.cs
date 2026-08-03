@@ -23,6 +23,18 @@ public static class ReceiptEndpoints
 
         group.MapGet("/chain/verify", VerifyChain)
             .WithName("VerifyReceiptChain");
+
+        group.MapPost("/chain/checkpoints", CreateCheckpoint)
+            .WithName("CreateSpineChainCheckpoint");
+
+        group.MapGet("/chain/checkpoints", ListCheckpoints)
+            .WithName("ListSpineChainCheckpoints");
+
+        group.MapGet("/chain/checkpoints/latest/export", ExportLatestCheckpoint)
+            .WithName("ExportLatestSpineChainCheckpoint");
+
+        group.MapGet("/chain/checkpoints/verify", VerifyCheckpoint)
+            .WithName("VerifySpineChainCheckpoint");
     }
 
     /// <summary>
@@ -48,6 +60,90 @@ public static class ReceiptEndpoints
             reason = result.Reason,
         });
     }
+
+    /// <summary>F3+: snapshot and optionally HMAC-sign the current chain head.</summary>
+    private static async Task<IResult> CreateCheckpoint(
+        ISpineCheckpointService checkpoints,
+        ClaimsPrincipal principal,
+        CancellationToken ct,
+        string? note = null)
+    {
+        if (!IsAdmin(principal))
+            return Results.NotFound();
+
+        try
+        {
+            var checkpoint = await checkpoints.CreateCheckpointAsync(note, ct);
+            return Results.Ok(MapCheckpoint(checkpoint));
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Results.BadRequest(new { code = "empty_spine", message = ex.Message });
+        }
+    }
+
+    private static async Task<IResult> ListCheckpoints(
+        ISpineCheckpointService checkpoints,
+        ClaimsPrincipal principal,
+        CancellationToken ct)
+    {
+        if (!IsAdmin(principal))
+            return Results.NotFound();
+
+        var items = await checkpoints.ListAsync(ct: ct);
+        return Results.Ok(items.Select(MapCheckpoint));
+    }
+
+    private static async Task<IResult> ExportLatestCheckpoint(
+        ISpineCheckpointService checkpoints,
+        ClaimsPrincipal principal,
+        CancellationToken ct)
+    {
+        if (!IsAdmin(principal))
+            return Results.NotFound();
+
+        var json = await checkpoints.ExportLatestManifestJsonAsync(ct);
+        if (json is null)
+            return Results.NotFound(new { code = "no_checkpoint", message = "No checkpoint recorded." });
+
+        return Results.Content(json, "application/json");
+    }
+
+    private static async Task<IResult> VerifyCheckpoint(
+        ISpineCheckpointService checkpoints,
+        ClaimsPrincipal principal,
+        CancellationToken ct)
+    {
+        if (!IsAdmin(principal))
+            return Results.NotFound();
+
+        var result = await checkpoints.VerifyLatestAsync(ct);
+        return Results.Ok(new
+        {
+            isFullyValid = result.IsFullyValid,
+            chainIntact = result.ChainIntact,
+            checkpointPresent = result.CheckpointPresent,
+            headMatchesCheckpoint = result.HeadMatchesCheckpoint,
+            signatureValid = result.SignatureValid,
+            externallyAnchored = result.ExternallyAnchored,
+            chainEntriesVerified = result.ChainEntriesVerified,
+            checkpointSequenceNumber = result.CheckpointSequenceNumber,
+            checkpointHeadEntryHash = result.CheckpointHeadEntryHash,
+            reason = result.Reason,
+        });
+    }
+
+    private static object MapCheckpoint(SpineChainCheckpoint c) => new
+    {
+        id = c.Id,
+        sequenceNumber = c.SequenceNumber,
+        headEntryHash = c.HeadEntryHash,
+        checkpointedAtUtc = c.CheckpointedAtUtc,
+        source = c.Source,
+        signatureAlgorithm = c.SignatureAlgorithm,
+        signature = c.Signature,
+        note = c.Note,
+    };
 
     private static async Task<IResult> GetReceiptByUri(
         string uri,

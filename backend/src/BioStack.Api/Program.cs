@@ -20,6 +20,7 @@ using BioStack.Infrastructure.Keon;
 using BioStack.Application.ScientificResearch;
 using BioStack.Application.Evidence;
 using BioStack.Application.Governance;
+using BioStack.Api.Governance;
 using Keon.Kompress;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -420,6 +421,8 @@ builder.Services.AddScientificResearchProvider(builder.Configuration);
 builder.Services.AddEvidenceContextComparison();
 builder.Services.AddSingleton<DoctrineSanitizer>();
 builder.Services.AddGovernance();
+// F3+: periodic signed chain-head checkpoints (key via SpineCheckpoint:SigningKey).
+builder.Services.AddHostedService<SpineCheckpointCadenceHostedService>();
 
 // ── OpenAPI ──────────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi(options =>

@@ -48,8 +48,8 @@ TestResults/
 **/*Dockerfile*
 !/.dockerignore
 !backend/KnowledgeWorker.Dockerfile
-!backend/src/BioStack.Research/Dockerfile
-!backend/src/BioStack.Research/.dockerignore
+!backend/research-sidecar/Dockerfile
+!backend/research-sidecar/.dockerignore
 
 # Environment/Secrets
 .env*

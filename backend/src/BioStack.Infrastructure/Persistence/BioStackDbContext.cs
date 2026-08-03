@@ -34,6 +34,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<StripeWebhookEvent> StripeWebhookEvents { get; set; }
     public DbSet<BioStack.Domain.Governance.SpineEntry> SpineEntries { get; set; }
+    public DbSet<BioStack.Domain.Governance.SpineChainCheckpoint> SpineChainCheckpoints { get; set; }
     public DbSet<KnowledgeSourceIntakeRequest> KnowledgeSourceIntakeRequests { get; set; }
     public DbSet<StagedTranscriptCandidateReviewEntity> StagedTranscriptCandidateReviews { get; set; }
     public DbSet<CompoundGraphArtifact> CompoundGraphArtifacts { get; set; }
@@ -456,11 +457,29 @@ public sealed class BioStackDbContext : DbContext
             entity.HasIndex(e => e.ReceiptUri).IsUnique();
             entity.HasIndex(e => e.SubjectUri);
             entity.HasIndex(e => e.ActorId);
-            // A sequence slot may be claimed once, and an entry may have at most one successor.
-            // Together these make a forked chain unwritable rather than merely discouraged.
+            // A sequence slot may be claimed once, which is what makes a forked chain unwritable:
+            // two concurrent appends compute the same slot and one loses at the database.
             entity.HasIndex(e => e.SequenceNumber).IsUnique();
-            entity.HasIndex(e => e.PreviousEntryHash).IsUnique();
             entity.HasIndex(e => e.EntryHash).IsUnique();
+            // Deliberately NOT unique. It would add nothing over unique SequenceNumber, and it
+            // cannot survive a backfill: AddColumn gives every pre-existing row the same default,
+            // so a unique constraint here fails on the second legacy row.
+            entity.HasIndex(e => e.PreviousEntryHash);
+        });
+
+        // F3+: signed chain-head checkpoints (key must not live in this database).
+        modelBuilder.Entity<BioStack.Domain.Governance.SpineChainCheckpoint>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.SequenceNumber).IsRequired();
+            entity.Property(e => e.HeadEntryHash).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.CheckpointedAtUtc).IsRequired();
+            entity.Property(e => e.Source).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.SignatureAlgorithm).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.Signature).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.Note).HasColumnType("TEXT");
+            entity.HasIndex(e => e.SequenceNumber);
+            entity.HasIndex(e => e.CheckpointedAtUtc);
         });
 
         modelBuilder.Entity<KnowledgeSourceIntakeRequest>(entity =>
