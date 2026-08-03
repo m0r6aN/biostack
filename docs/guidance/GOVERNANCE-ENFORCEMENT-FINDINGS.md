@@ -364,11 +364,11 @@ Two consequences. First, dev enforced `config/` while a deployed wheel enforced 
 |---|---|---|---|
 | F1 | Safety receipts throw in default config | Critical | **CLOSED** (#245) — verified on `main`: `TryIssueAndAppendAsync` + defence-in-depth catch + production startup guard |
 | F2 | Doctrine guard blocks permitted Class A/B evidence | High | **CLOSED** — two-tier doctrine (`OutputAttribution`); `EvidenceGate` Check 8 now evaluates source-attributed. No contract version bump: the code was over-broad relative to Class A, not the contract |
-| F3 | Spine not tamper-evident | High | **CLOSED (code)** — hash chain + linear-chain DB constraints + `VerifyChainAsync` + admin verify endpoint. **Migration must be generated** — see below |
+| F3 | Spine not tamper-evident | High | **CLOSED** — hash chain + hand-written migration `20260803000000_AddSpineHashChain` + microsecond UTC stamp + non-unique `PreviousEntryHash` |
 | F4 | Duplicate banned-phrase lists, drifted | Medium | **CLOSED** — both guards delegate to `DoctrineRuleset`; `DoctrineRulesetParityTests` fails CI on any future drift |
 | F5 | Regex documented as enforcement | Medium | Open — wording change in `RATIFICATION.md` |
 | F6 | Input screened with output doctrine | Low | **CLOSED** — `IsUnsafeRequest` screens intent only; instruction-seeking patterns added as the compensating control |
-| — | Sidecar + governance docs untracked in git | Critical | **Docs fixed** — moved to `docs/guidance/`; sidecar tracking still undecided |
+| — | Sidecar + governance docs untracked in git | Critical | **CLOSED** — docs in `docs/guidance/`; sidecar tracked at `backend/research-sidecar/` |
 | S1 | Sidecar unauthenticated on all interfaces by default | High | **CLOSED** (#242 + follow-up) — loopback default, `_enforce_bind_auth_policy` refuses unauthenticated non-loopback binds, `hmac.compare_digest` |
 | S2 | Privacy boundary checks key names, not values | High | **CLOSED** — compound `subject_name` shape + `known_identifiers` whitelist + value scan |
 | S3 | Hosted-fallback clause has no enforcement point | High | **CLOSED** — `inference_policy` choke point + job-start escalation assert + tests |

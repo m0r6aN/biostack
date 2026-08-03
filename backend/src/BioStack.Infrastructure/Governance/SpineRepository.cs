@@ -28,8 +28,8 @@ public sealed class SpineRepository(BioStackDbContext db) : ISpineRepository
 {
     /// <summary>
     /// Concurrent appends read the same chain head, so the loser of the race violates the unique
-    /// index on SequenceNumber/PreviousEntryHash. That is correct behaviour — it is what keeps the
-    /// chain linear — so retry a bounded number of times before surfacing contention.
+    /// index on SequenceNumber. That is correct behaviour — it is what keeps the chain linear —
+    /// so retry a bounded number of times before surfacing contention.
     /// </summary>
     private const int MaxAppendAttempts = 5;
 

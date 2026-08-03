@@ -142,4 +142,8 @@ internal sealed class ThrowingTestSpineRepository : ISpineRepository
         string actorId,
         CancellationToken ct = default)
         => Task.FromResult<IReadOnlyList<SpineEntry>>([]);
+
+    // This double exists to fail appends; nothing is ever written, so the chain is trivially intact.
+    public Task<SpineChainVerificationResult> VerifyChainAsync(CancellationToken ct = default)
+        => Task.FromResult(SpineChainVerificationResult.Intact(0));
 }

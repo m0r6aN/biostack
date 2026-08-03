@@ -11,14 +11,7 @@
 
 ## 1. Do this first — uncommitted work
 
-Two files exist on disk, compile, and are covered by passing tests, but are **untracked**. A pull will not include them:
-
-```
-backend/src/BioStack.Infrastructure/Persistence/Migrations/20260803000000_AddSpineHashChain.cs
-backend/src/BioStack.Infrastructure/Persistence/Migrations/20260803000000_AddSpineHashChain.Designer.cs
-```
-
-Without them the F3 hash-chain columns never reach a real database, while the unit tests stay green — they build schema from the model via `EnsureCreated()`, not from migrations. **A green test run does not prove the migration exists.**
+**Done:** hand-written migration `20260803000000_AddSpineHashChain` (+ Designer) is committed with the microsecond-UTC stamp fix and non-unique `PreviousEntryHash` index. Apply migrations on real databases as usual; unit tests that use `EnsureCreated()` alone do not prove a migration ran.
 
 ---
 

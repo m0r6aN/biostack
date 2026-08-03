@@ -4,6 +4,7 @@ using System.Text.Json;
 using BioStack.Domain.Governance;
 using BioStack.Infrastructure.Governance;
 using BioStack.Infrastructure.Keon;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 /// <summary>
@@ -16,7 +17,11 @@ public class RuntimeReceiptFactoryTests
     private static (RuntimeReceiptFactory factory, RecordingSpine spine) Build()
     {
         var spine = new RecordingSpine();
-        var factory = new RuntimeReceiptFactory(new EchoKeonClient(), spine);
+        var factory = new RuntimeReceiptFactory(
+            new EchoKeonClient(),
+            spine,
+            new KeonRuntimeOptions(),
+            NullLogger<RuntimeReceiptFactory>.Instance);
         return (factory, spine);
     }
 
@@ -129,7 +134,9 @@ public class RuntimeReceiptFactoryTests
         var spine = new RecordingSpine();
         var factory = new RuntimeReceiptFactory(
             new KeonRuntimeClientStub(new KeonRuntimeOptions { StubAllowAll = true }),
-            spine);
+            spine,
+            new KeonRuntimeOptions(),
+            NullLogger<RuntimeReceiptFactory>.Instance);
         var context = new ReceiptContext(
             ReceiptClass: ReceiptClass.ProtocolReviewCompleted,
             SubjectUri: "protocol:offline/review",
@@ -196,5 +203,9 @@ public class RuntimeReceiptFactoryTests
 
         public Task<IReadOnlyList<SpineEntry>> GetByActorAsync(string actorId, CancellationToken ct = default) =>
             Task.FromResult<IReadOnlyList<SpineEntry>>(Appended.Where(e => e.ActorId == actorId).ToList());
+
+        // Recording double: entries are stored verbatim without chaining, so report what it holds.
+        public Task<SpineChainVerificationResult> VerifyChainAsync(CancellationToken ct = default) =>
+            Task.FromResult(SpineChainVerificationResult.Intact(Appended.Count));
     }
 }

@@ -60,7 +60,7 @@ public static class SpineChain
         Append(builder, entry.SubjectUri);
         Append(builder, entry.TenantId);
         Append(builder, entry.ActorId);
-        Append(builder, entry.TimestampUtc.ToString("O", CultureInfo.InvariantCulture));
+        Append(builder, Stamp(entry.TimestampUtc));
         Append(builder, entry.Decision);
         Append(builder, entry.ReceiptClass);
         Append(builder, entry.PolicyHashValue);
@@ -68,12 +68,32 @@ public static class SpineChain
         Append(builder, entry.InputHash);
         Append(builder, entry.EvidenceRefsJson);
         Append(builder, entry.EffectStatus);
-        Append(builder, entry.CreatedAt.ToString("O", CultureInfo.InvariantCulture));
+        Append(builder, Stamp(entry.CreatedAt));
         Append(builder, entry.SequenceNumber.ToString(CultureInfo.InvariantCulture));
         Append(builder, previousEntryHash);
 
         var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(builder.ToString()));
         return "sha256:" + Convert.ToHexStringLower(bytes);
+    }
+
+    /// <summary>
+    /// Render a timestamp so it hashes identically before and after a database round-trip.
+    ///
+    /// Two things bite here, and both were caught by verification failing on an UNTAMPERED chain:
+    ///   • <see cref="DateTimeKind"/> does not survive SQLite. A value written as Utc reads back
+    ///     as Unspecified, and round-trip "O" format renders those differently ("...Z" vs no "Z"),
+    ///     so every entry rehashed to a different digest than it was written with.
+    ///   • Precision differs by provider. .NET ticks are 100ns; PostgreSQL timestamps are
+    ///     microsecond-resolution, so sub-microsecond ticks are truncated on the way back.
+    ///
+    /// Normalising to UTC at microsecond precision is stable across both providers.
+    /// </summary>
+    private static string Stamp(DateTime value)
+    {
+        var utc = value.Kind == DateTimeKind.Local ? value.ToUniversalTime() : value;
+
+        return DateTime.SpecifyKind(utc, DateTimeKind.Utc)
+            .ToString("yyyy-MM-ddTHH:mm:ss.ffffff", CultureInfo.InvariantCulture);
     }
 
     private static void Append(StringBuilder builder, string? value)
