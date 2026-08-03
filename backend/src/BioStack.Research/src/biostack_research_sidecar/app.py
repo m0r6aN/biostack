@@ -126,6 +126,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 payload["install_error"] = str(exc)
 
             payload["allowlist_version"] = allowlist.allowlist_version
+            # Which file was actually loaded — an allowlist you cannot locate is one you
+            # cannot audit. Resolution is deterministic and never reads the CWD.
+            payload["allowlist_path"] = allowlist.source_path
             payload["approved_tool_count"] = len(allowlist.approved_tools)
             payload["approved_skill_count"] = len(allowlist.approved_skills)
             payload["approved_tools"] = sorted(allowlist.approved_tools)

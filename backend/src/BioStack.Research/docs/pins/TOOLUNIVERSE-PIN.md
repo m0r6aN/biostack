@@ -77,8 +77,13 @@ These are **workflow skill names** (agent skill docs), not free-form tool execut
 Executable tool names are constrained separately in:
 
 ```text
-config/tooluniverse_allowlist.v1.json
+src/biostack_research_sidecar/data/tooluniverse_allowlist.v1.json
 ```
+
+This is the single canonical allowlist: it is present in the editable layout and ships
+in the wheel. Resolution never consults the current working directory. To point at a
+different allowlist, set `BIOSTACK_RESEARCH_TOOLUNIVERSE_ALLOWLIST_PATH` explicitly —
+there is no implicit discovery.
 
 ## Runtime enablement
 

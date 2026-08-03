@@ -66,7 +66,7 @@ Sidecar accepts public compound/research parameters only. No user health profile
 | Package | `tooluniverse==1.4.0` |
 | Install | `uv sync --extra tooluniverse` (base only, **not** `[all]`) |
 | Receipt | `docs/pins/TOOLUNIVERSE-PIN.md` |
-| Allowlist | `config/tooluniverse_allowlist.v1.json` |
+| Allowlist | `src/biostack_research_sidecar/data/tooluniverse_allowlist.v1.json` (single canonical copy; override only via `BIOSTACK_RESEARCH_TOOLUNIVERSE_ALLOWLIST_PATH`) |
 | Enable at runtime | `BIOSTACK_RESEARCH_TOOLUNIVERSE_ENABLED=true` |
 
 Capability probe:
