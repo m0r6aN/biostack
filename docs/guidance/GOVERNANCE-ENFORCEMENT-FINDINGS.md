@@ -117,7 +117,7 @@ The guard could not distinguish **who is speaking** from **what is claimed**. "B
 
 ## F3 — HIGH — The "append-only Governed Spine" is not tamper-evident
 
-**Status: CLOSED in code — see "F3 resolution" below. One migration step is outstanding.**
+**Status: CLOSED — see "F3 resolution" below. Hand-written migration committed.**
 
 **Citations**
 
