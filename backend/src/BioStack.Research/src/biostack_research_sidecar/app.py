@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, AsyncIterator
 
 from fastapi import FastAPI, Header, HTTPException, Request, status
 from fastapi.responses import JSONResponse
@@ -22,14 +23,20 @@ from biostack_research_sidecar.contracts.models import (
 )
 from biostack_research_sidecar.gpu.capability import detect_gpu_capability
 from biostack_research_sidecar.inference.ollama_probe import detect_inference_capability
+from biostack_research_sidecar.jobs.runner import JobRunner
 from biostack_research_sidecar.jobs.store import InMemoryJobStore
 from biostack_research_sidecar.privacy import PrivacyViolation, validate_research_payload
-from biostack_research_sidecar.workflows.executor import execute_research_job
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or get_settings()
-    store = InMemoryJobStore()
+    store = InMemoryJobStore(job_ttl_seconds=settings.job_ttl_seconds)
+    runner = JobRunner(store, settings)
+
+    @asynccontextmanager
+    async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
+        yield
+        runner.shutdown(wait=False)
 
     app = FastAPI(
         title="BioStack Scientific Research Sidecar",
@@ -38,9 +45,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "Internal BioStack research operations only. "
             "Does not expose unrestricted ToolUniverse execution."
         ),
+        lifespan=lifespan,
     )
     app.state.settings = settings
     app.state.job_store = store
+    app.state.job_runner = runner
 
     async def enforce_auth(
         authorization: str | None = Header(default=None),
@@ -50,12 +59,15 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/health")
     def health() -> dict[str, Any]:
         current: Settings = app.state.settings
+        current_runner: JobRunner = app.state.job_runner
         return {
             "status": "ok" if not current.global_kill_switch else "disabled",
             "service": "biostack-research-sidecar",
             "version": __version__,
             "global_kill_switch": current.global_kill_switch,
             "tooluniverse_enabled": current.tooluniverse_enabled,
+            "jobs_in_flight": current_runner.in_flight,
+            "max_concurrent_research_jobs": current_runner.max_workers,
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         }
 
@@ -196,18 +208,34 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 },
             )
 
-        record = store.create(research_request)
-        # Foundation: execute inline (async worker process comes later).
-        execute_research_job(store, record, current)
-        refreshed = store.get(record.job_id)
-        assert refreshed is not None
+        runner: JobRunner = app.state.job_runner
+        if not runner.try_reserve_slot():
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail={
+                    "code": "max_concurrent_jobs",
+                    "message": (
+                        f"At capacity ({runner.max_workers} concurrent research jobs). "
+                        "Retry after an in-flight job finishes."
+                    ),
+                },
+            )
+
+        try:
+            record = store.create(research_request)
+        except Exception:
+            runner.release_slot()
+            raise
+
+        # 202 is honest: work runs off the event loop; poll status/result.
+        runner.submit(record.job_id)
         return ResearchJobHandle(
-            job_id=refreshed.job_id,
-            research_request_id=refreshed.request.research_request_id,
-            workflow=refreshed.request.workflow,
-            status=refreshed.status,
-            submitted_at_utc=refreshed.submitted_at_utc,
-            correlation_id=refreshed.request.correlation_id,
+            job_id=record.job_id,
+            research_request_id=record.request.research_request_id,
+            workflow=record.request.workflow,
+            status=ResearchJobStatusCode.QUEUED,
+            submitted_at_utc=record.submitted_at_utc,
+            correlation_id=record.request.correlation_id,
         )
 
     @app.get(

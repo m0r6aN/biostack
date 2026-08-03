@@ -6,6 +6,8 @@ Enforcement layers:
 1. Top-level request field allowlist (unknown keys rejected).
 2. Nested key denylist for known health/identity fields.
 3. Free-text value scanning (subject_name, purpose, identifier values, etc.).
+4. subject_name compound-identifier shape (not free prose).
+5. known_identifiers key whitelist (public scientific IDs only).
 """
 
 from __future__ import annotations
@@ -52,6 +54,42 @@ ALLOWED_EXECUTION_FIELDS = frozenset(
         "maximum_execution_duration_seconds",
         "approved_model_profile",
     }
+)
+
+# Public scientific identifier keys only. Values are still value-scanned.
+# Keys match sequences.py consumers plus common registry aliases.
+ALLOWED_KNOWN_IDENTIFIER_KEYS = frozenset(
+    {
+        "cid",
+        "pubchem",
+        "pubchem_cid",
+        "chembl",
+        "chembl_id",
+        "molecule_chembl_id",
+        "uniprot",
+        "accession",
+        "pmid",
+        "inchikey",
+        "inchi",
+        "smiles",
+        "cas",
+        "cas_rn",
+        "drugbank",
+        "mesh",
+        "rxcui",
+        "nct",
+    }
+)
+
+# Compound / chemical name shape — not free-form health prose.
+# Allows common nomenclature: BPC-157, N-acetylcysteine, (S)-ketamine, 5-HTP.
+SUBJECT_NAME_MAX_LEN = 128
+_SUBJECT_NAME_SHAPE = re.compile(
+    r"^[A-Za-z0-9][A-Za-z0-9\s\-\(\)\[\]\.,'+/]{0,127}$"
+)
+# Identifier values: registry tokens, not sentences.
+_IDENTIFIER_VALUE_SHAPE = re.compile(
+    r"^[A-Za-z0-9][A-Za-z0-9\s\-\(\)\[\]\.,:+/=]{0,255}$"
 )
 
 # Nested key denylist (case-insensitive, separators stripped).
@@ -154,6 +192,14 @@ def validate_research_payload(payload: dict[str, Any]) -> None:
                 fields=[f"execution.{name}" for name in exec_unknown],
             )
 
+    subject_name = payload.get("subject_name")
+    if isinstance(subject_name, str):
+        assert_subject_name_shape(subject_name)
+
+    known_ids = payload.get("known_identifiers")
+    if isinstance(known_ids, dict):
+        assert_known_identifiers(known_ids)
+
     prohibited = find_prohibited_fields(payload)
     if prohibited:
         raise PrivacyViolation(
@@ -168,6 +214,73 @@ def validate_research_payload(payload: dict[str, Any]) -> None:
             "privacy_value_scan_violation",
             "Request free-text appears to include personal or health data.",
             fields=free_text_hits,
+        )
+
+
+def assert_subject_name_shape(subject_name: str) -> None:
+    """Reject free prose; only compound-identifier shapes are accepted."""
+    cleaned = subject_name.strip()
+    if not cleaned:
+        raise PrivacyViolation(
+            "subject_name_invalid",
+            "subject_name must not be blank.",
+            fields=["subject_name"],
+        )
+    if len(cleaned) > SUBJECT_NAME_MAX_LEN:
+        raise PrivacyViolation(
+            "subject_name_invalid",
+            f"subject_name exceeds {SUBJECT_NAME_MAX_LEN} characters.",
+            fields=["subject_name"],
+        )
+    if not _SUBJECT_NAME_SHAPE.fullmatch(cleaned):
+        raise PrivacyViolation(
+            "subject_name_invalid",
+            "subject_name must be a compound identifier (letters, digits, and "
+            "limited chemical-name punctuation only), not free-form text.",
+            fields=["subject_name"],
+        )
+    # Sentence-like free text with a colon / semicolon / question mark is out of charset,
+    # but multi-clause prose with only spaces can still slip through — cap token count.
+    tokens = cleaned.split()
+    if len(tokens) > 8:
+        raise PrivacyViolation(
+            "subject_name_invalid",
+            "subject_name looks like free prose (too many tokens for a compound name).",
+            fields=["subject_name"],
+        )
+
+
+def assert_known_identifiers(known_identifiers: dict[Any, Any]) -> None:
+    """Only public scientific registry keys; values must look like tokens, not notes."""
+    bad_keys: list[str] = []
+    bad_values: list[str] = []
+    for key, value in known_identifiers.items():
+        key_s = str(key).strip().lower()
+        path = f"known_identifiers.{key}"
+        if key_s not in ALLOWED_KNOWN_IDENTIFIER_KEYS:
+            bad_keys.append(path)
+            continue
+        if not isinstance(value, str):
+            bad_values.append(path)
+            continue
+        cleaned = value.strip()
+        if not cleaned or not _IDENTIFIER_VALUE_SHAPE.fullmatch(cleaned):
+            bad_values.append(path)
+            continue
+        if len(cleaned.split()) > 6:
+            bad_values.append(path)
+
+    if bad_keys:
+        raise PrivacyViolation(
+            "known_identifiers_key_not_allowlisted",
+            "known_identifiers contains keys outside the public scientific ID allowlist.",
+            fields=sorted(bad_keys),
+        )
+    if bad_values:
+        raise PrivacyViolation(
+            "known_identifiers_value_invalid",
+            "known_identifiers values must be registry tokens, not free-form notes.",
+            fields=sorted(bad_values),
         )
 
 

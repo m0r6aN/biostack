@@ -8,10 +8,38 @@
   "properties": {
     "research_request_id": { "type": "string", "minLength": 1 },
     "research_subject_type": { "type": "string", "default": "compound" },
-    "subject_name": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "subject_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "description": "Public compound/chemical identifier shape only — not free-form health prose."
+    },
     "known_identifiers": {
       "type": "object",
-      "additionalProperties": { "type": "string" }
+      "description": "Public scientific registry IDs only (pubchem, chembl, uniprot, pmid, etc.).",
+      "propertyNames": {
+        "enum": [
+          "cid",
+          "pubchem",
+          "pubchem_cid",
+          "chembl",
+          "chembl_id",
+          "molecule_chembl_id",
+          "uniprot",
+          "accession",
+          "pmid",
+          "inchikey",
+          "inchi",
+          "smiles",
+          "cas",
+          "cas_rn",
+          "drugbank",
+          "mesh",
+          "rxcui",
+          "nct"
+        ]
+      },
+      "additionalProperties": { "type": "string", "minLength": 1, "maxLength": 256 }
     },
     "workflow": {
       "type": "string",

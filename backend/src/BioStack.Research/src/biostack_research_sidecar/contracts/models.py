@@ -77,7 +77,7 @@ class ScientificResearchRequest(BaseModel):
 
     research_request_id: str = Field(default_factory=lambda: str(uuid4()))
     research_subject_type: str = "compound"
-    subject_name: str = Field(..., min_length=1, max_length=256)
+    subject_name: str = Field(..., min_length=1, max_length=128)
     known_identifiers: dict[str, str] = Field(default_factory=dict)
     workflow: WorkflowId
     evidence_categories: list[str] = Field(default_factory=list)
@@ -101,11 +101,23 @@ class ScientificResearchRequest(BaseModel):
 
     @field_validator("subject_name")
     @classmethod
-    def _strip_name(cls, value: str) -> str:
+    def _validate_subject_name(cls, value: str) -> str:
+        # Shape enforcement lives in privacy.assert_subject_name_shape; pydantic re-checks
+        # length after strip so blank/whitespace cannot pass model_validate alone.
+        from biostack_research_sidecar.privacy import assert_subject_name_shape
+
         cleaned = value.strip()
-        if not cleaned:
-            raise ValueError("subject_name must not be blank")
+        assert_subject_name_shape(cleaned)
         return cleaned
+
+    @field_validator("known_identifiers")
+    @classmethod
+    def _validate_known_identifiers(cls, value: dict[str, str]) -> dict[str, str]:
+        from biostack_research_sidecar.privacy import assert_known_identifiers
+
+        assert_known_identifiers(value)
+        # Normalize keys to lowercase for stable sequence lookups.
+        return {str(k).strip().lower(): str(v).strip() for k, v in value.items()}
 
 
 class ResearchJobHandle(BaseModel):

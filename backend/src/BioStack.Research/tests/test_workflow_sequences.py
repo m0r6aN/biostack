@@ -2,20 +2,22 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 from biostack_research_sidecar.tooluniverse_integration.adapter import (
     ToolInvocationResult,
     ToolUniverseAdapter,
 )
-from biostack_research_sidecar.tooluniverse_integration.allowlist import load_allowlist
+from biostack_research_sidecar.tooluniverse_integration.allowlist import (
+    load_allowlist,
+    packaged_allowlist_path,
+)
 from biostack_research_sidecar.workflows.sequences import (
     WORKFLOW_SEQUENCES,
     run_workflow_sequence,
 )
-from datetime import datetime, timezone
-from pathlib import Path
 
-
-ALLOWLIST = Path(__file__).resolve().parents[1] / "config" / "tooluniverse_allowlist.v1.json"
+ALLOWLIST = packaged_allowlist_path()
 
 
 class FakeAdapter(ToolUniverseAdapter):

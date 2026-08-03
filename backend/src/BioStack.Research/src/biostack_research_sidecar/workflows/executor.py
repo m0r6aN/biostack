@@ -191,18 +191,25 @@ def _execute_with_tooluniverse(
             )
         )
 
+    # Terminal status mapping (S6): distinguish full success, partial, and failure.
+    # Candidate claims still require human review — PENDING_REVIEW is the success path.
     any_success = any(item.success for item in results)
-    if tools_invoked and not any_success:
-        status = ResearchJobStatusCode.PARTIAL
-        partial = True
-        progress = "allowlisted tools invoked; all returned errors"
+    all_success = bool(tools_invoked) and all(item.success for item in results)
+    if tools_invoked and all_success:
+        status = ResearchJobStatusCode.PENDING_REVIEW
+        partial = False
+        progress = "allowlisted sequence returned candidate payloads (pending review)"
     elif tools_invoked and any_success:
         status = ResearchJobStatusCode.PARTIAL
         partial = True
-        progress = "allowlisted sequence returned candidate payloads (pending review)"
+        progress = "some allowlisted tools failed; partial candidate payloads (pending review)"
+    elif tools_invoked and not any_success:
+        status = ResearchJobStatusCode.FAILED
+        partial = False
+        progress = "allowlisted tools invoked; all returned errors"
     else:
-        status = ResearchJobStatusCode.PARTIAL
-        partial = True
+        status = ResearchJobStatusCode.FAILED
+        partial = False
         progress = "no tool steps executed (missing identifiers or empty sequence)"
 
     finished = datetime.now(timezone.utc)

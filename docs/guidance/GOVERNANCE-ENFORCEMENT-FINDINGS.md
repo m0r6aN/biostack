@@ -149,17 +149,13 @@ Fields are **length-prefixed** before hashing, so content shifted across a field
 
 **What this does and does not buy.** It makes the ledger tamper-**evident**. It does not make it tamper-**proof**: a holder with write access can still rewrite the entire chain consistently. Closing that requires anchoring the chain head somewhere the holder does not control — a server-side anchor on a cadence, or a periodic signed checkpoint. That remains open and is the right next step if receipts ever become compliance- or dispute-load-bearing, particularly for the provider-sharing story.
 
-**Outstanding step — the migration.** The model and EF configuration are updated, and the unit tests pass through `EnsureCreated()`, which builds schema from the model rather than from migrations. A real database still needs:
+**The migration is hand-written, per repository convention.** `20260803000000_AddSpineHashChain.cs` plus a partial `.Designer.cs`.
 
-```bash
-cd backend
-dotnet ef migrations add AddSpineHashChain \
-  --project src/BioStack.Infrastructure --startup-project src/BioStack.Api
-```
+Do **not** run `dotnet ef migrations add` in this repository. `BioStack.Api/ProductionMigrationBaselineConfiguration.cs` states the convention explicitly: *"Migrations in this repository are intentionally hand-written and the central snapshot is intentionally minimal."* The committed `BioStackDbContextModelSnapshot.cs` is 126 lines describing a single entity. EF compares the full model against that deliberately incomplete snapshot, concludes most tables do not exist, and scaffolds `CreateTable` for 25 of them — including `AppUsers`, `KnowledgeEntries`, and `SpineEntries` — while rewriting the snapshot to ~1900 lines. Applying such a migration against a live database would attempt to create tables that already exist. This was tried during F3 and reverted; the guard rail is this paragraph.
 
-This was deliberately **not** hand-written. A migration ships with a `.Designer.cs` and an updated `ModelSnapshot`, both of which are full model snapshots; hand-forging them without a compiler is how you get a snapshot that silently disagrees with the model and reports phantom pending changes forever. One generated command is safer than three hand-written files.
+**A unique index that could not survive backfill.** The first cut of F3 put unique indexes on all three chain columns. `AddColumn` gives every pre-existing row the *same* default, so a unique constraint on `PreviousEntryHash` fails on the second legacy row — the migration could not have applied to any populated database. `PreviousEntryHash` is now a plain index. Uniqueness on `SequenceNumber` is what actually enforces linearity (two concurrent appends compute the same slot; one loses at the database), and `EntryHash` uniqueness is backfillable because it is derived from the already-unique `ReceiptUri`.
 
-**Backfill note for existing rows.** Any Spine rows written before this change have no chain fields. The migration adds the columns, but pre-existing rows cannot be retro-chained (their hashes were never computed, and inventing them would be exactly the forgery the chain exists to detect). Decide explicitly: either treat the migration point as a new genesis and accept that pre-migration history is unverifiable, or export-and-reseed. This is a governance decision, not a code one — record it in the ratification package.
+**Backfill of legacy rows — a governance decision, now recorded.** Rows written before the chain existed cannot be retro-chained: their hashes were never computed, and inventing them would be precisely the forgery the chain exists to detect. The migration assigns deterministic per-row-unique placeholders (`row_number()` for the sequence, `'sha256:pre-chain:' || ReceiptUri` for the hash) purely so the constraints can be created. `VerifyChainAsync` will report the first such row as a hash mismatch. **That is correct and intended**: the migration point is the chain's effective genesis, and pre-migration history is not cryptographically verifiable. The alternative is export-and-reseed. Record whichever is chosen in the ratification package.
 
 ---
 
@@ -251,29 +247,29 @@ Separately, `auth.py:26` compares tokens with `!=` rather than `hmac.compare_dig
 
 ## S2 — HIGH — The privacy boundary inspects key names and never values
 
-**Citations:** `privacy.py:11-39` (20-name denylist), `privacy.py:42-55` (walks dict keys only), `contracts/models.py:80-81` (`subject_name` free text ≤256 chars, `known_identifiers` free-form `dict[str, str]`).
+**Status: CLOSED.**
 
-**Failure scenario:** the module docstring states "Sidecar must not accept personal health or protocol data." That boundary is enforced by comparing **dict key names** against a fixed list. Values are never examined, so `{"subject_name": "47yo M 92kg, 12mg tirzepatide, symptoms: nausea"}` passes cleanly and flows on to ToolUniverse. Absent from the denylist entirely: `dob`, `birthdate`, `height`, `bmi`, `diagnosis`, `medications`, `labs`, `bloodwork`, `blood_pressure`, `heart_rate`, `gender`, `mrn`, `address`. JSON nested inside a string value is invisible to the walk.
+**Citations (pre-fix):** key-only denylist, free-form `subject_name` / `known_identifiers`.
 
-`data_classification` (`app.py:183-193`) is a genuine allowlist and does real work — but it is **caller-asserted**. A caller that mislabels health data as `public_scientific` is believed.
+**Failure scenario:** the boundary compared **dict key names** against a fixed list and never examined values, so health prose in `subject_name` or free-form `known_identifiers` could reach ToolUniverse while still labeled `public_scientific`.
 
-This is the same denylist-where-an-allowlist-belongs defect as F2/F5, applied to health-data egress rather than output wording — the higher-stakes instance of the pattern.
+**Fix.** Five layers, fail closed:
 
-**Recommendation:** constrain `subject_name` to a compound-identifier shape (charset + length) rather than free prose, whitelist permitted `known_identifiers` keys, and treat the denylist as a backstop rather than the boundary.
+1. Top-level request field allowlist (unknown keys rejected).
+2. Nested key denylist for known health/identity fields (backstop).
+3. Free-text value scanning for health/identity patterns.
+4. **`subject_name` compound-identifier shape** — charset, max 128 chars, token-count cap (not free prose).
+5. **`known_identifiers` key whitelist** — public scientific registry keys only (`cid`, `chembl_id`, `uniprot`, `pmid`, …); values must look like registry tokens.
+
+`data_classification` remains caller-asserted and is still an allowlist for classification labels — the shape/whitelist layers are what prevent mislabeled health content from riding along.
 
 ## S3 — HIGH — The hosted-fallback clause has four flags and zero enforcement points
 
+**Status: CLOSED.**
+
 **The contract clause:** *"Hosted model fallbacks must not receive user health data merely because local GPU/Ollama failed."*
 
-**Citations:** `config.py:47` (`hosted_fallback_enabled`), `contracts/models.py:69` (`allow_hosted_fallback`), `contracts/models.py:97` (`hosted_inference_permitted`), `config.py:16` / `models.py:39` (`ExecutionMode` includes `"hosted_fallback_allowed"`).
-
-**Reference counts across `src/`:** `allow_hosted_fallback` → 1, `hosted_inference_permitted` → 1, `local_inference_permitted` → 1 — each occurrence being its own field definition. `hosted_fallback_enabled` → 4, all of them reporting (definition, probe read, manifest field).
-
-**Finding:** **no execution path reads any of them.** `executor.py` performs no inference whatsoever; `inference/ollama_probe.py` is read-only inventory. The clause is therefore *vacuously* satisfied today — there is no hosted path that could violate it.
-
-The risk is structural rather than present: there is no single choke point that fails closed, and four uncoordinated flags spread across two modules is precisely the F4 drift pattern, pre-loaded. Whoever wires inference will have to remember to consult all four.
-
-**Recommendation:** add one `assert_hosted_inference_allowed(settings, request)` that ANDs every flag and raises by default, call it at the single inference entry point, and write the test asserting rejection-when-any-flag-is-false **now**, while it costs nothing and no implementation exists to retrofit.
+**Fix.** `inference_policy.py` is the single choke point: `assert_hosted_inference_allowed` ANDs every authorization flag and fails closed by default; `assert_no_silent_hosted_escalation` runs at job start in `executor.py` so partial hosted flags are rejected before any work. Tests in `test_inference_policy.py` lock the matrix. No inference path executes models yet — when one is wired, it must call these asserts (already the documented entry points).
 
 ## S4 — MEDIUM — Sidecar output cannot satisfy the contract's own promotion requirements
 
@@ -287,19 +283,36 @@ As a safety posture this is correct — everything is candidate, nothing is prom
 
 ## S5 — MEDIUM — `202 Accepted` is not asynchronous; execution blocks the event loop
 
-**Citations:** `app.py:197` (`execute_research_job(...)` called synchronously inside `async def submit_job`), `app.py:137-141` (route declares `202 ACCEPTED`), `app.py:50` (`/health`), `app.py:264` (cancel route).
+**Status: CLOSED (foundation worker).**
 
-**Failure scenario:** the handler runs the entire research job inline on the event loop, then returns a 202 with a job handle implying background work. A single long job freezes the whole sidecar — including `/health`, which will then report the service as down to any supervisor. The job lifecycle statuses (`QUEUED`, `GATHERING_EVIDENCE`, `PENDING_REVIEW`) are decorative, since the job is finished before the response is written, and `POST .../cancel` can never arrive while there is anything left to cancel.
+**Failure scenario (pre-fix):** the handler ran the research job inline, so a long job froze `/health` and made cancel/status lifecycle decorative.
 
-**Define-only, never enforced:** `max_concurrent_research_jobs` (`config.py:41`), `job_ttl_seconds` (`config.py:42`), `maximum_execution_duration_seconds` (`models.py:71`), `maximum_execution_time_seconds` (`models.py:86`). The .NET caller passes `MaximumExecutionDuration: TimeSpan.FromMinutes(10)` (`AdminEndpoints.cs:492`); nothing on either side honours it.
+**Fix.** `JobRunner` reserves a concurrency slot at submit, returns `202` with `status=queued` immediately, and executes off the event loop on a bounded thread pool. Enforced:
 
-**Recommendation:** either move execution to a worker and keep the 202 honest, or drop to a synchronous 200 and stop advertising a job lifecycle that does not exist. Enforce the timeout regardless — an unbounded external-tool call on the event loop is the failure mode most likely to take the service down first.
+| Setting | Behaviour |
+|---|---|
+| `max_concurrent_research_jobs` | Non-blocking reserve; excess submits get `429 max_concurrent_jobs` |
+| `maximum_execution_time_seconds` / `execution.maximum_execution_duration_seconds` | Tighter of the two is the worker timeout; timeout → `FAILED` / `execution_timeout` |
+| `job_ttl_seconds` | Terminal jobs older than TTL are purged from the in-memory store |
+
+`/health` reports `jobs_in_flight` and the concurrency cap. Cancel remains cooperative at job-start checkpoints (mid-tool interrupt is not yet wired).
 
 ## S6 — LOW/MEDIUM — Every terminal status is `PARTIAL`
 
-**Citations:** `executor.py:186-198` — all three branches assign `ResearchJobStatusCode.PARTIAL` with `partial=True`; `contracts/models.py:57-58` (`PENDING_REVIEW`, `COMPLETED` defined).
+**Status: CLOSED.**
 
-Full success, every-tool-errored, and no-steps-executed are indistinguishable to the caller by status alone; the distinction survives only in prose inside `progress_message`. `COMPLETED` and `PENDING_REVIEW` are unreachable. The .NET side cannot gate on outcome without string-matching a human-readable message.
+**Fix.** Tool-sequence outcomes map as:
+
+| Outcome | Status | `partial` |
+|---|---|---|
+| All allowlisted tools succeeded | `pending_review` | false |
+| Mix of success and failure | `partial` | true |
+| Tools invoked, all failed | `failed` | false |
+| No steps executed | `failed` | false |
+| ToolUniverse disabled (scaffold) | `partial` | true |
+| Kill switch / hosted policy | `rejected_by_policy` | false |
+
+Candidate claims still require human review — full tool success is `pending_review`, not silent canonical completion. `COMPLETED` remains reserved for a future fully-closed path that does not produce review-staged candidates.
 
 ## S7 — LOW — Provenance records a device it did not check
 
@@ -325,6 +338,26 @@ This is the same shape as F1 — a governance control failing open-ish at reques
 
 ---
 
+## S8 — HIGH — The ToolUniverse allowlist existed twice, and the working directory decided which one won
+
+**Status: CLOSED.**
+
+**Citations:** `tooluniverse_integration/allowlist.py` (`_default_allowlist_path`, pre-fix), `config/tooluniverse_allowlist.v1.json` (removed), `src/biostack_research_sidecar/data/tooluniverse_allowlist.v1.json`.
+
+**Failure scenario.** Two tracked copies of the allowlist, byte-identical (2497 bytes) but with nothing enforcing that. Resolution tried three candidates in order:
+
+1. `here.parents[3]/config/...` — the repo copy. Wins in an editable/dev layout.
+2. `Path.cwd()/config/...` — **whatever directory the process started in.**
+3. `here.parents[1]/data/...` — the packaged copy. Wins in a wheel.
+
+Two consequences. First, dev enforced `config/` while a deployed wheel enforced `data/`, so the two could drift into *different tool allowlists* with both environments looking healthy. Second — and worse — candidate 2 sits between them: in a container the first candidate misses, so a `config/tooluniverse_allowlist.v1.json` present in the WORKDIR (mounted, copied, or left over) silently replaced the vetted allowlist. This is the control deciding which external tools may execute, resolved by current working directory, with nothing logging which file was chosen.
+
+**Fix.** One canonical location: the copy inside the package, which is present in the editable layout and ships in the wheel (hatchling includes the whole package directory). CWD is never consulted. Operators who need a different allowlist set `BIOSTACK_RESEARCH_TOOLUNIVERSE_ALLOWLIST_PATH` explicitly — deliberate override, no implicit discovery — and a missing packaged allowlist is a hard failure rather than a fallback to something unvetted. The resolved path now travels on the allowlist object and is reported by `/internal/v1/capabilities/tooluniverse`, because an allowlist you cannot locate is one you cannot audit. The legacy `config/` copy has been deleted; `test_legacy_config_copy_has_not_drifted` is a no-op when that path is absent.
+
+**Verification — executed, not reasoned.** Allowlist resolution tests pass, including the security regression: a decoy `config/tooluniverse_allowlist.v1.json` planted in the working directory advertising `ExecuteAnyTool` and `shell_exec` is ignored, and the packaged allowlist (v1.0.0, pin 1.4.0) loads instead.
+
+---
+
 ## Remediation status
 
 | # | Finding | Severity | Status |
@@ -337,11 +370,12 @@ This is the same shape as F1 — a governance control failing open-ish at reques
 | F6 | Input screened with output doctrine | Low | **CLOSED** — `IsUnsafeRequest` screens intent only; instruction-seeking patterns added as the compensating control |
 | — | Sidecar + governance docs untracked in git | Critical | **Docs fixed** — moved to `docs/guidance/`; sidecar tracking still undecided |
 | S1 | Sidecar unauthenticated on all interfaces by default | High | **CLOSED** (#242 + follow-up) — loopback default, `_enforce_bind_auth_policy` refuses unauthenticated non-loopback binds, `hmac.compare_digest` |
-| S2 | Privacy boundary checks key names, not values | High | Open — constrain `subject_name` / `known_identifiers` |
-| S3 | Hosted-fallback clause has no enforcement point | High | Open — add single choke point + test now |
+| S2 | Privacy boundary checks key names, not values | High | **CLOSED** — compound `subject_name` shape + `known_identifiers` whitelist + value scan |
+| S3 | Hosted-fallback clause has no enforcement point | High | **CLOSED** — `inference_policy` choke point + job-start escalation assert + tests |
 | S4 | Sidecar output structurally non-promotable | Medium | Open — document in ratification record |
-| S5 | `202 Accepted` blocks the event loop; timeouts unenforced | Medium | Open |
-| S6 | All terminal statuses are `PARTIAL` | Low/Med | Open |
+| S5 | `202 Accepted` blocks the event loop; timeouts unenforced | Medium | **CLOSED** — `JobRunner` background pool, 429 at capacity, per-job timeout, TTL purge |
+| S6 | All terminal statuses are `PARTIAL` | Low/Med | **CLOSED** — `pending_review` / `partial` / `failed` mapped by tool outcome |
+| S8 | Duplicate allowlist; CWD decided which one loaded | High | **CLOSED** — single packaged source, CWD never consulted, resolved path reported; legacy `config/` copy removed |
 | S7 | `execution_device` hardcoded in provenance | Low | **Accepted as accurate** — no GPU/inference path exists, so `"cpu"` is correct today; annotated as an audit field that must change when one lands |
 
 ### F1 remediation design (drafted)

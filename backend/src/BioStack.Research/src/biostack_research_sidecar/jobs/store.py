@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import threading
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
 from biostack_research_sidecar.contracts.models import (
@@ -35,9 +35,10 @@ class JobRecord:
 
 
 class InMemoryJobStore:
-    def __init__(self) -> None:
+    def __init__(self, job_ttl_seconds: int = 86_400) -> None:
         self._lock = threading.RLock()
         self._jobs: dict[str, JobRecord] = {}
+        self._job_ttl_seconds = max(60, int(job_ttl_seconds))
 
     def create(self, request: ScientificResearchRequest) -> JobRecord:
         now = datetime.now(timezone.utc)
@@ -50,12 +51,31 @@ class InMemoryJobStore:
             progress_message="queued",
         )
         with self._lock:
+            self._purge_expired_unlocked(now)
             self._jobs[record.job_id] = record
         return record
 
     def get(self, job_id: str) -> JobRecord | None:
         with self._lock:
+            self._purge_expired_unlocked(datetime.now(timezone.utc))
             return self._jobs.get(job_id)
+
+    def _purge_expired_unlocked(self, now: datetime) -> None:
+        cutoff = now - timedelta(seconds=self._job_ttl_seconds)
+        expired = [
+            job_id
+            for job_id, record in self._jobs.items()
+            if record.updated_at_utc < cutoff
+            and record.status
+            not in {
+                ResearchJobStatusCode.QUEUED,
+                ResearchJobStatusCode.RESOLVING_IDENTITY,
+                ResearchJobStatusCode.GATHERING_EVIDENCE,
+                ResearchJobStatusCode.NORMALIZING,
+            }
+        ]
+        for job_id in expired:
+            del self._jobs[job_id]
 
     def update(self, job_id: str, **kwargs: object) -> JobRecord | None:
         with self._lock:

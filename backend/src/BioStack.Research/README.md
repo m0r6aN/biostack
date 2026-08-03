@@ -59,6 +59,25 @@ docker run --rm -p 8080:8080 biostack-research-sidecar
 
 Sidecar accepts public compound/research parameters only. No user health profiles or personal protocols.
 
+| Control | Rule |
+|---|---|
+| `subject_name` | Compound-identifier shape (≤128 chars, chemical-name charset, ≤8 tokens) |
+| `known_identifiers` | Whitelisted registry keys only (`cid`, `chembl_id`, `uniprot`, `pmid`, …) |
+| Request body | Top-level field allowlist + nested health-key denylist + free-text value scan |
+| `data_classification` | Only `public_scientific` / `public_metadata` |
+
+## Jobs
+
+`POST /internal/v1/research/jobs` returns **202** with `status=queued` immediately. Work runs off the event loop.
+
+| Setting | Default | Effect |
+|---|---|---|
+| `BIOSTACK_RESEARCH_MAX_CONCURRENT_RESEARCH_JOBS` | `4` | Excess submits → `429 max_concurrent_jobs` |
+| `BIOSTACK_RESEARCH_JOB_TTL_SECONDS` | `86400` | Terminal jobs purged from the in-memory store |
+| Request `maximum_execution_time_seconds` / `execution.maximum_execution_duration_seconds` | `600` | Tighter of the two is the worker timeout |
+
+Poll `GET .../jobs/{id}` / `.../result`. `/health` stays responsive and reports `jobs_in_flight`.
+
 ## ToolUniverse pin
 
 | Item | Value |
