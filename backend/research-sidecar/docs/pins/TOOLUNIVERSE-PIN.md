@@ -31,7 +31,7 @@ tooluniverse = [
 Install:
 
 ```bash
-cd backend/src/BioStack.Research
+cd backend/research-sidecar
 uv sync --extra tooluniverse --extra dev
 ```
 

@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Scope | Both contract surfaces: the .NET consumer (Keon runtime, Governed Spine, doctrine/copy guards) and the Python research sidecar (`backend/src/BioStack.Research`) that produces the governed output |
+| Scope | Both contract surfaces: the .NET consumer (Keon runtime, Governed Spine, doctrine/copy guards) and the Python research sidecar (`backend/research-sidecar`) that produces the governed output |
 | Method | Static read of enforcement source on the working tree; **not** a live/runtime test. No .NET SDK or Python runtime available in the review environment — nothing here was compiled or executed. |
 | Date | 2026-08-02 |
 | Companion | `RATIFICATION.md`, `biostack-guidance-content-contract.v1.md` |
@@ -220,11 +220,11 @@ Screen input with the intent-based `UnsafeRequestPatterns` only (`UserFacingInte
 
 ---
 
-# Part 2 — Python research sidecar (`backend/src/BioStack.Research`)
+# Part 2 — Python research sidecar (`backend/research-sidecar`)
 
-The sidecar is the **producer** of the research output this contract governs; Part 1 reviewed only the .NET **consumer**. Paths below are relative to `backend/src/BioStack.Research/`.
+The sidecar is the **producer** of the research output this contract governs; Part 1 reviewed only the .NET **consumer**. Paths below are relative to `backend/research-sidecar/` (formerly `backend/src/BioStack.Research/`, moved out of the .NET source root).
 
-> **Tracking defect (fixed 2026-08-02):** this directory was entirely untracked in git (`?? backend/src/BioStack.Research/` — no nested `.git`, not `.gitignore`d). The contract and the ratification record lived inside it, so the document whose own version rule requires a fresh ratification cycle for any change had no history, no diff, and no blame. The governance docs were moved to `docs/guidance/` (tracked); **the sidecar itself remains untracked and still needs a decision.**
+> **Tracking defect (fixed 2026-08-02):** the sidecar directory was initially untracked in git. The contract and ratification record lived inside it. Governance docs were moved to `docs/guidance/` (tracked); the sidecar is tracked under `backend/research-sidecar/`.
 
 ## What is sound
 

@@ -48,7 +48,7 @@ ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 Location:
 
 ```text
-backend/src/BioStack.Research
+backend/research-sidecar
 ```
 
 Package module: `biostack_research_sidecar`.

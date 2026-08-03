@@ -1,6 +1,7 @@
-# BioStack.Research — Scientific Research Sidecar
+# BioStack research sidecar
 
-Bounded Python sidecar for BioStack compound research. Exposes **BioStack-owned** research operations only. Does **not** expose unrestricted ToolUniverse tool execution.
+Bounded Python sidecar for BioStack compound research (`backend/research-sidecar`).
+Exposes **BioStack-owned** research operations only. Does **not** expose unrestricted ToolUniverse tool execution.
 
 ## Status
 
@@ -16,7 +17,7 @@ See:
 ## Run locally
 
 ```bash
-cd backend/src/BioStack.Research
+cd backend/research-sidecar
 uv sync --all-extras
 uv run python -m biostack_research_sidecar
 ```

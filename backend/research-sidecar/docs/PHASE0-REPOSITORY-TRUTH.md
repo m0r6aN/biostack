@@ -36,7 +36,7 @@ Repository root: `D:\Repos\BioStack`
 | `BioStack.Infrastructure` | EF Core persistence, `IKnowledgeSource`, Keon runtime clients |
 | `BioStack.KnowledgeWorker` | Offline/online knowledge ingestion, source acquisition, trust gate, promotion |
 | `BioStack.Cognition` / `CollectiveAdapter` | Stack review / collective orchestration |
-| `BioStack.Research` | **New** — Python scientific research sidecar home (this work) |
+| `backend/research-sidecar` (was `BioStack.Research`) | **New** — Python scientific research sidecar home (this work) |
 
 Target framework: **net10.0** across backend projects.
 
@@ -297,7 +297,7 @@ BioStack Application (IScientificResearchProvider)
         |
         | internal HTTP + service auth + async jobs
         v
-Python Scientific Research Sidecar (BioStack.Research)
+Python Scientific Research Sidecar (`backend/research-sidecar`)
         |
         +--> CPU/Network: allowlisted ToolUniverse skills + official APIs
         +--> Local inference: BioStack router → Ollama adapter (host)

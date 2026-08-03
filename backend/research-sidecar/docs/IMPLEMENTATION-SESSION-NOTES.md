@@ -25,7 +25,7 @@
 | Configuration used | None (not mediating) |
 | Approval mode | Human / session manual approval |
 | Sensitive actions requested | Dependency install via `uv` (declared minimal set only); no ToolUniverse |
-| Sensitive actions approved | Scaffold + docs within BioStack.Research; Application abstraction stubs |
+| Sensitive actions approved | Scaffold + docs within research-sidecar; Application abstraction stubs |
 | Sensitive actions denied | n/a |
 | Tool calls mediated | 0 (Foreman not active) |
 | Known gaps | No MCP mediation, no SQLite audit log from Foreman, no command risk scoring |
@@ -76,7 +76,7 @@
 ## Verification commands
 
 ```bash
-cd backend/src/BioStack.Research
+cd backend/research-sidecar
 uv sync --extra dev --extra tooluniverse
 uv run pytest
 uv run --extra tooluniverse python scripts/smoke_tooluniverse_pin.py

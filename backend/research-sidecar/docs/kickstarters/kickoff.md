@@ -39,7 +39,7 @@ D:\Repos\BioStack
 
 Create In:
 ```text
-D:\Repos\BioStack\backend\src\BioStack.Research
+D:\Repos\BioStack\backend\research-sidecar
 ````
 
 ## Sidecar language and container decision
