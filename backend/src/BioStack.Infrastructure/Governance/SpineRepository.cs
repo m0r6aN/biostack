@@ -3,6 +3,9 @@ namespace BioStack.Infrastructure.Governance;
 using BioStack.Domain.Governance;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 public sealed class SpineImmutabilityViolationException(string receiptUri)
     : Exception($"Spine entry for receipt '{receiptUri}' already exists. Receipts are immutable.");
@@ -24,7 +27,11 @@ public interface ISpineRepository
     Task<SpineChainVerificationResult> VerifyChainAsync(CancellationToken ct = default);
 }
 
-public sealed class SpineRepository(BioStackDbContext db) : ISpineRepository
+public sealed class SpineRepository(
+    BioStackDbContext db,
+    IServiceProvider services,
+    IOptions<SpineCheckpointOptions> checkpointOptions,
+    ILogger<SpineRepository> logger) : ISpineRepository
 {
     /// <summary>
     /// Concurrent appends read the same chain head, so the loser of the race violates the unique
@@ -86,6 +93,7 @@ public sealed class SpineRepository(BioStackDbContext db) : ISpineRepository
             try
             {
                 await db.SaveChangesAsync(ct);
+                await MaybeAutoCheckpointAsync(withHash.SequenceNumber, ct);
                 return withHash;
             }
             catch (DbUpdateException) when (attempt < MaxAppendAttempts)
@@ -98,6 +106,37 @@ public sealed class SpineRepository(BioStackDbContext db) : ISpineRepository
         throw new SpineChainContentionException(
             $"Could not append receipt '{entry.ReceiptUri}' to the Governed Spine after "
             + $"{MaxAppendAttempts} attempts due to concurrent writes.");
+    }
+
+    /// <summary>
+    /// F3+: every N appends, snapshot the chain head with a signed checkpoint when configured.
+    /// Resolved lazily so checkpoint service can depend on this repository without a ctor cycle.
+    /// </summary>
+    private async Task MaybeAutoCheckpointAsync(long sequenceNumber, CancellationToken ct)
+    {
+        var every = checkpointOptions.Value.AutoCheckpointEveryNEntries;
+        if (every <= 0)
+            return;
+
+        // Sequence is 0-based; checkpoint after genesis and every N thereafter at N-1, 2N-1, …
+        if ((sequenceNumber + 1) % every != 0)
+            return;
+
+        try
+        {
+            var checkpoints = services.GetRequiredService<ISpineCheckpointService>();
+            await checkpoints.CreateCheckpointAsync(
+                note: $"auto-every-{every}-entries",
+                ct);
+        }
+        catch (Exception ex)
+        {
+            // Checkpoint failure must not roll back a successful receipt append.
+            logger.LogWarning(
+                ex,
+                "Auto spine checkpoint failed after sequence {Sequence}",
+                sequenceNumber);
+        }
     }
 
     public async Task<SpineChainVerificationResult> VerifyChainAsync(CancellationToken ct = default)

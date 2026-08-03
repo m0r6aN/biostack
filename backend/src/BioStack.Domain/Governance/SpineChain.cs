@@ -33,7 +33,8 @@ public sealed record SpineChainVerificationResult(
 ///
 /// This detects tampering; it does not prevent it. A holder with write access to the database
 /// can still rewrite the whole chain consistently. Preventing that requires anchoring the chain
-/// head somewhere the holder does not control — see the findings doc.
+/// head somewhere the holder does not control — signed checkpoints (F3+) with a key held outside
+/// the database file, and ideally server-side export of those checkpoints.
 /// </summary>
 public static class SpineChain
 {
@@ -42,6 +43,11 @@ public static class SpineChain
 
     /// <summary>Sequence number of the first entry in the chain.</summary>
     public const long GenesisSequenceNumber = 0;
+
+    public const string CheckpointSignatureAlgorithmHmacSha256 = "HMAC-SHA256";
+    public const string CheckpointSourceLocalHmac = "local-hmac";
+    public const string CheckpointSourceServerHmac = "server-hmac";
+    public const string CheckpointSourceUnsignedLocal = "unsigned-local";
 
     /// <summary>
     /// SHA-256 over the entry's governed fields plus its predecessor hash.
@@ -96,9 +102,77 @@ public static class SpineChain
             .ToString("yyyy-MM-ddTHH:mm:ss.ffffff", CultureInfo.InvariantCulture);
     }
 
+    /// <summary>
+    /// Canonical payload for a chain-head checkpoint. Same length-prefix discipline as entry hashes.
+    /// </summary>
+    public static string BuildCheckpointPayload(
+        long sequenceNumber,
+        string headEntryHash,
+        DateTime checkpointedAtUtc)
+    {
+        var builder = new StringBuilder();
+        Append(builder, sequenceNumber.ToString(CultureInfo.InvariantCulture));
+        Append(builder, headEntryHash);
+        Append(builder, Stamp(checkpointedAtUtc));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// HMAC-SHA256 over the checkpoint payload. Key must not be stored in the Spine database.
+    /// </summary>
+    public static string SignCheckpointPayload(string payload, byte[] signingKey)
+    {
+        ArgumentNullException.ThrowIfNull(payload);
+        ArgumentNullException.ThrowIfNull(signingKey);
+        if (signingKey.Length == 0)
+            throw new ArgumentException("Signing key must not be empty.", nameof(signingKey));
+
+        var bytes = HMACSHA256.HashData(signingKey, Encoding.UTF8.GetBytes(payload));
+        return "sha256:" + Convert.ToHexStringLower(bytes);
+    }
+
+    public static bool VerifyCheckpointSignature(
+        long sequenceNumber,
+        string headEntryHash,
+        DateTime checkpointedAtUtc,
+        string signature,
+        byte[] signingKey)
+    {
+        if (string.IsNullOrWhiteSpace(signature) || signingKey.Length == 0)
+            return false;
+
+        var payload = BuildCheckpointPayload(sequenceNumber, headEntryHash, checkpointedAtUtc);
+        var expected = SignCheckpointPayload(payload, signingKey);
+        var expectedBytes = Encoding.UTF8.GetBytes(expected);
+        var actualBytes = Encoding.UTF8.GetBytes(signature);
+        if (expectedBytes.Length != actualBytes.Length)
+            return false;
+        return CryptographicOperations.FixedTimeEquals(expectedBytes, actualBytes);
+    }
+
     private static void Append(StringBuilder builder, string? value)
     {
         value ??= string.Empty;
         builder.Append(value.Length).Append(':').Append(value).Append('|');
     }
 }
+
+/// <summary>Outcome of verifying the latest chain checkpoint against the live ledger head.</summary>
+public sealed record SpineCheckpointVerificationResult(
+    bool ChainIntact,
+    bool CheckpointPresent,
+    bool HeadMatchesCheckpoint,
+    bool SignatureValid,
+    bool ExternallyAnchored,
+    long ChainEntriesVerified,
+    long? CheckpointSequenceNumber,
+    string? CheckpointHeadEntryHash,
+    string? Reason)
+{
+    public bool IsFullyValid =>
+        ChainIntact
+        && CheckpointPresent
+        && HeadMatchesCheckpoint
+        && (!ExternallyAnchored || SignatureValid);
+}
+

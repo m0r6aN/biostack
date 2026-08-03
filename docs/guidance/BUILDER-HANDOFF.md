@@ -11,7 +11,11 @@
 
 ## 1. Do this first — uncommitted work
 
-**Done:** hand-written migration `20260803000000_AddSpineHashChain` (+ Designer) is committed with the microsecond-UTC stamp fix and non-unique `PreviousEntryHash` index. Apply migrations on real databases as usual; unit tests that use `EnsureCreated()` alone do not prove a migration ran.
+**Done.** See `docs/guidance/OPS-SPINE-AND-SIDECAR.md` for:
+
+- Applying F3 / F3+ migrations on real databases
+- Spine checkpoint signing key + export
+- Research sidecar path + `uv sync` after rename
 
 ---
 
@@ -78,7 +82,7 @@ Leave the `biostack-research-sidecar` strings in `ScientificResearchSidecarClien
 |---|---|---|
 | **S2** | Sidecar privacy boundary checks key **names**, not values | `privacy.py` walks dict keys against a 20-name denylist. Health data in `subject_name` (256 chars of free text) passes cleanly. Constrain `subject_name` to a compound-identifier shape and whitelist `known_identifiers` keys. |
 | **S5** | `202 Accepted` blocks the event loop | `app.py:197` runs the job inline in the request handler. One long job freezes the sidecar including `/health`. `max_concurrent_research_jobs`, `job_ttl_seconds`, and both execution-timeout settings are define-only. |
-| **F3+** | Spine is tamper-**evident**, not tamper-**proof** | A holder with write access can rewrite the whole chain consistently. Needs an anchor outside their control — a server-side checkpoint on a cadence. Worth closing before provider sharing goes live. |
+| **F3+** | Spine is tamper-**evident**, not tamper-**proof** | **CLOSED (foundation)** — signed checkpoints + cadence; configure `SpineCheckpoint:SigningKey` and export manifests off-box for real external anchor. |
 | **S3** | Hosted-fallback clause has four flags and no choke point | No inference path exists yet, so the contract clause is vacuously satisfied. Add `assert_hosted_inference_allowed()` and its test *now*, while it costs nothing. |
 | **S4** | Sidecar output is structurally non-promotable | `evidence_class="unknown"` hardcoded, `source_locations` never populated. Correct as posture, but the ratification record presents it as policy when it is currently also a structural impossibility. |
 | **S6** | Every terminal status is `PARTIAL` | Full success, total tool failure, and no-steps-executed are indistinguishable by status. `COMPLETED` and `PENDING_REVIEW` are unreachable. |
@@ -93,4 +97,4 @@ Neither is a code question. Both belong in the ratification package.
 
 **`AllowUnanchoredSafetyReceipts` defaults to `true`.** When Keon cannot anchor a non-effecting safety receipt, a clearly-labelled local row is written (`biostack://unanchored-receipt/...`, policy hash `unanchored-local`). Set `false` to degrade to "warning surfaced, nothing recorded". Effect-bearing receipts always fail closed regardless.
 
-Public Class B/C UX remains blocked pending the sign-off table in `RATIFICATION.md`. Nothing in this session enabled a new public surface.
+Public Class B/C UX is unblocked under the ratified contract when outputs obey copy-guards and review gates (see `RATIFICATION.md`). Nothing in the F3+/sidecar sessions enabled a *new* public surface beyond that ratification.

@@ -45,7 +45,7 @@ The same Class B comparison pattern applies to any compound/protocol entry vs re
 | Internal / admin research staging (Class A) | **Allowed** under review gates |
 | User-facing Class B comparison language | **Allowed** under contract + copy-guards + deterministic math |
 | User-facing Class C harm-reduction context | **Allowed** under approved templates and contract rules |
-| Class D personalized direction | **Prohibited** (copy-guard enforced) |
+| Class D personalized direction | **Prohibited** — primary control is reviewed templates + human review; copy-guard tests provide automated **backstop** coverage for known Class D phrasings (not the sole enforcement) |
 | Sidecar candidate evidence | Still **never canonical** until review/promotion |
 
 ### Structural non-promotability of sidecar output (S4)

@@ -34,6 +34,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<StripeWebhookEvent> StripeWebhookEvents { get; set; }
     public DbSet<BioStack.Domain.Governance.SpineEntry> SpineEntries { get; set; }
+    public DbSet<BioStack.Domain.Governance.SpineChainCheckpoint> SpineChainCheckpoints { get; set; }
     public DbSet<KnowledgeSourceIntakeRequest> KnowledgeSourceIntakeRequests { get; set; }
     public DbSet<StagedTranscriptCandidateReviewEntity> StagedTranscriptCandidateReviews { get; set; }
     public DbSet<CompoundGraphArtifact> CompoundGraphArtifacts { get; set; }
@@ -464,6 +465,21 @@ public sealed class BioStackDbContext : DbContext
             // cannot survive a backfill: AddColumn gives every pre-existing row the same default,
             // so a unique constraint here fails on the second legacy row.
             entity.HasIndex(e => e.PreviousEntryHash);
+        });
+
+        // F3+: signed chain-head checkpoints (key must not live in this database).
+        modelBuilder.Entity<BioStack.Domain.Governance.SpineChainCheckpoint>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.SequenceNumber).IsRequired();
+            entity.Property(e => e.HeadEntryHash).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.CheckpointedAtUtc).IsRequired();
+            entity.Property(e => e.Source).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.SignatureAlgorithm).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.Signature).IsRequired().HasColumnType("TEXT");
+            entity.Property(e => e.Note).HasColumnType("TEXT");
+            entity.HasIndex(e => e.SequenceNumber);
+            entity.HasIndex(e => e.CheckpointedAtUtc);
         });
 
         modelBuilder.Entity<KnowledgeSourceIntakeRequest>(entity =>

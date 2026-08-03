@@ -147,7 +147,7 @@ Fields are **length-prefixed** before hashing, so content shifted across a field
 
 **Verification reports the earliest break, not a boolean.** `VerifyChainAsync` walks from genesis checking sequence contiguity, linkage, and a recomputed hash, and returns the first divergent receipt with a reason. `GET /api/v1/receipts/chain/verify` exposes it (admin-only — it is ledger-wide state). Individual receipts now carry `sequenceNumber`, `previousEntryHash`, and `entryHash`, so a holder can verify a single receipt sits where it claims to.
 
-**What this does and does not buy.** It makes the ledger tamper-**evident**. It does not make it tamper-**proof**: a holder with write access can still rewrite the entire chain consistently. Closing that requires anchoring the chain head somewhere the holder does not control — a server-side anchor on a cadence, or a periodic signed checkpoint. That remains open and is the right next step if receipts ever become compliance- or dispute-load-bearing, particularly for the provider-sharing story.
+**What this does and does not buy.** It makes the ledger tamper-**evident**. It does not make it tamper-**proof**: a holder with write access can still rewrite the entire chain consistently. Closing that is **F3+** (signed chain-head checkpoints) — see below.
 
 **The migration is hand-written, per repository convention.** `20260803000000_AddSpineHashChain.cs` plus a partial `.Designer.cs`.
 
@@ -156,6 +156,35 @@ Do **not** run `dotnet ef migrations add` in this repository. `BioStack.Api/Prod
 **A unique index that could not survive backfill.** The first cut of F3 put unique indexes on all three chain columns. `AddColumn` gives every pre-existing row the *same* default, so a unique constraint on `PreviousEntryHash` fails on the second legacy row — the migration could not have applied to any populated database. `PreviousEntryHash` is now a plain index. Uniqueness on `SequenceNumber` is what actually enforces linearity (two concurrent appends compute the same slot; one loses at the database), and `EntryHash` uniqueness is backfillable because it is derived from the already-unique `ReceiptUri`.
 
 **Backfill of legacy rows — a governance decision, now recorded.** Rows written before the chain existed cannot be retro-chained: their hashes were never computed, and inventing them would be precisely the forgery the chain exists to detect. The migration assigns deterministic per-row-unique placeholders (`row_number()` for the sequence, `'sha256:pre-chain:' || ReceiptUri` for the hash) purely so the constraints can be created. `VerifyChainAsync` will report the first such row as a hash mismatch. **That is correct and intended**: the migration point is the chain's effective genesis, and pre-migration history is not cryptographically verifiable. The alternative is export-and-reseed. Record whichever is chosen in the ratification package.
+
+---
+
+## F3+ — HIGH — Chain is tamper-evident, not tamper-proof
+
+**Status: CLOSED (foundation).** Full external anchoring still depends on **where the signing key lives** and whether checkpoint manifests are exported off-box.
+
+**Problem.** A holder with write access to the SQLite/Postgres file can rewrite the entire hash chain consistently. F3 detects casual edits; it does not stop a determined rewrite.
+
+**Fix.**
+
+| Piece | Role |
+|---|---|
+| `SpineChainCheckpoint` | Snapshots `(sequenceNumber, headEntryHash)` at a point in time |
+| HMAC-SHA256 signature | Key from `SpineCheckpoint:SigningKey` (env / secret store — **not** the Spine DB) |
+| `source` | `local-hmac` / `server-hmac` (when `SigningKeyIsServerHeld=true`) / `unsigned-local` |
+| Auto every N entries | `AutoCheckpointEveryNEntries` (default 25) after Spine append |
+| Cadence worker | `SpineCheckpointCadenceHostedService` every `CadenceMinutes` (default 60) if head advanced |
+| Admin APIs | `POST /api/v1/receipts/chain/checkpoints`, `GET .../verify`, `GET .../latest/export` |
+| Migration | `20260803120000_AddSpineChainCheckpoints` |
+
+**Operator contract for real external anchoring**
+
+1. Set a high-entropy `SpineCheckpoint:SigningKey` (or `SpineCheckpoint__SigningKey`) that is **not** stored on the same volume as the DB when possible.
+2. Set `SigningKeyIsServerHeld=true` when the key is provisioned by platform/server, not the device.
+3. Periodically `GET .../chain/checkpoints/latest/export` and store the JSON **off-box** (object storage, SIEM, Keon, paper).
+4. On dispute: re-verify the live chain, then check the exported signature with the server key.
+
+Unsigned checkpoints still record history but do **not** claim external protection.
 
 ---
 
@@ -182,20 +211,11 @@ Extract a single shared ruleset consumed by both, and point the contract copy-gu
 
 ## F5 — MEDIUM — Regex blocklist is documented as "enforcement"
 
-**Citations**
+**Status: CLOSED (documentary).**
 
-- `RATIFICATION.md` — "Class D: remains prohibited; copy-guard tests enforce"
-- `Application/Governance/DoctrineSanitizer.cs:13-31`
+**Failure scenario (pre-fix):** ratification read as if Class D were *enforced by* copy-guard regex tests, inviting owners to treat the blocklist as the primary control.
 
-**Failure scenario**
-
-The pattern set misses ordinary paraphrases: *"begin with 0.5 mg"*, *"titrate to"*, *"you ought to"*, *"work up to"*, and spelled-out amounts (`\btake\s+\d+` does not match *"take five mg"*), plus unicode lookalikes.
-
-A blocklist is a legitimate **backstop**. The risk is documentary: if the sign-off table is read as "Class D is enforced by tests", a downstream owner may treat regex as the primary control, when the contract itself specifies reviewed templates plus human review as the actual control for Class B/C.
-
-**Recommendation**
-
-Reword the ratification line to "copy-guard tests provide automated backstop coverage for known Class D phrasings"; keep template/allowlist generation and human review named as the primary controls.
+**Fix.** `RATIFICATION.md` engineering table now states primary control is **reviewed templates + human review**, with copy-guard tests as automated **backstop** coverage for known Class D phrasings — not the sole enforcement.
 
 ---
 
@@ -365,8 +385,9 @@ Two consequences. First, dev enforced `config/` while a deployed wheel enforced 
 | F1 | Safety receipts throw in default config | Critical | **CLOSED** (#245) — verified on `main`: `TryIssueAndAppendAsync` + defence-in-depth catch + production startup guard |
 | F2 | Doctrine guard blocks permitted Class A/B evidence | High | **CLOSED** — two-tier doctrine (`OutputAttribution`); `EvidenceGate` Check 8 now evaluates source-attributed. No contract version bump: the code was over-broad relative to Class A, not the contract |
 | F3 | Spine not tamper-evident | High | **CLOSED** — hash chain + hand-written migration `20260803000000_AddSpineHashChain` + microsecond UTC stamp + non-unique `PreviousEntryHash` |
+| F3+ | Spine not tamper-proof (holder rewrite) | High | **CLOSED (foundation)** — HMAC chain-head checkpoints, cadence worker, admin create/export/verify; server-held key + off-box export for full external anchor |
 | F4 | Duplicate banned-phrase lists, drifted | Medium | **CLOSED** — both guards delegate to `DoctrineRuleset`; `DoctrineRulesetParityTests` fails CI on any future drift |
-| F5 | Regex documented as enforcement | Medium | Open — wording change in `RATIFICATION.md` |
+| F5 | Regex documented as enforcement | Medium | **CLOSED (documentary)** — primary = templates + human review; copy-guards = backstop |
 | F6 | Input screened with output doctrine | Low | **CLOSED** — `IsUnsafeRequest` screens intent only; instruction-seeking patterns added as the compensating control |
 | — | Sidecar + governance docs untracked in git | Critical | **CLOSED** — docs in `docs/guidance/`; sidecar tracked at `backend/research-sidecar/` |
 | S1 | Sidecar unauthenticated on all interfaces by default | High | **CLOSED** (#242 + follow-up) — loopback default, `_enforce_bind_auth_policy` refuses unauthenticated non-loopback binds, `hmac.compare_digest` |

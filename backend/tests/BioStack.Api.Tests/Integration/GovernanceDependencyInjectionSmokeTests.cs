@@ -44,6 +44,7 @@ public sealed class GovernanceDependencyInjectionSmokeTests : IDisposable
         typeof(IUserFacingIntelligenceGate),
         typeof(IRuntimeReceiptFactory),
         typeof(ISpineRepository),
+        typeof(ISpineCheckpointService),
         typeof(IKeonRuntimeClient),
         typeof(IEvidenceGate),
         typeof(PolicyGate),

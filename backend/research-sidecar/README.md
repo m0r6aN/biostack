@@ -16,6 +16,10 @@ See:
 
 ## Run locally
 
+> **Path:** this project lives at `backend/research-sidecar` (moved out of the .NET source root).
+> After a pull, recreate the venv if an editable install still points at the old path:
+> `rm -rf .venv && uv sync --all-extras` (PowerShell: `Remove-Item -Recurse -Force .venv`).
+
 ```bash
 cd backend/research-sidecar
 uv sync --all-extras
