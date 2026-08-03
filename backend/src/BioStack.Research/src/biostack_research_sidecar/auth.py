@@ -6,6 +6,8 @@ dev auth is explicitly enabled.
 
 from __future__ import annotations
 
+import hmac
+
 from fastapi import Header, HTTPException, status
 
 from biostack_research_sidecar.config import Settings
@@ -38,7 +40,7 @@ async def require_service_auth(
             detail={"code": "missing_bearer_token", "message": "Bearer token required."},
         )
     token = authorization.removeprefix("Bearer ").strip()
-    if token != expected:
+    if not hmac.compare_digest(token, expected):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail={"code": "invalid_bearer_token", "message": "Invalid service token."},

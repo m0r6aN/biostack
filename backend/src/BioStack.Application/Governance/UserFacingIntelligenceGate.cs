@@ -1,6 +1,5 @@
 namespace BioStack.Application.Governance;
 
-using System.Text.RegularExpressions;
 using BioStack.Contracts.Responses;
 using BioStack.Infrastructure.Keon;
 using Microsoft.Extensions.Logging;
@@ -85,16 +84,6 @@ public sealed class UserFacingIntelligenceGate(
     /// <summary>Stable id of the doctrine ruleset enforced by this gate, recorded as a policy ref.</summary>
     private const string DoctrinePolicyId = "biostack-doctrine-v1";
 
-    // Patterns that mark a *request* (user input) as unsafe to act on at all — sourcing/procurement,
-    // injection/administration how-to, and dosing-instruction seeking. Output constraints are handled
-    // separately by the shared DoctrineSanitizer doctrine.
-    private static readonly Regex[] UnsafeRequestPatterns =
-    [
-        new(@"\bwhere\s+(can|do|to)\b.*\b(buy|get|order|source|purchase)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\bhow\s+(do|to|can)\b.*\b(inject|administer|reconstitute|dose)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\b(buy|order|source)\b.*\b(online|vendor|supplier|gray\s*market|grey\s*market)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled),
-        new(@"\binject(ion|ing)?\b.*\b(protocol|schedule|site|how)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled),
-    ];
 
     private const string ConstrainedReplacement =
         "BioStack cannot present this as guidance. This is educational, observational context only — not medical advice, dosing, or instruction. Consider discussing with a qualified professional.";
@@ -259,9 +248,15 @@ public sealed class UserFacingIntelligenceGate(
         }
     }
 
+    /// <summary>
+    /// F6: screen the request by INTENT only. Output doctrine constrains what BioStack may
+    /// assert; running it over user input refused legitimate safety questions such as
+    /// "should I stop taking this before surgery?" (matched <c>stop taking</c>). Such questions
+    /// now flow through and receive evidence context with clinician framing, while the output
+    /// itself is still sanitized downstream.
+    /// </summary>
     internal bool IsUnsafeRequest(string requestText)
-        => sanitizer.ContainsBannedPhrase(requestText)
-           || UnsafeRequestPatterns.Any(p => p.IsMatch(requestText));
+        => DoctrineRuleset.MatchesUnsafeRequestIntent(requestText);
 
     // Severity ordering: allowed < warning < constrained < refused. Never downgrade.
     private static string Escalate(string current, string candidate)

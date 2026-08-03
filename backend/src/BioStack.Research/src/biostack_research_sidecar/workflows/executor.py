@@ -272,6 +272,8 @@ def _artifact(
         normalized_claims=claims or [],
         warnings=warnings or [],
         failure_details=failure_details,
+        # Accurate today: no inference or GPU execution path is wired in this executor.
+        # MUST be replaced with the real device when one lands — this is an audit field.
         execution_device="cpu",
         provenance=provenance,
     )

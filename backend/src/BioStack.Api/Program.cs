@@ -24,6 +24,16 @@ using Keon.Kompress;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Container validation in EVERY environment (the default enables this only in Development).
+// A missing or miswired registration must fail at startup, not as a 500 on the first request
+// that injects it. PR #246 had to restore governance DI lines a merge silently dropped; with
+// ValidateOnBuild that regression cannot boot, let alone reach a user.
+builder.Host.UseDefaultServiceProvider(options =>
+{
+    options.ValidateOnBuild = true;
+    options.ValidateScopes = true;
+});
+
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 

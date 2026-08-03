@@ -449,9 +449,18 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(e => e.EvidenceRefsJson).IsRequired().HasDefaultValue("[]");
             entity.Property(e => e.EffectStatus).IsRequired();
             entity.Property(e => e.CreatedAt).IsRequired();
+            // F3 tamper-evidence: the chain columns and the uniqueness that keeps it linear.
+            entity.Property(e => e.SequenceNumber).IsRequired();
+            entity.Property(e => e.PreviousEntryHash).IsRequired();
+            entity.Property(e => e.EntryHash).IsRequired();
             entity.HasIndex(e => e.ReceiptUri).IsUnique();
             entity.HasIndex(e => e.SubjectUri);
             entity.HasIndex(e => e.ActorId);
+            // A sequence slot may be claimed once, and an entry may have at most one successor.
+            // Together these make a forked chain unwritable rather than merely discouraged.
+            entity.HasIndex(e => e.SequenceNumber).IsUnique();
+            entity.HasIndex(e => e.PreviousEntryHash).IsUnique();
+            entity.HasIndex(e => e.EntryHash).IsUnique();
         });
 
         modelBuilder.Entity<KnowledgeSourceIntakeRequest>(entity =>

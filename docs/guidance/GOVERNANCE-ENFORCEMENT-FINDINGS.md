@@ -66,6 +66,8 @@ Non-effecting provenance receipts must degrade, not crash. Effect-bearing receip
 
 ## F2 — HIGH — The doctrine guard blocks the Class A/B evidence language the contract exists to permit
 
+**Status: CLOSED — see "F2 resolution" below.**
+
 **Citations**
 
 - `Application/Governance/DoctrineSanitizer.cs:19` — bans `\bis\s+safe\b`
@@ -90,7 +92,32 @@ Move Class A/B toward **template/allowlist generation** (as the contract itself 
 
 ---
 
+## F2 resolution — speaker vs subject
+
+The guard could not distinguish **who is speaking** from **what is claimed**. "BioStack says it is safe" and "the cited trial reported it is safe" are the same byte pattern, so the blocklist suppressed the sourced evidence the product exists to surface.
+
+**Mechanism.** Doctrine is now two tiers, both living in `DoctrineRuleset`:
+
+| Tier | Patterns | Rule |
+|---|---|---|
+| `PersonalizedDirection` | `you should`, `you must`, `safe for you`, `the best dose for you`, `recommended dose for your`, `ai recommends`, `take N mg`, `dose at`, `start at`, `increase to`, `stop taking` | Prohibited **unconditionally**. A citation never redeems an imperative — the contract's own Class A examples avoid them even when reporting a source. |
+| `AttributionSensitiveClaim` | `is safe`, `cures`, `proven to`, `will treat` | Prohibited only when **unattributed**. As BioStack's assertion these are Class D; as a report of a cited finding they are Class A published-evidence context. |
+
+`OutputAttribution` defaults to `Unattributed`, so a caller must **prove** attribution to get the permissive tier — fail-closed, consistent with the rest of the governance layer.
+
+**Where it is applied.** Exactly one production call site changed: `EvidenceGate` Check 8. That check runs *after* Check 6, which already rejects any record without citations — so attribution there is **structural, not asserted**, which is what makes the relaxation safe. Every other consumer (`UserFacingIntelligenceGate`, `ProtocolIntelligenceGate`, `PolicyGate`) screens BioStack-authored narrative and keeps the strict tier.
+
+**No contract version bump.** Class A always permitted source-backed evidence context; the *code* was over-broad relative to the contract. This makes enforcement match the ratified text rather than changing it, so the pending sign-off is unaffected — which matters while legal review is outstanding.
+
+**Behaviour change of record.** `EvidenceGateTests` previously asserted that `summary = "This compound is safe for long-term use"` must be rejected as `unsafe_recommendation_language`. That assertion encoded the defect. It is replaced by `Evaluate_AttributedSourceClaim_IsPermitted`, and the rejection theory retains a personalized-direction case in its place, so the strict path is still covered.
+
+**Still deliberately out of scope.** Class B/C *user-facing* templates remain gated behind the ratification sign-off table. This change unblocks Class A promotion of cited evidence; it does not enable any new public surface.
+
+---
+
 ## F3 — HIGH — The "append-only Governed Spine" is not tamper-evident
+
+**Status: CLOSED in code — see "F3 resolution" below. One migration step is outstanding.**
 
 **Citations**
 
@@ -107,6 +134,32 @@ Consequently "Receipt Supremacy" and the user-facing **Audit Receipts** surface 
 **Recommendation**
 
 Add a `PreviousEntryHash` committing each entry to its predecessor, expose a chain-verification routine, and — if receipts are ever to be compliance- or dispute-load-bearing — anchor the chain head server-side on a cadence.
+
+---
+
+## F3 resolution — a chain, not just a unique index
+
+**Mechanism.** `SpineEntry` gains three fields: `SequenceNumber` (genesis = 0), `PreviousEntryHash` (genesis sentinel `sha256:genesis`), and `EntryHash` — SHA-256 over the entry's governed fields *plus* its predecessor's hash. Every entry therefore commits to the one before it, so altering a field, changing a timestamp, or deleting a row invalidates every entry that follows.
+
+Fields are **length-prefixed** before hashing, so content shifted across a field boundary cannot produce an identical digest (`"a"+"bc"` and `"ab"+"c"` hash differently). Timestamps use round-trip `"O"` format for culture- and precision-stability.
+
+**A forked chain is unwritable, not merely discouraged.** Unique indexes on `SequenceNumber`, `PreviousEntryHash`, and `EntryHash` mean a sequence slot can be claimed once and an entry can have at most one successor. Two concurrent appends read the same head, and the loser violates the constraint — which is *correct*, so `AppendAsync` retries a bounded number of times and surfaces `SpineChainContentionException` if it genuinely cannot win.
+
+**Verification reports the earliest break, not a boolean.** `VerifyChainAsync` walks from genesis checking sequence contiguity, linkage, and a recomputed hash, and returns the first divergent receipt with a reason. `GET /api/v1/receipts/chain/verify` exposes it (admin-only — it is ledger-wide state). Individual receipts now carry `sequenceNumber`, `previousEntryHash`, and `entryHash`, so a holder can verify a single receipt sits where it claims to.
+
+**What this does and does not buy.** It makes the ledger tamper-**evident**. It does not make it tamper-**proof**: a holder with write access can still rewrite the entire chain consistently. Closing that requires anchoring the chain head somewhere the holder does not control — a server-side anchor on a cadence, or a periodic signed checkpoint. That remains open and is the right next step if receipts ever become compliance- or dispute-load-bearing, particularly for the provider-sharing story.
+
+**Outstanding step — the migration.** The model and EF configuration are updated, and the unit tests pass through `EnsureCreated()`, which builds schema from the model rather than from migrations. A real database still needs:
+
+```bash
+cd backend
+dotnet ef migrations add AddSpineHashChain \
+  --project src/BioStack.Infrastructure --startup-project src/BioStack.Api
+```
+
+This was deliberately **not** hand-written. A migration ships with a `.Designer.cs` and an updated `ModelSnapshot`, both of which are full model snapshots; hand-forging them without a compiler is how you get a snapshot that silently disagrees with the model and reports phantom pending changes forever. One generated command is safer than three hand-written files.
+
+**Backfill note for existing rows.** Any Spine rows written before this change have no chain fields. The migration adds the columns, but pre-existing rows cannot be retro-chained (their hashes were never computed, and inventing them would be exactly the forgery the chain exists to detect). Decide explicitly: either treat the migration point as a new genesis and accept that pre-migration history is unverifiable, or export-and-reseed. This is a governance decision, not a code one — record it in the ratification package.
 
 ---
 
@@ -256,24 +309,40 @@ The artifact reports CPU execution unconditionally, without consulting `gpu/capa
 
 ---
 
+## F7 — HIGH — Governance registrations can vanish without failing the build
+
+**Status: CLOSED — container validation enabled in all environments + DI smoke test.**
+
+**Citations:** PR #246 ("Restore research and evidence DI after #245 merge"), `BioStack.Api/Program.cs:408-412`, `BioStack.Application/Governance/GovernanceDependencyInjection.cs:14-20`.
+
+**Failure scenario:** a merge silently dropped governance DI registrations and it took a dedicated follow-up PR to notice. Nothing caught it: the build succeeds, and .NET's `ValidateOnBuild` defaults to Development-only, so in Production a missing registration does not fail at startup — it surfaces as an unhandled `InvalidOperationException` (HTTP 500) on the first request that injects the service. The user discovers the safety gate is missing.
+
+This is the same shape as F1 — a governance control failing open-ish at request time rather than loudly at boot — but arrived at through source control rather than configuration. It is a **demonstrated** regression class, not a hypothetical one.
+
+**Fix:** `Program.cs` now sets `ValidateOnBuild` and `ValidateScopes` for every environment, so an unresolvable or captively-scoped registration fails the host build. `GovernanceDependencyInjectionSmokeTests` additionally resolves each service on the governed output path, so a dropped line fails CI before merge.
+
+**Operational note:** enabling `ValidateOnBuild`/`ValidateScopes` globally can surface *pre-existing* latent wiring bugs elsewhere in the application as new startup failures. That is the intended behaviour — a captive dependency is a real defect — but it means the first run after this change may fail loudly on something unrelated to governance. Do not treat such a failure as a regression from this change; treat it as the check working.
+
+---
+
 ## Remediation status
 
 | # | Finding | Severity | Status |
 |---|---|---|---|
-| F1 | Safety receipts throw in default config | Critical | **Fix drafted** — graceful degradation + startup guard |
-| F2 | Doctrine guard blocks permitted Class A/B evidence | High | Open — needs template/allowlist design |
-| F3 | Spine not tamper-evident | High | Open — needs `PreviousEntryHash` + migration |
-| F4 | Duplicate banned-phrase lists, drifted | Medium | Open — extract shared ruleset |
+| F1 | Safety receipts throw in default config | Critical | **CLOSED** (#245) — verified on `main`: `TryIssueAndAppendAsync` + defence-in-depth catch + production startup guard |
+| F2 | Doctrine guard blocks permitted Class A/B evidence | High | **CLOSED** — two-tier doctrine (`OutputAttribution`); `EvidenceGate` Check 8 now evaluates source-attributed. No contract version bump: the code was over-broad relative to Class A, not the contract |
+| F3 | Spine not tamper-evident | High | **CLOSED (code)** — hash chain + linear-chain DB constraints + `VerifyChainAsync` + admin verify endpoint. **Migration must be generated** — see below |
+| F4 | Duplicate banned-phrase lists, drifted | Medium | **CLOSED** — both guards delegate to `DoctrineRuleset`; `DoctrineRulesetParityTests` fails CI on any future drift |
 | F5 | Regex documented as enforcement | Medium | Open — wording change in `RATIFICATION.md` |
-| F6 | Input screened with output doctrine | Low | Open — one-line scope change |
+| F6 | Input screened with output doctrine | Low | **CLOSED** — `IsUnsafeRequest` screens intent only; instruction-seeking patterns added as the compensating control |
 | — | Sidecar + governance docs untracked in git | Critical | **Docs fixed** — moved to `docs/guidance/`; sidecar tracking still undecided |
-| S1 | Sidecar unauthenticated on all interfaces by default | High | Open — bind loopback + require token |
+| S1 | Sidecar unauthenticated on all interfaces by default | High | **CLOSED** (#242 + follow-up) — loopback default, `_enforce_bind_auth_policy` refuses unauthenticated non-loopback binds, `hmac.compare_digest` |
 | S2 | Privacy boundary checks key names, not values | High | Open — constrain `subject_name` / `known_identifiers` |
 | S3 | Hosted-fallback clause has no enforcement point | High | Open — add single choke point + test now |
 | S4 | Sidecar output structurally non-promotable | Medium | Open — document in ratification record |
 | S5 | `202 Accepted` blocks the event loop; timeouts unenforced | Medium | Open |
 | S6 | All terminal statuses are `PARTIAL` | Low/Med | Open |
-| S7 | `execution_device` hardcoded in provenance | Low | Open |
+| S7 | `execution_device` hardcoded in provenance | Low | **Accepted as accurate** — no GPU/inference path exists, so `"cpu"` is correct today; annotated as an audit field that must change when one lands |
 
 ### F1 remediation design (drafted)
 

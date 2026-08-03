@@ -73,7 +73,8 @@ public sealed class EvidenceGateViolationException : InvalidOperationException
 ///   5. evidenceTier is a supported tier
 ///   6. 'citations' key present and non-empty
 ///   7. Tiers requiring mechanism: 'mechanismSummary' present and non-empty
-///   8. No banned safety-recommendation language in scanned text fields
+///   8. No personalized medical direction in scanned text fields. Evaluated as
+///      source-attributed, which Check 6 guarantees — see the inline note (F2).
 /// </summary>
 public sealed class EvidenceGate : IEvidenceGate
 {
@@ -176,16 +177,27 @@ public sealed class EvidenceGate : IEvidenceGate
         }
 
         // Check 8 — safety language scan.
+        //
+        // F2: this scan runs AFTER Check 6, which already rejected any record without citations.
+        // Attribution is therefore structurally guaranteed by the time we get here, so these
+        // fields are evaluated as OutputAttribution.SourceAttributed: personalized direction
+        // ("you should", "start at", "take 5 mg") is still rejected, but reporting what a cited
+        // source found ("the trial reported it is safe at the studied doses", "proven to bind X")
+        // is permitted Class A published-evidence context.
+        //
+        // Previously this used the strict tier, which rejected legitimate cited evidence as
+        // "unsafe_recommendation_language" — the guard was suppressing the exact material the
+        // Guidance Content Contract permits under Class A.
         foreach (var key in SafetyCheckedKeys)
         {
             if (!request.SourceMetadata.TryGetValue(key, out var text) || string.IsNullOrWhiteSpace(text))
                 continue;
 
-            if (Sanitizer.ContainsBannedPhrase(text))
+            if (Sanitizer.ContainsBannedPhrase(text, OutputAttribution.SourceAttributed))
             {
                 return Reject(
                     "unsafe_recommendation_language",
-                    $"Source metadata field '{key}' contains unsafe recommendation language.");
+                    $"Source metadata field '{key}' contains personalized medical direction.");
             }
         }
 

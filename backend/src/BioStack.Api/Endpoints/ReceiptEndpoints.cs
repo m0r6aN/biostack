@@ -20,6 +20,33 @@ public static class ReceiptEndpoints
 
         group.MapGet("", GetReceipts)
             .WithName("GetReceipts");
+
+        group.MapGet("/chain/verify", VerifyChain)
+            .WithName("VerifyReceiptChain");
+    }
+
+    /// <summary>
+    /// F3: walk the Governed Spine and confirm every entry rehashes and links to its predecessor.
+    /// Admin-only — it reports ledger-wide state, and the earliest break location is operational
+    /// detail an ordinary caller has no need for.
+    /// </summary>
+    private static async Task<IResult> VerifyChain(
+        ISpineRepository spine,
+        ClaimsPrincipal principal,
+        CancellationToken ct)
+    {
+        if (!IsAdmin(principal))
+            return Results.NotFound();
+
+        var result = await spine.VerifyChainAsync(ct);
+
+        return Results.Ok(new
+        {
+            isIntact = result.IsIntact,
+            entriesVerified = result.EntriesVerified,
+            firstBrokenReceiptUri = result.FirstBrokenReceiptUri,
+            reason = result.Reason,
+        });
     }
 
     private static async Task<IResult> GetReceiptByUri(
@@ -112,6 +139,10 @@ public static class ReceiptEndpoints
             inputHash = e.InputHash,
             evidenceRefs,
             effectStatus = e.EffectStatus,
+            // F3 chain position — lets a holder verify this receipt sits where it claims to.
+            sequenceNumber = e.SequenceNumber,
+            previousEntryHash = e.PreviousEntryHash,
+            entryHash = e.EntryHash,
         };
     }
 }
