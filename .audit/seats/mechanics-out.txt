@@ -1,0 +1,25 @@
+SEAT: Mechanics (Opus) — conversion architecture, information architecture, journey function. Blind.
+
+VERDICT: REVISE AND RE-REVIEW
+
+TOP 6 BRUTAL FINDINGS
+1. [BLOCKER] The page demands segmentation before it delivers comprehension — the first viewport asks the visitor to self-sort into 4 entry-path cards, yet the H1 names no product category and the only category words ship in metadata, JSON-LD and the footer as 4 conflicting descriptions (O13) — nobody can answer "which of these am I" before "what is this", so the entire routing grid fires on an unformed decision.
+2. [BLOCKER] There is no single primary action, and the page contradicts itself by breakpoint — the only two solid-fill buttons both target /tools/analyzer (O4) while the persistently visible privileged desktop CTA is Start Free -> /start, which appears nowhere in the mobile sticky bar (O14) — two different funnels ship on one URL and neither gets a clean run.
+3. [MAJOR] Decision load is inflated by fake choices: 14 interactive targets resolve to 8 distinct destinations before any scroll (O3/O2), and hero cards 1 and 3 sit adjacent in the same row pointing at the identical URL under 4 different labels page-wide ("Analyze a protocol" / "Analyze My Stack" / "Analyze a stack" / "Analyze") — a choice that returns no new option is pure decision tax and destroys label-destination trust.
+4. [MAJOR] The gate precedes the price precedes the definition — "Operator required" is the signal on card 1, the first cell of the decision grid, while Observer/Operator/Commander are never defined or priced anywhere on the page and 3 controls exit to /pricing to find out (O5) — the funnel opens on an exclusion notice and outsources the deciding fact.
+5. [MAJOR] The middle of the funnel is absent: exactly 2 content sections exist (O15), with no how-it-works, no tier comparison, no FAQ, no differentiator proof and zero trust signals (O12) — despite 6 feature strings and 10 FAQs already written and unrendered (2.8) — and the sole proof block is a hardcoded mock whose List/Evidence toggle is an interactive dead end; nothing between "pick a door" and "we're not a doctor" earns the click.
+6. [MAJOR] Terminal position carries no action and secondary routes are over-weighted — the last two blocks are a negation ("BioStack is not a doctor") and a 7-link footer that omits /pricing, /start and /tools/analyzer entirely, while /providers holds 4 placements including 25% of the decision grid; below md the 6 nav links are hidden with no disclosure menu, so mobile site navigation effectively does not exist.
+   [ORCHESTRATOR NOTE: last clause CORRECTED — the footer does carry 5 of the 6 nav destinations. See DIRECTIVE F11.]
+
+TOP 5 MOVES
+1. Merge hero cards 1 and 3 into one Analyze card and demote Provider to a text link, leaving 2 genuinely distinct paths (Start / Analyze); first-viewport controls drop from 14 to ~10 and every remaining card returns a unique destination.
+2. Declare one primary and hold it at every breakpoint: solid emerald fill on exactly one control (Start Free -> /start), demote the proof-section button to outline, and rebuild the mobile bar as 2 buttons (Start solid, Analyze outline), removing Evidence/Pricing/Provider from the highest-intent surface.
+3. Insert a definition block between hero and proof — category sentence, the local-first data answer, and an Observer/Operator/Commander strip with prices and one differentiator each, sourced from existing landingFeatures/featuredFaqs — so hero gating language becomes legible and /pricing stops being a mandatory exit.
+4. Add a closing CTA block between the disclaimer and the footer repeating the single primary action; add Pricing and Start to the footer row and add a mobile menu disclosure for the 6 hidden nav links.
+5. Label the StackIntelligencePanel as an illustrative example, make the List/Evidence toggle functional or non-interactive, and normalize every /tools/analyzer control to one label.
+
+PRESERVE
+- The sticky header pattern: low height, always one conversion control on screen at any scroll depth. Correct; keep the stickiness and the two-slot right side.
+- The disclaimer strip's placement after the claim it qualifies rather than inside the hero — it discharges the doctrine without taxing first-viewport comprehension. Keep the position; just stop letting it terminate the page.
+- The entry-path card mechanism itself (eyebrow, signal, action word, destination) is the right structure for a product with real alternative entries; the defect is the duplicate and the count, not the pattern.
+- The mobile sticky bar's 220px scroll delay: keeps first paint clean and gives mobile the persistence desktop lacks. Keep the trigger; fix the contents.
