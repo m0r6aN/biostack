@@ -15,6 +15,7 @@ import { metadata as unitConverterMetadata } from '@/app/tools/unit-converter/pa
 import { metadata as volumeCalculatorMetadata } from '@/app/tools/volume-calculator/page';
 import {
   ROOT_METADATA,
+  OPEN_GRAPH_IMAGE_PATH,
   SITE_ORIGIN,
   SITE_URL,
   absoluteSiteUrl,
@@ -74,14 +75,36 @@ describe('public SEO metadata', () => {
       expect(metadata.openGraph?.title).toBe(metadata.title);
       expect(metadata.openGraph?.description).toBe(metadata.description);
       expect(metadata.openGraph?.siteName).toBe('BioStack');
-      expect(metadata.twitter?.card).toBe('summary');
+      expect(metadata.openGraph?.images).toEqual([
+        {
+          url: OPEN_GRAPH_IMAGE_PATH,
+          width: 1200,
+          height: 630,
+          alt: 'BioStack protocol operations',
+        },
+      ]);
+      expect(metadata.twitter?.card).toBe('summary_large_image');
       expect(metadata.twitter?.title).toBe(metadata.title);
       expect(metadata.twitter?.description).toBe(metadata.description);
+      expect(metadata.twitter?.images).toEqual([OPEN_GRAPH_IMAGE_PATH]);
       expect(new URL(String(metadata.alternates?.canonical), SITE_URL).toString()).toBe(
         absoluteSiteUrl(path),
       );
     },
   );
+
+  it('provides the same large image card in root metadata', () => {
+    expect(ROOT_METADATA.openGraph?.images).toEqual([
+      {
+        url: OPEN_GRAPH_IMAGE_PATH,
+        width: 1200,
+        height: 630,
+        alt: 'BioStack protocol operations',
+      },
+    ]);
+    expect(ROOT_METADATA.twitter?.card).toBe('summary_large_image');
+    expect(ROOT_METADATA.twitter?.images).toEqual([OPEN_GRAPH_IMAGE_PATH]);
+  });
 
   it('builds metadata through the shared helper', () => {
     expect(

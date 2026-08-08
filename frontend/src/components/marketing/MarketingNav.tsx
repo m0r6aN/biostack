@@ -7,39 +7,39 @@ export function MarketingNav() {
     <>
       <header className="sticky top-0 z-30 border-b border-white/8 bg-[#0B0F14]/75 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 sm:px-8 sm:py-4">
-          <Link href="/" aria-label="BioStack home">
+          <Link href="/" aria-label="BioStack home" className="focus-visible:outline-none focus-visible:ring-2">
             <BioStackLogo variant="horizontal" theme="dark" size="md" animated hoverable />
           </Link>
           <nav className="hidden items-center gap-6 text-sm text-white/55 md:flex">
-            <Link href="/how-it-works" className="transition-colors hover:text-white">
+            <Link href="/how-it-works" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               How it works
             </Link>
-            <Link href="/tools" className="transition-colors hover:text-white">
+            <Link href="/tools" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               Tools
             </Link>
-            <Link href="/knowledge" className="transition-colors hover:text-white">
+            <Link href="/knowledge" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               Compounds & Evidence
             </Link>
-            <Link href="/pricing" className="transition-colors hover:text-white">
+            <Link href="/pricing" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               Pricing
             </Link>
-            <Link href="/providers" className="transition-colors hover:text-white">
+            <Link href="/providers" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               For Providers
             </Link>
-            <Link href="/safety" className="transition-colors hover:text-white">
+            <Link href="/safety" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               Safety
             </Link>
           </nav>
           <div className="flex items-center gap-3">
             <Link
               href="/tools/analyzer"
-              className="hidden rounded-full border border-white/12 px-4 py-2 text-sm text-white/75 transition-colors hover:text-white sm:inline-flex"
+              className="hidden rounded-full border border-white/12 px-4 py-2 text-sm text-white/75 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 sm:inline-flex"
             >
               Analyze My Stack
             </Link>
             <Link
               href="/start"
-              className="rounded-full border border-emerald-300/30 bg-emerald-400/12 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/50 hover:text-white"
+              className="rounded-full border border-emerald-300/30 bg-emerald-400/12 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/50 hover:text-white focus-visible:outline-none focus-visible:ring-2"
             >
               Start Free
             </Link>

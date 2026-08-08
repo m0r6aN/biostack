@@ -6,6 +6,13 @@ export const SITE_ORIGIN = SITE_URL.origin;
 export const SITE_TITLE = 'BioStack | Protocol Operations';
 export const SITE_DESCRIPTION =
   'Your protocol operations system. Track compounds, surface overlap, and turn daily signal into continuity.';
+export const OPEN_GRAPH_IMAGE_PATH = '/og-image.png';
+const OPEN_GRAPH_IMAGE = {
+  url: OPEN_GRAPH_IMAGE_PATH,
+  width: 1200,
+  height: 630,
+  alt: 'BioStack protocol operations',
+};
 
 export function absoluteSiteUrl(path = '/') {
   return new URL(path, SITE_URL).toString();
@@ -35,11 +42,13 @@ export function createPublicPageMetadata({
       siteName: SITE_NAME,
       title,
       description,
+      images: [OPEN_GRAPH_IMAGE],
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title,
       description,
+      images: [OPEN_GRAPH_IMAGE_PATH],
     },
   };
 }
@@ -58,11 +67,13 @@ export const ROOT_METADATA: Metadata = {
     siteName: SITE_NAME,
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    images: [OPEN_GRAPH_IMAGE],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    images: [OPEN_GRAPH_IMAGE_PATH],
   },
   icons: {
     icon: [
