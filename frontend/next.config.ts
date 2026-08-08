@@ -5,6 +5,9 @@ const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050').repl
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  typescript: {
+    tsconfigPath: 'tsconfig.build.json',
+  },
   turbopack: {
     root: path.resolve(__dirname),
   },

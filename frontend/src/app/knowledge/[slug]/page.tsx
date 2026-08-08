@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
@@ -48,11 +48,11 @@ function safeDecodeSlug(value: string): string {
 }
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export default function CompoundDossierPage({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = use(params);
   const { user, loading: authLoading } = useAuth();
   const [entry, setEntry] = useState<KnowledgeEntry | null>(null);
   const [loading, setLoading] = useState(true);
