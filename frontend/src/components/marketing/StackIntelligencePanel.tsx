@@ -8,9 +8,7 @@ import {
 import { getOnboardingSystemStatus, type SystemStatusTone } from '@/lib/systemStatus';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useMemo, useState } from 'react';
-
-const LOOP_DURATION = 7.2;
+import { useMemo, useRef, useState } from 'react';
 
 export type PanelMode = 'simple' | 'technical';
 
@@ -176,8 +174,11 @@ export function StackIntelligencePanel({
   isCheckingRelationships = false,
 }: StackIntelligencePanelProps) {
   const [mode, setMode] = useState<PanelMode>(initialMode);
-  const [insightIndex, setInsightIndex] = useState(0);
   const reduceMotion = useReducedMotion();
+  const modeButtonRefs = useRef<Record<PanelMode, HTMLButtonElement | null>>({
+    simple: null,
+    technical: null,
+  });
   const displayedCompounds = useMemo(() => buildCompounds(compoundNames), [compoundNames]);
   const intelligence = useMemo(
     () => getOnboardingIntelligenceState(compoundNames ?? [], relationshipCandidates),
@@ -200,24 +201,13 @@ export function StackIntelligencePanel({
     [contentOverrides, helperContent]
   );
   const activeContent = mergedContent[mode];
+  const activeModeIndex = modeOptions.findIndex((option) => option.id === mode);
   const stageLabels = activeContent.stageLabels ?? ['Compounds added', 'Relationships mapped', 'Next step ready'];
   const stats = activeContent.stats ?? [
     ['Compounds', displayedCompounds.map((compound) => compound.name).join(', ') || 'None yet'],
     ['Context', displayedCompounds.length > 0 ? 'Established' : 'Unavailable'],
     ['Relationship map', intelligence.isRelationshipAllowed ? 'Eligible' : 'Locked'],
   ];
-
-  useEffect(() => {
-    if (reduceMotion) {
-      return;
-    }
-
-    const interval = window.setInterval(() => {
-      setInsightIndex((current) => (current + 1) % activeContent.insights.length);
-    }, (LOOP_DURATION * 1000) / activeContent.insights.length);
-
-    return () => window.clearInterval(interval);
-  }, [activeContent.insights.length, mode, reduceMotion]);
 
   return (
     <div
@@ -247,20 +237,6 @@ export function StackIntelligencePanel({
                   {statusDescriptor.title}
                 </span>
               </div>
-              <div className="mt-2 max-w-md">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.p
-                    key={mode}
-                    className="text-sm leading-5 text-white/62"
-                    initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
-                    transition={{ duration: reduceMotion ? 0 : 0.24, ease: 'easeOut' }}
-                  >
-                    {activeContent.subtext}
-                  </motion.p>
-                </AnimatePresence>
-              </div>
             </div>
 
             {showModeToggle && (
@@ -278,12 +254,39 @@ export function StackIntelligencePanel({
                         key={option.id}
                         type="button"
                         role="tab"
+                        id={`intelligence-mode-tab-${option.id}`}
+                        aria-controls="intelligence-mode-panel"
                         aria-selected={isActive}
+                        tabIndex={isActive ? 0 : -1}
+                        ref={(element) => {
+                          modeButtonRefs.current[option.id] = element;
+                        }}
                         onClick={() => {
                           setMode(option.id);
-                          setInsightIndex(0);
                         }}
-                        className="relative min-w-[88px] rounded-full px-3 py-1.5 text-xs font-semibold"
+                        onKeyDown={(event) => {
+                          let nextIndex: number | undefined;
+
+                          if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                            nextIndex = (activeModeIndex + 1) % modeOptions.length;
+                          } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                            nextIndex = (activeModeIndex - 1 + modeOptions.length) % modeOptions.length;
+                          } else if (event.key === 'Home') {
+                            nextIndex = 0;
+                          } else if (event.key === 'End') {
+                            nextIndex = modeOptions.length - 1;
+                          }
+
+                          if (nextIndex === undefined) {
+                            return;
+                          }
+
+                          event.preventDefault();
+                          const nextMode = modeOptions[nextIndex].id;
+                          setMode(nextMode);
+                          modeButtonRefs.current[nextMode]?.focus();
+                        }}
+                        className="relative min-w-[88px] rounded-full px-3 py-1.5 text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60"
                       >
                         {isActive && (
                           <motion.span
@@ -303,19 +306,40 @@ export function StackIntelligencePanel({
             )}
           </div>
 
-          <div className="relative mt-3 flex flex-wrap gap-x-3 gap-y-1 rounded-lg border border-white/8 bg-black/20 px-3 py-2 text-[11px] font-medium text-white/42">
-            {stageLabels.map((label, index) => (
-              <span key={label} className="contents">
-                <span>{label}</span>
-                {index < stageLabels.length - 1 && <span className="text-white/18">/</span>}
-              </span>
-            ))}
-          </div>
+          <div
+            id={showModeToggle ? 'intelligence-mode-panel' : undefined}
+            role={showModeToggle ? 'tabpanel' : undefined}
+            aria-labelledby={showModeToggle ? `intelligence-mode-tab-${mode}` : undefined}
+            className="mt-2"
+          >
+            <div className="max-w-md">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.p
+                  key={mode}
+                  className="text-sm leading-5 text-white/62"
+                  initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.24, ease: 'easeOut' }}
+                >
+                  {activeContent.subtext}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+
+            <div className="relative mt-3 flex flex-wrap gap-x-3 gap-y-1 rounded-lg border border-white/8 bg-black/20 px-3 py-2 text-[11px] font-medium text-white/56">
+              {stageLabels.map((label, index) => (
+                <span key={label} className="contents">
+                  <span>{label}</span>
+                  {index < stageLabels.length - 1 && <span className="text-white/18">/</span>}
+                </span>
+              ))}
+            </div>
 
           <div className="relative mt-3 grid gap-3 rounded-lg border border-white/8 bg-white/[0.025] p-3 sm:grid-cols-[0.9fr_1.15fr_0.95fr]">
             {stats.map(([label, value]) => (
               <div key={label} className="rounded-lg border border-white/7 bg-black/20 px-3 py-2">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">{label}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/56">{label}</p>
                 <p className="mt-1 text-sm font-semibold leading-5 text-white/82">{value}</p>
               </div>
             ))}
@@ -361,14 +385,14 @@ export function StackIntelligencePanel({
           <div className="relative mt-3 rounded-lg border border-white/8 bg-white/[0.025] px-4 py-3">
             <AnimatePresence mode="wait" initial={false}>
               <motion.p
-                key={`${mode}-${insightIndex}`}
+                key={mode}
                 className="text-sm leading-6 text-white/66"
                 initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
                 transition={{ duration: reduceMotion ? 0 : 0.24, ease: 'easeOut' }}
               >
-                {activeContent.insights[insightIndex]}
+                {activeContent.insights[0]}
               </motion.p>
             </AnimatePresence>
           </div>
@@ -380,6 +404,7 @@ export function StackIntelligencePanel({
             <p className="mt-1 text-sm leading-6 text-white/76">
               {activeContent.nextAction ?? 'Type anything you take.'}
             </p>
+          </div>
           </div>
         </div>
       </div>
