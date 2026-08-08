@@ -10,7 +10,7 @@ export const metadata = createPublicPageMetadata({
 });
 
 interface StartPageProps {
-  searchParams?: Promise<{ mode?: string }> | { mode?: string };
+  searchParams?: Promise<{ mode?: string }>;
 }
 
 export default async function StartPage({ searchParams }: StartPageProps) {
