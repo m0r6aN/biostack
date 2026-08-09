@@ -1,0 +1,25 @@
+SEAT: Craft (Sonnet) — typographic/visual/code discipline, accessibility rigor, differentiation. Blind.
+
+VERDICT: REVISE AND RE-REVIEW
+
+TOP 6 BRUTAL FINDINGS
+1. [BLOCKER] CTA hierarchy is fractured — the only two solid-fill buttons on the page (proof-section "Analyze a stack," mobile sticky "Analyze") both point to gated /tools/analyzer while free-signup "Start Free" stays outline/tinted everywhere, and the color-privileged action flips from Start Free on desktop to Analyze on mobile, where /start has no presence at all — O4/O14 — visitor never gets one consistent primary action.
+2. [BLOCKER] Positioning is undefined — title "Protocol Operations," meta "protocol operations system," JSON-LD "Tracking, calculator, and stack mapping infrastructure," footer "Tracking, math, and clarity," H1 names no category — O13 — fails the 5-second "what is this" test the review is scored against.
+3. [MAJOR] Tier-gating language is front-loaded before tiers exist — "Operator required," "Operator access," "Operator and Commander members" appear four times in the hero while Observer/Operator/Commander are never defined or priced on the page — O5 — sells access to an undefined, unpriced thing to an audience the brief calls sophisticated.
+4. [MAJOR] ARIA tab pattern is incomplete, not absent — role="tablist"/role="tab"/aria-selected with no tabpanel, no aria-controls, no id wiring, no arrow-key handling — O8 — a screen-reader user hears "tab 1 of 2" and is stranded, worse than shipping no pattern.
+5. [MAJOR] Measured AA contrast failures compound with selective focus styling — stat labels 3.1:1 and stage labels 4.0:1 against the 4.5:1 threshold; focus-visible rings exist only on the four hero cards and are absent from every nav link, nav button, proof button, footer link, and sticky-bar button; no skip link exists — O6/O7 — accessibility applied inconsistently, not systemically.
+6. [MINOR] Component shipped unfinished — the hero eyebrow (`<p>Built for peptides...`) has zero className and inherits raw preflight body styling while every sibling text node is explicitly classed; `lg:col-span-2` is applied to a card grid whose parent is `flex flex-col`, so it does nothing — O1/O11 — reads as accumulated, not designed.
+
+TOP 5 MOVES
+1. Make "Start Free" the single solid-fill CTA everywhere it appears (nav, hero, mobile sticky bar); demote the proof-section "Analyze a stack" and mobile "Analyze" buttons to outline/tinted so a gated feature never outranks the free entry point.
+2. Write one product description and reuse it verbatim across <title>, meta description, JSON-LD, and footer.
+3. Either surface tier names and pricing above the hero's gating copy, or rewrite "Operator required" / "Operator access" as tier-agnostic language until pricing is visible on this page.
+4. In StackIntelligencePanel's toggle, add role="tabpanel" with matching aria-controls/id and arrow-key handling, or drop the tablist/tab roles entirely and ship a plain segmented control.
+5. Raise text-white/35 and text-white/42 labels to at least text-white/56 (~4.5:1), and add focus-visible rings to every nav link, button, and footer link matching the treatment already on the hero cards.
+
+PRESERVE
+- The disclaimer strip ("BioStack is not a doctor...") — direct, correctly placed, consistent with the Guidance Content Contract; leave as-is.
+- Hero card focus-visible ring treatment — tone-matched and visible; use as the template to propagate rather than redesign.
+- prefers-reduced-motion handling on the panel's rotating insight line — correctly disables both rotation and transitions.
+- Nav links, hero subhead, and footer text contrast (6.2:1, 8.0:1, ~4.5:1) — all clear or meet AA; no blanket opacity changes needed.
+  [ORCHESTRATOR NOTE: SPLIT — footer measures exactly 4.50:1, zero margin. Raising it in Phase 1.4.]

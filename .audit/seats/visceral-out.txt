@@ -1,0 +1,24 @@
+SEAT: Visceral (Sonnet) — first impression, brand nerve, the 7-second judgment. Blind.
+
+VERDICT: REVISE AND RE-REVIEW
+
+TOP 6 BRUTAL FINDINGS
+1. [MAJOR] H1 has no point of view — "What you're taking. How it's structured. See what it's doing." is interchangeable SaaS mad-libs with a hard `<br/>` for false emphasis — fails the 5-second test for an audience the product itself calls "serious self-experimenters," and reads generic, not expensive or confident.
+2. [MAJOR] Unstyled eyebrow line ships as a visible bug — `<p>Built for peptides, SARMs, SERMs, and beyond</p>` (LandingHero.tsx:79) has no className while every sibling text node is explicitly styled, so it renders as plain inherited body text — the first thing a visitor's eye catches looks broken, not deliberate.
+3. [MAJOR] The brand can't say what it is — title "Protocol Operations," meta "protocol operations system," JSON-LD "Tracking, calculator, and stack mapping infrastructure," footer "Tracking, math, and clarity for complex stacks" (O13) — four competing self-descriptions signal indecision, not conviction.
+4. [MAJOR] Zero credibility signals anywhere on the page (O12) — no counts, testimonials, badges, team, or dates — for a product asking sophisticated users to log gray-market compound protocols, an entirely unverified landing page reads as untrustworthy, not premium.
+5. [MAJOR] The single primary action is diluted by redundancy — /tools/analyzer is the destination of 4 separate controls, two of them adjacent in the same 4-card row (O2), while the solid-fill "confident" button treatment (O4) is spent twice on that same duplicate action instead of on the actual top-of-funnel CTA — this reads as unedited, not decisive.
+6. [MINOR] Gating language front-loaded before any pricing context — "Operator required" / "Operator access" appear twice in the hero while Observer/Operator/Commander are never defined or priced on this page (O5) — feels like a paywall tease, undercutting the confident tone the rest of the product's doctrine insists on.
+
+TOP 5 MOVES
+1. Rewrite the H1 in LandingHero.tsx with a claim only BioStack could make (still compliant with the Guidance Content Contract) instead of the generic three-clause structure — outcome: a headline with an actual point of view.
+2. Add a real typographic treatment (uppercase, tracked, muted tone) to the eyebrow `<p>` at LandingHero.tsx:79 — outcome: removes the "forgot to style it" tell.
+3. Cut hero cards 1 and 3 down to one /tools/analyzer entry point and repoint the freed card toward a distinct, non-duplicate action — outcome: restores one legible primary path through the fold.
+4. Consolidate the four site self-descriptions (title, meta, JSON-LD, footer) into a single reused sentence in site.ts — outcome: one coherent identity across every surface a user or crawler sees.
+5. Add one verifiable trust signal to the proof section — a real protocol/compound count, a security/local-first data line, or a dated changelog entry — sourced from actual product data, not invented — outcome: gives a skeptical audience a reason to believe this is real infrastructure, not a mockup.
+
+PRESERVE
+- The ambient background (three low-opacity emerald/blue/violet blooms on #0B0F14) is restrained and specific — it avoids generic neon-dark-SaaS glow and gives the page a clinical-but-serious mood that matches the audience.
+- "BioStack is not a doctor." in the disclaimer strip is blunt, unhedged, and confident — rare backbone for a compliance-mandated line, keep verbatim.
+- The ASCII ">" icon and colored left rail on the hero cards is a small, distinctive visual signature instead of a generic icon-library glyph — worth keeping as a brand marker.
+  [ORCHESTRATOR NOTE: OVERRULED on live-screenshot evidence — see DIRECTIVE "Disputed / Refuted".]
