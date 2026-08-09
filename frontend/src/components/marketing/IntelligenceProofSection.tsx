@@ -17,13 +17,13 @@ export function IntelligenceProofSection({ compact = false }: { compact?: boolea
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
                 href="/tools/analyzer"
-                className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
+                className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2"
               >
                 Analyze a stack
               </Link>
               <Link
                 href="/pricing"
-                className="rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24"
+                className="rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24 focus-visible:outline-none focus-visible:ring-2"
               >
                 See what Operator unlocks
               </Link>

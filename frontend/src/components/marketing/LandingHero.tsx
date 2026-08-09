@@ -81,7 +81,9 @@ export function LandingHero() {
     <section className="border-b border-white/8">
       <div className="mx-auto flex min-h-[calc(90svh-61px)] max-w-7xl flex-col justify-center gap-5 px-5 pb-7 pt-5 sm:min-h-[calc(90svh-73px)] sm:px-8 sm:pt-8 lg:min-h-[calc(88svh-73px)] lg:gap-7 lg:py-7">
         <div className="max-w-5xl">
-          <p>Built for peptides, SARMs, SERMs, and beyond</p>
+          <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.18em] text-emerald-200/78 sm:mb-4 sm:text-xs">
+            Built for peptides, SARMs, SERMs, and beyond
+          </p>
           <h1 className="text-[2.45rem] font-semibold leading-[0.96] tracking-tight text-white sm:text-6xl lg:text-7xl">
             What you&apos;re taking. How it&apos;s structured.<br />
             See what it&apos;s doing.
@@ -91,7 +93,7 @@ export function LandingHero() {
           </p>
         </div>
 
-        <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 lg:col-span-2 lg:grid-cols-4">
+        <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-4">
           {entryPaths.map((path) => (
             <LandingPathCard
               key={path.href}
@@ -113,13 +115,13 @@ export function LandingHero() {
         <div className="flex flex-wrap gap-x-5 gap-y-2">
           <Link
             href="/tools"
-            className="w-fit text-sm font-medium text-white/62 underline-offset-4 transition-colors hover:text-white/82 hover:underline sm:text-base"
+            className="w-fit text-sm font-medium text-white/62 underline-offset-4 transition-colors hover:text-white/82 hover:underline focus-visible:outline-none focus-visible:ring-2 sm:text-base"
           >
             Need to calculate dose volume or reconstitution? → Start here
           </Link>
           <Link
             href="/pricing"
-            className="w-fit text-sm font-medium text-emerald-100/78 underline-offset-4 transition-colors hover:text-emerald-50 hover:underline sm:text-base"
+            className="w-fit text-sm font-medium text-emerald-100/78 underline-offset-4 transition-colors hover:text-emerald-50 hover:underline focus-visible:outline-none focus-visible:ring-2 sm:text-base"
           >
             See Observer, Operator, and Commander
           </Link>
