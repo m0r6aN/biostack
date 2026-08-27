@@ -26,7 +26,7 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'What does BioStack actually do?',
     answer:
-      'BioStack is a personal bio-protocol operating system. It lets you log compounds, calculate injection math, detect pathway overlaps, track daily check-ins across 15+ biomarkers, and correlate patterns over time in a unified timeline.',
+      'BioStack is a free, public library of what the research says about peptides and similar compounds, graded by evidence strength. Paid tiers add your own layer: log compounds, calculate injection math, detect pathway overlaps, track daily check-ins across 15+ biomarkers, and correlate patterns over time in a unified timeline.',
   },
   {
     question: 'Who is BioStack designed for?',
@@ -61,7 +61,7 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'How is BioStack different from a spreadsheet?',
     answer:
-      'Spreadsheets do not calculate reconstitution math, detect pathway overlaps, or align check-ins and compound events in a unified timeline. BioStack is built for protocol operations rather than passive storage.',
+      'Spreadsheets do not calculate reconstitution math, detect pathway overlaps, or align check-ins and compound events in a unified timeline. BioStack pairs source-graded evidence with those tools rather than passive storage.',
   },
   {
     question: 'What daily metrics can I track?',

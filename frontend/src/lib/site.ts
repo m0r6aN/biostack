@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 export const SITE_NAME = 'BioStack';
 export const SITE_URL = new URL('https://biostack.cc');
 export const SITE_ORIGIN = SITE_URL.origin;
-export const SITE_TITLE = 'BioStack | Protocol Operations';
+export const SITE_TITLE = 'BioStack | Evidence-Graded Research on Peptides and Similar Compounds';
 export const SITE_DESCRIPTION =
-  'Your protocol operations system. Track compounds, surface overlap, and turn daily signal into continuity.';
+  'A free, public library of what the research says about peptides and similar compounds, graded by evidence strength, for anyone deciding for themselves.';
 export const OPEN_GRAPH_IMAGE_PATH = '/og-image.png';
 const OPEN_GRAPH_IMAGE = {
   url: OPEN_GRAPH_IMAGE_PATH,

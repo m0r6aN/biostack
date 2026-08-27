@@ -29,7 +29,7 @@ export default function SafetyPage() {
             BioStack is not a doctor.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-white/62">
-            It is infrastructure for tracking, math, and clarity.
+            It is a library of what the research says, graded by evidence strength, with math and tracking downstream of that.
           </p>
         </section>
 
@@ -42,7 +42,7 @@ export default function SafetyPage() {
         </section>
 
         <section className="mt-10 rounded-lg border border-emerald-300/16 bg-emerald-400/[0.06] p-5">
-          <p className="text-lg font-semibold text-white">No prescriptions. No guesswork. Just structure.</p>
+          <p className="text-lg font-semibold text-white">No prescriptions. No guesswork. Just what&apos;s known.</p>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/58">
             Use BioStack to organize protocol data and calculations. Work with qualified professionals for medical decisions.
           </p>

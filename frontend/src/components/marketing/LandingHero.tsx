@@ -82,14 +82,14 @@ export function LandingHero() {
       <div className="mx-auto flex min-h-[calc(90svh-61px)] max-w-7xl flex-col justify-center gap-5 px-5 pb-7 pt-5 sm:min-h-[calc(90svh-73px)] sm:px-8 sm:pt-8 lg:min-h-[calc(88svh-73px)] lg:gap-7 lg:py-7">
         <div className="max-w-5xl">
           <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.18em] text-emerald-200/78 sm:mb-4 sm:text-xs">
-            Built for peptides, SARMs, SERMs, and beyond
+            Evidence-graded research on peptides, SARMs, SERMs, and beyond
           </p>
           <h1 className="text-[2.45rem] font-semibold leading-[0.96] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            What you&apos;re taking. How it&apos;s structured.<br />
-            See what it&apos;s doing.
+            No prescriptions. No guesswork.<br />
+            Just what&apos;s known.
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-6 text-white/64 sm:mt-5 sm:text-lg">
-            Start with clarity. Then track, compare, and observe changes over time.
+            A free, public library of what the research says about peptides and similar compounds, graded by evidence strength, for anyone deciding for themselves. Tracking and analysis come after.
           </p>
         </div>
 
