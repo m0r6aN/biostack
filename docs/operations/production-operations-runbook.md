@@ -102,6 +102,19 @@ Same for the web app. Verify with the pinned smoke used in deploy.yml (`scripts/
 
 **Database caveat:** revision rollback does NOT roll back migrations. Migrations are hand-written (repo convention) — every migration must be backward-compatible one release, so N-1 code runs against N schema. Destructive migration + rollback = restore from §1 instead.
 
+## 3.5 Required production configuration (startup fails closed without these)
+
+The API validates configuration at startup in Production and crash-loops the new revision if any is missing — the deploy then fails at "Verify API revision readiness" with the revision stuck Activating (observed 2026-08-28, revision 0000112). Before merging a change that adds a required config key, provision the value in prod FIRST.
+
+Current required set (beyond DB/JWT/Stripe):
+- `DataProtection__ApplicationName` = `BioStack.Api.SessionCookie.v1` (exact)
+- `DataProtection__BlobUri` — HTTPS blob URI for the key ring, no SAS/query (blob container + *Storage Blob Data Contributor* for the app's managed identity)
+- `DataProtection__KeyVaultKeyIdentifier` — versionless `https://<vault>.vault.azure.net/keys/<key>` (identity needs *Key Vault Crypto User*)
+- optional `DataProtection__ManagedIdentityClientId` (GUID, user-assigned identity only)
+- If `Auth__Passkeys__Enabled=true`: `RpId`, `ServerName`, `Origins` (must include `FrontendUrl` exactly)
+
+Rule: any PR introducing a `Validate(...isProduction)` startup check lists its new keys in the PR description, and the deploy is scheduled after the values exist.
+
 ## 4. Deploy-time checklist (append to PR template once adopted)
 1. `.audit` probe for public knowledge boundary still passes on staging.
 2. Migration (if any) reviewed for N-1 compatibility.
