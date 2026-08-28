@@ -506,7 +506,11 @@ try
         await ProductionMigrationHistoryBaseline.ReconcileAsync(db, migrationLogger);
 
         // Apply pending EF migrations on startup so fresh deployments self-migrate.
-        db.Database.Migrate();
+        await db.Database.MigrateAsync();
+
+        // Existence-only checks cannot prove that Npgsql can materialize critical CLR types.
+        // Validate the final provider-native type and nullability contract before serving traffic.
+        await ProductionDatabaseSchemaReadiness.ValidateAsync(db, migrationLogger);
         await InteractionSchemaBootstrapper.EnsureCompoundInteractionHintsTableAsync(db);
     }
     else
