@@ -22,6 +22,7 @@ using BioStack.Application.Evidence;
 using BioStack.Application.Governance;
 using BioStack.Api.Governance;
 using Keon.Kompress;
+using Fido2NetLib;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,21 @@ builder.Logging.AddConsole();
 
 StripeProductionConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
 ProductionAuthConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
+var passkeyFeature = PasskeyFeatureConfiguration.Load(builder.Configuration);
+PasskeyFeatureConfiguration.Validate(
+    passkeyFeature,
+    builder.Environment.IsProduction(),
+    builder.Configuration["FrontendUrl"] ?? builder.Configuration["Auth:FrontendUrl"]);
+builder.Services.AddSingleton(passkeyFeature);
+builder.Services.AddFido2(options =>
+{
+    options.ServerDomain = passkeyFeature.Enabled ? passkeyFeature.RpId : "localhost";
+    options.ServerName = passkeyFeature.ServerName;
+    options.Origins = passkeyFeature.Enabled
+        ? passkeyFeature.Origins
+        : new HashSet<string>(StringComparer.Ordinal) { "http://localhost:3043" };
+    options.Timeout = 300000;
+});
 
 var stripeSecretKey = builder.Configuration["Stripe:SecretKey"];
 if (!string.IsNullOrWhiteSpace(stripeSecretKey))
@@ -467,6 +483,7 @@ app.MapGet(ProductContract.Current.Health.KeonDependencyPath, async (IKeonRuntim
 .WithName("KeonRuntimeHealth");
 
 app.MapAuthEndpoints();
+app.MapPasskeyEndpoints();
 app.MapConsentEndpoints();
 app.MapBillingEndpoints();
 app.MapProfileEndpoints();

@@ -123,6 +123,16 @@ function IconBilling() {
   );
 }
 
+function IconSecurity() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <path d="M8 1.5l5 2v3.75c0 3.1-2 5.65-5 7.25-3-1.6-5-4.15-5-7.25V3.5z" />
+      <circle cx="8" cy="7" r="1.5" />
+      <path d="M8 8.5v2" />
+    </svg>
+  );
+}
+
 function IconResearch() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
@@ -157,6 +167,7 @@ const navItems = [
   { label: 'Compounds & Evidence',href: '/knowledge',        icon: <IconKnowledge />,        adminOnly: false, exact: false },
   { label: 'Audit Receipts',       href: '/governance/receipts', icon: <IconReceipts />,      adminOnly: false, exact: false },
   { label: 'Billing',              href: '/billing',          icon: <IconBilling />,          adminOnly: false, exact: false },
+  { label: 'Account Security',     href: '/account/security', icon: <IconSecurity />,         adminOnly: false, exact: false },
   { label: 'Admin',                href: '/admin',            icon: <IconAdmin />,            adminOnly: true,  exact: true  },
   { label: 'Research',             href: '/admin/research',   icon: <IconResearch />,         adminOnly: true,  exact: false },
 ];
