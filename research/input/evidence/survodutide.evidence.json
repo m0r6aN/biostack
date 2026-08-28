@@ -1,0 +1,442 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "survodutide-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T22:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Survodutide",
+    "aliases": [
+      "BI 456906",
+      "BI-456906"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic 29-amino-acid peptide; glucagon receptor (GCGR) / GLP-1 receptor (GLP-1R) dual agonist",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "2805997-46-8",
+      "drugbank": "DB18989",
+      "pubchem": "168429725",
+      "chembl": null,
+      "doi": "10.1056/NEJMoa2401755",
+      "pmid": "38847460"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "pubchem-cid-168429725",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Survodutide | C192H289N47O61 - PubChem Compound Summary (CID 168429725)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Survodutide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "drugbank-db18989",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Survodutide: Uses, Interactions, Mechanism of Action - DrugBank (DB18989)",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB18989",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pace-cme-phase2-obesity",
+      "sourceType": "news-summary-of-primary-study",
+      "authorityTier": "B1",
+      "title": "Survodutide reduces body weight in phase 2 dose-finding trial for overweight/obesity (summarizing Lancet Diabetes & Endocrinology, le Roux et al. 2023)",
+      "publisher": "PACE-CME",
+      "url": "https://pace-cme.org/news/survodutide-reduces-body-weight-phase-2-dose-finding-trial-overweightobesity/2467319/",
+      "doi": "10.1016/S2213-8587(23)00356-X",
+      "pmid": "38330987",
+      "publishedAt": "2023-06-30T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pace-cme-phase2-mash",
+      "sourceType": "news-summary-of-primary-study",
+      "authorityTier": "B1",
+      "title": "Phase 2 trial results of survodutide in MASH with liver fibrosis (summarizing NEJM, Sanyal et al. 2024)",
+      "publisher": "PACE-CME",
+      "url": "https://pace-cme.org/news/phase-2-trial-results-survodutide-mash-liver-fibrosis/2467352/",
+      "doi": "10.1056/NEJMoa2401755",
+      "pmid": "38847460",
+      "publishedAt": "2024-07-25T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pubmed-38847460",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "A Phase 2 Randomized Trial of Survodutide in MASH and Fibrosis - PubMed",
+      "publisher": "New England Journal of Medicine (Sanyal AJ, et al., 2024)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38847460/",
+      "doi": "10.1056/NEJMoa2401755",
+      "pmid": "38847460",
+      "publishedAt": "2024-07-25T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pmc-synchronize1-baseline",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Survodutide for treatment of obesity: Baseline characteristics of participants in a randomized, double-blind, placebo-controlled, phase 3 trial (SYNCHRONIZE-1)",
+      "publisher": "PMC / Diabetes, Obesity and Metabolism",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12673442/",
+      "doi": null,
+      "pmid": "41187967",
+      "publishedAt": "2026-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "conscienhealth-phase3-topline",
+      "sourceType": "news-summary-of-primary-study",
+      "authorityTier": "B2",
+      "title": "Survodutide Phase 3 Toplines: From Weight to Health",
+      "publisher": "ConscienHealth",
+      "url": "https://conscienhealth.org/2026/04/29/survodutide-phase-3-toplines-from-weight-to-health/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-04-29T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "zealand-pharma-pipeline",
+      "sourceType": "manufacturer-pipeline-page",
+      "authorityTier": "C1",
+      "title": "Survodutide - Pipeline",
+      "publisher": "Zealand Pharma A/S",
+      "url": "https://www.zealandpharma.com/pipeline/survodutide/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "hcplive-breakthrough-therapy",
+      "sourceType": "news-summary-of-regulatory-action",
+      "authorityTier": "C1",
+      "title": "FDA Grants Breakthrough Therapy Designation to Survodutide for Noncirrhotic MASH",
+      "publisher": "HCPLive",
+      "url": "https://www.hcplive.com/view/fda-grants-breakthrough-therapy-designation-survodutide-noncirrhotic-mash",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2024-10-08T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "vendor-peptidesgg-survodutide",
+      "sourceType": "vendor-marketing-page",
+      "authorityTier": "D1",
+      "title": "Survodutide (10mg) | Research Peptide, 99% Purity",
+      "publisher": "Peptides.GG",
+      "url": "https://peptides.gg/survodutide/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "survodutide-identity-mechanism-001",
+      "claimType": "mechanism",
+      "statement": "Survodutide (BI 456906) is a synthetic peptide dual agonist of the glucagon receptor (GCGR) and the GLP-1 receptor (GLP-1R), engineered with a bias toward GLP-1 receptor activity, and is under active clinical development by Boehringer Ingelheim (licensed from Zealand Pharma) rather than being an approved drug.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "survodutide peptide",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "zealand-pharma-pipeline",
+        "pubchem-cid-168429725",
+        "drugbank-db18989"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "zealand-pharma-pipeline",
+          "quote": "an investigational long-acting, glucagon/GLP-1 receptor dual agonist",
+          "pageOrSection": "Mechanism of Action section"
+        },
+        {
+          "sourceRef": "zealand-pharma-pipeline",
+          "quote": "strong bias towards the GLP-1 receptors",
+          "pageOrSection": "Mechanism of Action section"
+        },
+        {
+          "sourceRef": "drugbank-db18989",
+          "quote": "under investigation in clinical trial NCT06077864 (A Study to Test the Effect of Survodutide (BI 456906) on Cardiovascular Safety in People With Overweight or Obesity (SYNCHRONIZE\u2122 - CVOT))",
+          "pageOrSection": "Overview / Clinical trials"
+        },
+        {
+          "sourceRef": "pubchem-cid-168429725",
+          "quote": "C192H289N47O61",
+          "pageOrSection": "Compound Summary, Molecular Formula"
+        }
+      ],
+      "reviewFlags": [
+        "compound is investigational, not FDA-approved; no DailyMed label exists to anchor regulatory/approved-indication claims"
+      ]
+    },
+    {
+      "claimId": "survodutide-regulatory-breakthrough-fasttrack-001",
+      "claimType": "regulatory",
+      "statement": "Survodutide has received U.S. FDA Fast Track and Breakthrough Therapy designations for noncirrhotic MASH with moderate or advanced fibrosis (stages 2-3), and EMA PRIME access for MASH with fibrosis; these designations expedite review and do not constitute marketing approval, and no survodutide product is FDA-approved or has a DailyMed label as of this packet's generation.",
+      "context": {
+        "population": "adults with noncirrhotic MASH and stage 2-3 fibrosis (trial populations)",
+        "route": null,
+        "formulation": "survodutide (investigational)",
+        "useCase": "regulatory development status",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "zealand-pharma-pipeline",
+        "hcplive-breakthrough-therapy"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "zealand-pharma-pipeline",
+          "quote": "Fast Track Designation and Breakthrough Therapy Designation by the U.S. Food and Drug Administration (FDA) for non-cirrhotic MASH and moderate or advanced fibrosis (stages 2 or 3)",
+          "pageOrSection": "Regulatory Designations"
+        },
+        {
+          "sourceRef": "zealand-pharma-pipeline",
+          "quote": "access to the Priority Medicine (PRIME) Scheme by the European Medicines Agency (EMA) for MASH with fibrosis",
+          "pageOrSection": "Regulatory Designations"
+        },
+        {
+          "sourceRef": "hcplive-breakthrough-therapy",
+          "quote": "The Breakthrough Therapy designation underscores that this potential best-in-class therapy has an opportunity to fundamentally change how MASH is treated.",
+          "pageOrSection": "Article body, company executive quote, dated October 8, 2024"
+        }
+      ],
+      "reviewFlags": [
+        "no direct FDA.gov page was locatable confirming this designation; sourced from manufacturer pipeline page and trade-press coverage of a company announcement, not primary FDA text",
+        "verify current designation and approval status at review time given active phase 3 program",
+        "fieldAuthorityRequired because designation status is frequently confused with approval by consumers"
+      ]
+    },
+    {
+      "claimId": "survodutide-efficacy-phase2-obesity-001",
+      "claimType": "efficacy",
+      "statement": "In a randomized, double-blind, placebo-controlled phase 2 dose-finding trial in adults with overweight/obesity without diabetes (n=387), 46 weeks of once-weekly subcutaneous survodutide produced placebo-corrected body-weight reductions ranging from -3.4% at the 0.6 mg dose to -12.1% at the 4.8 mg dose (both statistically significant), with the 4.8 mg group reaching -14.9% weight change versus -2.8% for placebo; gastrointestinal adverse events were substantially more common with survodutide, and treatment discontinuation due to adverse events was markedly higher than placebo.",
+      "context": {
+        "population": "adults with overweight or obesity, without type 2 diabetes (n=387 randomized)",
+        "route": "subcutaneous",
+        "formulation": "survodutide, once-weekly injection, dose-escalated (0.6-4.8 mg studied)",
+        "useCase": "investigational obesity/weight-management trial",
+        "doseText": "up to 4.8 mg once weekly following a dose-escalation schedule over 46 weeks (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pace-cme-phase2-obesity"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pace-cme-phase2-obesity",
+          "quote": "\u201314.9% (95%CI: \u201316.9% to \u201313.0%) for survodutide 4.8 mg, and \u20132.8% (95%CI: \u20134.9% to \u20130.7%) for placebo",
+          "pageOrSection": "Weight loss results, Week 46"
+        },
+        {
+          "sourceRef": "pace-cme-phase2-obesity",
+          "quote": "from \u22123.4% (95%CI: \u22126.3% to \u22120.4%; P=0.026) for survodutide 0.6 mg to \u221212.1% (95%CI: \u221215.0% to \u22129.2%; P<0.0001) for survodutide 4.8 mg",
+          "pageOrSection": "Placebo-corrected dose response"
+        },
+        {
+          "sourceRef": "pace-cme-phase2-obesity",
+          "quote": "The incidence of adverse events leading to treatment discontinuation was 25% in the combined survodutide group and 4% in the placebo group; they were also mostly gastrointestinal disorders",
+          "pageOrSection": "Adverse events & treatment discontinuation"
+        },
+        {
+          "sourceRef": "pace-cme-phase2-obesity",
+          "quote": "gastrointestinal disorders (75% vs. 42%)",
+          "pageOrSection": "Overall gastrointestinal burden"
+        }
+      ],
+      "reviewFlags": [
+        "phase 2 dose-finding trial; not yet confirmed at label-defining phase 3 scale in the primary literature directly fetched (phase 3 topline sourced separately from a secondary summary, see related claim)",
+        "GI-related discontinuation rate (25%) is a materially high tolerability signal that should be weighed against any marketing claiming easy tolerability"
+      ]
+    },
+    {
+      "claimId": "survodutide-efficacy-phase3-obesity-topline-001",
+      "claimType": "efficacy",
+      "statement": "Topline results from the phase 3 SYNCHRONIZE-1 trial (76-week, randomized, double-blind, placebo-controlled, adults with obesity without type 2 diabetes) were reported as approximately 16.6% body weight reduction with survodutide versus approximately 3.2% with placebo; this figure comes from a secondary news summary of an announcement rather than a directly fetched peer-reviewed results paper, and full peer-reviewed efficacy/safety detail should be verified against the primary NEJM publication before being treated as final.",
+      "context": {
+        "population": "adults with obesity or overweight with >=1 weight-related complication, without type 2 diabetes",
+        "route": "subcutaneous",
+        "formulation": "survodutide 3.6 mg or 6.0 mg once weekly vs placebo",
+        "useCase": "investigational obesity/weight-management, phase 3",
+        "doseText": "survodutide 3.6 mg or 6.0 mg once weekly with up-titration, 76-week trial protocol (SYNCHRONIZE-1); not a use recommendation"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "conscienhealth-phase3-topline",
+        "pmc-synchronize1-baseline"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "conscienhealth-phase3-topline",
+          "quote": "16.6% on the drug",
+          "pageOrSection": "SYNCHRONIZE-1 topline weight loss result"
+        },
+        {
+          "sourceRef": "pmc-synchronize1-baseline",
+          "quote": "determine the efficacy, safety, and tolerability of survodutide, a glucagon receptor/GLP-1 receptor dual agonist, for weight loss in a representative cohort of people with obesity without T2D",
+          "pageOrSection": "Study purpose"
+        },
+        {
+          "sourceRef": "pmc-synchronize1-baseline",
+          "quote": "percent body weight change and achievement of body weight reduction \u22655% from baseline to Week 76",
+          "pageOrSection": "Primary endpoints"
+        }
+      ],
+      "reviewFlags": [
+        "topline efficacy figure sourced from a secondary blog summary of a company/conference announcement, not a directly fetched peer-reviewed results paper; downgrade tier and re-verify against NEJM full results at review time",
+        "detailed phase 3 adverse-event profile not yet captured in this packet and must be added on review"
+      ]
+    },
+    {
+      "claimId": "survodutide-efficacy-phase2-mash-001",
+      "claimType": "efficacy",
+      "statement": "In a randomized, double-blind, placebo-controlled phase 2 trial in adults with MASH and fibrosis, survodutide was superior to placebo for the primary histologic endpoint (improvement in MASH without worsening of fibrosis): 47% (2.4 mg), 62% (4.8 mg), and 43% (6.0 mg) of survodutide-treated patients met the endpoint versus 14% of placebo-treated patients; gastrointestinal adverse events (nausea, diarrhea, vomiting) were substantially more frequent with survodutide, and discontinuation due to adverse events occurred in 20% of survodutide-treated patients versus 3% of placebo-treated patients.",
+      "context": {
+        "population": "adults with biopsy-confirmed MASH and fibrosis stages F1-F3",
+        "route": "subcutaneous",
+        "formulation": "survodutide 2.4 mg, 4.8 mg, or 6.0 mg once weekly vs placebo",
+        "useCase": "investigational MASH/liver-fibrosis trial",
+        "doseText": "2.4-6.0 mg once weekly with rapid dose-escalation phase, 48-week trial protocol; not a use recommendation"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pace-cme-phase2-mash",
+        "pubmed-38847460"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pace-cme-phase2-mash",
+          "quote": "47% (95%CI: 36%\u201358%) of the patients treated with survodutide 2.4 mg, 62% (95%CI: 51%\u201373%) of those receiving survodutide 4.8 mg, and 43% (95%CI: 33%\u201355%) of those on survodutide 6.0 mg, compared with 14% (95%CI: 8%\u201323%) of the placebo-treated patients",
+          "pageOrSection": "Primary endpoint results"
+        },
+        {
+          "sourceRef": "pace-cme-phase2-mash",
+          "quote": "Adverse events leading to discontinuation of the study drug occurred in 20% of the survodutide-treated patients (16% due to gastrointestinal adverse events, mostly occurring in the rapid-dose-escalation phase), compared with 3% of the placebo-treated patients.",
+          "pageOrSection": "Adverse events summary"
+        },
+        {
+          "sourceRef": "pubmed-38847460",
+          "quote": "Survodutide was superior to placebo with respect to improvement in MASH without worsening of fibrosis, warranting further investigation in phase 3 trials.",
+          "pageOrSection": "Abstract conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "phase 2 only; phase 3 LIVERAGE/LIVERAGE-Cirrhosis results not yet available and must not be assumed",
+        "results specific to biopsy-confirmed MASH population under close trial supervision; not generalizable to unsupervised gray-market self-administration"
+      ]
+    },
+    {
+      "claimId": "survodutide-evidence-gap-graymarket-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Survodutide has no FDA-approved product, yet is sold by numerous online 'research chemical' vendors as an injectable peptide alongside marketing language describing fat-loss, thermogenic, and hepatic-lipid benefits; this marketing draws on investigational trial data for a supervised, dose-escalated, prescription-track drug and does not reflect any evidence base for unsupervised self-administration of vendor-sourced material of unverified purity, dose accuracy, or sterility.",
+      "context": {
+        "population": "consumers purchasing unregulated 'research use only' survodutide online",
+        "route": "subcutaneous (self-administered gray-market use, as marketed)",
+        "formulation": "vendor-sourced lyophilized survodutide, marketed as 99% purity research reagent",
+        "useCase": "gray-market weight-loss / body-composition self-administration",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "vendor-peptidesgg-survodutide",
+        "zealand-pharma-pipeline"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "vendor-peptidesgg-survodutide",
+          "quote": "enhanced energy expenditure and thermogenesis, hepatic steatosis reduction, and examination of adipose tissue lipolysis",
+          "pageOrSection": "Product description, benefits language"
+        },
+        {
+          "sourceRef": "vendor-peptidesgg-survodutide",
+          "quote": "Peptides.GG sells this and all other peptides for Research Only and not for human consumption.",
+          "pageOrSection": "Research-use disclaimer"
+        },
+        {
+          "sourceRef": "vendor-peptidesgg-survodutide",
+          "quote": "This product is not intended to diagnose, treat, cure, or prevent any disease.",
+          "pageOrSection": "Legal disclaimer"
+        },
+        {
+          "sourceRef": "zealand-pharma-pipeline",
+          "quote": "Boehringer Ingelheim is evaluating survodutide in a global Phase 3 program for people living with obesity or overweight.",
+          "pageOrSection": "Development Status"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor pages juxtapose research-use disclaimers with consumer-benefit language borrowed from clinical trial results",
+        "no FDA import alert or warning letter specific to survodutide was located during this research pass; recheck FDA import-alert and warning-letter databases at review time",
+        "vendor product purity/identity claims (e.g., '99% purity') are self-reported by the seller and not independently verified in this packet"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "survodutide-conflict-phase3-source-tier-001",
+      "claimRefs": [
+        "survodutide-efficacy-phase3-obesity-topline-001"
+      ],
+      "severity": "moderate",
+      "summary": "The phase 3 SYNCHRONIZE-1 topline weight-loss figure (~16.6% vs ~3.2%) is currently anchored only on a secondary blog summary (ConscienHealth) of a company/conference announcement; the primary peer-reviewed NEJM article (doi.org/10.1056/NEJMoa2600751, PMID 42253238) and Lancet-tier phase 3 safety detail were located but returned bot-verification pages rather than fetchable content during this research pass, so full peer-reviewed numeric results and adverse-event tables are not yet directly verified against the primary source.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Primary NEJM phase 3 obesity publication (PMID 42253238, doi 10.1056/NEJMoa2600751) could not be directly fetched (bot-verification blocked); phase 3 efficacy claim is currently sourced from a secondary summary and should be re-verified against the primary article.",
+      "No FDA.gov page was directly locatable for survodutide (expected, since it is investigational); Breakthrough Therapy/Fast Track designation claims rely on manufacturer and trade-press sources rather than a primary FDA document and should be re-verified against FDA's own designation records if/when available.",
+      "UNII and ChEMBL identifiers not resolved from structured databases during this pass.",
+      "Detailed phase 3 adverse-event/tolerability data not yet captured and should be added once the primary phase 3 publications are accessible.",
+      "No FDA import alert or warning letter specific to survodutide gray-market sales was found; confirm absence is current, not a search gap, at review time."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "investigational-not-approved",
+      "no-fda-label",
+      "positive-human-phase2-rct-data",
+      "phase3-topline-secondary-source",
+      "thin-independent-verification-of-phase3",
+      "gray-market-marketing-gap-documented"
+    ]
+  }
+}

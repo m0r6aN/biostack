@@ -1,0 +1,358 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "pramlintide-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T22:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Pramlintide",
+    "aliases": [
+      "Symlin",
+      "SymlinPen",
+      "Pramlintide acetate"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic human amylin analog",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": "DB01278",
+      "pubchem": "70691388",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-symlinpen-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: Symlinpen - pramlintide acetate injection",
+      "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4aea30ff-eb0d-45c1-b114-3127966328ff",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-70691388",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Pramlintide, CID 70691388",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Pramlintide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "ratner-2004-diabetic-medicine-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Amylin replacement with pramlintide as an adjunct to insulin therapy improves long-term glycaemic and weight control in Type 1 diabetes mellitus: a 1-year, randomized controlled trial",
+      "publisher": "Diabetic Medicine (Ratner RE, Dickey R, Fineman M, et al., 2004)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15498087/",
+      "doi": null,
+      "pmid": "15498087",
+      "publishedAt": "2004-11-01T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "dunican-2010-annals-pharmacotherapy-review",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "The Role of Pramlintide for Weight Loss",
+      "publisher": "Annals of Pharmacotherapy (Dunican KC, Adams NM, Desilets AR, 2010)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20164472/",
+      "doi": "10.1345/aph.1M210",
+      "pmid": "20164472",
+      "publishedAt": "2010-02-01T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "helloklarity-pramlintide-marketing",
+      "sourceType": "vendor-marketing-page",
+      "authorityTier": "C2",
+      "title": "Pramlintide For Weight Loss Online Prescription In 24 Hours",
+      "publisher": "HelloKlarity (telehealth vendor)",
+      "url": "https://www.helloklarity.com/medication/pramlintide/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "pramlintide-regulatory-approved-indication-001",
+      "claimType": "approved-indication",
+      "statement": "SYMLIN (pramlintide acetate) is FDA-approved as an adjunctive treatment for patients with type 1 or type 2 diabetes who use mealtime insulin therapy and have failed to achieve desired glucose control despite optimal insulin therapy.",
+      "context": {
+        "population": "adults with type 1 or type 2 diabetes on mealtime insulin",
+        "route": "subcutaneous",
+        "formulation": "pramlintide acetate injection (SymlinPen)",
+        "useCase": "adjunctive glycemic control alongside mealtime insulin",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-symlinpen-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-symlinpen-label",
+          "quote": "SYMLIN is indicated as an adjunctive treatment in patients with type 1 or type 2 diabetes who use mealtime insulin therapy and who have failed to achieve desired glucose control despite optimal insulin therapy.",
+          "pageOrSection": "Indications and Usage"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "pramlintide-warning-severe-hypoglycemia-001",
+      "claimType": "warning",
+      "statement": "SYMLIN carries an FDA boxed warning that use with insulin increases the risk of severe hypoglycemia, particularly in patients with type 1 diabetes; severe hypoglycemia associated with pramlintide use in this population can be life-threatening and requires mealtime insulin dose reduction and close glucose monitoring per the label.",
+      "context": {
+        "population": "patients with type 1 or type 2 diabetes co-administering insulin",
+        "route": "subcutaneous",
+        "formulation": "pramlintide acetate injection",
+        "useCase": "risk of severe hypoglycemia when combined with insulin",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-symlinpen-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-symlinpen-label",
+          "quote": "SYMLIN use with insulin increases the risk of severe hypoglycemia, particularly in patients with type 1 diabetes.",
+          "pageOrSection": "Boxed Warning"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim"
+      ]
+    },
+    {
+      "claimId": "pramlintide-contraindication-gastroparesis-hypoawareness-001",
+      "claimType": "contraindication",
+      "statement": "SYMLIN is contraindicated in patients with serious hypersensitivity reaction to SYMLIN or any of its components, hypoglycemia unawareness, and confirmed gastroparesis.",
+      "context": {
+        "population": "prospective SYMLIN users",
+        "route": "subcutaneous",
+        "formulation": "pramlintide acetate injection",
+        "useCase": "contraindication screening",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-symlinpen-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-symlinpen-label",
+          "quote": "serious hypersensitivity reaction to SYMLIN or to any of its product components",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-symlinpen-label",
+          "quote": "hypoglycemia unawareness",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-symlinpen-label",
+          "quote": "confirmed gastroparesis",
+          "pageOrSection": "Contraindications"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim"
+      ]
+    },
+    {
+      "claimId": "pramlintide-dose-context-label-titration-001",
+      "claimType": "dose-context",
+      "statement": "The SYMLIN label describes initial dosing (as trial/label protocol, not a use recommendation) of 15 mcg subcutaneously before each major meal in type 1 diabetes and 60 mcg before each major meal in type 2 diabetes, with mealtime insulin doses reduced by 50% at initiation and gradual up-titration under monitoring to reduce nausea risk.",
+      "context": {
+        "population": "adults with type 1 or type 2 diabetes on mealtime insulin",
+        "route": "subcutaneous",
+        "formulation": "pramlintide acetate injection",
+        "useCase": "label-directed initiation and titration protocol",
+        "doseText": "Type 1: reduce mealtime insulin 50%, initiate SYMLIN 15 mcg subcutaneously before each major meal. Type 2: reduce mealtime insulin (including premixed) 50%, initiate SYMLIN 60 mcg before each major meal. At least 3 days between dose increments. (Label protocol context, not a use recommendation.)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-symlinpen-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-symlinpen-label",
+          "quote": "Reduce mealtime insulin doses by 50%, then initiate SYMLIN at 15 mcg subcutaneously, injecting immediately prior to each major meal.",
+          "pageOrSection": "Dosage and Administration, Type 1 Diabetes"
+        },
+        {
+          "sourceRef": "dailymed-symlinpen-label",
+          "quote": "Reduce mealtime insulin doses (including premixed insulins) by 50%, then initiate SYMLIN at 60 mcg subcutaneously, injecting immediately prior to each major meal.",
+          "pageOrSection": "Dosage and Administration, Type 2 Diabetes"
+        }
+      ],
+      "reviewFlags": [
+        "dose context only; must not be presented as a use recommendation"
+      ]
+    },
+    {
+      "claimId": "pramlintide-mechanism-amylin-analog-001",
+      "claimType": "mechanism",
+      "statement": "Pramlintide is a synthetic analog of human amylin, a peptide hormone co-secreted with insulin by pancreatic beta cells; as amylin replacement therapy it is used adjunctively with insulin to help regulate postprandial glucose.",
+      "context": {
+        "population": null,
+        "route": "subcutaneous",
+        "formulation": "pramlintide acetate",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "dunican-2010-annals-pharmacotherapy-review",
+        "pubchem-cid-70691388"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dunican-2010-annals-pharmacotherapy-review",
+          "quote": "Pramlintide is a human amylin analog approved by the Food and Drug Administration for use in conjunction with insulin therapy in patients with type 1 or 2 diabetes.",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "pramlintide-efficacy-t1d-rct-glycemic-weight-001",
+      "claimType": "efficacy",
+      "statement": "In a 52-week, double-blind, placebo-controlled, multicenter RCT of 651 patients with type 1 diabetes, adjunctive pramlintide (60 mcg TID or QID with mealtime insulin) produced significant HbA1c reductions of 0.29% and 0.34% versus a 0.04% reduction with placebo, alongside a modest body-weight reduction (0.4 kg) versus a 0.8-kg weight gain in the placebo group.",
+      "context": {
+        "population": "adults with type 1 diabetes on mealtime insulin (n=651; mean HbA1c 8.9%)",
+        "route": "subcutaneous",
+        "formulation": "pramlintide acetate, adjunct to insulin",
+        "useCase": "glycemic control and weight change in type 1 diabetes",
+        "doseText": "60 mcg three or four times daily with meals, adjunct to insulin, over 52 weeks (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "ratner-2004-diabetic-medicine-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ratner-2004-diabetic-medicine-rct",
+          "quote": "significant reductions in HbA(1c) from baseline to Week 52 of 0.29% (P < 0.011) and 0.34% (P < 0.001), respectively, compared with a 0.04% reduction in placebo group",
+          "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "ratner-2004-diabetic-medicine-rct",
+          "quote": "a significant reduction in body weight from baseline to Week 52 of 0.4 kg... compared with a 0.8-kg gain in body weight in the placebo group",
+          "pageOrSection": "Abstract, Results"
+        }
+      ],
+      "reviewFlags": [
+        "effect size on HbA1c is modest; not established as first-line therapy",
+        "weight effect is a secondary outcome in an insulin-adjunct T1D population, not a standalone weight-loss trial"
+      ]
+    },
+    {
+      "claimId": "pramlintide-marketing-vs-evidence-weightloss-gap-001",
+      "claimType": "evidence-gap",
+      "statement": "Pramlintide is not FDA-approved for weight loss in any population, yet is marketed and prescribed off-label for weight loss (including to non-diabetic patients) by telehealth vendors; the strongest available human evidence for this use is limited to preliminary, methodologically inconsistent trials describing modest weight loss (up to ~8 kg over 1 year in obese non-diabetics) rather than a validated weight-loss therapy, and vendor marketing pages state single-trial or short-duration weight-loss figures without describing study limitations.",
+      "context": {
+        "population": "obese/overweight adults, with and without diabetes, seeking weight loss",
+        "route": "subcutaneous",
+        "formulation": "pramlintide acetate, off-label weight-loss use",
+        "useCase": "off-label / marketed weight-loss use versus approved indication",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "dunican-2010-annals-pharmacotherapy-review",
+        "helloklarity-pramlintide-marketing",
+        "dailymed-symlinpen-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dunican-2010-annals-pharmacotherapy-review",
+          "quote": "Based on preliminary evidence, pramlintide facilitates modest weight loss in obese or overweight patients with and without diabetes. However, current trials were limited by inconsistent study design, dosing, and patient population.",
+          "pageOrSection": "Abstract, Conclusion"
+        },
+        {
+          "sourceRef": "dunican-2010-annals-pharmacotherapy-review",
+          "quote": "Preliminary trials assessing the use of pramlintide for weight loss in obese patients without diabetes have demonstrated weight loss of up to 8 kg after 1 year.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "helloklarity-pramlintide-marketing",
+          "quote": "While weight loss isn't an FDA-approved indication of pramlintide in Symlin, its appetite-suppressing effects have led healthcare providers to prescribe it off-label for this purpose.",
+          "pageOrSection": "Medication overview page"
+        },
+        {
+          "sourceRef": "helloklarity-pramlintide-marketing",
+          "quote": "In a 6-week clinical trial, people taking pramlintide lost 2.1% of their body weight.",
+          "pageOrSection": "Medication overview page"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor marketing cites short-duration/single-trial weight-loss figures without study-limitation context",
+        "off-label use in non-diabetic patients is outside the FDA-approved indication and outside the boxed-warning-tested insulin-adjunct population",
+        "human evidence base for weight loss specifically is preliminary and methodologically inconsistent per the cited systematic review"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "pramlintide-conflict-weightloss-marketing-vs-evidence-001",
+      "claimRefs": [
+        "pramlintide-marketing-vs-evidence-weightloss-gap-001",
+        "pramlintide-efficacy-t1d-rct-glycemic-weight-001"
+      ],
+      "severity": "moderate",
+      "summary": "Vendor marketing pages present pramlintide as an effective weight-loss product using selective short-duration or single-trial figures, while the approved-population RCT shows only a modest secondary weight effect (0.4 kg over 52 weeks) and the dedicated weight-loss systematic review characterizes the evidence as preliminary and inconsistent; the marketing framing overstates certainty relative to the underlying literature.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS number, UNII, ChEMBL identifier, and RxNorm code not yet resolved from structured databases (PubChem/DrugBank full identifier panels required JavaScript/login and were not retrievable via fetch this session).",
+      "Off-label weight-loss evidence base is thin and methodologically inconsistent per Dunican 2010; current figures should be re-checked against any newer systematic reviews at review time.",
+      "Vendor marketing page (HelloKlarity) is a single example of a broader telehealth marketing pattern; broader marketing-claim surveillance was out of scope for this session."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-product",
+      "a1-regulator-backed",
+      "boxed-warning-severe-hypoglycemia",
+      "off-label-marketing-gap-documented",
+      "thin-human-evidence-for-weightloss-indication"
+    ]
+  }
+}

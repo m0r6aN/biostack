@@ -1,0 +1,404 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "cagrilintide-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T22:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Cagrilintide",
+    "aliases": [
+      "Cagri",
+      "AM833",
+      "Cagrilintide acetate"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Long-acting amylin analog (amylin-receptor agonist)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "171397054",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "novonordisk-cagrisema-nda-filing-2025",
+      "sourceType": "sponsor-press-release",
+      "authorityTier": "B1",
+      "title": "Novo Nordisk files for FDA approval of CagriSema, the first once-weekly combination of GLP-1 and amylin analogues for weight management",
+      "publisher": "Novo Nordisk A/S",
+      "url": "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916470&embed=true",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-12-18T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "fda-bulk-substances-503a-page",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Bulk Drug Substances Used in Compounding Under Section 503A of the FD&C Act",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/bulk-drug-substances-used-compounding-under-section-503a-fdc-act",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "fda-category2-bulk-substances-page",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "acc-redefine1-redefine2-journal-scan",
+      "sourceType": "professional-society-trial-summary",
+      "authorityTier": "B1",
+      "title": "REDEFINE 1 and REDEFINE 2: Greater Weight Loss With Combined Cagrilintide-Semaglutide vs. Either Drug Alone or Placebo",
+      "publisher": "American College of Cardiology",
+      "url": "https://www.acc.org/latest-in-cardiology/journal-scans/2025/07/02/14/43/redefine-1-and-redefine-2",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-07-02T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pharmacytimes-cagrilintide-monotherapy",
+      "sourceType": "trade-press-clinical-summary",
+      "authorityTier": "B2",
+      "title": "Cagrilintide Demonstrates Promising Results as Monotherapy for Obesity Management",
+      "publisher": "Pharmacy Times",
+      "url": "https://www.pharmacytimes.com/view/cagrilintide-demonstrates-promising-results-as-monotherapy-for-obesity-management",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-171397054",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Cagrilintide, CID 171397054",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Cagrilintide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "peptidedeck-cagrilintide-marketing",
+      "sourceType": "vendor-marketing-page",
+      "authorityTier": "D1",
+      "title": "Cagrilintide: Benefits, Dosage & Side Effects (2026)",
+      "publisher": "PeptideDeck",
+      "url": "https://www.peptidedeck.com/peptides/cagrilintide-benefits-dosage-side-effects",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "myglp1store-cagrilintide-product-page",
+      "sourceType": "vendor-marketing-page",
+      "authorityTier": "D1",
+      "title": "Cagrilintide for Sale | Buy Cagrilintide (CAGRI) Research Peptide",
+      "publisher": "MyGLP1Store",
+      "url": "https://myglp1store.com/product/cagri/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "cagrilintide-regulatory-not-approved-nda-filed-001",
+      "claimType": "regulatory",
+      "statement": "Cagrilintide is not an FDA-approved drug, alone or in combination. Novo Nordisk submitted a New Drug Application to FDA on December 18, 2025 for once-weekly CagriSema (cagrilintide 2.4 mg / semaglutide 2.4 mg) for weight management, with FDA review expected in 2026; as of this packet's generation, no approval decision has been reported and no product label exists on DailyMed.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "cagrilintide 2.4 mg + semaglutide 2.4 mg (proposed combination product, investigational)",
+        "useCase": "regulatory approval status",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "novonordisk-cagrisema-nda-filing-2025"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "novonordisk-cagrisema-nda-filing-2025",
+          "quote": "Today, Novo Nordisk announced the submission of a New Drug Application (NDA) to the U.S. Food and Drug Administration (FDA) for once-weekly CagriSema",
+          "pageOrSection": "Announcement lede"
+        },
+        {
+          "sourceRef": "novonordisk-cagrisema-nda-filing-2025",
+          "quote": "The FDA is expected to review the CagriSema application in 2026.",
+          "pageOrSection": "Announcement body"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical / decision-relevant regulatory claim",
+        "sourced from sponsor press release, not a primary FDA.gov filing notice \u2014 confirm current approval status against FDA.gov or DailyMed at review time, since an approval or complete response letter may have issued after this packet's access date",
+        "no independent, non-sponsor regulator source located confirming NDA filing; treat as review-gated until FDA.gov corroboration is found"
+      ]
+    },
+    {
+      "claimId": "cagrilintide-regulatory-not-on-fda-compounding-lists-001",
+      "claimType": "regulatory",
+      "statement": "As of the pages accessed, cagrilintide does not appear on either FDA's 503A bulk drug substances nomination/category page or FDA's Category 2 list of bulk drug substances that may present significant safety risks for compounding \u2014 unlike some other research peptides (e.g., ipamorelin) that are explicitly listed.",
+      "context": {
+        "population": "compounded-product users",
+        "route": null,
+        "formulation": "compounded cagrilintide",
+        "useCase": "compounding regulatory boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bulk-substances-503a-page",
+        "fda-category2-bulk-substances-page"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bulk-substances-503a-page",
+          "quote": "Cagrilintide is not mentioned on this page.",
+          "pageOrSection": "Full-page review, nomination/category tables"
+        },
+        {
+          "sourceRef": "fda-category2-bulk-substances-page",
+          "quote": "Cagrilintide is not mentioned on this page. The document contains two tables listing bulk drug substances in Category 2 under FDA interim policies for compounding, but cagrilintide does not appear in either table or anywhere else in the content provided.",
+          "pageOrSection": "Category 2 table review"
+        }
+      ],
+      "reviewFlags": [
+        "absence-of-evidence claim: absence from these lists is not an FDA safety endorsement and can change if FDA updates the lists",
+        "verify current listing status at review time; compounded cagrilintide/semaglutide combination products have separately drawn FDA warning-letter attention for unrelated GLP-1 peptides, so the regulatory landscape for this compound class is volatile"
+      ]
+    },
+    {
+      "claimId": "cagrilintide-mechanism-amylin-analog-001",
+      "claimType": "mechanism",
+      "statement": "Cagrilintide is a long-acting amylin analog that mimics the endogenous hormone amylin, acting on amylin receptors to influence appetite/satiety signaling and food intake; it is studied both as a monotherapy and, more prominently, coadministered with semaglutide (a GLP-1 receptor agonist) as the combination CagriSema.",
+      "context": {
+        "population": null,
+        "route": "subcutaneous (studied route)",
+        "formulation": "cagrilintide (investigational)",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pharmacytimes-cagrilintide-monotherapy",
+        "pubchem-cid-171397054"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pharmacytimes-cagrilintide-monotherapy",
+          "quote": "a long-acting amylin analogue that mimics the naturally occurring hormone amylin",
+          "pageOrSection": "Drug description"
+        }
+      ],
+      "reviewFlags": [
+        "PubChem CID 171397054 record was fetched but returned only metadata (formula C194H312N54O59S2, CID) with no independent mechanism narrative \u2014 mechanism statement rests primarily on the trade-press source and should be cross-checked against a peer-reviewed pharmacology reference at review time"
+      ]
+    },
+    {
+      "claimId": "cagrilintide-efficacy-monotherapy-redefine1-001",
+      "claimType": "efficacy",
+      "statement": "In REDEFINE 1, a phase 3, 68-week, double-blind, placebo- and active-controlled trial in 3,417 adults with overweight/obesity (without type 2 diabetes), cagrilintide 2.4 mg once weekly as monotherapy produced an average body weight reduction of 11.8% versus 2.3% with placebo, with 31.6% of cagrilintide recipients achieving greater than 15% weight loss versus 4.7% on placebo; the most common adverse effects were mild-to-moderate gastrointestinal events (nausea, vomiting, diarrhea, constipation), and the regimen was reported as well tolerated in this trial population.",
+      "context": {
+        "population": "adults with overweight or obesity plus at least one weight-related comorbidity, without type 2 diabetes (n=3,417 trial-wide; cagrilintide-alone arm n=302 per ACC summary of trial randomization)",
+        "route": "subcutaneous",
+        "formulation": "cagrilintide 2.4 mg once weekly (monotherapy arm)",
+        "useCase": "chronic weight management (investigational; not an approved indication)",
+        "doseText": "Trial protocol dose: cagrilintide 2.4 mg once weekly after titration, monotherapy arm of REDEFINE 1, 68 weeks (trial protocol description; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pharmacytimes-cagrilintide-monotherapy",
+        "acc-redefine1-redefine2-journal-scan"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pharmacytimes-cagrilintide-monotherapy",
+          "quote": "average body weight reduction of 11.8% compared with 2.3% with placebo after 68 weeks",
+          "pageOrSection": "Results summary"
+        },
+        {
+          "sourceRef": "pharmacytimes-cagrilintide-monotherapy",
+          "quote": "31.6% of patients receiving cagrilintide achieved greater than 15% weight loss, compared with 4.7% of patients receiving placebo",
+          "pageOrSection": "Results summary"
+        },
+        {
+          "sourceRef": "pharmacytimes-cagrilintide-monotherapy",
+          "quote": "most common adverse effects were gastrointestinal, including nausea, vomiting, diarrhea, and constipation that were mild to moderate in severity",
+          "pageOrSection": "Safety summary"
+        },
+        {
+          "sourceRef": "acc-redefine1-redefine2-journal-scan",
+          "quote": "2.4 mg each of cagrilintide-semaglutide (n=2,108), semaglutide alone (n=302), cagrilintide alone (n=302) or placebo (n=705) once weekly",
+          "pageOrSection": "REDEFINE 1 trial design"
+        }
+      ],
+      "reviewFlags": [
+        "extracted via trade-press (Pharmacy Times) and professional-society (ACC) summaries of the NEJM-published trial, not the primary NEJM/PubMed article text directly \u2014 PubMed and NEJM full-text pages were blocked by bot-detection (reCAPTCHA / 403) during this research session and must be independently re-verified against the primary NEJM article (DOI 10.1056/NEJMoa2502081) at review time",
+        "trial dose/schedule is protocol context only and must never be presented as a use recommendation",
+        "cagrilintide-alone arm was substantially smaller (n=302) than the combination arm (n=2,108); precision around the monotherapy estimate is correspondingly lower"
+      ]
+    },
+    {
+      "claimId": "cagrilintide-efficacy-combination-cagrisema-redefine-001",
+      "claimType": "efficacy",
+      "statement": "Coadministered with semaglutide as CagriSema (2.4 mg/2.4 mg once weekly) in REDEFINE 1 (adults with overweight/obesity, no type 2 diabetes), weight loss at week 68 was -20.4% versus -3.0% with placebo (estimated difference -17.3 percentage points, p<0.001), exceeding either monotherapy arm; in REDEFINE 2 (adults with overweight/obesity and type 2 diabetes), CagriSema produced -13.7% weight loss versus -3.4% with placebo (estimated difference -10.4 percentage points, p<0.001), and 74% of REDEFINE 2 participants receiving CagriSema achieved HbA1c \u22646.5% versus 15.9% with placebo. Gastrointestinal adverse events were substantially more frequent with CagriSema than placebo (80% vs 40% in REDEFINE 1).",
+      "context": {
+        "population": "REDEFINE 1: adults with overweight/obesity, no T2D (n=3,417); REDEFINE 2: adults with overweight/obesity and T2D, HbA1c 7-10% (n=1,206)",
+        "route": "subcutaneous",
+        "formulation": "cagrilintide 2.4 mg + semaglutide 2.4 mg once weekly (fixed co-formulation, investigational)",
+        "useCase": "chronic weight management and glycemic control in T2D (investigational; combination not yet FDA-approved)",
+        "doseText": "Trial protocol dose: CagriSema 2.4 mg/2.4 mg once weekly after titration, 68 weeks (trial protocol description; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "acc-redefine1-redefine2-journal-scan"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "acc-redefine1-redefine2-journal-scan",
+          "quote": "\u201320.4% with CagriSema vs. \u20133.0% with placebo (estimated difference, \u201317.3 percentage points; p<0.001)",
+          "pageOrSection": "REDEFINE 1 weight loss results"
+        },
+        {
+          "sourceRef": "acc-redefine1-redefine2-journal-scan",
+          "quote": "80% vs. 40%",
+          "pageOrSection": "REDEFINE 1 gastrointestinal adverse events"
+        },
+        {
+          "sourceRef": "acc-redefine1-redefine2-journal-scan",
+          "quote": "\u221213.7% with CagriSema and \u22123.4% with placebo (estimated difference, \u221210.4 percentage points; p<0.001)",
+          "pageOrSection": "REDEFINE 2 weight loss results"
+        },
+        {
+          "sourceRef": "acc-redefine1-redefine2-journal-scan",
+          "quote": "74% of patients with T2D receiving CagriSema achieved a glycated hemoglobin level \u22646.5% vs. 15.9% with placebo",
+          "pageOrSection": "REDEFINE 2 glycemic results"
+        }
+      ],
+      "reviewFlags": [
+        "extracted via a professional-society (ACC) journal-scan summary of the primary NEJM articles (DOI 10.1056/NEJMoa2502081 and 10.1056/NEJMoa2502082), not the primary full text directly \u2014 PubMed/NEJM pages returned reCAPTCHA/403 blocks during this session; re-verify against primary sources at review time",
+        "this is a combination-product finding (cagrilintide + semaglutide) and must not be presented as evidence of cagrilintide's standalone effect size",
+        "CagriSema is not yet FDA-approved; efficacy figures are trial results, not labeled claims"
+      ]
+    },
+    {
+      "claimId": "cagrilintide-marketing-vs-evidence-gap-001",
+      "claimType": "evidence-gap",
+      "statement": "Gray-market vendor and content pages marketing research-grade cagrilintide describe benefits in broader, more definitive terms than the controlled trial record supports \u2014 including claims of 'near-complete appetite loss' in some users, weight loss framed as being 'predominantly from fat mass, with preserved lean mass,' and self-administration titration schedules (e.g., weekly dose escalation from 0.16 mg to a 2.4 mg maintenance dose) presented as established protocol \u2014 despite cagrilintide having no FDA-approved product, no approved dosing regimen, and only trial-controlled (not self-administered, unsupervised) human safety data. Body-composition (fat-vs-lean mass) effects and the extremes of appetite suppression described on these pages are not supported by the extracted trial-summary evidence in this packet, which reports only mean weight-loss percentages and standard GI adverse-event rates.",
+      "context": {
+        "population": "consumers of gray-market/research-grade cagrilintide products",
+        "route": "subcutaneous (self-administered, per vendor/content pages)",
+        "formulation": "research-grade cagrilintide, sold 'for research use only, not for human consumption'",
+        "useCase": "weight loss / appetite suppression / body recomposition marketing claims",
+        "doseText": "Vendor-published titration schedule (0.16 mg through 2.4 mg/week) reflects marketing content, not a clinical or regulatory dosing standard, and is not a use recommendation"
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "peptidedeck-cagrilintide-marketing",
+        "myglp1store-cagrilintide-product-page",
+        "pharmacytimes-cagrilintide-monotherapy"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peptidedeck-cagrilintide-marketing",
+          "quote": "near-complete appetite loss",
+          "pageOrSection": "Appetite & appetite suppression section"
+        },
+        {
+          "sourceRef": "peptidedeck-cagrilintide-marketing",
+          "quote": "weight loss comes predominantly from fat mass, with preserved lean mass percentages",
+          "pageOrSection": "Body composition claims section"
+        },
+        {
+          "sourceRef": "myglp1store-cagrilintide-product-page",
+          "quote": "All products offered are intended strictly for laboratory research purposes. Products are not for human consumption and are not intended for diagnostic, therapeutic, or medical use.",
+          "pageOrSection": "Product disclaimer"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor/content-site claims (near-complete appetite loss, fat-specific body composition benefit, a de facto self-injection titration protocol) exceed what the extracted controlled-trial evidence in this packet establishes",
+        "vendors formally disclaim human use ('not for human consumption') while simultaneously publishing human self-administration dosing schedules elsewhere in the same content ecosystem \u2014 this contradiction itself is a notable pattern worth flagging to reviewers",
+        "no controlled human body-composition (DEXA/lean-mass) data were located and quoted in this session; this claim should be revisited if such data become available"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "cagrilintide-conflict-marketing-vs-trial-scope-001",
+      "claimRefs": [
+        "cagrilintide-efficacy-monotherapy-redefine1-001",
+        "cagrilintide-marketing-vs-evidence-gap-001"
+      ],
+      "severity": "moderate",
+      "summary": "Vendor/content marketing pages describe body-composition-specific (fat-vs-lean mass) and extreme appetite-suppression outcomes for cagrilintide that are not present in the quoted trial-summary evidence, which reports only aggregate body-weight-percentage and standard GI adverse-event outcomes; the gap between marketed benefit framing and the documented trial endpoints is unresolved pending access to primary trial body-composition sub-analyses, if any exist.",
+      "resolutionStatus": "needs-human-review"
+    },
+    {
+      "conflictId": "cagrilintide-conflict-primary-source-access-001",
+      "claimRefs": [
+        "cagrilintide-efficacy-monotherapy-redefine1-001",
+        "cagrilintide-efficacy-combination-cagrisema-redefine-001"
+      ],
+      "severity": "moderate",
+      "summary": "Primary sources for REDEFINE 1 and REDEFINE 2 (NEJM full text, DOI 10.1056/NEJMoa2502081 and 10.1056/NEJMoa2502082; PubMed abstracts) were inaccessible during this research session (403 errors / reCAPTCHA challenges blocked automated fetch), so efficacy claims rely on secondary summaries (Pharmacy Times, American College of Cardiology journal scan) rather than the primary published article text.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Primary NEJM/PubMed full-text and abstract pages for REDEFINE 1 and REDEFINE 2 were blocked by reCAPTCHA/403 during this session; efficacy claims rely on secondary (trade-press and professional-society) summaries and must be reconciled against the primary journal articles at review time.",
+      "CagriSema's FDA approval decision is pending as of this packet's access date (NDA filed 2025-12-18, review expected in 2026); regulatory claim must be re-verified against FDA.gov/DailyMed for any approval, complete response letter, or label issued after 2026-08-28.",
+      "CAS/UNII/DrugBank/ChEMBL/DOI/PMID identifiers not resolved from structured databases in this session.",
+      "Human evidence for cagrilintide is limited to two Novo Nordisk-sponsored phase 3 trials (REDEFINE 1 and 2) summarized secondarily; no independent (non-sponsor) controlled human study was located."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "not-yet-fda-approved",
+      "sponsor-funded-trials-only",
+      "primary-source-access-blocked",
+      "vendor-marketing-vs-trial-gap-documented",
+      "gray-market-available"
+    ]
+  }
+}
