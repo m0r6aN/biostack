@@ -17,6 +17,7 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<AuthChallenge> AuthChallenges { get; set; }
     public DbSet<Session> Sessions { get; set; }
     public DbSet<PersonProfile> PersonProfiles { get; set; }
+    public DbSet<ProfileGoal> ProfileGoals { get; set; }
     public DbSet<CompoundRecord> CompoundRecords { get; set; }
     public DbSet<CheckIn> CheckIns { get; set; }
     public DbSet<Protocol> Protocols { get; set; }
@@ -147,6 +148,18 @@ public sealed class BioStackDbContext : DbContext
                 .WithOne(te => te.PersonProfile)
                 .HasForeignKey(te => te.PersonId)
                 .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany(p => p.Goals)
+                .WithOne(goal => goal.PersonProfile)
+                .HasForeignKey(goal => goal.ProfileId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<ProfileGoal>(entity =>
+        {
+            entity.HasKey(goal => goal.Id);
+            entity.Property(goal => goal.GoalDefinitionId).HasMaxLength(100).IsRequired();
+            entity.Property(goal => goal.CreatedAtUtc).IsRequired();
+            entity.HasIndex(goal => new { goal.ProfileId, goal.GoalDefinitionId }).IsUnique();
         });
 
         modelBuilder.Entity<CompoundRecord>(entity =>

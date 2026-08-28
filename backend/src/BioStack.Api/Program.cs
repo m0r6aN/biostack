@@ -312,6 +312,7 @@ builder.Services.AddDbContext<BioStackDbContext>(options =>
 
 // ── Repositories ────────────────────────────────────────────────────────────
 builder.Services.AddScoped<IPersonProfileRepository, PersonProfileRepository>();
+builder.Services.AddScoped<IProfileGoalRepository, ProfileGoalRepository>();
 builder.Services.AddScoped<ICompoundRecordRepository, CompoundRecordRepository>();
 builder.Services.AddScoped<ICheckInRepository, CheckInRepository>();
 builder.Services.AddScoped<IProtocolRepository, ProtocolRepository>();
@@ -361,6 +362,7 @@ builder.Services.AddScoped<IYouTubeTranscriptMcpClient, NullYouTubeTranscriptMcp
 builder.Services.AddScoped<ITranscriptSourceMaterialProvider, YouTubeTranscriptSourceMaterialProvider>();
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IGoalService, GoalService>();
 builder.Services.AddScoped<IOwnershipGuard, OwnershipGuard>();
 builder.Services.AddScoped<IConsentGate, ConsentGate>();
 builder.Services.AddScoped<BioStack.Api.Auth.RequireConsentFilter>();
@@ -470,6 +472,7 @@ app.MapAuthEndpoints();
 app.MapConsentEndpoints();
 app.MapBillingEndpoints();
 app.MapProfileEndpoints();
+app.MapGoalEndpoints();
 app.MapCompoundEndpoints();
 app.MapCheckInEndpoints();
 app.MapProtocolEndpoints();
