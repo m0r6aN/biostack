@@ -48,16 +48,9 @@ vi.mock('next/link', () => ({
 
 import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
-import KnowledgeSlugPage from '@/app/knowledge/[slug]/page';
+import { CompoundDossierExperience } from '@/components/knowledge/CompoundDossierExperience';
 
 const mockGetEntry = vi.mocked(apiClient.getKnowledgeEntry);
-const routeParams = (slug: string): Promise<{ slug: string }> => {
-  const value = { slug };
-  return Object.assign(Promise.resolve(value), {
-    status: 'fulfilled' as const,
-    value,
-  });
-};
 
 const mockEntry = {
   canonicalName: 'Creatine',
@@ -90,7 +83,7 @@ describe('/knowledge/[slug] page', () => {
 
   it('renders CompoundIntelligenceCard when getKnowledgeEntry resolves', async () => {
     mockGetEntry.mockResolvedValue(mockEntry);
-    render(<KnowledgeSlugPage params={routeParams('creatine')} />);
+    render(<CompoundDossierExperience slug="creatine" />);
     await waitFor(() => {
       expect(screen.getByTestId('compound-intelligence-card')).toBeInTheDocument();
       expect(screen.getByText('Creatine')).toBeInTheDocument();
@@ -105,14 +98,14 @@ describe('/knowledge/[slug] page', () => {
 
   it('shows skeleton while loading', () => {
     mockGetEntry.mockReturnValue(new Promise(() => {})); // never resolves
-    render(<KnowledgeSlugPage params={routeParams('creatine')} />);
+    render(<CompoundDossierExperience slug="creatine" />);
     // DossierSkeleton renders animate-pulse cards
     expect(document.querySelectorAll('.animate-pulse').length).toBeGreaterThan(0);
   });
 
   it('shows rose error card when getKnowledgeEntry rejects', async () => {
     mockGetEntry.mockRejectedValue(new Error('Failed to load compound dossier.'));
-    render(<KnowledgeSlugPage params={routeParams('creatine')} />);
+    render(<CompoundDossierExperience slug="creatine" />);
     await waitFor(() => {
       expect(screen.getByText('Failed to load compound dossier.')).toBeInTheDocument();
     });
@@ -120,7 +113,7 @@ describe('/knowledge/[slug] page', () => {
 
   it('does not render CompoundRelationshipsSection before entry loads', () => {
     mockGetEntry.mockReturnValue(new Promise(() => {})); // never resolves
-    render(<KnowledgeSlugPage params={routeParams('creatine')} />);
+    render(<CompoundDossierExperience slug="creatine" />);
     expect(screen.queryByTestId('relationships-section')).not.toBeInTheDocument();
   });
 
@@ -133,7 +126,7 @@ describe('/knowledge/[slug] page', () => {
     });
     mockGetEntry.mockResolvedValue(mockEntry);
 
-    render(<KnowledgeSlugPage params={routeParams('creatine')} />);
+    render(<CompoundDossierExperience slug="creatine" />);
 
     await waitFor(() => {
       expect(screen.getByTestId('marketing-nav')).toBeInTheDocument();

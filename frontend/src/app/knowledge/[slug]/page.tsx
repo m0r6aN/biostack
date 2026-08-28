@@ -1,42 +1,13 @@
-'use client';
+import type { Metadata } from 'next';
+import { getApiBaseUrl } from '@/lib/apiBase';
+import { createPublicPageMetadata } from '@/lib/site';
+import type { KnowledgeEntry } from '@/lib/types';
+import { CompoundDossierExperience } from '@/components/knowledge/CompoundDossierExperience';
 
-import { use, useEffect, useState } from 'react';
-import Link from 'next/link';
-import { apiClient } from '@/lib/api';
-import { useAuth } from '@/lib/AuthProvider';
-import { KnowledgeEntry } from '@/lib/types';
-import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
-import { CompoundRelationshipsSection } from '@/components/knowledge/CompoundRelationshipsSection';
-import { MarketingFooter } from '@/components/marketing/MarketingFooter';
-import { MarketingNav } from '@/components/marketing/MarketingNav';
+export const revalidate = 3600;
 
-function DossierSkeleton() {
-  return (
-    <div className="max-w-3xl mx-auto space-y-6 animate-pulse">
-      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 space-y-3">
-        <div className="h-7 w-56 rounded-lg bg-white/10" />
-        <div className="h-3 w-24 rounded bg-white/6" />
-      </div>
-      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 space-y-3">
-        <div className="h-3 w-20 rounded bg-white/8" />
-        <div className="flex gap-2">
-          <div className="h-6 w-20 rounded-full bg-white/10" />
-          <div className="h-6 w-28 rounded-full bg-white/8" />
-        </div>
-        <div className="h-16 rounded-xl bg-white/6" />
-      </div>
-      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 space-y-3">
-        <div className="h-3 w-36 rounded bg-white/8" />
-        <div className="h-14 rounded-xl bg-white/6" />
-      </div>
-      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 space-y-3">
-        <div className="h-3 w-28 rounded bg-white/8" />
-        {[1, 2, 3].map(i => (
-          <div key={i} className="h-12 rounded-xl bg-white/6" />
-        ))}
-      </div>
-    </div>
-  );
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
 
 function safeDecodeSlug(value: string): string {
@@ -47,82 +18,96 @@ function safeDecodeSlug(value: string): string {
   }
 }
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
-
-export default function CompoundDossierPage({ params }: PageProps) {
-  const { slug } = use(params);
-  const { user, loading: authLoading } = useAuth();
-  const [entry, setEntry] = useState<KnowledgeEntry | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-    setError(null);
-
-    apiClient.getKnowledgeEntry(safeDecodeSlug(slug)).then(res => {
-      if (!cancelled) {
-        setEntry(res);
-        setLoading(false);
+async function fetchEntry(slug: string): Promise<KnowledgeEntry | null> {
+  try {
+    const response = await fetch(
+      `${getApiBaseUrl()}/api/v1/knowledge/compounds/${encodeURIComponent(safeDecodeSlug(slug))}`,
+      {
+        next: { revalidate: 3600 },
+        signal: AbortSignal.timeout(5000),
       }
-    }).catch(err => {
-      if (!cancelled) {
-        setError(err?.message ?? 'Failed to load compound dossier.');
-        setLoading(false);
-      }
-    });
+    );
 
-    return () => { cancelled = true; };
-  }, [slug]);
+    if (!response.ok) {
+      return null;
+    }
 
-  if (authLoading) {
+    return (await response.json()) as KnowledgeEntry;
+  } catch {
+    // Server-side fetch is best-effort; the client experience fetches on its own.
     return null;
   }
+}
 
-  const content = (
-    <main className="min-h-screen bg-[#0a0a0b] py-8 px-4">
-      <nav className="max-w-3xl mx-auto mb-6">
-        <Link
-          href="/knowledge"
-          className="inline-flex items-center gap-1.5 text-xs text-white/40 hover:text-white/70 transition-colors"
-        >
-          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-          Compound Library
-        </Link>
-      </nav>
-
-      {loading ? (
-        <DossierSkeleton />
-      ) : error ? (
-        <div className="max-w-3xl mx-auto rounded-2xl border border-rose-400/20 bg-rose-500/[0.06] p-6">
-          <p className="text-sm text-rose-300">{error}</p>
-        </div>
-      ) : entry ? (
-        <>
-          <CompoundIntelligenceCard entry={entry} recommendationSurface="knowledge-detail" />
-          <CompoundRelationshipsSection
-            compoundName={entry.canonicalName}
-            aliases={entry.aliases}
-          />
-        </>
-      ) : null}
-    </main>
-  );
-
-  if (!user) {
-    return (
-      <div>
-        <MarketingNav />
-        {content}
-        <MarketingFooter />
-      </div>
-    );
+function truncate(value: string, max: number): string {
+  if (value.length <= max) {
+    return value;
   }
 
-  return content;
+  return `${value.slice(0, max - 1).trimEnd()}…`;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const entry = await fetchEntry(slug);
+  const path = `/knowledge/${encodeURIComponent(safeDecodeSlug(slug))}` as `/${string}`;
+
+  if (!entry) {
+    return createPublicPageMetadata({
+      title: 'Compound Dossier | BioStack',
+      description:
+        'A public compound dossier from the BioStack evidence library: what the research says, graded by evidence strength, with sources.',
+      path,
+    });
+  }
+
+  const description = truncate(
+    `${entry.classification} · Evidence tier: ${entry.evidenceTier}. ${entry.mechanismSummary}`,
+    155
+  );
+
+  return createPublicPageMetadata({
+    title: `${entry.canonicalName} Research & Evidence | BioStack`,
+    description,
+    path,
+  });
+}
+
+function buildStructuredData(entry: KnowledgeEntry, path: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${entry.canonicalName} Research & Evidence`,
+    url: path,
+    description: entry.mechanismSummary,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'BioStack',
+    },
+    about: {
+      '@type': 'ChemicalSubstance',
+      name: entry.canonicalName,
+      alternateName: entry.aliases,
+      description: entry.mechanismSummary,
+    },
+    citation: entry.sourceReferences,
+  };
+}
+
+export default async function CompoundDossierPage({ params }: PageProps) {
+  const { slug } = await params;
+  const entry = await fetchEntry(slug);
+  const path = `/knowledge/${encodeURIComponent(safeDecodeSlug(slug))}`;
+
+  return (
+    <>
+      {entry ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildStructuredData(entry, path)) }}
+        />
+      ) : null}
+      <CompoundDossierExperience slug={slug} initialEntry={entry} />
+    </>
+  );
 }

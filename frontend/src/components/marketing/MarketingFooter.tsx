@@ -10,6 +10,9 @@ export function MarketingFooter() {
           <Link href="/how-it-works" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             How it works
           </Link>
+          <Link href="/knowledge/methodology" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
+            How we grade evidence
+          </Link>
           <Link href="/tools" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             Tools
           </Link>

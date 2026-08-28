@@ -1,6 +1,7 @@
 import { metadata as faqMetadata } from '@/app/faq/page';
 import { metadata as howItWorksMetadata } from '@/app/how-it-works/page';
 import { metadata as knowledgeMetadata } from '@/app/knowledge/layout';
+import { metadata as methodologyMetadata } from '@/app/knowledge/methodology/page';
 import { metadata as homeMetadata } from '@/app/page';
 import { metadata as pricingMetadata } from '@/app/pricing/page';
 import { metadata as providersMetadata } from '@/app/providers/page';
@@ -22,13 +23,14 @@ import {
   createPublicPageMetadata,
 } from '@/lib/site';
 import type { Metadata } from 'next';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 const publicPages: Array<{ path: string; metadata: Metadata }> = [
   { path: '/', metadata: homeMetadata },
   { path: '/start', metadata: startMetadata },
   { path: '/providers', metadata: providersMetadata },
   { path: '/knowledge', metadata: knowledgeMetadata },
+  { path: '/knowledge/methodology', metadata: methodologyMetadata },
   { path: '/how-it-works', metadata: howItWorksMetadata },
   { path: '/safety', metadata: safetyMetadata },
   { path: '/pricing', metadata: pricingMetadata },
@@ -41,6 +43,10 @@ const publicPages: Array<{ path: string; metadata: Metadata }> = [
 ];
 
 describe('public SEO metadata', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   it('uses the live biostack.cc origin as the single metadata base', () => {
     expect(SITE_ORIGIN).toBe('https://biostack.cc');
     expect(SITE_URL.toString()).toBe('https://biostack.cc/');
@@ -55,14 +61,34 @@ describe('public SEO metadata', () => {
     expect(config.sitemap).not.toContain('biostack.app');
   });
 
-  it('publishes the exact public route set on the live canonical host', () => {
-    const entries = sitemap();
+  it('publishes the exact public route set on the live canonical host', async () => {
+    // Compound paths come from the knowledge API at build time; without it the
+    // sitemap must still ship every static public route.
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')));
+
+    const entries = await sitemap();
 
     expect(entries.map((entry) => new URL(entry.url).pathname)).toEqual(
       publicPages.map(({ path }) => path),
     );
     expect(entries.every((entry) => new URL(entry.url).origin === SITE_ORIGIN)).toBe(true);
     expect(entries.some((entry) => entry.url.includes('biostack.app'))).toBe(false);
+  });
+
+  it('appends compound dossier paths when the knowledge API responds', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => [{ canonicalName: 'BPC-157' }, { canonicalName: 'TB-500' }],
+      }),
+    );
+
+    const entries = await sitemap();
+    const paths = entries.map((entry) => new URL(entry.url).pathname);
+
+    expect(paths).toContain('/knowledge/BPC-157');
+    expect(paths).toContain('/knowledge/TB-500');
   });
 
   it.each(publicPages)(
