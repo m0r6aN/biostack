@@ -29,7 +29,7 @@ import Link from 'next/link';
 import { FormEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 type SurfaceMode = ToolMode;
-type BlendStatus = 'caution' | 'avoid' | 'unknown';
+type OverlapStatus = 'caution' | 'avoid' | 'unknown';
 
 interface ToolsDecisionSurfaceProps {
   initialMode?: SurfaceMode;
@@ -41,6 +41,13 @@ const massUnits: MassUnit[] = ['mcg', 'mg', 'g'];
 const concentrationUnits: ConcentrationUnit[] = ['mcg/mL', 'mg/mL'];
 const conversionUnits: MassUnit[] = ['mcg', 'mg', 'g'];
 const RECENT_COMPOUNDS_KEY = 'biostack.tools.recentCompounds.v1';
+
+export const COMPOUND_OVERLAP_COPY = {
+  title: 'Review compound overlap',
+  helper: 'Add another compound to review known overlap, redundancy, and interaction signals across your stack.',
+  idle: 'Run a check to review available interaction findings.',
+  boundary: 'This does not evaluate same-vial mixing, reconstitution compatibility, or overall clinical safety.',
+} as const;
 
 const modeCopy: Record<SurfaceMode, { label: string; title: string; description: string }> = {
   dose: {
@@ -81,7 +88,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   const [trackState, setTrackState] = useState<'idle' | 'tracking'>('idle');
   const [mobileOpen, setMobileOpen] = useState({
     reconstitution: false,
-    blend: false,
+    overlap: false,
   });
 
   const activeProfileId = currentProfileId ?? profiles[0]?.id ?? null;
@@ -135,8 +142,8 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
     ? `Calculated draw: ${formatNumber(dosing.result.u100UnitsPerAdministration, 1)} units on a U-100 syringe`
     : 'Enter valid numbers to calculate';
   const secondaryAnswer = dosing.result ? `${formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL for the entered amount` : dosing.error;
-  const blendResult = useMemo(
-    () => summarizeBlend(compatibilityState, compatibility, compound, additionalCompound, knowledge),
+  const overlapResult = useMemo(
+    () => summarizeCompoundOverlap(compatibilityState, compatibility, compound, additionalCompound, knowledge),
     [additionalCompound, compatibility, compatibilityState, compound, knowledge]
   );
   const stackInsights = useMemo(
@@ -447,13 +454,13 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             </MobileAccordion>
           )}
 
-          <MobileAccordion title="Check blend safety" open={mobileOpen.blend} onToggle={() => setMobileOpen((current) => ({ ...current, blend: !current.blend }))}>
-            <BlendSafetyPanel
+          <MobileAccordion title={COMPOUND_OVERLAP_COPY.title} open={mobileOpen.overlap} onToggle={() => setMobileOpen((current) => ({ ...current, overlap: !current.overlap }))}>
+            <CompoundOverlapPanel
               additionalCompound={additionalCompound}
               setAdditionalCompound={setAdditionalCompound}
               onCheck={() => void checkCompatibility()}
               state={compatibilityState}
-              result={blendResult}
+              result={overlapResult}
               knowledgeNames={knowledgeNames}
             />
           </MobileAccordion>
@@ -676,7 +683,7 @@ function InstructionList({ items }: { items: string[] }) {
   );
 }
 
-function BlendSafetyPanel({
+function CompoundOverlapPanel({
   additionalCompound,
   setAdditionalCompound,
   onCheck,
@@ -688,17 +695,18 @@ function BlendSafetyPanel({
   setAdditionalCompound: (value: string) => void;
   onCheck: () => void;
   state: string;
-  result: { status: BlendStatus; reasons: string[] };
+  result: { status: OverlapStatus; reasons: string[] };
   knowledgeNames: string[];
 }) {
   return (
     <div>
-      <p className="text-sm leading-6 text-white/52">Add another compound and check overlap, compatibility, or caution flags.</p>
+      <p className="text-sm leading-6 text-white/52">{COMPOUND_OVERLAP_COPY.helper}</p>
+      <p className="mt-2 text-xs leading-5 text-white/42">{COMPOUND_OVERLAP_COPY.boundary}</p>
       <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
         <label className="block">
           <span className="mb-2 block text-sm text-white/62">Additional compound</span>
-          <input list="biostack-blend-compounds" value={additionalCompound} onChange={(event) => setAdditionalCompound(event.target.value)} placeholder="Search or enter compound" className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45" />
-          <datalist id="biostack-blend-compounds">{knowledgeNames.map((name) => <option key={name} value={name} />)}</datalist>
+          <input list="biostack-overlap-compounds" value={additionalCompound} onChange={(event) => setAdditionalCompound(event.target.value)} placeholder="Search or enter compound" className="min-h-12 w-full rounded-lg border border-white/10 bg-[#0F141B] px-4 text-white outline-none transition-colors placeholder:text-white/30 focus:border-emerald-400/45" />
+          <datalist id="biostack-overlap-compounds">{knowledgeNames.map((name) => <option key={name} value={name} />)}</datalist>
         </label>
         <button type="button" onClick={onCheck} className="self-end rounded-lg border border-emerald-300/25 bg-emerald-400/12 px-4 py-3 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/50">
           {state === 'checking' ? 'Checking...' : 'Check'}
@@ -878,12 +886,12 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
   );
 }
 
-export function summarizeBlend(state: string, findings: InteractionFlag[], compound: string, additionalCompound: string, knowledge: KnowledgeEntry[]): { status: BlendStatus; reasons: string[] } {
+export function summarizeCompoundOverlap(state: string, findings: InteractionFlag[], compound: string, additionalCompound: string, knowledge: KnowledgeEntry[]): { status: OverlapStatus; reasons: string[] } {
   if (state === 'error') {
     return { status: 'unknown', reasons: ['Compatibility could not be evaluated from the available data.'] };
   }
   if (state !== 'checked') {
-    return { status: 'unknown', reasons: ['Run a check to see blend findings.'] };
+    return { status: 'unknown', reasons: [COMPOUND_OVERLAP_COPY.idle] };
   }
   if (findings.length === 0) {
     const pairNote = pairedNote(compound, additionalCompound, knowledge);
