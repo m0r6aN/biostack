@@ -3,34 +3,34 @@ import { LandingPathCard } from './LandingPathCard';
 
 const entryPaths = [
   {
-    label: 'Analyzer',
-    title: 'Analyze a protocol',
-    body: 'Operator and Commander members can review a pasted, uploaded, scanned, or linked stack.',
-    href: '/tools/analyzer',
+    label: 'Library',
+    title: 'Explore the evidence',
+    body: 'Browse compound dossiers with evidence tiers, sources, and mechanism summaries.',
+    href: '/knowledge',
     tone: 'cyan',
-    signal: 'Operator required',
-    action: 'Analyze',
-    path: 'analyzer',
+    signal: 'Free · public',
+    action: 'Browse',
+    path: 'library',
   },
   {
-    label: 'Starter',
-    title: 'I am getting started',
-    body: 'Set up compound tracking without rebuilding a spreadsheet.',
+    label: 'Start',
+    title: 'Start free',
+    body: 'Keep what you look up and set up your own records, guided from the first step.',
     href: '/start',
     tone: 'emerald',
-    signal: 'Guided',
+    signal: 'Free account',
     action: 'Start',
     path: 'starter',
   },
   {
-    label: 'Existing stack',
-    title: 'Analyze My Stack',
-    body: 'Review active compounds, overlap signals, and timeline context with Operator.',
+    label: 'Analyzer',
+    title: 'Analyze a protocol',
+    body: 'Review a pasted or uploaded stack against the evidence, with overlap and timeline context.',
     href: '/tools/analyzer',
     tone: 'sky',
-    signal: 'Operator access',
+    signal: 'Operator required',
     action: 'Analyze',
-    path: 'experienced',
+    path: 'analyzer',
   },
   {
     label: 'Provider',
@@ -82,14 +82,14 @@ export function LandingHero() {
       <div className="mx-auto flex min-h-[calc(90svh-61px)] max-w-7xl flex-col justify-center gap-5 px-5 pb-7 pt-5 sm:min-h-[calc(90svh-73px)] sm:px-8 sm:pt-8 lg:min-h-[calc(88svh-73px)] lg:gap-7 lg:py-7">
         <div className="max-w-5xl">
           <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.18em] text-emerald-200/78 sm:mb-4 sm:text-xs">
-            Built for peptides, SARMs, SERMs, and beyond
+            Evidence-graded research on peptides, SARMs, SERMs, and beyond
           </p>
           <h1 className="text-[2.45rem] font-semibold leading-[0.96] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            What you&apos;re taking. How it&apos;s structured.<br />
-            See what it&apos;s doing.
+            No prescriptions. No guesswork.<br />
+            Just what&apos;s known.
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-6 text-white/64 sm:mt-5 sm:text-lg">
-            Start with clarity. Then track, compare, and observe changes over time.
+            A free, public library of what the research says about peptides and similar compounds, graded by evidence strength, for anyone deciding for themselves. Tracking and analysis come after.
           </p>
         </div>
 

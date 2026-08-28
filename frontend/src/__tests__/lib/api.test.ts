@@ -152,32 +152,53 @@ describe('ApiClient', () => {
     expect(goals).toEqual(GOAL_DEFINITIONS);
   });
 
-  it('falls back to localStorage-backed profile goals when the API is unavailable', async () => {
+  it('returns nested profile goal definitions from the authenticated API contract', async () => {
     fetchMock.mockResolvedValue({
-      ok: false,
-      status: 503,
-      statusText: 'Unavailable',
+      ok: true,
+      status: 200,
+      json: async () => [{
+        id: 'profile-goal-1',
+        profileId: 'profile-1',
+        goalDefinitionId: GOAL_DEFINITIONS[0].id,
+        goalDefinition: GOAL_DEFINITIONS[0],
+        createdAtUtc: '2026-08-28T12:00:00Z',
+      }],
     });
-
-    localStorage.setItem('biostack_profile_goals', JSON.stringify({ 'profile-1': [GOAL_DEFINITIONS[0].id] }));
 
     const goals = await client.getProfileGoals('profile-1');
 
     expect(goals).toEqual([GOAL_DEFINITIONS[0]]);
   });
 
-  it('stores profile goals locally when the API write fails', async () => {
+  it('posts the complete profile goal set to the authenticated API contract', async () => {
     fetchMock.mockResolvedValue({
-      ok: false,
-      status: 503,
-      statusText: 'Unavailable',
+      ok: true,
+      status: 200,
+      json: async () => [],
     });
 
     await client.setProfileGoals('profile-1', [GOAL_DEFINITIONS[1].id]);
 
-    expect(localStorage.getItem('biostack_profile_goals')).toBe(
-      JSON.stringify({ 'profile-1': [GOAL_DEFINITIONS[1].id] })
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://api.example.test/api/v1/profiles/profile-1/goals',
+      expect.objectContaining({
+        method: 'POST',
+        body: JSON.stringify({ goalIds: [GOAL_DEFINITIONS[1].id] }),
+      })
     );
+  });
+
+  it('does not mask profile goal authorization or availability failures with local state', async () => {
+    fetchMock.mockResolvedValue({
+      ok: false,
+      status: 403,
+      statusText: 'Forbidden',
+      json: async () => ({ code: 'consent_required' }),
+    });
+
+    await expect(client.setProfileGoals('profile-1', [GOAL_DEFINITIONS[1].id]))
+      .rejects.toMatchObject({ status: 403, code: 'consent_required' });
+    expect(localStorage.getItem('biostack_profile_goals')).toBeNull();
   });
 
   describe('analyzeProtocol', () => {

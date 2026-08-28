@@ -11,7 +11,19 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$JwtSecret,
 
-    [string]$DatabaseProvider = "sqlite",
+    [Parameter(Mandatory = $true)]
+    [string]$DataProtectionBlobUri,
+
+    [Parameter(Mandatory = $true)]
+    [string]$DataProtectionKeyVaultKeyIdentifier,
+
+    [string]$DataProtectionManagedIdentityClientId = "",
+    [string]$DataProtectionManagedIdentityResourceId = "",
+
+    # PostgreSQL is the required production provider. SQLite was a temporary
+    # bootstrap option: it stores data on ephemeral revision storage (no mount
+    # is defined in this script), so a deploy or restart destroys it.
+    [string]$DatabaseProvider = "postgresql",
     [string]$PostgresConnectionString = "",
     [string]$WebUrlOverride = "",
     [string]$ApiUrlOverride = "",
@@ -26,6 +38,25 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+$dataProtectionApplicationName = "BioStack.Api.SessionCookie.v1"
+
+if (-not $DataProtectionBlobUri.StartsWith("https://", [System.StringComparison]::OrdinalIgnoreCase) -or
+    $DataProtectionBlobUri.Contains("?")) {
+    throw "DataProtectionBlobUri must be an HTTPS Blob object URI without a SAS token or query string."
+}
+
+if (-not $DataProtectionKeyVaultKeyIdentifier.StartsWith("https://", [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw "DataProtectionKeyVaultKeyIdentifier must be a versionless HTTPS Key Vault key URI."
+}
+
+$usesUserAssignedIdentity = -not [string]::IsNullOrWhiteSpace($DataProtectionManagedIdentityClientId) -or
+    -not [string]::IsNullOrWhiteSpace($DataProtectionManagedIdentityResourceId)
+if ($usesUserAssignedIdentity -and
+    ([string]::IsNullOrWhiteSpace($DataProtectionManagedIdentityClientId) -or
+     [string]::IsNullOrWhiteSpace($DataProtectionManagedIdentityResourceId))) {
+    throw "Provide both DataProtectionManagedIdentityClientId and DataProtectionManagedIdentityResourceId, or neither to use the API system-assigned identity."
+}
 
 function Require-AzCli {
     $azCmd = "C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd"
@@ -90,6 +121,13 @@ Invoke-Az @("acr", "build", "--resource-group", $ResourceGroup, "--registry", $a
 Invoke-Az @("containerapp", "env", "create", "--name", $envName, "--resource-group", $ResourceGroup, "--location", $Location)
 Invoke-Az @("containerapp", "create", "--name", $apiAppName, "--resource-group", $ResourceGroup, "--environment", $envName, "--image", "$acrLoginServer/biostack-api:latest", "--target-port", "5000", "--ingress", "external", "--registry-server", $acrLoginServer, "--registry-username", $acrUsername, "--registry-password", $acrPassword)
 
+if ($usesUserAssignedIdentity) {
+    Invoke-Az @("containerapp", "identity", "assign", "--name", $apiAppName, "--resource-group", $ResourceGroup, "--user-assigned", $DataProtectionManagedIdentityResourceId)
+}
+else {
+    Invoke-Az @("containerapp", "identity", "assign", "--name", $apiAppName, "--resource-group", $ResourceGroup, "--system-assigned")
+}
+
 $apiFqdn = & (Require-AzCli) containerapp show --name $apiAppName --resource-group $ResourceGroup --query properties.configuration.ingress.fqdn -o tsv
 if ($LASTEXITCODE -ne 0) { throw "Failed to resolve API FQDN." }
 $apiUrl = "https://$apiFqdn"
@@ -111,8 +149,15 @@ $apiEnvVars = @(
     "Cors__AllowedOrigins__0=https://placeholder",
     "PublicApiUrl=$publicApiUrl",
     "FrontendUrl=https://placeholder",
-    "Jwt__Secret=secretref:jwt-secret"
+    "Jwt__Secret=secretref:jwt-secret",
+    "DataProtection__ApplicationName=$dataProtectionApplicationName",
+    "DataProtection__BlobUri=$DataProtectionBlobUri",
+    "DataProtection__KeyVaultKeyIdentifier=$DataProtectionKeyVaultKeyIdentifier"
 )
+
+if ($usesUserAssignedIdentity) {
+    $apiEnvVars += "DataProtection__ManagedIdentityClientId=$DataProtectionManagedIdentityClientId"
+}
 
 if (-not [string]::IsNullOrWhiteSpace($SmtpHost)) {
     $apiEnvVars += @(
@@ -133,6 +178,13 @@ if (-not [string]::IsNullOrWhiteSpace($SmtpHost)) {
 $usePostgres = $DatabaseProvider.Equals("postgres", [System.StringComparison]::OrdinalIgnoreCase) -or
     $DatabaseProvider.Equals("postgresql", [System.StringComparison]::OrdinalIgnoreCase) -or
     $DatabaseProvider.Equals("npgsql", [System.StringComparison]::OrdinalIgnoreCase)
+
+if (-not $usePostgres) {
+    if ($env:BIOSTACK_ALLOW_EPHEMERAL_SQLITE -ne "1") {
+        throw "DatabaseProvider '$DatabaseProvider' provisions SQLite on EPHEMERAL container storage - user data is destroyed on deploy/restart. Use PostgreSQL, or set BIOSTACK_ALLOW_EPHEMERAL_SQLITE=1 only for throwaway environments."
+    }
+    Write-Warning "Provisioning with ephemeral SQLite: data will NOT survive deploys. Throwaway environments only."
+}
 
 if ($usePostgres) {
     if ([string]::IsNullOrWhiteSpace($PostgresConnectionString)) {
@@ -215,8 +267,15 @@ $apiFinalEnvVars = @(
     "Cors__AllowedOrigins__0=$publicWebUrl",
     "PublicApiUrl=$publicApiUrl",
     "FrontendUrl=$publicWebUrl",
-    "Jwt__Secret=secretref:jwt-secret"
+    "Jwt__Secret=secretref:jwt-secret",
+    "DataProtection__ApplicationName=$dataProtectionApplicationName",
+    "DataProtection__BlobUri=$DataProtectionBlobUri",
+    "DataProtection__KeyVaultKeyIdentifier=$DataProtectionKeyVaultKeyIdentifier"
 )
+
+if ($usesUserAssignedIdentity) {
+    $apiFinalEnvVars += "DataProtection__ManagedIdentityClientId=$DataProtectionManagedIdentityClientId"
+}
 
 if (-not [string]::IsNullOrWhiteSpace($SmtpHost)) {
     $apiFinalEnvVars += @(

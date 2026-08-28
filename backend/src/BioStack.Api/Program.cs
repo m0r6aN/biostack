@@ -4,6 +4,7 @@ using System.Threading.RateLimiting;
 using BioStack.Api.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
@@ -22,6 +23,7 @@ using BioStack.Application.Evidence;
 using BioStack.Application.Governance;
 using BioStack.Api.Governance;
 using Keon.Kompress;
+using Fido2NetLib;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,25 @@ builder.Logging.AddConsole();
 
 StripeProductionConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
 ProductionAuthConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
+ProductionDataProtectionConfiguration.Configure(
+    builder.Services,
+    builder.Configuration,
+    builder.Environment.IsProduction());
+var passkeyFeature = PasskeyFeatureConfiguration.Load(builder.Configuration);
+PasskeyFeatureConfiguration.Validate(
+    passkeyFeature,
+    builder.Environment.IsProduction(),
+    builder.Configuration["FrontendUrl"] ?? builder.Configuration["Auth:FrontendUrl"]);
+builder.Services.AddSingleton(passkeyFeature);
+builder.Services.AddFido2(options =>
+{
+    options.ServerDomain = passkeyFeature.Enabled ? passkeyFeature.RpId : "localhost";
+    options.ServerName = passkeyFeature.ServerName;
+    options.Origins = passkeyFeature.Enabled
+        ? passkeyFeature.Origins
+        : new HashSet<string>(StringComparer.Ordinal) { "http://localhost:3043" };
+    options.Timeout = 300000;
+});
 
 var stripeSecretKey = builder.Configuration["Stripe:SecretKey"];
 if (!string.IsNullOrWhiteSpace(stripeSecretKey))
@@ -182,6 +203,13 @@ builder.Services
         // non-/api paths keep the default redirect behavior.
         options.Events.OnRedirectToLogin = context =>
         {
+            if (context.Request.Cookies.ContainsKey(context.Options.Cookie.Name!))
+            {
+                context.Response.Cookies.Delete(
+                    context.Options.Cookie.Name!,
+                    context.Options.Cookie.Build(context.HttpContext));
+            }
+
             if (context.Request.Path.StartsWithSegments("/api"))
             {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -208,6 +236,9 @@ builder.Services
             if (string.IsNullOrWhiteSpace(sessionToken))
             {
                 context.RejectPrincipal();
+                context.Response.Cookies.Delete(
+                    context.Options.Cookie.Name!,
+                    context.Options.Cookie.Build(context.HttpContext));
                 return;
             }
 
@@ -223,12 +254,18 @@ builder.Services
             if (session is null)
             {
                 context.RejectPrincipal();
+                context.Response.Cookies.Delete(
+                    context.Options.Cookie.Name!,
+                    context.Options.Cookie.Build(context.HttpContext));
                 return;
             }
 
             if (context.Principal?.Identity is not ClaimsIdentity identity)
             {
                 context.RejectPrincipal();
+                context.Response.Cookies.Delete(
+                    context.Options.Cookie.Name!,
+                    context.Options.Cookie.Build(context.HttpContext));
                 return;
             }
 
@@ -312,6 +349,7 @@ builder.Services.AddDbContext<BioStackDbContext>(options =>
 
 // ── Repositories ────────────────────────────────────────────────────────────
 builder.Services.AddScoped<IPersonProfileRepository, PersonProfileRepository>();
+builder.Services.AddScoped<IProfileGoalRepository, ProfileGoalRepository>();
 builder.Services.AddScoped<ICompoundRecordRepository, CompoundRecordRepository>();
 builder.Services.AddScoped<ICheckInRepository, CheckInRepository>();
 builder.Services.AddScoped<IProtocolRepository, ProtocolRepository>();
@@ -361,6 +399,7 @@ builder.Services.AddScoped<IYouTubeTranscriptMcpClient, NullYouTubeTranscriptMcp
 builder.Services.AddScoped<ITranscriptSourceMaterialProvider, YouTubeTranscriptSourceMaterialProvider>();
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IGoalService, GoalService>();
 builder.Services.AddScoped<IOwnershipGuard, OwnershipGuard>();
 builder.Services.AddScoped<IConsentGate, ConsentGate>();
 builder.Services.AddScoped<BioStack.Api.Auth.RequireConsentFilter>();
@@ -440,6 +479,24 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
+if (app.Environment.IsProduction())
+{
+    // Resolve the remote key ring and perform a memory-only round trip before serving.
+    // Missing managed-identity roles, an unreachable Blob, or an unusable Key Vault key
+    // must fail the revision rather than silently minting incompatible session cookies.
+    var startupProtector = app.Services
+        .GetRequiredService<IDataProtectionProvider>()
+        .CreateProtector("BioStack.Api.StartupValidation.v1");
+    var startupProbe = startupProtector.Protect("data-protection-ready");
+    if (!string.Equals(
+            startupProtector.Unprotect(startupProbe),
+            "data-protection-ready",
+            StringComparison.Ordinal))
+    {
+        throw new InvalidOperationException("Production Data Protection startup validation failed.");
+    }
+}
+
 app.UseCors("ConfiguredOrigins");
 app.UseRateLimiter();
 app.UseAuthentication();
@@ -467,9 +524,11 @@ app.MapGet(ProductContract.Current.Health.KeonDependencyPath, async (IKeonRuntim
 .WithName("KeonRuntimeHealth");
 
 app.MapAuthEndpoints();
+app.MapPasskeyEndpoints();
 app.MapConsentEndpoints();
 app.MapBillingEndpoints();
 app.MapProfileEndpoints();
+app.MapGoalEndpoints();
 app.MapCompoundEndpoints();
 app.MapCheckInEndpoints();
 app.MapProtocolEndpoints();
@@ -506,7 +565,11 @@ try
         await ProductionMigrationHistoryBaseline.ReconcileAsync(db, migrationLogger);
 
         // Apply pending EF migrations on startup so fresh deployments self-migrate.
-        db.Database.Migrate();
+        await db.Database.MigrateAsync();
+
+        // Existence-only checks cannot prove that Npgsql can materialize critical CLR types.
+        // Validate the final provider-native type and nullability contract before serving traffic.
+        await ProductionDatabaseSchemaReadiness.ValidateAsync(db, migrationLogger);
         await InteractionSchemaBootstrapper.EnsureCompoundInteractionHintsTableAsync(db);
     }
     else

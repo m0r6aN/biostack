@@ -19,7 +19,10 @@ vi.mock('@/lib/AuthProvider', () => ({
 
 describe('AppShell', () => {
   beforeEach(() => {
-    useAuthMock.mockReturnValue({ user: { id: '1', email: 'test@test.com', displayName: 'Test', role: 0 } });
+    useAuthMock.mockReturnValue({
+      user: { id: '1', email: 'test@test.com', displayName: 'Test', role: 0 },
+      loading: false,
+    });
   });
 
   it('renders app chrome on app routes', () => {
@@ -91,7 +94,7 @@ describe('AppShell', () => {
   });
 
   it('does not render app chrome on /knowledge for anonymous visitors', () => {
-    useAuthMock.mockReturnValue({ user: null });
+    useAuthMock.mockReturnValue({ user: null, loading: false });
     usePathnameMock.mockReturnValue('/knowledge');
 
     render(
@@ -105,7 +108,10 @@ describe('AppShell', () => {
   });
 
   it('renders app chrome on /knowledge for authenticated users', () => {
-    useAuthMock.mockReturnValue({ user: { id: '1', email: 'test@test.com', displayName: 'Test', role: 0 } });
+    useAuthMock.mockReturnValue({
+      user: { id: '1', email: 'test@test.com', displayName: 'Test', role: 0 },
+      loading: false,
+    });
     usePathnameMock.mockReturnValue('/knowledge');
 
     render(
@@ -116,5 +122,34 @@ describe('AppShell', () => {
 
     expect(screen.getByText('Sidebar')).toBeInTheDocument();
     expect(screen.getByText('Knowledge content')).toBeInTheDocument();
+  });
+
+  it('withholds protected content while the session is being checked', () => {
+    useAuthMock.mockReturnValue({ user: null, loading: true });
+    usePathnameMock.mockReturnValue('/profiles');
+
+    render(
+      <AppShell>
+        <div>Sensitive profile content</div>
+      </AppShell>,
+    );
+
+    expect(screen.getByRole('status')).toHaveTextContent('Checking your session');
+    expect(screen.queryByText('Sensitive profile content')).not.toBeInTheDocument();
+    expect(screen.queryByText('Sidebar')).not.toBeInTheDocument();
+  });
+
+  it('withholds protected content after an invalid session while redirect begins', () => {
+    useAuthMock.mockReturnValue({ user: null, loading: false });
+    usePathnameMock.mockReturnValue('/profiles');
+
+    render(
+      <AppShell>
+        <div>Sensitive profile content</div>
+      </AppShell>,
+    );
+
+    expect(screen.getByRole('status')).toHaveTextContent('Redirecting to sign in');
+    expect(screen.queryByText('Sensitive profile content')).not.toBeInTheDocument();
   });
 });

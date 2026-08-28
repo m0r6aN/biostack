@@ -25,7 +25,7 @@ describe('SignInPage', () => {
     fireEvent.change(screen.getByLabelText('Email'), {
       target: { value: 'User@Example.com' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Email me a sign-in link' }));
 
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledWith(
@@ -54,7 +54,7 @@ describe('SignInPage', () => {
     fireEvent.change(screen.getByLabelText('Email'), {
       target: { value: 'User@Example.com' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Email me a sign-in link' }));
 
     expect(await screen.findByText('We could not send that sign-in link. Try again in a moment.')).toBeInTheDocument();
     expect(screen.queryByText('Check your inbox')).not.toBeInTheDocument();
@@ -75,7 +75,29 @@ describe('SignInPage', () => {
 
     render(<SignInPage />);
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'user@example.com' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Email me a sign-in link' }));
+
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledWith(
+        '/api/v1/auth/start',
+        expect.objectContaining({
+          body: JSON.stringify({
+            contact: 'user@example.com',
+            channel: 'email',
+            redirectPath: '/protocol-console',
+          }),
+        }),
+      );
+    });
+  });
+
+  it('does not translate a scheme-relative callback URL into a local return path', async () => {
+    callbackUrl = '%2F%2Fevil.example%2Fprofiles';
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({}) });
+
+    render(<SignInPage />);
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'user@example.com' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Email me a sign-in link' }));
 
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledWith(

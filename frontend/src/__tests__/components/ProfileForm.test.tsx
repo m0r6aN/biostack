@@ -6,10 +6,12 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 vi.mock('@/components/goals/GoalPicker', () => ({
   GoalPicker: ({
     customGoalNote,
+    selectedGoalIds,
     onChange,
     onCustomGoalNoteChange,
   }: {
     customGoalNote: string;
+    selectedGoalIds: string[];
     onChange: (goalIds: string[]) => void;
     onCustomGoalNoteChange: (value: string) => void;
   }) => (
@@ -22,6 +24,10 @@ vi.mock('@/components/goals/GoalPicker', () => ({
       />
       <button type="button" onClick={() => onChange(['recovery'])}>
         Select recovery goal
+      </button>
+      <span data-testid="selected-goals">{selectedGoalIds.join(',')}</span>
+      <button type="button" onClick={() => onChange([])}>
+        Clear goals
       </button>
     </div>
   ),
@@ -93,5 +99,36 @@ describe('ProfileForm', () => {
 
     expect(onCancel).toHaveBeenCalledTimes(1);
     expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('loads persisted goals for editing and can submit an empty replacement set', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    const profile = {
+      id: 'profile-1',
+      displayName: 'Existing Profile',
+      sex: 'Female',
+      age: 34,
+      weight: 72.5,
+      goalSummary: '',
+      notes: '',
+      createdAtUtc: '2026-08-28T12:00:00Z',
+      updatedAtUtc: '2026-08-28T12:00:00Z',
+    };
+
+    render(
+      <ProfileForm
+        initialData={profile}
+        initialGoalIds={['recovery-post-workout', 'energy-levels']}
+        onSubmit={onSubmit}
+        onCancel={vi.fn()}
+      />
+    );
+
+    expect(screen.getByTestId('selected-goals')).toHaveTextContent('recovery-post-workout,energy-levels');
+    fireEvent.click(screen.getByRole('button', { name: 'Clear goals' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Update Profile' }));
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
+    expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ selectedGoalIds: [] }));
   });
 });

@@ -2,6 +2,7 @@
 
 import { Sidebar } from '@/components/Sidebar';
 import { useAuth } from '@/lib/AuthProvider';
+import { isPublicRoutePath } from '@/lib/productContract';
 import { usePathname } from 'next/navigation';
 
 const APP_ROUTE_PREFIXES = [
@@ -26,11 +27,20 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  const isProtectedRoute = !isPublicRoutePath(pathname);
   const isKnowledgeRoute = pathname.startsWith('/knowledge');
   const isAppRoute =
     APP_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix)) &&
     (!isKnowledgeRoute || Boolean(user));
+
+  if (isProtectedRoute && (loading || !user)) {
+    return (
+      <main className="flex min-h-screen items-center justify-center px-6 text-center text-sm text-white/55">
+        <p role="status">{loading ? 'Checking your session…' : 'Redirecting to sign in…'}</p>
+      </main>
+    );
+  }
 
   if (!isAppRoute) {
     return <>{children}</>;

@@ -841,7 +841,7 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
           aria-expanded={open}
           aria-controls={open ? dialogId : undefined}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full text-white/40 transition-colors hover:text-emerald-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
+          className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-white/40 transition-colors hover:text-emerald-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
         >
           <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4" aria-hidden="true">
             <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-2.5a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4A.75.75 0 0 1 8 5.5Zm0-2a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
@@ -850,8 +850,8 @@ function NumberWithUnitFieldWithInfo<TUnit extends string>({ label, help, value,
       </span>
       {help && <span className="mb-2 block text-xs leading-5 text-white/45">{help}</span>}
       <div className="flex min-h-12 overflow-hidden rounded-lg border border-white/10 bg-[#0F141B] focus-within:border-emerald-400/45">
-        <input type="number" min="0" step="0.1" value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
-        <select value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
+        <input type="number" min="0" step="0.1" aria-label={label} value={Number.isNaN(value) ? '' : value} onChange={(event) => onValueChange(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 text-white outline-none placeholder:text-white/30" />
+        <select aria-label={`${label} unit`} value={unit} onChange={(event) => onUnitChange(event.target.value as TUnit)} className="border-l border-white/10 bg-[#111821] px-3 text-sm text-white outline-none">
           {units.map((item) => <option key={item} value={item}>{item}</option>)}
         </select>
       </div>

@@ -57,42 +57,42 @@ export const GOAL_CATEGORIES: GoalCategoryMeta[] = [
 
 export const GOAL_DEFINITIONS: GoalDefinition[] = [
   // Recovery & Repair
-  { id: 'recovery-muscles', name: 'Repair muscles, joints, and tendons', category: 'recovery', description: 'Support structural tissue recovery and resilience', isActive: true },
-  { id: 'recovery-inflammation', name: 'Reduce inflammation', category: 'recovery', description: 'Manage systemic and localized inflammatory response', isActive: true },
-  { id: 'recovery-injury', name: 'Accelerate injury healing', category: 'recovery', description: 'Support faster recovery from acute injuries', isActive: true },
-  { id: 'recovery-post-workout', name: 'Improve post-workout recovery', category: 'recovery', description: 'Reduce soreness and speed up training recovery', isActive: true },
+  { id: 'recovery-muscles', name: 'Muscle, joint, and tendon recovery', category: 'recovery', description: 'Observe comfort, function, and recovery patterns over time', isActive: true },
+  { id: 'recovery-inflammation', name: 'Inflammation-related patterns', category: 'recovery', description: 'Track user-reported inflammation-related changes over time', isActive: true },
+  { id: 'recovery-injury', name: 'Injury recovery', category: 'recovery', description: 'Observe recovery trends following an injury', isActive: true },
+  { id: 'recovery-post-workout', name: 'Post-workout recovery', category: 'recovery', description: 'Track soreness and return-to-baseline after training', isActive: true },
 
   // Energy & Metabolism
-  { id: 'energy-levels', name: 'Improve energy levels', category: 'energy', description: 'Sustain daily energy without crashes', isActive: true },
-  { id: 'energy-mitochondrial', name: 'Enhance mitochondrial function', category: 'energy', description: 'Support cellular energy production pathways', isActive: true },
-  { id: 'energy-metabolic', name: 'Improve metabolic efficiency', category: 'energy', description: 'Optimize metabolic rate and nutrient utilization', isActive: true },
-  { id: 'energy-fat-loss', name: 'Support fat loss', category: 'energy', description: 'Facilitate body composition changes toward leanness', isActive: true },
+  { id: 'energy-levels', name: 'Daily energy', category: 'energy', description: 'Observe self-reported energy patterns across daily routines', isActive: true },
+  { id: 'energy-mitochondrial', name: 'Cellular energy context', category: 'energy', description: 'Organize observations related to cellular energy evidence', isActive: true },
+  { id: 'energy-metabolic', name: 'Metabolic patterns', category: 'energy', description: 'Track weight, appetite, and energy trends over time', isActive: true },
+  { id: 'energy-fat-loss', name: 'Body composition', category: 'energy', description: 'Observe weight and body-composition trends without prescribing a target', isActive: true },
 
   // Cognitive & Neurological
-  { id: 'cognitive-focus', name: 'Improve focus and clarity', category: 'cognitive', description: 'Sharpen sustained attention and mental clarity', isActive: true },
-  { id: 'cognitive-memory', name: 'Enhance memory', category: 'cognitive', description: 'Support working and long-term memory formation', isActive: true },
-  { id: 'cognitive-performance', name: 'Increase cognitive performance', category: 'cognitive', description: 'Elevate overall mental processing and output', isActive: true },
-  { id: 'cognitive-neuro-health', name: 'Support neurological health', category: 'cognitive', description: 'Maintain and protect nervous system function', isActive: true },
+  { id: 'cognitive-focus', name: 'Focus and clarity', category: 'cognitive', description: 'Track self-reported attention and clarity patterns', isActive: true },
+  { id: 'cognitive-memory', name: 'Memory', category: 'cognitive', description: 'Observe self-reported working and long-term memory patterns', isActive: true },
+  { id: 'cognitive-performance', name: 'Cognitive performance', category: 'cognitive', description: 'Track self-reported mental processing and output', isActive: true },
+  { id: 'cognitive-neuro-health', name: 'Neurological health context', category: 'cognitive', description: 'Organize neurological observations for longitudinal review', isActive: true },
 
   // Longevity & Aging
-  { id: 'longevity-aging', name: 'Slow signs of aging', category: 'longevity', description: 'Address visible and functional markers of aging', isActive: true },
-  { id: 'longevity-cellular', name: 'Improve cellular repair', category: 'longevity', description: 'Support autophagy and DNA repair mechanisms', isActive: true },
-  { id: 'longevity-pathways', name: 'Support longevity pathways', category: 'longevity', description: 'Activate pathways associated with extended healthspan', isActive: true },
+  { id: 'longevity-aging', name: 'Aging-related changes', category: 'longevity', description: 'Observe visible and functional changes over time', isActive: true },
+  { id: 'longevity-cellular', name: 'Cellular repair context', category: 'longevity', description: 'Organize observations related to cellular repair evidence', isActive: true },
+  { id: 'longevity-pathways', name: 'Longevity pathway context', category: 'longevity', description: 'Track observations alongside evidence about longevity-associated pathways', isActive: true },
 
   // Performance
-  { id: 'performance-endurance', name: 'Improve endurance', category: 'performance', description: 'Increase stamina and aerobic capacity', isActive: true },
-  { id: 'performance-strength', name: 'Increase strength output', category: 'performance', description: 'Enhance force production and power output', isActive: true },
-  { id: 'performance-training', name: 'Improve training capacity', category: 'performance', description: 'Increase volume and intensity tolerance', isActive: true },
+  { id: 'performance-endurance', name: 'Endurance', category: 'performance', description: 'Track stamina and aerobic-capacity observations', isActive: true },
+  { id: 'performance-strength', name: 'Strength output', category: 'performance', description: 'Observe strength and power trends over time', isActive: true },
+  { id: 'performance-training', name: 'Training capacity', category: 'performance', description: 'Track training volume, intensity, and recovery patterns', isActive: true },
 
   // Skin & Appearance
-  { id: 'skin-elasticity', name: 'Improve skin elasticity', category: 'skin', description: 'Restore and maintain skin firmness and bounce', isActive: true },
-  { id: 'skin-appearance', name: 'Enhance skin appearance', category: 'skin', description: 'Improve tone, texture, and overall skin quality', isActive: true },
-  { id: 'skin-collagen', name: 'Support collagen production', category: 'skin', description: 'Stimulate natural collagen synthesis', isActive: true },
+  { id: 'skin-elasticity', name: 'Skin elasticity', category: 'skin', description: 'Observe changes in skin firmness and elasticity', isActive: true },
+  { id: 'skin-appearance', name: 'Skin appearance', category: 'skin', description: 'Track self-reported tone, texture, and skin quality', isActive: true },
+  { id: 'skin-collagen', name: 'Collagen context', category: 'skin', description: 'Organize skin observations alongside collagen-related evidence', isActive: true },
 
   // Organ & System Health
-  { id: 'organ-health', name: 'Support organ health', category: 'organ', description: 'Maintain liver, kidney, and organ function', isActive: true },
-  { id: 'organ-gut', name: 'Improve gut health', category: 'organ', description: 'Support microbiome and digestive function', isActive: true },
-  { id: 'organ-cardiovascular', name: 'Support cardiovascular function', category: 'organ', description: 'Maintain heart and vascular system health', isActive: true },
+  { id: 'organ-health', name: 'Organ health context', category: 'organ', description: 'Organize user-entered observations for longitudinal review', isActive: true },
+  { id: 'organ-gut', name: 'Digestive patterns', category: 'organ', description: 'Track self-reported digestive and gastrointestinal patterns', isActive: true },
+  { id: 'organ-cardiovascular', name: 'Cardiovascular context', category: 'organ', description: 'Organize cardiovascular observations for longitudinal review', isActive: true },
 ];
 
 export function getCategoryMeta(categoryKey: string): GoalCategoryMeta {
@@ -150,8 +150,8 @@ export function useGoalDefinitions(): { goals: GoalDefinition[]; loading: boolea
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // For now, use local definitions. When backend ships GET /api/v1/goals,
-    // replace this with an API call and fall back to GOAL_DEFINITIONS on error.
+    // Keep the picker immediately available from the matching versioned catalog;
+    // authenticated profile persistence uses the backend goals contract.
     setGoals(GOAL_DEFINITIONS);
     setLoading(false);
   }, []);

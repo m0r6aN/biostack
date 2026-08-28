@@ -17,7 +17,7 @@ export default function HomePage() {
     name: 'BioStack',
     applicationCategory: 'HealthApplication',
     operatingSystem: 'Web',
-    description: 'Tracking, calculator, and stack mapping infrastructure for compound protocols.',
+    description: 'A free, public library of what the research says about peptides and similar compounds, graded by evidence strength, for anyone deciding for themselves.',
   };
 
   return (
@@ -38,7 +38,7 @@ export default function HomePage() {
               BioStack is not a doctor.
             </p>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-white/56 sm:mt-0">
-              BioStack organizes tracking, math, overlap context, and evidence references. It does not prescribe, diagnose, recommend compounds, or replace qualified medical care.
+              BioStack organizes source-graded evidence, math, overlap context, and your own records. It does not prescribe, diagnose, recommend compounds, or replace qualified medical care.
             </p>
           </div>
         </section>

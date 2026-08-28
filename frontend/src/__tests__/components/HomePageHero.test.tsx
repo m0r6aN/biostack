@@ -21,28 +21,29 @@ describe('HomePage hero', () => {
     render(<LandingHero />);
 
     expect(
-      screen.getByRole('heading', { name: /What you're taking\. How it's structured\.\s*See what it's doing\./ })
+      screen.getByRole('heading', { name: /No prescriptions\. No guesswork\.\s*Just what's known\./ })
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Start with clarity. Then track, compare, and observe changes over time.')
+      screen.getByText(/A free, public library of what the research says about peptides and similar compounds/)
     ).toBeInTheDocument();
     // Banned prescriptive copy must not appear on the landing hero.
     expect(screen.queryByText(/What to take\. How to use it\./)).not.toBeInTheDocument();
     expect(screen.queryByText(/optimize over time/)).not.toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /I am getting started/ })).toHaveAttribute('href', '/start');
-    expect(screen.getByRole('link', { name: /Analyze My Stack/ })).toHaveAttribute('href', '/tools/analyzer');
+    expect(screen.getByRole('link', { name: /Start free/ })).toHaveAttribute('href', '/start');
+    expect(screen.getByRole('link', { name: /Explore the evidence/ })).toHaveAttribute('href', '/knowledge');
     expect(screen.getByRole('link', { name: /I work with clients/ })).toHaveAttribute('href', '/providers');
     expect(screen.getByRole('link', { name: /Analyze a protocol/ })).toHaveAttribute('href', '/tools/analyzer');
+    // Exactly one entry path may target the analyzer (Round 1 F1: no duplicate destinations).
+    expect(screen.getAllByRole('link', { name: /Analyze/ })).toHaveLength(1);
     expect(screen.getByRole('link', { name: 'Need to calculate dose volume or reconstitution? → Start here' })).toHaveAttribute('href', '/tools');
     expect(screen.getByRole('link', { name: 'See Observer, Operator, and Commander' })).toHaveAttribute('href', '/pricing');
-    expect(screen.getByText('Starter')).toBeInTheDocument();
-    expect(screen.getByText('Set up compound tracking without rebuilding a spreadsheet.')).toBeInTheDocument();
-    expect(screen.getByText('Existing stack')).toBeInTheDocument();
-    expect(screen.getByText('Review active compounds, overlap signals, and timeline context with Operator.')).toBeInTheDocument();
+    expect(screen.getByText('Library')).toBeInTheDocument();
+    expect(screen.getByText('Browse compound dossiers with evidence tiers, sources, and mechanism summaries.')).toBeInTheDocument();
+    expect(screen.getByText('Keep what you look up and set up your own records, guided from the first step.')).toBeInTheDocument();
     expect(screen.getByText('Provider')).toBeInTheDocument();
     expect(screen.getByText('Request access to the provider pilot for permissioned observational workflows.')).toBeInTheDocument();
     expect(screen.getByText('Analyzer')).toBeInTheDocument();
-    expect(screen.getByText('Operator and Commander members can review a pasted, uploaded, scanned, or linked stack.')).toBeInTheDocument();
+    expect(screen.getByText('Review a pasted or uploaded stack against the evidence, with overlap and timeline context.')).toBeInTheDocument();
     expect(screen.getByText('Pilot request')).toBeInTheDocument();
     expect(screen.queryByText('Multi-client')).not.toBeInTheDocument();
     expect(screen.queryByText('Protocol Surface')).not.toBeInTheDocument();

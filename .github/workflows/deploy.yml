@@ -57,6 +57,14 @@ jobs:
         working-directory: frontend
         run: npm audit --omit=dev --audit-level=moderate
 
+      # ── Research sidecar dependency audit ────────────────────────────────────
+      - name: Audit research sidecar dependencies
+        working-directory: backend/research-sidecar
+        run: |
+          pipx install uv
+          uv export --frozen --no-hashes -o "$RUNNER_TEMP/sidecar-requirements.txt"
+          pipx run pip-audit --strict -r "$RUNNER_TEMP/sidecar-requirements.txt"
+
       - name: Run frontend tests
         working-directory: frontend
         # Bound worker concurrency so the launch suite fits reliably on the

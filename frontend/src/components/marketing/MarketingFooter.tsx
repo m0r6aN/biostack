@@ -4,7 +4,7 @@ export function MarketingFooter() {
   return (
     <footer className="border-t border-white/8 bg-black/20">
       <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 text-sm text-white/60 sm:px-8 md:flex-row md:items-center md:justify-between">
-        <p>BioStack. Tracking, math, and clarity for complex stacks.</p>
+        <p>BioStack. What the research says, graded by evidence strength.</p>
 
         <div className="flex flex-wrap items-center gap-4">
           <Link href="/how-it-works" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">

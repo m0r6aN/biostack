@@ -16,10 +16,10 @@ export function IntelligenceProofSection({ compact = false }: { compact?: boolea
           {!compact && (
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
-                href="/tools/analyzer"
+                href="/start"
                 className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2"
               >
-                Analyze a stack
+                Start free
               </Link>
               <Link
                 href="/pricing"
@@ -32,6 +32,11 @@ export function IntelligenceProofSection({ compact = false }: { compact?: boolea
         </div>
 
         <StackIntelligencePanel
+          contentOverrides={{
+            simple: {
+              nextAction: 'Browse the evidence library, or start free to keep a list of your own.',
+            },
+          }}
           compoundNames={['BPC-157', 'TB-500']}
           relationshipCandidates={[
             {
