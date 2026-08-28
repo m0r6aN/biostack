@@ -15,6 +15,8 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<AuthIdentity> AuthIdentities { get; set; }
     public DbSet<AuthChallenge> AuthChallenges { get; set; }
+    public DbSet<PasskeyCredential> PasskeyCredentials { get; set; }
+    public DbSet<PasskeyOperationChallenge> PasskeyOperationChallenges { get; set; }
     public DbSet<Session> Sessions { get; set; }
     public DbSet<PersonProfile> PersonProfiles { get; set; }
     public DbSet<ProfileGoal> ProfileGoals { get; set; }
@@ -86,6 +88,40 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(i => i.ValueNormalized).HasMaxLength(255).IsRequired();
             entity.HasIndex(i => new { i.Type, i.ValueNormalized }).IsUnique();
             entity.HasIndex(i => i.UserId);
+            entity.HasOne(i => i.PasskeyCredential)
+                .WithOne(c => c.Identity)
+                .HasForeignKey<PasskeyCredential>(c => c.IdentityId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<PasskeyCredential>(entity =>
+        {
+            entity.HasKey(c => c.Id);
+            entity.Property(c => c.CredentialId).IsRequired();
+            entity.Property(c => c.PublicKey).IsRequired();
+            entity.Property(c => c.UserHandle).IsRequired();
+            entity.Property(c => c.CredentialType).HasMaxLength(32).IsRequired();
+            entity.Property(c => c.Transports).HasMaxLength(256);
+            entity.Property(c => c.DisplayName).HasMaxLength(100).IsRequired();
+            entity.HasIndex(c => c.CredentialId).IsUnique();
+            entity.HasIndex(c => c.IdentityId).IsUnique();
+        });
+
+        modelBuilder.Entity<PasskeyOperationChallenge>(entity =>
+        {
+            entity.HasKey(c => c.Id);
+            entity.Property(c => c.Operation).HasMaxLength(32).IsRequired();
+            entity.Property(c => c.RequestIdHash).HasMaxLength(64).IsRequired();
+            entity.Property(c => c.OptionsJson).HasColumnType("text").IsRequired();
+            entity.Property(c => c.RedirectPath).HasMaxLength(512).IsRequired();
+            entity.Property(c => c.IpAddress).HasMaxLength(128);
+            entity.HasIndex(c => c.RequestIdHash).IsUnique();
+            entity.HasIndex(c => c.ExpiresAtUtc);
+            entity.HasIndex(c => c.UserId);
+            entity.HasOne(c => c.User)
+                .WithMany(u => u.PasskeyOperationChallenges)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<AuthChallenge>(entity =>

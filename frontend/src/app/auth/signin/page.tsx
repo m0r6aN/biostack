@@ -3,6 +3,7 @@
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import { getApiBaseUrl } from '@/lib/apiBase';
 import { canonicalRoutes } from '@/lib/productContract';
+import { authenticateWithPasskey, passkeysSupported } from '@/lib/passkeys';
 import { useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useEffect, useMemo, useState } from 'react';
 
@@ -40,11 +41,24 @@ function SignInPageContent() {
   const [isSending, setIsSending] = useState(false);
   const [sendError, setSendError] = useState('');
   const [cooldownUntil, setCooldownUntil] = useState(0);
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(0);
+  const [passkeysEnabled, setPasskeysEnabled] = useState(false);
+  const [isUsingPasskey, setIsUsingPasskey] = useState(false);
+  const [passkeyError, setPasskeyError] = useState('');
 
   const isInboxStep = Boolean(submittedEmail);
   const cooldownMs = Math.max(0, cooldownUntil - now);
   const cooldownSeconds = Math.ceil(cooldownMs / 1000);
+
+  useEffect(() => {
+    if (!passkeysSupported()) {
+      return;
+    }
+    void fetch(`${API_URL}/api/v1/auth/passkeys/status`, { credentials: 'include', cache: 'no-store' })
+      .then(response => response.ok ? response.json() : null)
+      .then((status: { enabled?: boolean } | null) => setPasskeysEnabled(status?.enabled === true))
+      .catch(() => setPasskeysEnabled(false));
+  }, []);
 
   useEffect(() => {
     if (!cooldownUntil) {
@@ -82,8 +96,10 @@ function SignInPageContent() {
         throw new Error('Unable to send sign-in link.');
       }
 
+      const submittedAt = Date.now();
       setSubmittedEmail(normalized);
-      setCooldownUntil(Date.now() + 30000);
+      setNow(submittedAt);
+      setCooldownUntil(submittedAt + 30000);
     } catch {
       setSendError('We could not send that sign-in link. Try again in a moment.');
     } finally {
@@ -94,6 +110,17 @@ function SignInPageContent() {
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     void startAuth();
+  }
+
+  async function handlePasskeySignIn() {
+    setIsUsingPasskey(true);
+    setPasskeyError('');
+    try {
+      window.location.replace(await authenticateWithPasskey(redirectPath));
+    } catch {
+      setPasskeyError('We could not use that passkey. Try again or use your email link.');
+      setIsUsingPasskey(false);
+    }
   }
 
   return (
@@ -109,7 +136,7 @@ function SignInPageContent() {
               <div className="mb-7 text-center">
                 <h1 className="text-2xl font-bold tracking-tight text-white">Sign in to BioStack</h1>
                 <p className="mt-2 text-sm leading-6 text-white/45">
-                  Use your email. We will send a private sign-in link.
+                  Use a passkey for your quickest return, or email for registration and recovery.
                 </p>
                 <p className="mt-3 text-sm leading-6 text-white/55">
                   Create a free profile to save your analysis and track how your stack changes over time. No card required.
@@ -139,6 +166,30 @@ function SignInPageContent() {
                 </div>
               )}
 
+              {passkeyError && (
+                <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
+                  {passkeyError}
+                </div>
+              )}
+
+              {passkeysEnabled && (
+                <>
+                  <button
+                    type="button"
+                    disabled={isUsingPasskey}
+                    onClick={() => void handlePasskeySignIn()}
+                    className="min-h-12 w-full rounded-lg bg-emerald-400 px-5 text-sm font-bold text-[#07110c] transition-colors hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-65"
+                  >
+                    {isUsingPasskey ? 'Checking passkey…' : 'Sign in with a passkey'}
+                  </button>
+                  <div className="my-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/25">
+                    <span className="h-px flex-1 bg-white/10" />
+                    <span>Email fallback</span>
+                    <span className="h-px flex-1 bg-white/10" />
+                  </div>
+                </>
+              )}
+
               <form onSubmit={onSubmit} className="space-y-4">
                 <label className="block">
                   <span className="mb-2 block text-sm font-semibold text-white/70">Email</span>
@@ -159,7 +210,7 @@ function SignInPageContent() {
                   disabled={isSending}
                   className="min-h-12 w-full rounded-lg bg-emerald-400 px-5 text-sm font-bold text-[#07110c] transition-colors hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-65"
                 >
-                  {isSending ? 'Sending...' : 'Continue'}
+                  {isSending ? 'Sending...' : 'Email me a sign-in link'}
                 </button>
               </form>
             </>

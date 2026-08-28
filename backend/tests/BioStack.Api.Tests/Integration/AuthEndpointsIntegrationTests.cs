@@ -5,10 +5,12 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using BioStack.Api;
+using BioStack.Api.Endpoints;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Enums;
+using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -18,6 +20,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Fido2NetLib;
+using Fido2NetLib.Objects;
 using Xunit;
 
 [Trait("Category", "Integration")]
@@ -505,6 +509,154 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
             .SingleAsync(c => c.Identity.ValueNormalized == "billing-redirect@example.com");
 
         Assert.Equal("/billing?plan=operator", challenge.RedirectPath);
+    }
+
+    [Fact]
+    public async Task PasskeyRegistrationOptions_RequireVerifiedEmailAndStoreHashedSingleUseCeremony()
+    {
+        await StartAsync("passkey-enroll@example.com", "/account/security");
+        var token = ReadToken(await LatestMagicLinkAsync());
+        var signedIn = await _client.PostAsJsonAsync("/api/v1/auth/verify", new VerifyAuthRequest(token), JsonOptions);
+        Assert.Equal(HttpStatusCode.OK, signedIn.StatusCode);
+
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/auth/passkeys/register/options",
+            new { displayName = "Windows Hello" },
+            JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        using var body = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        var requestId = body.RootElement.GetProperty("requestId").GetString();
+        Assert.False(string.IsNullOrWhiteSpace(requestId));
+        var selection = body.RootElement.GetProperty("publicKey").GetProperty("authenticatorSelection");
+        Assert.Equal("required", selection.GetProperty("residentKey").GetString());
+        Assert.Equal("required", selection.GetProperty("userVerification").GetString());
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var challenge = await db.PasskeyOperationChallenges.SingleAsync();
+        Assert.Equal("registration", challenge.Operation);
+        Assert.NotEqual(requestId, challenge.RequestIdHash);
+        Assert.DoesNotContain(requestId!, challenge.RequestIdHash);
+        Assert.Equal(64, challenge.RequestIdHash.Length);
+        Assert.InRange(challenge.ExpiresAtUtc - challenge.CreatedAtUtc, TimeSpan.FromMinutes(4.9), TimeSpan.FromMinutes(5.1));
+    }
+
+    [Fact]
+    public async Task PasskeyRegistrationOptions_RejectAnonymousUsers()
+    {
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/auth/passkeys/register/options",
+            new { displayName = "Anonymous" },
+            JsonOptions);
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task DiscoverablePasskeyAuthentication_UsesNoCredentialAllowListAndNormalizesRedirect()
+    {
+        var optionsResponse = await _client.PostAsJsonAsync(
+            "/api/v1/auth/passkeys/authenticate/options",
+            new { redirectPath = "https://evil.example/profiles" },
+            JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, optionsResponse.StatusCode);
+        using var body = JsonDocument.Parse(await optionsResponse.Content.ReadAsStringAsync());
+        var publicKey = body.RootElement.GetProperty("publicKey");
+        Assert.Equal("required", publicKey.GetProperty("userVerification").GetString());
+        Assert.Empty(publicKey.GetProperty("allowCredentials").EnumerateArray());
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var challenge = await db.PasskeyOperationChallenges.SingleAsync();
+        Assert.Equal("authentication", challenge.Operation);
+        Assert.Equal(ProductContract.Current.Routes.Canonical["postSignInDefault"], challenge.RedirectPath);
+    }
+
+    [Fact]
+    public async Task PasskeyAuthenticationChallenge_IsConsumedBeforeCredentialVerificationAndCannotReplay()
+    {
+        var optionsResponse = await _client.PostAsJsonAsync(
+            "/api/v1/auth/passkeys/authenticate/options",
+            new { redirectPath = "/profiles" },
+            JsonOptions);
+        using var optionsBody = JsonDocument.Parse(await optionsResponse.Content.ReadAsStringAsync());
+        var requestId = optionsBody.RootElement.GetProperty("requestId").GetString();
+        var completion = new PasskeyEndpoints.CompletePasskeyAuthenticationRequest(
+            requestId!,
+            new AuthenticatorAssertionRawResponse
+            {
+                Id = "AQ",
+                RawId = [1],
+                Type = PublicKeyCredentialType.PublicKey,
+                Response = new AuthenticatorAssertionRawResponse.AssertionResponse
+                {
+                    AuthenticatorData = [1],
+                    Signature = [1],
+                    ClientDataJson = [1],
+                    UserHandle = null,
+                },
+                ClientExtensionResults = new AuthenticationExtensionsClientOutputs(),
+            });
+
+        var first = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/authenticate/complete", completion, JsonOptions);
+        var replay = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/authenticate/complete", completion, JsonOptions);
+
+        Assert.Equal(HttpStatusCode.BadRequest, first.StatusCode);
+        Assert.Equal(HttpStatusCode.BadRequest, replay.StatusCode);
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var challenge = await db.PasskeyOperationChallenges.SingleAsync();
+        Assert.NotNull(challenge.ConsumedAtUtc);
+        Assert.Equal(2, challenge.AttemptCount);
+        Assert.Empty(await db.Sessions.ToListAsync());
+    }
+
+    [Fact]
+    public async Task PasskeyRemoval_FailsClosedWithoutVerifiedEmailRecovery()
+    {
+        await StartAsync("passkey-remove@example.com");
+        await _client.PostAsJsonAsync(
+            "/api/v1/auth/verify",
+            new VerifyAuthRequest(ReadToken(await LatestMagicLinkAsync())),
+            JsonOptions);
+
+        Guid credentialId;
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            var emailIdentity = await db.AuthIdentities.SingleAsync();
+            emailIdentity.IsVerified = false;
+            var passkeyIdentity = new AuthIdentity
+            {
+                Id = Guid.NewGuid(),
+                UserId = emailIdentity.UserId,
+                Type = "passkey",
+                ValueNormalized = new string('A', 64),
+                IsVerified = true,
+                VerifiedAtUtc = DateTime.UtcNow,
+            };
+            credentialId = Guid.NewGuid();
+            passkeyIdentity.PasskeyCredential = new PasskeyCredential
+            {
+                Id = credentialId,
+                IdentityId = passkeyIdentity.Id,
+                CredentialId = [1, 2, 3],
+                PublicKey = [4, 5, 6],
+                UserHandle = emailIdentity.UserId.ToByteArray(),
+                DisplayName = "Recovery guard",
+            };
+            db.AuthIdentities.Add(passkeyIdentity);
+            await db.SaveChangesAsync();
+        }
+
+        var response = await _client.DeleteAsync($"/api/v1/auth/passkeys/{credentialId}");
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+        using var verificationScope = _factory.Services.CreateScope();
+        var verificationDb = verificationScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        Assert.True(await verificationDb.PasskeyCredentials.AnyAsync(c => c.Id == credentialId));
     }
 
     [Fact]

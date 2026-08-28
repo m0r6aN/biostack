@@ -12,4 +12,5 @@ public sealed class AuthIdentity
 
     public AppUser User { get; set; } = null!;
     public ICollection<AuthChallenge> Challenges { get; set; } = new List<AuthChallenge>();
+    public PasskeyCredential? PasskeyCredential { get; set; }
 }

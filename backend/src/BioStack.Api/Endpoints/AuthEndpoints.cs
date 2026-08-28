@@ -21,7 +21,6 @@ public static class AuthEndpoints
     private const string EmailChannel = "email";
     private const string MagicLinkType = "magic_link";
     private static readonly TimeSpan ChallengeLifetime = TimeSpan.FromMinutes(15);
-    private static readonly TimeSpan SessionLifetime = TimeSpan.FromDays(30);
     private static readonly string[] RedirectAllowlist =
     [
         "/protocol-console",
@@ -36,6 +35,7 @@ public static class AuthEndpoints
         "/knowledge",
         "/billing",
         "/admin",
+        "/account",
         ProductContract.Current.Routes.Canonical["onboarding"],
         ProductContract.Current.Routes.Canonical["analyzer"],
         "/"
@@ -243,41 +243,9 @@ public static class AuthEndpoints
             challenge.Identity.VerifiedAtUtc = now;
         }
 
-        var sessionToken = GenerateToken();
-        var session = new Session
-        {
-            Id = Guid.NewGuid(),
-            UserId = challenge.Identity.UserId,
-            TokenHash = HashSecret(sessionToken),
-            CreatedAtUtc = now,
-            ExpiresAtUtc = now.Add(SessionLifetime),
-            IpAddress = http.Connection.RemoteIpAddress?.ToString(),
-            UserAgent = http.Request.Headers.UserAgent.ToString(),
-        };
-        db.Sessions.Add(session);
-        await db.SaveChangesAsync(ct);
-
         var user = challenge.Identity.User;
-        var claims = BuildClaims(user, sessionToken);
-        await http.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme)),
-            new AuthenticationProperties
-            {
-                IsPersistent = true,
-                ExpiresUtc = session.ExpiresAtUtc,
-                AllowRefresh = false,
-            });
-
         var redirectPath = NormalizeRedirectPath(challenge.RedirectPath).Path;
-        var hasCurrentConsent = user.ConsentAcceptedAtUtc.HasValue &&
-            string.Equals(user.ConsentVersion, ConsentGate.CurrentConsentVersion, StringComparison.Ordinal);
-        if (!hasCurrentConsent)
-        {
-            redirectPath = $"/onboarding/consent?returnTo={Uri.EscapeDataString(redirectPath)}";
-        }
-
-        return redirectPath;
+        return await AuthSessionIssuer.SignInAsync(user, redirectPath, db, http, ct);
     }
 
     private static async Task<IResult> GetSession(HttpContext http)
@@ -314,22 +282,6 @@ public static class AuthEndpoints
         return Results.NoContent();
     }
 
-    private static IEnumerable<Claim> BuildClaims(AppUser user, string sessionToken)
-    {
-        return
-        [
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim("sub", user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim("email", user.Email),
-            new Claim(ClaimTypes.Name, user.DisplayName),
-            new Claim("name", user.DisplayName),
-            new Claim("avatar", user.AvatarUrl ?? string.Empty),
-            new Claim("role", ((int)user.Role).ToString()),
-            new Claim("session_token", sessionToken),
-        ];
-    }
-
     private static UserInfoDto? UserFromClaims(ClaimsPrincipal principal)
     {
         var sub = principal.FindFirst("sub")?.Value ?? principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -358,7 +310,7 @@ public static class AuthEndpoints
         return normalized;
     }
 
-    private static NormalizedRedirectPath NormalizeRedirectPath(string? redirectPath)
+    internal static NormalizedRedirectPath NormalizeRedirectPath(string? redirectPath)
     {
         if (string.IsNullOrWhiteSpace(redirectPath) ||
             !redirectPath.StartsWith("/", StringComparison.Ordinal) ||
@@ -399,5 +351,5 @@ public static class AuthEndpoints
             .Replace('+', '-')
             .Replace('/', '_');
 
-    private sealed record NormalizedRedirectPath(string Path, bool UsedFallback);
+    internal sealed record NormalizedRedirectPath(string Path, bool UsedFallback);
 }
