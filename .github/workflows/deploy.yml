@@ -62,7 +62,10 @@ jobs:
         working-directory: backend/research-sidecar
         run: |
           pipx install uv
-          uv export --frozen --no-hashes -o "$RUNNER_TEMP/sidecar-requirements.txt"
+          # Audit third-party dependencies only. The sidecar itself is a local,
+          # unpublished project, so including `-e .` makes pip-audit try (and
+          # fail) to resolve biostack-research-sidecar from PyPI.
+          uv export --frozen --no-hashes --no-emit-project -o "$RUNNER_TEMP/sidecar-requirements.txt"
           pipx run pip-audit --strict -r "$RUNNER_TEMP/sidecar-requirements.txt"
 
       - name: Run frontend tests
