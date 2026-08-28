@@ -1,0 +1,439 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "ligandrol-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T23:50:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Ligandrol",
+    "aliases": [
+      "LGD-4033",
+      "VK5211",
+      "VK-5211",
+      "LGD4033"
+    ],
+    "classification": "Investigational drug (non-steroidal SARM)",
+    "compoundFamily": "Selective androgen receptor modulator (SARM)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "1165910-22-4",
+      "drugbank": null,
+      "pubchem": "44137686",
+      "chembl": null,
+      "doi": "10.1093/gerona/gls078",
+      "pmid": "22459616"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-warning-letter-prime-sports-2025",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Warning Letter: Prime Sports Nutrition (719433, 12/12/2025)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/prime-sports-nutrition-719433-12122025",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-12-12T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "fda-consumer-sarms-update",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Warns Against Use of SARMs, Including LGD-4033/Ligandrol, in Body-Building Products",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "basaria-2013-jgerontol-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "The Safety, Pharmacokinetics, and Effects of LGD-4033, a Novel Nonsteroidal Oral, Selective Androgen Receptor Modulator, in Healthy Young Men",
+      "publisher": "The Journals of Gerontology: Series A (Basaria S, Collins L, Dillon EL, et al., 2013); summary accessed via DrugBank",
+      "url": "https://go.drugbank.com/articles/A31488",
+      "doi": "10.1093/gerona/gls078",
+      "pmid": "22459616",
+      "publishedAt": "2013-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "viking-vk5211-phase2-hipfracture-2018",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Viking Therapeutics Announces Positive Top-Line Results from Phase 2 Study of VK5211 in Patients Recovering from Hip Fracture",
+      "publisher": "Viking Therapeutics, Inc. (press release via PR Newswire)",
+      "url": "https://www.prnewswire.com/news-releases/viking-therapeutics-announces-positive-top-line-results-from-phase-2-study-of-vk5211-in-patients-recovering-from-hip-fracture-300562365.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-44137686",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: VK-5211 / LGD-4033 / Ligandrol (CID 44137686)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/44137686/JSON",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "vikingtherapeutics-pipeline-overview",
+      "sourceType": "company-pipeline-page",
+      "authorityTier": "C1",
+      "title": "Pipeline Overview (VK5211 listed as SARM program for prevention of lean mass loss)",
+      "publisher": "Viking Therapeutics, Inc.",
+      "url": "https://vikingtherapeutics.com/pipeline/overview/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "moreplatesmoredates-lgd4033-marketing",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "LGD-4033 (Ligandrol) - Results, Clinical Trials & Reviews",
+      "publisher": "More Plates More Dates (fitness/supplement content site)",
+      "url": "https://moreplatesmoredates.com/lgd-4033-overview/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "ligandrol-regulatory-unapproved-status-001",
+      "claimType": "regulatory",
+      "statement": "Ligandrol (LGD-4033) has no FDA-approved use in any form; FDA classifies products containing SARMs, including LGD-4033/Ligandrol sold as body-building supplements, as unapproved new drugs, and has issued warning letters to sellers on that basis while separately warning consumers against using SARMs due to potentially dangerous side effects.",
+      "context": {
+        "population": "consumers of gray-market/supplement-marketed LGD-4033 products",
+        "route": "oral",
+        "formulation": "unapproved supplement/research-chemical products containing LGD-4033",
+        "useCase": "regulatory status and consumer safety warning",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-warning-letter-prime-sports-2025",
+        "fda-consumer-sarms-update"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warning-letter-prime-sports-2025",
+          "quote": "These products are unapproved new drugs under section 505(a) of the Federal Food, Drug, and Cosmetic Act",
+          "pageOrSection": "Warning letter body"
+        },
+        {
+          "sourceRef": "fda-warning-letter-prime-sports-2025",
+          "quote": "LGD Is A Selective Androgen Receptor Modulator (SARM)...It Has The Ability To Rapidly Increase Muscle Mass While Reducing Overall Body Fat.",
+          "pageOrSection": "Cited marketing language, warning letter"
+        },
+        {
+          "sourceRef": "fda-consumer-sarms-update",
+          "quote": "Because these are unapproved drug products with potentially dangerous side effects, and they have not been reviewed by the FDA for safety or efficacy, consumers should be advised against using SARMs.",
+          "pageOrSection": "FDA consumer update"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "warning-letter targets are individual sellers; verify letter is still current/active at review time"
+      ]
+    },
+    {
+      "claimId": "ligandrol-warning-serious-risks-001",
+      "claimType": "warning",
+      "statement": "FDA states that SARMs such as LGD-4033/Ligandrol have been linked in adverse event reports to serious health risks including increased risk of heart attack or stroke, liver injury and acute liver failure, psychosis/hallucinations, sleep disturbances, sexual dysfunction, infertility, pregnancy miscarriage, and testicular shrinkage; a separate FDA warning letter states life-threatening liver toxicity has occurred in people taking SARM-containing products.",
+      "context": {
+        "population": "general consumers, including teens and young adults per FDA's stated concern",
+        "route": "oral",
+        "formulation": "SARM-containing supplement/research-chemical products",
+        "useCase": "adverse event / safety warning",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-consumer-sarms-update",
+        "fda-warning-letter-prime-sports-2025"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-consumer-sarms-update",
+          "quote": "SARMs are potentially dangerous.",
+          "pageOrSection": "FDA consumer update"
+        },
+        {
+          "sourceRef": "fda-consumer-sarms-update",
+          "quote": "Increased risk of heart attack or stroke; Liver injury and acute liver failure; Psychosis/hallucinations; Sleep disturbances; Sexual dysfunction; Infertility; Pregnancy miscarriage; Testicular shrinkage",
+          "pageOrSection": "FDA consumer update, listed risks"
+        },
+        {
+          "sourceRef": "fda-warning-letter-prime-sports-2025",
+          "quote": "Life-threatening reactions, including liver toxicity, have occurred in people taking products containing SARMs. SARMs also have the potential to increase the risk of heart attack and stroke.",
+          "pageOrSection": "Warning letter body"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim",
+        "these reports are FDA adverse-event/pharmacovigilance statements about the SARM class generally, not a formal causality-established list specific to LGD-4033 alone"
+      ]
+    },
+    {
+      "claimId": "ligandrol-mechanism-identity-001",
+      "claimType": "mechanism",
+      "statement": "Ligandrol (LGD-4033, VK-5211) is a nonsteroidal, orally bioavailable selective androgen receptor modulator; it was originally developed by Ligand Pharmaceuticals and later licensed to Viking Therapeutics as VK5211, and remains an investigational compound with no marketed drug product.",
+      "context": {
+        "population": null,
+        "route": "oral",
+        "formulation": "small-molecule SARM, investigational",
+        "useCase": "mechanism / development-history description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-44137686",
+        "vikingtherapeutics-pipeline-overview"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-44137686",
+          "quote": "This investigational selective androgen receptor modulator (SARM) has reached Phase 2 development status and has been studied for treating muscle wasting and osteoporosis.",
+          "pageOrSection": "PubChem CID 44137686 record"
+        },
+        {
+          "sourceRef": "vikingtherapeutics-pipeline-overview",
+          "quote": "VK5211 (SARM for muscle loss prevention)",
+          "pageOrSection": "Pipeline overview listing"
+        }
+      ],
+      "reviewFlags": [
+        "confirm current Viking Therapeutics pipeline status for VK5211 at review time; no Phase 3 trial or approval has been identified in this research pass"
+      ]
+    },
+    {
+      "claimId": "ligandrol-efficacy-lbm-healthy-men-001",
+      "claimType": "efficacy",
+      "statement": "In a randomized, double-blind, placebo-controlled dose-escalation trial in 76 healthy men, 21 days of oral LGD-4033 produced dose-dependent increases in lean body mass without a significant change in fat mass; the drug was reported as well tolerated with no drug-related serious adverse events.",
+      "context": {
+        "population": "healthy men, 21-50 years (n=76)",
+        "route": "oral",
+        "formulation": "LGD-4033 capsule/tablet, investigational",
+        "useCase": "short-term lean body mass change in healthy adults (investigational; not an approved indication)",
+        "doseText": "0.1 mg, 0.3 mg, or 1.0 mg once daily for 21 days versus placebo (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "basaria-2013-jgerontol-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "basaria-2013-jgerontol-rct",
+          "quote": "76 healthy men (21-50 years) were randomized to placebo or 0.1, 0.3, or 1.0 mg LGD-4033 daily for 21 days",
+          "pageOrSection": "Abstract/study summary"
+        },
+        {
+          "sourceRef": "basaria-2013-jgerontol-rct",
+          "quote": "Lean body mass increased dose dependently, but fat mass did not change significantly",
+          "pageOrSection": "Abstract/study summary"
+        },
+        {
+          "sourceRef": "basaria-2013-jgerontol-rct",
+          "quote": "LGD-4033 was well tolerated. There were no drug-related serious adverse events. Frequency of adverse events was similar between active and placebo groups",
+          "pageOrSection": "Abstract/study summary"
+        }
+      ],
+      "reviewFlags": [
+        "single short (21-day) trial in healthy young men; does not establish efficacy for bodybuilding, strength, or long-term use",
+        "trial dose (max 1.0 mg/day) must never be presented as a use recommendation"
+      ]
+    },
+    {
+      "claimId": "ligandrol-adverse-effect-hormone-suppression-001",
+      "claimType": "adverse-effect",
+      "statement": "In the same 21-day healthy-men trial, LGD-4033 caused dose-dependent suppression of total testosterone, sex hormone-binding globulin, HDL cholesterol, and triglycerides, with free testosterone and FSH significantly suppressed only at the highest (1.0 mg) dose; hormone levels and lipids returned to baseline after the drug was stopped.",
+      "context": {
+        "population": "healthy men, 21-50 years (n=76)",
+        "route": "oral",
+        "formulation": "LGD-4033, investigational",
+        "useCase": "endocrine and lipid safety signal from short-term dosing",
+        "doseText": "0.1-1.0 mg once daily for 21 days (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "basaria-2013-jgerontol-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "basaria-2013-jgerontol-rct",
+          "quote": "LGD-4033 administration was associated with dose-dependent suppression of total testosterone, sex hormone-binding globulin, high density lipoprotein cholesterol, and triglyceride levels. follicle-stimulating hormone and free testosterone showed significant suppression at 1.0-mg dose only.",
+          "pageOrSection": "Abstract/study summary"
+        },
+        {
+          "sourceRef": "basaria-2013-jgerontol-rct",
+          "quote": "Hormone levels and lipids returned to baseline after treatment discontinuation",
+          "pageOrSection": "Abstract/study summary"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical hormonal/lipid signal at doses far below common gray-market use; long-term or higher-dose human safety data are not established",
+        "recovery data are from a single 21-day exposure and may not generalize to weeks-to-months of unsupervised use"
+      ]
+    },
+    {
+      "claimId": "ligandrol-studied-use-hip-fracture-phase2-001",
+      "claimType": "studied-use",
+      "statement": "In a randomized, double-blind, placebo-controlled Phase 2 trial in 108 patients recovering from hip fracture, 12 weeks of once-daily VK5211 (LGD-4033) at 0.5, 1.0, or 2.0 mg produced statistically significant, dose-related placebo-adjusted increases in total lean body mass (4.8% to 9.1%, corresponding to 1.6-3.1 kg), with numerical but not statistically powered improvements on exploratory functional measures (6-minute walk test, short physical performance battery); adverse event rates did not differ significantly from placebo and no drug-related serious adverse events occurred in VK5211 patients. This remains an investigational program with no completed Phase 3 trial or FDA approval identified.",
+      "context": {
+        "population": "adults recovering from hip fracture (n=108)",
+        "route": "oral",
+        "formulation": "VK5211 (LGD-4033), investigational",
+        "useCase": "hip-fracture recovery / prevention of lean-mass loss (investigational; not an approved indication)",
+        "doseText": "0.5 mg, 1.0 mg, or 2.0 mg once daily for 12 weeks versus placebo (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "viking-vk5211-phase2-hipfracture-2018",
+        "vikingtherapeutics-pipeline-overview"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "viking-vk5211-phase2-hipfracture-2018",
+          "quote": "All doses of VK5211 demonstrated statistically significant increases in total lean body mass, less head, the study's primary endpoint.",
+          "pageOrSection": "Top-line results press release"
+        },
+        {
+          "sourceRef": "viking-vk5211-phase2-hipfracture-2018",
+          "quote": "Patients receiving VK5211 demonstrated numerical improvements in certain exploratory assessments of functional performance, including the 6-minute walk test and short physical performance battery, compared with placebo.",
+          "pageOrSection": "Top-line results press release"
+        },
+        {
+          "sourceRef": "viking-vk5211-phase2-hipfracture-2018",
+          "quote": "There were no significant differences in the rates of adverse events reported among patients receiving VK5211 compared with placebo... No drug-related SAEs were observed in patients receiving VK5211.",
+          "pageOrSection": "Top-line results press release"
+        },
+        {
+          "sourceRef": "vikingtherapeutics-pipeline-overview",
+          "quote": "VK5211 (SARM for muscle loss prevention)",
+          "pageOrSection": "Pipeline overview listing"
+        }
+      ],
+      "reviewFlags": [
+        "results reported via company press release, not yet verified against a peer-reviewed full-text publication of this trial",
+        "functional-outcome improvements were not statistically powered; do not overstate as proven clinical benefit",
+        "confirm whether this program has advanced to Phase 3 or been discontinued as of review date"
+      ]
+    },
+    {
+      "claimId": "ligandrol-marketing-vs-evidence-gap-001",
+      "claimType": "evidence-gap",
+      "statement": "Popular vendor/marketing content commonly recommends LGD-4033 doses of roughly 10-20 mg/day for men (and 5-10 mg/day for women) over multi-week 'bulking' cycles, and claims it 'outperforms most anabolic steroids' and 'vastly outperforms Anavar,' with muscle gains framed as an established, near-guaranteed outcome; no published controlled human trial has tested doses anywhere near this range (the highest dose studied in controlled trials to date is 2.0 mg/day), and no controlled human data exist on the safety or efficacy of multi-week self-administered dosing at 10-20 mg/day, on head-to-head comparisons with anabolic steroids, or on outcomes in the healthy, non-medical populations who are the primary market for these products.",
+      "context": {
+        "population": "recreational/bodybuilding users of gray-market LGD-4033 products",
+        "route": "oral",
+        "formulation": "gray-market LGD-4033 products, various doses/purities, unregulated",
+        "useCase": "bodybuilding 'bulking' and muscle-gain marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "moreplatesmoredates-lgd4033-marketing",
+        "basaria-2013-jgerontol-rct",
+        "viking-vk5211-phase2-hipfracture-2018",
+        "fda-consumer-sarms-update"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "moreplatesmoredates-lgd4033-marketing",
+          "quote": "Recreational users commonly report \"using 10 \u2013 20 mg of LGD-4033 per day\" for men; \"5 \u2013 10 mg per day\" for women.",
+          "pageOrSection": "Consumer dosing claims section"
+        },
+        {
+          "sourceRef": "moreplatesmoredates-lgd4033-marketing",
+          "quote": "10 mg of LGD-4033 vastly outperforms Anavar in all efficacy measures.",
+          "pageOrSection": "Comparisons to steroids section"
+        },
+        {
+          "sourceRef": "basaria-2013-jgerontol-rct",
+          "quote": "76 healthy men (21-50 years) were randomized to placebo or 0.1, 0.3, or 1.0 mg LGD-4033 daily for 21 days",
+          "pageOrSection": "Abstract/study summary"
+        },
+        {
+          "sourceRef": "viking-vk5211-phase2-hipfracture-2018",
+          "quote": "once-daily VK5211 doses of 0.5 mg, 1.0 mg, 2.0 mg, or placebo",
+          "pageOrSection": "Study design summary"
+        },
+        {
+          "sourceRef": "fda-consumer-sarms-update",
+          "quote": "they have not been reviewed by the FDA for safety or efficacy, consumers should be advised against using SARMs",
+          "pageOrSection": "FDA consumer update"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: marketed doses are roughly 5-10x higher than the highest dose in any published controlled human trial",
+        "no controlled human data exist at marketed doses or durations; steroid-comparison claims are unsupported by any cited controlled trial",
+        "flag for misinformation-claim escalation if vendor pages are found making explicit superiority-to-steroids claims in future review passes"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "ligandrol-conflict-dose-range-001",
+      "claimRefs": [
+        "ligandrol-efficacy-lbm-healthy-men-001",
+        "ligandrol-studied-use-hip-fracture-phase2-001",
+        "ligandrol-marketing-vs-evidence-gap-001"
+      ],
+      "severity": "high",
+      "summary": "Controlled human trials of LGD-4033/VK5211 have only studied doses up to 2.0 mg/day, while gray-market marketing and vendor guidance commonly recommend 10-20 mg/day; no controlled human safety or efficacy data exist at marketed dose levels, so real-world use is effectively unstudied.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Basaria 2013 quotes were sourced via a DrugBank summary page rather than the original PubMed/journal full text (PubMed page was blocked by a CAPTCHA during this research pass); verify quotes against the primary journal article or PMC full text at review time.",
+      "VK5211 Phase 2 hip-fracture results are sourced from a company press release, not a peer-reviewed publication; confirm whether a full peer-reviewed report exists and whether the program has since advanced or been discontinued.",
+      "UNII, DrugBank ID, ChEMBL ID, and RxNorm identifiers not yet resolved from structured databases.",
+      "Confirm current status of the cited FDA warning letter (issued 2025-12-12) and whether additional/updated warning letters specifically naming LGD-4033/Ligandrol exist at review time.",
+      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "no-fda-approved-product",
+      "thin-human-evidence",
+      "press-release-sourced-trial-data",
+      "marketing-dose-mismatch"
+    ]
+  }
+}

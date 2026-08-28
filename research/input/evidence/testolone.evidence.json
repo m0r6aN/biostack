@@ -1,0 +1,350 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "testolone-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T23:50:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Testolone",
+    "aliases": [
+      "RAD-140",
+      "RAD140",
+      "Testolone (RAD-140)"
+    ],
+    "classification": "Selective androgen receptor modulator (SARM)",
+    "compoundFamily": "Nonsteroidal SARM (androgen receptor agonist, investigational)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "1182367-47-0",
+      "drugbank": null,
+      "pubchem": "44200882",
+      "chembl": "CHEMBL1672635",
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-warrior-labz-warning-letter-2023",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Warning Letter: Warrior Labz SARMS (655280, 06/12/2023)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/warrior-labz-sarms-655280-06122023",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2023-06-12T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "case-report-jmcr-2023-dili",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Idiosyncratic drug-induced liver injury related to use of novel selective androgen receptor modulator RAD140 (Testalone): a case report",
+      "publisher": "Journal of Medical Case Reports (Springer Nature)",
+      "url": "https://link.springer.com/article/10.1186/s13256-023-03847-8",
+      "doi": "10.1186/s13256-023-03847-8",
+      "pmid": null,
+      "publishedAt": "2023-03-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-44200882",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Testolone / RAD140 (CID 44200882)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Testolone",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "clinicaltrials-nct03088527",
+      "sourceType": "clinical-trial-registry",
+      "authorityTier": "B1",
+      "title": "A Phase 1, First-in-Human, Multi-Part Study of RAD140 in Postmenopausal Women With Hormone Receptor Positive Breast Cancer (NCT03088527)",
+      "publisher": "ClinicalTrials.gov / U.S. National Library of Medicine",
+      "url": "https://clinicaltrials.gov/study/NCT03088527",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2017-03-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "caymanchem-rad140-product",
+      "sourceType": "structured-database",
+      "authorityTier": "C1",
+      "title": "RAD140 (CAS 1182367-47-0) - Product Page and Safety Data",
+      "publisher": "Cayman Chemical",
+      "url": "https://www.caymanchem.com/product/18773/rad140",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "testolone-mechanism-sarm-ar-agonist-001",
+      "claimType": "mechanism",
+      "statement": "RAD-140 (Testolone) is a nonsteroidal selective androgen receptor modulator (SARM) and anabolic agent with reported high in vitro binding affinity for the androgen receptor (Ki = 7 nM), selective over the progesterone, estrogen, and glucocorticoid receptors; it is a research chemical, not an approved or licensed pharmaceutical.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "RAD140 research-grade compound",
+        "useCase": "mechanism/identity description",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "caymanchem-rad140-product",
+        "pubchem-cid-44200882"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "caymanchem-rad140-product",
+          "quote": "RAD140 is a nonsteroidal selective androgen receptor modulator (SARM; Ki = 7 nM) and anabolic agent.",
+          "pageOrSection": "Product description"
+        },
+        {
+          "sourceRef": "caymanchem-rad140-product",
+          "quote": "It is selective for the androgen receptor over the progesterone, estrogen, and glucocorticoid receptors.",
+          "pageOrSection": "Product description"
+        },
+        {
+          "sourceRef": "caymanchem-rad140-product",
+          "quote": "WARNING This product is not for human or veterinary use.",
+          "pageOrSection": "Safety/handling notice"
+        }
+      ],
+      "reviewFlags": [
+        "Mechanism sourced from a supplier/vendor chemical-data page rather than a peer-reviewed pharmacology paper; verify Ki value and receptor-selectivity data against primary pharmacology literature at review.",
+        "Vendor 'not for human use' language reflects RUO labeling, not a clinical safety determination."
+      ]
+    },
+    {
+      "claimId": "testolone-regulatory-unapproved-new-drug-001",
+      "claimType": "regulatory",
+      "statement": "FDA has issued a warning letter to a marketer of RAD-140/Testolone products stating the products are unapproved new drugs sold in violation of the Federal Food, Drug, and Cosmetic Act, and that life-threatening reactions, including liver toxicity, have occurred in people taking SARM-containing products, which also carry potential increased risk of heart attack and stroke.",
+      "context": {
+        "population": "consumers purchasing RAD-140/SARM products marketed for human use",
+        "route": "oral (as marketed in cited products)",
+        "formulation": "gray-market RAD-140/Testolone liquid and capsule products",
+        "useCase": "regulatory enforcement against unapproved-drug marketing",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-warrior-labz-warning-letter-2023"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "Life-threatening reactions, including liver toxicity, have occurred in people taking products",
+          "pageOrSection": "Warning letter body, safety warning section"
+        },
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "SARMs also have the potential to increase the risk of heart attack and stroke.",
+          "pageOrSection": "Warning letter body, safety warning section"
+        },
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "are not generally recognized as safe and effective for the above referenced uses and, therefore, are 'new drugs'",
+          "pageOrSection": "Warning letter body, unapproved new drug determination"
+        }
+      ],
+      "reviewFlags": [
+        "Safety-critical regulatory claim.",
+        "Confirm current enforcement/market status of the specific cited seller at review time; warning letters describe a point-in-time enforcement action, not an ongoing product ban."
+      ]
+    },
+    {
+      "claimId": "testolone-adverse-effect-liver-injury-case-001",
+      "claimType": "adverse-effect",
+      "statement": "A published case report describes idiosyncratic drug-induced liver injury in a 26-year-old male following self-administered RAD140 (Testolone) use, presenting with nausea, vomiting, severe right upper quadrant abdominal pain, and jaundice (ALT 243 IU/L, total bilirubin 4.9 mg/dL); liver function normalized within 2 months after RAD140 was stopped, without recurrence of symptoms.",
+      "context": {
+        "population": "26-year-old male, non-medical bodybuilding use",
+        "route": "oral (liquid formulation administered via dropper)",
+        "formulation": "gray-market liquid RAD140",
+        "useCase": "bodybuilding / muscle-building self-use",
+        "doseText": "Exact dose not determinable from the case report; the patient used a liquid dropper formulation the authors note makes accurate dosing difficult (case-report context, not a use recommendation)."
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "case-report-jmcr-2023-dili"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "case-report-jmcr-2023-dili",
+          "quote": "RAD140 (Testalone) is a novel selective androgen receptor modulator with very limited data currently available on adverse effects related to this compound.",
+          "pageOrSection": "Abstract/Introduction"
+        },
+        {
+          "sourceRef": "case-report-jmcr-2023-dili",
+          "quote": "nausea, vomiting, severe right upper quadrant abdominal pain, and jaundice from acute liver injury.",
+          "pageOrSection": "Case presentation"
+        },
+        {
+          "sourceRef": "case-report-jmcr-2023-dili",
+          "quote": "He was instructed to stop RAD140, which he reported compliance with, and on 2-month follow-up his liver function panel had normalized without recurrence of any symptoms.",
+          "pageOrSection": "Case presentation / Outcome"
+        }
+      ],
+      "reviewFlags": [
+        "Single case report - establishes plausibility, not population-level incidence or proven causality.",
+        "Safety-critical adverse-effect claim.",
+        "Independent case reports of RAD-140-associated liver injury exist in other journals (e.g., Ochsner Journal, PMC7535764 covering related SARM products); cross-check those at review for a fuller adverse-event picture."
+      ]
+    },
+    {
+      "claimId": "testolone-studied-use-breast-cancer-trial-001",
+      "claimType": "studied-use",
+      "statement": "RAD140 was evaluated in a completed Phase 1, first-in-human, multi-part clinical trial (NCT03088527) in postmenopausal women with hormone receptor positive, HER2-negative metastatic or locally advanced breast cancer, supplied as an oral drug-in-capsule formulation, with the stated primary purpose of evaluating clinical safety profile, tolerability, and pharmacokinetics; this is an investigational oncology trial, not evidence of an approved indication or of any performance/physique benefit.",
+      "context": {
+        "population": "postmenopausal women with HR-positive/HER2-negative metastatic or locally advanced breast cancer (investigational oncology population)",
+        "route": "oral",
+        "formulation": "RAD140 formulated drug-in-capsule",
+        "useCase": "investigational oncology trial (safety/tolerability/PK), not an approved indication",
+        "doseText": "Part A dose escalation, Part B safety expansion at the maximum tolerated dose (trial protocol description; not a use recommendation)."
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "clinicaltrials-nct03088527"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "clinicaltrials-nct03088527",
+          "quote": "A Phase 1, First-in-Human, Multi-Part Study of RAD140 in Postmenopausal Women With Hormone Receptor Positive Breast Cancer",
+          "pageOrSection": "Official title"
+        },
+        {
+          "sourceRef": "clinicaltrials-nct03088527",
+          "quote": "The primary purpose of this study is to evaluate the clinical safety profile, tolerability, and pharmacokinetic (PK) characteristics of RAD140 in hormone receptor positive breast cancer.",
+          "pageOrSection": "Brief summary"
+        },
+        {
+          "sourceRef": "clinicaltrials-nct03088527",
+          "quote": "RAD140 will be supplied as formulated drug-in-capsules for oral administration.",
+          "pageOrSection": "Intervention description"
+        }
+      ],
+      "reviewFlags": [
+        "Trial dose/protocol context must never be presented as a use recommendation.",
+        "This is an investigational oncology trial in a specific patient population and must not be generalized to bodybuilding, performance, or anti-aging use.",
+        "Posted efficacy/adverse-event results were not confirmed from a fetched primary source in this pass; confirm results status directly on the registry or via the peer-reviewed trial publication at review."
+      ]
+    },
+    {
+      "claimId": "testolone-misinformation-marketing-vs-evidence-001",
+      "claimType": "misinformation-claim",
+      "statement": "RAD-140/Testolone is marketed online with claims that it 'carries the benefits of Testosterone injections without all the risks' and 'reduces fat and increases muscle mass,' packaged with suggested bodybuilding cycle lengths and daily dosing; these efficacy and safety claims are not supported by the human evidence located, which consists of a small single-arm oncology Phase 1 safety/PK trial and isolated case reports of serious adverse effects including liver injury - not controlled trials establishing benefit or safety for muscle-building or performance use.",
+      "context": {
+        "population": "gray-market/bodybuilding consumers",
+        "route": "oral",
+        "formulation": "gray-market RAD-140 liquid/capsule products",
+        "useCase": "muscle-building and physique marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-warrior-labz-warning-letter-2023",
+        "case-report-jmcr-2023-dili"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "RAD-140 / TESTOLONE SARM for Muscle Growth and Size Reduces Fat and Increases Muscle Mass",
+          "pageOrSection": "Cited product marketing language"
+        },
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "Carries the benefits of Testosterone injections without all the risks",
+          "pageOrSection": "Cited product marketing language"
+        },
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "CYCLE LENGTH \u2013 12 Weeks is best for optimal results. DOSAGE \u2013 1ML AM",
+          "pageOrSection": "Cited product marketing language"
+        }
+      ],
+      "reviewFlags": [
+        "Misinformation-adjacent: popular marketing claims lack supporting controlled human outcome evidence.",
+        "Verify whether the specific cited vendor listing is still active at review time; marketing claims of this type recur across many gray-market sellers beyond the one cited."
+      ]
+    },
+    {
+      "claimId": "testolone-evidence-gap-performance-use-001",
+      "claimType": "evidence-gap",
+      "statement": "No RAD140/Testolone product is FDA-approved for any indication, and no controlled human trial establishing efficacy or long-term safety for athletic performance, muscle building, or anti-aging use was located; the only human data identified are a single-arm oncology Phase 1 safety/pharmacokinetics trial and isolated adverse-event case reports, leaving performance-use efficacy and long-term safety unestablished.",
+      "context": {
+        "population": "general population using RAD140 for non-medical performance/physique purposes",
+        "route": "oral",
+        "formulation": "gray-market research-chemical RAD140",
+        "useCase": "athletic performance / body composition / anti-aging marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "clinicaltrials-nct03088527",
+        "case-report-jmcr-2023-dili",
+        "fda-warrior-labz-warning-letter-2023"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "are not generally recognized as safe and effective for the above referenced uses and, therefore, are 'new drugs'",
+          "pageOrSection": "Warning letter body, unapproved new drug determination"
+        },
+        {
+          "sourceRef": "case-report-jmcr-2023-dili",
+          "quote": "RAD140 (Testalone) is a novel selective androgen receptor modulator with very limited data currently available on adverse effects related to this compound.",
+          "pageOrSection": "Abstract/Introduction"
+        }
+      ],
+      "reviewFlags": [
+        "Thin human evidence overall: one completed oncology Phase 1 trial (results not confirmed from a fetched source) plus isolated case reports; no RCT in a healthy or performance-use population was located.",
+        "Re-search literature and trial registries for newer controlled human data at each review cycle."
+      ]
+    }
+  ],
+  "conflicts": [],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Human evidence remains thin: one completed oncology Phase 1 trial without confirmed public efficacy/safety results plus isolated case reports; reassess if new controlled human data emerges.",
+      "UNII, DrugBank, and PMID identifiers were not resolved from a fetched primary structured-database source in this pass; confirm before publication.",
+      "Gray-market marketing-claim landscape is volatile; the specific vendor listings cited in the FDA warning letter should be reconfirmed as still active (or superseded) at review time.",
+      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "case-report-level-human-safety-evidence",
+      "thin-human-evidence",
+      "no-fda-approved-product",
+      "gray-market-marketing-vs-evidence-gap"
+    ]
+  }
+}

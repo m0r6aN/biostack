@@ -1,0 +1,436 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "cardarine-evidence-expansion-001",
+    "category": "small-molecule-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T23:50:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Cardarine",
+    "aliases": [
+      "GW501516",
+      "GW1516",
+      "GW-501516",
+      "Endurobol",
+      "GSK-516"
+    ],
+    "classification": "Small molecule (research chemical / unapproved drug)",
+    "compoundFamily": "PPAR delta (PPAR\u03b4) agonist",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "7I2HA1NU22",
+      "casNumber": "317318-70-0",
+      "drugbank": null,
+      "pubchem": "9803963",
+      "chembl": null,
+      "doi": null,
+      "pmid": "22814748"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-warning-letter-sarms-america-2025",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Dynamic Health Group dba SARMS AMERICA - 719257 - 12/12/2025",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/dynamic-health-group-dba-sarms-america-719257-12122025",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-12-12T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "fda-sarms-bodybuilding-fraud",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bodybuilding Products Put Consumers at Risk of Heart Attack, Stroke, Serious Liver Damage, and More",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "wada-alert-gw501516-2013",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "WADA issues alert on GW501516",
+      "publisher": "World Anti-Doping Agency",
+      "url": "https://www.wada-ama.org/en/news/wada-issues-alert-gw501516",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2013-03-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "hsa-singapore-alert-2017",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "HSA Press Release: Bodybuilding Products Sold Online Found to Contain Unapproved/Banned Substances",
+      "publisher": "Health Sciences Authority, Singapore",
+      "url": "https://www.hsa.gov.sg/docs/default-source/announcements-csg/press-releases/pr-bodybuilding-products-sold-online_20oct2017.pdf?sfvrsn=fb4b6eb2_0",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2017-10-20T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "olson-2012-atvb-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Lipid effects of peroxisome proliferator-activated receptor-\u03b4 agonist GW501516 in subjects with low high-density lipoprotein cholesterol: characteristics of metabolic syndrome",
+      "publisher": "Arteriosclerosis, Thrombosis, and Vascular Biology (Olson EJ, Pearce GL, Jones NP, Sprecher DL, 2012)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22814748/",
+      "doi": "10.1161/ATVBAHA.112.247890",
+      "pmid": "22814748",
+      "publishedAt": "2012-09-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "mitchell-2019-pulm-circ-letter",
+      "sourceType": "peer-reviewed-commentary",
+      "authorityTier": "B2",
+      "title": "PPAR\u03b2/\u03b4 a potential target in pulmonary hypertension blighted by cancer risk",
+      "publisher": "Pulmonary Circulation (Mitchell JA, et al., 2019)",
+      "url": "https://journals.sagepub.com/doi/pdf/10.1177/2045894018812053",
+      "doi": "10.1177/2045894018812053",
+      "pmid": null,
+      "publishedAt": "2019-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "ncats-inxight-gw501516",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "NCATS Inxight Drugs: GW-501516",
+      "publisher": "National Center for Advancing Translational Sciences (NIH)",
+      "url": "https://drugs.ncats.io/drug/7I2HA1NU22",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-9803963",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: GW 501516 (CID 9803963)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/gw-501516",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "nature-srep09884-mouse-endurance",
+      "sourceType": "preclinical-study",
+      "authorityTier": "B2",
+      "title": "A metabolomic study of the PPAR\u03b4 agonist GW501516 for enhancing running endurance in Kunming mice",
+      "publisher": "Scientific Reports",
+      "url": "https://www.nature.com/articles/srep09884",
+      "doi": "10.1038/srep09884",
+      "pmid": null,
+      "publishedAt": "2015-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "cardarine-mechanism-ppar-delta-001",
+      "claimType": "mechanism",
+      "statement": "GW501516 (Cardarine) is a synthetic peroxisome proliferator-activated receptor delta (PPAR\u03b4) agonist originally developed by GlaxoSmithKline and Ligand Pharmaceuticals for dyslipidemia/metabolic syndrome. Clinical development was discontinued in 2007 following observations of cancer induction in long-term animal studies, and no cardarine/GW501516 product has ever been approved for human use.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "GW501516 (cardarine)",
+        "useCase": "mechanism and development history",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "ncats-inxight-gw501516",
+        "mitchell-2019-pulm-circ-letter"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ncats-inxight-gw501516",
+          "quote": "Development was discontinued after observations in animal studies of its association with the rapid induction of cancers in several organs.",
+          "pageOrSection": "Drug summary / development status"
+        },
+        {
+          "sourceRef": "mitchell-2019-pulm-circ-letter",
+          "quote": "GW501516 causes cancer in rats and mice after 104 weeks of dosing.",
+          "pageOrSection": "Letter to the Editor"
+        }
+      ],
+      "reviewFlags": [
+        "confirm NCATS Inxight drug record is unchanged at review time"
+      ]
+    },
+    {
+      "claimId": "cardarine-regulatory-fda-unapproved-001",
+      "claimType": "regulatory",
+      "statement": "FDA has taken direct enforcement action against a 'Cardarine GW501516' product: a December 12, 2025 warning letter to Dynamic Health Group (dba SARMS AMERICA) cites the product as violating Sections 505(a) and 301(d) of the Federal Food, Drug, and Cosmetic Act as an unapproved new drug introduced into interstate commerce. FDA's broader SARMs guidance states that these products 'are not dietary supplements' and are unapproved drugs FDA has not reviewed for safety or effectiveness.",
+      "context": {
+        "population": "US consumers purchasing gray-market online SARMs-category products",
+        "route": null,
+        "formulation": "oral cardarine/GW501516 product marketed by SARMS AMERICA",
+        "useCase": "regulatory enforcement against an unapproved drug",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-warning-letter-sarms-america-2025",
+        "fda-sarms-bodybuilding-fraud"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warning-letter-sarms-america-2025",
+          "quote": "Life-threatening reactions, including liver toxicity, have occurred in people taking products containing SARMs. SARMs also have the potential to increase the risk of heart attack and stroke.",
+          "pageOrSection": "Warning letter body"
+        },
+        {
+          "sourceRef": "fda-sarms-bodybuilding-fraud",
+          "quote": "are not dietary supplements. Instead, these products are unapproved drugs that FDA has not reviewed for safety and effectiveness.",
+          "pageOrSection": "Certain Bodybuilding Products Put Consumers at Risk"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "verify warning letter remains listed/active and check for FDA follow-up action at review time"
+      ]
+    },
+    {
+      "claimId": "cardarine-warning-carcinogenicity-animal-001",
+      "claimType": "adverse-effect",
+      "statement": "In long-term (104-week) preclinical dosing studies, GW501516 caused rapid induction of cancers across multiple organs in mice and rats; this animal carcinogenicity signal drove discontinuation of clinical development and underlies its international regulatory bans. A 2019 peer-reviewed commentary explicitly notes this cancer risk is 'although not confirmed in humans' and that the precise role of PPAR\u03b2/\u03b4 in human cancer 'remains unclear' - the underlying GSK toxicology study abstracts have not been published as full peer-reviewed papers.",
+      "context": {
+        "population": "mice and rats (preclinical models); human cancer-risk magnitude unconfirmed",
+        "route": "oral (animal dosing studies)",
+        "formulation": "GW501516",
+        "useCase": "carcinogenicity safety signal",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "mitchell-2019-pulm-circ-letter",
+        "hsa-singapore-alert-2017"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "mitchell-2019-pulm-circ-letter",
+          "quote": "GW501516 causes cancer in rats and mice after 104 weeks of dosing.",
+          "pageOrSection": "Letter to the Editor, references 6-7"
+        },
+        {
+          "sourceRef": "mitchell-2019-pulm-circ-letter",
+          "quote": "safety concerns...although not confirmed in humans",
+          "pageOrSection": "Letter to the Editor"
+        },
+        {
+          "sourceRef": "hsa-singapore-alert-2017",
+          "quote": "was found to cause cancers in mice and rats during animal safety studies",
+          "pageOrSection": "Press release"
+        }
+      ],
+      "reviewFlags": [
+        "do not infer human cancer-risk magnitude from animal carcinogenicity data",
+        "primary GSK rat/mouse carcinogenicity study abstracts (SOT 2009) have not been published as full peer-reviewed papers - independent verification of tumor sites/doses needed"
+      ]
+    },
+    {
+      "claimId": "cardarine-regulatory-international-status-001",
+      "claimType": "regulatory",
+      "statement": "GW501516/cardarine has never received clinical or marketing approval anywhere. WADA states 'Clinical approval has not, and will not be given for this substance' and issued a public alert in 2013 citing serious toxicities found in pre-clinical studies. Singapore's Health Sciences Authority confirms the substance 'has not been approved for medical use' and warned consumers against specific gray-market products. A 2019 peer-reviewed commentary further reports that Health Canada and Australia's TGA classified GW501516 as a poisonous substance in April 2018.",
+      "context": {
+        "population": "general public and athletes",
+        "route": null,
+        "formulation": "GW501516/cardarine gray-market products",
+        "useCase": "regulatory and anti-doping status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "wada-alert-gw501516-2013",
+        "hsa-singapore-alert-2017",
+        "mitchell-2019-pulm-circ-letter"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "wada-alert-gw501516-2013",
+          "quote": "Clinical approval has not, and will not be given for this substance.",
+          "pageOrSection": "WADA alert on GW501516"
+        },
+        {
+          "sourceRef": "wada-alert-gw501516-2013",
+          "quote": "serious toxicities were discovered in pre-clinical studies",
+          "pageOrSection": "WADA alert on GW501516"
+        },
+        {
+          "sourceRef": "hsa-singapore-alert-2017",
+          "quote": "has not been approved for medical use",
+          "pageOrSection": "Press release"
+        }
+      ],
+      "reviewFlags": [
+        "confirm current Health Canada/TGA classification directly against those regulators at review time (currently sourced via a secondary peer-reviewed commentary, not the primary regulator pages)"
+      ]
+    },
+    {
+      "claimId": "cardarine-efficacy-human-lipid-rct-001",
+      "claimType": "efficacy",
+      "statement": "In a randomized, controlled 12-week trial (n=268) in adults with low HDL cholesterol, GW501516 at 2.5, 5.0, or 10.0 mg daily produced dose-dependent lipid biomarker changes: HDL cholesterol increased up to 16.9% (10 mg) and apoA-I up to 6.6%, while LDL cholesterol fell 7.3%, triglycerides fell 16.9%, apoB fell 14.9%, and free fatty acids fell 19.4%; a smaller exploratory substudy (n=37) also showed a shift toward larger, less atherogenic lipoprotein particles. This trial measured cardiovascular lipid biomarkers only - it did not evaluate fat loss, athletic endurance, or exercise performance.",
+      "context": {
+        "population": "adults with HDL cholesterol <1.16 mmol/L (n=268 main study; n=37 exploratory substudy)",
+        "route": "oral",
+        "formulation": "GW501516 tablets",
+        "useCase": "dyslipidemia / metabolic syndrome (investigational program, subsequently discontinued)",
+        "doseText": "2.5, 5.0, or 10.0 mg once daily for 12 weeks in the trial protocol; not a use recommendation"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "olson-2012-atvb-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "olson-2012-atvb-rct",
+          "quote": "GW501516 (2.5, 5.0, or 10.0 mg) or placebo was given for 12 weeks to patients (n=268) with high-density lipoprotein (HDL) cholesterol <1.16 mmol/L.",
+          "pageOrSection": "Methods and Results"
+        },
+        {
+          "sourceRef": "olson-2012-atvb-rct",
+          "quote": "GW501516 demonstrated HDL cholesterol increases up to 16.9% (10 mg) and apoA-I increases up to 6.6%.",
+          "pageOrSection": "Methods and Results"
+        },
+        {
+          "sourceRef": "olson-2012-atvb-rct",
+          "quote": "Reductions were observed in low-density lipoprotein (LDL) cholesterol (-7.3%), triglycerides (-16.9%), apoB (-14.9%), and free fatty acids (-19.4%).",
+          "pageOrSection": "Methods and Results"
+        }
+      ],
+      "reviewFlags": [
+        "trial dose context must never be presented as a use recommendation",
+        "this development program was subsequently discontinued for an animal carcinogenicity signal; long-term human safety was not established",
+        "outcome measured is lipid biomarkers only, not endurance, fat loss, or performance"
+      ]
+    },
+    {
+      "claimId": "cardarine-misinformation-marketing-vs-evidence-001",
+      "claimType": "misinformation-claim",
+      "statement": "Gray-market sellers market cardarine/GW501516 with claims of fat burning, increased energy output, improved endurance, and cardiovascular benefit; FDA's warning letter documents these verbatim seller claims, including a reference to a 'twelve-week study' for cardiovascular protection. The only published controlled human trial identified measured lipid biomarkers (HDL, LDL, triglycerides, apoA-I, apoB) in a dyslipidemia population over 12 weeks - it did not test fat loss, endurance, or athletic performance in any population, and no cardarine product has ever been approved for any indication.",
+      "context": {
+        "population": "consumers of gray-market SARMs-category products",
+        "route": "oral (marketed capsules/liquids)",
+        "formulation": "research-chemical cardarine/GW501516",
+        "useCase": "fat loss / endurance / cardiovascular marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-warning-letter-sarms-america-2025",
+        "olson-2012-atvb-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warning-letter-sarms-america-2025",
+          "quote": "It has shown potential in aiding fat burning and possibly preventing obesity in users. Increases fatty acid oxidation and promotes fat loss",
+          "pageOrSection": "Cited seller website claims"
+        },
+        {
+          "sourceRef": "fda-warning-letter-sarms-america-2025",
+          "quote": "Lower LDL cholesterol (\"bad cholesterol\") Higher HDL cholesterol (\"good cholesterol\") Increases endurance Reduces inflammation",
+          "pageOrSection": "Cited seller website claims"
+        },
+        {
+          "sourceRef": "olson-2012-atvb-rct",
+          "quote": "GW501516 (2.5, 5.0, or 10.0 mg) or placebo was given for 12 weeks to patients (n=268) with high-density lipoprotein (HDL) cholesterol <1.16 mmol/L.",
+          "pageOrSection": "Methods and Results"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: endurance and fat-loss marketing claims are not supported by the cited human trial, which measured lipid biomarkers only",
+        "no controlled human endurance, body-composition, or performance trial for GW501516 was identified"
+      ]
+    },
+    {
+      "claimId": "cardarine-evidence-gap-endurance-animal-only-001",
+      "claimType": "evidence-gap",
+      "statement": "Popular claims that cardarine boosts running endurance trace to rodent research, not human trials: a mouse study reported GW501516 increased exhaustive running distance by roughly 31% in trained mice and 69% in sedentary Kunming mice after 3 weeks of dosing, via increased fatty-acid oxidation and reduced glucose utilization. No controlled human study of GW501516 for athletic endurance, muscle building, or fat loss was identified in this review; animal exercise-performance findings should not be read as evidence of human athletic benefit.",
+      "context": {
+        "population": "Kunming mice (animal model); no corresponding human athletic-performance study identified",
+        "route": "oral (animal dosing)",
+        "formulation": "GW501516",
+        "useCase": "athletic endurance enhancement (popular marketed use)",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "nature-srep09884-mouse-endurance"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nature-srep09884-mouse-endurance",
+          "quote": "PPAR\u03b4 regulates muscle metabolism and reprograms muscle fibre types to enhance running endurance.",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "animal-only endurance data; do not infer human athletic performance benefit",
+        "search additional source families (e.g., sports-medicine controlled trials) at next review pass to confirm no human endurance RCT exists"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "cardarine-conflict-human-cancer-relevance-001",
+      "claimRefs": [
+        "cardarine-warning-carcinogenicity-animal-001",
+        "cardarine-regulatory-international-status-001"
+      ],
+      "severity": "review",
+      "summary": "Regulators (WADA, HSA, and by extension Health Canada/TGA per secondary reporting) treat the animal carcinogenicity findings as sufficient grounds for banning/blocking approval, while the only identified peer-reviewed discussion of the underlying data (Mitchell 2019) states the cancer risk is 'not confirmed in humans' and that the primary GSK rat/mouse study abstracts were never published as full peer-reviewed papers. The magnitude of human cancer risk therefore remains unresolved pending independent verification of the primary toxicology data.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Primary GSK rat/mouse carcinogenicity study abstracts (SOT 2009) were never published as full peer-reviewed papers; tumor-site and dose details are sourced only via a secondary commentary and should be independently verified if a full study report becomes available.",
+      "Health Canada and TGA poisonous-substance classifications were sourced via a secondary peer-reviewed commentary, not fetched directly from those regulators' own pages - confirm against primary regulator sources at review time.",
+      "Human controlled-trial evidence is limited to a single lipid-biomarker RCT (Olson 2012) in a dyslipidemia population; no human trial addressing the endurance/fat-loss/performance uses cardarine is commonly marketed for was identified.",
+      "ChEMBL and DrugBank identifiers not yet resolved from structured databases.",
+      "audit: packet.category corrected peptides-core -> small-molecule-core to match compound classification"
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "no-approved-indication",
+      "negative-safety-signal-animal-carcinogenicity",
+      "thin-human-evidence",
+      "marketing-evidence-gap-documented",
+      "international-ban-multiple-jurisdictions"
+    ]
+  }
+}

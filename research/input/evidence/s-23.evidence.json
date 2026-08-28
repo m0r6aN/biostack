@@ -1,0 +1,404 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "s-23-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T23:50:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "S-23",
+    "aliases": [
+      "S23",
+      "CCTH-methylpropionamide"
+    ],
+    "classification": "Selective androgen receptor modulator (SARM)",
+    "compoundFamily": "Non-steroidal aryl-propionamide SARM (bicalutamide/andarine-derived scaffold)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "67546346",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-sarms-consumer-update",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA warns about the use of selective androgen receptor modulators (SARMs) among teens, young adults",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "fda-bodybuilding-fraudulent-products",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Bodybuilding Products: SARMs Cause Harm - Certain Bodybuilding Products Put Consumers at Risk of Heart Attack, Stroke, Serious Liver Damage, and More",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-67546346",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "S-23; CID 67546346",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/67546346",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "wikipedia-s23-drug",
+      "sourceType": "encyclopedic-reference",
+      "authorityTier": "C1",
+      "title": "S-23 (drug)",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/S-23_(drug)",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "wada-s1-anabolic-agents-list",
+      "sourceType": "anti-doping-regulatory-list",
+      "authorityTier": "B1",
+      "title": "S1. Anabolic Agents - Anti-Doping Prohibited List",
+      "publisher": "Drugs.com (WADA Prohibited List reference)",
+      "url": "https://www.drugs.com/wada/s1-anabolic-agents.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "alhalabi-2025-s23-metabolite-study",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Investigations Into the Urinary Metabolite Elimination Profile of the Selective Androgen Receptor Modulator S-23 in Studies Mimicking Contaminated Product Ingestion for Doping Control Purposes",
+      "publisher": "Biomedical Chromatography (Alhalabi et al., 2025); German Sport University Cologne research listing",
+      "url": "https://fis.dshs-koeln.de/en/publications/investigations-into-the-urinary-metabolite-elimination-profile-of-2/",
+      "doi": "10.1002/bmc.70090",
+      "pmid": null,
+      "publishedAt": "2025-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "moreplatesmoredates-s23-overview",
+      "sourceType": "vendor-enthusiast-content",
+      "authorityTier": "C2",
+      "title": "S23 SARM Overview - Preclinical Profile, Results, Reviews & Side Effects",
+      "publisher": "More Plates More Dates",
+      "url": "https://moreplatesmoredates.com/s23-overview/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "s23-mechanism-sarm-contraceptive-origin-001",
+      "claimType": "mechanism",
+      "statement": "S-23 is a non-steroidal selective androgen receptor modulator that binds the androgen receptor with high affinity (Ki 1.7 nM, reported stronger than andarine); it was developed by GTX, Inc. as a potential male hormonal contraceptive candidate, and in animal studies produced dose-dependent, reversible suppression of spermatogenesis alongside anabolic effects.",
+      "context": {
+        "population": "preclinical (animal models); no confirmed human trial population",
+        "route": null,
+        "formulation": "S-23 (research chemical)",
+        "useCase": "mechanism / development-history description",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "wikipedia-s23-drug",
+        "pubchem-cid-67546346"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "wikipedia-s23-drug",
+          "quote": "binds to the androgen receptor more strongly than older drugs such as andarine with a Ki of 1.7 nM",
+          "pageOrSection": "Pharmacology summary"
+        },
+        {
+          "sourceRef": "wikipedia-s23-drug",
+          "quote": "developed by GTX, Inc as a potential male hormonal contraceptive",
+          "pageOrSection": "Development history"
+        },
+        {
+          "sourceRef": "wikipedia-s23-drug",
+          "quote": "showed both a good ratio of anabolic to androgenic effects, and dose-dependent suppression of spermatogenesis with spontaneous recovery after cessation of treatment",
+          "pageOrSection": "Animal study findings"
+        }
+      ],
+      "reviewFlags": [
+        "primary source for these claims is a tertiary encyclopedic reference (Wikipedia), not the original GTX preclinical publication; independent primary-source verification recommended",
+        "animal-model findings only; must not be read as evidence of human contraceptive or anabolic efficacy"
+      ]
+    },
+    {
+      "claimId": "s23-regulatory-unapproved-sarm-class-001",
+      "claimType": "regulatory",
+      "statement": "FDA states that SARMs as a drug class, including products marketed for bodybuilding, cannot be legally marketed in the U.S. as a dietary supplement or drug, are unapproved drugs FDA has not reviewed for safety and effectiveness, and are illegally marketed when sold to consumers; S-23 falls within this SARM class. FDA's public statements name SARMs generically and do not single out S-23 by name.",
+      "context": {
+        "population": "U.S. consumers, including teens and young adults per FDA's specific concern",
+        "route": null,
+        "formulation": "SARM-containing products broadly (class includes S-23)",
+        "useCase": "regulatory/legal status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-sarms-consumer-update",
+        "fda-bodybuilding-fraudulent-products"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "SARMs cannot be legally marketed in the U.S. as a dietary supplement or drug at this time.",
+          "pageOrSection": "Consumer update body"
+        },
+        {
+          "sourceRef": "fda-bodybuilding-fraudulent-products",
+          "quote": "Although the products are generally marketed as dietary supplements, they are not dietary supplements. Instead, these products are unapproved drugs that FDA has not reviewed for safety and effectiveness.",
+          "pageOrSection": "Fraudulent products advisory"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "FDA sources address the SARM class generally; no S-23-specific FDA statement, warning letter, or Category 2 compounding listing was located in this session"
+      ]
+    },
+    {
+      "claimId": "s23-regulatory-wada-prohibited-001",
+      "claimType": "regulatory",
+      "statement": "S-23 is explicitly named as a prohibited SARM under the WADA Prohibited List's S1.2 Other Anabolic Agents category, alongside andarine, ostarine, ligandrol, RAD140, and YK-11.",
+      "context": {
+        "population": "athletes subject to anti-doping rules",
+        "route": null,
+        "formulation": "S-23",
+        "useCase": "anti-doping / sport regulatory status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "wada-s1-anabolic-agents-list"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "wada-s1-anabolic-agents-list",
+          "quote": "Selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]",
+          "pageOrSection": "Section S1.2 Other Anabolic Agents"
+        }
+      ],
+      "reviewFlags": [
+        "sourced via a secondary aggregator (Drugs.com) summarizing the WADA list rather than the official WADA PDF; confirm against the current-year official WADA Prohibited List at review time"
+      ]
+    },
+    {
+      "claimId": "s23-adverse-effect-sarm-class-safety-001",
+      "claimType": "adverse-effect",
+      "statement": "FDA reports that SARM-containing products have been associated with serious or life-threatening health problems including liver injury and acute liver failure requiring hospitalization, increased risk of heart attack and stroke, psychosis, sleep disturbances, sexual dysfunction, infertility, and testicular shrinkage. These findings are documented at the SARM-class level from adverse event reports and product-testing investigations, not from a dedicated S-23 human safety trial.",
+      "context": {
+        "population": "consumers of SARM-containing products (documented cases include teens/young adults)",
+        "route": "oral (typical for marketed SARM products)",
+        "formulation": "SARM-containing products broadly",
+        "useCase": "safety / adverse effect profile",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bodybuilding-fraudulent-products",
+        "fda-sarms-consumer-update"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bodybuilding-fraudulent-products",
+          "quote": "Life-threatening reactions, including liver injuries that required hospitalization, have occurred in people taking products containing SARMs.",
+          "pageOrSection": "Fraudulent products advisory"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "Studies and reports show SARMs are associated with serious or life-threatening health problems",
+          "pageOrSection": "Consumer update body"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim; evidence is class-level (mixed/undeclared-ingredient SARM products implicated in several cases) rather than isolated, characterized S-23 exposure",
+        "no S-23-specific controlled human toxicity data located in this session"
+      ]
+    },
+    {
+      "claimId": "s23-studied-use-human-excretion-microdose-001",
+      "claimType": "studied-use",
+      "statement": "The only located human data involving S-23 is a 2025 excretion/detection study, not an efficacy or safety trial: researchers administered microdosed oral S-23 (single and repeated doses of 1 microgram, 10 micrograms, and 50 micrograms) to human volunteers and analyzed urine by LC-MS/MS to characterize a metabolite elimination profile, identifying 18 metabolites, for anti-doping detection-window purposes (to assess whether inadvertent contaminated-supplement exposure could be distinguished from intentional use). A single 1-microgram dose remained detectable for roughly 253 hours on average, and a 50-microgram dose for up to roughly 544 hours on average.",
+      "context": {
+        "population": "human volunteers in a controlled excretion study (anti-doping analytical research, not a clinical efficacy/safety trial)",
+        "route": "oral",
+        "formulation": "microdosed S-23",
+        "useCase": "doping-control detection window characterization",
+        "doseText": "1 mcg, 10 mcg, and 50 mcg oral doses, single- and repeated-dose arms (analytical excretion-study protocol; not a use recommendation and doses are far below any recreational/bodybuilding dosing reported on vendor sites)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "alhalabi-2025-s23-metabolite-study"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "alhalabi-2025-s23-metabolite-study",
+          "quote": "Selective androgen receptor modulators (SARMs) have repeatedly been reason of adverse analytical findings (AAFs) in routine doping controls. Among these, S-23 has been identified in five AAFs reported in 2022.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "alhalabi-2025-s23-metabolite-study",
+          "quote": "single-dose and repeated-dose administrations at three dose levels: 1 microgram, 10 micrograms, and 50 micrograms",
+          "pageOrSection": "Study design summary"
+        }
+      ],
+      "reviewFlags": [
+        "dose-context claim; doses used are microdosing amounts for analytical/detection purposes only and must never be conflated with, or presented as guidance for, bodybuilding/performance dosing",
+        "this study evaluates pharmacokinetics/detectability, not efficacy or clinical safety, and must not be cited as human safety or efficacy evidence"
+      ]
+    },
+    {
+      "claimId": "s23-evidence-gap-no-human-efficacy-safety-001",
+      "claimType": "evidence-gap",
+      "statement": "No published controlled human efficacy or safety trial of S-23 for muscle-building, fat-loss, athletic-performance, or contraceptive use was located. Available human data is limited to a single 2025 microdosing excretion/detection study conducted for anti-doping analytical purposes, not efficacy or safety evaluation; all efficacy and most safety characterization (contraceptive effect, anabolic activity, hepatotoxicity potential) comes from animal/preclinical sources, and S-23 has never received FDA approval or authorized human trials for any indication.",
+      "context": {
+        "population": "prospective human users of S-23 for non-medical performance/physique purposes",
+        "route": "oral (typical gray-market route)",
+        "formulation": "research-grade / gray-market S-23",
+        "useCase": "bodybuilding, fat loss, performance enhancement, hormonal contraception (all unproven in humans)",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "wikipedia-s23-drug",
+        "alhalabi-2025-s23-metabolite-study",
+        "moreplatesmoredates-s23-overview"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "wikipedia-s23-drug",
+          "quote": "S-23 remains investigational, classified as an \"Investigational New Drug\" in the US",
+          "pageOrSection": "Regulatory status summary"
+        },
+        {
+          "sourceRef": "moreplatesmoredates-s23-overview",
+          "quote": "It is still in the preclinical stage of development, meaning it has only been tested on animals, not humans.",
+          "pageOrSection": "S23 overview article"
+        },
+        {
+          "sourceRef": "moreplatesmoredates-s23-overview",
+          "quote": "There is no preclinical data on the potential liver toxicity of S23.",
+          "pageOrSection": "S23 overview article"
+        }
+      ],
+      "reviewFlags": [
+        "confirm no newer human efficacy/safety trial has since been registered or published (e.g., ClinicalTrials.gov) at review time"
+      ]
+    },
+    {
+      "claimId": "s23-misinformation-marketing-vs-evidence-gap-001",
+      "claimType": "misinformation-claim",
+      "statement": "Vendor and enthusiast content markets S-23 as one of the strongest available SARMs for lean-mass building and fat loss, and cites recreational dosing of 10-30 mg per day, while the same sources concede S-23 has only preclinical (animal) data, no human toxicity data, and remains formally an unapproved investigational compound never legally sold as a supplement. This gap between confident performance/marketing claims and the actual (animal-only, non-approved) evidence base is a recurring pattern the reviewer should flag when this compound is discussed publicly.",
+      "context": {
+        "population": "consumers considering gray-market S-23 for physique/performance purposes",
+        "route": "oral (capsule products sold online)",
+        "formulation": "gray-market S-23 capsules/liquids marketed as 'research chemicals'",
+        "useCase": "muscle building / fat loss / performance marketing claims",
+        "doseText": "vendor-reported recreational use of 10-30 mg/day (marketing claim, not a trial protocol or a use recommendation; explicitly not supported by human safety or efficacy data)"
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "moreplatesmoredates-s23-overview",
+        "fda-sarms-consumer-update"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "moreplatesmoredates-s23-overview",
+          "quote": "S23 is undoubtedly one of the strongest SARMs in development right now.",
+          "pageOrSection": "S23 overview article"
+        },
+        {
+          "sourceRef": "moreplatesmoredates-s23-overview",
+          "quote": "Dosages of 10 \u2013 30 mg per day are commonly used in a recreational context for muscle building purposes.",
+          "pageOrSection": "S23 overview article"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "videos on social media platforms tout SARMs as a quick or easy way to improve physical appearance, gain muscle mass, or increase athletic performance",
+          "pageOrSection": "Consumer update body"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: recreational dosing figures are self-reported vendor/community norms, not derived from any controlled human dosing study",
+        "must never be restated as a dosing recommendation in any user-facing surface"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "s23-conflict-marketing-vs-regulatory-evidence-001",
+      "claimRefs": [
+        "s23-misinformation-marketing-vs-evidence-gap-001",
+        "s23-evidence-gap-no-human-efficacy-safety-001",
+        "s23-regulatory-unapproved-sarm-class-001"
+      ],
+      "severity": "moderate",
+      "summary": "Vendor/enthusiast marketing presents S-23 as an effective, strong muscle-building compound with an implied usable dosing range, while FDA and the absence of any published human efficacy/safety trial indicate the compound is an unapproved, uninvestigated-in-humans SARM with class-level serious adverse event reports. This is a persistent evidence-vs-marketing gap rather than a factual dispute between comparable sources.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS/UNII/DrugBank/ChEMBL identifiers not confirmed from an authoritative structured database in this session; a candidate CAS (1010396-29-8) appeared only as an unconfirmed synonym on PubChem and was deliberately omitted pending verification.",
+      "No S-23-specific FDA compounding-risk listing, warning letter, or import alert was located; regulatory/safety claims currently rely on SARM-class-level FDA statements and should be re-checked against the live FDA pages for any S-23-specific action.",
+      "Human evidence for S-23 is limited to a single 2025 microdosing excretion/detection study; no controlled human efficacy or safety trial exists, which materially limits confidence in any future efficacy-adjacent claims.",
+      "WADA prohibited-list claim was sourced via a secondary aggregator (Drugs.com) rather than the official WADA PDF and should be cross-checked against the current-year official list.",
+      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "class-level-not-compound-specific-fda-evidence",
+      "thin-human-evidence",
+      "no-human-efficacy-trial",
+      "gray-market-only",
+      "marketing-evidence-gap-documented"
+    ]
+  }
+}
