@@ -15,6 +15,10 @@ Implemented behavior:
 - current-version acceptance and refusal are persisted, and refusal signs the browser out without clearing the anonymous device preview;
 - returning users with current consent continue to the approved requested route;
 - an expired cookie on a protected route returns through sign-in with the relative path preserved;
+- protected frontend middleware validates an opaque cookie against the backend before admitting the route, and protected content is withheld while that check is unresolved;
+- unreadable, revoked, or expired cookies are cleared by the backend and their deletion is forwarded by frontend middleware;
+- anonymous/stale navigation exposes a visible Sign in control and authenticated navigation exposes a visible Sign out control;
+- `/billing?plan=operator` is an approved relative callback while absolute, scheme-relative, backslash, and non-allowlisted redirects still fall back;
 - rejected return paths emit the `AuthReturnPathRejected` event without logging the rejected value or token.
 
 ## Production configuration gate
@@ -28,6 +32,9 @@ Before deployment, verify all of the following without copying secret values int
   - SMTP: host, valid from address, TLS enabled, valid port, and password when a username is configured.
 - The public frontend build proxies `/api/v1/*` to the intended API deployment.
 - The session cookie is `HttpOnly`, `Secure` in production, `SameSite=Lax`, persistent for 30 days, and server-validated against the session record on every authenticated request.
+- ASP.NET Core Data Protection uses `BioStack.Api.SessionCookie.v1` as its immutable application name, persists its key ring to the configured Blob, protects every key with the configured versionless Key Vault key, and authenticates with only the API managed identity.
+- `DataProtection__BlobUri`, `DataProtection__KeyVaultKeyIdentifier`, and the stable application name are present before deployment. `DataProtection__ManagedIdentityClientId` is absent for a system identity or is the exact attached user-assigned identity client ID.
+- The API identity has `Storage Blob Data Contributor` at the dedicated container and `Key Vault Crypto User` at the wrapping key/vault. Production startup's protect/unprotect probe passes after role propagation.
 - Migration `20260713230000_AddVersionedConsentDecline` is present. Its reviewed SQL adds only `ConsentDeclinedAtUtc` and `ConsentDeclinedVersion` to `AppUsers`.
 
 ## Human approval gate
@@ -60,6 +67,7 @@ Run these against the deployed production URLs using dedicated test identities. 
    - Expire or revoke the server session while retaining the browser cookie.
    - Open a protected route and confirm sign-in receives the full relative path once, without a loop.
    - Confirm logout revokes the session and clears the cookie.
+   - Run the restart and true scale-to-zero continuity sequence in `docs/operations/production-operations-runbook.md`; confirm a 30-day cookie remains readable by the replacement replica.
 6. Negative routing and isolation
    - Submit absolute, scheme-relative, backslash, and unapproved return paths; confirm the canonical fallback and `AuthReturnPathRejected` telemetry.
    - Attempt cross-user resource access after sign-in and confirm denial.

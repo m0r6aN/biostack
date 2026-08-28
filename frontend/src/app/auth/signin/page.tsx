@@ -13,7 +13,7 @@ function resolveRedirectPath(callbackUrl: string | null) {
     return canonicalRoutes.postSignInDefault;
   }
 
-  if (callbackUrl.startsWith('/')) {
+  if (callbackUrl.startsWith('/') && !callbackUrl.startsWith('//') && !callbackUrl.includes('\\')) {
     return callbackUrl;
   }
 
@@ -127,7 +127,9 @@ function SignInPageContent() {
                 <div className="mb-5 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
                   {error === 'session-expired'
                     ? 'Your session expired. Sign in again to continue where you left off.'
-                    : 'That sign-in link is expired or already used. Send yourself a new one.'}
+                    : error === 'session-unavailable'
+                      ? 'We could not verify your session. Sign in again to continue, or retry in a moment.'
+                      : 'That sign-in link is expired or already used. Send yourself a new one.'}
                 </div>
               )}
 

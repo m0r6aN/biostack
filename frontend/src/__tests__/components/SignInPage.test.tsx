@@ -90,4 +90,26 @@ describe('SignInPage', () => {
       );
     });
   });
+
+  it('does not translate a scheme-relative callback URL into a local return path', async () => {
+    callbackUrl = '%2F%2Fevil.example%2Fprofiles';
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({}) });
+
+    render(<SignInPage />);
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'user@example.com' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledWith(
+        '/api/v1/auth/start',
+        expect.objectContaining({
+          body: JSON.stringify({
+            contact: 'user@example.com',
+            channel: 'email',
+            redirectPath: '/protocol-console',
+          }),
+        }),
+      );
+    });
+  });
 });

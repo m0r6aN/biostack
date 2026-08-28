@@ -236,6 +236,25 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Session_WithUnreadableCookie_ReturnsAnonymousAndExpiresCookie()
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/auth/session");
+        request.Headers.Add("Cookie", "biostack_session=not-a-valid-protected-ticket");
+
+        var response = await _client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var session = await response.Content.ReadFromJsonAsync<AuthSessionResponse>(JsonOptions);
+        Assert.NotNull(session);
+        Assert.False(session.Authenticated);
+        Assert.Null(session.User);
+        Assert.True(response.Headers.TryGetValues("Set-Cookie", out var cookies));
+        Assert.Contains(cookies, cookie =>
+            cookie.StartsWith("biostack_session=", StringComparison.Ordinal) &&
+            cookie.Contains("expires=", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public async Task MagicLink_NewUserCanLoginCreateProfileSaveCompoundAndRecordCalculation()
     {
         await StartAsync("new-user@example.com", "/profiles");
@@ -472,6 +491,20 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
             .SingleAsync(c => c.Identity.ValueNormalized == "portal-redirect@example.com");
 
         Assert.Equal("/my-protocol", challenge.RedirectPath);
+    }
+
+    [Fact]
+    public async Task RedirectAllowlist_AllowsApprovedBillingPlanCallback()
+    {
+        await StartAsync("billing-redirect@example.com", "/billing?plan=operator");
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var challenge = await db.AuthChallenges
+            .Include(c => c.Identity)
+            .SingleAsync(c => c.Identity.ValueNormalized == "billing-redirect@example.com");
+
+        Assert.Equal("/billing?plan=operator", challenge.RedirectPath);
     }
 
     [Fact]
