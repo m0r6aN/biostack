@@ -1,8 +1,5 @@
 import {
     GOAL_DEFINITIONS,
-    getMockProfileGoalIds,
-    resolveGoalDefinitions,
-    setMockProfileGoalIds,
 } from './goals';
 import { getApiBaseUrl } from './apiBase';
 import { normalizeTimelineEvent } from './timeline';
@@ -482,28 +479,19 @@ export class ApiClient {
   }
 
   async getProfileGoals(profileId: string): Promise<GoalDefinition[]> {
-    try {
-      const profileGoals = await this.request<ProfileGoal[]>(
-        `/api/v1/profiles/${profileId}/goals`
-      );
-      return profileGoals
-        .map(pg => pg.goalDefinition)
-        .filter((g): g is GoalDefinition => g !== undefined);
-    } catch {
-      const ids = getMockProfileGoalIds(profileId);
-      return resolveGoalDefinitions(ids);
-    }
+    const profileGoals = await this.request<ProfileGoal[]>(
+      `/api/v1/profiles/${profileId}/goals`
+    );
+    return profileGoals
+      .map(pg => pg.goalDefinition)
+      .filter((g): g is GoalDefinition => g !== undefined);
   }
 
   async setProfileGoals(profileId: string, goalIds: string[]): Promise<void> {
-    try {
-      await this.request(`/api/v1/profiles/${profileId}/goals`, {
-        method: 'POST',
-        body: JSON.stringify({ goalIds }),
-      });
-    } catch {
-      setMockProfileGoalIds(profileId, goalIds);
-    }
+    await this.request(`/api/v1/profiles/${profileId}/goals`, {
+      method: 'POST',
+      body: JSON.stringify({ goalIds }),
+    });
   }
 
   // Receipts

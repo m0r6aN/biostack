@@ -10,12 +10,13 @@ import { useId, useState } from 'react';
 interface ProfileFormProps {
   initialData?: PersonProfile;
   initialNotes?: string;
+  initialGoalIds?: string[];
   onSubmit: (data: CreateProfileRequest & { selectedGoalIds?: string[] }) => Promise<void>;
   onCancel: () => void;
   isSubmitting?: boolean;
 }
 
-export function ProfileForm({ initialData, initialNotes, onSubmit, onCancel, isSubmitting }: ProfileFormProps) {
+export function ProfileForm({ initialData, initialNotes, initialGoalIds, onSubmit, onCancel, isSubmitting }: ProfileFormProps) {
   const { settings } = useSettings();
   const formId = useId();
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ export function ProfileForm({ initialData, initialNotes, onSubmit, onCancel, isS
     weight: initialData?.weight || 70,
     notes: initialData?.notes || initialNotes || '',
   });
-  const [selectedGoalIds, setSelectedGoalIds] = useState<string[]>([]); // Note: We'd need to load existing goals if editing
+  const [selectedGoalIds, setSelectedGoalIds] = useState<string[]>(initialGoalIds ?? []);
   const [goalSummary, setGoalSummary] = useState(initialData?.goalSummary || '');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +34,7 @@ export function ProfileForm({ initialData, initialNotes, onSubmit, onCancel, isS
     await onSubmit({
       ...formData,
       goalSummary: goalSummary || undefined,
-      selectedGoalIds: selectedGoalIds.length > 0 ? selectedGoalIds : undefined,
+      selectedGoalIds: initialData || selectedGoalIds.length > 0 ? selectedGoalIds : undefined,
     });
   };
 

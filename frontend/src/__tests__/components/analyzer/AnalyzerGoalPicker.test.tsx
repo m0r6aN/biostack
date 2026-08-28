@@ -40,10 +40,10 @@ describe('AnalyzerGoalPicker', () => {
       />,
     );
     expect(screen.getByText('Refine (optional)')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: /Enhance mitochondrial function/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Cellular energy context/ }));
     expect(onChange).not.toHaveBeenCalled(); // max 2 — ignored
 
-    fireEvent.click(screen.getByRole('button', { name: /Improve energy levels/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Daily energy/ }));
     expect(onChange).toHaveBeenCalledWith({ primaryCategory: 'energy', refinementGoalIds: ['energy-fat-loss'] });
   });
 

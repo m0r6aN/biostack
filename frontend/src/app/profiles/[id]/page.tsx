@@ -139,6 +139,7 @@ export default function ProfileDetailPage() {
               {isEditing ? (
                 <ProfileForm
                   initialData={profile}
+                  initialGoalIds={profileGoals.map(goal => goal.id)}
                   onSubmit={handleUpdate}
                   onCancel={() => setIsEditing(false)}
                   isSubmitting={isSubmitting}

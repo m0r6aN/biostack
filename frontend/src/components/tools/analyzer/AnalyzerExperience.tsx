@@ -6,7 +6,6 @@ import type { AnalyzerGoalSelection } from '@/lib/analyzerGoals';
 import { saveAnalyzerAnalysis, saveAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
 import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
-import { getMockProfileGoalIds } from '@/lib/goals';
 import { FREE_TIER_COMPOUND_LIMIT } from '@/lib/tiers';
 import type { CurrentSubscription, PersonProfile, ProtocolAnalyzerInputType, ProtocolAnalyzerResult } from '@/lib/types';
 import Link from 'next/link';
@@ -161,10 +160,16 @@ export function AnalyzerExperience() {
         return;
       }
 
-      const profileGoalIds =
-        fetched.goals && fetched.goals.length > 0
-          ? fetched.goals.map((g) => g.goalDefinitionId)
-          : getMockProfileGoalIds(fetched.id);
+      let profileGoalIds: string[];
+      try {
+        const profileGoals = await apiClient.getProfileGoals(fetched.id);
+        profileGoalIds = profileGoals.map((goal) => goal.id);
+      } catch {
+        return;
+      }
+      if (cancelled) {
+        return;
+      }
 
       const prefilled = prefillFromProfileGoals(profileGoalIds);
       if (prefilled.primaryCategory !== null) {

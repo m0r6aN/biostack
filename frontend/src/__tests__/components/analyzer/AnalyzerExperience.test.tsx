@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ProtocolAnalyzerResult } from '@/lib/types';
+import { GOAL_DEFINITIONS } from '@/lib/goals';
 import { STORAGE_KEY_V3, STORAGE_KEY_V4 } from '@/components/tools/analyzer/useAnalyzerSession';
 
 // ── Mocks (analyzer test conventions) ─────────────────────────────────────────
@@ -26,11 +27,13 @@ vi.mock('@/lib/AuthProvider', () => ({
 
 const analyzeProtocolMock = vi.fn();
 const getProfilesMock = vi.fn();
+const getProfileGoalsMock = vi.fn();
 const getCurrentSubscriptionMock = vi.fn();
 vi.mock('@/lib/api', () => ({
   apiClient: {
     analyzeProtocol: (...args: unknown[]) => analyzeProtocolMock(...args),
     getProfiles: (...args: unknown[]) => getProfilesMock(...args),
+    getProfileGoals: (...args: unknown[]) => getProfileGoalsMock(...args),
     getCurrentSubscription: (...args: unknown[]) => getCurrentSubscriptionMock(...args),
   },
   ApiError: class ApiError extends Error {
@@ -160,6 +163,8 @@ beforeEach(() => {
   analyzeProtocolMock.mockReset();
   getProfilesMock.mockReset();
   getProfilesMock.mockResolvedValue([]);
+  getProfileGoalsMock.mockReset();
+  getProfileGoalsMock.mockResolvedValue([]);
   getCurrentSubscriptionMock.mockReset();
   getCurrentSubscriptionMock.mockResolvedValue({
     tier: 'Operator',
@@ -183,6 +188,27 @@ afterEach(() => {
 });
 
 describe('AnalyzerExperience', () => {
+  it('prefills analyzer goals from the authenticated profile-goals endpoint', async () => {
+    getProfilesMock.mockResolvedValue([{
+      id: 'profile-1',
+      displayName: 'Profile',
+      sex: 'Unspecified',
+      weight: 80,
+      notes: '',
+      createdAtUtc: '2026-08-28T12:00:00Z',
+      updatedAtUtc: '2026-08-28T12:00:00Z',
+    }]);
+    getProfileGoalsMock.mockResolvedValue([
+      GOAL_DEFINITIONS.find((goal) => goal.id === 'energy-fat-loss'),
+    ]);
+
+    render(<AnalyzerExperience />);
+
+    await waitFor(() => expect(getProfileGoalsMock).toHaveBeenCalledWith('profile-1'));
+    expect(screen.getByRole('button', { name: 'Energy & Metabolism' })).toHaveClass('border-emerald-300/45');
+    expect(screen.getByRole('button', { name: 'Body composition' })).toHaveClass('border-emerald-300/45');
+  });
+
   // 1 ─ Initial mount: input stage + analyzer_viewed
   it('renders the input stage (heading + four mode tabs) and fires analyzer_viewed', () => {
     const captured = captureAnalyzerEvents();
