@@ -206,7 +206,7 @@ export default function ProfilesPage() {
             </p>
             <h2 className="mt-2 text-xl font-semibold text-white">Your saved calculations are ready for this profile.</h2>
             <p className="mt-2 text-sm leading-6 text-white/58">
-              BioStack can bring over compounds, calculations, setups, instructions, and blend checks from this browser.
+              BioStack can bring over compounds, calculations, setups, instructions, and overlap checks from this browser.
             </p>
             <button
               type="button"
