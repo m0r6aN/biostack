@@ -11,7 +11,10 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$JwtSecret,
 
-    [string]$DatabaseProvider = "sqlite",
+    # PostgreSQL is the required production provider. SQLite was a temporary
+    # bootstrap option: it stores data on ephemeral revision storage (no mount
+    # is defined in this script), so a deploy or restart destroys it.
+    [string]$DatabaseProvider = "postgresql",
     [string]$PostgresConnectionString = "",
     [string]$WebUrlOverride = "",
     [string]$ApiUrlOverride = "",
@@ -133,6 +136,13 @@ if (-not [string]::IsNullOrWhiteSpace($SmtpHost)) {
 $usePostgres = $DatabaseProvider.Equals("postgres", [System.StringComparison]::OrdinalIgnoreCase) -or
     $DatabaseProvider.Equals("postgresql", [System.StringComparison]::OrdinalIgnoreCase) -or
     $DatabaseProvider.Equals("npgsql", [System.StringComparison]::OrdinalIgnoreCase)
+
+if (-not $usePostgres) {
+    if ($env:BIOSTACK_ALLOW_EPHEMERAL_SQLITE -ne "1") {
+        throw "DatabaseProvider '$DatabaseProvider' provisions SQLite on EPHEMERAL container storage - user data is destroyed on deploy/restart. Use PostgreSQL, or set BIOSTACK_ALLOW_EPHEMERAL_SQLITE=1 only for throwaway environments."
+    }
+    Write-Warning "Provisioning with ephemeral SQLite: data will NOT survive deploys. Throwaway environments only."
+}
 
 if ($usePostgres) {
     if ([string]::IsNullOrWhiteSpace($PostgresConnectionString)) {
