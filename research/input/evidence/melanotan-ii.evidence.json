@@ -1,0 +1,376 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "melanotan-ii-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T21:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Melanotan II",
+    "aliases": [
+      "MT-II",
+      "Melanotan 2",
+      "MT-2"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic cyclic heptapeptide alpha-MSH (melanocortin) analog / nonselective melanocortin receptor agonist",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "92432",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-bulk-substances-melanotan-ii",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-92432",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "melanotan-II | C50H69N15O9 | CID 92432 - PubChem Compound Summary",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Melanotan-II",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "dermnetnz-melanotan-ii",
+      "sourceType": "clinical-reference",
+      "authorityTier": "B2",
+      "title": "Melanotan II",
+      "publisher": "DermNet NZ",
+      "url": "https://dermnetnz.org/topics/melanotan-ii",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "dorr-1996-nature-ijir-mt2-erection-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Melanocortin receptor agonists, penile erection, and sexual motivation: human studies with Melanotan II",
+      "publisher": "International Journal of Impotence Research (Nature)",
+      "url": "https://www.nature.com/articles/3900582",
+      "doi": "10.1038/sj.ijir.3900582",
+      "pmid": "11035391",
+      "publishedAt": "2000-10-01T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "peters-2020-cen-case-reports-renal-infarction",
+      "sourceType": "case-report",
+      "authorityTier": "B3",
+      "title": "Melanotan II: a possible cause of renal infarction: review of the literature and case report",
+      "publisher": "CEN Case Reports (Springer)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7148395/",
+      "doi": "10.1007/s13730-020-00447-z",
+      "pmid": null,
+      "publishedAt": "2020-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "mt2-regulatory-fda-withdrawn-nomination-001",
+      "claimType": "regulatory",
+      "statement": "FDA lists Melanotan II in the bulk drug substances nominated-but-withdrawn table on its 503A compounding safety-risk reference page, citing immunogenicity risk from aggregation/peptide-related impurities and noting published case reports of serious adverse events including melanoma, posterior reversible encephalopathy syndrome, sympathomimetic toxidrome, and priapism. No Melanotan II product is FDA-approved for any indication.",
+      "context": {
+        "population": "humans exposed to compounded or self-sourced Melanotan II products",
+        "route": "various; subcutaneous injection and nasal spray most common in gray-market use",
+        "formulation": "compounded/research-grade Melanotan II",
+        "useCase": "compounding safety and regulatory boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bulk-substances-melanotan-ii"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bulk-substances-melanotan-ii",
+          "quote": "Compounded drugs containing Melanotan II may pose risk for immunogenicity for certain routes of administration due to the potential for aggregation or peptide-related impurities. Published case reports discuss serious adverse events including melanoma, posterior reversible encephalopathy syndrome, sympathomimetic toxidrome and priapism.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn from consideration, Melanotan II row"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "verify current table placement (withdrawn vs. active category) against the live FDA page at review time"
+      ]
+    },
+    {
+      "claimId": "mt2-mechanism-melanocortin-agonist-001",
+      "claimType": "mechanism",
+      "statement": "Melanotan II is a synthetic cyclic heptapeptide analog of alpha-melanocyte-stimulating hormone that non-selectively activates melanocortin receptors, stimulating eumelanin synthesis and skin tanning; PubChem's own record notes it was historically studied for prevention of sunlight-induced skin cancer via this pathway.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "Melanotan II",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-92432",
+        "dermnetnz-melanotan-ii"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-92432",
+          "quote": "synthetic cyclic heptapeptide, an analog of alpha-melanotropin...capable of stimulating melanin synthesis & promoting rapid tanning of skin; currently in trials for use in the prevention of sunlight-induced skin cancer",
+          "pageOrSection": "Compound Summary description"
+        },
+        {
+          "sourceRef": "dermnetnz-melanotan-ii",
+          "quote": "Melanotan II non-selectively mimics the action of melanocortin peptides",
+          "pageOrSection": "Mechanism of action"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "mt2-identity-unapproved-status-001",
+      "claimType": "identity",
+      "statement": "Melanotan II (PubChem CID 92432, molecular formula C50H69N15O9, MW ~1024.2 g/mol) is an unlicensed, largely untested peptide with no approved medical use; regulatory and clinical-reference sources describe it as not recommended for use outside of research/clinical-trial settings.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "Melanotan II",
+        "useCase": "identity and regulatory status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-92432",
+        "dermnetnz-melanotan-ii"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dermnetnz-melanotan-ii",
+          "quote": "Melanotan II is an unlicensed and largely untested form of alpha-melanocyte-stimulating hormone, which causes pigmentation (tanning) of human skin.",
+          "pageOrSection": "Definition"
+        },
+        {
+          "sourceRef": "dermnetnz-melanotan-ii",
+          "quote": "Melanotan II is not approved for the treatment of any medical conditions currently",
+          "pageOrSection": "Clinical status"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "mt2-efficacy-erection-libido-rct-001",
+      "claimType": "efficacy",
+      "statement": "In a double-blind, placebo-controlled crossover human study of 20 men with psychogenic and organic erectile dysfunction, subcutaneous Melanotan II at 0.025 mg/kg produced penile erection in 17 of 20 men (mean 41 minutes of Rigiscan tip rigidity >80%) and increased reported sexual desire after 68% of active doses versus 19% of placebo doses (P<0.01); this is investigational sexual-function data, not evidence supporting tanning-oriented or cosmetic use, and Melanotan II remains unapproved for any indication.",
+      "context": {
+        "population": "20 adult men with psychogenic and organic erectile dysfunction (investigational trial)",
+        "route": "subcutaneous injection",
+        "formulation": "Melanotan II",
+        "useCase": "investigational erectile dysfunction/sexual desire research (not an approved use)",
+        "doseText": "0.025 mg/kg, single-dose crossover protocol (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dorr-1996-nature-ijir-mt2-erection-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dorr-1996-nature-ijir-mt2-erection-rct",
+          "quote": "Melanotan II was administered to 20 men with psychogenic and organic ED using a double-blind placebo-controlled crossover design.",
+          "pageOrSection": "Abstract/Methods"
+        },
+        {
+          "sourceRef": "dorr-1996-nature-ijir-mt2-erection-rct",
+          "quote": "Melanotan II led to penile erection in 17 of 20 men. Subjects experienced a mean of 41 min Rigiscan tip rigidity>80%.",
+          "pageOrSection": "Abstract/Results"
+        },
+        {
+          "sourceRef": "dorr-1996-nature-ijir-mt2-erection-rct",
+          "quote": "Increased sexual desire was reported after 13/19 (68%) doses of Melanotan II vs 4/21 (19%) of placebo (P<0.01).",
+          "pageOrSection": "Abstract/Results"
+        }
+      ],
+      "reviewFlags": [
+        "small single-trial dataset (n=20); no confirmatory phase 3 or approved product resulted",
+        "trial dose context must never be presented as a use recommendation",
+        "do not extrapolate this supervised single-dose IV/SC clinical trial result to chronic gray-market self-administration for tanning"
+      ]
+    },
+    {
+      "claimId": "mt2-adverse-effects-short-term-001",
+      "claimType": "adverse-effect",
+      "statement": "Short-term adverse effects documented with Melanotan II include facial flushing, reduced appetite/nausea/vomiting, and spontaneous erections (priapism) occurring 1-5 hours after administration; the human RCT literature separately documents nausea and yawning as frequent side effects, with severe nausea in 12.9% of subjects at the 0.025 mg/kg dose.",
+      "context": {
+        "population": "humans administered Melanotan II (trial subjects and self-administering users)",
+        "route": "subcutaneous injection; nasal spray also used in gray-market products",
+        "formulation": "Melanotan II",
+        "useCase": "adverse effect profile",
+        "doseText": "0.025 mg/kg in the cited RCT (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dermnetnz-melanotan-ii",
+        "dorr-1996-nature-ijir-mt2-erection-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dermnetnz-melanotan-ii",
+          "quote": "In males, spontaneous erections 1-5 hours after administration (priapism)",
+          "pageOrSection": "Short-term adverse effects"
+        },
+        {
+          "sourceRef": "dermnetnz-melanotan-ii",
+          "quote": "Reduced appetite, nausea and vomiting",
+          "pageOrSection": "Short-term adverse effects"
+        },
+        {
+          "sourceRef": "dorr-1996-nature-ijir-mt2-erection-rct",
+          "quote": "Nausea and yawning were frequently reported side effects due to Melanotan II; at a dose of 0.025 mg/kg, 12.9% of subjects had severe nausea.",
+          "pageOrSection": "Abstract/Results"
+        }
+      ],
+      "reviewFlags": [
+        "gray-market products (unsupervised dose, unknown purity/route, e.g. nasal spray) are not equivalent to the supervised trial conditions cited here"
+      ]
+    },
+    {
+      "claimId": "mt2-warning-melanoma-nevus-vascular-001",
+      "claimType": "warning",
+      "statement": "Longer-term and serious safety concerns reported with Melanotan II use include melanoma, deepening/changes of moles and new atypical melanocytic naevi, and rare severe vascular/systemic events; a published case report describes a 45-year-old man who developed right-sided renal infarction (approximately 50% of kidney affected) after self-administering 27 mg of Melanotan II subcutaneously over six months for tanning, with the authors proposing Melanotan II-induced vasoconstriction/thrombotic effect as the mechanism after excluding embolic and coagulation causes.",
+      "context": {
+        "population": "long-term or repeated self-administering users; single-patient case report",
+        "route": "subcutaneous injection",
+        "formulation": "self-sourced Melanotan II",
+        "useCase": "cosmetic tanning (unsupervised, gray-market)",
+        "doseText": "case report patient: 27 mg cumulative subcutaneous dose over 6 months (case description, not a use recommendation)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dermnetnz-melanotan-ii",
+        "peters-2020-cen-case-reports-renal-infarction",
+        "fda-bulk-substances-melanotan-ii"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dermnetnz-melanotan-ii",
+          "quote": "Deepening of the colour of moles, new moles and atypical melanocytic naevi",
+          "pageOrSection": "Long-term concerns"
+        },
+        {
+          "sourceRef": "peters-2020-cen-case-reports-renal-infarction",
+          "quote": "In the mechanism of renal injury with Melanotan II, thrombotic pharmacological influence and possible direct toxic effect on renal parenchyma must be considered.",
+          "pageOrSection": "Discussion"
+        },
+        {
+          "sourceRef": "fda-bulk-substances-melanotan-ii",
+          "quote": "Published case reports discuss serious adverse events including melanoma, posterior reversible encephalopathy syndrome, sympathomimetic toxidrome and priapism.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn from consideration, Melanotan II row"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim: causality in single case reports is not established at the level of controlled epidemiological evidence",
+        "melanoma association is a monitored regulatory/case-report concern, not a proven causal link from controlled human trials",
+        "confirm whether more recent case series (post-2020) have added to the renal/vascular signal at review time"
+      ]
+    },
+    {
+      "claimId": "mt2-evidence-gap-cosmetic-tanning-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Melanotan II is widely marketed online and among gray-market peptide vendors as a 'tanning peptide' and libido enhancer for unsupervised, repeated self-injection, but no Melanotan II product is FDA-approved for tanning, cosmetic, or sexual-function use; the only controlled human efficacy data identified concerns single-dose, clinically supervised erectile-function outcomes, not chronic self-administered tanning, and it does not establish safety for long-term unsupervised use. Regulators and clinical references instead document a safety signal (melanoma, mole changes, priapism, vascular events, immunogenicity) associated with real-world gray-market use.",
+      "context": {
+        "population": "consumers of gray-market/online Melanotan II products",
+        "route": "subcutaneous injection or nasal spray (common gray-market use)",
+        "formulation": "research-grade or vendor-sourced Melanotan II",
+        "useCase": "cosmetic tanning and libido enhancement marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "dermnetnz-melanotan-ii",
+        "fda-bulk-substances-melanotan-ii",
+        "dorr-1996-nature-ijir-mt2-erection-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dermnetnz-melanotan-ii",
+          "quote": "due to its potential side effects it is not recommended that anybody use this drug",
+          "pageOrSection": "Summary/Clinical status"
+        },
+        {
+          "sourceRef": "dermnetnz-melanotan-ii",
+          "quote": "Melanotan II is not approved for the treatment of any medical conditions currently",
+          "pageOrSection": "Clinical status"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular 'tanning peptide' and libido-enhancement marketing outpaces and diverges from the actual approved-use and safety evidence base",
+        "no systematic review or long-term controlled safety trial of chronic self-administered Melanotan II was identified in this pass"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "mt2-conflict-marketing-vs-evidence-001",
+      "claimRefs": [
+        "mt2-efficacy-erection-libido-rct-001",
+        "mt2-evidence-gap-cosmetic-tanning-marketing-001"
+      ],
+      "severity": "moderate",
+      "summary": "Online/vendor marketing of Melanotan II as a general tanning and libido peptide for repeated self-injection is not supported by the identified evidence, which consists of a single small supervised single-dose erectile-function trial and an unapproved regulatory status with an accumulating case-report safety signal (melanoma, renal infarction, priapism).",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS/UNII/ChEMBL/DrugBank identifiers not yet resolved from structured databases; PubChem currently lists at least three distinct CIDs across free-base/acetate salt/synonym entries (92432, 139211148, 91971817) that should be reconciled before this packet is finalized.",
+      "Primary PubMed/PMC pages for the rhabdomyolysis case report (Clinical Toxicology, PMID 23121206) and a second melanoma case report (PMID 24355990) could not be fetched this session (blocked by an interstitial/CAPTCHA); their claims are only indirectly corroborated via the FDA page's case-report summary and should be independently verified against the primary sources at review time.",
+      "FDA bulk drug substances page listings and table placement are subject to periodic revision; confirm Melanotan II's current table/category status against the live page at review time.",
+      "Human evidence base is thin: only one controlled human trial (n=20, single-dose crossover, erectile function endpoint) was located; no systematic review or long-term controlled safety study of chronic self-administered Melanotan II was found."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "thin-human-evidence",
+      "gray-market-only",
+      "case-report-safety-signal",
+      "marketing-evidence-gap"
+    ]
+  }
+}

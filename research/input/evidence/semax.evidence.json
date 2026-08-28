@@ -1,0 +1,420 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "semax-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T21:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Semax",
+    "aliases": [
+      "ACTH(4-7)-PGP",
+      "ACTH(4-10)-PGP",
+      "Semax heptapeptide",
+      "Met-Glu-His-Phe-Pro-Gly-Pro"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic ACTH(4-7) fragment analog (heptapeptide, melanocortin-related neuropeptide)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "80714-61-0",
+      "drugbank": null,
+      "pubchem": "9811102",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-semax-withdrawn-nomination",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "semax-peptogen-label-insert",
+      "sourceType": "product-label",
+      "authorityTier": "B1",
+      "title": "Semax (nasal drops 0.1% / 1%) - Package Insert / Instructions for Medical Use",
+      "publisher": "CJSC Innovation Research and Production Center 'Peptogen', Russia",
+      "url": "https://cdn.shopify.com/s/files/1/1053/0426/files/Semax_instruction_updated.pdf?2102",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-9811102",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "ACTH (4-7), Pro-Gly-Pro- (Semax), PubChem Compound Summary (CID 9811102)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Semax",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "caymanchem-semax-27719",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Semax (ACTH4-7-PGP), Product 27719",
+      "publisher": "Cayman Chemical",
+      "url": "https://www.caymanchem.com/product/27719/semax",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "shmonin-2018-semax-stroke-meta-analysis",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Meta-analysis: Semax effectiveness in the acute period of stroke",
+      "publisher": "Bulletin of Rehabilitation Medicine (Shmonin AA, Verbickaya EV, Soloveva LN, Malceva MN, Melnikova EV, 2018, Vol 17 No 2, pp 81-88)",
+      "url": "https://journals.eco-vector.com/2078-1962/article/view/609445",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2018-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "wikipedia-semax",
+      "sourceType": "encyclopedia",
+      "authorityTier": "C1",
+      "title": "Semax",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Semax",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "peptiq-semax-guide",
+      "sourceType": "vendor-content",
+      "authorityTier": "C2",
+      "title": "Semax: The Neuroprotective Peptide Changing Cognitive Research",
+      "publisher": "PeptIQ",
+      "url": "https://peptiq.io/blog/semax-nootropic-peptide-guide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "cenexalabs-semax-product",
+      "sourceType": "vendor-content",
+      "authorityTier": "C2",
+      "title": "Semax Peptide Spray | USA Made | 10mg/10ml Research Grade",
+      "publisher": "Cenexa Labs",
+      "url": "https://cenexalabs.com/product/peptides/semax-peptide-spray-10ml/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "semax-identity-structure-001",
+      "claimType": "identity",
+      "statement": "Semax (ACTH4-7-PGP) is a synthetic heptapeptide with sequence Met-Glu-His-Phe-Pro-Gly-Pro, molecular formula C37H51N9O10S, molecular weight approximately 813.9, CAS number 80714-61-0, indexed in PubChem as CID 9811102 under the name 'ACTH (4-7), Pro-Gly-Pro-'.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "synthetic peptide, reference/research and Russian pharmaceutical (Peptogen) forms",
+        "useCase": "compound identification",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-9811102",
+        "caymanchem-semax-27719"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-9811102",
+          "quote": "ACTH (4-7), Pro-Gly-Pro-",
+          "pageOrSection": "Compound summary title / CID 9811102"
+        },
+        {
+          "sourceRef": "caymanchem-semax-27719",
+          "quote": "80714-61-0",
+          "pageOrSection": "Product 27719, CAS Number field"
+        }
+      ],
+      "reviewFlags": [
+        "DrugBank/ChEMBL identifiers not resolved this session"
+      ]
+    },
+    {
+      "claimId": "semax-mechanism-unclear-001",
+      "claimType": "mechanism",
+      "statement": "Semax's mechanism of action is not established; it is proposed to interact with melanocortin receptors or inhibit enkephalinase enzymes based on its structural relationship to ACTH(4-10), but this is not confirmed as a defined human pharmacological mechanism.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "Semax",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "low",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "wikipedia-semax"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "wikipedia-semax",
+          "quote": "The mechanism of action of Semax is unknown.",
+          "pageOrSection": "Pharmacology / Mechanism section"
+        },
+        {
+          "sourceRef": "wikipedia-semax",
+          "quote": "might interact with certain melanocortin receptors or inhibit enkephalinase enzymes",
+          "pageOrSection": "Pharmacology / Mechanism section"
+        }
+      ],
+      "reviewFlags": [
+        "sourced from a tertiary (encyclopedia) reference; primary mechanistic literature (largely rodent) not independently re-verified this session because PMC pages returned reCAPTCHA challenges instead of content",
+        "do not extrapolate proposed mechanism into a human efficacy claim"
+      ]
+    },
+    {
+      "claimId": "semax-russia-approved-indication-001",
+      "claimType": "approved-indication",
+      "statement": "In Russia, Semax nasal drops (manufactured by Peptogen) are labeled with indications including intellectual/mnestic (memory, attention) disorders and post-traumatic-brain-injury/neurosurgery/narcosis states (0.1% formulation, including use as a nootropic in children from age 7 for minimal brain dysfunction including ADHD), and the acute period of moderate-to-severe ischemic stroke as part of complex therapy (1% formulation). Semax is not FDA-approved and has no approved indication in the United States.",
+      "context": {
+        "population": "patients in Russia per product labeling; children 7+ for the 0.1% pediatric nootropic indication",
+        "route": "intranasal",
+        "formulation": "Semax 0.1% and 1% nasal drops (Peptogen, Russia)",
+        "useCase": "Russian-labeled indications: cognitive/memory disorders, post-TBI/neurosurgery states, pediatric minimal brain dysfunction/ADHD, acute ischemic stroke",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "semax-peptogen-label-insert",
+        "fda-semax-withdrawn-nomination"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "semax-peptogen-label-insert",
+          "quote": "Intellectual and mnestic (memory, attention) disorders; States after a traumatic brain injury, neurosurgical operations and narcosis",
+          "pageOrSection": "Indications, 0.1% formulation"
+        },
+        {
+          "sourceRef": "semax-peptogen-label-insert",
+          "quote": "as a nootropic in children from the age of 7 years old, in the treatment of the minimal brain dysfunction (including ADHD)",
+          "pageOrSection": "Indications, 0.1% formulation, pediatric use"
+        },
+        {
+          "sourceRef": "semax-peptogen-label-insert",
+          "quote": "Acute period of moderate to severe ischemic stroke as part of the complex therapy.",
+          "pageOrSection": "Indications, 1% formulation"
+        }
+      ],
+      "reviewFlags": [
+        "foreign (Russian) product label, not an FDA-approved label; approval status and label text should be reconfirmed against the current official Russian State Register of Medicines at review time",
+        "this claim must not be read as establishing US regulatory approval or as clinical guidance for US use"
+      ]
+    },
+    {
+      "claimId": "semax-us-regulatory-status-001",
+      "claimType": "regulatory",
+      "statement": "Semax (heptapeptide) was nominated for inclusion on FDA's 503A bulk drug substances Category 2 list (substances that may present significant safety risks, flagged for immunogenicity risk from aggregation or peptide-related impurities) but the nomination was withdrawn by the nominator; it is listed on FDA's page under 'bulk drug substances nominated but withdrawn' rather than as an active Category 2 safety-risk substance. Semax has no FDA-approved drug application and is not on FDA's positive 503A Bulks List.",
+      "context": {
+        "population": "US-based compounding pharmacies and patients receiving compounded products",
+        "route": null,
+        "formulation": "compounded Semax (heptapeptide)",
+        "useCase": "US compounding regulatory status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-semax-withdrawn-nomination"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-semax-withdrawn-nomination",
+          "quote": "Compounded drugs containing semax (heptapeptide) may pose risk for immunogenicity for certain routes of administration due to the potential for aggregation and peptide-related impurities.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn by nominator, Semax (heptapeptide) row"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "verify current status against the live FDA bulk-substances page at review time, since Category 2 and withdrawn-nomination listings have been revised in past cycles (e.g. April 2026 peptide-listing revisions noted for other compounds)"
+      ]
+    },
+    {
+      "claimId": "semax-warnings-contraindications-001",
+      "claimType": "contraindication",
+      "statement": "Per the Russian Semax product label, the drug is contraindicated in hypersensitivity to its components, in children under 7 years old (under 18 for ophthalmic/neurosurgical use), in pregnancy and lactation (no clinical studies conducted in these populations), in acute psychotic states or disorders accompanied by anxiety, and in patients with a history of seizures/cramps. Prolonged use may cause mild nasal mucosa irritation.",
+      "context": {
+        "population": "patients per Russian product labeling",
+        "route": "intranasal",
+        "formulation": "Semax nasal drops (Peptogen, Russia)",
+        "useCase": "label-stated contraindications and adverse effects",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "semax-peptogen-label-insert"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "semax-peptogen-label-insert",
+          "quote": "Hypersensitivity to the components of the drug; Children under 7 y.o. In ophthalmic and neurosurgical practice, children under 18 y.o.",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "semax-peptogen-label-insert",
+          "quote": "Pregnancy and lactation (no clinical studies have been conducted)",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "semax-peptogen-label-insert",
+          "quote": "Acute psychotic states, disorders accompanied by anxiety; History of cramps.",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "semax-peptogen-label-insert",
+          "quote": "Prolonged use may cause a mild irritation of the nasal mucosa.",
+          "pageOrSection": "Adverse effects"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim sourced from a foreign manufacturer label hosted on a third-party (retailer) CDN, not an official government registry page; reconfirm against the official Russian label/registry at review time",
+        "this is label context only, not a safety assessment for unsupervised gray-market use in populations the label was not written for"
+      ]
+    },
+    {
+      "claimId": "semax-human-efficacy-stroke-limited-001",
+      "claimType": "efficacy",
+      "statement": "A 2018 meta-analysis of Russian clinical literature identified 8 studies (n=654) on intranasal Semax 1% (12-18 mg/day) given within 10-14 days of acute ischemic stroke onset, of which 3 studies (n=181) met inclusion criteria for pooled analysis; pooled results reported reduced stroke severity (NIHSS) at 10-14 and 21 days and improved Rivermead mobility scores versus comparators in moderate/severe stroke subgroups, with the study authors themselves calling for a rigorous multicenter double-blind trial to confirm the finding - indicating the underlying studies were not uniformly double-blind, placebo-controlled trials by modern standards.",
+      "context": {
+        "population": "adult ischemic stroke patients, primarily from Russian-language clinical literature",
+        "route": "intranasal",
+        "formulation": "Semax 1% nasal drops",
+        "useCase": "acute ischemic stroke, adjunct to standard therapy (investigational/label context, not a use recommendation)",
+        "doseText": "1% intranasal, 12-18 mg/day, administered within the first 10-14 days post-stroke (trial/label protocol context; not a use recommendation)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "shmonin-2018-semax-stroke-meta-analysis"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "shmonin-2018-semax-stroke-meta-analysis",
+          "quote": "significant stroke severity decrease reduction using NIHSS at 10-14 and 21 days",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "shmonin-2018-semax-stroke-meta-analysis",
+          "quote": "Semax 1% intranasal administration in the acute period of stroke leads to neurological impairment decrease, mobility and functional independence increase",
+          "pageOrSection": "Conclusion"
+        },
+        {
+          "sourceRef": "shmonin-2018-semax-stroke-meta-analysis",
+          "quote": "a multicenter, powerful double-blind study",
+          "pageOrSection": "Conclusion / recommendation for further research"
+        }
+      ],
+      "reviewFlags": [
+        "underlying evidence base is Russian-language, largely open-label clinical studies; no internationally replicated double-blind placebo-controlled RCT was located this session",
+        "trial/label dose context must never be presented as a use recommendation",
+        "does not establish efficacy for any indication other than acute ischemic stroke under medical supervision"
+      ]
+    },
+    {
+      "claimId": "semax-evidence-gap-nootropic-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Semax is widely marketed in the US gray/research-chemical market as a general cognitive-enhancement, focus, mood, and neuroprotective 'nootropic' for healthy adults, extrapolating from stroke-neuroprotection data and animal BDNF/long-term-potentiation findings; no controlled human trial in healthy (non-stroke) populations supporting these broader cognitive-enhancement claims was located, and vendor product pages simultaneously carry 'research use only, not for human consumption' disclaimers while marketing health-related benefit language.",
+      "context": {
+        "population": "consumers of gray-market Semax products marketed for cognitive enhancement",
+        "route": "intranasal (common gray-market use)",
+        "formulation": "research-grade Semax nasal sprays/vials sold outside Russian pharmaceutical channels",
+        "useCase": "nootropic / cognitive-enhancement / focus / mood marketing claims in healthy adults",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "peptiq-semax-guide",
+        "cenexalabs-semax-product",
+        "shmonin-2018-semax-stroke-meta-analysis"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peptiq-semax-guide",
+          "quote": "The strongest clinical evidence is in ischemic stroke neuroprotection; extrapolation to healthy cognitive enhancement is mechanistically reasonable but not directly established.",
+          "pageOrSection": "Evidence summary"
+        },
+        {
+          "sourceRef": "cenexalabs-semax-product",
+          "quote": "This product is intended strictly for laboratory research purposes. Not for human consumption, clinical use, veterinary applications, or any diagnostic or therapeutic purposes.",
+          "pageOrSection": "Product disclaimer"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular nootropic/cognitive-enhancement marketing claims for healthy-adult use lack direct supporting human outcome evidence",
+        "stroke-specific efficacy data (limited, non-blinded) must not be generalized to healthy-population cognitive-enhancement claims"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "semax-conflict-approval-vs-evidence-rigor-001",
+      "claimRefs": [
+        "semax-russia-approved-indication-001",
+        "semax-human-efficacy-stroke-limited-001"
+      ],
+      "severity": "moderate",
+      "summary": "Semax holds Russian pharmaceutical labeling and marketing approval for stroke and cognitive indications, and a Russian meta-analysis reports positive pooled outcomes, but the underlying human studies are Russian-language and largely open-label rather than international double-blind placebo-controlled RCTs; no independent international regulator (FDA, EMA) has evaluated or approved Semax, and the meta-analysis authors themselves called for a more rigorous trial. The strength of the regulatory/marketing claim in Russia should not be read as equivalent to Strong-tier international efficacy evidence.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "No internationally indexed, PMC/PubMed-verified double-blind placebo-controlled human RCT for Semax was located this session; PMC and PubMed article pages returned reCAPTCHA challenge pages instead of content on repeated attempts, so mechanism and trial-level primary literature could not be independently re-verified beyond the meta-analysis abstract and label.",
+      "RxNorm, UNII, DrugBank, and ChEMBL identifiers not resolved from structured databases this session.",
+      "Confirm current FDA bulk-substances withdrawn-nomination status for Semax against the live FDA page at review time, since peptide listings have been revised in recent cycles.",
+      "Russian product label was sourced via a third-party retailer-hosted PDF rather than an official government registry; verify against the official Russian State Register of Medicines / manufacturer source at review time."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "not-fda-approved",
+      "foreign-label-anchor",
+      "thin-independently-verified-human-evidence",
+      "no-blinded-rct-identified",
+      "gray-market-us-marketing-gap"
+    ]
+  }
+}
