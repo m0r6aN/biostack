@@ -10,8 +10,8 @@
 
 Check (read-only):
 ```
-az containerapp show -n <api-app> -g $RG --query "properties.template.containers[0].env[?name=='Database__Provider']"
-az containerapp show -n <api-app> -g $RG --query "properties.template.volumes"
+az containerapp show -n biostackmissionctrl-api -g $RG --query "properties.template.containers[0].env[?name=='Database__Provider']"
+az containerapp show -n biostackmissionctrl-api -g $RG --query "properties.template.volumes"
 ```
 - `Database__Provider=postgresql` → follow §1-A. SQLite + a volume → §1-B. SQLite + no volume → **stop; migrate to PostgreSQL Flexible Server or attach an Azure Files mount before launch.**
 
