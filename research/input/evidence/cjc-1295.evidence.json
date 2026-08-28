@@ -1,0 +1,377 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "cjc-1295-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T21:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "CJC-1295",
+    "aliases": [
+      "CJC-1295 DAC",
+      "CJC-1295 without DAC",
+      "Mod GRF 1-29",
+      "Modified GRF 1-29"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic growth-hormone-releasing hormone (GHRH) analog",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "91971820",
+      "chembl": null,
+      "doi": "10.1210/jc.2005-1536",
+      "pmid": "16352683"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-pcac-briefing-183819",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting (CJC-1295 evaluation)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/183819/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "fda-bulk-substances-withdrawn-nominations",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (Bulk drug substances nominated but withdrawn: CJC-1295 entry)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "teichman-2006-jcem-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Prolonged Stimulation of Growth Hormone (GH) and Insulin-Like Growth Factor I Secretion by CJC-1295, a Long-Acting Analog of GH-Releasing Hormone, in Healthy Adults",
+      "publisher": "The Journal of Clinical Endocrinology & Metabolism (Teichman SL, Neale A, Lawrence B, et al., 2006)",
+      "url": "https://academic.oup.com/jcem/article-abstract/91/3/799/2843281",
+      "doi": "10.1210/jc.2005-1536",
+      "pmid": "16352683",
+      "publishedAt": "2006-03-01T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-91971820",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: CJC-1295 (CID 91971820)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Cjc-1295",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "peptidetreatments-vendor-marketing",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C3",
+      "title": "CJC-1295: Mechanism, Benefits & Research",
+      "publisher": "peptidetreatments.com",
+      "url": "https://peptidetreatments.com/peptides/cjc-1295",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "cjc1295-regulatory-503a-recommendation-001",
+      "claimType": "regulatory",
+      "statement": "In its Pharmacy Compounding Advisory Committee briefing on five CJC-1295 variants (CJC-1295 free base, CJC-1295 acetate, CJC-1295 DAC free base, CJC-1295 DAC acetate, CJC-1295 DAC TFA), FDA concluded the evaluation criteria weigh against placing any of them on the 503A Bulks List, citing immunogenicity risk (particularly for subcutaneous administration), pituitary DNA damage in genotoxicity testing, aggregation sensitivity, repeat-dose toxicity findings, and insufficient publicly available physical/chemical characterization data.",
+      "context": {
+        "population": "prospective compounded-product users",
+        "route": "subcutaneous (route specifically flagged for immunogenicity risk)",
+        "formulation": "CJC-1295 free base, acetate, and DAC salt forms",
+        "useCase": "regulatory evaluation for compounding eligibility",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-183819"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-183819",
+          "quote": "for the reasons discussed below, we believe the evaluation criteria weigh against placing CJC-1295 (free base), CJC-1295 acetate, CJC-1295 DAC (free base), CJC-1295 DAC acetate, or CJC-1295 DAC TFA on the list",
+          "pageOrSection": "Introduction, page 3"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183819",
+          "quote": "potential for immunogenicity...especially when administered by the SC ROA, because this ROA may present a particular risk for immunogenicity",
+          "pageOrSection": "pages 10, 12, 14, 16, 18 (repeated across the five bulk-drug-substance evaluations)"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183819",
+          "quote": "CJC-1295 DAC...caused DNA damage in the pituitary cells",
+          "pageOrSection": "page 30, Genotoxicity section"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "confirm final PCAC committee vote/outcome versus this briefing-document staff position",
+        "verify current FDA nomination status at review time"
+      ]
+    },
+    {
+      "claimId": "cjc1295-regulatory-withdrawn-nomination-001",
+      "claimType": "regulatory",
+      "statement": "CJC-1295 appears on FDA's public bulk-drug-substances page under \"Bulk drug substances nominated but withdrawn,\" not in the active Category 1 or Category 2 lists; the entry states FDA identified serious adverse events associated with CJC-1295 including increased heart rate and systemic vasodilatory reaction, and that available clinical data are limited.",
+      "context": {
+        "population": "humans exposed to compounded CJC-1295 products",
+        "route": null,
+        "formulation": "compounded CJC-1295",
+        "useCase": "compounding safety and regulatory boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bulk-substances-withdrawn-nominations"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bulk-substances-withdrawn-nominations",
+          "quote": "Compounded drugs containing CJC-1295 may pose risk for immunogenicity for certain routes of administration and may have complexities with regard to for peptide-related impurities and API characterization. FDA has identified serious adverse events associated with CJC-1295 including increased heart rate and systemic vasodilatory reaction. Available clinical data are limited.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn, CJC-1295 row"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "listing status (withdrawn vs. re-nominated) is volatile \u2014 reconfirm against the live FDA page at review time"
+      ]
+    },
+    {
+      "claimId": "cjc1295-mechanism-ghrh-analog-001",
+      "claimType": "mechanism",
+      "statement": "CJC-1295 (including the DAC-conjugated form) is a synthetic peptide analog of human growth-hormone-releasing hormone (GHRH 1-29) that activates GHRH receptors on anterior pituitary somatotroph cells to stimulate growth hormone release; the DAC (Drug Affinity Complex) modification is intended to extend plasma half-life via covalent albumin binding.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "CJC-1295 and CJC-1295 DAC",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-183819",
+        "teichman-2006-jcem-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-183819",
+          "quote": "CJC-1295 DAC...is a synthetic peptide analogue of the human GHRH1-29",
+          "pageOrSection": "pages 25-26, Nonclinical Assessment"
+        },
+        {
+          "sourceRef": "teichman-2006-jcem-rct",
+          "quote": "The estimated half-life of CJC-1295 was 5.8-8.1 d.",
+          "pageOrSection": "Abstract/Results"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "cjc1295-efficacy-human-rct-gh-igf1-001",
+      "claimType": "efficacy",
+      "statement": "In two randomized, placebo-controlled, double-blind, ascending-dose trials (28-day and 49-day) in healthy adults ages 21-61, subcutaneous CJC-1295 produced dose-dependent increases in plasma GH (2- to 10-fold) lasting 6 or more days and IGF-I (1.5- to 3-fold) lasting 9-11 days after single doses; after multiple weekly or biweekly doses, mean IGF-I remained above baseline for up to 28 days, and no serious adverse reactions were reported in this supervised trial setting. The trials measured hormone-axis pharmacodynamics only; they did not assess body composition, strength, fat loss, sleep, or other downstream outcomes.",
+      "context": {
+        "population": "healthy adults, ages 21-61 (two ascending-dose RCTs)",
+        "route": "subcutaneous",
+        "formulation": "CJC-1295",
+        "useCase": "GH/IGF-I axis stimulation (investigational, pharmacodynamic endpoints only)",
+        "doseText": "single ascending doses, and two-to-three weekly or biweekly doses, over 28- and 49-day trial protocols (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "teichman-2006-jcem-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "teichman-2006-jcem-rct",
+          "quote": "Two randomized, placebo-controlled, double-blind, ascending dose trials with durations of 28 and 49 d.",
+          "pageOrSection": "Study Design"
+        },
+        {
+          "sourceRef": "teichman-2006-jcem-rct",
+          "quote": "dose-dependent increases in mean plasma GH concentrations by 2- to 10-fold for 6 d or more and in mean plasma IGF-I concentrations by 1.5- to 3-fold for 9-11 d",
+          "pageOrSection": "Key Results"
+        },
+        {
+          "sourceRef": "teichman-2006-jcem-rct",
+          "quote": "No serious adverse reactions were reported.",
+          "pageOrSection": "Safety"
+        }
+      ],
+      "reviewFlags": [
+        "trial dose context must never be presented as a use recommendation",
+        "this trial predates and is independent of the CJC-1295 DAC phase 2 trial subject death reported in 2006 (see safety-critical claim below); does not establish long-term or self-administered gray-market safety"
+      ]
+    },
+    {
+      "claimId": "cjc1295-adverse-effect-phase2-death-001",
+      "claimType": "adverse-effect",
+      "statement": "FDA's briefing document states that ConjuChem Biotechnology withdrew CJC-1295 DAC from clinical trials in 2006 following the death of a subject involved in a phase 2 trial; nonclinical toxicology work also found DNA damage in pituitary cells (Comet assay) and repeat-dose findings including decreased activity, emesis, and injection-site inflammation, hemorrhage, and necrosis in animal studies.",
+      "context": {
+        "population": "phase 2 clinical trial subject (human); repeat-dose toxicology in animal studies",
+        "route": "subcutaneous/investigational",
+        "formulation": "CJC-1295 DAC",
+        "useCase": "safety history of clinical development",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-183819"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-183819",
+          "quote": "ConjuChem Biotechnology withdrew CJC-1295 DAC from clinical trials in 2006 after the death of a subject involved in a phase 2 trial.",
+          "pageOrSection": "page 19, Clinical Development History"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183819",
+          "quote": "CJC-1295 DAC...caused DNA damage in the pituitary cells, as measured in the Comet assay",
+          "pageOrSection": "page 30, Genotoxicity section"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183819",
+          "quote": "Decreased activity and emesis...injection site irritation...inflammation, hemorrhage, and minimal to mild necrosis",
+          "pageOrSection": "page 29, Repeat-Dose Toxicity"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim",
+        "FDA briefing does not specify the cause of death or whether it was attributed to CJC-1295 DAC; this gap should be resolved by an independent source (e.g., trial registry or published safety report) before publication",
+        "distinct from, but consistent in direction with, the separately documented cardiovascular adverse events (increased heart rate, systemic vasodilatory reaction) on the FDA withdrawn-nominations page"
+      ]
+    },
+    {
+      "claimId": "cjc1295-identity-two-forms-001",
+      "claimType": "identity",
+      "statement": "\"CJC-1295\" refers to two distinct products sold under overlapping branding: CJC-1295 DAC (the long-acting, Drug Affinity Complex-conjugated form with a multi-day half-life, the subject of the withdrawn ConjuChem phase 2 program) and CJC-1295 without DAC (also marketed as Mod GRF 1-29), a shorter-acting GHRH(1-29) analog lacking the DAC modification; PubChem's structured record for CJC-1295 lists molecular formula C165H269N47O46 under CID 91971820.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "CJC-1295 DAC vs. CJC-1295 without DAC (Mod GRF 1-29)",
+        "useCase": "compound identity and nomenclature",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-91971820",
+        "fda-pcac-briefing-183819"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-91971820",
+          "quote": "C165H269N47O46",
+          "pageOrSection": "Molecular Formula field, CID 91971820"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183819",
+          "quote": "we believe the evaluation criteria weigh against placing CJC-1295 (free base), CJC-1295 acetate, CJC-1295 DAC (free base), CJC-1295 DAC acetate, or CJC-1295 DAC TFA on the list",
+          "pageOrSection": "Introduction, page 3 (enumerates the five evaluated CJC-1295 variants)"
+        }
+      ],
+      "reviewFlags": [
+        "PubChem CID 91971820 record could not be confirmed to unambiguously distinguish DAC vs. non-DAC forms from the fetched page content; CAS number and UNII were not resolved from the fetched PubChem page and require follow-up",
+        "vendor product listings for 'CJC-1295 without DAC' and 'Mod GRF 1-29' are not consistently distinguished from CJC-1295 DAC in gray-market marketing; this ambiguity itself is a consumer-facing risk"
+      ]
+    },
+    {
+      "claimId": "cjc1295-evidence-gap-wellness-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "No approved CJC-1295 product exists, and the only published controlled human data measure GH/IGF-I pharmacodynamics in healthy adults over 28-49 days; that data does not establish the anti-aging, fat-loss, muscle-gain, sleep-quality, bone-density, or tissue-recovery benefits for which CJC-1295 is commonly marketed online (often stacked with ipamorelin). A vendor marketing page reviewed for this packet cited only the Teichman (2006) GH/IGF-I pharmacodynamic study and a separate pulsatility study as its human evidence, while asserting benefits for sleep architecture, bone density, lipolysis, lean mass, and tissue repair that those studies did not test.",
+      "context": {
+        "population": "consumers of gray-market peptide products",
+        "route": "subcutaneous (common gray-market use)",
+        "formulation": "research-grade CJC-1295, often combined with ipamorelin",
+        "useCase": "anti-aging / body composition / sleep / recovery marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "teichman-2006-jcem-rct",
+        "peptidetreatments-vendor-marketing",
+        "fda-pcac-briefing-183819"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "teichman-2006-jcem-rct",
+          "quote": "dose-dependent increases in mean plasma GH concentrations by 2- to 10-fold for 6 d or more and in mean plasma IGF-I concentrations by 1.5- to 3-fold for 9-11 d",
+          "pageOrSection": "Key Results"
+        },
+        {
+          "sourceRef": "peptidetreatments-vendor-marketing",
+          "quote": "Enhanced deep sleep quality \u2014 GH secretion is coupled to slow-wave sleep architecture",
+          "pageOrSection": "Anti-Aging/Longevity marketing claims"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular marketing claims (sleep, bone density, lipolysis, lean mass, tissue repair) are mechanistic extrapolations from GH/IGF-I elevation, not clinically demonstrated human outcomes",
+        "capture parallel ipamorelin combination claims in the ipamorelin packet as well"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "cjc1295-conflict-cause-of-death-attribution-001",
+      "claimRefs": [
+        "cjc1295-adverse-effect-phase2-death-001"
+      ],
+      "severity": "high",
+      "summary": "FDA's PCAC briefing document states a phase 2 trial subject death led to ConjuChem's 2006 withdrawal of CJC-1295 DAC from clinical trials, but the fetched briefing text does not specify whether the death was causally attributed to the study drug, and no independent primary source (e.g., trial registry record, published case report, or sponsor statement) was located this session to corroborate causality or rule it out.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Cause-of-death attribution for the 2006 phase 2 trial subject is stated by FDA's briefing without causal detail; an independent source (trial registry or published safety report) should be sought to confirm or contextualize before publication.",
+      "CAS number and UNII identifiers were not resolved from the fetched PubChem page and require follow-up against a structured database session that can render the full record.",
+      "FDA's bulk-drug-substances nomination/withdrawal status for CJC-1295 is time-volatile (the PCAC briefing and the withdrawn-nominations page may reflect different stages of the same review); reconfirm current status against the live FDA pages at review time.",
+      "Human evidence is limited to short-duration pharmacodynamic (GH/IGF-I) trials in healthy adults; no controlled human efficacy or long-term safety data exist for the body-composition, anti-aging, or recovery uses driving current demand."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "phase2-trial-death-documented",
+      "thin-human-evidence",
+      "regulatory-boundary",
+      "identifier-gaps"
+    ]
+  }
+}

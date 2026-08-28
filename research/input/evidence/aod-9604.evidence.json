@@ -1,0 +1,400 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "aod-9604-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T21:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "AOD-9604",
+    "aliases": [
+      "AOD 9604",
+      "AOD9604",
+      "hGH fragment 176-191",
+      "hGH fragment 177-191",
+      "Tyr-hGH 177-191",
+      "AOD-9604 acetate"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic hexadecapeptide fragment of human growth hormone (C-terminal lipolytic domain)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "221231-10-3",
+      "drugbank": null,
+      "pubchem": "71300630",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-aod9604-withdrawn-bulk-list",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "fda-pcac-briefing-183584",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting (AOD-9604 and AOD-9604 acetate evaluation)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/183584/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "more-kenley-2014-jofem-safety",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Safety and Metabolism of AOD9604, a Novel Nutraceutical Ingredient for Improved Metabolic Health",
+      "publisher": "Journal of Endocrinology and Metabolism, Vol. 4, Issue 3 (Mor\u00e9 MI, Kenley D, 2014)",
+      "url": "https://www.jofem.org/index.php/jofem/article/view/213/278",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2014-06-01T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "stier-2013-jofem-safety-tolerability",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Safety and Tolerability of the Hexadecapeptide AOD9604 in Humans",
+      "publisher": "Journal of Endocrinology and Metabolism (Stier H, Vos E, Kenley D, 2013)",
+      "url": "https://www.jofem.org/index.php/jofem/article/view/157/194",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2013-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-71300630",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: AOD-9604 (CID 71300630)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Aod-9604",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "chemicalbook-aod9604",
+      "sourceType": "structured-database",
+      "authorityTier": "B3",
+      "title": "AOD 9604 | 221231-10-3 (Chemical Product Properties)",
+      "publisher": "ChemicalBook",
+      "url": "https://www.chemicalbook.com/ChemicalProductProperty_EN_CB42516194.htm",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "meto-vendor-blog-aod9604",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "AOD-9604 for Fat Loss: Evidence, Safety & GLP-1 Comparison",
+      "publisher": "Meto (commercial peptide/telehealth blog)",
+      "url": "https://meto.co/blog/aod-9604-fat-loss-peptide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "aod9604-identity-mechanism-001",
+      "claimType": "mechanism",
+      "statement": "AOD-9604 is a synthetic hexadecapeptide fragment of human growth hormone (15 amino acids, positions 177-191, plus an added N-terminal tyrosine). FDA's briefing document states that the molecular target(s) and mechanism(s) of action underlying its pharmacological effects remain unknown, though it appears to act, at least in part, via beta-3 adrenergic receptor pathways rather than the growth hormone receptor/IGF-1 axis.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "AOD-9604 free base and AOD-9604 acetate",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-183584",
+        "more-kenley-2014-jofem-safety",
+        "pubchem-cid-71300630"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "AOD-9604 is a hexadecapeptide that is a synthetic fragment of human growth hormone (hGH) (15 amino acids: 177-191) with an additional tyrosine at the N-terminal end.",
+          "pageOrSection": "Page 3, Introduction"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "The molecular target(s) and the mechanism(s) of action underlying the pharmacological effects of AOD-9604 remain unknown",
+          "pageOrSection": "Page 25-26, Section II.D.1.a"
+        },
+        {
+          "sourceRef": "more-kenley-2014-jofem-safety",
+          "quote": "The mechanism of action of AOD9604 is not understood, although it clearly shares some of the biological effects of hGH, for example, on adipose tissues, but not others, for example, IGF-1 production.",
+          "pageOrSection": "Discussion"
+        }
+      ],
+      "reviewFlags": [
+        "mechanism is not established; do not present beta-3 adrenergic involvement as confirmed"
+      ]
+    },
+    {
+      "claimId": "aod9604-regulatory-withdrawn-nomination-001",
+      "claimType": "regulatory",
+      "statement": "FDA's Certain Bulk Drug Substances list shows AOD-9604 among substances that were nominated for the 503A Bulks List but subsequently withdrawn, rather than an actively regulated Category 1 or Category 2 substance. FDA's own safety-risk description for the withdrawn nomination states the agency has identified no or only limited safety-related information, lacks sufficient information to know whether the drug would cause harm in humans, and has identified serious adverse events that may be associated with AOD-9604, though causality is not clear.",
+      "context": {
+        "population": "prospective compounded-product users",
+        "route": "various compounded routes",
+        "formulation": "compounded AOD-9604",
+        "useCase": "compounding safety and regulatory boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-aod9604-withdrawn-bulk-list"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-aod9604-withdrawn-bulk-list",
+          "quote": "Compounded drugs containing AOD-9604 may pose significant risk for immunogenicity for certain routes of administration and may have complexities with regard to peptide-related impurities and API characterization. FDA has identified no, or only limited, safety-related information. Therefore, the agency lacks sufficient information to know whether the drug would cause harm when administered to humans. FDA has also identified serious adverse events that may be associated with AOD-9604, though causality is not clear.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn table, AOD-9604 row"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "verify current listing status at review time - nominated/withdrawn status can change; cross-check against the live FDA page"
+      ]
+    },
+    {
+      "claimId": "aod9604-regulatory-pcac-recommendation-001",
+      "claimType": "regulatory",
+      "statement": "In its Pharmacy Compounding Advisory Committee briefing document evaluating both AOD-9604 (free base) and AOD-9604 acetate for the 503A Bulks List, FDA concluded that the evaluation criteria weigh against placing either form on the list, citing concern about potential immunogenicity from impurities and peptide-related aggregates, inconclusive/equivocal genotoxicity signals, and nonclinical findings (lower osteocalcin levels in rats; periportal hepatocyte vacuolation in monkeys) that could indicate effects on bone health or drug-induced liver injury.",
+      "context": {
+        "population": "prospective compounded-product users",
+        "route": null,
+        "formulation": "AOD-9604 free base and AOD-9604 acetate",
+        "useCase": "regulatory evaluation for compounding eligibility",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-183584"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "we believe the evaluation criteria weigh against placing AOD-9604 (free base) or AOD-9604 acetate on the list of bulk drug substances",
+          "pageOrSection": "Page 3, Introduction"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "there is concern about the potential immunogenicity associated with these impurities and peptide related aggregates",
+          "pageOrSection": "Page 13, Section II.A.2.c"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "Genotoxicity studies were inconclusive, as AOD-9604 induced equivocal mutagenic signals",
+          "pageOrSection": "Section II.A (nonclinical toxicology)"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "At treatment week 13...male and female rats...had significantly lower blood osteocalcin levels than control",
+          "pageOrSection": "Page 29"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "Minimal or slight periportal vacuolation...in the liver of female monkeys...appeared to increase dose dependently.",
+          "pageOrSection": "Page 30"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "nonclinical (animal) bone and liver signals must not be presented as established human risks",
+        "confirm final PCAC committee vote/outcome versus this briefing-document staff position"
+      ]
+    },
+    {
+      "claimId": "aod9604-efficacy-negative-weight-loss-001",
+      "claimType": "efficacy",
+      "statement": "The largest and most definitive controlled human trial of AOD-9604 for obesity, the OPTIONS study (502 randomized adults, ages 18-65, BMI 30-45, oral AOD-9604 at 0.25, 0.5, or 1 mg daily plus supervised diet/exercise versus placebo for 24 weeks), found no statistically significant difference in the primary weight-loss endpoint between AOD-9604 and placebo at any dose. Earlier, smaller phase 1/2 studies (Wilding 2004) similarly showed no statistically significant weight loss versus placebo for intravenous or most oral dose arms, with one small 1-week, low-dose oral arm (36 men) showing a numerically greater but non-definitive difference (about 1 kg vs 0.6 kg for placebo). A subsequent published review of the AOD9604 program summarized that early positive signals were not reproduced once an intensive diet-and-exercise regimen was incorporated in later trials.",
+      "context": {
+        "population": "adults with obesity (BMI 30-45) enrolled in AOD-9604 obesity trials",
+        "route": "oral (OPTIONS study); intravenous and oral in earlier phase 1/2 studies",
+        "formulation": "AOD-9604",
+        "useCase": "obesity / weight loss (investigational, discontinued)",
+        "doseText": "OPTIONS study: 0.25, 0.5, or 1 mg oral daily for 24 weeks plus supervised diet/exercise (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-183584",
+        "more-kenley-2014-jofem-safety"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "Not a significant difference in the primary endpoint of weight loss between placebo and AOD-9604.",
+          "pageOrSection": "Page 21, OPTIONS Study"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "No statistically significant weight loss when AOD-9604 was administered to patients with obesity compared to placebo",
+          "pageOrSection": "Pages 20-21, discussing Wilding 2004 studies 1-2"
+        },
+        {
+          "sourceRef": "more-kenley-2014-jofem-safety",
+          "quote": "Effects of AOD9604 on weight loss were seen in initial trials but were not seen in the last study in which an intensive diet and exercise regime was incorporated.",
+          "pageOrSection": "Discussion"
+        }
+      ],
+      "reviewFlags": [
+        "no controlled human trial has demonstrated statistically significant weight loss versus placebo in the definitive, adequately powered study",
+        "do not present early small-trial signals as confirmed efficacy"
+      ]
+    },
+    {
+      "claimId": "aod9604-safety-human-tolerability-001",
+      "claimType": "adverse-effect",
+      "statement": "Across six randomized, double-blind, placebo-controlled human trials (approximately 900 adult subjects total, IV doses 25-400 mcg/kg and oral doses 0.25-54 mg), a published review reports no withdrawal or serious adverse event related to AOD-9604 intake, no effect on serum IGF-1 levels, and no negative effect on carbohydrate metabolism, with tolerability described as indistinguishable from placebo. This human tolerability data is distinct from, and does not resolve, the nonclinical (animal) osteocalcin and periportal hepatocyte findings and equivocal genotoxicity signals flagged separately by FDA.",
+      "context": {
+        "population": "adult trial participants across six controlled AOD-9604 studies (~900 subjects)",
+        "route": "intravenous and oral",
+        "formulation": "AOD-9604",
+        "useCase": "human safety/tolerability across development program",
+        "doseText": "25-400 mcg/kg IV or 0.25-54 mg oral, varying by trial (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "stier-2013-jofem-safety-tolerability",
+        "more-kenley-2014-jofem-safety",
+        "fda-pcac-briefing-183584"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "stier-2013-jofem-safety-tolerability",
+          "quote": "In none of the studies did a withdrawal or serious adverse event occur related to intake of AOD9604.",
+          "pageOrSection": "Results/Conclusion"
+        },
+        {
+          "sourceRef": "stier-2013-jofem-safety-tolerability",
+          "quote": "AOD9604 displayed a very good safety and tolerability profile indistinguishable from placebo.",
+          "pageOrSection": "Conclusion"
+        },
+        {
+          "sourceRef": "more-kenley-2014-jofem-safety",
+          "quote": "In all human studies, AOD9604 was found to be safe and well tolerated.",
+          "pageOrSection": "Discussion"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "There were no serious AEs (SAE) reported",
+          "pageOrSection": "Page 34, Section II.D.2.c (METAOD001 study)"
+        }
+      ],
+      "reviewFlags": [
+        "these are industry/sponsor-linked publications summarizing sponsor trial data; independent replication of long-term (>24 week) human safety data was not identified",
+        "does not address gray-market compounded product quality, dosing, or long-term subcutaneous self-administration outside supervised trials"
+      ]
+    },
+    {
+      "claimId": "aod9604-evidence-gap-marketed-fat-loss-001",
+      "claimType": "evidence-gap",
+      "statement": "AOD-9604 has no FDA-approved product and its own sponsor-run development program for obesity was discontinued after the largest confirmatory trial (OPTIONS, n=502) failed to show statistically significant weight loss versus placebo. Despite this negative definitive result, AOD-9604 continues to be sold by gray-market peptide vendors and marketed in commercial blog content as a 'fat loss' or 'targeted fat loss' peptide; some vendor and content pages cite only the smaller early-trial numbers (for example, a roughly 1.8-2.8 kg placebo-adjusted difference from initial 12-week data) without prominently disclosing that the larger, better-powered follow-up trial did not reproduce a significant effect. This gap between commercial fat-loss marketing and the definitive controlled-trial outcome is not resolved by the available human evidence.",
+      "context": {
+        "population": "consumers of gray-market peptide products marketed for fat loss",
+        "route": "subcutaneous (common gray-market use); oral and intravenous in clinical trials",
+        "formulation": "research-grade / compounded AOD-9604",
+        "useCase": "fat loss / weight loss marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-183584",
+        "fda-aod9604-withdrawn-bulk-list",
+        "meto-vendor-blog-aod9604"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-183584",
+          "quote": "Not a significant difference in the primary endpoint of weight loss between placebo and AOD-9604.",
+          "pageOrSection": "Page 21, OPTIONS Study"
+        },
+        {
+          "sourceRef": "meto-vendor-blog-aod9604",
+          "quote": "did not become an approved obesity drug",
+          "pageOrSection": "Article body"
+        },
+        {
+          "sourceRef": "meto-vendor-blog-aod9604",
+          "quote": "~2.6 kg average loss with AOD-9604 1 mg/day vs ~0.8 kg with placebo",
+          "pageOrSection": "Article body, citing early trial data"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular marketing claims of proven or targeted fat-loss benefit are not supported by the definitive controlled human trial",
+        "vendor product identity, purity, and dosing accuracy for gray-market AOD-9604 are unverified and outside the scope of the cited sources"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "aod9604-conflict-early-vs-confirmatory-trial-001",
+      "claimRefs": [
+        "aod9604-efficacy-negative-weight-loss-001",
+        "aod9604-evidence-gap-marketed-fat-loss-001"
+      ],
+      "severity": "moderate",
+      "summary": "Small, early-phase AOD-9604 trials (and secondary/marketing sources citing them) reported a numerically greater weight loss with AOD-9604 versus placebo over short durations, but the larger, adequately powered confirmatory OPTIONS trial (n=502, 24 weeks) found no statistically significant difference in the primary weight-loss endpoint. FDA's briefing document treats the confirmatory trial result as controlling; the conflict is resolved in favor of the negative, better-powered result, but marketing content continues to cite the earlier signal without this context.",
+      "resolutionStatus": "resolved"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "AOD-9604 nominated-but-withdrawn status on the FDA bulk drug substances page is time-sensitive and must be reconfirmed against the live FDA page at review time.",
+      "UNII, RxNorm, DrugBank, ChEMBL, DOI, and PMID identifiers were not resolved from structured databases and remain null.",
+      "Human efficacy evidence for the compound's popularly marketed fat-loss use is thin and specifically negative in the definitive trial; this must not be softened during review.",
+      "Sponsor-linked JOFEM safety publications (Stier 2013, More & Kenley 2014) were the only human tolerability sources found; an independent, non-sponsor-affiliated human safety source was not identified and should be sought during review."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "negative-human-rct-documented",
+      "thin-human-evidence",
+      "sponsor-linked-safety-sources",
+      "regulatory-boundary",
+      "marketing-evidence-gap"
+    ]
+  }
+}

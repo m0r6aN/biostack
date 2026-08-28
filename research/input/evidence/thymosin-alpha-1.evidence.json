@@ -1,0 +1,474 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "thymosin-alpha-1-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T21:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Thymosin alpha-1",
+    "aliases": [
+      "Thymalfasin",
+      "Zadaxin",
+      "T\u03b11",
+      "Ta1"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Thymic peptide / immunomodulator (28-amino-acid acetylated polypeptide)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "62304-98-7",
+      "drugbank": "DB04900",
+      "pubchem": "16130571",
+      "chembl": null,
+      "doi": null,
+      "pmid": "39814420"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-ta1-bulks-183892",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Thymosin Alpha-1 (T\u03b11) Related Bulk Drug Substances",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/183892/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "dailymed-search-thymalfasin",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "DailyMed Search Results for \"thymalfasin\"",
+      "publisher": "U.S. National Library of Medicine (DailyMed)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=thymalfasin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubmed-tests-2025",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "The efficacy and safety of thymosin \u03b11 for sepsis (TESTS): multicentre, double blinded, randomised, placebo controlled, phase 3 trial",
+      "publisher": "PubMed / U.S. National Library of Medicine",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39814420/",
+      "doi": null,
+      "pmid": "39814420",
+      "publishedAt": "2025-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubmed-etass-2013",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "The efficacy of thymosin alpha 1 for severe sepsis (ETASS): a multicenter, single-blind, randomized and controlled trial",
+      "publisher": "PubMed / U.S. National Library of Medicine",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23327199/",
+      "doi": null,
+      "pmid": "23327199",
+      "publishedAt": "2013-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-16130571",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Thymalfasin | C129H215N33O55 | CID 16130571",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Thymalfasin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "drugbank-db04900",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Thymalfasin: Uses, Interactions, Mechanism of Action",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB04900",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "rethinkpeptides-zadaxin-global",
+      "sourceType": "informational",
+      "authorityTier": "C1",
+      "title": "Zadaxin: The Brand Name Thymosin Alpha-1 and Its Global Use",
+      "publisher": "RethinkPeptides",
+      "url": "https://rethinkpeptides.com/articles/zadaxin-the-brand-name-thymosin-alpha-1-and-its-global-use",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "innerbody-thymosin-alpha-1",
+      "sourceType": "consumer-health-information",
+      "authorityTier": "C1",
+      "title": "Thymosin Alpha-1 | Safety, Benefits, and More [2026]",
+      "publisher": "Innerbody Research",
+      "url": "https://www.innerbody.com/thymosin-alpha-1-peptide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "superpower-thymosin-alpha-1",
+      "sourceType": "vendor-education",
+      "authorityTier": "C2",
+      "title": "Thymosin Alpha-1 (Zadaxin): A Thymic Peptide and Toll-Like Receptor Signaling Research Guide",
+      "publisher": "Superpower",
+      "url": "https://superpower.com/guides/thymosin-alpha-1",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "americanpeptides-thymosin-alpha-1",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "Thymosin Alpha-1 Research Peptide | 99%+ COA",
+      "publisher": "American Peptides",
+      "url": "https://www.americanpeptides.us/learn/thymosin-alpha-1",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "ta1-regulatory-not-fda-approved-001",
+      "claimType": "regulatory",
+      "statement": "Thymosin alpha-1 (thymalfasin, brand name Zadaxin) has no FDA-approved drug label in the United States - DailyMed, the authoritative U.S. label repository, returns zero results for \"thymalfasin\" - and is available in the U.S. only through compounding, not as an approved product; it is approved as a marketed drug in dozens of other countries (commonly cited for hepatitis B/C and as a cancer/vaccine adjuvant), but that ex-U.S. approval status has not been independently verified here against a primary foreign regulator source.",
+      "context": {
+        "population": "U.S. patients/consumers seeking thymosin alpha-1",
+        "route": "subcutaneous injection (product form used in approved markets and compounding)",
+        "formulation": "thymalfasin acetate injection",
+        "useCase": "regulatory status clarification",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-search-thymalfasin",
+        "rethinkpeptides-zadaxin-global"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-search-thymalfasin",
+          "quote": "SEARCH RESULTS for: thymalfasin (0 results) ... No Drug Package Labels found.",
+          "pageOrSection": "Search results page"
+        },
+        {
+          "sourceRef": "rethinkpeptides-zadaxin-global",
+          "quote": "Zadaxin has never been submitted for or granted FDA approval.",
+          "pageOrSection": "US/FDA status section"
+        },
+        {
+          "sourceRef": "rethinkpeptides-zadaxin-global",
+          "quote": "In the US, thymosin alpha-1 is available through compounding pharmacies under Section 503B",
+          "pageOrSection": "US/FDA status section"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "some marketing/presentation materials submitted to FDA public dockets assert thymosin alpha-1 is FDA-approved for hepatitis B; this conflicts with the DailyMed zero-result finding and must be independently reconciled - see conflict entry",
+        "ex-U.S. approval claims (35+ countries) sourced from a secondary informational article, not a primary foreign regulator page; needs verification against a primary source (e.g., NMPA, national label registries)"
+      ]
+    },
+    {
+      "claimId": "ta1-regulatory-bulks-list-evaluation-001",
+      "claimType": "regulatory",
+      "statement": "FDA's evaluation of thymosin alpha-1 (T\u03b11, free base and acetate) for the 503A compounding Bulks List found that a balancing of the four evaluation criteria weighs against adding it, citing insufficient physicochemical characterization, an immunogenicity risk potentially amplified by aggregation and peptide-related impurities, and a proposed injectable concentration (3 mg/mL) that exceeds Ta1 free base's aqueous solubility (2 mg/mL); the nomination was subsequently withdrawn and FDA is evaluating the substance at its own discretion rather than under a completed rulemaking.",
+      "context": {
+        "population": "prospective compounded-product users",
+        "route": "injectable (subcutaneous/IV as compounded)",
+        "formulation": "T\u03b11 free base and T\u03b11 acetate",
+        "useCase": "regulatory evaluation for compounding eligibility (503A Bulks List)",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-ta1-bulks-183892"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-ta1-bulks-183892",
+          "quote": "After considering the information currently available, a balancing of the four evaluation criteria weighs against T\u03b11 (free base) and T\u03b11 acetate being added to the 503A Bulks List.",
+          "pageOrSection": "FDA recommendation section"
+        },
+        {
+          "sourceRef": "fda-ta1-bulks-183892",
+          "quote": "T\u03b11 may pose a significant risk for immunogenicity, potentially amplified by aggregation as well as potential peptide-related impurities.",
+          "pageOrSection": "Immunogenicity concerns section"
+        },
+        {
+          "sourceRef": "fda-ta1-bulks-183892",
+          "quote": "The proposed concentration for injectable product (3 mg/mL) is greater than the solubility of T\u03b11 (free base) in water (2 mg/mL).",
+          "pageOrSection": "Formulation/solubility section"
+        },
+        {
+          "sourceRef": "fda-ta1-bulks-183892",
+          "quote": "The nomination was withdrawn, and FDA is evaluating the substances at its discretion.",
+          "pageOrSection": "Regulatory status section"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "nomination was withdrawn rather than formally decided - status is not a final FDA determination and must be re-checked against the live FDA compounding bulk substances list at review time"
+      ]
+    },
+    {
+      "claimId": "ta1-warning-immunosuppressed-gvhd-001",
+      "claimType": "warning",
+      "statement": "FDA's bulk drug substance evaluation flags a potential safety concern specific to immunosuppressed patients: thymosin alpha-1's immune-stimulating activity could cause or worsen acute or chronic graft-versus-host disease (GVHD) and lead to engraftment failure in hematopoietic stem cell transplant (HSCT) recipients.",
+      "context": {
+        "population": "patients undergoing deliberate immunosuppression, including HSCT recipients",
+        "route": "injectable",
+        "formulation": "T\u03b11 free base/acetate",
+        "useCase": "safety warning for immunocompromised or transplant populations",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-ta1-bulks-183892"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-ta1-bulks-183892",
+          "quote": "Potential safety concerns with administering T\u03b11 in patients who are undergoing deliberate immunosuppression.",
+          "pageOrSection": "Safety concerns section"
+        },
+        {
+          "sourceRef": "fda-ta1-bulks-183892",
+          "quote": "cause or worsen acute or chronic graft-vs-host disease (GVHD) and lead to engraftment failure in HSCT recipients.",
+          "pageOrSection": "Safety concerns section"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical warning claim",
+        "FDA characterizes this as a theoretical/mechanistic concern from an immune-stimulating agent, not a confirmed adverse-event signal from human data reviewed here; verify whether post-market case reports exist"
+      ]
+    },
+    {
+      "claimId": "ta1-mechanism-tlr9-thymic-peptide-001",
+      "claimType": "mechanism",
+      "statement": "Thymosin alpha-1 (thymalfasin) is a synthetically manufactured 28-amino-acid acetylated polypeptide identical to a naturally occurring human thymic peptide; it is described as activating toll-like receptor 9 (TLR9) signaling on dendritic cells, driving Th1 polarization and T-cell maturation as part of coordinated adaptive immune responses.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "thymalfasin",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "drugbank-db04900",
+        "superpower-thymosin-alpha-1"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "drugbank-db04900",
+          "quote": "Thymalfasin is a chemically synthesized version of thymosin alpha 1 that is identical to human thymosin alpha 1.",
+          "pageOrSection": "Description"
+        },
+        {
+          "sourceRef": "drugbank-db04900",
+          "quote": "Thymosin alpha 1 is an acetylated polypeptide.",
+          "pageOrSection": "Drug type"
+        },
+        {
+          "sourceRef": "superpower-thymosin-alpha-1",
+          "quote": "Activates toll-like receptor 9 signaling on dendritic cells, driving Th1 polarization, T-cell maturation, and coordinated adaptive immune responses.",
+          "pageOrSection": "Mechanism section"
+        }
+      ],
+      "reviewFlags": [
+        "mechanism sourced partly from a vendor-education page rather than a peer-reviewed pharmacology review; corroborate against a primary pharmacology reference at review time"
+      ]
+    },
+    {
+      "claimId": "ta1-efficacy-sepsis-tests-negative-001",
+      "claimType": "efficacy",
+      "statement": "In the largest and most rigorous published human efficacy trial - TESTS, a multicentre, double-blind, placebo-controlled phase 3 trial in 1,106 adults with sepsis across 22 Chinese centers - subcutaneous thymosin alpha-1 every 12 hours for up to 7 days did not reduce 28-day all-cause mortality versus placebo (23.4% vs 24.1%; hazard ratio 0.99, 95% CI 0.77-1.27, p=0.93), and secondary/safety outcomes showed no significant differences between groups.",
+      "context": {
+        "population": "adults (18-85) with sepsis per Sepsis-3 criteria (n=1,106 randomized, 1,089 analyzed)",
+        "route": "subcutaneous",
+        "formulation": "thymosin alpha-1 injection",
+        "useCase": "sepsis (investigational; not an approved indication)",
+        "doseText": "subcutaneous injection every 12 hours for up to 7 days or until ICU discharge/death/consent withdrawal (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pubmed-tests-2025"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubmed-tests-2025",
+          "quote": "23.4%",
+          "pageOrSection": "Results (thymosin \u03b11 group 28-day mortality)"
+        },
+        {
+          "sourceRef": "pubmed-tests-2025",
+          "quote": "24.1%",
+          "pageOrSection": "Results (placebo group 28-day mortality)"
+        },
+        {
+          "sourceRef": "pubmed-tests-2025",
+          "quote": "This trial found no clear evidence to suggest that thymosin \u03b11 decreases 28 day all cause mortality in adults with sepsis.",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "trial dose/protocol context must never be presented as a use recommendation",
+        "this is the highest-powered human RCT identified for any thymosin alpha-1 indication in this packet and should anchor efficacy framing over smaller/older positive trials"
+      ]
+    },
+    {
+      "claimId": "ta1-efficacy-sepsis-etass-early-001",
+      "claimType": "efficacy",
+      "statement": "An earlier, smaller multicenter randomized controlled trial (ETASS, six Chinese hospitals, n=361 ICU patients with severe sepsis, 2008-2010) reported a numerically lower 28-day death rate with thymosin alpha-1 added to conventional therapy versus conventional therapy alone (26.0% vs 35.0%; relative risk 0.74, 95% CI 0.54-1.02), a difference that did not reach conventional statistical significance, alongside greater improvement in monocyte HLA-DR expression (an immune-function marker) in the treatment group.",
+      "context": {
+        "population": "ICU patients with severe sepsis (n=361)",
+        "route": "not specified in extracted abstract",
+        "formulation": "thymosin alpha-1 plus conventional therapy",
+        "useCase": "severe sepsis (investigational; not an approved indication)",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pubmed-etass-2013"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubmed-etass-2013",
+          "quote": "The relative risk of death in the T\u03b11 group as compared to the control group was 0.74 (95% CI 0.54 to 1.02).",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "pubmed-etass-2013",
+          "quote": "The use of T\u03b11 therapy in combination with conventional medical therapies may be effective in improving clinical outcomes",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "superseded in statistical power and rigor by the later, larger TESTS phase 3 trial, which found no mortality benefit - see conflict entry",
+        "single-blind design and marginal (non-significant) result mean this trial alone should not be used to support an efficacy claim"
+      ]
+    },
+    {
+      "claimId": "ta1-evidence-gap-immune-wellness-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Thymosin alpha-1 is marketed and discussed online as having been \"long recognized for modifying, enhancing, and restoring immune function,\" with popular interest extending to autoimmune disease management, general inflammation reduction, cancer support, and longevity-adjacent uses such as long COVID; the only large, rigorous, placebo-controlled human trial identified for a systemic-immunomodulation indication (sepsis) found no mortality benefit, and consumer-facing sources themselves acknowledge that findings for these broader immune/longevity uses are based on small trials and that \"more research is needed.\" No controlled human evidence for general immune optimization, anti-aging, or wellness use in healthy adults was identified in this review.",
+      "context": {
+        "population": "consumers of research-grade or compounded thymosin alpha-1 for wellness/immune-optimization purposes",
+        "route": "subcutaneous (common self-administration route)",
+        "formulation": "research-grade or compounded thymosin alpha-1",
+        "useCase": "general immune-boosting / anti-aging / longevity / long-COVID marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "innerbody-thymosin-alpha-1",
+        "pubmed-tests-2025",
+        "americanpeptides-thymosin-alpha-1"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "innerbody-thymosin-alpha-1",
+          "quote": "has long been recognized for modifying, enhancing, and restoring immune function",
+          "pageOrSection": "Uses/benefits discussion"
+        },
+        {
+          "sourceRef": "innerbody-thymosin-alpha-1",
+          "quote": "more research is needed, though",
+          "pageOrSection": "Long COVID discussion"
+        },
+        {
+          "sourceRef": "innerbody-thymosin-alpha-1",
+          "quote": "found 'no clear evidence' that TA-1 decreased 28-day all-cause mortality in adults with sepsis",
+          "pageOrSection": "Sepsis evidence discussion"
+        },
+        {
+          "sourceRef": "americanpeptides-thymosin-alpha-1",
+          "quote": "It is not a drug, dietary supplement, or article intended for human or veterinary use, and no physiological or clinical outcome is claimed or implied.",
+          "pageOrSection": "Research-use disclaimer"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular framing of thymosin alpha-1 as a general immune enhancer is not supported by the strongest available controlled human trial data captured in this packet",
+        "vendor research-use-only disclaimers coexist alongside informal wellness/longevity discussion elsewhere online; this gap should be revisited if new controlled trials for non-hepatitis/non-sepsis indications are published"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "ta1-conflict-sepsis-trial-discordance-001",
+      "claimRefs": [
+        "ta1-efficacy-sepsis-tests-negative-001",
+        "ta1-efficacy-sepsis-etass-early-001"
+      ],
+      "severity": "moderate",
+      "summary": "The smaller, earlier ETASS trial (n=361, single-blind) reported a non-significant trend toward lower mortality with thymosin alpha-1 in severe sepsis, while the later, much larger TESTS phase 3 trial (n=1,106, double-blind, placebo-controlled) found no mortality benefit at all (HR 0.99, p=0.93). The discordance has not been independently adjudicated here against a third source family (e.g., a post-TESTS systematic review/meta-analysis specifically weighting trial quality); a 2025 systematic review/meta-analysis on this topic was identified in search results but not yet fetched and read for this packet.",
+      "resolutionStatus": "needs-human-review"
+    },
+    {
+      "conflictId": "ta1-conflict-fda-approval-claims-001",
+      "claimRefs": [
+        "ta1-regulatory-not-fda-approved-001"
+      ],
+      "severity": "high",
+      "summary": "A slide presentation submitted to an FDA public docket (regulations.gov, FDA-2024-N-4777-0009 attachment 7) asserts thymosin alpha-1/Zadaxin was \"FDA approved to treat Hepatitis B,\" which directly conflicts with DailyMed showing zero approved labels for thymalfasin and a secondary source stating Zadaxin \"has never been submitted for or granted FDA approval.\" This packet treats the DailyMed absence-of-label finding as controlling, but the source of the conflicting claim (a public commenter's presentation, not FDA itself) was not independently re-verified against a primary orphan-drug-designation or historical NDA record in this session.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Sepsis efficacy evidence is discordant between the early ETASS trial and the later, larger TESTS trial; resolve via an independent systematic review/meta-analysis source not yet fetched.",
+      "A conflicting FDA-approval claim from a public-docket presentation was identified but not independently reconciled against a primary orphan-drug-designation or NDA history record.",
+      "UNII and ChEMBL identifiers not yet resolved from structured databases; two candidate CAS numbers (62304-98-7 and 69521-94-4) were found and only one was selected without independent confirmation of which corresponds to free base vs. acetate salt.",
+      "Ex-U.S. approval-country claims rest on a secondary informational source, not a primary foreign regulator page or label registry."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "negative-human-rct-documented",
+      "discordant-human-trials",
+      "not-fda-approved",
+      "gray-market-us-status",
+      "misinformation-gap-documented"
+    ]
+  }
+}

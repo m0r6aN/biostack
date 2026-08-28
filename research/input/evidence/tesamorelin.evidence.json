@@ -1,0 +1,361 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "tesamorelin-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T21:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Tesamorelin",
+    "aliases": [
+      "Egrifta",
+      "Egrifta SV",
+      "Egrifta WR",
+      "Tesamorelin acetate",
+      "TH9507"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic growth hormone-releasing hormone (GHRH) analogue",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "16137828",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-egrifta-sv-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: EGRIFTA SV- tesamorelin kit",
+      "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3d783378-b02d-4f19-99dd-0fc91a042224",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "drugscom-egrifta-approval-history",
+      "sourceType": "regulator",
+      "authorityTier": "A2",
+      "title": "Egrifta WR (tesamorelin) FDA Approval History",
+      "publisher": "Drugs.com (aggregating FDA approval announcements)",
+      "url": "https://www.drugs.com/history/egrifta-wr.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "falutz-jama-2014-visceral-liver-fat-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Effect of Tesamorelin on Visceral Fat and Liver Fat in HIV-Infected Patients With Abdominal Fat Accumulation: A Randomized Clinical Trial",
+      "publisher": "JAMA (Stanley TL, Falutz J, et al.)",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/1889139",
+      "doi": null,
+      "pmid": "25038357",
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-16137828",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Tesamorelin, CID 16137828",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Tesamorelin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "peakedlabs-tesamorelin-vendor-guide",
+      "sourceType": "vendor-content",
+      "authorityTier": "C2",
+      "title": "Tesamorelin Peptide: Fat Loss, Cognition, FDA Evidence, Dosing, and Comparisons (2026 Guide)",
+      "publisher": "PeakedLabs (commercial peptide vendor/blog)",
+      "url": "https://peakedlabs.com/blog/tesamorelin-peptide-fat-loss-cognition",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "tesamorelin-regulatory-approved-indication-001",
+      "claimType": "approved-indication",
+      "statement": "Tesamorelin, marketed as EGRIFTA/EGRIFTA SV/EGRIFTA WR, is FDA-approved solely for the reduction of excess abdominal fat in HIV-infected adult patients with lipodystrophy; original Egrifta was approved November 10, 2010, with Egrifta SV approved in 2019 and Egrifta WR approved March 25, 2025 as reformulations.",
+      "context": {
+        "population": "HIV-infected adults with lipodystrophy and excess abdominal fat",
+        "route": "subcutaneous injection",
+        "formulation": "EGRIFTA SV / EGRIFTA WR (tesamorelin for injection kit)",
+        "useCase": "FDA-approved indication: reduction of excess abdominal fat in HIV lipodystrophy",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-egrifta-sv-label",
+        "drugscom-egrifta-approval-history"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-egrifta-sv-label",
+          "quote": "EGRIFTA SV is indicated for the reduction of excess abdominal fat in HIV-infected adult patients with lipodystrophy.",
+          "pageOrSection": "INDICATIONS AND USAGE"
+        },
+        {
+          "sourceRef": "drugscom-egrifta-approval-history",
+          "quote": "FDA Approves Egrifta (tesamorelin for injection): First and Only Treatment for the Reduction of Excess Abdominal Fat in HIV-infected Patients with Lipodystrophy",
+          "pageOrSection": "Original Egrifta (2010) approval announcement"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim - reconfirm current active label version and formulation (SV vs WR) at review time"
+      ]
+    },
+    {
+      "claimId": "tesamorelin-regulatory-limitations-of-use-001",
+      "claimType": "warning",
+      "statement": "The FDA label explicitly states EGRIFTA SV is not indicated for weight loss management because it has a weight-neutral effect, and that the effect of tesamorelin-induced visceral fat reduction on cardiovascular outcomes or antiretroviral adherence has not been established.",
+      "context": {
+        "population": "HIV-infected adults with lipodystrophy",
+        "route": "subcutaneous injection",
+        "formulation": "EGRIFTA SV",
+        "useCase": "boundary of approved indication vs. weight-loss/off-label use",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-egrifta-sv-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-egrifta-sv-label",
+          "quote": "EGRIFTA SV is not indicated for weight loss management as it has a weight neutral effect",
+          "pageOrSection": "Limitations of Use"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical labeling claim used to counter popular weight-loss marketing"
+      ]
+    },
+    {
+      "claimId": "tesamorelin-contraindications-warnings-001",
+      "claimType": "contraindication",
+      "statement": "EGRIFTA SV is contraindicated in patients with disruption of the hypothalamic-pituitary axis, active malignancy, known hypersensitivity to tesamorelin or excipients, and in pregnancy; labeled warnings include increased neoplasm risk, elevated IGF-1 requiring monitoring, fluid retention, new-onset or worsening glucose intolerance, hypersensitivity reactions, and increased mortality risk reported with growth hormone in critically ill patients.",
+      "context": {
+        "population": "HIV-infected adults being considered for or on tesamorelin therapy",
+        "route": "subcutaneous injection",
+        "formulation": "EGRIFTA SV",
+        "useCase": "prescribing safety boundaries",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-egrifta-sv-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-egrifta-sv-label",
+          "quote": "Disruption of the hypothalamic-pituitary axis due to hypophysectomy, hypopituitarism, pituitary tumor/surgery, head irradiation or head trauma",
+          "pageOrSection": "CONTRAINDICATIONS"
+        },
+        {
+          "sourceRef": "dailymed-egrifta-sv-label",
+          "quote": "Active malignancy. Any preexisting malignancy should be inactive and its treatment complete",
+          "pageOrSection": "CONTRAINDICATIONS"
+        },
+        {
+          "sourceRef": "dailymed-egrifta-sv-label",
+          "quote": "Pregnant women because modifying visceral adipose tissue offers no benefit in a pregnant woman and could result in fetal harm",
+          "pageOrSection": "CONTRAINDICATIONS"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim - full boxed/major warnings text should be independently re-verified against the current label PDF at accessdata.fda.gov before clinical use"
+      ]
+    },
+    {
+      "claimId": "tesamorelin-mechanism-ghrh-analogue-001",
+      "claimType": "mechanism",
+      "statement": "Tesamorelin is a synthetic analogue of human growth hormone-releasing hormone (GHRH) that stimulates the pituitary to release endogenous growth hormone, in turn increasing IGF-1; its molecular formula is C221H366N72O67S (PubChem CID 16137828).",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "tesamorelin",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-16137828",
+        "dailymed-egrifta-sv-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-16137828",
+          "quote": "C221H366N72O67S",
+          "pageOrSection": "Compound Summary, Molecular Formula"
+        }
+      ],
+      "reviewFlags": [
+        "mechanism-of-action narrative text from the label CLINICAL PHARMACOLOGY section was not independently quoted this pass; confirm against label PDF"
+      ]
+    },
+    {
+      "claimId": "tesamorelin-efficacy-visceral-liver-fat-rct-001",
+      "claimType": "efficacy",
+      "statement": "In a randomized, placebo-controlled trial in HIV-infected patients with abdominal fat accumulation, 6 months of tesamorelin was associated with a significantly greater reduction in visceral adipose tissue than placebo (treatment difference -42 cm^2, p=.005) and a modest reduction in liver fat (net effect -2.9%, p=.003); the study authors characterized it as a preliminary study.",
+      "context": {
+        "population": "HIV-infected patients with abdominal fat accumulation",
+        "route": "subcutaneous injection",
+        "formulation": "tesamorelin",
+        "useCase": "reduction of visceral adipose tissue and liver fat in HIV lipodystrophy (matches approved indication population)",
+        "doseText": "administered for 6 months in the trial protocol; not a use recommendation"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "falutz-jama-2014-visceral-liver-fat-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "falutz-jama-2014-visceral-liver-fat-rct",
+          "quote": "Tesamorelin significantly reduced visceral adipose tissue (mean change, \u201334 cm2 [95% CI, \u201353 to \u201315 cm2]",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "falutz-jama-2014-visceral-liver-fat-rct",
+          "quote": "In this preliminary study of HIV-infected patients with abdominal fat accumulation, tesamorelin administered for 6 months was associated with reductions in visceral fat and additionally with modest reductions in liver fat.",
+          "pageOrSection": "Conclusions"
+        }
+      ],
+      "reviewFlags": [
+        "trial dose/duration context must never be presented as a use recommendation",
+        "authors themselves label findings 'preliminary'; liver fat effect is described as 'modest'"
+      ]
+    },
+    {
+      "claimId": "tesamorelin-evidence-gap-cognition-off-label-001",
+      "claimType": "evidence-gap",
+      "statement": "Vendor and wellness-clinic marketing materials cite a small controlled trial reporting improved verbal memory/executive function and reduced hippocampal volume loss with GHRH therapy in older adults (including some with mild cognitive impairment) as support for tesamorelin's 'cognitive benefits,' but this study population and endpoint are distinct from the FDA-approved HIV-lipodystrophy indication, this session could not independently verify the primary trial text (PubMed/PMC access was blocked by bot-verification pages), and no cognitive-function claim appears anywhere in the FDA label; human evidence for cognitive or general anti-aging benefit in the populations tesamorelin is marketed to online is not established.",
+      "context": {
+        "population": "consumers of gray-market/wellness-clinic tesamorelin for 'longevity', 'anti-aging', or general fat-loss/cognitive-enhancement use",
+        "route": "subcutaneous (common off-label/gray-market use)",
+        "formulation": "compounded or off-label tesamorelin",
+        "useCase": "anti-aging, cognitive enhancement, and non-HIV fat-loss marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "peakedlabs-tesamorelin-vendor-guide",
+        "dailymed-egrifta-sv-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peakedlabs-tesamorelin-vendor-guide",
+          "quote": "improved verbal memory and executive function vs placebo at 20 weeks",
+          "pageOrSection": "Cognitive Benefits section, citing Baker et al. 2012"
+        },
+        {
+          "sourceRef": "peakedlabs-tesamorelin-vendor-guide",
+          "quote": "FDA approval for one indication does not mean FDA approval for off-label uses.",
+          "pageOrSection": "Critical Caveat"
+        },
+        {
+          "sourceRef": "dailymed-egrifta-sv-label",
+          "quote": "EGRIFTA SV is indicated for the reduction of excess abdominal fat in HIV-infected adult patients with lipodystrophy.",
+          "pageOrSection": "INDICATIONS AND USAGE"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: cognition/anti-aging claims for tesamorelin circulate in commercial content beyond what this session could verify at the primary-source level",
+        "PubMed/PMC access was blocked by CAPTCHA this session; independent reviewer must fetch the Baker et al. GHRH-cognition trial (JAMA Neurology / PMC3764914) directly and either confirm or strike this claim's evidentiary basis",
+        "do not generalize any HIV-lipodystrophy trial results to non-HIV, cognitive-enhancement, or anti-aging use cases"
+      ]
+    },
+    {
+      "claimId": "tesamorelin-dose-context-label-001",
+      "claimType": "dose-context",
+      "statement": "The FDA label describes EGRIFTA SV as a once-daily subcutaneous injection kit; this is label/trial protocol context only, not a use recommendation, and product-specific reconstitution/administration steps must be taken from the current label.",
+      "context": {
+        "population": "HIV-infected adults with lipodystrophy prescribed EGRIFTA SV",
+        "route": "subcutaneous injection",
+        "formulation": "EGRIFTA SV kit",
+        "useCase": "labeled dosing/administration context",
+        "doseText": "Per FDA label, administered once daily by subcutaneous injection (kit-based); exact mg dose, reconstitution, and injection-site instructions must be taken from the current full label text, not summarized here as clinical guidance."
+      },
+      "evidenceTier": "Strong",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-egrifta-sv-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-egrifta-sv-label",
+          "quote": "EGRIFTA SV is indicated for the reduction of excess abdominal fat in HIV-infected adult patients with lipodystrophy.",
+          "pageOrSection": "INDICATIONS AND USAGE / DOSAGE AND ADMINISTRATION context"
+        }
+      ],
+      "reviewFlags": [
+        "full DOSAGE AND ADMINISTRATION section text (exact mg/reconstitution steps) was not successfully quoted this session due to a fetch rate-limit; must be independently re-pulled from the label PDF before any dose-context claim is finalized",
+        "product-specific dosing claim - fieldAuthorityRequired"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "tesamorelin-conflict-cognition-marketing-vs-label-001",
+      "claimRefs": [
+        "tesamorelin-evidence-gap-cognition-off-label-001",
+        "tesamorelin-regulatory-approved-indication-001"
+      ],
+      "severity": "moderate",
+      "summary": "Wellness/vendor marketing content presents cognitive-benefit and general anti-aging framing for tesamorelin, while the FDA label recognizes only a single narrow indication (HIV lipodystrophy abdominal fat) with an explicit weight-neutral limitation; the cited cognition trial could not be independently verified at the primary-source level this session due to PubMed/PMC bot-verification blocks.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "PubMed/PMC primary-source pages (including the GHRH/cognition trial and an integrase-inhibitor-era tesamorelin efficacy/safety study) were blocked by CAPTCHA/bot-verification this session and could not be independently quoted; re-fetch required.",
+      "Full DOSAGE AND ADMINISTRATION label text was not captured due to a WebFetch rate limit; re-pull from the label PDF or DailyMed before publishing any dose-context claim.",
+      "CAS/UNII/RxNorm/DrugBank/ChEMBL identifiers not yet resolved from structured databases.",
+      "Cognitive-benefit marketing claim needs independent verification against the primary Baker et al. GHRH cognition trial before the evidence-gap claim can be closed or upgraded."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-product",
+      "a1-regulator-backed",
+      "positive-human-rct-hiv-lipodystrophy-only",
+      "off-label-marketing-gap",
+      "unverified-secondary-source-flagged"
+    ]
+  }
+}

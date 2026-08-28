@@ -1,0 +1,412 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "epitalon-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T21:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Epitalon",
+    "aliases": [
+      "Epithalon",
+      "Epithalone",
+      "AEDG peptide",
+      "Ala-Glu-Asp-Gly-OH"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic tetrapeptide (pineal-gland-derived, telomerase/circadian research peptide)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "307297-39-8",
+      "drugbank": null,
+      "pubchem": "219042",
+      "chembl": null,
+      "doi": null,
+      "pmid": "15452611"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-pcac-briefing-193345",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting, July 23-24, 2026 (epitalon evaluation)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/193345/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "fda-bulk-substances-503a-process",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Bulk Drug Substances Used in Compounding Under Section 503A of the FD&C Act",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/bulk-drug-substances-used-compounding-under-section-503a-fdc-act",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-219042",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Epitalon (CID 219042)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Epitalon",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "chemicalbook-epitalon",
+      "sourceType": "structured-database",
+      "authorityTier": "B3",
+      "title": "Epitalon | 307297-39-8",
+      "publisher": "ChemicalBook",
+      "url": "https://www.chemicalbook.com/ChemicalProductProperty_EN_CB12518304.htm",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "alzdiscovery-epithalamin-epitalon",
+      "sourceType": "research-review",
+      "authorityTier": "B1",
+      "title": "Epithalamin/Epitalon (Cognitive Vitality For Researchers)",
+      "publisher": "Alzheimer's Drug Discovery Foundation (Cognitive Vitality)",
+      "url": "https://www.alzdiscovery.org/uploads/cognitive_vitality_media/Epithalamin-and-Epithalon-Cognitive-Vitality-For-Researchers.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "korkushko-2004-melatonin-human",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B2",
+      "title": "Effect of peptide preparation epithalamin on circadian rhythm of epiphyseal melatonin-producing function in elderly people",
+      "publisher": "Bulletin of Experimental Biology and Medicine (Korkushko OV, Khavinson VKh, Shatilo VB, Magdich LV, 2004)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15452611/",
+      "doi": null,
+      "pmid": "15452611",
+      "publishedAt": "2004-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "superpower-epitalon-guide",
+      "sourceType": "web-review",
+      "authorityTier": "C1",
+      "title": "Epitalon (Epithalon, AEDG): A Pineal-Derived Synthetic Tetrapeptide",
+      "publisher": "Superpower",
+      "url": "https://superpower.com/guides/epitalon",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "biolongevitylabs-epitalon-product",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "Epithalon for Sale (20mg) | 99% Purity Epitalon Peptide for Research",
+      "publisher": "BioLongevity Labs",
+      "url": "https://biolongevitylabs.com/product/epithalon-20mg/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T21:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "epitalon-identity-mechanism-001",
+      "claimType": "identity",
+      "statement": "Epitalon (Epithalon, AEDG peptide, CAS 307297-39-8, PubChem CID 219042) is a synthetic tetrapeptide (Ala-Glu-Asp-Gly, molecular formula C14H22N4O9) modeled on pineal-gland signaling peptides; it is a distinct, single-tetrapeptide analog and is not the same substance as Epithalamin, the natural bovine/porcine pineal polypeptide extract used in most of the published human research on this peptide family.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "synthetic tetrapeptide (Ala-Glu-Asp-Gly)",
+        "useCase": "compound identity",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-219042",
+        "chemicalbook-epitalon",
+        "superpower-epitalon-guide"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "chemicalbook-epitalon",
+          "quote": "CAS Number: 307297-39-8; Molecular Formula: C14H22N4O9; Synonyms: Epithalon; Epithalone; Ala-Glu-Asp-Gly-OH",
+          "pageOrSection": "Chemical Product Property summary"
+        },
+        {
+          "sourceRef": "superpower-epitalon-guide",
+          "quote": "Every human clinical study of meaningful size used the polypeptide complex, not the tetrapeptide analog",
+          "pageOrSection": "Evidence limitations"
+        }
+      ],
+      "reviewFlags": [
+        "CAS number sourced from a secondary structured-database (ChemicalBook), not PubChem directly, because PubChem's compound page required JavaScript rendering; verify against PubChem's REST API at review time",
+        "distinction between Epitalon (tetrapeptide) and Epithalamin (polypeptide complex) is load-bearing for every efficacy/safety claim below and must not be collapsed"
+      ]
+    },
+    {
+      "claimId": "epitalon-mechanism-pineal-circadian-001",
+      "claimType": "mechanism",
+      "statement": "FDA's briefing describes the proposed mechanism of epitalon as pineal-gland-related, affecting circadian rhythmicity via melatonin signaling; separately, in vitro/cell-line research has reported epitalon activating telomerase and lengthening telomeres, but this cellular effect has not been established to occur in living human tissue.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "epitalon",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-193345",
+        "superpower-epitalon-guide"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193345",
+          "quote": "epitalon could affect circadian rhythmicity",
+          "pageOrSection": "p. 28"
+        },
+        {
+          "sourceRef": "superpower-epitalon-guide",
+          "quote": "Epitalon has been shown to activate telomerase and elongate telomeres in human cell cultures... Whether this in-vitro effect translates to telomerase activation in living human tissues has not been established.",
+          "pageOrSection": "Mechanism / evidence section"
+        }
+      ],
+      "reviewFlags": [
+        "do not infer in-vivo human telomerase/telomere effect from cell-line data"
+      ]
+    },
+    {
+      "claimId": "epitalon-regulatory-503a-recommendation-001",
+      "claimType": "regulatory",
+      "statement": "In its July 2026 PCAC briefing, FDA concluded that the evaluation criteria weigh against placing epitalon (free base) or epitalon acetate on the 503A Bulks List, noting neither is a component of an FDA-approved drug, there is no applicable USP/NF monograph, there are no clinical data supporting safety in humans, and there is a lack of evidence supporting effectiveness for the proposed use (insomnia).",
+      "context": {
+        "population": "prospective compounded-product users",
+        "route": null,
+        "formulation": "epitalon free base and epitalon acetate",
+        "useCase": "regulatory evaluation for 503A compounding eligibility",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-193345"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193345",
+          "quote": "neither is a component of an FDA-approved drug",
+          "pageOrSection": "p. 7"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193345",
+          "quote": "there are no clinical data to support the safety of epitalon (free base) or epitalon acetate when used in humans",
+          "pageOrSection": "p. 37"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193345",
+          "quote": "there is a lack of evidence to support the effectiveness of epitalon (free base) or epitalon acetate for the proposed use of insomnia",
+          "pageOrSection": "p. 37"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193345",
+          "quote": "weighs against epitalon (free base) or epitalon acetate being placed on that list",
+          "pageOrSection": "p. 37, final recommendation"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "confirm final PCAC committee vote/outcome versus this briefing-document staff position, and re-check FDA's Category 2 significant-safety-risk list for any subsequent epitalon listing"
+      ]
+    },
+    {
+      "claimId": "epitalon-warning-immunogenicity-carcinogenicity-001",
+      "claimType": "warning",
+      "statement": "FDA's briefing flags two theoretical safety concerns for injectable compounded epitalon: (1) immunogenicity risk from peptide aggregation/degradation typical of peptide products, and (2) a carcinogenicity concern because epitalon has been shown to activate telomerase and lengthen telomeres, and longer telomeres are generally associated with increased cancer risk; the briefing states there are no clinical safety data in humans to weigh against these theoretical concerns.",
+      "context": {
+        "population": "humans considering compounded/injectable epitalon products",
+        "route": "injectable (as compounded)",
+        "formulation": "compounded epitalon free base or acetate",
+        "useCase": "safety risk assessment",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-193345"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193345",
+          "quote": "FDA is concerned about the potential for immunogenicity of epitalon (free base) when compounding an injectable dosage form due to the potential for aggregation",
+          "pageOrSection": "p. 15"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193345",
+          "quote": "has been shown to activate telomerase and lengthen telomeres, and longer telomeres are generally associated with increased risk for cancer",
+          "pageOrSection": "p. 34"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193345",
+          "quote": "there are no clinical data to support the safety of epitalon (free base) or epitalon acetate when used in humans",
+          "pageOrSection": "p. 37"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim; theoretical mechanism-based concern, not an observed adverse-event signal from human data",
+        "this is not medical advice and must not be paraphrased as a contraindication list"
+      ]
+    },
+    {
+      "claimId": "epitalon-studied-use-epithalamin-melatonin-001",
+      "claimType": "studied-use",
+      "statement": "The main published controlled human research related to this peptide family used Epithalamin, a natural pineal polypeptide extract, not the synthetic tetrapeptide Epitalon: a small human study in healthy elderly subjects found that a course of Epithalamin treatment modulated pineal melatonin-producing function, increasing nighttime plasma melatonin in subjects with initially low pineal activity. This finding cannot be extrapolated to the single-tetrapeptide product marketed as Epitalon/Epithalon today.",
+      "context": {
+        "population": "healthy elderly human subjects",
+        "route": "not specified in fetched abstract",
+        "formulation": "Epithalamin (pineal polypeptide preparation, not the Epitalon tetrapeptide)",
+        "useCase": "circadian melatonin regulation (investigational, non-FDA-approved)",
+        "doseText": "course treatment with Epithalamin, dosing not specified in the fetched abstract (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "korkushko-2004-melatonin-human",
+        "alzdiscovery-epithalamin-epitalon"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "korkushko-2004-melatonin-human",
+          "quote": "Circadian rhythm of plasma melatonin concentrations in healthy elderly subjects was studied before and after a course treatment with Epithalamin (peptide preparation from the pineal gland). Epithalamin modulated the melatonin-producing function of the pineal gland.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "alzdiscovery-epithalamin-epitalon",
+          "quote": "every preclinical and clinical study discussed here has been conducted by Dr. Khavinson's group in Russia with no independent confirmation of their results",
+          "pageOrSection": "p. 2"
+        }
+      ],
+      "reviewFlags": [
+        "compound-identity conflict: Epithalamin (polypeptide extract) versus Epitalon (single tetrapeptide) are frequently marketed as interchangeable but are not the same substance; see conflict epitalon-conflict-formulation-001",
+        "single-group/no-independent-replication research base; not a placebo-controlled RCT of the tetrapeptide sold today",
+        "trial dosing/protocol details are context only, not a use recommendation"
+      ]
+    },
+    {
+      "claimId": "epitalon-evidence-gap-longevity-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "No FDA-approved epitalon product exists, no placebo-controlled human trial of the Epitalon tetrapeptide itself has been published, and no completed human study has measured telomere length before and after Epitalon administration in a placebo-controlled design; the anti-aging, telomere-lengthening, and longevity claims commonly used to market compounded/research-grade Epitalon online outrun the available human evidence, which for this exact molecule consists of in-vitro/cell-line findings plus older studies of a chemically different pineal-extract product (Epithalamin) run by a single Russian research group without independent replication.",
+      "context": {
+        "population": "consumers of gray-market/research-use-only Epitalon products",
+        "route": "subcutaneous/intramuscular injection (common gray-market use)",
+        "formulation": "research-grade or compounded Epitalon",
+        "useCase": "anti-aging / longevity / telomere-lengthening marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "superpower-epitalon-guide",
+        "fda-pcac-briefing-193345",
+        "alzdiscovery-epithalamin-epitalon",
+        "biolongevitylabs-epitalon-product"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "superpower-epitalon-guide",
+          "quote": "No placebo-controlled human trials exist, and it is not FDA-approved... No completed human trial has measured telomere length before and after Epitalon administration in a placebo-controlled design.",
+          "pageOrSection": "Evidence limitations"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193345",
+          "quote": "there is a lack of evidence to support the effectiveness of epitalon (free base) or epitalon acetate for the proposed use of insomnia",
+          "pageOrSection": "p. 37"
+        },
+        {
+          "sourceRef": "alzdiscovery-epithalamin-epitalon",
+          "quote": "a well-conducted Phase1 safety study and independent validation is needed to confirm safety",
+          "pageOrSection": "p. 1"
+        },
+        {
+          "sourceRef": "biolongevitylabs-epitalon-product",
+          "quote": "The statements made within this website have not been evaluated by the US Food and Drug Administration... All peptide research products on this site are for research and development use only.",
+          "pageOrSection": "Product page disclaimer"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular longevity/anti-aging marketing claims for this exact tetrapeptide are not supported by controlled human outcome data",
+        "vendor RUO disclaimers coexist with widespread real-world self-injection use; this gap between labeling and actual use should be tracked as a consumer-safety flag",
+        "no independent (non-Khavinson-group) human replication identified for the related Epithalamin literature either"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "epitalon-conflict-formulation-001",
+      "claimRefs": [
+        "epitalon-identity-mechanism-001",
+        "epitalon-studied-use-epithalamin-melatonin-001",
+        "epitalon-evidence-gap-longevity-marketing-001"
+      ],
+      "severity": "moderate",
+      "summary": "Marketing and even some review sources use 'Epitalon' and 'Epithalamin' interchangeably, but they are chemically distinct products (a single synthetic tetrapeptide versus a multi-peptide pineal extract), and nearly all human clinical data in the literature was generated with Epithalamin, not the Epitalon tetrapeptide sold today. This is an unresolved sourcing/labeling ambiguity, not a resolved scientific question, and should be verified against primary Khavinson-group publications at review time.",
+      "resolutionStatus": "needs-human-review"
+    },
+    {
+      "conflictId": "epitalon-conflict-telomerase-safety-001",
+      "claimRefs": [
+        "epitalon-mechanism-pineal-circadian-001",
+        "epitalon-warning-immunogenicity-carcinogenicity-001"
+      ],
+      "severity": "moderate",
+      "summary": "Telomerase activation/telomere lengthening is marketed as a longevity benefit but is flagged by FDA as a theoretical carcinogenicity concern; both framings rest on the same underlying in-vitro finding, and no human outcome data (cancer incidence or otherwise) exist to adjudicate between them.",
+      "resolutionStatus": "unresolved"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS number was sourced from a secondary structured database (ChemicalBook) rather than confirmed directly on PubChem's own compound page, which required JavaScript rendering not available to the fetch tool; re-verify via PubChem PUG REST API at review time.",
+      "UNII, DrugBank, and ChEMBL identifiers not resolved from structured databases.",
+      "Compound-identity ambiguity between Epitalon (tetrapeptide) and Epithalamin (polypeptide extract) affects most efficacy-adjacent claims and needs independent confirmation against primary Khavinson-group publications.",
+      "Human evidence base for the Epitalon tetrapeptide itself is thin to nonexistent; nearly all human data pertains to a related but distinct formulation (Epithalamin) from a single non-independently-replicated research group.",
+      "Confirm final PCAC committee outcome/vote versus the July 2026 FDA staff briefing-document position, and re-check FDA's Category 2 significant-safety-risk compounding list for any subsequent epitalon listing."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "thin-human-evidence",
+      "compound-identity-ambiguity",
+      "no-independent-replication",
+      "gray-market-only"
+    ]
+  }
+}
