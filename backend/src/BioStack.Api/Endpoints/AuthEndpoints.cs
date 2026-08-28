@@ -34,6 +34,7 @@ public static class AuthEndpoints
         "/timeline",
         "/calculators",
         "/knowledge",
+        "/billing",
         "/admin",
         ProductContract.Current.Routes.Canonical["onboarding"],
         ProductContract.Current.Routes.Canonical["analyzer"],
@@ -53,7 +54,7 @@ public static class AuthEndpoints
             .WithName("VerifyMagicLink")
             .RequireRateLimiting("auth-verify");
 
-        group.MapGet("/session", GetSession)
+        group.MapGet("/session", (Delegate)GetSession)
             .WithName("GetAuthSession");
 
         group.MapPost("/logout", Logout)
@@ -279,9 +280,14 @@ public static class AuthEndpoints
         return redirectPath;
     }
 
-    private static IResult GetSession(HttpContext http)
+    private static async Task<IResult> GetSession(HttpContext http)
     {
         var user = UserFromClaims(http.User);
+        if (user is null && http.Request.Cookies.ContainsKey("biostack_session"))
+        {
+            await http.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
         return Results.Ok(user is null
             ? new AuthSessionResponse(false, null)
             : new AuthSessionResponse(true, user));

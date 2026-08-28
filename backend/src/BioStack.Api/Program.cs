@@ -4,6 +4,7 @@ using System.Threading.RateLimiting;
 using BioStack.Api.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
@@ -40,6 +41,10 @@ builder.Logging.AddConsole();
 
 StripeProductionConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
 ProductionAuthConfiguration.Validate(builder.Configuration, builder.Environment.IsProduction());
+ProductionDataProtectionConfiguration.Configure(
+    builder.Services,
+    builder.Configuration,
+    builder.Environment.IsProduction());
 
 var stripeSecretKey = builder.Configuration["Stripe:SecretKey"];
 if (!string.IsNullOrWhiteSpace(stripeSecretKey))
@@ -182,6 +187,13 @@ builder.Services
         // non-/api paths keep the default redirect behavior.
         options.Events.OnRedirectToLogin = context =>
         {
+            if (context.Request.Cookies.ContainsKey(context.Options.Cookie.Name!))
+            {
+                context.Response.Cookies.Delete(
+                    context.Options.Cookie.Name!,
+                    context.Options.Cookie.Build(context.HttpContext));
+            }
+
             if (context.Request.Path.StartsWithSegments("/api"))
             {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -208,6 +220,9 @@ builder.Services
             if (string.IsNullOrWhiteSpace(sessionToken))
             {
                 context.RejectPrincipal();
+                context.Response.Cookies.Delete(
+                    context.Options.Cookie.Name!,
+                    context.Options.Cookie.Build(context.HttpContext));
                 return;
             }
 
@@ -223,12 +238,18 @@ builder.Services
             if (session is null)
             {
                 context.RejectPrincipal();
+                context.Response.Cookies.Delete(
+                    context.Options.Cookie.Name!,
+                    context.Options.Cookie.Build(context.HttpContext));
                 return;
             }
 
             if (context.Principal?.Identity is not ClaimsIdentity identity)
             {
                 context.RejectPrincipal();
+                context.Response.Cookies.Delete(
+                    context.Options.Cookie.Name!,
+                    context.Options.Cookie.Build(context.HttpContext));
                 return;
             }
 
@@ -441,6 +462,24 @@ builder.Services.AddOpenApi(options =>
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
+
+if (app.Environment.IsProduction())
+{
+    // Resolve the remote key ring and perform a memory-only round trip before serving.
+    // Missing managed-identity roles, an unreachable Blob, or an unusable Key Vault key
+    // must fail the revision rather than silently minting incompatible session cookies.
+    var startupProtector = app.Services
+        .GetRequiredService<IDataProtectionProvider>()
+        .CreateProtector("BioStack.Api.StartupValidation.v1");
+    var startupProbe = startupProtector.Protect("data-protection-ready");
+    if (!string.Equals(
+            startupProtector.Unprotect(startupProbe),
+            "data-protection-ready",
+            StringComparison.Ordinal))
+    {
+        throw new InvalidOperationException("Production Data Protection startup validation failed.");
+    }
+}
 
 app.UseCors("ConfiguredOrigins");
 app.UseRateLimiter();

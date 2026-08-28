@@ -168,7 +168,7 @@ import { useProfile } from '@/lib/context';
 export function Sidebar() {
   const pathname = usePathname();
   const { isSidebarOpen, setSidebarOpen } = useProfile();
-  const { user, logout } = useAuth();
+  const { user, loading, logout } = useAuth();
 
   const isAdmin = user?.role === 1;
 
@@ -294,15 +294,26 @@ export function Sidebar() {
               <button
                 onClick={() => void logout()}
                 title="Sign out"
-                className="shrink-0 p-1.5 rounded-xl hover:bg-white/5 text-white/25 hover:text-white/50 transition-colors"
+                className="shrink-0 flex items-center gap-1.5 rounded-xl px-2 py-1.5 text-[10px] font-semibold text-white/35 transition-colors hover:bg-white/5 hover:text-white/65"
               >
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" className="w-4 h-4">
                   <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" />
                   <polyline points="10 11 14 8 10 5" />
                   <line x1="14" y1="8" x2="6" y2="8" />
                 </svg>
+                <span>Sign out</span>
               </button>
             </div>
+          )}
+
+          {!loading && !user && (
+            <Link
+              href={`/auth/signin?callbackUrl=${encodeURIComponent(`${pathname}`)}`}
+              onClick={() => setSidebarOpen(false)}
+              className="mb-3 flex min-h-11 items-center justify-center rounded-xl border border-emerald-300/20 bg-emerald-400/10 px-3 text-sm font-semibold text-emerald-200 transition-colors hover:bg-emerald-400/15"
+            >
+              Sign in
+            </Link>
           )}
 
           {/* ── System zone ─────────────────────────────────────────────────── */}

@@ -2,9 +2,9 @@
 
 **Scope:** biostack.cc on Azure Container Apps (API + web, ACR images, OIDC deploys via `.github/workflows/deploy.yml`). Authored 2026-08-28 against `infra/azure/deploy-container-apps.ps1` and the deploy workflow. Dry-run status per section. Secrets never appear in this file; commands reference `$RG` (resource group) and app names as provisioned.
 
-## 0. FIRST: determine the live database provider — open question, release-gating
+## 0. FIRST: verify durable production state — release-gating
 
-`deploy-container-apps.ps1` defaults to `DatabaseProvider=sqlite` with `ConnectionStrings__DefaultConnection=Data Source=/app/data/biostack.db` and **defines no Azure Files storage mount**. `deploy.yml` only runs `az containerapp update --image ...`, which replaces revisions.
+`deploy-container-apps.ps1` now defaults to and requires PostgreSQL for production unless an explicit throwaway-only SQLite override is set. `deploy.yml` only replaces revision images, so the currently deployed configuration remains authoritative and must be inspected.
 
 > **If production was provisioned with the SQLite default, user data lives on ephemeral revision storage and every image deploy or revision restart can destroy it.** This must be answered before any backup claim is honest.
 
@@ -14,6 +14,50 @@ az containerapp show -n biostackmissionctrl-api -g $RG --query "properties.templ
 az containerapp show -n biostackmissionctrl-api -g $RG --query "properties.template.volumes"
 ```
 - `Database__Provider=postgresql` → follow §1-A. SQLite + a volume → §1-B. SQLite + no volume → **stop; migrate to PostgreSQL Flexible Server or attach an Azure Files mount before launch.**
+
+Session cookies have a separate durability boundary. Verify the API has a managed identity and all three non-secret Data Protection settings; never print cookie values, tokens, storage credentials, or secret references:
+
+```powershell
+az containerapp show -n <api-app> -g $RG --query identity
+az containerapp show -n <api-app> -g $RG --query "properties.template.containers[0].env[?starts_with(name, 'DataProtection__')].{name:name,value:value}" -o table
+```
+
+Expected application name: `BioStack.Api.SessionCookie.v1`. The Blob URI must identify one object without a query/SAS. The Key Vault URI must be versionless (`.../keys/<name>`). Missing values or unusable identity permissions intentionally prevent the new API revision from becoming ready.
+
+## 0-A. Session continuity across restart and scale-to-zero
+
+Operator prerequisites:
+
+1. Use an operator principal with `Contributor` plus `User Access Administrator` (or `Owner`, or an approved equivalent custom role) at the target resource-group scope so it can create the storage/vault/key resources and role assignments.
+2. Enable a system-assigned identity on the API app (or attach the approved user-assigned identity).
+3. Pre-create the dedicated Blob container and an enabled RSA Key Vault key with `wrapKey`/`unwrapKey`, or deploy `infra/azure/session-data-protection.bicep` after enabling the system identity.
+4. Assign `Storage Blob Data Contributor` to the API identity at the dedicated container scope and `Key Vault Crypto User` at the wrapping-key vault/key scope. Wait for RBAC propagation.
+5. Configure the exact three settings above. Configure `DataProtection__ManagedIdentityClientId` only for a user-assigned identity.
+6. Preserve all old wrapping-key versions for the 30-day cookie lifetime plus rollback window. Never change the application name during a routine deploy.
+
+An already-unreadable cookie whose container-local key was destroyed cannot be recovered. The acceptance session must be minted once after the durable key-ring cutover; that new cookie is then tested across restart and scale-to-zero.
+
+Verification uses a dedicated test identity and a normal browser. Record only timestamps, revision names, replica counts, response status, and final route—never the link token or cookie value.
+
+1. Sign in, accept the current consent version if required, open `/profiles`, and confirm `/api/v1/auth/session` reports `authenticated: true` in the browser session.
+2. Record the active revision, then restart only that revision:
+
+   ```powershell
+   $REV = az containerapp revision list -n <api-app> -g $RG --query '[?properties.trafficWeight > `0`].name | [0]' -o tsv
+   az containerapp revision restart -n <api-app> -g $RG --revision $REV
+   ```
+
+3. After readiness returns, refresh `/profiles` in the same browser. Pass: no sign-in redirect and the session endpoint remains authenticated.
+4. If the configured API scale rule has `minReplicas=0`, leave the app idle until this read-only command returns `[]` for the active revision:
+
+   ```powershell
+   az containerapp replica list -n <api-app> -g $RG --revision $REV -o json
+   ```
+
+5. Refresh `/profiles` again. The first request may include cold-start latency. Pass: the same browser session remains authenticated after a new replica starts. Fail: `session-expired`, a cookie decryption warning, a locally generated `/home/app/.aspnet/DataProtection-Keys` warning, or a new sign-in requirement.
+6. Sign out. Pass: the server session is revoked and the browser receives an expired `biostack_session` cookie. Retain no cookie material in evidence.
+
+Rollback: move traffic back only to a revision using the same application name, Blob URI, Key Vault key identifier, and identity access. A code rollback cannot recover cookies after deleting the Blob key ring or disabling a Key Vault version.
 
 ## 1. Backup / restore
 
