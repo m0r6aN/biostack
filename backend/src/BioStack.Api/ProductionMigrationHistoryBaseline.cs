@@ -21,7 +21,10 @@ public static class ProductionMigrationHistoryBaseline
     ];
 
     private static readonly (string Table, string Column)[] RequiredColumns =
-    [];
+        CriticalPostgresSchemaContract.Columns
+            .Where(column => column.IsLegacyBaselineColumn)
+            .Select(column => (column.Table, column.Column))
+            .ToArray();
 
     private static readonly string[] RequiredIndexes =
     [
@@ -120,13 +123,17 @@ public static class ProductionMigrationHistoryBaseline
             transaction,
             "SELECT table_name, column_name FROM information_schema.columns WHERE table_schema = 'public';",
             cancellationToken);
+        var columnSchemas = await ProductionDatabaseSchemaReadiness.ReadColumnSchemasAsync(
+            connection,
+            transaction,
+            cancellationToken);
         var indexes = await ReadSingleColumnAsync(
             connection,
             transaction,
             "SELECT indexname FROM pg_indexes WHERE schemaname = 'public';",
             cancellationToken);
 
-        var missing = FindMissingSchemaObjects(tables, columns, indexes);
+        var missing = FindMissingSchemaObjects(tables, columns, indexes, columnSchemas);
         if (missing.Count > 0)
         {
             throw new InvalidOperationException(
@@ -162,13 +169,19 @@ public static class ProductionMigrationHistoryBaseline
     public static IReadOnlyList<string> FindMissingSchemaObjects(
         IReadOnlySet<string> tables,
         IReadOnlySet<(string Table, string Column)> columns,
-        IReadOnlySet<string> indexes)
+        IReadOnlySet<string> indexes,
+        IReadOnlyDictionary<(string Table, string Column), PostgresColumnSchema>? columnSchemas = null)
     {
         var missing = new List<string>();
         missing.AddRange(RequiredTables.Where(table => !tables.Contains(table)).Select(table => $"table:{table}"));
         missing.AddRange(RequiredColumns.Where(column => !columns.Contains(column)).Select(column => $"column:{column.Table}.{column.Column}"));
         missing.AddRange(RequiredIndexes.Where(index => !indexes.Contains(index)).Select(index => $"index:{index}"));
-        return missing;
+        if (columnSchemas is not null)
+        {
+            missing.AddRange(CriticalPostgresSchemaContract.FindProblems(columnSchemas, legacyBaselineMode: true));
+        }
+
+        return missing.Distinct(StringComparer.Ordinal).ToArray();
     }
 
     private static async Task<HashSet<string>> ReadSingleColumnAsync(
