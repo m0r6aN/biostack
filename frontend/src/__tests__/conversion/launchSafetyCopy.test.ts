@@ -28,9 +28,9 @@ const BANNED_PRESCRIPTIVE = [
 // codebase-wide grep — that is the agreed scope.
 const TOUCHED_SURFACE_COPY = [
   // LandingHero
-  "What you're taking. How it's structured.",
-  "See what it's doing.",
-  'Start with clarity. Then track, compare, and observe changes over time.',
+  'No prescriptions. No guesswork.',
+  "Just what's known.",
+  'A free, public library of what the research says about peptides and similar compounds, graded by evidence strength, for anyone deciding for themselves. Tracking and analysis come after.',
   // ProtocolAnalyzerExperience
   'Operator and Commander members can paste, upload, scan, or link a protocol for structural scoring and observational alternative scenarios.',
   'Compare alternatives',
