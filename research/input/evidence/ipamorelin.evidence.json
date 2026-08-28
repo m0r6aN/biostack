@@ -1,0 +1,254 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "ipamorelin-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-lead-evidence-expansion",
+    "generatedAt": "2026-08-28T00:00:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Ipamorelin",
+    "aliases": [
+      "Ipamorelin acetate",
+      "NNC 26-0161"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic pentapeptide (ghrelin mimetic / growth hormone secretagogue)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "9831659",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-ipamorelin-category2",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T00:00:00Z"
+    },
+    {
+      "sourceId": "fda-pcac-briefing-182088",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting (ipamorelin evaluation)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/182088/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T00:00:00Z"
+    },
+    {
+      "sourceId": "beck-2014-ijcd-poi-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Prospective, randomized, controlled, proof-of-concept study of the Ghrelin mimetic ipamorelin for the management of postoperative ileus in bowel resection patients",
+      "publisher": "International Journal of Colorectal Disease (Beck DE, Sweeney WB, McCarter MD, et al., 2014)",
+      "url": "https://link.springer.com/article/10.1007/s00384-014-2030-8",
+      "doi": "10.1007/s00384-014-2030-8",
+      "pmid": null,
+      "publishedAt": "2014-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T00:00:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-9831659",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Ipamorelin (CID 9831659)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Ipamorelin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T00:00:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "ipamorelin-regulatory-compounding-risk-001",
+      "claimType": "regulatory",
+      "statement": "FDA lists ipamorelin acetate among bulk drug substances that may present significant safety risks for compounding, citing risk of immunogenicity for certain routes of administration due to potential aggregation or peptide-related impurities; the page additionally notes serious adverse events including death associated with intravenous administration.",
+      "context": {
+        "population": "humans exposed to compounded ipamorelin products",
+        "route": "various; intravenous specifically flagged",
+        "formulation": "compounded ipamorelin acetate",
+        "useCase": "compounding safety and regulatory boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-ipamorelin-category2"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-ipamorelin-category2",
+          "quote": "Compounded drugs containing Ipamorelin acetate may pose risk for immunogenicity for certain routes of administration due to the potential for aggregation or peptide-related impurities.",
+          "pageOrSection": "Category 2 table, Ipamorelin acetate row"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "verify current Category 2 status at review time - FDA revised peptide listings in April 2026"
+      ]
+    },
+    {
+      "claimId": "ipamorelin-regulatory-503a-recommendation-001",
+      "claimType": "regulatory",
+      "statement": "In its Pharmacy Compounding Advisory Committee briefing, FDA concluded the evaluation criteria weigh against placing ipamorelin (free base) and ipamorelin acetate on the 503A Bulks List, citing immunogenicity potential from impurities and peptide-related aggregates, possible stimulation of reward processing with potential for reinforcing and addictive behaviors, and possible negative effects on reproductive health and pregnancy outcomes.",
+      "context": {
+        "population": "prospective compounded-product users",
+        "route": null,
+        "formulation": "ipamorelin free base and acetate",
+        "useCase": "regulatory evaluation for compounding eligibility",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-182088"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-182088",
+          "quote": "we believe the evaluation criteria weigh against placing both ipamorelin (free base) and ipamorelin acetate on the...503A Bulks List",
+          "pageOrSection": "Introduction, page 3"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-182088",
+          "quote": "could stimulate reward processing and potentially induce reinforcing and addictive behaviors",
+          "pageOrSection": "Section II.D.1.a, page 28"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "confirm final PCAC/committee outcome versus briefing-document position"
+      ]
+    },
+    {
+      "claimId": "ipamorelin-mechanism-ghrelin-mimetic-001",
+      "claimType": "mechanism",
+      "statement": "Ipamorelin is a synthetic pentapeptide ghrelin mimetic that stimulates growth hormone release from the anterior pituitary; it was first identified in 1998.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "ipamorelin",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-182088",
+        "pubchem-cid-9831659"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-182088",
+          "quote": "ipamorelin stimulates growth hormone release from the anterior pituitary",
+          "pageOrSection": "Section II.D.1.a, page 26"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "ipamorelin-human-rct-negative-poi-001",
+      "claimType": "efficacy",
+      "statement": "In the principal published human efficacy trial - a multicenter, double-blind, placebo-controlled phase 2 study in 117 bowel-resection patients - intravenous ipamorelin 0.03 mg/kg twice daily did not significantly accelerate recovery from postoperative ileus versus placebo (median time to first tolerated meal 25.3 vs 32.6 hours, p = 0.15); the regimen was reported as well tolerated in that setting, and FDA's briefing notes development for this indication was subsequently discontinued.",
+      "context": {
+        "population": "adult bowel-resection patients (n=117 enrolled)",
+        "route": "intravenous",
+        "formulation": "ipamorelin",
+        "useCase": "postoperative ileus (investigational, discontinued)",
+        "doseText": "0.03 mg/kg twice daily, up to 7 days (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "beck-2014-ijcd-poi-rct",
+        "fda-pcac-briefing-182088"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "beck-2014-ijcd-poi-rct",
+          "quote": "Median time to first tolerated meal was 25.3 and 32.6 h in the ipamorelin and placebo groups, respectively (p = 0.15).",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-182088",
+          "quote": "Due to these disappointing results, its development was discontinued",
+          "pageOrSection": "Section II.C.2.a, page 24"
+        }
+      ],
+      "reviewFlags": [
+        "trial dose context must never be presented as a use recommendation",
+        "tolerability finding is specific to supervised IV hospital use and must not be generalized to gray-market subcutaneous use"
+      ]
+    },
+    {
+      "claimId": "ipamorelin-evidence-gap-wellness-uses-001",
+      "claimType": "evidence-gap",
+      "statement": "No approved ipamorelin product exists, and the published controlled human evidence does not address the anti-aging, body-composition, recovery, or growth-hormone-optimization uses for which ipamorelin (often combined with CJC-1295) is commonly marketed online; human efficacy and safety for those uses and for chronic subcutaneous self-administration are unestablished.",
+      "context": {
+        "population": "consumers of gray-market peptide products",
+        "route": "subcutaneous (common gray-market use)",
+        "formulation": "research-grade ipamorelin, often combined with CJC-1295",
+        "useCase": "anti-aging / body composition / recovery marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-182088",
+        "beck-2014-ijcd-poi-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-182088",
+          "quote": "Due to these disappointing results, its development was discontinued",
+          "pageOrSection": "Section II.C.2.a, page 24"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular marketing claims lack supporting human outcome evidence",
+        "capture CJC-1295 combination claims in the CJC-1295 packet as well"
+      ]
+    }
+  ],
+  "conflicts": [],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "FDA Category 2 peptide listings were revised in April 2026; current ipamorelin status must be confirmed against the live FDA page at review time.",
+      "CAS/UNII/ChEMBL identifiers not yet resolved from structured databases."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "negative-human-rct-documented",
+      "limited-human-evidence",
+      "regulatory-boundary"
+    ]
+  }
+}
