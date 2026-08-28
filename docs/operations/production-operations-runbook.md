@@ -15,6 +15,8 @@ az containerapp show -n biostackmissionctrl-api -g $RG --query "properties.templ
 ```
 - `Database__Provider=postgresql` → follow §1-A. SQLite + a volume → §1-B. SQLite + no volume → **stop; migrate to PostgreSQL Flexible Server or attach an Azure Files mount before launch.**
 
+**ANSWERED 2026-08-28 (operator-verified against production):** `Database__Provider=postgres`; Container App volumes `[]`; no container volume mounts — consistent with an external managed PostgreSQL service, not in-container storage. §1-A applies. Remaining §1-A actions: confirm PITR settings on the server and stand up the weekly logical backup + quarterly restore drill.
+
 Session cookies have a separate durability boundary. Verify the API has a managed identity and all three non-secret Data Protection settings; never print cookie values, tokens, storage credentials, or secret references:
 
 ```powershell
