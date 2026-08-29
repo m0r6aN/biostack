@@ -121,7 +121,7 @@
       "publisher": "U.S. Food and Drug Administration (openFDA / Drugs@FDA)",
       "url": "https://api.fda.gov/drug/drugsfda.json?search=products.active_ingredients.name:%22TOREMIFENE%20CITRATE%22&limit=10",
       "publishedAt": null,
-      "accessedAt": "2026-08-29"
+      "accessedAt": "2026-08-29T03:40:00Z"
     }
   ],
   "claims": [
