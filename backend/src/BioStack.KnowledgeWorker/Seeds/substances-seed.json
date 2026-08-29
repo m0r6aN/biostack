@@ -650,311 +650,358 @@
         "Saxenda"
       ],
       "brandNames": [],
-      "synonyms": [],
-      "classification": "Pharmaceutical",
-      "compoundFamily": "GLP-1 receptor agonist",
+      "synonyms": [
+        "Victoza",
+        "Saxenda"
+      ],
+      "classification": "Other",
+      "compoundFamily": "Glucagon-like peptide-1 (GLP-1) receptor agonist analog",
       "isCombinationProduct": false,
       "activeMoieties": [
         "Liraglutide"
       ],
       "externalIdentifiers": {
-        "rxnorm": null,
-        "unii": null,
-        "casNumber": null,
-        "drugbank": null,
-        "pubchem": null
+        "rxnorm": "475968",
+        "unii": "839I73S42A",
+        "casNumber": "204656-20-2",
+        "drugbank": "DB06655",
+        "pubchem": "16134956"
       }
     },
     "regulatory": {
-      "requiresPrescription": true,
-      "regulatoryStatus": "FDA-approved prescription product or labeled drug class",
-      "labelStatusByUseCase": [
-        {
-          "useCase": "type 2 diabetes or chronic weight management per product label",
-          "labelStatus": "on-label"
-        }
-      ],
-      "jurisdiction": "US",
-      "approvedIndications": [
-        "type 2 diabetes or chronic weight management per product label"
-      ],
-      "offLabelNotes": []
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
     },
     "mechanism": {
-      "mechanismSummary": "Liraglutide is represented by its commonly described glp-1 receptor agonist mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
+      "mechanismSummary": "Liraglutide is a synthetic glucagon-like peptide-1 (GLP-1) receptor agonist analog used in the management of type 2 diabetes mellitus, prevention of cardiovascular complications associated with diabetes, and obesity.",
       "primaryMechanisms": [
-        "GLP-1 receptor agonist",
-        "glycemic-control"
+        "Liraglutide is a synthetic glucagon-like peptide-1 (GLP-1) receptor agonist analog used in the management of type 2 diabetes mellitus, prevention of cardiovascular complications associated with diabetes, and obesity."
       ],
-      "pathways": [
-        "incretin-signaling",
-        "appetite-regulation",
-        "glucose-regulation"
-      ],
-      "targets": [
-        "GLP-1 receptor agonist"
-      ],
-      "effectTags": [
-        "glycemic-control",
-        "satiety"
-      ],
-      "goalTags": [
-        "weight-management",
-        "metabolic-health"
-      ]
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
     },
-    "formulations": [
-      {
-        "formulationId": "liraglutide-subcutaneous",
-        "productName": "Liraglutide",
-        "manufacturer": null,
-        "route": "subcutaneous",
-        "dosageForm": "injection",
-        "strength": null,
-        "concentration": null,
-        "unit": null,
-        "substitutableWith": [],
-        "storage": {
-          "beforeReconstitution": "Follow product labeling or pharmacy instructions; keep sterile products under labeled conditions.",
-          "afterReconstitution": "Use only within the product-specific stability window when one is provided.",
-          "temperatureNotes": "Do not freeze unless labeling specifically allows it.",
-          "lightSensitivity": null,
-          "stabilityWindow": "Product-specific or unknown."
-        },
-        "reconstitution": {
-          "required": true,
-          "diluent": "Use only the labeled diluent or pharmacist-provided sterile diluent.",
-          "diluentVolume": null,
-          "instructions": "Do not shake; inspect for particulate matter; follow product-specific labeling.",
-          "productSpecific": true
-        }
-      }
-    ],
-    "indications": [
-      {
-        "useCase": "type 2 diabetes or chronic weight management per product label",
-        "labelStatus": "on-label",
-        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "Evidence reviewed for type 2 diabetes or chronic weight management per product label; BioStack presents this as educational reference, not a recommendation.",
-        "evidenceTier": "Strong",
-        "sources": [
-          "src:liraglutide"
-        ]
-      }
-    ],
-    "dosingGuidance": [
-      {
-        "guidanceId": "liraglutide-guidance",
-        "context": {
-          "useCase": "type 2 diabetes or chronic weight management per product label",
-          "population": "Adults where appropriate",
-          "formulation": null,
-          "route": "subcutaneous"
-        },
-        "dose": {
-          "amount": 0.6,
-          "unit": "mg",
-          "frequency": "daily",
-          "scheduleText": "Follow product-specific prescribing information.",
-          "preferredTimeOfDay": null
-        },
-        "notes": [
-          "Educational reference only; not medical advice."
-        ],
-        "productSpecific": true,
-        "sources": [
-          "src:liraglutide"
-        ]
-      }
-    ],
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
     "compatibility": {
-      "vialCompatibilitySummary": "Compatibility is unknown; do not mix in the same vial or syringe unless product labeling or a pharmacist explicitly supports it.",
-      "blendingRules": [
-        {
-          "ruleType": "co-mix",
-          "target": "other compounds",
-          "status": "review",
-          "message": "No hard-safe compatibility conclusion is established by this seed record.",
-          "sources": [
-            "src:liraglutide"
-          ]
-        }
-      ],
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
       "compatibleBlends": [],
       "incompatibleBlends": [],
-      "unknownCompatibility": [
-        "other compounds"
-      ]
+      "unknownCompatibility": []
     },
     "safety": {
-      "contraindications": [
-        {
-          "item": "Known hypersensitivity to the active ingredient or formulation components",
-          "severity": "high",
-          "notes": "Confirm full labeled contraindications before use.",
-          "sources": [
-            "src:liraglutide"
-          ]
-        }
-      ],
-      "warnings": [
-        {
-          "item": "Use requires review of full prescribing information or regulator warning",
-          "severity": "review",
-          "notes": "BioStack stores a launch-safe summary only; primary sources may include additional risks and population-specific limits.",
-          "sources": [
-            "src:liraglutide"
-          ]
-        }
-      ],
-      "precautions": [
-        {
-          "item": "Medication and condition review",
-          "notes": "Check concurrent medications, conditions, pregnancy status, and labs where applicable.",
-          "sources": [
-            "src:liraglutide"
-          ]
-        }
-      ],
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
       "adverseEffects": {
-        "common": [
-          "source-dependent"
-        ],
-        "serious": [
-          "source-dependent"
-        ]
+        "common": [],
+        "serious": []
       },
-      "monitoring": [
-        {
-          "parameter": "Clinical response and adverse effects",
-          "reason": "Detect intolerance or clinically meaningful safety signals.",
-          "frequency": "Per label, regulator warning, and clinician judgment",
-          "sources": [
-            "src:liraglutide"
-          ]
-        }
-      ]
+      "monitoring": []
     },
-    "interactions": [
-      {
-        "interactionId": "liraglutide-insulin-or-insulin-secretagogues",
-        "type": "drug-drug",
-        "target": "insulin or insulin secretagogues",
-        "severity": "review",
-        "mechanism": "Pathway or pharmacologic overlap",
-        "effect": "Potential additive or opposing effects may occur.",
-        "recommendedAction": "Flag for review; do not treat as automatically compatible.",
-        "sources": [
-          "src:liraglutide"
-        ]
-      }
-    ],
+    "interactions": [],
     "stackIntelligence": {
       "pairsWellWith": [],
-      "avoidWith": [
-        {
-          "target": "other GLP-1 receptor agonists",
-          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
-          "severity": "review",
-          "sources": [
-            "src:liraglutide"
-          ]
-        }
-      ],
-      "overlapRules": [
-        {
-          "ruleId": "liraglutide-incretin-signaling-overlap",
-          "ruleType": "pathway-overlap",
-          "tag": "incretin-signaling",
-          "severity": "review",
-          "message": "Shared pathway tag: incretin-signaling.",
-          "action": "Show overlap and require interpretation rather than returning no relationship.",
-          "sources": [
-            "src:liraglutide"
-          ]
-        }
-      ],
+      "avoidWith": [],
+      "overlapRules": [],
       "synergyRules": [],
       "conflictRules": [],
       "redundancyRules": [],
       "timingRules": []
     },
     "supportiveGuidance": {
-      "nutrition": [
-        {
-          "topic": "Baseline",
-          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
-        }
-      ],
-      "supplements": [
-        {
-          "topic": "Stack review",
-          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
-        }
-      ],
-      "sleep": [
-        {
-          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
-        }
-      ],
-      "exercise": [
-        {
-          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
-        }
-      ],
-      "applicabilityNotes": [
-        "Supportive guidance is general tracking context and is not a treatment recommendation."
-      ],
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
       "sources": [
-        "src:internal-guidance"
+        "dailymed-victoza-label",
+        "dailymed-saxenda-label",
+        "fda-glp1-compounding-policy",
+        "pubchem-cid-16134956",
+        "drugbank-db06655",
+        "cadth-nbk594336-saxenda-review",
+        "pmc-6130125-leader-mi-subgroup",
+        "nabp-glp1-illegal-sellers-report",
+        "pmc-4985288-leader-primary",
+        "fda-daf-victoza-nda022341",
+        "fda-daf-saxenda-nda206321",
+        "gsrs-liraglutide-unii",
+        "rxnav-liraglutide-rxcui",
+        "chembl-liraglutide-CHEMBL4084119",
+        "accessdata-fda-victoza-label-2025",
+        "accessdata-fda-saxenda-label-2026"
       ]
     },
     "evidence": {
       "overallTier": "Strong",
       "claimSpecificEvidence": [
         {
-          "claim": "Liraglutide has evidence relevant to type 2 diabetes or chronic weight management per product label.",
+          "claim": "Liraglutide is a synthetic glucagon-like peptide-1 (GLP-1) receptor agonist analog used in the management of type 2 diabetes mellitus, prevention of cardiovascular complications associated with diabetes, and obesity.",
           "tier": "Strong",
           "confidence": "high",
           "sources": [
-            "src:liraglutide"
+            "drugbank-db06655",
+            "pubchem-cid-16134956"
+          ]
+        },
+        {
+          "claim": "The FDA-approved Victoza (liraglutide) label states it is indicated (1) as an adjunct to diet and exercise to improve glycemic control in adults and pediatric patients aged 10 years and older with type 2 diabetes mellitus, and (2) to reduce the risk of major adverse cardiovascular events in adults with type 2 diabetes mellitus and established cardiovascular disease.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-victoza-label",
+            "accessdata-fda-victoza-label-2025",
+            "fda-daf-victoza-nda022341"
+          ]
+        },
+        {
+          "claim": "The FDA-approved Saxenda (liraglutide 3 mg/day) label states it is indicated, in combination with a reduced-calorie diet and increased physical activity, to reduce excess body weight in (a) adults and pediatric patients aged 12 years and older with body weight above 60 kg and obesity, and (b) adults with overweight plus at least one weight-related comorbid condition.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-saxenda-label",
+            "accessdata-fda-saxenda-label-2026",
+            "fda-daf-saxenda-nda206321"
+          ]
+        },
+        {
+          "claim": "Both Victoza and Saxenda (liraglutide) carry an FDA boxed warning that liraglutide causes thyroid C-cell tumors in rodents at clinically relevant exposures, with human relevance undetermined; liraglutide is contraindicated in patients with a personal or family history of medullary thyroid carcinoma (MTC) or Multiple Endocrine Neoplasia syndrome type 2 (MEN 2), and in patients with serious hypersensitivity to liraglutide or its excipients.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-victoza-label",
+            "dailymed-saxenda-label",
+            "accessdata-fda-victoza-label-2025",
+            "accessdata-fda-saxenda-label-2026"
+          ]
+        },
+        {
+          "claim": "The Victoza label documents reports of acute pancreatitis (including fatal and non-fatal hemorrhagic or necrotizing pancreatitis), gastrointestinal adverse reactions (sometimes severe), acute gallbladder disease (cholelithiasis/cholecystitis), increased hypoglycemia risk when combined with insulin or an insulin secretagogue, and rare reports of pulmonary aspiration during elective surgery in patients receiving GLP-1 receptor agonists.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-victoza-label"
+          ]
+        },
+        {
+          "claim": "In the LEADER trial (liraglutide vs. placebo added to standard care in 9,340 adults with type 2 diabetes at high cardiovascular risk), the primary composite cardiovascular outcome (death from cardiovascular causes, nonfatal myocardial infarction, or nonfatal stroke) occurred in fewer patients in the liraglutide group (608 of 4,668 patients, 13.0%) than in the placebo group (694 of 4,672 patients, 14.9%), hazard ratio 0.87 (95% CI 0.78-0.97, p=0.01 for superiority); this trial underlies Victoza's cardiovascular risk-reduction indication.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "pmc-4985288-leader-primary",
+            "dailymed-victoza-label"
+          ]
+        },
+        {
+          "claim": "A CADTH clinical review of Saxenda's pivotal SCALE phase 3 trials found statistically significant placebo-adjusted body-weight reductions with liraglutide 3 mg, including a treatment difference of \u22125.39% (95% CI \u22125.82 to \u22124.95, p<0.0001) in the main trial (Study 1839), with odds of achieving \u22655% weight loss about 4.8-fold higher than placebo (OR 4.80, 95% CI 4.12\u20135.60, p<0.0001). The same review flagged evidence gaps: underrepresentation of patients with BMI 27 to <30 kg/m2, a lack of comparative (head-to-head) evidence, and trial populations that were predominantly White and female, limiting generalizability.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "cadth-nbk594336-saxenda-review",
+            "dailymed-saxenda-label"
+          ]
+        },
+        {
+          "claim": "Illegal online sellers market GLP-1 agonist injectables \u2014 the drug class that includes liraglutide \u2014 without requiring a valid prescription, and some sellers evade enforcement by labeling products 'peptides' intended 'for research purposes only' and 'not for human consumption.' Substandard and falsified GLP-1 products have been identified in multiple countries. Separately, FDA states that compounded drug products are not FDA-approved and have not undergone FDA review for safety, effectiveness, or quality. No human outcome data support unsupervised, non-prescription self-administration of liraglutide-class products obtained through these channels, and such use falls outside any FDA-approved label.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "nabp-glp1-illegal-sellers-report",
+            "fda-glp1-compounding-policy"
           ]
         }
       ],
-      "evidenceGaps": [
-        "Seed record is intentionally conservative; review primary sources for details."
-      ],
-      "controversies": []
+      "evidenceGaps": [],
+      "controversies": [
+        "Illegal online sellers market GLP-1 agonist injectables \u2014 the drug class that includes liraglutide \u2014 without requiring a valid prescription, and some sellers evade enforcement by labeling products 'peptides' intended 'for research purposes only' and 'not for human consumption.' Substandard and falsified GLP-1 products have been identified in multiple countries. Separately, FDA states that compounded drug products are not FDA-approved and have not undergone FDA review for safety, effectiveness, or quality. No human outcome data support unsupervised, non-prescription self-administration of liraglutide-class products obtained through these channels, and such use falls outside any FDA-approved label."
+      ]
     },
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "label",
-          "title": "Prescribing information for Liraglutide",
-          "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Liraglutide",
-          "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "sourceType": "other",
+          "title": "Label: VICTOZA- liraglutide injection",
+          "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5a9ef4ea-c76a-4d34-a604-27c5b505f5a4",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Label: SAXENDA- liraglutide injection, solution",
+          "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3946d389-0926-4f77-a708-0acb8153b143",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA clarifies policies for compounders as national GLP-1 supply begins to stabilize",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/drug-alerts-and-statements/fda-clarifies-policies-compounders-national-glp-1-supply-begins-stabilize",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Liraglutide, CID 16134956 - PubChem Compound Summary",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Liraglutide",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Liraglutide: Uses, Interactions, Mechanism of Action (DrugBank DB06655)",
+          "publisher": "DrugBank Online",
+          "url": "https://go.drugbank.com/drugs/DB06655",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "review",
+          "title": "Clinical Review \u2014 Liraglutide (Saxenda)",
+          "publisher": "Canadian Agency for Drugs and Technologies in Health (CADTH) / NCBI Bookshelf",
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK594336/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Cardiovascular outcomes in patients who experienced a myocardial infarction while treated with liraglutide versus placebo in the LEADER trial",
+          "publisher": "Diabetes & Vascular Disease Research (SAGE Publications)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6130125",
+          "publishedAt": "2018-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "NABP Report Explores How Illegal Online Sellers Exploit Consumer Demand for Weight Loss Drugs",
+          "publisher": "National Association of Boards of Pharmacy (NABP)",
+          "url": "https://nabp.pharmacy/news/news-releases/nabp-report-explores-how-illegal-online-sellers-exploit-consumer-demand-for-weight-loss-drugs/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Liraglutide and Cardiovascular Outcomes in Type 2 Diabetes (LEADER trial, primary publication)",
+          "publisher": "New England Journal of Medicine (Marso SP, Daniels GH, Brown-Frandsen K, et al., 2016;375:311-322) via PubMed Central",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4985288/",
+          "publishedAt": "2016-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Drugs@FDA: Victoza (liraglutide) NDA 022341 application overview",
+          "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022341",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Drugs@FDA: Saxenda (liraglutide) NDA 206321 application overview",
+          "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=206321",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Global Substance Registration System: LIRAGLUTIDE (UNII 839I73S42A)",
+          "publisher": "National Center for Advancing Translational Sciences (NCATS) / FDA Global Substance Registration System",
+          "url": "https://gsrs.ncats.nih.gov/api/v1/substances(839I73S42A)",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "RxNorm RxCUI lookup: liraglutide",
+          "publisher": "National Library of Medicine / RxNav",
+          "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=liraglutide",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "ChEMBL molecule record: Liraglutide (CHEMBL4084119)",
+          "publisher": "European Bioinformatics Institute / ChEMBL",
+          "url": "https://www.ebi.ac.uk/chembl/api/data/molecule/search?q=liraglutide&format=json",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Label: VICTOZA (liraglutide) injection, live FDA label PDF (2025, supplement s046)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/022341s046lbl.pdf",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Label: SAXENDA (liraglutide) injection, solution, live FDA label PDF (2026, supplement s025)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/206321s025lbl.pdf",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Launch seed record; conservative fields selected for validation and honest coverage."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "RESOLVED 2026-08-29: LEADER trial primary-outcome figure was corrected to HR 0.87 (95% CI 0.78-0.97, p=0.01 for superiority) after independently re-fetching and quoting the primary Marso et al. NEJM 2016 publication (PMC4985288); prior figure (HR 0.82) was a misattributed subgroup statistic.",
+        "RESOLVED 2026-08-29: CAS number (204656-20-2, via PubChem), UNII (839I73S42A, via FDA/NCATS GSRS), RxNorm RxCUI (475968, via RxNav), and ChEMBL ID (CHEMBL4084119, via ChEMBL API) were resolved and added to compound.externalIdentifiers this session.",
+        "PARTIAL 2026-08-29: for the Victoza/Saxenda approved-indication and boxed-warning claims, independent review this session added a second, materially different source family (Drugs@FDA structured-database records, NDA 022341 and NDA 206321) beyond the live FDA label PDFs already checked, confirming active approval and marketing status. A professional-guideline family (e.g., ADA Standards of Care) has not yet been consulted for these fieldAuthorityRequired claims; remains a documented gap pending further review.",
+        "PMID for compound.externalIdentifiers.pmid intentionally left null: no single canonical PMID applies to a compound identity record (liraglutide is associated with many publications, not one defining PMID).",
+        "Liraglutide-specific counterfeit/falsified-product incident data remains unconfirmed after an independent 2026-08-29 search across FDA, WHO, and peer-reviewed pharmacovigilance sources; every documented incident found was semaglutide/Ozempic-specific. Claim's class-level framing is accurate and stays review-gated as-is.",
+        "Boxed-warning and pancreatitis adverse-effect claims were independently corroborated this session (live FDA labels; Cleveland Clinic Journal of Medicine review) but a professional-guideline or systematic-review cross-check beyond the regulator/label and single-review sources used was not exhaustively pursued; low-risk given source authority tier, documented for completeness.",
+        "Compiled draft requires human review before publication."
       ],
-      "lastReviewedAt": "2026-04-20T00:00:00Z",
-      "reviewStatus": "approved"
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
     },
     "ops": {
       "recordVersion": 1,
       "contentHash": null,
-      "ingestionSource": "seed:substances-seed.json",
-      "ingestedAt": null,
-      "updatedAt": null,
+      "ingestionSource": "evidence-packet:liraglutide-evidence-expansion-001",
+      "ingestedAt": "2026-08-28T22:30:00Z",
+      "updatedAt": "2026-08-28T22:30:00Z",
       "lastChangeType": "seed",
-      "isActive": true,
+      "isActive": false,
       "completeness": "substantial",
-      "needsReview": false,
-      "reviewReasons": [],
-      "qualityFlags": []
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "RESOLVED 2026-08-29: LEADER trial primary-outcome figure was corrected to HR 0.87 (95% CI 0.78-0.97, p=0.01 for superiority) after independently re-fetching and quoting the primary Marso et al. NEJM 2016 publication (PMC4985288); prior figure (HR 0.82) was a misattributed subgroup statistic.",
+        "RESOLVED 2026-08-29: CAS number (204656-20-2, via PubChem), UNII (839I73S42A, via FDA/NCATS GSRS), RxNorm RxCUI (475968, via RxNav), and ChEMBL ID (CHEMBL4084119, via ChEMBL API) were resolved and added to compound.externalIdentifiers this session.",
+        "PARTIAL 2026-08-29: for the Victoza/Saxenda approved-indication and boxed-warning claims, independent review this session added a second, materially different source family (Drugs@FDA structured-database records, NDA 022341 and NDA 206321) beyond the live FDA label PDFs already checked, confirming active approval and marketing status. A professional-guideline family (e.g., ADA Standards of Care) has not yet been consulted for these fieldAuthorityRequired claims; remains a documented gap pending further review.",
+        "PMID for compound.externalIdentifiers.pmid intentionally left null: no single canonical PMID applies to a compound identity record (liraglutide is associated with many publications, not one defining PMID).",
+        "Liraglutide-specific counterfeit/falsified-product incident data remains unconfirmed after an independent 2026-08-29 search across FDA, WHO, and peer-reviewed pharmacovigilance sources; every documented incident found was semaglutide/Ozempic-specific. Claim's class-level framing is accurate and stays review-gated as-is.",
+        "Boxed-warning and pancreatitis adverse-effect claims were independently corroborated this session (live FDA labels; Cleveland Clinic Journal of Medicine review) but a professional-guideline or systematic-review cross-check beyond the regulator/label and single-review sources used was not exhaustively pursued; low-risk given source authority tier, documented for completeness.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "fda-approved-product",
+        "a1-regulator-backed",
+        "positive-human-rct-documented",
+        "dual-indication-diabetes-and-weight-management",
+        "gray-market-risk-documented",
+        "remediation-pass-2026-08-29",
+        "authority-support-pass-2026-08-29",
+        "compiled-from-evidence-packet"
+      ]
     }
   },
   {
@@ -1237,12 +1284,19 @@
       "slug": "exenatide",
       "aliases": [
         "Byetta",
-        "Bydureon"
+        "Bydureon",
+        "Bydureon BCise",
+        "Exendin-4"
       ],
       "brandNames": [],
-      "synonyms": [],
-      "classification": "Pharmaceutical",
-      "compoundFamily": "GLP-1 receptor agonist",
+      "synonyms": [
+        "Byetta",
+        "Bydureon",
+        "Bydureon BCise",
+        "Exendin-4"
+      ],
+      "classification": "Peptide",
+      "compoundFamily": "GLP-1 receptor agonist (exendin-4 derived, 39-amino-acid peptide)",
       "isCombinationProduct": false,
       "activeMoieties": [
         "Exenatide"
@@ -1251,299 +1305,286 @@
         "rxnorm": null,
         "unii": null,
         "casNumber": null,
-        "drugbank": null,
-        "pubchem": null
+        "drugbank": "DB01276",
+        "pubchem": "45588096"
       }
     },
     "regulatory": {
-      "requiresPrescription": true,
-      "regulatoryStatus": "FDA-approved prescription product or labeled drug class",
-      "labelStatusByUseCase": [
-        {
-          "useCase": "type 2 diabetes per product label",
-          "labelStatus": "on-label"
-        }
-      ],
-      "jurisdiction": "US",
-      "approvedIndications": [
-        "type 2 diabetes per product label"
-      ],
-      "offLabelNotes": []
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
     },
     "mechanism": {
-      "mechanismSummary": "Exenatide is represented by its commonly described glp-1 receptor agonist mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
+      "mechanismSummary": "Exenatide is a 39-amino-acid peptide GLP-1 receptor agonist derived from exendin-4 (originally isolated from Gila monster saliva); it binds and activates the human GLP-1 receptor to enhance glucose-dependent insulin secretion.",
       "primaryMechanisms": [
-        "GLP-1 receptor agonist",
-        "glycemic-control"
+        "Exenatide is a 39-amino-acid peptide GLP-1 receptor agonist derived from exendin-4 (originally isolated from Gila monster saliva); it binds and activates the human GLP-1 receptor to enhance glucose-dependent insulin secretion."
       ],
-      "pathways": [
-        "incretin-signaling",
-        "glucose-regulation"
-      ],
-      "targets": [
-        "GLP-1 receptor agonist"
-      ],
-      "effectTags": [
-        "glycemic-control",
-        "satiety"
-      ],
-      "goalTags": [
-        "metabolic-health",
-        "glucose-management"
-      ]
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
     },
-    "formulations": [
-      {
-        "formulationId": "exenatide-subcutaneous",
-        "productName": "Exenatide",
-        "manufacturer": null,
-        "route": "subcutaneous",
-        "dosageForm": "injection",
-        "strength": null,
-        "concentration": null,
-        "unit": null,
-        "substitutableWith": [],
-        "storage": {
-          "beforeReconstitution": "Follow product labeling or pharmacy instructions; keep sterile products under labeled conditions.",
-          "afterReconstitution": "Use only within the product-specific stability window when one is provided.",
-          "temperatureNotes": "Do not freeze unless labeling specifically allows it.",
-          "lightSensitivity": null,
-          "stabilityWindow": "Product-specific or unknown."
-        },
-        "reconstitution": {
-          "required": true,
-          "diluent": "Use only the labeled diluent or pharmacist-provided sterile diluent.",
-          "diluentVolume": null,
-          "instructions": "Do not shake; inspect for particulate matter; follow product-specific labeling.",
-          "productSpecific": true
-        }
-      }
-    ],
-    "indications": [
-      {
-        "useCase": "type 2 diabetes per product label",
-        "labelStatus": "on-label",
-        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "Evidence reviewed for type 2 diabetes per product label; BioStack presents this as educational reference, not a recommendation.",
-        "evidenceTier": "Strong",
-        "sources": [
-          "src:exenatide"
-        ]
-      }
-    ],
-    "dosingGuidance": [
-      {
-        "guidanceId": "exenatide-guidance",
-        "context": {
-          "useCase": "type 2 diabetes per product label",
-          "population": "Adults where appropriate",
-          "formulation": null,
-          "route": "subcutaneous"
-        },
-        "dose": {
-          "amount": 5.0,
-          "unit": "mcg",
-          "frequency": "per label",
-          "scheduleText": "Follow product-specific prescribing information.",
-          "preferredTimeOfDay": null
-        },
-        "notes": [
-          "Educational reference only; not medical advice."
-        ],
-        "productSpecific": true,
-        "sources": [
-          "src:exenatide"
-        ]
-      }
-    ],
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
     "compatibility": {
-      "vialCompatibilitySummary": "Compatibility is unknown; do not mix in the same vial or syringe unless product labeling or a pharmacist explicitly supports it.",
-      "blendingRules": [
-        {
-          "ruleType": "co-mix",
-          "target": "other compounds",
-          "status": "review",
-          "message": "No hard-safe compatibility conclusion is established by this seed record.",
-          "sources": [
-            "src:exenatide"
-          ]
-        }
-      ],
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
       "compatibleBlends": [],
       "incompatibleBlends": [],
-      "unknownCompatibility": [
-        "other compounds"
-      ]
+      "unknownCompatibility": []
     },
     "safety": {
-      "contraindications": [
-        {
-          "item": "Known hypersensitivity to the active ingredient or formulation components",
-          "severity": "high",
-          "notes": "Confirm full labeled contraindications before use.",
-          "sources": [
-            "src:exenatide"
-          ]
-        }
-      ],
-      "warnings": [
-        {
-          "item": "Use requires review of full prescribing information or regulator warning",
-          "severity": "review",
-          "notes": "BioStack stores a launch-safe summary only; primary sources may include additional risks and population-specific limits.",
-          "sources": [
-            "src:exenatide"
-          ]
-        }
-      ],
-      "precautions": [
-        {
-          "item": "Medication and condition review",
-          "notes": "Check concurrent medications, conditions, pregnancy status, and labs where applicable.",
-          "sources": [
-            "src:exenatide"
-          ]
-        }
-      ],
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
       "adverseEffects": {
-        "common": [
-          "source-dependent"
-        ],
-        "serious": [
-          "source-dependent"
-        ]
+        "common": [],
+        "serious": []
       },
-      "monitoring": [
-        {
-          "parameter": "Clinical response and adverse effects",
-          "reason": "Detect intolerance or clinically meaningful safety signals.",
-          "frequency": "Per label, regulator warning, and clinician judgment",
-          "sources": [
-            "src:exenatide"
-          ]
-        }
-      ]
+      "monitoring": []
     },
-    "interactions": [
-      {
-        "interactionId": "exenatide-insulin-or-insulin-secretagogues",
-        "type": "drug-drug",
-        "target": "insulin or insulin secretagogues",
-        "severity": "review",
-        "mechanism": "Pathway or pharmacologic overlap",
-        "effect": "Potential additive or opposing effects may occur.",
-        "recommendedAction": "Flag for review; do not treat as automatically compatible.",
-        "sources": [
-          "src:exenatide"
-        ]
-      }
-    ],
+    "interactions": [],
     "stackIntelligence": {
       "pairsWellWith": [],
-      "avoidWith": [
-        {
-          "target": "other GLP-1 receptor agonists",
-          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
-          "severity": "review",
-          "sources": [
-            "src:exenatide"
-          ]
-        }
-      ],
-      "overlapRules": [
-        {
-          "ruleId": "exenatide-incretin-signaling-overlap",
-          "ruleType": "pathway-overlap",
-          "tag": "incretin-signaling",
-          "severity": "review",
-          "message": "Shared pathway tag: incretin-signaling.",
-          "action": "Show overlap and require interpretation rather than returning no relationship.",
-          "sources": [
-            "src:exenatide"
-          ]
-        }
-      ],
+      "avoidWith": [],
+      "overlapRules": [],
       "synergyRules": [],
       "conflictRules": [],
       "redundancyRules": [],
       "timingRules": []
     },
     "supportiveGuidance": {
-      "nutrition": [
-        {
-          "topic": "Baseline",
-          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
-        }
-      ],
-      "supplements": [
-        {
-          "topic": "Stack review",
-          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
-        }
-      ],
-      "sleep": [
-        {
-          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
-        }
-      ],
-      "exercise": [
-        {
-          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
-        }
-      ],
-      "applicabilityNotes": [
-        "Supportive guidance is general tracking context and is not a treatment recommendation."
-      ],
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
       "sources": [
-        "src:internal-guidance"
+        "dailymed-byetta-label",
+        "fda-bydureon-label-2024",
+        "dailymed-bydureon-bcise-label",
+        "exscel-nejm-2017",
+        "exscel-mdedge-summary",
+        "pubchem-cid-45588096",
+        "drugbank-db01276",
+        "uhcprovider-discontinuation-2024",
+        "clinicaltrials-nct01144338-results",
+        "peptidefactcheck-exenatide"
       ]
     },
     "evidence": {
       "overallTier": "Strong",
       "claimSpecificEvidence": [
         {
-          "claim": "Exenatide has evidence relevant to type 2 diabetes per product label.",
+          "claim": "Exenatide is FDA-approved, as the immediate-release twice-daily product (Byetta) and the extended-release once-weekly product (Bydureon / Bydureon BCise), as an adjunct to diet and exercise to improve glycemic control in adults (and, for Bydureon, pediatric patients aged 10 years and older) with type 2 diabetes mellitus. It is not approved as a weight-loss product and concurrent use of multiple exenatide-containing products is not recommended. Note: the manufacturer (AstraZeneca) discontinued Byetta and Bydureon BCise for commercial reasons in October 2024; the underlying FDA approval and labeling remain on file, but as of this writing these exact branded products are no longer commercially marketed in the US.",
           "tier": "Strong",
           "confidence": "high",
           "sources": [
-            "src:exenatide"
+            "dailymed-byetta-label",
+            "fda-bydureon-label-2024"
+          ]
+        },
+        {
+          "claim": "Both Bydureon and Bydureon BCise carry a boxed warning that exenatide extended-release caused an increased incidence of thyroid C-cell tumors in rats at clinically relevant exposures; human relevance is unknown, and the products are contraindicated in patients with a personal or family history of medullary thyroid carcinoma (MTC) or Multiple Endocrine Neoplasia syndrome type 2 (MEN 2).",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "fda-bydureon-label-2024",
+            "dailymed-bydureon-bcise-label"
+          ]
+        },
+        {
+          "claim": "Exenatide is a 39-amino-acid peptide GLP-1 receptor agonist derived from exendin-4 (originally isolated from Gila monster saliva); it binds and activates the human GLP-1 receptor to enhance glucose-dependent insulin secretion.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "drugbank-db01276",
+            "dailymed-byetta-label"
+          ]
+        },
+        {
+          "claim": "Per FDA-approved labeling, Byetta's studied and approved dosing regimen is 5 mcg administered subcutaneously twice daily within 60 minutes before the two main meals of the day (approximately 6 or more hours apart), with an increase to 10 mcg twice daily after one month based on clinical response. This is label/trial dosing context, not a use recommendation.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-byetta-label"
+          ]
+        },
+        {
+          "claim": "In EXSCEL, a large randomized, double-blind, placebo-controlled cardiovascular outcomes trial in adults with type 2 diabetes (n=14,752, broad cardiovascular risk range), once-weekly exenatide met the prespecified noninferiority margin for the primary composite outcome (cardiovascular death, nonfatal MI, or nonfatal stroke) versus placebo (hazard ratio 0.91, 95% CI 0.83-1.00) but did not achieve statistical superiority over placebo for that outcome.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "exscel-nejm-2017",
+            "exscel-mdedge-summary",
+            "fda-bydureon-label-2024"
+          ]
+        },
+        {
+          "claim": "In the EXSCEL trial, once-weekly exenatide showed no significant difference from placebo in rates of acute pancreatitis, pancreatic cancer, or medullary thyroid carcinoma, and no adverse heart-failure signal despite a higher mean heart rate in the exenatide group.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "exscel-mdedge-summary",
+            "exscel-nejm-2017",
+            "clinicaltrials-nct01144338-results"
+          ]
+        },
+        {
+          "claim": "Exenatide is approved only for glycemic control in type 2 diabetes; unlike newer GLP-1 products approved for weight management, exenatide does not carry an FDA-approved weight-loss indication. Popular online narratives that group exenatide with weight-loss-focused GLP-1 peptides risk projecting a benefit onto it that its own labeling and the identified controlled trial evidence do not establish for that use.",
+          "tier": "Insufficient",
+          "confidence": "moderate",
+          "sources": [
+            "peptidefactcheck-exenatide",
+            "dailymed-byetta-label"
+          ]
+        },
+        {
+          "claim": "Exenatide (PubChem CID 45588096) has the molecular formula C184H282N50O60S and is catalogued in DrugBank under accession DB01276.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "pubchem-cid-45588096",
+            "drugbank-db01276"
           ]
         }
       ],
       "evidenceGaps": [
-        "Seed record is intentionally conservative; review primary sources for details."
+        "Exenatide is approved only for glycemic control in type 2 diabetes; unlike newer GLP-1 products approved for weight management, exenatide does not carry an FDA-approved weight-loss indication. Popular online narratives that group exenatide with weight-loss-focused GLP-1 peptides risk projecting a benefit onto it that its own labeling and the identified controlled trial evidence do not establish for that use."
       ],
       "controversies": []
     },
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "label",
-          "title": "Prescribing information for Exenatide",
-          "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Exenatide",
+          "sourceType": "regulator",
+          "title": "Label: BYETTA - exenatide injection",
+          "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=53d03c03-ebf7-418d-88a8-533eabd2ee4f",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Highlights of Prescribing Information - BYDUREON (exenatide extended-release) for injectable suspension",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/022200s035lbl.pdf",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Label: BYDUREON BCISE - exenatide injection, suspension, extended release",
+          "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2d18cfc4-e0de-4814-a712-c1b7c504bff5&audience=consumer",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Effects of Once-Weekly Exenatide on Cardiovascular Outcomes in Type 2 Diabetes (EXSCEL trial)",
+          "publisher": "New England Journal of Medicine (Holman RR, et al., 2017); abstract reproduced via Elsevier Pure",
+          "url": "https://cuk.elsevierpure.com/en/publications/effects-of-once-weekly-exenatide-on-cardiovascular-outcomes-in-ty/",
+          "publishedAt": "2017-09-14T00:00:00Z",
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "No increased overall cardiovascular risk seen with exenatide use",
+          "publisher": "MDedge",
+          "url": "https://ma1.mdedge.com/index.php/content/no-increased-overall-cardiovascular-risk-seen-exenatide-use",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Exenatide, CID 45588096",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Exenatide",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Exenatide: Uses, Interactions, Mechanism of Action (DB01276)",
+          "publisher": "DrugBank Online",
+          "url": "https://go.drugbank.com/drugs/DB01276",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Discontinuation of Bydureon BCise and Byetta",
+          "publisher": "UnitedHealthcare (UHCprovider.com)",
+          "url": "https://www.uhcprovider.com/en/resource-library/news/2024/discontinuation-bydureon-bcise-byetta.html",
+          "publishedAt": "2024-10-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Effects of Once Weekly Exenatide on Cardiovascular Outcomes (EXSCEL) - Results Section (NCT01144338)",
+          "publisher": "ClinicalTrials.gov / U.S. National Library of Medicine",
+          "url": "https://clinicaltrials.gov/study/NCT01144338?tab=results",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Exenatide - Hyped or Proven?",
+          "publisher": "PeptideFactCheck",
+          "url": "https://www.peptidefactcheck.com/peptides/exenatide",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
         }
       ],
       "curationNotes": [
-        "Launch seed record; conservative fields selected for validation and honest coverage."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "CAS number, UNII, RxNorm, and ChEMBL identifiers remain unresolved (PubChem full record required JavaScript rendering and is disallowed by robots.txt for this session's fetch tool; DrugBank gates the CAS/UNII fields; NIH GSRS host was blocked at the network layer this session) -- open ops-level gap, not a claim-level defect.",
+        "RESOLVED 2026-08-29: EXSCEL trial safety-detail claim (exenatide-adverse-effect-exscel-safety-001) was unresolved at independent review because NEJM and PMC full text were CAPTCHA/403-blocked. This pass pulled the sponsor-posted ClinicalTrials.gov results record for the same trial (NCT01144338), a structured-database primary-results family, and it independently confirms the packet's pancreatitis/pancreatic-malignancy/MTC/heart-failure comparisons. Claim and reviewFlags updated; promotion blocker cleared.",
+        "RESOLVED 2026-08-29: exenatide-approved-indication-001 promotion blocker (missing discontinued-market disclosure) addressed by adding a note, sourced to UHCprovider's Oct. 2024 discontinuation bulletin, that AstraZeneca discontinued Byetta (Oct. 25, 2024) and Bydureon BCise (Oct. 28, 2024) for commercial reasons; underlying FDA approval/labeling is unaffected.",
+        "Weight-loss-marketing evidence-gap claim rests on a single lower-authority fact-check source; seek an independent corroborating source (e.g., FDA consumer update or a peer-reviewed comparative review) at review time.",
+        "exenatide-dose-context-byetta-001 independent corroboration (RxList) largely republishes FDA label text rather than being a materially independent verification family; no controlled-study or clinical-guideline family source was reached within this session's budget to independently corroborate the specific titration schedule -- open, low-risk gap.",
+        "Compiled draft requires human review before publication."
       ],
-      "lastReviewedAt": "2026-04-20T00:00:00Z",
-      "reviewStatus": "approved"
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
     },
     "ops": {
       "recordVersion": 1,
       "contentHash": null,
-      "ingestionSource": "seed:substances-seed.json",
-      "ingestedAt": null,
-      "updatedAt": null,
+      "ingestionSource": "evidence-packet:exenatide-evidence-expansion-001",
+      "ingestedAt": "2026-08-28T22:30:00Z",
+      "updatedAt": "2026-08-28T22:30:00Z",
       "lastChangeType": "seed",
-      "isActive": true,
-      "completeness": "substantial",
-      "needsReview": false,
-      "reviewReasons": [],
-      "qualityFlags": []
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "CAS number, UNII, RxNorm, and ChEMBL identifiers remain unresolved (PubChem full record required JavaScript rendering and is disallowed by robots.txt for this session's fetch tool; DrugBank gates the CAS/UNII fields; NIH GSRS host was blocked at the network layer this session) -- open ops-level gap, not a claim-level defect.",
+        "RESOLVED 2026-08-29: EXSCEL trial safety-detail claim (exenatide-adverse-effect-exscel-safety-001) was unresolved at independent review because NEJM and PMC full text were CAPTCHA/403-blocked. This pass pulled the sponsor-posted ClinicalTrials.gov results record for the same trial (NCT01144338), a structured-database primary-results family, and it independently confirms the packet's pancreatitis/pancreatic-malignancy/MTC/heart-failure comparisons. Claim and reviewFlags updated; promotion blocker cleared.",
+        "RESOLVED 2026-08-29: exenatide-approved-indication-001 promotion blocker (missing discontinued-market disclosure) addressed by adding a note, sourced to UHCprovider's Oct. 2024 discontinuation bulletin, that AstraZeneca discontinued Byetta (Oct. 25, 2024) and Bydureon BCise (Oct. 28, 2024) for commercial reasons; underlying FDA approval/labeling is unaffected.",
+        "Weight-loss-marketing evidence-gap claim rests on a single lower-authority fact-check source; seek an independent corroborating source (e.g., FDA consumer update or a peer-reviewed comparative review) at review time.",
+        "exenatide-dose-context-byetta-001 independent corroboration (RxList) largely republishes FDA label text rather than being a materially independent verification family; no controlled-study or clinical-guideline family source was reached within this session's budget to independently corroborate the specific titration schedule -- open, low-risk gap.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "a1-regulator-backed",
+        "fda-approved-product",
+        "boxed-warning-present",
+        "noninferiority-not-superiority-cv-trial",
+        "thin-human-evidence-for-marketed-off-label-use",
+        "remediation-pass-2026-08-29",
+        "authority-support-pass-2026-08-29",
+        "compiled-from-evidence-packet"
+      ]
     }
   },
   {
@@ -2474,12 +2515,20 @@
       "aliases": [
         "Egrifta",
         "Egrifta SV",
+        "Egrifta WR",
+        "Tesamorelin acetate",
         "TH9507"
       ],
       "brandNames": [],
-      "synonyms": [],
+      "synonyms": [
+        "Egrifta",
+        "Egrifta SV",
+        "Egrifta WR",
+        "Tesamorelin acetate",
+        "TH9507"
+      ],
       "classification": "Peptide",
-      "compoundFamily": "GHRH analog",
+      "compoundFamily": "Synthetic growth hormone-releasing hormone (GHRH) analogue",
       "isCombinationProduct": false,
       "activeMoieties": [
         "Tesamorelin"
@@ -2489,298 +2538,223 @@
         "unii": null,
         "casNumber": null,
         "drugbank": null,
-        "pubchem": null
+        "pubchem": "16137828"
       }
     },
     "regulatory": {
-      "requiresPrescription": true,
-      "regulatoryStatus": "FDA-approved prescription product or labeled drug class",
-      "labelStatusByUseCase": [
-        {
-          "useCase": "HIV-associated lipodystrophy visceral fat reduction",
-          "labelStatus": "on-label"
-        }
-      ],
-      "jurisdiction": "US",
-      "approvedIndications": [
-        "HIV-associated lipodystrophy visceral fat reduction"
-      ],
-      "offLabelNotes": []
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
     },
     "mechanism": {
-      "mechanismSummary": "Tesamorelin is represented by its commonly described ghrh analog mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
+      "mechanismSummary": "Tesamorelin is a synthetic analogue of human growth hormone-releasing hormone (GHRH) that stimulates the pituitary to release endogenous growth hormone, in turn increasing IGF-1; its molecular formula is C221H366N72O67S (PubChem CID 16137828).",
       "primaryMechanisms": [
-        "GHRH analog",
-        "visceral-fat-reduction"
+        "Tesamorelin is a synthetic analogue of human growth hormone-releasing hormone (GHRH) that stimulates the pituitary to release endogenous growth hormone, in turn increasing IGF-1; its molecular formula is C221H366N72O67S (PubChem CID 16137828)."
       ],
-      "pathways": [
-        "GH-IGF-1 axis",
-        "lipolysis"
-      ],
-      "targets": [
-        "GHRH analog"
-      ],
-      "effectTags": [
-        "visceral-fat-reduction",
-        "body-composition"
-      ],
-      "goalTags": [
-        "body-composition",
-        "metabolic-health"
-      ]
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
     },
-    "formulations": [
-      {
-        "formulationId": "tesamorelin-subcutaneous",
-        "productName": "Tesamorelin",
-        "manufacturer": null,
-        "route": "subcutaneous",
-        "dosageForm": "lyophilized powder",
-        "strength": null,
-        "concentration": null,
-        "unit": null,
-        "substitutableWith": [],
-        "storage": {
-          "beforeReconstitution": "Follow product labeling or pharmacy instructions; keep sterile products under labeled conditions.",
-          "afterReconstitution": "Use only within the product-specific stability window when one is provided.",
-          "temperatureNotes": "Do not freeze unless labeling specifically allows it.",
-          "lightSensitivity": null,
-          "stabilityWindow": "Product-specific or unknown."
-        },
-        "reconstitution": {
-          "required": true,
-          "diluent": "Use only the labeled diluent or pharmacist-provided sterile diluent.",
-          "diluentVolume": null,
-          "instructions": "Do not shake; inspect for particulate matter; follow product-specific labeling.",
-          "productSpecific": true
-        }
-      }
-    ],
-    "indications": [
-      {
-        "useCase": "HIV-associated lipodystrophy visceral fat reduction",
-        "labelStatus": "on-label",
-        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "Evidence reviewed for HIV-associated lipodystrophy visceral fat reduction; BioStack presents this as educational reference, not a recommendation.",
-        "evidenceTier": "Strong",
-        "sources": [
-          "src:tesamorelin"
-        ]
-      }
-    ],
-    "dosingGuidance": [
-      {
-        "guidanceId": "tesamorelin-guidance",
-        "context": {
-          "useCase": "HIV-associated lipodystrophy visceral fat reduction",
-          "population": "Adults where appropriate",
-          "formulation": null,
-          "route": "subcutaneous"
-        },
-        "dose": {
-          "amount": 1.4,
-          "unit": "mg",
-          "frequency": "daily",
-          "scheduleText": "Follow product-specific prescribing information.",
-          "preferredTimeOfDay": null
-        },
-        "notes": [
-          "Educational reference only; not medical advice."
-        ],
-        "productSpecific": true,
-        "sources": [
-          "src:tesamorelin"
-        ]
-      }
-    ],
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
     "compatibility": {
-      "vialCompatibilitySummary": "Compatibility is unknown; do not mix in the same vial or syringe unless product labeling or a pharmacist explicitly supports it.",
-      "blendingRules": [
-        {
-          "ruleType": "co-mix",
-          "target": "other compounds",
-          "status": "review",
-          "message": "No hard-safe compatibility conclusion is established by this seed record.",
-          "sources": [
-            "src:tesamorelin"
-          ]
-        }
-      ],
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
       "compatibleBlends": [],
       "incompatibleBlends": [],
-      "unknownCompatibility": [
-        "other compounds"
-      ]
+      "unknownCompatibility": []
     },
     "safety": {
-      "contraindications": [
-        {
-          "item": "Known hypersensitivity to the active ingredient or formulation components",
-          "severity": "high",
-          "notes": "Confirm full labeled contraindications before use.",
-          "sources": [
-            "src:tesamorelin"
-          ]
-        }
-      ],
-      "warnings": [
-        {
-          "item": "Use requires review of full prescribing information or regulator warning",
-          "severity": "review",
-          "notes": "BioStack stores a launch-safe summary only; primary sources may include additional risks and population-specific limits.",
-          "sources": [
-            "src:tesamorelin"
-          ]
-        }
-      ],
-      "precautions": [
-        {
-          "item": "Medication and condition review",
-          "notes": "Check concurrent medications, conditions, pregnancy status, and labs where applicable.",
-          "sources": [
-            "src:tesamorelin"
-          ]
-        }
-      ],
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
       "adverseEffects": {
-        "common": [
-          "source-dependent"
-        ],
-        "serious": [
-          "source-dependent"
-        ]
+        "common": [],
+        "serious": []
       },
-      "monitoring": [
-        {
-          "parameter": "Clinical response and adverse effects",
-          "reason": "Detect intolerance or clinically meaningful safety signals.",
-          "frequency": "Per label, regulator warning, and clinician judgment",
-          "sources": [
-            "src:tesamorelin"
-          ]
-        }
-      ]
+      "monitoring": []
     },
-    "interactions": [
-      {
-        "interactionId": "tesamorelin-cyp3a4-substrates",
-        "type": "drug-drug",
-        "target": "CYP3A4 substrates",
-        "severity": "review",
-        "mechanism": "Pathway or pharmacologic overlap",
-        "effect": "Potential additive or opposing effects may occur.",
-        "recommendedAction": "Flag for review; do not treat as automatically compatible.",
-        "sources": [
-          "src:tesamorelin"
-        ]
-      }
-    ],
+    "interactions": [],
     "stackIntelligence": {
       "pairsWellWith": [],
-      "avoidWith": [
-        {
-          "target": "other GH secretagogues",
-          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
-          "severity": "review",
-          "sources": [
-            "src:tesamorelin"
-          ]
-        }
-      ],
-      "overlapRules": [
-        {
-          "ruleId": "tesamorelin-gh-igf-1-axis-overlap",
-          "ruleType": "pathway-overlap",
-          "tag": "GH-IGF-1 axis",
-          "severity": "review",
-          "message": "Shared pathway tag: GH-IGF-1 axis.",
-          "action": "Show overlap and require interpretation rather than returning no relationship.",
-          "sources": [
-            "src:tesamorelin"
-          ]
-        }
-      ],
+      "avoidWith": [],
+      "overlapRules": [],
       "synergyRules": [],
       "conflictRules": [],
       "redundancyRules": [],
       "timingRules": []
     },
     "supportiveGuidance": {
-      "nutrition": [
-        {
-          "topic": "Baseline",
-          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
-        }
-      ],
-      "supplements": [
-        {
-          "topic": "Stack review",
-          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
-        }
-      ],
-      "sleep": [
-        {
-          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
-        }
-      ],
-      "exercise": [
-        {
-          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
-        }
-      ],
-      "applicabilityNotes": [
-        "Supportive guidance is general tracking context and is not a treatment recommendation."
-      ],
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
       "sources": [
-        "src:internal-guidance"
+        "dailymed-egrifta-sv-label",
+        "drugscom-egrifta-approval-history",
+        "falutz-jama-2014-visceral-liver-fat-rct",
+        "pubchem-cid-16137828",
+        "peakedlabs-tesamorelin-vendor-guide"
       ]
     },
     "evidence": {
       "overallTier": "Strong",
       "claimSpecificEvidence": [
         {
-          "claim": "Tesamorelin has evidence relevant to HIV-associated lipodystrophy visceral fat reduction.",
+          "claim": "Tesamorelin, marketed as EGRIFTA/EGRIFTA SV/EGRIFTA WR, is FDA-approved solely for the reduction of excess abdominal fat in HIV-infected adult patients with lipodystrophy; original Egrifta was approved November 10, 2010, with Egrifta SV approved in 2019 and Egrifta WR approved March 25, 2025 as reformulations.",
           "tier": "Strong",
           "confidence": "high",
           "sources": [
-            "src:tesamorelin"
+            "dailymed-egrifta-sv-label",
+            "drugscom-egrifta-approval-history"
+          ]
+        },
+        {
+          "claim": "The FDA label explicitly states EGRIFTA SV is not indicated for weight loss management because it has a weight-neutral effect, and that the effect of tesamorelin-induced visceral fat reduction on cardiovascular outcomes or antiretroviral adherence has not been established.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-egrifta-sv-label"
+          ]
+        },
+        {
+          "claim": "EGRIFTA SV is contraindicated in patients with disruption of the hypothalamic-pituitary axis, active malignancy, known hypersensitivity to tesamorelin or excipients, and in pregnancy; labeled warnings include increased neoplasm risk, elevated IGF-1 requiring monitoring, fluid retention, new-onset or worsening glucose intolerance, hypersensitivity reactions, and increased mortality risk reported with growth hormone in critically ill patients.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-egrifta-sv-label"
+          ]
+        },
+        {
+          "claim": "Tesamorelin is a synthetic analogue of human growth hormone-releasing hormone (GHRH) that stimulates the pituitary to release endogenous growth hormone, in turn increasing IGF-1; its molecular formula is C221H366N72O67S (PubChem CID 16137828).",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "pubchem-cid-16137828",
+            "dailymed-egrifta-sv-label"
+          ]
+        },
+        {
+          "claim": "In a randomized, placebo-controlled trial in HIV-infected patients with abdominal fat accumulation, 6 months of tesamorelin was associated with a significantly greater reduction in visceral adipose tissue than placebo (treatment difference -42 cm^2, p=.005) and a modest reduction in liver fat (net effect -2.9%, p=.003); the study authors characterized it as a preliminary study.",
+          "tier": "Moderate",
+          "confidence": "high",
+          "sources": [
+            "falutz-jama-2014-visceral-liver-fat-rct"
+          ]
+        },
+        {
+          "claim": "Vendor and wellness-clinic marketing materials cite a small controlled trial reporting improved verbal memory/executive function and reduced hippocampal volume loss with GHRH therapy in older adults (including some with mild cognitive impairment) as support for tesamorelin's 'cognitive benefits,' but this study population and endpoint are distinct from the FDA-approved HIV-lipodystrophy indication, this session could not independently verify the primary trial text (PubMed/PMC access was blocked by bot-verification pages), and no cognitive-function claim appears anywhere in the FDA label; human evidence for cognitive or general anti-aging benefit in the populations tesamorelin is marketed to online is not established.",
+          "tier": "Insufficient",
+          "confidence": "moderate",
+          "sources": [
+            "peakedlabs-tesamorelin-vendor-guide",
+            "dailymed-egrifta-sv-label"
+          ]
+        },
+        {
+          "claim": "The FDA label describes EGRIFTA SV as a once-daily subcutaneous injection kit; this is label/trial protocol context only, not a use recommendation, and product-specific reconstitution/administration steps must be taken from the current label.",
+          "tier": "Strong",
+          "confidence": "moderate",
+          "sources": [
+            "dailymed-egrifta-sv-label"
           ]
         }
       ],
       "evidenceGaps": [
-        "Seed record is intentionally conservative; review primary sources for details."
+        "Vendor and wellness-clinic marketing materials cite a small controlled trial reporting improved verbal memory/executive function and reduced hippocampal volume loss with GHRH therapy in older adults (including some with mild cognitive impairment) as support for tesamorelin's 'cognitive benefits,' but this study population and endpoint are distinct from the FDA-approved HIV-lipodystrophy indication, this session could not independently verify the primary trial text (PubMed/PMC access was blocked by bot-verification pages), and no cognitive-function claim appears anywhere in the FDA label; human evidence for cognitive or general anti-aging benefit in the populations tesamorelin is marketed to online is not established."
       ],
       "controversies": []
     },
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "label",
-          "title": "Prescribing information for Tesamorelin",
-          "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Tesamorelin",
-          "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "sourceType": "regulator",
+          "title": "Label: EGRIFTA SV- tesamorelin kit",
+          "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3d783378-b02d-4f19-99dd-0fc91a042224",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Egrifta WR (tesamorelin) FDA Approval History",
+          "publisher": "Drugs.com (aggregating FDA approval announcements)",
+          "url": "https://www.drugs.com/history/egrifta-wr.html",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Effect of Tesamorelin on Visceral Fat and Liver Fat in HIV-Infected Patients With Abdominal Fat Accumulation: A Randomized Clinical Trial",
+          "publisher": "JAMA (Stanley TL, Falutz J, et al.)",
+          "url": "https://jamanetwork.com/journals/jama/fullarticle/1889139",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Tesamorelin, CID 16137828",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Tesamorelin",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Tesamorelin Peptide: Fat Loss, Cognition, FDA Evidence, Dosing, and Comparisons (2026 Guide)",
+          "publisher": "PeakedLabs (commercial peptide vendor/blog)",
+          "url": "https://peakedlabs.com/blog/tesamorelin-peptide-fat-loss-cognition",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
         }
       ],
       "curationNotes": [
-        "Launch seed record; conservative fields selected for validation and honest coverage."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "PubMed/PMC primary-source pages (including the GHRH/cognition trial and an integrase-inhibitor-era tesamorelin efficacy/safety study) were blocked by CAPTCHA/bot-verification this session and could not be independently quoted; re-fetch required.",
+        "Full DOSAGE AND ADMINISTRATION label text was not captured due to a WebFetch rate limit; re-pull from the label PDF or DailyMed before publishing any dose-context claim.",
+        "CAS/UNII/RxNorm/DrugBank/ChEMBL identifiers not yet resolved from structured databases.",
+        "Cognitive-benefit marketing claim needs independent verification against the primary Baker et al. GHRH cognition trial before the evidence-gap claim can be closed or upgraded.",
+        "Compiled draft requires human review before publication."
       ],
-      "lastReviewedAt": "2026-04-20T00:00:00Z",
-      "reviewStatus": "approved"
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
     },
     "ops": {
       "recordVersion": 1,
       "contentHash": null,
-      "ingestionSource": "seed:substances-seed.json",
-      "ingestedAt": null,
-      "updatedAt": null,
+      "ingestionSource": "evidence-packet:tesamorelin-evidence-expansion-001",
+      "ingestedAt": "2026-08-28T21:30:00Z",
+      "updatedAt": "2026-08-28T21:30:00Z",
       "lastChangeType": "seed",
-      "isActive": true,
-      "completeness": "substantial",
-      "needsReview": false,
-      "reviewReasons": [],
-      "qualityFlags": []
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "PubMed/PMC primary-source pages (including the GHRH/cognition trial and an integrase-inhibitor-era tesamorelin efficacy/safety study) were blocked by CAPTCHA/bot-verification this session and could not be independently quoted; re-fetch required.",
+        "Full DOSAGE AND ADMINISTRATION label text was not captured due to a WebFetch rate limit; re-pull from the label PDF or DailyMed before publishing any dose-context claim.",
+        "CAS/UNII/RxNorm/DrugBank/ChEMBL identifiers not yet resolved from structured databases.",
+        "Cognitive-benefit marketing claim needs independent verification against the primary Baker et al. GHRH cognition trial before the evidence-gap claim can be closed or upgraded.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "fda-approved-product",
+        "a1-regulator-backed",
+        "positive-human-rct-hiv-lipodystrophy-only",
+        "off-label-marketing-gap",
+        "unverified-secondary-source-flagged",
+        "authority-support-pass-2026-08-29",
+        "compiled-from-evidence-packet"
+      ]
     }
   },
   {
@@ -14938,6 +14912,303 @@
       ],
       "qualityFlags": [
         "classB-only"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "thymosin-alpha-1",
+      "canonicalName": "Thymosin alpha-1",
+      "slug": "thymosin-alpha-1",
+      "aliases": [
+        "Thymalfasin",
+        "Zadaxin",
+        "T\u03b11",
+        "Ta1"
+      ],
+      "brandNames": [],
+      "synonyms": [
+        "Thymalfasin",
+        "Zadaxin",
+        "T\u03b11",
+        "Ta1"
+      ],
+      "classification": "Peptide",
+      "compoundFamily": "Thymic peptide / immunomodulator (28-amino-acid acetylated polypeptide)",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Thymosin alpha-1"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": "62304-98-7",
+        "drugbank": "DB04900",
+        "pubchem": "16130571"
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Thymosin alpha-1 (thymalfasin) is a synthetically manufactured 28-amino-acid acetylated polypeptide identical to a naturally occurring human thymic peptide; it is described as activating toll-like receptor 9 (TLR9) signaling on dendritic cells, driving Th1 polarization and T-cell maturation as part of coordinated adaptive immune responses.",
+      "primaryMechanisms": [
+        "Thymosin alpha-1 (thymalfasin) is a synthetically manufactured 28-amino-acid acetylated polypeptide identical to a naturally occurring human thymic peptide; it is described as activating toll-like receptor 9 (TLR9) signaling on dendritic cells, driving Th1 polarization and T-cell maturation as part of coordinated adaptive immune responses."
+      ],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": [
+        "fda-ta1-bulks-183892",
+        "dailymed-search-thymalfasin",
+        "pubmed-tests-2025",
+        "pubmed-etass-2013",
+        "pubchem-cid-16130571",
+        "drugbank-db04900",
+        "rethinkpeptides-zadaxin-global",
+        "innerbody-thymosin-alpha-1",
+        "superpower-thymosin-alpha-1",
+        "americanpeptides-thymosin-alpha-1"
+      ]
+    },
+    "evidence": {
+      "overallTier": "Strong",
+      "claimSpecificEvidence": [
+        {
+          "claim": "Thymosin alpha-1 (thymalfasin, brand name Zadaxin) has no FDA-approved drug label in the United States - DailyMed, the authoritative U.S. label repository, returns zero results for \"thymalfasin\" - and is available in the U.S. only through compounding, not as an approved product; it is approved as a marketed drug in dozens of other countries (commonly cited for hepatitis B/C and as a cancer/vaccine adjuvant), but that ex-U.S. approval status has not been independently verified here against a primary foreign regulator source.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-search-thymalfasin",
+            "rethinkpeptides-zadaxin-global"
+          ]
+        },
+        {
+          "claim": "FDA's evaluation of thymosin alpha-1 (T\u03b11, free base and acetate) for the 503A compounding Bulks List found that a balancing of the four evaluation criteria weighs against adding it, citing insufficient physicochemical characterization, an immunogenicity risk potentially amplified by aggregation and peptide-related impurities, and a proposed injectable concentration (3 mg/mL) that exceeds Ta1 free base's aqueous solubility (2 mg/mL); the nomination was subsequently withdrawn and FDA is evaluating the substance at its own discretion rather than under a completed rulemaking.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "fda-ta1-bulks-183892"
+          ]
+        },
+        {
+          "claim": "FDA's bulk drug substance evaluation flags a potential safety concern specific to immunosuppressed patients: thymosin alpha-1's immune-stimulating activity could cause or worsen acute or chronic graft-versus-host disease (GVHD) and lead to engraftment failure in hematopoietic stem cell transplant (HSCT) recipients.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "fda-ta1-bulks-183892"
+          ]
+        },
+        {
+          "claim": "Thymosin alpha-1 (thymalfasin) is a synthetically manufactured 28-amino-acid acetylated polypeptide identical to a naturally occurring human thymic peptide; it is described as activating toll-like receptor 9 (TLR9) signaling on dendritic cells, driving Th1 polarization and T-cell maturation as part of coordinated adaptive immune responses.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "drugbank-db04900",
+            "superpower-thymosin-alpha-1"
+          ]
+        },
+        {
+          "claim": "In the largest and most rigorous published human efficacy trial - TESTS, a multicentre, double-blind, placebo-controlled phase 3 trial in 1,106 adults with sepsis across 22 Chinese centers - subcutaneous thymosin alpha-1 every 12 hours for up to 7 days did not reduce 28-day all-cause mortality versus placebo (23.4% vs 24.1%; hazard ratio 0.99, 95% CI 0.77-1.27, p=0.93), and secondary/safety outcomes showed no significant differences between groups.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "pubmed-tests-2025"
+          ]
+        },
+        {
+          "claim": "An earlier, smaller multicenter randomized controlled trial (ETASS, six Chinese hospitals, n=361 ICU patients with severe sepsis, 2008-2010) reported a numerically lower 28-day death rate with thymosin alpha-1 added to conventional therapy versus conventional therapy alone (26.0% vs 35.0%; relative risk 0.74, 95% CI 0.54-1.02), a difference that did not reach conventional statistical significance, alongside greater improvement in monocyte HLA-DR expression (an immune-function marker) in the treatment group.",
+          "tier": "Limited",
+          "confidence": "moderate",
+          "sources": [
+            "pubmed-etass-2013"
+          ]
+        },
+        {
+          "claim": "Thymosin alpha-1 is marketed and discussed online as having been \"long recognized for modifying, enhancing, and restoring immune function,\" with popular interest extending to autoimmune disease management, general inflammation reduction, cancer support, and longevity-adjacent uses such as long COVID; the only large, rigorous, placebo-controlled human trial identified for a systemic-immunomodulation indication (sepsis) found no mortality benefit, and consumer-facing sources themselves acknowledge that findings for these broader immune/longevity uses are based on small trials and that \"more research is needed.\" No controlled human evidence for general immune optimization, anti-aging, or wellness use in healthy adults was identified in this review.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "innerbody-thymosin-alpha-1",
+            "pubmed-tests-2025",
+            "americanpeptides-thymosin-alpha-1"
+          ]
+        }
+      ],
+      "evidenceGaps": [
+        "Thymosin alpha-1 is marketed and discussed online as having been \"long recognized for modifying, enhancing, and restoring immune function,\" with popular interest extending to autoimmune disease management, general inflammation reduction, cancer support, and longevity-adjacent uses such as long COVID; the only large, rigorous, placebo-controlled human trial identified for a systemic-immunomodulation indication (sepsis) found no mortality benefit, and consumer-facing sources themselves acknowledge that findings for these broader immune/longevity uses are based on small trials and that \"more research is needed.\" No controlled human evidence for general immune optimization, anti-aging, or wellness use in healthy adults was identified in this review."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "regulator",
+          "title": "Thymosin Alpha-1 (T\u03b11) Related Bulk Drug Substances",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/media/183892/download",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "DailyMed Search Results for \"thymalfasin\"",
+          "publisher": "U.S. National Library of Medicine (DailyMed)",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=thymalfasin",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "The efficacy and safety of thymosin \u03b11 for sepsis (TESTS): multicentre, double blinded, randomised, placebo controlled, phase 3 trial",
+          "publisher": "PubMed / U.S. National Library of Medicine",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39814420/",
+          "publishedAt": "2025-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "The efficacy of thymosin alpha 1 for severe sepsis (ETASS): a multicenter, single-blind, randomized and controlled trial",
+          "publisher": "PubMed / U.S. National Library of Medicine",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23327199/",
+          "publishedAt": "2013-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Thymalfasin | C129H215N33O55 | CID 16130571",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Thymalfasin",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Thymalfasin: Uses, Interactions, Mechanism of Action",
+          "publisher": "DrugBank",
+          "url": "https://go.drugbank.com/drugs/DB04900",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Zadaxin: The Brand Name Thymosin Alpha-1 and Its Global Use",
+          "publisher": "RethinkPeptides",
+          "url": "https://rethinkpeptides.com/articles/zadaxin-the-brand-name-thymosin-alpha-1-and-its-global-use",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Thymosin Alpha-1 | Safety, Benefits, and More [2026]",
+          "publisher": "Innerbody Research",
+          "url": "https://www.innerbody.com/thymosin-alpha-1-peptide",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Thymosin Alpha-1 (Zadaxin): A Thymic Peptide and Toll-Like Receptor Signaling Research Guide",
+          "publisher": "Superpower",
+          "url": "https://superpower.com/guides/thymosin-alpha-1",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Thymosin Alpha-1 Research Peptide | 99%+ COA",
+          "publisher": "American Peptides",
+          "url": "https://www.americanpeptides.us/learn/thymosin-alpha-1",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "Sepsis efficacy evidence is discordant between the early ETASS trial and the later, larger TESTS trial; resolve via an independent systematic review/meta-analysis source not yet fetched.",
+        "A conflicting FDA-approval claim from a public-docket presentation was identified but not independently reconciled against a primary orphan-drug-designation or NDA history record.",
+        "UNII and ChEMBL identifiers not yet resolved from structured databases; two candidate CAS numbers (62304-98-7 and 69521-94-4) were found and only one was selected without independent confirmation of which corresponds to free base vs. acetate salt.",
+        "Ex-U.S. approval-country claims rest on a secondary informational source, not a primary foreign regulator page or label registry.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "evidence-packet:thymosin-alpha-1-evidence-expansion-001",
+      "ingestedAt": "2026-08-28T21:30:00Z",
+      "updatedAt": "2026-08-28T21:30:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "Sepsis efficacy evidence is discordant between the early ETASS trial and the later, larger TESTS trial; resolve via an independent systematic review/meta-analysis source not yet fetched.",
+        "A conflicting FDA-approval claim from a public-docket presentation was identified but not independently reconciled against a primary orphan-drug-designation or NDA history record.",
+        "UNII and ChEMBL identifiers not yet resolved from structured databases; two candidate CAS numbers (62304-98-7 and 69521-94-4) were found and only one was selected without independent confirmation of which corresponds to free base vs. acetate salt.",
+        "Ex-U.S. approval-country claims rest on a secondary informational source, not a primary foreign regulator page or label registry.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "a1-regulator-backed",
+        "negative-human-rct-documented",
+        "discordant-human-trials",
+        "not-fda-approved",
+        "gray-market-us-status",
+        "misinformation-gap-documented",
+        "authority-support-pass-2026-08-29",
+        "compiled-from-evidence-packet"
       ]
     }
   }

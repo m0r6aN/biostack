@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "promotion-wave-003-2026-08-29",
+    "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+    "reviewedAt": "2026-08-29T04:16:26Z",
+    "notes": [
+      "Third promotion wave following completion of the authority-support pass (hard-blocked 46 -> 9).",
+      "Issued under OPERATOR-DELEGATION-2026-08-28; receipts interim custody per ledger; go-live via seed PR merge only."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "promotion-wave-003-liraglutide",
+      "compoundName": "Liraglutide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:16:26Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "promotion-wave",
+          "authority-support-pass-cleared"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: Re-review 002 approve-claims with zero reviewer blockers; SCALE efficacy claim now A1-linked to the Saxenda DailyMed label (authority pass wave A).",
+        "Soft blockers cleared: needsReview (expansion default; independent review complete), completeness=partial (identifier metadata, tracked non-blocking), resolved review-queue items.",
+        "Held from this wave with reasons on record: pramlintide (weight-loss figure unverified vs primary, access-blocked), cjc-1295 (2006 trial-death attribution unresolved), epitalon (telomerase-safety conflict open + publish-time FDA recheck required), melanotan-ii (PubChem CID reconciliation publication-blocking per reviewer).",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-003-exenatide",
+      "compoundName": "Exenatide",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:16:26Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "promotion-wave",
+          "authority-support-pass-cleared"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: Re-review 002 approve-claims; the single reviewer blocker (a reviewFlag mischaracterizing self-referential NCT01144338 as independent) corrected by operator with a correction flag; EXSCEL CV efficacy claim A1-linked to the FDA Bydureon label (wave A).",
+        "Soft blockers cleared: needsReview (expansion default; independent review complete), completeness=partial (identifier metadata, tracked non-blocking), resolved review-queue items.",
+        "Held from this wave with reasons on record: pramlintide (weight-loss figure unverified vs primary, access-blocked), cjc-1295 (2006 trial-death attribution unresolved), epitalon (telomerase-safety conflict open + publish-time FDA recheck required), melanotan-ii (PubChem CID reconciliation publication-blocking per reviewer).",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-003-tesamorelin",
+      "compoundName": "Tesamorelin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:16:26Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "promotion-wave",
+          "authority-support-pass-cleared"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: Batch-001 approve-claims: all five safety-critical/regulatory/dosing claims independently confirmed; reviewer recorded no unresolved fieldAuthorityRequired claims; authority-cleared in wave A.",
+        "Soft blockers cleared: needsReview (expansion default; independent review complete), completeness=partial (identifier metadata, tracked non-blocking), resolved review-queue items.",
+        "Held from this wave with reasons on record: pramlintide (weight-loss figure unverified vs primary, access-blocked), cjc-1295 (2006 trial-death attribution unresolved), epitalon (telomerase-safety conflict open + publish-time FDA recheck required), melanotan-ii (PubChem CID reconciliation publication-blocking per reviewer).",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-003-thymosin-alpha-1",
+      "compoundName": "Thymosin alpha-1",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:16:26Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "promotion-wave",
+          "authority-support-pass-cleared"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: Batch-001 approve-claims: all 5 fieldAuthorityRequired claims confirmed against materially independent source families; no reviewer promotion blockers; authority-cleared in wave A.",
+        "Soft blockers cleared: needsReview (expansion default; independent review complete), completeness=partial (identifier metadata, tracked non-blocking), resolved review-queue items.",
+        "Held from this wave with reasons on record: pramlintide (weight-loss figure unverified vs primary, access-blocked), cjc-1295 (2006 trial-death attribution unresolved), epitalon (telomerase-safety conflict open + publish-time FDA recheck required), melanotan-ii (PubChem CID reconciliation publication-blocking per reviewer).",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    }
+  ]
+}
