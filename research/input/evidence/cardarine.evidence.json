@@ -303,7 +303,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "olson-2012-atvb-rct"
       ],
@@ -327,7 +327,8 @@
       "reviewFlags": [
         "trial dose context must never be presented as a use recommendation",
         "this development program was subsequently discontinued for an animal carcinogenicity signal; long-term human safety was not established",
-        "outcome measured is lipid biomarkers only, not endurance, fat loss, or performance"
+        "outcome measured is lipid biomarkers only, not endurance, fat loss, or performance",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (named RCT, n=268, 12-week trial); no regulator document exists for this claim (searched: site:fda.gov GW501516/cardarine lipid HDL trial data - only warning letters and unrelated NDA labels found; site:dailymed.nlm.nih.gov GW501516/cardarine - found only a bulk-ingredient-for-animal-drug-compounding label with no clinical/efficacy content, fetched and confirmed no biomarker or trial data present)"
       ]
     },
     {
@@ -430,7 +431,8 @@
       "negative-safety-signal-animal-carcinogenicity",
       "thin-human-evidence",
       "marketing-evidence-gap-documented",
-      "international-ban-multiple-jurisdictions"
+      "international-ban-multiple-jurisdictions",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

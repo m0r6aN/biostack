@@ -247,7 +247,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": ["zhang-2019-pulsatile-gonadorelin-chh"],
       "extractedEvidence": [
         {
@@ -269,7 +269,8 @@
       "reviewFlags": [
         "study population (CHH, requiring a mechanical pulsatile pump) is not equivalent to men on exogenous testosterone therapy with an intact hypothalamic-pituitary axis; do not extrapolate to gray-market TRT-adjunct dosing",
         "treatment arm was self-selected, not randomized - confounding possible",
-        "independent verification of full-text results (beyond fetchable summary) recommended at review"
+        "independent verification of full-text results (beyond fetchable summary) recommended at review",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a prospective, self-selected open-label comparison in 28 azoospermic men with congenital hypogonadotropic hypogonadism (CHH)...\"); no regulator document exists for this claim (searched: FDA.gov and DailyMed for gonadorelin human products and any spermatogenesis/CHH indication - DailyMed lists only 5 veterinary gonadorelin products (CYSTORELIN, FACTREL, FERTAGYL, GONABREED, OVACYST), none addressing human fertility or spermatogenesis induction; no current FDA-approved human gonadorelin product or label was located)"
       ]
     },
     {
@@ -362,7 +363,8 @@
       "human-approval-status-unresolved",
       "thin-human-evidence",
       "marketing-use-evidence-gap",
-      "primary-literature-access-limited"
+      "primary-literature-access-limited",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

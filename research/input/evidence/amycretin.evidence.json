@@ -169,7 +169,8 @@
       "reviewFlags": [
         "safety-critical regulatory claim",
         "no FDA/EMA regulator-tier (A1) source was found or fetched this session; verify against an FDA or EMA page directly at review time",
-        "check whether amycretin has since been added to an FDA bulk-substances or import-alert list given ongoing 2026 PCAC scrutiny of gray-market peptides"
+        "check whether amycretin has since been added to an FDA bulk-substances or import-alert list given ongoing 2026 PCAC scrutiny of gray-market peptides",
+        "authority-support-pass 2026-08-29: searched Drugs@FDA (accessdata.fda.gov basic search), fda.gov site search, EMA medicines database (ema.europa.eu site search), and DailyMed for 'amycretin'/'NNC0487-0111'/'NN9487' -- no listing or regulator document was found addressing amycretin's approval/investigational status. claimType 'regulatory' is in the pipeline's safety-critical set, so this stays fieldAuthorityRequired=true and remains human-review gated pending an A1/A2 source; the absence of any FDA/EMA listing is negative evidence (consistent with 'not approved') but is not itself a fetchable regulator document that can serve as an A1/A2 sourceRef."
       ]
     },
     {
@@ -185,7 +186,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "news-medical-lancet-obesity-rct"
       ],
@@ -209,7 +210,8 @@
       "reviewFlags": [
         "single small early-phase trial at one site; not yet replicated in a phase 3 population",
         "sourced via a secondary news article summarizing The Lancet (Dahl et al. 2025, DOI 10.1016/S0140-6736(25)01185-7); fetch the primary paper directly at review time to verify exact figures",
-        "audit: placebo-figure sign corrected to match source verbatim (was inverted)"
+        "audit: placebo-figure sign corrected to match source verbatim (was inverted)",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a phase 1b/2a randomised, placebo-controlled trial...\"); no regulator document exists for this claim (searched: Drugs@FDA/accessdata.fda.gov, fda.gov, EMA medicines database, DailyMed for amycretin -- no approval or label exists for this investigational compound)"
       ]
     },
     {
@@ -225,7 +227,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pharmacytimes-t2d-phase2"
       ],
@@ -248,7 +250,8 @@
       ],
       "reviewFlags": [
         "topline/conference-style reporting via secondary news source; full peer-reviewed publication of this specific T2D trial should be located and cross-checked at review time",
-        "not yet a registration-enabling phase 3 result"
+        "not yet a registration-enabling phase 3 result",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed/topline trial findings at source-level attribution (\"In a phase 2, multinational... trial (NCT06542874)...\"); no regulator document exists for this claim (searched: Drugs@FDA/accessdata.fda.gov, fda.gov, EMA medicines database, DailyMed for amycretin -- no approval or label exists for this investigational compound)"
       ]
     },
     {
@@ -264,7 +267,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "news-medical-lancet-obesity-rct"
       ],
@@ -293,7 +296,8 @@
       "reviewFlags": [
         "safety-critical claim",
         "based on a single small, short-duration early-phase trial; long-term and larger-population safety data are not yet available",
-        "immunogenicity (antidrug antibody) finding warrants monitoring in any future larger trials and should be re-checked against phase 3 data when published"
+        "immunogenicity (antidrug antibody) finding warrants monitoring in any future larger trials and should be re-checked against phase 3 data when published",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed phase 1b/2a trial adverse-event findings at source-level attribution (population/route context ties directly to the phase 1b/2a obesity trial). Searched fda.gov and dailymed.nlm.nih.gov for amycretin-specific safety communications and for any FDA class warning/label covering GLP-1/amylin co-agonist adverse effects that would address this specific trial's findings -- no FDA label, MedWatch safety alert, or DailyMed entry exists for amycretin (investigational, unapproved), and no generic GLP-1-class FDA warning would genuinely support this claim's specific trial-level percentages, so no A1/A2 source can be linked without fabricating support."
       ]
     },
     {
@@ -353,7 +357,8 @@
       "investigational-not-approved",
       "thin-human-evidence",
       "gray-market-marketing-gap",
-      "identifier-resolution-incomplete"
+      "identifier-resolution-incomplete",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

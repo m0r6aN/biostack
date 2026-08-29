@@ -176,7 +176,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "jayasena-2011-jcem-lh-pulse"
       ],
@@ -199,7 +199,8 @@
       ],
       "reviewFlags": [
         "small acute-exposure pharmacodynamic study; not designed or powered to establish clinical efficacy for any indication",
-        "IV research-clinic administration is not generalizable to gray-market subcutaneous self-administration"
+        "IV research-clinic administration is not generalizable to gray-market subcutaneous self-administration",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution ('In a controlled human pharmacodynamic study...'); no regulator document exists for this claim (searched: FDA PCAC briefing document fda.gov/media/182089/download, which discusses the same Jayasena et al. 2011 paper's IV bolus cohort in detail but does not address the continuous-infusion LH-pulse-frequency/testosterone finding this claim reports; DailyMed drug-label search for 'kisspeptin' returned zero results; general fda.gov search for an FDA label or approval addressing kisspeptin-10 LH/testosterone stimulation returned no matching regulator document)"
       ]
     },
     {
@@ -320,7 +321,8 @@
       "a1-regulator-backed",
       "limited-human-evidence",
       "regulatory-boundary",
-      "gray-market-marketing-gap-documented"
+      "gray-market-marketing-gap-documented",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

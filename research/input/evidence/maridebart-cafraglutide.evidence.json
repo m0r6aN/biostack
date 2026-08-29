@@ -196,7 +196,8 @@
       ],
       "reviewFlags": [
         "no FDA label or PCAC/regulator determination exists yet for this compound; anchor future updates to DailyMed/FDA once (if) approved",
-        "confirm live Phase 3 status and any interim readouts at review time"
+        "confirm live Phase 3 status and any interim readouts at review time",
+        "A1/A2 authority support searched and not found (2026-08-29): searched FDA.gov (Drugs@FDA search, Fast Track/Breakthrough Therapy program pages), DailyMed (dailymed.nlm.nih.gov), and EMA EPAR listings for 'maridebart cafraglutide'/'MariTide'/'AMG 133' — no FDA, EMA, or other national-regulator document exists, consistent with this compound's unapproved investigational status; claim remains fieldAuthorityRequired-gated (stays-gated) pending an actual regulatory determination"
       ]
     },
     {
@@ -212,7 +213,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pubmed-40549887",
         "amgen-pr-2024-11-phase2-results"
@@ -236,7 +237,8 @@
       ],
       "reviewFlags": [
         "Phase 2 dose-ranging result only; not yet confirmed by completed Phase 3 (MARITIME) primary endpoints",
-        "trial dose figures must never be presented as a use recommendation"
+        "trial dose figures must never be presented as a use recommendation",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution ('In a randomized, double-blind, placebo-controlled Phase 2 trial...', citing Jastreboff et al., NEJM 2025, PMID 40549887); no regulator document exists for this claim (searched: FDA.gov Drugs@FDA and Fast Track/Breakthrough Therapy pages, DailyMed, EMA EPAR listings for maridebart cafraglutide/MariTide/AMG 133 — none exist for this unapproved investigational compound)"
       ]
     },
     {
@@ -265,7 +267,8 @@
         }
       ],
       "reviewFlags": [
-        "no approved label dose exists; this claim is trial-protocol context only and must be presented as such"
+        "no approved label dose exists; this claim is trial-protocol context only and must be presented as such",
+        "A1/A2 authority support searched and not found (2026-08-29): searched FDA.gov (Drugs@FDA search, Fast Track/Breakthrough Therapy pages), DailyMed (dailymed.nlm.nih.gov), and EMA EPAR listings for 'maridebart cafraglutide'/'MariTide'/'AMG 133' — no FDA label, EMA EPAR, or other regulator-published dosing document exists because the product is unapproved and investigational; claim remains fieldAuthorityRequired-gated (stays-gated)"
       ]
     },
     {
@@ -304,7 +307,8 @@
         }
       ],
       "reviewFlags": [
-        "long-term (beyond 52-week Phase 2 window) and Phase 3-scale safety data not yet available; monitor MARITIME readouts"
+        "long-term (beyond 52-week Phase 2 window) and Phase 3-scale safety data not yet available; monitor MARITIME readouts",
+        "A1/A2 authority support searched and not found (2026-08-29): searched FDA.gov (Drugs@FDA search, Fast Track/Breakthrough Therapy pages, drug safety communications) and DailyMed (dailymed.nlm.nih.gov) for 'maridebart cafraglutide'/'MariTide'/'AMG 133' — no FDA label or safety communication exists for this unapproved investigational compound, and no FDA/class-wide GLP-1 GI safety communication specifically documents this drug's trial-level discontinuation-rate data; claim remains fieldAuthorityRequired-gated (stays-gated)"
       ]
     },
     {
@@ -418,7 +422,8 @@
       "single-phase2-rct-only",
       "phase3-pending",
       "premature-marketing-flagged",
-      "identifier-gaps"
+      "identifier-gaps",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

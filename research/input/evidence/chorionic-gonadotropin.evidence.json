@@ -255,7 +255,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "hcg-spermatogenesis-retrospective-2025"
       ],
@@ -277,9 +277,9 @@
         }
       ],
       "reviewFlags": [
-        "safety-critical / dosing-adjacent off-label use claim",
         "single small retrospective cohort (n=19), uncontrolled, no placebo comparator - do not generalize to efficacy claims beyond this population",
-        "does not establish safety or efficacy of hCG use alongside non-prescribed androgens generally; independent confirmation from a controlled study recommended at next review"
+        "does not establish safety or efficacy of hCG use alongside non-prescribed androgens generally; independent confirmation from a controlled study recommended at next review",
+        "authority-flag recalibrated 2026-08-29: claimType common-off-label-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov site search for hCG spermatogenesis anabolic steroid post-cycle; DailyMed site search for hCG anabolic steroid spermatogenesis restoration; the Pregnyl/choriogonadotropin alfa FDA label in this packet's sources does not address off-label use of hCG for spermatogenesis restoration in men using non-prescribed anabolic androgens)"
       ]
     },
     {
@@ -374,7 +374,8 @@
       "fda-approved-product",
       "negative-human-trial-documented",
       "thin-human-evidence-off-label-use",
-      "misinformation-marketing-gap-documented"
+      "misinformation-marketing-gap-documented",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

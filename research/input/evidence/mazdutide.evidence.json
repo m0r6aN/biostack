@@ -462,7 +462,7 @@
       },
       "evidenceTier": "Strong",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pmc10733643-phase2-t2d-rct",
         "biospace-mazdutide-t2d-hba1c"
@@ -491,7 +491,8 @@
       ],
       "reviewFlags": [
         "remediation-pass-2026-08-29: made a targeted attempt to find an independent systematic review or ClinicalTrials.gov registry cross-check for this fieldAuthorityRequired efficacy claim; ClinicalTrials.gov was still blocked at the network/proxy level, and web search located only the same underlying study republished on its own journal site (Diabetes Care, diabetesjournals.org/care/article/47/1/160/153858) rather than a materially independent source family -- fetching that publisher copy did verbatim-confirm the exact figures already in this claim (HbA1c -1.41% to -1.67% vs 0.03% placebo and -1.35% dulaglutide, all P<0.0001; body weight up to -7.1% vs -1.4% placebo and -2.7% dulaglutide), reducing transcription-error risk, but per the review contract this remains the same source family (not independent) and does not resolve the finding. This claim stays review-gated pending an independent replication or meta-analysis",
-        "remediation-pass-2026-08-29 (session 2): fetched and verbatim-quoted independent trade-press coverage (BioSpace) confirming the trial's existence, design (double-blind, dulaglutide-controlled, ~252 Chinese T2D patients, doses 3/4.5/6mg vs placebo vs dulaglutide 1.5mg, 20-week duration), and that mazdutide met its primary endpoint of reducing HbA1c vs placebo -- corroborating the claim's overall shape from a source family independent of PMC/Diabetes Care. This BioSpace article explicitly states the granular numeric results were still being finalized for publication at the time and gives no figures, so the specific percentages (-1.41% to -1.67% HbA1c, up to -7.1% body weight) remain single-family sourced to PMC/Diabetes Care and stay review-gated."
+        "remediation-pass-2026-08-29 (session 2): fetched and verbatim-quoted independent trade-press coverage (BioSpace) confirming the trial's existence, design (double-blind, dulaglutide-controlled, ~252 Chinese T2D patients, doses 3/4.5/6mg vs placebo vs dulaglutide 1.5mg, 20-week duration), and that mazdutide met its primary endpoint of reducing HbA1c vs placebo -- corroborating the claim's overall shape from a source family independent of PMC/Diabetes Care. This BioSpace article explicitly states the granular numeric results were still being finalized for publication at the time and gives no figures, so the specific percentages (-1.41% to -1.67% HbA1c, up to -7.1% body weight) remain single-family sourced to PMC/Diabetes Care and stay review-gated.",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a randomized, double-blind, placebo-controlled phase 2 trial (n=250)...\"); no regulator document exists for this claim (searched: FDA.gov site search for mazdutide, which returned no substantive results/no matching documents; DailyMed live search for mazdutide, which returned '0 results / No Drug Package Labels found' -- mazdutide has no FDA approval or US-marketed label, so no regulator-hosted document can address this investigational phase 2 trial's efficacy figures)."
       ]
     },
     {
@@ -644,7 +645,8 @@
       "human-rct-evidence-available",
       "positive-human-efficacy-signal",
       "remediation-pass-2026-08-29",
-      "remediation-pass-2026-08-29-review-response"
+      "remediation-pass-2026-08-29-review-response",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

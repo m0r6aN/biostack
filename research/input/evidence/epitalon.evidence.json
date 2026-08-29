@@ -380,7 +380,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "korkushko-2004-melatonin-human",
         "alzdiscovery-epithalamin-epitalon"
@@ -406,7 +406,8 @@
         "compound-identity conflict: Epithalamin (polypeptide extract) versus Epitalon (single tetrapeptide) are frequently marketed as interchangeable but are not the same substance; see conflict epitalon-conflict-formulation-001",
         "single-group/no-independent-replication research base; not a placebo-controlled RCT of the tetrapeptide sold today",
         "trial dosing/protocol details are context only, not a use recommendation",
-        "independent review note: PubMed's own publication-type metadata for this record (PMID 15452611) tags it as both 'Clinical Trial' and 'Randomized Controlled Trial'; the fetched abstract text itself does not describe randomization or blinding procedures in detail, so 'randomized' has been added to the statement based on the PubMed classification, and the underlying primary paper's methods section should still be checked if full confirmation is needed"
+        "independent review note: PubMed's own publication-type metadata for this record (PMID 15452611) tags it as both 'Clinical Trial' and 'Randomized Controlled Trial'; the fetched abstract text itself does not describe randomization or blinding procedures in detail, so 'randomized' has been added to the statement based on the PubMed classification, and the underlying primary paper's methods section should still be checked if full confirmation is needed",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"a small randomized human study in healthy elderly subjects found that a course of Epithalamin treatment modulated...\"); no regulator document exists for this claim (searched: fda.gov site search for 'Epithalamin melatonin circadian' returned only the already-cited PCAC briefing, which discusses epitalon's general regulatory/safety posture but does not address the Korkushko et al. 2004 melatonin/circadian findings; dailymed.nlm.nih.gov has no listing for epitalon or epithalamin, consistent with there being no FDA-approved product)"
       ]
     },
     {
@@ -500,7 +501,8 @@
       "compound-identity-ambiguity",
       "no-independent-replication",
       "gray-market-only",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

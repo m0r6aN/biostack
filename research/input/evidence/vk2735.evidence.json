@@ -278,7 +278,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "viking-ir-venture-topline-2024",
         "viking-ir-venture-publication-2026",
@@ -311,7 +311,8 @@
         "single sponsor-funded trial; independent replication and Phase 3 confirmatory data not yet available",
         "trial dose context must never be presented as a use recommendation",
         "obtain and quote verbatim abstract text from the Obesity journal publication directly at review time",
-        "remediation-pass-2026-08-29: verbatim Obesity-journal abstract (via Europe PMC) independently confirms the 9.1%-14.7% weight-reduction range, the 1.7% placebo figure, and the >=5% responder rate (93%, 130/140 vs 12% placebo); the packet's '88% achieved >=10% weight loss at 15 mg' figure was NOT found in that abstract (only the >=5% cutoff appears there) and remains sourced only to the company topline press release -- reconfirm against the paper's full results tables at next review."
+        "remediation-pass-2026-08-29: verbatim Obesity-journal abstract (via Europe PMC) independently confirms the 9.1%-14.7% weight-reduction range, the 1.7% placebo figure, and the >=5% responder rate (93%, 130/140 vs 12% placebo); the packet's '88% achieved >=10% weight loss at 15 mg' figure was NOT found in that abstract (only the >=5% cutoff appears there) and remains sourced only to the company topline press release -- reconfirm against the paper's full results tables at next review.",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (attributed throughout to the named Phase 2 VENTURE trial and its Obesity-journal publication); no regulator document exists for this claim (searched: FDA.gov -- no VK2735 approval or drug-alert page exists; DailyMed search for 'VK2735' -- no drug package labels found, per source dailymed-search-vk2735-2026; ClinicalTrials.gov API v2 record for NCT06068946, the subcutaneous VENTURE study -- overallStatus COMPLETED but hasResults:false, so no A1/A2 posted-results record exists to independently confirm these percentages)."
       ]
     },
     {
@@ -375,7 +376,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "viking-ir-venture-topline-2024",
         "acto-venture-oral-2026",
@@ -406,7 +407,8 @@
       "reviewFlags": [
         "safety-critical claim; monitor for updated safety data from Phase 3 VANQUISH readouts",
         "GI adverse-event rates are from short (13-week) sponsor-funded trials; long-term safety in chronic/self-administered use is unestablished",
-        "confirmed-with-note-remediation-2026-08-29: the peer-reviewed Obesity abstract independently confirms the general pattern (GI AEs common, decreasing after dose titration) but does not surface the specific percentages in this statement (nausea 43%, constipation 26%, diarrhea 20%, vomiting 18%, decreased appetite 16%, 95% mild/moderate) or the single dehydration SAE, which remain sourced only to the company topline release; the oral-arm 20%/13% AE-discontinuation figures share the same unresolved-independent-source gap as claim vk2735-efficacy-oral-venture-oral-001. Direction/general magnitude supported; exact figures need a second independent check (full-text paper or CT.gov results posting) before being treated as fully closed."
+        "confirmed-with-note-remediation-2026-08-29: the peer-reviewed Obesity abstract independently confirms the general pattern (GI AEs common, decreasing after dose titration) but does not surface the specific percentages in this statement (nausea 43%, constipation 26%, diarrhea 20%, vomiting 18%, decreased appetite 16%, 95% mild/moderate) or the single dehydration SAE, which remain sourced only to the company topline release; the oral-arm 20%/13% AE-discontinuation figures share the same unresolved-independent-source gap as claim vk2735-efficacy-oral-venture-oral-001. Direction/general magnitude supported; exact figures need a second independent check (full-text paper or CT.gov results posting) before being treated as fully closed.",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed/trial findings at source-level attribution (attributed throughout to the named Phase 2 VENTURE and VENTURE-Oral trials); no regulator document exists for this claim (searched: FDA.gov drug-alerts page 'FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss' -- fetched live, does not mention VK2735 and reports only FAERS spontaneous-report counts for compounded semaglutide/tirzepatide, not trial-derived AE percentages for any GLP-1/GIP agent; a further FDA.gov site search for 'VK2735 FDA warning adverse events' returned no VK2735-specific results; DailyMed search for 'VK2735' -- no drug package labels found, per source dailymed-search-vk2735-2026)."
       ]
     },
     {
@@ -559,7 +561,8 @@
       "thin-independent-human-evidence",
       "gray-market-misinformation-risk",
       "unresolved-structured-identifiers",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

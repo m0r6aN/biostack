@@ -217,7 +217,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "mahlapuu-2021-wrr-pmc9298190"
       ],
@@ -241,7 +241,8 @@
       "reviewFlags": [
         "primary (overall population) endpoint was negative; the positive large-ulcer finding is a post-hoc subgroup result and is hypothesis-generating, not confirmatory",
         "trial dose context must never be presented as a use recommendation",
-        "topical, supervised-trial tolerability in venous leg ulcer patients must not be generalized to other routes or gray-market self-administration"
+        "topical, supervised-trial tolerability in venous leg ulcer patients must not be generalized to other routes or gray-market self-administration",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a phase IIb, multicentric, randomized, placebo-controlled trial in 149 patients...\"); no regulator document exists for this claim (searched: site:fda.gov and site:dailymed.nlm.nih.gov for LL-37 venous leg ulcer; FDA cathelicidin LL-37 approved indication/label — LL-37 has no FDA-approved indication or DailyMed label, only the bulk-compounding-substance safety listing already cited elsewhere in this packet, which does not address this trial's efficacy findings)"
       ]
     },
     {
@@ -313,7 +314,8 @@
       "single-human-rct-mixed-result",
       "thin-human-evidence",
       "gray-market-marketing-gap",
-      "regulatory-status-volatile"
+      "regulatory-status-volatile",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

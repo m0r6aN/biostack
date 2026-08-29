@@ -92,6 +92,18 @@
       "accessedAt": "2026-08-29T01:20:00Z"
     },
     {
+      "sourceId": "clinicaltrials-gov-nct03323749",
+      "sourceType": "regulator",
+      "authorityTier": "A2",
+      "title": "ClinicalTrials.gov Study Record: A Trial to Evaluate Safety and Efficacy of Elamipretide Primary Mitochondrial Myopathy Followed by Open-Label Extension (NCT03323749) - MMPOWER-3",
+      "publisher": "U.S. National Library of Medicine / National Institutes of Health - ClinicalTrials.gov (FDAAA 801 mandated results database)",
+      "url": "https://clinicaltrials.gov/study/NCT03323749",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
       "sourceId": "swolverine-ss31-vendor-page",
       "sourceType": "vendor-marketing",
       "authorityTier": "D1",
@@ -237,7 +249,7 @@
         },
         {
           "sourceRef": "dailymed-forzinity-label",
-          "quote": "Store refrigerated at 2\u00b0C to 8\u00b0C (36\u00b0F to 46\u00b0F). Do not freeze.",
+          "quote": "Store refrigerated at 2°C to 8°C (36°F to 46°F). Do not freeze.",
           "pageOrSection": "Storage and Handling"
         },
         {
@@ -305,7 +317,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "neurologylive-mmpower3-fail"
+        "neurologylive-mmpower3-fail",
+        "clinicaltrials-gov-nct03323749"
       ],
       "extractedEvidence": [
         {
@@ -322,12 +335,18 @@
           "sourceRef": "neurologylive-mmpower3-fail",
           "quote": "mostly mild to moderate adverse events",
           "pageOrSection": "Article body - safety summary"
+        },
+        {
+          "sourceRef": "clinicaltrials-gov-nct03323749",
+          "quote": "Part1,double blind portion of the trial did not meet the primary end points",
+          "pageOrSection": "protocolSection.statusModule.whyStopped (official FDAAA 801 trial results record)"
         }
       ],
       "reviewFlags": [
-        "confidence set to moderate because this claim is sourced from a secondary news summary of the published MMPOWER-3 RCT (Neurology, DOI 10.1212/WNL.0000000000207402) rather than a directly fetched and quoted primary-source abstract; the primary Neurology page and PMC mirror both blocked automated fetch (403 / CAPTCHA) this session",
+        "confidence set to moderate because the narrative safety/tolerability summary is sourced from a secondary news summary of the published MMPOWER-3 RCT (Neurology, DOI 10.1212/WNL.0000000000207402) rather than a directly fetched and quoted primary-source abstract; the primary Neurology page and PMC mirror both blocked automated fetch (403 / CAPTCHA) this session",
         "negative-human-RCT finding is for a different indication (primary mitochondrial myopathy) than the approved Barth syndrome indication and must not be conflated with it",
-        "independent re-verification against the primary Neurology publication or PMC full text required at next review pass"
+        "independent re-verification against the primary Neurology publication or PMC full text required at next review pass",
+        "2026-08-29 authority-support pass: added ClinicalTrials.gov official study record (NCT03323749, FDAAA 801-mandated results database, authorityTier A2) fetched live this session via the public API (clinicaltrials.gov/api/v2/studies/NCT03323749), whose whyStopped field independently confirms the double-blind portion 'did not meet the primary end points', resolving the A1/A2 authority-support deficit for this fieldAuthorityRequired claim"
       ]
     },
     {
@@ -407,7 +426,8 @@
       "conditional-accelerated-approval",
       "negative-human-rct-different-indication",
       "thin-human-evidence-outside-label",
-      "identifiers-incomplete"
+      "identifiers-incomplete",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

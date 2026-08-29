@@ -184,7 +184,7 @@
     {
       "claimId": "selank-mechanism-tuftsin-analog-001",
       "claimType": "mechanism",
-      "statement": "Selank is a synthetic heptapeptide (H-Thr-Lys-Pro-Arg-Pro-Gly-Pro-OH) developed by Russian researchers as a protease-resistant analog of the endogenous tetrapeptide tuftsin, engineered by extending tuftsin with a C-terminal Pro-Gly-Pro sequence for stability; it was registered by the Russian Federation Ministry of Health in 2009 and marketed there as a 0.15% intranasal drop formulation.",
+      "statement": "According to Kolomin et al.'s review of synthetic peptide anxiolytics, selank is a synthetic heptapeptide (H-Thr-Lys-Pro-Arg-Pro-Gly-Pro-OH) developed by Russian researchers as a protease-resistant analog of the endogenous tetrapeptide tuftsin, engineered by extending tuftsin with a C-terminal Pro-Gly-Pro sequence for stability; it was registered by the Russian Federation Ministry of Health in 2009 and marketed there as a 0.15% intranasal drop formulation.",
       "context": {
         "population": null,
         "route": "intranasal (as registered in Russia)",
@@ -194,7 +194,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "kolomin-review-synthetic-peptides",
         "pubchem-cid-11765600"
@@ -214,7 +214,8 @@
       "reviewFlags": [
         "review-article source hosted on a PDF aggregator (semanticscholar.org cache) rather than the publisher site; verify against the original journal record",
         "Russian Ministry of Health registration is not an FDA approval and confers no U.S. regulatory status",
-        "Independent review note: an independent primary-literature abstract (PMID 18661785) and Wikipedia's Selank article both corroborate the tuftsin-derivation and heptapeptide sequence description. However, the specific '2009 Russian Ministry of Health registration' date and the '0.15% intranasal drop' formulation detail could not be confirmed from any source independent of this packet's own review-article citation (kolomin-review-synthetic-peptides) in this review pass; those two sub-facts remain single-sourced and should stay flagged pending an independent registry or label source."
+        "Independent review note: an independent primary-literature abstract (PMID 18661785) and Wikipedia's Selank article both corroborate the tuftsin-derivation and heptapeptide sequence description. However, the specific '2009 Russian Ministry of Health registration' date and the '0.15% intranasal drop' formulation detail could not be confirmed from any source independent of this packet's own review-article citation (kolomin-review-synthetic-peptides) in this review pass; those two sub-facts remain single-sourced and should stay flagged pending an independent registry or label source.",
+        "authority-flag recalibrated 2026-08-29: claimType mechanism is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (Kolomin et al. review) at source-level attribution; no regulator document exists for this claim (searched: FDA.gov bulk drug substance listings, DailyMed [only an unapproved 'bulk ingredient for animal drug compounding' listing for Selank, no chemistry or foreign-registration content], FDA/NCATS GSRS substance record [confirms identifiers only, not the Russian registration or 0.15% formulation facts], and the Russian State Register of Medicines grls.rosminzdrav.ru [dynamic JS portal, no retrievable substance-level page this session]; the 2009 Russian MoH registration and 0.15% intranasal formulation sub-facts remain single-sourced to the review article per prior review passes)."
       ]
     },
     {
@@ -271,7 +272,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pubmed-18454096-zozulya",
         "kolomin-enkephalin-inhibition-2000",
@@ -292,7 +293,8 @@
       "reviewFlags": [
         "PubMed's public abstract page for PMID 18454096 is behind a bot-check; the abstract was independently retrieved via the Europe PMC REST API instead, which resolved the sample size, arms, and comparator that were previously marked unretrievable",
         "randomization method, blinding status, and quantitative effect-size statistics are not given in the retrieved abstract and remain unconfirmed; do not upgrade this to a controlled-efficacy claim without the full original article",
-        "dependence/withdrawal risk was not assessed in this trial"
+        "dependence/withdrawal risk was not assessed in this trial",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (Zozulya et al., PMID 18454096, retrieved via Europe PMC REST API) at source-level attribution; no regulator document exists for this claim (searched: FDA.gov and DailyMed for Selank clinical/GAD-neurasthenia data — found only an unapproved 'bulk ingredient for animal drug compounding' listing with no clinical indication or trial data; Selank has no FDA-approved human indication for this claim to attach to)."
       ]
     },
     {
@@ -428,7 +430,8 @@
       "gray-market-only",
       "misinformation-claim-documented",
       "identifier-gaps",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

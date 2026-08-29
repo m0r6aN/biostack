@@ -325,7 +325,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": false,
+      "fieldAuthorityRequired": true,
       "sourceRefs": [
         "mdpi-2026-oral-bioavailability-rct"
       ],
@@ -343,7 +343,9 @@
       ],
       "reviewFlags": [
         "very small crossover study (n=14); publisher/funding relationship to the tested proprietary micellar formulation not yet verified",
-        "trial dose context must never be presented as a use recommendation"
+        "trial dose context must never be presented as a use recommendation",
+        "authority-support search 2026-08-29: claimType dose-context is in the pipeline's safety-critical set, so this claim stays authority-gated; searched fda.gov (site:fda.gov oral glutathione bioavailability/absorption; FDA micellar/liposomal oral bioavailability guidance) and dailymed.nlm.nih.gov (glutathione oral absorption label) for an A1/A2 source addressing this specific proprietary micellar-vs-standard oral-glutathione PK/bioavailability comparison; found no regulator document addressing it (only the existing homeopathic-liquid label and the 2019 compounding advisory, neither of which discusses oral bioavailability/PK). No A1/A2 support identified this session; claim remains review-gated pending an independent regulator or guidance source.",
+        "authority-support-pass 2026-08-29 AUDIT CORRECTION: claimType dose-context is in the pipeline's safety-critical set and cannot be recalibrated; agent's fieldAuthorityRequired=false reverted to true by operator per audit blocker. No A1/A2 source found for this oral-bioavailability dose context (agent searched FDA.gov and DailyMed); claim stays human-review gated."
       ]
     },
     {
@@ -407,7 +409,8 @@
       "thin-human-evidence",
       "negative-or-null-injectable-trial-evidence",
       "gray-market-injectable-use",
-      "otc-and-compounded-both-in-market"
+      "otc-and-compounded-both-in-market",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }
