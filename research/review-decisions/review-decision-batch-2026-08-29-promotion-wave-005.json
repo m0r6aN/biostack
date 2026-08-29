@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "promotion-wave-005-2026-08-29",
+    "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+    "reviewedAt": "2026-08-29T16:49:00Z",
+    "notes": [
+      "Fifth promotion wave, issued after full-corpus review completion (all 78 packets, batches 001-007) and three remediation passes.",
+      "Six compounds with zero reviewer blockers and no manifest hard blockers: raloxifene, toremifene, lasofoxifene, LL-37, AC-262536, LGD-3303.",
+      "Issued under OPERATOR-DELEGATION-2026-08-28. Go-live via seed PR merge only."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "promotion-wave-005-raloxifene",
+      "compoundName": "Raloxifene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:49:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "promotion-wave",
+          "full-corpus-review-complete"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: wave review decision (batches 005-007). R1 approve-claims, zero reviewer blockers; FDA-approved product; MORE-trial figures + boxed warning verified verbatim across independent families.",
+        "Soft blockers cleared: needsReview (independent review complete), completeness=partial (identifier metadata tracked), resolved queue items.",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-005-toremifene",
+      "compoundName": "Toremifene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:49:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "promotion-wave",
+          "full-corpus-review-complete"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: wave review decision (batches 005-007). R1 approve-claims, zero reviewer blockers; approved product; CRL history and boxed QT warning independently confirmed.",
+        "Soft blockers cleared: needsReview (independent review complete), completeness=partial (identifier metadata tracked), resolved queue items.",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-005-lasofoxifene",
+      "compoundName": "Lasofoxifene",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:49:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "promotion-wave",
+          "full-corpus-review-complete"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: wave review decision (batches 005-007). R1 approve-claims, zero reviewer blockers; no-valid-authorization status and ELAINE-1 non-significance honestly recorded.",
+        "Soft blockers cleared: needsReview (independent review complete), completeness=partial (identifier metadata tracked), resolved queue items.",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-005-ll-37",
+      "compoundName": "LL-37",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:49:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "promotion-wave",
+          "full-corpus-review-complete"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: wave review decision (batches 005-007). R2 approve-claims, zero reviewer blockers; mixed venous-leg-ulcer RCT and withdrawn FDA nomination honestly framed.",
+        "Soft blockers cleared: needsReview (independent review complete), completeness=partial (identifier metadata tracked), resolved queue items.",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-005-ac-262536",
+      "compoundName": "AC-262536",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:49:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "promotion-wave",
+          "full-corpus-review-complete"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: wave review decision (batches 005-007). R3 approve-claims, zero reviewer blockers; zero-human-data status + live FDA class warning re-verified 2026-08-29 \u2014 flagship counter-programming content.",
+        "Soft blockers cleared: needsReview (independent review complete), completeness=partial (identifier metadata tracked), resolved queue items.",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    },
+    {
+      "decisionId": "promotion-wave-005-lgd-3303",
+      "compoundName": "LGD-3303",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T16:49:00Z",
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [
+          "promotion-wave",
+          "full-corpus-review-complete"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: wave review decision (batches 005-007). R3 approve-claims, zero reviewer blockers; preclinical-only status + WADA class prohibition documented.",
+        "Soft blockers cleared: needsReview (independent review complete), completeness=partial (identifier metadata tracked), resolved queue items.",
+        "Go-live gate remains the seed PR merge (Clint)."
+      ]
+    }
+  ]
+}
