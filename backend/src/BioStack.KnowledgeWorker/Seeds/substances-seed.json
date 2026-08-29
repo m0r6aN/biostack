@@ -7,13 +7,13 @@
       "canonicalName": "Semaglutide",
       "slug": "semaglutide",
       "aliases": [
-        "Ozempic",
-        "Wegovy",
-        "Rybelsus"
+        "GLP-1 receptor agonist"
       ],
       "brandNames": [],
-      "synonyms": [],
-      "classification": "Pharmaceutical",
+      "synonyms": [
+        "GLP-1 receptor agonist"
+      ],
+      "classification": "Peptide",
       "compoundFamily": "GLP-1 receptor agonist",
       "isCombinationProduct": false,
       "activeMoieties": [
@@ -22,301 +22,165 @@
       "externalIdentifiers": {
         "rxnorm": null,
         "unii": null,
-        "casNumber": null,
-        "drugbank": null,
-        "pubchem": null
+        "casNumber": "910463-68-2",
+        "drugbank": "DB13928",
+        "pubchem": "56843331"
       }
     },
     "regulatory": {
-      "requiresPrescription": true,
-      "regulatoryStatus": "FDA-approved prescription product or labeled drug class",
-      "labelStatusByUseCase": [
-        {
-          "useCase": "type 2 diabetes or chronic weight management per product label",
-          "labelStatus": "on-label"
-        }
-      ],
-      "jurisdiction": "US",
-      "approvedIndications": [
-        "type 2 diabetes or chronic weight management per product label"
-      ],
-      "offLabelNotes": []
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
     },
     "mechanism": {
-      "mechanismSummary": "Semaglutide is represented by its commonly described glp-1 receptor agonist mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
-      "primaryMechanisms": [
-        "GLP-1 receptor agonist",
-        "glycemic-control"
-      ],
-      "pathways": [
-        "incretin-signaling",
-        "appetite-regulation",
-        "glucose-regulation"
-      ],
-      "targets": [
-        "GLP-1 receptor agonist"
-      ],
-      "effectTags": [
-        "glycemic-control",
-        "satiety"
-      ],
-      "goalTags": [
-        "weight-management",
-        "metabolic-health"
-      ]
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
     },
-    "formulations": [
-      {
-        "formulationId": "semaglutide-subcutaneous",
-        "productName": "Semaglutide",
-        "manufacturer": null,
-        "route": "subcutaneous",
-        "dosageForm": "injection",
-        "strength": null,
-        "concentration": null,
-        "unit": null,
-        "substitutableWith": [],
-        "storage": {
-          "beforeReconstitution": "Follow product labeling or pharmacy instructions; keep sterile products under labeled conditions.",
-          "afterReconstitution": "Use only within the product-specific stability window when one is provided.",
-          "temperatureNotes": "Do not freeze unless labeling specifically allows it.",
-          "lightSensitivity": null,
-          "stabilityWindow": "Product-specific or unknown."
-        },
-        "reconstitution": {
-          "required": true,
-          "diluent": "Use only the labeled diluent or pharmacist-provided sterile diluent.",
-          "diluentVolume": null,
-          "instructions": "Do not shake; inspect for particulate matter; follow product-specific labeling.",
-          "productSpecific": true
-        }
-      }
-    ],
-    "indications": [
-      {
-        "useCase": "type 2 diabetes or chronic weight management per product label",
-        "labelStatus": "on-label",
-        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "Evidence reviewed for type 2 diabetes or chronic weight management per product label; BioStack presents this as educational reference, not a recommendation.",
-        "evidenceTier": "Strong",
-        "sources": [
-          "src:semaglutide"
-        ]
-      }
-    ],
-    "dosingGuidance": [
-      {
-        "guidanceId": "semaglutide-guidance",
-        "context": {
-          "useCase": "type 2 diabetes or chronic weight management per product label",
-          "population": "Adults where appropriate",
-          "formulation": null,
-          "route": "subcutaneous"
-        },
-        "dose": {
-          "amount": 0.25,
-          "unit": "mg",
-          "frequency": "weekly",
-          "scheduleText": "Follow product-specific prescribing information.",
-          "preferredTimeOfDay": null
-        },
-        "notes": [
-          "Educational reference only; not medical advice."
-        ],
-        "productSpecific": true,
-        "sources": [
-          "src:semaglutide"
-        ]
-      }
-    ],
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
     "compatibility": {
-      "vialCompatibilitySummary": "Compatibility is unknown; do not mix in the same vial or syringe unless product labeling or a pharmacist explicitly supports it.",
-      "blendingRules": [
-        {
-          "ruleType": "co-mix",
-          "target": "other compounds",
-          "status": "review",
-          "message": "No hard-safe compatibility conclusion is established by this seed record.",
-          "sources": [
-            "src:semaglutide"
-          ]
-        }
-      ],
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
       "compatibleBlends": [],
       "incompatibleBlends": [],
-      "unknownCompatibility": [
-        "other compounds"
-      ]
+      "unknownCompatibility": []
     },
     "safety": {
-      "contraindications": [
-        {
-          "item": "Known hypersensitivity to the active ingredient or formulation components",
-          "severity": "high",
-          "notes": "Confirm full labeled contraindications before use.",
-          "sources": [
-            "src:semaglutide"
-          ]
-        }
-      ],
-      "warnings": [
-        {
-          "item": "Use requires review of full prescribing information or regulator warning",
-          "severity": "review",
-          "notes": "BioStack stores a launch-safe summary only; primary sources may include additional risks and population-specific limits.",
-          "sources": [
-            "src:semaglutide"
-          ]
-        }
-      ],
-      "precautions": [
-        {
-          "item": "Medication and condition review",
-          "notes": "Check concurrent medications, conditions, pregnancy status, and labs where applicable.",
-          "sources": [
-            "src:semaglutide"
-          ]
-        }
-      ],
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
       "adverseEffects": {
-        "common": [
-          "source-dependent"
-        ],
-        "serious": [
-          "source-dependent"
-        ]
+        "common": [],
+        "serious": []
       },
-      "monitoring": [
-        {
-          "parameter": "Clinical response and adverse effects",
-          "reason": "Detect intolerance or clinically meaningful safety signals.",
-          "frequency": "Per label, regulator warning, and clinician judgment",
-          "sources": [
-            "src:semaglutide"
-          ]
-        }
-      ]
+      "monitoring": []
     },
-    "interactions": [
-      {
-        "interactionId": "semaglutide-insulin-or-insulin-secretagogues",
-        "type": "drug-drug",
-        "target": "insulin or insulin secretagogues",
-        "severity": "review",
-        "mechanism": "Pathway or pharmacologic overlap",
-        "effect": "Potential additive or opposing effects may occur.",
-        "recommendedAction": "Flag for review; do not treat as automatically compatible.",
-        "sources": [
-          "src:semaglutide"
-        ]
-      }
-    ],
+    "interactions": [],
     "stackIntelligence": {
       "pairsWellWith": [],
-      "avoidWith": [
-        {
-          "target": "other GLP-1 receptor agonists",
-          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
-          "severity": "review",
-          "sources": [
-            "src:semaglutide"
-          ]
-        }
-      ],
-      "overlapRules": [
-        {
-          "ruleId": "semaglutide-incretin-signaling-overlap",
-          "ruleType": "pathway-overlap",
-          "tag": "incretin-signaling",
-          "severity": "review",
-          "message": "Shared pathway tag: incretin-signaling.",
-          "action": "Show overlap and require interpretation rather than returning no relationship.",
-          "sources": [
-            "src:semaglutide"
-          ]
-        }
-      ],
+      "avoidWith": [],
+      "overlapRules": [],
       "synergyRules": [],
       "conflictRules": [],
       "redundancyRules": [],
       "timingRules": []
     },
     "supportiveGuidance": {
-      "nutrition": [
-        {
-          "topic": "Baseline",
-          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
-        }
-      ],
-      "supplements": [
-        {
-          "topic": "Stack review",
-          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
-        }
-      ],
-      "sleep": [
-        {
-          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
-        }
-      ],
-      "exercise": [
-        {
-          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
-        }
-      ],
-      "applicabilityNotes": [
-        "Supportive guidance is general tracking context and is not a treatment recommendation."
-      ],
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
       "sources": [
-        "src:internal-guidance"
+        "dailymed-ozempic",
+        "dailymed-wegovy",
+        "fda-compounded-glp1-concerns"
       ]
     },
     "evidence": {
       "overallTier": "Strong",
       "claimSpecificEvidence": [
         {
-          "claim": "Semaglutide has evidence relevant to type 2 diabetes or chronic weight management per product label.",
+          "claim": "DailyMed identifies Ozempic as semaglutide injection indicated as an adjunct to diet and exercise to improve glycemic control in adults with type 2 diabetes mellitus and for certain cardiovascular-risk contexts in adults with type 2 diabetes.",
           "tier": "Strong",
           "confidence": "high",
           "sources": [
-            "src:semaglutide"
+            "dailymed-ozempic"
+          ]
+        },
+        {
+          "claim": "DailyMed identifies Wegovy as semaglutide indicated with diet and physical activity for chronic weight-management contexts and cardiovascular-risk reduction contexts described in the product label.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-wegovy"
+          ]
+        },
+        {
+          "claim": "DailyMed semaglutide product labels list personal or family history of medullary thyroid carcinoma or MEN 2 as a contraindication.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-ozempic",
+            "dailymed-wegovy"
+          ]
+        },
+        {
+          "claim": "FDA has warned about dosing errors and adverse events associated with compounded injectable semaglutide products; BioStack should not treat compounded-product claims as equivalent to approved product labels.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "fda-compounded-glp1-concerns"
           ]
         }
       ],
-      "evidenceGaps": [
-        "Seed record is intentionally conservative; review primary sources for details."
-      ],
+      "evidenceGaps": [],
       "controversies": []
     },
     "provenance": {
       "sourceRecords": [
         {
           "sourceType": "label",
-          "title": "Prescribing information for Semaglutide",
-          "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Semaglutide",
-          "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "title": "DailyMed OZEMPIC (semaglutide) injection, solution",
+          "publisher": "National Library of Medicine / DailyMed",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e6da837c-0da0-41d6-973c-5559bf764367",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-05-05T00:00:00Z"
+        },
+        {
+          "sourceType": "label",
+          "title": "DailyMed WEGOVY (semaglutide) injection/tablet",
+          "publisher": "National Library of Medicine / DailyMed",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ee06186f-2aa3-4990-a760-757579d8f77b",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-05-05T00:00:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA's Concerns with Unapproved GLP-1 Drugs Used for Weight Loss",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/medications-containing-semaglutide-marketed-type-2-diabetes-or-weight-loss",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-05-05T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Launch seed record; conservative fields selected for validation and honest coverage."
+        "Pilot regulatory evidence packet requires human review before publication.",
+        "Compiled draft requires human review before publication."
       ],
-      "lastReviewedAt": "2026-04-20T00:00:00Z",
-      "reviewStatus": "approved"
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
     },
     "ops": {
       "recordVersion": 1,
       "contentHash": null,
-      "ingestionSource": "seed:substances-seed.json",
-      "ingestedAt": null,
-      "updatedAt": null,
+      "ingestionSource": "evidence-packet:semaglutide-evidence-pilot-001",
+      "ingestedAt": "2026-05-05T00:00:00Z",
+      "updatedAt": "2026-05-05T00:00:00Z",
       "lastChangeType": "seed",
-      "isActive": true,
-      "completeness": "substantial",
-      "needsReview": false,
-      "reviewReasons": [],
-      "qualityFlags": []
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Pilot regulatory evidence packet requires human review before publication.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "pilot-input",
+        "a1-label-backed",
+        "product-specific-labels",
+        "compiled-from-evidence-packet"
+      ]
     }
   },
   {
@@ -8514,12 +8378,18 @@
       "canonicalName": "Enclomiphene",
       "slug": "enclomiphene",
       "aliases": [
-        "trans-clomiphene"
+        "trans-clomiphene",
+        "Enclomiphene citrate",
+        "Androxal"
       ],
       "brandNames": [],
-      "synonyms": [],
+      "synonyms": [
+        "trans-clomiphene",
+        "Enclomiphene citrate",
+        "Androxal"
+      ],
       "classification": "SERM",
-      "compoundFamily": "selective estrogen receptor modulator",
+      "compoundFamily": "Selective estrogen receptor modulator",
       "isCombinationProduct": false,
       "activeMoieties": [
         "Enclomiphene"
@@ -8527,274 +8397,151 @@
       "externalIdentifiers": {
         "rxnorm": null,
         "unii": null,
-        "casNumber": null,
+        "casNumber": "15690-57-0",
         "drugbank": null,
         "pubchem": null
       }
     },
     "regulatory": {
       "requiresPrescription": false,
-      "regulatoryStatus": "ClassB reference only; regulatory status not established by this record",
-      "labelStatusByUseCase": [
-        {
-          "useCase": "research reference context",
-          "labelStatus": "not-indicated"
-        }
-      ],
-      "jurisdiction": "US",
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
       "approvedIndications": [],
-      "offLabelNotes": []
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
     },
     "mechanism": {
-      "mechanismSummary": "Enclomiphene is represented by its commonly described selective estrogen receptor modulator mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
-      "primaryMechanisms": [
-        "selective estrogen receptor modulator",
-        "gonadotropin-stimulation"
-      ],
-      "pathways": [
-        "estrogen-receptor-modulation",
-        "hypothalamic-pituitary-gonadal-axis"
-      ],
-      "targets": [
-        "selective estrogen receptor modulator"
-      ],
-      "effectTags": [
-        "gonadotropin-stimulation",
-        "testosterone-context"
-      ],
-      "goalTags": [
-        "hormone-management",
-        "fertility-context"
-      ]
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
     },
-    "formulations": [
-      {
-        "formulationId": "enclomiphene-oral",
-        "productName": "Enclomiphene",
-        "manufacturer": null,
-        "route": "oral",
-        "dosageForm": "tablet capsule",
-        "strength": null,
-        "concentration": null,
-        "unit": null,
-        "substitutableWith": [],
-        "storage": {
-          "beforeReconstitution": "Store according to product labeling or manufacturer instructions.",
-          "afterReconstitution": null,
-          "temperatureNotes": "Avoid excessive heat and moisture unless labeling states otherwise.",
-          "lightSensitivity": null,
-          "stabilityWindow": null
-        },
-        "reconstitution": {
-          "required": false,
-          "diluent": null,
-          "diluentVolume": null,
-          "instructions": null,
-          "productSpecific": false
-        }
-      }
-    ],
-    "indications": [
-      {
-        "useCase": "research reference context",
-        "labelStatus": "not-indicated",
-        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "Evidence reviewed for research reference context; BioStack presents this as educational reference, not a recommendation.",
-        "evidenceTier": "Limited",
-        "sources": [
-          "src:enclomiphene"
-        ]
-      }
-    ],
-    "dosingGuidance": [
-      {
-        "guidanceId": "enclomiphene-guidance",
-        "context": {
-          "useCase": "research reference context",
-          "population": "Adults where appropriate",
-          "formulation": null,
-          "route": "oral"
-        },
-        "dose": {
-          "amount": null,
-          "unit": "unknown",
-          "frequency": "review required",
-          "scheduleText": "Dosing is not established by the included ClassB or non-dose source; review with a licensed clinician or primary source.",
-          "preferredTimeOfDay": null
-        },
-        "notes": [
-          "No product-specific dosing is established by this seed record."
-        ],
-        "productSpecific": false,
-        "sources": [
-          "src:enclomiphene"
-        ]
-      }
-    ],
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
     "compatibility": {
-      "vialCompatibilitySummary": "Not applicable or unknown for non-injectable use; avoid assuming compatibility across products.",
-      "blendingRules": [
-        {
-          "ruleType": "co-use",
-          "target": "other compounds",
-          "status": "unknown",
-          "message": "No hard-safe compatibility conclusion is established by this seed record.",
-          "sources": [
-            "src:enclomiphene"
-          ]
-        }
-      ],
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
       "compatibleBlends": [],
       "incompatibleBlends": [],
-      "unknownCompatibility": [
-        "other compounds"
-      ]
+      "unknownCompatibility": []
     },
     "safety": {
       "contraindications": [],
       "warnings": [],
-      "precautions": [
-        {
-          "item": "Review primary sources before use",
-          "notes": "ClassB-only seed record; regulated safety canon is intentionally not asserted.",
-          "sources": [
-            "src:enclomiphene"
-          ]
-        }
-      ],
+      "precautions": [],
       "adverseEffects": {
-        "common": [
-          "unknown"
-        ],
-        "serious": [
-          "unknown"
-        ]
+        "common": [],
+        "serious": []
       },
       "monitoring": []
     },
-    "interactions": [
-      {
-        "interactionId": "enclomiphene-other-serms",
-        "type": "drug-drug",
-        "target": "other SERMs",
-        "severity": "review",
-        "mechanism": "Pathway or pharmacologic overlap",
-        "effect": "Potential additive or opposing effects may occur.",
-        "recommendedAction": "Flag for review; do not treat as automatically compatible.",
-        "sources": [
-          "src:enclomiphene"
-        ]
-      }
-    ],
+    "interactions": [],
     "stackIntelligence": {
       "pairsWellWith": [],
-      "avoidWith": [
-        {
-          "target": "other SERMs without review",
-          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
-          "severity": "review",
-          "sources": [
-            "src:enclomiphene"
-          ]
-        }
-      ],
-      "overlapRules": [
-        {
-          "ruleId": "enclomiphene-estrogen-receptor-modulation-overlap",
-          "ruleType": "pathway-overlap",
-          "tag": "estrogen-receptor-modulation",
-          "severity": "review",
-          "message": "Shared pathway tag: estrogen-receptor-modulation.",
-          "action": "Show overlap and require interpretation rather than returning no relationship.",
-          "sources": [
-            "src:enclomiphene"
-          ]
-        }
-      ],
+      "avoidWith": [],
+      "overlapRules": [],
       "synergyRules": [],
       "conflictRules": [],
       "redundancyRules": [],
       "timingRules": []
     },
     "supportiveGuidance": {
-      "nutrition": [
-        {
-          "topic": "Baseline",
-          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
-        }
-      ],
-      "supplements": [
-        {
-          "topic": "Stack review",
-          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
-        }
-      ],
-      "sleep": [
-        {
-          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
-        }
-      ],
-      "exercise": [
-        {
-          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
-        }
-      ],
-      "applicabilityNotes": [
-        "Supportive guidance is general tracking context and is not a treatment recommendation."
-      ],
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
       "sources": [
-        "src:internal-guidance"
+        "pmc-enclomiphene-pkpd-2014",
+        "pmc-enclomiphene-secondary-hypogonadism-2016"
       ]
     },
     "evidence": {
       "overallTier": "Limited",
       "claimSpecificEvidence": [
         {
-          "claim": "Enclomiphene has evidence relevant to research reference context.",
+          "claim": "Clinical studies have investigated enclomiphene citrate in men with secondary hypogonadism, including effects on testosterone, LH/FSH, and sperm-concentration preservation compared with exogenous testosterone contexts.",
           "tier": "Limited",
-          "confidence": "low",
+          "confidence": "moderate",
           "sources": [
-            "src:enclomiphene"
+            "pmc-enclomiphene-pkpd-2014",
+            "pmc-enclomiphene-secondary-hypogonadism-2016"
+          ]
+        },
+        {
+          "claim": "This pilot packet includes clinical-study literature but no approved product label; BioStack should not present enclomiphene as an approved therapy unless jurisdiction-specific regulatory evidence is added.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "pmc-enclomiphene-secondary-hypogonadism-2016"
+          ]
+        },
+        {
+          "claim": "Because enclomiphene affects endocrine pathways, BioStack should require explicit safety, contraindication, monitoring, fertility, and visual/ocular review before customer-facing stack intelligence is produced.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "pmc-enclomiphene-pkpd-2014",
+            "pmc-enclomiphene-secondary-hypogonadism-2016"
           ]
         }
       ],
       "evidenceGaps": [
-        "Seed record is intentionally conservative; review primary sources for details."
+        "This pilot packet includes clinical-study literature but no approved product label; BioStack should not present enclomiphene as an approved therapy unless jurisdiction-specific regulatory evidence is added.",
+        "Because enclomiphene affects endocrine pathways, BioStack should require explicit safety, contraindication, monitoring, fertility, and visual/ocular review before customer-facing stack intelligence is produced."
       ],
       "controversies": []
     },
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "database",
-          "title": "Compound summary for Enclomiphene",
-          "publisher": "PubChem",
-          "url": "https://pubchem.ncbi.nlm.nih.gov/#query=Enclomiphene",
-          "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "sourceType": "paper",
+          "title": "Testosterone restoration using enclomiphene citrate in men with secondary hypogonadism: a pharmacodynamic and pharmacokinetic study",
+          "publisher": "PubMed Central",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4155868/",
+          "publishedAt": "2014-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-05-05T00:00:00Z"
+        },
+        {
+          "sourceType": "review",
+          "title": "Enclomiphene Citrate for the Treatment of Secondary Male Hypogonadism",
+          "publisher": "PubMed Central",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5009465/",
+          "publishedAt": "2016-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-05-05T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Launch seed record; conservative fields selected for validation and honest coverage."
+        "Pilot hormone/SERM evidence packet requires human review before publication.",
+        "Compiled draft requires human review before publication."
       ],
-      "lastReviewedAt": "2026-04-20T00:00:00Z",
-      "reviewStatus": "reviewed"
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
     },
     "ops": {
       "recordVersion": 1,
       "contentHash": null,
-      "ingestionSource": "seed:substances-seed.json",
-      "ingestedAt": null,
-      "updatedAt": null,
+      "ingestionSource": "evidence-packet:enclomiphene-evidence-pilot-001",
+      "ingestedAt": "2026-05-05T00:00:00Z",
+      "updatedAt": "2026-05-05T00:00:00Z",
       "lastChangeType": "seed",
-      "isActive": true,
+      "isActive": false,
       "completeness": "partial",
       "needsReview": true,
       "reviewReasons": [
-        "ClassB-only source; regulated fields intentionally limited."
+        "Pilot hormone/SERM evidence packet requires human review before publication.",
+        "Compiled draft requires human review before publication."
       ],
       "qualityFlags": [
-        "classB-only"
+        "pilot-input",
+        "regulatory-ambiguity",
+        "hormone-axis-boundary",
+        "compiled-from-evidence-packet"
       ]
     }
   },
@@ -15208,6 +14955,365 @@
         "gray-market-us-status",
         "misinformation-gap-documented",
         "authority-support-pass-2026-08-29",
+        "compiled-from-evidence-packet"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "spermidine",
+      "canonicalName": "Spermidine",
+      "slug": "spermidine",
+      "aliases": [
+        "N-(3-aminopropyl)-1,4-butanediamine"
+      ],
+      "brandNames": [],
+      "synonyms": [
+        "N-(3-aminopropyl)-1,4-butanediamine"
+      ],
+      "classification": "Small Molecule",
+      "compoundFamily": "Polyamine",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Spermidine"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": "124-20-9",
+        "drugbank": null,
+        "pubchem": "1102"
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "PubChem describes spermidine as a polyamine formed from putrescine and found in tissues, supporting its classification as an endogenous polyamine rather than a disease-specific treatment claim.",
+      "primaryMechanisms": [
+        "PubChem describes spermidine as a polyamine formed from putrescine and found in tissues, supporting its classification as an endogenous polyamine rather than a disease-specific treatment claim."
+      ],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": [
+        "pubchem-spermidine",
+        "pubmed-spermidine-memory-pilot-2018",
+        "jama-spermidine-smartage-2022"
+      ]
+    },
+    "evidence": {
+      "overallTier": "Limited",
+      "claimSpecificEvidence": [
+        {
+          "claim": "Spermidine is indexed by PubChem as CID 1102 and associated with CAS number 124-20-9.",
+          "tier": "Unknown",
+          "confidence": "high",
+          "sources": [
+            "pubchem-spermidine"
+          ]
+        },
+        {
+          "claim": "PubChem describes spermidine as a polyamine formed from putrescine and found in tissues, supporting its classification as an endogenous polyamine rather than a disease-specific treatment claim.",
+          "tier": "Limited",
+          "confidence": "moderate",
+          "sources": [
+            "pubchem-spermidine"
+          ]
+        },
+        {
+          "claim": "Human studies have investigated spermidine-rich supplementation in older adults with subjective cognitive decline or dementia-risk contexts, but BioStack should treat cognition claims as emerging and study-context-specific.",
+          "tier": "Limited",
+          "confidence": "moderate",
+          "sources": [
+            "pubmed-spermidine-memory-pilot-2018",
+            "jama-spermidine-smartage-2022"
+          ]
+        },
+        {
+          "claim": "BioStack should separate spermidine autophagy/longevity marketing claims from human clinical outcomes; current pilot evidence supports tracking the research area, not presenting broad anti-aging conclusions.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "pubchem-spermidine",
+            "pubmed-spermidine-memory-pilot-2018",
+            "jama-spermidine-smartage-2022"
+          ]
+        }
+      ],
+      "evidenceGaps": [
+        "BioStack should separate spermidine autophagy/longevity marketing claims from human clinical outcomes; current pilot evidence supports tracking the research area, not presenting broad anti-aging conclusions."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "database",
+          "title": "PubChem Compound Summary for Spermidine",
+          "publisher": "National Center for Biotechnology Information",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/1102",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-05-05T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "The effect of spermidine on memory performance in older adults at risk for dementia: A randomized controlled trial",
+          "publisher": "Cortex / PubMed",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30388439/",
+          "publishedAt": "2018-09-01T00:00:00Z",
+          "lastCheckedAt": "2026-05-05T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effects of Spermidine Supplementation on Cognition and Biomarkers in Older Adults With Subjective Cognitive Decline: A Randomized Clinical Trial",
+          "publisher": "JAMA Network Open",
+          "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2792725",
+          "publishedAt": "2022-05-26T00:00:00Z",
+          "lastCheckedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Pilot emerging evidence packet requires human review before publication.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "evidence-packet:spermidine-evidence-pilot-001",
+      "ingestedAt": "2026-05-05T00:00:00Z",
+      "updatedAt": "2026-05-05T00:00:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Pilot emerging evidence packet requires human review before publication.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "pilot-input",
+        "emerging-longevity-compound",
+        "hype-boundary",
+        "compiled-from-evidence-packet"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "urolithin-a",
+      "canonicalName": "Urolithin A",
+      "slug": "urolithin-a",
+      "aliases": [
+        "3,8-dihydroxyurolithin"
+      ],
+      "brandNames": [],
+      "synonyms": [
+        "3,8-dihydroxyurolithin"
+      ],
+      "classification": "Supplement",
+      "compoundFamily": "Gut-derived ellagitannin metabolite",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Urolithin A"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": "1143-70-0",
+        "drugbank": null,
+        "pubchem": "5488186"
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Mechanism has not been reviewed for this draft record.",
+      "primaryMechanisms": [],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": [
+        "pubchem-urolithin-a",
+        "jama-urolithin-a-older-adults-2022"
+      ]
+    },
+    "evidence": {
+      "overallTier": "Moderate",
+      "claimSpecificEvidence": [
+        {
+          "claim": "Urolithin A is indexed by PubChem as CID 5488186 and associated with CAS number 1143-70-0.",
+          "tier": "Unknown",
+          "confidence": "high",
+          "sources": [
+            "pubchem-urolithin-a"
+          ]
+        },
+        {
+          "claim": "A randomized clinical trial studied urolithin A supplementation in older adults using muscle endurance and mitochondrial-health biomarkers as outcomes, supporting BioStack tracking it as an emerging mitochondrial-health compound without overstating general longevity benefits.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "jama-urolithin-a-older-adults-2022"
+          ]
+        },
+        {
+          "claim": "BioStack should separate urolithin A evidence on specific trial endpoints from broader anti-aging, lifespan, or universal mitochondrial-optimization claims unless stronger human evidence is added.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "jama-urolithin-a-older-adults-2022",
+            "pubchem-urolithin-a"
+          ]
+        }
+      ],
+      "evidenceGaps": [
+        "BioStack should separate urolithin A evidence on specific trial endpoints from broader anti-aging, lifespan, or universal mitochondrial-optimization claims unless stronger human evidence is added."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "database",
+          "title": "PubChem Compound Summary for Urolithin A",
+          "publisher": "National Center for Biotechnology Information",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/5488186",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-05-05T00:00:00Z"
+        },
+        {
+          "sourceType": "paper",
+          "title": "Effect of Urolithin A Supplementation on Muscle Endurance and Mitochondrial Health in Older Adults: A Randomized Clinical Trial",
+          "publisher": "JAMA Network Open",
+          "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2788244",
+          "publishedAt": "2022-01-20T00:00:00Z",
+          "lastCheckedAt": "2026-05-05T00:00:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Pilot emerging evidence packet requires human review before publication.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "evidence-packet:urolithin-a-evidence-pilot-001",
+      "ingestedAt": "2026-05-05T00:00:00Z",
+      "updatedAt": "2026-05-05T00:00:00Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Pilot emerging evidence packet requires human review before publication.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "pilot-input",
+        "emerging-longevity-compound",
+        "hype-boundary",
         "compiled-from-evidence-packet"
       ]
     }
