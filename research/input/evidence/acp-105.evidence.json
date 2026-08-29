@@ -1,0 +1,387 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "acp-105-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T02:21:10Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "ACP-105",
+    "aliases": [
+      "ACP105"
+    ],
+    "classification": "Selective androgen receptor modulator (SARM)",
+    "compoundFamily": "Non-steroidal azabicyclooctane-class SARM",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "899821-23-9",
+      "drugbank": null,
+      "pubchem": "11638442",
+      "chembl": null,
+      "doi": "10.3390/metabo11020085",
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-sarms-consumer-update",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Warns About Using SARMs in Body-building Products (Consumer Update)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "fda-bulk-substances-category2-list",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "metabolites-2021-acp105-equine-doping",
+      "sourceType": "controlled-study",
+      "authorityTier": "B1",
+      "title": "Investigation of Equine In Vivo and In Vitro Derived Metabolites of the Selective Androgen Receptor Modulator (SARM) ACP-105 for Improved Doping Control",
+      "publisher": "Metabolites (MDPI), vol. 11, issue 2, 2021",
+      "url": "https://escholarship.org/uc/item/1nw8m1m7",
+      "doi": "10.3390/metabo11020085",
+      "pmid": null,
+      "publishedAt": "2021-02-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "pubchem-cid-11638442",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: ACP-105 (CID 11638442)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/ACP-105",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "selleckchem-acp-105-product",
+      "sourceType": "vendor-chemical-database",
+      "authorityTier": "C1",
+      "title": "ACP-105 | Androgen Receptor modulator | CAS 899821-23-9",
+      "publisher": "Selleck Chemicals",
+      "url": "https://www.selleckchem.com/products/acp-105.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "usada-sarms-overview",
+      "sourceType": "professional-guidance",
+      "authorityTier": "B2",
+      "title": "Selective Androgen Receptor Modulators (SARMs) - Prohibited Class: Anabolic Agents",
+      "publisher": "U.S. Anti-Doping Agency (USADA)",
+      "url": "https://www.usada.org/spirit-of-sport/selective-androgen-receptor-modulators-sarms-prohibited-class-anabolic-agents/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "moreplatesmoredates-acp105-overview",
+      "sourceType": "vendor-marketing-content",
+      "authorityTier": "D1",
+      "title": "ACP-105 SARM Overview - What To Expect (Based On Clinical Studies)",
+      "publisher": "More Plates More Dates",
+      "url": "https://moreplatesmoredates.com/acp-105-sarm-overview/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "acp105-identity-mechanism-001",
+      "claimType": "identity",
+      "statement": "ACP-105 (CAS 899821-23-9) is a non-steroidal, orally available selective androgen receptor modulator (SARM); it is not an FDA-approved drug and has no approved medical indication.",
+      "context": {
+        "population": null,
+        "route": "oral (research/gray-market use)",
+        "formulation": "small-molecule SARM",
+        "useCase": "identity and regulatory status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pubchem-cid-11638442",
+        "selleckchem-acp-105-product",
+        "fda-sarms-consumer-update"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "selleckchem-acp-105-product",
+          "quote": "an orally available and potent selective androgen receptor modulator (SARM)",
+          "pageOrSection": "Product description"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "SARMs, which are chemical substances that mimic the effects of testosterone and anabolic steroids, are not FDA approved.",
+          "pageOrSection": "Consumer update body text"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "acp105-mechanism-anabolic-properties-001",
+      "claimType": "mechanism",
+      "statement": "As a SARM, ACP-105 is designed for tissue-selective androgen receptor activation intended to produce anabolic (muscle/bone) effects with reduced androgenic effects relative to anabolic-androgenic steroids; a peer-reviewed equine doping-control study describes ACP-105 as having 'anabolic properties but less adverse effects than anabolic androgenic steroids.' This describes intended pharmacologic design, not a demonstrated human safety advantage.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "ACP-105",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "metabolites-2021-acp105-equine-doping"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "metabolites-2021-acp105-equine-doping",
+          "quote": "anabolic properties but less adverse effects than anabolic androgenic steroids",
+          "pageOrSection": "Abstract/Introduction summary"
+        }
+      ],
+      "reviewFlags": [
+        "mechanism claim sourced from an animal (equine) doping-control paper, not human pharmacology data",
+        "do not present 'less adverse effects' as an established human safety finding"
+      ]
+    },
+    {
+      "claimId": "acp105-evidence-gap-no-human-trials-001",
+      "claimType": "evidence-gap",
+      "statement": "No published controlled human clinical trial data for ACP-105 were located. Available primary research is limited to receptor-binding/in vitro characterization, in silico ADME/toxicology modeling, and an equine (horse) pharmacokinetic/metabolite study conducted for anti-doping detection purposes; none of this establishes human efficacy or safety.",
+      "context": {
+        "population": "humans (no clinical trial population exists)",
+        "route": null,
+        "formulation": "ACP-105",
+        "useCase": "human efficacy/safety evidence base",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "metabolites-2021-acp105-equine-doping",
+        "moreplatesmoredates-acp105-overview"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "metabolites-2021-acp105-equine-doping",
+          "quote": "Oral ACP-105 administration occurred in horses with blood and urine sampling over 96 hours, compared against five in vitro models using fungal, microsomal, and hepatic fractions from human and equine sources.",
+          "pageOrSection": "Methods summary"
+        },
+        {
+          "sourceRef": "moreplatesmoredates-acp105-overview",
+          "quote": "there are no clinical studies on human subjects; consequently any conclusions or theories we develop around the compound have to be taken with a grain of salt",
+          "pageOrSection": "Article body"
+        }
+      ],
+      "reviewFlags": [
+        "confirm no human trial has since been registered or published at review time"
+      ]
+    },
+    {
+      "claimId": "acp105-misinformation-marketing-dosing-001",
+      "claimType": "misinformation-claim",
+      "statement": "A widely circulated gray-market vendor/marketing article promotes ACP-105 with claims of 'potent anabolic effects on muscle and bone with minimal effect on prostate' and possible improvements to 'speed, endurance, balance, strength and/or motor coordination,' and proposes a specific human 'research' dosage (approximately 11-12 mg/day) extrapolated from animal-study conversions. These performance and dosing claims are not supported by any published human clinical evidence and the source itself acknowledges the absence of human trials.",
+      "context": {
+        "population": "consumers of gray-market SARM products",
+        "route": "oral (as marketed)",
+        "formulation": "research-labeled ACP-105 liquid/powder",
+        "useCase": "muscle building, strength, performance enhancement (marketed use)",
+        "doseText": "Vendor article suggests approximately 11-12 mg/day extrapolated from animal-study dose conversions; this is marketing content, not a trial protocol or label, and is captured here strictly as an example of an unsupported public claim, not as usage guidance."
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "moreplatesmoredates-acp105-overview",
+        "fda-sarms-consumer-update"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "moreplatesmoredates-acp105-overview",
+          "quote": "potent anabolic effects on muscle and bone with minimal effect on prostate",
+          "pageOrSection": "Article body"
+        },
+        {
+          "sourceRef": "moreplatesmoredates-acp105-overview",
+          "quote": "a reasonable starting dosage is around 11-12mg per day for human research trials",
+          "pageOrSection": "Dosage section"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "The reality is SARMs are potentially dangerous. The FDA continues to receive adverse event reports associated with SARMS use.",
+          "pageOrSection": "Consumer update body text"
+        }
+      ],
+      "reviewFlags": [
+        "doseText field here documents a third-party marketing claim only; it must never be surfaced as a use recommendation",
+        "monitor for additional gray-market vendors making similar unsupported claims"
+      ]
+    },
+    {
+      "claimId": "acp105-warning-sarm-class-safety-001",
+      "claimType": "warning",
+      "statement": "FDA's consumer guidance on SARMs as a drug class (of which ACP-105 is a member) states that SARMs are associated with serious reported health risks including increased risk of heart attack or stroke, liver injury and acute liver failure, and additional effects such as psychosis/hallucinations, sleep disturbances, sexual dysfunction, infertility, pregnancy miscarriage, and testicular shrinkage. No ACP-105-specific human adverse event data were located; this class-level warning has not been confirmed as ACP-105-specific.",
+      "context": {
+        "population": "humans using SARM products, including teens and young adults per FDA's warning population",
+        "route": "oral (typical SARM route)",
+        "formulation": "SARM class, unapproved products",
+        "useCase": "safety warning, class-level",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-sarms-consumer-update",
+        "usada-sarms-overview"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "Liver injury and acute liver failure",
+          "pageOrSection": "Consumer update - list of serious health problems"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "Increased risk of heart attack or stroke",
+          "pageOrSection": "Consumer update - list of serious health problems"
+        },
+        {
+          "sourceRef": "usada-sarms-overview",
+          "quote": "Potential life-threatening side effects from SARMS, including an increased risk of heart attack and stroke have been reported.",
+          "pageOrSection": "SARMs key facts"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim is class-level (SARMs generally), not confirmed compound-specific for ACP-105",
+        "seek ACP-105-specific adverse event case reports if any are published"
+      ]
+    },
+    {
+      "claimId": "acp105-regulatory-not-on-compounding-lists-001",
+      "claimType": "regulatory",
+      "statement": "As of this review, ACP-105 does not appear in FDA's published Category 2 list of bulk drug substances presenting significant safety risks for compounding (nominated-and-withdrawn table included), unlike some other peptides/SARMs evaluated by FDA's Pharmacy Compounding Advisory Committee. Separately, FDA's general SARM consumer guidance states SARMs 'cannot be legally marketed in the U.S. as a dietary supplement or drug at this time,' meaning ACP-105 has no lawful consumer marketing pathway regardless of compounding-list status.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "ACP-105",
+        "useCase": "regulatory/compounding status",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bulk-substances-category2-list",
+        "fda-sarms-consumer-update"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "SARMs cannot be legally marketed in the U.S. as a dietary supplement or drug at this time.",
+          "pageOrSection": "Consumer update body text"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "absence from the Category 2 list was determined by direct page review at accessedAt; FDA bulk-substance lists change and must be reverified at review time",
+        "no FDA PCAC briefing document specific to ACP-105 was located; confirm none exists or has been issued since accessedAt"
+      ]
+    },
+    {
+      "claimId": "acp105-controversy-doping-detection-001",
+      "claimType": "controversy",
+      "statement": "ACP-105 is treated as a prohibited anabolic agent in both equine and human competitive sport; a peer-reviewed anti-doping study notes the compound is 'prohibited in both equine and human sports' and that research has focused on identifying urinary/plasma metabolites to improve detection, reflecting its use as a performance-enhancing agent outside any approved medical context.",
+      "context": {
+        "population": "competitive athletes (human and equine)",
+        "route": "oral",
+        "formulation": "ACP-105",
+        "useCase": "anti-doping / prohibited performance enhancement",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "metabolites-2021-acp105-equine-doping",
+        "usada-sarms-overview"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "metabolites-2021-acp105-equine-doping",
+          "quote": "prohibited in both equine and human sports",
+          "pageOrSection": "Abstract/Introduction summary"
+        },
+        {
+          "sourceRef": "usada-sarms-overview",
+          "quote": "All SARMs are prohibited at all times (both in and out-of-competition) for all athletes",
+          "pageOrSection": "SARMs key facts"
+        }
+      ],
+      "reviewFlags": []
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "acp105-conflict-marketing-vs-evidence-001",
+      "claimRefs": [
+        "acp105-misinformation-marketing-dosing-001",
+        "acp105-evidence-gap-no-human-trials-001"
+      ],
+      "severity": "moderate",
+      "summary": "Gray-market marketing content presents specific human benefit and dosing framing for ACP-105 despite the same ecosystem, and the independent peer-reviewed literature, confirming no published human clinical trial data exist; the gap between promotional framing and the actual (animal/in vitro/in silico-only) evidence base is material and unresolved pending any future human study.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "No ACP-105-specific human clinical or adverse-event literature was located; safety claims rely on SARM-class-level FDA/USADA guidance rather than compound-specific human data.",
+      "UNII, DrugBank, and ChEMBL identifiers not resolved from structured databases at time of packet generation.",
+      "FDA bulk drug substance Category 2 compounding list and any future PCAC briefing coverage of ACP-105 must be reverified at review time, as these listings are revised periodically.",
+      "PubMed/PMC primary literature pages could not be fetched directly (access-gated); ADME/toxicology paper coverage should be independently reverified against the primary PubMed/PMC record when accessible."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed-class-level-only",
+      "no-human-trial-data-located",
+      "thin-human-evidence",
+      "gray-market-only",
+      "marketing-vs-evidence-gap-documented"
+    ]
+  }
+}

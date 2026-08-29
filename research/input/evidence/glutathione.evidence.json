@@ -1,0 +1,413 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "glutathione-evidence-expansion-001",
+    "category": "core-supplements",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T02:21:10Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Glutathione",
+    "aliases": [
+      "GSH",
+      "L-glutathione",
+      "gamma-L-glutamyl-L-cysteinylglycine"
+    ],
+    "classification": "Endogenous antioxidant tripeptide / dietary supplement ingredient",
+    "compoundFamily": "Non-ribosomal tripeptide (glutamate-cysteine-glycine); sold as oral, sublingual, topical, and compounded-injectable products",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "70-18-8",
+      "drugbank": "DB00143",
+      "pubchem": "124886",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-us-glutathione-compounding-concerns",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA highlights concerns with using dietary ingredient glutathione to compound sterile injectables",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/fda-highlights-concerns-using-dietary-ingredient-glutathione-compound-sterile-injectables",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2019-06-07T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "fda-ph-advisory-2019-182",
+      "sourceType": "regulator",
+      "authorityTier": "A2",
+      "title": "FDA Advisory No. 2019-182: Unsafe Use of Glutathione as Skin Lightening Agent",
+      "publisher": "Philippines Food and Drug Administration",
+      "url": "https://www.fda.gov.ph/fda-advisory-no-2019-182-unsafe-use-of-glutathione-as-skin-lightening-agent/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "dailymed-glutathione-liquid-otc",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: GLUTATHIONE liquid (homeopathic OTC product)",
+      "publisher": "DailyMed / U.S. National Library of Medicine (labeler: Energique, Inc.)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3a369e12-984c-4b94-9b77-eb8d77c545bb",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "pubchem-cid-124886",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Glutathione, CID 124886 - PubChem Compound Summary",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Glutathione",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "drugbank-db00143",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Glutathione (DB00143) - DrugBank Online",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB00143",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "watanabe-2012-oral-whitening-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Glutathione as an oral whitening agent: a randomized, double-blind, placebo-controlled study",
+      "publisher": "Journal of Dermatological Treatment (Watanabe F, et al.)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20524875/",
+      "doi": null,
+      "pmid": "20524875",
+      "publishedAt": "2012-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "mdpi-2026-oral-bioavailability-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "A Targeted Metabolomic Assessment of Oral Glutathione Bioavailability and Safety in Humans: A Randomized Crossover Clinical Trial",
+      "publisher": "Antioxidants (MDPI)",
+      "url": "https://www.mdpi.com/2076-3921/15/3/354",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "glutathione-identity-mechanism-001",
+      "claimType": "mechanism",
+      "statement": "Glutathione (GSH) is an endogenously synthesized tripeptide that functions as a cellular antioxidant and cofactor, conjugating to xenobiotics/drugs to increase their solubility for excretion and participating in cellular protein disulfide bond formation and redox regulation.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "glutathione (reduced, GSH)",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "drugbank-db00143",
+        "pubchem-cid-124886"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "drugbank-db00143",
+          "quote": "A tripeptide with many roles in cells. It conjugates to drugs to make them more soluble for excretion, is a cofactor for some enzymes, is involved in protein disulfide bond...",
+          "pageOrSection": "Summary/Description"
+        },
+        {
+          "sourceRef": "pubchem-cid-124886",
+          "quote": "Glutathione | C10H17N3O6S | CID 124886",
+          "pageOrSection": "Compound identity header"
+        }
+      ],
+      "reviewFlags": [
+        "DrugBank description quote was truncated at source fetch; confirm full pharmacology text on next review pass"
+      ]
+    },
+    {
+      "claimId": "glutathione-regulatory-compounding-endotoxin-001",
+      "claimType": "regulatory",
+      "statement": "FDA identified that L-glutathione dietary-supplement powder labeled 'Caution: Dietary Supplement' was used by compounding pharmacies to make sterile injectable products despite the manufacturer stating it was not intended for sterile drug use; FDA laboratory testing found the material contained excessive bacterial endotoxin (up to five times the acceptable limit), and seven patients who received an injectable drug compounded with this L-glutathione experienced adverse events.",
+      "context": {
+        "population": "patients receiving compounded injectable glutathione products",
+        "route": "injectable (compounded)",
+        "formulation": "L-glutathione powder sourced as a dietary-supplement ingredient",
+        "useCase": "compounding safety / regulatory boundary between dietary-supplement ingredients and sterile drug components",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-us-glutathione-compounding-concerns"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-us-glutathione-compounding-concerns",
+          "quote": "Seven patients who received an injectable drug compounded with L-glutathione and experienced adverse events due to potentially high levels of endotoxins.",
+          "pageOrSection": "Main advisory text"
+        },
+        {
+          "sourceRef": "fda-us-glutathione-compounding-concerns",
+          "quote": "All samples tested by an FDA laboratory were found to contain excessive bacterial endotoxin with some results as high as five times the appropriate limit.",
+          "pageOrSection": "Main advisory text"
+        },
+        {
+          "sourceRef": "fda-us-glutathione-compounding-concerns",
+          "quote": "The L-glutathione powder the pharmacies received was labeled with 'Caution: Dietary Supplement' and should not have been used to compound sterile injectable drugs.",
+          "pageOrSection": "Main advisory text"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "confirm whether FDA has issued further compounding guidance or import alerts on glutathione since 2019-06-07"
+      ]
+    },
+    {
+      "claimId": "glutathione-adverse-effect-endotoxin-symptoms-001",
+      "claimType": "adverse-effect",
+      "statement": "FDA states that symptoms associated with exposure to excessive bacterial endotoxin in a compounded injectable product can include fever, chills, myalgia, headache, nausea, vomiting, hypotension, shock, and death.",
+      "context": {
+        "population": "patients receiving endotoxin-contaminated compounded injectable glutathione",
+        "route": "injectable (compounded)",
+        "formulation": "compounded sterile injectable containing L-glutathione",
+        "useCase": "adverse event description tied to contamination, not to glutathione itself",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-us-glutathione-compounding-concerns"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-us-glutathione-compounding-concerns",
+          "quote": "fever, chills, myalgia (muscle pain), headache, nausea, vomiting, hypotension (low blood pressure), shock and death",
+          "pageOrSection": "Main advisory text"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical adverse-effect claim; the harm described is attributable to endotoxin contamination from sourcing/compounding practice, not a documented pharmacologic toxicity of glutathione itself - keep this distinction explicit in any surfaced content"
+      ]
+    },
+    {
+      "claimId": "glutathione-regulatory-injectable-skin-lightening-001",
+      "claimType": "regulatory",
+      "statement": "The Philippines FDA states it has not approved any injectable products for skin lightening, warns that injectable glutathione for skin lightening carries reported toxic effects on the liver, kidneys, and nervous system, raises concern about Stevens-Johnson Syndrome and theoretical long-term skin cancer risk from altered melanin production, flags infection-transmission risk (HIV, hepatitis B/C) particularly from non-medical or non-sterile administration, and states that no published clinical trials have evaluated injectable glutathione for skin lightening.",
+      "context": {
+        "population": "consumers seeking skin-lightening injections",
+        "route": "injectable/intravenous",
+        "formulation": "injectable glutathione (compounded/gray-market)",
+        "useCase": "cosmetic skin lightening",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-ph-advisory-2019-182"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-ph-advisory-2019-182",
+          "quote": "The FDA has not approved any injectable products for skin lightening.",
+          "pageOrSection": "FDA Advisory No. 2019-182"
+        },
+        {
+          "sourceRef": "fda-ph-advisory-2019-182",
+          "quote": "Side effects on the use of injectable glutathione for skin lightening include toxic effects on the liver, kidneys, and nervous system.",
+          "pageOrSection": "FDA Advisory No. 2019-182"
+        },
+        {
+          "sourceRef": "fda-ph-advisory-2019-182",
+          "quote": "To date there are no published clinical trials that have evaluated the use of injectable glutathione for skin lightening.",
+          "pageOrSection": "FDA Advisory No. 2019-182"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "sourced from a non-U.S. regulator; confirm current U.S. FDA/FTC enforcement posture on injectable glutathione skin-lightening marketing at review time"
+      ]
+    },
+    {
+      "claimId": "glutathione-regulatory-otc-unapproved-001",
+      "claimType": "regulatory",
+      "statement": "At least one U.S. over-the-counter glutathione product on file with FDA (a homeopathic liquid) is explicitly labeled as unevaluated by FDA, with the label stating the fatigue-relief claim is 'based on traditional homeopathic practice, not accepted medical evidence' and that FDA 'is not aware of scientific evidence to support homeopathy as effective.'",
+      "context": {
+        "population": "general OTC consumers",
+        "route": "oral (sublingual drops)",
+        "formulation": "homeopathic glutathione 5X liquid",
+        "useCase": "OTC fatigue-relief marketing claim",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-glutathione-liquid-otc"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-glutathione-liquid-otc",
+          "quote": "This homeopathic product has not been evaluated by the Food and Drug Administration for safety or efficacy. FDA is not aware of scientific evidence to support homeopathy as effective.",
+          "pageOrSection": "Label - Purpose/Disclaimer"
+        }
+      ],
+      "reviewFlags": [
+        "one labeled product is not representative of all marketed glutathione SKUs; treat as an illustrative example of unapproved-status labeling, not a category-wide finding"
+      ]
+    },
+    {
+      "claimId": "glutathione-efficacy-oral-whitening-rct-001",
+      "claimType": "efficacy",
+      "statement": "In a randomized, double-blind, placebo-controlled trial of 60 healthy medical students given 500 mg oral glutathione daily for 4 weeks, melanin index trended lower across all six measured sites versus placebo, reaching statistical significance at only two of the sites (right facial cheek and sun-exposed left forearm, p=0.021 and p=0.036); the authors concluded oral glutathione produced skin lightening in a small number of subjects and stated long-term safety remained unestablished.",
+      "context": {
+        "population": "healthy adult (medical student) volunteers, n=60",
+        "route": "oral",
+        "formulation": "oral glutathione tablet",
+        "useCase": "cosmetic skin-lightening (investigational)",
+        "doseText": "500 mg/day for 4 weeks (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "watanabe-2012-oral-whitening-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "watanabe-2012-oral-whitening-rct",
+          "quote": "oral glutathione administration results in a lightening of skin color in a small number of subjects",
+          "pageOrSection": "Abstract/Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "small single-site trial (n=60); only 2 of 6 measured sites reached statistical significance",
+        "trial dose context must never be presented as a use recommendation"
+      ]
+    },
+    {
+      "claimId": "glutathione-dose-context-oral-bioavailability-001",
+      "claimType": "dose-context",
+      "statement": "In a randomized, double-blind, crossover pharmacokinetic study in 14 healthy adults, a 300 mg micellar glutathione formulation produced significantly higher systemic glutathione exposure and peak response than a standard 500 mg oral glutathione preparation (p=0.0064), and a 30-day, single-arm follow-up at 600 mg/day of the micellar formulation showed no significant change in liver enzymes (ALT, AST, ALP) or creatinine; the findings imply that standard (non-enhanced) oral glutathione has comparatively limited systemic absorption.",
+      "context": {
+        "population": "healthy adults, n=14",
+        "route": "oral",
+        "formulation": "micellar glutathione (LMG) vs. liposomal (LSG) vs. standard (STD) oral glutathione",
+        "useCase": "pharmacokinetics / bioavailability and short-term safety",
+        "doseText": "Acute: 300 mg (LMG or LSG) vs. 500 mg (STD), single dose; follow-on safety cohort: 600 mg/day LMG for 30 days (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "mdpi-2026-oral-bioavailability-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "mdpi-2026-oral-bioavailability-rct",
+          "quote": "LMG (300 mg) produced significantly higher baseline-adjusted systemic GSH exposure and peak response",
+          "pageOrSection": "Abstract/Results"
+        },
+        {
+          "sourceRef": "mdpi-2026-oral-bioavailability-rct",
+          "quote": "no significant changes in clinical safety markers (e.g., ALT, AST, ALP, creatinine) were observed following 30 days of daily LMG administration at 600 mg/d",
+          "pageOrSection": "Abstract/Results"
+        }
+      ],
+      "reviewFlags": [
+        "very small crossover study (n=14); publisher/funding relationship to the tested proprietary micellar formulation not yet verified",
+        "trial dose context must never be presented as a use recommendation"
+      ]
+    },
+    {
+      "claimId": "glutathione-evidence-gap-iv-detox-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Glutathione is widely marketed online and at med-spas/IV-drip clinics as a 'master antioxidant' skin-lightening and 'detox' injection, but no published clinical trials evaluate injectable glutathione for skin lightening, and the only controlled human efficacy data identified in this packet involve oral glutathione at modest, only partially significant effect sizes; injectable/IV glutathione use for cosmetic or detox purposes accordingly lacks supporting controlled human efficacy evidence and is separately the subject of explicit regulatory safety warnings.",
+      "context": {
+        "population": "consumers of gray-market/med-spa IV glutathione and OTC 'detox' glutathione products",
+        "route": "injectable/intravenous (marketed use) vs. oral (only route with controlled human efficacy data identified)",
+        "formulation": "IV/injectable glutathione; oral glutathione supplements",
+        "useCase": "popular 'detox', 'master antioxidant', and cosmetic skin-lightening marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-ph-advisory-2019-182",
+        "fda-us-glutathione-compounding-concerns",
+        "watanabe-2012-oral-whitening-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-ph-advisory-2019-182",
+          "quote": "To date there are no published clinical trials that have evaluated the use of injectable glutathione for skin lightening.",
+          "pageOrSection": "FDA Advisory No. 2019-182"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular 'detox' and IV-drip marketing claims lack supporting human outcome evidence and are not addressed by the oral-route efficacy literature",
+        "no source reviewed in this packet directly evaluates IV glutathione for general 'detox' claims; gap should be re-checked against any future controlled IV trials"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "glutathione-conflict-marketing-vs-evidence-001",
+      "claimRefs": [
+        "glutathione-evidence-gap-iv-detox-marketing-001",
+        "glutathione-efficacy-oral-whitening-rct-001",
+        "glutathione-regulatory-injectable-skin-lightening-001"
+      ],
+      "severity": "moderate",
+      "summary": "Popular marketing (IV/injectable 'detox' and skin-lightening claims) is not supported by the controlled human evidence identified, which is limited to a single small oral-route RCT with only partial statistical significance; the Philippines FDA states no published trials exist for the injectable route specifically, while separately warning of real safety risks associated with injectable use.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "PubChem compound page could not be fully rendered (JavaScript-gated); CAS number and additional identifiers were cross-confirmed only via search snippets and DrugBank, not a fully fetched structured-database page - re-verify identifiers against a directly fetched PubChem/PUG REST record.",
+      "DrugBank description text was truncated at fetch (login wall); full pharmacology/indication/group (approved vs. investigational vs. nutraceutical) fields were not accessible this session.",
+      "Human efficacy evidence for glutathione's most-marketed uses (IV/injectable skin lightening, general 'detox') remains thin to absent; only oral-route RCTs were available.",
+      "Philippines FDA advisory publish date not confirmed from the fetched page; confirm exact issuance date and current status at review time."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "thin-human-evidence",
+      "negative-or-null-injectable-trial-evidence",
+      "gray-market-injectable-use",
+      "otc-and-compounded-both-in-market"
+    ]
+  }
+}

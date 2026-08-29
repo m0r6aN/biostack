@@ -1,0 +1,380 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "chorionic-gonadotropin-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T02:21:10Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Chorionic gonadotropin",
+    "aliases": [
+      "hCG",
+      "Pregnyl",
+      "Novarel",
+      "Human chorionic gonadotropin",
+      "Choriogonadotropin alfa"
+    ],
+    "classification": "Peptide hormone",
+    "compoundFamily": "Glycoprotein hormone (LH/CG receptor agonist)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "20ED16GHEB",
+      "casNumber": null,
+      "drugbank": "DB09126",
+      "pubchem": null,
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-pregnyl-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "PREGNYL (choriogonadotropin alfa) kit - Label",
+      "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=dc604794-6dd6-43a7-85fa-2f04ed325c33",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "fda-drugs-com-hcg-diet-illegal",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "HCG Diet Products Are Illegal (FDA Consumer Update, republished)",
+      "publisher": "U.S. Food and Drug Administration (via Drugs.com FDA Consumer Updates archive)",
+      "url": "https://www.drugs.com/fda-consumer/hcg-diet-products-are-illegal-204.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "lijesen-1995-bjcp-meta-analysis",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "The effect of human chorionic gonadotropin (HCG) in the treatment of obesity by means of the Simeons therapy: a criteria-based meta-analysis",
+      "publisher": "British Journal of Clinical Pharmacology / NCBI Bookshelf (DARE, Lijesen GK et al., 1995)",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK66355/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "1995-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "hcg-spermatogenesis-retrospective-2025",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B2",
+      "title": "Efficacy of human chorionic gonadotropin hormone in restoring spermatogenesis in men using non-prescribed androgens: a retrospective analysis of real-world data",
+      "publisher": "F&S Reports / PMC (2025)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12223563/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "drugbank-db09126",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Chorionic Gonadotropin (Human) - DrugBank Drug Entry (DB09126)",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB09126",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "fda-gsrs-unii-chorionic-gonadotropin",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "Global Substance Registration System (GSRS) - Chorionic Gonadotropin (UNII 20ED16GHEB)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://precision.fda.gov/uniisearch/srs/unii/20ED16GHEB",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "hcg-regulatory-approved-indications-001",
+      "claimType": "approved-indication",
+      "statement": "Chorionic gonadotropin (Pregnyl, choriogonadotropin alfa) is FDA-approved for prepubertal cryptorchidism not due to anatomical obstruction, for selected cases of hypogonadotropic hypogonadism in males, and for induction of ovulation in anovulatory infertile women who have been pretreated with menotropins; it is labeled for intramuscular use only.",
+      "context": {
+        "population": "prepubertal boys with cryptorchidism; men with selected hypogonadotropic hypogonadism; anovulatory infertile women",
+        "route": "intramuscular",
+        "formulation": "Pregnyl / choriogonadotropin alfa injection kit",
+        "useCase": "approved regulatory indications",
+        "doseText": "Cryptorchidism: 4,000 USP Units three times weekly for three weeks (label regimen, not a use recommendation). Hypogonadism: 500-1,000 USP Units three times a week for three weeks. Ovulation induction: 5,000-10,000 USP Units one day following the last dose of menotropins."
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-pregnyl-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-pregnyl-label",
+          "quote": "Prepubertal cryptorchidism not due to anatomical obstruction (ages 4-9); Selected hypogonadotropic hypogonadism cases in males; Ovulation induction in anovulatory infertile women (after menotropin pretreatment)",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-pregnyl-label",
+          "quote": "4,000 USP Units three times weekly for three weeks",
+          "pageOrSection": "Dosage and Administration, cryptorchidism regimen"
+        }
+      ],
+      "reviewFlags": [
+        "product-specific dosing quoted from label must remain framed as label/trial context, never as a use recommendation"
+      ]
+    },
+    {
+      "claimId": "hcg-regulatory-weight-loss-not-effective-001",
+      "claimType": "regulatory",
+      "statement": "The FDA-approved Pregnyl label states HCG has not been demonstrated to be effective adjunctive therapy in the treatment of obesity, and FDA has separately stated that OTC products marketed as containing HCG for weight loss are illegal, with any weight loss attributable to the severe caloric restriction used alongside HCG diet protocols rather than to HCG itself.",
+      "context": {
+        "population": "consumers seeking weight loss",
+        "route": null,
+        "formulation": "HCG in any form marketed for weight loss (prescription or OTC)",
+        "useCase": "weight loss / obesity adjunct",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-pregnyl-label",
+        "fda-drugs-com-hcg-diet-illegal"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-pregnyl-label",
+          "quote": "HCG HAS NOT BEEN DEMONSTRATED TO BE EFFECTIVE ADJUNCTIVE THERAPY IN THE TREATMENT OF OBESITY.",
+          "pageOrSection": "Warnings"
+        },
+        {
+          "sourceRef": "fda-drugs-com-hcg-diet-illegal",
+          "quote": "You cannot sell products claiming to contain HCG as an OTC drug product. It's illegal",
+          "pageOrSection": "FDA regulatory counsel statement"
+        },
+        {
+          "sourceRef": "fda-drugs-com-hcg-diet-illegal",
+          "quote": "The data simply does not support this; any loss is from severe calorie restriction. Not from the HCG.",
+          "pageOrSection": "FDA statement on HCG diet efficacy"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "verify current FDA/FTC enforcement posture on OTC HCG weight-loss products at review time"
+      ]
+    },
+    {
+      "claimId": "hcg-mechanism-lh-receptor-agonist-001",
+      "claimType": "mechanism",
+      "statement": "Chorionic gonadotropin is a glycoprotein hormone that acts as an agonist at the luteinizing hormone (LH)/choriogonadotropin receptor, mimicking the action of endogenous LH to support corpus luteum function/progesterone production in pregnancy, trigger ovulation, and stimulate testosterone production by testicular Leydig cells.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "chorionic gonadotropin",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "drugbank-db09126",
+        "dailymed-pregnyl-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "drugbank-db09126",
+          "quote": "used for the treatment of prepubertal cryptorchidism and hypogonadotropic hypogonadism in selected males, and induction of pregnancy in selected infertile women",
+          "pageOrSection": "DrugBank summary / indications"
+        }
+      ],
+      "reviewFlags": [
+        "DrugBank mechanism-of-action detail page required login and was not fully accessible; mechanism statement synthesized from indication text and label pharmacology context - confirm against full DrugBank pharmacodynamics section at review"
+      ]
+    },
+    {
+      "claimId": "hcg-efficacy-weight-loss-negative-meta-001",
+      "claimType": "efficacy",
+      "statement": "A criteria-based meta-analysis of randomized controlled trials of HCG for obesity treatment via the Simeons protocol found no scientific evidence that HCG causes weight loss, redistributes fat, reduces hunger, or improves feelings of well-being; of 14 RCTs analyzed, twelve found HCG produced no greater weight loss than placebo or diet alone, and all eight trials examining fat redistribution were negative, leading the authors to conclude HCG should be regarded as inappropriate therapy for weight reduction.",
+      "context": {
+        "population": "adults using HCG for weight loss under low-calorie ('Simeons') diet protocols",
+        "route": "not specified across pooled trials (historically injectable and oral/sublingual products)",
+        "formulation": "HCG, various formulations pooled across trials",
+        "useCase": "obesity / weight-loss adjunct (Simeons therapy)",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "lijesen-1995-bjcp-meta-analysis",
+        "dailymed-pregnyl-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "lijesen-1995-bjcp-meta-analysis",
+          "quote": "There is no scientific evidence that hCG causes weight-loss, redistributes fat, staves off hunger or induces a feeling of well-being.",
+          "pageOrSection": "Conclusion"
+        },
+        {
+          "sourceRef": "lijesen-1995-bjcp-meta-analysis",
+          "quote": "Therefore, the use of hCG should be regarded as an inappropriate therapy for weight reduction.",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "source is a 1995 meta-analysis; confirm no more recent systematic review has reversed this conclusion",
+        "negative human-outcome trial data - do not soften in any downstream summarization"
+      ]
+    },
+    {
+      "claimId": "hcg-off-label-pct-spermatogenesis-001",
+      "claimType": "common-off-label-use",
+      "statement": "In a small, retrospective, real-world cohort of 19 men attending a harm-reduction clinic who continued non-prescribed anabolic androgen use, adjunctive hCG treatment was associated with increases in total sperm count (mean 18.0 million to 146.9 million) and total motile sperm count (1.1 million to 66.9 million baseline to post-treatment), with the proportion of men reaching a normal total motile sperm count rising from 5% to 58%; the authors framed this as support for cautiously including hCG in harm-reduction strategies pending further research, not as an approved or well-established therapy.",
+      "context": {
+        "population": "19 men using non-prescribed anabolic androgens at a Netherlands harm-reduction clinic (Apr 2023-Jul 2024)",
+        "route": "not specified in extracted material",
+        "formulation": "hCG, adjunctive to continued non-prescribed androgen use",
+        "useCase": "fertility/spermatogenesis preservation during anabolic-androgen use ('PCT'-adjacent off-label use)",
+        "doseText": "not extracted; not a use recommendation"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "hcg-spermatogenesis-retrospective-2025"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "hcg-spermatogenesis-retrospective-2025",
+          "quote": "Nineteen men attending a harm reduction clinic in the Netherlands from April 2023 to July 2024",
+          "pageOrSection": "Abstract / methods"
+        },
+        {
+          "sourceRef": "hcg-spermatogenesis-retrospective-2025",
+          "quote": "The mean TSC increased significantly from 18.0 million to 146.9 million after hCG treatment",
+          "pageOrSection": "Abstract / results"
+        },
+        {
+          "sourceRef": "hcg-spermatogenesis-retrospective-2025",
+          "quote": "Human chorionic gonadotropin appears to be effective in improving spermatogenesis in the majority of men who continue non-prescribed androgen use, whereas some men remain oligospermic or azoospermic.",
+          "pageOrSection": "Abstract / conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical / dosing-adjacent off-label use claim",
+        "single small retrospective cohort (n=19), uncontrolled, no placebo comparator - do not generalize to efficacy claims beyond this population",
+        "does not establish safety or efficacy of hCG use alongside non-prescribed androgens generally; independent confirmation from a controlled study recommended at next review"
+      ]
+    },
+    {
+      "claimId": "hcg-adverse-effects-fertility-use-001",
+      "claimType": "adverse-effect",
+      "statement": "In labeled use for ovulation induction, HCG carries serious adverse-reaction risks including ovarian hyperstimulation syndrome, ovarian cyst formation/rupture, multiple gestation, and arterial thromboembolism.",
+      "context": {
+        "population": "women receiving HCG for ovulation induction",
+        "route": "intramuscular",
+        "formulation": "Pregnyl / choriogonadotropin alfa",
+        "useCase": "ovulation induction",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-pregnyl-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-pregnyl-label",
+          "quote": "Ovarian hyperstimulation, ovarian cyst rupture, multiple births, and arterial thromboembolism noted during infertility treatment use.",
+          "pageOrSection": "Warnings / Adverse Reactions"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical adverse-effect claim requiring field-authority verification against full label ADVERSE REACTIONS section text"
+      ]
+    },
+    {
+      "claimId": "hcg-misinformation-otc-weight-loss-marketing-001",
+      "claimType": "misinformation-claim",
+      "statement": "HCG is widely marketed online and through 'HCG diet' vendors as a fat-burning, metabolism-boosting, or muscle-sparing weight-loss aid, and combined with very-low-calorie (~500 kcal/day) protocols; this marketed use is not supported by controlled trial evidence, is explicitly contradicted by the approved product label, and FDA has stated OTC HCG weight-loss products are illegal to sell, while the accompanying very-low-calorie diets carry their own documented risks (gallstone formation, electrolyte imbalance, cardiac arrhythmia).",
+      "context": {
+        "population": "consumers of HCG-diet products and protocols",
+        "route": "commonly oral drops/sublingual (unapproved OTC products) or self-administered injection",
+        "formulation": "unapproved OTC 'homeopathic' HCG products and compounded/gray-market HCG",
+        "useCase": "rapid weight loss / fat loss marketing claim",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-drugs-com-hcg-diet-illegal",
+        "lijesen-1995-bjcp-meta-analysis",
+        "dailymed-pregnyl-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-drugs-com-hcg-diet-illegal",
+          "quote": "increased risk for side effects that include gallstone formation, an imbalance of the electrolytes that keep the body's muscles and nerves functioning properly, and an irregular heartbeat",
+          "pageOrSection": "FDA nutritionist statement on very-low-calorie HCG diets"
+        },
+        {
+          "sourceRef": "lijesen-1995-bjcp-meta-analysis",
+          "quote": "There is no scientific evidence that hCG causes weight-loss, redistributes fat, staves off hunger or induces a feeling of well-being.",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent marketing claim capture; ensure this claim is surfaced prominently given high consumer search volume for 'HCG diet'",
+        "verify current status of FTC enforcement actions against specific HCG-diet vendors at review time"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "hcg-conflict-pct-marketing-vs-evidence-001",
+      "claimRefs": [
+        "hcg-off-label-pct-spermatogenesis-001",
+        "hcg-misinformation-otc-weight-loss-marketing-001"
+      ],
+      "severity": "moderate",
+      "summary": "Online marketing and forum discussion frequently present hCG as a well-established, low-risk tool for both weight loss and post-cycle testosterone/fertility recovery. The strongest available human evidence supports neither claim at that strength: weight-loss efficacy evidence is decisively negative (Lijesen 1995 meta-analysis of 14 RCTs), and the spermatogenesis-restoration evidence is limited to one small, uncontrolled, retrospective cohort (n=19) that its own authors describe as preliminary and requiring further research.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "PubChem CID and CAS number for chorionic gonadotropin could not be reliably resolved this session (PubChem's compound page returned data for an apparently mismatched small-molecule entry); leave externalIdentifiers.pubchem and casNumber null until confirmed against a structured database query in a follow-up session.",
+      "DrugBank DB09126 full pharmacodynamics/mechanism-of-action section was gated behind login and could not be fully quoted; mechanism claim should be cross-checked against DrugBank or a pharmacology textbook source at review.",
+      "Human evidence for the common off-label post-cycle-therapy/fertility-preservation use is thin (single small retrospective uncontrolled cohort); do not upgrade evidenceTier without an independent controlled study."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "fda-approved-product",
+      "negative-human-trial-documented",
+      "thin-human-evidence-off-label-use",
+      "misinformation-marketing-gap-documented"
+    ]
+  }
+}
