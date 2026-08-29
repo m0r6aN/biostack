@@ -965,313 +965,267 @@
       "canonicalName": "Dulaglutide",
       "slug": "dulaglutide",
       "aliases": [
-        "Trulicity"
+        "Trulicity",
+        "LY2189265"
       ],
       "brandNames": [],
-      "synonyms": [],
-      "classification": "Pharmaceutical",
-      "compoundFamily": "GLP-1 receptor agonist",
+      "synonyms": [
+        "Trulicity",
+        "LY2189265"
+      ],
+      "classification": "Other",
+      "compoundFamily": "Long-acting GLP-1 receptor agonist (GLP-1 analog fused to modified human IgG4 Fc fragment)",
       "isCombinationProduct": false,
       "activeMoieties": [
         "Dulaglutide"
       ],
       "externalIdentifiers": {
         "rxnorm": null,
-        "unii": null,
-        "casNumber": null,
-        "drugbank": null,
+        "unii": "WTT295HSY5",
+        "casNumber": "923950-08-7",
+        "drugbank": "DB09045",
         "pubchem": null
       }
     },
     "regulatory": {
-      "requiresPrescription": true,
-      "regulatoryStatus": "FDA-approved prescription product or labeled drug class",
-      "labelStatusByUseCase": [
-        {
-          "useCase": "type 2 diabetes per product label",
-          "labelStatus": "on-label"
-        }
-      ],
-      "jurisdiction": "US",
-      "approvedIndications": [
-        "type 2 diabetes per product label"
-      ],
-      "offLabelNotes": []
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
     },
     "mechanism": {
-      "mechanismSummary": "Dulaglutide is represented by its commonly described glp-1 receptor agonist mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
+      "mechanismSummary": "Dulaglutide is a GLP-1 receptor agonist consisting of a GLP-1 analog fused to a modified human IgG4 Fc fragment, engineered to slow renal clearance and support once-weekly subcutaneous dosing; DrugBank lists its clinical indication as management of type 2 diabetes mellitus.",
       "primaryMechanisms": [
-        "GLP-1 receptor agonist",
-        "glycemic-control"
+        "Dulaglutide is a GLP-1 receptor agonist consisting of a GLP-1 analog fused to a modified human IgG4 Fc fragment, engineered to slow renal clearance and support once-weekly subcutaneous dosing; DrugBank lists its clinical indication as management of type 2 diabetes mellitus."
       ],
-      "pathways": [
-        "incretin-signaling",
-        "glucose-regulation"
-      ],
-      "targets": [
-        "GLP-1 receptor agonist"
-      ],
-      "effectTags": [
-        "glycemic-control",
-        "satiety"
-      ],
-      "goalTags": [
-        "metabolic-health",
-        "glucose-management"
-      ]
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
     },
-    "formulations": [
-      {
-        "formulationId": "dulaglutide-subcutaneous",
-        "productName": "Dulaglutide",
-        "manufacturer": null,
-        "route": "subcutaneous",
-        "dosageForm": "injection",
-        "strength": null,
-        "concentration": null,
-        "unit": null,
-        "substitutableWith": [],
-        "storage": {
-          "beforeReconstitution": "Follow product labeling or pharmacy instructions; keep sterile products under labeled conditions.",
-          "afterReconstitution": "Use only within the product-specific stability window when one is provided.",
-          "temperatureNotes": "Do not freeze unless labeling specifically allows it.",
-          "lightSensitivity": null,
-          "stabilityWindow": "Product-specific or unknown."
-        },
-        "reconstitution": {
-          "required": true,
-          "diluent": "Use only the labeled diluent or pharmacist-provided sterile diluent.",
-          "diluentVolume": null,
-          "instructions": "Do not shake; inspect for particulate matter; follow product-specific labeling.",
-          "productSpecific": true
-        }
-      }
-    ],
-    "indications": [
-      {
-        "useCase": "type 2 diabetes per product label",
-        "labelStatus": "on-label",
-        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "Evidence reviewed for type 2 diabetes per product label; BioStack presents this as educational reference, not a recommendation.",
-        "evidenceTier": "Strong",
-        "sources": [
-          "src:dulaglutide"
-        ]
-      }
-    ],
-    "dosingGuidance": [
-      {
-        "guidanceId": "dulaglutide-guidance",
-        "context": {
-          "useCase": "type 2 diabetes per product label",
-          "population": "Adults where appropriate",
-          "formulation": null,
-          "route": "subcutaneous"
-        },
-        "dose": {
-          "amount": 0.75,
-          "unit": "mg",
-          "frequency": "weekly",
-          "scheduleText": "Follow product-specific prescribing information.",
-          "preferredTimeOfDay": null
-        },
-        "notes": [
-          "Educational reference only; not medical advice."
-        ],
-        "productSpecific": true,
-        "sources": [
-          "src:dulaglutide"
-        ]
-      }
-    ],
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
     "compatibility": {
-      "vialCompatibilitySummary": "Compatibility is unknown; do not mix in the same vial or syringe unless product labeling or a pharmacist explicitly supports it.",
-      "blendingRules": [
-        {
-          "ruleType": "co-mix",
-          "target": "other compounds",
-          "status": "review",
-          "message": "No hard-safe compatibility conclusion is established by this seed record.",
-          "sources": [
-            "src:dulaglutide"
-          ]
-        }
-      ],
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
       "compatibleBlends": [],
       "incompatibleBlends": [],
-      "unknownCompatibility": [
-        "other compounds"
-      ]
+      "unknownCompatibility": []
     },
     "safety": {
-      "contraindications": [
-        {
-          "item": "Known hypersensitivity to the active ingredient or formulation components",
-          "severity": "high",
-          "notes": "Confirm full labeled contraindications before use.",
-          "sources": [
-            "src:dulaglutide"
-          ]
-        }
-      ],
-      "warnings": [
-        {
-          "item": "Use requires review of full prescribing information or regulator warning",
-          "severity": "review",
-          "notes": "BioStack stores a launch-safe summary only; primary sources may include additional risks and population-specific limits.",
-          "sources": [
-            "src:dulaglutide"
-          ]
-        }
-      ],
-      "precautions": [
-        {
-          "item": "Medication and condition review",
-          "notes": "Check concurrent medications, conditions, pregnancy status, and labs where applicable.",
-          "sources": [
-            "src:dulaglutide"
-          ]
-        }
-      ],
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
       "adverseEffects": {
-        "common": [
-          "source-dependent"
-        ],
-        "serious": [
-          "source-dependent"
-        ]
+        "common": [],
+        "serious": []
       },
-      "monitoring": [
-        {
-          "parameter": "Clinical response and adverse effects",
-          "reason": "Detect intolerance or clinically meaningful safety signals.",
-          "frequency": "Per label, regulator warning, and clinician judgment",
-          "sources": [
-            "src:dulaglutide"
-          ]
-        }
-      ]
+      "monitoring": []
     },
-    "interactions": [
-      {
-        "interactionId": "dulaglutide-insulin-or-insulin-secretagogues",
-        "type": "drug-drug",
-        "target": "insulin or insulin secretagogues",
-        "severity": "review",
-        "mechanism": "Pathway or pharmacologic overlap",
-        "effect": "Potential additive or opposing effects may occur.",
-        "recommendedAction": "Flag for review; do not treat as automatically compatible.",
-        "sources": [
-          "src:dulaglutide"
-        ]
-      }
-    ],
+    "interactions": [],
     "stackIntelligence": {
       "pairsWellWith": [],
-      "avoidWith": [
-        {
-          "target": "other GLP-1 receptor agonists",
-          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
-          "severity": "review",
-          "sources": [
-            "src:dulaglutide"
-          ]
-        }
-      ],
-      "overlapRules": [
-        {
-          "ruleId": "dulaglutide-incretin-signaling-overlap",
-          "ruleType": "pathway-overlap",
-          "tag": "incretin-signaling",
-          "severity": "review",
-          "message": "Shared pathway tag: incretin-signaling.",
-          "action": "Show overlap and require interpretation rather than returning no relationship.",
-          "sources": [
-            "src:dulaglutide"
-          ]
-        }
-      ],
+      "avoidWith": [],
+      "overlapRules": [],
       "synergyRules": [],
       "conflictRules": [],
       "redundancyRules": [],
       "timingRules": []
     },
     "supportiveGuidance": {
-      "nutrition": [
-        {
-          "topic": "Baseline",
-          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
-        }
-      ],
-      "supplements": [
-        {
-          "topic": "Stack review",
-          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
-        }
-      ],
-      "sleep": [
-        {
-          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
-        }
-      ],
-      "exercise": [
-        {
-          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
-        }
-      ],
-      "applicabilityNotes": [
-        "Supportive guidance is general tracking context and is not a treatment recommendation."
-      ],
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
       "sources": [
-        "src:internal-guidance"
+        "dailymed-trulicity-label",
+        "springer-dulaglutide-therapy-review-2021",
+        "drugbank-db09045",
+        "wikipedia-dulaglutide",
+        "diabetes-care-glp1ra-thyroid-cohort-2026",
+        "primarycarenotebook-rewind-summary",
+        "healthline-trulicity-weight-loss"
       ]
     },
     "evidence": {
       "overallTier": "Strong",
       "claimSpecificEvidence": [
         {
-          "claim": "Dulaglutide has evidence relevant to type 2 diabetes per product label.",
+          "claim": "TRULICITY (dulaglutide) is FDA-approved as an adjunct to diet and exercise to improve glycemic control in adults and pediatric patients 10 years of age and older with type 2 diabetes mellitus, and separately to reduce the risk of major adverse cardiovascular events in adults with type 2 diabetes mellitus who have established cardiovascular disease or multiple cardiovascular risk factors. The current label contains no approved indication for weight loss or obesity.",
           "tier": "Strong",
           "confidence": "high",
           "sources": [
-            "src:dulaglutide"
+            "dailymed-trulicity-label"
+          ]
+        },
+        {
+          "claim": "TRULICITY carries a boxed warning that dulaglutide causes thyroid C-cell tumors in rats and that it is unknown whether it causes thyroid C-cell tumors, including medullary thyroid carcinoma (MTC), in humans. It is contraindicated in patients with a personal or family history of MTC or Multiple Endocrine Neoplasia syndrome type 2 (MEN 2), and in patients with prior serious hypersensitivity to dulaglutide or any product component.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-trulicity-label",
+            "diabetes-care-glp1ra-thyroid-cohort-2026"
+          ]
+        },
+        {
+          "claim": "The TRULICITY label warns that acute pancreatitis, including fatal and non-fatal hemorrhagic or necrotizing pancreatitis, has been observed in patients treated with GLP-1 receptor agonists including dulaglutide, and that postmarketing reports of acute kidney injury (in some cases requiring hemodialysis) have occurred, most often in patients experiencing GI adverse reactions leading to dehydration. Common adverse reactions occurring at >=5% incidence include nausea, diarrhea, vomiting, abdominal pain, and decreased appetite.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-trulicity-label"
+          ]
+        },
+        {
+          "claim": "Dulaglutide is a GLP-1 receptor agonist consisting of a GLP-1 analog fused to a modified human IgG4 Fc fragment, engineered to slow renal clearance and support once-weekly subcutaneous dosing; DrugBank lists its clinical indication as management of type 2 diabetes mellitus.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "drugbank-db09045",
+            "wikipedia-dulaglutide"
+          ]
+        },
+        {
+          "claim": "Per FDA-approved labeling (trial-protocol/label context, not a use recommendation), the recommended starting dosage of TRULICITY for glycemic control is 0.75 mg injected subcutaneously once weekly; after at least 4 weeks, dosage may be increased to 1.5 mg weekly, with further 1.5 mg increments possible at intervals of at least 4 weeks up to a maximum of 4.5 mg once weekly.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-trulicity-label",
+            "wikipedia-dulaglutide"
+          ]
+        },
+        {
+          "claim": "In the REWIND randomized, double-blind, placebo-controlled cardiovascular outcomes trial in adults with type 2 diabetes aged >=50 years (with or without established cardiovascular disease), dulaglutide treatment was associated with a significantly lower risk of the primary composite endpoint (non-fatal myocardial infarction, non-fatal stroke, or cardiovascular death) versus placebo over a median follow-up of 5.4 years (hazard ratio 0.88, 95% CI 0.79-0.99).",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "springer-dulaglutide-therapy-review-2021",
+            "dailymed-trulicity-label",
+            "primarycarenotebook-rewind-summary"
+          ]
+        },
+        {
+          "claim": "Dulaglutide (Trulicity) has no FDA-approved indication for weight loss or obesity management, unlike some other GLP-1 receptor agonists (e.g., semaglutide/Wegovy, tirzepatide/Zepbound) that hold dedicated weight-management approvals; consumer health coverage confirms it is sometimes prescribed off-label for weight loss based on the weight-reduction side effect observed in diabetes trials, but this use sits outside its approved indication and outside the controlled evidence base reviewed here for that specific purpose.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "dailymed-trulicity-label",
+            "healthline-trulicity-weight-loss"
           ]
         }
       ],
       "evidenceGaps": [
-        "Seed record is intentionally conservative; review primary sources for details."
+        "Dulaglutide (Trulicity) has no FDA-approved indication for weight loss or obesity management, unlike some other GLP-1 receptor agonists (e.g., semaglutide/Wegovy, tirzepatide/Zepbound) that hold dedicated weight-management approvals; consumer health coverage confirms it is sometimes prescribed off-label for weight loss based on the weight-reduction side effect observed in diabetes trials, but this use sits outside its approved indication and outside the controlled evidence base reviewed here for that specific purpose."
       ],
       "controversies": []
     },
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "label",
-          "title": "Prescribing information for Dulaglutide",
-          "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Dulaglutide",
-          "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "sourceType": "regulator",
+          "title": "Label: TRULICITY - dulaglutide injection, solution",
+          "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling, Eli Lilly and Company)",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=463050bd-2b1c-40f5-b3c3-0a04bb433309",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Article discussing REWIND trial cardiovascular outcome results for dulaglutide (Diabetes Therapy, Springer, DOI 10.1007/s13300-021-01200-0)",
+          "publisher": "Diabetes Therapy / Springer Nature",
+          "url": "https://link.springer.com/article/10.1007/s13300-021-01200-0",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Dulaglutide: Uses, Interactions, Mechanism of Action (DrugBank Accession DB09045)",
+          "publisher": "DrugBank Online",
+          "url": "https://go.drugbank.com/drugs/DB09045",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Dulaglutide",
+          "publisher": "Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Dulaglutide",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Retrospective multi-database cohort study of GLP-1 receptor agonist exposure (including dulaglutide) and thyroid tumor risk (460,032 users)",
+          "publisher": "Diabetes Care / American Diabetes Association",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12281980/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Dulaglutide and cardiovascular outcomes in type 2 diabetes: REWIND, a double-blind randomised placebo-controlled trial",
+          "publisher": "Primary Care Notebook",
+          "url": "https://primarycarenotebook.com/pages/diabetes-and-endocrinology/dulaglutide-and-cardiovascular-outcomes-in-type-2-diabetes-rewind-a-double-blind-randomised-placebo-controlled-trial",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Trulicity and Weight Loss: What to Expect",
+          "publisher": "Healthline",
+          "url": "https://www.healthline.com/health/drugs/trulicity-and-weight-loss",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T22:30:00Z"
         }
       ],
       "curationNotes": [
-        "Launch seed record; conservative fields selected for validation and honest coverage."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "RESOLVED (remediation pass 2026-08-29): Primary REWIND trial publication remained inaccessible directly (Lancet/PubMed/PMC still 403/CAPTCHA-gated this session), but an independent clinical-reference summary (Primary Care Notebook, distinct source family from the packet's Springer secondary review) was fetched and independently corroborates the exact HR 0.88 (95% CI 0.79-0.99, p=0.026), 5.4-year median follow-up, and 9,901-participant population verbatim. Added as a source and cited in extractedEvidence.",
+        "RESOLVED (remediation pass 2026-08-29): DOI for the REWIND primary publication (10.1016/S0140-6736(19)31149-3) independently confirmed via Crossref API this session (title/journal/lead-author match REWIND) and added to compound.externalIdentifiers.doi.",
+        "STILL OPEN: PubChem CID could not be resolved this remediation session. PUG-REST name and CAS-xref lookups were robots-disallowed; the PubChem compound-summary HTML page was fetched but its 'pubchem_uid_value' meta tag resolved to CID 262 (2,3-Butanediol), which was independently verified via a second fetch to be the WRONG compound - so it was rejected rather than written into the packet. pubchem identifier remains null pending a reliable resolution route (e.g., manual PubChem search UI, or NCBI E-utilities esearch against the PubChem Compound database).",
+        "STILL OPEN: dulaglutide-warning-pancreatitis-aki-001 (fieldAuthorityRequired safety-critical claim) remains unresolved. This remediation session attempted: Europe PMC REST API search for 'dulaglutide pancreatitis' (persistently 429 rate-limited across multiple retries with cooldowns, mirroring the original access problem), and PMC full text of Azoulay et al. (incretin drugs/pancreatitis, BMJ 2016) at a candidate PMC ID (410 gone/retired). No independent-family source was reached; the claim stays sourced only to the DailyMed label and remains human-review-gated. Recommend a follow-up attempt via Drugs@FDA safety communications, the FDA/EMA joint pancreatic-safety assessment (NEJM/Cohen 2014), or a fresh Europe PMC query once rate limits clear.",
+        "STILL OPEN (partially addressed): dulaglutide-regulatory-approved-indication-001 and dulaglutide-dose-context-label-regimen-001 (both fieldAuthorityRequired) - DrugBank and Wikipedia (independent families) now corroborate the core T2D indication and the dose-tier structure/ceiling respectively, but the CV-indication clause, the no-obesity-indication clause, and the exact 4-week titration interval wording still rest principally on the DailyMed/live-FDA regulator family. ADA Standards of Care (professional.diabetes.org) returned a 403 to the fetch tool again this session. Recommend one further independent-family attempt before final sign-off.",
+        "Weight-loss off-label marketing gap is documented from consumer-health media (Healthline) rather than a systematic review of off-label-use prevalence; strength of that characterization should be revisited if a stronger source becomes available. (Note: independent review located a supporting systematic review/meta-analysis - Li et al. 2024, Eur J Clin Invest, DOI 10.1111/eci.14125 - but this remediation session could not itself fetch the Wiley abstract, 403, so it was not added as a verified citation; a future session should re-attempt.)",
+        "Compiled draft requires human review before publication."
       ],
-      "lastReviewedAt": "2026-04-20T00:00:00Z",
-      "reviewStatus": "approved"
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
     },
     "ops": {
       "recordVersion": 1,
       "contentHash": null,
-      "ingestionSource": "seed:substances-seed.json",
-      "ingestedAt": null,
-      "updatedAt": null,
+      "ingestionSource": "evidence-packet:dulaglutide-evidence-expansion-001",
+      "ingestedAt": "2026-08-28T22:30:00Z",
+      "updatedAt": "2026-08-28T22:30:00Z",
       "lastChangeType": "seed",
-      "isActive": true,
-      "completeness": "substantial",
-      "needsReview": false,
-      "reviewReasons": [],
-      "qualityFlags": []
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "RESOLVED (remediation pass 2026-08-29): Primary REWIND trial publication remained inaccessible directly (Lancet/PubMed/PMC still 403/CAPTCHA-gated this session), but an independent clinical-reference summary (Primary Care Notebook, distinct source family from the packet's Springer secondary review) was fetched and independently corroborates the exact HR 0.88 (95% CI 0.79-0.99, p=0.026), 5.4-year median follow-up, and 9,901-participant population verbatim. Added as a source and cited in extractedEvidence.",
+        "RESOLVED (remediation pass 2026-08-29): DOI for the REWIND primary publication (10.1016/S0140-6736(19)31149-3) independently confirmed via Crossref API this session (title/journal/lead-author match REWIND) and added to compound.externalIdentifiers.doi.",
+        "STILL OPEN: PubChem CID could not be resolved this remediation session. PUG-REST name and CAS-xref lookups were robots-disallowed; the PubChem compound-summary HTML page was fetched but its 'pubchem_uid_value' meta tag resolved to CID 262 (2,3-Butanediol), which was independently verified via a second fetch to be the WRONG compound - so it was rejected rather than written into the packet. pubchem identifier remains null pending a reliable resolution route (e.g., manual PubChem search UI, or NCBI E-utilities esearch against the PubChem Compound database).",
+        "STILL OPEN: dulaglutide-warning-pancreatitis-aki-001 (fieldAuthorityRequired safety-critical claim) remains unresolved. This remediation session attempted: Europe PMC REST API search for 'dulaglutide pancreatitis' (persistently 429 rate-limited across multiple retries with cooldowns, mirroring the original access problem), and PMC full text of Azoulay et al. (incretin drugs/pancreatitis, BMJ 2016) at a candidate PMC ID (410 gone/retired). No independent-family source was reached; the claim stays sourced only to the DailyMed label and remains human-review-gated. Recommend a follow-up attempt via Drugs@FDA safety communications, the FDA/EMA joint pancreatic-safety assessment (NEJM/Cohen 2014), or a fresh Europe PMC query once rate limits clear.",
+        "STILL OPEN (partially addressed): dulaglutide-regulatory-approved-indication-001 and dulaglutide-dose-context-label-regimen-001 (both fieldAuthorityRequired) - DrugBank and Wikipedia (independent families) now corroborate the core T2D indication and the dose-tier structure/ceiling respectively, but the CV-indication clause, the no-obesity-indication clause, and the exact 4-week titration interval wording still rest principally on the DailyMed/live-FDA regulator family. ADA Standards of Care (professional.diabetes.org) returned a 403 to the fetch tool again this session. Recommend one further independent-family attempt before final sign-off.",
+        "Weight-loss off-label marketing gap is documented from consumer-health media (Healthline) rather than a systematic review of off-label-use prevalence; strength of that characterization should be revisited if a stronger source becomes available. (Note: independent review located a supporting systematic review/meta-analysis - Li et al. 2024, Eur J Clin Invest, DOI 10.1111/eci.14125 - but this remediation session could not itself fetch the Wiley abstract, 403, so it was not added as a verified citation; a future session should re-attempt.)",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "fda-approved-product",
+        "a1-regulator-backed",
+        "boxed-warning-present",
+        "secondary-source-for-pivotal-rct",
+        "off-label-marketing-gap-documented",
+        "remediation-pass-2026-08-29",
+        "compiled-from-evidence-packet"
+      ]
     }
   },
   {
@@ -3146,287 +3100,305 @@
       "canonicalName": "Sermorelin",
       "slug": "sermorelin",
       "aliases": [
-        "GRF 1-29"
+        "Geref",
+        "GRF 1-29",
+        "GHRH(1-29)NH2",
+        "Sermorelin acetate",
+        "Somatorelin (related INN)"
       ],
       "brandNames": [],
-      "synonyms": [],
+      "synonyms": [
+        "Geref",
+        "GRF 1-29",
+        "GHRH(1-29)NH2",
+        "Sermorelin acetate",
+        "Somatorelin (related INN)"
+      ],
       "classification": "Peptide",
-      "compoundFamily": "GHRH analog",
+      "compoundFamily": "Synthetic 29-amino-acid growth-hormone-releasing hormone (GHRH) analog / GHRH-receptor agonist",
       "isCombinationProduct": false,
       "activeMoieties": [
         "Sermorelin"
       ],
       "externalIdentifiers": {
-        "rxnorm": null,
-        "unii": null,
-        "casNumber": null,
-        "drugbank": null,
-        "pubchem": null
+        "rxnorm": "56188",
+        "unii": "89243S03TE",
+        "casNumber": "86168-78-7",
+        "drugbank": "DB00010",
+        "pubchem": "16132413"
       }
     },
     "regulatory": {
       "requiresPrescription": false,
-      "regulatoryStatus": "ClassB reference only; regulatory status not established by this record",
-      "labelStatusByUseCase": [
-        {
-          "useCase": "research or compounding reference",
-          "labelStatus": "unknown"
-        }
-      ],
-      "jurisdiction": "US",
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
       "approvedIndications": [],
-      "offLabelNotes": []
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
     },
     "mechanism": {
-      "mechanismSummary": "Sermorelin is represented by its commonly described ghrh analog mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
+      "mechanismSummary": "Sermorelin (acetate) is a synthetic 29-amino-acid peptide corresponding to the amino-terminal, biologically active segment of native human growth hormone-releasing hormone (GHRH); it acts as a GHRH-receptor agonist on the anterior pituitary to stimulate endogenous growth hormone secretion.",
       "primaryMechanisms": [
-        "GHRH analog",
-        "growth-hormone-release"
+        "Sermorelin (acetate) is a synthetic 29-amino-acid peptide corresponding to the amino-terminal, biologically active segment of native human growth hormone-releasing hormone (GHRH); it acts as a GHRH-receptor agonist on the anterior pituitary to stimulate endogenous growth hormone secretion."
       ],
-      "pathways": [
-        "GH-IGF-1 axis",
-        "pituitary-signaling"
-      ],
-      "targets": [
-        "GHRH analog"
-      ],
-      "effectTags": [
-        "growth-hormone-release",
-        "recovery-context"
-      ],
-      "goalTags": [
-        "recovery",
-        "body-composition"
-      ]
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
     },
-    "formulations": [
-      {
-        "formulationId": "sermorelin-subcutaneous",
-        "productName": "Sermorelin",
-        "manufacturer": null,
-        "route": "subcutaneous",
-        "dosageForm": "peptide injection",
-        "strength": null,
-        "concentration": null,
-        "unit": null,
-        "substitutableWith": [],
-        "storage": {
-          "beforeReconstitution": "Follow product labeling or pharmacy instructions; keep sterile products under labeled conditions.",
-          "afterReconstitution": "Use only within the product-specific stability window when one is provided.",
-          "temperatureNotes": "Do not freeze unless labeling specifically allows it.",
-          "lightSensitivity": null,
-          "stabilityWindow": "Product-specific or unknown."
-        },
-        "reconstitution": {
-          "required": true,
-          "diluent": "unknown",
-          "diluentVolume": null,
-          "instructions": "Reconstitution details are not established by included sources.",
-          "productSpecific": false
-        }
-      }
-    ],
-    "indications": [
-      {
-        "useCase": "research or compounding reference",
-        "labelStatus": "unknown",
-        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "Evidence reviewed for research or compounding reference; BioStack presents this as educational reference, not a recommendation.",
-        "evidenceTier": "Limited",
-        "sources": [
-          "src:sermorelin"
-        ]
-      }
-    ],
-    "dosingGuidance": [
-      {
-        "guidanceId": "sermorelin-guidance",
-        "context": {
-          "useCase": "research or compounding reference",
-          "population": "Adults where appropriate",
-          "formulation": null,
-          "route": "subcutaneous"
-        },
-        "dose": {
-          "amount": null,
-          "unit": "unknown",
-          "frequency": "review required",
-          "scheduleText": "Dosing is not established by the included ClassB or non-dose source; review with a licensed clinician or primary source.",
-          "preferredTimeOfDay": null
-        },
-        "notes": [
-          "No product-specific dosing is established by this seed record."
-        ],
-        "productSpecific": false,
-        "sources": [
-          "src:sermorelin"
-        ]
-      }
-    ],
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
     "compatibility": {
-      "vialCompatibilitySummary": "Compatibility is unknown; do not mix in the same vial or syringe unless product labeling or a pharmacist explicitly supports it.",
-      "blendingRules": [
-        {
-          "ruleType": "co-mix",
-          "target": "other compounds",
-          "status": "unknown",
-          "message": "No hard-safe compatibility conclusion is established by this seed record.",
-          "sources": [
-            "src:sermorelin"
-          ]
-        }
-      ],
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
       "compatibleBlends": [],
       "incompatibleBlends": [],
-      "unknownCompatibility": [
-        "other compounds"
-      ]
+      "unknownCompatibility": []
     },
     "safety": {
       "contraindications": [],
       "warnings": [],
-      "precautions": [
-        {
-          "item": "Review primary sources before use",
-          "notes": "ClassB-only seed record; regulated safety canon is intentionally not asserted.",
-          "sources": [
-            "src:sermorelin"
-          ]
-        }
-      ],
+      "precautions": [],
       "adverseEffects": {
-        "common": [
-          "unknown"
-        ],
-        "serious": [
-          "unknown"
-        ]
+        "common": [],
+        "serious": []
       },
       "monitoring": []
     },
-    "interactions": [
-      {
-        "interactionId": "sermorelin-other-gh-secretagogues",
-        "type": "drug-drug",
-        "target": "other GH secretagogues",
-        "severity": "review",
-        "mechanism": "Pathway or pharmacologic overlap",
-        "effect": "Potential additive or opposing effects may occur.",
-        "recommendedAction": "Flag for review; do not treat as automatically compatible.",
-        "sources": [
-          "src:sermorelin"
-        ]
-      }
-    ],
+    "interactions": [],
     "stackIntelligence": {
       "pairsWellWith": [],
-      "avoidWith": [
-        {
-          "target": "tesamorelin or other GH secretagogues",
-          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
-          "severity": "review",
-          "sources": [
-            "src:sermorelin"
-          ]
-        }
-      ],
-      "overlapRules": [
-        {
-          "ruleId": "sermorelin-gh-igf-1-axis-overlap",
-          "ruleType": "pathway-overlap",
-          "tag": "GH-IGF-1 axis",
-          "severity": "review",
-          "message": "Shared pathway tag: GH-IGF-1 axis.",
-          "action": "Show overlap and require interpretation rather than returning no relationship.",
-          "sources": [
-            "src:sermorelin"
-          ]
-        }
-      ],
+      "avoidWith": [],
+      "overlapRules": [],
       "synergyRules": [],
       "conflictRules": [],
       "redundancyRules": [],
       "timingRules": []
     },
     "supportiveGuidance": {
-      "nutrition": [
-        {
-          "topic": "Baseline",
-          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
-        }
-      ],
-      "supplements": [
-        {
-          "topic": "Stack review",
-          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
-        }
-      ],
-      "sleep": [
-        {
-          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
-        }
-      ],
-      "exercise": [
-        {
-          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
-        }
-      ],
-      "applicabilityNotes": [
-        "Supportive guidance is general tracking context and is not a treatment recommendation."
-      ],
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
       "sources": [
-        "src:internal-guidance"
+        "fedreg-geref-determination-2013",
+        "dailymed-search-sermorelin",
+        "fda-bulk-drug-substances-category2",
+        "pubchem-cid-16132413",
+        "drugbank-db00010",
+        "pmc-gh-secretagogues-review",
+        "healthline-sermorelin",
+        "biospace-geref-discontinuation-2008",
+        "vittone-1997-ghrh-elderly-men",
+        "vitiello-2006-ghrh-cognition-elderly",
+        "rxnav-nlm-sermorelin"
       ]
     },
     "evidence": {
-      "overallTier": "Limited",
+      "overallTier": "Strong",
       "claimSpecificEvidence": [
         {
-          "claim": "Sermorelin has evidence relevant to research or compounding reference.",
-          "tier": "Limited",
-          "confidence": "low",
+          "claim": "FDA-approved sermorelin acetate injection (brand GEREF) was indicated for treatment of idiopathic growth hormone deficiency in children with growth failure; the manufacturer (EMD Serono) discontinued the product in 2008, and FDA formally determined the product was not withdrawn from sale for reasons of safety or effectiveness.",
+          "tier": "Strong",
+          "confidence": "high",
           "sources": [
-            "src:sermorelin"
+            "fedreg-geref-determination-2013"
+          ]
+        },
+        {
+          "claim": "As of the access date, no sermorelin or sermorelin acetate drug product is listed in DailyMed (the NLM/FDA labeling repository), and sermorelin/sermorelin acetate does not appear in FDA's Category 2 table of bulk drug substances presenting significant safety risks or in the table of substances nominated but withdrawn on the FDA 503A bulk substances page; there is currently no FDA-approved sermorelin product on the market.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-search-sermorelin",
+            "fda-bulk-drug-substances-category2",
+            "fedreg-geref-determination-2013"
+          ]
+        },
+        {
+          "claim": "Sermorelin (acetate) is a synthetic 29-amino-acid peptide corresponding to the amino-terminal, biologically active segment of native human growth hormone-releasing hormone (GHRH); it acts as a GHRH-receptor agonist on the anterior pituitary to stimulate endogenous growth hormone secretion.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "drugbank-db00010",
+            "pmc-gh-secretagogues-review",
+            "pubchem-cid-16132413"
+          ]
+        },
+        {
+          "claim": "The only FDA-approved sermorelin products were GEREF injection formulations (0.5 mg base/vial and 1.0 mg base/vial for pediatric GHD treatment; 0.05 mg base/amp for diagnostic testing of pituitary somatotroph GH secretory capacity); both were discontinued by the manufacturer in the 2000s and are no longer manufactured, so sermorelin currently reaches consumers only as a compounded or research-labeled product outside the FDA-approved supply chain.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "fedreg-geref-determination-2013",
+            "dailymed-search-sermorelin"
+          ]
+        },
+        {
+          "claim": "Controlled human trial evidence specific to sermorelin/GHRH(1-29) in adults is limited: a small 1997 trial (11 healthy men, 64-76 years, 6 weeks of single nightly GHRH(1-29) injections) found improvement in only 2 of 6 strength measures and one muscle-endurance measure, with no change in DEXA-measured lean mass or fat, weight, BMI, or waist-to-hip ratio; a separate 2006 trial (89 healthy older adults, 6 months of daily GHRH treatment) found improved cognition on some measures (novel problem-solving, psychomotor/processing speed, working memory) but no improvement on 3 of 6 cognitive tests and no effect on sleep. Neither trial supports general anti-aging, well-being, insulin-sensitivity, or libido claims, and both are old, small, and use GHRH(1-29)/sermorelin rather than the compounded products currently marketed. Consumer-health reporting on sermorelin itself states that adult studies are limited and that definitive research supporting anti-aging benefits is lacking.",
+          "tier": "Limited",
+          "confidence": "moderate",
+          "sources": [
+            "healthline-sermorelin",
+            "pmc-gh-secretagogues-review",
+            "vittone-1997-ghrh-elderly-men",
+            "vitiello-2006-ghrh-cognition-elderly"
+          ]
+        },
+        {
+          "claim": "Sermorelin is popularly marketed online as a 'pro-aging support therapy' that 'restores your body's natural hGH production' and may increase general well-being, lean body mass, insulin sensitivity, and libido. The libido, insulin-sensitivity, general-well-being, and 'restores natural hGH production'/anti-aging framing are not supported by any controlled human trial identified for sermorelin/GHRH(1-29). The lean-body-mass claim specifically is also not supported: the one located controlled trial that measured body composition (Vittone et al. 1997, 11 elderly men) found no change in DEXA-measured lean mass or fat, though it did find improvement on 2 of 6 strength measures and one muscle-endurance measure. A separate controlled trial (Vitiello et al. 2006, 89 older adults) found improved cognition on some measures, which is not among the marketing claims evaluated here. None of this rises to evidence for the marketing claims as stated, and sermorelin's sole historical FDA-approved indication was pediatric growth hormone deficiency, now discontinued; these marketing claims should not be read as proven benefits.",
+          "tier": "Insufficient",
+          "confidence": "moderate",
+          "sources": [
+            "healthline-sermorelin",
+            "fedreg-geref-determination-2013",
+            "vittone-1997-ghrh-elderly-men",
+            "vitiello-2006-ghrh-cognition-elderly"
           ]
         }
       ],
       "evidenceGaps": [
-        "Seed record is intentionally conservative; review primary sources for details."
+        "Controlled human trial evidence specific to sermorelin/GHRH(1-29) in adults is limited: a small 1997 trial (11 healthy men, 64-76 years, 6 weeks of single nightly GHRH(1-29) injections) found improvement in only 2 of 6 strength measures and one muscle-endurance measure, with no change in DEXA-measured lean mass or fat, weight, BMI, or waist-to-hip ratio; a separate 2006 trial (89 healthy older adults, 6 months of daily GHRH treatment) found improved cognition on some measures (novel problem-solving, psychomotor/processing speed, working memory) but no improvement on 3 of 6 cognitive tests and no effect on sleep. Neither trial supports general anti-aging, well-being, insulin-sensitivity, or libido claims, and both are old, small, and use GHRH(1-29)/sermorelin rather than the compounded products currently marketed. Consumer-health reporting on sermorelin itself states that adult studies are limited and that definitive research supporting anti-aging benefits is lacking."
       ],
-      "controversies": []
+      "controversies": [
+        "Sermorelin is popularly marketed online as a 'pro-aging support therapy' that 'restores your body's natural hGH production' and may increase general well-being, lean body mass, insulin sensitivity, and libido. The libido, insulin-sensitivity, general-well-being, and 'restores natural hGH production'/anti-aging framing are not supported by any controlled human trial identified for sermorelin/GHRH(1-29). The lean-body-mass claim specifically is also not supported: the one located controlled trial that measured body composition (Vittone et al. 1997, 11 elderly men) found no change in DEXA-measured lean mass or fat, though it did find improvement on 2 of 6 strength measures and one muscle-endurance measure. A separate controlled trial (Vitiello et al. 2006, 89 older adults) found improved cognition on some measures, which is not among the marketing claims evaluated here. None of this rises to evidence for the marketing claims as stated, and sermorelin's sole historical FDA-approved indication was pediatric growth hormone deficiency, now discontinued; these marketing claims should not be read as proven benefits."
+      ]
     },
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "database",
-          "title": "Compound summary for Sermorelin",
-          "publisher": "PubChem",
-          "url": "https://pubchem.ncbi.nlm.nih.gov/#query=Sermorelin",
-          "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "sourceType": "regulator",
+          "title": "Determination That GEREF (Sermorelin Acetate) Injection, 0.5 Milligrams Base/Vial and 1.0 Milligrams Base/Vial, and GEREF (Sermorelin Acetate) Injection, 0.05 Milligrams Base/Amp, Were Not Withdrawn From Sale for Reasons of Safety or Effectiveness",
+          "publisher": "U.S. Food and Drug Administration / Federal Register",
+          "url": "https://www.federalregister.gov/documents/2013/03/04/2013-04827/determination-that-geref-sermorelin-acetate-injection-05-milligrams-basevial-and-10-milligrams",
+          "publishedAt": "2013-03-04T00:00:00Z",
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "DailyMed Search Results for SERMORELIN",
+          "publisher": "U.S. National Library of Medicine / DailyMed (FDA-sourced labeling repository)",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=sermorelin",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Sermorelin, CID 16132413",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Sermorelin",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Sermorelin (DB00010)",
+          "publisher": "DrugBank Online",
+          "url": "https://go.drugbank.com/drugs/DB00010",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "review",
+          "title": "The Safety and Efficacy of Growth Hormone Secretagogues",
+          "publisher": "PubMed Central (NIH)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5632578/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Sermorelin Therapy Benefits, Risks, Uses, Approval, and Side Effects",
+          "publisher": "Healthline Media",
+          "url": "https://www.healthline.com/health/sermorelin",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "EMD Serono, Inc. to Discontinue Geref Diagnostic",
+          "publisher": "BioSpace",
+          "url": "https://www.biospace.com/emd-serono-inc-to-discontinue-geref-diagnostic",
+          "publishedAt": "2008-10-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Effects of single nightly injections of growth hormone-releasing hormone (GHRH 1-29) in healthy elderly men",
+          "publisher": "Metabolism: Clinical and Experimental (via Johns Hopkins University research repository)",
+          "url": "https://pure.johnshopkins.edu/en/publications/effects-of-single-nightly-injections-of-growth-hormone-releasing--6/",
+          "publishedAt": "1997-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Growth hormone releasing hormone improves the cognition of healthy older adults",
+          "publisher": "Neurobiology of Aging (secondary reporting via NIH Bookshelf/Endotext and PMC review, PubMed record unreachable due to bot-detection blocking)",
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK279163/",
+          "publishedAt": "2006-02-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "RxNorm RxCUI lookup for sermorelin",
+          "publisher": "U.S. National Library of Medicine / RxNav",
+          "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=sermorelin",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Launch seed record; conservative fields selected for validation and honest coverage."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "Remediation pass 2026-08-29: located two sermorelin/GHRH(1-29)-specific controlled human trials (Vittone et al. 1997, PMID 9005976; Vitiello et al. 2006, PMID 16399214) via institutional-repository (Johns Hopkins Pure) and NIH Bookshelf/PMC secondary-review citations, since direct PubMed/PMC full-text access remained blocked by bot-detection (reCAPTCHA) this session as well. Original journal abstracts (Metabolism; Neurobiology of Aging) could not be independently re-confirmed beyond these secondary citations \u2014 this residual gap stays review-gated.",
+        "ChEMBL identifier not yet resolved (EBI ChEMBL API was rate-limited/unreachable this session); RxNorm identifier resolved this session via NLM RxNav (RxCUI 56188).",
+        "Current FDA 503A/503B bulk-substance listing status for sermorelin was re-verified live against the FDA bulk drug substances page and DailyMed on 2026-08-28 per the independent review; still absent from both. Continue to re-verify at each review cycle since these lists are revised periodically.",
+        "Verify DailyMed absence-of-listing finding is still current, since compounded or newly approved products could appear between snapshots.",
+        "Reviewer's recommended fix for the lean-body-mass marketing claim (that Vittone et al. 1997 showed increased lean mass and decreased visceral fat) was checked against the primary-source citation this session and found to be incorrect \u2014 the trial actually found no DEXA body-composition change, only partial strength/muscle-endurance improvement. The packet was corrected to reflect the verified result, not the reviewer's characterization; this discrepancy should be flagged back to the review process.",
+        "Compiled draft requires human review before publication."
       ],
-      "lastReviewedAt": "2026-04-20T00:00:00Z",
-      "reviewStatus": "reviewed"
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
     },
     "ops": {
       "recordVersion": 1,
       "contentHash": null,
-      "ingestionSource": "seed:substances-seed.json",
-      "ingestedAt": null,
-      "updatedAt": null,
+      "ingestionSource": "evidence-packet:sermorelin-evidence-expansion-001",
+      "ingestedAt": "2026-08-28T21:30:00Z",
+      "updatedAt": "2026-08-28T21:30:00Z",
       "lastChangeType": "seed",
-      "isActive": true,
+      "isActive": false,
       "completeness": "partial",
       "needsReview": true,
       "reviewReasons": [
-        "ClassB-only source; regulated fields intentionally limited."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "Remediation pass 2026-08-29: located two sermorelin/GHRH(1-29)-specific controlled human trials (Vittone et al. 1997, PMID 9005976; Vitiello et al. 2006, PMID 16399214) via institutional-repository (Johns Hopkins Pure) and NIH Bookshelf/PMC secondary-review citations, since direct PubMed/PMC full-text access remained blocked by bot-detection (reCAPTCHA) this session as well. Original journal abstracts (Metabolism; Neurobiology of Aging) could not be independently re-confirmed beyond these secondary citations \u2014 this residual gap stays review-gated.",
+        "ChEMBL identifier not yet resolved (EBI ChEMBL API was rate-limited/unreachable this session); RxNorm identifier resolved this session via NLM RxNav (RxCUI 56188).",
+        "Current FDA 503A/503B bulk-substance listing status for sermorelin was re-verified live against the FDA bulk drug substances page and DailyMed on 2026-08-28 per the independent review; still absent from both. Continue to re-verify at each review cycle since these lists are revised periodically.",
+        "Verify DailyMed absence-of-listing finding is still current, since compounded or newly approved products could appear between snapshots.",
+        "Reviewer's recommended fix for the lean-body-mass marketing claim (that Vittone et al. 1997 showed increased lean mass and decreased visceral fat) was checked against the primary-source citation this session and found to be incorrect \u2014 the trial actually found no DEXA body-composition change, only partial strength/muscle-endurance improvement. The packet was corrected to reflect the verified result, not the reviewer's characterization; this discrepancy should be flagged back to the review process.",
+        "Compiled draft requires human review before publication."
       ],
       "qualityFlags": [
-        "classB-only"
+        "expansion-input",
+        "a1-regulator-backed",
+        "thin-human-evidence",
+        "no-current-fda-approved-product",
+        "gray-market-only",
+        "marketing-vs-evidence-gap-documented",
+        "remediation-pass-2026-08-29",
+        "compiled-from-evidence-packet"
       ]
     }
   },
@@ -4527,290 +4499,275 @@
     "recordType": "substance",
     "identity": {
       "canonicalId": "mots-c",
-      "canonicalName": "MOTS-C",
+      "canonicalName": "MOTS-c",
       "slug": "mots-c",
       "aliases": [
-        "Mitochondrial ORF of the 12S rRNA-c"
+        "MOTS-C",
+        "mitochondrial-derived peptide",
+        "MOTS-c acetate",
+        "Mitochondrial Open Reading Frame of the 12S rRNA-c"
       ],
       "brandNames": [],
-      "synonyms": [],
+      "synonyms": [
+        "MOTS-C",
+        "mitochondrial-derived peptide",
+        "MOTS-c acetate",
+        "Mitochondrial Open Reading Frame of the 12S rRNA-c"
+      ],
       "classification": "Peptide",
-      "compoundFamily": "mitochondrial-derived peptide",
+      "compoundFamily": "Mitochondrial-derived peptide (16-amino-acid, mitochondrial-genome-encoded, AMPK-pathway regulator)",
       "isCombinationProduct": false,
       "activeMoieties": [
-        "MOTS-C"
+        "MOTS-c"
       ],
       "externalIdentifiers": {
         "rxnorm": null,
-        "unii": null,
-        "casNumber": null,
+        "unii": "A5CV6JFB78",
+        "casNumber": "1627580-64-6",
         "drugbank": null,
-        "pubchem": null
+        "pubchem": "146675088"
       }
     },
     "regulatory": {
       "requiresPrescription": false,
-      "regulatoryStatus": "ClassB reference only; regulatory status not established by this record",
-      "labelStatusByUseCase": [
-        {
-          "useCase": "research reference",
-          "labelStatus": "not-indicated"
-        }
-      ],
-      "jurisdiction": "US",
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
       "approvedIndications": [],
-      "offLabelNotes": []
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
     },
     "mechanism": {
-      "mechanismSummary": "MOTS-C is represented by its commonly described mitochondrial-derived peptide mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
+      "mechanismSummary": "MOTS-c is a 16-amino-acid peptide encoded within mitochondrial DNA (within the 12S rRNA region) that acts via AMPK-dependent signaling; in mice it regulates skeletal-muscle metabolism and nuclear genes related to metabolism and proteostasis, and endogenous MOTS-c is exercise-inducible, rising in circulation during and after acute exercise in humans.",
       "primaryMechanisms": [
-        "mitochondrial-derived peptide",
-        "mitochondrial-function"
+        "MOTS-c is a 16-amino-acid peptide encoded within mitochondrial DNA (within the 12S rRNA region) that acts via AMPK-dependent signaling; in mice it regulates skeletal-muscle metabolism and nuclear genes related to metabolism and proteostasis, and endogenous MOTS-c is exercise-inducible, rising in circulation during and after acute exercise in humans."
       ],
-      "pathways": [
-        "mitochondrial-signaling",
-        "metabolic-regulation"
-      ],
-      "targets": [
-        "mitochondrial-derived peptide"
-      ],
-      "effectTags": [
-        "mitochondrial-function",
-        "insulin-sensitivity"
-      ],
-      "goalTags": [
-        "metabolic-health",
-        "energy"
-      ]
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
     },
-    "formulations": [
-      {
-        "formulationId": "mots-c-subcutaneous",
-        "productName": "MOTS-C",
-        "manufacturer": null,
-        "route": "subcutaneous",
-        "dosageForm": "research peptide",
-        "strength": null,
-        "concentration": null,
-        "unit": null,
-        "substitutableWith": [],
-        "storage": {
-          "beforeReconstitution": "Follow product labeling or pharmacy instructions; keep sterile products under labeled conditions.",
-          "afterReconstitution": "Use only within the product-specific stability window when one is provided.",
-          "temperatureNotes": "Do not freeze unless labeling specifically allows it.",
-          "lightSensitivity": null,
-          "stabilityWindow": "Product-specific or unknown."
-        },
-        "reconstitution": {
-          "required": true,
-          "diluent": "unknown",
-          "diluentVolume": null,
-          "instructions": "Reconstitution details are not established by included sources.",
-          "productSpecific": false
-        }
-      }
-    ],
-    "indications": [
-      {
-        "useCase": "research reference",
-        "labelStatus": "not-indicated",
-        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "Evidence reviewed for research reference; BioStack presents this as educational reference, not a recommendation.",
-        "evidenceTier": "Limited",
-        "sources": [
-          "src:mots-c"
-        ]
-      }
-    ],
-    "dosingGuidance": [
-      {
-        "guidanceId": "mots-c-guidance",
-        "context": {
-          "useCase": "research reference",
-          "population": "Adults where appropriate",
-          "formulation": null,
-          "route": "subcutaneous"
-        },
-        "dose": {
-          "amount": null,
-          "unit": "unknown",
-          "frequency": "review required",
-          "scheduleText": "Dosing is not established by the included ClassB or non-dose source; review with a licensed clinician or primary source.",
-          "preferredTimeOfDay": null
-        },
-        "notes": [
-          "No product-specific dosing is established by this seed record."
-        ],
-        "productSpecific": false,
-        "sources": [
-          "src:mots-c"
-        ]
-      }
-    ],
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
     "compatibility": {
-      "vialCompatibilitySummary": "Compatibility is unknown; do not mix in the same vial or syringe unless product labeling or a pharmacist explicitly supports it.",
-      "blendingRules": [
-        {
-          "ruleType": "co-mix",
-          "target": "other compounds",
-          "status": "unknown",
-          "message": "No hard-safe compatibility conclusion is established by this seed record.",
-          "sources": [
-            "src:mots-c"
-          ]
-        }
-      ],
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
       "compatibleBlends": [],
       "incompatibleBlends": [],
-      "unknownCompatibility": [
-        "other compounds"
-      ]
+      "unknownCompatibility": []
     },
     "safety": {
       "contraindications": [],
       "warnings": [],
-      "precautions": [
-        {
-          "item": "Review primary sources before use",
-          "notes": "ClassB-only seed record; regulated safety canon is intentionally not asserted.",
-          "sources": [
-            "src:mots-c"
-          ]
-        }
-      ],
+      "precautions": [],
       "adverseEffects": {
-        "common": [
-          "unknown"
-        ],
-        "serious": [
-          "unknown"
-        ]
+        "common": [],
+        "serious": []
       },
       "monitoring": []
     },
-    "interactions": [
-      {
-        "interactionId": "mots-c-glucose-lowering-drugs",
-        "type": "drug-drug",
-        "target": "glucose-lowering drugs",
-        "severity": "review",
-        "mechanism": "Pathway or pharmacologic overlap",
-        "effect": "Potential additive or opposing effects may occur.",
-        "recommendedAction": "Flag for review; do not treat as automatically compatible.",
-        "sources": [
-          "src:mots-c"
-        ]
-      }
-    ],
+    "interactions": [],
     "stackIntelligence": {
       "pairsWellWith": [],
-      "avoidWith": [
-        {
-          "target": "other experimental metabolic peptides",
-          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
-          "severity": "review",
-          "sources": [
-            "src:mots-c"
-          ]
-        }
-      ],
-      "overlapRules": [
-        {
-          "ruleId": "mots-c-mitochondrial-signaling-overlap",
-          "ruleType": "pathway-overlap",
-          "tag": "mitochondrial-signaling",
-          "severity": "review",
-          "message": "Shared pathway tag: mitochondrial-signaling.",
-          "action": "Show overlap and require interpretation rather than returning no relationship.",
-          "sources": [
-            "src:mots-c"
-          ]
-        }
-      ],
+      "avoidWith": [],
+      "overlapRules": [],
       "synergyRules": [],
       "conflictRules": [],
       "redundancyRules": [],
       "timingRules": []
     },
     "supportiveGuidance": {
-      "nutrition": [
-        {
-          "topic": "Baseline",
-          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
-        }
-      ],
-      "supplements": [
-        {
-          "topic": "Stack review",
-          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
-        }
-      ],
-      "sleep": [
-        {
-          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
-        }
-      ],
-      "exercise": [
-        {
-          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
-        }
-      ],
-      "applicabilityNotes": [
-        "Supportive guidance is general tracking context and is not a treatment recommendation."
-      ],
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
       "sources": [
-        "src:internal-guidance"
+        "fda-mots-c-withdrawn-nomination",
+        "fda-pcac-briefing-193347",
+        "reynolds-2021-natcomms-mots-c-exercise",
+        "pubchem-cid-146675088",
+        "ajmc-pcac-peptides-vote-2026",
+        "diabetology-mds-mdp-systematic-review-2024",
+        "clinicaltrials-nct07505745",
+        "gethealthspan-mots-c-dosage-protocol"
       ]
     },
     "evidence": {
-      "overallTier": "Limited",
+      "overallTier": "Strong",
       "claimSpecificEvidence": [
         {
-          "claim": "MOTS-C has evidence relevant to research reference.",
-          "tier": "Limited",
-          "confidence": "low",
+          "claim": "MOTS-c was nominated for FDA's 503A Bulk Drug Substances list but the nomination was withdrawn; FDA's own note on the withdrawn-nominations table states it identified no human exposure data for MOTS-c via any route of administration and lacks information on whether MOTS-c would cause harm if administered to humans, while also flagging potential immunogenicity risk from peptide-related impurities.",
+          "tier": "Strong",
+          "confidence": "high",
           "sources": [
-            "src:mots-c"
+            "fda-mots-c-withdrawn-nomination"
+          ]
+        },
+        {
+          "claim": "In its Pharmacy Compounding Advisory Committee (PCAC) briefing document evaluating MOTS-c (free base) and MOTS-c acetate for the 503A Bulks List, FDA staff state they did not identify any clinical studies or human exposure data for MOTS-c via any route of administration, and that both forms are not well-characterized from a physical/chemical characterization standpoint due to unavailable data on impurities, aggregates, and endotoxins; FDA staff recommended against adding either form to the list. At the PCAC meeting on July 23, 2026, the committee voted 7-5 with 2 abstentions to recommend MOTS-c for the 503A Bulks List, overriding the staff recommendation. An advisory committee vote is not itself a legal listing decision -- FDA must still complete rulemaking before MOTS-c could be lawfully compounded under 503A -- and the staff's underlying findings on the absence of human exposure data and incomplete characterization remain unchanged by the vote.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "fda-pcac-briefing-193347",
+            "ajmc-pcac-peptides-vote-2026"
+          ]
+        },
+        {
+          "claim": "MOTS-c is a 16-amino-acid peptide encoded within mitochondrial DNA (within the 12S rRNA region) that acts via AMPK-dependent signaling; in mice it regulates skeletal-muscle metabolism and nuclear genes related to metabolism and proteostasis, and endogenous MOTS-c is exercise-inducible, rising in circulation during and after acute exercise in humans.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "reynolds-2021-natcomms-mots-c-exercise",
+            "fda-pcac-briefing-193347"
+          ]
+        },
+        {
+          "claim": "No published controlled human study of exogenously administered MOTS-c establishing efficacy for metabolic, fat-loss, exercise-performance, or anti-aging outcomes was identified; the only human MOTS-c data located is observational measurement of endogenous (naturally produced) circulating MOTS-c rising during exercise, and FDA's own review found no clinical studies or human exposure data for administered MOTS-c. The physical-capacity and healthspan benefits reported for MOTS-c are from mouse studies only.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "fda-pcac-briefing-193347",
+            "reynolds-2021-natcomms-mots-c-exercise"
+          ]
+        },
+        {
+          "claim": "An investigational Phase 2a randomized, placebo-controlled trial (NCT07505745) is recruiting adults aged 18-65 with BMI 27-40 kg/m2 and documented prediabetes to receive investigational MOTS-c or matching placebo via subcutaneous injection once daily for 12 weeks alongside standardized lifestyle counseling, to evaluate improvement in insulin sensitivity; results are not yet available.",
+          "tier": "Insufficient",
+          "confidence": "moderate",
+          "sources": [
+            "clinicaltrials-nct07505745"
+          ]
+        },
+        {
+          "claim": "Gray-market peptide vendor content promotes self-administered MOTS-c dosing protocols (e.g., titrating from roughly 2.5-5 mg subcutaneously several times weekly up to a 10 mg five-times-weekly maintenance regimen, timed 30-60 minutes before exercise) and attributes fat-loss, exercise-mimetic, and anti-aging benefits to it, while citing mouse data and a single small uncontrolled/early-phase human observation as support; this marketing framing outruns the human evidence base, which FDA and the primary literature reviewed here describe as absent for administered MOTS-c.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "gethealthspan-mots-c-dosage-protocol",
+            "fda-pcac-briefing-193347"
           ]
         }
       ],
       "evidenceGaps": [
-        "Seed record is intentionally conservative; review primary sources for details."
+        "No published controlled human study of exogenously administered MOTS-c establishing efficacy for metabolic, fat-loss, exercise-performance, or anti-aging outcomes was identified; the only human MOTS-c data located is observational measurement of endogenous (naturally produced) circulating MOTS-c rising during exercise, and FDA's own review found no clinical studies or human exposure data for administered MOTS-c. The physical-capacity and healthspan benefits reported for MOTS-c are from mouse studies only."
       ],
-      "controversies": []
+      "controversies": [
+        "Gray-market peptide vendor content promotes self-administered MOTS-c dosing protocols (e.g., titrating from roughly 2.5-5 mg subcutaneously several times weekly up to a 10 mg five-times-weekly maintenance regimen, timed 30-60 minutes before exercise) and attributes fat-loss, exercise-mimetic, and anti-aging benefits to it, while citing mouse data and a single small uncontrolled/early-phase human observation as support; this marketing framing outruns the human evidence base, which FDA and the primary literature reviewed here describe as absent for administered MOTS-c."
+      ]
     },
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "paper",
-          "title": "Literature reference for MOTS-C",
-          "publisher": "PubMed",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/?term=MOTS-C",
+          "sourceType": "regulator",
+          "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (Bulk drug substances nominated but withdrawn table)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting (MOTS-c free base and MOTS-c acetate evaluation)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/media/193347/download",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "MOTS-c is an exercise-induced mitochondrial-encoded regulator of age-dependent physical decline and muscle homeostasis",
+          "publisher": "Nature Communications (Reynolds JC, Lai RW, Woodhead JST, et al., 2021)",
+          "url": "https://www.nature.com/articles/s41467-020-20790-0",
+          "publishedAt": "2021-01-20T00:00:00Z",
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "PubChem Compound Summary: Mots-c (CID 146675088)",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Mots-c",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "FDA Panel Backs 6 Peptides for Compounding",
+          "publisher": "AJMC (American Journal of Managed Care)",
+          "url": "https://www.ajmc.com/view/fda-panel-backs-6-peptides-for-compounding",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Systematic review of mitochondrial-derived peptides (MOTS-c and related peptides) in metabolic disease",
+          "publisher": "Diabetology & Metabolic Syndrome",
+          "url": "https://link.springer.com/article/10.1186/s13098-024-01405-w",
           "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "lastCheckedAt": "2026-08-29T00:00:00Z"
+        },
+        {
+          "sourceType": "database",
+          "title": "MOTS-c for Improving Insulin Sensitivity in Adults With Prediabetes and Overweight/Obesity (NCT07505745)",
+          "publisher": "ClinicalTrials.gov / U.S. National Library of Medicine",
+          "url": "https://clinicaltrials.gov/study/NCT07505745",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "MOTS-C Dosage Chart: How to Actually Protocol This Mitochondrial Peptide",
+          "publisher": "Healthspan (gethealthspan.com)",
+          "url": "https://www.gethealthspan.com/research/article/mots-c-dosage-chart-protocol-guide",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T21:30:00Z"
         }
       ],
       "curationNotes": [
-        "Launch seed record; conservative fields selected for validation and honest coverage."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "RESOLVED 2026-08-29: vendor-cited human RCT (15% insulin-stimulated glucose disposal improvement) confirmed as a fabricated/misattributed citation to Reynolds et al. 2021 -- see conflicts and mots-c-misinformation-gray-market-dosing-001.",
+        "RESOLVED 2026-08-29: CAS (1627580-64-6) and UNII (A5CV6JFB78) identifiers resolved via direct fetch of PubChem CID 146675088 pug_view synonym data. DrugBank and ChEMBL identifiers remain unresolved -- no DrugBank or ChEMBL entry for MOTS-c was located this session; carry forward as a gap.",
+        "NCT07505745 is actively recruiting; re-check status and results at review time.",
+        "FDA withdrawn-nomination and PCAC briefing status for MOTS-c should be reconfirmed against the live FDA page at review time, since FDA revised Category 2 peptide listings in April 2026 and MOTS-c was among peptides discussed at the July 2026 PCAC meeting cycle.",
+        "RESOLVED 2026-08-29: PCAC committee actually voted 7-5 (2 abstentions) on 2026-07-23 to recommend MOTS-c for the 503A Bulks List, overriding the FDA staff briefing recommendation documented in the packet -- added to mots-c-regulatory-pcac-no-human-data-001 with the caveat that an advisory vote is not a final rule; re-check FDA's Federal Register docket for the completed rulemaking at next review.",
+        "Attempted but unresolved: NCT07505745 (studied-use claim) was checked only against an independent registry mirror (ichgcp.net), still within the same 'structured database' source family as the packet's own clinicaltrials.gov source; no news/trade coverage of this specific trial was found this session to fully diversify the source family. Low risk since the claim makes no efficacy assertion; kept review-gated.",
+        "Compiled draft requires human review before publication."
       ],
-      "lastReviewedAt": "2026-04-20T00:00:00Z",
-      "reviewStatus": "reviewed"
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
     },
     "ops": {
       "recordVersion": 1,
       "contentHash": null,
-      "ingestionSource": "seed:substances-seed.json",
-      "ingestedAt": null,
-      "updatedAt": null,
+      "ingestionSource": "evidence-packet:mots-c-evidence-expansion-001",
+      "ingestedAt": "2026-08-28T21:30:00Z",
+      "updatedAt": "2026-08-28T21:30:00Z",
       "lastChangeType": "seed",
-      "isActive": true,
+      "isActive": false,
       "completeness": "partial",
       "needsReview": true,
       "reviewReasons": [
-        "ClassB-only source; regulated fields intentionally limited."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "RESOLVED 2026-08-29: vendor-cited human RCT (15% insulin-stimulated glucose disposal improvement) confirmed as a fabricated/misattributed citation to Reynolds et al. 2021 -- see conflicts and mots-c-misinformation-gray-market-dosing-001.",
+        "RESOLVED 2026-08-29: CAS (1627580-64-6) and UNII (A5CV6JFB78) identifiers resolved via direct fetch of PubChem CID 146675088 pug_view synonym data. DrugBank and ChEMBL identifiers remain unresolved -- no DrugBank or ChEMBL entry for MOTS-c was located this session; carry forward as a gap.",
+        "NCT07505745 is actively recruiting; re-check status and results at review time.",
+        "FDA withdrawn-nomination and PCAC briefing status for MOTS-c should be reconfirmed against the live FDA page at review time, since FDA revised Category 2 peptide listings in April 2026 and MOTS-c was among peptides discussed at the July 2026 PCAC meeting cycle.",
+        "RESOLVED 2026-08-29: PCAC committee actually voted 7-5 (2 abstentions) on 2026-07-23 to recommend MOTS-c for the 503A Bulks List, overriding the FDA staff briefing recommendation documented in the packet -- added to mots-c-regulatory-pcac-no-human-data-001 with the caveat that an advisory vote is not a final rule; re-check FDA's Federal Register docket for the completed rulemaking at next review.",
+        "Attempted but unresolved: NCT07505745 (studied-use claim) was checked only against an independent registry mirror (ichgcp.net), still within the same 'structured database' source family as the packet's own clinicaltrials.gov source; no news/trade coverage of this specific trial was found this session to fully diversify the source family. Low risk since the claim makes no efficacy assertion; kept review-gated.",
+        "Compiled draft requires human review before publication."
       ],
       "qualityFlags": [
-        "classB-only"
+        "expansion-input",
+        "a1-regulator-backed",
+        "no-human-exposure-data-per-fda",
+        "thin-human-evidence",
+        "gray-market-only",
+        "fabricated-vendor-citation-confirmed",
+        "pcac-committee-recommended-listing-pending-rulemaking",
+        "remediation-pass-2026-08-29",
+        "compiled-from-evidence-packet"
       ]
     }
   },
