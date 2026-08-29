@@ -74,9 +74,6 @@ export default function KnowledgePage() {
     setOverlapResults([]);
   };
 
-  if (authLoading) {
-    return null;
-  }
 
   return (
     <div className="w-full min-h-screen">

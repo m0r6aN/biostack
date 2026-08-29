@@ -82,9 +82,6 @@ export function CompoundDossierExperience({ slug, initialEntry = null }: Compoun
     return () => { cancelled = true; };
   }, [slug, initialEntry]);
 
-  if (authLoading) {
-    return null;
-  }
 
   const content = (
     <main className="min-h-screen bg-[#0a0a0b] py-8 px-4">
@@ -124,7 +121,7 @@ export function CompoundDossierExperience({ slug, initialEntry = null }: Compoun
     </main>
   );
 
-  if (!user) {
+  if (authLoading || !user) {
     return (
       <div>
         <MarketingNav />
