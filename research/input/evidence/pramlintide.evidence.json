@@ -18,12 +18,12 @@
     "classification": "Peptide",
     "compoundFamily": "Synthetic human amylin analog",
     "externalIdentifiers": {
-      "rxnorm": null,
-      "unii": null,
-      "casNumber": null,
+      "rxnorm": "139953",
+      "unii": "D3FM8FA78T",
+      "casNumber": "151126-32-8",
       "drugbank": "DB01278",
       "pubchem": "70691388",
-      "chembl": null,
+      "chembl": "CHEMBL2103758",
       "doi": null,
       "pmid": null
     }
@@ -78,6 +78,42 @@
       "accessedAt": "2026-08-28T22:30:00Z"
     },
     {
+      "sourceId": "accessdata-fda-daf-021332",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Drugs@FDA: NDA 021332 (SYMLIN/pramlintide acetate) approval and marketing status history",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021332",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "gsrs-ncats-pramlintide",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "Global Substance Registration System (GSRS): Pramlintide, UNII D3FM8FA78T",
+      "publisher": "National Institutes of Health / National Center for Advancing Translational Sciences (NCATS) FDA Substance Registration System",
+      "url": "https://gsrs.ncats.nih.gov/api/v1/substances(D3FM8FA78T)",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "qiao-2017-oncotarget-meta-analysis",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Efficacy and safety of pramlintide injection adjunct to insulin therapy in patients with type 1 diabetes mellitus: a systematic review and meta-analysis",
+      "publisher": "Oncotarget (Qiao Q, et al., 2017; via Europe PMC)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29029531/",
+      "doi": null,
+      "pmid": "29029531",
+      "publishedAt": "2017-09-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "helloklarity-pramlintide-marketing",
       "sourceType": "vendor-marketing-page",
       "authorityTier": "C2",
@@ -94,28 +130,36 @@
     {
       "claimId": "pramlintide-regulatory-approved-indication-001",
       "claimType": "approved-indication",
-      "statement": "SYMLIN (pramlintide acetate) is FDA-approved as an adjunctive treatment for patients with type 1 or type 2 diabetes who use mealtime insulin therapy and have failed to achieve desired glucose control despite optimal insulin therapy.",
+      "statement": "SYMLIN (pramlintide acetate) is FDA-approved as an adjunctive treatment for patients with type 1 or type 2 diabetes who use mealtime insulin therapy and have failed to achieve desired glucose control despite optimal insulin therapy. As of the current FDA Drugs@FDA record (NDA 021332, checked 2026-08-29), marketing status for all Symlin/SymlinPen strengths (3mg/5ml, 1.5mg/1.5ml, 2.7mg/2.7ml) is listed as Discontinued; this claim describes the historical FDA-approved indication and label, not present-day market availability or prescribability.",
       "context": {
         "population": "adults with type 1 or type 2 diabetes on mealtime insulin",
         "route": "subcutaneous",
-        "formulation": "pramlintide acetate injection (SymlinPen)",
-        "useCase": "adjunctive glycemic control alongside mealtime insulin",
+        "formulation": "pramlintide acetate injection (SymlinPen) — marketing status: Discontinued per current FDA Drugs@FDA record",
+        "useCase": "adjunctive glycemic control alongside mealtime insulin (historical/label indication; product currently discontinued)",
         "doseText": null
       },
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "dailymed-symlinpen-label"
+        "dailymed-symlinpen-label",
+        "accessdata-fda-daf-021332"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-symlinpen-label",
           "quote": "SYMLIN is indicated as an adjunctive treatment in patients with type 1 or type 2 diabetes who use mealtime insulin therapy and who have failed to achieve desired glucose control despite optimal insulin therapy.",
           "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "accessdata-fda-daf-021332",
+          "quote": "Discontinued",
+          "pageOrSection": "Marketing Status column, all three product strength rows (EQ 3MG BASE/5ML, EQ 1.5MG BASE/1.5ML, EQ 2.7MG BASE/2.7ML)"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "product marketing status is currently Discontinued per live FDA Drugs@FDA record (NDA 021332, checked 2026-08-29); do not present as a currently available/prescribable product"
+      ]
     },
     {
       "claimId": "pramlintide-warning-severe-hypoglycemia-001",
@@ -213,7 +257,8 @@
         }
       ],
       "reviewFlags": [
-        "dose context only; must not be presented as a use recommendation"
+        "dose context only; must not be presented as a use recommendation",
+        "product marketing status is currently Discontinued per live FDA Drugs@FDA record (NDA 021332, checked 2026-08-29); this dosing protocol is historical label/trial-protocol information only, not current-use guidance"
       ]
     },
     {
@@ -258,7 +303,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "ratner-2004-diabetic-medicine-rct"
+        "ratner-2004-diabetic-medicine-rct",
+        "qiao-2017-oncotarget-meta-analysis"
       ],
       "extractedEvidence": [
         {
@@ -270,11 +316,17 @@
           "sourceRef": "ratner-2004-diabetic-medicine-rct",
           "quote": "a significant reduction in body weight from baseline to Week 52 of 0.4 kg... compared with a 0.8-kg gain in body weight in the placebo group",
           "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "qiao-2017-oncotarget-meta-analysis",
+          "quote": "A total of 10 randomized placebo-controlled studies were included for this meta-analysis (pramlintide, n=1978; placebo, n=1319). Compared with controls, patients given pramlintide had significantly lower HbA1c (p < 0.001), total daily insulin dose (p = 0.024), mean mealtime insulin dose (p < 0.001), body weight (p < 0.001) and postprandial glucose level (p = 0.002). The addition of pramlintide increased the incidence of nausea (p < 0.001), vomiting (p < 0.001), anorexia (p < 0.001) and hypoglycemia (p < 0.05) at the initiation of the treatment.",
+          "pageOrSection": "Abstract, Results (Europe PMC record for PMID 29029531)"
         }
       ],
       "reviewFlags": [
         "effect size on HbA1c is modest; not established as first-line therapy",
-        "weight effect is a secondary outcome in an insulin-adjunct T1D population, not a standalone weight-loss trial"
+        "weight effect is a secondary outcome in an insulin-adjunct T1D population, not a standalone weight-loss trial",
+        "independently corroborated by a 2017 meta-analysis of 10 RCTs (n=1978 pramlintide vs n=1319 placebo, PMID 29029531), which confirms the same direction of effect on HbA1c and body weight and documents increased nausea, vomiting, anorexia, and hypoglycemia at treatment initiation"
       ]
     },
     {
@@ -321,7 +373,8 @@
       "reviewFlags": [
         "misinformation-adjacent: vendor marketing cites short-duration/single-trial weight-loss figures without study-limitation context",
         "off-label use in non-diabetic patients is outside the FDA-approved indication and outside the boxed-warning-tested insulin-adjunct population",
-        "human evidence base for weight loss specifically is preliminary and methodologically inconsistent per the cited systematic review"
+        "human evidence base for weight loss specifically is preliminary and methodologically inconsistent per the cited systematic review",
+        "the 'up to ~8 kg over 1 year' figure is sourced only from the Dunican 2010 secondary citation of a 2008 Diabetes Care primary trial; that primary trial could not be independently pulled this session (Europe PMC REST search returned repeated HTTP 429 rate-limiting, mirroring the prior review pass's PubMed/Europe PMC/Semantic Scholar rate-limiting) and remains single-source (systematic-review-mediated) verified rather than independently confirmed against the primary paper"
       ]
     }
   ],
@@ -342,9 +395,12 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "CAS number, UNII, ChEMBL identifier, and RxNorm code not yet resolved from structured databases (PubChem/DrugBank full identifier panels required JavaScript/login and were not retrievable via fetch this session).",
+      "RESOLVED (remediation pass 2026-08-29): CAS number (151126-32-8), UNII (D3FM8FA78T), ChEMBL ID (CHEMBL2103758), and RxNorm code (139953) were independently resolved and cross-validated via NIH/NCATS GSRS (gsrs.ncats.nih.gov) and RxNav (rxnav.nlm.nih.gov), both fetched and confirmed this session; externalIdentifiers updated accordingly.",
+      "RESOLVED (remediation pass 2026-08-29): live FDA Drugs@FDA record (NDA 021332, fetched this session) confirms marketing status 'Discontinued' for all three Symlin/SymlinPen strengths; the approved-indication claim now discloses this so the packet does not imply present-day availability/prescribability.",
       "Off-label weight-loss evidence base is thin and methodologically inconsistent per Dunican 2010; current figures should be re-checked against any newer systematic reviews at review time.",
-      "Vendor marketing page (HelloKlarity) is a single example of a broader telehealth marketing pattern; broader marketing-claim surveillance was out of scope for this session."
+      "UNRESOLVED: the 'up to ~8 kg over 1 year' weight-loss figure (claim pramlintide-marketing-vs-evidence-weightloss-gap-001) rests on the Dunican 2010 secondary citation of a 2008 Diabetes Care primary trial. A targeted attempt this session to independently pull that primary source via the Europe PMC REST API failed with repeated HTTP 429 rate-limiting (same failure mode the prior review pass hit on PubMed/Europe PMC/Semantic Scholar). The claim's reviewFlags now record this explicitly and the figure remains gated as single-source (systematic-review-mediated) verified pending a future primary-source pull.",
+      "Vendor marketing page (HelloKlarity) is a single example of a broader telehealth marketing pattern; broader marketing-claim surveillance was out of scope for this session.",
+      "Efficacy claim pramlintide-efficacy-t1d-rct-glycemic-weight-001 was independently strengthened this session with a second, materially different source family (Qiao et al. 2017 meta-analysis of 10 RCTs, PMID 29029531, fetched via Europe PMC REST API and quoted verbatim) corroborating the single-RCT finding."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -352,7 +408,9 @@
       "a1-regulator-backed",
       "boxed-warning-severe-hypoglycemia",
       "off-label-marketing-gap-documented",
-      "thin-human-evidence-for-weightloss-indication"
+      "thin-human-evidence-for-weightloss-indication",
+      "product-marketing-status-discontinued",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

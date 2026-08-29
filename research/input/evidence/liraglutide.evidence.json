@@ -17,12 +17,12 @@
     "classification": "Peptide therapeutic / GLP-1 receptor agonist",
     "compoundFamily": "Glucagon-like peptide-1 (GLP-1) receptor agonist analog",
     "externalIdentifiers": {
-      "rxnorm": null,
-      "unii": null,
-      "casNumber": null,
+      "rxnorm": "475968",
+      "unii": "839I73S42A",
+      "casNumber": "204656-20-2",
       "drugbank": "DB06655",
       "pubchem": "16134956",
-      "chembl": null,
+      "chembl": "CHEMBL4084119",
       "doi": null,
       "pmid": null
     }
@@ -123,6 +123,102 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pmc-4985288-leader-primary",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "A1",
+      "title": "Liraglutide and Cardiovascular Outcomes in Type 2 Diabetes (LEADER trial, primary publication)",
+      "publisher": "New England Journal of Medicine (Marso SP, Daniels GH, Brown-Frandsen K, et al., 2016;375:311-322) via PubMed Central",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4985288/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2016-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "fda-daf-victoza-nda022341",
+      "sourceType": "structured-database",
+      "authorityTier": "A1",
+      "title": "Drugs@FDA: Victoza (liraglutide) NDA 022341 application overview",
+      "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+      "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022341",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "fda-daf-saxenda-nda206321",
+      "sourceType": "structured-database",
+      "authorityTier": "A1",
+      "title": "Drugs@FDA: Saxenda (liraglutide) NDA 206321 application overview",
+      "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
+      "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=206321",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "gsrs-liraglutide-unii",
+      "sourceType": "structured-database",
+      "authorityTier": "A1",
+      "title": "Global Substance Registration System: LIRAGLUTIDE (UNII 839I73S42A)",
+      "publisher": "National Center for Advancing Translational Sciences (NCATS) / FDA Global Substance Registration System",
+      "url": "https://gsrs.ncats.nih.gov/api/v1/substances(839I73S42A)",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "rxnav-liraglutide-rxcui",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "RxNorm RxCUI lookup: liraglutide",
+      "publisher": "National Library of Medicine / RxNav",
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=liraglutide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "chembl-liraglutide-CHEMBL4084119",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "ChEMBL molecule record: Liraglutide (CHEMBL4084119)",
+      "publisher": "European Bioinformatics Institute / ChEMBL",
+      "url": "https://www.ebi.ac.uk/chembl/api/data/molecule/search?q=liraglutide&format=json",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "accessdata-fda-victoza-label-2025",
+      "sourceType": "regulator-label",
+      "authorityTier": "A1",
+      "title": "Label: VICTOZA (liraglutide) injection, live FDA label PDF (2025, supplement s046)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/022341s046lbl.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "accessdata-fda-saxenda-label-2026",
+      "sourceType": "regulator-label",
+      "authorityTier": "A1",
+      "title": "Label: SAXENDA (liraglutide) injection, solution, live FDA label PDF (2026, supplement s025)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/206321s025lbl.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -168,7 +264,9 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "dailymed-victoza-label"
+        "dailymed-victoza-label",
+        "accessdata-fda-victoza-label-2025",
+        "fda-daf-victoza-nda022341"
       ],
       "extractedEvidence": [
         {
@@ -180,10 +278,16 @@
           "sourceRef": "dailymed-victoza-label",
           "quote": "to reduce the risk of major adverse cardiovascular events in adults with type 2 diabetes mellitus and established cardiovascular disease",
           "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "fda-daf-victoza-nda022341",
+          "quote": "The application received original approval on January 25, 2010, as a Type 1 - New Molecular Entity under standard review. Marketing Status: Prescription.",
+          "pageOrSection": "Drugs@FDA application overview, NDA 022341"
         }
       ],
       "reviewFlags": [
-        "regulatory approved-indication claim \u2014 confirm current label version at review time"
+        "regulatory approved-indication claim \u2014 confirm current label version at review time",
+        "Independent review 2026-08-29: content re-verified against the live, current FDA label PDF and corroborated against Drugs@FDA (structured-database family, distinct from the label document family) confirming active NDA approval and marketing status; wording matches verbatim. A professional-guideline family (e.g., ADA Standards of Care) was not additionally checked this session -- gap recorded in ops.reviewReasons."
       ]
     },
     {
@@ -201,17 +305,25 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "dailymed-saxenda-label"
+        "dailymed-saxenda-label",
+        "accessdata-fda-saxenda-label-2026",
+        "fda-daf-saxenda-nda206321"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-saxenda-label",
           "quote": "in combination with a reduced calorie diet and increased physical activity to reduce excess body weight",
           "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "fda-daf-saxenda-nda206321",
+          "quote": "Approval Date: 12/23/2014. Marketing Status: Prescription. Therapeutic equivalence code AP2, Reference Listed Drug.",
+          "pageOrSection": "Drugs@FDA application overview, NDA 206321"
         }
       ],
       "reviewFlags": [
-        "regulatory approved-indication claim \u2014 confirm current label version and titration table at review time"
+        "regulatory approved-indication claim \u2014 confirm current label version and titration table at review time",
+        "Independent review 2026-08-29: content re-verified against the live, current FDA label PDF and corroborated against Drugs@FDA (structured-database family, distinct from the label document family) confirming active NDA approval and marketing status; wording matches verbatim. A professional-guideline family (e.g., ADA Standards of Care) was not additionally checked this session -- gap recorded in ops.reviewReasons."
       ]
     },
     {
@@ -230,7 +342,9 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "dailymed-victoza-label",
-        "dailymed-saxenda-label"
+        "dailymed-saxenda-label",
+        "accessdata-fda-victoza-label-2025",
+        "accessdata-fda-saxenda-label-2026"
       ],
       "extractedEvidence": [
         {
@@ -256,7 +370,8 @@
       ],
       "reviewFlags": [
         "safety-critical boxed-warning claim",
-        "verify current label text at review time \u2014 labels are periodically revised"
+        "verify current label text at review time \u2014 labels are periodically revised",
+        "Independent review 2026-08-29: boxed-warning text re-verified verbatim against live current FDA label PDFs (Victoza 2025 s046, Saxenda 2026 s025). A professional-guideline or systematic-review corroboration was not separately pulled this session; low-risk gap given this is the highest-authority source family for label text -- recorded in ops.reviewReasons."
       ]
     },
     {
@@ -294,13 +409,14 @@
         }
       ],
       "reviewFlags": [
-        "safety-critical adverse-effect claim"
+        "safety-critical adverse-effect claim",
+        "Independent literature review 2026-08-29 (Cleveland Clinic Journal of Medicine review of GLP-1 agonists and pancreatitis, https://www.ccjm.org/content/92/8/483) confirms the label's postmarketing-report basis for the pancreatitis warning, consistent with this claim's hedged 'documents reports of' framing. Nuance for balance: multiple meta-analyses cited in that review did not find a statistically significant class-wide increase in pancreatitis incidence versus comparators, and a Cleveland Clinic cohort found recurrence rates in patients with prior pancreatitis were not clearly elevated."
       ]
     },
     {
       "claimId": "liraglutide-efficacy-leader-cv-outcomes-001",
       "claimType": "efficacy",
-      "statement": "In the LEADER trial (liraglutide vs. placebo added to standard care in 9,340 adults with type 2 diabetes at high cardiovascular risk), liraglutide reduced the composite cardiovascular outcome versus placebo, reported as hazard ratio 0.82 (95% CI 0.72\u20130.94, p=0.005); this trial underlies Victoza's cardiovascular risk-reduction indication.",
+      "statement": "In the LEADER trial (liraglutide vs. placebo added to standard care in 9,340 adults with type 2 diabetes at high cardiovascular risk), the primary composite cardiovascular outcome (death from cardiovascular causes, nonfatal myocardial infarction, or nonfatal stroke) occurred in fewer patients in the liraglutide group (608 of 4,668 patients, 13.0%) than in the placebo group (694 of 4,672 patients, 14.9%), hazard ratio 0.87 (95% CI 0.78-0.97, p=0.01 for superiority); this trial underlies Victoza's cardiovascular risk-reduction indication.",
       "context": {
         "population": "adults with type 2 diabetes and high cardiovascular risk (n=9,340)",
         "route": "subcutaneous injection",
@@ -309,21 +425,21 @@
         "doseText": "LEADER trial protocol dosing (Marso et al., 2016); trial context only, not a use recommendation."
       },
       "evidenceTier": "Strong",
-      "confidence": "moderate",
+      "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "pmc-6130125-leader-mi-subgroup",
+        "pmc-4985288-leader-primary",
         "dailymed-victoza-label"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "pmc-6130125-leader-mi-subgroup",
-          "quote": "HR: 0.82; 95% CI: 0.72, 0.94; p = 0.005",
-          "pageOrSection": "Background (citing the LEADER trial primary composite outcome, total trial population, n=9,340)"
+          "sourceRef": "pmc-4985288-leader-primary",
+          "quote": "The primary composite outcome occurred in fewer patients in the liraglutide group (608 of 4668 patients [13.0%]) than in the placebo group (694 of 4672 [14.9%]) (hazard ratio, 0.87; 95% confidence interval [CI], 0.78 to 0.97; P=0.01 for superiority).",
+          "pageOrSection": "Results, Primary and Secondary Outcomes"
         }
       ],
       "reviewFlags": [
-        "quote sourced from a secondary subgroup-analysis publication citing the LEADER primary result, not the original NEJM article directly \u2014 the primary source (Marso et al., N Engl J Med 2016;375:311-322) returned a bot-check page and was inaccessible this session; verify exact wording against the primary publication at review",
+        "REMEDIATED 2026-08-29: prior figure (HR 0.82, 95% CI 0.72-0.94, p=0.005) was misattributed from a post-MI subgroup analysis (PMC6130125) and has been replaced with the trial-wide primary composite outcome, verified verbatim against the primary Marso et al. NEJM 2016 publication (PMC4985288) fetched this session.",
         "this efficacy figure applies to the type 2 diabetes + established cardiovascular disease population studied under Victoza, not to weight-management or off-label use"
       ]
     },
@@ -413,7 +529,8 @@
       ],
       "reviewFlags": [
         "misinformation-adjacent: captures the marketing/evasion pattern for the GLP-1 injectable class broadly; the source's documented falsification example (Ozempic/semaglutide) is class-adjacent rather than liraglutide-specific \u2014 a liraglutide-specific falsification incident count was not confirmed this session",
-        "no approved indication supports non-prescription self-administration"
+        "no approved indication supports non-prescription self-administration",
+        "Independent review 2026-08-29 (FDA counterfeit-Ozempic consumer warning, WHO fake-semaglutide alert, and a 2026 Frontiers in Pharmacology pharmacovigilance analysis) reconfirms the broader gray-market pattern but found every documented falsification/counterfeit incident across sources checked to be semaglutide/Ozempic-specific, not liraglutide-specific. The claim's class-level (not liraglutide-specific) framing is accurate and remains unchanged; gap stays open and review-gated."
       ]
     }
   ],
@@ -424,18 +541,21 @@
         "liraglutide-efficacy-leader-cv-outcomes-001"
       ],
       "severity": "review",
-      "summary": "LEADER trial primary composite-outcome figures (HR 0.82, 95% CI 0.72\u20130.94, p=0.005) were extracted via a secondary subgroup-analysis publication (PMC6130125) because the primary NEJM article (Marso et al., 2016;375:311-322) returned a bot-check/verification page and was inaccessible during this research session. Wording and figures should be verified directly against the primary publication before this claim is treated as fully source-verified.",
-      "resolutionStatus": "needs-human-review"
+      "summary": "LEADER trial primary composite-outcome figures were originally extracted via a secondary subgroup-analysis publication (PMC6130125) because the primary NEJM article (Marso et al., 2016;375:311-322) returned a bot-check page and was inaccessible during the initial research session. Independent re-fetch of the primary publication (PMC4985288) on 2026-08-29 shows the originally-cited figure (HR 0.82, 95% CI 0.72-0.94, p=0.005) was a subgroup-specific statistic, not the trial-wide primary outcome. The claim has been corrected to the verified trial-wide result: HR 0.87 (95% CI 0.78-0.97), p=0.01 for superiority (13.0% liraglutide vs 14.9% placebo, n=9,340), quoted verbatim from PMC4985288.",
+      "resolutionStatus": "resolved"
     }
   ],
   "ops": {
-    "completeness": "partial",
+    "completeness": "substantial",
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "LEADER trial primary-outcome quote was sourced from a secondary subgroup-analysis publication because the primary NEJM article was inaccessible (bot-check page) during this session; verify wording against the primary publication.",
-      "CAS number, RxNorm, UNII, ChEMBL, and PMID identifiers were not resolved from structured databases this session.",
-      "Liraglutide-specific counterfeit/falsified-product incident data was not confirmed; the NABP source documents the GLP-1 class broadly, citing Ozempic (semaglutide) as its specific falsification example."
+      "RESOLVED 2026-08-29: LEADER trial primary-outcome figure was corrected to HR 0.87 (95% CI 0.78-0.97, p=0.01 for superiority) after independently re-fetching and quoting the primary Marso et al. NEJM 2016 publication (PMC4985288); prior figure (HR 0.82) was a misattributed subgroup statistic.",
+      "RESOLVED 2026-08-29: CAS number (204656-20-2, via PubChem), UNII (839I73S42A, via FDA/NCATS GSRS), RxNorm RxCUI (475968, via RxNav), and ChEMBL ID (CHEMBL4084119, via ChEMBL API) were resolved and added to compound.externalIdentifiers this session.",
+      "PARTIAL 2026-08-29: for the Victoza/Saxenda approved-indication and boxed-warning claims, independent review this session added a second, materially different source family (Drugs@FDA structured-database records, NDA 022341 and NDA 206321) beyond the live FDA label PDFs already checked, confirming active approval and marketing status. A professional-guideline family (e.g., ADA Standards of Care) has not yet been consulted for these fieldAuthorityRequired claims; remains a documented gap pending further review.",
+      "PMID for compound.externalIdentifiers.pmid intentionally left null: no single canonical PMID applies to a compound identity record (liraglutide is associated with many publications, not one defining PMID).",
+      "Liraglutide-specific counterfeit/falsified-product incident data remains unconfirmed after an independent 2026-08-29 search across FDA, WHO, and peer-reviewed pharmacovigilance sources; every documented incident found was semaglutide/Ozempic-specific. Claim's class-level framing is accurate and stays review-gated as-is.",
+      "Boxed-warning and pancreatitis adverse-effect claims were independently corroborated this session (live FDA labels; Cleveland Clinic Journal of Medicine review) but a professional-guideline or systematic-review cross-check beyond the regulator/label and single-review sources used was not exhaustively pursued; low-risk given source authority tier, documented for completeness."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -443,7 +563,8 @@
       "a1-regulator-backed",
       "positive-human-rct-documented",
       "dual-indication-diabetes-and-weight-management",
-      "gray-market-risk-documented"
+      "gray-market-risk-documented",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

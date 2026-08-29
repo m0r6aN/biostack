@@ -79,6 +79,30 @@
       "accessedAt": "2026-08-28T21:30:00Z"
     },
     {
+      "sourceId": "fda-lawblog-category2-2026",
+      "sourceType": "professional-legal-analysis",
+      "authorityTier": "C1",
+      "title": "FDA's Pep(tide) Rally! (FDA Law Blog)",
+      "publisher": "FDA Law Blog (Hyman, Phelps & McNamara, P.C.)",
+      "url": "https://www.thefdalawblog.com/2026/04/fdas-peptide-rally/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-91976842",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: CJC1295 Without DAC (CID 91976842)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/91976842",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "peptidetreatments-vendor-marketing",
       "sourceType": "vendor-marketing",
       "authorityTier": "C3",
@@ -129,13 +153,14 @@
       "reviewFlags": [
         "safety-critical regulatory claim",
         "confirm final PCAC committee vote/outcome versus this briefing-document staff position",
-        "verify current FDA nomination status at review time"
+        "verify current FDA nomination status at review time",
+        "independent re-check (live FDA bulk-drug-substances page, fetched 2026-08-28) corroborates only the general safety-concern/immunogenicity framing; the specific nonclinical findings cited here (Comet-assay DNA damage in pituitary cells, aggregation sensitivity) remain sourced solely to the single PCAC briefing PDF and have not been independently corroborated"
       ]
     },
     {
       "claimId": "cjc1295-regulatory-withdrawn-nomination-001",
       "claimType": "regulatory",
-      "statement": "CJC-1295 appears on FDA's public bulk-drug-substances page under \"Bulk drug substances nominated but withdrawn,\" not in the active Category 1 or Category 2 lists; the entry states FDA identified serious adverse events associated with CJC-1295 including increased heart rate and systemic vasodilatory reaction, and that available clinical data are limited.",
+      "statement": "CJC-1295 appears on FDA's public bulk-drug-substances page under \"Bulk drug substances nominated but withdrawn,\" not in the active Category 1 or Category 2 lists; the entry states FDA identified serious adverse events associated with CJC-1295 including increased heart rate and systemic vasodilatory reaction, and that available clinical data are limited. Prior to its current withdrawn-nomination status, CJC-1295 had been placed, in September 2023, into FDA's separate interim-policy \"Category 2\" list along with over a dozen other peptides; that Category 2 placement (of CJC-1295 alongside AOD-9604, ipamorelin acetate, and Thymosin Alpha-1) was the subject of an Administrative Procedure Act lawsuit against FDA brought by Evexias and Farmakeio.",
       "context": {
         "population": "humans exposed to compounded CJC-1295 products",
         "route": null,
@@ -147,18 +172,30 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "fda-bulk-substances-withdrawn-nominations"
+        "fda-bulk-substances-withdrawn-nominations",
+        "fda-lawblog-category2-2026"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "fda-bulk-substances-withdrawn-nominations",
           "quote": "Compounded drugs containing CJC-1295 may pose risk for immunogenicity for certain routes of administration and may have complexities with regard to for peptide-related impurities and API characterization. FDA has identified serious adverse events associated with CJC-1295 including increased heart rate and systemic vasodilatory reaction. Available clinical data are limited.",
           "pageOrSection": "Bulk drug substances nominated but withdrawn, CJC-1295 row"
+        },
+        {
+          "sourceRef": "fda-lawblog-category2-2026",
+          "quote": "In September 2023, FDA moved over a dozen peptides into Category 2 of the 503A bulks list",
+          "pageOrSection": "FDA's Pep(tide) Rally!, April 2026"
+        },
+        {
+          "sourceRef": "fda-lawblog-category2-2026",
+          "quote": "FDA was sued by Evexias and Farmakeio down in Texas under the Administrative Procedure Act, citing a lack of transparency concerning the placement of certain peptides in Category 2. That lawsuit dealt specifically with four peptides: AOD-9604, CJC-1295, Ipamorelin acetate, and Thymosin Alpha-1 (\"Ta1\").",
+          "pageOrSection": "FDA's Pep(tide) Rally!, April 2026"
         }
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "listing status (withdrawn vs. re-nominated) is volatile \u2014 reconfirm against the live FDA page at review time"
+        "listing status (withdrawn vs. re-nominated) is volatile — reconfirm against the live FDA page at review time",
+        "regulatory-history sentence (Category 2 placement, September 2023) added per independent-review note, sourced to an independent professional/legal-analysis source (FDA Law Blog, April 2026), a source family distinct from the FDA regulator pages already cited"
       ]
     },
     {
@@ -229,7 +266,8 @@
       ],
       "reviewFlags": [
         "trial dose context must never be presented as a use recommendation",
-        "this trial predates and is independent of the CJC-1295 DAC phase 2 trial subject death reported in 2006 (see safety-critical claim below); does not establish long-term or self-administered gray-market safety"
+        "this trial predates and is independent of the CJC-1295 DAC phase 2 trial subject death reported in 2006 (see safety-critical claim below); does not establish long-term or self-administered gray-market safety",
+        "independent 2009 published study (PMID 19386527) replicates the direction of GH/IGF-1 axis activation, supporting that the pharmacodynamic finding is not a single-trial artifact; the precise dose-response magnitudes (2-10x GH, 1.5-3x IGF-I) and duration windows remain sourced only to the single Teichman 2006 RCT"
       ]
     },
     {
@@ -269,7 +307,8 @@
       "reviewFlags": [
         "safety-critical claim",
         "FDA briefing does not specify the cause of death or whether it was attributed to CJC-1295 DAC; this gap should be resolved by an independent source (e.g., trial registry or published safety report) before publication",
-        "distinct from, but consistent in direction with, the separately documented cardiovascular adverse events (increased heart rate, systemic vasodilatory reaction) on the FDA withdrawn-nominations page"
+        "distinct from, but consistent in direction with, the separately documented cardiovascular adverse events (increased heart rate, systemic vasodilatory reaction) on the FDA withdrawn-nominations page",
+        "unresolved after a targeted independent-review attempt (2026-08-29): a matching ConjuChem-sponsored, terminated Phase 2 trial was located on ClinicalTrials.gov (NCT00267527, \"CJC 1295 in HIV Patients With Visceral Obesity,\" Dec 2005-Sep 2006) but its public registry record does not state a termination reason or any cause-of-death/adverse-event detail; a PubMed search for CJC-1295 DAC death/case-report literature returned zero results. No independent primary source confirming or ruling out causal attribution was found this session; this claim and conflict cjc1295-conflict-cause-of-death-attribution-001 remain human-review-gated as instructed"
       ]
     },
     {
@@ -288,6 +327,7 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pubchem-cid-91971820",
+        "pubchem-cid-91976842",
         "fda-pcac-briefing-183819"
       ],
       "extractedEvidence": [
@@ -297,13 +337,19 @@
           "pageOrSection": "Molecular Formula field, CID 91971820"
         },
         {
+          "sourceRef": "pubchem-cid-91976842",
+          "quote": "C152H252N44O42",
+          "pageOrSection": "Compound name \"CJC1295 Without DAC\", Molecular Formula field, CID 91976842"
+        },
+        {
           "sourceRef": "fda-pcac-briefing-183819",
           "quote": "we believe the evaluation criteria weigh against placing CJC-1295 (free base), CJC-1295 acetate, CJC-1295 DAC (free base), CJC-1295 DAC acetate, or CJC-1295 DAC TFA on the list",
           "pageOrSection": "Introduction, page 3 (enumerates the five evaluated CJC-1295 variants)"
         }
       ],
       "reviewFlags": [
-        "PubChem CID 91971820 record could not be confirmed to unambiguously distinguish DAC vs. non-DAC forms from the fetched page content; CAS number and UNII were not resolved from the fetched PubChem page and require follow-up",
+        "resolved on independent re-check (2026-08-29): PubChem holds a SEPARATE compound record, CID 91976842, explicitly named \"CJC1295 Without DAC\" (formula C152H252N44O42), distinct from the CID 91971820 record cited above -- this confirms PubChem does unambiguously distinguish DAC vs. non-DAC forms across two separate CIDs, resolving the prior gap",
+        "CAS number and UNII for PubChem CID 91971820 remain unresolved: an independent lookup via the FDA/NCATS Global Substance Registration System (GSRS) for \"CJC-1295\" returned 8 substance records (multiple UNII/CAS pairs for salt and related forms) and one clearer exact-name match (UNII 62RC32V9N7, CAS 446262-90-4) whose reported molecular formula did not cleanly match either PubChem CID's formula, so it could not be confidently attributed to CID 91971820 specifically; this identifier gap stays open for a reviewer with direct database/API access",
         "vendor product listings for 'CJC-1295 without DAC' and 'Mod GRF 1-29' are not consistently distinguished from CJC-1295 DAC in gray-market marketing; this ambiguity itself is a consumer-facing risk"
       ]
     },
@@ -334,7 +380,7 @@
         },
         {
           "sourceRef": "peptidetreatments-vendor-marketing",
-          "quote": "Enhanced deep sleep quality \u2014 GH secretion is coupled to slow-wave sleep architecture",
+          "quote": "Enhanced deep sleep quality — GH secretion is coupled to slow-wave sleep architecture",
           "pageOrSection": "Anti-Aging/Longevity marketing claims"
         }
       ],
@@ -351,7 +397,7 @@
         "cjc1295-adverse-effect-phase2-death-001"
       ],
       "severity": "high",
-      "summary": "FDA's PCAC briefing document states a phase 2 trial subject death led to ConjuChem's 2006 withdrawal of CJC-1295 DAC from clinical trials, but the fetched briefing text does not specify whether the death was causally attributed to the study drug, and no independent primary source (e.g., trial registry record, published case report, or sponsor statement) was located this session to corroborate causality or rule it out.",
+      "summary": "FDA's PCAC briefing document states a phase 2 trial subject death led to ConjuChem's 2006 withdrawal of CJC-1295 DAC from clinical trials, but the fetched briefing text does not specify whether the death was causally attributed to the study drug. A targeted independent-review attempt (2026-08-29) located the matching ConjuChem Phase 2 trial on ClinicalTrials.gov (NCT00267527, terminated September 2006) but its public record states no termination reason or cause-of-death detail, and a PubMed search for related case-report literature returned zero results. No independent primary source (trial registry detail, published case report, or sponsor statement) was located this session to corroborate causality or rule it out.",
       "resolutionStatus": "needs-human-review"
     }
   ],
@@ -361,8 +407,11 @@
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
       "Cause-of-death attribution for the 2006 phase 2 trial subject is stated by FDA's briefing without causal detail; an independent source (trial registry or published safety report) should be sought to confirm or contextualize before publication.",
+      "REMEDIATION 2026-08-29: targeted attempt made to resolve the cause-of-death gap. Located the matching ConjuChem Phase 2 trial on ClinicalTrials.gov (NCT00267527, \"CJC 1295 in HIV Patients With Visceral Obesity,\" terminated September 2006) via the ClinicalTrials.gov API, but its public registry record gives no termination reason or adverse-event/cause-of-death detail. A PubMed search (CJC-1295 DAC death) returned zero results. A tertiary source (Wikipedia) reports an unsourced physician opinion attributing the death to pre-existing coronary disease, but this could not be traced to a primary source this session. Gap remains unresolved; still requires a reviewer with access to the full trial record, sponsor safety report, or FDA adverse-event database.",
       "CAS number and UNII identifiers were not resolved from the fetched PubChem page and require follow-up against a structured database session that can render the full record.",
+      "REMEDIATION 2026-08-29: targeted attempt made to resolve CAS/UNII for PubChem CID 91971820. Queried the FDA/NCATS Global Substance Registration System (GSRS) for \"CJC-1295\"; it returned 8 substance records (multiple CAS/UNII pairs across salt and conjugated forms) with one clear exact-name match (UNII 62RC32V9N7, CAS 446262-90-4), but its reported molecular formula could not be confidently reconciled with either PubChem CID's formula, so the identifier was not written into the packet to avoid an unverified figure. CAS/UNII for CID 91971820 remain unresolved; a reviewer with direct GSRS/PubChem API or database access should confirm the correct salt-form mapping. Separately, the DAC vs. non-DAC identity ambiguity noted alongside this gap WAS resolved this session via a second PubChem record (CID 91976842, \"CJC1295 Without DAC\").",
       "FDA's bulk-drug-substances nomination/withdrawal status for CJC-1295 is time-volatile (the PCAC briefing and the withdrawn-nominations page may reflect different stages of the same review); reconfirm current status against the live FDA pages at review time.",
+      "REMEDIATION 2026-08-29: live FDA bulk-drug-substances page re-fetched and confirms CJC-1295 is still listed under \"nominated but withdrawn\" as of today; independent legal/regulatory-trade reporting (FDA Law Blog, April 2026) added to the packet, documenting CJC-1295's prior September 2023 placement in FDA's Category 2 interim-policy list and the resulting Evexias/Farmakeio APA lawsuit, for a more complete regulatory timeline.",
       "Human evidence is limited to short-duration pharmacodynamic (GH/IGF-I) trials in healthy adults; no controlled human efficacy or long-term safety data exist for the body-composition, anti-aging, or recovery uses driving current demand."
     ],
     "qualityFlags": [
@@ -371,7 +420,8 @@
       "phase2-trial-death-documented",
       "thin-human-evidence",
       "regulatory-boundary",
-      "identifier-gaps"
+      "identifier-gaps",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

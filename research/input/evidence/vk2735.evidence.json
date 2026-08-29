@@ -134,6 +134,66 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "europepmc-oby70106-verified",
+      "sourceType": "structured-literature-database",
+      "authorityTier": "B1",
+      "title": "Europe PMC record (EXT_ID:41508550) for 'Weekly Subcutaneous VK2735, a GIP/GLP-1 Receptor Dual Agonist, for Weight Management: Phase 2, Randomized, 13-Week VENTURE Study' (Obesity, 34(3):537-549, 2026)",
+      "publisher": "Europe PMC (EMBL-EBI)",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:41508550&format=json&resultType=core",
+      "doi": "10.1002/oby.70106",
+      "pmid": "41508550",
+      "publishedAt": "2026-03-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ctgov-nct06828055-results-status",
+      "sourceType": "clinical-trial-registry",
+      "authorityTier": "A2",
+      "title": "ClinicalTrials.gov API v2 study record for NCT06828055 (VENTURE-Oral) -- results-posting status check",
+      "publisher": "ClinicalTrials.gov (U.S. National Library of Medicine)",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT06828055?format=json",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "pubmed-search-vk2735-oral-2026",
+      "sourceType": "structured-literature-database",
+      "authorityTier": "A2",
+      "title": "PubMed search results for query 'VK2735 oral' -- no publications found",
+      "publisher": "PubMed, NCBI (U.S. National Library of Medicine)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/?term=VK2735+oral",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "dailymed-search-vk2735-2026",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "DailyMed search results for 'VK2735' -- no drug package labels found",
+      "publisher": "DailyMed, U.S. National Library of Medicine / FDA-sourced label data",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=VK2735",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ctgov-nct07104500-arms-2026",
+      "sourceType": "clinical-trial-registry",
+      "authorityTier": "A2",
+      "title": "ClinicalTrials.gov API v2 study record for NCT07104500 (VANQUISH 1) -- arms/interventions detail",
+      "publisher": "ClinicalTrials.gov (U.S. National Library of Medicine)",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT07104500?format=json",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -208,7 +268,7 @@
     {
       "claimId": "vk2735-efficacy-subcutaneous-venture-001",
       "claimType": "efficacy",
-      "statement": "In the sponsor-funded, randomized, double-blind, placebo-controlled Phase 2 VENTURE trial (13 weeks, n=176 adults with obesity), weekly subcutaneous VK2735 produced dose-dependent, statistically significant mean body-weight reductions from baseline of up to 14.7% at the 15 mg dose versus 1.7% with placebo, 'with no signs of plateau'; 88% of participants on the 15 mg dose achieved at least 10% weight loss versus 4% on placebo. Findings were subsequently published in the peer-reviewed journal Obesity.",
+      "statement": "In the sponsor-funded, randomized, double-blind, placebo-controlled Phase 2 VENTURE trial (13 weeks, n=176 adults with obesity), weekly subcutaneous VK2735 produced dose-dependent, statistically significant mean body-weight reductions from baseline ranging from 9.1% (2.5 mg) to 14.7% (15 mg) versus 1.7% (1.8 kg) with placebo, 'with no signs of plateau'; per the peer-reviewed Obesity journal publication, 93% (130/140) of participants across active-treatment arms achieved at least 5% weight loss versus 12% (4/34) with placebo. The company's topline release additionally reported that 88% of participants on the 15 mg dose achieved at least 10% weight loss versus 4% on placebo; this specific >=10% figure was independently checked against the published abstract in this review pass and was not present there (only the >=5% cutoff was reported), so it remains sourced solely to the company topline disclosure pending confirmation against the paper's full results tables. Findings were subsequently published in the peer-reviewed journal Obesity.",
       "context": {
         "population": "adults with obesity or overweight plus at least one weight-related comorbidity (n=176 randomized)",
         "route": "subcutaneous",
@@ -222,7 +282,8 @@
       "sourceRefs": [
         "viking-ir-venture-topline-2024",
         "viking-ir-venture-publication-2026",
-        "pubmed-41508550"
+        "pubmed-41508550",
+        "europepmc-oby70106-verified"
       ],
       "extractedEvidence": [
         {
@@ -239,18 +300,24 @@
           "sourceRef": "pubmed-41508550",
           "quote": null,
           "pageOrSection": "abstract (title/journal/PMID confirmed; full abstract text not machine-accessible at time of packet generation)"
+        },
+        {
+          "sourceRef": "europepmc-oby70106-verified",
+          "quote": "Mean weight reduction with active treatment ranged from 9.2 kg (2.5 mg dose) to 14.6 kg (15 mg dose), corresponding to 9.1% and 14.7% weight reductions, respectively; the placebo group had a 1.8 kg (1.7%) reduction. In the active treatment groups, 93% (130/140) of participants had a >= 5% weight reduction, compared with 12% (4/34) of participants with placebo treatment.",
+          "pageOrSection": "Results, abstract, Obesity 2026;34(3):537-549"
         }
       ],
       "reviewFlags": [
         "single sponsor-funded trial; independent replication and Phase 3 confirmatory data not yet available",
         "trial dose context must never be presented as a use recommendation",
-        "obtain and quote verbatim abstract text from the Obesity journal publication directly at review time"
+        "obtain and quote verbatim abstract text from the Obesity journal publication directly at review time",
+        "remediation-pass-2026-08-29: verbatim Obesity-journal abstract (via Europe PMC) independently confirms the 9.1%-14.7% weight-reduction range, the 1.7% placebo figure, and the >=5% responder rate (93%, 130/140 vs 12% placebo); the packet's '88% achieved >=10% weight loss at 15 mg' figure was NOT found in that abstract (only the >=5% cutoff appears there) and remains sourced only to the company topline press release -- reconfirm against the paper's full results tables at next review."
       ]
     },
     {
       "claimId": "vk2735-efficacy-oral-venture-oral-001",
       "claimType": "efficacy",
-      "statement": "In the sponsor-funded Phase 2 VENTURE-Oral trial (13 weeks, n=280 adults with obesity or overweight plus a comorbidity, six once-daily oral VK2735 dose arms plus placebo), oral VK2735 produced statistically significant mean body-weight reductions of up to 12.2% from baseline at week 13, with up to 80% of participants on higher doses achieving at least 10% weight loss versus 5-10% on placebo; discontinuation due to adverse events was higher with VK2735 (20%) than placebo (13%).",
+      "statement": "In the sponsor-funded Phase 2 VENTURE-Oral trial (13 weeks, n=280 adults with obesity or overweight plus a comorbidity, six once-daily oral VK2735 dose arms plus placebo), the sponsor (via topline company disclosure, echoed in trade press) has reported statistically significant mean body-weight reductions of up to 12.2% from baseline at week 13, with up to 80% of participants on higher doses achieving at least 10% weight loss versus 5-10% on placebo, and higher discontinuation due to adverse events with VK2735 (20%) than placebo (13%). As of this review pass (2026-08-29), these figures are NOT independently confirmed: ClinicalTrials.gov's record for NCT06828055 shows the trial as Completed with no results posted (hasResults: false), and a PubMed search for a VENTURE-Oral publication returned zero results. These outcome numbers should therefore be treated as sponsor-reported only, pending peer-reviewed publication or a ClinicalTrials.gov results posting.",
       "context": {
         "population": "adults with obesity (BMI >=30) or overweight (BMI >=27) with a weight-related comorbidity (n=280 randomized)",
         "route": "oral",
@@ -263,7 +330,9 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "acto-venture-oral-2026",
-        "nct06828055"
+        "nct06828055",
+        "ctgov-nct06828055-results-status",
+        "pubmed-search-vk2735-oral-2026"
       ],
       "extractedEvidence": [
         {
@@ -275,11 +344,22 @@
           "sourceRef": "acto-venture-oral-2026",
           "quote": "up to 80%\" achieved at least 10% weight loss versus 5-10% on placebo",
           "pageOrSection": "results summary"
+        },
+        {
+          "sourceRef": "ctgov-nct06828055-results-status",
+          "quote": "hasResults: false; overallStatus: COMPLETED",
+          "pageOrSection": "ClinicalTrials.gov API v2 study record, NCT06828055, statusModule/hasResults fields, fetched 2026-08-29"
+        },
+        {
+          "sourceRef": "pubmed-search-vk2735-oral-2026",
+          "quote": "No results were found.",
+          "pageOrSection": "PubMed search results page for query 'VK2735 oral', fetched 2026-08-29"
         }
       ],
       "reviewFlags": [
         "single sponsor-funded trial; not yet independently replicated or peer-reviewed at time of packet generation",
-        "trial dose context must never be presented as a use recommendation"
+        "trial dose context must never be presented as a use recommendation",
+        "unresolved-remediation-attempted-2026-08-29: targeted attempt made via ClinicalTrials.gov API v2 (NCT06828055 confirmed hasResults:false despite Completed status) and PubMed search (zero VENTURE-Oral publications found); no independent source family located, claim remains review-gated and statement language tightened to sponsor-reported-only framing"
       ]
     },
     {
@@ -298,7 +378,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "viking-ir-venture-topline-2024",
-        "acto-venture-oral-2026"
+        "acto-venture-oral-2026",
+        "europepmc-oby70106-verified"
       ],
       "extractedEvidence": [
         {
@@ -315,11 +396,17 @@
           "sourceRef": "acto-venture-oral-2026",
           "quote": "Discontinuation rates due to adverse events were 20% for VK2735 compared to 13% for placebo",
           "pageOrSection": "safety summary"
+        },
+        {
+          "sourceRef": "europepmc-oby70106-verified",
+          "quote": "The common adverse events (AEs) were gastrointestinal, which decreased in reported frequency after dose titration to steady state.",
+          "pageOrSection": "Results, abstract, Obesity 2026;34(3):537-549"
         }
       ],
       "reviewFlags": [
         "safety-critical claim; monitor for updated safety data from Phase 3 VANQUISH readouts",
-        "GI adverse-event rates are from short (13-week) sponsor-funded trials; long-term safety in chronic/self-administered use is unestablished"
+        "GI adverse-event rates are from short (13-week) sponsor-funded trials; long-term safety in chronic/self-administered use is unestablished",
+        "confirmed-with-note-remediation-2026-08-29: the peer-reviewed Obesity abstract independently confirms the general pattern (GI AEs common, decreasing after dose titration) but does not surface the specific percentages in this statement (nausea 43%, constipation 26%, diarrhea 20%, vomiting 18%, decreased appetite 16%, 95% mild/moderate) or the single dehydration SAE, which remain sourced only to the company topline release; the oral-arm 20%/13% AE-discontinuation figures share the same unresolved-independent-source gap as claim vk2735-efficacy-oral-venture-oral-001. Direction/general magnitude supported; exact figures need a second independent check (full-text paper or CT.gov results posting) before being treated as fully closed."
       ]
     },
     {
@@ -337,18 +424,25 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "fda-bulk-substances-category2"
+        "fda-bulk-substances-category2",
+        "dailymed-search-vk2735-2026"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "fda-bulk-substances-category2",
           "quote": "Absence finding: neither \"VK2735\" nor \"VK-2735\" appears in the Category 2 table or the withdrawn-nominations table on this FDA page (checked in full; audit independently re-verified).",
           "pageOrSection": "Category 2 and withdrawn-nominations tables checked for 'VK2735'/'VK-2735'; no matching entry found as of access date"
+        },
+        {
+          "sourceRef": "dailymed-search-vk2735-2026",
+          "quote": "No Drug Package Labels found.",
+          "pageOrSection": "DailyMed search results page for query 'VK2735', fetched 2026-08-29"
         }
       ],
       "reviewFlags": [
         "absence-based finding; must be rechecked against the live FDA page at review time since compounding/peptide listings change frequently",
-        "safety-critical regulatory claim"
+        "safety-critical regulatory claim",
+        "remediation-pass-2026-08-29: independently re-fetched the live FDA Category 2 bulk-substances page (2026-08-29) -- absence still holds; also independently confirmed via DailyMed search that no drug package label exists for VK2735, directly supporting the statement's DailyMed-absence clause which previously had no cited source"
       ]
     },
     {
@@ -406,7 +500,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "prnewswire-vanquish-phase3-init"
+        "prnewswire-vanquish-phase3-init",
+        "ctgov-nct07104500-arms-2026"
       ],
       "extractedEvidence": [
         {
@@ -418,11 +513,17 @@
           "sourceRef": "prnewswire-vanquish-phase3-init",
           "quote": "Randomized, double-blind, placebo-controlled, multicenter trial",
           "pageOrSection": "trial design"
+        },
+        {
+          "sourceRef": "ctgov-nct07104500-arms-2026",
+          "quote": "Arm Groups: Placebo Assignment - \"VK2735 Placebo Comparator Once Weekly\"; Active Assignment (Dose 1) - \"VK2735 7.5mg Once Weekly\"; Active Assignment (Dose 2) - \"VK2735 12.5mg Once Weekly\"; Active Assignment (Dose 3) - \"VK2735 17.5mg Once Weekly\"",
+          "pageOrSection": "armsInterventionsModule, NCT07104500 (VANQUISH 1) study record"
         }
       ],
       "reviewFlags": [
         "trial dose context must never be presented as a use recommendation",
-        "confirm current enrollment/completion status at review time"
+        "confirm current enrollment/completion status at review time",
+        "remediation-pass-2026-08-29: residual gap closed -- independently pulled the CT.gov arms/interventions detail page for NCT07104500, which confirms the exact 7.5mg/12.5mg/17.5mg weekly dose arms plus placebo, matching the packet's press-release-sourced dose listing"
       ]
     }
   ],
@@ -444,10 +545,12 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "PubChem CID, CAS number, UNII, and ChEMBL identifiers were not resolved for VK2735 during this research pass (PubChem search interface required JavaScript / API endpoints were blocked or 404s); confirm identifiers via structured database lookup at review time.",
-      "Full verbatim abstract text from the peer-reviewed Obesity journal publication (PMID 41508550 / DOI 10.1002/oby.70106) could not be machine-fetched (PubMed and Wiley Online Library pages returned no extractable body content); efficacy quotes currently rely on the sponsor's investor-relations press releases describing the same trial and should be cross-checked against the primary journal text.",
+      "PubChem CID, CAS number, UNII, and ChEMBL identifiers remain unresolved for VK2735 after a second attempt in this remediation pass: PubChem's REST endpoint (pubchem.ncbi.nlm.nih.gov/rest/pug/...) is blocked by robots.txt, CAS Common Chemistry's search API returned HTTP 403, and ChEMBL's EBI-hosted API endpoint could not be reached (rate-limited/blocked in this session alongside other ebi.ac.uk requests). Confirm identifiers via structured database lookup (or an interactive/browser-based session) at next review.",
+      "Full verbatim abstract text from the peer-reviewed Obesity journal publication (PMID 41508550 / DOI 10.1002/oby.70106) was successfully machine-fetched in this remediation pass via the Europe PMC REST API (source: europepmc-oby70106-verified) and used to independently corroborate the subcutaneous VENTURE efficacy and safety claims; the packet's '88% achieved >=10% weight loss at 15 mg' figure was not present in that abstract and should still be cross-checked against the paper's full results tables (not just the abstract) at next review.",
       "All human efficacy/safety evidence is sponsor-funded (Viking Therapeutics); Phase 3 VANQUISH-1/VANQUISH-2 results were not yet reported as of the access date and should be incorporated once available.",
-      "FDA Category 2 bulk-substances listing status is absence-based and should be rechecked against the live FDA page at review time given the fast-changing compounding-peptide regulatory landscape."
+      "FDA Category 2 bulk-substances listing status is absence-based and was re-verified live against the FDA page on 2026-08-29 (still absent); should continue to be rechecked at each review given the fast-changing compounding-peptide regulatory landscape.",
+      "VENTURE-Oral outcome numbers (claim vk2735-efficacy-oral-venture-oral-001) remain unresolved after a targeted remediation attempt: ClinicalTrials.gov API v2 confirms NCT06828055 is Completed with hasResults:false, and a PubMed search for 'VK2735 oral' returned zero publications; a WebSearch also surfaced only a further company/trade-press conference disclosure (ECO 2026), not an independent source family. Claim statement has been tightened to sponsor-reported-only framing and stays review-gated pending peer-reviewed publication or a CT.gov results posting.",
+      "The granular GI adverse-event percentages and single dehydration SAE in claim vk2735-adverse-effects-gi-001 remain corroborated only at the general-direction level (Europe PMC abstract) and not at the specific-figure level; flagged for a follow-up check against the full published paper or a CT.gov results posting."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -455,7 +558,8 @@
       "sponsor-funded-evidence-only",
       "thin-independent-human-evidence",
       "gray-market-misinformation-risk",
-      "unresolved-structured-identifiers"
+      "unresolved-structured-identifiers",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

@@ -23,7 +23,7 @@
       "drugbank": "DB09045",
       "pubchem": null,
       "chembl": "CHEMBL2108027",
-      "doi": null,
+      "doi": "10.1016/S0140-6736(19)31149-3",
       "pmid": "31189511"
     }
   },
@@ -77,6 +77,30 @@
       "accessedAt": "2026-08-28T22:30:00Z"
     },
     {
+      "sourceId": "diabetes-care-glp1ra-thyroid-cohort-2026",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Retrospective multi-database cohort study of GLP-1 receptor agonist exposure (including dulaglutide) and thyroid tumor risk (460,032 users)",
+      "publisher": "Diabetes Care / American Diabetes Association",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12281980/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "primarycarenotebook-rewind-summary",
+      "sourceType": "clinical-reference-summary",
+      "authorityTier": "B1",
+      "title": "Dulaglutide and cardiovascular outcomes in type 2 diabetes: REWIND, a double-blind randomised placebo-controlled trial",
+      "publisher": "Primary Care Notebook",
+      "url": "https://primarycarenotebook.com/pages/diabetes-and-endocrinology/dulaglutide-and-cardiovascular-outcomes-in-type-2-diabetes-rewind-a-double-blind-randomised-placebo-controlled-trial",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "healthline-trulicity-weight-loss",
       "sourceType": "consumer-health-media",
       "authorityTier": "C2",
@@ -119,7 +143,9 @@
           "pageOrSection": "INDICATIONS AND USAGE"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "independent-review note: DrugBank (structured-database, independent source family) corroborates the core T2D indication; the live FDA label re-check performed at review time is the same regulator/label family as the packet's own DailyMed citation, so it does not by itself satisfy the independent-family bar for the CV-indication and no-obesity-indication clauses. One further independent-family source (e.g., ADA Standards of Care) is recommended before final sign-off; ADA's site returned a 403 this remediation session as well."
+      ]
     },
     {
       "claimId": "dulaglutide-regulatory-boxed-warning-contraindication-001",
@@ -136,7 +162,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "dailymed-trulicity-label"
+        "dailymed-trulicity-label",
+        "diabetes-care-glp1ra-thyroid-cohort-2026"
       ],
       "extractedEvidence": [
         {
@@ -148,10 +175,16 @@
           "sourceRef": "dailymed-trulicity-label",
           "quote": "Patients with a personal or family history of medullary thyroid carcinoma (MTC) or in patients with Multiple Endocrine Neoplasia syndrome type 2 (MEN 2)",
           "pageOrSection": "CONTRAINDICATIONS"
+        },
+        {
+          "sourceRef": "diabetes-care-glp1ra-thyroid-cohort-2026",
+          "quote": "GLP-1RA exposure was not associated with an increased risk of thyroid tumors compared with SGLT2i, DPP4i, or SU therapy.",
+          "pageOrSection": "Results (multi-database cohort, 460,032 GLP-1RA users, dulaglutide included)"
         }
       ],
       "reviewFlags": [
-        "safety-critical regulatory claim - human MTC causation remains unconfirmed per label language itself"
+        "safety-critical regulatory claim - human MTC causation remains unconfirmed per label language itself",
+        "independent-review note: a 460,032-patient retrospective multi-database cohort study (Diabetes Care, ADA journal) found no increased human thyroid tumor risk with GLP-1RA exposure including dulaglutide, consistent with the label's hedged 'unknown whether ... in humans' language; species-specific GLP-1 receptor expression (much higher in rodent thyroid C-cells than human) is the proposed mechanism for why the rat signal has not been confirmed in humans. This does not change the boxed warning or contraindication, which remain as labeled."
       ]
     },
     {
@@ -189,7 +222,8 @@
         }
       ],
       "reviewFlags": [
-        "safety-critical monitoring claim"
+        "safety-critical monitoring claim",
+        "unresolved independent-source gap: no independent-family source (systematic review, controlled study, or guideline) on GLP-1RA/dulaglutide pancreatitis or AKI risk could be reached this remediation session either; the claim remains sourced only to the DailyMed label and stays human-review-gated rather than being re-affirmed from that same source family. Statement is limited to the label's own hedged, class-level language ('has been observed', 'postmarketing reports') and does not assert an incidence rate or causal magnitude."
       ]
     },
     {
@@ -207,17 +241,23 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "drugbank-db09045"
+        "drugbank-db09045",
+        "wikipedia-dulaglutide"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "drugbank-db09045",
           "quote": "Dulaglutide is a GLP-1 agonist used to manage type 2 diabetes mellitus.",
           "pageOrSection": "Indication"
+        },
+        {
+          "sourceRef": "wikipedia-dulaglutide",
+          "quote": "It is a glucagon-like peptide-1 receptor agonist (GLP-1 agonist) consisting of GLP-1(7-37) covalently linked to an Fc fragment of human IgG4.",
+          "pageOrSection": "Pharmacology / mechanism of action"
         }
       ],
       "reviewFlags": [
-        "fusion-protein structural detail sourced from Fc-fusion description in DrugBank/product literature; independent structural source not yet cross-checked"
+        "independent-review note: Wikipedia (encyclopedia/tertiary reference, independent of the DrugBank structured-database citation) independently corroborates the Fc-fusion structural detail; this was verified against the live page this remediation session. The fusion-protein structural detail is now independently cross-checked."
       ]
     },
     {
@@ -235,17 +275,24 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "dailymed-trulicity-label"
+        "dailymed-trulicity-label",
+        "wikipedia-dulaglutide"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-trulicity-label",
           "quote": "The recommended starting dosage of TRULICITY is 0.75 mg injected subcutaneously once weekly.",
           "pageOrSection": "DOSAGE AND ADMINISTRATION"
+        },
+        {
+          "sourceRef": "wikipedia-dulaglutide",
+          "quote": "In 2020, the FDA approved two higher doses of the medication, 3.0 mg and 4.5 mg, based on results of the AWARD-11 trial demonstrating improved glucose lowering and weight benefits.",
+          "pageOrSection": "Approval history / dosing"
         }
       ],
       "reviewFlags": [
-        "dosing claim - label context only, must not be presented as individualized medical advice"
+        "dosing claim - label context only, must not be presented as individualized medical advice",
+        "independent-review note: Wikipedia independently corroborates the 0.75/1.5 mg initial dose tiers and the 2020 addition of the 3.0/4.5 mg tiers (dose ceiling), consistent with the packet's titration statement. This is a different source family than DailyMed for the dose-tier existence, but the exact 4-week titration interval wording still rests principally on the DailyMed label; a second independent-family check (e.g., ADA Standards of Care) is recommended before final sign-off."
       ]
     },
     {
@@ -264,17 +311,23 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "springer-dulaglutide-therapy-review-2021",
-        "dailymed-trulicity-label"
+        "dailymed-trulicity-label",
+        "primarycarenotebook-rewind-summary"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "springer-dulaglutide-therapy-review-2021",
           "quote": "During the median follow-up of 5.4 years, dulaglutide treatment demonstrated a significantly lower risk of the primary composite endpoint of non-fatal myocardial infarction, non-fatal stroke or CV death compared to placebo (hazard ratio 0.88; 95% confidence interval 0.79-0.99)",
           "pageOrSection": "Discussion of REWIND trial results"
+        },
+        {
+          "sourceRef": "primarycarenotebook-rewind-summary",
+          "quote": "during a median follow-up of 5.4 years (IQR 5.1-5.9), the primary composite outcome occurred in 594 (12.0%) participants at an incidence rate of 2.4 per 100 person-years in the dulaglutide group and in 663 (13.4%) participants at an incidence rate of 2.7 per 100 person-years in the placebo group (hazard ratio [HR] 0.88, 95% CI 0.79-0.99; p=0.026)",
+          "pageOrSection": "REWIND trial summary, primary outcome"
         }
       ],
       "reviewFlags": [
-        "secondary/review-article citation of REWIND (Gerstein et al., Lancet 2019) - independent verification against the primary Lancet publication not yet completed because the primary article was inaccessible this session (403/robots-blocked); flagged for follow-up review to confirm exact wording and any subgroup caveats"
+        "secondary/review-article citation of REWIND (Gerstein et al., Lancet 2019) - the primary Lancet publication itself remained inaccessible this remediation session (403/CAPTCHA), but an independent clinical-reference summary family (Primary Care Notebook) independently corroborates the exact HR/CI/p-value/follow-up/population figures verbatim, closing the prior citation gap. DOI 10.1016/S0140-6736(19)31149-3 was independently confirmed via Crossref this session and added to compound.externalIdentifiers.doi."
       ]
     },
     {
@@ -330,10 +383,12 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "Primary REWIND trial publication (Lancet, Gerstein et al. 2019, PMID 31189511) could not be fetched directly this session (PubMed reCAPTCHA-gated, Lancet returned 403, PMC reCAPTCHA-gated); REWIND findings are currently sourced through a secondary review article and should be cross-checked against the primary publication at review time.",
-      "PubChem CID could not be resolved this session (PubChem compound page requires JavaScript and PUG-REST endpoints were robots-disallowed to the fetch tool); pubchem identifier left null pending resolution.",
-      "Weight-loss off-label marketing gap is documented from consumer-health media (Healthline) rather than a systematic review of off-label-use prevalence; strength of that characterization should be revisited if a stronger source becomes available.",
-      "DOI for the REWIND primary publication not yet resolved and confirmed independently."
+      "RESOLVED (remediation pass 2026-08-29): Primary REWIND trial publication remained inaccessible directly (Lancet/PubMed/PMC still 403/CAPTCHA-gated this session), but an independent clinical-reference summary (Primary Care Notebook, distinct source family from the packet's Springer secondary review) was fetched and independently corroborates the exact HR 0.88 (95% CI 0.79-0.99, p=0.026), 5.4-year median follow-up, and 9,901-participant population verbatim. Added as a source and cited in extractedEvidence.",
+      "RESOLVED (remediation pass 2026-08-29): DOI for the REWIND primary publication (10.1016/S0140-6736(19)31149-3) independently confirmed via Crossref API this session (title/journal/lead-author match REWIND) and added to compound.externalIdentifiers.doi.",
+      "STILL OPEN: PubChem CID could not be resolved this remediation session. PUG-REST name and CAS-xref lookups were robots-disallowed; the PubChem compound-summary HTML page was fetched but its 'pubchem_uid_value' meta tag resolved to CID 262 (2,3-Butanediol), which was independently verified via a second fetch to be the WRONG compound - so it was rejected rather than written into the packet. pubchem identifier remains null pending a reliable resolution route (e.g., manual PubChem search UI, or NCBI E-utilities esearch against the PubChem Compound database).",
+      "STILL OPEN: dulaglutide-warning-pancreatitis-aki-001 (fieldAuthorityRequired safety-critical claim) remains unresolved. This remediation session attempted: Europe PMC REST API search for 'dulaglutide pancreatitis' (persistently 429 rate-limited across multiple retries with cooldowns, mirroring the original access problem), and PMC full text of Azoulay et al. (incretin drugs/pancreatitis, BMJ 2016) at a candidate PMC ID (410 gone/retired). No independent-family source was reached; the claim stays sourced only to the DailyMed label and remains human-review-gated. Recommend a follow-up attempt via Drugs@FDA safety communications, the FDA/EMA joint pancreatic-safety assessment (NEJM/Cohen 2014), or a fresh Europe PMC query once rate limits clear.",
+      "STILL OPEN (partially addressed): dulaglutide-regulatory-approved-indication-001 and dulaglutide-dose-context-label-regimen-001 (both fieldAuthorityRequired) - DrugBank and Wikipedia (independent families) now corroborate the core T2D indication and the dose-tier structure/ceiling respectively, but the CV-indication clause, the no-obesity-indication clause, and the exact 4-week titration interval wording still rest principally on the DailyMed/live-FDA regulator family. ADA Standards of Care (professional.diabetes.org) returned a 403 to the fetch tool again this session. Recommend one further independent-family attempt before final sign-off.",
+      "Weight-loss off-label marketing gap is documented from consumer-health media (Healthline) rather than a systematic review of off-label-use prevalence; strength of that characterization should be revisited if a stronger source becomes available. (Note: independent review located a supporting systematic review/meta-analysis - Li et al. 2024, Eur J Clin Invest, DOI 10.1111/eci.14125 - but this remediation session could not itself fetch the Wiley abstract, 403, so it was not added as a verified citation; a future session should re-attempt.)"
     ],
     "qualityFlags": [
       "expansion-input",
@@ -341,7 +396,8 @@
       "a1-regulator-backed",
       "boxed-warning-present",
       "secondary-source-for-pivotal-rct",
-      "off-label-marketing-gap-documented"
+      "off-label-marketing-gap-documented",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

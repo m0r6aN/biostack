@@ -1,0 +1,484 @@
+{
+ "fixes": [
+  {
+   "slug": "cjc-1295",
+   "ok": true,
+   "itemsFixed": [
+    "cjc1295-regulatory-503a-recommendation-001: added reviewFlag noting live-FDA-page re-check corroborates only general safety framing, not the specific Comet-assay/aggregation findings",
+    "cjc1295-regulatory-withdrawn-nomination-001: statement extended with verified Category 2 (Sept 2023) placement history and Evexias/Farmakeio APA lawsuit, sourced to newly fetched FDA Law Blog article with verbatim quotes; new source fda-lawblog-category2-2026 added",
+    "cjc1295-efficacy-human-rct-gh-igf1-001: added reviewFlag noting independent PMID 19386527 replicates direction of GH/IGF-1 effect but not exact magnitudes",
+    "cjc1295-identity-two-forms-001: DAC vs non-DAC ambiguity resolved via newly fetched PubChem CID 91976842 ('CJC1295 Without DAC', C152H252N44O42) added as source+quote; reviewFlags updated",
+    "promotionBlocker (CAS/UNII gap): one serious independent attempt made via FDA/NCATS GSRS; result was ambiguous (formula mismatch) so no unverified figure was written, gap documented in ops.reviewReasons",
+    "promotionBlocker (phase-2 death causality): one serious independent attempt made via ClinicalTrials.gov API (found NCT00267527, no cause-of-death detail) and PubMed (zero results); documented in reviewFlags, conflict summary, and ops.reviewReasons",
+    "ops.qualityFlags: appended remediation-pass-2026-08-29; ops.needsReview kept true"
+   ],
+   "itemsStillGated": [
+    "cjc1295-adverse-effect-phase2-death-001 / conflict cjc1295-conflict-cause-of-death-attribution-001: cause-of-death causal attribution remains unresolved \u2014 ClinicalTrials.gov (NCT00267527) and PubMed searches this session found no primary source confirming or ruling out causality; stays human-review-gated per directive",
+    "CAS number and UNII for PubChem CID 91971820: GSRS lookup returned an ambiguous multi-record match whose formula did not cleanly reconcile with the target CID, so the identifier was not written; stays flagged for a reviewer with direct database/API access"
+   ],
+   "newSources": [
+    "https://www.thefdalawblog.com/2026/04/fdas-peptide-rally/ (fda-lawblog-category2-2026)",
+    "https://pubchem.ncbi.nlm.nih.gov/compound/91976842 (pubchem-cid-91976842)"
+   ],
+   "summary": "Applied all verdict-driven edits to /home/user/evidence-run/packets/cjc-1295.evidence.json in place. Verified and added the reviewer's Category 2/lawsuit note (FDA Law Blog, fetched this session) and the PubChem CID 91976842 record resolving the DAC-identity ambiguity, both with verbatim quotes and new source entries. Made one serious independent-verification attempt each on the two unresolved/blocking items (phase-2 death causality via ClinicalTrials.gov + PubMed; CAS/UNII via FDA GSRS) \u2014 neither could be confidently resolved, so both remain review-gated with the attempted routes documented in reviewFlags/ops.reviewReasons rather than forcing unverified figures. Added confirmed-with-note context to the 503a-recommendation and efficacy-RCT claims per the verdict. Appended remediation-pass-2026-08-29 to ops.qualityFlags, kept ops.needsReview=true, and validated the file against schema.json (VALID)."
+  },
+  {
+   "slug": "sermorelin",
+   "ok": true,
+   "itemsFixed": [
+    "sermorelin-evidence-gap-adult-wellness-uses-001: revised statement, evidenceTier (Insufficient->Limited), sourceRefs, and extractedEvidence to reflect two independently-verified controlled trials (Vittone et al. 1997 PMID 9005976; Vitiello et al. 2006 PMID 16399214), rather than the reviewer's unverified characterization of the 1997 trial's results",
+    "sermorelin-misinformation-anti-aging-marketing-001: narrowed statement to distinguish unsupported claims (libido, insulin sensitivity, general well-being, anti-aging/hGH-restoration) from the lean-body-mass claim, which remains unsupported per the actual primary-source result (no DEXA change) rather than the reviewer's suggested 'partially supported' framing",
+    "sermorelin-regulatory-discontinuation-not-safety-001: added BioSpace independent source + verbatim quote and reviewFlag noting supply-chain-specific framing",
+    "sermorelin-formulation-historical-approved-product-001: added BioSpace independent source + verbatim quote and reviewFlag",
+    "compound.externalIdentifiers.rxnorm: resolved to 56188 via NLM RxNav REST API this session (was null)",
+    "promotionBlocker (evidence-gap overstatement): addressed via the evidence-gap claim revision above, using verified rather than reviewer-asserted facts",
+    "promotionBlocker (misinformation blanket-dismissal): addressed via the misinformation claim narrowing above"
+   ],
+   "itemsStillGated": [
+    "ChEMBL identifier remains null \u2014 EBI ChEMBL REST API was rate-limited (HTTP 429) throughout this session and could not be reached; recorded in ops.reviewReasons",
+    "Vittone 1997 and Vitiello 2006 original journal abstracts (Metabolism; Neurobiology of Aging) could not be directly re-confirmed on PubMed/PMC/ScienceDirect/Metabolism journal site \u2014 all were CAPTCHA-blocked or 403'd this session same as the packet's original research pass; findings are sourced instead from the Johns Hopkins Pure institutional repository (1997 trial) and NIH Bookshelf/Endotext + PMC review citations (2006 trial), both fetched live this session, and this residual gap is recorded in reviewFlags/ops.reviewReasons rather than treated as fully closed",
+    "ops.needsReview remains true and the overall packet remains human-review-gated per the directive (fieldAuthorityRequired claims were already clean per the verdict; the two corrected claims still carry reviewFlags documenting the discrepancy found between the reviewer's suggested facts and the verified primary-source facts, which a human reviewer should see before promotion"
+   ],
+   "newSources": [
+    "https://www.biospace.com/emd-serono-inc-to-discontinue-geref-diagnostic",
+    "https://pure.johnshopkins.edu/en/publications/effects-of-single-nightly-injections-of-growth-hormone-releasing--6/ (Vittone et al. 1997, PMID 9005976)",
+    "https://www.ncbi.nlm.nih.gov/books/NBK279163/ used as secondary citation source for Vitiello et al. 2006, PMID 16399214",
+    "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=sermorelin"
+   ],
+   "summary": "Read the verdict first, then addressed all six claimVerdicts and both promotionBlockers. For the two confirmed-with-note regulatory/formulation claims, fetched the BioSpace independent source and added its verbatim quote plus a contextual reviewFlag. For the two needs-adjustment claims (evidence-gap and misinformation-claim), I re-fetched the primary sources the reviewer cited (Vittone et al. 1997 via Johns Hopkins' institutional repository, since PubMed/PMC/ScienceDirect/the journal site were all CAPTCHA-blocked or 403'd this session too) and found the reviewer's own recommended fix was factually wrong: the 1997 trial did NOT show increased lean body mass or decreased visceral fat \u2014 it showed no DEXA body-composition change at all, only partial improvement on 2 of 6 strength measures and one endurance measure. Per the task rule to never write a figure not verified against a fetched page this session, I corrected both claims to state the verified result rather than the reviewer's unverified claim, and documented this discrepancy explicitly in reviewFlags and ops.reviewReasons. Also independently verified and added the Vitiello et al. 2006 cognition trial (89 older adults, 6-month GHRH) via NIH Bookshelf/Endotext and a PMC review, both fetched live. Resolved the RxNorm identifier gap (RxCUI 56188) via NLM RxNav; ChEMBL remained unreachable (EBI API rate-limited) and is left null with the gap recorded. Appended 'remediation-pass-2026-08-29' to ops.qualityFlags, kept ops.needsReview=true, added no advice language, and the packet validates against schema.json."
+  },
+  {
+   "slug": "mots-c",
+   "ok": true,
+   "itemsFixed": [
+    "mots-c-regulatory-pcac-no-human-data-001 (needs-adjustment): statement updated to add the PCAC committee's actual 7-5 (2 abstentions) vote on 2026-07-23 recommending MOTS-c for the 503A Bulks List, with the caveat that the advisory vote is not a final rule; added AJMC as a corroborating independent source with verbatim quote.",
+    "mots-c-conflict-vendor-human-rct-claim-001 (promotionBlocker): resolved definitively -- confirmed via direct fetch that gethealthspan.com's cited 'human RCT' (15% insulin-stimulated glucose disposal, single 2mg/kg IV dose, citing 'Reynolds, Bhatt, Patel et al. 2021') is a fabricated/misattributed citation; the real Reynolds et al. 2021 Nature Communications paper (fetched directly) has a different author list and reports no such IV-dose human RCT. resolutionStatus changed from needs-human-review to resolved.",
+    "mots-c-misinformation-gray-market-dosing-001 (confirmed-with-note): added extractedEvidence quoting the vendor's fabricated citation and the real paper's author byline; reviewFlags updated to state the fabrication definitively instead of 'could not be verified'.",
+    "mots-c-studied-use-phase2a-prediabetes-trial-001 (confirmed-with-note): added reviewer's note about the registry-mirror source-family limitation to reviewFlags.",
+    "promotionBlocker (identifiers): CAS number (1627580-64-6) and UNII (A5CV6JFB78) resolved via direct fetch of PubChem CID 146675088 pug_view synonym data and added to compound.externalIdentifiers.",
+    "ops.qualityFlags: appended 'remediation-pass-2026-08-29' plus flags reflecting the fabricated-citation finding and pending PCAC rulemaking status; ops.reviewReasons updated to mark resolved items and carry forward remaining gaps."
+   ],
+   "itemsStillGated": [
+    "mots-c-studied-use-phase2a-prediabetes-trial-001: kept review-gated -- only an independent registry mirror (ichgcp.net) was found, still within the same 'structured database' source family as the packet's own clinicaltrials.gov source; no news/trade coverage of this specific trial was located this session. Low risk since the claim asserts no efficacy outcome.",
+    "DrugBank and ChEMBL identifiers for MOTS-c: remain null -- no DrugBank or ChEMBL entry for MOTS-c was located this session; documented as a carried-forward gap in ops.reviewReasons.",
+    "FDA rulemaking outcome for the PCAC's 7-5 recommendation: the advisory vote is documented, but whether/when FDA finalizes a rule adding MOTS-c to the 503A Bulks List is still pending and flagged for re-check against the Federal Register at next review.",
+    "ops.needsReview remains true and completeness remains 'partial' per directive -- packet still requires human review before publication."
+   ],
+   "newSources": [
+    "https://www.ajmc.com/view/fda-panel-backs-6-peptides-for-compounding (AJMC, PCAC 7-5 vote reporting)",
+    "https://link.springer.com/article/10.1186/s13098-024-01405-w (Diabetology & Metabolic Syndrome 2024 systematic review, independent corroboration of zero controlled human MOTS-c trials)",
+    "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/146675088/JSON/?heading=Depositor-Supplied+Synonyms (PubChem pug_view data used to verify CAS 1627580-64-6 and UNII A5CV6JFB78)"
+   ],
+   "summary": "Fetched and verified all reviewer-cited claims this session: confirmed the PCAC's actual 7-5 (2 abstentions) vote via AJMC and folded it into the regulatory claim with an advisory-vote caveat; confirmed via direct fetch that the vendor's cited human RCT is a fabricated/misattributed citation (wrong author list, no such study in the real Reynolds et al. 2021 paper), closing the open conflict as resolved with a second independent systematic-review source corroborating zero controlled human MOTS-c trials; resolved CAS/UNII identifiers via PubChem pug_view data; added a reviewer note to the trial claim's reviewFlags. Packet validates against schema.json, ops.needsReview stays true, and 'remediation-pass-2026-08-29' was appended to ops.qualityFlags. No existing sound claims were deleted."
+  },
+  {
+   "slug": "aod-9604",
+   "ok": true,
+   "itemsFixed": [
+    "aod9604-identity-mechanism-001: added reviewFlag capturing confirmed-with-note context (Wikipedia's more assertive beta-3 framing vs. packet's conservative hedged language, kept as-is)",
+    "aod9604-regulatory-pcac-recommendation-001: added reviewFlag noting independently-verified corroborating context that the July 2026 PCAC meeting (7-peptide batch) excluded AOD-9604, plus explicit note that the toxicology-detail promotionBlocker remains outstanding after a genuine PubMed search",
+    "aod9604-safety-human-tolerability-001 (unresolved, promotionBlocker): tightened claim statement to state explicitly it rests only on sponsor-affiliated sources; added reviewFlag and ops.reviewReasons entry documenting the targeted PubMed (23 results reviewed) and Europe PMC attempt and its failure; kept fieldAuthorityRequired=true and review-gated",
+    "ops.qualityFlags: appended remediation-pass-2026-08-29",
+    "ops.reviewReasons: added two entries documenting remediation attempts and residual gaps for both promotionBlockers"
+   ],
+   "itemsStillGated": [
+    "aod9604-safety-human-tolerability-001: still no independent, non-sponsor-affiliated human safety/tolerability source located despite a full PubMed search (23 results) this session; Europe PMC REST was unreachable due to egress policy (403 on www.ebi.ac.uk). Stays fieldAuthorityRequired=true / human-review gated.",
+    "aod9604-regulatory-pcac-recommendation-001: the specific nonclinical toxicology findings (rat osteocalcin, monkey periportal hepatocyte vacuolation, equivocal genotoxicity) remain sourced only to the single FDA PCAC briefing document; no second independent publication repeating these findings was found. Stays fieldAuthorityRequired=true / human-review gated; corroborating regulatory-posture context (July 2026 PCAC exclusion) was added but does not close the toxicology-detail gap."
+   ],
+   "newSources": [],
+   "summary": "Read the verdict and applied its per-claim instructions to /home/user/evidence-run/packets/aod-9604.evidence.json in place. No claim was verdicted needs-adjustment, so no new figures/sources needed re-fetching and quoting. For the two confirmed-with-note claims (identity-mechanism, pcac-recommendation) I folded the reviewer's note substance into reviewFlags. For the one unresolved, promotionBlocker-listed claim (safety-human-tolerability), I made a genuine independent-source attempt this session: PubMed search for AOD9604 (23 results across 3 pages, all reviewed) turned up only preclinical, analytical/doping-detection, and general-obesity-review papers -- no independent non-sponsor human safety study; Europe PMC REST (www.ebi.ac.uk) was blocked by the session's network egress policy (403), so I could not complete that route. Since the attempt failed, I tightened the claim statement to explicitly flag that it rests only on sponsor-affiliated sources, kept it fieldAuthorityRequired=true and review-gated, and logged the attempted routes in ops.reviewReasons rather than forcing a resolution. The second promotionBlocker (toxicology detail single-sourced to the FDA briefing) was addressed the same way: the same PubMed search found no independent corroboration of the specific findings, so it stays gated, while the independently-verified corroborating regulatory context (July 2026 PCAC meeting excluding AOD-9604) was added to reviewFlags. Appended 'remediation-pass-2026-08-29' to ops.qualityFlags, left ops.needsReview=true, deleted nothing, and the packet validates against schema.json (python3 jsonschema check prints VALID)."
+  },
+  {
+   "slug": "selank",
+   "ok": true,
+   "itemsFixed": [
+    "selank-regulatory-bulk-nomination-withdrawn-001: live FDA page re-fetched 2026-08-29, confirmed still in 'nominated but withdrawn' table; conflict summary tightened to separate the withdrawn-nominations table from the unrelated active Category 2 trade-press activity; conflict resolutionStatus set to resolved.",
+    "selank-mechanism-tuftsin-analog-001: reviewFlags updated with confirmed-with-note substance (tuftsin-derivation/sequence corroborated independently; 2009 registration date and 0.15% formulation detail remain single-sourced and flagged).",
+    "selank-mechanism-enkephalin-inhibition-001: independently re-verified IC50 15 microM figure verbatim via Europe PMC REST API (PMID 11550013); added as sourceRef + extractedEvidence; closed the prior 'unverified wording' flag.",
+    "selank-studied-use-gad-neurasthenia-001 (needs-adjustment): re-fetched PMID 18454096 abstract via Europe PMC REST API; statement rewritten from 'unverifiable' to the actual retrieved design facts (N=62; 30 selank vs 32 medazepam); added source + verbatim quote; flagged that randomization/blinding/effect-size remain unstated.",
+    "selank-evidence-gap-marketing-vs-evidence-001 (needs-adjustment): statement tightened to acknowledge the one small comparator trial instead of asserting none exists, and explicitly flags that dependence/withdrawal risk was never measured.",
+    "selank-identifiers-cas-pubchem-001 (unresolved -> resolved): independently confirmed CAS 129954-34-3 / PubChem CID 11765600 / diacetate CID 155804769 pairing via FDA/NCATS GSRS registry (a source family distinct from PubChem); added UNII TS9JR8EP1G and RxCUI 2049928 to compound.externalIdentifiers; evidenceTier raised to Strong/high confidence.",
+    "ops.reviewReasons updated to mark each of the above resolved with date/method, and ops.qualityFlags appended with 'remediation-pass-2026-08-29'."
+   ],
+   "itemsStillGated": [
+    "GAD/neurasthenia trial (PMID 18454096) claim stays fieldAuthorityRequired: randomization, blinding, and effect-size statistics are not present in the retrieved abstract and require the full original article.",
+    "Dependence/withdrawal risk for Selank vs. benzodiazepines remains unassessed in any human data found; the vendor 'no dependence' claim stays flagged as unsupported.",
+    "DrugBank and ChEMBL identifiers remain unresolved after this pass; no independent source returned values.",
+    "PubChem's own live compound page still renders as a JS-gated shell on direct fetch; identity confirmation relies on the independent GSRS cross-reference instead of a re-rendered PubChem page.",
+    "Tuftsin-analog claim's '2009 Russian MoH registration' date and '0.15% intranasal drop' formulation detail remain sourced only to the packet's own review-article citation; no independent source confirmed these this session."
+   ],
+   "newSources": [
+    "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18454096&format=json&resultType=core",
+    "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:11550013&format=json&resultType=core",
+    "https://gsrs.ncats.nih.gov/api/v1/substances(TS9JR8EP1G)",
+    "https://gsrs.ncats.nih.gov/api/v1/substances(Q94Z9E92UU)/codes"
+   ],
+   "summary": "Applied all six claimVerdicts from the reviewer against /home/user/evidence-run/packets/selank.evidence.json in place. Re-fetched the live FDA bulk-substances page (still 'withdrawn' table, tightened the conflict framing vs. 2026 trade press) and two Europe PMC abstracts this session (PMID 18454096 and 11550013), quoting them verbatim to fix the GAD/neurasthenia needs-adjustment claim (statement now states the real N=62/30-vs-32-medazepam design instead of asserting it's unverifiable) and the marketing-vs-evidence needs-adjustment claim (now acknowledges the one small comparator trial while flagging dependence/withdrawal was never measured), and to close the IC50 15 microM verification flag. For the unresolved identifiers claim I made a targeted attempt beyond PubChem/CAS Common Chemistry (both blocked) and succeeded via the FDA/NCATS Global Substance Registration System (GSRS), which independently cross-references CAS 129954-34-3, PubChem CID 11765600, and PubChem CID 155804769 (diacetate) to official UNII codes \u2014 added as a new independent source, added UNII TS9JR8EP1G and RxCUI 2049928 to compound.externalIdentifiers, and upgraded that claim's evidenceTier/confidence. ops.needsReview stays true, ops.qualityFlags got 'remediation-pass-2026-08-29' appended, and ops.reviewReasons was updated to mark resolved items and list what's still gated. The packet validates against schema.json."
+  },
+  {
+   "slug": "epitalon",
+   "ok": true,
+   "itemsFixed": [
+    "epitalon-regulatory-503a-recommendation-001 (needs-adjustment / promotionBlocker): rewrote statement to attribute the negative evaluation specifically to FDA STAFF's briefing, added the July 24, 2026 PCAC committee's 7-4 (1 abstention) vote IN FAVOR of epitalon for the 503A Bulks List, and added that this is a non-binding recommendation pending final FDA rulemaking; sourced and verbatim-quoted from a freshly fetched, materially different source (McDermott Will & Emery legal analysis).",
+    "promotionBlocker 2 (clarify neither staff position nor committee vote is final FDA action): resolved in the same statement rewrite above.",
+    "epitalon-identity-mechanism-001 (confirmed-with-note): added reviewFlag on secondary-source identity blurring (e.g. Wikipedia loosely attributing epithalamin outcome studies to 'epitalon'); also independently re-verified CAS 307297-39-8 via PubChem PUG-REST and NCATS GSRS, and added the previously-null UNII (O65P17785G) to compound.externalIdentifiers.",
+    "epitalon-warning-immunogenicity-carcinogenicity-001 (confirmed-with-note): added reviewFlags noting (a) epitalon's Category 2 significant-safety-risk nomination was withdrawn and it is not currently on that FDA list (verified via fresh fetch), and (b) telomere-length/cancer risk literature is bidirectional/complex, not a settled one-direction finding.",
+    "epitalon-studied-use-epithalamin-melatonin-001 (confirmed-with-note): added 'randomized' to the statement based on PubMed's own publication-type tags for PMID 15452611 ('Clinical Trial'; 'Randomized Controlled Trial'), fetched and quoted verbatim this session, with a caveat that the abstract text itself lacks blinding/randomization procedural detail.",
+    "ops.reviewReasons: closed the PCAC-vote-outcome item and the Category-2-list recheck item (both resolved), and the CAS/PubChem-verification item (CAS confirmed via PUG-REST + GSRS; UNII resolved). Appended ops.qualityFlags with 'remediation-pass-2026-08-29'."
+   ],
+   "itemsStillGated": [
+    "ops.reviewReasons: DrugBank and ChEMBL identifiers still unresolved (no structured-database confirmation found/attempted beyond UNII/CAS).",
+    "conflict epitalon-conflict-formulation-001 (Epitalon vs Epithalamin labeling ambiguity): kept needs-human-review per verdict instruction not to resolve by re-affirmation; needs confirmation against primary Khavinson-group publications.",
+    "conflict epitalon-conflict-telomerase-safety-001 (telomerase activation marketed as benefit vs FDA-flagged theoretical carcinogenicity concern): kept unresolved -- no human outcome data exists to adjudicate either framing.",
+    "ops.reviewReasons: human evidence base for the Epitalon tetrapeptide itself remains thin/nonexistent -- nearly all human data pertains to the distinct Epithalamin extract from a single non-independently-replicated research group; this is a structural evidence gap, not something a single review pass resolves.",
+    "epitalon-mechanism-pineal-circadian-001 and epitalon-evidence-gap-longevity-marketing-001 (verdict: confirmed): left as-is per instructions, since no per-item action was required."
+   ],
+   "newSources": [
+    "https://www.mcdermottlaw.com/insights/bulk-list-bound-pcac-backs-majority-of-peptides-in-two-day-public-meeting/",
+    "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+    "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/219042/synonyms/JSON",
+    "https://gsrs.ncats.nih.gov/api/v1/substances/search?q=epitalon"
+   ],
+   "summary": "Remediated /home/user/evidence-run/packets/epitalon.evidence.json against its verdict in place. Fixed the sole promotion-blocking needs-adjustment claim (503A/PCAC regulatory outcome) by fetching and quoting an independent law-firm analysis confirming the committee's 7-4 favorable vote, and clarified it as non-binding pending FDA rulemaking. Applied all three confirmed-with-note notes (identity blurring, telomere/cancer complexity + Category 2 nomination-withdrawn status, and randomized-trial detail for PMID 15452611), independently re-verifying each new fact via fresh WebFetch/WebSearch calls this session (PubChem PUG-REST, NCATS GSRS, PubMed, FDA Category 2 page, McDermott law-firm article) and quoting verbatim. Added 4 new sources to the packet's sources array, resolved the UNII identifier (O65P17785G), closed the now-resolved ops.reviewReasons items, kept both conflicts and the remaining identifier/evidence-thinness gaps open, kept ops.needsReview=true, and appended 'remediation-pass-2026-08-29' to ops.qualityFlags. Schema validation passes."
+  },
+  {
+   "slug": "liraglutide",
+   "ok": true,
+   "itemsFixed": [
+    "liraglutide-efficacy-leader-cv-outcomes-001 (needs-adjustment): corrected LEADER-trial primary composite outcome from misattributed subgroup figure HR 0.82 (95% CI 0.72-0.94, p=0.005) to verified trial-wide primary outcome HR 0.87 (95% CI 0.78-0.97, p=0.01 for superiority; 13.0% vs 14.9%, n=9,340), quoted verbatim from primary Marso et al. NEJM 2016 publication (PMC4985288) fetched this session; re-sourced extractedEvidence and sourceRefs accordingly",
+    "conflict liraglutide-leader-quote-secondary-source-001: resolutionStatus changed to 'resolved' with explanation",
+    "promotionBlocker #1 (LEADER HR error): fixed as above",
+    "promotionBlocker #2 (single-family verification gap for Victoza/Saxenda/boxed-warning claims): partially addressed by adding a second, materially different independent source family (Drugs@FDA structured-database records NDA 022341 and NDA 206321) confirming approval/marketing status; remaining gap (professional-guideline family not checked) recorded in ops.reviewReasons",
+    "compound.externalIdentifiers: resolved and filled casNumber (204656-20-2, PubChem), unii (839I73S42A, FDA/NCATS GSRS), rxnorm (475968, RxNav), chembl (CHEMBL4084119, ChEMBL API) -- addresses an ops.reviewReasons item from the original packet",
+    "liraglutide-approved-indication-victoza-001 and -saxenda-001 (confirmed-with-note): added reviewer's independent-family note plus Drugs@FDA corroboration to reviewFlags/sourceRefs/extractedEvidence",
+    "liraglutide-boxed-warning-thyroid-ccell-001 (confirmed-with-note): added note on live-label re-verification and same-family caveat to reviewFlags",
+    "liraglutide-adverse-effects-gi-pancreatitis-001 (confirmed-with-note): added CCJM meta-analysis nuance (no clear class-wide pancreatitis-incidence signal) to reviewFlags",
+    "liraglutide-evidence-gap-gray-market-glp1-001 (confirmed-with-note): added note confirming class-level framing remains accurate and gap stays open"
+   ],
+   "itemsStillGated": [
+    "liraglutide-approved-indication-victoza-001, -saxenda-001, -boxed-warning-thyroid-ccell-001: still lack a professional-guideline (e.g., ADA Standards of Care) independent family check; Drugs@FDA was added as a second structured-database family but the directive's fuller cross-family bar is only partially met -- recorded in ops.reviewReasons, needsReview stays true",
+    "liraglutide-evidence-gap-gray-market-glp1-001: no liraglutide-specific counterfeit/falsification incident found in any source family checked this session (FDA, WHO, peer-reviewed pharmacovigilance); claim's class-level (non-liraglutide-specific) framing intentionally left unchanged and review-gated per reviewer guidance",
+    "compound.externalIdentifiers.pmid: left null -- no single canonical PMID applies to a compound identity record; reasoning recorded in ops.reviewReasons"
+   ],
+   "newSources": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC4985288/",
+    "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022341",
+    "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=206321",
+    "https://gsrs.ncats.nih.gov/api/v1/substances(839I73S42A)",
+    "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=liraglutide",
+    "https://www.ebi.ac.uk/chembl/api/data/molecule/search?q=liraglutide&format=json",
+    "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/022341s046lbl.pdf",
+    "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/206321s025lbl.pdf"
+   ],
+   "summary": "Read the reviewer verdict (recommendation: request-changes) and remediated /home/user/evidence-run/packets/liraglutide.evidence.json in place. Fixed the sole needs-adjustment item (LEADER trial hazard ratio) by fetching the primary Marso et al. NEJM 2016 publication via PMC (PMC4985288) this session and replacing the misattributed subgroup figure with the verified trial-wide primary composite outcome (HR 0.87, 95% CI 0.78-0.97, p=0.01), quoted verbatim, re-sourced, and marked the conflict resolved. Addressed both promotionBlockers: corrected the LEADER figure, and partially closed the single-source-family gap on the Victoza/Saxenda/boxed-warning claims by independently fetching and citing Drugs@FDA structured-database records (NDA 022341, NDA 206321) as a second, materially different source family beyond the live FDA label PDFs -- the remaining professional-guideline gap is documented in ops.reviewReasons rather than force-closed. Resolved the identifier gap named in ops.reviewReasons by fetching CAS (PubChem), UNII (FDA/NCATS GSRS), RxNorm RxCUI (RxNav), and ChEMBL ID (ChEMBL API) this session and adding them to compound.externalIdentifiers, each backed by a new source entry. Added the four confirmed-with-note reviewer notes into the relevant claims' reviewFlags without altering statements (none required correction). Appended 'remediation-pass-2026-08-29' to ops.qualityFlags, kept ops.needsReview=true, did not delete any existing claims, and validated the final packet against schema.json via jsonschema -- it passes (VALID)."
+  },
+  {
+   "slug": "dulaglutide",
+   "ok": true,
+   "itemsFixed": [
+    "dulaglutide-regulatory-boxed-warning-contraindication-001: added independent-family source (Diabetes Care 460k-patient cohort study, PMC12281980) with verbatim quote confirming no increased human thyroid tumor risk; note added to reviewFlags",
+    "dulaglutide-mechanism-glp1-agonist-001: added Wikipedia as independently-verified corroborating source for the Fc-fusion structural detail (fetched and quoted this session)",
+    "dulaglutide-dose-context-label-regimen-001: added Wikipedia corroboration of dose-tier structure/2020 ceiling addition; noted remaining single-family reliance on titration-interval wording",
+    "dulaglutide-efficacy-rewind-cv-outcomes-001: added independent clinical-reference source (Primary Care Notebook) with verbatim HR/CI/p-value/population quote, closing the REWIND secondary-citation gap",
+    "REWIND DOI (10.1016/S0140-6736(19)31149-3) independently verified via Crossref API this session and added to compound.externalIdentifiers.doi, closing that ops.reviewReasons gap",
+    "dulaglutide-regulatory-approved-indication-001: reviewFlags updated to record DrugBank independent corroboration and the remaining single-family gap on CV/no-obesity clauses",
+    "ops.qualityFlags: appended remediation-pass-2026-08-29 as instructed"
+   ],
+   "itemsStillGated": [
+    "dulaglutide-warning-pancreatitis-aki-001: unresolved. This session's targeted attempt (Europe PMC REST search, PMC fetch of a candidate Azoulay et al. pancreatitis meta-analysis) failed (429 rate-limit persisted across retries with cooldowns; candidate PMC ID returned 410). Claim stays sourced only to DailyMed, fieldAuthorityRequired, human-review-gated; language already appropriately hedged (no incidence/causal magnitude asserted).",
+    "PubChem CID: still null. PUG-REST endpoints robots-disallowed; a PubChem HTML page fetch returned a meta tag pointing to CID 262, which a follow-up fetch confirmed is 2,3-Butanediol (wrong compound) -- deliberately rejected rather than written into the packet per the no-unverified-figures rule.",
+    "dulaglutide-regulatory-approved-indication-001 / dulaglutide-dose-context-label-regimen-001: CV-indication clause, no-obesity-indication clause, and exact 4-week titration interval still rest on the single DailyMed/live-FDA regulator family; ADA Standards of Care (professional.diabetes.org) again returned 403 this session.",
+    "Weight-loss meta-analysis (Li et al. 2024, Wiley DOI 10.1111/eci.14125) could not be independently fetched this session (403); noted in ops.reviewReasons for future follow-up rather than cited unverified. Claim dulaglutide-evidence-gap-weight-loss-marketing-001 left unchanged (was already 'confirmed' and unproblematic per reviewer)."
+   ],
+   "newSources": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12281980/ (Diabetes Care GLP-1RA thyroid cohort study)",
+    "https://primarycarenotebook.com/pages/diabetes-and-endocrinology/dulaglutide-and-cardiovascular-outcomes-in-type-2-diabetes-rewind-a-double-blind-randomised-placebo-controlled-trial (REWIND independent clinical-reference summary)",
+    "https://en.wikipedia.org/wiki/Dulaglutide (now actively cited in claims, was previously an unused source entry)"
+   ],
+   "summary": "Applied the verdict's instructions claim-by-claim: for the two confirmed-with-note regulatory/dosing claims and the confirmed mechanism claim, fetched and verbatim-quoted genuinely independent-family sources (Diabetes Care cohort study, Wikipedia) this session and recorded remaining single-family gaps in reviewFlags. For the confirmed REWIND efficacy claim, fetched an independent clinical-reference summary that verbatim-corroborates the HR/CI/population figures, and independently verified the REWIND DOI via Crossref, closing two ops.reviewReasons gaps. For the unresolved pancreatitis/AKI safety claim and the PubChem-identifier blocker, made serious targeted fetch attempts (Europe PMC REST, PMC Azoulay pancreatitis paper, PubChem PUG-REST and HTML page) \u2014 all failed or, in PubChem's case, returned a demonstrably wrong CID that was verified-and-rejected rather than written in \u2014 so both remain review-gated with the attempted routes documented in ops.reviewReasons per the no-force rule. Did not touch the already-sound weight-loss claim since I could not independently verify the Wiley source this session (403). Packet validates against schema.json, ops.needsReview stays true, and remediation-pass-2026-08-29 was appended to ops.qualityFlags."
+  },
+  {
+   "slug": "exenatide",
+   "ok": true,
+   "itemsFixed": [
+    "exenatide-approved-indication-001 (promotionBlocker): added manufacturer-discontinuation disclosure for Byetta (Oct 25, 2024) and Bydureon BCise (Oct 28, 2024), sourced to a fetched UHCprovider bulletin, quoted verbatim, source added to packet",
+    "exenatide-adverse-effect-exscel-safety-001 (promotionBlocker, unresolved): resolved via a fetched ClinicalTrials.gov results record (NCT01144338) for the same EXSCEL trial, a structured-database primary-results family distinct from the mdedge summary; added quantitative pancreatitis/pancreatic-malignancy/MTC/heart-failure comparisons, upgraded evidenceTier to Strong/confidence high",
+    "exenatide-warning-thyroid-ccell-001 (confirmed-with-note): added independent PMC corroboration note to reviewFlags",
+    "exenatide-dose-context-byetta-001 (confirmed-with-note): added note documenting the weak-independence gap (RxList largely republishes label text) to reviewFlags",
+    "ops.reviewReasons and ops.qualityFlags updated; appended remediation-pass-2026-08-29 flag; ops.needsReview left true"
+   ],
+   "itemsStillGated": [
+    "exenatide-evidence-gap-weightloss-marketing-001: still rests on a single low-authority vendor source (PeptideFactCheck) plus StatPearls corroboration noted in the verdict as already sufficient by the reviewer (verdict = confirmed); no further action needed but ops.reviewReasons still flags it as thin",
+    "CAS number, UNII, RxNorm, ChEMBL identifiers: made a targeted attempt (PubChem REST synonyms endpoint) but it was blocked by robots.txt for the fetch tool this session; DrugBank gates the fields; NIH GSRS host was blocked at the network/gateway layer. Left unresolved and documented in ops.reviewReasons per directive (not a listed promotionBlocker, so not forced)",
+    "exenatide-dose-context-byetta-001 titration schedule: only a label-derivative independent source (RxList) was reachable; no controlled-study or clinical-guideline family source was found this session -- kept as an open, low-risk note rather than force-upgraded"
+   ],
+   "newSources": [
+    "https://www.uhcprovider.com/en/resource-library/news/2024/discontinuation-bydureon-bcise-byetta.html",
+    "https://clinicaltrials.gov/study/NCT01144338?tab=results (data retrieved via https://clinicaltrials.gov/api/v2/studies/NCT01144338?fields=ResultsSection)"
+   ],
+   "summary": "Read the verdict first, then remediated the exenatide packet in place. Fetched and quoted the UHCprovider discontinuation bulletin (fetched this session) to add the required disclosure note to exenatide-approved-indication-001, resolving that promotionBlocker. For the unresolved safety claim (exenatide-adverse-effect-exscel-safety-001), NEJM/PMC/PubMed/EBI were all blocked (403/CAPTCHA/gateway policy) as the verdict predicted, so I pulled the sponsor-posted ClinicalTrials.gov structured results record for the same EXSCEL trial (NCT01144338) via its API, verified pancreatitis, pancreatic-malignancy, MTC, and heart-failure-hospitalization figures against fetched JSON, and added them as verbatim-quoted extractedEvidence from a materially different (structured-database) source family -- resolving both the claim and the second promotionBlocker. Added reviewer notes to the two confirmed-with-note claims (thyroid C-cell independent literature; Byetta dosing weak-independence gap) without altering their statements, since no imprecision was identified. Made one targeted, unsuccessful attempt at CAS/UNII/RxNorm/ChEMBL identifiers (PubChem REST blocked by robots.txt, GSRS blocked at gateway) and left that gap documented rather than forced. Updated ops.reviewReasons with resolution notes, appended 'remediation-pass-2026-08-29' to ops.qualityFlags, kept ops.needsReview=true, added no advice language, and did not delete any existing claims. Schema validation passes."
+  },
+  {
+   "slug": "pramlintide",
+   "ok": true,
+   "itemsFixed": [
+    "pramlintide-regulatory-approved-indication-001 (needs-adjustment): added disclosure that FDA Drugs@FDA NDA 021332 lists all Symlin/SymlinPen strengths as marketing-status 'Discontinued' (verified via fresh WebFetch), with new sourceRef/extractedEvidence/reviewFlag",
+    "pramlintide-dose-context-label-titration-001 (confirmed-with-note): strengthened reviewFlags to explicitly reference the discontinued marketing status per reviewer note",
+    "pramlintide-efficacy-t1d-rct-glycemic-weight-001 (confirmed-with-note): added Qiao et al. 2017 meta-analysis (PMID 29029531, 10 RCTs, n=3297) as a second, materially different sourceRef with verbatim quote fetched via Europe PMC REST API, plus corroboration note",
+    "externalIdentifiers promotionBlocker: resolved rxnorm (139953), unii (D3FM8FA78T), casNumber (151126-32-8), chembl (CHEMBL2103758) via NIH/NCATS GSRS and RxNav, cross-validated across two independent structured databases fetched this session",
+    "pramlintide-marketing-vs-evidence-weightloss-gap-001 (confirmed-with-note): tightened claim language / reviewFlags so the 'up to ~8 kg' figure is explicitly marked single-source (Dunican 2010 secondary citation) pending primary-source verification"
+   ],
+   "itemsStillGated": [
+    "'up to ~8 kg over 1 year' weight-loss figure in pramlintide-marketing-vs-evidence-weightloss-gap-001: one targeted attempt to independently pull the underlying 2008 Diabetes Care primary trial via Europe PMC REST API failed with repeated HTTP 429 rate-limiting; figure stays gated as systematic-review-mediated only, documented in reviewFlags and ops.reviewReasons",
+    "pramlintide-conflict-weightloss-marketing-vs-evidence-001 conflict remains resolutionStatus=needs-human-review (unchanged) pending the above primary-source gap",
+    "doi/pmid fields in externalIdentifiers remain null (compound-level identifiers; not applicable/resolvable at the compound-identity level distinct from per-source pmid/doi already captured on individual sourceSnapshots)"
+   ],
+   "newSources": [
+    "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021332 (accessdata-fda-daf-021332)",
+    "https://gsrs.ncats.nih.gov/api/v1/substances(D3FM8FA78T) (gsrs-ncats-pramlintide)",
+    "https://pubmed.ncbi.nlm.nih.gov/29029531/ (qiao-2017-oncotarget-meta-analysis, PMID 29029531, content fetched via Europe PMC REST API)"
+   ],
+   "summary": "Read the verdict and applied each instruction. Fetched and verified: the live FDA Drugs@FDA NDA 021332 record (confirmed 'Discontinued' marketing status for all three Symlin/SymlinPen strengths) and added that disclosure to the approved-indication claim and dose-context claim's reviewFlags; the Qiao et al. 2017 Oncotarget meta-analysis abstract via Europe PMC REST API (verbatim quote added as a second sourceRef strengthening the T1D efficacy claim); and identifier lookups via NIH/NCATS GSRS (cross-validated with RxNav) resolving CAS, UNII, ChEMBL, and RxNorm for pramlintide, closing the identifiers promotionBlocker. For the remaining promotionBlocker (the 'up to ~8 kg' weight-loss figure resting on a secondary citation of an unretrieved 2008 primary trial), I made one genuine attempt via Europe PMC REST API which hit repeated rate-limiting (429s), matching the reviewer's own experience; rather than forcing an unverified figure, I tightened the claim's reviewFlags to mark it explicitly single-source/systematic-review-mediated and logged the attempted route in ops.reviewReasons, keeping it review-gated. Appended 'remediation-pass-2026-08-29' to ops.qualityFlags, kept ops.needsReview=true, added no medical-advice language, deleted no existing claims, and the packet validates cleanly against schema.json."
+  },
+  {
+   "slug": "cagrilintide",
+   "ok": true,
+   "itemsFixed": [
+    "cagrilintide-regulatory-not-approved-nda-filed-001: independently confirmed non-approval via live FDA Novel Drug Approvals 2026 list (35 approvals, none matching) and DailyMed search (0 results); both added as sources with verbatim quotes, reviewFlags updated to reflect closure of the prior 'no independent regulator source' gap.",
+    "cagrilintide-mechanism-amylin-analog-001: added independent Wikipedia (Cagrilintide) source and verbatim quote corroborating the amylin-analog mechanism.",
+    "cagrilintide-efficacy-monotherapy-redefine1-001: added Wikipedia Cagrilintide/CagriSema sources with verbatim quotes cross-validating the 11.8%/2.3%/31.6%/4.7% figures; flagged the 11.8% vs 11.5% cross-source discrepancy for reviewer reconciliation.",
+    "cagrilintide-efficacy-combination-cagrisema-redefine-001: added Wikipedia CagriSema source with verbatim quote corroborating 20.4%/13.7% CagriSema figures; flagged the 3.4% vs 3.1% REDEFINE 2 placebo discrepancy.",
+    "promotionBlocker (identifiers): resolved CAS number (1415456-99-3) and UNII (AO43BIF1U8) via live FDA/NCATS GSRS lookup, added as a source and written into compound.externalIdentifiers."
+   ],
+   "itemsStillGated": [
+    "cagrilintide-regulatory-not-on-fda-compounding-lists-001: stays unresolved/review-gated \u2014 fetched a4pc.org/peptide-compounding live (independent trade-org source) but it names only 'several peptides' added to FDA Category 2 in Sept 2023, not cagrilintide specifically; Europe PMC REST also attempted and failed (query params stripped). No independent, non-FDA source naming cagrilintide's absence was found.",
+    "Primary NEJM full text for REDEFINE 1/2 (DOIs 10.1056/NEJMoa2502081, 10.1056/NEJMoa2502082): direct fetch (doi.org) returned 403 and Europe PMC REST failed again this pass; two efficacy claims remain review-gated on this basis, with two small numeric discrepancies (11.8% vs 11.5% monotherapy; 3.4% vs 3.1% REDEFINE 2 placebo) between independent tertiary sources left unreconciled against primary text.",
+    "Both packet conflicts (marketing-vs-trial-scope, primary-source-access) remain resolutionStatus=needs-human-review, unchanged, since primary NEJM access could not be obtained.",
+    "DrugBank, ChEMBL, DOI, and PMID identifiers remain unresolved (null)."
+   ],
+   "newSources": [
+    "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2026",
+    "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=cagrilintide&searchtype=all",
+    "https://gsrs.ncats.nih.gov/ginas/app/api/v1/substances/search?q=cagrilintide",
+    "https://en.wikipedia.org/wiki/Cagrilintide",
+    "https://en.wikipedia.org/wiki/CagriSema"
+   ],
+   "summary": "Read the verdict first, then addressed all six claimVerdicts. For the confirmed-with-note claims (mechanism, both efficacy claims) and the confirmed-with-note regulatory-approval claim, I independently re-fetched sources this session (FDA Novel Drug Approvals 2026 live list, DailyMed search, Wikipedia Cagrilintide and CagriSema articles) and added verbatim quotes plus new source entries \u2014 this fully closed the regulatory-approval claim's promotionBlocker and cross-validated the efficacy figures while explicitly flagging two small unreconciled numeric discrepancies (11.8% vs 11.5% monotherapy weight loss; 3.4% vs 3.1% REDEFINE 2 placebo) for reviewer reconciliation against primary NEJM text. For the unresolved compounding-lists claim, I made a targeted attempt using an independent trade-org route (a4pc.org, fetched live) plus Europe PMC REST, per the reviewer's suggested routes; neither route named cagrilintide specifically, so per instructions I did not force a resolution \u2014 the claim stays review-gated with attempted routes recorded in ops.reviewReasons. I also resolved the CAS number and UNII via a live FDA/NCATS GSRS lookup, addressing the identifiers promotionBlocker in part (DrugBank/ChEMBL/DOI/PMID remain unresolved). ops.needsReview stays true, and 'remediation-pass-2026-08-29' was appended to ops.qualityFlags. No existing sound claims were deleted. The packet validates cleanly against schema.json (confirmed via the jsonschema.validate command)."
+  },
+  {
+   "slug": "survodutide",
+   "ok": true,
+   "itemsFixed": [
+    "survodutide-efficacy-phase3-obesity-topline-001: replaced ConscienHealth secondary-summary topline (~16.6% vs ~3.2%) with verified primary NEJM SYNCHRONIZE-1 results (-12.2%/-13.0% survodutide vs -5.4% placebo at week 76; 72.6%/71.9%/46.3% achieving >=5% loss; GI AEs 80.9%/89.7% vs 47.9%; no deaths), upgraded evidenceTier Limited->Strong/confidence moderate->high, added europepmc-42253238-synchronize1-results source",
+    "survodutide-conflict-phase3-source-tier-001: corrected stale 'bot-verification blocked' note, marked resolutionStatus resolved with explanation of the real numeric discrepancy found",
+    "survodutide-efficacy-phase2-obesity-001: added independent Europe PMC-fetched Lancet abstract (PMID 38330987) confirming figures and clarifying that the packet's 75%/42% is the GI-specific AE subset, distinct from the trial's overall 91%/75% any-AE rate (not a conflict)",
+    "survodutide-regulatory-breakthrough-fasttrack-001: tightened claim language to flag FDA Fast Track/Breakthrough Therapy/EMA PRIME as manufacturer/trade-press-reported and not independently confirmed; added DailyMed zero-label verification (re-fetched and quoted verbatim this session) for the 'not approved' portion; documented three failed resolution routes attempted this session",
+    "survodutide-efficacy-phase2-mash-001: added reviewFlag documenting the independent Europe PMC literature search performed and that it found only directional (not numeric) corroboration",
+    "ops.reviewReasons and ops.qualityFlags updated to reflect all of the above and append remediation-pass-2026-08-29"
+   ],
+   "itemsStillGated": [
+    "survodutide-regulatory-breakthrough-fasttrack-001 (FDA Fast Track/Breakthrough Therapy, EMA PRIME designations): remains fieldAuthorityRequired and human-review gated -- no primary FDA.gov/EMA document reachable this session (Europe PMC search inconclusive/rate-limited, Boehringer newsroom and a guessed press-release URL both returned bot/security interstitials)",
+    "survodutide-efficacy-phase2-mash-001 (47%/62%/43% vs 14% histologic endpoint): percentages not independently re-derived from a second numeric source; only directional review-literature corroboration obtained (Patil et al. 2026, Newsome & Loomba 2025, Stachteas et al. 2025) -- flagged for follow-up full-text cross-check against the primary NEJM Sanyal et al. 2024 paper",
+    "UNII and ChEMBL identifiers: still unresolved, not attempted this pass (not named in this verdict's promotionBlockers), left in ops.reviewReasons for next review",
+    "FDA import alert/warning letter check for gray-market vendor sales: still unreachable (404 in prior pass, not re-attempted this pass since verdict said to leave it flagged as-is)"
+   ],
+   "newSources": [
+    "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=survodutide (dailymed-survodutide-search)",
+    "https://europepmc.org/article/MED/42253238 (europepmc-42253238-synchronize1-results, doi 10.1056/nejmoa2600751)",
+    "https://europepmc.org/article/MED/38330987 (europepmc-38330987-phase2-obesity-abstract, doi 10.1016/s2213-8587(23)00356-x)"
+   ],
+   "summary": "Read the verdict, then remediated the packet at /home/user/evidence-run/packets/survodutide.evidence.json in place. Fetched and verbatim-quoted three primary/regulator sources this session via WebFetch (Europe PMC REST for PMID 42253238 NEJM SYNCHRONIZE-1 results and PMID 38330987 Lancet phase 2 abstract; DailyMed search page), added them to the sources array, and used them to: (1) fix the needs-adjustment phase 3 topline claim with verified NEJM figures and resolve the stale conflicts entry; (2) add a clarifying note to the confirmed-with-note phase 2 obesity claim distinguishing overall-AE vs GI-specific AE percentages; (3) tighten the unresolved FDA/EMA designation claim's language to not overstate what trade-press/manufacturer sources support, after three failed independent-verification attempts (Europe PMC rate-limited, Boehringer newsroom and a guessed press-release URL both blocked by bot/security interstitials); (4) note the MASH histologic-endpoint residual gap after an Europe PMC search found only directional, not numeric, corroboration. ops.needsReview stayed true, 'remediation-pass-2026-08-29' was appended to ops.qualityFlags, no existing claims were deleted, and the packet validates against schema.json."
+  },
+  {
+   "slug": "pemvidutide",
+   "ok": true,
+   "itemsFixed": [
+    "pemvidutide-mechanism-dual-agonist-001: added independent Lancet (PMID 41237796) + Wikipedia corroboration to reviewFlags (verdict: confirmed, strengthened)",
+    "pemvidutide-efficacy-impact-2b-mash-001: added Lancet PMID 41237796 as primary sourceRef with verbatim quote (fetched via Europe PMC REST this session), demoting HCPLive to secondary confirmation; resolved conflict pemvidutide-conflict-fibrosis-endpoint-001 (marked resolved)",
+    "pemvidutide-efficacy-masld-phase2-rct-001: added confirmed-with-note substance (precise stats not independently re-derived) to reviewFlags",
+    "pemvidutide-evidence-gap-gray-market-marketing-001: added confirmed-with-note substance (Wikipedia corroboration) to reviewFlags",
+    "compound.externalIdentifiers.unii: resolved to A35F525WBG via FDA/NIH GSRS structured database (fixed duplicate-key bug introduced during edit), added gsrs-fda-unii-pemvidutide source",
+    "promotionBlocker (identifiers): UNII fixed; PubChem/ChEMBL/RxNorm attempt recorded as still open in ops.reviewReasons",
+    "ops.qualityFlags: appended remediation-pass-2026-08-29"
+   ],
+   "itemsStillGated": [
+    "pemvidutide-regulatory-development-status-001: unresolved -- Altimmune Breakthrough Therapy (MASH) and Fast Track (AUD) designations still lack an FDA.gov-hosted source (none exists to check against); only an independent trade-press corroboration (AJMC/HCPLive) was found this session. Statement tightened to attribute designations to company disclosure; stays review-gated.",
+    "pemvidutide-safety-gi-adverse-events-momentum-001: unresolved -- targeted attempt (ClinicalTrials.gov API, Europe PMC, ADA conference abstract 403) found no independent MOMENTUM trial safety data; statement tightened to explicitly attribute figures to the sponsor; stays review-gated per verdict.",
+    "pemvidutide-efficacy-momentum-weight-loss-001: unresolved -- same attempt/outcome as the safety claim; stays review-gated with sponsor-attributed language.",
+    "conflict pemvidutide-conflict-sponsor-only-safety-data-001: remains needs-human-review after remediation attempt.",
+    "PubChem CID / ChEMBL / RxNorm identifiers: still unresolved (PubChem blocked by robots.txt for automated fetch; likely registered as a large-peptide substance rather than small-molecule PubChem compound); recorded in ops.reviewReasons."
+   ],
+   "newSources": [
+    "https://pubmed.ncbi.nlm.nih.gov/41237796/ (Lancet IMPACT 24-week trial, PMID 41237796, fetched via Europe PMC REST API)",
+    "https://gsrs.ncats.nih.gov/api/v1/substances/d0e39d47-4977-4f6c-b773-55d1ff6f4a4e (FDA/NIH GSRS UNII record, A35F525WBG)",
+    "https://www.ajmc.com/view/pemvidutide-for-mash-earns-fda-breakthrough-therapy-designation",
+    "https://en.wikipedia.org/wiki/Pemvidutide"
+   ],
+   "summary": "Remediated the pemvidutide packet against every claimVerdict and promotionBlocker in the reviewer's report. Fetched and quoted the independent peer-reviewed Lancet IMPACT publication (PMID 41237796, via Europe PMC REST since PubMed itself served a reCAPTCHA page) to add as a primary source for the IMPACT 2b claim, resolving the fibrosis-endpoint conflict and strengthening the mechanism claim. Resolved the UNII identifier (A35F525WBG) via the official FDA/NIH GSRS database. Made one serious targeted independent-verification attempt each for the regulatory-designation claim and both MOMENTUM trial claims (ClinicalTrials.gov API, Europe PMC, Drugs@FDA, an ADA conference abstract that 403'd, and web search) -- none surfaced an independent primary source with the specific figures, so those three claims stay review-gated with statement language tightened to explicitly attribute the figures to the sponsor rather than asserting them as independently confirmed. PubChem/ChEMBL/RxNorm remain unresolved (PubChem robots-blocked; likely no small-molecule CID exists for this peptide) and are recorded in ops.reviewReasons. Added confirmed-with-note substance to reviewFlags on the two confirmed-with-note claims. ops.needsReview stayed true and 'remediation-pass-2026-08-29' was appended to ops.qualityFlags. The packet validates cleanly against schema.json."
+  },
+  {
+   "slug": "mazdutide",
+   "ok": true,
+   "itemsFixed": [
+    "mazdutide-mechanism-dual-agonist-001: added independent Semantic Scholar/NEJM corroboration note + quote for confirmed-with-note verdict",
+    "mazdutide-identity-external-ids-001: UNII (MB76Z4IBZ5) and CAS (2259884-03-0) independently resolved/confirmed via NCATS/FDA GSRS (materially different source family); ChEMBL ID CHEMBL5095358 added (still same-family via PubChem, flagged as not independently verified)",
+    "mazdutide-regulatory-nmpa-weight-mgmt-001: RESOLVED via independent peer-reviewed 'Mazdutide: First Approval' review (Drugs journal, PMID 41028652) confirming June 2025 approval + BMI thresholds",
+    "mazdutide-regulatory-nmpa-t2d-001: RESOLVED via same independent 'First Approval' review confirming September 2025 T2D approval",
+    "mazdutide-efficacy-glory1-weight-loss-001: added independent Semantic Scholar corroboration note; flagged a new discrepancy in percentages found during verification; kept evidenceTier Moderate per verdict",
+    "mazdutide-safety-gi-adverse-effects-001: added independent corroboration note for general GI pattern from Semantic Scholar/NEJM record",
+    "mazdutide-evidence-gap-gray-market-us-001: added live DailyMed source + verbatim 'No Drug Package Labels found' quote confirming no US label",
+    "conflict mazdutide-conflict-regulatory-source-authority-001: resolutionStatus changed unresolved->resolved based on independent 'First Approval' review",
+    "promotionBlocker (identifiers): UNII/CAS gap fixed via GSRS; ChEMBL gap documented as still open",
+    "ops.qualityFlags: appended remediation-pass-2026-08-29; ops.reviewReasons updated with resolved/still-gated status per item"
+   ],
+   "itemsStillGated": [
+    "mazdutide-identity-external-ids-001 (ChEMBL sub-point): ChEMBL ID only confirmed via PubChem (same family already cited); direct ChEMBL/ebi.ac.uk lookup blocked/rate-limited again this pass",
+    "mazdutide-efficacy-glory1-weight-loss-001: exact GLORY-1 percentages (-12.05%, -14.84%, 50.6%/2.1%) still trace to sponsor press release; NEJM full text remains paywalled (403); evidenceTier kept at Moderate",
+    "mazdutide-efficacy-phase2-t2d-hba1c-001: remains single-family (PMC/Diabetes Care trial only); ClinicalTrials.gov blocked at proxy/network level; no independent systematic review/meta-analysis found this session",
+    "mazdutide-safety-gi-adverse-effects-001 (granular %-breakdown sub-point): diarrhea/appetite/nausea/vomiting percentages remain single-family sourced to the phase 2 T2D trial; only the general mild-to-moderate GI pattern was independently corroborated",
+    "NMPA approval exact calendar days (June 27, Sept 19) and T2D combination-therapy eligibility detail still trace only to Innovent press releases; independent review confirmed only approval month + core criteria"
+   ],
+   "newSources": [
+    "https://gsrs.ncats.nih.gov/ginas/app/api/v1/substances/search?q=mazdutide&type=all (NCATS/FDA GSRS substance record)",
+    "https://pubmed.ncbi.nlm.nih.gov/41028652/ (Shirley M., 'Mazdutide: First Approval', Drugs 2025;85(12):1621-1627, DOI 10.1007/s40265-025-02249-y)",
+    "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1056/NEJMoa2411528 (Semantic Scholar bibliographic record of NEJM GLORY-1 publication)",
+    "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=mazdutide (live DailyMed search, 2026-08-29)"
+   ],
+   "summary": "Read the verdict first, then remediated all 8 claims and both promotionBlockers in /home/user/evidence-run/packets/mazdutide.evidence.json. Key win: found an independent peer-reviewed source (Shirley M., \"Mazdutide: First Approval\", Drugs journal, PMID 41028652) via WebSearch that the original reviewer had missed -- this resolved both previously-unresolved NMPA regulatory-approval claims (weight management and T2D) from a materially independent source family, flipping the regulatory-source-authority conflict from needs-human-review to resolved. Also resolved the UNII identifier gap via NCATS/FDA's Global Substance Registration System (a source family distinct from PubChem/DrugBank/MedChemExpress), which independently cross-confirmed the CAS number too. Added confirmed-with-note substance (Semantic Scholar/NEJM bibliographic corroboration) to the mechanism, GLORY-1 efficacy, and GI-safety claims per their verdicts -- notably, my own independent fetch of the NEJM record surfaced a new percentage discrepancy versus the press-release-sourced GLORY-1 figures, which I recorded rather than silently trusting, keeping evidenceTier at Moderate as instructed. Added a live DailyMed check (verbatim 'No Drug Package Labels found') to the gray-market evidence-gap claim. The phase 2 T2D efficacy claim and the ChEMBL identifier remain genuinely unresolved -- ClinicalTrials.gov and direct ChEMBL (ebi.ac.uk) stayed blocked at the network/proxy level on this pass too -- so both stay review-gated with the attempted routes documented in ops.reviewReasons, per the \"don't force it\" rule. ops.needsReview stays true, \"remediation-pass-2026-08-29\" was appended to ops.qualityFlags, no sound claims were deleted, and the packet validates cleanly against schema.json."
+  },
+  {
+   "slug": "vk2735",
+   "ok": true,
+   "itemsFixed": [
+    "vk2735-efficacy-subcutaneous-venture-001 (confirmed-with-note): re-fetched Obesity-journal abstract via Europe PMC this session, added it as a new source with verbatim quote, confirmed 9.1%-14.7% range/1.7% placebo/93% >=5% responder rate, and hedged the unverified '88% >=10%' figure in the statement + reviewFlags",
+    "vk2735-adverse-effects-gi-001 (confirmed-with-note): added verbatim Europe PMC quote confirming general GI-AE pattern, noted in reviewFlags that granular percentages and the dehydration SAE remain sourced only to the company release",
+    "vk2735-dose-context-phase3-001 (confirmed-with-note): closed the residual gap by pulling CT.gov armsInterventionsModule for NCT07104500, independently confirming the 7.5/12.5/17.5 mg dose arms",
+    "vk2735-regulatory-no-compounding-listing-001 promotionBlocker-adjacent gap: added a DailyMed search source/quote to back the statement's DailyMed-absence clause, which previously had no cited source",
+    "ops.qualityFlags: appended 'remediation-pass-2026-08-29'; ops.reviewReasons rewritten to reflect this pass's fetch attempts and outcomes for identifiers, abstract text, VENTURE-Oral, and GI AE granularity"
+   ],
+   "itemsStillGated": [
+    "vk2735-efficacy-oral-venture-oral-001 (unresolved): remains review-gated. Attempted CT.gov API (confirms hasResults:false despite Completed status), PubMed search (zero VENTURE-Oral publications), and WebSearch (only found a further company/trade-press ECO 2026 conference disclosure, not an independent source family). Statement tightened to sponsor-reported-only framing; attempted routes recorded in ops.reviewReasons.",
+    "vk2735-adverse-effects-gi-001 granular percentages (nausea 43%, constipation 26%, diarrhea 20%, vomiting 18%, decreased appetite 16%, dehydration SAE): only general direction/magnitude independently confirmed (Europe PMC abstract); exact figures still sourced only to company release, flagged for next review.",
+    "vk2735-efficacy-subcutaneous-venture-001's '88% achieved >=10% weight loss at 15mg' figure: independently checked against the Obesity abstract this session and NOT found there (abstract only reports a >=5% cutoff); statement now hedges this and it remains sourced only to the company topline release pending full results-table confirmation.",
+    "Structured identifiers (PubChem CID, CAS, UNII, ChEMBL): still unresolved after a second attempt -- PubChem REST blocked by robots.txt, CAS Common Chemistry API returned 403, ChEMBL/EBI endpoint unreachable (rate-limited) in this session; carried forward in ops.reviewReasons."
+   ],
+   "newSources": [
+    "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:41508550&format=json&resultType=core (europepmc-oby70106-verified)",
+    "https://clinicaltrials.gov/api/v2/studies/NCT06828055?format=json (ctgov-nct06828055-results-status)",
+    "https://pubmed.ncbi.nlm.nih.gov/?term=VK2735+oral (pubmed-search-vk2735-oral-2026)",
+    "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=VK2735 (dailymed-search-vk2735-2026)",
+    "https://clinicaltrials.gov/api/v2/studies/NCT07104500?format=json (ctgov-nct07104500-arms-2026)"
+   ],
+   "summary": "Remediated /home/user/evidence-run/packets/vk2735.evidence.json against its verdict. Fetched and quoted verbatim (this session) the Obesity-journal abstract via Europe PMC, confirming the subcutaneous VENTURE efficacy/safety figures while surfacing that the packet's '88% >=10% weight loss' figure isn't in that abstract -- statement hedged accordingly. Made a targeted, documented attempt to resolve the unresolved VENTURE-Oral claim (CT.gov API, PubMed search, WebSearch) but found no independent source family; tightened its statement to sponsor-reported-only language and kept it review-gated with attempted routes recorded. Added a DailyMed source to back an existing but previously uncited statement clause. Closed the minor dose-arm verification gap on the Phase 3 dose-context claim via CT.gov's arms/interventions detail page. Re-attempted PubChem/CAS/ChEMBL identifier lookups; all still blocked (robots.txt / 403 / rate-limited), carried forward unchanged in ops.reviewReasons. Added 5 new sources, appended 'remediation-pass-2026-08-29' to ops.qualityFlags, kept ops.needsReview=true, preserved all 8 existing claims, and the packet validates against schema.json."
+  }
+ ],
+ "audit": {
+  "overallPass": true,
+  "perPacket": [
+   {
+    "slug": "cjc-1295",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "sermorelin",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Correctly deviated from the reviewer's suggested fix for the lean-body-mass claim: the reviewer's recommended characterization (Vittone 1997 showed increased lean mass/decreased visceral fat) was checked against the primary source and found factually wrong, so the packet used the verified result (no DEXA body-composition change) instead of blindly applying the reviewer's fix. Correct behavior, noted for transparency."
+    ]
+   },
+   {
+    "slug": "mots-c",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "aod-9604",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "A new reviewFlag sentence was added to aod9604-regulatory-pcac-recommendation-001 stating the July 2026 PCAC meeting recommended 6 other peptides and excluded AOD-9604, but no sourceRef/URL backs this specific addition (low-risk, and independently plausible given cross-packet corroboration in epitalon/mots-c verdicts, but should be sourced).",
+     "Spot-check not possible: the unresolved safety-tolerability item legitimately found no new independent source this remediation pass (documented, honest failure), so there was no newly-added quote available to verify against a live page."
+    ]
+   },
+   {
+    "slug": "selank",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "epitalon",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "liraglutide",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "dulaglutide",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "exenatide",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": [
+     "Spot-check inconclusive (not a discrepancy): WebFetch could not retrieve results data from the clinicaltrials.gov NCT01144338 results page or its v2 API (JS-rendered page returned only navigation chrome; API blocked by robots.txt) in this session, so the specific pancreatitis/heart-failure figures added to exenatide-adverse-effect-exscel-safety-001 could not be independently re-confirmed against the live source. This matches the access difficulty multiple packets' own remediation sessions reported for this domain."
+    ]
+   },
+   {
+    "slug": "pramlintide",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "cagrilintide",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "survodutide",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "pemvidutide",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "mazdutide",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   },
+   {
+    "slug": "vk2735",
+    "schemaValid": true,
+    "verdictAddressed": true,
+    "issues": []
+   }
+  ],
+  "blockers": [],
+  "warnings": [
+   "aod-9604: new reviewFlag text about the July 2026 PCAC meeting excluding AOD-9604 from its 6-peptide recommendation batch was added without a cited sourceRef; low-risk (corroborated indirectly by epitalon/mots-c packets' independently-verified PCAC vote data) but should be sourced before publication.",
+   "aod-9604: no newly-added independent source exists in this packet to spot-check (the unresolved safety-tolerability claim's remediation attempt genuinely found nothing new, which is itself documented honestly in ops.reviewReasons and claim reviewFlags).",
+   "exenatide: could not independently verify the new clinicaltrials.gov NCT01144338 EXSCEL safety-figures quote via WebFetch in this session (JS-rendered results page and API both inaccessible to the fetch tool); this is an access limitation, not an identified discrepancy, and mirrors difficulty other packets' remediation sessions logged for the same domain.",
+   "gsrs.ncats.nih.gov timed out repeatedly on the specific SELANK and MAZDUTIDE substance-record queries during spot-checking (the domain itself is reachable, as shown by a successful liraglutide GSRS fetch); verification for those two packets was completed via an alternate newly-added source instead (Europe PMC abstract for selank; the independent 'Mazdutide: First Approval' PubMed review for mazdutide)."
+  ]
+ }
+}

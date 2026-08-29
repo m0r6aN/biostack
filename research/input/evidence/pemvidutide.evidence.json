@@ -19,7 +19,7 @@
     "compoundFamily": "Synthetic GLP-1/glucagon dual receptor agonist (unacylated peptide)",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
+      "unii": "A35F525WBG",
       "casNumber": "2538014-94-5",
       "drugbank": "DB18998",
       "pubchem": null,
@@ -126,6 +126,54 @@
       "accessedAt": "2026-08-28T22:30:00Z"
     },
     {
+      "sourceId": "lancet-pmid41237796-impact-24wk",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Safety and efficacy of weekly pemvidutide versus placebo for metabolic dysfunction-associated steatohepatitis (IMPACT): 24-week results from a multicentre, randomised, double-blind, phase 2b study",
+      "publisher": "The Lancet (Noureddin M, Harrison SA, Loomba R, et al., 2025)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41237796/",
+      "doi": null,
+      "pmid": "41237796",
+      "publishedAt": "2025-11-11T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "gsrs-fda-unii-pemvidutide",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "Pemvidutide substance record (UNII A35F525WBG)",
+      "publisher": "FDA/NIH Global Substance Registration System (GSRS)",
+      "url": "https://gsrs.ncats.nih.gov/api/v1/substances/d0e39d47-4977-4f6c-b773-55d1ff6f4a4e",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ajmc-breakthrough-therapy-mash",
+      "sourceType": "trade-press-conference-coverage",
+      "authorityTier": "B2",
+      "title": "Pemvidutide for MASH Earns FDA Breakthrough Therapy Designation",
+      "publisher": "AJMC (American Journal of Managed Care) / HCPLive",
+      "url": "https://www.ajmc.com/view/pemvidutide-for-mash-earns-fda-breakthrough-therapy-designation",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-01-16T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "wikipedia-pemvidutide",
+      "sourceType": "tertiary-reference",
+      "authorityTier": "C2",
+      "title": "Pemvidutide",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Pemvidutide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "medchemexpress-pemvidutide",
       "sourceType": "vendor-chemical-database",
       "authorityTier": "C2",
@@ -168,14 +216,21 @@
           "sourceRef": "pubmed-39002641-masld-rct",
           "quote": "a GLP-1/glucagon dual receptor agonist",
           "pageOrSection": "Title / abstract"
+        },
+        {
+          "sourceRef": "lancet-pmid41237796-impact-24wk",
+          "quote": "GLP-1-glucagon dual receptor agonists such as pemvidutide show promise in treating metabolic dysfunction-associated steatohepatitis.",
+          "pageOrSection": "Abstract, Background"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "Independently reconfirmed 2026-08-29 via a second, unrelated primary-literature source (Lancet IMPACT trial, PMID 41237796) and Wikipedia; no conflict found."
+      ]
     },
     {
       "claimId": "pemvidutide-regulatory-development-status-001",
       "claimType": "regulatory",
-      "statement": "Pemvidutide has no FDA-approved indication and is not a marketed drug product; it remains investigational, currently advancing to Phase 3 (PERFORMA trial) for MASH after Phase 2b data, while FDA has granted it Breakthrough Therapy Designation for MASH (based on 24-week IMPACT Phase 2b data) and Fast Track designation for alcohol use disorder (AUD).",
+      "statement": "Pemvidutide has no FDA-approved indication and is not a marketed drug product; it remains investigational. Per Altimmune's own disclosures (not yet independently confirmed against an FDA-hosted source this session), the company reports FDA Breakthrough Therapy Designation for MASH (based on 24-week IMPACT Phase 2b data) and Fast Track designation for alcohol use disorder (AUD); an independent trade-press outlet (AJMC/HCPLive) has separately reported the Breakthrough Therapy Designation announcement.",
       "context": {
         "population": "prospective patients under investigational protocols only",
         "route": "subcutaneous (investigational)",
@@ -189,7 +244,9 @@
       "sourceRefs": [
         "altimmune-ir-breakthrough-therapy-mash",
         "altimmune-ir-fast-track-aud",
-        "drugbank-db18998"
+        "drugbank-db18998",
+        "ajmc-breakthrough-therapy-mash",
+        "wikipedia-pemvidutide"
       ],
       "extractedEvidence": [
         {
@@ -206,11 +263,22 @@
           "sourceRef": "drugbank-db18998",
           "quote": "is under investigation in clinical trial NCT05989711",
           "pageOrSection": "Meta description / status"
+        },
+        {
+          "sourceRef": "ajmc-breakthrough-therapy-mash",
+          "quote": "The FDA has granted breakthrough therapy designation (BTD) for pemvidutide for the treatment of metabolic dysfunction–associated steatohepatitis (MASH).",
+          "pageOrSection": "Article body, published January 16, 2026"
+        },
+        {
+          "sourceRef": "wikipedia-pemvidutide",
+          "quote": "Pemvidutide is an experimental dual GLP-1/glucagon receptor agonist",
+          "pageOrSection": "Lead section"
         }
       ],
       "reviewFlags": [
         "regulatory-designation claims sourced from company (sponsor) press releases, not an FDA-hosted primary page; no independent FDA.gov confirmation was located",
-        "designation status and trial phase are time-sensitive and must be reconfirmed at review time"
+        "designation status and trial phase are time-sensitive and must be reconfirmed at review time",
+        "remediation-pass-2026-08-29: attempted independent verification via ClinicalTrials.gov, Drugs@FDA, and web search for a non-sponsor confirmation; only an independent trade-press report (AJMC/HCPLive) of the same designation announcement was found, plus Wikipedia (which does not mention either designation). No FDA.gov-hosted designation database confirmation exists to check against (FDA does not publish a searchable per-drug Breakthrough Therapy/Fast Track registry). Claim remains review-gated per reviewer verdict; statement was tightened to attribute the designations to company disclosure rather than asserting them as independently confirmed fact."
       ]
     },
     {
@@ -249,7 +317,8 @@
         }
       ],
       "reviewFlags": [
-        "small early-phase trial (n=94, 12 weeks); not a substitute for Phase 3 confirmatory data"
+        "small early-phase trial (n=94, 12 weeks); not a substitute for Phase 3 confirmatory data",
+        "remediation-pass-2026-08-29: independent review-article and Wikipedia sources (checked this session) corroborate the qualitative direction (dose-dependent liver-fat reduction, significant weight loss) but do not independently reproduce these exact percentage figures; the precise statistics remain sourced only to the packet's own cited Journal of Hepatology RCT and have not been independently re-derived from a second primary source."
       ]
     },
     {
@@ -267,10 +336,16 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
+        "lancet-pmid41237796-impact-24wk",
         "hcplive-impact-2b-mash",
         "altimmune-ir-breakthrough-therapy-mash"
       ],
       "extractedEvidence": [
+        {
+          "sourceRef": "lancet-pmid41237796-impact-24wk",
+          "quote": "Pemvidutide achieved significantly higher MASH resolution rates—58% (1.2 mg) and 52% (1.8 mg) versus 20% placebo. Fibrosis improvement showed modest differences: 33% (1.2 mg), 36% (1.8 mg), versus 28% placebo, without statistical significance.",
+          "pageOrSection": "Abstract, Findings"
+        },
         {
           "sourceRef": "hcplive-impact-2b-mash",
           "quote": "Pemvidutide 1.2 mg: 59.1% achieved MASH resolution without worsening fibrosis; Pemvidutide 1.8 mg: 52.1% achieved MASH resolution without worsening fibrosis; Placebo: 19.1% (P <.0001 both doses)",
@@ -283,14 +358,14 @@
         }
       ],
       "reviewFlags": [
-        "reported via trade-press conference/manuscript coverage rather than a peer-reviewed full-text article located this session; cross-check against the primary Lancet/journal publication when accessible",
+        "remediation-pass-2026-08-29: resolved. Independently confirmed 2026-08-29 against the peer-reviewed primary publication (Noureddin M, Harrison SA, Loomba R, et al., 'Safety and efficacy of weekly pemvidutide versus placebo for MASH (IMPACT): 24-week results...', Lancet, published online 11 Nov 2025, PMID 41237796), which now supersedes the trade-press (HCPLive) sourcing as the primary reference. The Lancet's rounded figures (58%/52%/20% MASH resolution; 33%/36%/28% fibrosis improvement, not significant) are consistent with the packet's more precise HCPLive-reported figures (59.1%/52.1%/19.1%; 31.8%/34.5%/25.9%) — minor rounding/denominator differences only, not a discrepancy. This resolves conflict pemvidutide-conflict-fibrosis-endpoint-001.",
         "fibrosis-improvement endpoint did not reach statistical significance and should not be conflated with the MASH-resolution endpoint"
       ]
     },
     {
       "claimId": "pemvidutide-safety-gi-adverse-events-momentum-001",
       "claimType": "adverse-effect",
-      "statement": "In the 48-week Phase 2 MOMENTUM obesity trial (topline company-reported results, n=391), gastrointestinal adverse events at the highest dose (2.4 mg weekly) included nausea in 51.5%, vomiting in 27.8%, diarrhea in 18.6%, and constipation in 22.7% of participants, described as mostly mild-to-moderate; drug-related discontinuation rates were 15.5% (2.4 mg) and 16.2% (1.8 mg) versus 2.1% for placebo, and one serious vomiting event was reported at the 2.4 mg dose.",
+      "statement": "According to Altimmune's sponsor-reported topline results for the 48-week Phase 2 MOMENTUM obesity trial (n=391), which remain the only source located for these figures, gastrointestinal adverse events at the highest dose (2.4 mg weekly) included nausea in 51.5%, vomiting in 27.8%, diarrhea in 18.6%, and constipation in 22.7% of participants, described as mostly mild-to-moderate; drug-related discontinuation rates were reported as 15.5% (2.4 mg) and 16.2% (1.8 mg) versus 2.1% for placebo, and one serious vomiting event was reported at the 2.4 mg dose. These figures have not been independently verified against a peer-reviewed publication, regulator review, or ClinicalTrials.gov results posting.",
       "context": {
         "population": "adults with obesity/overweight and >=1 comorbidity, without diabetes (n=391)",
         "route": "subcutaneous",
@@ -318,13 +393,14 @@
       ],
       "reviewFlags": [
         "safety-critical adverse-event data sourced only from a sponsor topline press release, not yet an independently peer-reviewed publication located this session",
-        "full adverse-event tables and independent statistical review should be checked against the eventual peer-reviewed MOMENTUM manuscript when published"
+        "full adverse-event tables and independent statistical review should be checked against the eventual peer-reviewed MOMENTUM manuscript when published",
+        "remediation-pass-2026-08-29: one serious targeted attempt was made to resolve this claim independently: (1) ClinicalTrials.gov API search for all registered pemvidutide studies found no trial named 'MOMENTUM' and no study with a posted Results/hasResults=true record; (2) Europe PMC search for 'pemvidutide MOMENTUM obesity' returned only secondary review-article mentions with no reproduced adverse-event figures; (3) an American Diabetes Association conference abstract (262-OR, diabetesjournals.org) that may cover this trial could not be fetched (403 error) this session. No independent source with these exact figures was found. Statement tightened to attribute figures explicitly to the sponsor and note the absence of independent verification; claim remains review-gated per reviewer verdict."
       ]
     },
     {
       "claimId": "pemvidutide-efficacy-momentum-weight-loss-001",
       "claimType": "efficacy",
-      "statement": "In the same MOMENTUM 48-week Phase 2 obesity trial topline report, mean weight loss versus placebo (-2.2%) was -10.3% (1.2 mg), -11.2% (1.8 mg), and -15.6% (2.4 mg); at the 2.4 mg dose 71.4% of participants achieved >=10% weight loss and 32.1% achieved >=20% weight loss.",
+      "statement": "According to Altimmune's sponsor-reported topline results for the same MOMENTUM 48-week Phase 2 obesity trial, which remain the only source located for these figures, mean weight loss versus placebo (-2.2%) was reported as -10.3% (1.2 mg), -11.2% (1.8 mg), and -15.6% (2.4 mg); at the 2.4 mg dose 71.4% of participants were reported to have achieved >=10% weight loss and 32.1% >=20% weight loss. These figures have not been independently verified against a peer-reviewed publication, regulator review, or ClinicalTrials.gov results posting.",
       "context": {
         "population": "adults with obesity/overweight and >=1 comorbidity, without diabetes (n=391)",
         "route": "subcutaneous",
@@ -351,7 +427,8 @@
         }
       ],
       "reviewFlags": [
-        "topline results reported by the trial sponsor, not yet independently peer-reviewed or confirmed by a regulator; treat magnitude as provisional until published data are available"
+        "topline results reported by the trial sponsor, not yet independently peer-reviewed or confirmed by a regulator; treat magnitude as provisional until published data are available",
+        "remediation-pass-2026-08-29: same targeted independent-verification attempt as the companion safety claim (pemvidutide-safety-gi-adverse-events-momentum-001) was made this session (ClinicalTrials.gov API, Europe PMC, ADA conference abstract 403) with no independent source located reproducing these exact figures. Statement tightened to attribute figures explicitly to the sponsor; claim remains review-gated per reviewer verdict."
       ]
     },
     {
@@ -382,7 +459,8 @@
       ],
       "reviewFlags": [
         "misinformation-adjacent: vendor marketing language ('striking reductions') echoes trial topline figures without the population, dose-titration, monitoring, and adverse-event context established in the controlled trials",
-        "all published human data to date derive from supervised trials of at most 48 weeks; no chronic self-administration safety data exist"
+        "all published human data to date derive from supervised trials of at most 48 weeks; no chronic self-administration safety data exist",
+        "remediation-pass-2026-08-29: independently reconfirmed via Wikipedia (outside all sourceRefs), which describes pemvidutide as investigational-only with no approved indication, consistent with this claim's framing that gray-market/self-administered use is unestablished and outside the trial evidence base."
       ]
     }
   ],
@@ -393,8 +471,8 @@
         "pemvidutide-efficacy-impact-2b-mash-001"
       ],
       "severity": "low",
-      "summary": "MASH-resolution endpoint reached strong statistical significance in the IMPACT Phase 2b trial, but the co-primary/secondary fibrosis-improvement endpoint did not separate significantly from placebo at 24 weeks, which trade-press coverage of the topline data does not consistently emphasize alongside the MASH-resolution headline figures.",
-      "resolutionStatus": "needs-human-review"
+      "summary": "MASH-resolution endpoint reached strong statistical significance in the IMPACT Phase 2b trial, but the co-primary/secondary fibrosis-improvement endpoint did not separate significantly from placebo at 24 weeks, which trade-press coverage of the topline data does not consistently emphasize alongside the MASH-resolution headline figures. Resolved 2026-08-29: the peer-reviewed Lancet publication (PMID 41237796) independently confirms both the MASH-resolution figures and the non-significant fibrosis-improvement result, matching the packet's existing caveat.",
+      "resolutionStatus": "resolved"
     },
     {
       "conflictId": "pemvidutide-conflict-sponsor-only-safety-data-001",
@@ -403,7 +481,7 @@
         "pemvidutide-efficacy-momentum-weight-loss-001"
       ],
       "severity": "moderate",
-      "summary": "The MOMENTUM 48-week obesity trial's efficacy and safety figures are currently available only via sponsor (Altimmune) topline press release; no independent peer-reviewed publication, regulator review, or non-sponsor source for these specific numbers was located this session.",
+      "summary": "The MOMENTUM 48-week obesity trial's efficacy and safety figures are currently available only via sponsor (Altimmune) topline press release; no independent peer-reviewed publication, regulator review, or non-sponsor source for these specific numbers was located this session. Remediation-pass-2026-08-29: a further targeted attempt (ClinicalTrials.gov API, Europe PMC, ADA conference abstract) still found no independent source; remains unresolved and review-gated.",
       "resolutionStatus": "needs-human-review"
     }
   ],
@@ -412,9 +490,10 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "Regulatory designation and safety/efficacy claims for the MOMENTUM obesity trial and Breakthrough Therapy/Fast Track designations rely on sponsor press releases; independent FDA-hosted or peer-reviewed confirmation was not located this session and should be checked at review time.",
-      "PubChem CID, UNII, ChEMBL, and RxNorm identifiers could not be confirmed from a directly fetched structured-database page this session and remain unresolved.",
-      "IMPACT Phase 2b MASH trial data were captured from trade-press coverage rather than a directly fetched peer-reviewed full-text article; verify against the primary journal publication when available.",
+      "Regulatory designation claims (Breakthrough Therapy for MASH, Fast Track for AUD) still rely primarily on sponsor press releases; remediation-pass-2026-08-29 found one independent trade-press corroboration (AJMC/HCPLive) of the Breakthrough Therapy announcement, but no FDA.gov-hosted confirmation exists to check against (FDA does not publish a searchable per-drug designation registry). Statement language was tightened to attribute the designations to company disclosure. Remains review-gated.",
+      "MOMENTUM 48-week obesity trial safety and weight-loss figures remain sourced only to an Altimmune sponsor topline press release/PDF after a targeted remediation-pass-2026-08-29 attempt (ClinicalTrials.gov API search found no trial named MOMENTUM with posted results; Europe PMC found only secondary review mentions; an ADA conference abstract that may report this trial returned a 403 error and could not be fetched). Both MOMENTUM claims remain review-gated with tightened, sponsor-attributed language.",
+      "PubChem CID and ChEMBL/RxNorm identifiers remain unresolved after remediation-pass-2026-08-29 (PubChem is blocked by robots.txt for automated fetch this session and no CID was found via web search, likely because pemvidutide is registered as a large-peptide substance rather than a small-molecule PubChem compound). UNII was successfully resolved this session via the FDA/NIH GSRS structured database (A35F525WBG) and added to compound.externalIdentifiers.",
+      "IMPACT Phase 2b MASH trial data: resolved in remediation-pass-2026-08-29. Independently confirmed against the peer-reviewed Lancet publication (PMID 41237796), which is now cited as a primary sourceRef alongside the original HCPLive trade-press coverage; this also resolved conflict pemvidutide-conflict-fibrosis-endpoint-001.",
       "Development status (trial phase, designations) is time-sensitive for a compound still in active Phase 2/3 development and must be reconfirmed against current sources at review time."
     ],
     "qualityFlags": [
@@ -422,7 +501,8 @@
       "investigational-not-approved",
       "sponsor-press-release-dependent",
       "thin-independent-safety-data",
-      "active-late-stage-development"
+      "active-late-stage-development",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

@@ -115,6 +115,30 @@
       "accessedAt": "2026-08-28T22:30:00Z"
     },
     {
+      "sourceId": "uhcprovider-discontinuation-2024",
+      "sourceType": "payer-clinical-bulletin",
+      "authorityTier": "B1",
+      "title": "Discontinuation of Bydureon BCise and Byetta",
+      "publisher": "UnitedHealthcare (UHCprovider.com)",
+      "url": "https://www.uhcprovider.com/en/resource-library/news/2024/discontinuation-bydureon-bcise-byetta.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2024-10-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "clinicaltrials-nct01144338-results",
+      "sourceType": "structured-database",
+      "authorityTier": "B1",
+      "title": "Effects of Once Weekly Exenatide on Cardiovascular Outcomes (EXSCEL) - Results Section (NCT01144338)",
+      "publisher": "ClinicalTrials.gov / U.S. National Library of Medicine",
+      "url": "https://clinicaltrials.gov/study/NCT01144338?tab=results",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "peptidefactcheck-exenatide",
       "sourceType": "vendor-or-informational-page",
       "authorityTier": "C2",
@@ -131,7 +155,7 @@
     {
       "claimId": "exenatide-approved-indication-001",
       "claimType": "approved-indication",
-      "statement": "Exenatide is FDA-approved, as the immediate-release twice-daily product (Byetta) and the extended-release once-weekly product (Bydureon / Bydureon BCise), as an adjunct to diet and exercise to improve glycemic control in adults (and, for Bydureon, pediatric patients aged 10 years and older) with type 2 diabetes mellitus. It is not approved as a weight-loss product and concurrent use of multiple exenatide-containing products is not recommended.",
+      "statement": "Exenatide is FDA-approved, as the immediate-release twice-daily product (Byetta) and the extended-release once-weekly product (Bydureon / Bydureon BCise), as an adjunct to diet and exercise to improve glycemic control in adults (and, for Bydureon, pediatric patients aged 10 years and older) with type 2 diabetes mellitus. It is not approved as a weight-loss product and concurrent use of multiple exenatide-containing products is not recommended. Note: the manufacturer (AstraZeneca) discontinued Byetta and Bydureon BCise for commercial reasons in October 2024; the underlying FDA approval and labeling remain on file, but as of this writing these exact branded products are no longer commercially marketed in the US.",
       "context": {
         "population": "adults, and pediatric patients aged 10+ for Bydureon, with type 2 diabetes mellitus",
         "route": "subcutaneous injection",
@@ -156,9 +180,16 @@
           "sourceRef": "fda-bydureon-label-2024",
           "quote": "BYDUREON is indicated as an adjunct to diet and exercise to improve glycemic control in adults and pediatric patients aged 10 years and older with type 2 diabetes mellitus.",
           "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "uhcprovider-discontinuation-2024",
+          "quote": "Bydureon BCise was discontinued on Oct. 28, 2024, and Byetta was discontinued on Oct. 25, 2024.",
+          "pageOrSection": "Discontinuation notice"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "remediation-2026-08-29: added manufacturer-discontinuation disclosure (Byetta and Bydureon BCise, AstraZeneca, Oct. 2024) per independent-review finding; underlying FDA approval/labeling is unaffected, but these exact branded products are no longer commercially marketed in the US as of this writing."
+      ]
     },
     {
       "claimId": "exenatide-warning-thyroid-ccell-001",
@@ -192,7 +223,8 @@
       ],
       "reviewFlags": [
         "safety-critical boxed-warning claim",
-        "human carcinogenic relevance of the rat C-cell tumor signal remains unresolved in the label itself"
+        "human carcinogenic relevance of the rat C-cell tumor signal remains unresolved in the label itself",
+        "independent-review note (2026-08-29): independent PMC literature on exenatide and thyroid C-cell/nodule findings corroborates the rodent-vs-human disconnect (rodent C-cell tumor signal at high doses; human calcitonin/thyroid-cancer-marker follow-up showed no increased risk) -- reassuring context that supports, and does not contradict, this claim's 'human relevance is unknown' framing"
       ]
     },
     {
@@ -252,7 +284,8 @@
         }
       ],
       "reviewFlags": [
-        "dose text is label protocol only and must never be presented as a use recommendation"
+        "dose text is label protocol only and must never be presented as a use recommendation",
+        "independent-review note (2026-08-29): independent corroboration found (RxList) matches the 5 mcg BID -> 10 mcg BID titration and 60-minute pre-meal timing, but RxList substantially republishes FDA label language rather than being a materially independent verification family; no controlled-study or clinical-guideline family source was reached within review budget to independently corroborate the specific titration schedule -- gap noted, not blocking given low risk of the underlying figures being wrong"
       ]
     },
     {
@@ -300,12 +333,13 @@
         "useCase": "trial-level safety monitoring",
         "doseText": null
       },
-      "evidenceTier": "Moderate",
-      "confidence": "moderate",
+      "evidenceTier": "Strong",
+      "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "exscel-mdedge-summary",
-        "exscel-nejm-2017"
+        "exscel-nejm-2017",
+        "clinicaltrials-nct01144338-results"
       ],
       "extractedEvidence": [
         {
@@ -317,11 +351,17 @@
           "sourceRef": "exscel-mdedge-summary",
           "quote": "observed no significant differences between the two groups in the rates of death from cardiovascular causes, fatal or nonfatal MI, or stroke, hospitalization for heart failure or for acute coronary syndrome, or in the incidence of acute pancreatitis, pancreatic cancer, medullary thyroid carcinoma, and serious adverse events.",
           "pageOrSection": "Trial summary of results"
+        },
+        {
+          "sourceRef": "clinicaltrials-nct01144338-results",
+          "quote": "Adverse Events, Pancreatitis: Placebo 22/7372 affected (0.30%); Exenatide Once Weekly 37/7344 affected (0.50%). Pancreatic cyst and pancreatic mass: 0-1 event per arm; no pancreatic-malignancy adverse-event term reported in either arm. No medullary thyroid carcinoma adverse-event term reported in either arm. Hospitalization for heart failure: Placebo 231/7372 (3.13%); Exenatide 219/7344 (2.98%); hazard ratio 0.94 (95% CI 0.78-1.13), p=0.485.",
+          "pageOrSection": "Results Section, Adverse Events and Outcome Measures modules"
         }
       ],
       "reviewFlags": [
-        "sourced via a secondary medical-news summary of the trial rather than the primary NEJM full text (NEJM full text returned a 403 on direct fetch this session); verify against primary article at review time",
-        "single-trial rare-event reassurance should not be read as definitive absence of risk given the boxed-warning C-cell tumor signal in animal data"
+        "sourced originally via a secondary medical-news summary of the trial rather than the primary NEJM full text (NEJM full text returned a 403 on direct fetch this session)",
+        "single-trial rare-event reassurance should not be read as definitive absence of risk given the boxed-warning C-cell tumor signal in animal data",
+        "independent-review resolution (2026-08-29): NEJM/PMC full text remained CAPTCHA/403-blocked, so the sponsor-posted ClinicalTrials.gov results record for this same trial (NCT01144338) was pulled instead -- a structured-database primary-results family materially different from the medical-news summary. It independently confirms no pancreatic-malignancy or MTC adverse-event terms reported in either arm, pancreatitis rare in both arms (0.30% placebo vs 0.50% exenatide), and no heart-failure-hospitalization signal (2.98% exenatide vs 3.13% placebo, HR 0.94, 95% CI 0.78-1.13, p=0.485). Claim upgraded from unresolved to independently corroborated."
       ]
     },
     {
@@ -400,9 +440,11 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "CAS number, UNII, RxNorm, and ChEMBL identifiers not yet resolved from structured databases (pages required JavaScript or login not available to this research pass).",
-      "EXSCEL trial safety-detail quotes were sourced via a secondary medical-news summary because the primary NEJM full-text page returned an HTTP 403 on direct fetch this session; re-verify against nejm.org or PubMed primary text at review time.",
-      "Weight-loss-marketing evidence-gap claim rests on a single lower-authority fact-check source; seek an independent corroborating source (e.g., FDA consumer update or a peer-reviewed comparative review) at review time."
+      "CAS number, UNII, RxNorm, and ChEMBL identifiers remain unresolved (PubChem full record required JavaScript rendering and is disallowed by robots.txt for this session's fetch tool; DrugBank gates the CAS/UNII fields; NIH GSRS host was blocked at the network layer this session) -- open ops-level gap, not a claim-level defect.",
+      "RESOLVED 2026-08-29: EXSCEL trial safety-detail claim (exenatide-adverse-effect-exscel-safety-001) was unresolved at independent review because NEJM and PMC full text were CAPTCHA/403-blocked. This pass pulled the sponsor-posted ClinicalTrials.gov results record for the same trial (NCT01144338), a structured-database primary-results family, and it independently confirms the packet's pancreatitis/pancreatic-malignancy/MTC/heart-failure comparisons. Claim and reviewFlags updated; promotion blocker cleared.",
+      "RESOLVED 2026-08-29: exenatide-approved-indication-001 promotion blocker (missing discontinued-market disclosure) addressed by adding a note, sourced to UHCprovider's Oct. 2024 discontinuation bulletin, that AstraZeneca discontinued Byetta (Oct. 25, 2024) and Bydureon BCise (Oct. 28, 2024) for commercial reasons; underlying FDA approval/labeling is unaffected.",
+      "Weight-loss-marketing evidence-gap claim rests on a single lower-authority fact-check source; seek an independent corroborating source (e.g., FDA consumer update or a peer-reviewed comparative review) at review time.",
+      "exenatide-dose-context-byetta-001 independent corroboration (RxList) largely republishes FDA label text rather than being a materially independent verification family; no controlled-study or clinical-guideline family source was reached within this session's budget to independently corroborate the specific titration schedule -- open, low-risk gap."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -410,7 +452,8 @@
       "fda-approved-product",
       "boxed-warning-present",
       "noninferiority-not-superiority-cv-trial",
-      "thin-human-evidence-for-marketed-off-label-use"
+      "thin-human-evidence-for-marketed-off-label-use",
+      "remediation-pass-2026-08-29"
     ]
   }
 }
