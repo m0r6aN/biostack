@@ -3438,12 +3438,16 @@
       "canonicalName": "Ipamorelin",
       "slug": "ipamorelin",
       "aliases": [
-        "ipamorelin acetate"
+        "Ipamorelin acetate",
+        "NNC 26-0161"
       ],
       "brandNames": [],
-      "synonyms": [],
+      "synonyms": [
+        "Ipamorelin acetate",
+        "NNC 26-0161"
+      ],
       "classification": "Peptide",
-      "compoundFamily": "growth hormone secretagogue receptor agonist",
+      "compoundFamily": "Synthetic pentapeptide (ghrelin mimetic / growth hormone secretagogue)",
       "isCombinationProduct": false,
       "activeMoieties": [
         "Ipamorelin"
@@ -3453,272 +3457,191 @@
         "unii": null,
         "casNumber": null,
         "drugbank": null,
-        "pubchem": null
+        "pubchem": "9831659"
       }
     },
     "regulatory": {
       "requiresPrescription": false,
-      "regulatoryStatus": "ClassB reference only; regulatory status not established by this record",
-      "labelStatusByUseCase": [
-        {
-          "useCase": "research reference",
-          "labelStatus": "not-indicated"
-        }
-      ],
-      "jurisdiction": "US",
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
       "approvedIndications": [],
-      "offLabelNotes": []
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
     },
     "mechanism": {
-      "mechanismSummary": "Ipamorelin is represented by its commonly described growth hormone secretagogue receptor agonist mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
+      "mechanismSummary": "Ipamorelin is a synthetic pentapeptide ghrelin mimetic that stimulates growth hormone release from the anterior pituitary; it was first identified in 1998.",
       "primaryMechanisms": [
-        "growth hormone secretagogue receptor agonist",
-        "growth-hormone-release"
+        "Ipamorelin is a synthetic pentapeptide ghrelin mimetic that stimulates growth hormone release from the anterior pituitary; it was first identified in 1998."
       ],
-      "pathways": [
-        "GH-IGF-1 axis",
-        "ghrelin-receptor-signaling"
-      ],
-      "targets": [
-        "growth hormone secretagogue receptor agonist"
-      ],
-      "effectTags": [
-        "growth-hormone-release",
-        "recovery-context"
-      ],
-      "goalTags": [
-        "recovery",
-        "body-composition"
-      ]
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
     },
-    "formulations": [
-      {
-        "formulationId": "ipamorelin-subcutaneous",
-        "productName": "Ipamorelin",
-        "manufacturer": null,
-        "route": "subcutaneous",
-        "dosageForm": "peptide injection",
-        "strength": null,
-        "concentration": null,
-        "unit": null,
-        "substitutableWith": [],
-        "storage": {
-          "beforeReconstitution": "Follow product labeling or pharmacy instructions; keep sterile products under labeled conditions.",
-          "afterReconstitution": "Use only within the product-specific stability window when one is provided.",
-          "temperatureNotes": "Do not freeze unless labeling specifically allows it.",
-          "lightSensitivity": null,
-          "stabilityWindow": "Product-specific or unknown."
-        },
-        "reconstitution": {
-          "required": true,
-          "diluent": "unknown",
-          "diluentVolume": null,
-          "instructions": "Reconstitution details are not established by included sources.",
-          "productSpecific": false
-        }
-      }
-    ],
-    "indications": [
-      {
-        "useCase": "research reference",
-        "labelStatus": "not-indicated",
-        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "Evidence reviewed for research reference; BioStack presents this as educational reference, not a recommendation.",
-        "evidenceTier": "Limited",
-        "sources": [
-          "src:ipamorelin"
-        ]
-      }
-    ],
-    "dosingGuidance": [
-      {
-        "guidanceId": "ipamorelin-guidance",
-        "context": {
-          "useCase": "research reference",
-          "population": "Adults where appropriate",
-          "formulation": null,
-          "route": "subcutaneous"
-        },
-        "dose": {
-          "amount": null,
-          "unit": "unknown",
-          "frequency": "review required",
-          "scheduleText": "Dosing is not established by the included ClassB or non-dose source; review with a licensed clinician or primary source.",
-          "preferredTimeOfDay": null
-        },
-        "notes": [
-          "No product-specific dosing is established by this seed record."
-        ],
-        "productSpecific": false,
-        "sources": [
-          "src:ipamorelin"
-        ]
-      }
-    ],
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
     "compatibility": {
-      "vialCompatibilitySummary": "Compatibility is unknown; do not mix in the same vial or syringe unless product labeling or a pharmacist explicitly supports it.",
-      "blendingRules": [
-        {
-          "ruleType": "co-mix",
-          "target": "other compounds",
-          "status": "unknown",
-          "message": "No hard-safe compatibility conclusion is established by this seed record.",
-          "sources": [
-            "src:ipamorelin"
-          ]
-        }
-      ],
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
       "compatibleBlends": [],
       "incompatibleBlends": [],
-      "unknownCompatibility": [
-        "other compounds"
-      ]
+      "unknownCompatibility": []
     },
     "safety": {
       "contraindications": [],
       "warnings": [],
-      "precautions": [
-        {
-          "item": "Review primary sources before use",
-          "notes": "ClassB-only seed record; regulated safety canon is intentionally not asserted.",
-          "sources": [
-            "src:ipamorelin"
-          ]
-        }
-      ],
+      "precautions": [],
       "adverseEffects": {
-        "common": [
-          "unknown"
-        ],
-        "serious": [
-          "unknown"
-        ]
+        "common": [],
+        "serious": []
       },
       "monitoring": []
     },
-    "interactions": [
-      {
-        "interactionId": "ipamorelin-other-gh-secretagogues",
-        "type": "drug-drug",
-        "target": "other GH secretagogues",
-        "severity": "review",
-        "mechanism": "Pathway or pharmacologic overlap",
-        "effect": "Potential additive or opposing effects may occur.",
-        "recommendedAction": "Flag for review; do not treat as automatically compatible.",
-        "sources": [
-          "src:ipamorelin"
-        ]
-      }
-    ],
+    "interactions": [],
     "stackIntelligence": {
       "pairsWellWith": [],
-      "avoidWith": [
-        {
-          "target": "other GH secretagogues",
-          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
-          "severity": "review",
-          "sources": [
-            "src:ipamorelin"
-          ]
-        }
-      ],
-      "overlapRules": [
-        {
-          "ruleId": "ipamorelin-gh-igf-1-axis-overlap",
-          "ruleType": "pathway-overlap",
-          "tag": "GH-IGF-1 axis",
-          "severity": "review",
-          "message": "Shared pathway tag: GH-IGF-1 axis.",
-          "action": "Show overlap and require interpretation rather than returning no relationship.",
-          "sources": [
-            "src:ipamorelin"
-          ]
-        }
-      ],
+      "avoidWith": [],
+      "overlapRules": [],
       "synergyRules": [],
       "conflictRules": [],
       "redundancyRules": [],
       "timingRules": []
     },
     "supportiveGuidance": {
-      "nutrition": [
-        {
-          "topic": "Baseline",
-          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
-        }
-      ],
-      "supplements": [
-        {
-          "topic": "Stack review",
-          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
-        }
-      ],
-      "sleep": [
-        {
-          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
-        }
-      ],
-      "exercise": [
-        {
-          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
-        }
-      ],
-      "applicabilityNotes": [
-        "Supportive guidance is general tracking context and is not a treatment recommendation."
-      ],
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
       "sources": [
-        "src:internal-guidance"
+        "fda-ipamorelin-category2",
+        "fda-pcac-briefing-182088",
+        "beck-2014-ijcd-poi-rct",
+        "pubchem-cid-9831659"
       ]
     },
     "evidence": {
-      "overallTier": "Limited",
+      "overallTier": "Strong",
       "claimSpecificEvidence": [
         {
-          "claim": "Ipamorelin has evidence relevant to research reference.",
-          "tier": "Limited",
-          "confidence": "low",
+          "claim": "FDA lists ipamorelin acetate among bulk drug substances that may present significant safety risks for compounding, citing risk of immunogenicity for certain routes of administration due to potential aggregation or peptide-related impurities; the page additionally notes serious adverse events including death associated with intravenous administration.",
+          "tier": "Strong",
+          "confidence": "high",
           "sources": [
-            "src:ipamorelin"
+            "fda-ipamorelin-category2"
+          ]
+        },
+        {
+          "claim": "In its Pharmacy Compounding Advisory Committee briefing, FDA concluded the evaluation criteria weigh against placing ipamorelin (free base) and ipamorelin acetate on the 503A Bulks List, citing immunogenicity potential from impurities and peptide-related aggregates, possible stimulation of reward processing with potential for reinforcing and addictive behaviors, and possible negative effects on reproductive health and pregnancy outcomes.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "fda-pcac-briefing-182088"
+          ]
+        },
+        {
+          "claim": "Ipamorelin is a synthetic pentapeptide ghrelin mimetic that stimulates growth hormone release from the anterior pituitary; it was first identified in 1998.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "fda-pcac-briefing-182088",
+            "pubchem-cid-9831659"
+          ]
+        },
+        {
+          "claim": "In the principal published human efficacy trial - a multicenter, double-blind, placebo-controlled phase 2 study in 117 bowel-resection patients - intravenous ipamorelin 0.03 mg/kg twice daily did not significantly accelerate recovery from postoperative ileus versus placebo (median time to first tolerated meal 25.3 vs 32.6 hours, p = 0.15); the regimen was reported as well tolerated in that setting, and FDA's briefing notes development for this indication was subsequently discontinued.",
+          "tier": "Moderate",
+          "confidence": "high",
+          "sources": [
+            "beck-2014-ijcd-poi-rct",
+            "fda-pcac-briefing-182088"
+          ]
+        },
+        {
+          "claim": "No approved ipamorelin product exists, and the published controlled human evidence does not address the anti-aging, body-composition, recovery, or growth-hormone-optimization uses for which ipamorelin (often combined with CJC-1295) is commonly marketed online; human efficacy and safety for those uses and for chronic subcutaneous self-administration are unestablished.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "fda-pcac-briefing-182088",
+            "beck-2014-ijcd-poi-rct"
           ]
         }
       ],
       "evidenceGaps": [
-        "Seed record is intentionally conservative; review primary sources for details."
+        "No approved ipamorelin product exists, and the published controlled human evidence does not address the anti-aging, body-composition, recovery, or growth-hormone-optimization uses for which ipamorelin (often combined with CJC-1295) is commonly marketed online; human efficacy and safety for those uses and for chronic subcutaneous self-administration are unestablished."
       ],
       "controversies": []
     },
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "database",
-          "title": "Compound summary for Ipamorelin",
-          "publisher": "PubChem",
-          "url": "https://pubchem.ncbi.nlm.nih.gov/#query=Ipamorelin",
-          "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "sourceType": "regulator",
+          "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T00:00:00Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting (ipamorelin evaluation)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/media/182088/download",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Prospective, randomized, controlled, proof-of-concept study of the Ghrelin mimetic ipamorelin for the management of postoperative ileus in bowel resection patients",
+          "publisher": "International Journal of Colorectal Disease (Beck DE, Sweeney WB, McCarter MD, et al., 2014)",
+          "url": "https://link.springer.com/article/10.1007/s00384-014-2030-8",
+          "publishedAt": "2014-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-28T00:00:00Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "PubChem Compound Summary: Ipamorelin (CID 9831659)",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Ipamorelin",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-28T00:00:00Z"
         }
       ],
       "curationNotes": [
-        "Launch seed record; conservative fields selected for validation and honest coverage."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "FDA Category 2 peptide listings were revised in April 2026; current ipamorelin status must be confirmed against the live FDA page at review time.",
+        "CAS/UNII/ChEMBL identifiers not yet resolved from structured databases.",
+        "Compiled draft requires human review before publication."
       ],
-      "lastReviewedAt": "2026-04-20T00:00:00Z",
-      "reviewStatus": "reviewed"
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
     },
     "ops": {
       "recordVersion": 1,
       "contentHash": null,
-      "ingestionSource": "seed:substances-seed.json",
-      "ingestedAt": null,
-      "updatedAt": null,
+      "ingestionSource": "evidence-packet:ipamorelin-evidence-expansion-001",
+      "ingestedAt": "2026-08-28T00:00:00Z",
+      "updatedAt": "2026-08-28T00:00:00Z",
       "lastChangeType": "seed",
-      "isActive": true,
+      "isActive": false,
       "completeness": "partial",
       "needsReview": true,
       "reviewReasons": [
-        "ClassB-only source; regulated fields intentionally limited."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "FDA Category 2 peptide listings were revised in April 2026; current ipamorelin status must be confirmed against the live FDA page at review time.",
+        "CAS/UNII/ChEMBL identifiers not yet resolved from structured databases.",
+        "Compiled draft requires human review before publication."
       ],
       "qualityFlags": [
-        "classB-only"
+        "expansion-input",
+        "a1-regulator-backed",
+        "negative-human-rct-documented",
+        "limited-human-evidence",
+        "regulatory-boundary",
+        "compiled-from-evidence-packet"
       ]
     }
   },
