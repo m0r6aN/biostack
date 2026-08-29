@@ -1,0 +1,352 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "setmelanotide-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:20:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Setmelanotide",
+    "aliases": [
+      "Imcivree",
+      "Setmelanotide acetate",
+      "RM-493",
+      "BIM-22493"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Cyclic peptide melanocortin-4 receptor (MC4R) agonist",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "11993702",
+      "chembl": null,
+      "doi": null,
+      "pmid": "33137293"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-imcivree-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: IMCIVREE - setmelanotide solution",
+      "publisher": "DailyMed / U.S. National Library of Medicine (labeler: Rhythm Pharmaceuticals, Inc.)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=70c3ccf7-4df0-4c75-ba07-fede9970c8d9",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "fda-imcivree-first-approval-announcement",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Approves First Treatment for Weight Management for People with Certain Rare Genetic Conditions",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/news-events-human-drugs/fda-approves-first-treatment-weight-management-people-certain-rare-genetic-conditions",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2020-11-27T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pmc9070354-setmelanotide-review",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "PMC9070354 (Setmelanotide efficacy, safety, and clinical outcomes review article, PubMed Central)",
+      "publisher": "PubMed Central / National Center for Biotechnology Information",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9070354",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "clement-2020-lancet-de-poms-lepr-phase3",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Efficacy and safety of setmelanotide, an MC4R agonist, in individuals with severe obesity due to LEPR or POMC deficiency: single-arm, open-label, multicentre, phase 3 trials",
+      "publisher": "The Lancet Diabetes & Endocrinology (Clement K, et al., 2020); indexed PubMed 33137293",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33137293/",
+      "doi": "10.1016/S2213-8587(20)30364-8",
+      "pmid": "33137293",
+      "publishedAt": "2020-11-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-11993702",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Setmelanotide (CID 11993702)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Setmelanotide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "maple-research-labs-setmelanotide",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "Setmelanotide (MC4R Agonist) Peptide Research & Mechanism",
+      "publisher": "Maple Research Labs (research-chemical vendor site)",
+      "url": "https://mapleresearchlabs.com/peptide-research/setmelanotide-mc4r-agonist-peptide-research-mechanism/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "setmelanotide-regulatory-approved-indications-001",
+      "claimType": "approved-indication",
+      "statement": "IMCIVREE (setmelanotide) is FDA-approved to reduce excess body weight and maintain weight reduction in adults and pediatric patients aged 4 years and older with obesity due to acquired hypothalamic injury, in patients aged 2 years and older with Bardet-Biedl syndrome, and in patients aged 2 years and older with obesity due to confirmed pathogenic, likely pathogenic, or variant of uncertain significance in POMC, PCSK1, or LEPR genes. The label explicitly excludes other types of obesity, including common (polygenic) obesity, from the approved indication.",
+      "context": {
+        "population": "patients aged 2+ (genetic deficiencies, Bardet-Biedl syndrome) or 4+ (acquired hypothalamic obesity) with confirmed qualifying diagnosis",
+        "route": "subcutaneous injection",
+        "formulation": "IMCIVREE (setmelanotide) injection solution",
+        "useCase": "chronic weight management in specific rare obesity etiologies",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-imcivree-label",
+        "fda-imcivree-first-approval-announcement"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-imcivree-label",
+          "quote": "IMCIVREE is indicated to reduce excess body weight in: Adults and pediatric patients aged 4+ years with acquired hypothalamic obesity; Patients aged 2+ years with Bardet-Biedl syndrome; Patients aged 2+ years with confirmed POMC, PCSK1, or LEPR deficiency (pathogenic, likely pathogenic, or uncertain significance variants)",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-imcivree-label",
+          "quote": "Other types of obesity not related to acquired hypothalamic obesity, Bardet-Biedl syndrome or POMC, PCSK1 or LEPR deficiency, including general polygenic obesity",
+          "pageOrSection": "Limitations of Use"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical / regulatory claim",
+        "reconfirm current label version at review time; label has been amended multiple times (2020 initial approval, 2022 BBS expansion, 2024/2025 pediatric/hypothalamic-obesity expansions)"
+      ]
+    },
+    {
+      "claimId": "setmelanotide-mechanism-mc4r-agonist-001",
+      "claimType": "mechanism",
+      "statement": "Setmelanotide is a cyclic peptide melanocortin-4 receptor (MC4R) agonist that acts downstream in the leptin-melanocortin pathway; it reduces weight and hunger by targeting the underlying physiologic defect in patients whose POMC, PCSK1, or LEPR gene variants disrupt normal MC4R pathway signaling.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "setmelanotide",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pmc9070354-setmelanotide-review",
+        "pubchem-cid-11993702"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc9070354-setmelanotide-review",
+          "quote": "treatment with the MC4R agonist setmelanotide led to reductions in weight and hunger in patients with obesity due to POMC, PCSK1, or LEPR deficiency through targeting the underlying physiologic defects in the MC4R pathway and decreasing the resulting hunger",
+          "pageOrSection": "Efficacy / Mechanism summary"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "setmelanotide-efficacy-pomc-lepr-phase3-001",
+      "claimType": "efficacy",
+      "statement": "In the pivotal single-arm, open-label phase 3 trials supporting FDA approval, 80% of patients with POMC or PCSK1 deficiency and 46% of patients with LEPR deficiency lost 10% or more of their body weight after approximately one year of setmelanotide treatment; this is genotype-specific efficacy in a small, molecularly confirmed rare-disease population and does not generalize to common obesity.",
+      "context": {
+        "population": "patients with genetically confirmed POMC/PCSK1 or LEPR deficiency and obesity",
+        "route": "subcutaneous",
+        "formulation": "setmelanotide injection, single-arm open-label phase 3 protocol",
+        "useCase": "chronic weight management in confirmed genetic obesity (approved indication)",
+        "doseText": "trial protocol dosing per published phase 3 study design (titrated subcutaneous daily dosing); not a use recommendation"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-imcivree-first-approval-announcement",
+        "clement-2020-lancet-de-poms-lepr-phase3"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-imcivree-first-approval-announcement",
+          "quote": "80 percent of patients with POMC or PCSK1 deficiency lost 10 percent or more of their body weight",
+          "pageOrSection": "Approval announcement, trial efficacy results"
+        },
+        {
+          "sourceRef": "fda-imcivree-first-approval-announcement",
+          "quote": "46 percent of patients with LEPR deficiency lost 10 percent or more of their body weight",
+          "pageOrSection": "Approval announcement, trial efficacy results"
+        }
+      ],
+      "reviewFlags": [
+        "small single-arm trial populations (rare disease); no placebo comparator in these specific phase 3 studies",
+        "verify against full published Lancet Diabetes & Endocrinology results (PMID 33137293) at next review pass for cohort sizes and confidence intervals"
+      ]
+    },
+    {
+      "claimId": "setmelanotide-safety-warnings-001",
+      "claimType": "warning",
+      "statement": "Labeling and the FDA approval announcement identify depression and suicidal ideation, spontaneous penile erections in males and adverse sexual reactions in females, generalized/focal skin hyperpigmentation and new or darkening moles, serious hypersensitivity reactions including anaphylaxis, and injection site reactions as recognized risks of setmelanotide; patients must be monitored for new-onset or worsening depression or suicidal thoughts, and men experiencing erections lasting over 4 hours are advised to seek emergency care.",
+      "context": {
+        "population": "patients prescribed IMCIVREE",
+        "route": "subcutaneous",
+        "formulation": "IMCIVREE (setmelanotide)",
+        "useCase": "safety monitoring during approved treatment",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-imcivree-label",
+        "fda-imcivree-first-approval-announcement"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-imcivree-label",
+          "quote": "Monitor patients for new onset or worsening depression, suicidal thoughts or behavior",
+          "pageOrSection": "Warnings and Precautions"
+        },
+        {
+          "sourceRef": "dailymed-imcivree-label",
+          "quote": "Generalized or focal increases in skin pigmentation occurred in the majority of treated patients; darkening of existing moles and new moles may develop.",
+          "pageOrSection": "Warnings and Precautions"
+        },
+        {
+          "sourceRef": "fda-imcivree-first-approval-announcement",
+          "quote": "Spontaneous penile erections in males and adverse sexual reactions in females have occurred with treatment. Depression and suicidal ideation have also occurred with Imcivree.",
+          "pageOrSection": "Approval announcement, safety summary"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim requiring clinician-level monitoring guidance",
+        "no boxed warning identified on the label version fetched; confirm no boxed warning was added in a subsequent label revision"
+      ]
+    },
+    {
+      "claimId": "setmelanotide-adverse-effect-common-001",
+      "claimType": "adverse-effect",
+      "statement": "The most common treatment-emergent adverse events reported for setmelanotide are injection site reactions, skin hyperpigmentation, headache, and gastrointestinal side effects; a review of the trial program also reports no treatment-related cardiovascular adverse events and no adverse change in heart rate or blood pressure in reported analyses, with improved fasting glucose observed in POMC-deficient patients.",
+      "context": {
+        "population": "patients treated in setmelanotide clinical trial program",
+        "route": "subcutaneous",
+        "formulation": "setmelanotide",
+        "useCase": "safety/tolerability profile",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-imcivree-first-approval-announcement",
+        "pmc9070354-setmelanotide-review"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-imcivree-first-approval-announcement",
+          "quote": "The most common side effects of Imcivree include injection site reactions, skin hyperpigmentation, headache and gastrointestinal side effects",
+          "pageOrSection": "Approval announcement, safety summary"
+        },
+        {
+          "sourceRef": "pmc9070354-setmelanotide-review",
+          "quote": "Setmelanotide has been shown to be well tolerated, with the most common treatment-emergent adverse events being related to injection site reactions and hyperpigmentation. No treatment-related cardiovascular adverse events were reported with setmelanotide, and setmelanotide was not associated with changes in heart rate or blood pressure.",
+          "pageOrSection": "Safety profile summary"
+        }
+      ],
+      "reviewFlags": [
+        "cardiovascular-neutral finding sourced from a secondary review article, not directly quoted from a primary trial paper; verify against primary trial safety tables at next review"
+      ]
+    },
+    {
+      "claimId": "setmelanotide-evidence-gap-research-chemical-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Setmelanotide is sold online by research-chemical vendors under 'not for human consumption / research purposes only' disclaimers that nonetheless cite the same phase 3 genetic-obesity trial statistics (e.g., 80%/45% weight-loss responder rates) FDA relied on for a narrow, genotype-restricted approval. This creates a real-world risk that consumers infer general weight-loss benefit for undiagnosed or non-qualifying obesity from data that only applies to a small, molecularly confirmed rare-disease population under physician supervision; no controlled human evidence supports setmelanotide use for weight loss outside its approved genetic/acquired-hypothalamic-obesity indications, and self-sourced, non-pharmacy-grade product carries unverified purity/sterility and dosing risk that the approved label does not address.",
+      "context": {
+        "population": "consumers of gray-market/research-chemical setmelanotide products",
+        "route": "self-administered subcutaneous (gray-market use, unsupervised)",
+        "formulation": "unregulated research-chemical setmelanotide, vendor purity/sterility not FDA-verified",
+        "useCase": "general weight loss marketing versus approved narrow genetic-obesity indication",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "maple-research-labs-setmelanotide",
+        "dailymed-imcivree-label",
+        "fda-imcivree-first-approval-announcement"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "maple-research-labs-setmelanotide",
+          "quote": "For research purposes only. Not for human consumption.",
+          "pageOrSection": "Vendor disclaimer, repeated on page"
+        },
+        {
+          "sourceRef": "maple-research-labs-setmelanotide",
+          "quote": "8 of 10 (80 percent) participants in the POMC cohort and 5 of 11 (45 percent) in the LEPR cohort reached at least 10 percent reduction in body weight",
+          "pageOrSection": "Human study data section citing phase 3 trial"
+        },
+        {
+          "sourceRef": "dailymed-imcivree-label",
+          "quote": "Other types of obesity not related to acquired hypothalamic obesity, Bardet-Biedl syndrome or POMC, PCSK1 or LEPR deficiency, including general polygenic obesity",
+          "pageOrSection": "Limitations of Use"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor cites real trial statistics out of the genotype-restricted context in which FDA evaluated them",
+        "no FDA import alert or warning letter specific to setmelanotide research-chemical sellers was located in this research pass; search again at next review",
+        "gray-market product identity/purity is unverified; do not equate with pharmacy-dispensed IMCIVREE"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "setmelanotide-conflict-marketing-vs-label-scope-001",
+      "claimRefs": [
+        "setmelanotide-evidence-gap-research-chemical-marketing-001",
+        "setmelanotide-regulatory-approved-indications-001"
+      ],
+      "severity": "moderate",
+      "summary": "Research-chemical vendor marketing cites the same pivotal-trial weight-loss percentages FDA used to approve setmelanotide for a narrow, genetically confirmed population, without conveying the label's explicit exclusion of general/polygenic obesity, creating a mismatch between how the efficacy data is presented online and its actual approved scope.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS/UNII/DrugBank/ChEMBL identifiers not yet resolved from structured databases; PubChem page did not render full identifier table via fetch.",
+      "Primary phase 3 trial (PMID 33137293) full text was inaccessible behind a bot-check page during this research pass; efficacy quotes were corroborated via the FDA approval announcement and a secondary PMC review article instead of the primary paper directly \u2014 re-fetch PMC/journal full text at next review to source cohort sizes and CIs directly from the primary study.",
+      "No FDA import alert, warning letter, or compounding-risk listing specific to setmelanotide research-chemical sales was located in this pass; confirm absence (or find one) at next review.",
+      "DailyMed label version accessed via WebFetch summary; confirm no boxed warning or newer label revision exists at review time given multiple indication expansions (2020, 2022, 2024/2025)."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-product",
+      "a1-regulator-backed",
+      "genotype-restricted-indication",
+      "gray-market-marketing-mismatch",
+      "thin-primary-source-access"
+    ]
+  }
+}

@@ -1,0 +1,418 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "mecasermin-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:20:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Mecasermin",
+    "aliases": [
+      "Increlex",
+      "rhIGF-1",
+      "recombinant human insulin-like growth factor-1"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Recombinant human insulin-like growth factor-1 (rhIGF-1) analog",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "7GR9I2683O",
+      "casNumber": null,
+      "drugbank": "DB01277",
+      "pubchem": "400",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-increlex-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: INCRELEX - mecasermin injection, solution",
+      "publisher": "U.S. National Library of Medicine / DailyMed (FDA-approved labeling)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a8b27a1b-a611-4f91-ad22-76d4b390c3ae",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "ncbi-bookshelf-mecasermin-clinical-review",
+      "sourceType": "systematic-review",
+      "authorityTier": "A2",
+      "title": "Clinical Review - Mecasermin (Increlex)",
+      "publisher": "NCBI Bookshelf (Canadian Agency for Drugs and Technologies in Health / CADTH-sourced clinical review)",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK596664/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-400",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Mecasermin (CID 400)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Mecasermin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "drugbank-db01277",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Mecasermin: Uses, Interactions, Mechanism of Action (DB01277)",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB01277",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "swolverine-igf1-des-bodybuilding-guide",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C3",
+      "title": "IGF-1 DES Guide: Benefits, Dosage, Stacking, and Safety for Bodybuilders",
+      "publisher": "Swolverine (supplement/peptide vendor blog)",
+      "url": "https://swolverine.com/blogs/blog/igf-1-des-guide-benefits-dosage-stacking-and-safety-for-bodybuilders",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "mecasermin-regulatory-approved-indication-001",
+      "claimType": "approved-indication",
+      "statement": "INCRELEX (mecasermin) is FDA-approved for the treatment of growth failure in pediatric patients 2 years of age and older with severe primary IGF-1 deficiency (Primary IGFD), or for those with growth hormone (GH) gene deletion who have developed neutralizing antibodies to GH; it is not approved for and is not a substitute for GH in GH-deficient patients who are not in these populations.",
+      "context": {
+        "population": "pediatric patients aged 2 years and older with severe primary IGF-1 deficiency or GH gene deletion with neutralizing anti-GH antibodies",
+        "route": "subcutaneous injection",
+        "formulation": "INCRELEX injection, solution (branded mecasermin)",
+        "useCase": "approved pediatric growth-failure indication",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-increlex-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "INCRELEX is indicated for the treatment of growth failure in pediatric patients 2 years of age and older with severe primary IGF-1 deficiency or with growth hormone (GH) gene deletion who have developed neutralizing antibodies to GH.",
+          "pageOrSection": "INDICATIONS AND USAGE"
+        }
+      ],
+      "reviewFlags": [
+        "regulatory approved-indication claim; confirm no label revisions at review time"
+      ]
+    },
+    {
+      "claimId": "mecasermin-warning-hypoglycemia-001",
+      "claimType": "warning",
+      "statement": "INCRELEX carries a labeled warning that severe hypoglycemia, including hypoglycemic seizures, has been observed with treatment; because of its insulin-like effects, the label directs that it be given shortly before or after a meal or snack and that high-risk activities such as driving be avoided for 2-3 hours after dosing, particularly at treatment initiation.",
+      "context": {
+        "population": "pediatric patients receiving INCRELEX",
+        "route": "subcutaneous injection",
+        "formulation": "INCRELEX injection, solution",
+        "useCase": "safety monitoring during approved use",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-increlex-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "Severe hypoglycemia leading to hypoglycemic seizures has been observed with INCRELEX treatment.",
+          "pageOrSection": "WARNINGS AND PRECAUTIONS / Boxed-level hypoglycemia warning"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical warning; verify current label warning language has not changed"
+      ]
+    },
+    {
+      "claimId": "mecasermin-contraindication-001",
+      "claimType": "contraindication",
+      "statement": "INCRELEX is contraindicated in patients with known hypersensitivity to mecasermin, in patients with closed epiphyses, and in patients with active or suspected malignant neoplasia.",
+      "context": {
+        "population": "pediatric patients considered for INCRELEX therapy",
+        "route": "subcutaneous injection",
+        "formulation": "INCRELEX injection, solution",
+        "useCase": "contraindication screening prior to treatment",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-increlex-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "Known Hypersensitivity to mecasermin",
+          "pageOrSection": "CONTRAINDICATIONS"
+        },
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "Closed Epiphyses",
+          "pageOrSection": "CONTRAINDICATIONS"
+        },
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "Malignant Neoplasia",
+          "pageOrSection": "CONTRAINDICATIONS"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "mecasermin-dose-context-label-001",
+      "claimType": "dose-context",
+      "statement": "The FDA label describes a recommended starting dose of 0.04 mg/kg to 0.08 mg/kg of body weight given twice daily by subcutaneous injection, titratable upward by 0.04 mg/kg per dose after tolerating a dose for at least one week, to a maximum of 0.12 mg/kg twice daily; the label specifies the drug must be administered by subcutaneous injection only and never intravenously. This is trial/label protocol context, not a use recommendation by this packet.",
+      "context": {
+        "population": "pediatric patients aged 2 years and older with severe primary IGF-1 deficiency",
+        "route": "subcutaneous injection only (never intravenous)",
+        "formulation": "INCRELEX injection, solution",
+        "useCase": "labeled dosing and titration protocol",
+        "doseText": "0.04-0.08 mg/kg twice daily starting dose, titrated to a maximum of 0.12 mg/kg twice daily (label protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-increlex-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "The recommended starting dose of INCRELEX is 0.04 mg/kg to 0.08 mg/kg of body weight twice daily by subcutaneous injection.",
+          "pageOrSection": "DOSAGE AND ADMINISTRATION"
+        }
+      ],
+      "reviewFlags": [
+        "product-specific dosing claim; must never be presented as a use recommendation for non-labeled populations"
+      ]
+    },
+    {
+      "claimId": "mecasermin-mechanism-igf1-receptor-001",
+      "claimType": "mechanism",
+      "statement": "Mecasermin is recombinant human IGF-1 (rhIGF-1), produced by recombinant DNA technology and identical to the naturally occurring human peptide, which is the principal mediator of statural growth; it acts by binding the IGF-1 receptor, a homolog of the insulin receptor, activating intracellular signaling that stimulates processes leading to statural growth.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "mecasermin (rhIGF-1)",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "ncbi-bookshelf-mecasermin-clinical-review"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ncbi-bookshelf-mecasermin-clinical-review",
+          "quote": "Mecasermin contains rhIGF-1, which is produced by recombinant DNA technology. It is identical to the naturally occurring human peptide, IGF-1, which is the principal mediator of statural growth in humans.",
+          "pageOrSection": "Mechanism of Action"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-mecasermin-clinical-review",
+          "quote": "In target tissues, the IGF-1 receptor, which is homologous to the insulin receptor, is activated by IGF-1, resulting in intracellular signalling that stimulates multiple processes that lead to statural growth.",
+          "pageOrSection": "Mechanism of Action"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "mecasermin-efficacy-growth-velocity-001",
+      "claimType": "efficacy",
+      "statement": "In the clinical evidence summarized in the reviewed clinical trial data for severe primary IGF-1 deficiency, mean height velocity increased from 2.6 cm/year (SD 1.7) at baseline to 8.0 cm/year (SD 2.3) during year 1 of INCRELEX treatment, with mean height velocity SDS rising from -3.4 (SD 1.6) to 1.7 (SD 2.8); the growth response was attenuated but sustained over long-term follow-up, remaining above baseline through year 8 (5.9 cm/year in year 2, declining to 4.4 cm/year by year 8). This is treatment-effect evidence specific to the labeled severe primary IGF-1 deficiency population and must not be generalized to other populations.",
+      "context": {
+        "population": "pediatric patients with severe primary IGF-1 deficiency treated with INCRELEX in the reviewed clinical dataset",
+        "route": "subcutaneous injection",
+        "formulation": "INCRELEX (mecasermin)",
+        "useCase": "growth failure treatment, approved indication",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "ncbi-bookshelf-mecasermin-clinical-review"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ncbi-bookshelf-mecasermin-clinical-review",
+          "quote": "During year 1 of treatment, there was an increase in mean height velocity from 2.6 cm per year (SD = 1.7) to 8.0 cm per year (SD = 2.3).",
+          "pageOrSection": "Controlled Clinical Trial Results - Growth Velocity"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-mecasermin-clinical-review",
+          "quote": "Height velocities for years 2 through 8 of treatment remained greater than baseline (i.e., 5.9 cm per year [SD = 1.7] in year 2 and 4.4 cm per year [SD = 1.5] in year 8).",
+          "pageOrSection": "Controlled Clinical Trial Results - Growth Velocity"
+        }
+      ],
+      "reviewFlags": [
+        "growth-velocity effect size specific to severe primary IGF-1 deficiency population; not evidence of benefit in other uses"
+      ]
+    },
+    {
+      "claimId": "mecasermin-adverse-effect-profile-001",
+      "claimType": "adverse-effect",
+      "statement": "In the reviewed clinical dataset, 83% of patients (76 of an evaluated cohort) had at least one adverse event, with the most frequently reported notable harms being hypoglycemia (47%), lipohypertrophy at the injection site (35%), and tonsillar hypertrophy (21%); 20% of patients had at least one serious adverse event requiring hospitalization.",
+      "context": {
+        "population": "pediatric patients with severe primary IGF-1 deficiency treated with INCRELEX in the reviewed clinical dataset",
+        "route": "subcutaneous injection",
+        "formulation": "INCRELEX (mecasermin)",
+        "useCase": "safety monitoring, adverse event surveillance",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "ncbi-bookshelf-mecasermin-clinical-review"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ncbi-bookshelf-mecasermin-clinical-review",
+          "quote": "Seventy-six patients (83%) had at least 1 adverse event (AE).",
+          "pageOrSection": "Adverse Effects"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-mecasermin-clinical-review",
+          "quote": "The most frequently reported notable harms included hypoglycemia (n = 43; 47%); lipohypertrophy at the injection site (n = 32; 35%); tonsillar hypertrophy (n = 19; 21%).",
+          "pageOrSection": "Adverse Effects"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-mecasermin-clinical-review",
+          "quote": "Eighteen patients (20%) had at least 1 serious adverse event (SAE) that required hospitalization.",
+          "pageOrSection": "Adverse Effects"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical adverse-event data specific to the labeled pediatric IGFD population; incidence in unsupervised gray-market/adult use is not established"
+      ]
+    },
+    {
+      "claimId": "mecasermin-misinformation-bodybuilding-marketing-001",
+      "claimType": "misinformation-claim",
+      "statement": "Gray-market vendor marketing for IGF-1-family peptides (including analogs marketed alongside or in place of mecasermin) promotes muscle-hypertrophy, satellite-cell-activation, and physique-enhancement benefits for bodybuilders, with vendor-authored dosing/cycling schedules (e.g., 20-100 mcg per injection, pre-workout timing, 4-6 weeks on/2-4 weeks off); these marketing claims rely on cell-culture and animal-signaling literature and are not supported by controlled human trials in healthy adults, and the underlying compound (mecasermin/rhIGF-1) has no FDA-approved indication in adults or for athletic/aesthetic performance use.",
+      "context": {
+        "population": "adult bodybuilders and gray-market peptide consumers (non-labeled use)",
+        "route": "subcutaneous injection (vendor-recommended, unsupervised)",
+        "formulation": "research-grade/gray-market IGF-1 products, including IGF-1 DES and other analogs marketed alongside mecasermin",
+        "useCase": "muscle hypertrophy, physique enhancement, anti-aging marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "swolverine-igf1-des-bodybuilding-guide",
+        "dailymed-increlex-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "swolverine-igf1-des-bodybuilding-guide",
+          "quote": "IGF-1 DES exhibits enhanced receptor affinity and greater potency in stimulating localized muscle hypertrophy compared to native IGF-1.",
+          "pageOrSection": "Muscle Growth Benefits section, citing Philippou et al."
+        },
+        {
+          "sourceRef": "swolverine-igf1-des-bodybuilding-guide",
+          "quote": "Beginner 20-50 mcg per injection; Intermediate 50-75 mcg per injection; Advanced 75-100 mcg per injection",
+          "pageOrSection": "Dosing table for bodybuilders"
+        },
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "INCRELEX is indicated for the treatment of growth failure in pediatric patients 2 years of age and older with severe primary IGF-1 deficiency or with growth hormone (GH) gene deletion who have developed neutralizing antibodies to GH.",
+          "pageOrSection": "INDICATIONS AND USAGE (showing absence of any adult/performance indication)"
+        }
+      ],
+      "reviewFlags": [
+        "vendor-marketing source (authority tier C3); claims must not be presented as validated human efficacy",
+        "source describes an IGF-1 analog (IGF-1 DES) distinct from mecasermin; family-level marketing pattern documented, not a mecasermin-specific human trial",
+        "no controlled human trial evidence located for muscle-hypertrophy/physique claims in healthy adults; flagged as evidence gap pending further search"
+      ]
+    },
+    {
+      "claimId": "mecasermin-evidence-gap-adult-offlabel-001",
+      "claimType": "evidence-gap",
+      "statement": "No controlled human trial evidence was located establishing safety or efficacy of mecasermin/rhIGF-1 for anti-aging, muscle-building, fat-loss, or general adult wellness use; the only controlled/label-anchored human evidence found is specific to pediatric patients with severe primary IGF-1 deficiency or GH gene deletion with neutralizing antibodies, a population and mechanism (correcting a defined hormone deficiency) that does not generalize to healthy adults seeking performance or aesthetic effects.",
+      "context": {
+        "population": "adults without severe primary IGF-1 deficiency seeking performance, aesthetic, or anti-aging effects",
+        "route": null,
+        "formulation": "mecasermin / rhIGF-1",
+        "useCase": "off-label adult wellness, anti-aging, and performance use",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "dailymed-increlex-label",
+        "ncbi-bookshelf-mecasermin-clinical-review"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "INCRELEX is indicated for the treatment of growth failure in pediatric patients 2 years of age and older with severe primary IGF-1 deficiency or with growth hormone (GH) gene deletion who have developed neutralizing antibodies to GH.",
+          "pageOrSection": "INDICATIONS AND USAGE"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: no approved or trial-established use exists outside the labeled pediatric IGFD/GH-antibody indication",
+        "confirm during independent review whether any adult healthy-volunteer controlled trial data exists in a materially different source family"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "mecasermin-conflict-marketing-vs-evidence-001",
+      "claimRefs": [
+        "mecasermin-misinformation-bodybuilding-marketing-001",
+        "mecasermin-evidence-gap-adult-offlabel-001"
+      ],
+      "severity": "moderate",
+      "summary": "Vendor marketing for IGF-1-family peptides claims muscle-hypertrophy and physique benefits for adult bodybuilders, while the only controlled/label-anchored human evidence located is confined to pediatric severe primary IGF-1 deficiency; no controlled human trial evidence supports the marketed adult performance/aesthetic uses.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS number and ChEMBL/RxNorm identifiers not resolved from a verifiable fetched source; multiple secondary chemistry sites list CAS 68562-41-4 but this was not confirmed against PubChem/DrugBank primary content during this session.",
+      "Gray-market marketing claim (mecasermin-misinformation-bodybuilding-marketing-001) is documented from a source discussing an IGF-1 analog (IGF-1 DES) rather than mecasermin itself; a mecasermin-specific gray-market marketing source should be located on review.",
+      "No adult healthy-volunteer controlled human trial data located for mecasermin; confirm this evidence gap against an additional independent source family (e.g., a systematic review or sports-medicine/anti-doping literature) during review."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-product",
+      "a1-label-backed",
+      "pediatric-only-approved-indication",
+      "thin-human-evidence-outside-label",
+      "misinformation-gap-documented"
+    ]
+  }
+}

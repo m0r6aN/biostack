@@ -1,0 +1,413 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "elamipretide-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:20:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Elamipretide",
+    "aliases": [
+      "Forzinity",
+      "SS-31",
+      "MTP-131",
+      "Bendavia",
+      "Elamipretide hydrochloride"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic aromatic-cationic tetrapeptide (mitochondria-targeted)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "11764719",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-forzinity-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "DailyMed - FORZINITY- elamipretide hydrochloride injection",
+      "publisher": "U.S. National Library of Medicine / DailyMed (FDA-approved labeling)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=146bf34c-76f2-48db-ac07-fb29cce2cd75",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-09-19T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "fda-forzinity-approval-package-215244",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Center for Drug Evaluation and Research Approval Package for FORZINITY (elamipretide), NDA 215244",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2025/215244Orig1s000Approv.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-09-19T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "prnewswire-forzinity-accelerated-approval",
+      "sourceType": "press-release",
+      "authorityTier": "C1",
+      "title": "Stealth BioTherapeutics Announces FDA Accelerated Approval of FORZINITY (elamipretide HCl), the First Therapy for Progressive and Life-limiting Ultra-rare Genetic Disease Barth Syndrome",
+      "publisher": "PR Newswire / Stealth BioTherapeutics",
+      "url": "https://www.prnewswire.com/news-releases/stealth-biotherapeutics-announces-fda-accelerated-approval-of-forzinity-elamipretide-hcl-the-first-therapy-for-progressive-and-life-limiting-ultra-rare-genetic-disease-barth-syndrome-302562058.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-09-19T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "neurologylive-mmpower3-fail",
+      "sourceType": "medical-news-summary-of-controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Elamipretide Fails to Meet Primary End Points in Primary Mitochondrial Myopathy Trial (MMPOWER-3)",
+      "publisher": "NeurologyLive (reporting on MMPOWER-3 randomized controlled trial published in Neurology)",
+      "url": "https://www.neurologylive.com/view/elampretide-fails-to-meet-primary-end-points-in-primary-mitochondrial-myopathy",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-11764719",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Elamipretide (CID 11764719)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Elamipretide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "swolverine-ss31-vendor-page",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "D1",
+      "title": "SS-31 Peptide (Elamipretide): Mitochondrial Protection and Performance Potential",
+      "publisher": "Swolverine (supplement/peptide vendor blog)",
+      "url": "https://swolverine.com/blogs/blog/ss-31-peptide-mitochondrial-protection-and-performance-potential",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "elamipretide-regulatory-approved-indication-001",
+      "claimType": "approved-indication",
+      "statement": "FDA granted accelerated approval to elamipretide (brand name FORZINITY) to improve muscle strength in adult and pediatric patients with Barth syndrome weighing at least 30 kg; this is the first FDA-approved therapy for Barth syndrome.",
+      "context": {
+        "population": "adult and pediatric patients with Barth syndrome weighing at least 30 kg",
+        "route": "subcutaneous",
+        "formulation": "FORZINITY (elamipretide hydrochloride injection)",
+        "useCase": "Barth syndrome - muscle strength improvement",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-forzinity-label",
+        "fda-forzinity-approval-package-215244"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-forzinity-label",
+          "quote": "FORZINITY is indicated to improve muscle strength in adult and pediatric patients with Barth syndrome weighing at least 30 kg.",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "fda-forzinity-approval-package-215244",
+          "quote": "September 19, 2025",
+          "pageOrSection": "Approval date"
+        }
+      ],
+      "reviewFlags": [
+        "regulatory approved-indication claim"
+      ]
+    },
+    {
+      "claimId": "elamipretide-regulatory-accelerated-approval-basis-001",
+      "claimType": "regulatory",
+      "statement": "The Barth syndrome indication was granted under accelerated approval, based on an intermediate clinical endpoint (knee extensor muscle strength) rather than a demonstrated clinical-benefit endpoint; FDA required a confirmatory randomized, double-blind, placebo-controlled trial in patients 5 years and older to verify and describe clinical benefit, with the confirmatory study enrolling March 2026-March 2028 and final reporting due by March 2030. Continued approval is contingent on that verification.",
+      "context": {
+        "population": "Barth syndrome patients, confirmatory trial cohort age 5+",
+        "route": "subcutaneous",
+        "formulation": "FORZINITY (elamipretide hydrochloride injection)",
+        "useCase": "post-marketing confirmatory requirement",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-forzinity-approval-package-215244",
+        "prnewswire-forzinity-accelerated-approval"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-forzinity-approval-package-215244",
+          "quote": "It is approved under accelerated approval pursuant to section 506(c)",
+          "pageOrSection": "Approval basis"
+        },
+        {
+          "sourceRef": "fda-forzinity-approval-package-215244",
+          "quote": "Conduct a randomized, double-blind, placebo-controlled trial in patients 5 years and older with Barth syndrome to verify and describe the clinical benefit",
+          "pageOrSection": "Postmarketing requirement"
+        },
+        {
+          "sourceRef": "prnewswire-forzinity-accelerated-approval",
+          "quote": "This indication is approved under accelerated approval based on an improvement in knee extensor muscle strength, an intermediate clinical endpoint.",
+          "pageOrSection": "Press release body"
+        },
+        {
+          "sourceRef": "prnewswire-forzinity-accelerated-approval",
+          "quote": "Continued approval for this indication may be contingent upon verification and description of clinical benefit in a confirmatory trial(s).",
+          "pageOrSection": "Press release body"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "accelerated approval status is conditional; monitor confirmatory trial (targeted completion 2030) for outcome"
+      ]
+    },
+    {
+      "claimId": "elamipretide-mechanism-mitochondria-targeted-001",
+      "claimType": "mechanism",
+      "statement": "Elamipretide is a synthetic aromatic-cationic tetrapeptide (a Szeto-Schiller peptide, SS-31) that concentrates in the inner mitochondrial membrane and is described as binding cardiolipin to support mitochondrial bioenergetics; its molecular formula is C32H49N9O5.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "elamipretide",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-11764719"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-11764719",
+          "quote": "C32H49N9O5",
+          "pageOrSection": "Molecular Formula"
+        }
+      ],
+      "reviewFlags": [
+        "cardiolipin-binding mechanism claim sourced from general compound literature, not verbatim-quoted from a fetched primary mechanistic source this session; confirm with a dedicated pharmacology review at next pass"
+      ]
+    },
+    {
+      "claimId": "elamipretide-dosing-context-forzinity-001",
+      "claimType": "dose-context",
+      "statement": "The FORZINITY label specifies a recommended dose of 40 mg subcutaneously once daily for patients weighing at least 30 kg, with a reduced dose of 20 mg daily for adults with severe renal impairment (eGFR <30 mL/min) not on dialysis; injections are rotated between the abdomen (at least 2 inches from the navel) and outer thigh.",
+      "context": {
+        "population": "Barth syndrome patients weighing at least 30 kg (label population)",
+        "route": "subcutaneous",
+        "formulation": "FORZINITY (elamipretide hydrochloride injection)",
+        "useCase": "labeled dosing for approved Barth syndrome indication - trial/label protocol context only, not a use recommendation for any other population",
+        "doseText": "40 mg subcutaneously once daily (20 mg daily if severe renal impairment, eGFR <30 mL/min, not on dialysis) - label text, not a use recommendation"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-forzinity-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-forzinity-label",
+          "quote": "40 mg subcutaneously once daily",
+          "pageOrSection": "Dosage and Administration"
+        },
+        {
+          "sourceRef": "dailymed-forzinity-label",
+          "quote": "Store refrigerated at 2\u00b0C to 8\u00b0C (36\u00b0F to 46\u00b0F). Do not freeze.",
+          "pageOrSection": "Storage and Handling"
+        },
+        {
+          "sourceRef": "dailymed-forzinity-label",
+          "quote": "Discard vials 8 days after first opening.",
+          "pageOrSection": "Storage and Handling"
+        }
+      ],
+      "reviewFlags": [
+        "product-specific dosing/formulation/storage claim - fieldAuthorityRequired",
+        "must not be generalized beyond the labeled Barth syndrome population or beyond the FORZINITY product"
+      ]
+    },
+    {
+      "claimId": "elamipretide-safety-adverse-effects-001",
+      "claimType": "adverse-effect",
+      "statement": "The most common adverse reactions reported for FORZINITY are injection site reactions (erythema, pain, induration, pruritus, bruising, and urticaria); the label also notes eosinophilia that typically resolved within 6-12 months, a hypersensitivity warning requiring monitoring for allergic reactions including rash and respiratory symptoms with possible need for epinephrine, and that the product is not approved for use in neonates due to benzyl alcohol content (20 mg/mL).",
+      "context": {
+        "population": "labeled Barth syndrome population",
+        "route": "subcutaneous",
+        "formulation": "FORZINITY (elamipretide hydrochloride injection)",
+        "useCase": "safety monitoring",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-forzinity-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-forzinity-label",
+          "quote": "Most common adverse reactions are injection site reactions",
+          "pageOrSection": "Adverse Reactions"
+        },
+        {
+          "sourceRef": "dailymed-forzinity-label",
+          "quote": "Serious hypersensitivity to elamipretide or any of the excipients in FORZINITY.",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-forzinity-label",
+          "quote": "Not approved for use in neonates",
+          "pageOrSection": "Warnings - benzyl alcohol toxicity"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim",
+        "adverse-event profile derives from the labeled Barth syndrome population under supervised dosing; not established for unsupervised gray-market subcutaneous use at other doses"
+      ]
+    },
+    {
+      "claimId": "elamipretide-human-rct-negative-pmm-001",
+      "claimType": "efficacy",
+      "statement": "In MMPOWER-3, the phase 3 randomized controlled trial of elamipretide in primary mitochondrial myopathy (a different, non-approved indication from Barth syndrome), elamipretide did not meet its co-primary endpoints - change in 6-minute walk test distance and change in Primary Mitochondrial Myopathy Symptom Assessment (PMMSA) total fatigue score - versus placebo, despite an earlier phase 2 trial having shown improvement on patient-reported outcomes without benefit on the 6-minute walk test. The treatment was reported tolerable, with mostly mild-to-moderate adverse events.",
+      "context": {
+        "population": "adults with genetically confirmed primary mitochondrial myopathy",
+        "route": "subcutaneous (per MMPOWER program dosing)",
+        "formulation": "elamipretide (investigational, non-Barth-syndrome indication)",
+        "useCase": "primary mitochondrial myopathy - efficacy trial, NOT an FDA-approved indication",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "neurologylive-mmpower3-fail"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "neurologylive-mmpower3-fail",
+          "quote": "failed to achieve the primary end points",
+          "pageOrSection": "Article body summarizing MMPOWER-3 (Neurology, published RCT)"
+        },
+        {
+          "sourceRef": "neurologylive-mmpower3-fail",
+          "quote": "demonstrated improvement in patient-reported outcomes, although did not show benefit in terms of the 6-minute walk test",
+          "pageOrSection": "Article body, quoting Dr. Bruce H. Cohen on the earlier phase 2 trial"
+        },
+        {
+          "sourceRef": "neurologylive-mmpower3-fail",
+          "quote": "mostly mild to moderate adverse events",
+          "pageOrSection": "Article body - safety summary"
+        }
+      ],
+      "reviewFlags": [
+        "confidence set to moderate because this claim is sourced from a secondary news summary of the published MMPOWER-3 RCT (Neurology, DOI 10.1212/WNL.0000000000207402) rather than a directly fetched and quoted primary-source abstract; the primary Neurology page and PMC mirror both blocked automated fetch (403 / CAPTCHA) this session",
+        "negative-human-RCT finding is for a different indication (primary mitochondrial myopathy) than the approved Barth syndrome indication and must not be conflated with it",
+        "independent re-verification against the primary Neurology publication or PMC full text required at next review pass"
+      ]
+    },
+    {
+      "claimId": "elamipretide-misinformation-gap-ss31-longevity-001",
+      "claimType": "misinformation-claim",
+      "statement": "Gray-market vendors marketing elamipretide under the research name SS-31 (unrelated to the FDA-approved FORZINITY product and its Barth syndrome indication) promote it for anti-aging, cellular energy/ATP production, endurance, exercise recovery, and fatigue resistance in general consumers; these use cases are not supported by any approved indication or by the published controlled human trial evidence identified this session, which involved a different investigational program (primary mitochondrial myopathy) that failed its primary endpoints. The reviewed vendor page does disclose that SS-31/elamipretide is investigational and 'not approved to diagnose, treat, cure, or prevent any disease,' but this disclosure follows extensive benefit-oriented marketing language.",
+      "context": {
+        "population": "general consumers of gray-market/research-labeled peptide products",
+        "route": "subcutaneous (common gray-market use)",
+        "formulation": "research-labeled SS-31/elamipretide, RUO material",
+        "useCase": "anti-aging, energy, endurance, and recovery marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "swolverine-ss31-vendor-page",
+        "neurologylive-mmpower3-fail",
+        "dailymed-forzinity-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "swolverine-ss31-vendor-page",
+          "quote": "Counters one of the root causes of aging: mitochondrial decline",
+          "pageOrSection": "Anti-Aging Potential section"
+        },
+        {
+          "sourceRef": "swolverine-ss31-vendor-page",
+          "quote": "May improve endurance, recovery, and resistance to fatigue",
+          "pageOrSection": "Energy/Performance section"
+        },
+        {
+          "sourceRef": "swolverine-ss31-vendor-page",
+          "quote": "SS-31 (elamipretide) is not approved to diagnose, treat, cure, or prevent any disease.",
+          "pageOrSection": "Disclosure/disclaimer section"
+        },
+        {
+          "sourceRef": "dailymed-forzinity-label",
+          "quote": "FORZINITY is indicated to improve muscle strength in adult and pediatric patients with Barth syndrome weighing at least 30 kg.",
+          "pageOrSection": "Indications and Usage - showing the only FDA-recognized indication does not include general anti-aging or athletic-performance use"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: general-population anti-aging/performance marketing claims lack supporting human outcome evidence and fall outside the sole approved indication",
+        "do not infer general-population human efficacy from the Barth syndrome accelerated-approval data or from animal/in-vitro mitochondrial mechanism data"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "elamipretide-conflict-indication-scope-001",
+      "claimRefs": [
+        "elamipretide-regulatory-approved-indication-001",
+        "elamipretide-human-rct-negative-pmm-001",
+        "elamipretide-misinformation-gap-ss31-longevity-001"
+      ],
+      "severity": "moderate",
+      "summary": "Elamipretide carries a narrow FDA accelerated approval (Barth syndrome muscle strength, based on an intermediate endpoint with confirmatory trial pending) alongside a documented phase 3 efficacy failure in a separate indication (primary mitochondrial myopathy) and widespread gray-market marketing for unrelated general-wellness/anti-aging uses; these three evidence strands must be kept distinct and not blended into a single 'proven effective' narrative.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "MMPOWER-3 negative-RCT claim was sourced from a secondary news summary because the primary Neurology journal page (403) and its PMC mirror (CAPTCHA-gated) could not be fetched directly this session; re-verify against the primary publication at next review pass.",
+      "CAS number, UNII, ChEMBL ID, DrugBank ID, DOI, and PMID identifiers not yet resolved from structured databases or fetched directly from PubChem's full record (JavaScript-rendered detail panel was not accessible to the fetch tool).",
+      "Accelerated approval for the Barth syndrome indication is conditional on a confirmatory trial not due to report until March 2030; approval status should be reconfirmed against the live FDA/DailyMed record at review time.",
+      "Human efficacy evidence outside the narrow Barth syndrome accelerated-approval population is thin to negative (MMPOWER-3) and must not be generalized to gray-market wellness/anti-aging use."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "fda-approved-product",
+      "conditional-accelerated-approval",
+      "negative-human-rct-different-indication",
+      "thin-human-evidence-outside-label",
+      "identifiers-incomplete"
+    ]
+  }
+}

@@ -1,0 +1,361 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "bremelanotide-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:20:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Bremelanotide",
+    "aliases": [
+      "PT-141",
+      "Vyleesi",
+      "Bremelanotide acetate"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Cyclic heptapeptide melanocortin receptor (MC4R) agonist",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "189691-06-3",
+      "drugbank": "DB11653",
+      "pubchem": "9941379",
+      "chembl": null,
+      "doi": null,
+      "pmid": "31599840"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-vyleesi-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: VYLEESI - bremelanotide injection",
+      "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "kingsberg-2019-obgyn-reconnect-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Bremelanotide for the Treatment of Hypoactive Sexual Desire Disorder: Two Randomized Phase 3 Trials",
+      "publisher": "Obstetrics & Gynecology (Kingsberg SA, Clayton AH, Portman D, et al., 2019); indexed PubMed",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31599840/",
+      "doi": null,
+      "pmid": "31599840",
+      "publishedAt": "2019-11-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-9941379",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Bremelanotide | C50H68N14O10 | CID 9941379",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Bremelanotide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "drugbank-db11653",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Bremelanotide: Uses, Interactions, Mechanism of Action",
+      "publisher": "DrugBank Online (DB11653)",
+      "url": "https://go.drugbank.com/drugs/DB11653",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "vendor-thepeptidelist-pt141-nasal",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "PT-141 Nasal Spray Guide",
+      "publisher": "The Peptide List (commercial/informational vendor content)",
+      "url": "https://thepeptidelist.com/pt-141-nasal-spray",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "bremelanotide-regulatory-approved-indication-001",
+      "claimType": "approved-indication",
+      "statement": "Bremelanotide, marketed as Vyleesi, is FDA-approved as a melanocortin receptor agonist indicated for the treatment of premenopausal women with acquired, generalized hypoactive sexual desire disorder (HSDD); the label explicitly states it is not indicated for HSDD in postmenopausal women or in men, and not indicated to enhance sexual performance.",
+      "context": {
+        "population": "premenopausal women with acquired, generalized HSDD",
+        "route": "subcutaneous",
+        "formulation": "Vyleesi prefilled autoinjector, 1.75 mg/0.3 mL",
+        "useCase": "FDA-approved treatment of HSDD",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-vyleesi-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-vyleesi-label",
+          "quote": "VYLEESI is a melanocortin receptor agonist indicated for the treatment of premenopausal women with acquired, generalized hypoactive sexual desire disorder (HSDD)",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-vyleesi-label",
+          "quote": "Not indicated for treatment of HSDD in postmenopausal women or in men",
+          "pageOrSection": "Limitations of Use"
+        },
+        {
+          "sourceRef": "dailymed-vyleesi-label",
+          "quote": "Not indicated to enhance sexual performance",
+          "pageOrSection": "Limitations of Use"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical/regulatory claim; confirm current label version against live DailyMed setid at review time"
+      ]
+    },
+    {
+      "claimId": "bremelanotide-contraindication-cv-001",
+      "claimType": "contraindication",
+      "statement": "Vyleesi is contraindicated in patients with uncontrolled hypertension or known cardiovascular disease, and the label warns that bremelanotide causes a transient increase in blood pressure and decrease in heart rate after each dose that usually resolves within 12 hours.",
+      "context": {
+        "population": "patients with uncontrolled hypertension or known cardiovascular disease",
+        "route": "subcutaneous",
+        "formulation": "Vyleesi autoinjector",
+        "useCase": "cardiovascular safety",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-vyleesi-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-vyleesi-label",
+          "quote": "Uncontrolled hypertension or known cardiovascular disease",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-vyleesi-label",
+          "quote": "Transient increase in blood pressure and decrease in heart rate: Occurs after each dose and usually resolves within 12 hours",
+          "pageOrSection": "Warnings and Precautions"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory/contraindication claim"
+      ]
+    },
+    {
+      "claimId": "bremelanotide-adverse-effects-001",
+      "claimType": "adverse-effect",
+      "statement": "In FDA-approved labeling, nausea was reported by 40% of patients receiving up to 8 monthly doses of Vyleesi, requiring anti-emetic therapy in 13% of patients; focal hyperpigmentation (face, gingiva, breasts) was reported by 1% of patients receiving up to 8 doses per month. The RECONNECT phase 3 trials separately reported nausea, flushing, and headache each occurring in 10% or more of bremelanotide-treated patients versus placebo, mostly mild to moderate in intensity.",
+      "context": {
+        "population": "premenopausal women with HSDD treated in clinical trials and post-approval labeling review",
+        "route": "subcutaneous",
+        "formulation": "Vyleesi 1.75 mg autoinjector",
+        "useCase": "safety/tolerability profile",
+        "doseText": "up to 8 doses per month (label-reported exposure, not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-vyleesi-label",
+        "kingsberg-2019-obgyn-reconnect-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-vyleesi-label",
+          "quote": "Nausea: Reported by 40% of patients who received up to 8 monthly doses, requiring anti-emetic therapy in 13% of patients",
+          "pageOrSection": "Adverse Reactions"
+        },
+        {
+          "sourceRef": "dailymed-vyleesi-label",
+          "quote": "Focal hyperpigmentation: Reported by 1% of patients who received up to 8 doses per month, including involvement of the face, gingiva and breasts",
+          "pageOrSection": "Adverse Reactions"
+        },
+        {
+          "sourceRef": "kingsberg-2019-obgyn-reconnect-rct",
+          "quote": "Patients taking bremelanotide experienced more nausea, flushing, and headache (10% or more in both studies) compared with placebo.",
+          "pageOrSection": "Abstract/Results"
+        }
+      ],
+      "reviewFlags": [
+        "focal hyperpigmentation may be irreversible in some cases per label context; confirm reversibility language at review"
+      ]
+    },
+    {
+      "claimId": "bremelanotide-mechanism-mc4r-001",
+      "claimType": "mechanism",
+      "statement": "Bremelanotide is a synthetic cyclic heptapeptide melanocortin receptor agonist (active metabolite of the earlier candidate melanotan II) that acts on melanocortin receptors, including MC4R, implicated in central regulation of sexual arousal/desire pathways.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "bremelanotide",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "dailymed-vyleesi-label",
+        "drugbank-db11653"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-vyleesi-label",
+          "quote": "VYLEESI is a melanocortin receptor agonist indicated for the treatment of premenopausal women with acquired, generalized hypoactive sexual desire disorder (HSDD)",
+          "pageOrSection": "Indications and Usage"
+        }
+      ],
+      "reviewFlags": [
+        "DrugBank mechanism-of-action page did not fully render in this session; verify receptor-subtype specificity (MC4R vs other melanocortin receptors) against a primary pharmacology source at review time"
+      ]
+    },
+    {
+      "claimId": "bremelanotide-efficacy-reconnect-001",
+      "claimType": "efficacy",
+      "statement": "In two identical phase 3, randomized, double-blind, placebo-controlled trials (RECONNECT; total 1,267 premenopausal women with HSDD randomized, 1,202 in the efficacy population), as-needed subcutaneous bremelanotide 1.75 mg over 24 weeks produced statistically significant improvements versus placebo on both co-primary endpoints: increase in Female Sexual Function Index-desire domain score (Study 301: +0.30, P<.001; Study 302: +0.42, P<.001) and reduction in Female Sexual Distress Scale-Desire/Arousal/Orgasm score (Study 301: -0.37, P<.001; Study 302: -0.29, P=.005).",
+      "context": {
+        "population": "premenopausal women with acquired, generalized HSDD (n=1,267 randomized)",
+        "route": "subcutaneous",
+        "formulation": "bremelanotide 1.75 mg, as-needed",
+        "useCase": "treatment of HSDD (approved indication)",
+        "doseText": "1.75 mg subcutaneously as needed, over a 24-week trial period (trial protocol description; not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "kingsberg-2019-obgyn-reconnect-rct",
+        "dailymed-vyleesi-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "kingsberg-2019-obgyn-reconnect-rct",
+          "quote": "Female Sexual Function Index-desire domain: Bremelanotide showed statistically significant increases compared to placebo across both studies (Study 301: 0.30, P<.001; Study 302: 0.42, P<.001; integrated: 0.35, P<.001)",
+          "pageOrSection": "Abstract/Results"
+        },
+        {
+          "sourceRef": "kingsberg-2019-obgyn-reconnect-rct",
+          "quote": "Female Sexual Distress Scale: Significant reductions in distress (Study 301: -0.37, P<.001; Study 302: -0.29, P=.005; integrated: -0.33, P<.001)",
+          "pageOrSection": "Abstract/Results"
+        }
+      ],
+      "reviewFlags": [
+        "effect sizes are modest on validated instrument scales; clinical-meaningfulness interpretation should not be overstated"
+      ]
+    },
+    {
+      "claimId": "bremelanotide-evidence-gap-nasal-offlabel-001",
+      "claimType": "evidence-gap",
+      "statement": "Only the FDA-approved subcutaneous autoinjector form (Vyleesi, 1.75 mg) has controlled human efficacy and safety data supporting the HSDD indication. Compounded PT-141 nasal spray products sold online (commonly 1-2 mg per spray, per vendor marketing) are not FDA-approved formulations and are not supported by the RECONNECT trial evidence, which tested only the subcutaneous route; a vendor page explicitly frames intranasal PT-141 as 'off-label' even while acknowledging Vyleesi's approval status.",
+      "context": {
+        "population": "consumers/patients seeking PT-141 outside the approved indication or route",
+        "route": "intranasal (compounded, off-label) vs. subcutaneous (FDA-approved)",
+        "formulation": "compounded PT-141 nasal spray, various vendor concentrations",
+        "useCase": "off-label/unapproved-formulation use marketed for libido or general sexual enhancement",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "vendor-thepeptidelist-pt141-nasal",
+        "dailymed-vyleesi-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "vendor-thepeptidelist-pt141-nasal",
+          "quote": "PT-141 (bremelanotide) is FDA-approved as Vyleesi for premenopausal women with HSDD. Compounded intranasal use is off-label and requires a prescription.",
+          "pageOrSection": "Regulatory status disclaimer"
+        },
+        {
+          "sourceRef": "vendor-thepeptidelist-pt141-nasal",
+          "quote": "Compounded intranasal PT-141 is commonly prepared at 1 mg to 2 mg per spray",
+          "pageOrSection": "Dosing information"
+        },
+        {
+          "sourceRef": "dailymed-vyleesi-label",
+          "quote": "VYLEESI is a melanocortin receptor agonist indicated for the treatment of premenopausal women with acquired, generalized hypoactive sexual desire disorder (HSDD)",
+          "pageOrSection": "Indications and Usage (route: subcutaneous only)"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor marketing extrapolates an approved subcutaneous product's evidence to an unapproved intranasal route and broader 'sexual enhancement' framing not supported by the label, which explicitly excludes performance-enhancement use",
+        "no controlled human trial for intranasal PT-141 was located in this session; confirm absence/presence at independent review"
+      ]
+    },
+    {
+      "claimId": "bremelanotide-identity-external-ids-001",
+      "claimType": "identity",
+      "statement": "Bremelanotide (PubChem CID 9941379, molecular formula C50H68N14O10, CAS 189691-06-3, DrugBank DB11653) is a cyclic heptapeptide melanocortin receptor agonist and the active metabolite of melanotan II.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "bremelanotide",
+        "useCase": "compound identity/reference data",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-9941379",
+        "drugbank-db11653"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-9941379",
+          "quote": "Bremelanotide | C50H68N14O10 | CID 9941379",
+          "pageOrSection": "Compound summary header"
+        },
+        {
+          "sourceRef": "drugbank-db11653",
+          "quote": "DrugBank ID: DB11653",
+          "pageOrSection": "Identification"
+        }
+      ],
+      "reviewFlags": [
+        "UNII not resolved from a fetched source in this session; identifier remains null pending independent verification",
+        "CAS number sourced from commercial supplier listings cross-referencing 189691-06-3, not directly confirmed on the fetched PubChem/DrugBank pages this session; verify against a structured-database page directly at review"
+      ]
+    }
+  ],
+  "conflicts": [],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "UNII and ChEMBL identifiers not yet resolved from structured databases; CAS number requires direct confirmation against a fetched PubChem/DrugBank record rather than supplier listings.",
+      "DrugBank mechanism-of-action detail page did not fully render in this session (JavaScript-gated content); mechanism claim relies primarily on the FDA label and should be cross-checked against a primary pharmacology source.",
+      "No controlled human trial for the compounded/off-label intranasal PT-141 route was located; the evidence-gap claim should be re-checked for any newer literature at independent review."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-product",
+      "a1-regulator-backed",
+      "positive-human-rct-documented",
+      "vendor-marketing-scope-mismatch-flagged"
+    ]
+  }
+}

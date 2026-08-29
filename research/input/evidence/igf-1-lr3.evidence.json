@@ -1,0 +1,427 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "igf-1-lr3-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:20:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "IGF-1 LR3",
+    "aliases": [
+      "Long R3 IGF-I",
+      "Long R3 IGF-1",
+      "Long-(Arg3)-IGF-I",
+      "LR3IGF-I",
+      "LongR3-IGF-I"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Insulin-like growth factor 1 (IGF-1) analogue / growth factor",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "M9L22Y19H9",
+      "casNumber": "143045-27-6",
+      "drugbank": null,
+      "pubchem": "SID 381123731",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-increlex-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "INCRELEX (mecasermin) injection, solution - Label",
+      "publisher": "U.S. Food and Drug Administration / National Library of Medicine DailyMed",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a8b27a1b-a611-4f91-ad22-76d4b390c3ae",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "fda-bulk-substances-cat2",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "fda-unii-srs-m9l22y19h9",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "FDA Substance Registration System (UNII) Record: Long-(Arg3)Insulin-like Growth Factor-I",
+      "publisher": "U.S. Food and Drug Administration / Global Substance Registration System",
+      "url": "https://precision.fda.gov/uniisearch/srs/unii/M9L22Y19H9",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pubchem-sid-381123731",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Substance Record SID 381123731: Long-(arg3)insulin-like growth factor-i",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/substance/381123731",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "conlon-1995-guinea-pig",
+      "sourceType": "animal-study",
+      "authorityTier": "B2",
+      "title": "Long R3 insulin-like growth factor-I (IGF-I) infusion stimulates organ growth but reduces plasma IGF-I, IGF-II and IGF binding protein concentrations in the guinea pig",
+      "publisher": "The Journal of Endocrinology (Conlon MA, Tomas FM, Owens PC, Wallace JC, Howarth GS, Ballard FJ, 1995); accessed via Europe PMC",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:7561636&format=json&resultType=core",
+      "doi": null,
+      "pmid": "7561636",
+      "publishedAt": "1995-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "dopinglinkki",
+      "sourceType": "professional-guidance",
+      "authorityTier": "B1",
+      "title": "Insulin-like growth factor 1 (IGF-1) and long chain IGF (Ir3igf-1)",
+      "publisher": "Dopinglinkki, A-Clinic Foundation (Finnish national doping/substance information service)",
+      "url": "https://dopinglinkki.fi/en/info-bank/doping-substances/insulin-like-growth-factor-1-igf-1-and-long-chain-igf-ir3igf-1/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "peptidedosingprotocols",
+      "sourceType": "vendor-informational",
+      "authorityTier": "C1",
+      "title": "IGF-1 LR3 Peptide Dosage Guide: Cycle, Side Effects & Safety",
+      "publisher": "PeptideDosingProtocols.com",
+      "url": "https://www.peptidedosingprotocols.com/protocol/igf-1-lr3",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "wikipedia-igf1lr3",
+      "sourceType": "tertiary-reference",
+      "authorityTier": "C2",
+      "title": "IGF-1 LR3",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/IGF-1_LR3",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "igf1lr3-identity-structure-001",
+      "claimType": "mechanism",
+      "statement": "IGF-1 LR3 (Long-Arg3-IGF-I) is a synthetic 83-amino-acid analogue of human IGF-1 bearing an arginine substitution at position 3 and a 13-amino-acid N-terminal extension; these modifications reduce its affinity for IGF-binding proteins, contributing to a longer functional half-life and greater potency than native IGF-1 in preclinical models. FDA's Substance Registration System assigns it UNII M9L22Y19H9 with CAS 143045-27-6; commercial vendor chemical listings commonly cite a different CAS number (946870-92-4) for the same substance name, an identifier discrepancy that is unresolved.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "IGF-1 LR3 (Long R3 IGF-I) analogue",
+        "useCase": "identity / mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-unii-srs-m9l22y19h9",
+        "conlon-1995-guinea-pig",
+        "wikipedia-igf1lr3"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-unii-srs-m9l22y19h9",
+          "quote": "CAS Number: 143045-27-6",
+          "pageOrSection": "UNII record M9L22Y19H9, substance identity fields"
+        },
+        {
+          "sourceRef": "conlon-1995-guinea-pig",
+          "quote": "long R3 IGF-I (LR3IGF-I), an analogue which has much reduced affinities for IGF binding proteins",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "wikipedia-igf1lr3",
+          "quote": "a synthetic protein and lengthened analogue of human insulin-like growth factor 1 (IGF-1)",
+          "pageOrSection": "Lead section"
+        },
+        {
+          "sourceRef": "wikipedia-igf1lr3",
+          "quote": "approximately three times more potent than IGF-1",
+          "pageOrSection": "Pharmacology section"
+        }
+      ],
+      "reviewFlags": [
+        "identifier conflict: vendor-listed CAS 946870-92-4 vs FDA UNII CAS 143045-27-6 not yet reconciled against a validated CAS registry source",
+        "Wikipedia is a tertiary source; verify structural claims against primary literature at review"
+      ]
+    },
+    {
+      "claimId": "igf1lr3-regulatory-no-approved-product-001",
+      "claimType": "regulatory",
+      "statement": "No FDA-approved drug product contains IGF-1 LR3, and IGF-1 LR3 does not appear on FDA's published Category 2 list of bulk drug substances presenting significant safety risks for compounding. The only FDA-approved IGF-1-based product, INCRELEX (mecasermin), is a chemically distinct molecule - recombinant human IGF-1 with an amino acid sequence identical to endogenous IGF-1, not the LR3 analogue - and is approved solely for growth failure in pediatric patients 2 years of age and older with severe primary IGF-1 deficiency or GH gene deletion with neutralizing antibodies to GH.",
+      "context": {
+        "population": "pediatric patients with severe primary IGF-1 deficiency (Increlex-approved population; distinct from the population using IGF-1 LR3 products)",
+        "route": "subcutaneous (Increlex)",
+        "formulation": "mecasermin (Increlex) - chemically distinct from IGF-1 LR3",
+        "useCase": "regulatory status / approved-indication contrast",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-increlex-label",
+        "fda-bulk-substances-cat2"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "INCRELEX (mecasermin) injection is indicated for the treatment of growth failure in pediatric patients 2 years of age and older with severe primary IGF-1 deficiency or with growth hormone (GH) gene deletion who have developed neutralizing antibodies to GH.",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "amino acid sequence of the product is identical to that of endogenous human IGF-1",
+          "pageOrSection": "Description"
+        },
+        {
+          "sourceRef": "fda-bulk-substances-cat2",
+          "quote": null,
+          "pageOrSection": "Category 2 and formerly-nominated substances tables (reviewed 2026-08-29): no entry found for IGF-1, IGF-1 LR3, or insulin-like growth factor"
+        }
+      ],
+      "reviewFlags": [
+        "regulatory status of the LR3 analogue specifically (vs. mecasermin) should be reverified against live FDA compounding lists and import alerts at review time",
+        "safety-critical regulatory claim"
+      ]
+    },
+    {
+      "claimId": "igf1lr3-adverse-effect-hypoglycemia-001",
+      "claimType": "adverse-effect",
+      "statement": "Severe hypoglycemia (including hypoglycemic seizures) is a labeled, mechanism-based risk of IGF-1 receptor agonism established for the FDA-approved parent molecule mecasermin (Increlex). A Finnish national anti-doping information service states that not all adverse effects of IGF-1 LR3 in humans have been characterized but are presumed similar to ordinary IGF-1, including severe hypoglycemia. No direct human safety data specific to IGF-1 LR3 itself were identified this session.",
+      "context": {
+        "population": "humans using IGF-1 or IGF-1 LR3 products",
+        "route": "subcutaneous / injection (typical reported use pattern)",
+        "formulation": "IGF-1 LR3 and related IGF-1 analogues generally",
+        "useCase": "safety / adverse-effect profile",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-increlex-label",
+        "dopinglinkki"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-increlex-label",
+          "quote": "Severe hypoglycemia leading to hypoglycemic seizures has been observed with INCRELEX treatment.",
+          "pageOrSection": "Warnings and Precautions"
+        },
+        {
+          "sourceRef": "dopinglinkki",
+          "quote": "Not all of the adverse effects of LR3IGF-1 on humans have been identified, but presumably they are similar to those of ordinary IGF-1.",
+          "pageOrSection": "Doping substances: IGF-1 and LR3IGF-1"
+        }
+      ],
+      "reviewFlags": [
+        "no IGF-1 LR3-specific human adverse-event dataset identified; risk profile here is extrapolated from the approved parent molecule and expert/anti-doping guidance, not from direct study of IGF-1 LR3",
+        "safety-critical claim",
+        "must not be presented as a validated or complete IGF-1 LR3 safety profile"
+      ]
+    },
+    {
+      "claimId": "igf1lr3-animal-study-organ-growth-001",
+      "claimType": "mechanism",
+      "statement": "In a 7-day continuous-infusion study in guinea pigs, LR3IGF-I (120 micrograms/day) significantly increased the fractional weight of adrenals, gut, kidneys and spleen, but overall body growth (weight gain, feed intake, feed conversion efficiency, carcass composition) was not significantly affected in any treatment group, including higher-dose native IGF-I or IGF-II. This is animal-model, non-human pharmacology data and must not be read as evidence of human muscle-growth, fat-loss, or performance benefit.",
+      "context": {
+        "population": "female guinea pigs, ~350 g body weight (animal model - not human data)",
+        "route": "continuous intravenous infusion, 7 days",
+        "formulation": "recombinant LR3IGF-I, 120 micrograms/day",
+        "useCase": "preclinical organ-growth pharmacology",
+        "doseText": "120 micrograms/day continuous IV infusion for 7 days in guinea pigs (animal research protocol; not a human dose and not a use recommendation)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "conlon-1995-guinea-pig"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "conlon-1995-guinea-pig",
+          "quote": "body weight gain, feed intake, feed conversion efficiency and carcass composition were not significantly affected by any treatment",
+          "pageOrSection": "Abstract / Results"
+        },
+        {
+          "sourceRef": "conlon-1995-guinea-pig",
+          "quote": "the fractional weight of adrenals, gut, kidneys and spleen were significantly increased by LR3IGF-I, but again overall growth was not stimulated",
+          "pageOrSection": "Abstract / Results"
+        }
+      ],
+      "reviewFlags": [
+        "animal-model data only; per directive, must not be extrapolated to human efficacy or dosing",
+        "no corresponding human study identified for this endpoint"
+      ]
+    },
+    {
+      "claimId": "igf1lr3-evidence-gap-human-trials-001",
+      "claimType": "evidence-gap",
+      "statement": "No published human clinical trials of IGF-1 LR3 for any therapeutic or performance endpoint were identified, and ClinicalTrials.gov is reported to list no completed or active IGF-1 LR3 study. A Finnish national doping-information service similarly notes that scientific studies have only sporadically mentioned IGF abuse. The muscle-growth, fat-loss, hyperplasia, and recovery benefits attributed to IGF-1 LR3 in popular and commercial use rest on preclinical (rodent) mechanistic work and the unrelated Increlex pediatric-deficiency dataset, not on direct human evidence for these uses.",
+      "context": {
+        "population": "consumers of gray-market / research-labeled IGF-1 LR3 products",
+        "route": "subcutaneous injection (commonly reported use)",
+        "formulation": "research-labeled IGF-1 LR3",
+        "useCase": "muscle growth / fat loss / recovery marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "peptidedosingprotocols",
+        "dopinglinkki",
+        "wikipedia-igf1lr3"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peptidedosingprotocols",
+          "quote": "No formal human clinical trial has ever evaluated IGF-1 LR3 for any therapeutic or performance endpoint.",
+          "pageOrSection": "Human evidence section"
+        },
+        {
+          "sourceRef": "peptidedosingprotocols",
+          "quote": "There are no published human clinical trials of IGF-1 LR3 itself. ClinicalTrials.gov does not list any active or completed IGF-1 LR3 efficacy or safety study.",
+          "pageOrSection": "Human clinical evidence status"
+        },
+        {
+          "sourceRef": "dopinglinkki",
+          "quote": "scientific studies have mentioned IGF abuse only sporadically",
+          "pageOrSection": "Overview / meta description"
+        }
+      ],
+      "reviewFlags": [
+        "peptidedosingprotocols.com is a vendor/informational site, not a primary source - its claim of a ClinicalTrials.gov gap should be independently reverified directly against ClinicalTrials.gov at next review",
+        "misinformation-adjacent evidence-gap claim"
+      ]
+    },
+    {
+      "claimId": "igf1lr3-misinformation-marketing-claims-001",
+      "claimType": "misinformation-claim",
+      "statement": "IGF-1 LR3 is commonly marketed online for 'anabolic' muscle-building effects and 'satellite cell activation and possible hyperplasia (creation of new muscle fibers),' with the underlying mechanism sourced by the marketing material itself only to preclinical rat studies, and with dosing ranges the same source describes as 'extrapolated from preclinical work, the Increlex clinical record, and decades of community reporting' rather than validated clinical evidence. These popular marketing claims are not supported by any identified human controlled trial.",
+      "context": {
+        "population": "consumers exposed to peptide-vendor marketing",
+        "route": null,
+        "formulation": "research-labeled IGF-1 LR3",
+        "useCase": "bodybuilding / muscle-hyperplasia marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "peptidedosingprotocols"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peptidedosingprotocols",
+          "quote": "satellite cell activation and possible hyperplasia (creation of new muscle fibers)",
+          "pageOrSection": "Mechanism / marketing claims section"
+        },
+        {
+          "sourceRef": "peptidedosingprotocols",
+          "quote": "These ranges are observational. They are not human clinical dosing guidance.",
+          "pageOrSection": "Dosing protocol disclaimer"
+        },
+        {
+          "sourceRef": "peptidedosingprotocols",
+          "quote": "extrapolated from preclinical work, the Increlex clinical record, and decades of community reporting",
+          "pageOrSection": "Dosing protocol disclaimer"
+        }
+      ],
+      "reviewFlags": [
+        "source is a peptide-vendor-adjacent informational site; verify claims against independent literature at review",
+        "captured per directive's required misinformation-handling rule for popular/vendor claims lacking stronger support"
+      ]
+    },
+    {
+      "claimId": "igf1lr3-regulatory-doping-status-001",
+      "claimType": "regulatory",
+      "statement": "IGF-1 and LR3IGF-1 are classified as doping substances under the Finnish Criminal Code according to Finland's national anti-doping information service. IGF-1 LR3 is understood to fall within the broader class of IGF-1-related growth factors restricted in competitive sport, but this specific finding is documented only for Finland; general WADA Prohibited List classification for IGF-1 analogues was not independently verified this session.",
+      "context": {
+        "population": "competitive athletes",
+        "route": null,
+        "formulation": "IGF-1 LR3",
+        "useCase": "anti-doping / sport regulatory status",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dopinglinkki"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dopinglinkki",
+          "quote": "IGF-1 and LR3IGF-1 are classified as doping substances in the Finnish Criminal Code.",
+          "pageOrSection": "Regulatory / legal status"
+        }
+      ],
+      "reviewFlags": [
+        "jurisdiction-specific (Finland) claim; verify directly against the WADA Prohibited List (S2 growth factors class) at review",
+        "safety-critical / regulatory claim"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "igf1lr3-cas-identifier-conflict-001",
+      "claimRefs": [
+        "igf1lr3-identity-structure-001"
+      ],
+      "severity": "low",
+      "summary": "Commercial/vendor chemical listings (e.g., ChemicalBook) cite CAS 946870-92-4 for IGF-1 LR3, while FDA's UNII/Substance Registration System record (UNII M9L22Y19H9) lists CAS 143045-27-6 for the same substance name. The discrepancy is unresolved pending independent reconciliation against a validated CAS registry source.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS number discrepancy (946870-92-4 vendor vs 143045-27-6 FDA UNII) unresolved - needs independent CAS registry verification.",
+      "No PubChem CID (only a PubChem SID) resolved for IGF-1 LR3; ChEMBL and DrugBank identifiers were not found this session.",
+      "Human evidence for IGF-1 LR3 itself is thin: sources located this session cover identifiers, an unrelated FDA-approved product (Increlex/mecasermin, a chemically distinct molecule), one animal (guinea pig) study, and vendor/anti-doping informational pages - no direct human efficacy or safety study of IGF-1 LR3 was located.",
+      "Finland-specific doping-classification claim needs corroboration directly against the WADA Prohibited List."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "gray-market-no-approved-product",
+      "thin-human-evidence",
+      "identifier-conflict-unresolved",
+      "misinformation-gap-documented"
+    ]
+  }
+}

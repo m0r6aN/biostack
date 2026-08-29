@@ -1,0 +1,326 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "kisspeptin-10-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:20:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Kisspeptin-10",
+    "aliases": [
+      "KP-10",
+      "Metastin(45-54)",
+      "Kisspeptin 10 (human)"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Decapeptide fragment of the KISS1-derived kisspeptin/metastin family; endogenous ligand of KISS1R (GPR54)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "374675-21-5",
+      "drugbank": null,
+      "pubchem": "25240297",
+      "chembl": "CHEMBL376756",
+      "doi": null,
+      "pmid": "21632807"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-pcac-briefing-kisspeptin-182089",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting (kisspeptin-10 evaluation)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/182089/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "fda-bulk-substances-significant-safety-risks",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "jayasena-2011-jcem-lh-pulse",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Kisspeptin-10 Is a Potent Stimulator of LH and Increases Pulse Frequency in Men",
+      "publisher": "The Journal of Clinical Endocrinology & Metabolism (Jayasena CN, Nijher GM, Comninos AN, et al., 2011)",
+      "url": "https://academic.oup.com/jcem/article/96/8/E1228/2833644",
+      "doi": null,
+      "pmid": "21632807",
+      "publishedAt": "2011-08-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-25240297",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Kisspeptin-10 (CID 25240297)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Kisspeptin-10",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "peptides-org-kp10-dosage-page",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "Kisspeptin-10 Dosage Calculator and Chart | A-Z Guide",
+      "publisher": "peptides.org",
+      "url": "https://www.peptides.org/kisspeptin-10-dosage-calculator/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "kp10-mechanism-kiss1r-agonist-001",
+      "claimType": "mechanism",
+      "statement": "Kisspeptin-10 is the minimal bioactive C-terminal decapeptide fragment of the KISS1 gene product (kisspeptin/metastin) and acts as an agonist at the KISS1R (GPR54) receptor, the key upstream activator of hypothalamic GnRH neurons in the hypothalamic-pituitary-gonadal (HPG) axis.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "kisspeptin-10",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-kisspeptin-182089",
+        "jayasena-2011-jcem-lh-pulse"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "jayasena-2011-jcem-lh-pulse",
+          "quote": "Intravenous bolus kisspeptin-10 resulted in a rapid and dose-dependent rise in serum LH concentration, with maximal stimulation at 1 microg/kg (4.1 +/- 0.4 to 12.4 +/- 1.7 IU/liter at 30 min, P < 0.001, n = 6).",
+          "pageOrSection": "Abstract/Results"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "kp10-regulatory-503a-recommendation-001",
+      "claimType": "regulatory",
+      "statement": "In its Pharmacy Compounding Advisory Committee briefing document, FDA concluded the evaluation criteria weigh against placing kisspeptin-10 on the 503A Bulks List, citing poor physicochemical characterization (impurity data not publicly available or provided in the certificate of analysis), potential immunogenicity risk from parenteral administration of a 10-amino-acid peptide (amplified by possible aggregation and peptide-related impurities), and insufficient evidence of effectiveness for treating hypogonadism in men via IM or SC administration.",
+      "context": {
+        "population": "prospective compounded-product users, specifically men evaluated for secondary hypogonadism",
+        "route": "intramuscular/subcutaneous (as proposed for compounding); intravenous (as studied)",
+        "formulation": "kisspeptin-10 bulk drug substance",
+        "useCase": "regulatory evaluation for 503A compounding eligibility",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-kisspeptin-182089"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-kisspeptin-182089",
+          "quote": "the nominated BDS, kisspeptin-10, is not well characterized from the physical and chemical characterization perspective because certain critical characterization data specific to the kisspeptin-10, such as likely impurities, were neither found in the publicly available scientific literature nor were provided in the CoA.",
+          "pageOrSection": "Characterization section"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-kisspeptin-182089",
+          "quote": "As a peptide with 10 amino acids that is administered through a parenteral route of administration, kisspeptin-10 may pose a significant risk for immunogenicity, potentially amplified by aggregation as well as potential peptide-related impurities.",
+          "pageOrSection": "Safety/Immunogenicity section"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-kisspeptin-182089",
+          "quote": "There is insufficient evidence to make a conclusion on the effectiveness of kisspeptin-10 via IM or SC administration for treating hypogonadism in men.",
+          "pageOrSection": "Effectiveness section"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-kisspeptin-182089",
+          "quote": "For the reasons discussed below, we believe the evaluation criteria weigh against placing kisspeptin-10 on the list of bulk drug substances that can be used to compound drug products in accordance with section 503A.",
+          "pageOrSection": "Recommendation/Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "verify current 503A/Category listing status against the live FDA bulk-substances page at review time; PCAC peptide listings have been revised repeatedly through 2025-2026",
+        "confirm whether this reflects a final agency decision or remains a briefing-document staff position"
+      ]
+    },
+    {
+      "claimId": "kp10-human-rct-lh-testosterone-stimulation-001",
+      "claimType": "studied-use",
+      "statement": "In a controlled human pharmacodynamic study in healthy men, intravenous kisspeptin-10 produced a rapid, dose-dependent rise in serum LH after bolus dosing (maximal effect at 1 microg/kg), and continuous low-dose infusion (1.5 microg/kg/h) increased LH pulse frequency and raised testosterone from 16.6 +/- 2.4 to 24.0 +/- 2.5 nmol/L; the authors describe this as evidence for its potential as a stimulator of endogenous reproductive hormone secretion, not as a demonstrated treatment for any diagnosed condition.",
+      "context": {
+        "population": "healthy adult male volunteers (small pharmacodynamic study; n=6 for bolus-dose cohort, n=4 for infusion cohort)",
+        "route": "intravenous (bolus and continuous infusion)",
+        "formulation": "kisspeptin-10",
+        "useCase": "investigational stimulation of the hypothalamic-pituitary-gonadal axis",
+        "doseText": "IV bolus 0.01-3.0 microg/kg; continuous infusion 1.5 microg/kg/h (research protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "jayasena-2011-jcem-lh-pulse"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "jayasena-2011-jcem-lh-pulse",
+          "quote": "Intravenous bolus kisspeptin-10 resulted in a rapid and dose-dependent rise in serum LH concentration, with maximal stimulation at 1 microg/kg (4.1 +/- 0.4 to 12.4 +/- 1.7 IU/liter at 30 min, P < 0.001, n = 6).",
+          "pageOrSection": "Abstract/Results"
+        },
+        {
+          "sourceRef": "jayasena-2011-jcem-lh-pulse",
+          "quote": "LH pulse frequency from 0.7 +/- 0.1 to 1.0 +/- 0.2 pulses/h (P = 0.01)",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "jayasena-2011-jcem-lh-pulse",
+          "quote": "continuous infusion increases testosterone, LH pulse frequency, and pulse size",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "small acute-exposure pharmacodynamic study; not designed or powered to establish clinical efficacy for any indication",
+        "IV research-clinic administration is not generalizable to gray-market subcutaneous self-administration"
+      ]
+    },
+    {
+      "claimId": "kp10-evidence-gap-hypogonadism-treatment-001",
+      "claimType": "evidence-gap",
+      "statement": "No FDA-approved kisspeptin-10 product exists, and FDA's own compounding evaluation found insufficient evidence that kisspeptin-10 is effective for treating hypogonadism in men; the acute LH/testosterone-stimulating pharmacodynamic effects shown in short research-clinic infusion studies have not been shown to translate into a validated clinical treatment for hypogonadism, infertility, or libido disorders, and no chronic self-administration safety or efficacy data in gray-market users exist.",
+      "context": {
+        "population": "men considering compounded/gray-market kisspeptin-10 for hypogonadism or low testosterone",
+        "route": "subcutaneous/intramuscular (common gray-market use)",
+        "formulation": "research-grade kisspeptin-10",
+        "useCase": "hypogonadism / low testosterone treatment claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-kisspeptin-182089",
+        "jayasena-2011-jcem-lh-pulse"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-kisspeptin-182089",
+          "quote": "There is insufficient evidence to make a conclusion on the effectiveness of kisspeptin-10 via IM or SC administration for treating hypogonadism in men.",
+          "pageOrSection": "Effectiveness section"
+        }
+      ],
+      "reviewFlags": [
+        "FDA's insufficient-effectiveness finding is specific to IM/SC use for hypogonadism and should not be read as a blanket statement on all kisspeptin research uses"
+      ]
+    },
+    {
+      "claimId": "kp10-misinformation-marketing-benefits-001",
+      "claimType": "misinformation-claim",
+      "statement": "Gray-market vendor pages market kisspeptin-10 with a broad set of consumer benefit claims -- fertility improvement, weight loss/fat metabolism, mood regulation and anxiety reduction, antidepressant-like effects, and cognitive/memory benefits -- that go well beyond anything shown in the small acute human LH-stimulation studies or acknowledged by FDA's compounding review; the same vendor page simultaneously disclaims the product as being for laboratory/research use only and states no claims are made that it can cure, treat, or prevent any condition.",
+      "context": {
+        "population": "consumers of gray-market/research-use-only peptide products",
+        "route": "subcutaneous (vendor-suggested)",
+        "formulation": "research-grade kisspeptin-10, vendor-sold",
+        "useCase": "fertility, weight loss, mood, anxiety, cognition marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "peptides-org-kp10-dosage-page",
+        "fda-pcac-briefing-kisspeptin-182089"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peptides-org-kp10-dosage-page",
+          "quote": "increase testosterone levels in men, in addition to improving fertility",
+          "pageOrSection": "Benefits section"
+        },
+        {
+          "sourceRef": "peptides-org-kp10-dosage-page",
+          "quote": "Positively impact metabolism",
+          "pageOrSection": "Benefits section"
+        },
+        {
+          "sourceRef": "peptides-org-kp10-dosage-page",
+          "quote": "help reduce anxiety",
+          "pageOrSection": "Benefits section"
+        },
+        {
+          "sourceRef": "peptides-org-kp10-dosage-page",
+          "quote": "intended for laboratory and research use only",
+          "pageOrSection": "Disclaimer"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: marketing claims (fertility, weight loss, mood, cognition) are not supported by the available controlled human evidence, which covers only acute LH/testosterone pharmacodynamics",
+        "vendor page is a C-tier marketing source, not independently reviewed evidence; retained only to document the marketing/evidence gap"
+      ]
+    },
+    {
+      "claimId": "kp10-identity-structured-database-001",
+      "claimType": "identity",
+      "statement": "Kisspeptin-10 (human) is registered in PubChem as CID 25240297 with molecular formula C63H83N17O14, corresponding to the C-terminal 10-amino-acid fragment of the KISS1 gene product (metastin/kisspeptin), CAS number 374675-21-5.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "kisspeptin-10 (human)",
+        "useCase": "compound identity",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-25240297"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-25240297",
+          "quote": "Kisspeptin-10 | C63H83N17O14 | CID 25240297",
+          "pageOrSection": "Compound summary header"
+        }
+      ],
+      "reviewFlags": [
+        "PubChem page required JavaScript for full computed-properties rendering; CAS number sourced from a secondary chemical-vendor listing (GlpBio/ChemicalBook) and not directly confirmed on the fetched PubChem page -- verify against a fully-rendered PubChem or authoritative registry source at review time"
+      ]
+    }
+  ],
+  "conflicts": [],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "FDA compounding/PCAC peptide listings have been revised repeatedly through 2025-2026; current status of kisspeptin-10 relative to the 503A Bulks List must be reconfirmed against the live FDA page at review time.",
+      "CAS number (374675-21-5) was sourced from secondary chemical-vendor pages, not directly confirmed on a fully-rendered PubChem/ChEMBL page; UNII, DrugBank, and RxNorm identifiers remain unresolved.",
+      "Human efficacy evidence is limited to small acute pharmacodynamic infusion studies in healthy volunteers; no chronic-use, disease-endpoint, or gray-market self-administration safety/efficacy data were located."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "limited-human-evidence",
+      "regulatory-boundary",
+      "gray-market-marketing-gap-documented"
+    ]
+  }
+}

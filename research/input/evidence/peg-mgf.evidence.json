@@ -1,0 +1,319 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "peg-mgf-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:20:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "PEG-MGF",
+    "aliases": [
+      "Pegylated mechano growth factor",
+      "Mechano growth factor pegylated",
+      "PEGylated MGF",
+      "MGF-Ec (pegylated)"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Pegylated synthetic analog of the mechano growth factor (MGF/IGF-1Ec) C-terminal splice-variant peptide of insulin-like growth factor 1",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": null,
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-peg-mgf-bulk-withdrawn",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (Bulk drug substances nominated but withdrawn: Mechano growth factor pegylated / PEG-MGF)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "hill-2014-ajp-mgf-no-effect",
+      "sourceType": "in-vitro-preclinical-study",
+      "authorityTier": "B2",
+      "title": "Mechano-growth factor peptide, the COOH terminus of unprocessed insulin-like growth factor 1, has no apparent effect on myoblasts or primary muscle stem cells",
+      "publisher": "American Journal of Physiology-Endocrinology and Metabolism, 2014;306(2):E150-6 (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24253050/",
+      "doi": null,
+      "pmid": "24253050",
+      "publishedAt": "2014-01-15T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "mavrommatis-2011-mgf-e-progenitor",
+      "sourceType": "in-vitro-preclinical-study",
+      "authorityTier": "B2",
+      "title": "Mechano Growth Factor E peptide (MGF-E), derived from an isoform of IGF-1, activates human muscle progenitor cells and induces an increase in their fusion potential at different ages",
+      "publisher": "PubMed",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21354439/",
+      "doi": null,
+      "pmid": "21354439",
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "peptiq-peg-mgf-page",
+      "sourceType": "vendor-marketing-page",
+      "authorityTier": "C2",
+      "title": "PEG-MGF (PEGylated Mechano Growth Factor) \u2014 Dosing, Side Effects, FDA Status & Research",
+      "publisher": "PeptIQ",
+      "url": "https://peptiq.io/peptides/peg-mgf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "peg-mgf-regulatory-nominated-withdrawn-001",
+      "claimType": "regulatory",
+      "statement": "PEG-MGF (Mechano growth factor pegylated) was nominated to FDA's list of bulk drug substances that may be used in 503A compounding, but the nomination was subsequently withdrawn; PEG-MGF does not appear on FDA's Category 1 (may be included) or Category 2 (significant safety risk, excluded) lists, has no FDA-approved drug product, and FDA states it lacks human exposure data for the substance.",
+      "context": {
+        "population": "prospective users of compounded or gray-market PEG-MGF products",
+        "route": null,
+        "formulation": "compounded/research-grade PEG-MGF",
+        "useCase": "regulatory status of compounding eligibility",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-peg-mgf-bulk-withdrawn"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-peg-mgf-bulk-withdrawn",
+          "quote": "Mechano growth factor pegylated (PEG-MGF)",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn (table)"
+        },
+        {
+          "sourceRef": "fda-peg-mgf-bulk-withdrawn",
+          "quote": "FDA has not identified any human exposure data on drug products containing PEG-MGF administered via any route of administration.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn (table)"
+        }
+      ],
+      "reviewFlags": [
+        "regulatory-status claim; re-check FDA's live Category 1/2/withdrawn-nomination lists at review time since these are periodically revised",
+        "withdrawn nomination means the safety-risk narrative below was never adjudicated by the PCAC and should not be read as a formal FDA determination"
+      ]
+    },
+    {
+      "claimId": "peg-mgf-warning-immunogenicity-001",
+      "claimType": "warning",
+      "statement": "FDA's compounding-substance profile for PEG-MGF states that compounded drugs containing it may pose significant risk for immunogenicity for certain routes of administration and may have complexities with regard to peptide-related impurities and API characterization, and that FDA lacks important information regarding whether PEG-MGF would cause harm if administered to humans.",
+      "context": {
+        "population": "humans potentially exposed to compounded or self-administered PEG-MGF",
+        "route": "any (route-dependent immunogenicity risk cited)",
+        "formulation": "compounded/research-grade PEG-MGF",
+        "useCase": "compounding safety risk description",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-peg-mgf-bulk-withdrawn"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-peg-mgf-bulk-withdrawn",
+          "quote": "Compounded drugs containing Mechano Growth Factor Pegylated (PEG-MGF) may pose significant risk for immunogenicity for certain routes of administration and may have complexities with regard to peptide-related impurities and API characterization.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn (table)"
+        },
+        {
+          "sourceRef": "fda-peg-mgf-bulk-withdrawn",
+          "quote": "FDA lacks important information regarding any safety issues raised by PEG-MGF, including whether it would cause harm if administered to humans.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn (table)"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim sourced from a withdrawn-nomination entry, not an active Category 2 exclusion; treat as FDA's stated concern, not a finalized safety finding",
+        "no independent adverse-event registry or case-series source located this pass"
+      ]
+    },
+    {
+      "claimId": "peg-mgf-mechanism-igf1-splice-variant-001",
+      "claimType": "mechanism",
+      "statement": "PEG-MGF is a pegylated synthetic analog of the mechano growth factor (MGF/IGF-1Ec) peptide, a splice variant isoform of insulin-like growth factor 1 (IGF-1); published preclinical literature describes native MGF expression as exercise- and age-dependent, distinguishing it from the liver-derived, circulating IGF-1Ea isoform.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "PEG-MGF / MGF peptide",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "mavrommatis-2011-mgf-e-progenitor"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "mavrommatis-2011-mgf-e-progenitor",
+          "quote": "the expression of Mechano Growth Factor (MGF), a member of the IGF-1 (insulin-like Growth Factor 1) super family, has been shown to be both exercise and age dependent.",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "mechanism description is for the parent MGF/MGF-E peptide studied in the literature, not for the pegylated commercial analog itself, which has not been independently characterized in peer-reviewed sources located this pass"
+      ]
+    },
+    {
+      "claimId": "peg-mgf-evidence-gap-invitro-conflict-001",
+      "claimType": "evidence-gap",
+      "statement": "The available human-relevant evidence on the MGF/MGF-E peptide family is limited to conflicting in vitro cell-culture studies, not human clinical trials: one study found MGF-E significantly increased proliferative lifespan and fusion of satellite cells from neonatal/young-adult (but not old-adult) donors, while a separate study found the MGF C-terminal peptide (up to 500 ng/mL) failed to increase proliferation of C2C12 cells or primary human skeletal muscle myoblasts and failed to affect primary muscle stem cells, concluding this calls into question whether MGF has a physiological role at all. No published human clinical trial of PEG-MGF (the pegylated analog actually sold as a research/gray-market product) was located.",
+      "context": {
+        "population": "in vitro human and mouse muscle cell cultures (no human clinical trial data)",
+        "route": "in vitro cell culture (not applicable to a route of administration)",
+        "formulation": "unpegylated MGF/MGF-E research peptide (not the pegylated commercial product)",
+        "useCase": "muscle repair / satellite cell activation research",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "mavrommatis-2011-mgf-e-progenitor",
+        "hill-2014-ajp-mgf-no-effect"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "mavrommatis-2011-mgf-e-progenitor",
+          "quote": "MGF-E peptide significantly increases the proliferative life span and delays senescence of satellite cells isolated from neonatal and young adult but not from old adult muscle",
+          "pageOrSection": "Abstract/Results"
+        },
+        {
+          "sourceRef": "hill-2014-ajp-mgf-no-effect",
+          "quote": "Concentrations of peptide up to 500 ng/ml failed to increase the proliferation of C2C12 cells or primary human skeletal muscle myoblasts.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "hill-2014-ajp-mgf-no-effect",
+          "quote": "These results call in to question whether there is a physiological role for MGF",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "directly conflicting in vitro findings across independent labs; unresolved without a mechanistic reconciliation study",
+        "do not infer human efficacy from either study; both are cell-culture, not human, evidence",
+        "no PEG-MGF-specific (pegylated form) study located; extrapolation from unpegylated MGF/MGF-E peptide is unverified"
+      ]
+    },
+    {
+      "claimId": "peg-mgf-misinformation-marketing-gap-001",
+      "claimType": "misinformation-claim",
+      "statement": "Peptide-vendor and 'research peptide' marketing pages promote PEG-MGF for tissue repair, muscle recovery, hypertrophy, gut health, joint support, and localized muscle repair/hypertrophy/angiogenesis 'without the systemic IGF-1 metabolic effects,' assigning it qualitative effectiveness ratings (e.g., 'Most Effective' for tissue repair); no human clinical outcome study of PEG-MGF supporting any of these claims was located, and the only human-cell data available are the conflicting in vitro results captured above.",
+      "context": {
+        "population": "consumers of gray-market/research-labeled PEG-MGF products",
+        "route": "subcutaneous injection (as marketed)",
+        "formulation": "research-labeled PEG-MGF vials",
+        "useCase": "muscle recovery / hypertrophy / anti-aging / gut and joint health marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "peptiq-peg-mgf-page",
+        "hill-2014-ajp-mgf-no-effect",
+        "mavrommatis-2011-mgf-e-progenitor"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peptiq-peg-mgf-page",
+          "quote": "local muscle repair, hypertrophy, and angiogenesis without the systemic IGF-1 metabolic effects",
+          "pageOrSection": "Overview / mechanism marketing copy"
+        },
+        {
+          "sourceRef": "peptiq-peg-mgf-page",
+          "quote": "Research Only",
+          "pageOrSection": "FDA status disclaimer"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular marketing claims (gut health, joint support, hyperplasia) lack any supporting human outcome evidence located this pass",
+        "vendor page itself discloses 'Not medical advice' and 'Research Only' status, which is consistent with but does not resolve the underlying evidence gap"
+      ]
+    },
+    {
+      "claimId": "peg-mgf-dosecontext-vendor-001",
+      "claimType": "dose-context",
+      "statement": "Peptide-vendor marketing materials describe 'research protocol' PEG-MGF dosing such as 200-400 mcg once or twice weekly, or alternatively 250 mcg once daily; this is vendor-sourced information for an unapproved, non-clinically-validated product and is not derived from any published human trial protocol or product label.",
+      "context": {
+        "population": "not applicable \u2014 no human trial or approved product exists",
+        "route": "subcutaneous (as marketed)",
+        "formulation": "research-labeled PEG-MGF vials",
+        "useCase": "vendor-marketed dosing information only; not a use recommendation",
+        "doseText": "Vendor-stated 'research protocols': 200-400 mcg 1-2x weekly, or 250 mcg once daily (not derived from any clinical trial or approved label; provided as context on how the product is marketed, not as guidance)"
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "low",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "peptiq-peg-mgf-page"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peptiq-peg-mgf-page",
+          "quote": "200\u2013400 mcg 1\u20132\u00d7 weekly (research protocols)",
+          "pageOrSection": "Dosing section"
+        }
+      ],
+      "reviewFlags": [
+        "dosing claim sourced entirely from vendor marketing copy, not a clinical trial or label \u2014 never present as a recommendation",
+        "no clinical pharmacokinetic or dose-finding data exist for PEG-MGF to corroborate or contradict vendor-stated amounts"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "peg-mgf-conflict-invitro-proliferation-001",
+      "claimRefs": [
+        "peg-mgf-mechanism-igf1-splice-variant-001",
+        "peg-mgf-evidence-gap-invitro-conflict-001"
+      ],
+      "severity": "moderate",
+      "summary": "Two independent in vitro studies of the (unpegylated) MGF/MGF-E peptide reach opposite conclusions on human muscle-cell activity: Mavrommatis et al. (2011) report MGF-E significantly increases satellite-cell proliferative lifespan and fusion in younger donors, while Hill et al. (2014, Am J Physiol Endocrinol Metab) report no proliferative or differentiation effect on C2C12 cells or primary human myoblasts at concentrations up to 500 ng/mL and question whether MGF has any physiological role. No study on the pegylated commercial analog (PEG-MGF) was located to help adjudicate.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "No PubChem/DrugBank/ChEMBL/CAS/UNII identifiers could be resolved for PEG-MGF this pass; PubChem's own search UI is JavaScript-rendered and PMC article pages returned reCAPTCHA challenges, blocking structured-database and additional literature fetches.",
+      "Directly conflicting in vitro findings (Mavrommatis 2011 vs. Hill 2014) on the parent MGF/MGF-E peptide remain unresolved and unadjudicated by any systematic review located this pass.",
+      "No PEG-MGF-specific (pegylated form) human or animal study was located; all literature evidence pertains to the unpegylated MGF/MGF-E research peptide, an extrapolation that should be re-examined by a reviewer.",
+      "FDA's PEG-MGF entry sits under a withdrawn nomination, not an active Category 1/2 determination; the compounding-eligibility and safety-risk status should be reconfirmed against FDA's live page at review time."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "no-human-clinical-trial-located",
+      "in-vitro-evidence-only",
+      "conflicting-preclinical-literature",
+      "thin-human-evidence",
+      "unresolved-identifiers",
+      "vendor-marketing-gap-documented"
+    ]
+  }
+}
