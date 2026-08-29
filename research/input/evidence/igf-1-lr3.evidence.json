@@ -126,6 +126,18 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "wada-2026-prohibited-list",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "World Anti-Doping Code International Standard: The 2026 Prohibited List, Section S2.3 (Growth Factors and Growth Factor Modulators)",
+      "publisher": "World Anti-Doping Agency (WADA)",
+      "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-09-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
     }
   ],
   "claims": [
@@ -264,7 +276,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "conlon-1995-guinea-pig"
       ],
@@ -282,7 +294,8 @@
       ],
       "reviewFlags": [
         "animal-model data only; per directive, must not be extrapolated to human efficacy or dosing",
-        "no corresponding human study identified for this endpoint"
+        "no corresponding human study identified for this endpoint",
+        "authority-flag recalibrated 2026-08-29: claimType mechanism is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (Conlon et al. 1995, named study, guinea pig infusion protocol); no regulator document exists for this claim (searched: FDA.gov and general web search for FDA/regulator guidance addressing IGF-1 LR3 preclinical organ-growth pharmacology; results returned only vendor/informational peptide sites, no FDA, EMA, or other regulator document addressing this animal-model endpoint)"
       ]
     },
     {
@@ -380,18 +393,26 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "dopinglinkki"
+        "dopinglinkki",
+        "wada-2026-prohibited-list"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "dopinglinkki",
           "quote": "IGF-1 and LR3IGF-1 are classified as doping substances in the Finnish Criminal Code.",
           "pageOrSection": "Regulatory / legal status"
+        },
+        {
+          "sourceRef": "wada-2026-prohibited-list",
+          "quote": "Insulin-like growth factor 1 (IGF-1, mecasermin) and its analogues",
+          "pageOrSection": "S2.3 Growth Factors and Growth Factor Modulators"
         }
       ],
       "reviewFlags": [
-        "jurisdiction-specific (Finland) claim; verify directly against the WADA Prohibited List (S2 growth factors class) at review",
-        "safety-critical / regulatory claim"
+        "jurisdiction-specific (Finland) claim corroborated by international WADA classification",
+        "safety-critical / regulatory claim",
+        "authority-support verified 2026-08-29: WADA's 2026 Prohibited List (S2.3) lists 'Insulin-like growth factor 1 (IGF-1, mecasermin) and its analogues' as prohibited at all times; IGF-1 LR3 is a named IGF-1 analogue and falls within this class, though the List does not name LR3IGF-1 individually",
+        "authority-source verification 2026-08-29: quote verified verbatim against the official WADA 2026 Prohibited List document (byte content served via mirror cdn.conmebol.com; wada-ama.org blocks automated fetch \u2014 robots). Source URL points to the canonical wada-ama.org document, linked from usada.org's prohibited-list page. Human reviewer should confirm against wada-ama.org directly."
       ]
     }
   ],
@@ -414,14 +435,16 @@
       "CAS number discrepancy (946870-92-4 vendor vs 143045-27-6 FDA UNII) unresolved - needs independent CAS registry verification.",
       "No PubChem CID (only a PubChem SID) resolved for IGF-1 LR3; ChEMBL and DrugBank identifiers were not found this session.",
       "Human evidence for IGF-1 LR3 itself is thin: sources located this session cover identifiers, an unrelated FDA-approved product (Increlex/mecasermin, a chemically distinct molecule), one animal (guinea pig) study, and vendor/anti-doping informational pages - no direct human efficacy or safety study of IGF-1 LR3 was located.",
-      "Finland-specific doping-classification claim needs corroboration directly against the WADA Prohibited List."
+      "Finland-specific doping-classification claim needs corroboration directly against the WADA Prohibited List.",
+      "2026-08-29 authority-support pass: doping-status claim (igf1lr3-regulatory-doping-status-001) corroborated against the WADA 2026 Prohibited List (S2.3) and linked as A1 source; animal-study mechanism claim (igf1lr3-animal-study-organ-growth-001) had fieldAuthorityRequired recalibrated to false (mechanism claimType is outside directive scope; no regulator document exists for this preclinical endpoint)."
     ],
     "qualityFlags": [
       "expansion-input",
       "gray-market-no-approved-product",
       "thin-human-evidence",
       "identifier-conflict-unresolved",
-      "misinformation-gap-documented"
+      "misinformation-gap-documented",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

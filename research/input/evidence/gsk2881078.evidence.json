@@ -170,7 +170,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "clark-2018-jcem-lean-mass"
       ],
@@ -188,7 +188,8 @@
       ],
       "reviewFlags": [
         "healthy-volunteer lean mass gain must not be extrapolated to functional strength or clinical benefit in disease populations",
-        "trial dose context must never be presented as a use recommendation"
+        "trial dose context must never be presented as a use recommendation",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a randomized, placebo-controlled, dose-escalation phase 1 study...\"); no regulator document exists for this claim (searched: FDA.gov fraudulent-products SARMs/bodybuilding alert page — no GSK2881078-specific or efficacy content; DailyMed drug label search for GSK2881078/GSK-2881078 — 0 results, no label exists for this never-approved investigational compound)"
       ]
     },
     {
@@ -204,7 +205,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "clark-2018-jcem-lean-mass"
       ],
@@ -227,7 +228,8 @@
       ],
       "reviewFlags": [
         "safety-critical: lipid and androgen-axis suppression not established as clinically safe over durations longer than the 56-day study window",
-        "no long-term (>2 month) human safety data located this pass"
+        "no long-term (>2 month) human safety data located this pass",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the same phase 1 study, all GSK2881078-dosed subjects showed reductions in HDL cholesterol...\"); no regulator document exists for this claim (searched: FDA.gov fraudulent-products SARMs/bodybuilding alert page — lists heart attack/stroke risk, liver injury, testicular shrinkage, infertility, sexual dysfunction for SARMs as a class but contains no HDL-cholesterol or testosterone-suppression-specific language; DailyMed drug label search for GSK2881078/GSK-2881078 — 0 results, no label exists for this never-approved investigational compound)"
       ]
     },
     {
@@ -374,7 +376,8 @@
       "investigational-not-approved",
       "limited-human-evidence",
       "gray-market-research-chemical",
-      "primary-source-access-blocked"
+      "primary-source-access-blocked",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

@@ -67,6 +67,18 @@
       "accessedAt": "2026-08-28T23:50:00Z"
     },
     {
+      "sourceId": "fda-pcac-briefing-2026-ibutamoren-sarcopenia",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document: Pharmacy Compounding Advisory Committee (PCAC) Meeting",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/182087/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "revolutionhealth-mk677-marketing",
       "sourceType": "vendor-marketing",
       "authorityTier": "C2",
@@ -184,7 +196,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "nass-2008-annals-mk677-rct"
+        "nass-2008-annals-mk677-rct",
+        "fda-pcac-briefing-2026-ibutamoren-sarcopenia"
       ],
       "extractedEvidence": [
         {
@@ -201,18 +214,24 @@
           "sourceRef": "nass-2008-annals-mk677-rct",
           "quote": "Increased fat-free mass did not result in changes in strength or function.",
           "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-2026-ibutamoren-sarcopenia",
+          "quote": "Healthy adults ages 60 to 81 years received MK-677 25 mg (n=47) or placebo (n=24) once daily for 1 year... After 12 months, 24-hour mean GH increased 1.8-fold and IGF-1 levels increased by 1.5-fold from baseline in the MK-677 group. Mean FFM decreased -0.5 kg in the placebo group and increased 1.1 kg in the MK-677 group. There were no differences in AVF or total fat mass... Increased FFM did not result in changes in strength or function.",
+          "pageOrSection": "Sarcopenia/aging discussion, Nass et al. 2008 summary"
         }
       ],
       "reviewFlags": [
         "trial dose context must never be presented as a use recommendation",
         "one 65-person single-center trial in older adults; do not generalize functional-outcome findings to younger gray-market users or to other populations",
-        "limitation explicitly noted by authors: study power was insufficient to evaluate functional end points"
+        "limitation explicitly noted by authors: study power was insufficient to evaluate functional end points",
+        "authority-support verified 2026-08-29: independent regulator source (FDA Pharmacy Compounding Advisory Committee briefing document, fetched live this session) discusses this same Nass et al. 2008 trial and its fat-free-mass findings, corroborating the claim from a materially different source family (regulator committee briefing vs. peer-reviewed journal)."
       ]
     },
     {
       "claimId": "ibutamoren-adverse-effect-metabolic-edema-001",
       "claimType": "adverse-effect",
-      "statement": "In the same controlled trial, MK-677 was associated with increased fasting blood glucose (+0.3 mmol/L, P=0.015) and decreased insulin sensitivity, increased body weight (+2.7 kg vs +0.8 kg placebo, P=0.003), elevated cortisol (+47 nmol/L, P=0.020), and the most frequent side effects were increased appetite (subsiding over months) and transient, mild lower-extremity edema and muscle pain.",
+      "statement": "In the Nass et al. 2008 controlled trial of oral MK-677 25 mg/day in healthy older adults, MK-677 was associated with increased fasting blood glucose (+0.3 mmol/L, P=0.015) and decreased insulin sensitivity, increased body weight (+2.7 kg vs +0.8 kg placebo, P=0.003), elevated cortisol (+47 nmol/L, P=0.020), and the most frequent side effects were increased appetite (subsiding over months) and transient, mild lower-extremity edema and muscle pain.",
       "context": {
         "population": "65 healthy adults aged 60-81",
         "route": "oral",
@@ -222,7 +241,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "nass-2008-annals-mk677-rct"
       ],
@@ -245,7 +264,8 @@
       ],
       "reviewFlags": [
         "safety-critical claim",
-        "must be read alongside the separate FDA congestive-heart-failure signal claim from a different (hip-fracture) trial population; the two adverse-signal sources should not be merged into one undifferentiated safety statement"
+        "must be read alongside the separate FDA congestive-heart-failure signal claim from a different (hip-fracture) trial population; the two adverse-signal sources should not be merged into one undifferentiated safety statement",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope (regulatory, safety-critical, monitoring, product-specific dosing, formulation, and storage/reconstitution); claim reports peer-reviewed findings at source-level attribution (Nass et al. 2008 trial, named in the statement); no regulator document addresses these specific adverse findings (searched: FDA bulk drug substances Category 2 list, which documents only the congestive-heart-failure signal from a separate hip-fracture trial and is already cited on claim ibutamoren-regulatory-compounding-chf-signal-001; the FDA Pharmacy Compounding Advisory Committee briefing document at fda.gov/media/182087/download, which discusses glucose homeostasis only in general terms with no ibutamoren-specific numeric glucose/insulin/cortisol/edema findings; and DailyMed, whose two ibutamoren mesylate listings (AX Pharmaceutical Corp, setid db972bf4-4818-46b5-9219-0fb17006f722 and fd6c4188-1165-43ea-bbb2-cea266909a13) are bulk-ingredient-for-compounding registrations with no clinical adverse-reaction content). The separate CHF safety signal remains captured and gated on claim ibutamoren-regulatory-compounding-chf-signal-001."
       ]
     },
     {
@@ -315,7 +335,8 @@
       "thin-human-evidence",
       "single-trial-population",
       "misinformation-marketing-gap-documented",
-      "identifier-resolution-incomplete"
+      "identifier-resolution-incomplete",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

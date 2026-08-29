@@ -70,7 +70,7 @@
       "sourceId": "peptiq-peg-mgf-page",
       "sourceType": "vendor-marketing-page",
       "authorityTier": "C2",
-      "title": "PEG-MGF (PEGylated Mechano Growth Factor) \u2014 Dosing, Side Effects, FDA Status & Research",
+      "title": "PEG-MGF (PEGylated Mechano Growth Factor) — Dosing, Side Effects, FDA Status & Research",
       "publisher": "PeptIQ",
       "url": "https://peptiq.io/peptides/peg-mgf",
       "doi": null,
@@ -258,7 +258,7 @@
       "claimType": "dose-context",
       "statement": "Peptide-vendor marketing materials describe 'research protocol' PEG-MGF dosing such as 200-400 mcg once or twice weekly, or alternatively 250 mcg once daily; this is vendor-sourced information for an unapproved, non-clinically-validated product and is not derived from any published human trial protocol or product label.",
       "context": {
-        "population": "not applicable \u2014 no human trial or approved product exists",
+        "population": "not applicable — no human trial or approved product exists",
         "route": "subcutaneous (as marketed)",
         "formulation": "research-labeled PEG-MGF vials",
         "useCase": "vendor-marketed dosing information only; not a use recommendation",
@@ -273,13 +273,14 @@
       "extractedEvidence": [
         {
           "sourceRef": "peptiq-peg-mgf-page",
-          "quote": "200\u2013400 mcg 1\u20132\u00d7 weekly (research protocols)",
+          "quote": "200–400 mcg 1–2× weekly (research protocols)",
           "pageOrSection": "Dosing section"
         }
       ],
       "reviewFlags": [
-        "dosing claim sourced entirely from vendor marketing copy, not a clinical trial or label \u2014 never present as a recommendation",
-        "no clinical pharmacokinetic or dose-finding data exist for PEG-MGF to corroborate or contradict vendor-stated amounts"
+        "dosing claim sourced entirely from vendor marketing copy, not a clinical trial or label — never present as a recommendation",
+        "no clinical pharmacokinetic or dose-finding data exist for PEG-MGF to corroborate or contradict vendor-stated amounts",
+        "authority-support search 2026-08-29: dose-context is a safety-critical claimType and cannot be recalibrated off fieldAuthorityRequired; searched FDA's compounding bulk-drug-substances page (fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks) — confirms PEG-MGF's withdrawn-nomination status but contains no dosing/dose-amount/regimen information — and DailyMed (dailymed.nlm.nih.gov, query 'mechano growth factor') — 0 results, no label exists. No A1/A2 source addressing PEG-MGF dosing exists because the compound has no FDA-approved product or human trial. Claim stays review-gated per the three-lane rule (Lane 3); fieldAuthorityRequired left at true."
       ]
     }
   ],
@@ -313,7 +314,8 @@
       "conflicting-preclinical-literature",
       "thin-human-evidence",
       "unresolved-identifiers",
-      "vendor-marketing-gap-documented"
+      "vendor-marketing-gap-documented",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

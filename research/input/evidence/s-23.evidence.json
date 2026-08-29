@@ -111,6 +111,18 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "wada-2026-prohibited-list-official",
+      "sourceType": "anti-doping-regulatory-list",
+      "authorityTier": "A1",
+      "title": "World Anti-Doping Code International Standard \u2014 Prohibited List 2026",
+      "publisher": "World Anti-Doping Agency (WADA)",
+      "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -204,17 +216,25 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "wada-s1-anabolic-agents-list"
+        "wada-s1-anabolic-agents-list",
+        "wada-2026-prohibited-list-official"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "wada-s1-anabolic-agents-list",
           "quote": "Selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]",
           "pageOrSection": "Section S1.2 Other Anabolic Agents"
+        },
+        {
+          "sourceRef": "wada-2026-prohibited-list-official",
+          "quote": "selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]",
+          "pageOrSection": "S1.2 Other Anabolic Agents"
         }
       ],
       "reviewFlags": [
-        "sourced via a secondary aggregator (Drugs.com) summarizing the WADA list rather than the official WADA PDF; confirm against the current-year official WADA Prohibited List at review time"
+        "sourced via a secondary aggregator (Drugs.com) summarizing the WADA list rather than the official WADA PDF; confirm against the current-year official WADA Prohibited List at review time",
+        "authority-support-pass 2026-08-29: verified against the official WADA World Anti-Doping Code International Standard Prohibited List 2026 (effective 1 Jan 2026, publisher World Anti-Doping Agency), which names S-23 under S1.2 Other Anabolic Agents; A1 source added alongside the existing Drugs.com secondary aggregator.",
+        "authority-source verification 2026-08-29: quote verified verbatim against the official WADA 2026 Prohibited List document (byte content served via mirror cdn.conmebol.com; wada-ama.org blocks automated fetch \u2014 robots). Source URL points to the canonical wada-ama.org document, linked from usada.org's prohibited-list page. Human reviewer should confirm against wada-ama.org directly."
       ]
     },
     {
@@ -265,7 +285,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "alhalabi-2025-s23-metabolite-study"
       ],
@@ -283,7 +303,8 @@
       ],
       "reviewFlags": [
         "dose-context claim; doses used are microdosing amounts for analytical/detection purposes only and must never be conflated with, or presented as guidance for, bodybuilding/performance dosing",
-        "this study evaluates pharmacokinetics/detectability, not efficacy or clinical safety, and must not be cited as human safety or efficacy evidence"
+        "this study evaluates pharmacokinetics/detectability, not efficacy or clinical safety, and must not be cited as human safety or efficacy evidence",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (Alhalabi et al. 2025 excretion/metabolite study) at source-level attribution ('a 2025 excretion/detection study...researchers administered...'); no regulator document exists for this claim (searched FDA.gov and DailyMed for S-23 -- not an approved drug, no label or FDA document exists; searched WADA materials -- WADA's list documents prohibited status only, not pharmacokinetic/detection-window data)."
       ]
     },
     {
@@ -398,7 +419,8 @@
       "thin-human-evidence",
       "no-human-efficacy-trial",
       "gray-market-only",
-      "marketing-evidence-gap-documented"
+      "marketing-evidence-gap-documented",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

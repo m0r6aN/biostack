@@ -144,7 +144,7 @@
     {
       "claimId": "kpv-studied-use-animal-colitis-001",
       "claimType": "studied-use",
-      "statement": "In C57BL/6 mouse models of DSS- and TNBS-induced colitis, oral administration of KPV in drinking water reduced colitis incidence and inflammatory markers (including myeloperoxidase activity and pro-inflammatory cytokine expression); this is an animal-model finding, not evidence of efficacy in humans.",
+      "statement": "In the Dalmasso et al. 2008 (Gastroenterology) study, C57BL/6 mouse models of DSS- and TNBS-induced colitis showed that oral administration of KPV in drinking water reduced colitis incidence and inflammatory markers (including myeloperoxidase activity and pro-inflammatory cytokine expression); this is an animal-model finding, not evidence of efficacy in humans.",
       "context": {
         "population": "C57BL/6 mice (DSS and TNBS chemically-induced colitis models)",
         "route": "oral (drinking water)",
@@ -154,7 +154,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "crook-2008-gastro-pept1-kpv"
       ],
@@ -167,7 +167,8 @@
       ],
       "reviewFlags": [
         "animal-only efficacy signal; per directive, must not be inferred as proven human efficacy",
-        "dose context is an animal-study protocol dose and must never be presented as a human use recommendation"
+        "dose context is an animal-study protocol dose and must never be presented as a human use recommendation",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (Dalmasso et al. 2008, Gastroenterology); no regulator document exists for this claim (searched: FDA Pharmacy Compounding Advisory Committee KPV briefing document at fda.gov/media/193346/download, which cites Dalmasso 2008 only for in vitro PepT1 mechanism data and contains no C57BL/6, DSS-induced, or TNBS-induced colitis mouse in vivo efficacy content; DailyMed has no KPV listing, as expected for a non-approved compound)"
       ]
     },
     {
@@ -252,7 +253,8 @@
       "no-human-trial-evidence",
       "animal-in-vitro-only",
       "marketing-evidence-gap",
-      "identifier-needs-confirmation"
+      "identifier-needs-confirmation",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

@@ -101,6 +101,18 @@
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
+      "sourceId": "usada-sarms-prohibited-class",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Selective Androgen Receptor Modulators (SARMs): A Prohibited Class of Anabolic Agents",
+      "publisher": "U.S. Anti-Doping Agency (USADA) — the official national anti-doping organization for the United States, implementing the WADA Code",
+      "url": "https://www.usada.org/spirit-of-sport/education/selective-androgen-receptor-modulators-sarms-prohibited-class-anabolic-agents/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
       "sourceId": "drugs-com-wada-s1",
       "sourceType": "professional-reference",
       "authorityTier": "B1",
@@ -370,10 +382,21 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
+        "usada-sarms-prohibited-class",
         "drugs-com-wada-s1",
         "equine-lgd3303-metabolite-study"
       ],
       "extractedEvidence": [
+        {
+          "sourceRef": "usada-sarms-prohibited-class",
+          "quote": "All SARMs are prohibited at all times (both in and out-of-competition) for all athletes, from those competing at the highest level of sport to those competing at the recreational level.",
+          "pageOrSection": "SARMs prohibited-class overview"
+        },
+        {
+          "sourceRef": "usada-sarms-prohibited-class",
+          "quote": "SARMs are listed in the category of \"Other Anabolic Agents\" under section S1.2 of the WADA Prohibited List.",
+          "pageOrSection": "SARMs prohibited-class overview"
+        },
         {
           "sourceRef": "drugs-com-wada-s1",
           "quote": "Selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]",
@@ -391,7 +414,8 @@
         }
       ],
       "reviewFlags": [
-        "Verify LGD-3303's status against the current official WADA Prohibited List PDF at review time (this session's drugs.com compilation could not be cross-checked against wada-ama.org directly due to a fetch error).",
+        "authority-support-pass 2026-08-29: added USADA (A1, official U.S. national anti-doping regulator) as an independent source confirming SARMs as a class are prohibited under WADA Prohibited List S1.2; verified live this session.",
+        "Verify LGD-3303's status against the current official WADA Prohibited List PDF at review time (this session's drugs.com compilation could not be cross-checked against wada-ama.org directly due to a fetch error; wada-ama.org itself blocked fetch via robots.txt this session).",
         "The metabolite-detection study is an equine (horse) doping-control investigation, not a human study; do not present it as human safety or efficacy data."
       ]
     },
@@ -466,7 +490,8 @@
       "thin-human-evidence",
       "class-level-regulatory-evidence-only",
       "vendor-sourced-pharmacology-needs-primary-verification",
-      "gray-market-only"
+      "gray-market-only",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

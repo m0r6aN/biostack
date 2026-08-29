@@ -243,7 +243,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "basaria-2013-jgerontol-rct"
       ],
@@ -266,7 +266,8 @@
       ],
       "reviewFlags": [
         "single short (21-day) trial in healthy young men; does not establish efficacy for bodybuilding, strength, or long-term use",
-        "trial dose (max 1.0 mg/day) must never be presented as a use recommendation"
+        "trial dose (max 1.0 mg/day) must never be presented as a use recommendation",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed trial findings (Basaria et al. 2013) at source-level attribution ('In a randomized, double-blind, placebo-controlled dose-escalation trial...'); no regulator document exists for this claim (searched: FDA.gov -- LGD-4033/Ligandrol is an unapproved investigational compound with no FDA-reviewed efficacy data, only consumer safety warnings; DailyMed -- 0 results for LGD-4033, no approved label exists)"
       ]
     },
     {
@@ -282,7 +283,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "basaria-2013-jgerontol-rct"
       ],
@@ -300,7 +301,8 @@
       ],
       "reviewFlags": [
         "safety-critical hormonal/lipid signal at doses far below common gray-market use; long-term or higher-dose human safety data are not established",
-        "recovery data are from a single 21-day exposure and may not generalize to weeks-to-months of unsupervised use"
+        "recovery data are from a single 21-day exposure and may not generalize to weeks-to-months of unsupervised use",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed trial findings (Basaria et al. 2013) at source-level attribution ('In the same 21-day healthy-men trial, LGD-4033 caused dose-dependent suppression...'); no regulator document exists for this claim (searched FDA.gov hard per adverse-effect caution: fetched the FDA consumer SARM update and the Prime Sports Nutrition warning letter live -- both list only general class-level adverse events (testicular shrinkage, infertility, liver toxicity, cardiovascular risk) with no testosterone/SHBG/HDL-cholesterol/triglyceride suppression data specific to this finding; also searched DailyMed -- 0 results for LGD-4033, no label exists since it is unapproved)"
       ]
     },
     {
@@ -316,7 +318,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "viking-vk5211-phase2-hipfracture-2018",
         "vikingtherapeutics-pipeline-overview"
@@ -346,7 +348,8 @@
       "reviewFlags": [
         "results reported via company press release, not yet verified against a peer-reviewed full-text publication of this trial",
         "functional-outcome improvements were not statistically powered; do not overstate as proven clinical benefit",
-        "confirm whether this program has advanced to Phase 3 or been discontinued as of review date"
+        "confirm whether this program has advanced to Phase 3 or been discontinued as of review date",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports phase 2 trial findings (Viking Therapeutics VK5211 top-line results) at source-level attribution ('In a randomized, double-blind, placebo-controlled Phase 2 trial in 108 patients...'); no regulator document exists for this claim (searched: FDA.gov -- VK5211/LGD-4033 has no FDA-approved product, and this investigational Phase 2 trial has not undergone FDA review; DailyMed -- 0 results for LGD-4033, no label exists)"
       ]
     },
     {
@@ -433,7 +436,8 @@
       "no-fda-approved-product",
       "thin-human-evidence",
       "press-release-sourced-trial-data",
-      "marketing-dose-mismatch"
+      "marketing-dose-mismatch",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

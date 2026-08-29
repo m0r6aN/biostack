@@ -185,7 +185,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "case-report-jmcr-2023-dili"
+        "case-report-jmcr-2023-dili",
+        "fda-warrior-labz-warning-letter-2023"
       ],
       "extractedEvidence": [
         {
@@ -202,12 +203,18 @@
           "sourceRef": "case-report-jmcr-2023-dili",
           "quote": "He was instructed to stop RAD140, which he reported compliance with, and on 2-month follow-up his liver function panel had normalized without recurrence of any symptoms.",
           "pageOrSection": "Case presentation / Outcome"
+        },
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "Life-threatening reactions, including liver toxicity, have occurred in people taking products containing SARMs.",
+          "pageOrSection": "Warning letter body, safety warning section (letter cites RAD-140/Testolone-labeled products by name)"
         }
       ],
       "reviewFlags": [
         "Single case report - establishes plausibility, not population-level incidence or proven causality.",
         "Safety-critical adverse-effect claim.",
-        "Independent case reports of RAD-140-associated liver injury exist in other journals (e.g., Ochsner Journal, PMC7535764 covering related SARM products); cross-check those at review for a fuller adverse-event picture."
+        "Independent case reports of RAD-140-associated liver injury exist in other journals (e.g., Ochsner Journal, PMC7535764 covering related SARM products); cross-check those at review for a fuller adverse-event picture.",
+        "authority-support: A1 regulator source (FDA warning letter, re-fetched and verified 2026-08-29) added as independent corroboration - it names RAD-140/Testolone products specifically and states liver toxicity has occurred in people taking SARM-containing products, consistent with this case report's finding; it does not itself report this individual patient's lab values, which remain sourced to the case report."
       ]
     },
     {
@@ -344,7 +351,8 @@
       "case-report-level-human-safety-evidence",
       "thin-human-evidence",
       "no-fda-approved-product",
-      "gray-market-marketing-vs-evidence-gap"
+      "gray-market-marketing-vs-evidence-gap",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

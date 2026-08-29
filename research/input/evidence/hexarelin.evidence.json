@@ -114,6 +114,30 @@
       "accessedAt": "2026-08-28T23:50:00Z"
     },
     {
+      "sourceId": "massoud-1996-jcem-cortisol-prolactin-doseresponse",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Hexarelin-induced growth hormone, cortisol, and prolactin release: a dose-response study",
+      "publisher": "The Journal of Clinical Endocrinology & Metabolism (Massoud AF, Hindmarsh PC, Brook CG, 1996)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8954038/",
+      "doi": null,
+      "pmid": "8954038",
+      "publishedAt": "1996-12-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "rahim-1999-clinendo-chronic-hpa-axis",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "The effect of chronic hexarelin administration on the pituitary-adrenal axis and prolactin",
+      "publisher": "Clinical Endocrinology (Oxford) (Rahim A, O'Neill PA, Shalet SM, 1999)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10341859/",
+      "doi": null,
+      "pmid": "10341859",
+      "publishedAt": "1999-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "peptidedeck-hexarelin-vendor-page",
       "sourceType": "vendor-marketing",
       "authorityTier": "D1",
@@ -172,7 +196,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "imbimbo-1994-ejcp-dose-response"
       ],
@@ -190,7 +214,8 @@
       ],
       "reviewFlags": [
         "acute GH pharmacodynamic endpoint only; no downstream clinical outcome (body composition, strength, disease outcome) was measured in this trial",
-        "small single-dose acute study (n=12); not generalizable to chronic subcutaneous self-administration protocols marketed online"
+        "small single-dose acute study (n=12); not generalizable to chronic subcutaneous self-administration protocols marketed online",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a double-blind, placebo-controlled, rising-dose study of 12 healthy adult male volunteers...\"); no regulator document exists for this claim (searched: FDA.gov site search for hexarelin -- no FDA-approved product or PCAC/bulk-substance document addressing this trial; DailyMed site search for hexarelin -- no label results; hexarelin has no FDA-approved drug product)."
       ]
     },
     {
@@ -355,7 +380,7 @@
     {
       "claimId": "hexarelin-safety-hpa-axis-001",
       "claimType": "adverse-effect",
-      "statement": "Beyond growth hormone release, hexarelin has been reported in the endocrinology literature to also stimulate cortisol and prolactin release and to activate the hypothalamo-pituitary-adrenal axis, indicating effects beyond the GH axis alone that carry safety and monitoring relevance for any human use.",
+      "statement": "In a dose-response study of intravenous hexarelin (0-1.0 micrograms/kg) in healthy adult men (Massoud et al. 1996, J Clin Endocrinol Metab), hexarelin produced dose-dependent increases in prolactin (up to 180% above baseline, ED50 0.39 micrograms/kg) and a step increase in cortisol of approximately 40% at doses of 0.5 micrograms/kg and above, in addition to growth hormone release. In a separate 16-week chronic twice-daily subcutaneous dosing study (Rahim et al. 1999, Clinical Endocrinology), the cortisol response to hexarelin decreased over the treatment course and prolactin levels remained stable, with the authors concluding that clinically significant over-stimulation of the pituitary-adrenal axis and prolactin secretion did not occur at the doses used. Taken together, hexarelin has demonstrated measurable acute effects on cortisol and prolactin beyond the GH axis, though the only located chronic-dosing study did not find clinically significant HPA-axis over-stimulation at the studied dose.",
       "context": {
         "population": "human study subjects in endocrine pharmacology research",
         "route": "parenteral (studied routes)",
@@ -365,11 +390,28 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
+        "massoud-1996-jcem-cortisol-prolactin-doseresponse",
+        "rahim-1999-clinendo-chronic-hpa-axis",
         "riteaid-hexarelin-status-safety"
       ],
       "extractedEvidence": [
+        {
+          "sourceRef": "massoud-1996-jcem-cortisol-prolactin-doseresponse",
+          "quote": "The cortisol dose-response curve showed a step increase to approximately 40% at a hexarelin dose of 0.5 microgram/kg.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "massoud-1996-jcem-cortisol-prolactin-doseresponse",
+          "quote": "The PRL dose-response curve reached a plateau of 180% for the maximum percent rise from baseline, corresponding to a hexarelin dose of 1.0 microgram/kg, with an ED50 of 0.39 +/- 0.02 microgram/kg.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "rahim-1999-clinendo-chronic-hpa-axis",
+          "quote": "over-stimulation of the pituitary adrenal axis and prolactin secretion do not occur",
+          "pageOrSection": "Abstract"
+        },
         {
           "sourceRef": "riteaid-hexarelin-status-safety",
           "quote": "Possible concerns include GH-axis side effects, glucose changes, water retention, and pituitary-hormone effects.",
@@ -377,8 +419,8 @@
         }
       ],
       "reviewFlags": [
-        "this safety summary is drawn from a consumer-health secondary source, not a primary trial or label; a primary-literature source for cortisol/prolactin/HPA-axis effects (e.g. a PubMed-indexed human study) should be added on independent review",
-        "safety-critical claim requiring field authority sign-off before publication"
+        "primary-literature sources for cortisol/prolactin/HPA-axis effects (Massoud 1996; Rahim 1999) added on independent review, replacing sole reliance on a consumer-health secondary source",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov site search for hexarelin cortisol/prolactin/HPA-axis -- no results addressing hexarelin, only unrelated NDA/compound matches; DailyMed site search for hexarelin cortisol/prolactin/HPA-axis -- no results, hexarelin has no FDA-approved label; hexarelin is not an FDA-approved drug so no label-based AE documentation exists)."
       ]
     }
   ],
@@ -409,7 +451,8 @@
       "thin-human-evidence",
       "animal-data-marketed-as-human-benefit",
       "regulatory-status-unresolved",
-      "identifier-gaps"
+      "identifier-gaps",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

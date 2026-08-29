@@ -227,7 +227,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pubmed-17609397-ghrp2-adult-ghd"
       ],
@@ -245,7 +245,8 @@
       ],
       "reviewFlags": [
         "diagnostic-test evidence must not be generalized into a therapeutic/performance efficacy claim",
-        "abstract accessed via automated summarization tool (PubMed page blocked by bot check); recommend independent full-text re-verification at review time"
+        "abstract accessed via automated summarization tool (PubMed page blocked by bot check); recommend independent full-text re-verification at review time",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (77 healthy subjects / 58 GHD patients, controlled study) at source-level attribution; no regulator document exists for this claim (searched: FDA.gov bulk-compounding significant-safety-risks page [GHRP-2 entry, no diagnostic-protocol content]; DailyMed search for GHRP-2 [0 results]; web search confirmed the only FDA-approved GH-deficiency diagnostic test is Macrilen/macimorelin, a different compound, not GHRP-2)"
       ]
     },
     {
@@ -261,7 +262,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "hayashi-2008-endocrj-ghrp2-vs-itt"
       ],
@@ -279,13 +280,14 @@
       ],
       "reviewFlags": [
         "exact sample size and dosing details not captured from the accessed excerpt; full text should be pulled for precise n and dose at independent review",
-        "diagnostic-test finding, not a treatment-efficacy finding"
+        "diagnostic-test finding, not a treatment-efficacy finding",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (Hayashi et al. 2008, Endocrine Journal) at source-level attribution; no regulator document exists for this claim (searched: FDA.gov bulk-compounding significant-safety-risks page [GHRP-2 entry, no diagnostic-protocol content]; DailyMed search for GHRP-2 [0 results]; web search confirmed the only FDA-approved GH-deficiency diagnostic test is Macrilen/macimorelin, a different compound, not GHRP-2)"
       ]
     },
     {
       "claimId": "ghrp2-safety-supplement-contamination-001",
       "claimType": "adverse-effect",
-      "statement": "GHRP-2 has been identified by independent analytical testing as an undeclared adulterant in an over-the-counter nutritional supplement product, at approximately 50 micrograms per tablet, indicating GHRP-2 can enter the consumer supply chain undisclosed and without dosing control.",
+      "statement": "In a 2010 Drug Testing and Analysis analytical study (Thomas et al.), GHRP-2 was identified by independent analytical testing as an undeclared adulterant in an over-the-counter nutritional supplement product, at approximately 50 micrograms per tablet, indicating GHRP-2 can enter the consumer supply chain undisclosed and without dosing control.",
       "context": {
         "population": "consumers of an unidentified over-the-counter tablet supplement",
         "route": "oral (as adulterant in supplement)",
@@ -295,21 +297,22 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "thomas-2010-dta-ghrp2-supplement"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "thomas-2010-dta-ghrp2-supplement",
-          "quote": "the content of GHRP-2 was determined with approximately 50 \u00b5g per tablet.",
+          "quote": "the content of GHRP-2 was determined with approximately 50 µg per tablet.",
           "pageOrSection": "Findings (per institutional repository summary of the 2010 Drug Testing and Analysis paper)"
         }
       ],
       "reviewFlags": [
         "safety-critical: undisclosed peptide adulteration in consumer supplements",
         "single product instance reported in 2010; not evidence of current, widespread contamination and should be independently re-verified for currency",
-        "sourced via institutional repository summary rather than the full Wiley article (paywalled/403); recommend pulling primary DOI 10.1002/dta.120 record at review"
+        "sourced via institutional repository summary rather than the full Wiley article (paywalled/403); recommend pulling primary DOI 10.1002/dta.120 record at review",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed analytical-study findings (Thomas et al. 2010, Drug Testing and Analysis) at source-level attribution; no regulator document exists for this claim (searched: fda.gov for GHRP-2 supplement/warning-letter adulteration content [none found addressing this specific incident]; FDA bulk-compounding significant-safety-risks page [covers compounded-drug immunogenicity/adverse events, not supplement contamination]; DailyMed search for GHRP-2 [0 results])"
       ]
     },
     {
@@ -380,7 +383,8 @@
       ],
       "reviewFlags": [
         "trial dose context must never be presented as a use recommendation",
-        "clinically supervised single-dose IV diagnostic use must not be generalized to unsupervised chronic subcutaneous gray-market use"
+        "clinically supervised single-dose IV diagnostic use must not be generalized to unsupervised chronic subcutaneous gray-market use",
+        "authority-support search 2026-08-29: claimType dose-context is in the pipeline's safety-critical set, so fieldAuthorityRequired stays true and this claim is not eligible for recalibration; searched FDA.gov bulk-compounding significant-safety-risks page (GHRP-2 entry addresses immunogenicity/adverse-event risk only, no dosing-protocol content), DailyMed (search for GHRP-2 returns 0 results), and general web search for an FDA/regulator-published GHRP-2 diagnostic dosing protocol; the only FDA-approved GH-deficiency diagnostic-test drug identified is Macrilen (macimorelin), a different compound, not GHRP-2; no A1/A2 source supporting this specific diagnostic dosing claim was found. Claim remains human-review gated pending regulator-grade support."
       ]
     }
   ],
@@ -412,7 +416,8 @@
       "diagnostic-use-only-human-evidence",
       "no-chronic-use-human-trials-found",
       "supplement-adulteration-documented",
-      "marketing-evidence-gap-flagged"
+      "marketing-evidence-gap-flagged",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

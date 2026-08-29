@@ -268,7 +268,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "centerwatch-nct05573126",
         "ellipses-sabcs-2022-vosilasarm"
@@ -291,7 +291,8 @@
         }
       ],
       "reviewFlags": [
-        "trial status (recruiting/active) should be reconfirmed against the live ClinicalTrials.gov record at review time; this session's fetch of clinicaltrials.gov was blocked by robots.txt and a mirror (CenterWatch) was used instead"
+        "trial status (recruiting/active) should be reconfirmed against the live ClinicalTrials.gov record at review time; this session's fetch of clinicaltrials.gov was blocked by robots.txt and a mirror (CenterWatch) was used instead",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed/registry findings at source-level attribution (trial registry record NCT05573126 and Ellipses Pharma trial-design disclosure, named by trial code EP0062); no regulator document exists for this claim (searched: FDA.gov warning-letter and compounding bulk-substances pages, DailyMed drug-label search for RAD-140/vosilasarm, and general web search for an FDA record of the EP0062/vosilasarm trial — none found, as expected for a never-approved investigational compound)"
       ]
     },
     {
@@ -307,7 +308,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "clbc-lorusso-rad140-phase1-2021"
       ],
@@ -325,7 +326,8 @@
       ],
       "reviewFlags": [
         "trial dose context must never be presented as a use recommendation",
-        "efficacy signal is specific to a heavily pretreated oncology population and route/schedule under medical supervision; not applicable to gray-market self-administration"
+        "efficacy signal is specific to a heavily pretreated oncology population and route/schedule under medical supervision; not applicable to gray-market self-administration",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the first-in-human Phase 1 dose-escalation study...\", LoRusso et al., Clinical Breast Cancer 2022); no regulator document exists for this claim (searched: FDA.gov warning-letter and compounding bulk-substances pages, DailyMed drug-label search for RAD-140/vosilasarm, and general web search for an FDA record of the EP0062/vosilasarm phase 1 trial results — none found, as expected for a never-approved investigational compound)"
       ]
     },
     {
@@ -345,7 +347,8 @@
       "sourceRefs": [
         "clbc-lorusso-rad140-phase1-2021",
         "australian-prescriber-rad140-liver-injury",
-        "pmc-rad140-dili-case-report-2023"
+        "pmc-rad140-dili-case-report-2023",
+        "fda-warrior-labz-warning-letter-2023"
       ],
       "extractedEvidence": [
         {
@@ -362,11 +365,17 @@
           "sourceRef": "australian-prescriber-rad140-liver-injury",
           "quote": "Few human studies on hepatic safety of SARMs are available. The mechanism of SARM-associated hepatotoxicity remains elusive.",
           "pageOrSection": "Discussion"
+        },
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "Life-threatening reactions, including liver toxicity, have occurred in people taking products containing SARMs.",
+          "pageOrSection": "Warning letter, safety statement"
         }
       ],
       "reviewFlags": [
         "safety-critical adverse-effect claim requiring monitoring guidance context",
-        "single published case report for the gray-market use setting; incidence in unsupervised use is unknown, not just this one case"
+        "single published case report for the gray-market use setting; incidence in unsupervised use is unknown, not just this one case",
+        "authority-support-pass-2026-08-29: linked A1 regulator source (FDA Warrior Labz warning letter, refetched live this session) explicitly naming liver toxicity among SARM-associated life-threatening reactions, satisfying A1/A2 authority-support requirement for this safety-critical adverse-effect claim"
       ]
     },
     {
@@ -438,7 +447,8 @@
       "gray-market-and-oncology-dual-context",
       "single-case-report-safety-signal",
       "thin-human-evidence",
-      "active-investigational-oncology-program"
+      "active-investigational-oncology-program",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

@@ -196,7 +196,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "munoz-1995-ejendo-oral-shortstature"
       ],
@@ -214,7 +214,8 @@
       ],
       "reviewFlags": [
         "very small sample (n=13), single study, 1995, no approved product resulted; GH-release response only, not a demonstrated growth/height outcome",
-        "must not be generalized to unsupervised gray-market subcutaneous self-administration in adults"
+        "must not be generalized to unsupervised gray-market subcutaneous self-administration in adults",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a small controlled human study...\"); no regulator document exists for this claim (searched: fda.gov site search for GHRP-6 short stature/oral administration, dailymed.nlm.nih.gov for GHRP-6 label entries — no FDA or DailyMed document addresses this 1995 investigational pediatric short-stature study; GHRP-6 has no approved product and the only FDA document found, the Category 2 compounding-risk listing, does not address this efficacy finding)"
       ]
     },
     {
@@ -230,7 +231,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "frontiers-2024-egf-ghrp6-stroke-rct"
       ],
@@ -248,7 +249,8 @@
       ],
       "reviewFlags": [
         "open-label, non-blinded, small n=36 trial; safety/efficacy signal is preliminary and specific to acute ischemic stroke, not generalizable to other uses",
-        "not related to and must not be cited to support bodybuilding/anti-aging/appetite marketing claims"
+        "not related to and must not be cited to support bodybuilding/anti-aging/appetite marketing claims",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a phase I/II open-label randomized controlled trial...\"); no regulator document exists for this claim (searched: fda.gov site search for GHRP-6 stroke/EGF combination trial, dailymed.nlm.nih.gov for GHRP-6 label entries — no FDA or DailyMed document addresses this 2024 investigational acute-ischemic-stroke combination trial; GHRP-6 has no approved product and the only FDA document found, the Category 2 compounding-risk listing, does not address this efficacy finding)"
       ]
     },
     {
@@ -300,7 +302,8 @@
       "thin-human-evidence",
       "no-approved-product",
       "gray-market-marketing-gap",
-      "regulatory-boundary"
+      "regulatory-boundary",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

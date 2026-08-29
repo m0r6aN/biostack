@@ -101,6 +101,18 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "wada-prohibited-list-2026",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "The World Anti-Doping Code International Standard \u2014 Prohibited List 2026 (S1.2 Other Anabolic Agents)",
+      "publisher": "World Anti-Doping Agency (WADA)",
+      "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -237,7 +249,8 @@
         }
       ],
       "reviewFlags": [
-        "sourced from a compliance-advocacy summary rather than a primary clinical trial report or FDA document; independent primary source (e.g. the original GTx Phase I study report) not located and should be sought at review time"
+        "sourced from a compliance-advocacy summary rather than a primary clinical trial report or FDA document; independent primary source (e.g. the original GTx Phase I study report) not located and should be sought at review time",
+        "authority-support-pass 2026-08-29: searched for A1/A2 support for the vision-disturbance claim \u2014 fetched the FDA Titan SARMS warning letter (fda-warning-letter-titan-sarms), which does not mention vision, blurred vision, or ocular effects; DailyMed has no andarine label because no andarine product is FDA-approved; searched Europe PMC and general web/PubMed-adjacent literature for a published andarine phase 1 trial or FDA safety communication documenting vision effects and found none. No A1/A2 source located; fieldAuthorityRequired remains true and this claim stays authority-gated pending a primary clinical source (e.g., an original GTx Phase I study report)."
       ]
     },
     {
@@ -352,17 +365,25 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "bscg-andarine-compliance"
+        "bscg-andarine-compliance",
+        "wada-prohibited-list-2026"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "bscg-andarine-compliance",
           "quote": "Andarine has been listed on the World Anti-Doping Agency (WADA) Prohibited List since 2008 and remains banned in all athletic competition.",
           "pageOrSection": "Regulatory status section"
+        },
+        {
+          "sourceRef": "wada-prohibited-list-2026",
+          "quote": "selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]",
+          "pageOrSection": "S1.2 Other Anabolic Agents (Prohibited List, effective 1 January 2026)"
         }
       ],
       "reviewFlags": [
-        "sourced from a compliance-advocacy secondary summary rather than the primary WADA Prohibited List document; verify directly against the current-year WADA Prohibited List at review time"
+        "sourced from a compliance-advocacy secondary summary rather than the primary WADA Prohibited List document; verify directly against the current-year WADA Prohibited List at review time",
+        "authority-support-pass 2026-08-29: verified directly against the official WADA 2026 Prohibited List (S1.2 Other Anabolic Agents), which names andarine as an example SARM prohibited at all times; A1 regulator source added to sourceRefs.",
+        "authority-source verification 2026-08-29: quote verified verbatim against the official WADA 2026 Prohibited List document (byte content served via mirror cdn.conmebol.com; wada-ama.org blocks automated fetch \u2014 robots). Source URL points to the canonical wada-ama.org document, linked from usada.org's prohibited-list page. Human reviewer should confirm against wada-ama.org directly."
       ]
     }
   ],
@@ -395,7 +416,8 @@
       "no-fda-approved-product",
       "thin-human-evidence",
       "unresolved-clinical-history-conflict",
-      "regulatory-enforcement-documented"
+      "regulatory-enforcement-documented",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

@@ -302,7 +302,8 @@
       ],
       "reviewFlags": [
         "safety-critical: dose figures in this claim are vendor-sourced informal use patterns, not label or trial data, and must never be surfaced as a dosing recommendation",
-        "no peer-reviewed human adverse-event data located this session; escalate to human review for continued literature search"
+        "no peer-reviewed human adverse-event data located this session; escalate to human review for continued literature search",
+        "authority-support search 2026-08-29: searched FDA.gov (site search and consumer-update warning pages) and DailyMed (dailymed.nlm.nih.gov) for SR9009/Stenabolic-specific adverse-event or label data — DailyMed returned zero results (no approved label exists for this never-approved compound) and no FDA page addresses SR9009 by name; the general FDA SARMs consumer warning (teens/young-adults SARMs alert) was reviewed but describes a different chemical class (androgen receptor modulators) and was not linked here because it does not genuinely address this REV-ERB-agonist compound. No A1/A2 source exists for this claim; fieldAuthorityRequired left as true and the claim remains human-review gated pending any future regulator action on SR9009 specifically."
       ]
     }
   ],
@@ -335,7 +336,8 @@
       "no-human-controlled-trials-located",
       "animal-only-efficacy-data",
       "anti-doping-prohibited-substance",
-      "marketing-vs-evidence-gap-flagged"
+      "marketing-vs-evidence-gap-flagged",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }
