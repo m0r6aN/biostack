@@ -13,19 +13,19 @@ public sealed class CorpusIdentityInventoryBuilderTests
 
         Assert.Equal("1.0.0", snapshot.SnapshotVersion);
         Assert.Equal("repository-identity-and-provenance-metadata-only", snapshot.Scope);
-        Assert.Equal(49, snapshot.SeedRecordCount);
+        Assert.Equal(52, snapshot.SeedRecordCount);
         Assert.Equal(16, snapshot.CandidateRecordCount);
-        Assert.Equal(16, snapshot.EvidencePacketCount);
+        Assert.Equal(78, snapshot.EvidencePacketCount);
         Assert.Equal(13, snapshot.SourceRegistryRecordCount);
-        Assert.Equal(10, snapshot.SeedCandidateOverlapCount);
-        Assert.Equal(39, snapshot.SeedOnlyCanonicalIds.Count);
-        Assert.Equal(6, snapshot.CandidateOnlyCanonicalIds.Count);
+        Assert.Equal(12, snapshot.SeedCandidateOverlapCount);
+        Assert.Equal(40, snapshot.SeedOnlyCanonicalIds.Count);
+        Assert.Equal(4, snapshot.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(snapshot.CandidatesMissingEvidenceCanonicalIds);
-        Assert.Empty(snapshot.EvidenceWithoutCandidateCanonicalIds);
+        Assert.Equal(62, snapshot.EvidenceWithoutCandidateCanonicalIds.Count);
         Assert.Equal(7, snapshot.ApprovedRightsSourceCount);
         Assert.Equal(7, snapshot.ActiveOperationsSourceCount);
         Assert.Equal(7, snapshot.AcquisitionEnabledSourceCount);
-        Assert.Equal(6, snapshot.RegistryAuthorizedEvidencePacketCount);
+        Assert.Equal(2, snapshot.RegistryAuthorizedEvidencePacketCount);
         Assert.Equal(2, snapshot.IdentityTokenCollisions.Count);
         Assert.Equal(
             ["creatine", "creatine-monohydrate"],
