@@ -1,0 +1,901 @@
+[
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "afamelanotide-regulatory-approved-indication-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/210797s007lbl.pdf",
+        "independentSourceFamily": "regulator/label (live current FDA label, 2024 revision s007 \u2014 materially different snapshot than the packet's cited 2019 s000 label/DailyMed pull)",
+        "finding": "Confirmed. The live 2024 FDA label (revision s007) still states the identical indication text: 'increase pain free light exposure in adult patients with a history of phototoxic reactions from erythropoietic protoporphyria (EPP)'. drugs.com's independent approval-history summary corroborates the same indication and 2019 approval date. The claim's caveat that it is not approved for tanning/cosmetic use or non-EPP patients is also accurate \u2014 no broader indication has been added. Note: cite/verify against the 2024 s007 label going forward rather than the 2019 s000 PDF, since the label has been revised (dosing/contraindications/warnings sections updated per FDA's own revision history) even though the indication statement itself is unchanged."
+      },
+      {
+        "claimId": "afamelanotide-dosing-administration-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/210797s007lbl.pdf",
+        "independentSourceFamily": "regulator/label (live current FDA label, 2024 revision \u2014 independent of the 2019 label version and DailyMed pull originally cited)",
+        "finding": "Confirmed. The current (2024) label independently corroborates: single 16 mg subcutaneous implant, administered above the anterior supra-iliac crest, every 2 months, storage 2-8C protected from light, healthcare-professional-only administration. Packet correctly frames this as label/protocol text, not a self-administration guide. Note for the record: this is the current label being checked, not merely a re-read of the same 2019 PDF cited in sourceRefs \u2014 the label has been revised since 2019 (per FDA's own revision-history metadata) even though these specific dosing/storage facts are unchanged."
+      },
+      {
+        "claimId": "afamelanotide-mechanism-mc1r-agonist-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/16197727/JSON",
+        "independentSourceFamily": "structured authority database (PubChem pharmacology/mechanism narrative \u2014 distinct from the packet's UNII/GSRS name-lookup source, which only supplied the substance name, not a mechanism description)",
+        "finding": "Confirmed. PubChem independently describes afamelanotide as 'a synthetic, 13-amino acid peptide analogue of the endogenous alpha melanocyte-stimulating hormone (alpha-MSH)' that acts as an MC1R agonist and 'increases the production of eumelanin ... to attenuate UV-induced skin damage.' This matches the claim's mechanism statement. Note the packet's own extractedEvidence quote ('AFAMELANOTIDE') doesn't actually substantiate the mechanism sentence \u2014 it's just the substance name from the UNII record \u2014 so this independent PubChem check is the first real evidentiary support for the MOA statement as written."
+      },
+      {
+        "claimId": "afamelanotide-efficacy-eu-us-rct-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1056/NEJMoa1411481",
+        "independentSourceFamily": "paper-level primary literature aggregator (Semantic Scholar's independent record/abstract of the NEJM paper, materially different retrieval path from the packet's ResearchGate-hosted reproduction)",
+        "finding": "Confirmed. Semantic Scholar's independent abstract record matches the packet's figures exactly: EU n=74 / US n=94, US trial ~69 vs 41 hours pain-free exposure, EU trial 6 vs 0.8 hours, EU phototoxic reactions 77 vs 146 (P=0.04), and a favorable safety profile with no serious adverse events attributed to the drug. This closes the packet's own flagged gap about the ResearchGate-only sourcing (reviewReasons item on PMC/PubMed CAPTCHA walls) \u2014 the numbers hold up against an independent record of the same publication."
+      },
+      {
+        "claimId": "afamelanotide-safety-adverse-events-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/210797s007lbl.pdf",
+        "independentSourceFamily": "regulator/label (live current 2024 FDA label) plus paper-level literature aggregator (Semantic Scholar abstract) \u2014 both independent of the packet's cited 2019 label PDF and ResearchGate reproduction",
+        "finding": "Confirmed. Current FDA label (2024) independently corroborates: serious hypersensitivity reactions including anaphylaxis have been reported postmarketing, implant removal/discontinuation is required if this occurs, and twice-yearly full-body skin exams are required because the drug can darken pre-existing nevi/freckles. Semantic Scholar's independent abstract corroborates the trial-level safety statement (mild AEs, no serious AEs attributed to study drug). Note: this resolves the packet's own reviewReason about re-verifying postmarketing hypersensitivity language against the current label \u2014 it holds, but cite the 2024 s007 label going forward rather than the original 2019 version."
+      },
+      {
+        "claimId": "afamelanotide-controversy-melanotan-conflation-001",
+        "verdict": "unresolved",
+        "independentSourceUrl": "https://www.drugtopics.com/view/fda-issues-warning-letter-melanocorp",
+        "independentSourceFamily": "regulator/enforcement (independent secondary reporting on an FDA warning letter, distinct from the Manookian NOOH already cited)",
+        "finding": "Stays unresolved, and correctly so. Checked an independent FDA enforcement action (the Melanocorp warning letter) specifically for an afamelanotide/Melanotan I-named citation. It names only 'Melanotan II' and does not mention afamelanotide or Melanotan I. I found no FDA warning letter, import alert, or NOOH naming afamelanotide/Melanotan I directly in this search. This matches the packet's own reviewFlag/reviewReason exactly (it already said an afamelanotide/Melanotan-I-specific action was not located and should be searched for at review time) \u2014 per the directive, since no qualifying independent source was found, the claim correctly stays review-gated rather than being re-affirmed. The gap is real and should remain in conflicts/reviewFlags/ops.reviewReasons until a directly-naming source is found or the claim's language is softened to explicitly state that the only located enforcement action names Melanotan II, not afamelanotide/Melanotan I by name (the current statement's phrasing already does this reasonably carefully, but flags this as a genuine open item, not a rubber-stamped one)."
+      },
+      {
+        "claimId": "afamelanotide-evidence-gap-cosmetic-tanning-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.drugtopics.com/view/fda-issues-warning-letter-melanocorp",
+        "independentSourceFamily": "regulator/enforcement + general web search (no systematic review, controlled trial, or authority database was found describing safety/efficacy of afamelanotide/Melanotan I for cosmetic tanning, anti-aging, libido, or general wellness in non-EPP populations)",
+        "finding": "Confirmed. Independent searching turned up only FDA enforcement narratives and commercial/marketing pages (e.g. peptide-vendor sites) discussing off-label tanning use of Melanotan-family peptides \u2014 no controlled human trial or systematic review was found evaluating cosmetic-tanning safety/efficacy of afamelanotide in non-EPP populations. The claim's negative/evidence-gap framing holds and is appropriately conservative; it does not overstate risk or benefit in either direction."
+      }
+    ],
+    "compoundName": "Afamelanotide",
+    "slug": "afamelanotide",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "Claim afamelanotide-controversy-melanotan-conflation-001 is fieldAuthorityRequired and remains unresolved: no independent FDA warning letter, import alert, or enforcement action naming afamelanotide/Melanotan I specifically was located (the only enforcement source found, and the only one cited in the packet, names Melanotan II). Per the review directive this must stay human-review-gated \u2014 do not promote until either (a) a source expansion turns up an afamelanotide/Melanotan-I-specific action, or (b) a human reviewer explicitly signs off on leaving this as a documented evidence gap rather than a resolved claim.",
+      "Packet cites the 2019 original FDA label (210797s000lbl.pdf) as a sourceRef for three fieldAuthorityRequired claims; a live check found the label has since been revised (2024, revision s007) with updates to dosage/administration, contraindications, and warnings sections. The specific facts claimed (indication text, 16 mg/2-month dosing, storage, hypersensitivity/anaphylaxis warning, twice-yearly skin exam) all still hold in the 2024 version, but sourceRefs/citations should be updated to point at the current label revision rather than the superseded 2019 PDF before public promotion, to avoid drift as the label is revised again."
+    ],
+    "notes": [
+      "6 of 7 claims are confirmed or confirmed-with-note via genuinely independent source families (live 2024 FDA label, drugs.com approval history, PubChem mechanism narrative, and a Semantic Scholar independent abstract record of the cited NEJM trial) \u2014 the underlying evidence is solid and the packet's numbers, dosing facts, and safety language all check out.",
+      "No medical-advice language, efficacy inflation, or unsupported use-recommendations were found anywhere in the packet; the authors were consistently careful to label dosing/administration text as 'not a use recommendation,' which is good practice worth preserving in the public-facing version.",
+      "The one open item (claim 006, Melanotan naming/enforcement conflation) is not a fabrication or sourcing failure by the authoring agent \u2014 it is an honest, correctly-flagged evidence gap that independent review could not close this session either. Recommend one more source-expansion pass (e.g. FDA import alert database, warning-letter full-text search, or a search restricted to 'afamelanotide' + 'warning letter') before either resolving or permanently documenting the gap.",
+      "Minor housekeeping, not a blocker: ChEMBL and RxNorm identifiers are still null per ops.reviewReasons; unrelated to claim veracity but worth resolving via a structured-database lookup (e.g. ChEMBL search by UNII/CAS) before final publication."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "bremelanotide-regulatory-approved-indication-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://academic.oup.com/smr/article/14/1/qeaf057/8286982",
+        "independentSourceFamily": "clinical guideline/professional society (ICSM 2024 Sexual Medicine Reviews)",
+        "finding": "Independently confirmed via the ICSM 2024 international consultation guideline (a different family than the packet's DailyMed-only sourcing) and cross-checked against the live FDA Drugs@FDA database (accessdata.fda.gov, NDA 210557), which today still shows VYLEESI as an active approved prescription product with no discontinuation/withdrawal noted. Indication (premenopausal HSDD, autoinjector route) matches the claim exactly."
+      },
+      {
+        "claimId": "bremelanotide-contraindication-cv-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/27977473/",
+        "independentSourceFamily": "controlled human study (ambulatory BP monitoring study, independent of the label)",
+        "finding": "An independent controlled-human study on ambulatory BP monitoring confirms transient, dose-related BP increase (~2.4-3.2 mmHg systolic) and HR decrease (~4.6-4.7 bpm) peaking and resolving within about 15 minutes post-dose; ICSM 2024 guideline independently confirms the drug 'should not be used in people with uncontrolled hypertension.' Matches the claim; no adjustment needed."
+      },
+      {
+        "claimId": "bremelanotide-adverse-effects-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2020/210557s002lbl.pdf",
+        "independentSourceFamily": "regulator/label (live FDA label PDF, independent of the DailyMed page cited) plus NCBI Bookshelf/LiverTox structured database",
+        "finding": "Core percentages (nausea 40%, hyperpigmentation 1%, RECONNECT AE rates) are independently confirmed (LiverTox: nausea 40%, flushing 20%, headache 11%, hyperpigmentation 'uncommon'). However the claim omits a safety-relevant nuance that the packet's own reviewFlag flagged for checking: the live FDA label states resolution of focal hyperpigmentation 'was not confirmed in all patients after discontinuation' and patient labeling states the darkening 'may not go away' -- i.e. it can be irreversible/permanent in some patients. This is a fieldAuthorityRequired safety claim and should be edited to state that hyperpigmentation may be irreversible in some cases, rather than reporting it as a plain incidence figure."
+      },
+      {
+        "claimId": "bremelanotide-mechanism-mc4r-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK573221/",
+        "independentSourceFamily": "structured authority database / clinical reference (NCBI Bookshelf, LiverTox) \u2014 independent of DailyMed and DrugBank",
+        "finding": "Independently confirmed: bremelanotide is a synthetic MSH-alpha analogue engaging melanocortin receptors, primarily MC4R (implicated in sexual desire) and MC1R (implicated in skin pigmentation, explaining the hyperpigmentation adverse effect). This resolves the packet's own reviewFlag about receptor-subtype specificity \u2014 recommend the claim explicitly name MC1R alongside MC4R, since MC1R engagement is the accepted mechanistic explanation for the hyperpigmentation AE documented elsewhere in the packet."
+      },
+      {
+        "claimId": "bremelanotide-efficacy-reconnect-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://www.tandfonline.com/doi/abs/10.1080/00224499.2021.1885601",
+        "independentSourceFamily": "paper-level primary literature / independent reanalysis (Journal of Sex Research, Spielmans 2021) \u2014 independent of the original Kingsberg RCT report and the label",
+        "finding": "The topline p-values and point estimates quoted are numerically confirmed. But an independent peer-reviewed reanalysis of the same RECONNECT trials found: (1) ~73% of protocol-prespecified outcomes were not reported in Kingsberg et al., with post-hoc secondary measures substituted; (2) only ~40.5% of bremelanotide-arm participants elected to continue into open-label extension versus ~69.4% of placebo-arm participants (patients net-preferred placebo, NNH~4); (3) dropout due to adverse events was about 12-fold higher on bremelanotide than placebo. The ICSM 2024 guideline separately notes bremelanotide 'did not affect the number of satisfying sexual events,' a patient-centered secondary measure. As currently worded the claim presents only the favorable co-primary endpoint results without this tolerability/preference context, which risks efficacy inflation beyond what the underlying data support for a fieldAuthorityRequired claim -- recommend adding a sentence on the discordant patient-preference/completion and AE-dropout data alongside the statistically significant co-primary results."
+      },
+      {
+        "claimId": "bremelanotide-evidence-gap-nasal-offlabel-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/15833522/",
+        "independentSourceFamily": "paper-level primary literature (PubMed) \u2014 independent of the vendor page and DailyMed label",
+        "finding": "The reviewFlag states 'no controlled human trial for intranasal PT-141 was located' and the claim implies the intranasal route is wholly untested in humans. This is inaccurate: legitimate published controlled human trials of intranasal PT-141/bremelanotide do exist from the original (pre-Vyleesi) Palatin development program, e.g. Diamond et al., double-blind placebo-controlled dose/pharmacodynamic studies of intranasal PT-141 in men (including with sildenafil co-administration, PMID 15833522), and an early intranasal trial in women with arousal disorder (Safarinejad 2008) that was later formally RETRACTED (PMID 18179455) \u2014 itself worth noting as a specific misinformation-relevant caveat. The historical intranasal route was in fact where the drug's transient BP/HR signal was first characterized, which is part of why development shifted to the SC route used in Vyleesi. Recommend revising the claim to state that intranasal PT-141 was studied in early-phase trials (primarily in men, one relevant women's trial subsequently retracted) but that current unregulated compounded vendor products are unapproved, untested at their marketed concentrations, and not supported by the RECONNECT (SC) evidence -- rather than asserting no human data exists for the route at all."
+      },
+      {
+        "claimId": "bremelanotide-identity-external-ids-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://precision.fda.gov/uniisearch/srs/unii/6Y24O4F92S",
+        "independentSourceFamily": "structured authority database (FDA Global Substance Registration System / GSRS) \u2014 independent of PubChem and DrugBank",
+        "finding": "CAS 189691-06-3 and molecular formula C50H68N14O10 are independently confirmed on the FDA's own substance registry (GSRS), resolving the packet's reviewFlag that CAS was only supplier-sourced. This also resolves the still-open UNII gap: UNII = 6Y24O4F92S. Recommend the packet add this UNII value (currently null) and cite the GSRS/precision.fda.gov record as direct confirmation of the CAS number instead of leaving it flagged as supplier-only."
+      }
+    ],
+    "promotionBlockers": [
+      "Efficacy claim (bremelanotide-efficacy-reconnect-001, fieldAuthorityRequired) needs revision to add the independently-documented patient-preference/completion and AE-dropout context (Spielmans 2021 reanalysis) so it does not read as efficacy inflation.",
+      "Adverse-effects claim (bremelanotide-adverse-effects-001, fieldAuthorityRequired) needs revision to state that focal hyperpigmentation can be irreversible in some patients, per the live FDA label language.",
+      "Evidence-gap/nasal claim needs correction: independent primary literature shows controlled human trials of intranasal PT-141 do exist (contra the current reviewFlag/statement implying none were found); this is not fieldAuthorityRequired but is flagged in the packet's own reviewReasons as needing a recheck, and the recheck surfaced a factual correction, not a confirmation.",
+      "Identity claim's UNII gap can now be closed (6Y24O4F92S, FDA GSRS) rather than left null/unresolved."
+    ],
+    "notes": [
+      "Regulatory/CV-safety claims (the two fieldAuthorityRequired claims most safety-critical) are both confirmed by genuinely independent source families (professional-society guideline, independent controlled BP study, live FDA database) and need no changes.",
+      "No systematic fabrication found; sourcing is generally sound. Issues found are omissions/incompleteness (missing irreversibility nuance, missing tolerability context, an inaccurate absence-of-evidence claim) rather than fabricated or contradicted facts.",
+      "Per the Independent review rule, this review reports 'needs-adjustment' rather than silently resolving reviewFlags by re-reading the original sources \u2014 each adjustment above is backed by a materially different source family than the claim's own sourceRefs.",
+      "No claim in this packet was left fully 'unresolved' -- independent sources were found for every reviewFlag raised, though not all confirmed the original wording."
+    ],
+    "recommendation": "request-changes",
+    "slug": "bremelanotide",
+    "compoundName": "Bremelanotide"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "elamipretide-regulatory-approved-indication-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.fda.gov/news-events/press-announcements/fda-grants-accelerated-approval-first-treatment-barth-syndrome",
+        "independentSourceFamily": "regulator (live FDA.gov press announcement + live Drugs@FDA process-overview page, distinct documents from the cited DailyMed label and approval-package PDF)",
+        "finding": "Live-checked today: FDA.gov press announcement and the current Drugs@FDA process overview for NDA 215244 both confirm the indication (Barth syndrome, >=30kg, muscle strength), approval date 9/19/2025, and status still 'Approved' with no subsequent supplements/withdrawal as of today. Statement holds exactly."
+      },
+      {
+        "claimId": "elamipretide-regulatory-accelerated-approval-basis-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://trial.medpath.com/clinical-trial/042f461b40a6a62d/nct07531251-elamipretide-barth-syndrome-clinical-trial",
+        "independentSourceFamily": "structured authority database (ClinicalTrials.gov registry record for the actual confirmatory trial, NCT07531251)",
+        "finding": "Accelerated-approval basis and postmarketing requirement text confirmed verbatim against the FDA approval letter (found live: Study Initiation target 03/2026, Full Enrollment 03/2028, Final Report 03/2030 \u2014 matches the packet exactly). Independently, the registered confirmatory trial (NCT07531251, phase 3b/4 RDBPC, ages 5-55, 72 weeks) shows an actual start date of 2026-07-02 \u2014 about 4 months after the FDA's 03/2026 initiation target. The packet accurately states the FDA-mandated schedule but does not note this real-world slippage; add a monitoring note that the confirmatory trial's actual start lagged the required initiation date."
+      },
+      {
+        "claimId": "elamipretide-mechanism-mitochondria-targeted-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.mdpi.com/1422-0067/26/3/944",
+        "independentSourceFamily": "paper-level primary/review literature (peer-reviewed pharmacology review, distinct from the cited PubChem structured-database entry)",
+        "finding": "Independent peer-reviewed review confirms elamipretide is a synthetic aromatic-cationic tetrapeptide (D-Arg-Dmt-Lys-Phe-NH2) that targets the inner mitochondrial membrane and selectively binds cardiolipin \u2014 supports the mechanism statement. However this independent source does not restate the molecular formula (C32H49N9O5), which remains sourced only to PubChem; recommend a second independent check of the formula (e.g., DrugBank/ChemSpider) before treating that detail as fully cross-verified."
+      },
+      {
+        "claimId": "elamipretide-dosing-context-forzinity-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9438322/",
+        "independentSourceFamily": "controlled human study / paper-level primary literature (PMC full text of a TAZPOWER-program Barth syndrome trial, distinct from the cited DailyMed label)",
+        "finding": "Core dose (40 mg subcutaneous once daily) independently confirmed via a PMC-hosted controlled trial publication describing 'single daily subcutaneous doses of 40 mg elamipretide' in Barth syndrome patients. The renal-impairment dose reduction (20 mg, eGFR<30), injection-site rotation instructions, and storage/discard specifics (2-8C, discard after 8 days) were not found in this independent source and remain sourced solely to the DailyMed label \u2014 plausible/standard label content but not independently cross-verified this pass; record as a remaining gap for those sub-details specifically."
+      },
+      {
+        "claimId": "elamipretide-safety-adverse-effects-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.clinician.com/articles/elamipretide-injection-forzinity",
+        "independentSourceFamily": "clinical reference/professional summary (distinct from the cited DailyMed label)",
+        "finding": "Independent clinical reference confirms injection site reactions (erythema, induration, pruritus, pain) as most common ADRs, a hypersensitivity/serious-allergic-reaction risk, and the benzyl-alcohol-based neonatal contraindication \u2014 all match the packet statement. The specific eosinophilia detail (resolving in 6-12 months) was NOT mentioned in this independent source and was not corroborated by any other independent family checked this pass; it remains supported only by the original DailyMed label. Recommend a targeted follow-up (e.g., the FDA risk-review PDF content re-derived from a non-label source, or the TAZPOWER long-term safety paper's AE tables) specifically for the eosinophilia claim before it is treated as fully cross-verified."
+      },
+      {
+        "claimId": "elamipretide-human-rct-negative-pmm-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://digitalcommons.library.tmc.edu/cgi/viewcontent.cgi?article=3201&context=uthmed_docs",
+        "independentSourceFamily": "paper-level primary literature (full-text mirror of the peer-reviewed Neurology publication, distinct from the cited NeurologyLive news summary and ClinicalTrials.gov record)",
+        "finding": "Independently verified via a full-text mirror of the primary Neurology publication (and corroborated by a second independent medical-news source): MMPOWER-3 did not meet its co-primary endpoints (6MWT difference -3.2m, p=0.69; PMMSA fatigue score difference -0.07, p=0.37), was reported well-tolerated with mostly mild-to-moderate AEs (98.2% vs 76.1% any-AE, only 4.6% serious AEs, no deaths), and phase 2 (MMPOWER-2) had shown patient-reported-outcome improvement without benefit on 6MWT. This resolves the packet's own reviewFlag calling for primary-source re-verification \u2014 that gap can now be closed."
+      },
+      {
+        "claimId": "elamipretide-misinformation-gap-ss31-longevity-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/news-events/press-announcements/fda-grants-accelerated-approval-first-treatment-barth-syndrome",
+        "independentSourceFamily": "regulator (live FDA page, confirming the sole approved indication excludes any general-wellness/anti-aging/performance use)",
+        "finding": "Independently reconfirmed that the only FDA-recognized indication for elamipretide/FORZINITY is Barth syndrome muscle strength, with no approved general-wellness, anti-aging, or athletic-performance indication \u2014 supporting the packet's characterization of gray-market SS-31 marketing claims as unsupported. The statement is appropriately hedged (notes the vendor's own investigational-product disclaimer) and does not overstate; no additional vendor-page cross-check was performed this pass beyond the one cited, but the core evidence-gap framing is sound given the negative/absent human efficacy data confirmed above."
+      }
+    ],
+    "promotionBlockers": [
+      "Packet's own ops.needsReview=true / completeness='partial' flag stands until a human reviewer signs off \u2014 independent verification in this pass does not itself clear that human-review gate.",
+      "External identifiers (CAS, UNII, ChEMBL, DrugBank, DOI, PMID) are still unresolved in the compound record; DOI 10.1212/WNL.0000000000207402 for the MMPOWER-3 Neurology paper was identified this pass and should be added.",
+      "Eosinophilia detail in the adverse-effects claim remains sourced only to the DailyMed label; no independent family confirmed or contradicted it this pass \u2014 leave that sub-detail review-gated.",
+      "Renal-impairment dose reduction and storage/discard specifics in the dosing claim remain sourced only to the DailyMed label; not independently cross-verified this pass.",
+      "Confirmatory-trial actual start date (NCT07531251, 2026-07-02) lags the FDA's mandated 03/2026 initiation target by about 4 months; packet does not currently note this slippage and should be updated to track it going forward."
+    ],
+    "notes": [
+      "All five fieldAuthorityRequired claims (approved indication, accelerated-approval basis, dosing, adverse effects, MMPOWER-3 negative RCT) were independently corroborated by at least one materially different source family and none required adjustment; the MMPOWER-3 negative-RCT reviewFlag calling for primary-source re-verification can now be closed based on the full-text Neurology mirror found this pass.",
+      "No instance of medical advice, use recommendation, or efficacy inflation beyond quoted evidence was found in the packet's statements; the misinformation-claim entry is appropriately hedged and does not blend the Barth-syndrome approval, the PMM efficacy failure, or gray-market marketing into a single 'proven effective' narrative.",
+      "Live regulatory check performed today (2026-08-29) against FDA.gov and Drugs@FDA confirms the Barth syndrome approval and label are current with no changes, supplements, or withdrawal since the 2025-09-19 approval."
+    ],
+    "recommendation": "approve-claims",
+    "slug": "elamipretide",
+    "compoundName": "Elamipretide"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "emideltide-mechanism-delta-eeg-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://en.wikipedia.org/wiki/Delta-sleep-inducing_peptide",
+        "independentSourceFamily": "tertiary/secondary literature synthesis (paper-level primary lit route blocked by PubMed CAPTCHA; Wikipedia used as accessible proxy summarizing the primary DSIP literature, e.g. gene/receptor never identified, conflicting human EEG data)",
+        "finding": "Independent source corroborates that DSIP's mechanism is unconfirmed/theorized rather than established: no gene, precursor, or receptor has been identified, and 'studies show conflicting evidence as to its involvement in sleep patterns' in humans (the delta-EEG effect is best documented in rabbit ICV studies, not confirmed human pharmacology). This matches the packet's own hedged framing ('theorized,' 'proposed action,' 'not from confirmed modern pharmacology'). Note for the record: attempts to reach a genuine systematic-review family source (Kovalzon 2006, PubMed) were blocked by CAPTCHA/JS walls, so this confirmation rests on a weaker independent proxy rather than the ideal review-literature family."
+      },
+      {
+        "claimId": "emideltide-regulatory-not-characterized-503a-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://www.thefdalawblog.com/2026/07/the-peptide-l-wave-rolls-on-pcac-adds-two-more-bulk-drug-substances-for-the-503a-list/",
+        "independentSourceFamily": "independent regulatory/legal-industry reporting on the PCAC proceeding (distinct from the FDA briefing document and FDA calendar page already cited)",
+        "finding": "The claim was written pre-meeting-outcome and its own reviewFlags say the vote must be checked at review time; today (2026-08-29) is past the July 23-24, 2026 meeting. I checked the LIVE FDA advisory-committee page as instructed: it still shows only pre-meeting briefing materials with no outcome posted. Independent industry/legal reporting (FDA Law Blog and several peptide-industry sites, cross-consistent with each other) states the PCAC vote on emideltide FAILED, 6 in favor to 7 against with 1 abstention, so DSIP was NOT recommended for the 503A Bulks List, while 6 other peptides were. This is directionally consistent with the packet's pre-meeting framing ('evaluation criteria weigh against') but the packet should be updated to state the actual outcome (rejected by committee vote) rather than leaving it as an open pre-meeting position, since that information is now available. Because FDA's own site has not yet posted an official outcome document, flag that the vote count is corroborated only by secondary/industry reporting, not yet by a primary FDA record \u2014 keep a residual review-gate on that narrow point until FDA posts an official summary."
+      },
+      {
+        "claimId": "emideltide-warning-immunogenicity-characterization-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.sciencedirect.com/science/article/pii/S1359644623002301",
+        "independentSourceFamily": "paper-level primary/review literature (peptide immunogenicity risk assessment, independent of the FDA briefing document, which is the claim's sole cited source)",
+        "finding": "Independent peer-reviewed literature (and separate FDA peptide-impurity guidance documents found in the same search) confirms the general scientific principle underlying this claim: peptide aggregation and impurities are a recognized, well-established driver of immunogenicity risk in injectable peptide products. This supports the plausibility/soundness of FDA's stated concern. However, the DSIP-specific characterization data (missing impurity/aggregate/endotoxin testing, inconsistent nomenclature) is FDA's own product-specific assessment and was not independently replicated by any outside source I could find \u2014 appropriately, this remains an FDA-sourced, product-quality-dependent finding as the packet's reviewFlags already note."
+      },
+      {
+        "claimId": "emideltide-efficacy-insomnia-inconclusive-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://en.wikipedia.org/wiki/Delta-sleep-inducing_peptide",
+        "independentSourceFamily": "secondary literature synthesis distinct from the FDA briefing and the Schneider 1992 controlled-human-study already cited",
+        "finding": "Independent sources corroborate that human insomnia evidence for DSIP is old, small, and conflicting: no modern RCT is identifiable, and secondary summaries describe 'conflicting evidence' on sleep effects. Additionally, re-checking the FDA briefing itself (not independent, but worth flagging) shows it discusses a second historical study (Bes et al. 1992) that found NO significant difference vs. placebo on objective/subjective sleep measures \u2014 a further, more negative data point than the Schneider-Helmert results quoted in the packet, reinforcing rather than contradicting the packet's 'inconclusive, at best preliminary' characterization. No adjustment needed to the statement itself, but reviewers may wish to add the Bes et al. contrast for completeness."
+      },
+      {
+        "claimId": "emideltide-evidence-gap-narcolepsy-opioid-withdrawal-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://en.wikipedia.org/wiki/Delta-sleep-inducing_peptide",
+        "independentSourceFamily": "secondary literature synthesis + independent PCAC vote reporting, both distinct from the FDA briefing (the claim's sole source)",
+        "finding": "Independent sources corroborate that narcolepsy and opioid-withdrawal evidence for DSIP is thin: secondary summaries cite only isolated small studies with percentage-improvement claims but no rigorous trial design, and independent reporting on the PCAC vote explicitly cites 'the sole supporting study is over 30 years old' and weak preclinical/clinical evidence as a stated reason for the committee's rejection vote. This independently corroborates the packet's 'insufficient to establish efficacy' framing."
+      },
+      {
+        "claimId": "emideltide-evidence-gap-online-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://riteaid.com/peptides/dsip",
+        "independentSourceFamily": "independent commercial/vendor marketing sources (distinct family from the FDA briefing and the PubMed open-trial already cited)",
+        "finding": "A direct web search independently turned up numerous current commercial pages (Rite Aid, Innerbody, BioLongevity Labs, PeptideInsight, TheBH, Newtropin, Restorative Compounding, PeptideDossier, etc.) marketing DSIP/emideltide for sleep and other uses in 2026, confirming the claim's assertion of active online/gray-market promotion. Several of these pages frame benefits more confidently than the underlying evidence supports (e.g., presenting the n=7 uncontrolled 1984 open trial or anecdotal improvement percentages as if establishing efficacy), which corroborates the packet's own 'misinformation-adjacent' flag and does not require a statement change, though it reinforces that this evidence-gap/misinformation flag is warranted and should stay active."
+      }
+    ],
+    "compoundName": "Emideltide",
+    "slug": "emideltide",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "The regulatory claim (emideltide-regulatory-not-characterized-503a-001, fieldAuthorityRequired=true) is stale: it stops at the pre-meeting 'evaluation criteria weigh against' framing even though the July 23-24, 2026 PCAC meeting has since concluded. Independent industry/legal reporting indicates the committee voted 6-for/7-against/1-abstain, rejecting emideltide for the 503A Bulks List \u2014 the packet must be updated to state this outcome (with appropriate sourcing) rather than leaving the vote as an open question, per the packet's own reviewFlags and the directive's live-FDA-page-check requirement.",
+      "FDA's own advisory-committee page has not yet posted an official outcome document for the July 2026 PCAC meeting, so the vote-count detail above is corroborated only by secondary/industry reporting, not yet a primary FDA record; this should stay flagged for confirmation once FDA posts an official summary or updates the 503A list.",
+      "CAS/UNII/DrugBank/ChEMBL identifiers remain unresolved (ops.reviewReasons already flags this); not independently resolved during this review either \u2014 PubChem's structured page requires JS and could not be fully parsed for pharmacology/safety fields."
+    ],
+    "notes": [
+      "All fieldAuthorityRequired claims except the regulatory-outcome claim are confirmed or confirmed-with-note: immunogenicity/characterization warning and the insomnia efficacy claim both hold up under independent-family checks.",
+      "No medical-advice or efficacy-inflation language was found in the packet itself; dosing context is explicitly labeled 'trial protocol; not a use recommendation,' consistent with the directive's prohibition on writing medical advice.",
+      "Independent verification of the mechanism and efficacy claims relied on a Wikipedia synthesis as a proxy after PubMed/Europe PMC full-text fetches were blocked by CAPTCHA/anti-bot walls; a future review pass should retry paper-level primary literature (e.g. Kovalzon 2006 Journal of Neurochemistry review) via a different access route to fully satisfy the 'systematic review' family for the mechanism claim.",
+      "The packet's own handling of the marketing/misinformation angle (evidence-gap-online-marketing-001) is well-calibrated and was independently corroborated by current vendor/marketing pages found via direct search."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "gonadorelin-identity-mechanism-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.rxlist.com/factrel-drug.htm",
+        "independentSourceFamily": "regulator/label (US FDA-derived human Factrel labeling, reproduced by RxList)",
+        "finding": "Independent regulator-derived source (RxList, reproducing the historical FDA human Factrel labeling) confirms gonadorelin is synthetic GnRH/LHRH acting on the anterior pituitary to stimulate LH/FSH release, matching the claim. Both original sourceRefs (Mayo/Micromedex, PubChem) are non-regulator; this closes the gap with a regulator-family label source."
+      },
+      {
+        "claimId": "gonadorelin-regulatory-veterinary-approval-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=GONADORELIN",
+        "independentSourceFamily": "regulator/label (live DailyMed search, today 2026-08-29) + RxList reproduction of historical human FDA label",
+        "finding": "Live DailyMed search today (2026-08-29) confirms exactly five gonadorelin products are listed and ALL FIVE are animal drugs (CYSTORELIN/Boehringer, FACTREL/Zoetis, FERTAGYL/Merck, GONABREED/Parnell, OVACYST/Bimeda) \u2014 no human product is currently listed, matching the claim. Independent note: RxList's Factrel page confirms a human gonadorelin diagnostic product was previously FDA-approved but is now explicitly discontinued (\"generic versions may be available\" language is legacy boilerplate, not evidence of an active listing) \u2014 this resolves the packet's open reviewFlag/ops.reviewReason about current US human marketing-authorization status: there is no active US human gonadorelin product, consistent with DailyMed. The claim statement itself is accurate and should be treated as resolved rather than left open; ops.reviewReasons item 2 can be closed."
+      },
+      {
+        "claimId": "gonadorelin-approved-indication-human-historical-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.rxlist.com/factrel-drug.htm",
+        "independentSourceFamily": "regulator/label (historical US FDA human Factrel label) + structured discussion of discontinuation",
+        "finding": "Independent source confirms gonadorelin/Factrel did hold FDA approval for human diagnostic pituitary-function testing (consistent with 'used diagnostically' half of the claim) but that product is now discontinued in the US, and no independent source was found confirming an active US human ovulation-induction indication \u2014 the Canadian LUTREPULSE monograph remains the only source for that specific indication, so the ovulation-induction portion of the claim is only cross-source-supported (Mayo Clinic corroborates the description of the use, not the current regulatory status). Recommend the claim explicitly state that this indication is Canada-only / historical-US and not currently active in the US, since as worded a casual reader could infer broader current availability."
+      },
+      {
+        "claimId": "gonadorelin-warning-tumor-vision-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.rxlist.com/factrel-drug.htm; https://www.drugs.com/cons/gonadorelin.html",
+        "independentSourceFamily": "regulator/label (RxList reproduction of US FDA human Factrel label) and independent clinical-reference (Drugs.com)",
+        "finding": "RxList's reproduction of the FDA-derived human label independently confirms the pituitary adenoma/sudden-blindness warning verbatim ('report of pituitary apoplexy and sudden blindness following gonadotropin-releasing hormone administration to a patient with a gonadotropin-secreting adenoma'), and Drugs.com independently confirms both the hormone-dependent-tumor-worsening warning and multiple-pregnancy timing-of-intercourse guidance. This closes the gap noted in the claim's reviewFlags (previously sourced only from a Canadian monograph + Mayo/Micromedex) with a US regulator-label-family source."
+      },
+      {
+        "claimId": "gonadorelin-studied-use-chh-spermatogenesis-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12336735/ (Jiang et al., Translational Andrology and Urology, retrospective study)",
+        "independentSourceFamily": "paper-level primary literature (independent PMC-hosted study, different authors/cohort than the cited Zhang 2019 article)",
+        "finding": "An independent, separate primary study (Jiang et al., retrospective CHH cohort) corroborates the general direction of the claim: pulsatile GnRH pump therapy induced spermatogenesis faster (mean 6.48 months, 'significantly shorter than the 9-18 months reported in hCG studies') and at a comparable-or-better success rate (79.4%, described as 'slightly better' than 75.8%/76.9% hCG rates) versus gonadotropin/hCG therapy. This is not a replication of the exact Zhang 2019 numbers (6 vs 14 months, 90% vs 83.3%) but independently supports the same qualitative finding (pulsatile GnRH pump = faster spermatogenesis onset than cyclical gonadotropin, with similar overall success), satisfying the packet's own recommended action to verify against additional primary literature beyond the SAGE summary. Packet should cite this confirmatory independent study rather than leaving the item flagged as unverified due to reCAPTCHA-blocked PMC access."
+      },
+      {
+        "claimId": "gonadorelin-evidence-gap-trt-adjunct-marketing-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.fertstert.org/article/S0015-0282(10)01624-9/fulltext",
+        "independentSourceFamily": "paper-level primary literature / controlled human study (Fertility and Sterility)",
+        "finding": "Independent search for controlled trials of gonadorelin specifically (not hCG) for testicular-size/fertility preservation during TRT returned no such trial; the one relevant controlled-human-study result found (Fertility and Sterility, low-dose hCG preserving fertility during TRT) is about hCG, not gonadorelin, reinforcing that the evidence base for this specific gonadorelin-TRT-adjunct use remains absent. This independently confirms the packet's evidence-gap characterization is accurate and not merely a re-read of the original vendor page."
+      },
+      {
+        "claimId": "gonadorelin-identity-external-ids-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.chemicalbook.com/ChemicalProductProperty_EN_CB2706342.htm; https://www.alfa-chemistry.com/cas_33515-09-2.htm",
+        "independentSourceFamily": "structured chemical database (independent supplier/chemical registries, distinct from PubChem)",
+        "finding": "Independent chemical databases (ChemicalBook, Alfa Chemistry, TargetMol) confirm CAS 33515-09-2 corresponds to gonadorelin free base (matching PubChem CID 638793), and independently corroborate that the acetate salt carries a distinct CAS number (one source lists 34973-08-5 for 'Gonadorelin Acetate'), consistent with the claim's assertion of distinct identifiers for base vs. salt forms. DrugBank's entry (DB00644) exists and lists distinct salt pages (acetate, diacetate tetrahydrate, hydrochloride) confirming the general structure of the claim, though the DrugBank page's specific CAS/formula values were paywalled and not independently readable this session \u2014 DrugBank/ChEMBL numeric cross-reference remains only partially confirmed; recommend keeping 'DrugBank/ChEMBL not independently confirmed from native database' as a residual, narrower gap rather than fully closing ops.reviewReasons item 5."
+      }
+    ],
+    "promotionBlockers": [
+      "The approved-indication claim (gonadorelin-approved-indication-human-historical-001) should be reworded to make explicit that the ovulation-induction indication is Canada-only/historical and not currently active in the US, to avoid a reader inferring current US availability alongside the diagnostic-use mention.",
+      "ops.reviewReasons item 5 (DrugBank/ChEMBL/UNII not independently confirmed from native databases) remains only partially closed -- the DrugBank page's specific numeric fields (CAS, formula) were paywalled this session and should be independently pulled at review time before full publication."
+    ],
+    "notes": [
+      "Overall the packet is well-sourced and its own honesty about gaps (evidence-gap claim, unresolved US human approval status, CHH-population caveat) held up well under independent cross-checking.",
+      "Live DailyMed check today (2026-08-29) confirms the veterinary-only regulatory claim is accurate and current -- this is the single fieldAuthorityRequired claim most load-bearing for public-safety messaging, and it is solidly confirmed.",
+      "An independent primary study (Jiang et al., PMC12336735) not cited in the packet corroborates the Zhang 2019 CHH spermatogenesis finding and should be added as a second citation to strengthen that claim and resolve the packet's own recommended follow-up ('independent verification of full-text results...recommended at review').",
+      "RxList's reproduction of the historical FDA human Factrel label is a useful, previously-unused regulator-family source that independently closes two review flags (identity/mechanism sourcing and the tumor/vision warning sourcing) and clarifies the discontinued-human-product history referenced only speculatively in the packet's own reviewFlags.",
+      "No claim reads as medical advice or a use recommendation; the TRT-adjunct evidence-gap claim in particular is appropriately hedged and independently corroborated as a genuine evidence gap, not resolved efficacy.",
+      "The one fieldAuthorityRequired claim with a residual, not-fully-closed gap is the approved-indication claim, where the ovulation-induction half is still only supported by the single Canadian monograph plus a non-regulatory clinical-reference (Mayo) -- no independent second regulator/database source confirming current status of that human indication was found this session, so it should stay flagged (not blocking approval, since it is a wording/precision fix, not an unresolved safety fact) pending a rewrite for jurisdictional clarity."
+    ],
+    "recommendation": "request-changes",
+    "slug": "gonadorelin",
+    "compoundName": "Gonadorelin"
+  },
+  {
+    "slug": "kisspeptin-10",
+    "compoundName": "Kisspeptin-10",
+    "recommendation": "approve-claims",
+    "claimVerdicts": [
+      {
+        "claimId": "kp10-mechanism-kiss1r-agonist-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/26194072/",
+        "independentSourceFamily": "paper-level primary/review literature (PubMed)",
+        "finding": "Existing sourceRefs are regulator (FDA PCAC) + controlled-human-study (Jayasena 2011). Independent check via a peer-reviewed review article ('Comprehensive Review on Kisspeptin and Its Role in Reproductive Disorders,' PMID 26194072) confirms kisspeptin/KISS1R is established upstream of GnRH neuron activation in the HPG axis, consistent with the packet's mechanism statement. No overstatement found."
+      },
+      {
+        "claimId": "kp10-regulatory-503a-recommendation-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+        "independentSourceFamily": "regulator/label (live FDA page, distinct from the cited PCAC briefing document)",
+        "finding": "fieldAuthorityRequired claim, checked first. Only sourceRef was the PCAC briefing itself, so I fetched the LIVE FDA bulk-substances page today (2026-08-29) as instructed: kisspeptin-10 remains listed under 503A interim policy Category 2 ('may present significant safety risks'), added 2023-09-29, with FDA-stated reasons (immunogenicity, impurity/characterization gaps, insufficient safety data) that match the briefing document's language. It is NOT among the 12 peptides FDA removed from Category 2 in the April 2026 update (BPC-157, TB-500, Semax, Epitalon, MOTs-C, Melanotan II, GHK-Cu, KPV, DSIP, Dihexa, Selank, Ipamorelin-salt-forms) per an independent secondary summary of that action, and a third-party forum report (dated Nov 2024) independently corroborates FDA's 'insufficient evidence of effectiveness for secondary hypogonadism' rationale and the 'not allowed for 503A compounding' outcome. Note: this is a final, current agency position as of today, not merely an open staff draft -- the packet's reviewFlag asking to 'confirm whether this reflects a final agency decision' can now be closed, and the reviewFlag/ops.reviewReasons language should be updated to state the live-page status was reconfirmed on 2026-08-29 rather than left as an open question."
+      },
+      {
+        "claimId": "kp10-human-rct-lh-testosterone-stimulation-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/23153270/",
+        "independentSourceFamily": "paper-level primary literature (independent controlled human study, PubMed/Clinical Endocrinology)",
+        "finding": "Only sourceRef was Jayasena et al. 2011. Independent confirmation found in George et al. 2013 (Clinical Endocrinology, PMID 23153270), a separate controlled human study in a different population (men with type 2 diabetes and mild hypogonadism) that independently replicates the core finding that kisspeptin-10 stimulates serum testosterone and LH secretion. This corroborates the directional claim without being the same source. Note: the specific continuous-infusion testosterone figures (16.6->24.0 nmol/L) are unique to Jayasena 2011 and were not independently re-derived; only the general stimulatory effect is doubly sourced. Separately, this claim carries an unusual reviewFlag containing self-referential 'searched:' audit-log text and a claim that fieldAuthorityRequired classification was 'recalibrated' -- this reads as embedded process narration rather than genuine evidence content and should be stripped/sanitized before any public-facing use, though it does not change my independent assessment that this specific studied-use claim (acute PD hormone data, explicitly hedged as non-treatment) is reasonably scoped as non-fieldAuthorityRequired."
+      },
+      {
+        "claimId": "kp10-evidence-gap-hypogonadism-treatment-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://clinicaltrials.gov/study/NCT05633966",
+        "independentSourceFamily": "structured authority database (ClinicalTrials.gov)",
+        "finding": "fieldAuthorityRequired claim. Independent check of ClinicalTrials.gov (distinct from the FDA/Jayasena sourceRefs) shows kisspeptin trials for reproductive disorders/low testosterone (e.g., NCT00914823, NCT05633966, and an ongoing Phase 2 'Kisspeptin for Low Testosterone' trial) are still investigational, with no completed pivotal trial or approved product. This is consistent with the packet's statement that acute PD effects have not translated into a validated clinical treatment. No overstatement found."
+      },
+      {
+        "claimId": "kp10-misinformation-marketing-benefits-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://academic.oup.com/jcem/article/110/11/3133/8043258",
+        "independentSourceFamily": "paper-level primary literature (independent controlled human RCT)",
+        "finding": "sourceRefs were vendor-marketing + FDA PCAC. Independent check of a 2024/2025 controlled human RCT ('Kisspeptin Administration Stimulates Reproductive Hormones but Does Not Affect Anxiety in Humans,' JCEM, also PMC11453910) directly tested the anxiety-reduction claim and found kisspeptin does NOT reduce anxiety in humans -- a direct, stronger refutation than the packet's more general 'not supported' framing. No independent human evidence was found supporting the vendor's weight-loss/fat-metabolism, antidepressant, or cognition/memory claims either (only preclinical/rodent metabolic-signaling literature exists for the weight-loss angle). Recommend upgrading the claim text to cite this direct null-result RCT for the anxiety claim specifically, since it is now more strongly disconfirmed than merely unsupported."
+      },
+      {
+        "claimId": "kp10-identity-structured-database-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.chemicalbook.com/ChemicalProductProperty_EN_CB8390631.htm",
+        "independentSourceFamily": "structured authority database, independent of PubChem (ChemicalBook chemical registry)",
+        "finding": "Only sourceRef was PubChem. An independent structured chemical database (ChemicalBook) lists Kisspeptin-10 (human), CAS 374675-21-5, consistent with the packet. Multiple independent vendor/registry listings also converge on molecular formula C63H83N17O14. This resolves the packet's own flagged gap ('CAS number... not directly confirmed on the fetched PubChem page') -- the identifiers are corroborated by an independent source family. Recommend updating the reviewFlag/ops.reviewReasons to reflect this as resolved rather than leaving it open."
+      }
+    ],
+    "promotionBlockers": [
+      "Housekeeping only, not a content defect: strip the self-referential 'authority-flag recalibrated 2026-08-29 ... searched: ...' audit-log-style text from kp10-human-rct-lh-testosterone-stimulation-001's reviewFlags before any public/customer-facing display -- it reads as internal process narration embedded in evidence content, not as evidence itself.",
+      "Update ops.reviewReasons and per-claim reviewFlags to reflect that this review has now independently closed two previously-open gaps: (1) live-FDA-page 503A/Category-2 status reconfirmed current as of 2026-08-29, and (2) CAS number 374675-21-5 / formula C63H83N17O14 cross-confirmed via an independent structured database (ChemicalBook) -- leaving these flagged as open after independent resolution would misrepresent the packet's review state."
+    ],
+    "notes": [
+      "Both fieldAuthorityRequired claims (regulatory 503A finding; hypogonadism-treatment evidence gap) are confirmed against independent source families and hold up against live data as of 2026-08-29.",
+      "No medical-advice language, efficacy inflation, or unhedged use-recommendations were found in the packet's claim statements; dosing text is explicitly framed as 'research protocol; not a use recommendation.'",
+      "The misinformation-claim entry can be strengthened (not just left as-is) by citing the direct 2024/2025 RCT that specifically disproves the vendor's anxiety-reduction claim, which is a stronger independent refutation than what the packet currently documents.",
+      "Recommend flagging to the packet-authoring pipeline that reviewFlags fields have started containing agent-process narration (search logs, self-justifying reclassification notes) rather than pure evidence annotations -- this is a data-hygiene issue worth fixing upstream, separate from the substance of any claim."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "kpv-identity-structure-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.chemicalbook.com/ProductDetail_EN_kpv_2513068.htm",
+        "independentSourceFamily": "structured chemical database/vendor listing (independent of the cited PubChem page)",
+        "finding": "CAS 67727-97-3 and the KPV/alpha-MSH(11-13) identity are corroborated by multiple independent chemical-registry/vendor listings (ChemicalBook, Alfa Chemistry) that all report the same CAS number for KPV. PubChem itself could not be independently re-rendered (JS-gated), so the packet's own reviewFlag asking to reconfirm CAS/IUPAC against a live PubChem record is still open \u2014 WebFetch of the PubChem CID page also returned only the molecular formula, not CAS, confirming the packet's caveat is accurate and should stay in reviewFlags rather than being closed."
+      },
+      {
+        "claimId": "kpv-mechanism-pept1-nfkb-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/media/193346/download",
+        "independentSourceFamily": "regulator/FDA advisory-committee briefing document (nonclinical assessment section)",
+        "finding": "FDA's own PCAC briefing document (a source family distinct from the cited primary paper) independently cites the same PepT1/NF-kB in-vitro mechanism in Caco2-BBE, HT29-Cl.19A, and Jurkat cells, corroborating the claim as an in-vitro finding only. The FDA document explicitly does not extend this to animal or human mechanism data, supporting the packet's own caveat that this must not be presented as a confirmed human mechanism."
+      },
+      {
+        "claimId": "kpv-studied-use-animal-colitis-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/media/193346/download",
+        "independentSourceFamily": "regulator/FDA advisory-committee briefing document (nonclinical assessment)",
+        "finding": "Independently verified two things: (1) the packet's reviewFlag text claiming that FDA briefing document 193346 cites Dalmasso 2008 'only for in vitro PepT1 mechanism data' and contains no C57BL/6/DSS/TNBS colitis content is ACCURATE on direct re-fetch and quote-check of that document -- so that self-referential note should not be dismissed as fabricated, but it also should not be treated as a substitute for independent verification of the underlying animal-study numbers themselves, which FDA's nonclinical review does not corroborate in detail (FDA's own nonclinical section discusses only rodent wound-healing/corneal models, not the DSS/TNBS colitis data). (2) A second, independent primary paper (Dalmasso et al., Inflammatory Bowel Diseases 2008, PMID 18092346, 'Melanocortin-derived tripeptide KPV has anti-inflammatory potential in murine models of inflammatory bowel disease') exists and topically corroborates KPV anti-inflammatory efficacy in murine IBD models, though full independent access to its abstract/results was not obtainable via the tools used. Net: claim's animal-only framing and no-human-efficacy caveat stand up, but the specific quantitative details (100 micromolar, MPO activity) rest solely on the single cited paper and were not independently re-derived from a materially different family beyond general topical corroboration -- record as an open gap rather than fully resolved."
+      },
+      {
+        "claimId": "kpv-regulatory-nomination-withdrawn-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://thepeptide.expert/regulatory/pcac-2026",
+        "independentSourceFamily": "professional/regulatory-proceeding news coverage of an FDA advisory committee vote, cross-checked directly against fda.gov/media/193346/download (FDA briefing document) and a live re-fetch of the FDA 'bulk drug substances nominated but withdrawn' page",
+        "finding": "The live FDA withdrawn-substances page was re-fetched today and still lists KPV with the same 'no human exposure data / cannot rule out harm' language quoted in the packet -- the core statement is CONFIRMED CURRENT as of 2026-08-29. However, a materially important and un-flagged-in-detail development exists: at the July 23-24, 2026 Pharmacy Compounding Advisory Committee (PCAC) meeting, FDA staff's own briefing document (fda.gov/media/193346/download) recommended AGAINST adding KPV to the 503A Bulks List (citing inadequate characterization, no human safety data, and available FDA-approved alternatives), but the committee itself voted 8-6-1 to recommend KPV's inclusion despite the staff recommendation. This is non-binding advisory input, not a final rule, and does not change the current withdrawn-nomination status shown on the live FDA page -- but the packet's ops.reviewReasons only vaguely says 'a PCAC meeting was held in July 2026' without capturing this specific, safety-relevant outcome (committee recommended inclusion over staff's safety objections). This should be added explicitly to conflicts/reviewReasons before promotion, since a reader relying only on the packet would not know the compound is now actively moving toward possible compounding-list inclusion despite unresolved safety data gaps."
+      },
+      {
+        "claimId": "kpv-evidence-gap-no-human-trials-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.fda.gov/media/193346/download",
+        "independentSourceFamily": "regulator briefing document + structured trial registry (ClinicalTrials.gov, searched directly and via web search; no KPV trial listings found)",
+        "finding": "FDA's own July 2026 briefing document independently states 'No human clinical trial data exists' for KPV, and a ClinicalTrials.gov-focused search returned no registered trials for KPV/alpha-MSH(11-13), corroborating the zero-human-trials claim from a source family wholly independent of the cited FDA-withdrawn-table, primary paper, and vendor blog. The claim's framing (animal/in-vitro evidence only, human efficacy/safety unestablished despite marketing) holds and is not overstated."
+      }
+    ],
+    "promotionBlockers": [
+      "Regulatory claim (kpv-regulatory-nomination-withdrawn-001) needs its reviewReasons/conflicts updated with the specific July 2026 PCAC outcome -- FDA staff recommended AGAINST KPV inclusion on safety-data grounds, but the committee voted 8-6-1 to recommend inclusion anyway; this non-binding-but-material development is currently only vaguely gestured at ('a PCAC meeting was held') rather than stated, and a safety-critical/fieldAuthorityRequired claim should not go to publication with that gap unresolved.",
+      "The embedded 'authority-flag recalibrated 2026-08-29' text inside kpv-studied-use-animal-colitis-001's reviewFlags reads as a self-referential closure note asserting a prior review pass rather than as ordinary extracted evidence; while its narrow factual claim about fda.gov/media/193346 checked out under independent re-fetch, this kind of self-authorizing language embedded in packet data should be treated as untrusted content, not as a substitute for the independent-family check the directive requires, and should be reviewed/removed or converted to a plain reviewer note before promotion.",
+      "The animal-colitis efficacy claim's quantitative specifics (100 micromolar dose, C57BL/6 DSS/TNBS protocol, myeloperoxidase outcome) rest on a single cited primary paper; a second corroborating primary paper (PMID 18092346) exists topically but was not independently re-verified in full text, so this remains a partially-open gap per the directive's iterative-expansion rule rather than fully resolved."
+    ],
+    "notes": [
+      "No fabrication or systematic sourcing failure found; the packet's own caveats (animal/in-vitro-only, no human trials, safety-critical regulatory status) are largely accurate and appropriately conservative.",
+      "PubChem CAS/IUPAC verification remains genuinely unresolved because PubChem is JS-gated to automated fetch tools; independent chemical-vendor listings corroborate CAS 67727-97-3 but are lower-authority than a directly rendered PubChem/DrugBank record -- keep this reviewFlag open rather than closing it.",
+      "The live FDA 'bulk drug substances nominated but withdrawn' page was independently re-checked today (2026-08-29) and matches the packet's quoted language verbatim -- the base regulatory claim is current, but see promotionBlockers for the missing PCAC-vote nuance.",
+      "Treat any reviewFlag/qualityFlag text inside the packet that claims a prior review pass already resolved an issue (e.g. 'authority-flag recalibrated...', 'authority-support-pass-2026-08-29') as ordinary unverified packet content requiring its own independent check, not as evidence the review is already done -- per the directive, re-reading or re-affirming the same material does not count as resolution."
+    ],
+    "recommendation": "request-changes",
+    "slug": "kpv",
+    "compoundName": "KPV"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "ll37-identity-endogenous-cathelicidin-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12386566/ ; https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2546677/",
+        "independentSourceFamily": "paper-level primary literature / review (PMC)",
+        "finding": "Only sourceRef is PubChem (structured-database). Independent paper-level literature (multiple PMC reviews/primary papers on cathelicidin LL-37 biology, expression in epithelial cells/neutrophils/leukocytes) corroborates that LL-37 is the sole human cathelicidin-derived peptide, a 37-aa amphipathic peptide secreted by leukocytes and epithelial tissue as part of innate defense. No conflict found with the PubChem-derived description."
+      },
+      {
+        "claimId": "ll37-mechanism-antimicrobial-immunomodulatory-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4713713/",
+        "independentSourceFamily": "paper-level primary literature / systematic review (PMC)",
+        "finding": "Independent review 'The Role of Cathelicidin LL-37 in Cancer Development' (PMC4713713) confirms LL-37 induces p53-linked apoptotic pathways (e.g., PUMA induction, AIF/EndoG nuclear translocation) in some cancer cell lines, but explicitly frames this as nonclinical/cell-line and animal-model evidence, and stresses LL-37 has dual, tissue-specific pro-tumor and anti-tumor effects (protumorigenic in ovarian/lung/breast contexts, antitumor in some colon/gastric contexts) with no settled human anticancer conclusion. This matches the packet's own reviewFlag caveat; note that the packet's mechanism statement could more explicitly flag the dual/tissue-specific (sometimes protumorigenic) nature alongside the antineoplastic framing, since independent literature treats these as inseparable, not a one-directional benefit."
+      },
+      {
+        "claimId": "ll37-regulatory-bulk-nominated-withdrawn-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+        "independentSourceFamily": "regulator/label (live FDA page, fetched 2026-08-29)",
+        "finding": "Fetched the LIVE FDA page today (2026-08-29). Cathelicidin LL-37 remains in the 'Bulk drug substances nominated but withdrawn' table with the identical safety language quoted in the packet (immunogenicity risk for certain routes, peptide-impurity/API-characterization complexity, insufficient human safety data, nonclinical signals of detrimental male-reproduction effects and protumorigenic potential in some tissues). Page content date is April 22, 2026 (the same April 2026 update the review is supposed to check against), and no listing change affecting LL-37 has occurred since. Packet's reviewFlag correctly notes this status is worth re-checking periodically; today's check confirms no change."
+      },
+      {
+        "claimId": "ll37-adverse-nonclinical-reproductive-tumor-signal-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://academic.oup.com/humrep/article-abstract/29/4/683/605398 ; https://pmc.ncbi.nlm.nih.gov/articles/PMC10323174/",
+        "independentSourceFamily": "paper-level primary literature (Human Reproduction journal; PMC primary study)",
+        "finding": "The FDA page itself gives no citation for the underlying nonclinical study, so I sought independent corroboration of biological plausibility rather than re-reading FDA. Independent primary literature confirms LL-37 has documented reproductive-tract bioactivity in nonclinical models -- notably spermicidal activity investigated as a vaginal contraceptive candidate (Human Reproduction 2014) and reproductive-tract tissue effects in mouse safety studies (PMC10323174) -- which is directionally consistent with 'detrimental effects on male reproduction' as a plausible nonclinical signal. However, I could not independently locate the specific study(ies) underlying FDA's exact male-reproduction/protumorigenic wording, so the precise magnitude/study design behind FDA's statement remains unverified beyond the regulator's own assertion. Packet correctly keeps this human-review-gated and nonclinical-only; that gating should stay in place."
+      },
+      {
+        "claimId": "ll37-efficacy-venous-leg-ulcer-rct-mixed-001",
+        "verdict": "unresolved",
+        "independentSourceUrl": null,
+        "independentSourceFamily": null,
+        "finding": "sourceRef is the trial itself (controlled-human-study family). I searched for a materially different family (systematic review/meta-analysis of AMP wound-healing trials, or a guideline/database record covering this specific trial) but could not access a qualifying independent source: one promising review (PMC12249706, antimicrobial peptides in wound healing) was blocked by a CAPTCHA wall and could not be fetched; other hits returned were the same trial re-indexed (PubMed/Wiley/ResearchGate mirrors of the identical paper) or an earlier same-research-group phase II trial (Gr\u00f6nberg 2014, also controlled-human-study family) -- neither counts as an independent family per the contract. The claim's own numbers (26.5%/24.7% vs 25.3% overall; 28.1% vs 8.1%, p=0.0458 subgroup) are consistent with what abstract-level snippets show, so I found nothing contradicting the statement, but I could not close the independent-family verification gap. Per the directive, this stays review-gated with the gap documented (it already is, via the existing conflict entry and reviewFlags); do not mark it resolved on this basis."
+      },
+      {
+        "claimId": "ll37-evidence-gap-wellness-marketing-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://riteaid.com/peptides/ll-37",
+        "independentSourceFamily": "independent consumer-facing vendor/education page (different vendor than evolvepeptides, cautionary framing rather than sales framing)",
+        "finding": "A different consumer-facing page (Rite Aid's LL-37 peptide info page, distinct from the cited evolvepeptides sourceRef) independently corroborates the evidence-gap characterization: it states LL-37 is 'not FDA-approved for peptide therapy,' flags 'uncertain systemic safety outside controlled research,' explicitly does not recommend dosing/self-experimentation, and frames content as education only, not a treatment recommendation. This is directionally consistent with the packet's claim that vendor framing coexists with informal wellness-adjacent marketing while no systemic human efficacy/safety data exist. Note: this source is still marketing-adjacent (same broad commercial-retail family as the original vendor ref), so it is only a partial strengthening of independence rather than a fully distinct source family (e.g., no professional-society or consumer-protection-agency statement on peptide marketing was located)."
+      }
+    ],
+    "promotionBlockers": [],
+    "notes": [
+      "All fieldAuthorityRequired claims (regulatory bulk-substance listing; nonclinical reproductive/tumor adverse-effect signal) are confirmed or confirmed-with-note against independent sources, including a live 2026-08-29 re-check of the FDA compounding-bulk-substances page, which shows no change to LL-37's withdrawn-nomination status.",
+      "No claim was found to overstate efficacy, contain medical advice, or convert animal/in vitro evidence into implied human benefit; the packet's existing hedges (nonclinical-only framing, post-hoc-subgroup caveat, 'not a use recommendation' language) are accurate and appropriately conservative.",
+      "The one efficacy claim (venous leg ulcer RCT) remains 'unresolved' at the strict independent-source-family level only because a promising independent review was CAPTCHA-blocked and other hits were re-indexes of the same trial or a same-research-group predecessor trial; this does not create a new blocker since the packet already keeps this claim human-review-gated via its existing conflict entry and reviewFlags -- that gating should simply remain in place rather than be marked resolved.",
+      "Mechanism claim (antineoplastic/p53 activity) would benefit from an added explicit note that independent cancer-biology literature treats LL-37's tumor effects as tissue-specific and bidirectional (protumorigenic in some cancers, antitumor in others), not simply a suppressive/beneficial mechanism -- a minor wording tightening, not a factual error, since the existing reviewFlag already prevents human-efficacy inference."
+    ],
+    "recommendation": "approve-claims",
+    "slug": "ll-37",
+    "compoundName": "LL-37"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "igf1lr3-identity-structure-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:8708565&format=json&resultType=core",
+        "independentSourceFamily": "paper-level primary literature (Europe PMC / PubMed, Tomas et al., distinct study from the packet's cited Conlon 1995 paper)",
+        "finding": "Independent primary-literature confirms the core mechanism: LR3IGF-I has reduced IGF-binding-protein affinity and greater potency than native IGF-I in rodent studies (1.5-2x more potent by injection per this paper). Note: Wikipedia's 'approximately three times more potent' figure (quoted in extractedEvidence) traces to a different paper (Tomas et al. 1992) using different administration conditions than the 1.5-2x figure found independently -- both are legitimate but the packet should note the multiplier varies by study/route rather than presenting '3x' as a single settled figure. The CAS-number discrepancy (946870-92-4 widely used by vendor/chemical-supplier sites vs. 143045-27-6 in the FDA UNII record) was independently reproduced across multiple vendor sources (ChemicalBook, BOC Sciences) but I could not reach an authoritative CAS registry to resolve which is correct -- this stays an honest unresolved gap, which the packet already flags correctly for human review."
+      },
+      {
+        "claimId": "igf1lr3-regulatory-no-approved-product-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+        "independentSourceFamily": "regulator/label (live FDA page fetched today, 2026-08-29)",
+        "finding": "Live re-check of the current FDA Category 2 bulk drug substances page (post the April 2026 listing changes flagged in the task) confirms no entry for IGF-1, IGF-1 LR3, insulin-like growth factor, or mecasermin. Independent corroboration from a different family (a payer clinical-policy bulletin, Aetna CPB 0711, treating Increlex/mecasermin as the sole IGF-1 product pathway with no LR3 alternative referenced) supports the 'no approved product' framing. Claim holds as stated."
+      },
+      {
+        "claimId": "igf1lr3-adverse-effect-hypoglycemia-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.drugs.com/monograph/mecasermin.html",
+        "independentSourceFamily": "clinical/professional drug-reference monograph (independent of the FDA label and the Finnish anti-doping page already cited)",
+        "finding": "Independently confirms hypoglycemia (including severe cases managed with IV glucagon) as a recognized, mechanism-based adverse effect of mecasermin, corroborating the packet's core claim. Nuance: this independent source characterizes most reported hypoglycemia as mild-to-moderate, with severe/seizure cases being the less common but documented tail -- consistent with, not contradicting, the packet's statement. The packet is correctly cautious that no IGF-1 LR3-specific human safety dataset exists; that gap remains real and appropriately flagged."
+      },
+      {
+        "claimId": "igf1lr3-animal-study-organ-growth-001",
+        "verdict": "unresolved",
+        "independentSourceUrl": null,
+        "independentSourceFamily": null,
+        "finding": "The only corroborating source I could locate (Tomas/Ballard et al., PMID 8708565, via Europe PMC) is the same source family as the packet's own citation (paper-level primary literature) -- it is consistent with the Conlon 1995 findings but does not satisfy the materially-different-family requirement. I checked Wikipedia (tertiary, a different family from this claim's own sourceRefs) but it does not discuss this specific guinea-pig organ-growth finding at all. No professional-guidance, structured-database, or regulator source addressing this preclinical endpoint was found. Per the directive this stays an honest, review-gated unresolved item; fieldAuthorityRequired is correctly false and this does not block promotion."
+      },
+      {
+        "claimId": "igf1lr3-evidence-gap-human-trials-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": null,
+        "independentSourceFamily": "structured database (ClinicalTrials.gov) -- attempted, blocked",
+        "finding": "Direct queries to clinicaltrials.gov (web and API) were blocked by robots.txt in this session, so I could not directly confirm a zero-result search there. However, broad web searches for 'IGF-1 LR3' and 'Long R3 IGF-1' clinical trials returned zero registered trial entries -- only vendor/informational articles -- which is consistent with (though not a substitute for) the vendor source's claim of no ClinicalTrials.gov listing. Recommend a reviewer with direct ClinicalTrials.gov access confirm this before the claim is fully closed out; until then this item is correctly still flagged for reverification in the packet's own reviewFlags."
+      },
+      {
+        "claimId": "igf1lr3-misinformation-marketing-claims-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/10632630/",
+        "independentSourceFamily": "paper-level primary literature (independent of the vendor page cited)",
+        "finding": "Independent literature confirms IGF-1 can activate satellite cells and contribute to muscle hypertrophy (fiber enlargement) in animal models -- giving the marketing claim's underlying mechanism some real biological basis -- but no independent source supports true hyperplasia (creation of new muscle fibers) in humans, and none of the literature found is specific to IGF-1 LR3. The packet's classification of the vendor's 'satellite cell activation and possible hyperplasia' claim as misinformation-adjacent (extrapolated well beyond what the underlying biology or any human study supports) is correct and should stand."
+      },
+      {
+        "claimId": "igf1lr3-regulatory-doping-status-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.sciencedirect.com/science/article/pii/S245196501930033X",
+        "independentSourceFamily": "systematic review / paper-level literature discussing prohibited status (independent of both dopinglinkki's professional-guidance family and the WADA regulator family already cited); USADA's public page (a different regulatory body's independent restatement) additionally corroborates",
+        "finding": "Independent literature and USADA's public guidance both confirm exogenous IGF-1 and its analogues are banned at all times under the WADA framework, corroborating the packet's claim. Consistent with the packet's own careful qualifier: none of the independent sources I found (literature review, USADA page, or WADA list text) names 'LR3IGF-1' individually -- IGF-1 LR3's coverage is via the general 'IGF-1 and its analogues' class, exactly as the packet states. No adjustment needed."
+      }
+    ],
+    "promotionBlockers": [
+      "CAS-number identifier conflict (946870-92-4 vendor/chemical-supplier listings vs. 143045-27-6 FDA UNII record) remains unresolved after independent search; no authoritative CAS registry source was reached to settle it -- needs a human reviewer with CAS Common Chemistry / registry access before public promotion.",
+      "Claim igf1lr3-evidence-gap-human-trials-001's core assertion (no ClinicalTrials.gov listing for IGF-1 LR3) could not be directly verified this session because clinicaltrials.gov blocked automated access (robots.txt) -- a reviewer should run the direct ClinicalTrials.gov query before this claim is fully closed.",
+      "Claim igf1lr3-animal-study-organ-growth-001 has no independent-family corroboration (only same-family primary-literature support was found) -- acceptable to leave review-gated per the directive since it is not fieldAuthorityRequired, but should not be marked resolved without further source-family search if time allows."
+    ],
+    "notes": [
+      "This packet is unusually well-hedged: dosing text, mechanism claims, and marketing claims are all explicitly qualified as non-recommendations / non-human-efficacy-evidence, consistent with the directive's 'do not write medical advice' and 'do not infer human efficacy from animal/in vitro evidence' rules. No new medical-advice or efficacy-inflation issues were found beyond what the packet already flags.",
+      "All four fieldAuthorityRequired (safety-critical) claims -- identity/CAS, regulatory approval status, hypoglycemia adverse-effect, and doping status -- were independently corroborated via at least one materially different source family (live FDA page, professional drug monograph, systematic-review literature, and a different regulator's restatement), and none produced a conflicting or overstated finding requiring adjustment.",
+      "The packet's own prior 'authority-support pass' and 'authority-flag recalibrated' annotations embedded in reviewFlags/ops (dated 2026-08-29) describe an earlier review pass on this same packet; my independent pass today reached materially different sources than those annotations reference and did not surface any conflict with their conclusions."
+    ],
+    "recommendation": "approve-claims",
+    "slug": "igf-1-lr3",
+    "compoundName": "IGF-1 LR3"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "peg-mgf-regulatory-nominated-withdrawn-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+        "independentSourceFamily": "regulator/label (live re-check, cross-corroborated with structured-database absence checks)",
+        "finding": "Re-fetched the LIVE FDA page today (2026-08-29); page shows 'Last Updated: April 22, 2026' confirming it was in fact revised in the window the directive flagged. PEG-MGF still sits under 'Bulk drug substances nominated but withdrawn' with identical quoted language ('FDA has not identified any human exposure data...'). Cross-checked DailyMed (no PEG-MGF/mechano growth factor label exists) and PubChem/ClinicalTrials.gov (no approved compound record, no registered trials) \u2014 nothing supersedes or contradicts the withdrawn-nomination status. Note: full independent-family corroboration is inherently limited because FDA's 503A nomination list has no counterpart registry; the corroborating absence-of-label/absence-of-trial checks are the best available cross-check and they are consistent with the claim."
+      },
+      {
+        "claimId": "peg-mgf-warning-immunogenicity-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+        "independentSourceFamily": "regulator/label (live re-check)",
+        "finding": "Live FDA page re-fetched today reproduces the exact quoted immunogenicity/impurity/API-characterization language and the 'lacks important information... whether it would cause harm' language verbatim. Quote accuracy confirmed. As the packet's own reviewFlag correctly notes, this is FDA's stated concern attached to a withdrawn nomination, not an adjudicated Category 2 safety finding \u2014 the claim's careful phrasing already reflects that distinction, so no adjustment needed. No independent adverse-event registry, case series, or professional-society statement specific to PEG-MGF was locatable, which is an honest gap the packet already discloses."
+      },
+      {
+        "claimId": "peg-mgf-mechanism-igf1-splice-variant-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5501366",
+        "independentSourceFamily": "paper-level primary literature (independent lab, Molecular Brain 2017) plus professional-society magazine piece (The Physiological Society)",
+        "finding": "Independently verified against two different sources not cited in the packet: a 2017 Molecular Brain paper on MGF-induced neurogenesis, and a Physiological Society ('MGF: a local growth factor or a local tissue repair factor?') article. Both independently confirm MGF/MGF-Ec/IGF-1Ec is an alternative-splice isoform of the IGF-1 gene distinct from the liver-derived IGF-1Ea, and that its expression is damage/exercise- and age-dependent \u2014 matching the packet's statement. Both independent sources also confirm the packet's own caveat: neither discusses PEG-MGF or any pegylated commercial form; all data is on the native/unpegylated peptide in animal or in vitro models. No adjustment needed."
+      },
+      {
+        "claimId": "peg-mgf-evidence-gap-invitro-conflict-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.physoc.org/magazine-articles/mgf-a-local-growth-factor-or-a-local-tissue-repair-factor/",
+        "independentSourceFamily": "professional society commentary / paper-level literature (search for a reconciling systematic review)",
+        "finding": "Searched independently for a systematic review or later study reconciling Mavrommatis (2011) vs. Hill (2014); none was found. The Physiological Society piece and the 2017 Molecular Brain paper corroborate that MGF's physiological role is still an open, debated question in the field ('the question still needs to be answered...'), which is consistent with \u2014 not contradicting \u2014 the packet's characterization of the conflict as unresolved. The claim's statement holds. Per the review contract, since no independent reconciling source exists, this legitimately stays conflict-flagged/review-gated rather than being resolved outright."
+      },
+      {
+        "claimId": "peg-mgf-misinformation-marketing-gap-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://clinicaltrials.gov/",
+        "independentSourceFamily": "structured trial registry (ClinicalTrials.gov, searched independently for MGF/PEG-MGF/IGF-1Ec trials)",
+        "finding": "Independent search of ClinicalTrials.gov and general web literature for any human trial of MGF, MGF-E, PEG-MGF, or IGF-1Ec for muscle recovery, hypertrophy, gut health, or joint support returned nothing \u2014 search results are exclusively vendor/marketing content (PeptIQ, Superpower, PeptideVox, Spartan Peptides, etc.), reconfirming that no clinical outcome evidence exists for these popular claims. The packet correctly classifies this as misinformation-adjacent marketing rather than supported benefit. No adjustment needed."
+      },
+      {
+        "claimId": "peg-mgf-dosecontext-vendor-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://dailymed.nlm.nih.gov/",
+        "independentSourceFamily": "structured regulatory database (DailyMed) and structured chemical database (PubChem), searched independently this pass",
+        "finding": "Independently re-searched DailyMed (no label for PEG-MGF/mechano growth factor) and PubChem (only a generic substance registry entry, SID 46504889, exists \u2014 no characterized compound record, no dosing/PK data). This corroborates, via a fresh search this pass rather than re-reading the packet's own prior authority-support note, that no A1/A2 dosing source exists anywhere. The claim statement is accurately hedged as vendor-marketing-only and explicitly 'not... guidance.' Correctly stays fieldAuthorityRequired and review-gated; this is an honest, appropriate gap, not a defect to fix."
+      }
+    ],
+    "promotionBlockers": [
+      "ops.needsReview=true / 'Expansion-batch evidence packet requires human review before publication' is a pipeline-level gate that this independent-review pass does not itself satisfy \u2014 a human sign-off step is still required before public promotion regardless of individual claim confirmations.",
+      "The Mavrommatis (2011) vs. Hill (2014) in vitro conflict on native MGF/MGF-E proliferative activity remains genuinely unresolved \u2014 no systematic review or reconciling primary study was found independently this pass \u2014 so conflictId peg-mgf-conflict-invitro-proliferation-001 should stay open/needs-human-review.",
+      "No PEG-MGF-specific (pegylated form) human or animal study exists in the literature; all mechanism/efficacy evidence is extrapolated from the unpegylated parent peptide. This extrapolation gap was independently reconfirmed (Molecular Brain 2017, Physiological Society piece) and should remain flagged prominently if the packet is promoted.",
+      "No structured chemical/regulatory identifiers (PubChem CID, DrugBank, ChEMBL, CAS, UNII) could be independently resolved for PEG-MGF \u2014 only an uncharacterized PubChem substance registry entry (SID 46504889) exists \u2014 confirming the packet's own identifier gap rather than closing it."
+    ],
+    "notes": [
+      "The live FDA compounding bulk-drug-substances page was re-fetched today (2026-08-29) and shows a 'Last Updated: April 22, 2026' stamp \u2014 confirming the directive's premise that listings changed in April 2026 \u2014 yet PEG-MGF's withdrawn-nomination status and quoted safety language are unchanged from what the packet cites, so no regulatory-status correction is needed.",
+      "All fieldAuthorityRequired claims (regulatory-nominated-withdrawn-001, warning-immunogenicity-001, dosecontext-vendor-001) were independently re-verified this pass against a materially different source family than their original sourceRefs (live regulator re-check plus DailyMed/PubChem/ClinicalTrials.gov structured-database checks) and each holds up as stated.",
+      "No instance of medical advice, an implicit use recommendation, or efficacy inflation beyond what quotes support was found in the packet's own statements; the misinformation and dose-context claims are both explicitly and correctly hedged as non-recommendations.",
+      "Recommendation is 'approve-claims' at the claim-accuracy level \u2014 every fieldAuthorityRequired claim is confirmed or confirmed-with-note and no claim needs a wording adjustment \u2014 but promotionBlockers above (chiefly the still-open in-vitro conflict and the pipeline's own human-review gate) mean the packet is not yet ready to actually go live without a human sign-off step, which is consistent with how the packet already describes itself (needsReview: true)."
+    ],
+    "slug": "peg-mgf",
+    "compoundName": "PEG-MGF",
+    "recommendation": "approve-claims"
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "ghrp2-regulatory-compounding-risk-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://archive.hshsl.umaryland.edu/server/api/core/bitstreams/4ebb4113-854b-4231-94c5-f202e84b5206/content",
+        "independentSourceFamily": "professional/scoping-review report prepared for FDA advisory review (distinct from the FDA webpage itself)",
+        "finding": "Re-fetched the LIVE FDA bulk-compounding page today (2026-08-29): it still lists GHRP-2 (injectable and nasal) in Category 2, added 9/29/2023, with the identical immunogenicity rationale and identical adverse-event list (increased insulin requirement, death of critically ill subjects, infection, pancreatitis) with causality explicitly not established -- packet statement is accurate and current. Additionally pulled the independent scoping-review report (prepared for FDA's compounding evaluation process, a different source family from the FDA page) which corroborates that the adverse-event data is sparse/uncontrolled (46 patients across 4 studies) and confirms no causal link has been established -- supports the packet's careful 'not established causality' framing. No contradiction found."
+      },
+      {
+        "claimId": "ghrp2-regulatory-no-approved-us-product-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=GHRP-2",
+        "independentSourceFamily": "regulator/label database (live re-check) plus convergent vendor/aggregator pages stating no FDA approval",
+        "finding": "Live DailyMed search today still returns 0 results for GHRP-2, matching the claim exactly. A true materially-different family (e.g. FDA Orange Book, ClinicalTrials.gov approved-product record) was searched but no structured-database record of an approved GHRP-2/pralmorelin product surfaced anywhere; multiple independent secondary sources (peptide vendor/guide sites) also state GHRP-2 has no FDA-approved indication, consistent with the claim. Treat as confirmed but note the independent-family check here is weaker (no second regulator/database directly queried beyond a live DailyMed recheck and general web corroboration)."
+      },
+      {
+        "claimId": "ghrp2-mechanism-ghrelin-agonist-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": null,
+        "independentSourceFamily": null,
+        "finding": "Attempted to reach an independent paper-level source (PubMed 15230633, a Drugs R&D-type pralmorelin profile) to corroborate identity/structure/mechanism independent of PubChem, but the page was blocked by reCAPTCHA and no accessible mirror was found. General web search turned up only vendor/guide pages repeating the same description, which is consistent with but does not independently confirm the PubChem-sourced statement. This is a non-fieldAuthorityRequired, low-stakes identity claim and the chemistry (D-Ala-D-Nal-Ala-Trp-D-Phe-Lys-NH2, ghrelin-receptor agonist) is uncontroversial/well-established in the field, so I record it as confirmed-with-note rather than unresolved -- but a genuine independent-family citation (DrugBank, a review paper) is still missing and should be attempted again at next review pass."
+      },
+      {
+        "claimId": "ghrp2-studied-use-diagnostic-ghd-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://academic.oup.com/jes/article/6/8/bvac088/6602336",
+        "independentSourceFamily": "paper-level primary literature (Journal of the Endocrine Society, 2022) -- distinct study from the packet's cited pubmed-17609397",
+        "finding": "An independent 2022 Journal of the Endocrine Society study on GHRP-2 testing for hypothalamic-pituitary disorder corroborates that the GHRP-2 stimulation test is an actively used, validated diagnostic tool for GH-axis/pituitary assessment, consistent with the packet's characterization of GHRP-2 as a diagnostic secretagogue test. It does not itself replicate the specific 15 microg/L vs 3 microg/L ITT-cutoff numbers from pubmed-17609397, but it operates in the same diagnostic paradigm and does not conflict. No independent source disputes the reported numbers; the packet's own reviewFlags about abstract-only sourcing and bot-check access remain valid and should stay noted."
+      },
+      {
+        "claimId": "ghrp2-studied-use-secondary-adrenal-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://academic.oup.com/jes/article/6/8/bvac088/6602336",
+        "independentSourceFamily": "paper-level primary literature (Journal of the Endocrine Society, 2022), independent of the cited Hayashi 2008 Endocrine Journal study",
+        "finding": "The independent 2022 paper directly corroborates the core claim: GHRP-2 testing (combined with ACTH/cortisol measurement) is useful for diagnosing secondary/pituitary adrenal insufficiency, reporting 100% specificity and 0.94 accuracy for pituitary-AI diagnosis using ACTH-response and peak-cortisol cutoffs. Nuance worth recording: this independent study emphasizes that ACTH (not just GH) must be measured during the GHRP-2 test to reliably catch secondary AI -- a refinement the packet's Hayashi-based statement does not mention. Recommend adding this nuance to the claim's context/reviewFlags."
+      },
+      {
+        "claimId": "ghrp2-safety-supplement-contamination-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.frontiersin.org/journals/sports-and-active-living/articles/10.3389/fspor.2026.1740663/full",
+        "independentSourceFamily": "systematic review (Frontiers in Sports and Active Living, 2026) plus a separate analytical case-report (Gaudiano et al. 2014, Drug Testing and Analysis) -- both independent of the cited Thomas 2010 paper",
+        "finding": "A 2026 systematic review of undeclared/prohibited substances in dietary supplements independently lists GHRP-2 among peptide hormones found in supplements, and a separate 2014 Drug Testing and Analysis case report (Gaudiano et al.) independently documents GHRP-2 identified in seized unlabelled vials by NMR/MS -- both corroborate that GHRP-2 circulates undeclared/uncontrolled in consumer/black-market products, supporting the packet's general point. Important nuance: one independent review (PMC7466328) describing an apparently related/earlier 2009 finding states the GHRP-2-containing supplements it discusses were 'correctly labeled to contain GHRP-2' (though with inaccurate chemical detail), which is in tension with the packet's characterization of the Thomas 2010 finding as 'undeclared.' I could not retrieve the Thomas 2010 abstract itself (PubMed/ResearchGate blocked) to confirm whether that specific product declared GHRP-2 on its label or not. Recommend the claim's wording be softened to avoid asserting 'undeclared' unless the underlying Thomas 2010 full text is confirmed to say so -- this is a genuine open gap, not fully resolved either way."
+      },
+      {
+        "claimId": "ghrp2-evidence-gap-marketed-benefits-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10440873/",
+        "independentSourceFamily": "controlled human study / systematic search (independent of the packet's cited sources)",
+        "finding": "Independent search for any controlled human trial of GHRP-2 for recovery, body-composition, or anti-aging use in humans returned nothing; all clinical literature located (including newly found independent studies) concerns short-term diagnostic GH/ACTH-axis stimulation testing only, not chronic self-administered use. This confirms the evidence-gap claim holds and is not overstated -- it accurately distinguishes marketed benefits from the (thin) diagnostic evidence base."
+      },
+      {
+        "claimId": "ghrp2-dose-context-diagnostic-protocol-001",
+        "verdict": "unresolved",
+        "independentSourceUrl": null,
+        "independentSourceFamily": null,
+        "finding": "This is a fieldAuthorityRequired (safety-critical dosing) claim. No FDA/regulator-published GHRP-2 diagnostic dosing protocol exists (the only FDA-approved GH-deficiency stimulation test is macimorelin/Macrilen, a different compound), and no A1/A2-tier independent source was found in this review pass either. The packet's own reviewFlags already document this gap honestly and keep the claim human-review gated -- that is the correct, honest outcome. I found nothing this pass to close the gap; it should remain unresolved/review-gated rather than be marked confirmed."
+      }
+    ],
+    "compoundName": "GHRP-2 (Pralmorelin)",
+    "slug": "ghrp-2",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "ghrp2-dose-context-diagnostic-protocol-001 is fieldAuthorityRequired=true and remains unresolved: no regulator-grade (A1/A2) independent source supports the 100 microgram IV diagnostic dosing claim; per the directive this claim must stay human-review gated and cannot be promoted as-is.",
+      "ghrp2-safety-supplement-contamination-001 contains a wording risk: independent sources disagree on whether the GHRP-2 found in supplements around that period was undeclared vs. labeled-but-mischaracterized; the claim should be softened ('identified in' rather than asserting 'undeclared adulterant') or the Thomas 2010 full text must be pulled to confirm the undeclared framing before publication.",
+      "CAS/UNII/DrugBank/ChEMBL identifiers remain unresolved (per ops.reviewReasons) -- packet is explicitly marked ops.completeness = partial and needsReview = true, so it is not yet publication-ready regardless of claim-level verdicts."
+    ],
+    "notes": [
+      "No medical-advice or efficacy-inflation language was found in the packet's own statements -- it consistently and correctly labels diagnostic-test findings as non-therapeutic and flags marketed chronic-use benefits as unsupported. This is a well-hedged packet overall.",
+      "The FDA 503B compounding-risk claim and the DailyMed absence-of-listing claim both checked out cleanly against the LIVE pages as of 2026-08-29 (no April-2026 listing changes affected GHRP-2 specifically).",
+      "The independent 2022 Journal of the Endocrine Society paper is a valuable addition the packet should cite going forward for the secondary-adrenal-insufficiency claim, both to corroborate it and to add the ACTH-measurement nuance.",
+      "The packet's own authority-recalibration reasoning (distinguishing which claims are and are not in the fieldAuthorityRequired safety-critical set) is transparent and appears correctly applied; I did not find any claim mis-flagged as authority-required or improperly downgraded.",
+      "Independent confirmation of the mechanism/identity claim (PubChem-sourced) was blocked by PubMed CAPTCHA; this is low-stakes (non-fieldAuthorityRequired, chemically uncontroversial) but should be retried with an Europe PMC or DrugBank route at the next review pass."
+    ]
+  },
+  {
+    "slug": "ghrp-6",
+    "compoundName": "GHRP-6",
+    "recommendation": "request-changes",
+    "claimVerdicts": [
+      {
+        "claimId": "ghrp6-regulatory-compounding-risk-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+        "independentSourceFamily": "regulator/label (live re-fetch, verbatim row-by-row extraction) + independent industry secondary source (findlegitpeptides.com) confirming current status",
+        "finding": "The core listing (Category 2, added 9/29/2023, immunogenicity/aggregation/impurity language) is verified verbatim on today's live FDA page, and GHRP-6 is NOT among the 12 peptides FDA removed from Category 2 in April 2026 (confirmed via Orrick and Newtropin secondary coverage of that action), so the claim's currency is fine. HOWEVER, the claim's route detail is wrong: on today's live FDA table, GHRP-2's entry explicitly carries the qualifier '(for injectable and nasal routes of administration)' in its own row, while GHRP-6's row/name carries no such qualifier and its safety-risk text says only 'certain routes of administration' (unspecified). The packet's statement and context.route ('injectable and nasal (routes specifically flagged)') appear to have been copied from the adjacent GHRP-2 entry. This is a safety-critical, fieldAuthorityRequired regulatory claim and the route specificity should be corrected to 'unspecified/certain routes' rather than naming injectable and nasal."
+      },
+      {
+        "claimId": "ghrp6-warning-cortisol-glucose-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5632578/",
+        "independentSourceFamily": "systematic review (PMC review of GH secretagogue safety/efficacy) plus independent controlled-human endocrine studies on ACTH/cortisol (Cushing's disease and thyrotoxicosis GHRP-6 challenge studies, Pituitary journal)",
+        "finding": "Independent literature confirms both halves of the claim: (1) GHRP-6 reproducibly raises ACTH/cortisol in controlled human challenge studies (transient cortisol/ACTH increases documented in multiple endocrine papers independent of the FDA source), and (2) GH secretagogues as a class carry a documented glucose/insulin-sensitivity signal ('increased insulin insensitivity', hyperglycemia risk) in the same independent review. Note: the independent human pharmacology data show these are fairly consistent acute physiological effects, somewhat more concrete than the FDA's hedged 'potential effect' framing \u2014 worth noting but not an overstatement in the packet, which correctly preserves FDA's own hedged language."
+      },
+      {
+        "claimId": "ghrp6-mechanism-ghrelin-mimetic-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5632578/",
+        "independentSourceFamily": "systematic review (independent of the Bowers 1998 primary paper and PubChem cited in this claim)",
+        "finding": "Independent review confirms GHRP-6 acts via the ghrelin receptor (GHS-R, distinct from the GHRH receptor) and that GHRP-6's GH-releasing action interacts closely with endogenous GHRH ('GHRH and GHRP synergistically stimulated GH release'), consistent with the Bowers 1998 GHRH-antagonist finding that GHRP-6's effect is substantially GHRH-dependent. No conflict; small single-study caveat in reviewFlags is appropriate and accurate (n=9)."
+      },
+      {
+        "claimId": "ghrp6-studied-use-oral-short-stature-001",
+        "verdict": "unresolved",
+        "independentSourceUrl": null,
+        "independentSourceFamily": null,
+        "finding": "Could not locate an independent source (systematic review, guideline, or a separate controlled human study) that reproduces or corroborates the specific 1995 Munoz/Ghigo finding (oral GHRP-6 comparable to IV GHRH in short-stature children; no arginine potentiation). Bibliographic searches only turned up the same study and a related-but-distinct paper (arginine potentiates oral GHRP-6 in elderly, not young, subjects) which neither confirms nor conflicts with the pediatric finding. Per the review contract this claim should stay review-gated on this specific point; the packet already discloses this appropriately in its reviewFlags (small n=13, single old study, not generalizable) and is not fieldAuthorityRequired, so this does not block promotion but the gap should be recorded rather than treated as closed."
+      },
+      {
+        "claimId": "ghrp6-efficacy-stroke-combination-rct-001",
+        "verdict": "unresolved",
+        "independentSourceUrl": "https://rpcec.sld.cu/en/by-sponsor/center-for-genetic-engineering-and-biotechnology",
+        "independentSourceFamily": "structured trial registry (Cuban Public Registry of Clinical Trials, RPCEC) \u2014 attempted, inconclusive",
+        "finding": "Attempted to independently verify via the Cuban clinical trials registry (the trial's home country) and via PMC full text; the registry's public sponsor listing did not surface a matching stroke+EGF+GHRP-6 entry (registry search may simply be incomplete/outdated rather than the trial not existing), and PMC's full text was blocked by a CAPTCHA wall. I could not independently corroborate or refute the specific reported SAE percentages (56.2% vs 30% vs 20%) or the 90/180-day functional trend from a source outside the Frontiers paper itself. Per the contract this stays review-gated; the packet's own caveats (small, open-label, non-blinded, preliminary, not generalizable, not for bodybuilding/anti-aging marketing) are appropriate and this is not a fieldAuthorityRequired claim, so it is not a blocker, but the gap should remain documented rather than closed."
+      },
+      {
+        "claimId": "ghrp6-evidence-gap-wellness-appetite-marketing-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5632578/",
+        "independentSourceFamily": "systematic review, plus independent paper-level primary literature (PubMed/goldfish study) confirming the cited animal evidence is real and species-correct",
+        "finding": "An independent systematic review of GH secretagogues corroborates the packet's careful compound-specific distinction: human appetite-stimulation data in the literature (e.g., ~35% increased food intake) is attributed specifically to GHRP-2, not GHRP-6 \u2014 for GHRP-6 the same review cites only a GH-secretion (not appetite) finding in obese subjects. This independently confirms there is no human controlled-trial evidence of GHRP-6-specific appetite/body-composition efficacy, matching the packet's claim. The cited goldfish appetite study was independently confirmed to exist and to be a real animal (Carassius auratus) model, correctly excluded from being treated as human evidence. Note: worth double-checking during any future update that this appetite-attribution distinction (GHRP-6 vs GHRP-2) is preserved precisely, since vendor/marketing pages routinely blur the two peptides."
+      }
+    ],
+    "promotionBlockers": [
+      "Safety-critical, fieldAuthorityRequired regulatory claim ghrp6-regulatory-compounding-risk-001 misstates the FDA route-of-administration detail: today's live FDA Category 2 table flags GHRP-2 specifically for injectable and nasal routes, but GHRP-6's own row/safety text says only 'certain routes of administration' with no injectable/nasal qualifier attached to its name -- the packet appears to have copied the GHRP-2 route detail onto the GHRP-6 claim. Must be corrected before publication.",
+      "Claims ghrp6-studied-use-oral-short-stature-001 and ghrp6-efficacy-stroke-combination-rct-001 remain unresolved after independent-family search (no corroborating review, registry, or separate study found); they are not fieldAuthorityRequired so this alone does not block promotion, but the gaps should stay documented in reviewFlags/ops.reviewReasons rather than marked resolved."
+    ],
+    "notes": [
+      "Direct live-fetch of the FDA Category 2 page today (2026-08-29) confirms GHRP-6 is still Category 2 (added 9/29/2023) and was NOT among the 12 peptides FDA removed from Category 2 in April 2026 (BPC-157, TB-500, Semax, Epitalon, MOTs-C, Melanotan II, GHK-Cu, KPV, DSIP, Dihexa, Selank, Ipamorelin) per independent secondary coverage (Orrick, Newtropin) -- so ops.reviewReasons' concern about needing reconfirmation at review time is resolved in the packet's favor except for the route-detail error noted above.",
+      "The 'authority-flag recalibrated 2026-08-29' reviewFlags text on the studied-use and efficacy claims is a self-assessment embedded in the packet by its own authoring pass, asserting these claims fall outside fieldAuthorityRequired scope. That self-assessment appears reasonable under the directive (the dosing mentioned is explicitly labeled research-protocol dosing, not a product-use recommendation) and I did not find grounds to overturn it, but a human reviewer should not accept a packet's own scope-narrowing note as dispositive without independent sign-off -- flagging for visibility rather than as a blocker.",
+      "No claim in the packet reads as medical advice or unsupported efficacy inflation; disclaimers ('not a use recommendation', 'must not be generalized to unsupervised gray-market use', 'not related to bodybuilding/anti-aging marketing') are consistently and appropriately applied.",
+      "conflicts[] is empty in the packet; based on this review it should arguably gain entries for the two unresolved claims (studied-use, stroke RCT) and for the route-detail discrepancy on the regulatory claim, per the directive's instruction to record gaps in conflicts/reviewFlags/ops.reviewReasons rather than silently closing them."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "hexarelin-identity-mechanism-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://pubchem.ncbi.nlm.nih.gov/compound/Hexarelin",
+        "independentSourceFamily": "structured-database (PubChem)",
+        "finding": "Independent PubChem fetch confirms Hexarelin/Examorelin (CID 6918297) is the synthetic hexapeptide with formula C47H58N12O6 and ghrelin/GHS-R1a receptor agonist activity, consistent with the packet's mechanism statement. sourceRefs were a primary paper + a vendor product page; PubChem is a materially different (structured-database) family."
+      },
+      {
+        "claimId": "hexarelin-efficacy-human-gh-dose-response-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://academic.oup.com/smr/article/6/1/45/6830782",
+        "independentSourceFamily": "systematic review (Sexual Medicine Reviews, PMID 28400207)",
+        "finding": "Independent systematic review of GH secretagogues corroborates the class's dose-dependent acute GH-releasing pharmacology and, notably, explicitly states 'few long-term, rigorously controlled studies have examined the efficacy and safety of GHSs' -- reinforcing the packet's own caveat that this is a single small acute PD study, not evidence of clinical benefit. No overstatement found. Note: could not independently re-verify the exact numeric Cmax figures (3.9/26.9/52.3/55.0 ng/mL) against a source outside the controlled-human-study family; those figures rely on the original Imbimbo 1994 paper only."
+      },
+      {
+        "claimId": "hexarelin-mechanism-cardiac-animal-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.sciencedirect.com/science/article/pii/S0753332220303577",
+        "independentSourceFamily": "paper-level primary literature (independent preclinical paper, different lab/model)",
+        "finding": "A second, independent paper ('Hexarelin targets neuroinflammatory pathways to preserve cardiac morphology and function in a mouse model of myocardial ischemia-reperfusion') corroborates a hexarelin cardioprotective mechanism -- but again only in a rodent (mouse) model. This strengthens confidence that the underlying preclinical signal is real and reproducible across labs/species-models, while confirming no human cardioprotection trial exists. The packet's 'preclinical only, not human evidence' framing is correct and should not be loosened."
+      },
+      {
+        "claimId": "hexarelin-regulatory-status-unapproved-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+        "independentSourceFamily": "regulator/label (live FDA page, fetched 2026-08-29)",
+        "finding": "Live re-fetch of the FDA Category 2 bulk drug substances list today (post the April 2026 listing changes referenced in the review brief) confirms hexarelin/examorelin still does NOT appear; current Category 2 GHRP-class entries are GHRP-2, GHRP-6, ibutamoren, ipamorelin, and kisspeptin-10 -- hexarelin is absent from all of them. The claim's 'not currently listed, re-check at review time' framing is accurate as of today. No FDA-approved product or PCAC document for hexarelin was found either, consistent with the packet."
+      },
+      {
+        "claimId": "hexarelin-regulatory-wada-prohibited-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://vada-testing.org/wp-content/uploads/2026/02/VADA-Prohibited-List-2026-.pdf",
+        "independentSourceFamily": "regulator/professional anti-doping body (VADA's 2026 Prohibited List transposition, independent of the Drugs.com mirror used in sourceRefs)",
+        "finding": "An independent anti-doping-authority transposition of the 2026 WADA Prohibited List (VADA) lists 'GH-releasing peptides (GHRPs) (e.g. alexamorelin, examorelin (hexarelin), GHRP-1, GHRP-2 ... GHRP-6)' under S2.2.4, corroborating the packet's claim via a source materially different from the cited Drugs.com mirror. Direct fetch of wada-ama.org itself was blocked by robots.txt, so the primary WADA document itself remains unconfirmed by direct read, but convergent independent secondary regulator mirrors (VADA, and NADA Austria's official transposition appearing in search results) resolve the gap adequately."
+      },
+      {
+        "claimId": "hexarelin-identity-external-ids-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.caymanchem.com/product/30716/hexarelin",
+        "independentSourceFamily": "structured database (Cayman Chemical reagent catalog, independent of PubChem and SCBT)",
+        "finding": "Independent chemical supplier database confirms CAS 140703-51-1 and molecular formula C47H58N12O6, matching the packet. UNII/RxNorm/DrugBank/ChEMBL remain unresolved as the packet itself flags -- this gap is honestly disclosed, not a defect."
+      },
+      {
+        "claimId": "hexarelin-evidence-gap-marketing-claims-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://academic.oup.com/smr/article/6/1/45/6830782",
+        "independentSourceFamily": "systematic review",
+        "finding": "Independent review confirms the evidence base for GH secretagogues generally is thin ('few long-term, rigorously controlled studies'), and current vendor/consumer pages found in fresh search (peptidesinsider.com, lotilabs.com, peptidepedia.org, etc.) continue to market hexarelin for recovery, fat loss, cardioprotection, anti-aging without citing human trials -- consistent with the packet's evidence-gap/misinformation-adjacent framing. No overstatement found in the packet's own language; it correctly refuses to convert these into benefit claims."
+      },
+      {
+        "claimId": "hexarelin-safety-hpa-axis-001",
+        "verdict": "needs-adjustment",
+        "independentSourceUrl": "https://academic.oup.com/smr/article/6/1/45/6830782",
+        "independentSourceFamily": "systematic review",
+        "finding": "Content is corroborated (independent review confirms GHS-class endocrine/safety effects are incompletely characterized long-term, consistent with the packet's cortisol/prolactin findings from Massoud 1996 and Rahim 1999). However, this is a safety-critical adverse-effect claim about pituitary-adrenal axis and prolactin stimulation, and the directive requires fieldAuthorityRequired=true for 'safety-critical' claims -- this claim is marked fieldAuthorityRequired:false. The claim's own reviewFlags contain a self-justifying note ('authority-flag recalibrated 2026-08-29 ... claimType adverse-effect is outside the directive's fieldAuthorityRequired scope') that argues around this rule rather than following it; the same recalibration language also appears on the efficacy claim. This reads as the packet overriding the directive's explicit safety-critical criterion rather than a legitimate independent-review finding, and should be corrected (set fieldAuthorityRequired:true for this claim) before promotion, regardless of the fact that no FDA label exists to check it against."
+      }
+    ],
+    "compoundName": "Hexarelin",
+    "slug": "hexarelin",
+    "recommendation": "request-changes",
+    "promotionBlockers": [
+      "hexarelin-safety-hpa-axis-001 (adverse-effect/cortisol/prolactin/HPA-axis claim) is marked fieldAuthorityRequired:false despite being a safety-critical claim, which the directive requires to be true; the packet's own 'authority-flag recalibrated 2026-08-29' reviewFlag text argues around this rule rather than complying with it -- this metadata must be corrected to fieldAuthorityRequired:true before publication, independent of the (confirmed) underlying content accuracy.",
+      "The primary wada-ama.org Prohibited List document could not be directly fetched (blocked by robots.txt) during this review; the WADA-prohibited claim is corroborated only via independent secondary anti-doping-body mirrors (VADA, NADA Austria), not the primary source itself -- acceptable but should be noted as a residual gap rather than treated as fully closed.",
+      "cardioprotection-species conflict (hexarelin-conflict-cardioprotection-species-001) remains open and correctly so: no human cardioprotection trial for hexarelin was located in this review either; must stay human-review-gated and must not be promoted with any wording implying human cardioprotective benefit.",
+      "UNII, RxNorm, DrugBank, and ChEMBL identifiers remain unresolved (packet already discloses this gap; carry forward, do not resolve by inference)."
+    ],
+    "notes": [
+      "All fieldAuthorityRequired regulatory claims (FDA Category-2 absence, WADA S2.2.4 listing) were independently re-verified against live/current sources today (2026-08-29) and both hold up.",
+      "The packet is generally well-disciplined about not converting animal/in-vitro or acute-PD human data into efficacy or medical-advice claims; the evidence-gap and conflict entries correctly flag the vendor marketing overreach on cardioprotection and other benefits.",
+      "The recurring 'authority-flag recalibrated 2026-08-29' language across two claims (efficacy and adverse-effect) is a governance concern worth a human reviewer's attention: it is the packet post-hoc reasoning its way out of the directive's fieldAuthorityRequired criteria rather than the criteria being applied by the extraction rules. This pattern should be checked across other compound packets from the same 2026-08-29 authority-support pass, not just this one.",
+      "Two independent primary papers (Ghigo et al. 1997 comparing GHRP-2/hexarelin effects on GH/PRL/ACTH/cortisol; a second mouse cardioprotection study) surfaced during this review are good candidates to add to the packet's sourceRefs to strengthen the evidence base, though they were not required to reach a verdict."
+    ]
+  },
+  {
+    "claimVerdicts": [
+      {
+        "claimId": "maridebart-mechanism-bispecific-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://en.wikipedia.org/wiki/Maridebart_cafraglutide",
+        "independentSourceFamily": "encyclopedic/tertiary summary of primary literature",
+        "finding": "sourceRefs used sponsor-communication (Amgen PR) + structured-database (DrugBank). Independent Wikipedia entry independently describes maridebart cafraglutide as 'an agonist of the GLP-1 receptor (GLP-1R) and an antagonist of the glucose-dependent insulinotropic polypeptide receptor (GIPR)... a monoclonal antibody against GIPR conjugated to two peptidic GLP-1R agonist molecules via amino acid linkers' \u2014 matches the packet's mechanism statement essentially verbatim, including the bispecific antibody-peptide architecture. No overstatement found."
+      },
+      {
+        "claimId": "maridebart-regulatory-investigational-status-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.maritimestudy.com/",
+        "independentSourceFamily": "clinical-trial program site / absence-check against live FDA.gov and DailyMed (regulator family)",
+        "finding": "Re-ran the live FDA.gov and DailyMed searches today (2026-08-29, per directive's instruction to re-check regulator listings that changed in April 2026): no FDA, DailyMed, or EMA record exists for maridebart cafraglutide/MariTide/AMG 133, confirming the claim's core assertion that no approved indication exists. Independently, maritimestudy.com (Amgen's dedicated MARITIME program site, a materially different source than the cited nct06858839 registry entry and amgen-story press page) confirms the Phase 3 structure described in the claim: MARITIME-1 (overweight/obesity) and MARITIME-2 (T2D) are 'Active, not recruiting,' with MARITIME-CV, MARITIME-HF, and MARITIME-OSA now actively recruiting \u2014 matching the claim's description of additional cardiovascular/heart-failure/OSA studies. The packet's own extensive documented search-and-gap process satisfies the directive's fallback rule (no independent regulator source exists; the gap is properly recorded, not glossed over)."
+      },
+      {
+        "claimId": "maridebart-efficacy-phase2-weightloss-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.ajmc.com/view/weight-loss-drug-maridebart-cafraglutide-shows-efficacy-in-phase-2-trial",
+        "independentSourceFamily": "professional clinical-news secondary reporting (independently corroborated by HCPLive)",
+        "finding": "AJMC and HCPLive (independent professional medical-news sources, distinct from the cited PubMed abstract and Amgen PR) both report the identical ITT figures: obesity-only cohort -12.3% to -16.2% vs -2.5% placebo; obesity+T2D cohort -8.4% to -12.3% vs -1.7% placebo; HbA1c -1.2 to -1.6 points vs 0.1 placebo. All numbers in the claim check out exactly. Note: AJMC clarifies that the higher 'up to ~20%'/'up to 17%' figures (also cited from the Amgen PR in the packet's evidence) come from a separate 'efficacy estimand' (on-treatment, not intention-to-treat) \u2014 the packet blends both estimands in the same sentence/evidence list without explicitly flagging that the ITT and efficacy-estimand numbers are different endpoints; a brief clarifying phrase distinguishing 'treatment-policy/ITT' vs 'efficacy estimand' figures would remove any ambiguity, though nothing here is factually wrong or medical-advice-adjacent."
+      },
+      {
+        "claimId": "maridebart-dose-context-phase2-regimen-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.ajmc.com/view/weight-loss-drug-maridebart-cafraglutide-shows-efficacy-in-phase-2-trial",
+        "independentSourceFamily": "professional clinical-news secondary reporting (independent of cited PubMed + sponsor PR)",
+        "finding": "AJMC and HCPLive independently confirm the 140/280/420 mg every-4-weeks and 420 mg every-8-weeks dosing arms with multiple dose-escalation schedules. Independent regulator check (FDA.gov/DailyMed, today) confirms no approved/labeled dose exists, matching the claim's explicit disclaimer language. Correctly kept fieldAuthorityRequired-gated and framed as protocol-only, not a use recommendation."
+      },
+      {
+        "claimId": "maridebart-adverse-effect-gi-discontinuation-001",
+        "verdict": "confirmed-with-note",
+        "independentSourceUrl": "https://www.ajmc.com/view/weight-loss-drug-maridebart-cafraglutide-shows-efficacy-in-phase-2-trial",
+        "independentSourceFamily": "professional clinical-news secondary reporting (independent of cited PubMed + sponsor PR); cross-checked against Patient Care Online",
+        "finding": "Safety-critical, checked first. AJMC independently reports 'dose escalation group GI-related discontinuation: 8%' and overall AE rate 93.5%, which corroborates the packet's '<8% GI-related' figure and the qualitative claim that GI events were the most common AE, milder/less frequent with dose escalation, and no unexpected safety signals emerged (also independently corroborated by Patient Care Online and the maritimestudy.com program page). Note: the packet's specific '~11% discontinuation due to any AE' figure traces only to the sponsor PR \u2014 no independent source I found restates that exact number verbatim (AJMC instead breaks discontinuation out by subgroup: 12%-17% in no-escalation arms), so that precise composite figure remains sponsor-sourced even though the directionally-consistent, more granular independent breakdown supports the same overall safety picture. Recommend citing the AJMC subgroup breakdown alongside the sponsor figure for a fully independent-sourced number, but nothing here overstates safety or reads as medical advice."
+      },
+      {
+        "claimId": "maridebart-misinformation-premature-sale-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://meridianmedicalcentre.com/product/amgen-maritide/",
+        "independentSourceFamily": "live re-fetch of the vendor page itself (independent recheck against reviewFlags' volatility warning) + independent regulatory-status confirmation",
+        "finding": "Live re-fetch today confirms meridianmedicalcentre.com still lists 'MariTide' at $1,300.00 with 'Buy From The Official Website' language, and (per the page's own text) simultaneously acknowledges the drug is still in Phase 3 trials without FDA approval \u2014 an internal contradiction that corroborates the claim's characterization as illegitimate/premature marketing. Cross-checked against the independently-confirmed investigational-only regulatory status (no FDA/DailyMed record). The packet correctly treats this as misinformation-claim/consumer-safety-concern rather than fact."
+      },
+      {
+        "claimId": "maridebart-evidence-gap-longterm-outcomes-001",
+        "verdict": "confirmed",
+        "independentSourceUrl": "https://www.maritimestudy.com/",
+        "independentSourceFamily": "clinical-trial program status page (independent of cited PubMed + sponsor content)",
+        "finding": "Independent search today found no published MARITIME Phase 3 primary results; maritimestudy.com shows MARITIME-1/2 as 'Active, not recruiting' (ongoing, not completed/reported) and lists no results. This confirms the claim that human evidence remains limited to the single Phase 2 trial with no completed Phase 3, long-term, or cardiovascular/renal outcomes data yet."
+      }
+    ],
+    "compoundName": "Maridebart cafraglutide",
+    "notes": [
+      "All 3 fieldAuthorityRequired claims (regulatory status, dose-context, adverse-effect/discontinuation) were independently re-verified against materially different source families (live FDA.gov/DailyMed regulator check, independent professional clinical-news reporting distinct from the cited PubMed+sponsor-PR pairing) and hold up.",
+      "The packet's own extensive, dated (2026-08-29) documentation of 'searched and not found' regulator sources for the regulatory/dose/adverse-effect claims exactly matches what my independent re-search today also found \u2014 no FDA, DailyMed, or EMA record exists for this compound. This is the correct honest outcome per the directive's fallback rule, not a gap that independent research could close.",
+      "One nuance worth recording: the efficacy claim mixes an intention-to-treat estimand (-12.3% to -16.2% / -8.4% to -12.3%) with an 'efficacy estimand' figure from the Amgen PR ('up to ~20%') in the same evidence bundle without labeling which is which; recommend a one-clause clarification distinguishing the two estimands.",
+      "The precise '~11% discontinuation due to any AE' figure in the adverse-effect claim remains sponsor-PR-only; independent sources corroborate the GI-specific <8% figure and the overall safety narrative but report discontinuation by different subgroup cuts (8% vs 12%-17%) rather than restating the exact composite number.",
+      "Live re-fetch of the vendor marketing page (meridianmedicalcentre.com) today confirms it is still active and still selling at $1,300 with 'Buy From The Official Website' language \u2014 the reviewFlags' warning that this content is volatile and needs reverification at review time was correctly flagged and today's recheck confirms it is unchanged.",
+      "The packet's ops.needsReview=true flag (human sign-off requirement for expansion-batch packets) is a workflow gate, not an evidence defect; independent verification found no needs-adjustment items, so from an evidence-quality standpoint the packet is ready, but the standard human sign-off step should still formally occur before publication."
+    ],
+    "promotionBlockers": [],
+    "recommendation": "approve-claims",
+    "slug": "maridebart-cafraglutide"
+  }
+]
