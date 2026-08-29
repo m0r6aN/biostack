@@ -1,38 +1,364 @@
 {
   "schemaVersion": "1.0.0",
   "recordType": "compound-evidence-packet",
-  "packet": { "packetId": "vitamin-d3-evidence-pilot-001", "category": "core-supplements", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "packet": {
+    "packetId": "vitamin-d3-evidence-expansion-001",
+    "category": "core-supplements",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T04:46:26Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
   "compound": {
     "canonicalName": "Vitamin D3",
-    "aliases": ["Cholecalciferol", "Vitamin D"],
-    "classification": "Vitamin",
-    "compoundFamily": "Secosteroid vitamin",
-    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "67-97-0", "drugbank": null, "pubchem": "5280795", "chembl": null, "doi": null, "pmid": null }
+    "aliases": [
+      "Cholecalciferol",
+      "Colecalciferol"
+    ],
+    "classification": "Fat-soluble vitamin / secosteroid (dietary supplement; also marketed as an OTC and prescription-strength product)",
+    "compoundFamily": "Vitamin D (D3 form, distinct from plant-derived D2/ergocalciferol)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "1C6V77QF41",
+      "casNumber": "67-97-0",
+      "drugbank": "DB00169",
+      "pubchem": "5280795",
+      "chembl": "CHEMBL1042",
+      "doi": null,
+      "pmid": null
+    }
   },
   "sources": [
-    { "sourceId": "pubchem-vitamin-d3", "sourceType": "database", "authorityTier": "C1", "title": "PubChem Compound Summary for Vitamin D3", "publisher": "National Center for Biotechnology Information", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/5280795", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
-    { "sourceId": "nih-ods-vitamin-d-hp", "sourceType": "medical-summary", "authorityTier": "C2", "title": "Vitamin D - Health Professional Fact Sheet", "publisher": "NIH Office of Dietary Supplements", "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" }
+    {
+      "sourceId": "dailymed-cholecalciferol-25mcg-tab",
+      "sourceType": "regulator-label",
+      "authorityTier": "A2",
+      "title": "CHOLECALCIFEROL 25MCG TAB - cholecalciferol tablet (DailyMed structured product label)",
+      "publisher": "U.S. National Library of Medicine DailyMed / FDA Structured Product Labeling",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ef102aff-a775-4f99-b90d-53507e24a558",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "nih-ods-vitamind-health-professional",
+      "sourceType": "professional-guidance",
+      "authorityTier": "A1",
+      "title": "Vitamin D: Fact Sheet for Health Professionals",
+      "publisher": "National Institutes of Health, Office of Dietary Supplements (ODS)",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "uspstf-vitamind-calcium-fracture-fall-prevention",
+      "sourceType": "professional-guidance",
+      "authorityTier": "A1",
+      "title": "Vitamin D, Calcium, or Combined Supplementation for the Primary Prevention of Fractures in Community-Dwelling Adults: Final Recommendation Statement (and related falls-prevention recommendation)",
+      "publisher": "U.S. Preventive Services Task Force",
+      "url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/vitamin-d-calcium-or-combined-supplementation-for-the-primary-prevention-of-fractures-in-adults-preventive-medication",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "tctmd-vital-trial-summary-2018",
+      "sourceType": "science-media-summary-of-rct",
+      "authorityTier": "B2",
+      "title": "VITAL: No Benefits to Vitamin D and Omega-3s in Reducing Major CV Events, Cancer (reporting on the NEJM VITAL trial, Manson JE et al. 2019)",
+      "publisher": "TCTMD",
+      "url": "https://www.tctmd.com/news/vital-no-benefits-vitamin-d-and-omega-3s-reducing-major-cv-events-cancer",
+      "doi": "10.1056/NEJMoa1809944",
+      "pmid": "30415629",
+      "publishedAt": "2018-11-10T00:00:00Z",
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "cidrap-vitamind-covid-trial-2025",
+      "sourceType": "science-media-summary-of-rct",
+      "authorityTier": "B2",
+      "title": "Vitamin D supplements don't cut COVID health care use, symptom severity, trial shows",
+      "publisher": "CIDRAP, University of Minnesota",
+      "url": "https://www.cidrap.umn.edu/covid-19/vitamin-d-supplements-don-t-cut-covid-health-care-use-symptom-severity-trial-shows",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "pubchem-cid-5280795",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Vitamin D3 / Cholecalciferol (CID 5280795)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Cholecalciferol",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T04:46:26Z"
+    }
   ],
   "claims": [
     {
-      "claimId": "vitamin-d3-identity-pubchem-001", "claimType": "identity", "statement": "Vitamin D3 is cholecalciferol, indexed by PubChem as CID 5280795 and associated with CAS number 67-97-0.",
-      "context": { "population": null, "route": null, "formulation": null, "useCase": "identity resolution", "doseText": null },
-      "evidenceTier": "Unknown", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-vitamin-d3"],
-      "extractedEvidence": [{ "sourceRef": "pubchem-vitamin-d3", "quote": null, "pageOrSection": "Compound summary" }], "reviewFlags": []
+      "claimId": "vitamind3-regulatory-supplement-status-001",
+      "claimType": "regulatory",
+      "statement": "Cholecalciferol (Vitamin D3) is marketed in the U.S. predominantly as an unapproved-as-drug dietary supplement under DailyMed structured product labeling; the reviewed label carries no dedicated FDA-reviewed 'Indications' section and directs dosing and any medical use to a physician, consistent with dietary-supplement (not new-drug) regulatory status for this specific product.",
+      "context": {
+        "population": "adults and children per label instructions",
+        "route": "oral",
+        "formulation": "25 mcg (1000 IU) tablet, OTC dietary supplement",
+        "useCase": "regulatory classification / label content",
+        "doseText": "Label states: 'Adults 18 years or older: 25 mcg (1 tablet) daily preferably with a meal or as directed by your doctor. Persons under 18 years of age: Consult your doctor.' (label text, not a clinical recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-cholecalciferol-25mcg-tab"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-cholecalciferol-25mcg-tab",
+          "quote": "Adults 18 years or older: 25 mcg (1 tablet) daily preferably with a meal or as directed by your doctor. Persons under 18 years of age: Consult your doctor.",
+          "pageOrSection": "Dosage and Administration / Directions"
+        },
+        {
+          "sourceRef": "dailymed-cholecalciferol-25mcg-tab",
+          "quote": "Do not exceed recommended dosage. Consult your physician before taking this product if you have vascular disease (such as heart disease or history of stroke) or diabetes, are pregnant or nursing, taking medication, facing surgery, have bleeding problems, or undergoing any treatment which may affect the ability of blood to clot.",
+          "pageOrSection": "Warnings"
+        }
+      ],
+      "reviewFlags": [
+        "product-specific label; other cholecalciferol SKUs on DailyMed (prescription-strength, combination, or drug-classified products) may carry different labeling and must not be assumed identical",
+        "verify at review time whether any cholecalciferol product currently holds FDA-approved drug status distinct from this dietary-supplement SKU"
+      ]
     },
     {
-      "claimId": "vitamin-d3-d2-d3-distinction-001", "claimType": "mechanism", "statement": "NIH ODS distinguishes vitamin D2 and vitamin D3 as supplemental forms and notes that both can raise serum 25-hydroxyvitamin D, with evidence that D3 can increase levels more than D2.",
-      "context": { "population": "general nutrition context", "route": "oral", "formulation": "cholecalciferol", "useCase": "vitamin D status", "doseText": null },
-      "evidenceTier": "Moderate", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["nih-ods-vitamin-d-hp"],
-      "extractedEvidence": [{ "sourceRef": "nih-ods-vitamin-d-hp", "quote": null, "pageOrSection": "Dietary supplements" }], "reviewFlags": ["avoid personalized lab or dosing interpretation"]
+      "claimId": "vitamind3-mechanism-calcium-bone-001",
+      "claimType": "mechanism",
+      "statement": "Vitamin D (including the D3/cholecalciferol form) functions physiologically to promote intestinal calcium absorption and maintain serum calcium and phosphate concentrations needed for normal bone mineralization, growth, and remodeling.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "cholecalciferol / vitamin D generally",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "nih-ods-vitamind-health-professional",
+        "pubchem-cid-5280795"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nih-ods-vitamind-health-professional",
+          "quote": "Vitamin D promotes calcium absorption in the gut and maintains adequate serum calcium and phosphate concentrations to enable normal bone mineralization.",
+          "pageOrSection": "Overview / Function"
+        }
+      ],
+      "reviewFlags": []
     },
     {
-      "claimId": "vitamin-d3-evidence-gap-labs-001", "claimType": "evidence-gap", "statement": "BioStack should keep vitamin D status, lab interpretation, deficiency claims, toxicity claims, and product-dose claims separate from basic identity and physiology summaries.",
-      "context": { "population": null, "route": "oral", "formulation": null, "useCase": "lab and safety boundary", "doseText": null },
-      "evidenceTier": "Insufficient", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["nih-ods-vitamin-d-hp"],
-      "extractedEvidence": [{ "sourceRef": "nih-ods-vitamin-d-hp", "quote": null, "pageOrSection": "Health professional fact sheet" }], "reviewFlags": ["lab interpretation and toxicity content require stronger review gates"]
+      "claimId": "vitamind3-dose-context-rda-ul-001",
+      "claimType": "dose-context",
+      "statement": "NIH Office of Dietary Supplements lists the adult Recommended Dietary Allowance for vitamin D as 15 mcg (600 IU)/day for ages 19-70 and 20 mcg (800 IU)/day for ages over 70, with a Tolerable Upper Intake Level of 100 mcg (4,000 IU)/day for adults; serum 25-hydroxyvitamin D below 30 nmol/L (12 ng/mL) is associated with deficiency, while levels above 125 nmol/L (50 ng/mL) are linked to potential adverse effects. This is reference-intake and safety-threshold context, not a treatment dose recommendation.",
+      "context": {
+        "population": "general adult population, U.S. reference intakes",
+        "route": "oral",
+        "formulation": "vitamin D (D2 or D3)",
+        "useCase": "reference intake / upper safety limit context",
+        "doseText": "RDA 15 mcg (600 IU)/day (19-70y), 20 mcg (800 IU)/day (>70y); UL 100 mcg (4,000 IU)/day for adults (NIH ODS reference values, not an individualized recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "nih-ods-vitamind-health-professional"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nih-ods-vitamind-health-professional",
+          "quote": "RDAs for vitamin D are listed in both micrograms (mcg) and International Units (IU); 1 mcg vitamin D is equal to 40 IU.",
+          "pageOrSection": "Recommended Intakes table"
+        }
+      ],
+      "reviewFlags": [
+        "dosing/reference-intake claim requires field authority sign-off before publication",
+        "confirm no revision to RDA/UL values at review time"
+      ]
+    },
+    {
+      "claimId": "vitamind3-efficacy-vital-cancer-cvd-negative-001",
+      "claimType": "efficacy",
+      "statement": "In the VITAL trial, a large randomized placebo-controlled trial (NEJM 2019, Manson et al.) in initially healthy U.S. adults, daily supplementation with high-dose vitamin D for 5 years did not reduce the incidence of cancer or major cardiovascular events, nor did it show benefit across a wide range of secondary endpoints including myocardial infarction, stroke, cardiovascular death, or all-cause mortality; a subgroup finding of possibly lower cancer risk in normal-BMI participants was characterized as hypothesis-generating rather than confirmatory.",
+      "context": {
+        "population": "initially healthy U.S. adults (VITAL trial cohort)",
+        "route": "oral",
+        "formulation": "high-dose vitamin D3 (per VITAL trial protocol)",
+        "useCase": "primary prevention of cancer and cardiovascular disease (investigated, not supported)",
+        "doseText": "Trial protocol dosing per VITAL study design (not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "tctmd-vital-trial-summary-2018"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "tctmd-vital-trial-summary-2018",
+          "quote": "Daily supplementation with high-dose vitamin D for 5 years among initially healthy adults in the United States did not reduce the incidence of cancer or major cardiovascular events.",
+          "pageOrSection": "Article body, summarizing NEJM VITAL trial results"
+        },
+        {
+          "sourceRef": "tctmd-vital-trial-summary-2018",
+          "quote": "no differences were seen across a wide range of secondary endpoints, including an expanded composite primary endpoint (that included revascularization), myocardial infarction, stroke, cardiovascular death, death from any cause, and a range of cancers and cancer death",
+          "pageOrSection": "Article body"
+        }
+      ],
+      "reviewFlags": [
+        "quotes sourced from a secondary media summary of the NEJM article; original NEJM/PubMed full text was inaccessible this session (blocked by CAPTCHA/403) and should be independently re-verified against the primary paper at review time",
+        "do not extrapolate this negative primary-prevention finding to deficiency-correction or musculoskeletal endpoints, which VITAL was not primarily designed to test"
+      ]
+    },
+    {
+      "claimId": "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
+      "claimType": "efficacy",
+      "statement": "USPSTF recommends against daily supplementation with 400 IU or less of vitamin D (with 1000 mg or less of calcium) for primary prevention of fractures in postmenopausal women (Grade D), finds current evidence insufficient to assess the balance of benefits and harms for fracture prevention in men and premenopausal women (Grade I), and separately recommends against vitamin D supplementation to prevent falls in community-dwelling older adults (Grade D).",
+      "context": {
+        "population": "community-dwelling adults, primarily postmenopausal women and older adults without known osteoporosis or vitamin D deficiency",
+        "route": "oral",
+        "formulation": "vitamin D supplementation (with or without calcium), primary-prevention dosing",
+        "useCase": "primary prevention of fractures and falls",
+        "doseText": "USPSTF evaluated regimens of 400 IU/day or less vitamin D (plus 1000 mg or less calcium) for the fracture recommendation; this is a population-level guideline finding, not an individual dosing instruction"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "uspstf-vitamind-calcium-fracture-fall-prevention"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "uspstf-vitamind-calcium-fracture-fall-prevention",
+          "quote": "recommends against \"daily supplementation with 400 IU or less of vitamin D and 1000 mg or less of calcium\"",
+          "pageOrSection": "Final Recommendation Statement, postmenopausal women"
+        },
+        {
+          "sourceRef": "uspstf-vitamind-calcium-fracture-fall-prevention",
+          "quote": "current evidence is insufficient",
+          "pageOrSection": "Final Recommendation Statement, men and premenopausal women"
+        },
+        {
+          "sourceRef": "uspstf-vitamind-calcium-fracture-fall-prevention",
+          "quote": "recommends against vitamin D supplementation to prevent falls in community-dwelling older adults",
+          "pageOrSection": "Related falls-prevention recommendation"
+        }
+      ],
+      "reviewFlags": [
+        "USPSTF recommendation is population/primary-prevention specific and does not address treatment of diagnosed deficiency or osteoporosis, which is a materially different clinical context",
+        "confirm this remains the current, non-superseded USPSTF recommendation at review time"
+      ]
+    },
+    {
+      "claimId": "vitamind3-evidence-gap-immune-covid-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Vitamin D3 is widely marketed and popularly used for 'immune support,' mood/depression, and general wellness, but controlled human evidence for these specific popular use cases is weak, mixed, or negative: NIH's own fact sheet notes clinical trials show no significant reduction in depression symptoms after supplementation despite observational associations, and a randomized trial reported in CIDRAP found high-dose vitamin D did not reduce COVID-19 severity, symptom burden, or health-care use, with only a non-significant trend toward lower long-COVID prevalence. Popular marketing claims of proven immune-boosting or mood-lifting benefit are not supported by this controlled evidence.",
+      "context": {
+        "population": "general supplement-using public exposed to online 'immune support' and mood marketing claims",
+        "route": "oral",
+        "formulation": "vitamin D3, various OTC doses",
+        "useCase": "popular marketing claims: immune support, depression/mood, COVID-19 prevention or severity reduction",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "nih-ods-vitamind-health-professional",
+        "cidrap-vitamind-covid-trial-2025"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nih-ods-vitamind-health-professional",
+          "quote": "no significant reduction in symptoms after supplementation with vitamin D",
+          "pageOrSection": "Depression section"
+        },
+        {
+          "sourceRef": "cidrap-vitamind-covid-trial-2025",
+          "quote": "The monthly cumulative incidence of health care use in index patients didn't differ significantly between the 863 vitamin D3 and 884 placebo recipients.",
+          "pageOrSection": "Article body"
+        },
+        {
+          "sourceRef": "cidrap-vitamind-covid-trial-2025",
+          "quote": "While we didn't find that high-dose vitamin D reduced COVID severity or hospitalizations, we observed a promising signal for long COVID that merits additional research.",
+          "pageOrSection": "Article body, quoting senior author JoAnn Manson"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: online 'immune support' and mood marketing for vitamin D outpaces the controlled human evidence base",
+        "long-COVID signal was described as nonsignificant/borderline in the underlying trial and should not be presented as an established benefit",
+        "capture immune-function mechanistic claims (vitamin D receptor in immune cells) separately from clinical outcome claims if added in a future revision"
+      ]
+    },
+    {
+      "claimId": "vitamind3-adverse-effect-hypercalcemia-toxicity-001",
+      "claimType": "adverse-effect",
+      "statement": "Excess vitamin D intake, generally from supplements rather than diet or sun exposure, can raise serum 25-hydroxyvitamin D above thresholds associated with adverse effects (per NIH ODS, above 125 nmol/L / 50 ng/mL is linked to potential harm), and the reviewed cholecalciferol product label warns against exceeding the recommended dose and instructs consultation with a physician for people with vascular disease, diabetes, pregnancy/nursing status, or bleeding/anticoagulation concerns before use.",
+      "context": {
+        "population": "supplement users, particularly those combining multiple vitamin D-containing products or exceeding label dosing",
+        "route": "oral",
+        "formulation": "cholecalciferol supplements, various doses",
+        "useCase": "toxicity / excess-intake safety context",
+        "doseText": "Adverse-effect risk threshold cited at serum 25(OH)D >125 nmol/L (>50 ng/mL); label states 'Do not exceed recommended dosage' (safety context, not a treatment protocol)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "nih-ods-vitamind-health-professional",
+        "dailymed-cholecalciferol-25mcg-tab"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nih-ods-vitamind-health-professional",
+          "quote": "Linked to potential adverse effects",
+          "pageOrSection": "Serum 25(OH)D concentration and health status table, >125 nmol/L (>50 ng/mL) row"
+        },
+        {
+          "sourceRef": "dailymed-cholecalciferol-25mcg-tab",
+          "quote": "Do not exceed recommended dosage. Consult your physician before taking this product if you have vascular disease (such as heart disease or history of stroke) or diabetes, are pregnant or nursing, taking medication, facing surgery, have bleeding problems, or undergoing any treatment which may affect the ability of blood to clot.",
+          "pageOrSection": "Warnings"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim requiring field authority sign-off",
+        "hypercalcemia mechanism and symptom detail not independently sourced this session from a clinical-toxicology reference; add at review time"
+      ]
     }
   ],
   "conflicts": [],
-  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot evidence packet has not received human review."], "qualityFlags": ["pilot-input", "no-safety-canonicalization"] }
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Primary NEJM/PubMed full text for the VITAL trial was inaccessible this session (CAPTCHA/403 blocks); the efficacy claim currently rests on a secondary media summary (TCTMD) and should be re-verified against the original NEJM article and/or PMC full text at review time.",
+      "RxNorm identifier not resolved this session.",
+      "Confirm USPSTF and NIH ODS reference values/recommendations have not been superseded since fetch date.",
+      "Multiple distinct cholecalciferol product labels exist on DailyMed (OTC supplement SKUs, combination products, and possibly prescription-strength products); only one representative OTC label was reviewed, and label content should not be assumed uniform across SKUs."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "otc-dietary-supplement-not-fda-approved-drug",
+      "negative-human-rct-documented",
+      "professional-guidance-recommends-against-primary-prevention-use",
+      "marketing-evidence-gap-documented"
+    ]
+  }
 }
