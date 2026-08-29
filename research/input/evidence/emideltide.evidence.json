@@ -1,0 +1,336 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "emideltide-evidence-expansion-001",
+    "category": "nootropics-sleep",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T02:21:10Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Emideltide",
+    "aliases": [
+      "DSIP",
+      "Delta sleep-inducing peptide",
+      "Delta-sleep inducing peptide"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Nonapeptide neuropeptide (delta sleep-inducing peptide family)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "68816",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-pcac-briefing-193344-emideltide",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting, July 23-24, 2026 (emideltide/DSIP evaluation)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/193344/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-07-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "fda-pcac-calendar-july2026",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "July 23-24, 2026: Meeting of the Pharmacy Compounding Advisory Committee",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "schneider-1992-double-blind-insomnia",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Effects of delta sleep-inducing peptide on sleep of chronic insomniac patients. A double-blind study",
+      "publisher": "PubMed (Schneider-Helmert D, et al., 1992)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1299794/",
+      "doi": null,
+      "pmid": "1299794",
+      "publishedAt": "1992-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "pubmed-6391926-open-trial",
+      "sourceType": "human-study",
+      "authorityTier": "B3",
+      "title": "A clinical trial with DSIP",
+      "publisher": "PubMed",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/6391926/",
+      "doi": null,
+      "pmid": "6391926",
+      "publishedAt": "1984-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "pubchem-cid-68816",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Delta Sleep-Inducing Peptide, CID 68816",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/68816",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "emideltide-mechanism-delta-eeg-001",
+      "claimType": "mechanism",
+      "statement": "Emideltide (DSIP) is a nonapeptide theorized to promote a sleep state characterized by an increase in the delta rhythm of the EEG, with proposed action through accentuation of the circadian wake-sleep rhythm; this mechanistic characterization comes from FDA's synthesis of the historical DSIP literature rather than from confirmed modern pharmacology.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "emideltide (free base and acetate)",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-193344-emideltide",
+        "pubchem-cid-68816"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193344-emideltide",
+          "quote": "promotes a particular type of sleep which is characterized by an increase in the delta rhythm of the EEG",
+          "pageOrSection": "Background/mechanism discussion"
+        }
+      ],
+      "reviewFlags": [
+        "mechanism claim relies on decades-old literature synthesized secondhand in the 2026 FDA briefing; primary mechanistic studies not independently pulled"
+      ]
+    },
+    {
+      "claimId": "emideltide-regulatory-not-characterized-503a-001",
+      "claimType": "regulatory",
+      "statement": "Emideltide is not a component of any FDA-approved drug and has no applicable USP/NF drug substance monograph; in its July 2026 Pharmacy Compounding Advisory Committee briefing, FDA states the evaluation criteria weigh against placing both emideltide (free base) and emideltide acetate on the 503A Bulks List of substances eligible for compounding.",
+      "context": {
+        "population": "prospective compounded-product users in the United States",
+        "route": null,
+        "formulation": "emideltide free base and acetate",
+        "useCase": "regulatory evaluation for 503A compounding eligibility",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-193344-emideltide",
+        "fda-pcac-calendar-july2026"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193344-emideltide",
+          "quote": "There is no applicable United States Pharmacopeeia (USP) or National Formulary (NF) drug substance monograph for emideltide (free base) or its acetate form, and neither is a component of an FDA-approved drug.",
+          "pageOrSection": "Regulatory status discussion"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193344-emideltide",
+          "quote": "we believe the evaluation criteria weigh against placing both emideltide (free base) and emideltide acetate on the...503A Bulks List",
+          "pageOrSection": "Introduction/conclusion"
+        },
+        {
+          "sourceRef": "fda-pcac-calendar-july2026",
+          "quote": "Emideltide (also referred to as delta sleeping inducing peptide (DSIP))-related bulk drug substances",
+          "pageOrSection": "Meeting agenda, July 24, 2026 session"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "confirm final PCAC committee vote/outcome versus this pre-meeting briefing-document position at review time",
+        "confirm whether emideltide is added to or excluded from any FDA Category list following the July 2026 meeting"
+      ]
+    },
+    {
+      "claimId": "emideltide-warning-immunogenicity-characterization-001",
+      "claimType": "warning",
+      "statement": "FDA's briefing document characterizes emideltide (free base) as not well-characterized physically/chemically, citing inconsistent nomenclature and missing critical impurity, aggregate, and endotoxin testing data, and states FDA is concerned about immunogenicity potential when emideltide is formulated as an injectable for subcutaneous administration due to potential peptide aggregation.",
+      "context": {
+        "population": "users of compounded or gray-market injectable emideltide",
+        "route": "subcutaneous (injectable formulations under FDA review)",
+        "formulation": "emideltide free base, injectable",
+        "useCase": "product quality and immunogenicity safety concern",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-193344-emideltide"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193344-emideltide",
+          "quote": "Emideltide (free base) is considered not well-characterized from the physical and chemical characterization perspectives based on (1) inconsistent naming conventions that do not follow established chemical nomenclature standards (e.g., USAN, INN, IUPAC), and (2) certain critical characterization data specific to emideltide (free base), including specific tests for impurities, aggregates, and endotoxins, were not found.",
+          "pageOrSection": "Physical/chemical characterization section"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193344-emideltide",
+          "quote": "FDA is concerned about the potential for immunogenicity of emideltide (free base) when formulated in an injectable dosage form for SC administration due to the potential for peptide aggregation.",
+          "pageOrSection": "Safety concerns section"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical, product-quality-dependent finding; risk level depends on specific manufacturer/compounder practices not assessed here"
+      ]
+    },
+    {
+      "claimId": "emideltide-efficacy-insomnia-inconclusive-001",
+      "claimType": "efficacy",
+      "statement": "Human evidence for emideltide/DSIP in chronic insomnia is limited and inconclusive: FDA's review of the historical clinical literature concludes short-term IV DSIP showed effects on disturbed sleep but results were 'inconclusive and at best preliminary,' and a double-blind, matched-pairs study of 16 chronic insomniac patients found higher objective sleep efficiency and shorter sleep latency with IV DSIP (25 nmol/kg) versus placebo, but the authors concluded short-term DSIP treatment of chronic insomnia is not likely to be of major therapeutic benefit.",
+      "context": {
+        "population": "adult chronic insomnia patients (n=16 in the double-blind study)",
+        "route": "intravenous",
+        "formulation": "DSIP",
+        "useCase": "chronic insomnia (investigational, not an approved indication)",
+        "doseText": "25 nmol/kg body weight IV, administered on three separate nights in a laboratory sleep study (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-pcac-briefing-193344-emideltide",
+        "schneider-1992-double-blind-insomnia"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193344-emideltide",
+          "quote": "Although some studies showed that short-term IV emideltide appeared to exert an effect on disturbed sleep, the results appear inconclusive and at best preliminary.",
+          "pageOrSection": "Section on chronic insomnia evidence"
+        },
+        {
+          "sourceRef": "schneider-1992-double-blind-insomnia",
+          "quote": "results for objective sleep quality indicated higher sleep efficiency and shorter sleep latency with DSIP as compared to placebo",
+          "pageOrSection": "Abstract, results"
+        },
+        {
+          "sourceRef": "schneider-1992-double-blind-insomnia",
+          "quote": "short-term treatment of chronic insomnia with DSIP is not likely to be of major therapeutic benefit",
+          "pageOrSection": "Abstract, conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "trial dose context (IV, laboratory-supervised, historical formulation) must never be presented as a use recommendation for gray-market subcutaneous products",
+        "underlying trials are small (n=16 or fewer) and decades old; no modern, adequately powered RCT identified"
+      ]
+    },
+    {
+      "claimId": "emideltide-evidence-gap-narcolepsy-opioid-withdrawal-001",
+      "claimType": "evidence-gap",
+      "statement": "Human evidence for emideltide/DSIP in narcolepsy and opioid withdrawal is insufficient to establish efficacy: FDA's briefing identifies only a single case report for narcolepsy, which it says has limited interpretability 'due to insufficient methodological rigor, potential recall bias, researcher subjectivity and issues of reliability,' and only two uncontrolled, open-label studies for opioid withdrawal, limited by 'small sample sizes, different treatment regimen and several limitations owing to nonrandomized and uncontrolled study design.'",
+      "context": {
+        "population": "patients with narcolepsy or undergoing opioid withdrawal",
+        "route": null,
+        "formulation": "emideltide/DSIP",
+        "useCase": "narcolepsy and opioid withdrawal (investigational, not approved indications)",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-193344-emideltide"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193344-emideltide",
+          "quote": "limits interpretation of effectiveness...due to insufficient methodological rigor, potential recall bias, researcher subjectivity and issues of reliability",
+          "pageOrSection": "Narcolepsy evidence section"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193344-emideltide",
+          "quote": "small sample sizes, different treatment regimen and several limitations owing to nonrandomized and uncontrolled study design",
+          "pageOrSection": "Opioid withdrawal evidence section"
+        }
+      ],
+      "reviewFlags": [
+        "narcolepsy evidence rests on a single case report; opioid withdrawal use should not be inferred as proven or as a substitute for standard-of-care withdrawal management"
+      ]
+    },
+    {
+      "claimId": "emideltide-evidence-gap-online-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Emideltide/DSIP is actively marketed online in the US by integrative neurology clinics, medical concierge services, medical spas, wellness clinics, and online retailers for uses including sleep, opioid withdrawal, and other purposes, as injections and nasal sprays, despite FDA characterizing the underlying human efficacy evidence for these uses as inconclusive-to-insufficient and the substance as not well-characterized and lacking FDA approval or a USP/NF monograph.",
+      "context": {
+        "population": "consumers of gray-market/wellness-clinic emideltide products",
+        "route": "injectable (subcutaneous) and intranasal, as marketed",
+        "formulation": "compounded or research-grade emideltide, various product forms",
+        "useCase": "sleep, opioid withdrawal, and other wellness marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-pcac-briefing-193344-emideltide",
+        "pubmed-6391926-open-trial"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-pcac-briefing-193344-emideltide",
+          "quote": "An online search revealed integrative neurology clinics, medical concierge services, medical spas, wellness clinics, and online retailers in the US marketing emideltide-related drug products for various uses.",
+          "pageOrSection": "Market landscape discussion"
+        },
+        {
+          "sourceRef": "pubmed-6391926-open-trial",
+          "quote": "In all but 1 case sleep was normalized for follow-up periods of 3-7 months. The mood and performance during the daytime improved as well.",
+          "pageOrSection": "Abstract (uncontrolled open trial, n=7)"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular wellness-clinic marketing outpaces the strength of published human evidence and FDA's own characterization of the substance",
+        "the single small open-label trial cited by marketers (n=7, uncontrolled) should not be treated as confirmatory of consistent benefit"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "emideltide-conflict-efficacy-signal-vs-marketing-001",
+      "claimRefs": [
+        "emideltide-efficacy-insomnia-inconclusive-001",
+        "emideltide-evidence-gap-online-marketing-001"
+      ],
+      "severity": "moderate",
+      "summary": "FDA and the underlying controlled literature describe emideltide's human efficacy signal for insomnia as weak, inconsistent, and 'not likely to be of major therapeutic benefit,' while wellness clinics and online retailers market emideltide-related products for sleep and other uses without qualifying this evidentiary weakness.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Final outcome of the July 23-24, 2026 PCAC meeting (committee vote, any subsequent FDA listing decision) had not been confirmed as of packet generation and must be checked against the live FDA advisory committee page at review time.",
+      "CAS/UNII/DrugBank/ChEMBL identifiers not resolved from an authoritative structured database in this session; PubChem detail page required JavaScript and could not be fully parsed, so only the PubChem CID was confirmed.",
+      "Human efficacy evidence base is thin (small, decades-old studies; only one modern-era FDA synthesis document reviewed) and should be expanded with any additional controlled studies at review time."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "gray-market-only",
+      "thin-human-evidence",
+      "regulatory-decision-pending-2026-pcac",
+      "marketing-outpaces-evidence"
+    ]
+  }
+}

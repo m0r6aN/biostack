@@ -20,8 +20,8 @@
     "compoundFamily": "Mitochondrial-derived peptide (16-amino-acid, mitochondrial-genome-encoded, AMPK-pathway regulator)",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
-      "casNumber": null,
+      "unii": "A5CV6JFB78",
+      "casNumber": "1627580-64-6",
       "drugbank": null,
       "pubchem": "146675088",
       "chembl": null,
@@ -76,7 +76,31 @@
       "doi": null,
       "pmid": null,
       "publishedAt": null,
-      "accessedAt": "2026-08-28T21:30:00Z"
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ajmc-pcac-peptides-vote-2026",
+      "sourceType": "trade-press",
+      "authorityTier": "C2",
+      "title": "FDA Panel Backs 6 Peptides for Compounding",
+      "publisher": "AJMC (American Journal of Managed Care)",
+      "url": "https://www.ajmc.com/view/fda-panel-backs-6-peptides-for-compounding",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "diabetology-mds-mdp-systematic-review-2024",
+      "sourceType": "peer-reviewed-study",
+      "authorityTier": "B1",
+      "title": "Systematic review of mitochondrial-derived peptides (MOTS-c and related peptides) in metabolic disease",
+      "publisher": "Diabetology & Metabolic Syndrome",
+      "url": "https://link.springer.com/article/10.1186/s13098-024-01405-w",
+      "doi": "10.1186/s13098-024-01405-w",
+      "pmid": null,
+      "publishedAt": "2024-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
       "sourceId": "clinicaltrials-nct07505745",
@@ -137,7 +161,7 @@
     {
       "claimId": "mots-c-regulatory-pcac-no-human-data-001",
       "claimType": "regulatory",
-      "statement": "In its Pharmacy Compounding Advisory Committee briefing document evaluating MOTS-c (free base) and MOTS-c acetate for the 503A Bulks List, FDA states it did not identify any clinical studies or human exposure data for MOTS-c via any route of administration, and that both forms are not well-characterized from a physical/chemical characterization standpoint due to unavailable data on impurities, aggregates, and endotoxins; FDA recommends against adding either form to the list.",
+      "statement": "In its Pharmacy Compounding Advisory Committee (PCAC) briefing document evaluating MOTS-c (free base) and MOTS-c acetate for the 503A Bulks List, FDA staff state they did not identify any clinical studies or human exposure data for MOTS-c via any route of administration, and that both forms are not well-characterized from a physical/chemical characterization standpoint due to unavailable data on impurities, aggregates, and endotoxins; FDA staff recommended against adding either form to the list. At the PCAC meeting on July 23, 2026, the committee voted 7-5 with 2 abstentions to recommend MOTS-c for the 503A Bulks List, overriding the staff recommendation. An advisory committee vote is not itself a legal listing decision -- FDA must still complete rulemaking before MOTS-c could be lawfully compounded under 503A -- and the staff's underlying findings on the absence of human exposure data and incomplete characterization remain unchanged by the vote.",
       "context": {
         "population": "prospective compounded-product users",
         "route": "injection (route under evaluation)",
@@ -149,7 +173,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "fda-pcac-briefing-193347"
+        "fda-pcac-briefing-193347",
+        "ajmc-pcac-peptides-vote-2026"
       ],
       "extractedEvidence": [
         {
@@ -161,11 +186,17 @@
           "sourceRef": "fda-pcac-briefing-193347",
           "quote": "the potential for immunogenicity when administered by an injection route",
           "pageOrSection": "PCAC briefing document, safety concerns"
+        },
+        {
+          "sourceRef": "ajmc-pcac-peptides-vote-2026",
+          "quote": "MOTS-c passed 7-5 with 2 abstentions.",
+          "pageOrSection": "Article body, PCAC July 23, 2026 meeting vote results"
         }
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "confirm final PCAC committee vote/outcome versus briefing-document staff position",
+        "resolved 2026-08-29: PCAC committee voted 7-5 (2 abstentions) on 2026-07-23 to recommend MOTS-c for the 503A Bulks List, overriding the FDA staff briefing-document recommendation; statement updated accordingly and vote outcome confirmed independently via AJMC reporting of the same meeting",
+        "advisory-committee recommendation is not a final rule; FDA must complete rulemaking before any lawful 503A listing takes effect -- re-check FDA's Federal Register docket for a final rule at next review",
         "briefing document date should be confirmed against the July 2026 PCAC meeting record"
       ]
     },
@@ -269,7 +300,8 @@
       ],
       "reviewFlags": [
         "trial is actively recruiting as of the March 2026 verification date reviewed; outcome not yet available - re-check status/results at review time",
-        "trial dose/route context must never be presented as a use recommendation"
+        "trial dose/route context must never be presented as a use recommendation",
+        "independent-review note (2026-08-29): trial details were cross-checked against an independent registry mirror (ichgcp.net/clinical-trials-registry/NCT07505745) rather than clinicaltrials.gov directly and corroborate the packet's description (Phase 2a, ages 18-65, BMI 27-40, prediabetes, subcutaneous once-daily x12 weeks, placebo-controlled, still recruiting); this mirror is still within the same 'structured database' source family as the packet's own source, not a fully independent family (no news/trade coverage of the trial was found). Flagged as a minor methodological gap, not a blocker, since the claim asserts no efficacy outcome."
       ]
     },
     {
@@ -305,10 +337,20 @@
           "sourceRef": "fda-pcac-briefing-193347",
           "quote": "FDA did not identify any clinical studies or human exposure data for MOTS-c via any route of administration.",
           "pageOrSection": "PCAC briefing document, MOTS-c evaluation section"
+        },
+        {
+          "sourceRef": "gethealthspan-mots-c-dosage-protocol",
+          "quote": "Reynolds, J. C., Bhatt, D. L., Patel, M., et al. (2021). MOTS-c is an exercise-induced mitochondrial-encoded regulator of age-dependent physical decline and muscle homeostasis. Nature Communications, 12(1), 470.",
+          "pageOrSection": "Citation given for the claimed 'human RCT' (single IV dose, 2 mg/kg, ~15% improvement in insulin-stimulated glucose disposal)"
+        },
+        {
+          "sourceRef": "reynolds-2021-natcomms-mots-c-exercise",
+          "quote": "Joseph C. Reynolds, Rochelle W. Lai, Jonathan S. T. Woodhead, James H. Joly, Cameron J. Mitchell, David Cameron-Smith, Ryan Lu, Pinchas Cohen, Nicholas A. Graham, Berenice A. Benayoun, Troy L. Merry, and Changhan Lee",
+          "pageOrSection": "Actual author byline of Nature Communications 12(1):470 (2021) -- no Bhatt or Patel among authors, and the paper reports no IV-dose human RCT or glucose-clamp study of any kind"
         }
       ],
       "reviewFlags": [
-        "vendor page cites 'a human RCT' with a 15% insulin-stimulated glucose disposal improvement from a single IV dose; this could not be independently verified against a peer-reviewed source this session and conflicts with FDA's statement that no human exposure data was identified - see conflicts",
+        "resolved 2026-08-29: the vendor's cited 'human RCT' (15% insulin-stimulated glucose disposal, single 2 mg/kg IV dose) is a fabricated/misattributed citation. Direct fetch of the actual Reynolds et al. 2021 Nature Communications 12(1):470 paper shows a different author list (no Bhatt or Patel) and no IV-dose human RCT or hyperinsulinemic-euglycemic clamp study -- its only human data is observational endogenous MOTS-c response to exercise. An independent 2024 systematic review (Diabetology & Metabolic Syndrome) likewise found zero controlled human trials of administered MOTS-c in the literature. See conflicts (mots-c-conflict-vendor-human-rct-claim-001), now resolved.",
         "self-administration dosing content must never be reproduced as a use recommendation on BioStack"
       ]
     }
@@ -321,8 +363,8 @@
         "mots-c-regulatory-pcac-no-human-data-001"
       ],
       "severity": "moderate",
-      "summary": "A gray-market vendor page (gethealthspan.com) asserts a human RCT found a 15% improvement in insulin-stimulated glucose disposal from a single IV dose of MOTS-c, while FDA's PCAC briefing document states it did not identify any clinical studies or human exposure data for MOTS-c via any route of administration. This session could not locate or verify the peer-reviewed primary source the vendor claim appears to reference; the discrepancy (and whether the cited study used MOTS-c itself versus a MOTS-c analog such as CohBar's CB4211) is unresolved and needs a materially independent source (e.g., a PubMed/PMC search or the underlying trial registry record) to close.",
-      "resolutionStatus": "needs-human-review"
+      "summary": "A gray-market vendor page (gethealthspan.com) asserted a human RCT found a 15% improvement in insulin-stimulated glucose disposal from a single 2 mg/kg IV dose of MOTS-c, citing 'Reynolds, Bhatt, Patel et al. (2021) Nature Communications 12(1), 470' -- while FDA's PCAC briefing document states it did not identify any clinical studies or human exposure data for MOTS-c via any route of administration. RESOLVED 2026-08-29: direct fetch of the vendor page confirms the exact fabricated citation text, and direct fetch of the actual Reynolds et al. 2021 Nature Communications paper (DOI 10.1038/s41467-020-20790-0) shows a completely different author byline (Reynolds, Lai, Woodhead, Joly, Mitchell, Cameron-Smith, Lu, Cohen, Graham, Benayoun, Merry, Lee -- no Bhatt or Patel) and no IV-dose human RCT or glucose-clamp study of any kind; its only human data is an observational measurement of endogenous MOTS-c during exercise. An independent 2024 systematic review (Diabetology & Metabolic Syndrome, DOI 10.1186/s13098-024-01405-w) separately confirms zero controlled human trials of administered/exogenous MOTS-c exist in the literature. The vendor's cited human RCT does not exist as described; the citation is fabricated/misattributed, not merely unverifiable.",
+      "resolutionStatus": "resolved"
     }
   ],
   "ops": {
@@ -330,10 +372,12 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "Unresolved conflict: vendor-cited human RCT (15% insulin-stimulated glucose disposal improvement) could not be independently verified or matched to a peer-reviewed source this session; may reference a MOTS-c analog (e.g., CB4211) rather than MOTS-c itself.",
-      "CAS/UNII/DrugBank/ChEMBL identifiers not yet resolved from structured databases.",
+      "RESOLVED 2026-08-29: vendor-cited human RCT (15% insulin-stimulated glucose disposal improvement) confirmed as a fabricated/misattributed citation to Reynolds et al. 2021 -- see conflicts and mots-c-misinformation-gray-market-dosing-001.",
+      "RESOLVED 2026-08-29: CAS (1627580-64-6) and UNII (A5CV6JFB78) identifiers resolved via direct fetch of PubChem CID 146675088 pug_view synonym data. DrugBank and ChEMBL identifiers remain unresolved -- no DrugBank or ChEMBL entry for MOTS-c was located this session; carry forward as a gap.",
       "NCT07505745 is actively recruiting; re-check status and results at review time.",
-      "FDA withdrawn-nomination and PCAC briefing status for MOTS-c should be reconfirmed against the live FDA page at review time, since FDA revised Category 2 peptide listings in April 2026 and MOTS-c was among peptides discussed at the July 2026 PCAC meeting cycle."
+      "FDA withdrawn-nomination and PCAC briefing status for MOTS-c should be reconfirmed against the live FDA page at review time, since FDA revised Category 2 peptide listings in April 2026 and MOTS-c was among peptides discussed at the July 2026 PCAC meeting cycle.",
+      "RESOLVED 2026-08-29: PCAC committee actually voted 7-5 (2 abstentions) on 2026-07-23 to recommend MOTS-c for the 503A Bulks List, overriding the FDA staff briefing recommendation documented in the packet -- added to mots-c-regulatory-pcac-no-human-data-001 with the caveat that an advisory vote is not a final rule; re-check FDA's Federal Register docket for the completed rulemaking at next review.",
+      "Attempted but unresolved: NCT07505745 (studied-use claim) was checked only against an independent registry mirror (ichgcp.net), still within the same 'structured database' source family as the packet's own clinicaltrials.gov source; no news/trade coverage of this specific trial was found this session to fully diversify the source family. Low risk since the claim makes no efficacy assertion; kept review-gated."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -341,7 +385,9 @@
       "no-human-exposure-data-per-fda",
       "thin-human-evidence",
       "gray-market-only",
-      "unresolved-source-conflict"
+      "fabricated-vendor-citation-confirmed",
+      "pcac-committee-recommended-listing-pending-rulemaking",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

@@ -1,0 +1,454 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "vosilasarm-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T02:21:10Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Vosilasarm",
+    "aliases": [
+      "RAD-140",
+      "RAD140",
+      "Testolone",
+      "EP0062"
+    ],
+    "classification": "SARM (selective androgen receptor modulator)",
+    "compoundFamily": "Non-steroidal oral selective androgen receptor modulator",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": "DB13939",
+      "pubchem": "44200882",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-warrior-labz-warning-letter-2023",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Warrior Labz SARMS - 655280 - 06/12/2023 (Warning Letter)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/warrior-labz-sarms-655280-06122023",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2023-06-12T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "fda-compounding-bulk-substances-cat2",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "pmc-rad140-dili-case-report-2023",
+      "sourceType": "case-report",
+      "authorityTier": "B2",
+      "title": "Idiosyncratic drug-induced liver injury related to use of novel selective androgen receptor modulator RAD140 (Testalone): a case report",
+      "publisher": "Journal of Medical Case Reports (Springer Nature, PMC10054042)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10054042",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2023-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "australian-prescriber-rad140-liver-injury",
+      "sourceType": "case-report",
+      "authorityTier": "B1",
+      "title": "Severe liver injury following use of RAD-140, a selective androgen receptor modulator, for body building",
+      "publisher": "Australian Prescriber (Therapeutic Guidelines Ltd.)",
+      "url": "https://australianprescriber.tg.org.au/articles/severe-liver-injury-following-use-of-rad-140-a-selective-androgen-receptor-modulator-for-body-building.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "clbc-lorusso-rad140-phase1-2021",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "A First-in-Human Phase 1 Study of a Novel Selective Androgen Receptor Modulator (SARM), RAD140, in ER+/HER2- Metastatic Breast Cancer",
+      "publisher": "Clinical Breast Cancer (LoRusso P, et al., 2022; 22(1):67-77)",
+      "url": "https://profiles.wustl.edu/en/publications/a-first-in-human-phase-1-study-of-a-novel-selective-androgen-rece/",
+      "doi": "10.1016/j.clbc.2021.08.003",
+      "pmid": null,
+      "publishedAt": "2021-08-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "pubchem-cid-44200882",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: RAD140 / Vosilasarm (CID 44200882)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Vosilasarm",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "drugbank-db13939",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Vosilasarm: Uses, Interactions, Mechanism of Action",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB13939",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "centerwatch-nct05573126",
+      "sourceType": "trial-registry",
+      "authorityTier": "B2",
+      "title": "Phase 1/2 Study to Evaluate Vosilasarm (EP0062) as Monotherapy and in Combination in Patients With Advanced or Metastatic AR+/HER-2-/ER+ Breast Cancer (NCT05573126)",
+      "publisher": "CenterWatch, mirroring ClinicalTrials.gov registry record",
+      "url": "https://www.centerwatch.com/clinical-trials/listings/NCT05573126/phase-1-2-study-to-evaluate-vosilasarm-ep0062-as-monotherapy-and-in-combination-in-patients-with-advanced-or-metastatic-arher-2-er-breast-cancer",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "ellipses-sabcs-2022-vosilasarm",
+      "sourceType": "industry-press-release",
+      "authorityTier": "C1",
+      "title": "Ellipses Pharma Presents Design of Newly Initiated Phase 1/2a Trial of Vosilasarm (EP0062) at SABCS",
+      "publisher": "Ellipses Pharma Limited",
+      "url": "https://ellipses.life/ellipses-pharma-presents-design-of-newly-initiated-phase-1-2a-trial-of-vosilasarm-ep0062-at-sabcs/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2022-12-05T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "vosilasarm-identity-naming-001",
+      "claimType": "identity",
+      "statement": "Vosilasarm is the World Health Organization International Nonproprietary Name (INN) assigned to the compound long known in gray-market/research-chemical and bodybuilding contexts as RAD-140 or 'Testolone'; it is not a structural analog of RAD-140 but the same molecule (PubChem CID 44200882, molecular formula C20H16ClN5O2), now also being developed clinically under the code name EP0062 by Ellipses Pharma for oncology use. Sources discussing 'RAD-140', 'Testolone', 'EP0062', and 'Vosilasarm' should be treated as referring to one compound unless a source states otherwise.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "free compound",
+        "useCase": "identity/naming disambiguation",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-44200882",
+        "drugbank-db13939",
+        "ellipses-sabcs-2022-vosilasarm",
+        "fda-warrior-labz-warning-letter-2023"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-44200882",
+          "quote": "2-Chloro-4-(((1R,2S)-1-(5-(4-cyanophenyl)-1,3,4-oxadiazol-2-yl)-2-hydroxypropyl)amino)-3-methylbenzonitrile",
+          "pageOrSection": "IUPAC Name, CID 44200882"
+        },
+        {
+          "sourceRef": "drugbank-db13939",
+          "quote": "selective androgen receptor modulator (SARM)",
+          "pageOrSection": "Vosilasarm (RAD140 investigational designation), DB13939"
+        },
+        {
+          "sourceRef": "ellipses-sabcs-2022-vosilasarm",
+          "quote": "Vosilasarm is an oral, non-steroidal, SARM currently being developed for the treatment of AR+/HER2-/ER+ advanced breast cancer.",
+          "pageOrSection": "Mechanism/trial rationale"
+        },
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "RAD-140 Testolone",
+          "pageOrSection": "Product list, unapproved new drugs"
+        }
+      ],
+      "reviewFlags": [
+        "confirm CAS number and UNII against an authoritative registry at review time; not resolved from the sources fetched this session"
+      ]
+    },
+    {
+      "claimId": "vosilasarm-mechanism-ar-agonist-001",
+      "claimType": "mechanism",
+      "statement": "Vosilasarm/RAD-140 is a non-steroidal, orally bioavailable selective androgen receptor modulator (SARM) that acts as an androgen receptor agonist; in the oncology development program this AR-agonist activity is being exploited because the androgen receptor can act as a tumor suppressor in AR+/ER+ breast cancer, distinct from the anabolic/myotropic rationale used in bodybuilding marketing of the same molecule.",
+      "context": {
+        "population": null,
+        "route": "oral",
+        "formulation": "oral tablet/capsule (investigational)",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "ellipses-sabcs-2022-vosilasarm",
+        "drugbank-db13939",
+        "clbc-lorusso-rad140-phase1-2021"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ellipses-sabcs-2022-vosilasarm",
+          "quote": "the AR acts as a tumour suppressor in multiple contexts of ER+ breast cancer",
+          "pageOrSection": "Rationale"
+        },
+        {
+          "sourceRef": "clbc-lorusso-rad140-phase1-2021",
+          "quote": "SHBG decreased in 18 per 18 patients, and PSA increased in 16 per 20 patients. Paired baseline and on-treatment tumor biopsies demonstrated AR engagement.",
+          "pageOrSection": "Pharmacodynamics/target engagement"
+        }
+      ],
+      "reviewFlags": [
+        "mechanism evidence for AR-agonist tumor-suppressor activity is from an investigational oncology context and must not be read as evidence for anabolic/muscle-building claims"
+      ]
+    },
+    {
+      "claimId": "vosilasarm-regulatory-unapproved-illegal-marketing-001",
+      "claimType": "regulatory",
+      "statement": "FDA has issued a warning letter identifying RAD-140/Testolone (marketed alongside other SARMs) as an unapproved 'new drug' under the FD&C Act when sold as a bodybuilding/research-chemical product for human use, citing violations of sections 301(d) and 505(a); no vosilasarm/RAD-140 product is FDA-approved for any indication as of this packet's generation date. The agency also states that SARM-containing products have been linked to life-threatening reactions.",
+      "context": {
+        "population": "consumers purchasing SARM products marketed as research chemicals or bodybuilding supplements",
+        "route": "oral (as marketed to consumers)",
+        "formulation": "gray-market capsule/liquid research-chemical products",
+        "useCase": "regulatory/legal status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-warrior-labz-warning-letter-2023"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "\"RAD-140 Testolone,\" \"MK-677 Ibutamoren,\" \"MK-2866 Ostarine,\" and \"LGD-4033 Ligandrol\" are classified as \"new drugs\" lacking FDA approval and violate sections 301(d) and 505(a) of the FD&C Act.",
+          "pageOrSection": "Warning letter, product classification"
+        },
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "Life-threatening reactions, including liver toxicity, have occurred in people taking products containing SARMs. SARMs also have the potential to increase the risk of heart attack and stroke.",
+          "pageOrSection": "Warning letter, safety statement"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "RAD-140/vosilasarm was not found on the current FDA Category 2 compounding bulk-substances list fetched this session; verify current listing status at review time (fda-compounding-bulk-substances-cat2)"
+      ]
+    },
+    {
+      "claimId": "vosilasarm-studied-use-oncology-development-001",
+      "claimType": "studied-use",
+      "statement": "Under the code name EP0062, vosilasarm is being developed by Ellipses Pharma as an investigational oral SARM for AR+/HER2-negative/ER+ advanced or metastatic breast cancer, evaluated as monotherapy and in combination with standard-of-care endocrine therapies (exemestane, fulvestrant) and everolimus in a Phase 1/2 trial (NCT05573126) enrolling up to 130 patients globally; the trial is not an approval pathway for any consumer/bodybuilding use.",
+      "context": {
+        "population": "postmenopausal women with biopsy-proven AR+/ER+/HER2-negative advanced or metastatic breast cancer, prior progression on endocrine therapy",
+        "route": "oral",
+        "formulation": "investigational oral SARM (EP0062/vosilasarm), monotherapy or combination",
+        "useCase": "investigational oncology treatment (advanced/metastatic AR+/ER+/HER2- breast cancer)",
+        "doseText": "trial dose-escalation protocol under an active Phase 1/2 registry record; not a use recommendation and not applicable outside this trial population"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "centerwatch-nct05573126",
+        "ellipses-sabcs-2022-vosilasarm"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "centerwatch-nct05573126",
+          "quote": "identify the optimal dose for EP0062 as monotherapy and in combination with standard-of-care therapies",
+          "pageOrSection": "Brief summary/purpose"
+        },
+        {
+          "sourceRef": "centerwatch-nct05573126",
+          "quote": "Biopsy-proven AR+ and ER+ breast cancer",
+          "pageOrSection": "Key eligibility requirements"
+        },
+        {
+          "sourceRef": "ellipses-sabcs-2022-vosilasarm",
+          "quote": "up to 130 patients globally",
+          "pageOrSection": "Trial design"
+        }
+      ],
+      "reviewFlags": [
+        "trial status (recruiting/active) should be reconfirmed against the live ClinicalTrials.gov record at review time; this session's fetch of clinicaltrials.gov was blocked by robots.txt and a mirror (CenterWatch) was used instead",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed/registry findings at source-level attribution (trial registry record NCT05573126 and Ellipses Pharma trial-design disclosure, named by trial code EP0062); no regulator document exists for this claim (searched: FDA.gov warning-letter and compounding bulk-substances pages, DailyMed drug-label search for RAD-140/vosilasarm, and general web search for an FDA record of the EP0062/vosilasarm trial — none found, as expected for a never-approved investigational compound)"
+      ]
+    },
+    {
+      "claimId": "vosilasarm-efficacy-phase1-oncology-001",
+      "claimType": "efficacy",
+      "statement": "In the first-in-human Phase 1 dose-escalation study of RAD140/vosilasarm in 22 heavily pretreated ER+/HER2-negative metastatic breast cancer patients (50/100/150 mg once daily), the maximum tolerated dose was 100 mg daily; clinical benefit rate at 24 weeks was 18.2% and median progression-free survival was 2.3 months, with only one confirmed partial response (in a patient with a baseline ESR1 mutation). This is a modest, early-phase oncology efficacy signal in a specific pretreated cancer population and must not be generalized to any performance, muscle-building, or general-health benefit claim.",
+      "context": {
+        "population": "22 heavily pretreated ER+/HER2-negative metastatic breast cancer patients (21 AR+)",
+        "route": "oral",
+        "formulation": "RAD140/vosilasarm tablet/capsule, once daily",
+        "useCase": "investigational oncology efficacy (metastatic breast cancer), not a use recommendation",
+        "doseText": "50 mg (n=6), 100 mg (n=13), or 150 mg (n=3) once daily in a dose-escalation trial; MTD established at 100 mg daily (trial protocol context only)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "clbc-lorusso-rad140-phase1-2021"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "clbc-lorusso-rad140-phase1-2021",
+          "quote": "Twenty-two (21 AR+) heavily pretreated mBC patients were enrolled. Dose levels included 50 mg (n = 6), 100 mg (n = 13), and 150 mg (n = 3) once daily",
+          "pageOrSection": "Patients and methods/results"
+        },
+        {
+          "sourceRef": "clbc-lorusso-rad140-phase1-2021",
+          "quote": "clinical benefit rate at 24 weeks was 18.2%, and median progression-free survival was 2.3 months",
+          "pageOrSection": "Results/efficacy"
+        }
+      ],
+      "reviewFlags": [
+        "trial dose context must never be presented as a use recommendation",
+        "efficacy signal is specific to a heavily pretreated oncology population and route/schedule under medical supervision; not applicable to gray-market self-administration",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the first-in-human Phase 1 dose-escalation study...\", LoRusso et al., Clinical Breast Cancer 2022); no regulator document exists for this claim (searched: FDA.gov warning-letter and compounding bulk-substances pages, DailyMed drug-label search for RAD-140/vosilasarm, and general web search for an FDA record of the EP0062/vosilasarm phase 1 trial results — none found, as expected for a never-approved investigational compound)"
+      ]
+    },
+    {
+      "claimId": "vosilasarm-adverse-effect-hepatotoxicity-001",
+      "claimType": "adverse-effect",
+      "statement": "Human evidence documents clinically significant, dose- and duration-limited hepatotoxicity with RAD-140/vosilasarm in both the oncology trial setting and gray-market bodybuilding use. In the Phase 1 oncology trial, treatment-related AST/ALT elevation occurred in 59.1%/45.5% of patients and Grade 3/4 AST/ALT elevation in 22.7%; separately, a published case report describes a man who developed severe cholestatic drug-induced liver injury (peak total bilirubin 708 micromol/L, reference <20) after two months of self-administered gray-market RAD-140 for bodybuilding, with biopsy-confirmed bland cholestatic hepatitis; liver biochemistry normalized within five months of discontinuation and monitoring.",
+      "context": {
+        "population": "oncology trial patients (supervised, dose-escalation) and a gray-market bodybuilding user (unsupervised, self-administered)",
+        "route": "oral",
+        "formulation": "investigational oral RAD140/vosilasarm (trial) and unregulated gray-market RAD-140 product (case report)",
+        "useCase": "adverse effect / hepatotoxicity monitoring",
+        "doseText": "case report: unspecified gray-market dose taken for approximately 2 months before symptom onset (not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "clbc-lorusso-rad140-phase1-2021",
+        "australian-prescriber-rad140-liver-injury",
+        "pmc-rad140-dili-case-report-2023",
+        "fda-warrior-labz-warning-letter-2023"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "clbc-lorusso-rad140-phase1-2021",
+          "quote": "Grade 3/4 TEAEs occurred in 16 (72.7%) patients and included elevations in AST/ALT and hypophosphatemia (22.7% each).",
+          "pageOrSection": "Safety results"
+        },
+        {
+          "sourceRef": "australian-prescriber-rad140-liver-injury",
+          "quote": "Five months after discontinuation of RAD-140 and close monitoring of the bland cholestasis, the patient's total serum bilirubin concentration and other liver biochemistry returned to within reference ranges.",
+          "pageOrSection": "Case outcome"
+        },
+        {
+          "sourceRef": "australian-prescriber-rad140-liver-injury",
+          "quote": "Few human studies on hepatic safety of SARMs are available. The mechanism of SARM-associated hepatotoxicity remains elusive.",
+          "pageOrSection": "Discussion"
+        },
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "Life-threatening reactions, including liver toxicity, have occurred in people taking products containing SARMs.",
+          "pageOrSection": "Warning letter, safety statement"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical adverse-effect claim requiring monitoring guidance context",
+        "single published case report for the gray-market use setting; incidence in unsupervised use is unknown, not just this one case",
+        "authority-support-pass-2026-08-29: linked A1 regulator source (FDA Warrior Labz warning letter, refetched live this session) explicitly naming liver toxicity among SARM-associated life-threatening reactions, satisfying A1/A2 authority-support requirement for this safety-critical adverse-effect claim"
+      ]
+    },
+    {
+      "claimId": "vosilasarm-misinformation-bodybuilding-marketing-001",
+      "claimType": "misinformation-claim",
+      "statement": "RAD-140/vosilasarm is widely marketed online to consumers as a 'research chemical' or bodybuilding supplement promising muscle growth, fat loss, rapid recovery, and increased libido, typically labeled 'not for human consumption' to evade regulation; this marketing is not supported by controlled human efficacy or safety data for those uses, is unapproved and illegal to sell for human use per FDA, and independent testing of SARM-labeled bodybuilding products has found frequent mislabeling of actual contents.",
+      "context": {
+        "population": "consumers of online SARM/research-chemical products",
+        "route": "oral (as marketed)",
+        "formulation": "unregulated gray-market capsules/liquids sold as 'research chemicals'",
+        "useCase": "bodybuilding/muscle growth marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-warrior-labz-warning-letter-2023",
+        "australian-prescriber-rad140-liver-injury"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warrior-labz-warning-letter-2023",
+          "quote": "RAD-140 / TESTOLONE SARM for Muscle Growth and Size",
+          "pageOrSection": "Warning letter, example marketing claim"
+        },
+        {
+          "sourceRef": "australian-prescriber-rad140-liver-injury",
+          "quote": "SARMs are not approved by the TGA, yet are readily accessible online as body-building or nutritional supplements.",
+          "pageOrSection": "Background"
+        },
+        {
+          "sourceRef": "australian-prescriber-rad140-liver-injury",
+          "quote": "A 2017 study evaluating the ingredients of 44 nutritional supplements, marketed as SARMs, found only 52% were primarily SARMs in content.",
+          "pageOrSection": "Discussion"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular marketing claims lack supporting human outcome evidence for the bodybuilding/muscle-growth use case",
+        "product-content mislabeling finding is from a 2017 study of SARM-labeled products broadly, not RAD-140-specific analytical testing; cite with that caveat"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "vosilasarm-conflict-population-context-001",
+      "claimRefs": [
+        "vosilasarm-efficacy-phase1-oncology-001",
+        "vosilasarm-misinformation-bodybuilding-marketing-001"
+      ],
+      "severity": "moderate",
+      "summary": "Vosilasarm/RAD-140 has a modest, supervised, early-phase oncology efficacy and safety dataset in a specific pretreated AR+/ER+/HER2- breast cancer population, while online gray-market marketing extrapolates from the same molecule's AR-agonist mechanism to unsupported bodybuilding/anabolic benefit claims in an entirely different (healthy, self-administering) population; the oncology data cannot be used to validate the bodybuilding marketing claims, and no controlled human efficacy or long-term safety data exist for the bodybuilding use case.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS number and UNII not resolved from the structured-database sources fetched this session; DrugBank's full identifier panel required an account login and was not accessible.",
+      "ClinicalTrials.gov direct fetch was blocked by robots.txt; trial status was sourced from a CenterWatch mirror and should be reconfirmed against the live registry record at review time.",
+      "Only a single published case report was found documenting gray-market hepatotoxicity; true incidence in unsupervised users is unknown and this packet's adverse-effect claim should not be read as an incidence estimate.",
+      "RAD-140/vosilasarm's presence or absence on FDA's Category 2 compounding bulk-substances list should be reverified at review time; it was not found on the version of that FDA page fetched this session."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "gray-market-and-oncology-dual-context",
+      "single-case-report-safety-signal",
+      "thin-human-evidence",
+      "active-investigational-oncology-program",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

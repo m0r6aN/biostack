@@ -1,0 +1,343 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "stenabolic-evidence-expansion-001",
+    "category": "small-molecule-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T23:50:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Stenabolic",
+    "aliases": [
+      "SR9009",
+      "SR-9009"
+    ],
+    "classification": "Small-molecule research chemical",
+    "compoundFamily": "REV-ERB\u03b1/\u03b2 agonist (non-peptide; marketed alongside SARMs/peptides in gray-market performance channels)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "57394020",
+      "chembl": null,
+      "doi": "10.1038/nature11030",
+      "pmid": "22460951"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-bulk-substances-cat2",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "wada-s4-metabolic-modulators",
+      "sourceType": "regulator",
+      "authorityTier": "A2",
+      "title": "S4. Hormone And Metabolic Modulators \u2014 Anti-Doping Prohibited List (WADA), mirrored by Drugs.com",
+      "publisher": "World Anti-Doping Agency (mirrored by Drugs.com)",
+      "url": "https://www.drugs.com/wada/s4-hormone-and-metabolic-modulators.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "solt-2012-nature-reverb-agonists",
+      "sourceType": "preclinical-study",
+      "authorityTier": "B1",
+      "title": "Regulation of circadian behaviour and metabolism by synthetic REV-ERB agonists",
+      "publisher": "Nature (Solt LA, Wang Y, Banerjee S, et al., 2012)",
+      "url": "https://www.nature.com/articles/nature11030",
+      "doi": "10.1038/nature11030",
+      "pmid": "22460951",
+      "publishedAt": "2012-03-29T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-57394020",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: SR9009 (CID 57394020)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/57394020",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "vendor-omk-sr9009-review",
+      "sourceType": "vendor-content",
+      "authorityTier": "C2",
+      "title": "SR9009 Review 2026: Stenabolic Dosage, Results, & Benefits",
+      "publisher": "operationmilitarykids.org (commercial SARMs/peptide review blog)",
+      "url": "https://www.operationmilitarykids.org/sr9009-review-stenabolic/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "vendor-sarmguide-sr9009-review",
+      "sourceType": "vendor-content",
+      "authorityTier": "C2",
+      "title": "SR9009 \u2013 Stenabolic Review, Results, Dosage",
+      "publisher": "sarmguide.com (commercial SARMs/peptide review blog)",
+      "url": "https://sarmguide.com/sr9009-stenabolic-review/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "stenabolic-identity-status-001",
+      "claimType": "identity",
+      "statement": "Stenabolic (SR9009) is an unapproved synthetic small molecule (not a peptide) sold as a 'research chemical' in gray-market bodybuilding and biohacking channels; it has no FDA-approved indication and does not appear on FDA's published 503A/503B bulk drug substance compounding lists as of the access date.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "research-chemical liquid or capsule products sold online",
+        "useCase": "regulatory/identity status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bulk-substances-cat2",
+        "pubchem-cid-57394020"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bulk-substances-cat2",
+          "quote": "Bulk drug substances that may present significant safety risks have been placed in category 2 under the interim policies.",
+          "pageOrSection": "Category 2 introduction"
+        }
+      ],
+      "reviewFlags": [
+        "absence-based claim: SR9009 was not found on this FDA list at access time; re-check the live page at review time since FDA revises these lists periodically",
+        "identifiers incomplete: CAS, UNII, ChEMBL, RxNorm not yet resolved from a structured database"
+      ]
+    },
+    {
+      "claimId": "stenabolic-mechanism-reverb-agonist-001",
+      "claimType": "mechanism",
+      "statement": "SR9009 is a synthetic REV-ERB (REV-ERB\u03b1/\u03b2 nuclear receptor) agonist. In diet-induced obese mice, SR9009/SR9011 treatment increased energy expenditure, altered circadian expression of core clock and metabolic genes in liver, skeletal muscle and adipose tissue, and reduced fat mass while improving dyslipidaemia and hyperglycaemia.",
+      "context": {
+        "population": "diet-induced obese mice (preclinical only; no human data)",
+        "route": "not applicable to humans \u2014 animal dosing only",
+        "formulation": "SR9009 / SR9011 investigational compounds",
+        "useCase": "mechanism / preclinical pharmacology",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "solt-2012-nature-reverb-agonists"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "solt-2012-nature-reverb-agonists",
+          "quote": "REV-ERB agonists reduce fat mass in diet-induced obese mice and improve dyslipidaemia and hyperglycaemia.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "solt-2012-nature-reverb-agonists",
+          "quote": "increased energy expenditure",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "solt-2012-nature-reverb-agonists",
+          "quote": "alter[ed] circadian behaviour and the circadian pattern of core clock gene expression in the hypothalami of mice",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "evidenceTier set to Limited (not Strong) specifically because this is the founding animal pharmacology paper and no human confirmatory data exists \u2014 do not upgrade tier based on this source alone",
+        "mouse energy-expenditure/fat-mass findings must not be presented as demonstrated human effects"
+      ]
+    },
+    {
+      "claimId": "stenabolic-evidence-gap-no-human-data-001",
+      "claimType": "evidence-gap",
+      "statement": "No published controlled human trial of SR9009 exists. All efficacy and mechanistic data (energy expenditure, endurance, fat mass, circadian gene expression) come from mouse studies; human pharmacokinetics, dosing, efficacy, and long-term safety are unestablished, and even vendor-facing review content acknowledges this gap.",
+      "context": {
+        "population": "prospective human users of gray-market SR9009 products",
+        "route": "oral (as commonly sold)",
+        "formulation": "research-chemical SR9009 products",
+        "useCase": "fat loss / endurance / metabolic optimization marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "solt-2012-nature-reverb-agonists",
+        "vendor-omk-sr9009-review"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "vendor-omk-sr9009-review",
+          "quote": "SR9009 has not been tested on humans, so it is unclear if the benefits seen in laboratory animals transfer over.",
+          "pageOrSection": "Review body"
+        },
+        {
+          "sourceRef": "vendor-omk-sr9009-review",
+          "quote": "this is an untested, unapproved pharmaceutical designed for investigational uses in a laboratory setting",
+          "pageOrSection": "Review body"
+        }
+      ],
+      "reviewFlags": [
+        "no independent PubMed/PMC human study family was found during this session; if one surfaces at review it should supersede or upgrade this claim",
+        "thin/absent human evidence base \u2014 flag for continued literature monitoring"
+      ]
+    },
+    {
+      "claimId": "stenabolic-misinformation-marketed-benefits-001",
+      "claimType": "misinformation-claim",
+      "statement": "Commercial review/vendor content markets Stenabolic with confident-sounding fat-loss, endurance, and 'exercise mimetic' benefit language sourced entirely from rodent studies, presenting mouse outcomes (weight loss, faster muscle recovery, improved cholesterol, endurance gains) as consumer-relevant benefits without adequately foregrounding that these are unreplicated-in-humans animal findings.",
+      "context": {
+        "population": "consumers of gray-market SR9009 products",
+        "route": "oral",
+        "formulation": "research-chemical SR9009 products, often stacked with SARMs/peptides",
+        "useCase": "fat loss / endurance / 'exercise in a pill' marketing narrative",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "vendor-omk-sr9009-review",
+        "vendor-sarmguide-sr9009-review"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "vendor-omk-sr9009-review",
+          "quote": "Weight loss, Faster muscle tissue growth, Improved blood cholesterol levels, Improved muscular endurance",
+          "pageOrSection": "Benefits list (framed as animal-study outcomes presented alongside consumer dosing guidance)"
+        },
+        {
+          "sourceRef": "vendor-sarmguide-sr9009-review",
+          "quote": "Early animal studies suggest that SR9009 may: Increase energy expenditure, Improve mitochondrial function, Reduce fat storage, Speed up fat loss even at maintenance calories",
+          "pageOrSection": "Fat loss section"
+        },
+        {
+          "sourceRef": "vendor-sarmguide-sr9009-review",
+          "quote": "Anecdotal reports often mention feeling calmer, experiencing reduced anxiety, or noticing a more stable overall mood while using SR9009.",
+          "pageOrSection": "Mood section"
+        }
+      ],
+      "reviewFlags": [
+        "source family is commercial/vendor content, not independent journalism or academic review \u2014 treat statement as characterizing marketing pattern, not as validating or refuting the underlying animal science",
+        "co-locate with stenabolic-evidence-gap-no-human-data-001 claim when displayed to users"
+      ]
+    },
+    {
+      "claimId": "stenabolic-regulatory-antidoping-status-001",
+      "claimType": "regulatory",
+      "statement": "SR9009 (and the related compound SR9011) are explicitly named REV-ERB\u03b1 agonists on the World Anti-Doping Agency's Prohibited List under class S4.4 (Metabolic Modulators), within S4 Hormone and Metabolic Modulators \u2014 substances prohibited at all times in sport under the WADA Code.",
+      "context": {
+        "population": "athletes subject to WADA Code / competitive sport testing",
+        "route": null,
+        "formulation": "SR9009, SR9011",
+        "useCase": "anti-doping regulatory status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "wada-s4-metabolic-modulators"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "wada-s4-metabolic-modulators",
+          "quote": "Rev-erb\u0251 agonists, e.g. SR9009, SR9011",
+          "pageOrSection": "S4.4 Metabolic Modulators (within S4. Hormone and Metabolic Modulators)"
+        }
+      ],
+      "reviewFlags": [
+        "sourced via a Drugs.com mirror of the WADA list rather than the live wada-ama.org prohibited-list PDF; confirm against the current official WADA Prohibited List PDF at review time",
+        "anti-doping prohibition is not itself evidence of human efficacy or a clinical safety finding \u2014 keep separate from any efficacy/safety claim"
+      ]
+    },
+    {
+      "claimId": "stenabolic-adverse-effect-unknown-profile-001",
+      "claimType": "adverse-effect",
+      "statement": "Because no controlled human trials of SR9009 have been published, its human adverse-effect profile is not established from clinical data; any safety signals in circulation (e.g., short elimination half-life cited by vendors necessitating multiple daily doses, unknown hepatic or endocrine effects) originate from vendor/forum sources rather than peer-reviewed human studies and should be treated as unverified.",
+      "context": {
+        "population": "humans self-administering gray-market SR9009",
+        "route": "oral",
+        "formulation": "research-chemical SR9009 products",
+        "useCase": "safety monitoring context",
+        "doseText": "vendor-reported informal dosing range of 10-40 mg/day split across multiple doses citing an approximately 5-hour half-life (vendor claim, not a trial protocol or a use recommendation)"
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "low",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "vendor-omk-sr9009-review",
+        "solt-2012-nature-reverb-agonists"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "vendor-omk-sr9009-review",
+          "quote": "Bodybuilders and athletes who have used it have found that the dosage range is 10mg to 40mg per day, spread out over several doses.",
+          "pageOrSection": "Dosage section"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical: dose figures in this claim are vendor-sourced informal use patterns, not label or trial data, and must never be surfaced as a dosing recommendation",
+        "no peer-reviewed human adverse-event data located this session; escalate to human review for continued literature search",
+        "authority-support search 2026-08-29: searched FDA.gov (site search and consumer-update warning pages) and DailyMed (dailymed.nlm.nih.gov) for SR9009/Stenabolic-specific adverse-event or label data — DailyMed returned zero results (no approved label exists for this never-approved compound) and no FDA page addresses SR9009 by name; the general FDA SARMs consumer warning (teens/young-adults SARMs alert) was reviewed but describes a different chemical class (androgen receptor modulators) and was not linked here because it does not genuinely address this REV-ERB-agonist compound. No A1/A2 source exists for this claim; fieldAuthorityRequired left as true and the claim remains human-review gated pending any future regulator action on SR9009 specifically."
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "stenabolic-conflict-marketing-vs-evidence-001",
+      "claimRefs": [
+        "stenabolic-misinformation-marketed-benefits-001",
+        "stenabolic-evidence-gap-no-human-data-001"
+      ],
+      "severity": "moderate",
+      "summary": "Vendor/review-blog content markets SR9009 using benefit language drawn from mouse studies (fat loss, endurance, mitochondrial function) while the only peer-reviewed evidence base is preclinical/animal and no human efficacy or safety trial has been published; the marketing framing risks readers inferring proven human benefit that the underlying science does not support.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "No independent controlled human study or systematic review of SR9009 was located during this session; confirm via a dedicated PubMed/PMC search before finalizing the evidence-gap and adverse-effect claims.",
+      "CAS/UNII/ChEMBL/RxNorm identifiers not yet resolved from structured databases.",
+      "WADA prohibited-list evidence was sourced via a third-party mirror (Drugs.com), not the live wada-ama.org PDF; re-verify against the official WADA Prohibited List at review time.",
+      "FDA bulk drug substance list absence-check should be re-run against the live FDA page at review time since these lists are revised periodically.",
+      "audit: packet.category corrected peptides-core -> small-molecule-core to match compound classification"
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "gray-market-compound-no-fda-approval",
+      "no-human-controlled-trials-located",
+      "animal-only-efficacy-data",
+      "anti-doping-prohibited-substance",
+      "marketing-vs-evidence-gap-flagged",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

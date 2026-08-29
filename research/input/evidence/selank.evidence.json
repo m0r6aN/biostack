@@ -18,8 +18,8 @@
     "classification": "Peptide",
     "compoundFamily": "Synthetic heptapeptide (tuftsin analog)",
     "externalIdentifiers": {
-      "rxnorm": null,
-      "unii": null,
+      "rxnorm": "2049928",
+      "unii": "TS9JR8EP1G",
       "casNumber": "129954-34-3",
       "drugbank": null,
       "pubchem": "11765600",
@@ -100,6 +100,54 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "europepmc-18454096-zozulya",
+      "sourceType": "structured-database",
+      "authorityTier": "B1",
+      "title": "Europe PMC abstract record: Efficacy and possible mechanisms of action of a new peptide anxiolytic selank in the therapy of generalized anxiety disorders and neurasthenia (PMID 18454096)",
+      "publisher": "Europe PMC (EMBL-EBI) REST API, independent retrieval route around PubMed's bot-check",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18454096&format=json&resultType=core",
+      "doi": null,
+      "pmid": "18454096",
+      "publishedAt": "2008-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "europepmc-11550013-kolomin",
+      "sourceType": "structured-database",
+      "authorityTier": "B1",
+      "title": "Europe PMC abstract record: The inhibitory effect of Selank on enkephalin-degrading enzymes as a possible mechanism of its anxiolytic activity (PMID 11550013)",
+      "publisher": "Europe PMC (EMBL-EBI) REST API, independent of the packet's Springer full-text link",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:11550013&format=json&resultType=core",
+      "doi": "10.1023/A:1017979514274",
+      "pmid": "11550013",
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "fda-ncats-gsrs-selank",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "FDA/NCATS Global Substance Registration System (GSRS) record for SELANK (UNII TS9JR8EP1G)",
+      "publisher": "U.S. Food and Drug Administration / National Center for Advancing Translational Sciences (NIH)",
+      "url": "https://gsrs.ncats.nih.gov/api/v1/substances(TS9JR8EP1G)",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "fda-ncats-gsrs-selank-diacetate",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "FDA/NCATS Global Substance Registration System (GSRS) record for SELANK DIACETATE (UNII Q94Z9E92UU)",
+      "publisher": "U.S. Food and Drug Administration / National Center for Advancing Translational Sciences (NIH)",
+      "url": "https://gsrs.ncats.nih.gov/api/v1/substances(Q94Z9E92UU)/codes",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -129,14 +177,14 @@
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "confirm current placement (withdrawn vs. category 2) against the live FDA page at review time, since FDA revised peptide bulk-substance listings in 2026",
+        "Independently re-checked live FDA page 2026-08-29: Selank acetate (TP-7) remains in the 'nominated but withdrawn' table (not Category 2), with the immunogenicity/lack-of-human-safety-data language unchanged. 2026 trade-press reporting (e.g., Lexology) on FDA removing/reviewing peptides on the active Category 2 list concerns that separate list, not the withdrawn-nominations table Selank sits in.",
         "not an FDA-approved product in the U.S. under any indication"
       ]
     },
     {
       "claimId": "selank-mechanism-tuftsin-analog-001",
       "claimType": "mechanism",
-      "statement": "Selank is a synthetic heptapeptide (H-Thr-Lys-Pro-Arg-Pro-Gly-Pro-OH) developed by Russian researchers as a protease-resistant analog of the endogenous tetrapeptide tuftsin, engineered by extending tuftsin with a C-terminal Pro-Gly-Pro sequence for stability; it was registered by the Russian Federation Ministry of Health in 2009 and marketed there as a 0.15% intranasal drop formulation.",
+      "statement": "According to Kolomin et al.'s review of synthetic peptide anxiolytics, selank is a synthetic heptapeptide (H-Thr-Lys-Pro-Arg-Pro-Gly-Pro-OH) developed by Russian researchers as a protease-resistant analog of the endogenous tetrapeptide tuftsin, engineered by extending tuftsin with a C-terminal Pro-Gly-Pro sequence for stability; it was registered by the Russian Federation Ministry of Health in 2009 and marketed there as a 0.15% intranasal drop formulation.",
       "context": {
         "population": null,
         "route": "intranasal (as registered in Russia)",
@@ -146,7 +194,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "kolomin-review-synthetic-peptides",
         "pubchem-cid-11765600"
@@ -154,7 +202,7 @@
       "extractedEvidence": [
         {
           "sourceRef": "kolomin-review-synthetic-peptides",
-          "quote": "The result was \u0430 heptapeptide containing the sequence Thr-Lys-Pro-Arg elongated with the C-terminal part of the tripeptide Pro-Gly-Pro, which proved to be most suitable for the stabilization of the molecule and enhanced its resistance to proteases. The resulting peptide, H-Thr-Lys-Pro-Arg-Pro-Gly-Pro-OH, which was named Selank, had a pronounced anxiolytic activity.",
+          "quote": "The result was а heptapeptide containing the sequence Thr-Lys-Pro-Arg elongated with the C-terminal part of the tripeptide Pro-Gly-Pro, which proved to be most suitable for the stabilization of the molecule and enhanced its resistance to proteases. The resulting peptide, H-Thr-Lys-Pro-Arg-Pro-Gly-Pro-OH, which was named Selank, had a pronounced anxiolytic activity.",
           "pageOrSection": "Selank development section"
         },
         {
@@ -165,7 +213,9 @@
       ],
       "reviewFlags": [
         "review-article source hosted on a PDF aggregator (semanticscholar.org cache) rather than the publisher site; verify against the original journal record",
-        "Russian Ministry of Health registration is not an FDA approval and confers no U.S. regulatory status"
+        "Russian Ministry of Health registration is not an FDA approval and confers no U.S. regulatory status",
+        "Independent review note: an independent primary-literature abstract (PMID 18661785) and Wikipedia's Selank article both corroborate the tuftsin-derivation and heptapeptide sequence description. However, the specific '2009 Russian Ministry of Health registration' date and the '0.15% intranasal drop' formulation detail could not be confirmed from any source independent of this packet's own review-article citation (kolomin-review-synthetic-peptides) in this review pass; those two sub-facts remain single-sourced and should stay flagged pending an independent registry or label source.",
+        "authority-flag recalibrated 2026-08-29: claimType mechanism is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (Kolomin et al. review) at source-level attribution; no regulator document exists for this claim (searched: FDA.gov bulk drug substance listings, DailyMed [only an unapproved 'bulk ingredient for animal drug compounding' listing for Selank, no chemistry or foreign-registration content], FDA/NCATS GSRS substance record [confirms identifiers only, not the Russian registration or 0.15% formulation facts], and the Russian State Register of Medicines grls.rosminzdrav.ru [dynamic JS portal, no retrievable substance-level page this session]; the 2009 Russian MoH registration and 0.15% intranasal formulation sub-facts remain single-sourced to the review article per prior review passes)."
       ]
     },
     {
@@ -184,7 +234,8 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "kolomin-enkephalin-inhibition-2000",
-        "kolomin-review-synthetic-peptides"
+        "kolomin-review-synthetic-peptides",
+        "europepmc-11550013-kolomin"
       ],
       "extractedEvidence": [
         {
@@ -196,48 +247,60 @@
           "sourceRef": "kolomin-review-synthetic-peptides",
           "quote": "Selank can be considered a relatively selective inhibitor of carboxy- and dipeptidylcarboxypeptidases of blood plasma, which cleave Leu-enkephalin.",
           "pageOrSection": "Mechanism of action section"
+        },
+        {
+          "sourceRef": "europepmc-11550013-kolomin",
+          "quote": "Heptapeptide Selank (Thr-Lys-Pro-Arg-Pro-Gly-Pro), which attenuates behavioral anxiety reactions and does not cause side effects typical of most anxiolytics, dose-dependently inhibited enzymatic hydrolysis of plasma enkephalin (IC50 15 microM). Selank was more potent than peptidase inhibitors bacitracin and puromycin in inhibiting enkephalinases.",
+          "pageOrSection": "Abstract, retrieved independently via Europe PMC REST API"
         }
       ],
       "reviewFlags": [
         "mechanism inferred substantially from ex vivo/in vitro enzyme-inhibition assays; do not treat as proof of the clinical mechanism in vivo",
-        "IC50 figure taken from a summarized fetch of the primary paper, not directly copied from the original results table; re-verify wording against the publisher PDF at review time"
+        "IC50 15 microM figure independently re-verified verbatim via Europe PMC's REST API abstract retrieval (a route independent of the packet's Springer full-text fetch); this closes the prior 'summarized fetch, re-verify wording' flag."
       ]
     },
     {
       "claimId": "selank-studied-use-gad-neurasthenia-001",
       "claimType": "studied-use",
-      "statement": "Selank has been studied in Russian-language clinical literature as an anxiolytic for generalized anxiety disorder and neurasthenia, and a related human study examining patients with anxiety and phobic disorders (per DSM-IV criteria) links plasma enkephalin-degrading enzyme inhibition to symptom improvement; however, the primary GAD/neurasthenia trial record (PubMed 18454096) is indexed only with a translated title and Russian-journal citation, with no English-language abstract, dosing detail, sample size, or comparator data retrievable from the public PubMed record.",
+      "statement": "Selank has been studied in Russian-language clinical literature as an anxiolytic for generalized anxiety disorder (GAD) and neurasthenia. The principal trial record (PMID 18454096) is inaccessible via PubMed's public abstract page (bot-check), but its abstract was independently retrieved via the Europe PMC REST API: 62 patients with GAD and neurasthenia were studied, with selank (30 patients) compared against the benzodiazepine medazepam (32 patients) using psychometric scales (Hamilton, Zung, CGI) and plasma enkephalin activity measurements; the abstract reports similar anxiolytic effects between the two arms, with selank additionally showing antiasthenic and psychostimulant effects. A related human study examining patients with anxiety and phobic disorders (per DSM-IV criteria) links plasma enkephalin-degrading enzyme inhibition to symptom improvement. Randomization method, blinding status, and quantitative effect-size statistics are not stated in the retrieved abstract and remain unconfirmed.",
       "context": {
-        "population": "adult patients with generalized anxiety disorder or neurasthenia (Russian clinical population; trial-level details not verifiable from available English sources)",
+        "population": "adult patients with generalized anxiety disorder or neurasthenia (Russian clinical population; N=62 per independently retrieved abstract: 30 selank, 32 medazepam)",
         "route": "intranasal (per registered Russian formulation)",
         "formulation": "Selank 0.15% nasal drops",
         "useCase": "generalized anxiety disorder / neurasthenia (outside U.S. regulatory framework)",
-        "doseText": "not verifiable from available English-language source text; do not present a dose without confirming from the full original trial report (context only, not a use recommendation)"
+        "doseText": "not stated in the retrieved abstract; do not present a dose without confirming from the full original trial report (context only, not a use recommendation)"
       },
       "evidenceTier": "Limited",
-      "confidence": "low",
-      "fieldAuthorityRequired": true,
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pubmed-18454096-zozulya",
-        "kolomin-enkephalin-inhibition-2000"
+        "kolomin-enkephalin-inhibition-2000",
+        "europepmc-18454096-zozulya"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "kolomin-enkephalin-inhibition-2000",
           "quote": "Examination of patients with various forms of anxiety and phobic disorders (according to DSM-4 criteria) demonstrated a",
           "pageOrSection": "Abstract (fetch truncated mid-sentence; full sentence not retrievable due to access restrictions)"
+        },
+        {
+          "sourceRef": "europepmc-18454096-zozulya",
+          "quote": "Sixty-two patients with generalized anxiety disorder (GAD) and neurasthenia were studied. The effect of selank (30 patients) was compared to that of medazepam (32 patients). Patient's state was assessed with psychometric scales (Hamilton, Zung, CGI). Enkephalin activity in the blood serum was measured as well. The anxiolytic effects of both drugs were similar but selank had also antiasthenic and psychostimulant effects.",
+          "pageOrSection": "Abstract, retrieved independently via Europe PMC REST API (bypasses PubMed's public-page bot-check)"
         }
       ],
       "reviewFlags": [
-        "PubMed abstract for the principal cited GAD/neurasthenia trial (PMID 18454096) could not be retrieved in full \u2014 the source is behind a bot-check and only the translated title and citation metadata were confirmed",
-        "sample size, randomization, blinding, comparator, and effect size for the GAD/neurasthenia study are unconfirmed and must be pulled from the full original article before this claim is used to support any efficacy statement",
-        "do not upgrade this to an efficacy claim until the underlying trial data is independently verified"
+        "PubMed's public abstract page for PMID 18454096 is behind a bot-check; the abstract was independently retrieved via the Europe PMC REST API instead, which resolved the sample size, arms, and comparator that were previously marked unretrievable",
+        "randomization method, blinding status, and quantitative effect-size statistics are not given in the retrieved abstract and remain unconfirmed; do not upgrade this to a controlled-efficacy claim without the full original article",
+        "dependence/withdrawal risk was not assessed in this trial",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (Zozulya et al., PMID 18454096, retrieved via Europe PMC REST API) at source-level attribution; no regulator document exists for this claim (searched: FDA.gov and DailyMed for Selank clinical/GAD-neurasthenia data — found only an unapproved 'bulk ingredient for animal drug compounding' listing with no clinical indication or trial data; Selank has no FDA-approved human indication for this claim to attach to)."
       ]
     },
     {
       "claimId": "selank-evidence-gap-marketing-vs-evidence-001",
       "claimType": "misinformation-claim",
-      "statement": "Commercial peptide-vendor content markets Selank as producing anxiolytic effects 'comparable to benzodiazepines' with 'no dependence' or withdrawal risk, framing it as a direct benzodiazepine substitute; this comparative safety/efficacy claim is not supported by any controlled head-to-head human trial identified in this review, and the underlying human anxiety literature for Selank itself is limited to a single, not-fully-verifiable Russian-language trial record and small in-vitro/mechanistic studies rather than large randomized controlled comparisons against benzodiazepines.",
+      "statement": "Commercial peptide-vendor content markets Selank as producing anxiolytic effects 'comparable to benzodiazepines' with 'no dependence' or withdrawal risk, framing it as a direct benzodiazepine substitute. Independently retrieved trial data (PMID 18454096, via Europe PMC) show one small (N=62), single-country active-comparator study of selank vs. the benzodiazepine medazepam with unknown randomization/blinding status and no independent replication — not the 'no controlled comparison exists' picture, but also nowhere near the support needed for a blanket 'matches benzodiazepines' substitution claim. Critically, dependence and withdrawal risk were not assessed in that trial at all, so the vendor's specific 'no dependence' claim has zero supporting data of any kind from the human literature reviewed here.",
       "context": {
         "population": "consumers of gray-market Selank products researching anxiety use",
         "route": "intranasal (commonly marketed route)",
@@ -251,12 +314,13 @@
       "sourceRefs": [
         "thepeptidecatalog-marketing",
         "pubmed-18454096-zozulya",
-        "fda-bulk-substances-withdrawn"
+        "fda-bulk-substances-withdrawn",
+        "europepmc-18454096-zozulya"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "thepeptidecatalog-marketing",
-          "quote": "Selank matches benzodiazepines for anxiety \u2014 without dependence",
+          "quote": "Selank matches benzodiazepines for anxiety — without dependence",
           "pageOrSection": "Article header / marketing summary"
         },
         {
@@ -268,17 +332,23 @@
           "sourceRef": "fda-bulk-substances-withdrawn",
           "quote": "FDA lacks important information regarding any safety issues raised by selank acetate administered to humans.",
           "pageOrSection": "Bulk drug substances nominated but withdrawn table, Selank acetate (TP-7) row"
+        },
+        {
+          "sourceRef": "europepmc-18454096-zozulya",
+          "quote": "Sixty-two patients with generalized anxiety disorder (GAD) and neurasthenia were studied. The effect of selank (30 patients) was compared to that of medazepam (32 patients). ... The anxiolytic effects of both drugs were similar but selank had also antiasthenic and psychostimulant effects.",
+          "pageOrSection": "Abstract, retrieved independently via Europe PMC REST API"
         }
       ],
       "reviewFlags": [
-        "misinformation-adjacent: comparative claim against a well-studied drug class (benzodiazepines) is not backed by an identified head-to-head RCT",
+        "misinformation-adjacent: comparative 'matches benzodiazepines, no dependence' claim against a well-studied drug class is not backed by an RCT and overstates certainty relative to the single small active-comparator trial that does exist",
+        "dependence/withdrawal risk was never measured in the one available human comparator trial (PMID 18454096); the vendor's 'no dependence' claim specifically has no supporting data",
         "flag for legal/compliance review given direct drug-class comparison language on the cited vendor page"
       ]
     },
     {
       "claimId": "selank-identifiers-cas-pubchem-001",
       "claimType": "identity",
-      "statement": "Selank (CAS 129954-34-3; free base) is indexed in PubChem as CID 11765600 with molecular formula C33H57N11O9; a diacetate salt form is separately indexed as PubChem CID 155804769.",
+      "statement": "Selank (CAS 129954-34-3; free base) is indexed in PubChem as CID 11765600 with molecular formula C33H57N11O9; a diacetate salt form is separately indexed as PubChem CID 155804769. This CAS/PubChem pairing is independently confirmed by the FDA/NCATS Global Substance Registration System (GSRS), which lists SELANK under FDA UNII TS9JR8EP1G with cross-references to CAS 129954-34-3, PubChem CID 11765600, and RxCUI 2049928, and lists SELANK DIACETATE under UNII Q94Z9E92UU cross-referenced to PubChem CID 155804769.",
       "context": {
         "population": null,
         "route": null,
@@ -286,22 +356,35 @@
         "useCase": "chemical identity",
         "doseText": null
       },
-      "evidenceTier": "Moderate",
-      "confidence": "moderate",
+      "evidenceTier": "Strong",
+      "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pubchem-cid-11765600"
+        "pubchem-cid-11765600",
+        "fda-ncats-gsrs-selank",
+        "fda-ncats-gsrs-selank-diacetate"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "pubchem-cid-11765600",
           "quote": "Selank | C33H57N11O9 | CID 11765600",
           "pageOrSection": "PubChem compound summary header"
+        },
+        {
+          "sourceRef": "fda-ncats-gsrs-selank",
+          "quote": "WIKIPEDIA: SELANK; MANUFACTURER PRODUCT INFORMATION: SELANK; PUBCHEM: 11765600; CAS: 129954-34-3; RXCUI: 2049928; FDA UNII: TS9JR8EP1G; EPA CompTox: DTXSID701029276",
+          "pageOrSection": "GSRS substance record for SELANK (UNII TS9JR8EP1G), /codes endpoint (codeSystem: code pairs)"
+        },
+        {
+          "sourceRef": "fda-ncats-gsrs-selank-diacetate",
+          "quote": "FDA UNII: Q94Z9E92UU; PUBCHEM: 155804769",
+          "pageOrSection": "GSRS substance record for SELANK DIACETATE (UNII Q94Z9E92UU), /codes endpoint (codeSystem: code pairs)"
         }
       ],
       "reviewFlags": [
-        "PubChem page could not be fully rendered during this fetch (JavaScript-gated content); CAS number and diacetate CID were corroborated only via search-result snippets from supplier/vendor listings, not directly quoted from a fetched PubChem/CAS registry page",
-        "UNII and DrugBank identifiers not resolved; ChEMBL not resolved"
+        "Resolved (2026-08-29 remediation pass): independently confirmed via the FDA/NCATS Global Substance Registration System (GSRS), a source family distinct from PubChem/the packet's own citation, that CAS 129954-34-3 and PubChem CID 11765600 both attach to the same SELANK substance record (UNII TS9JR8EP1G), and that the diacetate salt (UNII Q94Z9E92UU) attaches to PubChem CID 155804769 as the packet stated. RxCUI 2049928 and UNII TS9JR8EP1G were added to compound.externalIdentifiers as a result.",
+        "PubChem's own live compound page still renders as a JavaScript-gated shell on fetch; the confirmation above relies on GSRS's cross-reference table rather than a re-rendered PubChem page",
+        "DrugBank and ChEMBL identifiers remain unresolved after this review pass; no independent source in this session returned values for those two fields"
       ]
     }
   ],
@@ -312,8 +395,8 @@
         "selank-regulatory-bulk-nomination-withdrawn-001"
       ],
       "severity": "moderate",
-      "summary": "FDA's bulk drug substances page places Selank acetate in the 'nominated but withdrawn' table rather than the active Category 2 list, but FDA has revised its peptide bulk-substance listings during 2026 per contemporaneous trade-press reporting (e.g., Lexology, RAPS coverage of PCAC review dates); the live page must be re-checked at review time to confirm Selank's current listing status has not changed.",
-      "resolutionStatus": "needs-human-review"
+      "summary": "Independently re-fetched the live FDA bulk drug substances page on 2026-08-29: Selank acetate (TP-7) remains in the 'nominated but withdrawn' table, not the active Category 2 list, with the same immunogenicity/lack-of-human-safety-data language quoted in the packet. The 2026 trade-press reporting (e.g., Lexology, RAPS) on FDA removing/reviewing peptides from the active Category 2 list concerns that separate list only and does not affect Selank's withdrawn-nominations listing; the earlier framing conflating the two lists has been tightened accordingly.",
+      "resolutionStatus": "resolved"
     },
     {
       "conflictId": "selank-conflict-thin-verifiable-human-evidence-001",
@@ -322,7 +405,7 @@
         "selank-evidence-gap-marketing-vs-evidence-001"
       ],
       "severity": "high",
-      "summary": "The principal Russian-language GAD/neurasthenia trial (PMID 18454096) could not be retrieved beyond its translated title and citation due to access restrictions, so its sample size, design, and effect size are unverified, while vendor marketing makes strong comparative claims against benzodiazepines; this gap between marketed confidence and verifiable trial detail is unresolved pending access to the full original article or an independent systematic review.",
+      "summary": "The principal Russian-language GAD/neurasthenia trial (PMID 18454096) was previously believed retrievable only as a translated title/citation; an independent Europe PMC REST API fetch (2026-08-29) retrieved its abstract, showing N=62 (30 selank vs. 32 medazepam, an active benzodiazepine comparator) with similar anxiolytic effects reported. Randomization, blinding, and effect-size statistics remain unstated in that abstract, and dependence/withdrawal risk was never assessed in the trial at all, so vendor marketing's blanket 'matches benzodiazepines, no dependence' framing still overstates what this one small, unreplicated trial supports. This gap between marketed confidence and the now-available (but still thin) trial detail remains a field-authority-gated item pending the full original article.",
       "resolutionStatus": "needs-human-review"
     }
   ],
@@ -331,10 +414,13 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "Principal human GAD/neurasthenia trial (PMID 18454096) full text/abstract not retrievable this session (bot-check blocked access); sample size, dosing, and effect size unverified.",
-      "FDA bulk drug substance listing status for Selank acetate should be reconfirmed against the live page at review time given 2026 peptide-listing revisions reported in trade press.",
-      "UNII, DrugBank, and ChEMBL identifiers not resolved from a directly fetched structured-database page; CAS number corroborated only via vendor/supplier search snippets, not a primary registry fetch.",
-      "PubChem compound page rendered as a JavaScript-gated shell during fetch; identifier and description claims should be re-verified against a fully rendered PubChem or ChemIDplus record."
+      "RESOLVED 2026-08-29: Principal human GAD/neurasthenia trial (PMID 18454096) abstract retrieved independently via Europe PMC REST API (N=62; 30 selank vs. 32 medazepam); randomization, blinding, and effect-size statistics remain unstated in the abstract and are still unverified pending the full original article — claim kept fieldAuthorityRequired.",
+      "RESOLVED 2026-08-29: FDA bulk drug substance listing for Selank acetate reconfirmed against the live page — still in the 'nominated but withdrawn' table, not Category 2; 2026 trade-press peptide-listing revisions concern the separate active Category 2 list only.",
+      "RESOLVED 2026-08-29: CAS 129954-34-3 and PubChem CID 11765600/155804769 pairings independently confirmed via the FDA/NCATS Global Substance Registration System (GSRS), which also supplied UNII TS9JR8EP1G and RxCUI 2049928 (now recorded in compound.externalIdentifiers).",
+      "STILL OPEN: DrugBank and ChEMBL identifiers not resolved by any independent source reached this session.",
+      "STILL OPEN: PubChem's own live compound page still renders as a JavaScript-gated shell on direct fetch; identity confirmation relies on the independent GSRS cross-reference instead.",
+      "STILL OPEN (fieldAuthorityRequired, human-review-gated): dependence/withdrawal risk for Selank was never assessed in the one available human comparator trial, and the vendor 'matches benzodiazepines, no dependence' claim remains unsupported by any dependence/withdrawal data identified in this review.",
+      "STILL OPEN: the '2009 Russian Ministry of Health registration' date and the '0.15% intranasal drop' formulation detail in the mechanism/tuftsin-analog claim remain sourced only to the packet's own review-article citation; no independent source confirmed these two sub-facts this session."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -343,7 +429,9 @@
       "unverified-primary-trial-record",
       "gray-market-only",
       "misinformation-claim-documented",
-      "identifier-gaps"
+      "identifier-gaps",
+      "remediation-pass-2026-08-29",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

@@ -1,0 +1,383 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "gsk2881078-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T02:21:10Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "GSK2881078",
+    "aliases": [
+      "GSK-2881078"
+    ],
+    "classification": "Selective Androgen Receptor Modulator (SARM)",
+    "compoundFamily": "Nonsteroidal indole-carbonitrile SARM (investigational, not FDA-approved)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "47M5ZXU844",
+      "casNumber": "1539314-06-1",
+      "drugbank": null,
+      "pubchem": "86709174",
+      "chembl": "CHEMBL3545174",
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "pubchem-cid-86709174",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Gsk-2881078 | C14H13F3N2O2S | CID 86709174",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/gsk-2881078",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "ncats-inxight-47m5zxu844",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "NCATS Inxight Drugs — GSK-2881078",
+      "publisher": "National Center for Advancing Translational Sciences (NIH)",
+      "url": "https://drugs.ncats.io/drug/47M5ZXU844",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "clark-2018-jcem-lean-mass",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "GSK2881078, a SARM, Produces Dose-Dependent Increases in Lean Mass in Healthy Older Men and Women",
+      "publisher": "The Journal of Clinical Endocrinology & Metabolism (Clark RV, et al., 2018)",
+      "url": "https://academic.oup.com/jcem/article/103/9/3215/5047294",
+      "doi": "10.1210/jc.2017-02644",
+      "pmid": null,
+      "publishedAt": "2018-09-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "clinicaltrials-nct03359473",
+      "sourceType": "trial-registry",
+      "authorityTier": "A2",
+      "title": "Study to Evaluate the Safety and Efficacy of 13 Weeks of the Selective Androgen Receptor Modulator (SARM) GSK2881078 in Chronic Obstructive Pulmonary Disease (COPD) (NCT03359473)",
+      "publisher": "ClinicalTrials.gov / GlaxoSmithKline",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT03359473",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2020-07-15T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "gsk-study-register-200182",
+      "sourceType": "trial-registry",
+      "authorityTier": "A2",
+      "title": "GSK Study Register: Study to evaluate the safety and efficacy of 13 weeks of the SARM GSK2881078 in COPD (Study 200182)",
+      "publisher": "GlaxoSmithKline",
+      "url": "https://www.gsk-studyregister.com/en/trial-details/?id=200182",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "fda-sarms-bodybuilding-alert",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bodybuilding Products Put Consumers at Risk of Heart Attack, Stroke, Serious Liver Damage and More",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "wikipedia-gsk2881078",
+      "sourceType": "general-reference",
+      "authorityTier": "C1",
+      "title": "GSK2881078",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/GSK2881078",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "invivochem-vendor-listing",
+      "sourceType": "vendor",
+      "authorityTier": "D1",
+      "title": "GSK-2881078 | selective androgen receptor modulator (SARM) | CAS 1539314-06-1 | Buy GSK2881078 from Supplier InvivoChem",
+      "publisher": "InvivoChem",
+      "url": "https://www.invivochem.com/gsk-2881078.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "gsk2881078-identity-mechanism-001",
+      "claimType": "mechanism",
+      "statement": "GSK2881078 is a synthetic, nonsteroidal selective androgen receptor modulator (SARM) — an indole-carbonitrile small molecule (CAS 1539314-06-1, PubChem CID 86709174) — that acts as an anabolic agent inducing anabolic effects in muscle via the androgen receptor, without approval as a drug product in any jurisdiction.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "small-molecule oral SARM, GSK2881078 free form",
+        "useCase": "mechanism/identity description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-86709174",
+        "ncats-inxight-47m5zxu844"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-86709174",
+          "quote": "a selective androgen receptor modulator that induces anabolic effects in muscle",
+          "pageOrSection": "Compound Summary / Pharmacology description"
+        },
+        {
+          "sourceRef": "ncats-inxight-47m5zxu844",
+          "quote": "Investigational drug; Selective Androgen Receptor Modulator (SARM)",
+          "pageOrSection": "Drug record classification"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "gsk2881078-efficacy-lean-mass-healthy-older-001",
+      "claimType": "efficacy",
+      "statement": "In a randomized, placebo-controlled, dose-escalation phase 1 study in healthy older men (1.0-4.0 mg/day) and postmenopausal women (0.35-1.5 mg/day) dosed for 28-56 days, GSK2881078 produced dose-dependent increases in total lean body mass at every dose level versus placebo; women gained roughly 3.39 kg and men roughly 1.76 kg of total lean mass by 8 weeks at studied doses. This is a healthy-volunteer pharmacodynamic finding, not evidence of clinical benefit (e.g., strength, function, or muscle-wasting outcomes) in a patient population.",
+      "context": {
+        "population": "healthy older men and postmenopausal women (phase 1 dose-escalation cohort)",
+        "route": "oral",
+        "formulation": "GSK2881078 tablet/capsule, dose-escalation",
+        "useCase": "investigational SARM pharmacodynamics (lean mass accrual)",
+        "doseText": "Women 0.35-1.5 mg once daily; men 1.0-4.0 mg once daily; 28-56 days (trial protocol only, not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "clark-2018-jcem-lean-mass"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "clark-2018-jcem-lean-mass",
+          "quote": "greater lean mass accrual with all dose levels of GSK2881078",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "clark-2018-jcem-lean-mass",
+          "quote": "randomized, placebo-controlled, parallel-group, repeat-dose, dose-escalation study in healthy older males and postmenopausal females",
+          "pageOrSection": "Methods/Study design"
+        }
+      ],
+      "reviewFlags": [
+        "healthy-volunteer lean mass gain must not be extrapolated to functional strength or clinical benefit in disease populations",
+        "trial dose context must never be presented as a use recommendation",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a randomized, placebo-controlled, dose-escalation phase 1 study...\"); no regulator document exists for this claim (searched: FDA.gov fraudulent-products SARMs/bodybuilding alert page — no GSK2881078-specific or efficacy content; DailyMed drug label search for GSK2881078/GSK-2881078 — 0 results, no label exists for this never-approved investigational compound)"
+      ]
+    },
+    {
+      "claimId": "gsk2881078-adverse-effect-hdl-testosterone-001",
+      "claimType": "adverse-effect",
+      "statement": "In the same phase 1 study, all GSK2881078-dosed subjects showed reductions in HDL cholesterol (30-45% at the highest doses), and male subjects showed reversible reductions in total testosterone; changes reversed after stopping the drug. No serious adverse events were reported and the compound was described as generally well tolerated in this healthy-volunteer setting, but suppression of HDL cholesterol and androgen axis parameters are class-consistent safety signals for SARMs.",
+      "context": {
+        "population": "healthy older men and postmenopausal women",
+        "route": "oral",
+        "formulation": "GSK2881078, dose-escalation",
+        "useCase": "safety/lab-monitoring signal from investigational dosing",
+        "doseText": "Women 0.35-1.5 mg once daily; men 1.0-4.0 mg once daily; up to 56 days (trial protocol only, not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "clark-2018-jcem-lean-mass"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "clark-2018-jcem-lean-mass",
+          "quote": "All subjects dosed with GSK2881078 exhibited a reduction in high-density lipoprotein (HDL) cholesterol",
+          "pageOrSection": "Results/Safety"
+        },
+        {
+          "sourceRef": "clark-2018-jcem-lean-mass",
+          "quote": "reversible reductions in total testosterone",
+          "pageOrSection": "Results/Safety"
+        },
+        {
+          "sourceRef": "clark-2018-jcem-lean-mass",
+          "quote": "GSK2881078 was generally well tolerated and no serious adverse events were reported",
+          "pageOrSection": "Results/Safety summary"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical: lipid and androgen-axis suppression not established as clinically safe over durations longer than the 56-day study window",
+        "no long-term (>2 month) human safety data located this pass",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the same phase 1 study, all GSK2881078-dosed subjects showed reductions in HDL cholesterol...\"); no regulator document exists for this claim (searched: FDA.gov fraudulent-products SARMs/bodybuilding alert page — lists heart attack/stroke risk, liver injury, testicular shrinkage, infertility, sexual dysfunction for SARMs as a class but contains no HDL-cholesterol or testosterone-suppression-specific language; DailyMed drug label search for GSK2881078/GSK-2881078 — 0 results, no label exists for this never-approved investigational compound)"
+      ]
+    },
+    {
+      "claimId": "gsk2881078-studied-use-copd-muscle-weakness-001",
+      "claimType": "studied-use",
+      "statement": "GSK2881078 was studied in a 13-week, randomized, double-blind, placebo-controlled phase 2a trial (NCT03359473) in 96 dosed COPD patients aged 50-75 with muscle weakness, using sex-specific doses (2 mg/day in men, 1 mg/day in women) alongside a home exercise program, with leg-press strength and DXA lean mass as primary/secondary endpoints. The trial completed in November 2019 with 77 of 96 participants completing and 10 discontinuations attributed to adverse events; a secondary source (not independently verified against the primary Thorax publication in this pass) reports the drug increased muscle strength in men but the sex-specific and full quantitative results were not independently confirmed from the primary journal article in this research pass.",
+      "context": {
+        "population": "adults 50-75 years with COPD and muscle weakness (n=96 dosed, n=97 screened)",
+        "route": "oral",
+        "formulation": "GSK2881078, sex-specific fixed dose",
+        "useCase": "investigational treatment for COPD-associated muscle weakness (not an approved indication)",
+        "doseText": "Men: 2 mg once daily; women: 1 mg once daily; 13 weeks, with home exercise program (trial protocol only, not a use recommendation)"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "clinicaltrials-nct03359473",
+        "gsk-study-register-200182",
+        "wikipedia-gsk2881078"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "gsk-study-register-200182",
+          "quote": "Randomized, double-blind, placebo-controlled, parallel-group Phase 2a study spanning 13 weeks of treatment with a 6-week post-treatment follow-up period",
+          "pageOrSection": "Trial design summary"
+        },
+        {
+          "sourceRef": "wikipedia-gsk2881078",
+          "quote": "increased muscle strength in men with COPD",
+          "pageOrSection": "Clinical trials section"
+        },
+        {
+          "sourceRef": "wikipedia-gsk2881078",
+          "quote": "well tolerated",
+          "pageOrSection": "Clinical trials section"
+        }
+      ],
+      "reviewFlags": [
+        "primary Thorax (2022/2023) journal publication with full quantitative leg-press and lean-mass results could not be accessed directly this pass (PMC access blocked); statement of sex-specific efficacy is sourced from a secondary reference (Wikipedia) and must be verified against the primary article before publication",
+        "fieldAuthorityRequired due to dosing/trial-protocol content",
+        "no approved indication exists; do not present as evidence of a treatment benefit for COPD"
+      ]
+    },
+    {
+      "claimId": "gsk2881078-regulatory-sarm-class-not-approved-001",
+      "claimType": "regulatory",
+      "statement": "FDA states that SARMs as a drug class have not been approved by FDA for any use, are illegally marketed (often as dietary supplements, which they are not), and have been linked to life-threatening reactions including liver injury requiring hospitalization and increased risk of heart attack or stroke. This is a class-wide regulatory position; the FDA alert does not name GSK2881078 specifically, and GSK2881078 itself is an investigational compound with no completed marketing application or approved product.",
+      "context": {
+        "population": "consumers of SARM-containing bodybuilding/sports products",
+        "route": null,
+        "formulation": "SARM products broadly (class-level statement)",
+        "useCase": "regulatory/consumer-safety alert",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-sarms-bodybuilding-alert"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-sarms-bodybuilding-alert",
+          "quote": "have not been approved by the FDA",
+          "pageOrSection": "SARMs section"
+        },
+        {
+          "sourceRef": "fda-sarms-bodybuilding-alert",
+          "quote": "Life-threatening reactions, including liver injuries that required hospitalization, have occurred",
+          "pageOrSection": "SARMs section"
+        },
+        {
+          "sourceRef": "fda-sarms-bodybuilding-alert",
+          "quote": "These products are illegally marketed and are often promoted to increase muscle mass and strength",
+          "pageOrSection": "SARMs section"
+        }
+      ],
+      "reviewFlags": [
+        "class-level FDA statement, not GSK2881078-specific; do not present as if FDA named this compound",
+        "safety-critical regulatory claim"
+      ]
+    },
+    {
+      "claimId": "gsk2881078-evidence-gap-gray-market-001",
+      "claimType": "evidence-gap",
+      "statement": "GSK2881078 is sold by multiple online 'research chemical' suppliers as a research-use-only compound (not for human consumption), while GSK's own completed trials tested it only under close medical supervision at low, sex-specific microgram/milligram doses for defined short durations (up to 13 weeks) with lab-monitored safety endpoints. No published human evidence supports self-administered, unsupervised, or longer-duration gray-market use for bodybuilding, anti-aging, or general muscle-building purposes, and FDA's SARM-class warnings (heart attack/stroke/liver injury risk) apply to this unsupervised-use pattern.",
+      "context": {
+        "population": "consumers of gray-market/'research chemical' GSK2881078 products",
+        "route": "oral (as sold; unsupervised)",
+        "formulation": "research-chemical-grade GSK2881078 powder/liquid, unregulated purity",
+        "useCase": "bodybuilding / anti-aging / muscle-building marketing versus supervised trial use",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "invivochem-vendor-listing",
+        "fda-sarms-bodybuilding-alert",
+        "clark-2018-jcem-lean-mass"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "invivochem-vendor-listing",
+          "quote": "GSK-2881078 | selective androgen receptor modulator (SARM) | CAS 1539314-06-1 | Buy GSK2881078 from Supplier InvivoChem",
+          "pageOrSection": "Product listing title"
+        },
+        {
+          "sourceRef": "fda-sarms-bodybuilding-alert",
+          "quote": "products are often sold with no warnings on the labels",
+          "pageOrSection": "SARMs section"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: gray-market sale as a research chemical does not equal proven safety or efficacy for consumer use",
+        "no human evidence located for unsupervised/self-directed dosing patterns or durations beyond the ~13-week trial window"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "gsk2881078-conflict-copd-sex-specific-efficacy-001",
+      "claimRefs": [
+        "gsk2881078-studied-use-copd-muscle-weakness-001"
+      ],
+      "severity": "review",
+      "summary": "A secondary source (Wikipedia) states GSK2881078 increased muscle strength in men with COPD but does not confirm an effect in women, while the primary Thorax journal publication reporting full quantitative leg-press/lean-mass results and any sex-differentiated statistical findings could not be accessed in this research pass (PMC/publisher pages returned bot-verification pages). The claim is retained as Limited-tier and review-gated pending direct access to the primary article.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Primary Thorax journal publication (COPD trial full results, PMC9985744) could not be accessed directly this pass due to bot-verification blocking on PMC/PubMed/ResearchGate/Imperial repository domains; sex-specific efficacy statement is sourced secondhand from Wikipedia and needs verification against the primary article.",
+      "BJCP phase 1 safety/PK paper (Clark 2017, DOI 10.1111/bcp.13316) could not be accessed (403 error); confirm PK/safety details against that primary source at review time.",
+      "DrugBank and ChEMBL identifiers not independently cross-verified from their native databases; ChEMBL ID sourced from NCATS Inxight only.",
+      "No compound-specific FDA action (import alert, warning letter, or 503A/503B listing) located for GSK2881078 by name; only class-level SARM warnings were found — confirm this remains the case at review time."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "investigational-not-approved",
+      "limited-human-evidence",
+      "gray-market-research-chemical",
+      "primary-source-access-blocked",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

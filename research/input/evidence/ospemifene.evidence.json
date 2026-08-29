@@ -1,0 +1,470 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "ospemifene-evidence-expansion-001",
+    "category": "hormones-serms-sarms",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:58:43Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Ospemifene",
+    "aliases": [
+      "Osphena",
+      "FC-1271a"
+    ],
+    "classification": "Selective estrogen receptor modulator (SERM)",
+    "compoundFamily": "Triphenylethylene-derivative, non-hormonal SERM",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "128607-22-7",
+      "drugbank": null,
+      "pubchem": "3036505",
+      "chembl": "CHEMBL2105395",
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-osphena-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: OSPHENA - ospemifene tablet, film coated",
+      "publisher": "U.S. National Library of Medicine / DailyMed (source: Shionogi Inc.)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=9accbcc9-78ee-4f84-9b7e-704f2ab1c413",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "fda-osphena-label-pdf",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "OSPHENA (ospemifene) tablets, for oral use - Full Prescribing Information",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/203505s015lbl.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2019-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pubchem-cid-3036505",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Ospemifene, CID 3036505",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/3036505",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "ncbi-bookshelf-dare-nbk174699",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "The efficacy and safety of ospemifene in treating dyspareunia associated with postmenopausal vulvar and vaginal atrophy: a systematic review and meta-analysis (DARE quality-assessed review)",
+      "publisher": "Centre for Reviews and Dissemination / NCBI Bookshelf",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK174699/",
+      "doi": null,
+      "pmid": "24251418",
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pmc-case-report-5005291",
+      "sourceType": "case-report",
+      "authorityTier": "B3",
+      "title": "Ospemifene May Not Treat Vulvar Atrophy: A Report of Two Cases",
+      "publisher": "PMC (Sexual Medicine)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5005291/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "mdpi-bone-density-2022",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B2",
+      "title": "Effect of Ospemifene on Densitometric and Plasma Bone Metabolism Biomarkers in Postmenopausal Women Reporting Vulvar and Vaginal Atrophy (VVA)",
+      "publisher": "Journal of Clinical Medicine (MDPI)",
+      "url": "https://www.mdpi.com/2077-0383/11/21/6316",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "chembl-2105395",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Compound: OSPEMIFENE (CHEMBL2105395)",
+      "publisher": "European Bioinformatics Institute / ChEMBL",
+      "url": "https://www.ebi.ac.uk/chembl/explore/compound/CHEMBL2105395",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "choosingtherapy-consumer-article",
+      "sourceType": "consumer-health-content",
+      "authorityTier": "C2",
+      "title": "Osphena (Ospemifene): Uses, Side Effects, Dosing, & More",
+      "publisher": "ChoosingTherapy.com",
+      "url": "https://www.choosingtherapy.com/osphena-ospemifene/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "ospemifene-regulatory-approved-indication-001",
+      "claimType": "approved-indication",
+      "statement": "Ospemifene (Osphena) is FDA-approved as an oral, once-daily 60 mg tablet for the treatment of moderate to severe dyspareunia and moderate to severe vaginal dryness, both symptoms of vulvar and vaginal atrophy (VVA) due to menopause.",
+      "context": {
+        "population": "postmenopausal women with symptomatic VVA",
+        "route": "oral",
+        "formulation": "60 mg film-coated tablet",
+        "useCase": "moderate to severe dyspareunia and vaginal dryness due to menopausal VVA",
+        "doseText": "One 60 mg tablet taken orally once daily with food, per FDA label (label text, not a use recommendation)."
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-osphena-label",
+        "fda-osphena-label-pdf"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-osphena-label",
+          "quote": "The treatment of moderate to severe dyspareunia, a symptom of vulvar and vaginal atrophy, due to menopause.",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-osphena-label",
+          "quote": "The treatment of moderate to severe vaginal dryness, a symptom of vulvar and vaginal atrophy, due to menopause.",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "fda-osphena-label-pdf",
+          "quote": "One tablet taken orally once daily with food",
+          "pageOrSection": "Dosage and Administration"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "ospemifene-regulatory-boxed-warning-001",
+      "claimType": "warning",
+      "statement": "OSPHENA carries an FDA boxed warning for endometrial cancer and cardiovascular disorders: unopposed estrogenic activity in the endometrium raises endometrial cancer risk, and estrogen-agonist activity is associated with increased risk of stroke and deep vein thrombosis (DVT); the label instructs immediate discontinuation if a thromboembolic/hemorrhagic stroke or VTE occurs or is suspected, and directs diagnostic workup (including endometrial sampling when indicated) for abnormal bleeding.",
+      "context": {
+        "population": "women prescribed OSPHENA, particularly those with a uterus",
+        "route": "oral",
+        "formulation": "60 mg tablet",
+        "useCase": "safety monitoring during VVA treatment",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-osphena-label",
+        "fda-osphena-label-pdf"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-osphena-label",
+          "quote": "WARNING: ENDOMETRIAL CANCER and CARDIOVASCULAR DISORDERS",
+          "pageOrSection": "Boxed Warning"
+        },
+        {
+          "sourceRef": "dailymed-osphena-label",
+          "quote": "There is an increased risk of endometrial cancer in a woman with a uterus who uses unopposed estrogens.",
+          "pageOrSection": "Boxed Warning"
+        },
+        {
+          "sourceRef": "dailymed-osphena-label",
+          "quote": "Estrogen-alone therapy has an increased risk of stroke and deep vein thrombosis (DVT).",
+          "pageOrSection": "Boxed Warning"
+        },
+        {
+          "sourceRef": "dailymed-osphena-label",
+          "quote": "Immediately discontinue OSPHENA if a thromboembolic or hemorrhagic stroke occurs or is suspected.",
+          "pageOrSection": "Warnings and Precautions"
+        },
+        {
+          "sourceRef": "dailymed-osphena-label",
+          "quote": "Immediately discontinue OSPHENA if a VTE occurs or is suspected.",
+          "pageOrSection": "Warnings and Precautions"
+        }
+      ],
+      "reviewFlags": [
+        "boxed-warning safety-critical claim; verify against current DailyMed set at review time"
+      ]
+    },
+    {
+      "claimId": "ospemifene-contraindication-breastcancer-001",
+      "claimType": "contraindication",
+      "statement": "OSPHENA is contraindicated in undiagnosed abnormal genital bleeding, known estrogen-dependent neoplasia, active or historical DVT/pulmonary embolism, active arterial thromboembolic disease (e.g. stroke, myocardial infarction), known hypersensitivity to the drug, and known or suspected pregnancy; the label separately states OSPHENA has not been adequately studied in women with breast cancer and should not be used in women with known or suspected breast cancer.",
+      "context": {
+        "population": "prospective OSPHENA users",
+        "route": "oral",
+        "formulation": "60 mg tablet",
+        "useCase": "prescribing eligibility screening",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-osphena-label",
+        "fda-osphena-label-pdf"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-osphena-label",
+          "quote": "Undiagnosed abnormal genital bleeding",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-osphena-label",
+          "quote": "Active DVT, pulmonary embolism (PE), or a history of these conditions",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-osphena-label",
+          "quote": "Known or suspected pregnancy",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "fda-osphena-label-pdf",
+          "quote": "OSPHENA 60 mg has not been adequately studied in women with breast cancer; therefore, it should not be used in women with known or suspected breast cancer.",
+          "pageOrSection": "Use in Specific Populations"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical prescribing-eligibility claim"
+      ]
+    },
+    {
+      "claimId": "ospemifene-mechanism-serm-tissue-selective-001",
+      "claimType": "mechanism",
+      "statement": "Ospemifene is a tissue-selective estrogen receptor agonist/antagonist (SERM): it binds estrogen receptors and produces agonist (estrogen-like) activity in some tissues, including vaginal epithelium and endometrium, while acting as an antagonist in others; its effect on breast tissue is not mechanistically characterized in the FDA label, and the label states it has not been adequately studied in women with breast cancer.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "ospemifene",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-osphena-label-pdf",
+        "pubchem-cid-3036505"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-osphena-label-pdf",
+          "quote": "OSPHENA is an estrogen receptor agonist/antagonist with tissue selective effects. Its biological actions are mediated through binding to estrogen receptors.",
+          "pageOrSection": "Clinical Pharmacology / Mechanism of Action"
+        },
+        {
+          "sourceRef": "fda-osphena-label-pdf",
+          "quote": "results in activation of estrogenic pathways in some tissues (agonism) and blockade of estrogenic pathways in others (antagonism)",
+          "pageOrSection": "Clinical Pharmacology / Mechanism of Action"
+        }
+      ],
+      "reviewFlags": [
+        "breast-tissue mechanistic data not characterized in label; do not extrapolate breast-safety conclusions from mechanism alone"
+      ]
+    },
+    {
+      "claimId": "ospemifene-efficacy-dyspareunia-vva-001",
+      "claimType": "efficacy",
+      "statement": "A systematic review and meta-analysis of six randomized controlled trials (1,772 patients total, short-term 12-week and long-term 1-year trials) found that, versus placebo, oral ospemifene 60 mg produced statistically significant reductions in vaginal parabasal cells, increases in superficial cells, reductions in vaginal pH, and reductions in dyspareunia severity; the review's authors concluded ospemifene was an effective and generally safe treatment for dyspareunia associated with postmenopausal vulvar and vaginal atrophy, with increased endometrial thickness observed on monitoring in long-term use.",
+      "context": {
+        "population": "postmenopausal women with VVA-associated dyspareunia (pooled n=1,772 across 6 RCTs)",
+        "route": "oral",
+        "formulation": "60 mg tablet",
+        "useCase": "dyspareunia and vaginal maturation index improvement in menopausal VVA",
+        "doseText": "60 mg once daily, trial protocol duration 12 weeks (short-term) to 1 year (long-term); reported as a trial finding, not a use recommendation."
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "ncbi-bookshelf-dare-nbk174699"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ncbi-bookshelf-dare-nbk174699",
+          "quote": "six publications involving a total of 1,772 patients",
+          "pageOrSection": "Meta-analysis population summary"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-dare-nbk174699",
+          "quote": "ospemifene was generally safe",
+          "pageOrSection": "Safety findings"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-dare-nbk174699",
+          "quote": "an effective and safe treatment for dyspareunia associated with postmenopausal vulvar and vaginal atrophy",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "quantitative effect sizes (SMDs) taken from secondary summary of the review; confirm against primary DARE/Cochrane-style record at review time"
+      ]
+    },
+    {
+      "claimId": "ospemifene-studied-use-bone-density-001",
+      "claimType": "studied-use",
+      "statement": "In a 12-month controlled study of postmenopausal women with VVA (61 treated with ospemifene 60 mg/day vs 67 untreated controls), the ospemifene group showed significant bone mineral density/T-score decline only at the femoral neck, while total femur and lumbar spine measurements remained stable, versus significant declines at all three sites in the untreated control group; bone alkaline phosphatase decreased in the treated group. Ospemifene is not FDA-approved for osteoporosis or fracture-risk reduction, and the study explicitly states any reduction in fracture risk is not yet proven.",
+      "context": {
+        "population": "postmenopausal women with VVA (n=61 treated, n=67 untreated control)",
+        "route": "oral",
+        "formulation": "60 mg tablet",
+        "useCase": "exploratory bone-density outcome in women already being treated for VVA (not an approved bone indication)",
+        "doseText": "60 mg once daily for 12 months (trial protocol; not a use recommendation, and not an FDA-approved bone-health regimen)."
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "mdpi-bone-density-2022",
+        "dailymed-osphena-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "mdpi-bone-density-2022",
+          "quote": "Women reporting VVA symptoms were included. Bone health profile was investigated in 61 subjects treated with OSP (OSPG) (60 mg/day) and compared with a control group (CG) (n = 67) over 12 months.",
+          "pageOrSection": "Abstract - Methods"
+        },
+        {
+          "sourceRef": "mdpi-bone-density-2022",
+          "quote": "the possibility that ospemifene causes a decrease in fracture risk is not yet proven",
+          "pageOrSection": "Abstract - Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "not an approved indication; do not present as osteoporosis treatment",
+        "single non-randomized-control comparison; independent confirmation needed"
+      ]
+    },
+    {
+      "claimId": "ospemifene-evidence-gap-vulvar-specific-001",
+      "claimType": "evidence-gap",
+      "statement": "A published case report describes two postmenopausal women who took ospemifene 60 mg daily for 1 to 1.5 years without improvement in vulvar atrophy or introital pain, and notes that none of the trials underlying FDA approval included an objective, instrument-based assessment of vulvar tissue specifically (as opposed to vaginal maturation index and dyspareunia severity, which were assessed); the authors call for dedicated vulvar-outcome trials, and hypothesize the vulvar vestibule may be more androgen-dependent than estrogen-receptor-dependent, which could explain non-response in some patients.",
+      "context": {
+        "population": "postmenopausal women using ospemifene for VVA symptoms, subset with vulvar-predominant complaints",
+        "route": "oral",
+        "formulation": "60 mg tablet",
+        "useCase": "vulvar atrophy / introital dyspareunia specifically, as distinct from general vaginal dryness/dyspareunia",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "low",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pmc-case-report-5005291",
+        "ncbi-bookshelf-dare-nbk174699"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc-case-report-5005291",
+          "quote": "These cases highlight the need to perform additional clinical trials that specifically assess the efficacy of ospemifene for changes in vulvar atrophy.",
+          "pageOrSection": "Discussion/Conclusion"
+        },
+        {
+          "sourceRef": "pmc-case-report-5005291",
+          "quote": "vulvar vestibular pain threshold before and after treatment with ospemifene as measured by a calibrated instrument such as a vulvogeisometer",
+          "pageOrSection": "Discussion - proposed future research"
+        }
+      ],
+      "reviewFlags": [
+        "based on a 2-patient case report (lowest evidentiary weight); not generalizable",
+        "flags a gap in the approval-trial evidence base itself, distinct from general efficacy claim"
+      ]
+    },
+    {
+      "claimId": "ospemifene-misinformation-bone-marketing-001",
+      "claimType": "misinformation-claim",
+      "statement": "Consumer-facing health content markets ospemifene as having likely bone-protective benefit, e.g. stating it 'might have positive effects on bone mineral density, similar to other medications like raloxifene' and framing this as making the drug 'advantageous for both intimate health and bone strength' -- language that presents an unapproved, still-unproven benefit (fracture-risk reduction has not been demonstrated) as a established secondary advantage of treatment, going beyond what the FDA label or the single exploratory bone-density study support.",
+      "context": {
+        "population": "consumers researching ospemifene online",
+        "route": "oral",
+        "formulation": "60 mg tablet",
+        "useCase": "consumer marketing/education content vs. FDA-approved indication",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "choosingtherapy-consumer-article",
+        "mdpi-bone-density-2022",
+        "dailymed-osphena-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "choosingtherapy-consumer-article",
+          "quote": "Evidence suggests that it might have positive effects on bone mineral density, similar to other medications like raloxifene.",
+          "pageOrSection": "Article body"
+        },
+        {
+          "sourceRef": "mdpi-bone-density-2022",
+          "quote": "the possibility that ospemifene causes a decrease in fracture risk is not yet proven",
+          "pageOrSection": "Abstract - Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: consumer content frames exploratory bone-density findings as an established secondary benefit",
+        "OSPHENA is not FDA-approved for any bone/osteoporosis indication; this framing should not be repeated as a use recommendation"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "ospemifene-conflict-vulvar-evidence-001",
+      "claimRefs": [
+        "ospemifene-regulatory-approved-indication-001",
+        "ospemifene-evidence-gap-vulvar-specific-001"
+      ],
+      "severity": "moderate",
+      "summary": "FDA approval and label indication reference 'vulvar and vaginal atrophy' broadly, but the approval-supporting trials assessed vaginal maturation index and dyspareunia severity rather than an objective, vulvar-tissue-specific outcome measure; a small case report documents non-response of vulvar symptoms specifically, creating a gap between the labeled indication's scope and the direct evidence for vulvar-specific benefit.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "RxNorm and UNII identifiers were not resolved from a structured database fetch this session and remain null.",
+      "Individual phase III RCT abstracts on PubMed (e.g. PMID 24679891, PMID 23361170) were blocked by bot-verification pages during this session; efficacy evidence instead relies on a systematic review/meta-analysis (NBK174699) and should be cross-checked against primary trial abstracts at review time.",
+      "Bone-density claim rests on a single non-randomized controlled comparison (MDPI 2022) and needs independent confirmation before any public framing beyond 'exploratory'.",
+      "Vulvar-specific evidence gap is documented from a 2-patient case report only; broader literature search for corroborating or contradicting data is recommended."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "fda-approved-product",
+      "boxed-warning-present",
+      "systematic-review-backed-efficacy",
+      "thin-human-evidence-for-secondary-uses",
+      "misinformation-gap-documented"
+    ]
+  }
+}

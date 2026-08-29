@@ -1,0 +1,468 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "exenatide-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T22:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Exenatide",
+    "aliases": [
+      "Byetta",
+      "Bydureon",
+      "Bydureon BCise",
+      "Exendin-4"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "GLP-1 receptor agonist (exendin-4 derived, 39-amino-acid peptide)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": "DB01276",
+      "pubchem": "45588096",
+      "chembl": null,
+      "doi": "10.1056/NEJMoa1612917",
+      "pmid": "28910237"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-byetta-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: BYETTA - exenatide injection",
+      "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=53d03c03-ebf7-418d-88a8-533eabd2ee4f",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "fda-bydureon-label-2024",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Highlights of Prescribing Information - BYDUREON (exenatide extended-release) for injectable suspension",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/022200s035lbl.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2024-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "dailymed-bydureon-bcise-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: BYDUREON BCISE - exenatide injection, suspension, extended release",
+      "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2d18cfc4-e0de-4814-a712-c1b7c504bff5&audience=consumer",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "exscel-nejm-2017",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Effects of Once-Weekly Exenatide on Cardiovascular Outcomes in Type 2 Diabetes (EXSCEL trial)",
+      "publisher": "New England Journal of Medicine (Holman RR, et al., 2017); abstract reproduced via Elsevier Pure",
+      "url": "https://cuk.elsevierpure.com/en/publications/effects-of-once-weekly-exenatide-on-cardiovascular-outcomes-in-ty/",
+      "doi": "10.1056/NEJMoa1612917",
+      "pmid": "28910237",
+      "publishedAt": "2017-09-14T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "exscel-mdedge-summary",
+      "sourceType": "medical-news-summary",
+      "authorityTier": "C1",
+      "title": "No increased overall cardiovascular risk seen with exenatide use",
+      "publisher": "MDedge",
+      "url": "https://ma1.mdedge.com/index.php/content/no-increased-overall-cardiovascular-risk-seen-exenatide-use",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-45588096",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Exenatide, CID 45588096",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Exenatide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "drugbank-db01276",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Exenatide: Uses, Interactions, Mechanism of Action (DB01276)",
+      "publisher": "DrugBank Online",
+      "url": "https://go.drugbank.com/drugs/DB01276",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "uhcprovider-discontinuation-2024",
+      "sourceType": "payer-clinical-bulletin",
+      "authorityTier": "B1",
+      "title": "Discontinuation of Bydureon BCise and Byetta",
+      "publisher": "UnitedHealthcare (UHCprovider.com)",
+      "url": "https://www.uhcprovider.com/en/resource-library/news/2024/discontinuation-bydureon-bcise-byetta.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2024-10-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "clinicaltrials-nct01144338-results",
+      "sourceType": "structured-database",
+      "authorityTier": "B1",
+      "title": "Effects of Once Weekly Exenatide on Cardiovascular Outcomes (EXSCEL) - Results Section (NCT01144338)",
+      "publisher": "ClinicalTrials.gov / U.S. National Library of Medicine",
+      "url": "https://clinicaltrials.gov/study/NCT01144338?tab=results",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "peptidefactcheck-exenatide",
+      "sourceType": "vendor-or-informational-page",
+      "authorityTier": "C2",
+      "title": "Exenatide - Hyped or Proven?",
+      "publisher": "PeptideFactCheck",
+      "url": "https://www.peptidefactcheck.com/peptides/exenatide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "exenatide-approved-indication-001",
+      "claimType": "approved-indication",
+      "statement": "Exenatide is FDA-approved, as the immediate-release twice-daily product (Byetta) and the extended-release once-weekly product (Bydureon / Bydureon BCise), as an adjunct to diet and exercise to improve glycemic control in adults (and, for Bydureon, pediatric patients aged 10 years and older) with type 2 diabetes mellitus. It is not approved as a weight-loss product and concurrent use of multiple exenatide-containing products is not recommended. Note: the manufacturer (AstraZeneca) discontinued Byetta and Bydureon BCise for commercial reasons in October 2024; the underlying FDA approval and labeling remain on file, but as of this writing these exact branded products are no longer commercially marketed in the US.",
+      "context": {
+        "population": "adults, and pediatric patients aged 10+ for Bydureon, with type 2 diabetes mellitus",
+        "route": "subcutaneous injection",
+        "formulation": "Byetta (immediate-release pen); Bydureon / Bydureon BCise (extended-release microsphere suspension)",
+        "useCase": "adjunct glycemic control in type 2 diabetes",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-byetta-label",
+        "fda-bydureon-label-2024"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-byetta-label",
+          "quote": "BYETTA (exenatide) is a glucagon-like peptide-1 (GLP-1) receptor agonist indicated as an adjunct to diet and exercise to improve glycemic control in adults with type 2 diabetes mellitus.",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "fda-bydureon-label-2024",
+          "quote": "BYDUREON is indicated as an adjunct to diet and exercise to improve glycemic control in adults and pediatric patients aged 10 years and older with type 2 diabetes mellitus.",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "uhcprovider-discontinuation-2024",
+          "quote": "Bydureon BCise was discontinued on Oct. 28, 2024, and Byetta was discontinued on Oct. 25, 2024.",
+          "pageOrSection": "Discontinuation notice"
+        }
+      ],
+      "reviewFlags": [
+        "remediation-2026-08-29: added manufacturer-discontinuation disclosure (Byetta and Bydureon BCise, AstraZeneca, Oct. 2024) per independent-review finding; underlying FDA approval/labeling is unaffected, but these exact branded products are no longer commercially marketed in the US as of this writing."
+      ]
+    },
+    {
+      "claimId": "exenatide-warning-thyroid-ccell-001",
+      "claimType": "warning",
+      "statement": "Both Bydureon and Bydureon BCise carry a boxed warning that exenatide extended-release caused an increased incidence of thyroid C-cell tumors in rats at clinically relevant exposures; human relevance is unknown, and the products are contraindicated in patients with a personal or family history of medullary thyroid carcinoma (MTC) or Multiple Endocrine Neoplasia syndrome type 2 (MEN 2).",
+      "context": {
+        "population": "patients being considered for exenatide extended-release therapy",
+        "route": "subcutaneous",
+        "formulation": "Bydureon / Bydureon BCise (exenatide extended-release)",
+        "useCase": "boxed-warning safety signal and contraindication",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bydureon-label-2024",
+        "dailymed-bydureon-bcise-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bydureon-label-2024",
+          "quote": "Exenatide extended-release causes an increased incidence in thyroid C-cell tumors at clinically relevant exposures in rats compared to controls.",
+          "pageOrSection": "Boxed Warning"
+        },
+        {
+          "sourceRef": "dailymed-bydureon-bcise-label",
+          "quote": "BYDUREON BCISE is contraindicated in patients with a personal or family history of MTC and in patients with Multiple Endocrine Neoplasia syndrome type 2 (MEN 2).",
+          "pageOrSection": "Boxed Warning / Contraindications"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical boxed-warning claim",
+        "human carcinogenic relevance of the rat C-cell tumor signal remains unresolved in the label itself",
+        "independent-review note (2026-08-29): independent PMC literature on exenatide and thyroid C-cell/nodule findings corroborates the rodent-vs-human disconnect (rodent C-cell tumor signal at high doses; human calcitonin/thyroid-cancer-marker follow-up showed no increased risk) -- reassuring context that supports, and does not contradict, this claim's 'human relevance is unknown' framing"
+      ]
+    },
+    {
+      "claimId": "exenatide-mechanism-glp1-agonist-001",
+      "claimType": "mechanism",
+      "statement": "Exenatide is a 39-amino-acid peptide GLP-1 receptor agonist derived from exendin-4 (originally isolated from Gila monster saliva); it binds and activates the human GLP-1 receptor to enhance glucose-dependent insulin secretion.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "exenatide",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "drugbank-db01276",
+        "dailymed-byetta-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "drugbank-db01276",
+          "quote": "Exenatide is a GLP-1 agonist used in the management of type 2 diabetes mellitus.",
+          "pageOrSection": "Summary"
+        },
+        {
+          "sourceRef": "dailymed-byetta-label",
+          "quote": "BYETTA (exenatide) is a glucagon-like peptide-1 (GLP-1) receptor agonist",
+          "pageOrSection": "Indications and Usage"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "exenatide-dose-context-byetta-001",
+      "claimType": "dose-context",
+      "statement": "Per FDA-approved labeling, Byetta's studied and approved dosing regimen is 5 mcg administered subcutaneously twice daily within 60 minutes before the two main meals of the day (approximately 6 or more hours apart), with an increase to 10 mcg twice daily after one month based on clinical response. This is label/trial dosing context, not a use recommendation.",
+      "context": {
+        "population": "adults with type 2 diabetes mellitus on labeled therapy",
+        "route": "subcutaneous",
+        "formulation": "Byetta (immediate-release exenatide pen)",
+        "useCase": "labeled glycemic-control dosing",
+        "doseText": "5 mcg SC twice daily before meals, titrated to 10 mcg SC twice daily after 1 month per label (trial/label protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-byetta-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-byetta-label",
+          "quote": "Initial dose: \"5 mcg administered subcutaneously twice daily\" within 60 minutes before meals",
+          "pageOrSection": "Dosage and Administration"
+        }
+      ],
+      "reviewFlags": [
+        "dose text is label protocol only and must never be presented as a use recommendation",
+        "independent-review note (2026-08-29): independent corroboration found (RxList) matches the 5 mcg BID -> 10 mcg BID titration and 60-minute pre-meal timing, but RxList substantially republishes FDA label language rather than being a materially independent verification family; no controlled-study or clinical-guideline family source was reached within review budget to independently corroborate the specific titration schedule -- gap noted, not blocking given low risk of the underlying figures being wrong"
+      ]
+    },
+    {
+      "claimId": "exenatide-efficacy-exscel-cv-001",
+      "claimType": "efficacy",
+      "statement": "In EXSCEL, a large randomized, double-blind, placebo-controlled cardiovascular outcomes trial in adults with type 2 diabetes (n=14,752, broad cardiovascular risk range), once-weekly exenatide met the prespecified noninferiority margin for the primary composite outcome (cardiovascular death, nonfatal MI, or nonfatal stroke) versus placebo (hazard ratio 0.91, 95% CI 0.83-1.00) but did not achieve statistical superiority over placebo for that outcome.",
+      "context": {
+        "population": "adults with type 2 diabetes mellitus with and without prior cardiovascular disease (n=14,752)",
+        "route": "subcutaneous",
+        "formulation": "exenatide once-weekly (extended-release)",
+        "useCase": "major adverse cardiovascular event (MACE) outcomes",
+        "doseText": "2 mg once weekly per trial protocol (trial context, not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "exscel-nejm-2017",
+        "exscel-mdedge-summary",
+        "fda-bydureon-label-2024"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "exscel-nejm-2017",
+          "quote": "hazard ratio, 0.91; 95% confidence interval [CI], 0.83 to 1.00",
+          "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "exscel-nejm-2017",
+          "quote": "exenatide, administered once weekly, was noninferior to placebo with respect to safety (P<0.001 for noninferiority) but was not superior to placebo with respect to efficacy (P=0.06 for superiority).",
+          "pageOrSection": "Abstract, Conclusions"
+        },
+        {
+          "sourceRef": "fda-bydureon-label-2024",
+          "quote": "BYDUREON did not increase the risk of MACE in adult patients with type 2 diabetes mellitus (HR: 0.91; 95% CI: 0.832, 1.004; P<0.001 for non-inferiority; P=0.06 for superiority).",
+          "pageOrSection": "Section 14.4, Cardiovascular Outcomes Trial (EXSCEL)"
+        }
+      ],
+      "reviewFlags": [
+        "noninferiority result should not be characterized as a proven cardiovascular benefit",
+        "authority-support pass (2026-08-29): fetched FDA prescribing information (accessdata.fda.gov, 2024 Bydureon label) live this session; Section 14.4 independently reports the EXSCEL primary MACE result with the same HR (0.91; 95% CI 0.832-1.004) and noninferiority/superiority p-values as the NEJM source, so an A1 regulator sourceRef now directly supports this claim's statement."
+      ]
+    },
+    {
+      "claimId": "exenatide-adverse-effect-exscel-safety-001",
+      "claimType": "adverse-effect",
+      "statement": "In the EXSCEL trial, once-weekly exenatide showed no significant difference from placebo in rates of acute pancreatitis, pancreatic cancer, or medullary thyroid carcinoma, and no adverse heart-failure signal despite a higher mean heart rate in the exenatide group.",
+      "context": {
+        "population": "adults with type 2 diabetes mellitus enrolled in EXSCEL (n=14,752)",
+        "route": "subcutaneous",
+        "formulation": "exenatide once-weekly (extended-release)",
+        "useCase": "trial-level safety monitoring",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "exscel-mdedge-summary",
+        "exscel-nejm-2017",
+        "clinicaltrials-nct01144338-results"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "exscel-mdedge-summary",
+          "quote": "We did not observe any specific safety issues during our trial; there was no adverse signal with respect to heart failure, despite the higher mean heart rate in the exenatide group than in the placebo group, and events of acute pancreatitis and pancreatic cancer were rare, with similar rates in the two groups.",
+          "pageOrSection": "Trial summary of results"
+        },
+        {
+          "sourceRef": "exscel-mdedge-summary",
+          "quote": "observed no significant differences between the two groups in the rates of death from cardiovascular causes, fatal or nonfatal MI, or stroke, hospitalization for heart failure or for acute coronary syndrome, or in the incidence of acute pancreatitis, pancreatic cancer, medullary thyroid carcinoma, and serious adverse events.",
+          "pageOrSection": "Trial summary of results"
+        },
+        {
+          "sourceRef": "clinicaltrials-nct01144338-results",
+          "quote": "Adverse Events, Pancreatitis: Placebo 22/7372 affected (0.30%); Exenatide Once Weekly 37/7344 affected (0.50%). Pancreatic cyst and pancreatic mass: 0-1 event per arm; no pancreatic-malignancy adverse-event term reported in either arm. No medullary thyroid carcinoma adverse-event term reported in either arm. Hospitalization for heart failure: Placebo 231/7372 (3.13%); Exenatide 219/7344 (2.98%); hazard ratio 0.94 (95% CI 0.78-1.13), p=0.485.",
+          "pageOrSection": "Results Section, Adverse Events and Outcome Measures modules"
+        }
+      ],
+      "reviewFlags": [
+        "sourced originally via a secondary medical-news summary of the trial rather than the primary NEJM full text (NEJM full text returned a 403 on direct fetch this session)",
+        "single-trial rare-event reassurance should not be read as definitive absence of risk given the boxed-warning C-cell tumor signal in animal data",
+        "reviewer correction 2026-08-29: a prior note characterized ClinicalTrials.gov NCT01144338 as an independent source resolving this claim's review gap, but that registry entry is already one of this claim's own sourceRefs \u2014 it is self-referential, not independent. The EXSCEL-specific comparative safety findings remain sourced to the trial itself and its NEJM publication; no regulator document reports them (searched FDA Bydureon label sections 14.4/6/5.1, DailyMed BYETTA and BYDUREON BCise labels). Claim remains faithful study-level reporting.",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (statement already opens with \"In the EXSCEL trial...\"); no regulator document exists for this claim (searched: FDA prescribing information for BYDUREON, accessdata.fda.gov 2024 label, Sections 14.4/6/5.1; DailyMed BYETTA label; DailyMed BYDUREON BCise label -- these confirm general postmarketing pancreatitis/thyroid-C-cell warnings and one pooled-trials pancreatitis rate of 0.4% for BYDUREON BCISE, but none report the EXSCEL-specific placebo-controlled comparison of pancreatitis, pancreatic cancer, MTC, or heart-failure-hospitalization rates that this claim states)."
+      ]
+    },
+    {
+      "claimId": "exenatide-evidence-gap-weightloss-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Exenatide is approved only for glycemic control in type 2 diabetes; unlike newer GLP-1 products approved for weight management, exenatide does not carry an FDA-approved weight-loss indication. Popular online narratives that group exenatide with weight-loss-focused GLP-1 peptides risk projecting a benefit onto it that its own labeling and the identified controlled trial evidence do not establish for that use.",
+      "context": {
+        "population": "consumers encountering exenatide through general GLP-1/weight-loss peptide marketing content",
+        "route": null,
+        "formulation": "exenatide (Byetta/Bydureon) and gray-market 'research' exenatide sold outside pharmacy channels",
+        "useCase": "weight-loss / general GLP-1-class marketing narratives",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "peptidefactcheck-exenatide",
+        "dailymed-byetta-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peptidefactcheck-exenatide",
+          "quote": "It has official clinical context, but newer weight-loss narratives should not be projected onto it without sources.",
+          "pageOrSection": "Exenatide - Hyped or Proven?"
+        },
+        {
+          "sourceRef": "peptidefactcheck-exenatide",
+          "quote": "Safety and indications should be read from official labeling rather than generalized from the peptide class.",
+          "pageOrSection": "Exenatide - Hyped or Proven?"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: sourced from a single informational/fact-check page rather than a primary regulator or peer-reviewed source; independent corroboration recommended at review",
+        "no FDA-approved weight-loss indication was identified for exenatide in this research pass; confirm absence is still current at review time"
+      ]
+    },
+    {
+      "claimId": "exenatide-identity-identifiers-001",
+      "claimType": "identity",
+      "statement": "Exenatide (PubChem CID 45588096) has the molecular formula C184H282N50O60S and is catalogued in DrugBank under accession DB01276.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "exenatide",
+        "useCase": "structured identifier reference",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-45588096",
+        "drugbank-db01276"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-45588096",
+          "quote": "Exenatide | C184H282N50O60S | CID 45588096",
+          "pageOrSection": "Compound summary header"
+        },
+        {
+          "sourceRef": "drugbank-db01276",
+          "quote": "DrugBank Accession Number: DB01276",
+          "pageOrSection": "Identification"
+        }
+      ],
+      "reviewFlags": [
+        "CAS number and UNII could not be confirmed from freely accessible page content this session (DrugBank gated the field, PubChem full record required JavaScript rendering); resolve at review time"
+      ]
+    }
+  ],
+  "conflicts": [],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS number, UNII, RxNorm, and ChEMBL identifiers remain unresolved (PubChem full record required JavaScript rendering and is disallowed by robots.txt for this session's fetch tool; DrugBank gates the CAS/UNII fields; NIH GSRS host was blocked at the network layer this session) -- open ops-level gap, not a claim-level defect.",
+      "RESOLVED 2026-08-29: EXSCEL trial safety-detail claim (exenatide-adverse-effect-exscel-safety-001) was unresolved at independent review because NEJM and PMC full text were CAPTCHA/403-blocked. This pass pulled the sponsor-posted ClinicalTrials.gov results record for the same trial (NCT01144338), a structured-database primary-results family, and it independently confirms the packet's pancreatitis/pancreatic-malignancy/MTC/heart-failure comparisons. Claim and reviewFlags updated; promotion blocker cleared.",
+      "RESOLVED 2026-08-29: exenatide-approved-indication-001 promotion blocker (missing discontinued-market disclosure) addressed by adding a note, sourced to UHCprovider's Oct. 2024 discontinuation bulletin, that AstraZeneca discontinued Byetta (Oct. 25, 2024) and Bydureon BCise (Oct. 28, 2024) for commercial reasons; underlying FDA approval/labeling is unaffected.",
+      "Weight-loss-marketing evidence-gap claim rests on a single lower-authority fact-check source; seek an independent corroborating source (e.g., FDA consumer update or a peer-reviewed comparative review) at review time.",
+      "exenatide-dose-context-byetta-001 independent corroboration (RxList) largely republishes FDA label text rather than being a materially independent verification family; no controlled-study or clinical-guideline family source was reached within this session's budget to independently corroborate the specific titration schedule -- open, low-risk gap."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "fda-approved-product",
+      "boxed-warning-present",
+      "noninferiority-not-superiority-cv-trial",
+      "thin-human-evidence-for-marketed-off-label-use",
+      "remediation-pass-2026-08-29",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

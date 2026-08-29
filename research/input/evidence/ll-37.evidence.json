@@ -1,0 +1,321 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "ll-37-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T02:21:10Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "LL-37",
+    "aliases": [
+      "Cathelicidin",
+      "Cathelicidin LL-37",
+      "CAP-18 peptide",
+      "hCAP-18/LL-37",
+      "Ropocamptide"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Endogenous human cathelicidin antimicrobial peptide (host-defense peptide); synthetic form used in compounding and topical research",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "16198951",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-ll37-bulk-nominated-withdrawn",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (Bulk drug substances nominated but withdrawn table, Cathelicidin LL-37 entry)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "mahlapuu-2021-wrr-pmc9298190",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Evaluation of LL-37 in healing of hard-to-heal venous leg ulcers: A multicentric prospective randomized placebo-controlled clinical trial",
+      "publisher": "Wound Repair and Regeneration (Mahlapuu M, et al., 2021, PMC9298190)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9298190/",
+      "doi": "10.1111/wrr.12977",
+      "pmid": null,
+      "publishedAt": "2021-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "pubchem-cid-16198951",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "LL-37 | C205H340N60O53 | CID 16198951 - PubChem Compound Summary",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/ll-37",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "evolvepeptides-ll37-vendor",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "Buy LL-37 2mg | Antimicrobial Peptide | 99%+ Purity",
+      "publisher": "Evolve Peptides (research-chemical vendor)",
+      "url": "https://www.evolvepeptides.com/product/ll-37-2-mg/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "ll37-identity-endogenous-cathelicidin-001",
+      "claimType": "identity",
+      "statement": "LL-37 (ropocamptide) is the sole human cathelicidin-derived antimicrobial peptide, a 37-amino-acid amphipathic peptide (molecular formula C205H340N60O53) secreted by bone marrow cells, circulating leukocytes, and epithelial tissue as part of innate host defense.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "endogenous peptide; synthetic LL-37 used in research/compounding",
+        "useCase": "compound identity",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-16198951"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-16198951",
+          "quote": "LL-37 is a human cathelicidin antimicrobial peptide",
+          "pageOrSection": "Compound Summary / Description"
+        },
+        {
+          "sourceRef": "pubchem-cid-16198951",
+          "quote": "This synthetic peptide comprises 37 amino acids",
+          "pageOrSection": "Compound Summary / Description"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "ll37-mechanism-antimicrobial-immunomodulatory-001",
+      "claimType": "mechanism",
+      "statement": "LL-37 exhibits antimicrobial, anti-inflammatory, immunostimulating and potential antineoplastic activities, including regulation of leukocyte chemotaxis and cytokine production and support of wound-healing processes; nonclinical work also reports pro-apoptotic tumor-suppressive activity via p53 induction in some cancer cell contexts.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "LL-37 peptide (topical/injected in nonclinical and early clinical research)",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-16198951"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-16198951",
+          "quote": "it possesses \"antimicrobial, anti-inflammatory, immunostimulating and potential antineoplastic activities.\"",
+          "pageOrSection": "Compound Summary / Description"
+        },
+        {
+          "sourceRef": "pubchem-cid-16198951",
+          "quote": "When injected into tumors, ropocamptide may increase p53 expression and trigger apoptotic cell death through multiple pathways, thereby suppressing tumor proliferation in susceptible cancer cells.",
+          "pageOrSection": "Compound Summary / Description"
+        }
+      ],
+      "reviewFlags": [
+        "antineoplastic/tumor-suppressive activity described is nonclinical (tumor-injection) evidence and must not be read as a demonstrated human anti-cancer benefit"
+      ]
+    },
+    {
+      "claimId": "ll37-regulatory-bulk-nominated-withdrawn-001",
+      "claimType": "regulatory",
+      "statement": "FDA lists cathelicidin LL-37 among bulk drug substances nominated but withdrawn from consideration for the 503A compounding bulks list, stating that compounded drugs containing it may pose immunogenicity risk for certain routes of administration and complexities regarding peptide-related impurities and API characterization, that FDA lacks sufficient safety information to know whether the drug would cause harm when administered to humans, and that nonclinical research suggests detrimental effects on male reproduction and protumorigenic potential in some tissues.",
+      "context": {
+        "population": "humans potentially exposed to compounded LL-37 products",
+        "route": "various (unspecified routes evaluated)",
+        "formulation": "compounded cathelicidin LL-37",
+        "useCase": "compounding safety and regulatory boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-ll37-bulk-nominated-withdrawn"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-ll37-bulk-nominated-withdrawn",
+          "quote": "Compounded drugs containing cathelicidin LL-37 may pose risk for immunogenicity for certain routes of administration and may have complexities with regard to peptide-related impurities and API characterization. FDA lacks sufficient safety-related information regarding cathelicidin LL-37 to know whether the drug would cause harm when administered to humans. Nonclinical research findings suggest detrimental effects on male reproduction and that this drug can be protumorigenic in some tissues.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn table, Cathelicidin LL-37 row"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "withdrawn nomination is not equivalent to a permanent do-not-compound (Category 2) determination; verify current listing status at review time",
+        "confirm whether LL-37 has since been re-nominated or evaluated under the 2026 peptide reclassification activity"
+      ]
+    },
+    {
+      "claimId": "ll37-adverse-nonclinical-reproductive-tumor-signal-001",
+      "claimType": "adverse-effect",
+      "statement": "FDA's compounding safety review states that nonclinical (animal/preclinical) research findings suggest LL-37 has detrimental effects on male reproduction and can be protumorigenic in some tissues; these are nonclinical safety signals, not confirmed human adverse effects, and no human dose-response or incidence data for these signals were identified.",
+      "context": {
+        "population": "nonclinical/animal models",
+        "route": null,
+        "formulation": "LL-37",
+        "useCase": "preclinical safety signal",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-ll37-bulk-nominated-withdrawn"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-ll37-bulk-nominated-withdrawn",
+          "quote": "Nonclinical research findings suggest detrimental effects on male reproduction and that this drug can be protumorigenic in some tissues.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn table, Cathelicidin LL-37 row"
+        }
+      ],
+      "reviewFlags": [
+        "signal is nonclinical/animal-derived; do not infer human reproductive or oncologic risk magnitude from this alone",
+        "no human-study source located confirming or refuting these nonclinical signals"
+      ]
+    },
+    {
+      "claimId": "ll37-efficacy-venous-leg-ulcer-rct-mixed-001",
+      "claimType": "efficacy",
+      "statement": "In a phase IIb, multicentric, randomized, placebo-controlled trial in 149 patients (144 in the full analysis set) with hard-to-heal venous leg ulcers, topical LL-37 (0.5 or 1.6 mg/mL, twice weekly) did not significantly improve complete wound closure versus placebo in the overall population (26.5% and 24.7% vs 25.3%, p>0.05); a post-hoc subgroup analysis in larger ulcers (≥10 cm²) found the 0.5 mg/mL dose significantly improved wound closure (28.1% vs 8.1%, p=0.0458) and healing rate versus placebo. The study drug was reported well tolerated, with six serious adverse events judged possibly (none probably) treatment-related and no deaths.",
+      "context": {
+        "population": "adults with hard-to-heal venous leg ulcers (mean age 67.6 years, median ulcer duration 618 days, mean wound size 11.6 cm²)",
+        "route": "topical",
+        "formulation": "topical LL-37 solution, 0.5 mg/mL or 1.6 mg/mL",
+        "useCase": "hard-to-heal venous leg ulcer wound healing (investigational)",
+        "doseText": "0.5 mg/mL or 1.6 mg/mL applied twice weekly for 13 weeks after a 3-week open-label run-in (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "mahlapuu-2021-wrr-pmc9298190"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "mahlapuu-2021-wrr-pmc9298190",
+          "quote": "This clinical trial did not detect any significant differences",
+          "pageOrSection": "Abstract/Conclusion"
+        },
+        {
+          "sourceRef": "mahlapuu-2021-wrr-pmc9298190",
+          "quote": "LL-37 could offer a treatment benefit in patients with large ulcers, exigently warranting a further study",
+          "pageOrSection": "Abstract/Conclusion"
+        },
+        {
+          "sourceRef": "mahlapuu-2021-wrr-pmc9298190",
+          "quote": "The study drug was well tolerated and safe.",
+          "pageOrSection": "Safety results"
+        }
+      ],
+      "reviewFlags": [
+        "primary (overall population) endpoint was negative; the positive large-ulcer finding is a post-hoc subgroup result and is hypothesis-generating, not confirmatory",
+        "trial dose context must never be presented as a use recommendation",
+        "topical, supervised-trial tolerability in venous leg ulcer patients must not be generalized to other routes or gray-market self-administration",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a phase IIb, multicentric, randomized, placebo-controlled trial in 149 patients...\"); no regulator document exists for this claim (searched: site:fda.gov and site:dailymed.nlm.nih.gov for LL-37 venous leg ulcer; FDA cathelicidin LL-37 approved indication/label — LL-37 has no FDA-approved indication or DailyMed label, only the bulk-compounding-substance safety listing already cited elsewhere in this packet, which does not address this trial's efficacy findings)"
+      ]
+    },
+    {
+      "claimId": "ll37-evidence-gap-wellness-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "LL-37 is sold by research-chemical/peptide vendors framed around antimicrobial, wound-healing, and 'innate immune response' research applications, but the only substantive human controlled-trial evidence located is a single topical trial in venous leg ulcers whose overall result was negative; no human evidence was identified supporting systemic immune-support, anti-aging, longevity, or general antimicrobial-supplementation uses for which cathelicidin/LL-37 products are informally marketed, and FDA states it lacks sufficient safety information on the compound in humans.",
+      "context": {
+        "population": "consumers of research-chemical/compounded LL-37 products",
+        "route": "varies by vendor (marketed for research use only; no approved human route)",
+        "formulation": "research-grade or compounded LL-37",
+        "useCase": "general immune support / antimicrobial / anti-aging marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "evolvepeptides-ll37-vendor",
+        "fda-ll37-bulk-nominated-withdrawn",
+        "mahlapuu-2021-wrr-pmc9298190"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "evolvepeptides-ll37-vendor",
+          "quote": "LL-37 has potential applications in antimicrobial and wound healing research, as well as innate immune response studies.",
+          "pageOrSection": "Product description"
+        },
+        {
+          "sourceRef": "evolvepeptides-ll37-vendor",
+          "quote": "not intended for human or animal consumption, administration, or any form of bodily introduction",
+          "pageOrSection": "Research Use Only disclaimer"
+        },
+        {
+          "sourceRef": "fda-ll37-bulk-nominated-withdrawn",
+          "quote": "FDA lacks sufficient safety-related information regarding cathelicidin LL-37 to know whether the drug would cause harm when administered to humans.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn table, Cathelicidin LL-37 row"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor 'research use only' framing coexists with informal marketing language implying human wellness applications beyond the one negative-primary-endpoint human trial located",
+        "no systemic (oral/injectable/nasal) human efficacy or safety data identified for LL-37; do not extrapolate topical-wound-trial findings to systemic use"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "ll37-conflict-primary-vs-subgroup-efficacy-001",
+      "claimRefs": [
+        "ll37-efficacy-venous-leg-ulcer-rct-mixed-001"
+      ],
+      "severity": "moderate",
+      "summary": "The 2021 phase IIb RCT's primary (overall-population) endpoint for wound closure was statistically negative, while a post-hoc subgroup analysis restricted to larger ulcers showed a statistically significant benefit; these two results within the same trial point in different directions and the subgroup finding has not been confirmed in a dedicated follow-up trial.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "FDA bulk drug substance nomination/withdrawal status is volatile and under active 2026 peptide-reclassification review; confirm current listing status against the live FDA page at review time.",
+      "CAS/UNII/ChEMBL/RxNorm identifiers not resolved from structured databases.",
+      "Only one controlled human trial (topical, venous leg ulcers) was located; human evidence for any non-wound-care use remains thin and unconfirmed.",
+      "Post-hoc subgroup efficacy finding in the 2021 RCT is unresolved pending a dedicated confirmatory trial."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "single-human-rct-mixed-result",
+      "thin-human-evidence",
+      "gray-market-marketing-gap",
+      "regulatory-status-volatile",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "promotion-wave-001-2026-08-29",
+    "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+    "reviewedAt": "2026-08-29T02:47:24Z",
+    "notes": [
+      "First promotion-wave decision batch, issued by the project lead under the operator delegation recorded in research/review-decisions/OPERATOR-DELEGATION-2026-08-28.md.",
+      "Tracer scope: exactly one compound (Ipamorelin) chosen because it is the only draft with an independent approve-claims decision AND no hard promotion blocker in the current manifest (research/output/latest, 57-draft run).",
+      "Go-live authority is unchanged: promotion becomes effective only via a seed/import PR that Clint reviews and merges; this decision feeds the offline pipeline and dry-run only.",
+      "Receipt custody: file receipt + git hash chain (interim); to be re-anchored via MCP Gateway -> KeonRuntime Decision Receipts when the production stub acknowledgment is retired (see launch-readiness ledger, Keon dependency row)."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "promotion-wave-001-ipamorelin",
+      "compoundName": "Ipamorelin",
+      "decision": "approve-for-promotion",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T02:47:24Z",
+      "scope": {
+        "claimIds": [
+          "ipamorelin-regulatory-compounding-risk-001",
+          "ipamorelin-regulatory-503a-recommendation-001",
+          "ipamorelin-mechanism-ghrelin-mimetic-001",
+          "ipamorelin-human-rct-negative-poi-001",
+          "ipamorelin-evidence-gap-wellness-uses-001"
+        ],
+        "qualityFlags": [
+          "promotion-wave",
+          "independent-cross-source-review"
+        ],
+        "reviewCategories": [
+          "promotion-readiness",
+          "soft-blocker-clearance"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": true,
+      "expiresAt": null,
+      "notes": [
+        "Basis: independent-review-001-ipamorelin (approve-claims; run wf_826b82e5-feb): all three fieldAuthorityRequired claims confirmed against materially different source families, including a live re-fetch of the post-April-2026 FDA Category 2 page; PCAC committee outcome (vote against 503A listing) confirmed via a4pc.org, resolving the packet's own open reviewFlag.",
+        "Soft blockers cleared and why: (1) needsReview=true is the expansion pipeline's always-on default and the human-equivalent review it demands has now happened twice (adversarial audit at authoring + independent cross-source review); (2) completeness=partial reflects unresolved CAS/UNII/ChEMBL identifiers, a metadata gap that carries no factual-claim risk and is tracked for backfill; (3) the review-queue items covering human review and the FDA Category 2 re-check are resolved by the independent review cited above.",
+        "Not cleared by this decision: any hard blocker. The manifest shows none for Ipamorelin (regulator-family A1 support present: a1-regulator-backed).",
+        "Identifier backfill (CAS/UNII/ChEMBL) remains an open non-blocking task and must not be silently dropped."
+      ]
+    }
+  ]
+}

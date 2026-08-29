@@ -1,0 +1,327 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "lasofoxifene-evidence-expansion-001",
+    "category": "hormones-serms-sarms",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:58:43Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Lasofoxifene",
+    "aliases": [
+      "Fablyn",
+      "CP-336156",
+      "Lasofoxifene tartrate",
+      "Oporia"
+    ],
+    "classification": "Selective estrogen receptor modulator (SERM)",
+    "compoundFamily": "Nonsteroidal third-generation SERM (naphthalene derivative)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "337G83N988",
+      "casNumber": "180916-16-9",
+      "drugbank": "DB06202",
+      "pubchem": "216416",
+      "chembl": "CHEMBL328190",
+      "doi": null,
+      "pmid": "38072514"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "ema-epar-fablyn",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Fablyn (lasofoxifene) - European Public Assessment Report (EPAR)",
+      "publisher": "European Medicines Agency",
+      "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/fablyn",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2009-02-24T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "drugscom-fablyn-history",
+      "sourceType": "regulatory-history",
+      "authorityTier": "B2",
+      "title": "Fablyn (Lasofoxifene): FDA Approval History",
+      "publisher": "Drugs.com",
+      "url": "https://www.drugs.com/history/fablyn.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "elaine1-wustl-fulltext",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Lasofoxifene versus fulvestrant for ER+/HER2- metastatic breast cancer with an ESR1 mutation: results from the randomized, phase II ELAINE 1 trial",
+      "publisher": "Annals of Oncology (Bardia A, Neven P, Streich G, et al., 2024); open-access copy via Washington University in St. Louis Digital Commons",
+      "url": "https://digitalcommons.wustl.edu/cgi/viewcontent.cgi?article=4488&context=oa_4",
+      "doi": "10.1016/j.annonc.2023.12.001",
+      "pmid": "38072514",
+      "publishedAt": "2024-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pubchem-cid-216416",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Lasofoxifene, CID 216416 (compound record, including FDA GSRS UNII and CAS cross-references)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Lasofoxifene",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "sermonix-lasofoxifene-page",
+      "sourceType": "sponsor-page",
+      "authorityTier": "C1",
+      "title": "Lasofoxifene",
+      "publisher": "Sermonix Pharmaceuticals",
+      "url": "https://sermonixpharma.com/lasofoxifene/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "drugbank-db06202",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Lasofoxifene: Uses, Interactions, Mechanism of Action (DB06202)",
+      "publisher": "DrugBank Online",
+      "url": "https://go.drugbank.com/drugs/DB06202",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "lasofoxifene-regulatory-no-current-approval-001",
+      "claimType": "regulatory",
+      "statement": "Lasofoxifene has no currently valid marketing authorization anywhere. It was rejected by FDA for a US osteoporosis indication (Complete Response Letter, January 2009, after an earlier 2005 non-approvable letter under the name Oporia) and never launched in the US; the EU authorization for Fablyn (granted by the European Commission on 24 February 2009 for osteoporosis in postmenopausal women at increased fracture risk) automatically lapsed on 27 February 2012 under the sunset clause because the product was never marketed in any EU member state.",
+      "context": {
+        "population": "postmenopausal women (originally studied osteoporosis population)",
+        "route": "oral",
+        "formulation": "lasofoxifene tartrate 0.25 mg (EU-authorized dose)",
+        "useCase": "osteoporosis prevention/treatment - historical regulatory record",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "ema-epar-fablyn",
+        "drugscom-fablyn-history"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ema-epar-fablyn",
+          "quote": "On 24 February 2009, the European Commission granted a marketing authorisation valid throughout the European Union (EU)",
+          "pageOrSection": "EPAR summary, authorisation details"
+        },
+        {
+          "sourceRef": "ema-epar-fablyn",
+          "quote": "from 27 February 2012, the marketing authorisation for Fablyn is no longer valid",
+          "pageOrSection": "EPAR summary, authorisation status"
+        },
+        {
+          "sourceRef": "drugscom-fablyn-history",
+          "quote": "the New Drug Application (NDA) for Fablyn (lasofoxifene tartrate) had not been approved",
+          "pageOrSection": "FDA Approval History timeline, January 2009 entry"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical / regulatory claim",
+        "confirm no new FDA or EMA filing has since been approved, given active Phase 3 breast-cancer program (ELAINE 3)"
+      ]
+    },
+    {
+      "claimId": "lasofoxifene-mechanism-serm-001",
+      "claimType": "mechanism",
+      "statement": "Lasofoxifene is a nonsteroidal, third-generation selective estrogen receptor modulator that binds both ERα and ERβ with high affinity, acting as an estrogen-receptor antagonist in breast and endometrial tissue while producing estrogen-agonist effects in bone.",
+      "context": {
+        "population": null,
+        "route": "oral",
+        "formulation": "lasofoxifene tartrate",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "drugbank-db06202",
+        "pubchem-cid-216416"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "drugbank-db06202",
+          "quote": "Lasofoxifene is a non-steroidal 3rd generation selective estrogen receptor modulator (SERM) that selectively binds to both ERα and ERβ with high affinity.",
+          "pageOrSection": "Drug summary / meta description"
+        }
+      ],
+      "reviewFlags": [
+        "tissue-selective agonist/antagonist activity claim sourced from database summary; verify against primary pharmacology literature at next review"
+      ]
+    },
+    {
+      "claimId": "lasofoxifene-efficacy-elaine1-esr1-mbc-001",
+      "claimType": "efficacy",
+      "statement": "In ELAINE 1, an open-label, randomized, phase II, multicenter trial in 103 patients with ER+/HER2- metastatic breast cancer harboring an ESR1 mutation who had progressed on prior aromatase-inhibitor-based therapy, oral lasofoxifene 5 mg daily (n=52) numerically improved median progression-free survival versus intramuscular fulvestrant 500 mg (n=51) - 24.2 weeks (~5.6 months) vs 16.2 weeks (~3.7 months) - with a hazard ratio of 0.699 (95% CI 0.434-1.125); the difference did not reach statistical significance (p=0.138). Both arms showed grade 3/4 toxicity in roughly 20% of patients with no unexpected safety signals; the most frequent lasofoxifene adverse events were nausea, fatigue, arthralgia, and hot flushes.",
+      "context": {
+        "population": "postmenopausal women with ER+/HER2- metastatic breast cancer and an ESR1 mutation, progressed on prior aromatase inhibitor (n=103 randomized)",
+        "route": "oral (lasofoxifene) vs intramuscular (fulvestrant comparator)",
+        "formulation": "lasofoxifene tartrate tablet",
+        "useCase": "investigational treatment of ESR1-mutated metastatic breast cancer (not an approved indication)",
+        "doseText": "Lasofoxifene 5 mg orally once daily vs fulvestrant 500 mg IM on days 1, 15, 29, then monthly (trial protocol only; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "elaine1-wustl-fulltext"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "elaine1-wustl-fulltext",
+          "quote": "24.2 weeks (~5.6 months)",
+          "pageOrSection": "Results, median PFS lasofoxifene arm"
+        },
+        {
+          "sourceRef": "elaine1-wustl-fulltext",
+          "quote": "16.2 weeks (~3.7 months; P = 0.138)",
+          "pageOrSection": "Results, median PFS fulvestrant arm"
+        },
+        {
+          "sourceRef": "elaine1-wustl-fulltext",
+          "quote": "0.699 (95% confidence interval 0.434-1.125)",
+          "pageOrSection": "Results, hazard ratio for PFS"
+        },
+        {
+          "sourceRef": "elaine1-wustl-fulltext",
+          "quote": "nausea, fatigue, arthralgia, and hot flushes",
+          "pageOrSection": "Safety, most frequent treatment-emergent adverse events"
+        }
+      ],
+      "reviewFlags": [
+        "phase II result, statistically non-significant primary endpoint - must not be characterized as proven superiority over fulvestrant",
+        "this is investigational use; not an FDA- or EMA-approved indication",
+        "dose is trial protocol context only, not a use recommendation",
+        "confirm whether ELAINE 3 (phase III, lasofoxifene + abemaciclib) has since reported results that would supersede this",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (ELAINE 1 phase II trial, PMID 38072514); no regulator document exists for this claim (searched: FDA.gov for lasofoxifene ESR1/metastatic breast cancer approval or labeling action - found only an unrelated Fast Track designation news item, no approved indication or label; DailyMed search for lasofoxifene returned 0 results, no current label) since lasofoxifene holds no approved indication for this use"
+      ]
+    },
+    {
+      "claimId": "lasofoxifene-studied-use-development-status-001",
+      "claimType": "studied-use",
+      "statement": "Lasofoxifene's active clinical development is now centered on oncology rather than its original osteoporosis indication: the drug sponsor describes it as under investigation as an endocrine therapy, combined with the CDK4/6 inhibitor abemaciclib, for postmenopausal and ovarian-suppressed premenopausal women with locally advanced or metastatic ER+ breast cancer, via the ELAINE trial program (ELAINE 1, 2, and the phase III ELAINE 3 study).",
+      "context": {
+        "population": "postmenopausal women and premenopausal women on ovarian suppression with ER+ locally advanced/metastatic breast cancer",
+        "route": "oral",
+        "formulation": "lasofoxifene, investigational, in combination with abemaciclib in later-stage trials",
+        "useCase": "investigational endocrine therapy for ER+ breast cancer",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "sermonix-lasofoxifene-page",
+        "elaine1-wustl-fulltext"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "sermonix-lasofoxifene-page",
+          "quote": "Lasofoxifene is being investigated as a targeted endocrine therapy with a differentiated safety profile that could prove useful in the treatment of postmenopausal women and premenopausal women on ovarian suppression with locally advanced or metastatic hormone receptor-positive (ER+) breast cancer.",
+          "pageOrSection": "Lasofoxifene overview"
+        },
+        {
+          "sourceRef": "sermonix-lasofoxifene-page",
+          "quote": "Lasofoxifene has been part of several clinical development programs and is being investigated as part of the ELAINE Study",
+          "pageOrSection": "Lasofoxifene overview"
+        }
+      ],
+      "reviewFlags": [
+        "sponsor-authored source; independently verify development-status claims against ClinicalTrials.gov registry entries at next review",
+        "not an approved indication - investigational only"
+      ]
+    },
+    {
+      "claimId": "lasofoxifene-evidence-gap-approval-status-001",
+      "claimType": "evidence-gap",
+      "statement": "Because lasofoxifene currently holds no active marketing authorization in the US or EU, any online or secondary-source description of it as an 'FDA-approved' or 'approved SERM' for osteoporosis, vaginal atrophy, or breast cancer is inaccurate; its only human outcome evidence in breast cancer to date (ELAINE 1) is a phase II trial that missed statistical significance on its primary endpoint, and larger phase III confirmatory data (ELAINE 3) had not been shown to change this packet's sourced regulatory status as of the sources reviewed.",
+      "context": {
+        "population": "general public and clinicians encountering lasofoxifene described online",
+        "route": null,
+        "formulation": "lasofoxifene / lasofoxifene tartrate",
+        "useCase": "clarifying approval status versus promotional or outdated descriptions",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "ema-epar-fablyn",
+        "drugscom-fablyn-history",
+        "elaine1-wustl-fulltext"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ema-epar-fablyn",
+          "quote": "from 27 February 2012, the marketing authorisation for Fablyn is no longer valid",
+          "pageOrSection": "EPAR summary, authorisation status"
+        },
+        {
+          "sourceRef": "elaine1-wustl-fulltext",
+          "quote": "16.2 weeks (~3.7 months; P = 0.138)",
+          "pageOrSection": "Results, statistical significance of primary endpoint"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: approval-status claims about lasofoxifene circulating online/in secondary sources should be checked against live FDA/EMA registries, not assumed current",
+        "human evidence for breast-cancer benefit remains phase II / non-significant; do not upgrade to proven efficacy without phase III confirmatory data reviewed directly"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "lasofoxifene-conflict-approval-perception-001",
+      "claimRefs": [
+        "lasofoxifene-regulatory-no-current-approval-001",
+        "lasofoxifene-evidence-gap-approval-status-001"
+      ],
+      "severity": "moderate",
+      "summary": "Lasofoxifene is widely referenced in secondary/tertiary sources by its former brand name Fablyn and discussed as an established SERM, which can read as implying current approval; the primary regulator sources establish that no authorization is currently valid in the US or EU. This packet did not independently verify whether any other jurisdiction (e.g., outside US/EU) currently authorizes it.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "DailyMed has no current label for lasofoxifene (no valid US marketing authorization was found); confirm this absence directly against DailyMed at review time rather than relying on this packet's regulatory-history sources alone.",
+      "ELAINE 1 primary endpoint was not statistically significant (p=0.138); confirm whether phase III ELAINE 3 has since reported results that should be incorporated.",
+      "PMID/DOI for ELAINE 1 confirmed via PubMed listing, but full text was retrieved from an open-access institutional repository mirror rather than the publisher site (publisher and ScienceDirect pages blocked automated access); verify mirror fidelity against publisher version at review time.",
+      "Sponsor-authored source (Sermonix) used for development-status claim; independent confirmation against ClinicalTrials.gov not yet completed in this pass."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "no-current-marketing-authorization",
+      "negative-or-nonsignificant-human-rct-documented",
+      "thin-human-evidence",
+      "investigational-oncology-repurposing",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

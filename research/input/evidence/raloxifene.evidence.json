@@ -1,0 +1,386 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "raloxifene-evidence-expansion-001",
+    "category": "hormones-serms-sarms",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:58:43Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Raloxifene",
+    "aliases": [
+      "Evista",
+      "Raloxifene hydrochloride",
+      "LY156758"
+    ],
+    "classification": "Small molecule drug",
+    "compoundFamily": "Selective estrogen receptor modulator (SERM), benzothiophene class",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "YX9162EO3I",
+      "casNumber": "84449-90-1",
+      "drugbank": "DB00481",
+      "pubchem": "5035",
+      "chembl": null,
+      "doi": null,
+      "pmid": "10376571"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-evista-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "EVISTA (raloxifene hydrochloride) tablet - Label",
+      "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=fcaaa6dc-74e8-4fb8-800c-5574bf0f8de9",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "jama-more-trial-1999",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "The Effect of Raloxifene on Risk of Breast Cancer in Postmenopausal Women: Results From the MORE Randomized Trial",
+      "publisher": "JAMA (Cummings SR, Eckert S, Krueger KA, et al., 1999)",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/190420",
+      "doi": null,
+      "pmid": "10376571",
+      "publishedAt": "1999-06-16T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "ncbi-statpearls-raloxifene",
+      "sourceType": "professional-reference",
+      "authorityTier": "B1",
+      "title": "Raloxifene (StatPearls)",
+      "publisher": "StatPearls Publishing / NCBI Bookshelf, National Library of Medicine",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK544233/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "drugbank-db00481",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Raloxifene: Uses, Interactions, Mechanism of Action (DB00481)",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB00481",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pubchem-cid-5035",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Raloxifene, CID 5035",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Raloxifene",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "chemicalbook-raloxifene",
+      "sourceType": "structured-database",
+      "authorityTier": "C1",
+      "title": "Raloxifene | 84449-90-1",
+      "publisher": "ChemicalBook (commercial chemical supplier database)",
+      "url": "https://www.chemicalbook.com/ChemicalProductProperty_EN_CB1290431.htm",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "elitefitness-forum-gyno-dosing",
+      "sourceType": "forum",
+      "authorityTier": "D1",
+      "title": "Raloxifene Doses For Reversal Of Existing Gyno (forum thread)",
+      "publisher": "EliteFitness.com Bodybuilding Forums (user-generated content)",
+      "url": "https://www.elitefitness.com/forum/threads/raloxifene-doses-for-reversal-of-existing-gyno.599350/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "raloxifene-identity-identifiers-001",
+      "claimType": "identity",
+      "statement": "Raloxifene is a benzothiophene-derivative selective estrogen receptor modulator (SERM), marketed as Evista (raloxifene hydrochloride); its structured-database identifiers are PubChem CID 5035, DrugBank DB00481, CAS 84449-90-1, and UNII YX9162EO3I.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "raloxifene hydrochloride, oral tablet",
+        "useCase": "compound identity",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-5035",
+        "drugbank-db00481",
+        "chemicalbook-raloxifene"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "chemicalbook-raloxifene",
+          "quote": "CAS Number: 84449-90-1; UNII: YX9162EO3I; Molecular Formula: C28H27NO4S",
+          "pageOrSection": "Identification / Properties table"
+        },
+        {
+          "sourceRef": "drugbank-db00481",
+          "quote": "Raloxifene is a selective estrogen receptor modulator that is used to prevent and treat osteoporosis and reduce the risk of invasive breast cancer in high-risk postmenopausal women.",
+          "pageOrSection": "Summary"
+        }
+      ],
+      "reviewFlags": [
+        "CAS/UNII sourced from a commercial chemical-supplier database (chemicalbook.com), not a government registry; corroborate against FDA GSRS/UNII resolver or ChemIDplus at review time"
+      ]
+    },
+    {
+      "claimId": "raloxifene-regulatory-approved-indications-001",
+      "claimType": "approved-indication",
+      "statement": "FDA-approved EVISTA (raloxifene hydrochloride) labeling covers two indications in postmenopausal women: treatment and prevention of osteoporosis, and reduction of risk of invasive breast cancer in postmenopausal women with osteoporosis or at high risk for invasive breast cancer.",
+      "context": {
+        "population": "postmenopausal women",
+        "route": "oral",
+        "formulation": "raloxifene hydrochloride tablet",
+        "useCase": "osteoporosis treatment/prevention; breast cancer risk reduction",
+        "doseText": "Label-indicated dosing context, not a use recommendation."
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-evista-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-evista-label",
+          "quote": "Treatment and prevention of osteoporosis in postmenopausal women",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-evista-label",
+          "quote": "reduction of invasive breast cancer risk in postmenopausal women with osteoporosis or at high risk",
+          "pageOrSection": "Indications and Usage"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "raloxifene-warning-boxed-vte-stroke-001",
+      "claimType": "warning",
+      "statement": "EVISTA carries an FDA boxed warning for increased risk of venous thromboembolism (deep vein thrombosis, pulmonary embolism, retinal vein thrombosis) and for increased risk of death due to stroke in a trial of postmenopausal women with documented coronary heart disease or elevated coronary risk; the drug is contraindicated in women with active or past history of venous thromboembolism and in pregnancy.",
+      "context": {
+        "population": "postmenopausal women, including subgroups with coronary heart disease or elevated coronary risk",
+        "route": "oral",
+        "formulation": "raloxifene hydrochloride tablet",
+        "useCase": "regulatory safety warning",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-evista-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-evista-label",
+          "quote": "Increased risk of deep vein thrombosis and pulmonary embolism have been reported with EVISTA.",
+          "pageOrSection": "Boxed Warning"
+        },
+        {
+          "sourceRef": "dailymed-evista-label",
+          "quote": "Increased risk of death due to stroke occurred in a trial in postmenopausal women with documented coronary heart disease or at increased risk for major coronary events.",
+          "pageOrSection": "Boxed Warning"
+        },
+        {
+          "sourceRef": "dailymed-evista-label",
+          "quote": "EVISTA is contraindicated for use in pregnant women",
+          "pageOrSection": "Contraindications / Pregnancy"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim"
+      ]
+    },
+    {
+      "claimId": "raloxifene-mechanism-serm-001",
+      "claimType": "mechanism",
+      "statement": "Raloxifene acts as a selective estrogen receptor modulator, binding estrogen receptors to produce tissue-selective estrogen-agonist effects (e.g., decreased bone resorption and increased bone mineral density) alongside estrogen-antagonist effects in other tissues such as breast and endometrium.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "raloxifene",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "ncbi-statpearls-raloxifene",
+        "drugbank-db00481"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ncbi-statpearls-raloxifene",
+          "quote": "Binding to estrogen receptors. This binding results in activation of estrogenic pathways (estrogen-agonistic effect) and blockade of estrogenic pathways (estrogen-antagonistic effect).",
+          "pageOrSection": "Mechanism of Action"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "raloxifene-efficacy-breast-cancer-risk-reduction-more-001",
+      "claimType": "efficacy",
+      "statement": "In the MORE randomized, double-blind, placebo-controlled trial (7,705 postmenopausal women with osteoporosis, 180 centers, 25 countries, median 40 months follow-up), raloxifene reduced the risk of invasive breast cancer versus placebo: 13 cases among 5,129 women on raloxifene vs 27 among 2,576 on placebo (relative risk 0.24, 95% CI 0.13-0.44, P<.001); estrogen-receptor-positive breast cancer risk was reduced by 90% (RR 0.10, 95% CI 0.04-0.24).",
+      "context": {
+        "population": "postmenopausal women with osteoporosis (mean age 66.5, 96% white, no prior breast cancer)",
+        "route": "oral",
+        "formulation": "raloxifene 60 or 120 mg/day (trial protocol)",
+        "useCase": "breast cancer risk reduction (approved indication, secondary trial endpoint)",
+        "doseText": "60 mg or 120 mg/day in the MORE trial protocol; trial dose context, not a use recommendation."
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "jama-more-trial-1999",
+        "dailymed-evista-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "jama-more-trial-1999",
+          "quote": "Thirteen cases of breast cancer were confirmed among the 5129 women assigned to raloxifene vs 27 among the 2576 women assigned to placebo (relative risk [RR], 0.24; 95% confidence interval [CI], 0.13-0.44; P<.001).",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "jama-more-trial-1999",
+          "quote": "risk decreased 90% (RR, 0.10; 95% CI, 0.04-0.24)",
+          "pageOrSection": "Results, ER-positive subgroup"
+        }
+      ],
+      "reviewFlags": [
+        "trial population is postmenopausal women with osteoporosis, not a general breast-cancer-risk population; do not generalize beyond labeled population"
+      ]
+    },
+    {
+      "claimId": "raloxifene-adverse-effect-vte-quantified-001",
+      "claimType": "adverse-effect",
+      "statement": "In the MORE trial, raloxifene significantly increased the risk of venous thromboembolic disease relative to placebo (relative risk 3.1, 95% CI 1.5-6.2), independently corroborating the magnitude of the VTE risk described qualitatively in FDA boxed-warning labeling.",
+      "context": {
+        "population": "postmenopausal women with osteoporosis enrolled in the MORE trial",
+        "route": "oral",
+        "formulation": "raloxifene hydrochloride tablet",
+        "useCase": "quantified safety signal",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "jama-more-trial-1999",
+        "dailymed-evista-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "jama-more-trial-1999",
+          "quote": "Raloxifene increased the risk of venous thromboembolic disease (RR, 3.1; 95% CI, 1.5-6.2)",
+          "pageOrSection": "Results, adverse events"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical quantified risk estimate"
+      ]
+    },
+    {
+      "claimId": "raloxifene-misinformation-bodybuilding-gyno-001",
+      "claimType": "misinformation-claim",
+      "statement": "Anabolic-androgenic-steroid-using bodybuilding forums promote self-directed raloxifene dosing (posts described protocols ranging from 30-120 mg/day, including a 17-week taper starting at 120 mg/day) to reverse gynecomastia, citing a pediatric case series (\"J Pediatr. 2004\") reporting 91% of raloxifene-treated patients improved and \"no side effects were seen in any patients\"; no controlled human trial of raloxifene for gynecomastia in adult anabolic-steroid users was identified, the cited pediatric population and setting do not generalize to self-directed adult AAS-user dosing, and this use is not an FDA-approved indication.",
+      "context": {
+        "population": "adult male anabolic-androgenic-steroid users self-treating gynecomastia (forum-reported)",
+        "route": "oral, self-directed",
+        "formulation": "raloxifene, non-prescribed/self-sourced per forum accounts",
+        "useCase": "gynecomastia reversal during/after anabolic steroid use (popular online use, not an approved indication)",
+        "doseText": "Forum-reported self-directed protocols (e.g., 60-120 mg/day tapering schedules); reported as-is from a user forum, not a trial protocol or a use recommendation."
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "low",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "elitefitness-forum-gyno-dosing",
+        "dailymed-evista-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "elitefitness-forum-gyno-dosing",
+          "quote": "The effective dose appears to be in the range 60mg daily to 80/100 mg daily for gyno reversal.",
+          "pageOrSection": "Original post (forum thread)"
+        },
+        {
+          "sourceRef": "elitefitness-forum-gyno-dosing",
+          "quote": "91% receiving raloxifene [showed improvement]... 86% had significant decrease (>50%)... No side effects were seen in any patients",
+          "pageOrSection": "User post citing 'J Pediatr. 2004' case series"
+        },
+        {
+          "sourceRef": "dailymed-evista-label",
+          "quote": "EVISTA is contraindicated for use in pregnant women",
+          "pageOrSection": "Contraindications (illustrating label scope is limited to postmenopausal-women indications, not gynecomastia)"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: forum dosing and 'no side effects' claims are drawn from a pediatric case series and self-report, not a controlled trial in adult AAS users",
+        "no approved indication or controlled human trial for gynecomastia in anabolic-steroid users was located; treat as evidence gap",
+        "do not cite forum dosing ranges as a use recommendation"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "raloxifene-conflict-vte-safety-perception-001",
+      "claimRefs": [
+        "raloxifene-adverse-effect-vte-quantified-001",
+        "raloxifene-misinformation-bodybuilding-gyno-001"
+      ],
+      "severity": "moderate",
+      "summary": "FDA label and MORE-trial RCT data document a tripled risk of venous thromboembolic disease with raloxifene in postmenopausal women (RR 3.1), while the bodybuilding-forum source cites a pediatric case series claiming 'no side effects were seen in any patients' for a different population, dose pattern, and monitoring context; the anecdotal safety claim should not be read as contradicting the established VTE signal.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS/UNII identifiers were sourced from a commercial chemical-supplier database rather than a government registry (FDA GSRS/ChemIDplus); confirm at review time.",
+      "RxNorm and ChEMBL identifiers not yet resolved from structured databases.",
+      "Off-label bodybuilding/gynecomastia use in adult anabolic-steroid users is supported only by forum anecdote and an unverified secondary citation to a pediatric case series; no controlled human trial for this population/use was located and human evidence for this specific use is thin to absent."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-product",
+      "a1-regulator-backed",
+      "boxed-warning-present",
+      "positive-human-rct-documented",
+      "quantified-adverse-effect",
+      "gray-market-off-label-use-flagged",
+      "thin-human-evidence-for-off-label-use"
+    ]
+  }
+}

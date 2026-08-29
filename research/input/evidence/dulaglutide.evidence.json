@@ -1,0 +1,403 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "dulaglutide-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T22:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Dulaglutide",
+    "aliases": [
+      "Trulicity",
+      "LY2189265"
+    ],
+    "classification": "Peptide (fusion protein)",
+    "compoundFamily": "Long-acting GLP-1 receptor agonist (GLP-1 analog fused to modified human IgG4 Fc fragment)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "WTT295HSY5",
+      "casNumber": "923950-08-7",
+      "drugbank": "DB09045",
+      "pubchem": null,
+      "chembl": "CHEMBL2108027",
+      "doi": "10.1016/S0140-6736(19)31149-3",
+      "pmid": "31189511"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-trulicity-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: TRULICITY - dulaglutide injection, solution",
+      "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling, Eli Lilly and Company)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=463050bd-2b1c-40f5-b3c3-0a04bb433309",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "springer-dulaglutide-therapy-review-2021",
+      "sourceType": "review-article",
+      "authorityTier": "B1",
+      "title": "Article discussing REWIND trial cardiovascular outcome results for dulaglutide (Diabetes Therapy, Springer, DOI 10.1007/s13300-021-01200-0)",
+      "publisher": "Diabetes Therapy / Springer Nature",
+      "url": "https://link.springer.com/article/10.1007/s13300-021-01200-0",
+      "doi": "10.1007/s13300-021-01200-0",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "drugbank-db09045",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Dulaglutide: Uses, Interactions, Mechanism of Action (DrugBank Accession DB09045)",
+      "publisher": "DrugBank Online",
+      "url": "https://go.drugbank.com/drugs/DB09045",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "wikipedia-dulaglutide",
+      "sourceType": "encyclopedia-reference",
+      "authorityTier": "C1",
+      "title": "Dulaglutide",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Dulaglutide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "diabetes-care-glp1ra-thyroid-cohort-2026",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Retrospective multi-database cohort study of GLP-1 receptor agonist exposure (including dulaglutide) and thyroid tumor risk (460,032 users)",
+      "publisher": "Diabetes Care / American Diabetes Association",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12281980/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "primarycarenotebook-rewind-summary",
+      "sourceType": "clinical-reference-summary",
+      "authorityTier": "B1",
+      "title": "Dulaglutide and cardiovascular outcomes in type 2 diabetes: REWIND, a double-blind randomised placebo-controlled trial",
+      "publisher": "Primary Care Notebook",
+      "url": "https://primarycarenotebook.com/pages/diabetes-and-endocrinology/dulaglutide-and-cardiovascular-outcomes-in-type-2-diabetes-rewind-a-double-blind-randomised-placebo-controlled-trial",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "healthline-trulicity-weight-loss",
+      "sourceType": "consumer-health-media",
+      "authorityTier": "C2",
+      "title": "Trulicity and Weight Loss: What to Expect",
+      "publisher": "Healthline",
+      "url": "https://www.healthline.com/health/drugs/trulicity-and-weight-loss",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "dulaglutide-regulatory-approved-indication-001",
+      "claimType": "approved-indication",
+      "statement": "TRULICITY (dulaglutide) is FDA-approved as an adjunct to diet and exercise to improve glycemic control in adults and pediatric patients 10 years of age and older with type 2 diabetes mellitus, and separately to reduce the risk of major adverse cardiovascular events in adults with type 2 diabetes mellitus who have established cardiovascular disease or multiple cardiovascular risk factors. The current label contains no approved indication for weight loss or obesity.",
+      "context": {
+        "population": "adults and pediatric patients 10 years of age and older with type 2 diabetes mellitus",
+        "route": "subcutaneous injection",
+        "formulation": "dulaglutide injection, solution (single-dose pen/prefilled syringe)",
+        "useCase": "glycemic control and cardiovascular risk reduction in type 2 diabetes",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-trulicity-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-trulicity-label",
+          "quote": "As an adjunct to diet and exercise to improve glycemic control in adults and pediatric patients 10 years of age and older with type 2 diabetes mellitus",
+          "pageOrSection": "INDICATIONS AND USAGE"
+        },
+        {
+          "sourceRef": "dailymed-trulicity-label",
+          "quote": "To reduce the risk of major adverse cardiovascular events in adults with type 2 diabetes mellitus who have established cardiovascular disease or multiple cardiovascular risk factors.",
+          "pageOrSection": "INDICATIONS AND USAGE"
+        }
+      ],
+      "reviewFlags": [
+        "independent-review note: DrugBank (structured-database, independent source family) corroborates the core T2D indication; the live FDA label re-check performed at review time is the same regulator/label family as the packet's own DailyMed citation, so it does not by itself satisfy the independent-family bar for the CV-indication and no-obesity-indication clauses. One further independent-family source (e.g., ADA Standards of Care) is recommended before final sign-off; ADA's site returned a 403 this remediation session as well."
+      ]
+    },
+    {
+      "claimId": "dulaglutide-regulatory-boxed-warning-contraindication-001",
+      "claimType": "contraindication",
+      "statement": "TRULICITY carries a boxed warning that dulaglutide causes thyroid C-cell tumors in rats and that it is unknown whether it causes thyroid C-cell tumors, including medullary thyroid carcinoma (MTC), in humans. It is contraindicated in patients with a personal or family history of MTC or Multiple Endocrine Neoplasia syndrome type 2 (MEN 2), and in patients with prior serious hypersensitivity to dulaglutide or any product component.",
+      "context": {
+        "population": "patients with type 2 diabetes being considered for or currently on dulaglutide",
+        "route": "subcutaneous injection",
+        "formulation": "dulaglutide injection, solution",
+        "useCase": "regulatory safety boundary / prescribing eligibility",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-trulicity-label",
+        "diabetes-care-glp1ra-thyroid-cohort-2026"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-trulicity-label",
+          "quote": "Dulaglutide causes thyroid C-cell tumors in rats. It is unknown whether TRULICITY causes thyroid C-cell tumors, including medullary thyroid carcinoma (MTC), in humans.",
+          "pageOrSection": "BOXED WARNING"
+        },
+        {
+          "sourceRef": "dailymed-trulicity-label",
+          "quote": "Patients with a personal or family history of medullary thyroid carcinoma (MTC) or in patients with Multiple Endocrine Neoplasia syndrome type 2 (MEN 2)",
+          "pageOrSection": "CONTRAINDICATIONS"
+        },
+        {
+          "sourceRef": "diabetes-care-glp1ra-thyroid-cohort-2026",
+          "quote": "GLP-1RA exposure was not associated with an increased risk of thyroid tumors compared with SGLT2i, DPP4i, or SU therapy.",
+          "pageOrSection": "Results (multi-database cohort, 460,032 GLP-1RA users, dulaglutide included)"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim - human MTC causation remains unconfirmed per label language itself",
+        "independent-review note: a 460,032-patient retrospective multi-database cohort study (Diabetes Care, ADA journal) found no increased human thyroid tumor risk with GLP-1RA exposure including dulaglutide, consistent with the label's hedged 'unknown whether ... in humans' language; species-specific GLP-1 receptor expression (much higher in rodent thyroid C-cells than human) is the proposed mechanism for why the rat signal has not been confirmed in humans. This does not change the boxed warning or contraindication, which remain as labeled."
+      ]
+    },
+    {
+      "claimId": "dulaglutide-warning-pancreatitis-aki-001",
+      "claimType": "warning",
+      "statement": "The TRULICITY label warns that acute pancreatitis, including fatal and non-fatal hemorrhagic or necrotizing pancreatitis, has been observed in patients treated with GLP-1 receptor agonists including dulaglutide, and that postmarketing reports of acute kidney injury (in some cases requiring hemodialysis) have occurred, most often in patients experiencing GI adverse reactions leading to dehydration. Common adverse reactions occurring at >=5% incidence include nausea, diarrhea, vomiting, abdominal pain, and decreased appetite.",
+      "context": {
+        "population": "patients with type 2 diabetes treated with dulaglutide",
+        "route": "subcutaneous injection",
+        "formulation": "dulaglutide injection, solution",
+        "useCase": "safety monitoring during treatment",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-trulicity-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-trulicity-label",
+          "quote": "Acute pancreatitis, including fatal and non-fatal hemorrhagic or necrotizing pancreatitis, has been observed in patients treated with GLP-1 receptor agonists, including TRULICITY.",
+          "pageOrSection": "WARNINGS AND PRECAUTIONS - Acute Pancreatitis"
+        },
+        {
+          "sourceRef": "dailymed-trulicity-label",
+          "quote": "There have been postmarketing reports of acute kidney injury, in some cases requiring hemodialysis, in patients treated with GLP-1 receptor agonists, including TRULICITY.",
+          "pageOrSection": "WARNINGS AND PRECAUTIONS - Acute Kidney Injury"
+        },
+        {
+          "sourceRef": "dailymed-trulicity-label",
+          "quote": "Most frequent reactions (>=5% incidence): nausea, diarrhea, vomiting, abdominal pain, and decreased appetite.",
+          "pageOrSection": "ADVERSE REACTIONS"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical monitoring claim",
+        "unresolved independent-source gap: no independent-family source (systematic review, controlled study, or guideline) on GLP-1RA/dulaglutide pancreatitis or AKI risk could be reached this remediation session either; the claim remains sourced only to the DailyMed label and stays human-review-gated rather than being re-affirmed from that same source family. Statement is limited to the label's own hedged, class-level language ('has been observed', 'postmarketing reports') and does not assert an incidence rate or causal magnitude."
+      ]
+    },
+    {
+      "claimId": "dulaglutide-mechanism-glp1-agonist-001",
+      "claimType": "mechanism",
+      "statement": "Dulaglutide is a GLP-1 receptor agonist consisting of a GLP-1 analog fused to a modified human IgG4 Fc fragment, engineered to slow renal clearance and support once-weekly subcutaneous dosing; DrugBank lists its clinical indication as management of type 2 diabetes mellitus.",
+      "context": {
+        "population": null,
+        "route": "subcutaneous",
+        "formulation": "dulaglutide (GLP-1-Fc fusion protein)",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "drugbank-db09045",
+        "wikipedia-dulaglutide"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "drugbank-db09045",
+          "quote": "Dulaglutide is a GLP-1 agonist used to manage type 2 diabetes mellitus.",
+          "pageOrSection": "Indication"
+        },
+        {
+          "sourceRef": "wikipedia-dulaglutide",
+          "quote": "It is a glucagon-like peptide-1 receptor agonist (GLP-1 agonist) consisting of GLP-1(7-37) covalently linked to an Fc fragment of human IgG4.",
+          "pageOrSection": "Pharmacology / mechanism of action"
+        }
+      ],
+      "reviewFlags": [
+        "independent-review note: Wikipedia (encyclopedia/tertiary reference, independent of the DrugBank structured-database citation) independently corroborates the Fc-fusion structural detail; this was verified against the live page this remediation session. The fusion-protein structural detail is now independently cross-checked."
+      ]
+    },
+    {
+      "claimId": "dulaglutide-dose-context-label-regimen-001",
+      "claimType": "dose-context",
+      "statement": "Per FDA-approved labeling (trial-protocol/label context, not a use recommendation), the recommended starting dosage of TRULICITY for glycemic control is 0.75 mg injected subcutaneously once weekly; after at least 4 weeks, dosage may be increased to 1.5 mg weekly, with further 1.5 mg increments possible at intervals of at least 4 weeks up to a maximum of 4.5 mg once weekly.",
+      "context": {
+        "population": "adults with type 2 diabetes mellitus",
+        "route": "subcutaneous injection",
+        "formulation": "dulaglutide injection, solution, single-dose pen or prefilled syringe",
+        "useCase": "label-specified dosing regimen for glycemic control",
+        "doseText": "0.75 mg SC once weekly starting dose; titrate in 1.5 mg increments at >=4-week intervals to a maximum of 4.5 mg once weekly (FDA label protocol, not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-trulicity-label",
+        "wikipedia-dulaglutide"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-trulicity-label",
+          "quote": "The recommended starting dosage of TRULICITY is 0.75 mg injected subcutaneously once weekly.",
+          "pageOrSection": "DOSAGE AND ADMINISTRATION"
+        },
+        {
+          "sourceRef": "wikipedia-dulaglutide",
+          "quote": "In 2020, the FDA approved two higher doses of the medication, 3.0 mg and 4.5 mg, based on results of the AWARD-11 trial demonstrating improved glucose lowering and weight benefits.",
+          "pageOrSection": "Approval history / dosing"
+        }
+      ],
+      "reviewFlags": [
+        "dosing claim - label context only, must not be presented as individualized medical advice",
+        "independent-review note: Wikipedia independently corroborates the 0.75/1.5 mg initial dose tiers and the 2020 addition of the 3.0/4.5 mg tiers (dose ceiling), consistent with the packet's titration statement. This is a different source family than DailyMed for the dose-tier existence, but the exact 4-week titration interval wording still rests principally on the DailyMed label; a second independent-family check (e.g., ADA Standards of Care) is recommended before final sign-off."
+      ]
+    },
+    {
+      "claimId": "dulaglutide-efficacy-rewind-cv-outcomes-001",
+      "claimType": "efficacy",
+      "statement": "In the REWIND randomized, double-blind, placebo-controlled cardiovascular outcomes trial in adults with type 2 diabetes aged >=50 years (with or without established cardiovascular disease), dulaglutide treatment was associated with a significantly lower risk of the primary composite endpoint (non-fatal myocardial infarction, non-fatal stroke, or cardiovascular death) versus placebo over a median follow-up of 5.4 years (hazard ratio 0.88, 95% CI 0.79-0.99).",
+      "context": {
+        "population": "adults with type 2 diabetes mellitus aged 50 years and older, with or without established cardiovascular disease (REWIND trial cohort)",
+        "route": "subcutaneous injection",
+        "formulation": "dulaglutide 1.5 mg once weekly (trial protocol)",
+        "useCase": "cardiovascular event risk reduction in type 2 diabetes",
+        "doseText": "REWIND trial protocol dose; not a use recommendation"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "springer-dulaglutide-therapy-review-2021",
+        "dailymed-trulicity-label",
+        "primarycarenotebook-rewind-summary"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "springer-dulaglutide-therapy-review-2021",
+          "quote": "During the median follow-up of 5.4 years, dulaglutide treatment demonstrated a significantly lower risk of the primary composite endpoint of non-fatal myocardial infarction, non-fatal stroke or CV death compared to placebo (hazard ratio 0.88; 95% confidence interval 0.79-0.99)",
+          "pageOrSection": "Discussion of REWIND trial results"
+        },
+        {
+          "sourceRef": "primarycarenotebook-rewind-summary",
+          "quote": "during a median follow-up of 5.4 years (IQR 5.1-5.9), the primary composite outcome occurred in 594 (12.0%) participants at an incidence rate of 2.4 per 100 person-years in the dulaglutide group and in 663 (13.4%) participants at an incidence rate of 2.7 per 100 person-years in the placebo group (hazard ratio [HR] 0.88, 95% CI 0.79-0.99; p=0.026)",
+          "pageOrSection": "REWIND trial summary, primary outcome"
+        }
+      ],
+      "reviewFlags": [
+        "secondary/review-article citation of REWIND (Gerstein et al., Lancet 2019) - the primary Lancet publication itself remained inaccessible this remediation session (403/CAPTCHA), but an independent clinical-reference summary family (Primary Care Notebook) independently corroborates the exact HR/CI/p-value/follow-up/population figures verbatim, closing the prior citation gap. DOI 10.1016/S0140-6736(19)31149-3 was independently confirmed via Crossref this session and added to compound.externalIdentifiers.doi."
+      ]
+    },
+    {
+      "claimId": "dulaglutide-evidence-gap-weight-loss-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Dulaglutide (Trulicity) has no FDA-approved indication for weight loss or obesity management, unlike some other GLP-1 receptor agonists (e.g., semaglutide/Wegovy, tirzepatide/Zepbound) that hold dedicated weight-management approvals; consumer health coverage confirms it is sometimes prescribed off-label for weight loss based on the weight-reduction side effect observed in diabetes trials, but this use sits outside its approved indication and outside the controlled evidence base reviewed here for that specific purpose.",
+      "context": {
+        "population": "prospective off-label users seeking weight loss; general public encountering weight-loss-focused marketing/content about Trulicity",
+        "route": "subcutaneous injection",
+        "formulation": "dulaglutide injection, solution",
+        "useCase": "popular/off-label weight-loss use versus approved diabetes/cardiovascular indications",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "dailymed-trulicity-label",
+        "healthline-trulicity-weight-loss"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "healthline-trulicity-weight-loss",
+          "quote": "The FDA has not approved Trulicity as a weight loss medication, but some doctors may prescribe it off-label for this purpose.",
+          "pageOrSection": "FDA approval status section"
+        },
+        {
+          "sourceRef": "dailymed-trulicity-label",
+          "quote": "As an adjunct to diet and exercise to improve glycemic control in adults and pediatric patients 10 years of age and older with type 2 diabetes mellitus",
+          "pageOrSection": "INDICATIONS AND USAGE (no obesity/weight-loss indication listed)"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular/off-label weight-loss framing outruns the approved-indication and controlled human evidence captured in this packet",
+        "no head-to-head or dedicated weight-management RCT for dulaglutide was located or reviewed this session; do not infer weight-loss efficacy magnitude from this packet"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "dulaglutide-conflict-weight-loss-marketing-vs-label-001",
+      "claimRefs": [
+        "dulaglutide-regulatory-approved-indication-001",
+        "dulaglutide-evidence-gap-weight-loss-marketing-001"
+      ],
+      "severity": "moderate",
+      "summary": "Substantial consumer/media content markets or discusses dulaglutide (Trulicity) as a weight-loss option, but the FDA-approved label limits its indications to glycemic control and cardiovascular risk reduction in type 2 diabetes and contains no weight-loss/obesity indication; no dedicated weight-management RCT for dulaglutide was reviewed this session to substantiate off-label efficacy claims.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "RESOLVED (remediation pass 2026-08-29): Primary REWIND trial publication remained inaccessible directly (Lancet/PubMed/PMC still 403/CAPTCHA-gated this session), but an independent clinical-reference summary (Primary Care Notebook, distinct source family from the packet's Springer secondary review) was fetched and independently corroborates the exact HR 0.88 (95% CI 0.79-0.99, p=0.026), 5.4-year median follow-up, and 9,901-participant population verbatim. Added as a source and cited in extractedEvidence.",
+      "RESOLVED (remediation pass 2026-08-29): DOI for the REWIND primary publication (10.1016/S0140-6736(19)31149-3) independently confirmed via Crossref API this session (title/journal/lead-author match REWIND) and added to compound.externalIdentifiers.doi.",
+      "STILL OPEN: PubChem CID could not be resolved this remediation session. PUG-REST name and CAS-xref lookups were robots-disallowed; the PubChem compound-summary HTML page was fetched but its 'pubchem_uid_value' meta tag resolved to CID 262 (2,3-Butanediol), which was independently verified via a second fetch to be the WRONG compound - so it was rejected rather than written into the packet. pubchem identifier remains null pending a reliable resolution route (e.g., manual PubChem search UI, or NCBI E-utilities esearch against the PubChem Compound database).",
+      "STILL OPEN: dulaglutide-warning-pancreatitis-aki-001 (fieldAuthorityRequired safety-critical claim) remains unresolved. This remediation session attempted: Europe PMC REST API search for 'dulaglutide pancreatitis' (persistently 429 rate-limited across multiple retries with cooldowns, mirroring the original access problem), and PMC full text of Azoulay et al. (incretin drugs/pancreatitis, BMJ 2016) at a candidate PMC ID (410 gone/retired). No independent-family source was reached; the claim stays sourced only to the DailyMed label and remains human-review-gated. Recommend a follow-up attempt via Drugs@FDA safety communications, the FDA/EMA joint pancreatic-safety assessment (NEJM/Cohen 2014), or a fresh Europe PMC query once rate limits clear.",
+      "STILL OPEN (partially addressed): dulaglutide-regulatory-approved-indication-001 and dulaglutide-dose-context-label-regimen-001 (both fieldAuthorityRequired) - DrugBank and Wikipedia (independent families) now corroborate the core T2D indication and the dose-tier structure/ceiling respectively, but the CV-indication clause, the no-obesity-indication clause, and the exact 4-week titration interval wording still rest principally on the DailyMed/live-FDA regulator family. ADA Standards of Care (professional.diabetes.org) returned a 403 to the fetch tool again this session. Recommend one further independent-family attempt before final sign-off.",
+      "Weight-loss off-label marketing gap is documented from consumer-health media (Healthline) rather than a systematic review of off-label-use prevalence; strength of that characterization should be revisited if a stronger source becomes available. (Note: independent review located a supporting systematic review/meta-analysis - Li et al. 2024, Eur J Clin Invest, DOI 10.1111/eci.14125 - but this remediation session could not itself fetch the Wiley abstract, 403, so it was not added as a verified citation; a future session should re-attempt.)"
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-product",
+      "a1-regulator-backed",
+      "boxed-warning-present",
+      "secondary-source-for-pivotal-rct",
+      "off-label-marketing-gap-documented",
+      "remediation-pass-2026-08-29"
+    ]
+  }
+}

@@ -197,7 +197,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "dorr-1996-nature-ijir-mt2-erection-rct"
       ],
@@ -221,7 +221,8 @@
       "reviewFlags": [
         "small single-trial dataset (n=20); no confirmatory phase 3 or approved product resulted",
         "trial dose context must never be presented as a use recommendation",
-        "do not extrapolate this supervised single-dose IV/SC clinical trial result to chronic gray-market self-administration for tanning"
+        "do not extrapolate this supervised single-dose IV/SC clinical trial result to chronic gray-market self-administration for tanning",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (Dorr et al. 1996, Int J Impot Res); no regulator document exists for this claim (searched: FDA.gov bulk drug substances page for Melanotan II, DailyMed label database — no approved Melanotan II product or label exists, and FDA/DailyMed search returned no document addressing erectile-function or libido efficacy of Melanotan II)"
       ]
     },
     {
@@ -240,7 +241,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "dermnetnz-melanotan-ii",
-        "dorr-1996-nature-ijir-mt2-erection-rct"
+        "dorr-1996-nature-ijir-mt2-erection-rct",
+        "fda-bulk-substances-melanotan-ii"
       ],
       "extractedEvidence": [
         {
@@ -257,10 +259,16 @@
           "sourceRef": "dorr-1996-nature-ijir-mt2-erection-rct",
           "quote": "Nausea and yawning were frequently reported side effects due to Melanotan II; at a dose of 0.025 mg/kg, 12.9% of subjects had severe nausea.",
           "pageOrSection": "Abstract/Results"
+        },
+        {
+          "sourceRef": "fda-bulk-substances-melanotan-ii",
+          "quote": "Compounded drugs containing Melanotan II may pose risk for immunogenicity for certain routes of administration due to the potential for aggregation or peptide-related impurities. Published case reports discuss serious adverse events including melanoma, posterior reversible encephalopathy syndrome, sympathomimetic toxidrome and priapism.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn from consideration, Melanotan II row (re-fetched and re-verified live 2026-08-29)"
         }
       ],
       "reviewFlags": [
-        "gray-market products (unsupervised dose, unknown purity/route, e.g. nasal spray) are not equivalent to the supervised trial conditions cited here"
+        "gray-market products (unsupervised dose, unknown purity/route, e.g. nasal spray) are not equivalent to the supervised trial conditions cited here",
+        "authority-support-pass 2026-08-29: added FDA bulk drug substances page (A1 regulator source) as independent authoritative support — its case-report summary corroborates priapism as a documented adverse event; no DailyMed label exists (no approved Melanotan II product) and no separate FDA warning page addressing flushing/nausea/appetite specifically was found (searched FDA.gov and DailyMed); the flushing/nausea/appetite portion of this claim remains supported by the DermNet clinical reference and the Dorr et al. controlled trial pending any future FDA-specific documentation"
       ]
     },
     {
@@ -370,7 +378,8 @@
       "thin-human-evidence",
       "gray-market-only",
       "case-report-safety-signal",
-      "marketing-evidence-gap"
+      "marketing-evidence-gap",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

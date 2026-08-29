@@ -1,0 +1,394 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "clomiphene-evidence-expansion-001",
+    "category": "hormones-serms-sarms",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:58:43Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Clomiphene",
+    "aliases": [
+      "Clomifene",
+      "Clomid",
+      "Clomiphene citrate",
+      "Serophene"
+    ],
+    "classification": "Small-molecule drug",
+    "compoundFamily": "Selective estrogen receptor modulator (triphenylethylene SERM)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "2800",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-clomid-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: CLOMID- clomiphene citrate tablet",
+      "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2ca373c1-4dba-4126-8616-5c533d606fe5",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pmc-serm-male-hypogonadism-meta-2025",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Clomiphene or enclomiphene citrate for the treatment of male hypogonadism: a systematic review and meta-analysis of randomized controlled trials",
+      "publisher": "PubMed Central (PMC)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12510335/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pubchem-cid-2800",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Clomiphene | C26H28ClNO | CID 2800",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Clomiphene",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "ro-co-clomid-pct-marketing",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "Clomid PCT (Post Cycle Therapy) Protocol: What to Know",
+      "publisher": "Ro (ro.co)",
+      "url": "https://ro.co/erectile-dysfunction/clomid-for-post-cycle-therapy/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "clomiphene-approved-indication-ovulatory-dysfunction-001",
+      "claimType": "approved-indication",
+      "statement": "Clomiphene citrate (Clomid) is FDA-approved for the treatment of ovulatory dysfunction in women desiring pregnancy; it is not approved, and the label states there is no adequate evidence of effectiveness, for male infertility.",
+      "context": {
+        "population": "women with ovulatory dysfunction desiring pregnancy",
+        "route": "oral",
+        "formulation": "50 mg tablet",
+        "useCase": "ovulation induction",
+        "doseText": "Label regimen: 50 mg daily for 5 days as an initial course; a second course of 100 mg daily for 5 days may be used if ovulation does not occur (label text, not a use recommendation)."
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-clomid-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "Clomiphene citrate is indicated for the treatment of ovulatory dysfunction in women desiring pregnancy.",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "There are no adequate or well-controlled studies that demonstrate the effectiveness of clomiphene citrate in the treatment of male infertility.",
+          "pageOrSection": "Use in Specific Populations / male use"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "Treatment of the selected patient should begin with a low dose, 50 mg daily (1 tablet) for 5 days.",
+          "pageOrSection": "Dosage and Administration"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical / dosing-adjacent regulatory claim"
+      ]
+    },
+    {
+      "claimId": "clomiphene-mechanism-serm-001",
+      "claimType": "mechanism",
+      "statement": "Clomiphene citrate is a triphenylethylene selective estrogen receptor modulator (SERM) that competes with estrogen at estrogen-receptor-binding sites in the hypothalamus and pituitary, triggering increased pituitary gonadotropin (FSH/LH) release that drives follicular development and a preovulatory gonadotropin surge.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "clomiphene citrate",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "dailymed-clomid-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "may compete with estrogen for estrogen-receptor-binding sites",
+          "pageOrSection": "Clinical Pharmacology / Mechanism of Action"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "a series of endocrine events culminating in a preovulatory gonadotropin surge and subsequent follicular rupture",
+          "pageOrSection": "Clinical Pharmacology / Mechanism of Action"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "clomiphene-warning-ohss-visual-multiple-pregnancy-001",
+      "claimType": "warning",
+      "statement": "Clomiphene citrate labeling carries warnings for ovarian hyperstimulation syndrome (OHSS), which can progress rapidly and in severe cases has resulted in death from hypovolemic shock, hemoconcentration, or thromboembolism; for visual disturbances (blurring, spots, flashes) that may occasionally be irreversible, especially at increased dosage; and for an increased chance of multiple pregnancy.",
+      "context": {
+        "population": "women treated with clomiphene citrate for ovulation induction",
+        "route": "oral",
+        "formulation": "clomiphene citrate tablet",
+        "useCase": "ovulation induction safety monitoring",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-clomid-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "may progress rapidly (within 24 hours to several days)",
+          "pageOrSection": "Warnings / Ovarian Hyperstimulation Syndrome"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "gross ovarian enlargement, gastrointestinal symptoms, ascites, dyspnea, oliguria, and pleural effusion",
+          "pageOrSection": "Warnings / Ovarian Hyperstimulation Syndrome"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "Blurring or other visual symptoms such as spots or flashes may occasionally occur during therapy...visual disturbances may be irreversible, especially with increased dosage.",
+          "pageOrSection": "Warnings / Visual Disturbances"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "There is an increased chance of multiple pregnancy",
+          "pageOrSection": "Warnings / Multiple Pregnancy"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical warning claim"
+      ]
+    },
+    {
+      "claimId": "clomiphene-contraindications-001",
+      "claimType": "contraindication",
+      "statement": "Clomiphene citrate is contraindicated in pregnancy, in patients with known hypersensitivity to the drug, in patients with liver disease or a history of liver dysfunction, in abnormal uterine bleeding of undetermined origin, and in ovarian cysts or enlargement not due to polycystic ovarian syndrome; prolonged use may also increase the risk of a borderline or invasive ovarian tumor.",
+      "context": {
+        "population": "patients considered for clomiphene citrate therapy",
+        "route": "oral",
+        "formulation": "clomiphene citrate tablet",
+        "useCase": "prescribing eligibility screening",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-clomid-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "Clomiphene citrate use in pregnant women is contraindicated",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "Prolonged use of clomiphene citrate tablets USP may increase the risk of a borderline or invasive ovarian tumor",
+          "pageOrSection": "Warnings / Ovarian Cancer"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "available human data do not suggest an increased risk for congenital anomalies",
+          "pageOrSection": "Use in Specific Populations / Pregnancy"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim"
+      ]
+    },
+    {
+      "claimId": "clomiphene-efficacy-male-hypogonadism-testosterone-001",
+      "claimType": "efficacy",
+      "statement": "In a systematic review and meta-analysis of randomized controlled trials, clomiphene/enclomiphene (SERM) therapy significantly raised total testosterone versus placebo (moderate-quality GRADE evidence) and was comparable to topical testosterone gel for raising total testosterone; sperm concentration improved more than with testosterone gel, but SERM therapy was not significantly different from placebo on sperm concentration. This off-label male-hypogonadism use is not an FDA-approved indication.",
+      "context": {
+        "population": "men with functional/late-onset hypogonadism enrolled in RCTs (pooled analysis)",
+        "route": "oral",
+        "formulation": "clomiphene or enclomiphene citrate",
+        "useCase": "off-label treatment of male hypogonadism (investigational/off-label, not FDA-approved for men)",
+        "doseText": "Pooled trial follow-up ranged 2 to 30 weeks across included studies (systematic-review protocol context, not a use recommendation)."
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pmc-serm-male-hypogonadism-meta-2025",
+        "dailymed-clomid-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "SERM therapy significantly improved TT (MD: 273.76 ng/dL; 95% CI: 191.87-355.66 ng/dL; p < 0.01)",
+          "pageOrSection": "Results / Testosterone outcomes"
+        },
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "there were no significant differences between SERM and placebo groups regarding sperm concentration",
+          "pageOrSection": "Results / Semen parameters"
+        },
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "this study remains underpowered with regard to safety endpoints",
+          "pageOrSection": "Discussion / Limitations"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "There are no adequate or well-controlled studies that demonstrate the effectiveness of clomiphene citrate in the treatment of male infertility.",
+          "pageOrSection": "Use in Specific Populations / male use"
+        }
+      ],
+      "reviewFlags": [
+        "off-label use claim; not FDA-approved for men",
+        "safety endpoints in the meta-analysis are explicitly underpowered per the authors"
+      ]
+    },
+    {
+      "claimId": "clomiphene-adverse-effects-male-hypogonadism-001",
+      "claimType": "adverse-effect",
+      "statement": "In the same meta-analysis of male-hypogonadism trials, 21% of men experienced adverse events attributed to the study drug (most commonly headaches and minor estradiol elevation), none rated severe, and no included trials reported decreased sexual desire or erectile function with SERM therapy; the authors caution the safety analysis was underpowered.",
+      "context": {
+        "population": "men with functional/late-onset hypogonadism in RCTs",
+        "route": "oral",
+        "formulation": "clomiphene or enclomiphene citrate",
+        "useCase": "off-label male hypogonadism treatment, safety monitoring",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pmc-serm-male-hypogonadism-meta-2025"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "53 (21%) men experienced adverse events related to the study drug; none were severe",
+          "pageOrSection": "Results / Safety"
+        },
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "no studies reporting a decrease in sexual desire or penile erections",
+          "pageOrSection": "Results / Safety"
+        },
+        {
+          "sourceRef": "pmc-serm-male-hypogonadism-meta-2025",
+          "quote": "this study remains underpowered with regard to safety endpoints",
+          "pageOrSection": "Discussion / Limitations"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim; underpowered safety data per source authors",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the same meta-analysis of male-hypogonadism trials...\"); no regulator document exists for this claim (searched: DailyMed CLOMID label ADVERSE REACTIONS section, which lists headache at 1.3% incidence and notes testicular tumors/gynecomastia in male users but does not address the specific 21% study-drug-related adverse-event rate, estradiol elevation, or absence of reported sexual-desire/erectile-function decrease from male-hypogonadism RCTs; and FDA.gov / accessdata.fda.gov search for clomiphene male-hypogonadism safety communications, which returned only the unrelated female-indication Clomid label and a class-wide testosterone-product labeling notice not specific to clomiphene)."
+      ]
+    },
+    {
+      "claimId": "clomiphene-evidence-gap-pct-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Clomiphene ('Clomid') is widely marketed and used off-label as post-cycle therapy (PCT) to restore natural testosterone after anabolic-androgenic steroid use, with vendor content claiming it 'safely' boosts testosterone production; however, the same vendor content and the underlying literature acknowledge that PCT efficacy and the long-term safety of SERM-based PCT protocols are unproven, and no controlled human trials establish PCT-specific efficacy or safety outcomes (as distinct from the FDA-approved female indication or the studied off-label male-hypogonadism use above).",
+      "context": {
+        "population": "anabolic-androgenic steroid users seeking to restore endogenous testosterone",
+        "route": "oral",
+        "formulation": "clomiphene citrate, self-directed PCT protocols",
+        "useCase": "post-cycle therapy (PCT) after anabolic steroid use",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "ro-co-clomid-pct-marketing",
+        "dailymed-clomid-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ro-co-clomid-pct-marketing",
+          "quote": "safely giving your body a boost as it increases testosterone production",
+          "pageOrSection": "Clomid for PCT article body"
+        },
+        {
+          "sourceRef": "ro-co-clomid-pct-marketing",
+          "quote": "Some researchers acknowledge that the efficacy of PCT is still unproven, as are many of the practices surrounding steroid use.",
+          "pageOrSection": "Clomid for PCT article body"
+        },
+        {
+          "sourceRef": "ro-co-clomid-pct-marketing",
+          "quote": "their safety and long-term effects as a PCT protocol are still unknown",
+          "pageOrSection": "Clomid for PCT article body"
+        },
+        {
+          "sourceRef": "dailymed-clomid-label",
+          "quote": "There are no adequate or well-controlled studies that demonstrate the effectiveness of clomiphene citrate in the treatment of male infertility.",
+          "pageOrSection": "Use in Specific Populations / male use"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor 'safely' framing is not supported by controlled PCT-specific trial evidence",
+        "distinguish PCT-specific claims from the studied male-hypogonadism evidence in claim clomiphene-efficacy-male-hypogonadism-testosterone-001"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "clomiphene-conflict-male-use-status-001",
+      "claimRefs": [
+        "clomiphene-approved-indication-ovulatory-dysfunction-001",
+        "clomiphene-efficacy-male-hypogonadism-testosterone-001",
+        "clomiphene-evidence-gap-pct-marketing-001"
+      ],
+      "severity": "moderate",
+      "summary": "The FDA label states there are no adequate or well-controlled studies demonstrating effectiveness in male infertility and clomiphene is not approved for men, while a published RCT meta-analysis shows a significant testosterone-raising effect in male hypogonadism and vendor/consumer marketing presents off-label PCT use as a 'safe' testosterone-restoration protocol; the strength and applicability of male-use evidence therefore differs sharply by claim (regulatory status vs. hypogonadism RCT data vs. unproven PCT-specific marketing claims) and needs continued human review to keep these distinctions clear to readers.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS/UNII/RxNorm/DrugBank/ChEMBL identifiers not yet resolved from structured databases; PubChem CID confirmed but a direct authoritative-page CAS quote was not obtained this session.",
+      "Male-hypogonadism and PCT-specific evidence is comparatively thin (meta-analysis flags its own safety analysis as underpowered; no controlled PCT-specific trials located) and should be reconfirmed against additional independent source families (e.g., an endocrine society guideline) at review time.",
+      "Vendor/marketing source (ro.co) is a single non-independent example of PCT marketing language; broader marketing-claim sampling recommended before publication."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-product-label-backed",
+      "off-label-male-use-documented",
+      "thin-human-evidence-for-pct-specific-claims",
+      "misinformation-adjacent-marketing-flagged",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

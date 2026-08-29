@@ -1,0 +1,397 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "oxytocin-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:58:43Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Oxytocin",
+    "aliases": [
+      "Pitocin",
+      "Syntocinon",
+      "Oxytocin hydrochloride"
+    ],
+    "classification": "Peptide hormone",
+    "compoundFamily": "Nonapeptide neurohypophysial hormone (posterior pituitary hormone)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "50-56-6",
+      "drugbank": "DB00107",
+      "pubchem": "439302",
+      "chembl": null,
+      "doi": null,
+      "pmid": "34644471"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-pitocin-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Label: PITOCIN - oxytocin injection",
+      "publisher": "DailyMed / U.S. Food and Drug Administration",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=969d5b35-0add-4c23-9605-6a5b6ab65c95",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "nejm-sikich-2021-asd-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Intranasal Oxytocin in Children and Adolescents with Autism Spectrum Disorder (Sikich et al., 2021)",
+      "publisher": "New England Journal of Medicine (open-access repository copy via eScholarship)",
+      "url": "https://escholarship.org/uc/item/3t5731hc",
+      "doi": "10.1056/NEJMoa2103583",
+      "pmid": "34644471",
+      "publishedAt": "2021-10-14T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "cai-2018-pcn-adverse-events-meta",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Systematic review and meta-analysis of reported adverse events of long-term intranasal oxytocin treatment for autism spectrum disorder",
+      "publisher": "Psychiatry and Clinical Neurosciences (Cai Q, Feng L, Yap KZ, 2018)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29232031/",
+      "doi": null,
+      "pmid": "29232031",
+      "publishedAt": "2018-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "drugbank-db00107",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Oxytocin: Uses, Interactions, Mechanism of Action (DrugBank DB00107)",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB00107",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pubchem-cid-439302",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Oxytocin | C43H66N12O12S2 | CID 439302 - PubChem Compound Summary",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Oxytocin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "mochi-oxytocin-nasal-spray-marketing",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "Oxytocin Nasal Spray: Benefits & Side Effects",
+      "publisher": "Mochi Health (telehealth/compounding vendor blog)",
+      "url": "https://joinmochi.com/blog/oxytocin-nasal-spray-benefits-side-effects-how-it-works",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "hillstone-oxytocin-nasal-spray-marketing",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "Oxytocin Nasal Spray in 2026: A Clear Look at the Connection Hormone",
+      "publisher": "Hillstone Pharmacy (compounding pharmacy blog)",
+      "url": "https://www.hillstonepharmacy.com/blog-posts/oxytocin-nasal-spray-2026",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "oxytocin-regulatory-approved-indications-001",
+      "claimType": "approved-indication",
+      "statement": "FDA-approved oxytocin injection (Pitocin) is indicated for initiation or improvement of uterine contractions to induce labor in patients with a medical indication for induction, for augmentation of labor in uterine inertia, to produce uterine contractions during the third stage of labor and control postpartum bleeding/hemorrhage, and as adjunctive therapy in the management of incomplete or inevitable abortion; the label explicitly states oxytocin is not indicated for elective (medically unindicated) labor induction.",
+      "context": {
+        "population": "pregnant/peripartum patients under hospital medical supervision",
+        "route": "intravenous infusion (labor induction/augmentation); intramuscular injection permitted for postpartum hemorrhage control",
+        "formulation": "Pitocin oxytocin injection, USP (synthetic)",
+        "useCase": "labor induction/augmentation; control of postpartum hemorrhage; adjunct in incomplete/inevitable abortion",
+        "doseText": "Label dosing for induction/augmentation: initial IV infusion 0.5-1 mU/min, increased by 1-2 mU/min at 30-60 minute intervals; rates above 9-10 mU/min rarely required at term (label text, not a use recommendation)."
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-pitocin-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-pitocin-label",
+          "quote": "Produce uterine contractions during the third stage of labor and to control postpartum bleeding or hemorrhage.",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-pitocin-label",
+          "quote": "Elective induction of labor is defined as the initiation of labor in a pregnant individual who has no medical indications for induction...Pitocin is not indicated for elective induction of labor.",
+          "pageOrSection": "Important Notice"
+        }
+      ],
+      "reviewFlags": [
+        "regulatory claim - reconfirm current label text at review time; multiple NDA/ANDA oxytocin injection labels exist on DailyMed and wording can vary by holder"
+      ]
+    },
+    {
+      "claimId": "oxytocin-safety-obstetric-warnings-001",
+      "claimType": "warning",
+      "statement": "The Pitocin label requires administration only by intravenous route with adequate medical supervision in a hospital setting, and warns of maternal risks (hypertensive episodes, uterine rupture, and water intoxication with convulsions and coma from prolonged infusion with concurrent electrolyte-free fluids) and fetal risks (bradycardia, permanent CNS or brain damage, and fetal death) with obstetric oxytocin use.",
+      "context": {
+        "population": "peripartum patients receiving IV oxytocin",
+        "route": "intravenous",
+        "formulation": "Pitocin oxytocin injection",
+        "useCase": "labor induction/augmentation safety monitoring",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-pitocin-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-pitocin-label",
+          "quote": "Must be administered only by the intravenous route and with adequate medical supervision in a hospital",
+          "pageOrSection": "Warnings"
+        },
+        {
+          "sourceRef": "dailymed-pitocin-label",
+          "quote": "Water intoxication with convulsions and coma has occurred",
+          "pageOrSection": "Warnings"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical monitoring claim - obstetric use only; must not be conflated with unsupervised intranasal gray-market use"
+      ]
+    },
+    {
+      "claimId": "oxytocin-mechanism-identity-001",
+      "claimType": "identity",
+      "statement": "Oxytocin (CAS 50-56-6, molecular formula C43H66N12O12S2, PubChem CID 439302, DrugBank DB00107) is a nonapeptide hormone; the approved injectable form is a recombinant/synthetic version used to induce or strengthen uterine contractions for labor and delivery or to control postpartum bleeding.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "synthetic/recombinant oxytocin",
+        "useCase": "compound identity",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-439302",
+        "drugbank-db00107"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "drugbank-db00107",
+          "quote": "Oxytocin is a recombinant hormone used to induce or strengthen uterine contractions in pregnant women to aid in labor and delivery or to control postpartum bleeding.",
+          "pageOrSection": "Summary"
+        }
+      ],
+      "reviewFlags": [
+        "UNII and ChEMBL identifiers not resolved from structured databases fetched this session"
+      ]
+    },
+    {
+      "claimId": "oxytocin-efficacy-intranasal-asd-negative-rct-001",
+      "claimType": "efficacy",
+      "statement": "In the largest published randomized controlled trial of intranasal oxytocin for a non-approved neurobehavioral use - a 24-week, placebo-controlled phase 2 trial in 290 children and adolescents (ages 3-17) with autism spectrum disorder, dosed to a total target of 48 international units daily intranasally - intranasal oxytocin showed no significant benefit over placebo on the primary social-functioning outcome (least-squares mean change from baseline in the Aberrant Behavior Checklist modified Social Withdrawal subscale: -3.7 with oxytocin vs -3.5 with placebo) or on secondary measures of social or cognitive functioning.",
+      "context": {
+        "population": "children and adolescents ages 3-17 with autism spectrum disorder (n=290 randomized, 277 completing primary assessment)",
+        "route": "intranasal",
+        "formulation": "intranasal oxytocin spray, investigational",
+        "useCase": "autism spectrum disorder social-withdrawal symptoms (investigational, not an approved use)",
+        "doseText": "Target 48 international units/day intranasal, 24-week trial protocol (trial protocol only; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "nejm-sikich-2021-asd-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nejm-sikich-2021-asd-rct",
+          "quote": "least-squares mean change from baseline in the ABC-mSW score... was -3.7 in the oxytocin group and -3.5 in the placebo group",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "nejm-sikich-2021-asd-rct",
+          "quote": "This placebo-controlled trial of intranasal oxytocin therapy in children and adolescents with autism spectrum disorder showed no significant between-group differences in the least-squares mean change from baseline on measures of social or cognitive functioning over a period of 24 weeks.",
+          "pageOrSection": "Conclusions"
+        }
+      ],
+      "reviewFlags": [
+        "this is the largest and most rigorous human RCT identified for intranasal oxytocin in a social/behavioral use and is negative; do not let smaller positive proof-of-concept trials override this finding without explicit discussion",
+        "does not address obstetric IV use, which is separately supported (see approved-indication claim)",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov for intranasal oxytocin approval/label, DailyMed drug label database for oxytocin products [only injectable Pitocin/generic oxytocin for obstetric use found, no intranasal formulation or ASD indication listed], and web search for FDA intranasal oxytocin autism label/approval \u2014 no regulator document addresses intranasal oxytocin for ASD efficacy or adverse events)."
+      ]
+    },
+    {
+      "claimId": "oxytocin-safety-intranasal-adverse-events-001",
+      "claimType": "adverse-effect",
+      "statement": "A systematic review and meta-analysis of randomized controlled trials of intranasal oxytocin in autism spectrum disorder (223 participants pooled) found the most common adverse events were nasal discomfort (14.3%), irritability (9.0%), tiredness (7.2%), diarrhea (4.5%), and skin irritation (4.5%), none statistically associated with oxytocin versus placebo (all P > 0.1); rare serious events (aggression, seizure) occurred in both oxytocin and placebo arms. The reviewers concluded short-to-moderate-term intranasal oxytocin was well tolerated in this population, while calling for larger trials.",
+      "context": {
+        "population": "pooled RCT participants with autism spectrum disorder (n=223; 123 oxytocin, 100 placebo)",
+        "route": "intranasal",
+        "formulation": "intranasal oxytocin, investigational, various trial durations",
+        "useCase": "tolerability of intranasal oxytocin in supervised RCT settings",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "cai-2018-pcn-adverse-events-meta"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "cai-2018-pcn-adverse-events-meta",
+          "quote": "Nasal discomfort (14.3%), tiredness (7.2%), irritability (9.0%), diarrhea (4.5%), and skin irritation (4.5%)",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "cai-2018-pcn-adverse-events-meta",
+          "quote": "intranasal oxytocin as well tolerated and safe for use in the ASD population",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "tolerability finding is from supervised, time-limited RCT protocols; must not be generalized to unsupervised chronic gray-market intranasal or compounded use",
+        "pooled n is small (223); reviewers themselves called for larger trials",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov for intranasal oxytocin approval/label, DailyMed drug label database for oxytocin products [only injectable Pitocin/generic oxytocin for obstetric use found, no intranasal formulation or ASD indication listed], and web search for FDA intranasal oxytocin autism label/approval \u2014 no regulator document addresses intranasal oxytocin for ASD efficacy or adverse events)."
+      ]
+    },
+    {
+      "claimId": "oxytocin-misinformation-bonding-marketing-001",
+      "claimType": "misinformation-claim",
+      "statement": "Compounding-pharmacy and telehealth vendor marketing for intranasal oxytocin products markets the compound as the 'love hormone' or 'bonding hormone' with claims of reducing anxiety, improving trust/emotional recognition, and lowering stress/cortisol from social touch, going beyond what is established by the negative pediatric ASD RCT and the compound's sole approved (obstetric, IV) indication; one vendor page explicitly acknowledges that 'some portray oxytocin sprays as quick ways to enhance feelings of closeness or confidence' while cautioning that oxytocin 'does not \"create\" affection or instantly change personality.'",
+      "context": {
+        "population": "consumers of compounded/gray-market intranasal oxytocin products",
+        "route": "intranasal (marketed use)",
+        "formulation": "compounded oxytocin nasal spray",
+        "useCase": "bonding, trust, anxiety reduction, social connection - not an FDA-approved use",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "mochi-oxytocin-nasal-spray-marketing",
+        "hillstone-oxytocin-nasal-spray-marketing",
+        "nejm-sikich-2021-asd-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "mochi-oxytocin-nasal-spray-marketing",
+          "quote": "the 'love hormone' or 'bonding hormone' because your body releases it during physical touch",
+          "pageOrSection": "Article body"
+        },
+        {
+          "sourceRef": "mochi-oxytocin-nasal-spray-marketing",
+          "quote": "Studies have shown it can reduce cortisol levels and promote calmer responses in social situations",
+          "pageOrSection": "Article body"
+        },
+        {
+          "sourceRef": "hillstone-oxytocin-nasal-spray-marketing",
+          "quote": "Some portray oxytocin sprays as quick ways to enhance feelings of closeness or confidence",
+          "pageOrSection": "Article body"
+        },
+        {
+          "sourceRef": "hillstone-oxytocin-nasal-spray-marketing",
+          "quote": "Oxytocin does not 'create' affection or instantly change personality.",
+          "pageOrSection": "Article body"
+        }
+      ],
+      "reviewFlags": [
+        "vendor-marketing source, not independent evidence - retained only to document the claim being made, not to support it",
+        "cross-reference against oxytocin-efficacy-intranasal-asd-negative-rct-001, which is the strongest available controlled human evidence and does not support a reliable pro-social behavioral effect"
+      ]
+    },
+    {
+      "claimId": "oxytocin-evidence-gap-social-behavioral-use-001",
+      "claimType": "evidence-gap",
+      "statement": "No oxytocin product is FDA-approved for any bonding, trust, social-cognition, anxiety, weight-management, or 'wellness' use; the only FDA-approved oxytocin products are obstetric IV/IM injections for labor and postpartum hemorrhage management. The largest controlled human trial for a social/behavioral use (pediatric autism spectrum disorder) was negative on its primary outcome, and human evidence supporting popular self-administered intranasal 'bonding' or anxiety-reduction use in the general population is unestablished.",
+      "context": {
+        "population": "general population using compounded/gray-market intranasal oxytocin outside obstetric care",
+        "route": "intranasal (non-approved use)",
+        "formulation": "compounded oxytocin nasal spray",
+        "useCase": "social bonding, trust, anxiety, general wellness",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "dailymed-pitocin-label",
+        "nejm-sikich-2021-asd-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-pitocin-label",
+          "quote": "Produce uterine contractions during the third stage of labor and to control postpartum bleeding or hemorrhage.",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "nejm-sikich-2021-asd-rct",
+          "quote": "This placebo-controlled trial of intranasal oxytocin therapy in children and adolescents with autism spectrum disorder showed no significant between-group differences in the least-squares mean change from baseline on measures of social or cognitive functioning over a period of 24 weeks.",
+          "pageOrSection": "Conclusions"
+        }
+      ],
+      "reviewFlags": [
+        "positive proof-of-concept single-dose adult trials exist in the broader literature but were not fetched this session; if added later they must be weighed against this larger negative pediatric RCT, not substituted for it",
+        "no FDA compounding bulk-substances or import-alert page for oxytocin was located this session; confirm at review time whether one exists"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "oxytocin-conflict-marketing-vs-rct-001",
+      "claimRefs": [
+        "oxytocin-misinformation-bonding-marketing-001",
+        "oxytocin-efficacy-intranasal-asd-negative-rct-001"
+      ],
+      "severity": "moderate",
+      "summary": "Vendor/telehealth marketing for compounded intranasal oxytocin promotes bonding, trust, and anxiety-reduction benefits, while the largest available controlled human RCT (pediatric ASD, n=290) found no significant benefit of intranasal oxytocin over placebo on social/cognitive outcomes; smaller positive single-dose adult proof-of-concept studies exist in the wider literature but were not independently verified this session.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "UNII and ChEMBL identifiers not resolved from structured databases fetched this session.",
+      "No FDA compounding/bulk-substances or import-alert page for oxytocin was located; confirm whether one exists at review time.",
+      "Positive single-dose adult proof-of-concept oxytocin trials referenced in secondary literature were not independently fetched and verified this session; the packet currently anchors on the larger negative pediatric RCT only.",
+      "Marketing-claim quotes are from a small, non-representative sample of two compounding/telehealth vendor pages and should not be treated as exhaustive of gray-market marketing."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-obstetric-product",
+      "a1-regulator-backed",
+      "negative-human-rct-documented",
+      "marketing-vs-evidence-gap-flagged",
+      "thin-human-evidence-for-nonapproved-use",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

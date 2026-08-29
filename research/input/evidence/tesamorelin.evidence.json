@@ -235,7 +235,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "falutz-jama-2014-visceral-liver-fat-rct"
       ],
@@ -253,7 +253,8 @@
       ],
       "reviewFlags": [
         "trial dose/duration context must never be presented as a use recommendation",
-        "authors themselves label findings 'preliminary'; liver fat effect is described as 'modest'"
+        "authors themselves label findings 'preliminary'; liver fat effect is described as 'modest'",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: DailyMed EGRIFTA SV label CLINICAL STUDIES section, which reports different pivotal trials (Studies 1/2, VAT treatment differences -31 and -21 cm^2) and contains no liver-fat data at all, so it does not cover the Stanley/Falutz JAMA 2014 (PMID 25038357) trial's specific -42 cm^2 VAT and -2.9% liver-fat findings; also searched FDA.gov/accessdata.fda.gov, which returns only the original 2010 NDA review and label documents, predating the 2014 publication)"
       ]
     },
     {
@@ -355,7 +356,8 @@
       "a1-regulator-backed",
       "positive-human-rct-hiv-lipodystrophy-only",
       "off-label-marketing-gap",
-      "unverified-secondary-source-flagged"
+      "unverified-secondary-source-flagged",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

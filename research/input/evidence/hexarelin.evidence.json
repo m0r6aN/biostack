@@ -1,0 +1,458 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "hexarelin-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T23:50:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Hexarelin",
+    "aliases": [
+      "Examorelin",
+      "Hexarelin acetate",
+      "GHRP hexapeptide"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic hexapeptide growth hormone secretagogue (GHRP class / GHS-R1a and CD36 agonist)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "140703-51-1",
+      "drugbank": null,
+      "pubchem": "6918297",
+      "chembl": null,
+      "doi": "10.1007/BF00614221",
+      "pmid": "7957536"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-bulk-drugs-category2-listing",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "wada-s2-prohibited-list-drugscom",
+      "sourceType": "regulator",
+      "authorityTier": "A2",
+      "title": "S2. Peptide Hormones, Growth Factors, Related Substances And Mimetics - WADA Anti-Doping Prohibited List",
+      "publisher": "World Anti-Doping Agency (mirrored via Drugs.com)",
+      "url": "https://www.drugs.com/wada/s2-peptide-hormones-growth-factors-and-related-substances.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "imbimbo-1994-ejcp-dose-response",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Growth hormone-releasing activity of hexarelin in humans. A dose-response study",
+      "publisher": "European Journal of Clinical Pharmacology (Imbimbo BP, Mant T, Edwards M, Amin D, Dalton N, Boutignon F, Lenaerts V, Wuthrich P, Deghenghi R, 1994)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/7957536/",
+      "doi": "10.1007/BF00614221",
+      "pmid": "7957536",
+      "publishedAt": "1994-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "kong-2017-ihj-rat-cardioprotection",
+      "sourceType": "preclinical-study",
+      "authorityTier": "C1",
+      "title": "The Growth Hormone Secretagogue Hexarelin Protects Rat Cardiomyocytes From in vivo Ischemia/Reperfusion Injury Through Interleukin-1 Signaling Pathway",
+      "publisher": "International Heart Journal (J-STAGE)",
+      "url": "https://www.jstage.jst.go.jp/article/ihj/58/2/58_16-241/_article",
+      "doi": null,
+      "pmid": "28321024",
+      "publishedAt": "2017-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-6918297",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Examorelin / Hexarelin (CID 6918297)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Hexarelin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "scbt-hexarelin-product-page",
+      "sourceType": "structured-database",
+      "authorityTier": "C2",
+      "title": "Hexarelin | CAS 140703-51-1",
+      "publisher": "Santa Cruz Biotechnology",
+      "url": "https://www.scbt.com/p/hexarelin-140703-51-1",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "riteaid-hexarelin-status-safety",
+      "sourceType": "consumer-health-info",
+      "authorityTier": "C1",
+      "title": "Hexarelin: Status and Safety",
+      "publisher": "Rite Aid",
+      "url": "https://riteaid.com/peptides/hexarelin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "massoud-1996-jcem-cortisol-prolactin-doseresponse",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Hexarelin-induced growth hormone, cortisol, and prolactin release: a dose-response study",
+      "publisher": "The Journal of Clinical Endocrinology & Metabolism (Massoud AF, Hindmarsh PC, Brook CG, 1996)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8954038/",
+      "doi": null,
+      "pmid": "8954038",
+      "publishedAt": "1996-12-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "rahim-1999-clinendo-chronic-hpa-axis",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "The effect of chronic hexarelin administration on the pituitary-adrenal axis and prolactin",
+      "publisher": "Clinical Endocrinology (Oxford) (Rahim A, O'Neill PA, Shalet SM, 1999)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10341859/",
+      "doi": null,
+      "pmid": "10341859",
+      "publishedAt": "1999-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "peptidedeck-hexarelin-vendor-page",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "D1",
+      "title": "Hexarelin Peptide: Benefits, Dosage, Uses & Side Effects",
+      "publisher": "PeptideDeck",
+      "url": "https://www.peptidedeck.com/peptides/hexarelin-peptide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "hexarelin-identity-mechanism-001",
+      "claimType": "mechanism",
+      "statement": "Hexarelin is a synthetic hexapeptide GHRP-class growth hormone secretagogue that stimulates growth hormone release both in vitro and in vivo by acting as a ghrelin/growth hormone secretagogue receptor (GHS-R1a) agonist.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "hexarelin",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "imbimbo-1994-ejcp-dose-response",
+        "scbt-hexarelin-product-page"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "imbimbo-1994-ejcp-dose-response",
+          "quote": "Hexarelin is a new hexapeptide (His-D-2-methyl-Trp-Ala-Trp-D-Phe-Lys-NH2) that stimulates the release of growth hormone both in vitro and in vivo.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "scbt-hexarelin-product-page",
+          "quote": "Hexarelin is a synthetic hexapeptide that is primarily of interest in the field of endocrinology research. It functions as a ghrelin receptor agonist, which makes it a useful tool for studying the regulation of growth hormone release and appetite control mechanisms.",
+          "pageOrSection": "Product description"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "hexarelin-efficacy-human-gh-dose-response-001",
+      "claimType": "efficacy",
+      "statement": "In a double-blind, placebo-controlled, rising-dose study of 12 healthy adult male volunteers, single intravenous boluses of hexarelin (0.5, 1, and 2 micrograms/kg) produced dose-dependent increases in plasma growth hormone, peaking at about 30 minutes; mean peak GH concentrations were 3.9 (placebo), 26.9, 52.3, and 55.0 ng/mL at increasing doses, with response near-maximal by the 2 microgram/kg dose. This is an acute GH-release pharmacodynamic finding in healthy men, not evidence of any downstream clinical benefit.",
+      "context": {
+        "population": "12 healthy adult male volunteers",
+        "route": "intravenous",
+        "formulation": "hexarelin",
+        "useCase": "acute growth hormone secretagogue pharmacodynamics (investigational)",
+        "doseText": "single IV bolus of 0.5, 1, or 2 micrograms/kg in a rising-dose study design (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "imbimbo-1994-ejcp-dose-response"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "imbimbo-1994-ejcp-dose-response",
+          "quote": "Twelve adult male volunteers received single intravenous boluses of 0.5, 1 and 2.micrograms.kg-1 hexarelin as well as placebo.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "imbimbo-1994-ejcp-dose-response",
+          "quote": "The mean peak plasma growth hormone concentrations (Cmax) were 3.9, 26.9, 52.3, 55.0 ng.ml-1 after 0, 0.5, 1 and 2 micrograms.kg-1, respectively.",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "acute GH pharmacodynamic endpoint only; no downstream clinical outcome (body composition, strength, disease outcome) was measured in this trial",
+        "small single-dose acute study (n=12); not generalizable to chronic subcutaneous self-administration protocols marketed online",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a double-blind, placebo-controlled, rising-dose study of 12 healthy adult male volunteers...\"); no regulator document exists for this claim (searched: FDA.gov site search for hexarelin -- no FDA-approved product or PCAC/bulk-substance document addressing this trial; DailyMed site search for hexarelin -- no label results; hexarelin has no FDA-approved drug product)."
+      ]
+    },
+    {
+      "claimId": "hexarelin-mechanism-cardiac-animal-001",
+      "claimType": "mechanism",
+      "statement": "In a rat model of myocardial ischemia/reperfusion injury (left coronary artery ligation), subcutaneous hexarelin (100 mcg/kg/day for 7 days) improved cardiac systolic function, reduced malondialdehyde production, and increased surviving cardiomyocytes versus control, an effect blocked by a GHSR antagonist and attributed to interleukin-1 pathway modulation. This is preclinical rodent data and does not establish a cardioprotective effect in humans.",
+      "context": {
+        "population": "male Sprague-Dawley rats (animal model, not human)",
+        "route": "subcutaneous (rat model)",
+        "formulation": "hexarelin",
+        "useCase": "cardioprotection mechanism research (preclinical)",
+        "doseText": "100 mcg/kg/day subcutaneously, twice daily dosing, for 7 days in a rat ischemia/reperfusion model (animal protocol; not a human dose recommendation)"
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "kong-2017-ihj-rat-cardioprotection"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "kong-2017-ihj-rat-cardioprotection",
+          "quote": "hexarelin treatment improved cardiac systolic function, decreased malondialdehyde production, and increased the number of surviving cardiomyocytes",
+          "pageOrSection": "Results/Abstract"
+        },
+        {
+          "sourceRef": "kong-2017-ihj-rat-cardioprotection",
+          "quote": "down-regulation of IL-1\u03b2 expression and up-regulation of IL-1Ra expression in I/R myocardium",
+          "pageOrSection": "Results/Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "animal-only evidence (rat model); must not be presented as demonstrated human cardioprotective benefit",
+        "vendor and consumer content online extrapolates this rodent mechanism into human cardiac benefit claims without human trial support"
+      ]
+    },
+    {
+      "claimId": "hexarelin-regulatory-status-unapproved-001",
+      "claimType": "regulatory",
+      "statement": "Hexarelin has no FDA-approved drug product and, unlike some other GH secretagogue peptides (e.g. ipamorelin, GHRP-6), does not currently appear on FDA's published Category 2 list of bulk drug substances that may present significant safety risks for compounding; its regulatory status for 503A/503B compounding has not been affirmatively confirmed and should be re-checked against the live FDA list at review time.",
+      "context": {
+        "population": "prospective users of compounded or research-labeled hexarelin products",
+        "route": null,
+        "formulation": "hexarelin / hexarelin acetate",
+        "useCase": "regulatory/compounding status",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bulk-drugs-category2-listing",
+        "riteaid-hexarelin-status-safety"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "riteaid-hexarelin-status-safety",
+          "quote": "Not FDA-approved. Banned in sport; research-only products are not approved for human use.",
+          "pageOrSection": "Regulatory status summary"
+        }
+      ],
+      "reviewFlags": [
+        "absence from the FDA Category 2 table was confirmed by direct page fetch on 2026-08-28 but this list is revised periodically and must be re-verified at review time",
+        "no direct FDA compounding-substance evaluation document (e.g. PCAC briefing) for hexarelin was located in this pass"
+      ]
+    },
+    {
+      "claimId": "hexarelin-regulatory-wada-prohibited-001",
+      "claimType": "regulatory",
+      "statement": "Hexarelin (listed as examorelin) is named explicitly under WADA's S2.2.4 Growth Hormone Releasing Factors category of the Prohibited List, alongside other GHRPs (GHRP-1/2/3/4/5/6) and GH secretagogues, and is therefore prohibited at all times in professional and Olympic-level sport.",
+      "context": {
+        "population": "athletes subject to WADA-code anti-doping rules",
+        "route": null,
+        "formulation": "hexarelin",
+        "useCase": "anti-doping regulatory status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "wada-s2-prohibited-list-drugscom"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "wada-s2-prohibited-list-drugscom",
+          "quote": "examorelin (hexarelin), GHRP-1, GHRP-2 (pralmorelin), GHRP-3, GHRP-4, GHRP-5 and GHRP-6",
+          "pageOrSection": "S2.2.4 Growth Hormone Releasing Factors"
+        }
+      ],
+      "reviewFlags": [
+        "sourced via a Drugs.com mirror of the WADA list rather than the primary wada-ama.org document; cross-check against the current-year official WADA Prohibited List PDF at review time"
+      ]
+    },
+    {
+      "claimId": "hexarelin-identity-external-ids-001",
+      "claimType": "identity",
+      "statement": "Hexarelin (CAS 140703-51-1) is catalogued in PubChem under the synonym Examorelin (CID 6918297) with molecular formula C47H58N12O6.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "hexarelin",
+        "useCase": "structured identifier reference",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-6918297",
+        "scbt-hexarelin-product-page"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "scbt-hexarelin-product-page",
+          "quote": "CAS Number: 140703-51-1 | Molecular Formula: C47H58N12O6",
+          "pageOrSection": "Product identifiers"
+        }
+      ],
+      "reviewFlags": [
+        "PubChem's primary compound record for hexarelin resolves under the synonym 'Examorelin' (CID 6918297); confirm no separate hexarelin-specific CID exists at review time",
+        "UNII, RxNorm, DrugBank, and ChEMBL identifiers were not resolved in this pass"
+      ]
+    },
+    {
+      "claimId": "hexarelin-evidence-gap-marketing-claims-001",
+      "claimType": "evidence-gap",
+      "statement": "Hexarelin is marketed online by peptide vendors with a broad list of purported human benefits -- faster recovery and hypertrophy, increased lipolysis, joint/tendon healing, improved sleep, cardioprotection, and bone/skin effects from 'multi-cycle use' -- none of which are supported by controlled human trial evidence located in this review; the only controlled human data available addresses acute growth-hormone pharmacodynamics, and the cardioprotection claim specifically originates from a rat ischemia/reperfusion study, not human outcomes data.",
+      "context": {
+        "population": "consumers of gray-market/research-labeled hexarelin products",
+        "route": "subcutaneous (common gray-market use)",
+        "formulation": "research-grade hexarelin/hexarelin acetate",
+        "useCase": "muscle recovery, fat loss, joint healing, sleep, cardioprotection, anti-aging marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "peptidedeck-hexarelin-vendor-page",
+        "imbimbo-1994-ejcp-dose-response",
+        "kong-2017-ihj-rat-cardioprotection"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peptidedeck-hexarelin-vendor-page",
+          "quote": "Faster recovery between sessions, higher work capacity, modest hypertrophy when combined with training and protein intake",
+          "pageOrSection": "Marketing claims"
+        },
+        {
+          "sourceRef": "peptidedeck-hexarelin-vendor-page",
+          "quote": "CD36 activation produces cardioprotective effects in ischemia-reperfusion and heart failure studies; unique to hexarelin within the GHRP class",
+          "pageOrSection": "Marketing claims - Cardioprotection"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor page extrapolates a rat cardioprotection study directly into a human benefit claim without qualifying the species",
+        "no controlled human trial for hypertrophy, fat loss, joint healing, sleep, or cardioprotection endpoints was located for hexarelin in this pass",
+        "dosing protocols quoted on vendor pages (e.g. 50-200 mcg multiple times daily, cyclical schedules) are self-administration marketing content, not clinical protocol, and must not be reproduced as guidance"
+      ]
+    },
+    {
+      "claimId": "hexarelin-safety-hpa-axis-001",
+      "claimType": "adverse-effect",
+      "statement": "In a dose-response study of intravenous hexarelin (0-1.0 micrograms/kg) in healthy adult men (Massoud et al. 1996, J Clin Endocrinol Metab), hexarelin produced dose-dependent increases in prolactin (up to 180% above baseline, ED50 0.39 micrograms/kg) and a step increase in cortisol of approximately 40% at doses of 0.5 micrograms/kg and above, in addition to growth hormone release. In a separate 16-week chronic twice-daily subcutaneous dosing study (Rahim et al. 1999, Clinical Endocrinology), the cortisol response to hexarelin decreased over the treatment course and prolactin levels remained stable, with the authors concluding that clinically significant over-stimulation of the pituitary-adrenal axis and prolactin secretion did not occur at the doses used. Taken together, hexarelin has demonstrated measurable acute effects on cortisol and prolactin beyond the GH axis, though the only located chronic-dosing study did not find clinically significant HPA-axis over-stimulation at the studied dose.",
+      "context": {
+        "population": "human study subjects in endocrine pharmacology research",
+        "route": "parenteral (studied routes)",
+        "formulation": "hexarelin",
+        "useCase": "hormonal side-effect / monitoring relevance",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "massoud-1996-jcem-cortisol-prolactin-doseresponse",
+        "rahim-1999-clinendo-chronic-hpa-axis",
+        "riteaid-hexarelin-status-safety"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "massoud-1996-jcem-cortisol-prolactin-doseresponse",
+          "quote": "The cortisol dose-response curve showed a step increase to approximately 40% at a hexarelin dose of 0.5 microgram/kg.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "massoud-1996-jcem-cortisol-prolactin-doseresponse",
+          "quote": "The PRL dose-response curve reached a plateau of 180% for the maximum percent rise from baseline, corresponding to a hexarelin dose of 1.0 microgram/kg, with an ED50 of 0.39 +/- 0.02 microgram/kg.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "rahim-1999-clinendo-chronic-hpa-axis",
+          "quote": "over-stimulation of the pituitary adrenal axis and prolactin secretion do not occur",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "riteaid-hexarelin-status-safety",
+          "quote": "Possible concerns include GH-axis side effects, glucose changes, water retention, and pituitary-hormone effects.",
+          "pageOrSection": "Safety Concerns"
+        }
+      ],
+      "reviewFlags": [
+        "primary-literature sources for cortisol/prolactin/HPA-axis effects (Massoud 1996; Rahim 1999) added on independent review, replacing sole reliance on a consumer-health secondary source",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov site search for hexarelin cortisol/prolactin/HPA-axis -- no results addressing hexarelin, only unrelated NDA/compound matches; DailyMed site search for hexarelin cortisol/prolactin/HPA-axis -- no results, hexarelin has no FDA-approved label; hexarelin is not an FDA-approved drug so no label-based AE documentation exists)."
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "hexarelin-conflict-cardioprotection-species-001",
+      "claimRefs": [
+        "hexarelin-mechanism-cardiac-animal-001",
+        "hexarelin-evidence-gap-marketing-claims-001"
+      ],
+      "severity": "moderate",
+      "summary": "Vendor marketing content presents hexarelin's CD36-mediated cardioprotection as an established effect ('cardioprotective effects in ischemia-reperfusion and heart failure studies'), while the only located supporting study is a rat ischemia/reperfusion model; no human cardioprotection trial was found in this pass.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "No FDA PCAC briefing document or bulk-substance evaluation specific to hexarelin was located in this pass; confirm whether one exists before finalizing regulatory claims.",
+      "UNII, RxNorm, DrugBank, and ChEMBL identifiers not yet resolved from structured databases.",
+      "Human evidence is thin: only one controlled human study was located (acute IV GH-release pharmacodynamics, n=12); no human data on chronic subcutaneous use, cardioprotection, body composition, or safety in the populations that self-administer it.",
+      "WADA prohibited-status claim was sourced via a secondary mirror (Drugs.com) rather than the primary wada-ama.org document; verify against the current official list."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "thin-human-evidence",
+      "animal-data-marketed-as-human-benefit",
+      "regulatory-status-unresolved",
+      "identifier-gaps",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

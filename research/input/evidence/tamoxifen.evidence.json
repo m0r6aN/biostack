@@ -1,0 +1,376 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "tamoxifen-evidence-expansion-001",
+    "category": "hormones-serms-sarms",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:58:43Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Tamoxifen",
+    "aliases": ["Nolvadex", "tamoxifen citrate", "Soltamox"],
+    "classification": "Selective estrogen receptor modulator (SERM)",
+    "compoundFamily": "Triphenylethylene-derivative nonsteroidal antiestrogen",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "2733526",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-tamoxifen-citrate-label",
+      "sourceType": "regulator-label",
+      "authorityTier": "A1",
+      "title": "Label: tamoxifen citrate - Tamoxifen Citrate tablet",
+      "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8f642753-9e12-433c-a0bc-ab33dac41ddf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pubchem-cid-2733526",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Tamoxifen | C26H29NO | CID 2733526",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Tamoxifen",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "nsabp-p1-fisher-1998-jnci",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Tamoxifen for Prevention of Breast Cancer: Report of the National Surgical Adjuvant Breast and Bowel Project P-1 Study",
+      "publisher": "Journal of the National Cancer Institute (Fisher B, Costantino JP, Wickerham DL, et al., 1998)",
+      "url": "https://academic.oup.com/jnci/article/90/18/1371/897928",
+      "doi": null,
+      "pmid": "9747868",
+      "publishedAt": "1998-09-16T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "atlas-davies-2013-summary-wjc",
+      "sourceType": "trial-summary",
+      "authorityTier": "B2",
+      "title": "ATLAS (Adjuvant Tamoxifen: Longer Against Shorter) - summary of Davies C, et al., Lancet 2013",
+      "publisher": "Wiki Journal Club (secondary summary of Davies C, Pan H, Godwin J, et al., Lancet 2013;381:805-816)",
+      "url": "https://www.wikijournalclub.org/wiki/ATLAS",
+      "doi": null,
+      "pmid": "23219286",
+      "publishedAt": "2013-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "frontiers-2025-illegal-pct-aas",
+      "sourceType": "human-survey-study",
+      "authorityTier": "C1",
+      "title": "Illegal and falsified medicines self-administrated in not approved post-cycle therapy after the cessation of anabolic-androgenic steroids - qualitative analysis",
+      "publisher": "Frontiers in Chemistry (2025)",
+      "url": "https://www.frontiersin.org/journals/chemistry/articles/10.3389/fchem.2025.1536858/full",
+      "doi": "10.3389/fchem.2025.1536858",
+      "pmid": null,
+      "publishedAt": "2025-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "tamoxifen-approved-indication-001",
+      "claimType": "approved-indication",
+      "statement": "Tamoxifen citrate is FDA-approved for metastatic breast cancer in women and men, adjuvant treatment of node-positive and node-negative breast cancer, ductal carcinoma in situ (DCIS) following breast surgery and radiation, and reduction of breast cancer incidence in women at high risk (5-year predicted risk >=1.67% by the Gail model).",
+      "context": {
+        "population": "women and men with breast cancer; high-risk women for risk reduction",
+        "route": "oral",
+        "formulation": "tablet / oral solution (Soltamox)",
+        "useCase": "breast cancer treatment, adjuvant therapy, DCIS, and risk reduction",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["dailymed-tamoxifen-citrate-label"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "Metastatic breast cancer in women and men; Adjuvant treatment of node-positive and node-negative breast cancer; Ductal carcinoma in situ (DCIS) following breast surgery and radiation; Reduction of breast cancer incidence in women at high risk with a 5-year predicted risk >=1.67%",
+          "pageOrSection": "Indications and Usage"
+        }
+      ],
+      "reviewFlags": ["fetched via WebFetch summarization tool rather than raw HTML; verify exact indication wording against live label at review time"]
+    },
+    {
+      "claimId": "tamoxifen-warning-boxed-001",
+      "claimType": "warning",
+      "statement": "Tamoxifen carries an FDA boxed warning for serious, sometimes fatal, uterine malignancies, stroke, and pulmonary embolism occurring at elevated rates during risk-reduction use, with endometrial adenocarcinoma reported at 2.20 per 1,000 women-years on tamoxifen versus 0.71 on placebo, and pulmonary embolism at 0.75 versus 0.25 per 1,000 women-years.",
+      "context": {
+        "population": "women using tamoxifen for breast cancer risk reduction",
+        "route": "oral",
+        "formulation": "tamoxifen citrate tablet",
+        "useCase": "boxed-warning safety disclosure",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["dailymed-tamoxifen-citrate-label"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "some of the strokes, pulmonary emboli, and uterine malignancies were fatal",
+          "pageOrSection": "Boxed Warning"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "There is evidence of an increased incidence of thromboembolic events, including deep vein thrombosis and pulmonary embolism, during tamoxifen therapy.",
+          "pageOrSection": "Warnings"
+        }
+      ],
+      "reviewFlags": ["safety-critical regulatory claim", "numeric incidence rates extracted via summarization tool; confirm exact per-1000-women-years figures against raw label table at review time"]
+    },
+    {
+      "claimId": "tamoxifen-contraindication-001",
+      "claimType": "contraindication",
+      "statement": "Tamoxifen is contraindicated in patients with known hypersensitivity to tamoxifen or its ingredients, and, for the risk-reduction indication specifically, in women concurrently on coumarin-type anticoagulants or with a history of deep vein thrombosis or pulmonary embolus.",
+      "context": {
+        "population": "prospective tamoxifen users",
+        "route": "oral",
+        "formulation": "tamoxifen citrate tablet",
+        "useCase": "contraindication disclosure",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["dailymed-tamoxifen-citrate-label"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "Known hypersensitivity to tamoxifen or its ingredients; For risk reduction: concurrent coumarin-type anticoagulants, history of deep vein thrombosis, or history of pulmonary embolus",
+          "pageOrSection": "Contraindications"
+        }
+      ],
+      "reviewFlags": ["confirm exact contraindication list wording against raw label HTML at review time"]
+    },
+    {
+      "claimId": "tamoxifen-mechanism-serm-001",
+      "claimType": "mechanism",
+      "statement": "Tamoxifen is a nonsteroidal antiestrogenic agent that acts as a competitive inhibitor of estrogen binding at estrogen receptor sites in target tissues such as breast.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "tamoxifen",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": ["dailymed-tamoxifen-citrate-label", "pubchem-cid-2733526"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "a nonsteroidal agent that has demonstrated potent antiestrogenic properties in animal test systems. The antiestrogenic effects may be related to its ability to compete with estrogen for binding sites in target tissues such as breast.",
+          "pageOrSection": "Clinical Pharmacology"
+        }
+      ],
+      "reviewFlags": ["label mechanism text partly derived from animal test systems; do not present as direct proof of human mechanism-of-efficacy without the human RCT evidence cited elsewhere in this packet"]
+    },
+    {
+      "claimId": "tamoxifen-dose-context-001",
+      "claimType": "dose-context",
+      "statement": "Labeled clinical-trial protocols underlying tamoxifen's approved uses used 20 mg/day: five years of adjuvant tamoxifen citrate therapy is the regimen supported by clinical trial data for breast cancer treatment, and five years of tamoxifen citrate at 20 mg/day is the regimen studied for reduction of invasive breast cancer incidence in high-risk women. This is trial/label protocol context only, not a use recommendation.",
+      "context": {
+        "population": "adjuvant breast cancer patients; high-risk women (risk reduction)",
+        "route": "oral",
+        "formulation": "tamoxifen citrate tablet, 20 mg/day",
+        "useCase": "label-referenced clinical trial dosing protocol",
+        "doseText": "20 mg/day for five years (label/trial-protocol context; not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["dailymed-tamoxifen-citrate-label"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "Current data from clinical trials support five years of adjuvant tamoxifen therapy for patients with breast cancer.",
+          "pageOrSection": "Clinical Studies"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "five years of tamoxifen citrate therapy (20 mg/day)",
+          "pageOrSection": "Clinical Studies - Breast Cancer Risk Reduction"
+        }
+      ],
+      "reviewFlags": ["dose-context claim; must never be rendered as a use recommendation", "confirm the label's dedicated Dosage and Administration section text directly, as this extraction drew on the Clinical Studies section"]
+    },
+    {
+      "claimId": "tamoxifen-efficacy-nsabp-p1-001",
+      "claimType": "efficacy",
+      "statement": "In the NSABP P-1 randomized, double-blind, placebo-controlled prevention trial in women at increased breast cancer risk, tamoxifen 20 mg/day reduced the cumulative incidence of invasive breast cancer by 49% (43.4 per 1,000 women on placebo vs. 22.0 per 1,000 on tamoxifen through 69 months) and reduced estrogen-receptor-positive tumor incidence by 69%, but this benefit came with an increased rate of endometrial cancer (risk ratio 2.53) and elevated rates of stroke, pulmonary embolism, and deep-vein thrombosis, particularly in women aged 50 and older.",
+      "context": {
+        "population": "women at increased risk of breast cancer (NSABP P-1 cohort)",
+        "route": "oral",
+        "formulation": "tamoxifen, 20 mg/day",
+        "useCase": "breast cancer risk reduction (prevention trial)",
+        "doseText": "20 mg/day (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["nsabp-p1-fisher-1998-jnci", "dailymed-tamoxifen-citrate-label"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nsabp-p1-fisher-1998-jnci",
+          "quote": "Tamoxifen reduced the risk of invasive breast cancer by 49%",
+          "pageOrSection": "Results (via extraction of JNCI article page)"
+        },
+        {
+          "sourceRef": "nsabp-p1-fisher-1998-jnci",
+          "quote": "All endometrial cancers in the tamoxifen group were stage I (localized disease); no endometrial cancer deaths have occurred in this group.",
+          "pageOrSection": "Results (via extraction of JNCI article page)"
+        },
+        {
+          "sourceRef": "nsabp-p1-fisher-1998-jnci",
+          "quote": "The rates of stroke, pulmonary embolism, and deep-vein thrombosis were elevated in the tamoxifen group; these events occurred more frequently in women aged 50 years or older.",
+          "pageOrSection": "Results (via extraction of JNCI article page)"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "After a median follow-up of 4.2 years, the incidence of invasive breast cancer was reduced by 44% among women assigned to tamoxifen",
+          "pageOrSection": "Clinical Studies - Breast Cancer Risk Reduction (NSABP P-1)"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "In the NSABP P-1 trial, 33 cases of endometrial cancer were observed in the tamoxifen group vs. 14 in the placebo group (RR=2.48, 95% CI: 1.27-4.92).",
+          "pageOrSection": "Clinical Studies - Breast Cancer Risk Reduction (NSABP P-1)"
+        }
+      ],
+      "reviewFlags": ["quotes extracted via automated page summarization rather than raw PDF; verify exact figures (49%, 43.4 vs 22.0 per 1000, RR 2.53) against the primary JNCI PDF at review time", "this is a risk-reduction/prevention population, not treatment of existing cancer - do not generalize benefit magnitude across indications", "authority-support-pass 2026-08-29: added the FDA-approved DailyMed label (A1) as an independent regulator source for the same NSABP P-1 trial, fetched live this session. The label's Clinical Studies section reports a different point estimate for the same trial (44% reduction at 4.2-year median follow-up; 33 vs 14 endometrial cancers, RR 2.48) than the primary JNCI publication cited here (49% reduction at 69-month follow-up; RR 2.53) - same direction of effect, differing follow-up duration/point estimate; a human reviewer should reconcile the two figures before publication and must not average or merge them."]
+    },
+    {
+      "claimId": "tamoxifen-efficacy-atlas-extended-001",
+      "claimType": "efficacy",
+      "statement": "In the ATLAS randomized trial of women with ER-positive breast cancer already on adjuvant tamoxifen, continuing tamoxifen to 10 years versus stopping at 5 years further reduced breast cancer recurrence (18.0% vs 20.8%; RR 0.84) and breast cancer mortality (18.6% vs 21.1% cumulative; RR 0.87), but roughly doubled the cumulative incidence of endometrial cancer (1.80% vs 0.97%; RR 1.74).",
+      "context": {
+        "population": "women with ER-positive breast cancer already completing 5 years of adjuvant tamoxifen",
+        "route": "oral",
+        "formulation": "tamoxifen, extended adjuvant therapy",
+        "useCase": "extended adjuvant duration (10 vs 5 years) after breast cancer diagnosis",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": ["atlas-davies-2013-summary-wjc"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "atlas-davies-2013-summary-wjc",
+          "quote": "18.0% vs. 20.8% (RR 0.84; 95% CI 0.76-0.94; P=0.002)",
+          "pageOrSection": "Outcomes summary - breast cancer recurrence, 10 vs 5 years tamoxifen"
+        },
+        {
+          "sourceRef": "atlas-davies-2013-summary-wjc",
+          "quote": "18.6% vs. 21.1% (RR 0.87; 95% CI 0.78-0.97; P=0.01)",
+          "pageOrSection": "Outcomes summary - breast cancer mortality, 10 vs 5 years tamoxifen"
+        },
+        {
+          "sourceRef": "atlas-davies-2013-summary-wjc",
+          "quote": "1.80% vs. 0.97% (RR 1.74; 95% CI 1.30-2.34; P=0.0002)",
+          "pageOrSection": "Outcomes summary - endometrial cancer, 10 vs 5 years tamoxifen"
+        }
+      ],
+      "reviewFlags": ["sourced from a secondary trial-summary page (Wiki Journal Club), not the primary Lancet full text - the original Davies et al. Lancet 2013 article should be fetched directly at review time to confirm these figures verbatim", "extended-duration benefit vs endometrial cancer risk trade-off must be presented together, never in isolation", "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the ATLAS randomized trial...\"); no regulator document supports this claim (searched: DailyMed tamoxifen citrate label, fetched live this session, Clinical Studies section - it contains no ATLAS trial data and instead cites the earlier NSABP B-14 extended-duration study, which concluded 'continuation of therapy beyond 5 years does not provide additional benefit', i.e. the current FDA label does not support and in fact predates/conflicts with the ATLAS 10-vs-5-year finding; also searched fda.gov, no relevant result). Linking the label here would misrepresent it as backing this claim, so no A1/A2 source was added."]
+    },
+    {
+      "claimId": "tamoxifen-evidence-gap-bodybuilding-pct-001",
+      "claimType": "evidence-gap",
+      "statement": "Tamoxifen (Nolvadex) is widely marketed and self-administered in bodybuilding/anabolic-androgenic-steroid (AAS) communities as unsupervised 'post-cycle therapy' (PCT) to restore endogenous testosterone and manage gynecomastia after steroid cycles, despite no evidence-based clinical guidelines supporting this specific use; a 2025 qualitative analysis of illegal and falsified PCT medicines found frequent adverse events among AAS users self-administering SERMs, and product-testing of illicit tamoxifen samples found some were incorrectly labeled or substituted with non-active ingredients, indicating both an efficacy/safety evidence gap and a product-integrity risk distinct from the FDA-approved, prescription, pharmacy-dispensed product.",
+      "context": {
+        "population": "anabolic-androgenic steroid users self-administering unsupervised PCT",
+        "route": "oral (gray-market product, unsupervised)",
+        "formulation": "illicitly sourced tamoxifen, often unverified purity/labeling",
+        "useCase": "bodybuilding post-cycle testosterone recovery / gynecomastia management (not an FDA-approved indication)",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": ["frontiers-2025-illegal-pct-aas"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "frontiers-2025-illegal-pct-aas",
+          "quote": "since no evidence-based recommendations for safe AAS withdrawal management currently exist, some users self-administer non-approved post-cycle therapy (PCT) to stimulate endogenous testicular function.",
+          "pageOrSection": "Discussion"
+        },
+        {
+          "sourceRef": "frontiers-2025-illegal-pct-aas",
+          "quote": "The main adverse events reported by male AAS users to SERMs (clomiphene and tamoxifen) were decreased libido and erectile dysfunction (24%), acne (21%), fatigue (19%), mood disorders (13%), visual disturbances (5%), arthralgia (4%), insomnia (4%), and hot flushes (2%).",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "frontiers-2025-illegal-pct-aas",
+          "quote": "Among the 63 samples, seven with declared tamoxifen were tested; five contained the declared API, while two were incorrectly labeled.",
+          "pageOrSection": "Results - product analysis"
+        },
+        {
+          "sourceRef": "frontiers-2025-illegal-pct-aas",
+          "quote": "the self-administration of unapproved PCT using illegal and falsified medicines is dangerous and can be considered a potential threat to consumer health",
+          "pageOrSection": "Conclusion"
+        }
+      ],
+      "reviewFlags": ["misinformation-adjacent: popular PCT/gynecomastia marketing claims lack a controlled human evidence base establishing efficacy for this specific unsupervised use pattern", "distinguish clearly from the FDA-approved, prescription-dispensed indications documented elsewhere in this packet", "quotes extracted via automated page summarization; verify exact wording against the Frontiers full-text PDF at review time"]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "tamoxifen-extended-duration-benefit-risk-001",
+      "claimRefs": ["tamoxifen-efficacy-atlas-extended-001"],
+      "severity": "moderate",
+      "summary": "Extending adjuvant tamoxifen from 5 to 10 years (ATLAS trial) reduces breast cancer recurrence and mortality but nearly doubles endometrial cancer incidence; the ATLAS figures in this packet were extracted from a secondary trial-summary page rather than the primary Lancet full text, so the underlying numbers require confirmation against the original publication before this benefit/risk trade-off is finalized for publication.",
+      "resolutionStatus": "needs-human-review"
+    },
+    {
+      "conflictId": "tamoxifen-gray-market-vs-approved-use-001",
+      "claimRefs": ["tamoxifen-evidence-gap-bodybuilding-pct-001", "tamoxifen-approved-indication-001"],
+      "severity": "moderate",
+      "summary": "Popular online marketing frames tamoxifen (Nolvadex) as a bodybuilding PCT/gynecomastia agent, while the only FDA-approved, evidence-backed uses are breast cancer treatment, DCIS, and risk reduction in high-risk women; no controlled human trial evidence in this packet establishes efficacy or safety for unsupervised post-cycle testosterone recovery.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS/UNII/DrugBank/ChEMBL/RxNorm identifiers not yet resolved from structured databases; only PubChem CID confirmed via fetch.",
+      "ATLAS trial figures were sourced from a secondary trial-summary page (Wiki Journal Club) rather than the primary Lancet full text; confirm against thelancet.com or PMC at review time.",
+      "DailyMed and JNCI page content was extracted via automated summarization of fetched pages rather than raw HTML/PDF; spot-check exact wording and numeric figures against source pages at review time.",
+      "Human evidence for the popular bodybuilding/PCT off-label use pattern remains thin to absent; only a single 2025 survey/product-testing study was located."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "fda-approved-product",
+      "boxed-warning-present",
+      "positive-human-rct-documented",
+      "benefit-risk-tradeoff-documented",
+      "gray-market-off-label-use-flagged",
+      "secondary-source-for-atlas-trial",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

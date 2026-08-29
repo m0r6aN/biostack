@@ -1,0 +1,373 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "yk-11-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T23:50:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "YK-11",
+    "aliases": [
+      "YK11",
+      "Myostine"
+    ],
+    "classification": "Steroidal selective androgen receptor modulator (SARM) / myostatin inhibitor",
+    "compoundFamily": "Synthetic steroidal androgen receptor partial agonist",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "1370003-76-1",
+      "drugbank": null,
+      "pubchem": "119058028",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-bodybuilding-sarms-harm",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Bodybuilding Products: SARMs Cause Harm",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "livertox-sarms-nbk619971",
+      "sourceType": "professional-guidance",
+      "authorityTier": "A2",
+      "title": "Selective Androgen Receptor Modulators - LiverTox: Clinical and Research Information on Drug-Induced Liver Injury",
+      "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases / NCBI Bookshelf",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "yatsu-2018-biophys-res-commun-osteoblast",
+      "sourceType": "in-vitro-study",
+      "authorityTier": "B1",
+      "title": "Selective Androgen Receptor Modulator, YK11, Upregulates Osteoblastic Proliferation and Differentiation in MC3T3-E1 Cells",
+      "publisher": "Biological and Pharmaceutical Bulletin (Yatsu T, Kusakabe T, et al., 2018; PMID 29491216)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29491216/",
+      "doi": null,
+      "pmid": "29491216",
+      "publishedAt": "2018-01-01T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "cayman-chem-yk11-insert",
+      "sourceType": "vendor-technical-datasheet",
+      "authorityTier": "B2",
+      "title": "YK-11 Product Information / Safety Data Sheet Insert (Item No. 9003137)",
+      "publisher": "Cayman Chemical Company",
+      "url": "https://cdn.caymanchem.com/cdn/insert/9003137.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "musclechem-yk11-product-page",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C1",
+      "title": "YK-11 | Myostatin Inhibitor for Extreme Muscle Growth",
+      "publisher": "MuscleChem",
+      "url": "https://musclechem.com/product/yk-11/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "yk11-regulatory-not-approved-adverse-event-001",
+      "claimType": "regulatory",
+      "statement": "YK-11 is not an FDA-approved drug or approved supplement ingredient. FDA laboratory testing of a bodybuilding product (GE Labs Ykarine) confirmed it contained YK-11 as a listed ingredient alongside undeclared trendione (an anabolic steroid), and FDA's investigation was prompted by an adverse event report of a consumer who used the product and subsequently suffered a stroke.",
+      "context": {
+        "population": "consumers of SARM-containing bodybuilding products",
+        "route": "oral (as sold in bodybuilding products)",
+        "formulation": "commercial bodybuilding product (GE Labs Ykarine) containing YK-11",
+        "useCase": "regulatory safety warning / adulterated product enforcement",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bodybuilding-sarms-harm"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bodybuilding-sarms-harm",
+          "quote": "The laboratory analysis also confirmed the product contains YK-11, which is a listed ingredient on the product label.",
+          "pageOrSection": "GE Labs Ykarine testing summary"
+        },
+        {
+          "sourceRef": "fda-bodybuilding-sarms-harm",
+          "quote": "The testing found the product contained undeclared trendione (estra-4,9,11-triene-3,17-dione), which is an anabolic steroid.",
+          "pageOrSection": "GE Labs Ykarine testing summary"
+        },
+        {
+          "sourceRef": "fda-bodybuilding-sarms-harm",
+          "quote": "The agency testing was based on an adverse event report of a consumer who used the product and subsequently suffered a stroke.",
+          "pageOrSection": "GE Labs Ykarine testing summary"
+        },
+        {
+          "sourceRef": "fda-bodybuilding-sarms-harm",
+          "quote": "Life-threatening reactions, including liver injuries that required hospitalization, have occurred in people taking products containing SARMs.",
+          "pageOrSection": "Health risks section"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "adverse event (stroke) is associated with a combination product (YK-11 plus undeclared trendione), not YK-11 in isolation; causal attribution to YK-11 alone is not established"
+      ]
+    },
+    {
+      "claimId": "yk11-adverse-effect-liver-injury-001",
+      "claimType": "adverse-effect",
+      "statement": "NIH LiverTox describes YK-11 as a steroidal SARM/myostatin inhibitor not approved for human use, banned by the World Anti-Doping Agency, and implicated (typically in combination with other SARMs) in cases of clinically apparent liver injury with cholestatic/jaundice patterns resembling anabolic-steroid-induced liver injury; a cited case involved a 23-year-old who developed jaundice three months after starting three SARMs (including ligandrol, testolone, and YK-11), with bilirubin peaking at 36.4 mg/dL and slow recovery over three months.",
+      "context": {
+        "population": "recreational bodybuilding users of multi-SARM stacks",
+        "route": "oral (typical recreational use)",
+        "formulation": "research-chemical YK-11, usually combined with other SARMs",
+        "useCase": "recreational bodybuilding / muscle-building",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "livertox-sarms-nbk619971"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "livertox-sarms-nbk619971",
+          "quote": "YK-11 is a steroidal selective androgen receptor modulator and acts as a partial agonist of the androgen receptor but with unique downstream effects In addition, it is a myostatin inhibitor which promotes muscle growth.",
+          "pageOrSection": "SARMs background, YK-11 subsection"
+        },
+        {
+          "sourceRef": "livertox-sarms-nbk619971",
+          "quote": "YK-11 has not been approved for human use but has been used recreationally for body building.",
+          "pageOrSection": "SARMs background, YK-11 subsection"
+        },
+        {
+          "sourceRef": "livertox-sarms-nbk619971",
+          "quote": "YK-11, like anabolic steroids and the nonsteroidal SARMS, is banned by the World Anti-Doping Agency.",
+          "pageOrSection": "SARMs background, YK-11 subsection"
+        },
+        {
+          "sourceRef": "livertox-sarms-nbk619971",
+          "quote": "have been implicated in multiple cases of severe cholestatic jaundice that resembles anabolic steroid jaundice.",
+          "pageOrSection": "SARMs class hepatotoxicity summary"
+        },
+        {
+          "sourceRef": "livertox-sarms-nbk619971",
+          "quote": "Reported cases of liver injury and jaundice with SARMs have often been prolonged but have invariably resolved.",
+          "pageOrSection": "SARMs class hepatotoxicity summary"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical adverse-effect claim",
+        "case reports involve multi-SARM stacks; liver injury cannot be attributed to YK-11 in isolation from a single case report",
+        "no dedicated YK-11-only case series identified"
+      ]
+    },
+    {
+      "claimId": "yk11-mechanism-ar-partial-agonist-myostatin-001",
+      "claimType": "mechanism",
+      "statement": "YK-11 is described as a gene-selective/steroidal partial agonist of the androgen receptor that, at low concentration, activates AR transcriptional activity and accelerates nuclear translocation of the receptor without inducing the N-terminal/C-terminal (N/C) interaction typical of full agonists; it also acts as a myostatin-pathway inhibitor, increasing follistatin and myogenic regulatory factor (MyoD, Myf5, myogenin) expression in cultured muscle cells.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "YK-11 (research-grade)",
+        "useCase": "mechanism description (preclinical)",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "cayman-chem-yk11-insert",
+        "livertox-sarms-nbk619971"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "cayman-chem-yk11-insert",
+          "quote": "an androgen receptor partial agonist that activates androgen receptor transcriptional activity",
+          "pageOrSection": "Mechanism/description, citing Kanno et al., 2011"
+        },
+        {
+          "sourceRef": "cayman-chem-yk11-insert",
+          "quote": "accelerates nuclear translocation of androgen receptors without inducing interaction between the androgen receptor N- and C-termini.",
+          "pageOrSection": "Mechanism/description"
+        },
+        {
+          "sourceRef": "cayman-chem-yk11-insert",
+          "quote": "increases expression of the myogenic regulatory factors MyoD, Myf5, and myogenin",
+          "pageOrSection": "Mechanism/description, citing Kanno et al., 2013"
+        },
+        {
+          "sourceRef": "livertox-sarms-nbk619971",
+          "quote": "YK-11 is a steroidal selective androgen receptor modulator and acts as a partial agonist of the androgen receptor but with unique downstream effects In addition, it is a myostatin inhibitor which promotes muscle growth.",
+          "pageOrSection": "SARMs background, YK-11 subsection"
+        }
+      ],
+      "reviewFlags": [
+        "mechanism data is preclinical (cell-based, non-human); does not establish human efficacy",
+        "underlying primary literature (Kanno et al. 2011/2013) accessed only via secondary vendor summary in this pass; verify against primary journal article on next review"
+      ]
+    },
+    {
+      "claimId": "yk11-invitro-osteoblast-001",
+      "claimType": "target-pathway",
+      "statement": "In an in vitro study using MC3T3-E1 mouse osteoblast cells, YK-11 (like dihydrotestosterone) accelerated cell proliferation and mineralization and increased osteoblast differentiation markers (osteoprotegerin, osteocalcin); effects were attenuated by an androgen-receptor antagonist and were associated with increased phosphorylated Akt, suggesting a non-genomic AR-signaling component.",
+      "context": {
+        "population": "in vitro mouse osteoblast cell line (not human, not in vivo)",
+        "route": null,
+        "formulation": "YK-11 in cell culture",
+        "useCase": "preclinical bone-cell signaling research",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "yatsu-2018-biophys-res-commun-osteoblast"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "yatsu-2018-biophys-res-commun-osteoblast",
+          "quote": "treatment of YK11 and dihydrotestosterone (DHT) accelerated cell proliferation and mineralization in MC3T3-E1 mouse osteoblast cells. Further, YK11-treated cells increased osteoblast specific differentiation markers, such as osteoprotegerin and osteocalcin, compared to untreated cells. These observations were attenuated by androgen receptor (AR) antagonist treatment.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "yatsu-2018-biophys-res-commun-osteoblast",
+          "quote": "The phosphorylated Akt protein level was increased by YK11 and DHT treatment, suggesting that YK11 activates Akt-signaling via non-genomic signaling of AR.",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "in vitro rodent cell-line finding only; must not be extrapolated to human bone or muscle outcomes"
+      ]
+    },
+    {
+      "claimId": "yk11-evidence-gap-no-human-trials-001",
+      "claimType": "evidence-gap",
+      "statement": "No published human clinical trials of YK-11 were identified in this review. All mechanistic and efficacy evidence located is preclinical (cell culture and animal models); human pharmacokinetics, dosing, efficacy for muscle growth, and long-term safety in people are unestablished.",
+      "context": {
+        "population": "prospective human users",
+        "route": null,
+        "formulation": "YK-11, any formulation",
+        "useCase": "muscle growth / myostatin inhibition (claimed use)",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "livertox-sarms-nbk619971",
+        "yatsu-2018-biophys-res-commun-osteoblast"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "livertox-sarms-nbk619971",
+          "quote": "YK-11 has not been approved for human use but has been used recreationally for body building.",
+          "pageOrSection": "SARMs background, YK-11 subsection"
+        },
+        {
+          "sourceRef": "yatsu-2018-biophys-res-commun-osteoblast",
+          "quote": "treatment of YK11 and dihydrotestosterone (DHT) accelerated cell proliferation and mineralization in MC3T3-E1 mouse osteoblast cells.",
+          "pageOrSection": "Abstract (in vitro model, not human)"
+        }
+      ],
+      "reviewFlags": [
+        "absence-of-evidence claim; re-check literature at each review cycle for newly published human data",
+        "search in this pass could not confirm full text of Kanno et al. 2011/2013 or the hippocampal oxidative-stress rodent studies via primary source (PubMed/ScienceDirect blocked automated access); revisit with authenticated access"
+      ]
+    },
+    {
+      "claimId": "yk11-misinformation-marketing-gap-001",
+      "claimType": "misinformation-claim",
+      "statement": "YK-11 is marketed online with superlative human-benefit language (e.g., 'extreme muscle growth,' 'incredible muscle fullness,' testimonial claims of fast strength gains) despite vendor pages themselves acknowledging no controlled clinical evidence supports these outcomes; the marketing channel (customer testimonials implying personal use) is in tension with 'research use only' labeling on the same product.",
+      "context": {
+        "population": "online buyers of research-chemical YK-11",
+        "route": "oral (as marketed for personal use despite 'research only' label)",
+        "formulation": "research-chemical YK-11 sold by online vendors",
+        "useCase": "muscle growth / bodybuilding marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "musclechem-yk11-product-page",
+        "livertox-sarms-nbk619971"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "musclechem-yk11-product-page",
+          "quote": "Claims regarding muscle growth beyond genetically determined limits have not been established through robust clinical evidence.",
+          "pageOrSection": "Product page disclaimer"
+        },
+        {
+          "sourceRef": "musclechem-yk11-product-page",
+          "quote": "Limited published studies and the absence of controlled clinical trials mean that its pharmacokinetics, tissue selectivity, long-term biological effects, and safety profile remain uncertain.",
+          "pageOrSection": "Product page disclaimer"
+        },
+        {
+          "sourceRef": "livertox-sarms-nbk619971",
+          "quote": "YK-11 has not been approved for human use but has been used recreationally for body building.",
+          "pageOrSection": "SARMs background, YK-11 subsection"
+        }
+      ],
+      "reviewFlags": [
+        "vendor marketing page is a single example, not a systematic survey of marketing claims; illustrative only",
+        "'research use only' labeling paired with consumer testimonials is itself a red flag pattern worth tracking across the SARM category, not unique to this vendor"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "yk11-conflict-liver-injury-attribution-001",
+      "claimRefs": [
+        "yk11-adverse-effect-liver-injury-001",
+        "yk11-regulatory-not-approved-adverse-event-001"
+      ],
+      "severity": "moderate",
+      "summary": "Both documented human harm signals for YK-11 (the FDA stroke adverse-event report and the LiverTox jaundice case) involve YK-11 used in combination with other undeclared or co-administered agents (trendione; ligandrol and testolone respectively), so neither source isolates YK-11 as the sole causal agent. Marketing sources present YK-11 as if its effects and safety profile were independently characterized in humans, which the regulatory/clinical sources do not support.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "PubMed abstract pages (23995658, 38521455, 30379415) returned reCAPTCHA/robots-blocked content to automated fetch this session; primary-literature quotes for the original Kanno et al. 2011/2013 mechanism papers and the hippocampal oxidative-stress rodent studies were not independently re-verified from the primary journal source and are currently sourced via a vendor technical datasheet (Cayman Chemical) instead.",
+      "PubChem CID (119058028) and CAS number were cross-confirmed across PubChem, Cayman Chemical, and MedKoo vendor pages but ChEMBL/UNII/DrugBank identifiers remain unresolved.",
+      "No dedicated YK-11-only human case series or controlled human study was located; human safety/efficacy evidence rests entirely on multi-SARM case reports and a single FDA adulterated-product adverse-event report.",
+      "Vendor/marketing landscape for YK-11 changes frequently (product reformulations, delisting); marketing claim example should be re-checked for currency at each review cycle.",
+      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "no-approved-human-indication",
+      "thin-human-evidence",
+      "combination-product-confound",
+      "preclinical-mechanism-only"
+    ]
+  }
+}

@@ -1,0 +1,783 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "independent-review-2026-08-29-batch-001",
+    "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+    "reviewedAt": "2026-08-29T00:45:00Z",
+    "notes": [
+      "Decisions issued by the project lead under the operator delegation recorded in research/review-decisions/OPERATOR-DELEGATION-2026-08-28.md.",
+      "Verification performed by 21 independent reviewer agents (workflow run wf_826b82e5-feb), each bound to consult materially different source families than the packet's own sourceRefs, with live-FDA regulatory rechecks post-April-2026 listing revision.",
+      "approve-claims does NOT approve promotion: promotion additionally requires clearing each decision's promotionBlockers and the compile/ingestion gates.",
+      "Full per-claim verdicts with independent-source URLs archived alongside this batch as independent-review-2026-08-29-verdicts.json."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "independent-review-001-ipamorelin",
+      "compoundName": "Ipamorelin",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "ipamorelin-regulatory-compounding-risk-001",
+          "ipamorelin-regulatory-503a-recommendation-001",
+          "ipamorelin-mechanism-ghrelin-mimetic-001",
+          "ipamorelin-human-rct-negative-poi-001",
+          "ipamorelin-evidence-gap-wellness-uses-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=4, confirmed-with-note=1.",
+        "All three fieldAuthorityRequired claims (regulatory Category 2 listing, PCAC 503A recommendation, and the negative human RCT) are independently confirmed against materially different source families: a live re-fetch of the current FDA Category 2 page (post-Apr",
+        "The packet's own reviewFlag on claim -503a-recommendation-001 ('confirm final PCAC/committee outcome versus briefing-document position') is now resolved: the committee did vote against 503A listing, matching the briefing position. Recommend the packet be updat",
+        "Non-fieldAuthorityRequired claims (mechanism, evidence-gap) were also independently confirmed via PubMed primary literature and ClinicalTrials.gov, respectively."
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-cjc-1295",
+      "compoundName": "CJC-1295",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "cjc1295-adverse-effect-phase2-death-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "Safety-critical, fieldAuthorityRequired claim cjc1295-adverse-effect-phase2-death-001 (and its linked conflict cjc1295-conflict-cause-of-death-attribution-001) remains unresolved: no independent primary/regulator source was located this session to confirm or rule out causal attribution of the 2006 C",
+          "CAS number and UNII for PubChem CID 91971820 remain unresolved after an independent re-check attempt (PubChem's detail table did not render via fetch); flag for a reviewer with direct database/API access before treating the identity claim's identifiers as complete."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=2, confirmed-with-note=4, unresolved=1.",
+        "cjc1295-adverse-effect-phase2-death-001 [unresolved]: No independent primary/regulator/controlled-study source was found this session that confirms or refutes causal attribution of the 2006 phase 2 trial subject's death to CJC-1295 DAC. A tertiary reference (Wikipedia's CJC-1295 article, not one of the approved i",
+        "Live FDA bulk-drug-substances page was re-fetched today (2026-08-28) and CJC-1295 is still listed under 'Bulk drug substances nominated but withdrawn' with the same adverse-event language quoted in the packet -- the regulatory-status claim is current and accur",
+        "Independent legal/regulatory-trade reporting (FDA Law Blog, April 2026) indicates CJC-1295 was placed in FDA's interim-policy 'Category 2' list in September 2023 (alongside a 4-peptide lawsuit: AOD-9604, CJC-1295, Ipamorelin acetate, Thymosin Alpha-1) before i",
+        "Independent paper-level and professional-review sources corroborate both the mechanism claim and the evidence-gap/misinformation claim well; those two claims are solidly confirmed."
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-sermorelin",
+      "compoundName": "Sermorelin",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "sermorelin-evidence-gap-adult-wellness-uses-001",
+          "sermorelin-misinformation-anti-aging-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "The evidence-gap claim (sermorelin-evidence-gap-adult-wellness-uses-001) overstates the absence of controlled human trials in adults \u2014 independent search found real sermorelin/GHRH(1-29) controlled trials (Vittone et al. 1997 body-composition trial; a 2006 cognitive-function trial in 89 elderly adul",
+          "The misinformation-claim (sermorelin-misinformation-anti-aging-marketing-001) blanket-dismisses the lean-body-mass marketing claim as unsupported, but independent trial evidence partially supports a lean-mass/fat-composition effect; the claim needs to be narrowed to distinguish which specific market",
+          "Both flagged claims are fieldAuthorityRequired=false, but they materially shape the packet's overall risk/evidence framing (feeding the conflicts entry and ops.qualityFlags 'thin-human-evidence'), so the packet's headline evidence-gap narrative should not be promoted to the public library until revi"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=2, confirmed-with-note=2, needs-adjustment=2.",
+        "sermorelin-evidence-gap-adult-wellness-uses-001 [needs-adjustment]: The packet states 'no sermorelin-specific controlled human efficacy trial ... was located in this research pass' and frames adult evidence as essentially absent. An independent search (two queries) found real sermorelin-specific controlled human trials: a 6-mo",
+        "sermorelin-misinformation-anti-aging-marketing-001 [needs-adjustment]: The claim correctly flags libido and insulin-sensitivity claims and general 'restores natural hGH production'/anti-aging framing as unsupported marketing overreach \u2014 Endotext explicitly states GH use for anti-aging is not warranted and is prohibited by US fede",
+        "All fieldAuthorityRequired=true claims (both regulatory claims and the historical-formulation claim) were independently confirmed or confirmed-with-note against materially different source families, including a LIVE re-check of the FDA bulk-substances page and",
+        "The mechanism claim was independently confirmed via an NIH Bookshelf/Endotext professional review, a source family distinct from the packet's DrugBank/PubChem/PMC-review citations.",
+        "The two needs-adjustment claims are both claimType='evidence-gap' and 'misinformation-claim' (fieldAuthorityRequired=false), so per the approve-claims bar (which only requires fieldAuthorityRequired claims to be clean) a stricter reading could argue for approv"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-tesamorelin",
+      "compoundName": "Tesamorelin",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "tesamorelin-regulatory-approved-indication-001",
+          "tesamorelin-regulatory-limitations-of-use-001",
+          "tesamorelin-contraindications-warnings-001",
+          "tesamorelin-mechanism-ghrh-analogue-001",
+          "tesamorelin-efficacy-visceral-liver-fat-rct-001",
+          "tesamorelin-evidence-gap-cognition-off-label-001",
+          "tesamorelin-dose-context-label-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "None of the fieldAuthorityRequired claims are unresolved after this review -- all five safety-critical/regulatory/dosing claims (approved-indication, limitations-of-use, contraindications, efficacy RCT, dose-context) were independently confirmed against a live FDA.gov label PDF, an SEC filing, and a"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=5, confirmed-with-note=2.",
+        "Packet is well-constructed: it correctly separated a single positive RCT (Moderate evidence tier) from the FDA-approved indication, correctly flagged the vendor cognition claim as an evidence-gap rather than adopting it as fact, and correctly declined to state",
+        "All five fieldAuthorityRequired (safety-critical) claims were independently confirmed against a live, current FDA.gov primary label (accessdata.fda.gov/.../2025/022505s020lbl.pdf, for EGRIFTA WR, current as of the April 2026 listing-change note in the task) --",
+        "No claim in the packet reads as medical advice or a use recommendation; dosing text is explicitly hedged as trial/label context only, consistent with the directive."
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-mots-c",
+      "compoundName": "MOTS-c",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "mots-c-regulatory-pcac-no-human-data-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "Claim mots-c-regulatory-pcac-no-human-data-001 (fieldAuthorityRequired) presents only the FDA staff briefing document's pre-meeting recommendation against listing MOTS-c, omitting that the PCAC committee actually voted 7-5 (2 abstentions) on July 23, 2026 to recommend MOTS-c for the 503A Bulks List ",
+          "Open conflict mots-c-conflict-vendor-human-rct-claim-001 is marked 'needs-human-review' but independent verification now closes it: the vendor's cited 'human RCT' (15% insulin-stimulated glucose disposal, single IV dose) is a fabricated/misattributed citation to Reynolds et al. 2021 (wrong author li"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=3, confirmed-with-note=2, needs-adjustment=1.",
+        "mots-c-regulatory-pcac-no-human-data-001 [needs-adjustment]: The claim accurately states the FDA staff briefing document's own position (recommend against listing, no human data, characterization gaps) -- that part is confirmed via a second WebFetch of an independent newtropin.com summary and a direct FDA press-briefing",
+        "Live-FDA-page re-check today (2026-08-28) confirms the withdrawn-nomination claim is still current; no change needed there.",
+        "The mechanism and evidence-gap claims are both well-supported by an independent 2024 systematic review (Diabetology & Metabolic Syndrome) that was not among the packet's cited sources -- a genuinely different source family that corroborates the packet's carefu",
+        "No medical-advice or efficacy-inflation language was found in the packet's own statements; the vendor dosing protocol is quoted only for evidence-gap/misinformation documentation and is explicitly flagged as not a use recommendation, consistent with the direct"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-aod-9604",
+      "compoundName": "AOD-9604",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "aod9604-safety-human-tolerability-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "Claim aod9604-safety-human-tolerability-001 (fieldAuthorityRequired=true) has no independent, non-sponsor-affiliated human safety source despite a genuine cross-family search (structured databases, primary literature, legal/fact-check secondary sources); it must remain human-review gated and not be ",
+          "Claim aod9604-regulatory-pcac-recommendation-001 (fieldAuthorityRequired=true) relies solely on the single FDA PCAC briefing document for its specific nonclinical toxicology findings (osteocalcin reduction, periportal hepatocyte vacuolation, equivocal genotoxicity); no second independent source repe"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=3, confirmed-with-note=2, unresolved=1.",
+        "aod9604-safety-human-tolerability-001 [unresolved]: Extensive search (structured databases, primary literature via PubMed/Europe PMC, secondary fact-check/legal commentary) did not surface an independent, non-sponsor-affiliated human safety/tolerability source for AOD-9604 beyond what the packet already cites (",
+        "Live FDA bulk-drug-substances page was re-fetched today (2026-08-28) and confirms AOD-9604's withdrawn-nomination status is unchanged from what the packet captured; this specific time-sensitivity flag is resolved for now.",
+        "The July 2026 PCAC meeting reviewed a different batch of 7 peptides (BPC-157, TB-500, KPV, MOTS-c, Semax, Epitalon, Emideltide) and did NOT include AOD-9604 \u2014 this is consistent with, and does not contradict, the packet's characterization of AOD-9604 as withdr",
+        "No instances of medical advice, use recommendations, or efficacy inflation beyond what the quoted sources support were found in the packet's claim statements; dosing text fields are explicitly and correctly labeled as trial protocol, not use recommendations."
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-melanotan-ii",
+      "compoundName": "Melanotan II",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "mt2-regulatory-fda-withdrawn-nomination-001",
+          "mt2-mechanism-melanocortin-agonist-001",
+          "mt2-identity-unapproved-status-001",
+          "mt2-efficacy-erection-libido-rct-001",
+          "mt2-adverse-effects-short-term-001",
+          "mt2-warning-melanoma-nevus-vascular-001",
+          "mt2-evidence-gap-cosmetic-tanning-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "CAS/UNII/ChEMBL/DrugBank identifiers remain unresolved, and PubChem lists at least three distinct CIDs (92432, 139211148, 91971817) across free-base/salt/synonym entries that still need reconciliation before this packet is publication-ready -- not independently resolved in this review pass.",
+          "The renal-infarction/vascular safety signal rests on a single 2020 case report; no independent post-2020 case series or review was found in this pass to confirm whether the signal has grown, so that specific sub-claim should stay review-gated even though the claim's broader safety-signal framing is "
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=4, confirmed-with-note=3.",
+        "All four fieldAuthorityRequired claims (regulatory, efficacy/RCT, short-term adverse effects, melanoma/renal warning) were independently corroborated via source families materially different from each claim's own sourceRefs -- regulator/label (live FDA page re",
+        "Successfully closed the ops.reviewReasons gap flagging PMID 23121206 (rhabdomyolysis) and PMID 24355990 (melanoma) as CAPTCHA-blocked -- both were retrieved this session via alternate routes and corroborate the FDA page's case-report summary.",
+        "No medical advice, use recommendations, or efficacy inflation beyond the cited quotes was found; all doseText fields are explicitly scoped as trial context, not use guidance, which is appropriate."
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-semax",
+      "compoundName": "Semax",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "semax-identity-structure-001",
+          "semax-mechanism-unclear-001",
+          "semax-russia-approved-indication-001",
+          "semax-us-regulatory-status-001",
+          "semax-warnings-contraindications-001",
+          "semax-human-efficacy-stroke-limited-001",
+          "semax-evidence-gap-nootropic-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "Adverse-effects claim (semax-warnings-contraindications-001) omits two independently-reported human AEs (nasal cavity discoloration ~10%, blood glucose increase in diabetics ~7.4%) found in the ADDF Cognitive Vitality summary -- add before public promotion given this is a fieldAuthorityRequired safe",
+          "Russian label citation should be swapped from the third-party Shopify CDN PDF to the official manufacturer domain (peptogen.ru, reg. no. \u041b\u0421-002553) now that it has been located, for a cleaner regulator/label-family citation.",
+          "RxNorm, UNII, DrugBank, and ChEMBL identifiers remain unresolved as the packet itself notes; not blocking for claim accuracy but still an open completeness gap per ops.reviewReasons.",
+          "Packet's own ops.completeness is 'partial' and ops.needsReview is true; this review closes out the specific reviewReasons that were checkable via independent sourcing (FDA live status, label/contraindication cross-check, stroke-evidence corroboration, mechanism corroboration) but a human reviewer sh"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=3, confirmed-with-note=4.",
+        "All four fieldAuthorityRequired claims (Russia-approved-indication, US-regulatory-status, contraindications, human-efficacy-stroke) were independently confirmed or confirmed-with-note using source families materially different from each claim's original source",
+        "No instances of medical advice, use recommendation, or efficacy inflation beyond the cited quotes were found in the packet's statements; dosing/trial context is explicitly and correctly flagged as 'not a use recommendation' throughout.",
+        "The lone unresolved item after independent search is the absence of an internationally-indexed double-blind placebo-controlled RCT for Semax in stroke -- this matches the packet's own stated gap (ops.reviewReasons) and, per the directive, is correctly left rev"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-selank",
+      "compoundName": "Selank",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "selank-studied-use-gad-neurasthenia-001",
+          "selank-evidence-gap-marketing-vs-evidence-001",
+          "selank-identifiers-cas-pubchem-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "fieldAuthorityRequired claim selank-studied-use-gad-neurasthenia-001 currently states trial sample size/comparator data are unverifiable; independent Europe PMC lookup shows they ARE retrievable (N=62; 30 selank vs 32 medazepam) \u2014 statement must be corrected before promotion, not merely re-flagged.",
+          "Misinformation claim selank-evidence-gap-marketing-vs-evidence-001 should be tightened to acknowledge the one small comparator trial that does exist while making explicit that dependence/withdrawal risk was never measured in it \u2014 as written it slightly overstates the total absence of comparative hum",
+          "selank-identifiers-cas-pubchem-001 (CAS 129954-34-3, diacetate CID pairing) has no independent-family confirmation after this review pass; keep human-review-gated pending a structured-database or registry source outside PubChem."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=2, confirmed-with-note=1, needs-adjustment=2, unresolved=1.",
+        "selank-studied-use-gad-neurasthenia-001 [needs-adjustment]: The packet states sample size, dosing, and comparator data for PMID 18454096 are 'not retrievable from the public PubMed record' due to a bot-check. Checking a different family/route (Europe PMC's REST API) DID retrieve the abstract: 'Sixty-two patients with g",
+        "selank-evidence-gap-marketing-vs-evidence-001 [needs-adjustment]: The claim asserts 'no controlled head-to-head human trial identified in this review' against benzodiazepines. Independent retrieval of PMID 18454096's abstract shows a small (N=62) active-comparator trial did compare selank to medazepam, a benzodiazepine. The ",
+        "selank-identifiers-cas-pubchem-001 [unresolved]: Attempted independent confirmation of CAS 129954-34-3 via ChemSpider (403 blocked) and CAS Common Chemistry / DrugBank (not resolved in search); Wikipedia's Selank page does not list a CAS number. PubChem CID 155804769 (diacetate, C37H65N11O13) was reconfirmed",
+        "Live-FDA-page re-check (today, 2026-08-28) confirms Selank acetate remains in the nominated-but-withdrawn table, not Category 2 \u2014 the packet's highest-priority regulatory reviewFlag is resolved.",
+        "Europe PMC's REST API proved a useful independent route around PubMed's bot-check for two claims (18454096 and 11550013) that the packet had marked as inaccessible \u2014 worth noting as a general remediation technique for future GenAI evidence-extraction passes on",
+        "No new medical-advice or efficacy-inflation language was found beyond what the packet itself already flagged as a misinformation-claim; the packet's own dosing disclaimer ('do not present a dose... not a use recommendation') is appropriately cautious."
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-epitalon",
+      "compoundName": "Epitalon",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "epitalon-regulatory-503a-recommendation-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "Regulatory claim epitalon-regulatory-503a-recommendation-001 (fieldAuthorityRequired=true) must be revised before publication: it currently reports only the FDA staff briefing document's negative evaluation and omits that the PCAC committee's subsequent non-binding vote on July 24, 2026 went 7-4 IN ",
+          "The claim should also clarify that neither the staff briefing position nor the committee's favorable vote constitutes final FDA agency action -- no binding rule/classification has issued as of this review -- to avoid readers over- or under-reading the current status in either direction."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=2, confirmed-with-note=3, needs-adjustment=1.",
+        "epitalon-regulatory-503a-recommendation-001 [needs-adjustment]: The claim accurately quotes the FDA STAFF briefing document's pre-meeting evaluation (which did weigh against epitalon). But independent sources on the actual July 23-24, 2026 PCAC meeting outcome show the committee then VOTED 7-4 to recommend epitalon FOR inc",
+        "Both conflicts (epitalon-conflict-formulation-001 and epitalon-conflict-telomerase-safety-001) remain legitimately unresolved/needs-human-review after independent checking -- that gating is correct and should be kept, not resolved by re-affirmation.",
+        "ops.reviewReasons item about confirming 'final PCAC committee outcome/vote versus the July 2026 FDA staff briefing-document position' is now resolvable: independent sources supply the actual vote outcome (7-4 in favor of epitalon). This should be folded into c",
+        "CAS number / molecular formula (307297-39-8, C14H22N4O9) and the Ala-Glu-Asp-Gly identity were independently corroborated via Wikipedia and a public DrugBank listing (DB17882) existing, addressing part of the ops.reviewReasons concern about PubChem being unrea"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-thymosin-alpha-1",
+      "compoundName": "Thymosin alpha-1",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "ta1-regulatory-not-fda-approved-001",
+          "ta1-regulatory-bulks-list-evaluation-001",
+          "ta1-warning-immunosuppressed-gvhd-001",
+          "ta1-mechanism-tlr9-thymic-peptide-001",
+          "ta1-efficacy-sepsis-tests-negative-001",
+          "ta1-efficacy-sepsis-etass-early-001",
+          "ta1-evidence-gap-immune-wellness-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=3, confirmed-with-note=4.",
+        "All 5 fieldAuthorityRequired claims (regulatory x2, safety warning, both sepsis efficacy claims) are confirmed or confirmed-with-note against materially independent source families (structured authority database, a distinct FDA document, paper-level primary li",
+        "Highest-value finding: the independent Frontiers 2025 meta-analysis (PMID 40969554) directly closes the packet's own open conflict (ta1-conflict-sepsis-trial-discordance-001), which had explicitly said this exact type of source was needed but not yet fetched. ",
+        "Second finding worth incorporating before promotion (not blocking, but a real content gap): independent primary/patent literature shows thymosin alpha-1's relationship to GVHD is more bidirectional/context-dependent (tolerogenic, Treg-inducing mechanisms activ"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-liraglutide",
+      "compoundName": "Liraglutide",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "liraglutide-efficacy-leader-cv-outcomes-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "liraglutide-efficacy-leader-cv-outcomes-001 states an incorrect LEADER-trial primary-outcome hazard ratio (0.82, 95% CI 0.72-0.94, p=0.005). Independent retrieval of the primary Marso et al. NEJM 2016 publication (PMC4985288) shows the actual trial-wide primary composite outcome is HR 0.87 (95% CI 0",
+          "The two approved-indication claims (Victoza, Saxenda) and the boxed-warning claim were re-verified only against live FDA label PDFs, which remain in the same regulator/label source family as the packet's own DailyMed sourceRefs; a second, materially different independent family (e.g., ADA/profession"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=2, confirmed-with-note=5, needs-adjustment=1.",
+        "liraglutide-efficacy-leader-cv-outcomes-001 [needs-adjustment]: Retrieved the actual primary LEADER trial publication (Marso et al., N Engl J Med 2016;375:311-322, PMCID PMC4985288) that the packet's own reviewFlag said was inaccessible. The primary composite cardiovascular outcome (death from CV causes, nonfatal MI, or no",
+        "The packet's own reviewFlags and conflicts entry correctly identified that the LEADER-trial quote was sourced from a secondary/subgroup publication and needed primary-source verification -- that flag was validated and the resulting number is now confirmed wron",
+        "The gray-market/misinformation claim (evidence-gap-gray-market-glp1-001) is well-hedged and its own flagged gap (no liraglutide-specific counterfeit data) was independently reconfirmed as still open across FDA, WHO, and peer-reviewed pharmacovigilance sources ",
+        "No statements in the packet read as medical advice or unsupported efficacy inflation beyond what the quoted sources support; dosing/titration text is explicitly framed as label/trial context rather than a use recommendation, consistent with the directive."
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-dulaglutide",
+      "compoundName": "Dulaglutide",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "dulaglutide-warning-pancreatitis-aki-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "dulaglutide-warning-pancreatitis-aki-001 (fieldAuthorityRequired safety-critical claim) remains unresolved: no independent source family (systematic review, controlled study, or guideline) was reachable this session for the pancreatitis/AKI warning language. Per the review contract, this must stay h",
+          "PubChem identifier remains unresolved (ops.reviewReasons) \u2014 I also could not conclusively resolve a PubChem CID for dulaglutide this session (PubChem's compound page requires JS; search results were ambiguous, showing a GLP-1-moiety fragment CID and multiple SID entries rather than a clear parent CI",
+          "dulaglutide-regulatory-approved-indication-001 and dulaglutide-dose-context-label-regimen-001 (both fieldAuthorityRequired) were corroborated by a genuinely independent family (DrugBank / Wikipedia) only for their core substance (base T2D indication; dose ceiling), not for every clause (CV indicatio"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=3, confirmed-with-note=3, unresolved=1.",
+        "dulaglutide-warning-pancreatitis-aki-001 [unresolved]: Could not obtain an independent-family source (systematic review, controlled study, or guideline) on GLP-1RA/dulaglutide pancreatitis or AKI risk this session despite repeated attempts: PubMed pages returned reCAPTCHA gates, NEJM and Wiley (DOM) returned 403s,",
+        "Regulatory currency check: the live FDA label for Trulicity (accessdata.fda.gov, application 125469, supplement s065, approved 2026-03-12 \u2014 the most recent on file today, 2026-08-28) matches the packet's Indications and Usage, Boxed Warning, Contraindications,",
+        "The packet's own reviewFlags and ops.reviewReasons are honest and well-calibrated: it correctly flagged the REWIND secondary-citation gap, the pending PubChem CID, the unresolved DOI, and the weight-loss off-label characterization as needing follow-up rather t",
+        "No medical-advice language, use recommendations, or efficacy inflation were found anywhere in the packet. Every dosing/efficacy statement is explicitly hedged ('label context only, must not be presented as individualized medical advice,' 'trial protocol; not a"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-exenatide",
+      "compoundName": "Exenatide",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "exenatide-approved-indication-001",
+          "exenatide-adverse-effect-exscel-safety-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "exenatide-approved-indication-001 (fieldAuthorityRequired) needs an added note that Byetta and Bydureon BCise were discontinued by the manufacturer (AstraZeneca, Oct 2024) and are no longer commercially marketed in the US \u2014 independently confirmed via a payer/clinical bulletin (UHCprovider) and corr",
+          "exenatide-adverse-effect-exscel-safety-001 (fieldAuthorityRequired, safety-critical) remains unresolved: no qualifying independent source family (regulator, guideline/society, systematic review, controlled-human-study primary text, or structured database) could be reached for the pancreatitis/pancre"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=4, confirmed-with-note=2, needs-adjustment=1, unresolved=1.",
+        "exenatide-approved-indication-001 [needs-adjustment]: The FDA-approved-indication text is accurate as far as it goes (independently corroborated by the live DailyMed Byetta page today, which still shows marketing category 'New Drug Application' with no discontinuation flag on the label document itself). However, ",
+        "exenatide-adverse-effect-exscel-safety-001 [unresolved]: Could not reach a qualifying independent source family (regulator/label, guideline/society, systematic review, controlled-human-study primary text, or structured database) for the specific pancreatitis/pancreatic-cancer/MTC/heart-failure safety comparisons. NE",
+        "All other claims (mechanism, EXSCEL primary efficacy outcome, boxed-warning C-cell tumor signal, Byetta dosing regimen, weight-loss evidence-gap framing, and structured identifiers) were independently corroborated against a materially different source family t",
+        "exenatide-dose-context-byetta-001 was only weakly corroborated: the independent source found (RxList) largely republishes FDA label text rather than being a truly separate verification family; recommend a follow-up check against a clinical guideline (e.g., ADA",
+        "The packet's own ops.reviewReasons already flag most of the gaps found in this review (secondary-sourced EXSCEL safety data, single-source weight-loss evidence-gap claim, unresolved CAS/UNII/RxNorm/ChEMBL identifiers) \u2014 this review confirms those flags are sti"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-pramlintide",
+      "compoundName": "Pramlintide",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "pramlintide-regulatory-approved-indication-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "Claim pramlintide-regulatory-approved-indication-001 (fieldAuthorityRequired) does not disclose that Symlin/SymlinPen's marketing status is currently listed as 'Discontinued' on the live FDA Drugs@FDA record (checked 2026-08-28) \u2014 must be corrected before public promotion so the packet does not impl",
+          "ops.reviewReasons already flags that CAS/UNII/ChEMBL/RxNorm identifiers are unresolved (externalIdentifiers largely null) \u2014 packet remains incomplete on structured-identifier fields and should not be promoted until resolved or explicitly accepted as out of scope.",
+          "The 'up to ~8 kg over 1 year' weight-loss figure in pramlintide-marketing-vs-evidence-weightloss-gap-001 rests on a secondary citation (Dunican 2010) of a primary 2008 Diabetes Care trial that could not be independently pulled this session; a follow-up primary-source check is recommended before trea"
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=3, confirmed-with-note=3, needs-adjustment=1.",
+        "pramlintide-regulatory-approved-indication-001 [needs-adjustment]: The indication text itself is accurate and matches the DailyMed label verbatim. However, the live Drugs@FDA record (checked 2026-08-28, per the directive's mandate to re-verify regulatory claims against today's FDA page) lists marketing status as 'Discontinued",
+        "Reviewed under the pramlintide.evidence.json packet's Independent review rule: for each claim, at least one materially different source family from its own sourceRefs was consulted.",
+        "Priority safety-critical (fieldAuthorityRequired) claims \u2014 boxed warning and contraindications \u2014 were independently confirmed verbatim against a professional drug-reference database (drugs.com) distinct from the cited DailyMed label.",
+        "The single most consequential finding is the discontinued marketing status on the live FDA Drugs@FDA record, which the packet's approved-indication claim does not currently reflect; this is the type of live-FDA-page change the review directive specifically ask"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-cagrilintide",
+      "compoundName": "Cagrilintide",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "cagrilintide-regulatory-not-on-fda-compounding-lists-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "Claim cagrilintide-regulatory-not-on-fda-compounding-lists-001 (fieldAuthorityRequired=true) remains unresolved: no independent, non-FDA source family confirming cagrilintide's absence from the FDA 503A / Category 2 compounding lists was found in this review, since PubMed/PMC/ClinicalTrials.gov/Euro",
+          "Primary NEJM full-text for REDEFINE 1 and REDEFINE 2 (DOIs 10.1056/NEJMoa2502081, 10.1056/NEJMoa2502082) is still unverified directly \u2014 only cross-validated against a second tertiary summary (Wikipedia), which itself shows small numeric discrepancies (11.5% vs 11.8% monotherapy weight loss; 3.1% vs ",
+          "Both open conflicts in the packet (marketing-vs-trial-scope and primary-source-access) remain accurately flagged as needs-human-review and should stay that way; this review did not gain access to primary-source NEJM text to close the second conflict."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=1, confirmed-with-note=4, unresolved=1.",
+        "cagrilintide-regulatory-not-on-fda-compounding-lists-001 [unresolved]: Re-fetched both live FDA pages today per the special instruction (still no mention of cagrilintide on either the 503A page or the Category 2 page, and the Category 2 table's full peptide list \u2014 GHRP-2, GHRP-6, ipamorelin, BPC-157, TB-500, etc. \u2014 does not inclu",
+        "FDA.gov and DailyMed were fetched live today (2026-08-28) and independently confirm CagriSema/cagrilintide has no FDA approval and no DailyMed label as of this date \u2014 this is the strongest, cleanest independent confirmation obtained and fully closes the packet",
+        "PubMed, PMC, ClinicalTrials.gov, and Europe PMC (eutils.ncbi.nlm.nih.gov, pmc.ncbi.nlm.nih.gov, clinicaltrials.gov, www.ebi.ac.uk) are all hard-blocked at the network/proxy level in this review environment (repeated 403 policy-denial responses via the agent pr",
+        "The packet's own hedging, disclaimers ('not a use recommendation', 'investigational', explicit separation of monotherapy vs. combination effect sizes) is appropriate and I found no instance of medical advice, use recommendation, or efficacy inflation beyond wh"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-survodutide",
+      "compoundName": "Survodutide",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "survodutide-regulatory-breakthrough-fasttrack-001",
+          "survodutide-efficacy-phase3-obesity-topline-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "Phase 3 SYNCHRONIZE-1 topline efficacy claim (survodutide-efficacy-phase3-obesity-topline-001) states ~16.6% vs ~3.2% weight change, but the primary peer-reviewed NEJM paper (PMID 42253238), now published and independently fetchable, reports -12.2% (3.6mg) and -13.0% (6.0mg) vs -5.4% placebo at week",
+          "The packet's conflict entry and ops.reviewReasons state the primary NEJM phase 3 article could not be fetched due to bot-verification; this is now stale/inaccurate (this review fetched it successfully via Europe PMC) and must be updated to reflect that the article is accessible and reveals a real nu",
+          "FDA Fast Track / Breakthrough Therapy / EMA PRIME designation claim (survodutide-regulatory-breakthrough-fasttrack-001) remains unresolved: no independent regulator-family (FDA.gov) or literature source could confirm the designation in this pass; it is fieldAuthorityRequired and must stay human-revi",
+          "Phase 2 MASH histologic-endpoint percentages (47%/62%/43% vs 14%) were not independently re-derived from a second numeric source in this pass (only directional review-literature corroboration was obtained) and should get a follow-up quantitative cross-check before full sign-off."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=1, confirmed-with-note=3, needs-adjustment=1, unresolved=1.",
+        "survodutide-regulatory-breakthrough-fasttrack-001 [unresolved]: Independently confirmed via DailyMed (regulator/label family, 0 results returned) that no survodutide product has any FDA label -- this supports the claim's 'not FDA-approved / no DailyMed label' portion. However, the specific assertion of FDA Fast Track and B",
+        "survodutide-efficacy-phase3-obesity-topline-001 [needs-adjustment]: The primary NEJM SYNCHRONIZE-1 results paper (PMID 42253238, doi 10.1056/NEJMoa2600751) IS now published (June 2026 online / August 2026 print) and IS fetchable -- contrary to the packet's conflict note that it 'returned bot-verification pages.' Its actual rep",
+        "DailyMed independently confirms zero drug labels exist for 'survodutide,' supporting the 'not FDA-approved / no label' portions of both the mechanism claim and the regulatory-designation claim.",
+        "WebSearch was unavailable for almost this entire review (session budget exhausted before this subagent's searches could run) and the WebFetch proxy repeatedly rate-limited (HTTP 429) requests to europepmc.org and other targets, which constrained how many indep",
+        "The single most consequential finding of this review is that the phase 3 SYNCHRONIZE-1 primary NEJM publication is now live and its actual numbers differ meaningfully from the packet's ConscienHealth-sourced topline figure -- this should be treated as a priori"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-pemvidutide",
+      "compoundName": "Pemvidutide",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "pemvidutide-regulatory-development-status-001",
+          "pemvidutide-safety-gi-adverse-events-momentum-001",
+          "pemvidutide-efficacy-momentum-weight-loss-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "MOMENTUM 48-week obesity trial safety data (nausea/vomiting/diarrhea/constipation rates, drug-related discontinuation rates) \u2014 a fieldAuthorityRequired safety-critical claim \u2014 is sourced exclusively to an Altimmune sponsor topline press release; no independent peer-reviewed, ClinicalTrials.gov-resul",
+          "MOMENTUM weight-loss efficacy figures (-10.3%/-11.2%/-15.6% vs placebo) \u2014 also fieldAuthorityRequired \u2014 have the same single-source (sponsor press release) problem and should not be promoted as confirmed until independently corroborated.",
+          "The FDA Breakthrough Therapy Designation (MASH) and Fast Track designation (AUD) claims \u2014 fieldAuthorityRequired regulatory claims \u2014 remain sourced only to Altimmune press releases/website; no FDA.gov-hosted confirmation or independent (non-sponsor) news report was reachable this session. Recommend ",
+          "Structured identifiers (PubChem CID, UNII, ChEMBL, RxNorm) remain unresolved, as already flagged in ops.reviewReasons; not safety-blocking but should be completed for library-record integrity."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=2, confirmed-with-note=2, unresolved=3.",
+        "pemvidutide-regulatory-development-status-001 [unresolved]: Partially corroborated, not fully resolved. Wikipedia (independent of all sourceRefs) confirms pemvidutide remains investigational/unapproved and that a Phase 2 MASH trial with weight-loss benefit occurred, consistent with the packet. However, the specific FDA",
+        "pemvidutide-safety-gi-adverse-events-momentum-001 [unresolved]: No independent source family confirms the specific MOMENTUM adverse-event rates (nausea 51.5%, vomiting 27.8%, discontinuation 15.5%/16.2%). Europe PMC turns up only secondary review articles that mention pemvidutide's obesity data qualitatively, not this data",
+        "pemvidutide-efficacy-momentum-weight-loss-001 [unresolved]: As with the companion safety claim, the specific MOMENTUM weight-loss percentages (-10.3%/-11.2%/-15.6%) remain sourced only to the Altimmune sponsor topline press release. Independent review articles corroborate the general direction ('significant weight loss",
+        "The Phase 2b IMPACT MASH claim (pemvidutide-efficacy-impact-2b-mash-001) can now be strengthened: an independent, peer-reviewed Lancet publication (PMID 41237796, Noureddin/Harrison/Loomba et al., published online Nov 11 2025) exists and corroborates both the ",
+        "A live independent regulatory check for the Breakthrough Therapy / Fast Track designations was attempted (FDA.gov search endpoints, biospace.com, fiercebiotech.com) but all attempts either hit robots.txt blocks, 404s, or timeouts this session \u2014 this is a tooli",
+        "No medical-advice language, dosing recommendations, or efficacy inflation beyond what quoted sources support was found anywhere in the packet; all dose texts are explicitly labeled 'trial protocol; not a use recommendation,' and the vendor-marketing quote in t"
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-mazdutide",
+      "compoundName": "Mazdutide",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "mazdutide-identity-external-ids-001",
+          "mazdutide-regulatory-nmpa-weight-mgmt-001",
+          "mazdutide-regulatory-nmpa-t2d-001",
+          "mazdutide-efficacy-phase2-t2d-hba1c-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "Both NMPA regulatory-approval claims (chronic weight management and T2D glycemic control) remain single-sourced to Innovent company press releases; no independent regulator-hosted NMPA document, guideline, or independent secondary source was reachable this session (NMPA site returned a 412 error; ge",
+          "The phase 2 T2D efficacy/dosing claim (HbA1c and weight results, also fieldAuthorityRequired) is still sourced to a single family (the PMC trial paper) with no independent systematic-review or registry cross-check completed this session; keep review-gated.",
+          "Identity claim's CAS/UNII/ChEMBL cross-check against a materially independent structured database (e.g., ChEMBL directly) could not be completed (network/proxy blocks); the packet's own reviewFlag on this point is still open.",
+          "GLORY-1 weight-loss figures are corroborated in magnitude and direction by an independent primary-literature record (Semantic Scholar/NEJM bibliographic entry) but the exact percentages (-12.05%, -14.84%, 50.6% vs 2.1%) still rest on the sponsor press release since the NEJM full text remains paywall",
+          "No claim showed fabrication, medical-advice language, or efficacy inflation beyond what quotes support \u2014 the packet's own hedging and reviewFlags are generally well-calibrated; the blockers above are sourcing-completeness gaps, not integrity problems."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=1, confirmed-with-note=3, unresolved=4.",
+        "mazdutide-identity-external-ids-001 [unresolved]: Attempted to cross-check CAS/UNII/ChEMBL identifiers against ChEMBL directly (a materially different structured database than PubChem/DrugBank, both already cited) but the request was blocked/rate-limited (proxy policy denial on ebi.ac.uk, then 429). A PubChem",
+        "mazdutide-regulatory-nmpa-weight-mgmt-001 [unresolved]: This is a safety-critical, fieldAuthorityRequired regulatory claim sourced to a single Innovent press release. I could not reach NMPA's own site (returned a 412 error), and general web search was unavailable this session (WebSearch budget exhausted) and most s",
+        "mazdutide-regulatory-nmpa-t2d-001 [unresolved]: Same access constraints as the weight-management NMPA claim: NMPA's own site was unreachable, and no independent regulator/label, guideline, or secondary-news source could be consulted this session (search engines and ClinicalTrials.gov were blocked at the net",
+        "mazdutide-efficacy-phase2-t2d-hba1c-001 [unresolved]: This fieldAuthorityRequired efficacy/dosing claim is sourced solely to the PMC controlled-human-study (a single source family). I attempted to find an independent systematic review/meta-analysis or a ClinicalTrials.gov registry cross-check, but ClinicalTrials.",
+        "Tooling constraints materially limited independent-family coverage this session: the WebSearch tool's budget was already exhausted at the start of this review (shared session quota), and several key independent-source hosts were blocked at the proxy/network le",
+        "Recommend that a follow-up review session with working access to ClinicalTrials.gov, an NMPA-hosted or Chinese-regulatory-press independent source, and PubMed/PMC search be used to close the two regulatory-approval gaps and the phase 2 T2D efficacy gap before ",
+        "No instance of medical-advice language, use-recommendation, or efficacy inflation beyond what the extracted quotes support was found in the packet's statements; the gray-market evidence-gap claim in particular is framed as a caution, not an endorsement."
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-amycretin",
+      "compoundName": "Amycretin",
+      "decision": "approve-claims",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "amycretin-mechanism-dual-agonist-001",
+          "amycretin-regulatory-not-approved-001",
+          "amycretin-efficacy-obesity-phase1b2a-001",
+          "amycretin-efficacy-t2d-phase2-001",
+          "amycretin-adverse-effects-gi-immunogenicity-001",
+          "amycretin-evidence-gap-graymarket-marketing-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": []
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=1, confirmed-with-note=5.",
+        "All fieldAuthorityRequired claims (regulatory-not-approved, both efficacy claims, adverse-effects) reached at least confirmed-with-note using genuinely different source families: DailyMed (regulator/label) for regulatory status, Semantic Scholar's record of th",
+        "No claim was found to overstate its cited evidence, convert animal/in vitro data to human efficacy, or read as medical advice -- doseText fields are explicitly framed as 'not a use recommendation' throughout, which independent checking did not contradict.",
+        "Residual, non-blocking gaps that should stay review-gated per the directive rather than being marked resolved: (1) exact numeric AE/efficacy figures (24.3% weight loss, 92% TEAE rate, 21-29% antidrug antibodies, T2D -14.5%/-10.1% weight loss and HbA1c deltas) "
+      ]
+    },
+    {
+      "decisionId": "independent-review-001-vk2735",
+      "compoundName": "VK2735",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T00:45:00Z",
+      "scope": {
+        "claimIds": [
+          "vk2735-efficacy-oral-venture-oral-001"
+        ],
+        "qualityFlags": [
+          "independent-cross-source-review",
+          "expansion-batch"
+        ],
+        "reviewCategories": [
+          "independent-source-family-verification",
+          "regulatory-recheck-live-fda",
+          "citation-fidelity"
+        ],
+        "promotionBlockers": [
+          "Claim vk2735-efficacy-oral-venture-oral-001 (fieldAuthorityRequired) is unresolved: no independent source family (peer-reviewed literature, or ClinicalTrials.gov posted results) currently confirms the VENTURE-Oral outcome numbers (12.2% weight loss, up to 80% achieving >=10% loss, 20%/13% AE discont",
+          "Claim vk2735-adverse-effects-gi-001's granular GI adverse-event percentages (nausea 43%, constipation 26%, diarrhea 20%, vomiting 18%, decreased appetite 16%) and the single dehydration SAE are independently corroborated only in general direction (Europe PMC abstract confirms GI AEs are common and d",
+          "The packet's '88% achieved >=10% weight loss at 15 mg' figure in vk2735-efficacy-subcutaneous-venture-001 was not found in the independently pulled Obesity-journal abstract (which reports a >=5% cutoff: 93%); worth reconfirming against the paper's full results tables."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Independent cross-source review (run wf_826b82e5-feb): confirmed=4, confirmed-with-note=3, unresolved=1.",
+        "vk2735-efficacy-oral-venture-oral-001 [unresolved]: No independent source family confirms the oral VENTURE-Oral outcome numbers (12.2% weight loss, up to 80% achieving >=10% loss, 20% vs 13% AE-discontinuation). ClinicalTrials.gov's own record for NCT06828055 explicitly shows hasResults:false -- no results post",
+        "No medical-advice language, use recommendations, or efficacy inflation beyond what quotes/abstracts support was found in the packet; all dose text is correctly framed as trial-protocol-only.",
+        "Two fieldAuthorityRequired claims (regulatory-no-compounding-listing and regulatory-investigational-status) were the priority checks per instructions and both re-confirmed live/independently as of 2026-08-29.",
+        "WebSearch quota was exhausted mid-review (200/200 used by prior activity in this session); all remaining independent verification was done via direct WebFetch to ClinicalTrials.gov API v2, Europe PMC REST API, FDA.gov, and Viking IR pages rather than search, w"
+      ]
+    }
+  ]
+}

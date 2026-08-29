@@ -1,0 +1,394 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "ac-262536-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T02:21:10Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "AC-262536",
+    "aliases": [
+      "AC-262,536",
+      "Accadine",
+      "Accadrine"
+    ],
+    "classification": "Non-steroidal selective androgen receptor modulator (SARM)",
+    "compoundFamily": "Aniline-class SARM (related to ACP-105 and RAD140/vosilasarm)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "870888-46-3",
+      "drugbank": "DB13935",
+      "pubchem": null,
+      "chembl": null,
+      "doi": null,
+      "pmid": "18164613"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-sarms-consumer-update",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Warns Against Use of SARMs in Body-building Products",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "caymanchem-ac262536",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "AC-262536 (CAS Number: 870888-46-3) Product Page",
+      "publisher": "Cayman Chemical Company",
+      "url": "https://www.caymanchem.com/product/31598/ac-262536",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "medchemexpress-ac262536",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "AC-262536 | Androgen Receptor Agonist",
+      "publisher": "MedChemExpress",
+      "url": "https://www.medchemexpress.com/ac-262536.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "vanoeveren-2007-ac262536-pharm",
+      "sourceType": "preclinical-study",
+      "authorityTier": "B1",
+      "title": "Pharmacological characterization of AC-262536, a novel selective androgen receptor modulator",
+      "publisher": "Journal of Steroid Biochemistry and Molecular Biology (via ResearchGate abstract record; PMID 18164613)",
+      "url": "https://www.researchgate.net/publication/5684238_Pharmacological_characterization_of_AC-262536_a_novel_selective_androgen_receptor_modulator",
+      "doi": null,
+      "pmid": "18164613",
+      "publishedAt": "2008-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "wikipedia-ac262536",
+      "sourceType": "encyclopedia",
+      "authorityTier": "C1",
+      "title": "AC-262,536",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/AC-262,536",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "sarmguide-ac262536-review",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "D1",
+      "title": "AC-262536 Review, Dosage, Results And More",
+      "publisher": "sarmguide.com",
+      "url": "https://sarmguide.com/ac-262536-review/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "moreplatesmoredates-ac262536",
+      "sourceType": "independent-review",
+      "authorityTier": "C2",
+      "title": "AC-262536 SARM Overview - What To Expect (Based On Clinical Studies)",
+      "publisher": "More Plates More Dates",
+      "url": "https://moreplatesmoredates.com/ac-262536-sarm-overview/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "ac262536-identity-classification-001",
+      "claimType": "identity",
+      "statement": "AC-262536 (Accadine/Accadrine, CAS 870888-46-3, C18H18N2O, MW 278.4) is a non-steroidal selective androgen receptor modulator originally developed by Acadia Pharmaceuticals; it exhibits endo-exo isomerism with the endo form being pharmacologically active, and it is not an approved pharmaceutical product.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "research chemical / gray-market oral and topical products",
+        "useCase": "compound identity and chemistry",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "caymanchem-ac262536",
+        "wikipedia-ac262536"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "caymanchem-ac262536",
+          "quote": "AC-262536 is a selective androgen receptor modulator (SARM; Ki = 5.01 nM)",
+          "pageOrSection": "Product description"
+        },
+        {
+          "sourceRef": "wikipedia-ac262536",
+          "quote": "a drug developed by Acadia Pharmaceuticals which acts as a selective androgen receptor modulator (SARM)",
+          "pageOrSection": "Lead section"
+        },
+        {
+          "sourceRef": "wikipedia-ac262536",
+          "quote": "Accadrine is not approved for any medical use by the Food and Drug Administration and is not available as a licensed pharmaceutical drug as of 2025.",
+          "pageOrSection": "Lead section"
+        }
+      ],
+      "reviewFlags": [
+        "PubChem CID could not be reliably resolved: the CID surfaced by a name search (914925) has a mismatched molecular formula (C12H17N3O2) versus the CAS-confirmed formula (C18H18N2O) and was excluded rather than cited",
+        "CAS/formula sourced from a commercial vendor product page (Cayman Chemical), not a government structured database; independent confirmation against PubChem/ChemIDplus recommended at review"
+      ]
+    },
+    {
+      "claimId": "ac262536-mechanism-animal-pharmacology-001",
+      "claimType": "mechanism",
+      "statement": "In a cell-based functional assay, AC-262536 was identified as a potent, selective androgen-receptor ligand acting as a partial agonist relative to testosterone (reported Ki approximately 5 nM); in castrated male rats it produced anabolic effects on the levator ani muscle (reported at roughly 66% of testosterone's maximal effect) while producing substantially weaker effects on prostate gland weight (roughly 27% of testosterone's maximal effect), indicating tissue-selective activity in animal models. This is preclinical (in vitro and rodent) evidence only and has not been demonstrated in humans.",
+      "context": {
+        "population": "castrated male rats; in vitro cell-based assay",
+        "route": null,
+        "formulation": "AC-262536",
+        "useCase": "preclinical tissue-selectivity/anabolic pharmacology",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "vanoeveren-2007-ac262536-pharm",
+        "wikipedia-ac262536",
+        "medchemexpress-ac262536"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "vanoeveren-2007-ac262536-pharm",
+          "quote": "Using a functional cell-based assay AC-262536 was identified as a potent and selective AR ligand, with partial agonist activity relative to the natural androgen testosterone.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "wikipedia-ac262536",
+          "quote": "In animal studies it produced a maximal effect of around 66% of the levator ani muscle weight increase of testosterone, but only around 27% of its maximal effect on prostate gland weight.",
+          "pageOrSection": "Pharmacology section"
+        },
+        {
+          "sourceRef": "medchemexpress-ac262536",
+          "quote": "exhibits potent agonist activity at the androgen receptor, with an affinity in the low nanomolar range (1-10 nM)",
+          "pageOrSection": "Product description"
+        }
+      ],
+      "reviewFlags": [
+        "Animal/in-vitro evidence only; must not be presented as evidence of human anabolic benefit or tissue selectivity",
+        "Full text of the primary pharmacology paper (PMID 18164613) was not accessible this session (abstract only, via a secondary aggregator); direct journal/PubMed confirmation recommended at review"
+      ]
+    },
+    {
+      "claimId": "ac262536-regulatory-not-approved-001",
+      "claimType": "regulatory",
+      "statement": "AC-262536 has no approved medical use and is not a licensed pharmaceutical product in the United States; FDA states that SARMs as a class 'are not FDA approved' and 'cannot be legally marketed in the U.S. as a dietary supplement or drug at this time,' and AC-262536 has additionally been documented as encountered in the illicit/novel-designer-drug market.",
+      "context": {
+        "population": "U.S. consumers/purchasers of AC-262536 products",
+        "route": null,
+        "formulation": "gray-market/underground SARM products marketed as 'Accadrine'",
+        "useCase": "regulatory and legal marketing status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-sarms-consumer-update",
+        "wikipedia-ac262536"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "SARMs are not FDA approved",
+          "pageOrSection": "Approval status"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "SARMs cannot be legally marketed in the U.S. as a dietary supplement or drug at this time.",
+          "pageOrSection": "Approval status"
+        },
+        {
+          "sourceRef": "wikipedia-ac262536",
+          "quote": "The drug was encountered as a novel designer drug by at least 2020.",
+          "pageOrSection": "Legal status section"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "FDA quote is class-level (SARMs generally) rather than an AC-262536-specific enforcement action; no AC-262536-specific FDA warning letter or import alert was located this session"
+      ]
+    },
+    {
+      "claimId": "ac262536-warning-class-sarm-risks-001",
+      "claimType": "warning",
+      "statement": "FDA has warned that SARMs as a class are 'associated with serious or life-threatening health problems,' specifically citing increased risk of heart attack or stroke and liver injury/acute liver failure, along with psychosis/hallucinations, sleep disturbances, sexual dysfunction, infertility, pregnancy/miscarriage risk, and testicular shrinkage; this warning targets the SARM drug class broadly (including products marketed to teens and young adults) and is not derived from AC-262536-specific human safety data, which does not exist.",
+      "context": {
+        "population": "consumers of SARM-containing bodybuilding/muscle-enhancement products, including teens and young adults",
+        "route": "oral (typical marketed gray-market route)",
+        "formulation": "unregulated SARM products",
+        "useCase": "class-wide safety warning",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-sarms-consumer-update"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "associated with serious or life-threatening health problems, such as: Increased risk of heart attack or stroke",
+          "pageOrSection": "Health risks"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "Liver injury and acute liver failure.",
+          "pageOrSection": "Health risks"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "Targeting teenagers and young adults, videos on social media platforms tout SARMs as a quick or easy way to improve physical appearance, gain muscle mass, or increase athletic performance.",
+          "pageOrSection": "Marketing to youth"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim; evidence tier reflects that this is class-level regulatory warning language, not an AC-262536-specific adverse-event dataset",
+        "no AC-262536-specific human case reports or adverse-event data were located this session"
+      ]
+    },
+    {
+      "claimId": "ac262536-evidence-gap-no-human-data-001",
+      "claimType": "evidence-gap",
+      "statement": "No published human clinical trials of AC-262536 exist; all pharmacological and efficacy data available come from a single in vitro/rodent characterization study. Human safety, dosing, and efficacy are entirely unestablished.",
+      "context": {
+        "population": "humans (no data exist)",
+        "route": null,
+        "formulation": "AC-262536 / Accadrine",
+        "useCase": "human safety and efficacy evidence gap",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "moreplatesmoredates-ac262536",
+        "vanoeveren-2007-ac262536-pharm"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "moreplatesmoredates-ac262536",
+          "quote": "This is another SARM that has no clinical studies on human subjects",
+          "pageOrSection": "Human data section"
+        },
+        {
+          "sourceRef": "moreplatesmoredates-ac262536",
+          "quote": "there are no clinical trials done on humans",
+          "pageOrSection": "Human data section"
+        },
+        {
+          "sourceRef": "moreplatesmoredates-ac262536",
+          "quote": "there is EXTREMELY limited data, even anecdotally",
+          "pageOrSection": "Human data section"
+        }
+      ],
+      "reviewFlags": [
+        "independent literature search (PubMed/PMC) for any AC-262536 human trial should be repeated at review to confirm this remains a true gap and not stale"
+      ]
+    },
+    {
+      "claimId": "ac262536-misinformation-marketing-vs-evidence-001",
+      "claimType": "misinformation-claim",
+      "statement": "AC-262536/Accadrine is marketed online (as a bodybuilding/'SARM' supplement) with claims that it builds muscle and strength, raises testosterone, 'slows down the onset of Alzheimer's disease,' shrinks the prostate favorably, and produces 'no exogenous side effects' — claims drawn entirely from a single rodent/in-vitro pharmacology study and not supported by any human data; the marketing does not disclose the absence of human trials or FDA's class-wide SARM safety warnings.",
+      "context": {
+        "population": "consumers reading gray-market/bodybuilding marketing content",
+        "route": "oral (as marketed)",
+        "formulation": "gray-market AC-262536/Accadrine products",
+        "useCase": "muscle building, testosterone elevation, neuroprotection, prostate health marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "sarmguide-ac262536-review",
+        "moreplatesmoredates-ac262536",
+        "fda-sarms-consumer-update"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "sarmguide-ac262536-review",
+          "quote": "significantly enchant anabolic numbers in rats, which lead to increased muscle mass and strength",
+          "pageOrSection": "Benefits section"
+        },
+        {
+          "sourceRef": "sarmguide-ac262536-review",
+          "quote": "Slows Down The Onset of Alzheimer's Disease",
+          "pageOrSection": "Benefits section heading"
+        },
+        {
+          "sourceRef": "sarmguide-ac262536-review",
+          "quote": "As of now, no exogenous side effects have been discovered as a direct result of AC-262536 use",
+          "pageOrSection": "Safety section"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update",
+          "quote": "These products are often sold with no warnings on the labels, potentially leading consumers to believe the products are safe.",
+          "pageOrSection": "Safety concerns"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: rodent-only findings (e.g., Alzheimer's, muscle mass) are presented as consumer benefits without disclosing they are non-human data",
+        "'no side effects' claim directly conflicts with FDA's class-wide SARM safety warning; see conflict ac262536-conflict-001"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "ac262536-conflict-001",
+      "claimRefs": [
+        "ac262536-misinformation-marketing-vs-evidence-001",
+        "ac262536-warning-class-sarm-risks-001"
+      ],
+      "severity": "moderate",
+      "summary": "Gray-market marketing for AC-262536 asserts 'no exogenous side effects have been discovered,' while FDA warns the SARM drug class broadly carries serious risks including heart attack/stroke and liver injury. Neither position is backed by AC-262536-specific human safety data — the marketing claim is unsupported optimism and the FDA warning is class-level, not compound-specific — so the true human safety profile of AC-262536 remains unresolved pending direct data.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "No AC-262536-specific human trial, case-report, or FDA enforcement action (warning letter/import alert) was located this session; all safety framing relies on class-wide SARM sources and must be re-checked for a compound-specific update at review.",
+      "PubChem CID and other structured-database identifiers (UNII, ChEMBL, RxNorm) could not be reliably resolved this session; the candidate PubChem CID found had a mismatched molecular formula and was excluded rather than cited.",
+      "Primary pharmacology study (PMID 18164613) was only accessible as an abstract via a secondary aggregator, not the publisher or PubMed page directly; verify against the original journal record at review."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "gray-market-only-no-approved-product",
+      "no-human-clinical-data",
+      "class-level-regulatory-warning-only",
+      "unresolved-structured-identifiers",
+      "marketing-evidence-gap-documented"
+    ]
+  }
+}

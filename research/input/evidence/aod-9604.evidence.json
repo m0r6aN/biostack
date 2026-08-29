@@ -61,7 +61,7 @@
       "sourceType": "controlled-human-study",
       "authorityTier": "B1",
       "title": "Safety and Metabolism of AOD9604, a Novel Nutraceutical Ingredient for Improved Metabolic Health",
-      "publisher": "Journal of Endocrinology and Metabolism, Vol. 4, Issue 3 (Mor\u00e9 MI, Kenley D, 2014)",
+      "publisher": "Journal of Endocrinology and Metabolism, Vol. 4, Issue 3 (Moré MI, Kenley D, 2014)",
       "url": "https://www.jofem.org/index.php/jofem/article/view/213/278",
       "doi": null,
       "pmid": null,
@@ -155,7 +155,8 @@
         }
       ],
       "reviewFlags": [
-        "mechanism is not established; do not present beta-3 adrenergic involvement as confirmed"
+        "mechanism is not established; do not present beta-3 adrenergic involvement as confirmed",
+        "independent review note: an independent tertiary source (Wikipedia, AOD9604 article) describes the beta-3 adrenergic pathway more assertively than this packet; the packet's hedged phrasing ('appears to act, at least in part') is retained as the more conservative and defensible framing given FDA's own 'mechanism remains unknown' statement"
       ]
     },
     {
@@ -234,7 +235,9 @@
       "reviewFlags": [
         "safety-critical regulatory claim",
         "nonclinical (animal) bone and liver signals must not be presented as established human risks",
-        "confirm final PCAC committee vote/outcome versus this briefing-document staff position"
+        "confirm final PCAC committee vote/outcome versus this briefing-document staff position",
+        "independent review note: legal/industry commentary corroborates AOD-9604's negative disposition; separately verified that the July 2026 PCAC meeting recommended 6 of 7 different peptides (BPC-157, TB-500, KPV, MOTS-c, Semax, Epitalon) and did not include AOD-9604 at all, consistent with it remaining excluded following this unfavorable evaluation",
+        "the specific nonclinical toxicology findings (lower rat osteocalcin, periportal hepatocyte vacuolation in monkeys, equivocal genotoxicity) remain sourced only to this single FDA briefing document; a targeted independent search (PubMed, 23 results reviewed) found no second independent publication repeating these specific findings, so this detail stays review-gated pending further corroboration"
       ]
     },
     {
@@ -280,7 +283,7 @@
     {
       "claimId": "aod9604-safety-human-tolerability-001",
       "claimType": "adverse-effect",
-      "statement": "Across six randomized, double-blind, placebo-controlled human trials (approximately 900 adult subjects total, IV doses 25-400 mcg/kg and oral doses 0.25-54 mg), a published review reports no withdrawal or serious adverse event related to AOD-9604 intake, no effect on serum IGF-1 levels, and no negative effect on carbohydrate metabolism, with tolerability described as indistinguishable from placebo. This human tolerability data is distinct from, and does not resolve, the nonclinical (animal) osteocalcin and periportal hepatocyte findings and equivocal genotoxicity signals flagged separately by FDA.",
+      "statement": "Across six randomized, double-blind, placebo-controlled human trials (approximately 900 adult subjects total, IV doses 25-400 mcg/kg and oral doses 0.25-54 mg), sponsor-linked published reviews report no withdrawal or serious adverse event related to AOD-9604 intake, no effect on serum IGF-1 levels, and no negative effect on carbohydrate metabolism, with tolerability described as indistinguishable from placebo. This claim rests entirely on sponsor-affiliated publications (and FDA's regulatory review of the same underlying sponsor trial data); a targeted search for an independent, non-sponsor-affiliated human safety source did not locate one, so the claim should be read as reporting what the sponsor-linked literature states rather than as independently corroborated. This human tolerability data is also distinct from, and does not resolve, the nonclinical (animal) osteocalcin and periportal hepatocyte findings and equivocal genotoxicity signals flagged separately by FDA.",
       "context": {
         "population": "adult trial participants across six controlled AOD-9604 studies (~900 subjects)",
         "route": "intravenous and oral",
@@ -320,7 +323,8 @@
       ],
       "reviewFlags": [
         "these are industry/sponsor-linked publications summarizing sponsor trial data; independent replication of long-term (>24 week) human safety data was not identified",
-        "does not address gray-market compounded product quality, dosing, or long-term subcutaneous self-administration outside supervised trials"
+        "does not address gray-market compounded product quality, dosing, or long-term subcutaneous self-administration outside supervised trials",
+        "unresolved after remediation attempt (2026-08-29): targeted independent search via PubMed (query \"AOD9604\", all 23 results reviewed across 3 pages) found no non-sponsor-affiliated human safety/tolerability paper; Europe PMC REST (www.ebi.ac.uk) could not be reached this session (network egress policy rejected the connection). Remains fieldAuthorityRequired and human-review gated per directive."
       ]
     },
     {
@@ -385,7 +389,9 @@
       "AOD-9604 nominated-but-withdrawn status on the FDA bulk drug substances page is time-sensitive and must be reconfirmed against the live FDA page at review time.",
       "UNII, RxNorm, DrugBank, ChEMBL, DOI, and PMID identifiers were not resolved from structured databases and remain null.",
       "Human efficacy evidence for the compound's popularly marketed fat-loss use is thin and specifically negative in the definitive trial; this must not be softened during review.",
-      "Sponsor-linked JOFEM safety publications (Stier 2013, More & Kenley 2014) were the only human tolerability sources found; an independent, non-sponsor-affiliated human safety source was not identified and should be sought during review."
+      "Sponsor-linked JOFEM safety publications (Stier 2013, More & Kenley 2014) were the only human tolerability sources found; an independent, non-sponsor-affiliated human safety source was not identified and should be sought during review.",
+      "Remediation pass (2026-08-29), claim aod9604-safety-human-tolerability-001: made one serious targeted attempt to resolve via PubMed (query \"AOD9604\", 23 results across 3 pages reviewed in full) and Europe PMC REST; no independent non-sponsor-affiliated human safety source was found, and the Europe PMC REST endpoint (www.ebi.ac.uk) was unreachable due to network egress policy this session. Claim statement tightened to make explicit it rests on sponsor-affiliated sources only; remains fieldAuthorityRequired=true and human-review gated per promotion blocker.",
+      "Remediation pass (2026-08-29), claim aod9604-regulatory-pcac-recommendation-001: same PubMed search found no independent publication repeating the FDA briefing's specific nonclinical toxicology findings (osteocalcin, periportal hepatocyte vacuolation, equivocal genotoxicity); this remains sourced solely to fda-pcac-briefing-183584 and stays human-review gated per promotion blocker. Independently corroborated context (July 2026 PCAC meeting excluded AOD-9604 from its 7-peptide recommended batch) was added to the claim's reviewFlags."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -394,7 +400,8 @@
       "thin-human-evidence",
       "sponsor-linked-safety-sources",
       "regulatory-boundary",
-      "marketing-evidence-gap"
+      "marketing-evidence-gap",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

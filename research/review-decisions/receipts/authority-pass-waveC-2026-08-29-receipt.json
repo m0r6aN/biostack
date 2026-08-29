@@ -1,0 +1,379 @@
+{
+ "fixes": [
+  {
+   "ok": true,
+   "slug": "andarine",
+   "summary": "Resolved both AUTHORITY-SUPPORT deficits on the andarine packet: the WADA regulatory claim was linked to a newly fetched A1 WADA 2026 Prohibited List source; the vision adverse-effect claim was searched against FDA/DailyMed/literature and found no A1/A2 support, so it stays authority-gated with the search documented. Packet validates against schema.json.",
+   "perClaim": [
+    {
+     "claimId": "andarine-regulatory-wada-001",
+     "lane": "a1a2-linked",
+     "detail": "Fetched the official WADA 2026 Prohibited List (effective 1 Jan 2026) this session; it names andarine under S1.2 Other Anabolic Agents/SARMs. Added new A1 source wada-prohibited-list-2026 with a verbatim quote and linked it to the claim's sourceRefs; fieldAuthorityRequired/evidenceTier/confidence left unchanged.",
+     "newSourceUrl": "https://cdn.conmebol.com/wp-content/uploads/2025/12/WORLD-ANTI-DOPING-CODE-2026.pdf"
+    },
+    {
+     "claimId": "andarine-adverse-vision-001",
+     "lane": "stays-gated",
+     "detail": "claimType adverse-effect is outside the hard safety-critical set, but the claim is sourced only to a compliance-advocacy page (BSCG), not a peer-reviewed study with study-level attribution, so Lane 2 recalibration does not apply. Fetched the FDA Titan SARMS warning letter (no vision mention), confirmed no DailyMed label exists (no FDA-approved andarine product), and searched Europe PMC/web for a primary trial or FDA communication on andarine vision effects with no result. Documented the search in a new reviewFlag; fieldAuthorityRequired stays true and the claim remains gated."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "ghrp-2",
+   "summary": "Resolved all 4 flagged authority-support deficits on ghrp-2.evidence.json. The dose-context claim (safety-critical claimType) stays gated \u2014 no A1/A2 regulator source addresses GHRP-2's diagnostic dosing protocol (the only FDA-approved GH-deficiency diagnostic drug, Macrilen/macimorelin, is a different compound). The other three (adverse-effect and two studied-use claims) were over-flagged per the directive's scope: their claimTypes are outside the pipeline's safety-critical set, they faithfully report peer-reviewed study findings with source-level attribution, and no regulator document exists for any of them despite searching FDA.gov and DailyMed \u2014 fieldAuthorityRequired was set to false with a reviewFlag documenting the recalibration and search. One statement (supplement-contamination) was tightened to explicitly name the source study. Packet validates against schema.json; ops.needsReview stays true and qualityFlags now includes authority-support-pass-2026-08-29.",
+   "perClaim": [
+    {
+     "claimId": "ghrp2-dose-context-diagnostic-protocol-001",
+     "lane": "stays-gated",
+     "detail": "claimType dose-context is in the pipeline's safety-critical set, so it can never be recalibrated. Searched FDA's bulk-compounding significant-safety-risks page (covers only immunogenicity/adverse-event risk, no dosing content) and DailyMed (0 results for GHRP-2); the only FDA-approved GH-deficiency diagnostic drug is Macrilen (macimorelin), a different compound. No A1/A2 source supports this specific diagnostic IV dosing claim, so fieldAuthorityRequired remains true and a reviewFlag documents the search; claim stays human-review gated."
+    },
+    {
+     "claimId": "ghrp2-safety-supplement-contamination-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType adverse-effect is outside the directive's fieldAuthorityRequired scope, and this is a faithful report of a specific peer-reviewed analytical study (Thomas et al. 2010, Drug Testing and Analysis) detecting GHRP-2 as an undeclared supplement adulterant. Searched fda.gov (no warning letter or page addresses this specific incident; the FDA bulk-compounding page covers immunogenicity, not supplement contamination) and DailyMed (0 results) per the adverse-effect caution \u2014 found nothing. Set fieldAuthorityRequired=false, tightened the statement to explicitly name the source study, and added a reviewFlag recording the recalibration and search."
+    },
+    {
+     "claimId": "ghrp2-studied-use-diagnostic-ghd-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType studied-use is outside the directive's fieldAuthorityRequired scope. The statement already attributes findings to the specific controlled study (77 healthy subjects, 58 GHD patients). Searched FDA.gov and DailyMed for GHRP-2; confirmed via web search that the only FDA-approved GH-deficiency diagnostic test is Macrilen (macimorelin), a distinct compound. Set fieldAuthorityRequired=false with a reviewFlag documenting the recalibration and search."
+    },
+    {
+     "claimId": "ghrp2-studied-use-secondary-adrenal-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType studied-use is outside the directive's fieldAuthorityRequired scope. The statement is already attributed to the specific Japanese clinical study (Hayashi et al. 2008). Searched FDA.gov and DailyMed for GHRP-2 diagnostic-use content and found none (only the unrelated macimorelin/Macrilen approval exists). Set fieldAuthorityRequired=false with a reviewFlag documenting the recalibration and search."
+    }
+   ]
+  },
+  {
+   "slug": "ghrp-6",
+   "ok": true,
+   "summary": "Both flagged GHRP-6 claims resolved via Lane 2 (flag-recalibrated): neither claimType is safety-critical, both statements already carry study-level attribution, and FDA/DailyMed searches found no regulator document addressing either finding. fieldAuthorityRequired set to false on both, reviewFlags appended documenting the recalibration and search, ops.qualityFlags updated, ops.needsReview left true. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "ghrp6-studied-use-oral-short-stature-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType studied-use is not in the safety-critical set; the statement already attributes the finding to the specific 1995 oral GHRP-6 short-stature study. Searched fda.gov and dailymed.nlm.nih.gov for GHRP-6 short-stature/oral-administration coverage and found none (GHRP-6 has no approved product; FDA's only GHRP-6 page is the unrelated Category 2 compounding-risk listing). Set fieldAuthorityRequired=false and added a dated reviewFlag recording the recalibration and search performed."
+    },
+    {
+     "claimId": "ghrp6-efficacy-stroke-combination-rct-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType efficacy is not in the safety-critical set; the statement already attributes the finding to the specific 2024 phase I/II EGF+GHRP-6 stroke RCT. Searched fda.gov and dailymed.nlm.nih.gov for GHRP-6 stroke/EGF-combination coverage and found none (no approved product; only FDA hit is the unrelated Category 2 compounding-risk listing). Set fieldAuthorityRequired=false and added a dated reviewFlag recording the recalibration and search performed."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "gsk2881078",
+   "summary": "Both flagged claims for GSK2881078 (efficacy-lean-mass-healthy-older-001, adverse-effect-hdl-testosterone-001) have claimTypes ('efficacy', 'adverse-effect') outside the pipeline's safety-critical set. Searched FDA.gov (fraudulent-products SARMs/bodybuilding alert) and DailyMed (0 results for GSK2881078/GSK-2881078, no label exists for this never-approved investigational compound) live this session; no regulator document addresses either claim's specific findings (lean-mass accrual magnitude, HDL/testosterone reduction). Both claims already carry study-level attribution to the Clark 2018 JCEM phase 1 trial. Applied Lane 2 (flag-recalibrated) to both: set fieldAuthorityRequired=false and appended a dated reviewFlag documenting the recalibration and the searches performed. No statement text, evidenceTier, confidence, or sourceRefs were changed. ops.needsReview remains true; appended 'authority-support-pass-2026-08-29' to ops.qualityFlags. Packet validated successfully against schema.json.",
+   "perClaim": [
+    {
+     "claimId": "gsk2881078-efficacy-lean-mass-healthy-older-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType 'efficacy' is not in the pipeline's safety-critical set; statement already attributes findings to the specific phase 1 trial. Searched FDA.gov SARMs/bodybuilding alert (no GSK2881078-specific or efficacy content) and DailyMed (0 results for GSK2881078) live this session and found no regulator document. Set fieldAuthorityRequired=false and added a dated reviewFlag recording the recalibration and searches; no other fields changed."
+    },
+    {
+     "claimId": "gsk2881078-adverse-effect-hdl-testosterone-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType 'adverse-effect' is not in the pipeline's safety-critical set. Per the Lane 2 caution for adverse-effect claims, searched FDA.gov (the packet's existing SARMs/bodybuilding alert lists heart attack/stroke, liver injury, testicular shrinkage, infertility, sexual dysfunction for the SARM class but no HDL-cholesterol or testosterone-suppression-specific language) and DailyMed (0 results for GSK2881078, no label exists for this never-approved compound) live this session; no regulator document addresses this specific HDL/testosterone finding. Statement already attributes findings to the specific phase 1 trial. Set fieldAuthorityRequired=false and added a dated reviewFlag recording the recalibration and searches; no other fields changed."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "hexarelin",
+   "summary": "Both flagged hexarelin claims were resolved via Lane 2 (flag-recalibrated), not Lane 1: hexarelin has no FDA-approved product, and FDA.gov/DailyMed searches found no regulator document addressing either claim. Neither claim's claimType (efficacy, adverse-effect) is in the pipeline's hard safety-critical set. For the HPA-axis claim, the previously generic statement was tightened to attribute findings to two specific peer-reviewed human studies (Massoud 1996 JCEM; Rahim 1999 Clin Endocrinol), fetched live via Europe PMC this session, and added as new B1-tier sources with verbatim quotes. fieldAuthorityRequired was set to false on both claims with reviewFlags documenting the recalibration and the regulator search. ops.needsReview remains true and 'authority-support-pass-2026-08-29' was appended to ops.qualityFlags. The packet validates against schema.json.",
+   "perClaim": [
+    {
+     "claimId": "hexarelin-efficacy-human-gh-dose-response-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType 'efficacy' is outside the pipeline's safety-critical set; the statement already attributes findings to the specific Imbimbo 1994 dose-response trial (n=12 healthy male volunteers). Searched FDA.gov and DailyMed for a hexarelin regulator document -- none exists (hexarelin has no FDA-approved product). fieldAuthorityRequired set to false with a reviewFlag documenting the recalibration and search."
+    },
+    {
+     "claimId": "hexarelin-safety-hpa-axis-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType 'adverse-effect' is outside the pipeline's safety-critical set. Searched FDA.gov and DailyMed first (Lane 1) -- no regulator document addresses hexarelin's cortisol/prolactin/HPA-axis effects, so Lane 1 was impossible. Tightened the previously unattributed statement to cite two specific peer-reviewed human studies (Massoud et al. 1996 JCEM dose-response study; Rahim et al. 1999 Clinical Endocrinology chronic-dosing study), fetched live via Europe PMC this session, added as new B1 sourceRefs with verbatim quotes, and set fieldAuthorityRequired to false with a reviewFlag documenting the recalibration and the FDA/DailyMed search.",
+     "newSourceUrl": "https://pubmed.ncbi.nlm.nih.gov/8954038/"
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "ibutamoren",
+   "summary": "Resolved both flagged Ibutamoren claims. The efficacy claim (fat-free-mass, Nass 2008 trial) is now Lane 1 a1a2-linked: added a new A1 source (FDA Pharmacy Compounding Advisory Committee briefing document, fetched live) whose sarcopenia-section discussion of the same Nass et al. 2008 trial corroborates the exact FFM figures (-0.5 kg placebo vs +1.1 kg MK-677, no AVF/fat-mass change, no strength/function benefit). The adverse-effect claim (glucose/cortisol/edema/appetite) is Lane 2 flag-recalibrated: adverse-effect is not in the directive's safety-critical claimType set, the statement already attributes findings to the named Nass 2008 trial, and a documented three-way search (FDA bulk-substances Category 2 list, the FDA PCAC briefing document, and DailyMed's two ibutamoren-mesylate bulk-ingredient listings) found no regulator source addressing these specific metabolic/tolerability findings (only the separate, already-captured CHF signal exists at regulator level). fieldAuthorityRequired was set to false with a reviewFlag documenting the recalibration and the search trail; the CHF regulatory claim itself was untouched. Packet validates against schema.json; ops.needsReview stayed true and 'authority-support-pass-2026-08-29' was appended to qualityFlags.",
+   "perClaim": [
+    {
+     "claimId": "ibutamoren-efficacy-fatfreemass-mixed-001",
+     "lane": "a1a2-linked",
+     "detail": "Added a new A1 source (FDA Pharmacy Compounding Advisory Committee briefing document, fda.gov/media/182087/download, fetched live this session) whose sarcopenia section discusses the same Nass et al. 2008 trial with matching verbatim figures (-0.5 kg placebo vs +1.1 kg MK-677 FFM change, no AVF/total-fat-mass difference, no strength/function benefit), genuinely corroborating this claim's statement from an independent regulator source family. sourceRefs and extractedEvidence updated; fieldAuthorityRequired left true (already-satisfied, now with A1 support).",
+     "newSourceUrl": "https://www.fda.gov/media/182087/download"
+    },
+    {
+     "claimId": "ibutamoren-adverse-effect-metabolic-edema-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; statement already attributes the findings to the named Nass et al. 2008 trial. Searched FDA's Category 2 bulk-substances page (covers only the separate CHF signal from a different hip-fracture trial), the FDA PCAC briefing document (discusses glucose homeostasis only generically, no ibutamoren-specific numeric AE data), and DailyMed (two ibutamoren mesylate listings are bulk-ingredient-for-compounding registrations with no clinical adverse-reaction content) \u2014 no regulator source addresses these specific glucose/cortisol/edema/appetite findings. Set fieldAuthorityRequired=false and added a reviewFlag documenting the recalibration and full search trail; the separate CHF regulatory claim remains untouched and gated."
+    }
+   ]
+  },
+  {
+   "slug": "igf-1-lr3",
+   "ok": true,
+   "summary": "Resolved both flagged authority-support deficits on the IGF-1 LR3 packet. The regulatory doping-status claim was Lane-1 linked to a newly fetched A1 WADA 2026 Prohibited List source. The animal-study mechanism claim was Lane-2 recalibrated (fieldAuthorityRequired set to false) since mechanism/animal-study claimType is outside the directive's safety-critical scope, the statement already attributes findings to the named 1995 Conlon et al. guinea-pig study, and no regulator document addressing this preclinical endpoint was found. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "igf1lr3-regulatory-doping-status-001",
+     "lane": "a1a2-linked",
+     "detail": "Added a new A1 source (WADA's 2026 Prohibited List, S2.3 Growth Factors) fetched this session, with verbatim quote 'Insulin-like growth factor 1 (IGF-1, mecasermin) and its analogues' confirming IGF-1 analogues (which include IGF-1 LR3) are prohibited internationally, corroborating the existing Finland-specific Dopinglinkki source. claimType is regulatory (safety-critical set), fieldAuthorityRequired unchanged (true).",
+     "newSourceUrl": "https://www.wada-ama.org/en/resources/2026-prohibited-list"
+    },
+    {
+     "claimId": "igf1lr3-animal-study-organ-growth-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType is mechanism, which is not in the pipeline's safety-critical set, and the directive scopes fieldAuthorityRequired to regulatory/safety-critical/monitoring/dosing/formulation/storage claims. The statement already attributes findings at study level (Conlon et al. 1995 guinea-pig infusion study) and is a faithful report of a peer-reviewed animal study. Searched FDA.gov and the general web for any regulator document addressing this preclinical organ-growth endpoint; found none (only vendor/informational peptide sites). Set fieldAuthorityRequired=false and added a reviewFlag documenting the recalibration and the search performed."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "kpv",
+   "summary": "One flagged claim for KPV (kpv-studied-use-animal-colitis-001, claimType studied-use). Lane 1 (A1/A2 linkage) was checked and ruled out: fetched the FDA Pharmacy Compounding Advisory Committee KPV briefing document (fda.gov/media/193346/download) live \u2014 it cites Dalmasso et al. 2008 only for in vitro PepT1/mechanism data (Caco2-BBE, HT29, Jurkat cells) and contains no discussion of the C57BL/6 mouse DSS/TNBS colitis in vivo efficacy data this claim reports; DailyMed has no KPV listing (non-approved compound). Applied Lane 2: claimType studied-use is outside the directive's fieldAuthorityRequired scope (safety-critical set is {regulatory, approved-indication, dose-context, formulation, storage-reconstitution, contraindication, warning, monitoring, interaction}), the claim faithfully reports a specific peer-reviewed animal study, and no regulator document addresses it. Set fieldAuthorityRequired=false, tightened the statement to add explicit study-level attribution (\"In the Dalmasso et al. 2008 (Gastroenterology) study, ...\") without altering any facts, and appended a reviewFlag documenting the recalibration and the sources searched. Appended \"authority-support-pass-2026-08-29\" to ops.qualityFlags; ops.needsReview left true. Packet validates against schema.json.",
+   "perClaim": [
+    {
+     "claimId": "kpv-studied-use-animal-colitis-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType studied-use is outside the directive's fieldAuthorityRequired safety-critical set. Fetched FDA's PCAC KPV briefing document (fda.gov/media/193346/download) live and confirmed it discusses Dalmasso 2008 only for in vitro mechanism, not the mouse DSS/TNBS colitis in vivo data this claim reports; DailyMed has no KPV listing. Set fieldAuthorityRequired=false, added explicit study-level attribution to the statement, and logged the recalibration plus searched sources in reviewFlags."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "lgd-3303",
+   "summary": "One flagged claim (lgd3303-regulatory-antidoping-sarm-class-001, claimType regulatory) resolved via Lane 1. Added USADA \u2014 the official U.S. national anti-doping regulator implementing the WADA Code \u2014 as a new A1 source with two verbatim quotes fetched live this session, confirming SARMs as a class (which includes LGD-3303 by chemical/pharmacological category) are prohibited at all times under WADA Prohibited List S1.2. The claim's existing sourceRefs (drugs.com WADA S1 compilation, equine metabolite study) were kept as supporting context but are no longer the sole basis for authority support. fieldAuthorityRequired left true (unchanged, correctly safety-critical/regulatory). reviewFlags updated to note the added independent source and that wada-ama.org itself was robots-blocked this session (still worth re-checking at review). ops.qualityFlags appended with authority-support-pass-2026-08-29. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "lgd3303-regulatory-antidoping-sarm-class-001",
+     "lane": "a1a2-linked",
+     "newSourceUrl": "https://www.usada.org/spirit-of-sport/education/selective-androgen-receptor-modulators-sarms-prohibited-class-anabolic-agents/",
+     "detail": "Added USADA (authorityTier A1, official U.S. national anti-doping regulator implementing the WADA Code) with two verbatim quotes fetched live this session: 'All SARMs are prohibited at all times (both in and out-of-competition) for all athletes...' and 'SARMs are listed in the category of \"Other Anabolic Agents\" under section S1.2 of the WADA Prohibited List.' This directly supports the claim that LGD-3303, as a SARM, falls within the WADA-prohibited class. wada-ama.org itself was robots-blocked this session, so USADA (the implementing national regulator) was used instead; flagged for a re-check against wada-ama.org directly at review."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "ligandrol",
+   "summary": "All 3 flagged claims resolved via Lane 2 (flag-recalibrated): none of the claimTypes (adverse-effect, efficacy, studied-use) are in the directive's safety-critical set, each claim already attributes findings to a specific trial, and live FDA.gov/DailyMed searches this session found no regulator document addressing these trial-level findings for the never-approved investigational SARM LGD-4033. fieldAuthorityRequired set to false on all three with reviewFlag documentation of the search; ops.needsReview left true; qualityFlags got authority-support-pass-2026-08-29 appended. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "ligandrol-adverse-effect-hormone-suppression-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType adverse-effect is not in the pipeline's safety-critical set. Fetched FDA's SARM consumer update and the Prime Sports Nutrition warning letter live this session (hard search per adverse-effect caution) -- both list only general class-level AEs (testicular shrinkage, infertility, liver toxicity, cardiovascular risk), with no data on testosterone/SHBG/HDL-cholesterol/triglyceride suppression specifically. DailyMed search returned 0 results for LGD-4033 (no approved label exists). Statement already attributes the finding to the Basaria 2013 RCT, so fieldAuthorityRequired set false with a reviewFlag documenting the search."
+    },
+    {
+     "claimId": "ligandrol-efficacy-lbm-healthy-men-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType efficacy is not in the pipeline's safety-critical set and the statement already attributes the lean-body-mass finding to the specific Basaria et al. 2013 randomized trial. No regulator source exists for an investigational, never-approved compound's trial efficacy data (confirmed via FDA.gov and a 0-result DailyMed search this session), so fieldAuthorityRequired was set to false with a reviewFlag recording the search."
+    },
+    {
+     "claimId": "ligandrol-studied-use-hip-fracture-phase2-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType studied-use is not in the pipeline's safety-critical set, and the statement already attributes the finding to the specific Viking Therapeutics VK5211 Phase 2 top-line press release. FDA.gov and DailyMed (0 results) were searched this session and no regulator document covers this investigational trial, so fieldAuthorityRequired was set to false with a reviewFlag documenting the search."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "peg-mgf",
+   "summary": "One flagged claim on the peg-mgf packet (peg-mgf-dosecontext-vendor-001, dose-context). No A1/A2 source exists for PEG-MGF dosing since it has no approved product or human trial; confirmed via live FDA and DailyMed checks. Dose-context is safety-critical so Lane 2 recalibration is disallowed \u2014 claim stays Lane 3 (stays-gated) with a documented search trail; schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "peg-mgf-dosecontext-vendor-001",
+     "lane": "stays-gated",
+     "detail": "claimType dose-context is in the pipeline's safety-critical set, so it cannot be recalibrated regardless of source availability. Fetched FDA's compounding bulk-drug-substances page (confirms withdrawn nomination, no dosing data) and searched DailyMed for 'mechano growth factor' (0 results) \u2014 no A1/A2 source addresses PEG-MGF dosing because it has no FDA-approved product or human trial. fieldAuthorityRequired left true; added a reviewFlag documenting the search so the claim remains honestly un-promotable."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "s-23",
+   "summary": "Resolved both flagged claims in the S-23 packet: the regulatory/WADA claim was linked to a newly-fetched official A1 source, and the studied-use excretion claim was recalibrated since its claimType falls outside the directive's fieldAuthorityRequired scope.",
+   "perClaim": [
+    {
+     "claimId": "s23-regulatory-wada-prohibited-001",
+     "lane": "a1a2-linked",
+     "detail": "Fetched the official WADA World Anti-Doping Code International Standard Prohibited List 2026 (effective 1 Jan 2026, publisher World Anti-Doping Agency) this session and confirmed it verbatim lists 'S-23' under S1.2 Other Anabolic Agents alongside andarine, ostarine, ligandrol, RAD140, and YK-11. Added a new A1 source entry with a verbatim quote and appended its sourceRef to the claim, alongside the existing Drugs.com secondary source.",
+     "newSourceUrl": "https://cdn.conmebol.com/wp-content/uploads/2026/02/WORLD-ANTI-DOPING-CODE-2026.pdf"
+    },
+    {
+     "claimId": "s23-studied-use-human-excretion-microdose-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType is 'studied-use', which is outside the directive's safety-critical fieldAuthorityRequired scope (regulatory, safety-critical, monitoring, product-specific dosing, formulation, storage/reconstitution). The statement already attributes findings to the specific 2025 Alhalabi et al. excretion/metabolite study at source level. Searched FDA.gov and DailyMed (no S-23 product/label exists, not an approved drug) and WADA materials (list only documents prohibited status, not PK/detection data) and found no regulator document addressing this specific claim, so set fieldAuthorityRequired=false and recorded the recalibration and search trail in reviewFlags."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "stenabolic",
+   "summary": "Stenabolic packet has one flagged claim (stenabolic-adverse-effect-unknown-profile-001, claimType adverse-effect, fieldAuthorityRequired=true). Lane 1 was attempted hard per the adverse-effect caution: searched FDA.gov (site search/consumer-update pages) and DailyMed for SR9009/Stenabolic specifically \u2014 DailyMed returned zero results (no approved label exists) and no FDA page names SR9009. The general FDA SARMs teen/young-adult warning was reviewed but covers a different chemical class (androgen receptor modulators, not this REV-ERB agonist) and was correctly not linked, since it would not genuinely support this specific claim. Because the claim also carries safety-monitoring/product-specific-dosing content (vendor-sourced 10-40mg/day figures) that the directive treats as fieldAuthorityRequired-scope regardless of its adverse-effect claimType label, it was kept Lane 3 (stays-gated) rather than recalibrated \u2014 a documented reviewFlag records the search and the gap. No other fields, evidenceTier, confidence, or claim substance were changed. ops.needsReview remains true and ops.qualityFlags now includes authority-support-pass-2026-08-29. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "stenabolic-adverse-effect-unknown-profile-001",
+     "lane": "stays-gated",
+     "detail": "Searched FDA.gov (site search + consumer-update SARMs warning page) and DailyMed for SR9009/Stenabolic; DailyMed returned zero results and no FDA page names SR9009. The only adjacent regulator document, FDA's general SARMs teen/young-adult warning, covers a chemically distinct class (androgen receptor modulators) and does not genuinely address this REV-ERB-agonist compound, so it was not linked to avoid fabricating support. Because the claim also embeds vendor-sourced product-specific dosing (10-40mg/day) and a safety-monitoring context that the directive treats as fieldAuthorityRequired-scope, it was not recalibrated under Lane 2; fieldAuthorityRequired stays true and a reviewFlag documents the search performed and the absence of any A1/A2 source, keeping the claim honestly human-review gated."
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "testolone",
+   "summary": "One flagged claim (testolone-adverse-effect-liver-injury-case-001, claimType adverse-effect, fieldAuthorityRequired=true) was resolved via Lane 1: the FDA Warrior Labz SARMS warning letter (authorityTier A1) was re-fetched live this session, confirmed to name RAD-140/Testolone products and state that life-threatening reactions including liver toxicity have occurred in people taking SARM-containing products. Added as a second sourceRef on the claim with a verbatim extractedEvidence quote, plus a reviewFlag documenting the corroboration and its scope limit (it doesn't cover the individual patient's specific lab values). Appended 'authority-support-pass-2026-08-29' to ops.qualityFlags; ops.needsReview left true. Packet re-validated successfully against schema.json.",
+   "perClaim": [
+    {
+     "claimId": "testolone-adverse-effect-liver-injury-case-001",
+     "lane": "a1a2-linked",
+     "detail": "Added FDA Warrior Labz SARMS warning letter (A1, regulator) as a second sourceRef with a verbatim quote fetched live this session: 'Life-threatening reactions, including liver toxicity, have occurred in people taking products containing SARMs.' The letter names RAD-140/Testolone-labeled products specifically, corroborating the case report's core adverse-effect finding (the individual patient lab values remain sourced solely to the case report).",
+     "newSourceUrl": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/warrior-labz-sarms-655280-06122023"
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "slug": "vosilasarm",
+   "summary": "All three flagged claims on the Vosilasarm packet resolved: the hepatotoxicity adverse-effect claim gained a genuine A1 FDA source (Lane 1), and the phase-1-oncology efficacy and oncology-development studied-use claims were recalibrated (Lane 2) since neither claimType is in the pipeline's safety-critical set and both already attribute findings at study/trial-registry level with no regulator document existing for a never-approved investigational compound. Schema validation passes.",
+   "perClaim": [
+    {
+     "claimId": "vosilasarm-adverse-effect-hepatotoxicity-001",
+     "lane": "a1a2-linked",
+     "detail": "Added fda-warrior-labz-warning-letter-2023 (A1, FDA) as a sourceRef with a verbatim quote fetched live this session: \"Life-threatening reactions, including liver toxicity, have occurred in people taking products containing SARMs.\" This directly supports the claim's hepatotoxicity statement, satisfying the A1/A2 requirement without altering fieldAuthorityRequired (left true) or any other claim content.",
+     "newSourceUrl": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/warrior-labz-sarms-655280-06122023"
+    },
+    {
+     "claimId": "vosilasarm-efficacy-phase1-oncology-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType efficacy is not in the pipeline's safety-critical set. The statement already attributes findings at study level (\"In the first-in-human Phase 1 dose-escalation study...\", LoRusso et al. 2022), so no statement edit was needed. Searched FDA.gov (warning letter, Category 2 compounding list), DailyMed (0 results for RAD-140/vosilasarm), and general web search for any FDA record of the EP0062/vosilasarm trial results \u2014 none exists, as expected for a never-approved investigational compound. Set fieldAuthorityRequired=false and added the recalibration reviewFlag."
+    },
+    {
+     "claimId": "vosilasarm-studied-use-oncology-development-001",
+     "lane": "flag-recalibrated",
+     "detail": "claimType studied-use is not in the pipeline's safety-critical set. The statement already attributes the development program to Ellipses Pharma and trial registry NCT05573126/EP0062 at source level. Same searches (FDA.gov, DailyMed, web search) confirmed no regulator document tracks this investigational trial's studied-use status. Set fieldAuthorityRequired=false and added the recalibration reviewFlag."
+    }
+   ]
+  }
+ ],
+ "audit": {
+  "overallPass": false,
+  "perPacket": [
+   {
+    "slug": "andarine",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": [
+     "Warning: new A1 source for andarine-regulatory-wada-001 is a WADA 2026 Prohibited List PDF hosted at cdn.conmebol.com (a South American football confederation's CDN), not an official wada-ama.org URL. Content verified accurate (S1.2 quote confirmed verbatim via WebFetch) but the hosting domain is atypical for an A1 regulator citation."
+    ]
+   },
+   {
+    "slug": "ghrp-2",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "ghrp-6",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "gsk2881078",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "hexarelin",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": [
+     "New B1 source Massoud et al. 1996 (JCEM) verified verbatim via Oxford Academic abstract page (cortisol '~40% step increase at 0.5 microgram/kg' and prolactin '180% plateau, ED50 0.39 microgram/kg' both confirmed). Rahim et al. 1999 (Clin Endocrinol) confirmed to exist and match the cited topic/title via PubMed/search-index results, but full abstract text could not be independently re-fetched (PubMed reCAPTCHA-blocked, institutional repository 403) to verify the exact quote verbatim -- not treated as a blocker since paper identity and subject match are solid, but flagged for reviewer awareness."
+    ]
+   },
+   {
+    "slug": "ibutamoren",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "igf-1-lr3",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": [
+     "BLOCKER: the new A1 source cited for igf1lr3-regulatory-doping-status-001 (url https://www.wada-ama.org/en/resources/2026-prohibited-list) is a landing/description page that only offers a download link and does not itself display Prohibited List content. The cited extractedEvidence quote ('Insulin-like growth factor 1 (IGF-1, mecasermin) and its analogues', S2.3) could not be found at that URL via WebFetch. The underlying substance/quote is likely accurate to the real 2026 WADA list (confirmed via an alternate WADA PDF mirror used for other packets), but the source as recorded in this packet does not support itself and should be replaced with a URL that actually serves the document (e.g. the same PDF mirror used in the andarine/s-23 packets)."
+    ]
+   },
+   {
+    "slug": "kpv",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "lgd-3303",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "ligandrol",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "peg-mgf",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "s-23",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": [
+     "Warning: new A1 source for s23-regulatory-wada-prohibited-001 is also hosted at cdn.conmebol.com rather than an official wada-ama.org domain (same pattern as andarine). Content verified accurate (S1.2 quote naming S-23 confirmed verbatim via WebFetch)."
+    ]
+   },
+   {
+    "slug": "stenabolic",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "testolone",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   },
+   {
+    "slug": "vosilasarm",
+    "schemaValid": true,
+    "lanesJustified": true,
+    "issues": []
+   }
+  ],
+  "blockers": [
+   "igf-1-lr3 / igf1lr3-regulatory-doping-status-001: the newly added A1 source URL (https://www.wada-ama.org/en/resources/2026-prohibited-list) does not itself contain the quoted S2.3 text ('Insulin-like growth factor 1 (IGF-1, mecasermin) and its analogues') -- it is a landing page describing the list's availability, not the document. WebFetch confirms the page has only a generic 'Download' link and no substance-list content. The claim's underlying fact is almost certainly correct (verified against an alternate WADA 2026 PDF mirror), but the citation as recorded fails independent source verification and should be corrected to a URL that actually serves the document text."
+  ],
+  "warnings": [
+   "andarine and s-23 both cite their new A1 WADA 2026 Prohibited List source at cdn.conmebol.com (a South American football confederation's CDN) rather than an official wada-ama.org domain. Content was verified accurate via WebFetch for both, so this is not a blocker, but it is an unusual/unofficial hosting location for a document being recorded as an A1 regulator source; recommend re-pointing to a canonical wada-ama.org-hosted copy at next review.",
+   "hexarelin's second new source (Rahim et al. 1999, Clinical Endocrinology) was confirmed to exist and match the cited title/topic via PubMed and an institutional-repository search-index hit, but the exact abstract quote could not be independently re-verified verbatim during this audit because both PubMed and the Christie repository blocked automated fetch (reCAPTCHA / 403). Not a blocker given the strong title/topic match, but worth a manual look at review time.",
+   "Schema validation and lane-discipline checks (no safety-critical claimType with fieldAuthorityRequired=false) passed cleanly across all 15 packets with zero violations -- the recalibration work was disciplined and consistently well-documented with search trails in reviewFlags. Spot-checks of flag-recalibrated claims in andarine, ghrp-2, gsk2881078, kpv, ligandrol, and stenabolic found no regulator source the agents had missed. No advice, efficacy inflation, or safety-assurance language was introduced by any edit reviewed."
+  ]
+ },
+ "operatorCorrections": [
+  "igf-1-lr3: WADA source URL repointed from landing page to canonical 2026 Prohibited List PDF; S2.3 quote re-verified against official document content (via mirror; wada-ama.org blocks automated fetch); disclosure reviewFlag added.",
+  "andarine, s-23: WADA source URLs repointed from cdn.conmebol.com mirror to canonical wada-ama.org PDF; quotes verified against official document content; disclosure reviewFlags added.",
+  "s-23: drugs.com source URL restored after an over-broad sweep briefly rewrote it.",
+  "hexarelin: Rahim 1999 abstract quote re-verified verbatim via Europe PMC REST (audit could not reach PubMed)."
+ ]
+}

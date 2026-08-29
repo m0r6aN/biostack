@@ -1,0 +1,342 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "ibutamoren-evidence-expansion-001",
+    "category": "small-molecule-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T23:50:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Ibutamoren",
+    "aliases": [
+      "MK-677",
+      "MK-0677",
+      "Ibutamoren mesylate",
+      "Nutrobal"
+    ],
+    "classification": "Small molecule (non-peptide)",
+    "compoundFamily": "Orally active ghrelin-receptor agonist / growth hormone secretagogue",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": "DB18214",
+      "pubchem": "178024",
+      "chembl": null,
+      "doi": null,
+      "pmid": "18981485"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-bulk-substances-category2-ibutamoren",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "nass-2008-annals-mk677-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Effects of an Oral Ghrelin Mimetic on Body Composition and Clinical Outcomes in Healthy Older Adults: A Randomized Trial",
+      "publisher": "Annals of Internal Medicine (Nass R, Pezzoli SS, Oliveri MC, et al., 2008)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18981485/",
+      "doi": "10.7326/0003-4819-149-9-200811040-00003",
+      "pmid": "18981485",
+      "publishedAt": "2008-11-04T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-178024",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Ibutamoren (CID 178024)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Ibutamoren",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "fda-pcac-briefing-2026-ibutamoren-sarcopenia",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document: Pharmacy Compounding Advisory Committee (PCAC) Meeting",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/182087/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "revolutionhealth-mk677-marketing",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C2",
+      "title": "Peptide Therapy - MK-677",
+      "publisher": "Revolution Health & Wellness (clinic/vendor blog)",
+      "url": "https://revolutionhealth.org/blogs/news/peptide-therapy-mk-677",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "ibutamoren-identity-classification-001",
+      "claimType": "identity",
+      "statement": "Ibutamoren (MK-677 / MK-0677) is a small-molecule, orally bioavailable ghrelin-receptor (growth hormone secretagogue receptor) agonist, not a peptide, with PubChem CID 178024 and molecular formula C27H36N4O5S.",
+      "context": {
+        "population": null,
+        "route": "oral",
+        "formulation": "ibutamoren (free base); mesylate salt used in clinical trials",
+        "useCase": "compound identity",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-178024"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-178024",
+          "quote": "CID 178024; Molecular Formula C27H36N4O5S",
+          "pageOrSection": "Compound summary header"
+        }
+      ],
+      "reviewFlags": [
+        "CAS number and UNII not resolved from an accessible structured-database page this session; PubChem full JS-rendered compound page and PubChem PUG-REST endpoint were both inaccessible (JS-gated / robots-disallowed) at access time"
+      ]
+    },
+    {
+      "claimId": "ibutamoren-regulatory-compounding-chf-signal-001",
+      "claimType": "regulatory",
+      "statement": "FDA lists ibutamoren mesylate on its Category 2 list of bulk drug substances that may present significant safety risks for compounding (added to the 503B list December 29, 2022 and the 503A list September 29, 2023), citing potential risk of congestive heart failure and referencing a randomized, placebo-controlled hip-fracture-recovery trial of ibutamoren mesylate that was terminated early for a possible CHF safety signal.",
+      "context": {
+        "population": "patients exposed to compounded ibutamoren mesylate products; trial population was older adults recovering from hip fracture",
+        "route": null,
+        "formulation": "compounded ibutamoren mesylate",
+        "useCase": "compounding safety and regulatory boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bulk-substances-category2-ibutamoren"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bulk-substances-category2-ibutamoren",
+          "quote": "Ibutamoren mesylate poses significant safety risks due to the potential for congestive heart failure in certain patients. The agency is aware of a randomized, placebo-controlled trial assessing ibutamoren mesylate for the treatment of patients recovering from hip fracture that 'was terminated early due to a potential safety signal of congestive heart failure.'",
+          "pageOrSection": "Category 2 table, Ibutamoren mesylate row"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "verify current Category 2 status at review time against the live FDA page; listing dates and category membership have changed for other peptides/secretagogues in 2026 revisions",
+        "identify and, if possible, obtain the underlying hip-fracture trial publication (MK-0677 hip fracture phase IIb study) independently of the FDA summary"
+      ]
+    },
+    {
+      "claimId": "ibutamoren-mechanism-ghrelin-agonist-001",
+      "claimType": "mechanism",
+      "statement": "Ibutamoren is a non-peptide agonist at the ghrelin/growth hormone secretagogue receptor that increases pulsatile growth hormone secretion and downstream IGF-1 levels when administered orally.",
+      "context": {
+        "population": "healthy older adults (trial population)",
+        "route": "oral",
+        "formulation": "MK-677, 25 mg tablet",
+        "useCase": "mechanism description",
+        "doseText": "25 mg orally once daily (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "nass-2008-annals-mk677-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nass-2008-annals-mk677-rct",
+          "quote": "To determine whether MK-677, an oral ghrelin mimetic, increases growth hormone secretion into the young-adult range without serious adverse effects, prevents the decline of fat-free mass, and decreases abdominal visceral fat in healthy older adults.",
+          "pageOrSection": "Abstract, Objective"
+        },
+        {
+          "sourceRef": "nass-2008-annals-mk677-rct",
+          "quote": "Daily administration of MK-677 significantly increased growth hormone and insulin-like growth factor I levels to those of healthy young adults without serious adverse effects.",
+          "pageOrSection": "Abstract, Results"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "ibutamoren-efficacy-fatfreemass-mixed-001",
+      "claimType": "efficacy",
+      "statement": "In a 2-year, double-blind, randomized, placebo-controlled trial in 65 healthy adults aged 60-81, oral MK-677 25 mg/day significantly increased fat-free mass relative to placebo at 1 year (change +1.1 kg vs -0.5 kg, P<0.001) and increased body cell mass, but produced no significant change in abdominal visceral fat or total fat mass, and the increase in fat-free mass did not translate into improved strength or physical function.",
+      "context": {
+        "population": "65 healthy adults aged 60-81 (men, women on and off hormone replacement therapy)",
+        "route": "oral",
+        "formulation": "MK-677 25 mg tablet",
+        "useCase": "prevention of age-related fat-free mass decline (investigational; not an approved indication)",
+        "doseText": "25 mg orally once daily for up to 2 years (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "nass-2008-annals-mk677-rct",
+        "fda-pcac-briefing-2026-ibutamoren-sarcopenia"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nass-2008-annals-mk677-rct",
+          "quote": "Mean fat-free mass decreased in the placebo group but increased in the MK-677 group (change, -0.5 kg [95% CI, -1.1 to 0.2 kg] vs. 1.1 kg [CI, 0.7 to 1.5 kg], respectively; P < 0.001)",
+          "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "nass-2008-annals-mk677-rct",
+          "quote": "No significant differences were observed in abdominal visceral fat or total fat mass",
+          "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "nass-2008-annals-mk677-rct",
+          "quote": "Increased fat-free mass did not result in changes in strength or function.",
+          "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-2026-ibutamoren-sarcopenia",
+          "quote": "Healthy adults ages 60 to 81 years received MK-677 25 mg (n=47) or placebo (n=24) once daily for 1 year... After 12 months, 24-hour mean GH increased 1.8-fold and IGF-1 levels increased by 1.5-fold from baseline in the MK-677 group. Mean FFM decreased -0.5 kg in the placebo group and increased 1.1 kg in the MK-677 group. There were no differences in AVF or total fat mass... Increased FFM did not result in changes in strength or function.",
+          "pageOrSection": "Sarcopenia/aging discussion, Nass et al. 2008 summary"
+        }
+      ],
+      "reviewFlags": [
+        "trial dose context must never be presented as a use recommendation",
+        "one 65-person single-center trial in older adults; do not generalize functional-outcome findings to younger gray-market users or to other populations",
+        "limitation explicitly noted by authors: study power was insufficient to evaluate functional end points",
+        "authority-support verified 2026-08-29: independent regulator source (FDA Pharmacy Compounding Advisory Committee briefing document, fetched live this session) discusses this same Nass et al. 2008 trial and its fat-free-mass findings, corroborating the claim from a materially different source family (regulator committee briefing vs. peer-reviewed journal)."
+      ]
+    },
+    {
+      "claimId": "ibutamoren-adverse-effect-metabolic-edema-001",
+      "claimType": "adverse-effect",
+      "statement": "In the Nass et al. 2008 controlled trial of oral MK-677 25 mg/day in healthy older adults, MK-677 was associated with increased fasting blood glucose (+0.3 mmol/L, P=0.015) and decreased insulin sensitivity, increased body weight (+2.7 kg vs +0.8 kg placebo, P=0.003), elevated cortisol (+47 nmol/L, P=0.020), and the most frequent side effects were increased appetite (subsiding over months) and transient, mild lower-extremity edema and muscle pain.",
+      "context": {
+        "population": "65 healthy adults aged 60-81",
+        "route": "oral",
+        "formulation": "MK-677 25 mg tablet",
+        "useCase": "safety/tolerability in a supervised clinical-trial setting",
+        "doseText": "25 mg orally once daily for up to 2 years (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "nass-2008-annals-mk677-rct"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nass-2008-annals-mk677-rct",
+          "quote": "Fasting blood glucose level increased an average of 0.3 mmol/L (5 mg/dL) in the MK-677 group (P = 0.015), and insulin sensitivity decreased.",
+          "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "nass-2008-annals-mk677-rct",
+          "quote": "The most frequent side effects were an increase in appetite that subsided in a few months and transient, mild lower-extremity edema and muscle pain.",
+          "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "nass-2008-annals-mk677-rct",
+          "quote": "Cortisol levels increased 47 nmol/L (CI, 28 to 71 nmol/L (1.7 microg/dL [CI, 1.0 to 2.6 microg/dL]) in MK-677 recipients (P = 0.020).",
+          "pageOrSection": "Abstract, Results"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim",
+        "must be read alongside the separate FDA congestive-heart-failure signal claim from a different (hip-fracture) trial population; the two adverse-signal sources should not be merged into one undifferentiated safety statement",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope (regulatory, safety-critical, monitoring, product-specific dosing, formulation, and storage/reconstitution); claim reports peer-reviewed findings at source-level attribution (Nass et al. 2008 trial, named in the statement); no regulator document addresses these specific adverse findings (searched: FDA bulk drug substances Category 2 list, which documents only the congestive-heart-failure signal from a separate hip-fracture trial and is already cited on claim ibutamoren-regulatory-compounding-chf-signal-001; the FDA Pharmacy Compounding Advisory Committee briefing document at fda.gov/media/182087/download, which discusses glucose homeostasis only in general terms with no ibutamoren-specific numeric glucose/insulin/cortisol/edema findings; and DailyMed, whose two ibutamoren mesylate listings (AX Pharmaceutical Corp, setid db972bf4-4818-46b5-9219-0fb17006f722 and fd6c4188-1165-43ea-bbb2-cea266909a13) are bulk-ingredient-for-compounding registrations with no clinical adverse-reaction content). The separate CHF safety signal remains captured and gated on claim ibutamoren-regulatory-compounding-chf-signal-001."
+      ]
+    },
+    {
+      "claimId": "ibutamoren-evidence-gap-wellness-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "No ibutamoren product is FDA-approved for any indication, and vendor/clinic marketing commonly claims broad benefits - enhanced muscle protein synthesis, improved deep/REM sleep, faster recovery from workouts and surgery, youthful skin and hair, slower biological aging, fat loss, joint health, and elevated mood via serotonin/dopamine - that are not supported by the identified controlled human evidence, which comes from a single trial in older adults showing increased fat-free mass but no functional/strength benefit, adverse metabolic signals (higher fasting glucose, lower insulin sensitivity), and a separate FDA-flagged cardiac safety signal from an unrelated trial population.",
+      "context": {
+        "population": "consumers of gray-market/compounded ibutamoren products marketed for wellness, anti-aging, and performance use",
+        "route": "oral (as marketed)",
+        "formulation": "gray-market/compounded ibutamoren capsules or liquid",
+        "useCase": "anti-aging / muscle growth / sleep / recovery / mood marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "revolutionhealth-mk677-marketing",
+        "nass-2008-annals-mk677-rct",
+        "fda-bulk-substances-category2-ibutamoren"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "revolutionhealth-mk677-marketing",
+          "quote": "Enhances muscle protein synthesis; Improve[s] sleep quality-Especially REM Sleep; Faster recovery from workouts, injuries, surgeries; Youthful skin and hair growth; Slower biological aging markers; Most potent non-injectable GH booster available; Reduced joint inflammation; Elevated serotonin and dopamine levels",
+          "pageOrSection": "Marketing benefit list"
+        },
+        {
+          "sourceRef": "nass-2008-annals-mk677-rct",
+          "quote": "Increased fat-free mass did not result in changes in strength or function.",
+          "pageOrSection": "Abstract, Results"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular marketing claims (sleep quality, skin/hair, biological aging, mood, joint health) lack any identified supporting controlled human outcome evidence in this packet",
+        "vendor source is a clinic/telehealth marketing page, not an independent secondary source; treat as documentation of the claim gap, not as evidence for the claims themselves"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "ibutamoren-conflict-cardiac-signal-vs-single-rct-tolerability-001",
+      "claimRefs": [
+        "ibutamoren-regulatory-compounding-chf-signal-001",
+        "ibutamoren-adverse-effect-metabolic-edema-001"
+      ],
+      "severity": "moderate",
+      "summary": "FDA's compounding-risk listing cites a congestive-heart-failure safety signal from a terminated hip-fracture-recovery trial, while the identified peer-reviewed controlled trial (healthy older adults, 25 mg/day, up to 2 years) reported the regimen as 'generally well tolerated' with no serious adverse effects and only mild edema/appetite/muscle-pain side effects. The underlying hip-fracture trial publication itself was not independently retrieved this session, so the population, dose, and event details behind the CHF signal could not be cross-checked against the FDA summary language.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS number and UNII identifiers not resolved: PubChem's full compound page requires JavaScript and the PUG-REST JSON endpoint was blocked by robots.txt in this session; DrugBank page (DB18214) is login-gated for CAS/UNII fields.",
+      "The FDA-cited hip-fracture-recovery trial underlying the congestive-heart-failure signal was not independently retrieved or verified this session (only the FDA summary sentence was read); an independent source (e.g., the original phase IIb hip-fracture publication) should be pulled at review time to verify the CHF signal detail and resolve the open conflict.",
+      "FDA Category 2 bulk-substance listings are subject to periodic revision; confirm ibutamoren mesylate's current 503A/503B status against the live FDA page at review time.",
+      "Human efficacy evidence rests on a single controlled trial in older adults (n=65); this is thin for the range of uses (younger/general-population muscle and recovery use) for which ibutamoren is commonly marketed.",
+      "audit: packet.category corrected peptides-core -> small-molecule-core to match compound classification"
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "negative-signal-cardiac-flagged",
+      "thin-human-evidence",
+      "single-trial-population",
+      "misinformation-marketing-gap-documented",
+      "identifier-resolution-incomplete",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

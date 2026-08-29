@@ -20,7 +20,7 @@
     "compoundFamily": "Synthetic tetrapeptide (pineal-gland-derived, telomerase/circadian research peptide)",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
+      "unii": "O65P17785G",
       "casNumber": "307297-39-8",
       "drugbank": null,
       "pubchem": "219042",
@@ -65,6 +65,54 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T21:30:00Z"
+    },
+    {
+      "sourceId": "pubchem-pug-rest-synonyms-219042",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem PUG-REST Synonyms for CID 219042 (Epitalon)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/219042/synonyms/JSON",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ncats-gsrs-epitalon",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "Epitalon substance record (UNII O65P17785G)",
+      "publisher": "NIH/NCATS Global Substance Registration System (GSRS)",
+      "url": "https://gsrs.ncats.nih.gov/api/v1/substances/search?q=epitalon",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "mcdermott-pcac-vote-2026",
+      "sourceType": "professional-legal-analysis",
+      "authorityTier": "B1",
+      "title": "Bulk-list bound? PCAC backs majority of peptides in two-day public meeting",
+      "publisher": "McDermott Will & Emery",
+      "url": "https://www.mcdermottlaw.com/insights/bulk-list-bound-pcac-backs-majority-of-peptides-in-two-day-public-meeting/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "fda-category2-bulk-substances",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
       "sourceId": "chemicalbook-epitalon",
@@ -145,7 +193,9 @@
       "sourceRefs": [
         "pubchem-cid-219042",
         "chemicalbook-epitalon",
-        "superpower-epitalon-guide"
+        "superpower-epitalon-guide",
+        "pubchem-pug-rest-synonyms-219042",
+        "ncats-gsrs-epitalon"
       ],
       "extractedEvidence": [
         {
@@ -157,11 +207,22 @@
           "sourceRef": "superpower-epitalon-guide",
           "quote": "Every human clinical study of meaningful size used the polypeptide complex, not the tetrapeptide analog",
           "pageOrSection": "Evidence limitations"
+        },
+        {
+          "sourceRef": "pubchem-pug-rest-synonyms-219042",
+          "quote": "307297-39-8",
+          "pageOrSection": "Synonyms list (CAS Registry Number), PubChem PUG-REST JSON for CID 219042"
+        },
+        {
+          "sourceRef": "ncats-gsrs-epitalon",
+          "quote": "EPITALON ... UNII code: O65P17785G ... molecular formula C14H22N4O9",
+          "pageOrSection": "NCATS GSRS substance search result for \"epitalon\""
         }
       ],
       "reviewFlags": [
-        "CAS number sourced from a secondary structured-database (ChemicalBook), not PubChem directly, because PubChem's compound page required JavaScript rendering; verify against PubChem's REST API at review time",
-        "distinction between Epitalon (tetrapeptide) and Epithalamin (polypeptide complex) is load-bearing for every efficacy/safety claim below and must not be collapsed"
+        "CAS number (307297-39-8) independently re-verified this review pass via PubChem's own PUG-REST synonyms endpoint (not just the secondary ChemicalBook listing) and cross-checked against NCATS GSRS, which also supplied the UNII (O65P17785G) now added to compound.externalIdentifiers",
+        "distinction between Epitalon (tetrapeptide) and Epithalamin (polypeptide complex) is load-bearing for every efficacy/safety claim below and must not be collapsed",
+        "independent review note: some secondary/tertiary sources (e.g., Wikipedia) frame Epitalon more loosely as 'the putative active component of epithalamin' and loosely attribute epithalamin mortality/telomere outcome studies to 'epitalon'; the underlying primary literature for those specific outcome studies used the extract (Epithalamine), not the synthetic tetrapeptide, so the packet's stricter identity separation is the more accurate framing and is retained, but readers should be aware some secondary sources blur this line"
       ]
     },
     {
@@ -201,7 +262,7 @@
     {
       "claimId": "epitalon-regulatory-503a-recommendation-001",
       "claimType": "regulatory",
-      "statement": "In its July 2026 PCAC briefing, FDA concluded that the evaluation criteria weigh against placing epitalon (free base) or epitalon acetate on the 503A Bulks List, noting neither is a component of an FDA-approved drug, there is no applicable USP/NF monograph, there are no clinical data supporting safety in humans, and there is a lack of evidence supporting effectiveness for the proposed use (insomnia).",
+      "statement": "FDA STAFF's July 2026 PCAC briefing document concluded, in its own pre-meeting evaluation, that the evaluation criteria weigh against placing epitalon (free base) or epitalon acetate on the 503A Bulks List, noting neither is a component of an FDA-approved drug, there is no applicable USP/NF monograph, there are no clinical data supporting safety in humans, and there is a lack of evidence supporting effectiveness for the proposed use (insomnia). However, at the subsequent July 23-24, 2026 PCAC meeting, the committee itself voted 7-4 (with 1 abstention) IN FAVOR of recommending epitalon for the 503A Bulks List, diverging from the staff briefing's negative evaluation; epitalon was one of six of the seven peptides the committee recommended, and only emideltide (DSIP) was voted down (6-7, with 1 abstention). This committee vote is a non-binding recommendation to FDA, not final agency action: FDA has not completed formal rulemaking/classification for epitalon as of this review, and the agency may accept, reject, or take no immediate action on the committee's recommendation.",
       "context": {
         "population": "prospective compounded-product users",
         "route": null,
@@ -213,7 +274,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "fda-pcac-briefing-193345"
+        "fda-pcac-briefing-193345",
+        "mcdermott-pcac-vote-2026"
       ],
       "extractedEvidence": [
         {
@@ -235,11 +297,27 @@
           "sourceRef": "fda-pcac-briefing-193345",
           "quote": "weighs against epitalon (free base) or epitalon acetate being placed on that list",
           "pageOrSection": "p. 37, final recommendation"
+        },
+        {
+          "sourceRef": "mcdermott-pcac-vote-2026",
+          "quote": "\"Epitalon (free base / acetate)\" ... \"Friday, July 24\" ... \"7 – 4 (1 abstention)\" ... \"Recommended for inclusion\"",
+          "pageOrSection": "PCAC meeting vote-results table"
+        },
+        {
+          "sourceRef": "mcdermott-pcac-vote-2026",
+          "quote": "\"Emideltide (DSIP) (free base / acetate)\" ... \"Friday, July 24\" ... \"6 – 7 (1 abstention)\" ... \"NOT recommended for inclusion\"",
+          "pageOrSection": "PCAC meeting vote-results table"
+        },
+        {
+          "sourceRef": "mcdermott-pcac-vote-2026",
+          "quote": "PCAC is an advisory body to the FDA; PCAC reviews scientific evidence and provides recommendations to the FDA on questions related to drug compounding. Critically, the committee does not make law and does not issue approvals.",
+          "pageOrSection": "Article body"
         }
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "confirm final PCAC committee vote/outcome versus this briefing-document staff position, and re-check FDA's Category 2 significant-safety-risk list for any subsequent epitalon listing"
+        "resolved this review pass: independent professional-legal-analysis source (McDermott Will & Emery) confirms the July 24, 2026 PCAC committee vote (7-4, 1 abstention) recommended epitalon FOR the 503A Bulks List, contrary to the staff briefing document's own pre-meeting negative evaluation; the statement now attributes the negative evaluation specifically to FDA staff, adds the committee's favorable vote, and notes the vote is non-binding pending formal FDA rulemaking",
+        "re-checked FDA's Category 2 significant-safety-risk bulk drug substances list this review pass: epitalon is not currently on that list; it appears only in the 'nominated but withdrawn' section (nomination withdrawn by the nominator) — see claim epitalon-warning-immunogenicity-carcinogenicity-001"
       ]
     },
     {
@@ -257,7 +335,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "fda-pcac-briefing-193345"
+        "fda-pcac-briefing-193345",
+        "fda-category2-bulk-substances"
       ],
       "extractedEvidence": [
         {
@@ -274,17 +353,24 @@
           "sourceRef": "fda-pcac-briefing-193345",
           "quote": "there are no clinical data to support the safety of epitalon (free base) or epitalon acetate when used in humans",
           "pageOrSection": "p. 37"
+        },
+        {
+          "sourceRef": "fda-category2-bulk-substances",
+          "quote": "Compounded drugs containing epitalon may pose risk for immunogenicity for certain routes of administration due to the potential for aggregation and peptide-related impurities.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn"
         }
       ],
       "reviewFlags": [
         "safety-critical claim; theoretical mechanism-based concern, not an observed adverse-event signal from human data",
-        "this is not medical advice and must not be paraphrased as a contraindication list"
+        "this is not medical advice and must not be paraphrased as a contraindication list",
+        "independent review note: epitalon was separately nominated for FDA's Category 2 significant-safety-risk compounding list on similar immunogenicity/aggregation grounds, but that nomination was withdrawn by the nominator and epitalon is not currently on the Category 2 list; this is consistent with, and does not undermine, the PCAC briefing's theoretical immunogenicity concern",
+        "independent review note: the broader telomere-length/cancer-risk literature is more complex and bidirectional than a single-direction 'longer telomeres = more cancer risk' statement (some cancers are associated with short telomeres too); the claim's summary should be read as the FDA briefing's theoretical, mechanism-based concern, not a settled epidemiological finding — the packet's own framing already treats it as theoretical rather than an observed signal"
       ]
     },
     {
       "claimId": "epitalon-studied-use-epithalamin-melatonin-001",
       "claimType": "studied-use",
-      "statement": "The main published controlled human research related to this peptide family used Epithalamin, a natural pineal polypeptide extract, not the synthetic tetrapeptide Epitalon: a small human study in healthy elderly subjects found that a course of Epithalamin treatment modulated pineal melatonin-producing function, increasing nighttime plasma melatonin in subjects with initially low pineal activity. This finding cannot be extrapolated to the single-tetrapeptide product marketed as Epitalon/Epithalon today.",
+      "statement": "The main published controlled human research related to this peptide family used Epithalamin, a natural pineal polypeptide extract, not the synthetic tetrapeptide Epitalon: a small randomized human study in healthy elderly subjects found that a course of Epithalamin treatment modulated pineal melatonin-producing function, increasing nighttime plasma melatonin in subjects with initially low pineal activity. This finding cannot be extrapolated to the single-tetrapeptide product marketed as Epitalon/Epithalon today.",
       "context": {
         "population": "healthy elderly human subjects",
         "route": "not specified in fetched abstract",
@@ -294,7 +380,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "korkushko-2004-melatonin-human",
         "alzdiscovery-epithalamin-epitalon"
@@ -309,12 +395,19 @@
           "sourceRef": "alzdiscovery-epithalamin-epitalon",
           "quote": "every preclinical and clinical study discussed here has been conducted by Dr. Khavinson's group in Russia with no independent confirmation of their results",
           "pageOrSection": "p. 2"
+        },
+        {
+          "sourceRef": "korkushko-2004-melatonin-human",
+          "quote": "Clinical Trial; Randomized Controlled Trial",
+          "pageOrSection": "Publication types"
         }
       ],
       "reviewFlags": [
         "compound-identity conflict: Epithalamin (polypeptide extract) versus Epitalon (single tetrapeptide) are frequently marketed as interchangeable but are not the same substance; see conflict epitalon-conflict-formulation-001",
         "single-group/no-independent-replication research base; not a placebo-controlled RCT of the tetrapeptide sold today",
-        "trial dosing/protocol details are context only, not a use recommendation"
+        "trial dosing/protocol details are context only, not a use recommendation",
+        "independent review note: PubMed's own publication-type metadata for this record (PMID 15452611) tags it as both 'Clinical Trial' and 'Randomized Controlled Trial'; the fetched abstract text itself does not describe randomization or blinding procedures in detail, so 'randomized' has been added to the statement based on the PubMed classification, and the underlying primary paper's methods section should still be checked if full confirmation is needed",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"a small randomized human study in healthy elderly subjects found that a course of Epithalamin treatment modulated...\"); no regulator document exists for this claim (searched: fda.gov site search for 'Epithalamin melatonin circadian' returned only the already-cited PCAC briefing, which discusses epitalon's general regulatory/safety posture but does not address the Korkushko et al. 2004 melatonin/circadian findings; dailymed.nlm.nih.gov has no listing for epitalon or epithalamin, consistent with there being no FDA-approved product)"
       ]
     },
     {
@@ -394,11 +487,12 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "CAS number was sourced from a secondary structured database (ChemicalBook) rather than confirmed directly on PubChem's own compound page, which required JavaScript rendering not available to the fetch tool; re-verify via PubChem PUG REST API at review time.",
-      "UNII, DrugBank, and ChEMBL identifiers not resolved from structured databases.",
-      "Compound-identity ambiguity between Epitalon (tetrapeptide) and Epithalamin (polypeptide extract) affects most efficacy-adjacent claims and needs independent confirmation against primary Khavinson-group publications.",
+      "RESOLVED 2026-08-29 remediation pass: CAS number (307297-39-8) independently re-confirmed directly via PubChem's own PUG-REST synonyms endpoint (no longer relying only on the secondary ChemicalBook listing), and cross-checked against NCATS GSRS, which also supplied a confirmed UNII (O65P17785G), now added to compound.externalIdentifiers.",
+      "DrugBank and ChEMBL identifiers still not resolved from structured databases (UNII resolved 2026-08-29 via NCATS GSRS: O65P17785G).",
+      "Compound-identity ambiguity between Epitalon (tetrapeptide) and Epithalamin (polypeptide extract) affects most efficacy-adjacent claims and needs independent confirmation against primary Khavinson-group publications; kept as needs-human-review per conflict epitalon-conflict-formulation-001.",
       "Human evidence base for the Epitalon tetrapeptide itself is thin to nonexistent; nearly all human data pertains to a related but distinct formulation (Epithalamin) from a single non-independently-replicated research group.",
-      "Confirm final PCAC committee outcome/vote versus the July 2026 FDA staff briefing-document position, and re-check FDA's Category 2 significant-safety-risk compounding list for any subsequent epitalon listing."
+      "RESOLVED 2026-08-29 remediation pass: independent professional-legal-analysis source (McDermott Will & Emery) confirms the July 24, 2026 PCAC committee voted 7-4 (1 abstention) IN FAVOR of recommending epitalon for the 503A Bulks List, reversing the staff briefing's negative pre-meeting evaluation; claim epitalon-regulatory-503a-recommendation-001 has been rewritten accordingly and the vote is noted as non-binding pending final FDA rulemaking. Also re-checked FDA's Category 2 significant-safety-risk compounding list: epitalon is not currently listed (nomination withdrawn by nominator); folded into claim epitalon-warning-immunogenicity-carcinogenicity-001.",
+      "Conflicts epitalon-conflict-formulation-001 and epitalon-conflict-telomerase-safety-001 remain legitimately unresolved/needs-human-review after this independent-review pass; that gating is correct and has been kept, not resolved by re-affirmation."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -406,7 +500,9 @@
       "thin-human-evidence",
       "compound-identity-ambiguity",
       "no-independent-replication",
-      "gray-market-only"
+      "gray-market-only",
+      "remediation-pass-2026-08-29",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

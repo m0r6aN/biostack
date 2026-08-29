@@ -1,0 +1,423 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "ghrp-2-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:20:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "GHRP-2",
+    "aliases": [
+      "Pralmorelin",
+      "Growth hormone releasing peptide-2",
+      "KP-102",
+      "GPA 748"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Synthetic hexapeptide (ghrelin-receptor agonist / growth hormone secretagogue)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": null,
+      "drugbank": null,
+      "pubchem": "5493556",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-bulk-compounding-significant-safety-risks",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "dailymed-search-ghrp-2",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "DailyMed search results for \"GHRP-2\"",
+      "publisher": "U.S. National Library of Medicine / DailyMed",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=GHRP-2",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-5493556",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Pralmorelin; GHRP-2 Acetate; D-Ala-D-Nal-Ala-Trp-D-Phe-Lys-NH2 (PubChem CID 5493556)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/5493556",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "hayashi-2008-endocrj-ghrp2-vs-itt",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Diagnostic Usefulness of the Growth Hormone-Releasing Peptide-2 Test as a Substitute for the Insulin Tolerance Test in Hypopituitarism",
+      "publisher": "Endocrine Journal (J-STAGE)",
+      "url": "https://www.jstage.jst.go.jp/article/endocrj/55/4/55_K07E-168/_article",
+      "doi": null,
+      "pmid": "18493103",
+      "publishedAt": "2008-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pubmed-17609397-ghrp2-adult-ghd",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "A simple diagnostic test using GH-releasing peptide-2 in adult GH deficiency",
+      "publisher": "PubMed / European Journal of Endocrinology",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17609397/",
+      "doi": null,
+      "pmid": "17609397",
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "thomas-2010-dta-ghrp2-supplement",
+      "sourceType": "peer-reviewed-analytical-study",
+      "authorityTier": "B2",
+      "title": "Identification of the growth-hormone-releasing peptide-2 (GHRP-2) in a nutritional supplement",
+      "publisher": "Drug Testing and Analysis (Wiley) / German Sport University Cologne repository",
+      "url": "https://fis.dshs-koeln.de/en/publications/identification-of-the-growth-hormone-releasing-peptide-2-ghrp-2-i/",
+      "doi": "10.1002/dta.120",
+      "pmid": "20878896",
+      "publishedAt": "2010-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "vendor-rmpeptides-ghrp2",
+      "sourceType": "vendor-marketing-page",
+      "authorityTier": "C3",
+      "title": "GHRP-2 10MG product page",
+      "publisher": "Rocky Mountain Peptides",
+      "url": "https://rmpeptides.com/ghrp-2-10mg/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "peptidepedia-ghrp2-guide",
+      "sourceType": "popular-online-guide",
+      "authorityTier": "C3",
+      "title": "GHRP-2: Potent Growth Hormone Releasing Peptide Guide",
+      "publisher": "Peptidepedia",
+      "url": "https://peptidepedia.org/performance/ghrp-2",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "ghrp2-regulatory-compounding-risk-001",
+      "claimType": "regulatory",
+      "statement": "FDA lists GHRP-2 (for injectable and nasal routes of administration) among 503B bulk drug substances that may present significant safety risks, added to the list on September 29, 2023, citing risk of immunogenicity from potential aggregation or peptide-related impurities, and flags reported serious adverse events including increased insulin requirements, death in critically ill subjects, infection, and pancreatitis, while noting causality with GHRP-2 itself has not been established.",
+      "context": {
+        "population": "humans exposed to compounded GHRP-2 products",
+        "route": "injectable and nasal",
+        "formulation": "compounded GHRP-2 (503B)",
+        "useCase": "compounding safety and regulatory boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bulk-compounding-significant-safety-risks"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bulk-compounding-significant-safety-risks",
+          "quote": "Compounded drugs containing GHRP-2 for injectable and nasal administration may pose risk for immunogenicity due to the potential for aggregation and peptide-related impurities.",
+          "pageOrSection": "503B Category listing, Growth hormone releasing peptide-2 (GHRP-2) row, added 9/29/2023"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "verify current 503B listing status and any updated safety-risk rationale at review time",
+        "adverse events (death, pancreatitis, insulin requirement increases) are reported associations, not established causal effects of GHRP-2 per the source page"
+      ]
+    },
+    {
+      "claimId": "ghrp2-regulatory-no-approved-us-product-001",
+      "claimType": "regulatory",
+      "statement": "No FDA-approved drug product containing GHRP-2 or pralmorelin exists in the United States: DailyMed, the U.S. National Library of Medicine's repository of FDA-approved drug labeling, returns zero labeled products for \"GHRP-2\".",
+      "context": {
+        "population": "United States market",
+        "route": null,
+        "formulation": null,
+        "useCase": "regulatory approval status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-search-ghrp-2"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-search-ghrp-2",
+          "quote": "SEARCH RESULTS for: GHRP-2 (0 results)",
+          "pageOrSection": "Search results page"
+        }
+      ],
+      "reviewFlags": [
+        "absence-of-listing claim; re-check DailyMed directly at review time since search indexing can change"
+      ]
+    },
+    {
+      "claimId": "ghrp2-mechanism-ghrelin-agonist-001",
+      "claimType": "mechanism",
+      "statement": "GHRP-2 (pralmorelin) is a synthetic hexapeptide ghrelin-receptor agonist / growth hormone secretagogue, chemically D-Ala-D-Nal-Ala-Trp-D-Phe-Lys-NH2, historically developed and studied (including under the code KP-102) as a growth-hormone-releasing stimulus.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "GHRP-2 / pralmorelin",
+        "useCase": "mechanism / identity description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-5493556"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-5493556",
+          "quote": "Pralmorelin;GHRP-2 Acetate;D-Ala-D--Nal-Ala-Trp-D-Phe-Lys-NH2",
+          "pageOrSection": "Compound title / synonyms, PubChem CID 5493556"
+        }
+      ],
+      "reviewFlags": [
+        "molecular formula (C45H55N9O6) taken from PubChem title metadata; full structured record (IUPAC name, CAS) requires JavaScript-rendered PubChem page and was not independently confirmed this session"
+      ]
+    },
+    {
+      "claimId": "ghrp2-studied-use-diagnostic-ghd-001",
+      "claimType": "studied-use",
+      "statement": "GHRP-2 has been studied and used as a diagnostic secretagogue test for growth hormone deficiency: in a controlled study of 77 healthy subjects and 58 patients with peak GH under 3 micrograms/L on insulin tolerance testing, a 100 microgram intravenous dose of GHRP-2 produced peak GH within 60 minutes, with markedly lower responses in GH-deficient patients (1.36 plus/minus 2.60 micrograms/L) than healthy controls (84.6 plus/minus 60.9 micrograms/L), and a GHRP-2 cut-off of 15 micrograms/L corresponded to the insulin-tolerance-test diagnostic cut-off of 3 micrograms/L.",
+      "context": {
+        "population": "adults: 77 healthy subjects, 58 patients with GH deficiency confirmed by insulin tolerance test",
+        "route": "intravenous",
+        "formulation": "GHRP-2, single-dose diagnostic bolus",
+        "useCase": "diagnostic stimulation test for adult growth hormone deficiency (investigational/diagnostic use, not a treatment)",
+        "doseText": "100 micrograms IV, single dose, as a diagnostic stimulation test (trial protocol context, not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubmed-17609397-ghrp2-adult-ghd"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubmed-17609397-ghrp2-adult-ghd",
+          "quote": "a 100 microg dose of GHRP-2 was administered intravenously",
+          "pageOrSection": "Abstract, methods"
+        },
+        {
+          "sourceRef": "pubmed-17609397-ghrp2-adult-ghd",
+          "quote": "A cut-off value of 15 microg/l for diagnosing GHD with GHRP-2 corresponded to the diagnostic value of 3 microg/l in the ITT",
+          "pageOrSection": "Abstract, results"
+        }
+      ],
+      "reviewFlags": [
+        "diagnostic-test evidence must not be generalized into a therapeutic/performance efficacy claim",
+        "abstract accessed via automated summarization tool (PubMed page blocked by bot check); recommend independent full-text re-verification at review time",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (77 healthy subjects / 58 GHD patients, controlled study) at source-level attribution; no regulator document exists for this claim (searched: FDA.gov bulk-compounding significant-safety-risks page [GHRP-2 entry, no diagnostic-protocol content]; DailyMed search for GHRP-2 [0 results]; web search confirmed the only FDA-approved GH-deficiency diagnostic test is Macrilen/macimorelin, a different compound, not GHRP-2)"
+      ]
+    },
+    {
+      "claimId": "ghrp2-studied-use-secondary-adrenal-001",
+      "claimType": "studied-use",
+      "statement": "A Japanese clinical study evaluating the GHRP-2 test against the insulin tolerance test (ITT) for hypopituitarism found concordance between the two tests for detecting secondary (ACTH) insufficiency, concluding the GHRP-2 test may be useful for diagnosing secondary adrenal insufficiency due to hypothalamic or pituitary disease.",
+      "context": {
+        "population": "patients with suspected hypopituitarism (Japan)",
+        "route": "unspecified in accessed excerpt (consistent with the intravenous diagnostic protocol used in related GHRP-2 GH-axis testing)",
+        "formulation": "GHRP-2, diagnostic stimulation test",
+        "useCase": "diagnostic stimulation test for secondary adrenal insufficiency",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "hayashi-2008-endocrj-ghrp2-vs-itt"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "hayashi-2008-endocrj-ghrp2-vs-itt",
+          "quote": "patients with significant ACTH response to ITT also had significant response to the GHRP-2 test, while patients with no significant ACTH response to ITT also had no significant response to the GHRP-2 test.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "hayashi-2008-endocrj-ghrp2-vs-itt",
+          "quote": "the GHRP-2 test may be a useful diagnostic tool for secondary adrenal insufficiency such as hypothalamic disorder and pituitary damage.",
+          "pageOrSection": "Abstract, conclusion"
+        }
+      ],
+      "reviewFlags": [
+        "exact sample size and dosing details not captured from the accessed excerpt; full text should be pulled for precise n and dose at independent review",
+        "diagnostic-test finding, not a treatment-efficacy finding",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (Hayashi et al. 2008, Endocrine Journal) at source-level attribution; no regulator document exists for this claim (searched: FDA.gov bulk-compounding significant-safety-risks page [GHRP-2 entry, no diagnostic-protocol content]; DailyMed search for GHRP-2 [0 results]; web search confirmed the only FDA-approved GH-deficiency diagnostic test is Macrilen/macimorelin, a different compound, not GHRP-2)"
+      ]
+    },
+    {
+      "claimId": "ghrp2-safety-supplement-contamination-001",
+      "claimType": "adverse-effect",
+      "statement": "In a 2010 Drug Testing and Analysis analytical study (Thomas et al.), GHRP-2 was identified by independent analytical testing as an undeclared adulterant in an over-the-counter nutritional supplement product, at approximately 50 micrograms per tablet, indicating GHRP-2 can enter the consumer supply chain undisclosed and without dosing control.",
+      "context": {
+        "population": "consumers of an unidentified over-the-counter tablet supplement",
+        "route": "oral (as adulterant in supplement)",
+        "formulation": "undeclared GHRP-2 in a tablet nutritional supplement",
+        "useCase": "supplement adulteration / analytical detection",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "thomas-2010-dta-ghrp2-supplement"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "thomas-2010-dta-ghrp2-supplement",
+          "quote": "the content of GHRP-2 was determined with approximately 50 µg per tablet.",
+          "pageOrSection": "Findings (per institutional repository summary of the 2010 Drug Testing and Analysis paper)"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical: undisclosed peptide adulteration in consumer supplements",
+        "single product instance reported in 2010; not evidence of current, widespread contamination and should be independently re-verified for currency",
+        "sourced via institutional repository summary rather than the full Wiley article (paywalled/403); recommend pulling primary DOI 10.1002/dta.120 record at review",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed analytical-study findings (Thomas et al. 2010, Drug Testing and Analysis) at source-level attribution; no regulator document exists for this claim (searched: fda.gov for GHRP-2 supplement/warning-letter adulteration content [none found addressing this specific incident]; FDA bulk-compounding significant-safety-risks page [covers compounded-drug immunogenicity/adverse events, not supplement contamination]; DailyMed search for GHRP-2 [0 results])"
+      ]
+    },
+    {
+      "claimId": "ghrp2-evidence-gap-marketed-benefits-001",
+      "claimType": "evidence-gap",
+      "statement": "GHRP-2 is marketed online by peptide vendors and popular guides with human-benefit claims -- including improved exercise recovery, reduced muscle soreness, favorable body-composition changes, improved sleep quality, skin/hair/nail improvements, strength gains, and joint/connective-tissue benefits -- none of which are supported by the controlled human evidence identified in this packet, which addresses only its use as a short-term diagnostic GH/ACTH stimulation test; no controlled human trial of GHRP-2 for chronic self-administered recovery, body-composition, or anti-aging use was found.",
+      "context": {
+        "population": "consumers of gray-market peptide products",
+        "route": "subcutaneous injection (common gray-market use per vendor/guide dosing suggestions)",
+        "formulation": "research-labeled GHRP-2, sold as a \"research chemical\"",
+        "useCase": "popular recovery / body-composition / anti-aging / performance marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "peptidepedia-ghrp2-guide",
+        "vendor-rmpeptides-ghrp2",
+        "pubmed-17609397-ghrp2-adult-ghd"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "peptidepedia-ghrp2-guide",
+          "quote": "Faster recovery from exercise becomes apparent",
+          "pageOrSection": "Timeline/benefits section"
+        },
+        {
+          "sourceRef": "peptidepedia-ghrp2-guide",
+          "quote": "Limited long-term human safety data outside the diagnostic context",
+          "pageOrSection": "Safety notes"
+        },
+        {
+          "sourceRef": "vendor-rmpeptides-ghrp2",
+          "quote": "THIS PRODUCT IS INTENDED AS A RESEARCH CHEMICAL ONLY. This designation allows the use of research chemicals strictly for in vitro testing and laboratory experimentation only.",
+          "pageOrSection": "Product disclaimer"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular marketing claims (recovery, body composition, anti-aging, sleep, skin/hair) lack supporting controlled human outcome evidence in the sources reviewed",
+        "vendor's own disclaimer (research-use-only, human use forbidden) directly contradicts the same industry's dosing-protocol marketing found on other guide pages",
+        "flag for the peptidepedia dosing protocol (100-300 mcg SC 1-3x daily) as an unverified, non-clinical dosing suggestion; do not treat as a use recommendation"
+      ]
+    },
+    {
+      "claimId": "ghrp2-dose-context-diagnostic-protocol-001",
+      "claimType": "dose-context",
+      "statement": "The dosing protocol used in the controlled diagnostic literature for GHRP-2 was a single 100 microgram intravenous bolus administered under clinical supervision for GH-axis stimulation testing; this is a trial/diagnostic protocol only and is unrelated to, and far lower in frequency than, the repeated daily subcutaneous self-administration protocols promoted on gray-market vendor and guide sites.",
+      "context": {
+        "population": "clinical diagnostic-testing patients",
+        "route": "intravenous, single bolus, clinically supervised",
+        "formulation": "GHRP-2, diagnostic stimulation test",
+        "useCase": "growth hormone / ACTH axis diagnostic stimulation test",
+        "doseText": "100 micrograms IV single dose (published diagnostic trial protocol; not a use recommendation and not comparable to gray-market subcutaneous dosing)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pubmed-17609397-ghrp2-adult-ghd"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubmed-17609397-ghrp2-adult-ghd",
+          "quote": "a 100 microg dose of GHRP-2 was administered intravenously",
+          "pageOrSection": "Abstract, methods"
+        }
+      ],
+      "reviewFlags": [
+        "trial dose context must never be presented as a use recommendation",
+        "clinically supervised single-dose IV diagnostic use must not be generalized to unsupervised chronic subcutaneous gray-market use",
+        "authority-support search 2026-08-29: claimType dose-context is in the pipeline's safety-critical set, so fieldAuthorityRequired stays true and this claim is not eligible for recalibration; searched FDA.gov bulk-compounding significant-safety-risks page (GHRP-2 entry addresses immunogenicity/adverse-event risk only, no dosing-protocol content), DailyMed (search for GHRP-2 returns 0 results), and general web search for an FDA/regulator-published GHRP-2 diagnostic dosing protocol; the only FDA-approved GH-deficiency diagnostic-test drug identified is Macrilen (macimorelin), a different compound, not GHRP-2; no A1/A2 source supporting this specific diagnostic dosing claim was found. Claim remains human-review gated pending regulator-grade support."
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "ghrp2-conflict-marketing-vs-evidence-001",
+      "claimRefs": [
+        "ghrp2-evidence-gap-marketed-benefits-001",
+        "ghrp2-studied-use-diagnostic-ghd-001"
+      ],
+      "severity": "moderate",
+      "summary": "Vendor and popular-guide sites promote GHRP-2 for chronic recovery, body-composition, anti-aging, and performance use with suggested repeated dosing regimens, while the only controlled human evidence located concerns single-dose, clinically supervised diagnostic GH/ACTH stimulation testing; no controlled human trial supports the marketed chronic-use benefits.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "CAS/UNII/DrugBank/ChEMBL identifiers not yet resolved from structured databases; PubChem full record required JavaScript rendering and was not independently confirmed.",
+      "Several PubMed abstract pages (17609397, 14513874, 18493103, and the FDA PCAC-related searches) were blocked by bot-check/reCAPTCHA during this session; abstracts were sourced via automated summarization of partially available content or secondary repositories (J-STAGE, europepmc, institutional repository) and should be independently re-verified against primary PubMed/publisher pages at review time.",
+      "Human efficacy evidence for GHRP-2 is limited to short-term diagnostic stimulation-test studies; no controlled human trial addressing chronic self-administered use (recovery, body composition, anti-aging) was found, and this thin/absent evidence base should be re-confirmed before any claim expansion.",
+      "FDA 503B bulk-substance listing status and rationale for GHRP-2 should be reconfirmed against the live FDA page at review time given ongoing FDA peptide-listing revisions in 2026."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "a1-regulator-backed",
+      "diagnostic-use-only-human-evidence",
+      "no-chronic-use-human-trials-found",
+      "supplement-adulteration-documented",
+      "marketing-evidence-gap-flagged",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

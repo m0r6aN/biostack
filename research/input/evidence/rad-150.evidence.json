@@ -1,0 +1,406 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "rad-150-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T02:21:10Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "RAD-150",
+    "aliases": [
+      "TLB-150",
+      "TLB-150 benzoate",
+      "RAD150"
+    ],
+    "classification": "Selective androgen receptor modulator (SARM) prodrug",
+    "compoundFamily": "Nonsteroidal SARM benzoate ester prodrug of RAD140 (androgen receptor agonist, investigational/gray-market; no published human or animal pharmacology data identified)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "1208070-53-4",
+      "drugbank": null,
+      "pubchem": "68547459",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-bodybuilding-sarms-harm",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Bodybuilding Products: SARMs Cause Harm",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "fda-bulk-substances-category2",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "ncbi-livertox-sarms",
+      "sourceType": "systematic-review",
+      "authorityTier": "A2",
+      "title": "Selective Androgen Receptor Modulators — LiverTox: Clinical and Research Information on Drug-Induced Liver Injury",
+      "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases / NCBI Bookshelf",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "caymanchem-rad150",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "RAD150 (CAS Number: 1208070-53-4) — Product Summary",
+      "publisher": "Cayman Chemical Company",
+      "url": "https://www.caymanchem.com/product/39173/rad150",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "medkoo-rad150",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "RAD150 | CAS#1208070-53-4 | nonsteroidal androgen receptor | benzoate ester | SARM | RAD140",
+      "publisher": "MedKoo Biosciences",
+      "url": "https://www.medkoo.com/products/56940",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "pubchem-cid-68547459",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: TLB 150 Benzoate (CID 68547459)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/68547459",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "genemedics-rad150-marketing",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C3",
+      "title": "RAD-150 | TLB-150 Benzoate | Improves Muscle Mass",
+      "publisher": "Genemedics Health Institute (commercial marketing page)",
+      "url": "https://www.genemedics.com/rad-150",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "muscleandbrawn-rad150-review",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "C3",
+      "title": "RAD 150 Review: Benefits, Uses, Dosage (vs RAD 140)",
+      "publisher": "Muscle & Brawn (bodybuilding/fitness blog)",
+      "url": "https://muscleandbrawn.com/blog/rad-150-review/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "rad150-identity-benzoate-prodrug-001",
+      "claimType": "identity",
+      "statement": "RAD-150 (TLB-150, TLB-150 benzoate) is a nonsteroidal androgen receptor ligand described by chemical vendors as the benzoate ester derivative of the SARM RAD140 (testolone), CAS 1208070-53-4, molecular formula C27H20ClN5O3, molecular weight approximately 497.9-498.0 g/mol, with an in-vitro androgen receptor binding IC50 of 130 nM reported by the supplier.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "RAD150 free compound, benzoate ester",
+        "useCase": "chemical identity",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "caymanchem-rad150",
+        "medkoo-rad150",
+        "pubchem-cid-68547459"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "caymanchem-rad150",
+          "quote": "RAD150 is a nonsteroidal androgen receptor modulator (IC50 = 130 nM)",
+          "pageOrSection": "Product description"
+        },
+        {
+          "sourceRef": "medkoo-rad150",
+          "quote": "RAD150 is a nonsteroidal androgen receptor modulator (IC50 = 130 nM) and benzoate ester derivative of the selective androgen receptor modulator (SARM) RAD140.",
+          "pageOrSection": "Product description"
+        },
+        {
+          "sourceRef": "pubchem-cid-68547459",
+          "quote": "TLB 150 Benzoate; RAD150; CAS 1208070-53-4",
+          "pageOrSection": "Depositor-Supplied Synonyms"
+        }
+      ],
+      "reviewFlags": [
+        "IC50 and formula figures are supplier-reported, not independently verified via a peer-reviewed structure-activity paper",
+        "no PubChem-listed peer-reviewed literature reference was located for this CID"
+      ]
+    },
+    {
+      "claimId": "rad150-evidence-gap-no-human-data-001",
+      "claimType": "evidence-gap",
+      "statement": "No published human clinical trial, case series, or peer-reviewed pharmacology/toxicology study specific to RAD-150/TLB-150 was located in this search of PubMed-indexed literature, PubChem's literature panel, or FDA/NCBI resources; RAD-150's benzoate-prodrug rationale (extended half-life relative to RAD140) is a vendor claim, not one demonstrated in a published human or animal pharmacokinetic study for this specific ester.",
+      "context": {
+        "population": "general population considering RAD-150 use",
+        "route": null,
+        "formulation": "RAD-150 (TLB-150 benzoate)",
+        "useCase": "overall evidence base for the compound",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-68547459",
+        "ncbi-livertox-sarms"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ncbi-livertox-sarms",
+          "quote": "None were approved for human use",
+          "pageOrSection": "Introduction (referring to SARMs as a class)"
+        }
+      ],
+      "reviewFlags": [
+        "absence-of-evidence claim; re-check PubMed/PMC directly at review time in case a study specific to RAD-150/TLB-150 has since been published",
+        "no PMID/DOI exists for this compound to anchor a primary literature claim"
+      ]
+    },
+    {
+      "claimId": "rad150-regulatory-unapproved-sarm-class-001",
+      "claimType": "regulatory",
+      "statement": "RAD-150 is not an FDA-approved drug and is not listed on FDA's bulk drug substances (503A/503B) compounding lists; FDA has separately warned that SARMs as a class sold in bodybuilding products are unapproved drugs not reviewed by FDA for safety or effectiveness, and has documented life-threatening reactions, including liver injuries requiring hospitalization, associated with SARM-containing products.",
+      "context": {
+        "population": "consumers of SARM-containing bodybuilding/research-chemical products",
+        "route": "oral (as marketed)",
+        "formulation": "unregulated gray-market RAD-150 products",
+        "useCase": "regulatory status and general SARM-class safety warning",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bodybuilding-sarms-harm",
+        "fda-bulk-substances-category2"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bodybuilding-sarms-harm",
+          "quote": "unapproved drugs that FDA has not reviewed for safety and effectiveness",
+          "pageOrSection": "Regulatory stance"
+        },
+        {
+          "sourceRef": "fda-bodybuilding-sarms-harm",
+          "quote": "Life-threatening reactions, including liver injuries that required hospitalization, have occurred in people taking products containing SARMs.",
+          "pageOrSection": "Health risks"
+        },
+        {
+          "sourceRef": "fda-bodybuilding-sarms-harm",
+          "quote": "Increased risk of heart attack or stroke, Psychosis/hallucinations, Sleep disturbances, Sexual dysfunction, Liver injury and acute liver failure, Infertility, Pregnancy miscarriage, Testicular shrinkage.",
+          "pageOrSection": "Health risks list"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "class-level FDA warning is not RAD-150-specific; no FDA communication naming RAD-150/TLB-150 by name was located",
+        "confirm FDA bulk-substances and import-alert listings have not been updated to name RAD-150/TLB-150 specifically since this access"
+      ]
+    },
+    {
+      "claimId": "rad150-safety-classlevel-hepatotoxicity-001",
+      "claimType": "adverse-effect",
+      "statement": "As a class, SARMs (including nonsteroidal androgen receptor agonists structurally related to RAD-150's parent compound RAD140) have been associated in case reports with severe cholestatic jaundice resembling anabolic-steroid-induced liver injury in recreational users, with a typical latency of 2 to 3 months and presentation of fatigue, anorexia, weight loss, abdominal pain, pruritus, dark urine, and jaundice; the mechanism of SARM-associated liver injury is not established but is thought to involve excessive androgen receptor engagement. No case report specific to RAD-150/TLB-150 was located.",
+      "context": {
+        "population": "recreational SARM users (class-level case reports; not RAD-150-specific)",
+        "route": "oral",
+        "formulation": "SARM class, various compounds",
+        "useCase": "hepatotoxicity risk",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "ncbi-livertox-sarms"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ncbi-livertox-sarms",
+          "quote": "Multiple cases of severe cholestatic jaundice that resembles anabolic steroid jaundice",
+          "pageOrSection": "Hepatotoxicity findings"
+        },
+        {
+          "sourceRef": "ncbi-livertox-sarms",
+          "quote": "Fatigue, anorexia, weight loss, abdominal pain, and pruritus followed by dark urine and jaundice",
+          "pageOrSection": "Clinical presentation"
+        },
+        {
+          "sourceRef": "ncbi-livertox-sarms",
+          "quote": "The mechanism by which SARMs cause liver injury is not known but is likely to be the result of excessive androgen receptor engagement.",
+          "pageOrSection": "Mechanism"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim extrapolated from SARM class-level case reports (ligandrol, ostarine, RAD140/testolone were the specifically named compounds); must not be read as RAD-150-specific case data",
+        "do not present as proof that RAD-150 itself has caused liver injury absent a compound-specific report"
+      ]
+    },
+    {
+      "claimId": "rad150-misinformation-marketing-vs-evidence-001",
+      "claimType": "misinformation-claim",
+      "statement": "Commercial vendor and bodybuilding-media pages market RAD-150 with specific claims of enhanced muscle growth, improved endurance/recovery, fat loss and physique enhancement, improved sexual function, and a longer half-life/greater potency and 'smoother' sustained effect versus RAD-140, along with numeric daily dosing suggestions (e.g., 5-10 mg/day or 10-20 mg/day for 8-12 week cycles); none of these efficacy, comparative-potency, or dosing claims are supported by any published human or controlled-animal study identified for RAD-150 specifically, and the compound is explicitly labeled by at least one chemical supplier as 'not for human or veterinary use.'",
+      "context": {
+        "population": "prospective gray-market/research-chemical consumers",
+        "route": "oral (as marketed)",
+        "formulation": "vendor-marketed RAD-150/TLB-150 capsules, powder, and liquid research-chemical products",
+        "useCase": "muscle-building, fat loss, recovery, and libido marketing claims",
+        "doseText": "Vendor-suggested ranges of 5-10 mg/day to 10-20 mg/day for 8-12 weeks are marketing/dosing-page text, not a trial protocol, a label, or a use recommendation; no controlled dosing study for RAD-150 was located."
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "genemedics-rad150-marketing",
+        "muscleandbrawn-rad150-review",
+        "caymanchem-rad150",
+        "fda-bodybuilding-sarms-harm"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "genemedics-rad150-marketing",
+          "quote": "strongly stimulating the growth of lean muscle mass",
+          "pageOrSection": "Primary benefits claims"
+        },
+        {
+          "sourceRef": "genemedics-rad150-marketing",
+          "quote": "10 to 20 mg per day for most users",
+          "pageOrSection": "Dosing suggestions"
+        },
+        {
+          "sourceRef": "muscleandbrawn-rad150-review",
+          "quote": "Typically the doses should range from 5mg to 10mg per day, divided into 2 to 3 equal divisions",
+          "pageOrSection": "Dosage claims"
+        },
+        {
+          "sourceRef": "muscleandbrawn-rad150-review",
+          "quote": "RAD 150 being an esterified version of the former, it is concluded that RAD 150 lasts much longer",
+          "pageOrSection": "Potency vs RAD-140"
+        },
+        {
+          "sourceRef": "caymanchem-rad150",
+          "quote": "WARNING This product is not for human or veterinary use.",
+          "pageOrSection": "Use statement"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular marketing claims (efficacy, comparative potency, dosing) lack any supporting human or controlled-animal outcome study",
+        "dosing text must never be surfaced as a use recommendation in any downstream product",
+        "vendor dosage figures conflict with the supplier-side 'not for human use' labeling; document as an internal marketing-vs-labeling conflict"
+      ]
+    },
+    {
+      "claimId": "rad150-mechanism-family-context-001",
+      "claimType": "mechanism",
+      "statement": "RAD-150 is marketed as a prodrug/ester analog of RAD140 (testolone), a nonsteroidal SARM that has itself been studied in an FDA-registered first-in-human Phase 1 oncology trial for ER+/HER2- metastatic breast cancer; that trial data describes RAD140's own pharmacology and tolerability and does not constitute human efficacy or safety data for the RAD-150 benzoate ester, which has not itself entered any identified human study.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "RAD-150 relative to parent compound RAD140",
+        "useCase": "mechanistic/family context only",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "medkoo-rad150",
+        "caymanchem-rad150"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "medkoo-rad150",
+          "quote": "benzoate ester derivative of the selective androgen receptor modulator (SARM) RAD140",
+          "pageOrSection": "Product description"
+        }
+      ],
+      "reviewFlags": [
+        "must not import RAD140 human trial results (e.g., the Clinical Breast Cancer Phase 1 RAD140 study) as evidence for RAD-150 itself; that trial was not fetched/quoted in this packet and is referenced here only as unverified background context requiring its own source citation before any RAD140-specific claim is made",
+        "review should add a dedicated, independently-sourced RAD140 claim in the testolone packet rather than here"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "rad150-conflict-marketing-vs-labeling-001",
+      "claimRefs": [
+        "rad150-misinformation-marketing-vs-evidence-001",
+        "rad150-identity-benzoate-prodrug-001"
+      ],
+      "severity": "high",
+      "summary": "Vendor marketing pages (genemedics.com, muscleandbrawn.com) present specific human dosing regimens (5-20 mg/day) and efficacy/comparative-potency claims for RAD-150, while a research-chemical supplier of the same compound (Cayman Chemical) labels it 'not for human or veterinary use' and no compound-specific human or animal study was located to adjudicate either the dosing or the efficacy claims.",
+      "resolutionStatus": "needs-human-review"
+    },
+    {
+      "conflictId": "rad150-conflict-classlevel-safety-extrapolation-001",
+      "claimRefs": [
+        "rad150-safety-classlevel-hepatotoxicity-001",
+        "rad150-evidence-gap-no-human-data-001"
+      ],
+      "severity": "moderate",
+      "summary": "The only human safety signal available (SARM-class hepatotoxicity case reports and FDA's general SARM warning) is not RAD-150-specific; no independent source confirming or ruling out RAD-150-specific adverse events was found, so the safety claim rests on class-level extrapolation that must be flagged, not resolved.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "No PubMed/PMC-indexed literature, PMID, or DOI could be located for RAD-150/TLB-150 specifically; re-run a targeted PubMed/PMC search at review time in case new literature has been indexed.",
+      "UNII, DrugBank, and ChEMBL identifiers not resolved for this compound.",
+      "Safety and dosing claims rely on SARM class-level sources (FDA general warning, LiverTox) rather than RAD-150-specific data; independent-source expansion should prioritize any compound-specific regulatory action or case report before this packet is published.",
+      "Vendor listing status and marketing claims are volatile (gray-market retail pages change frequently) and should be re-verified against live pages at review time."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "no-compound-specific-human-data",
+      "class-level-safety-extrapolation",
+      "gray-market-only",
+      "marketing-vs-evidence-gap-documented",
+      "thin-human-evidence"
+    ]
+  }
+}

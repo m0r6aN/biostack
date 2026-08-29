@@ -1,0 +1,423 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "andarine-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T23:50:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Andarine",
+    "aliases": [
+      "S-4",
+      "GTx-007",
+      "S4",
+      "GTx007"
+    ],
+    "classification": "Selective androgen receptor modulator (SARM)",
+    "compoundFamily": "Non-steroidal arylpropionamide-class SARM",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "401900-40-1",
+      "drugbank": null,
+      "pubchem": "9824562",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-warning-letter-titan-sarms",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Titan SARMS LLC - 719645 - 12/12/2025 (Warning Letter)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/titan-sarms-llc-719645-12122025",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-12-12T00:00:00Z",
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "ejcp-2023-sarm-adverse-events",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Selective androgen receptor modulator use and related adverse events including drug-induced liver injury: Analysis of suspected cases",
+      "publisher": "European Journal of Clinical Pharmacology (Springer Nature)",
+      "url": "https://link.springer.com/article/10.1007/s00228-023-03592-3",
+      "doi": "10.1007/s00228-023-03592-3",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "pubchem-cid-9824562",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: Andarine (CID 9824562)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Andarine",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "cayman-chem-gtx-007",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "GTx-007 (Andarine, S-4), CAS 401900-40-1 - Product Information",
+      "publisher": "Cayman Chemical Company",
+      "url": "https://www.caymanchem.com/product/18772/gtx-007",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "sec-gtx-2004-press-release",
+      "sourceType": "company-regulatory-filing",
+      "authorityTier": "B2",
+      "title": "GTx, Inc. Press Release (Exhibit 99.1, SEC Form 8-K) - andarine development update",
+      "publisher": "GTx, Inc. via U.S. Securities and Exchange Commission EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1260990/000095014404002713/g87900exv99w1.txt",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "bscg-andarine-compliance",
+      "sourceType": "advocacy-compliance-org",
+      "authorityTier": "C1",
+      "title": "Andarine: An Illegal Dietary Supplement Ingredient",
+      "publisher": "BSCG (Banned Substances Control Group)",
+      "url": "https://www.bscg.org/andarine-a-banned-substance-in-sport-and-illegal-dietary-supplement-ingredient",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "wada-prohibited-list-2026",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "The World Anti-Doping Code International Standard \u2014 Prohibited List 2026 (S1.2 Other Anabolic Agents)",
+      "publisher": "World Anti-Doping Agency (WADA)",
+      "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "andarine-mechanism-identity-001",
+      "claimType": "mechanism",
+      "statement": "Andarine (S-4 / GTx-007) is a non-steroidal selective androgen receptor modulator originally developed by GTx, Inc. as an orally active, tissue-selective agonist of the androgen receptor, initially investigated for muscle wasting/cachexia and later described as a candidate for osteoporosis and benign prostatic hyperplasia indications.",
+      "context": {
+        "population": null,
+        "route": "oral (as studied)",
+        "formulation": "andarine free compound",
+        "useCase": "mechanism / development history",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "sec-gtx-2004-press-release",
+        "cayman-chem-gtx-007"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "sec-gtx-2004-press-release",
+          "quote": "initially developing its second product candidate, andarine, for the treatment of muscle wasting weight loss, or cachexia, which occurs from various types of cancer and other chronic diseases",
+          "pageOrSection": "Press release body"
+        },
+        {
+          "sourceRef": "cayman-chem-gtx-007",
+          "quote": "GTx-007 is a non-steroidal selective androgen receptor modulator (SARM) that has tissue-selective androgenic and anabolic effects in animals.",
+          "pageOrSection": "Product description"
+        }
+      ],
+      "reviewFlags": [
+        "Mechanism corroborated only by a company press release and a vendor chemical-supplier description, not by an independent peer-reviewed pharmacology paper in this pass."
+      ]
+    },
+    {
+      "claimId": "andarine-regulatory-fda-unapproved-001",
+      "claimType": "regulatory",
+      "statement": "No andarine (S-4) product is FDA-approved; FDA classifies andarine-containing products sold online as unapproved new drugs and, in a December 2025 warning letter, cited a vendor's andarine marketing claims (e.g., that S-4 was 'originally developed for muscle wasting and osteoporosis' and could 'increase muscle mass while reducing fat') as unapproved-drug claims requiring correction.",
+      "context": {
+        "population": "purchasers of online SARM products",
+        "route": "oral (as marketed)",
+        "formulation": "gray-market andarine capsules/liquid",
+        "useCase": "regulatory status of marketed andarine products",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-warning-letter-titan-sarms"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warning-letter-titan-sarms",
+          "quote": "No approved applications pursuant to section 505 of the FD&C Act...are in effect for these products.",
+          "pageOrSection": "Regulatory status section"
+        },
+        {
+          "sourceRef": "fda-warning-letter-titan-sarms",
+          "quote": "S-4 is often studied for its ability to reduce fat mass while preserving or increasing lean muscle.",
+          "pageOrSection": "Marketing claims cited from firm website"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "warning letter targets one named firm; confirm this remains FDA's current enforcement posture at review time"
+      ]
+    },
+    {
+      "claimId": "andarine-safety-liver-cardiovascular-001",
+      "claimType": "adverse-effect",
+      "statement": "FDA warns that SARM-containing products carry risk of life-threatening liver toxicity and elevated heart attack/stroke risk. A 2023 peer-reviewed review of suspected SARM adverse-event case reports notes andarine's aromatic nitro substituent may confer higher chemical toxicity potential relative to other SARMs, but the liver-injury case series it analyzed named ostarine, RAD-140, and ligandrol rather than documenting confirmed andarine-attributed liver-injury cases.",
+      "context": {
+        "population": "human SARM users (case-report level)",
+        "route": "oral",
+        "formulation": "gray-market SARM products",
+        "useCase": "safety signal review",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-warning-letter-titan-sarms",
+        "ejcp-2023-sarm-adverse-events"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warning-letter-titan-sarms",
+          "quote": "Life-threatening reactions, including liver toxicity, have occurred in people taking products containing SARMs. SARMs also have the potential to increase the risk of heart attack and stroke.",
+          "pageOrSection": "Safety warning section"
+        },
+        {
+          "sourceRef": "ejcp-2023-sarm-adverse-events",
+          "quote": "Andarine contains an aromatic nitro substituent (Ar\u2013NO2)",
+          "pageOrSection": "Discussion (structural toxicity analysis)"
+        },
+        {
+          "sourceRef": "ejcp-2023-sarm-adverse-events",
+          "quote": "Since 2020, 20 reports of adverse events, most described as drug-induced liver injury associated with the use of SARM agonists, have been published.",
+          "pageOrSection": "Results/liver injury summary"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical claim",
+        "no case report specifically naming andarine as the causal agent for liver injury was located in this pass; the structural-toxicity concern and the case-series harm data must not be conflated as one andarine-specific finding"
+      ]
+    },
+    {
+      "claimId": "andarine-adverse-vision-001",
+      "claimType": "adverse-effect",
+      "statement": "Andarine use is repeatedly reported to be associated with dose-related visual disturbances - blurred vision, a yellowish tinge to vision, and vision flashes especially noticeable at night - commonly cited as a reason its clinical development did not progress toward approval.",
+      "context": {
+        "population": "human andarine users",
+        "route": "oral",
+        "formulation": "andarine",
+        "useCase": "reported adverse effect / discontinuation rationale",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "low",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "bscg-andarine-compliance"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "bscg-andarine-compliance",
+          "quote": "Frequently reported symptoms include blurred vision, yellowish shade to vision, and vision flashes, particularly noticeable at night.",
+          "pageOrSection": "Safety concerns section"
+        }
+      ],
+      "reviewFlags": [
+        "sourced from a compliance-advocacy summary rather than a primary clinical trial report or FDA document; independent primary source (e.g. the original GTx Phase I study report) not located and should be sought at review time",
+        "authority-support-pass 2026-08-29: searched for A1/A2 support for the vision-disturbance claim \u2014 fetched the FDA Titan SARMS warning letter (fda-warning-letter-titan-sarms), which does not mention vision, blurred vision, or ocular effects; DailyMed has no andarine label because no andarine product is FDA-approved; searched Europe PMC and general web/PubMed-adjacent literature for a published andarine phase 1 trial or FDA safety communication documenting vision effects and found none. No A1/A2 source located; fieldAuthorityRequired remains true and this claim stays authority-gated pending a primary clinical source (e.g., an original GTx Phase I study report)."
+      ]
+    },
+    {
+      "claimId": "andarine-controversy-trial-history-001",
+      "claimType": "controversy",
+      "statement": "Sources disagree on how far andarine's human clinical development actually progressed: a 2004 GTx, Inc. corporate press release states the company had 'completed several Phase I clinical trials' and planned a Phase II study, while a 2023 peer-reviewed SARM adverse-event review states preclinical andarine studies 'were suspended and did not advance to phase I of clinical trials.' This discrepancy was not resolved with a third independent source in this research pass.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "andarine",
+        "useCase": "clinical development history",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "low",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "sec-gtx-2004-press-release",
+        "ejcp-2023-sarm-adverse-events"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "sec-gtx-2004-press-release",
+          "quote": "GTx has completed several Phase I clinical trials, and with its new partner, plans to initiate a Phase II clinical trial of andarine in 2004.",
+          "pageOrSection": "Press release body"
+        },
+        {
+          "sourceRef": "ejcp-2023-sarm-adverse-events",
+          "quote": "preclinical studies on the andarine (S-4) compound, which is also available for sale online, were suspended and did not advance to phase I of clinical trials",
+          "pageOrSection": "Background/history section"
+        }
+      ],
+      "reviewFlags": [
+        "unresolved conflict between a primary company source and a secondary peer-reviewed review",
+        "requires independent verification against FDA historical records, GTx SEC 10-K filings, or a contemporaneous clinicaltrials.gov-era registry entry"
+      ]
+    },
+    {
+      "claimId": "andarine-misinformation-marketing-001",
+      "claimType": "misinformation-claim",
+      "statement": "Online SARM vendors market andarine/S-4 as an efficacious muscle-building and fat-loss compound with claims such as it being able to 'increase muscle mass while reducing fat' and 'support bone density improvements,' despite there being no FDA-approved andarine product, no completed published human efficacy trial located in this research, and FDA's classification of such marketed products as illegally sold unapproved new drugs.",
+      "context": {
+        "population": "consumers of gray-market SARM products",
+        "route": "oral",
+        "formulation": "gray-market andarine capsules/liquid",
+        "useCase": "bodybuilding / fat-loss / bone-density marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-warning-letter-titan-sarms"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-warning-letter-titan-sarms",
+          "quote": "Increase muscle mass while reducing fat",
+          "pageOrSection": "Marketing claims cited from firm website"
+        },
+        {
+          "sourceRef": "fda-warning-letter-titan-sarms",
+          "quote": "Support bone density improvements",
+          "pageOrSection": "Marketing claims cited from firm website"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular marketing claims lack any supporting completed human efficacy trial in the current source set"
+      ]
+    },
+    {
+      "claimId": "andarine-evidence-gap-efficacy-001",
+      "claimType": "evidence-gap",
+      "statement": "No completed, published human efficacy trial establishing andarine's benefit for muscle wasting, body composition, fat loss, or bone density was located in this research pass; available human-related information is limited to early-stage development history (of disputed extent, see andarine-controversy-trial-history-001) that did not proceed to approval, leaving the compound's popular bodybuilding/cutting-stack use unsupported by controlled human outcome data.",
+      "context": {
+        "population": "gray-market andarine users",
+        "route": "oral",
+        "formulation": "andarine",
+        "useCase": "body composition / cutting / performance enhancement",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "ejcp-2023-sarm-adverse-events",
+        "sec-gtx-2004-press-release"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ejcp-2023-sarm-adverse-events",
+          "quote": "Despite being in clinical trials, none has been approved by the Food and Drug Administration (FDA) or European Medicines Agency for pharmacotherapy.",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "do not infer human efficacy from andarine's in vitro/animal pharmacology literature (e.g. glioblastoma, ovariectomized-rat bone/fat studies) not included as efficacy claims here"
+      ]
+    },
+    {
+      "claimId": "andarine-regulatory-wada-001",
+      "claimType": "regulatory",
+      "statement": "Andarine has been included on the World Anti-Doping Agency Prohibited List since 2008 and remains banned in competitive sport under the anabolic agents class; it is also identified in published doping-control detection literature.",
+      "context": {
+        "population": "competitive athletes subject to WADA-code testing",
+        "route": null,
+        "formulation": "andarine",
+        "useCase": "anti-doping regulatory status",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "bscg-andarine-compliance",
+        "wada-prohibited-list-2026"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "bscg-andarine-compliance",
+          "quote": "Andarine has been listed on the World Anti-Doping Agency (WADA) Prohibited List since 2008 and remains banned in all athletic competition.",
+          "pageOrSection": "Regulatory status section"
+        },
+        {
+          "sourceRef": "wada-prohibited-list-2026",
+          "quote": "selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]",
+          "pageOrSection": "S1.2 Other Anabolic Agents (Prohibited List, effective 1 January 2026)"
+        }
+      ],
+      "reviewFlags": [
+        "sourced from a compliance-advocacy secondary summary rather than the primary WADA Prohibited List document; verify directly against the current-year WADA Prohibited List at review time",
+        "authority-support-pass 2026-08-29: verified directly against the official WADA 2026 Prohibited List (S1.2 Other Anabolic Agents), which names andarine as an example SARM prohibited at all times; A1 regulator source added to sourceRefs.",
+        "authority-source verification 2026-08-29: quote verified verbatim against the official WADA 2026 Prohibited List document (byte content served via mirror cdn.conmebol.com; wada-ama.org blocks automated fetch \u2014 robots). Source URL points to the canonical wada-ama.org document, linked from usada.org's prohibited-list page. Human reviewer should confirm against wada-ama.org directly."
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "andarine-conflict-phase1-history-001",
+      "claimRefs": [
+        "andarine-mechanism-identity-001",
+        "andarine-controversy-trial-history-001"
+      ],
+      "severity": "moderate",
+      "summary": "GTx, Inc.'s own 2004 corporate press release states the company had completed several Phase I clinical trials of andarine in humans and planned a Phase II trial, while a 2023 peer-reviewed SARM adverse-event review states preclinical andarine studies were suspended and never advanced to Phase I. These accounts are not reconcilable as literally stated and were not resolved against a third independent source (e.g. FDA archives, GTx 10-K filings) in this research pass.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Unresolved conflict between a 2004 GTx press release (Phase I trials completed) and a 2023 peer-reviewed review (preclinical suspension, never reached Phase I) regarding andarine's human clinical trial history; needs independent verification against FDA archives, GTx SEC 10-K filings, or historical trial registries.",
+      "WADA prohibited-list status and reported vision-disturbance adverse effects are sourced from a compliance-advocacy secondary summary (BSCG), not fetched directly from the primary WADA Prohibited List or an original clinical trial report; verify at review time.",
+      "No human case report specifically naming andarine as the causal agent for liver injury was located; SARM-class liver injury signal in the current sources is drawn from ostarine/RAD-140/ligandrol cases only.",
+      "UNII, ChEMBL, RxNorm, and DrugBank identifiers not yet resolved from structured databases; PubChem page content was largely JavaScript-gated during this pass and only partially retrievable.",
+      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "gray-market-only",
+      "no-fda-approved-product",
+      "thin-human-evidence",
+      "unresolved-clinical-history-conflict",
+      "regulatory-enforcement-documented",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

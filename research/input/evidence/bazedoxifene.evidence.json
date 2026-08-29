@@ -1,0 +1,466 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "bazedoxifene-evidence-expansion-001",
+    "category": "hormones-serms-sarms",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:58:43Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Bazedoxifene",
+    "aliases": [
+      "Duavee",
+      "Viviant",
+      "Bazedoxifene acetate",
+      "TSE-424",
+      "Conjugated estrogens/bazedoxifene"
+    ],
+    "classification": "Selective estrogen receptor modulator (SERM)",
+    "compoundFamily": "Third-generation SERM (indole-based)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "198481-32-2",
+      "drugbank": "DB06401",
+      "pubchem": "154257",
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-duavee-label",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "DUAVEE- conjugated estrogens/bazedoxifene tablet, film coated (FDA-approved product label)",
+      "publisher": "DailyMed / U.S. National Library of Medicine (labeling text sourced from FDA-approved labeling)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16705d8-4472-4f83-96ac-69fa2be066cb",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pubchem-cid-154257",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Bazedoxifene, CID 154257",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Bazedoxifene",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "statpearls-bazedoxifene",
+      "sourceType": "clinical-reference",
+      "authorityTier": "B1",
+      "title": "Bazedoxifene",
+      "publisher": "StatPearls / NCBI Bookshelf (NBK585122)",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK585122/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pmc3131985-bazedoxifene-review",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Bazedoxifene: literature data and clinical evidence",
+      "publisher": "Clinical Interventions in Aging (via DOAJ/PMC, PMC3131985)",
+      "url": "https://doaj.org/article/a20acec5398f45c3a04962dcb0ec23be",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pmc2908075-bazedoxifene-safety",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Safety of bazedoxifene in a randomized, double-blind, placebo- and active-controlled phase 3 study of postmenopausal women with osteoporosis",
+      "publisher": "PMC (PMC2908075)",
+      "url": "https://ncbi.nlm.nih.gov/pmc/articles/PMC2908075",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "frontiers-pct-illicit-serms",
+      "sourceType": "literature-context",
+      "authorityTier": "B2",
+      "title": "Illegal and falsified medicines self-administrated in not approved post-cycle therapy after the cessation of anabolic-androgenic steroids -- qualitative analysis",
+      "publisher": "Frontiers in Chemistry",
+      "url": "https://www.frontiersin.org/journals/chemistry/articles/10.3389/fchem.2025.1536858/full",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "ema-conbriza-epar",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Conbriza (bazedoxifene) - European public assessment report (EPAR)",
+      "publisher": "European Medicines Agency (EMA)",
+      "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/conbriza",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "drugbank-db06401",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Bazedoxifene: Uses, Interactions, Mechanism of Action (DB06401)",
+      "publisher": "DrugBank Online",
+      "url": "https://go.drugbank.com/drugs/DB06401",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "bazedoxifene-regulatory-approved-product-001",
+      "claimType": "regulatory",
+      "statement": "Bazedoxifene is not marketed as a standalone drug in the United States; it is FDA-approved only as the fixed-dose combination product DUAVEE (bazedoxifene 20 mg / conjugated estrogens 0.45 mg), indicated in women with a uterus for treatment of moderate to severe vasomotor symptoms of menopause and prevention of postmenopausal osteoporosis. The label carries a boxed warning and directs use for the shortest duration consistent with treatment goals.",
+      "context": {
+        "population": "postmenopausal women with a uterus",
+        "route": "oral",
+        "formulation": "fixed-dose tablet: bazedoxifene 20 mg / conjugated estrogens 0.45 mg",
+        "useCase": "vasomotor symptoms of menopause; osteoporosis prevention",
+        "doseText": "One tablet daily (label-specified fixed-dose combination); not a use recommendation"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-duavee-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-duavee-label",
+          "quote": "Treatment of moderate to severe vasomotor symptoms associated with menopause",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-duavee-label",
+          "quote": "Prevention of postmenopausal osteoporosis",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-duavee-label",
+          "quote": "the shortest duration consistent with treatment goals and risks for the individual woman",
+          "pageOrSection": "Indications and Usage / dosage guidance"
+        }
+      ],
+      "reviewFlags": [
+        "bazedoxifene-only (Viviant) was never approved as a standalone U.S. product; verify current marketing status is unchanged at review time"
+      ]
+    },
+    {
+      "claimId": "bazedoxifene-warning-boxed-001",
+      "claimType": "warning",
+      "statement": "DUAVEE carries an FDA boxed warning: patients should not take additional estrogens; estrogen therapy should not be used to prevent cardiovascular disease or dementia; Women's Health Initiative data showed increased risks of stroke and deep vein thrombosis with estrogen therapy, and increased dementia risk was observed in women 65 years or older on estrogen-alone therapy.",
+      "context": {
+        "population": "postmenopausal women with a uterus taking DUAVEE",
+        "route": "oral",
+        "formulation": "conjugated estrogens/bazedoxifene tablet",
+        "useCase": "safety warning accompanying approved indications",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-duavee-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-duavee-label",
+          "quote": "Women taking DUAVEE should not take additional estrogens",
+          "pageOrSection": "Boxed Warning"
+        },
+        {
+          "sourceRef": "dailymed-duavee-label",
+          "quote": "Estrogen therapy should not be used for the prevention of cardiovascular disease or dementia",
+          "pageOrSection": "Boxed Warning"
+        },
+        {
+          "sourceRef": "dailymed-duavee-label",
+          "quote": "increased risks of stroke and deep vein thrombosis (DVT)",
+          "pageOrSection": "Boxed Warning, citing WHI studies"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical boxed-warning claim"
+      ]
+    },
+    {
+      "claimId": "bazedoxifene-contraindication-001",
+      "claimType": "contraindication",
+      "statement": "DUAVEE is contraindicated in women with undiagnosed abnormal uterine bleeding, known/suspected/past history of breast cancer, known or suspected estrogen-dependent neoplasia, active or prior venous or arterial thromboembolic disease, known hepatic impairment or disease, or pregnancy.",
+      "context": {
+        "population": "postmenopausal women considered for DUAVEE therapy",
+        "route": "oral",
+        "formulation": "conjugated estrogens/bazedoxifene tablet",
+        "useCase": "prescribing safety screen",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "dailymed-duavee-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-duavee-label",
+          "quote": "Undiagnosed abnormal uterine bleeding",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-duavee-label",
+          "quote": "Known, suspected, or past history of breast cancer",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-duavee-label",
+          "quote": "Known or suspected estrogen-dependent neoplasia",
+          "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "dailymed-duavee-label",
+          "quote": "Known hepatic impairment or disease",
+          "pageOrSection": "Contraindications"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical contraindication claim"
+      ]
+    },
+    {
+      "claimId": "bazedoxifene-mechanism-serm-001",
+      "claimType": "mechanism",
+      "statement": "Bazedoxifene is a selective estrogen receptor modulator (SERM) with tissue-selective activity: it acts as a competitive estrogen-receptor antagonist in breast and endometrial tissue (antiproliferative effect), while acting as an estrogen-receptor agonist in bone, favorably affecting bone turnover and lipid metabolism.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "bazedoxifene (free base or acetate)",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "statpearls-bazedoxifene",
+        "pmc3131985-bazedoxifene-review",
+        "drugbank-db06401"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "statpearls-bazedoxifene",
+          "quote": "In cases of breast cancer or uterine carcinoma/endometrial hyperplasia, bazedoxifene acts as a competitive antagonist, yielding antiproliferative effects.",
+          "pageOrSection": "Mechanism of Action"
+        },
+        {
+          "sourceRef": "statpearls-bazedoxifene",
+          "quote": "the drug acts as an agonist by stimulating lipid metabolism and ensuring proper regulation of bone turnover",
+          "pageOrSection": "Mechanism of Action"
+        },
+        {
+          "sourceRef": "pmc3131985-bazedoxifene-review",
+          "quote": "a novel selective estrogen receptor modulator, has been developed to have favorable effects on bone and the lipid profile",
+          "pageOrSection": "Abstract/summary"
+        },
+        {
+          "sourceRef": "drugbank-db06401",
+          "quote": "a selective estrogen receptor modulator (SERM) used to treat moderate to severe vasomotor symptoms in menopause and osteoporosis alone or in combination with conjugated estrogens",
+          "pageOrSection": "Summary"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "bazedoxifene-efficacy-vertebral-fracture-001",
+      "claimType": "efficacy",
+      "statement": "In a 3-year randomized, placebo- and active(raloxifene)-controlled phase 3 trial in postmenopausal women with osteoporosis, bazedoxifene significantly reduced the risk of new vertebral fractures compared with placebo; the same body of trial evidence reported no evidence of endometrial or breast stimulation with bazedoxifene. Adverse effects including hot flushes (vasodilatation), leg cramps, and venous thromboembolic events were significantly more frequent with bazedoxifene (and with raloxifene) than with placebo.",
+      "context": {
+        "population": "postmenopausal women with osteoporosis enrolled in phase 3 trials (approximately 1583 subjects in supporting phase 3 program per secondary source)",
+        "route": "oral",
+        "formulation": "bazedoxifene 20 mg or 40 mg daily (trial doses)",
+        "useCase": "postmenopausal osteoporosis, vertebral fracture prevention",
+        "doseText": "20 mg or 40 mg daily for up to 3 years in the pivotal trial (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "ema-conbriza-epar",
+        "pmc3131985-bazedoxifene-review",
+        "statpearls-bazedoxifene",
+        "pmc2908075-bazedoxifene-safety"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "ema-conbriza-epar",
+          "quote": "After three years, 2% of the patients receiving Conbriza (35 out of 1,724) had new fractures compared with 4% of those receiving placebo (59 out of 1,741).",
+          "pageOrSection": "EPAR summary for the public / efficacy results"
+        },
+        {
+          "sourceRef": "ema-conbriza-epar",
+          "quote": "a significant reduction in the incidence of vertebral fractures",
+          "pageOrSection": "EPAR summary for the public / efficacy results"
+        },
+        {
+          "sourceRef": "ema-conbriza-epar",
+          "quote": "efficacy on hip fractures has not been established",
+          "pageOrSection": "EPAR summary for the public / efficacy results"
+        },
+        {
+          "sourceRef": "ema-conbriza-epar",
+          "quote": "hot flushes, muscle spasms and peripheral oedema",
+          "pageOrSection": "EPAR summary for the public / side effects"
+        },
+        {
+          "sourceRef": "pmc3131985-bazedoxifene-review",
+          "quote": "bazedoxifene...significantly reduced the risk of new vertebral fractures in postmenopausal women compared with placebo",
+          "pageOrSection": "Results summary"
+        },
+        {
+          "sourceRef": "pmc3131985-bazedoxifene-review",
+          "quote": "no evidence of endometrial and breast stimulation with bazedoxifene",
+          "pageOrSection": "Safety summary"
+        },
+        {
+          "sourceRef": "pmc3131985-bazedoxifene-review",
+          "quote": "The incidences of vasodilatation (hot flushes), leg cramps, and venous thromboembolic events were significantly higher with bazedoxifene and raloxifene compared with placebo",
+          "pageOrSection": "Safety summary"
+        },
+        {
+          "sourceRef": "statpearls-bazedoxifene",
+          "quote": "dose-dependent enhancements in lumbar bone mineral density (BMD) scores significantly above baseline",
+          "pageOrSection": "Clinical trials"
+        },
+        {
+          "sourceRef": "statpearls-bazedoxifene",
+          "quote": "1583 healthy postmenopausal women at risk for osteoporosis",
+          "pageOrSection": "Clinical trials"
+        }
+      ],
+      "reviewFlags": [
+        "verify against primary trial (Silverman et al., J Bone Miner Res 2008) for exact vertebral-fracture percent-reduction figures and nonvertebral fracture subgroup findings; primary PubMed/PMC pages were blocked by a CAPTCHA this session and could not be quoted directly",
+        "efficacy shown is bone-density and vertebral fracture endpoints in a diagnosed-osteoporosis trial population; do not generalize to other populations or endpoints"
+      ]
+    },
+    {
+      "claimId": "bazedoxifene-adverse-effect-vte-001",
+      "claimType": "adverse-effect",
+      "statement": "In a randomized, double-blind, placebo- and active-controlled phase 3 study, venous thromboembolism (VTE) rates were higher with bazedoxifene than placebo: any-VTE incidence was 2.8 per 1,000 women-years with bazedoxifene 20 mg and 2.9 per 1,000 women-years with bazedoxifene 40 mg, versus 1.7 per 1,000 women-years with placebo; deep vein thrombosis specifically occurred at 1.7 (20 mg) and 2.0 (40 mg) per 1,000 women-years with bazedoxifene versus 0.2 with placebo. VTE risk did not differ significantly between bazedoxifene and raloxifene, and absolute risk was described as low, with an attributable risk of about 1 additional VTE case per 1,000 women-years.",
+      "context": {
+        "population": "postmenopausal women with osteoporosis in a phase 3 RCT",
+        "route": "oral",
+        "formulation": "bazedoxifene 20 mg or 40 mg daily vs. raloxifene 60 mg vs. placebo",
+        "useCase": "postmenopausal osteoporosis treatment/prevention trial",
+        "doseText": "20 mg or 40 mg daily (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pmc2908075-bazedoxifene-safety",
+        "dailymed-duavee-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc2908075-bazedoxifene-safety",
+          "quote": "The rates of any VTE per 1,000 women-years were 2.8 with bazedoxifene 20 mg, 2.9 with bazedoxifene 40 mg...and 1.7 with placebo",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "pmc2908075-bazedoxifene-safety",
+          "quote": "There were no significant differences in the risk of any VTE...between the bazedoxifene and raloxifene treatment groups.",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "pmc2908075-bazedoxifene-safety",
+          "quote": "The absolute risk of VTEs was low among all treatment groups in the current study, with the attributable risk for bazedoxifene estimated at 1 case per 1,000 women-years",
+          "pageOrSection": "Discussion"
+        },
+        {
+          "sourceRef": "pmc2908075-bazedoxifene-safety",
+          "quote": "The rates of DVT per 1,000 women-years were 1.7 with bazedoxifene 20 mg, 2.0 with bazedoxifene 40 mg, 1.5 with raloxifene 60 mg, and 0.2 with placebo",
+          "pageOrSection": "Results"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical adverse-effect claim; cross-check against DUAVEE label VTE/DVT language at next review"
+      ]
+    },
+    {
+      "claimId": "bazedoxifene-evidence-gap-gray-market-serm-001",
+      "claimType": "evidence-gap",
+      "statement": "Bazedoxifene is listed by anti-doping literature among SERMs (alongside clomiphene, raloxifene, tamoxifen, and toremifene) prohibited by WADA and used in unsupervised, non-approved post-cycle therapy (PCT) after anabolic-androgenic steroid cessation to counter estrogen-driven effects such as gynecomastia; a 2025 qualitative analysis of illicit PCT products flags bazedoxifene as a newer-generation SERM 'expected to soon become more popular in the illegal market,' but did not detect it in the illicit samples it actually analyzed. No controlled human evidence establishes safety or efficacy of bazedoxifene for anabolic-steroid PCT, gynecomastia prevention, or any bodybuilding/performance use; bazedoxifene's only human efficacy and safety data come from postmenopausal-osteoporosis and menopausal-vasomotor-symptom trials in older women, a population and physiology very different from steroid-using men.",
+      "context": {
+        "population": "anabolic-androgenic steroid users seeking unsupervised post-cycle therapy",
+        "route": "oral (as used in approved product; illicit-market formulation/route not verified)",
+        "formulation": "illicit/gray-market bazedoxifene-containing products (not FDA-approved for this use)",
+        "useCase": "unapproved post-cycle therapy / anti-estrogen use for gynecomastia prevention in steroid users",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "frontiers-pct-illicit-serms",
+        "dailymed-duavee-label"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "frontiers-pct-illicit-serms",
+          "quote": "anti-estrogenic compounds mentioned in the WADA list can be divided into two groups: SERMs (bazedoxifene, clomiphene, cyclofenil, ospemifene, raloxifene, tamoxifen, and toremifene)",
+          "pageOrSection": "Introduction"
+        },
+        {
+          "sourceRef": "frontiers-pct-illicit-serms",
+          "quote": "Bazedoxifene, ospemifene, and toremifene are newer-generation SERMs that are expected to soon become more popular in the illegal market.",
+          "pageOrSection": "Discussion"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular/illicit anti-estrogen use in steroid PCT is not supported by any human trial evidence in that population",
+        "study population for all cited human efficacy/safety data is postmenopausal women, not steroid-using men; do not generalize"
+      ]
+    }
+  ],
+  "conflicts": [],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Primary pivotal trial pages (PubMed 18665787 / PMC full texts for the Silverman et al. 3-year vertebral fracture RCT) were blocked by CAPTCHA this session; fracture-efficacy claim is currently sourced through secondary review articles and StatPearls rather than the primary trial text, and should be re-verified against the primary source at review time.",
+      "RxNorm, UNII, and ChEMBL identifiers not yet resolved from structured databases.",
+      "Nonvertebral-fracture subgroup findings (bazedoxifene vs. bisphosphonates, FRAX high-risk subgroup) referenced in search results but not independently quoted/verified this session; flagged rather than included as a claim."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-combination-product",
+      "a1-regulator-backed",
+      "boxed-warning-present",
+      "gray-market-adjacent-use-documented",
+      "limited-primary-trial-access-this-session",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

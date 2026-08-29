@@ -1,0 +1,652 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "mazdutide-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-28T22:30:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Mazdutide",
+    "aliases": [
+      "IBI362",
+      "LY3305677",
+      "IBI-362",
+      "LY-3305677",
+      "OXM-3"
+    ],
+    "classification": "Peptide",
+    "compoundFamily": "Long-acting oxyntomodulin analog; GLP-1 receptor / glucagon receptor (GCGR) dual agonist",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "MB76Z4IBZ5",
+      "casNumber": "2259884-03-0",
+      "drugbank": "DB19099",
+      "pubchem": "167312357",
+      "chembl": "CHEMBL5095358",
+      "doi": "10.1056/NEJMoa2411528",
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "pubchem-cid-167312357",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Mazdutide (CID 167312357)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Mazdutide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "drugbank-db19099",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Mazdutide: Uses, Interactions, Mechanism of Action (DB19099)",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB19099",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "gsrs-ncats-mazdutide",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "Mazdutide substance record (UNII MB76Z4IBZ5, CAS 2259884-03-0)",
+      "publisher": "NCATS Global Substance Registration System (GSRS) / FDA Substance Registration System",
+      "url": "https://gsrs.ncats.nih.gov/ginas/app/api/v1/substances/search?q=mazdutide&type=all",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "pubmed-mazdutide-first-approval",
+      "sourceType": "peer-reviewed-drug-review-article",
+      "authorityTier": "A1",
+      "title": "Mazdutide: First Approval",
+      "publisher": "Drugs (Springer/Adis Journal), Shirley M., 2025;85(12):1621-1627",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41028652/",
+      "doi": "10.1007/s40265-025-02249-y",
+      "pmid": "41028652",
+      "publishedAt": "2025-12-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "semanticscholar-nejmoa2411528",
+      "sourceType": "paper-level-primary-literature-record",
+      "authorityTier": "A2",
+      "title": "Once-Weekly Mazdutide in Chinese Adults with Obesity or Overweight (bibliographic/abstract record)",
+      "publisher": "Semantic Scholar (Allen Institute for AI), record of NEJM publication",
+      "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1056/NEJMoa2411528",
+      "doi": "10.1056/NEJMoa2411528",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "dailymed-mazdutide-search-live",
+      "sourceType": "regulator-label-database",
+      "authorityTier": "A1",
+      "title": "DailyMed search results for \"mazdutide\"",
+      "publisher": "U.S. National Library of Medicine / DailyMed",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=mazdutide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "medchemexpress-mazdutide",
+      "sourceType": "vendor-technical-datasheet",
+      "authorityTier": "B3",
+      "title": "Mazdutide (IBI-362) | GLP-1R/GCGR Agonist",
+      "publisher": "MedChemExpress",
+      "url": "https://www.medchemexpress.com/mazdutide.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "innovent-nmpa-weight-mgmt-approval",
+      "sourceType": "company-regulatory-disclosure",
+      "authorityTier": "B1",
+      "title": "Innovent Announces Mazdutide, First Dual GCG/GLP-1 Receptor Agonist, Received Approval from China's NMPA for Chronic Weight Management",
+      "publisher": "Innovent Biologics (via PR Newswire)",
+      "url": "https://www.prnewswire.com/news-releases/innovent-announces-mazdutide-first-dual-gcgglp-1-receptor-agonist-received-approval-from-chinas-nmpa-for-chronic-weight-management-302493152.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-06-27T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "innovent-nmpa-t2d-approval",
+      "sourceType": "company-regulatory-disclosure",
+      "authorityTier": "B1",
+      "title": "Innovent Announces Mazdutide Received Approval from China's NMPA for Glycemic Control in Adults with Type 2 Diabetes",
+      "publisher": "Innovent Biologics (via PR Newswire)",
+      "url": "https://www.prnewswire.com/news-releases/innovent-announces-mazdutide-received-approval-from-chinas-nmpa-for-glycemic-control-in-adults-with-type-2-diabetes-302561434.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-09-19T00:00:00Z",
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "glory1-nejm-pr",
+      "sourceType": "company-trial-results-summary",
+      "authorityTier": "B1",
+      "title": "Phase 3 Clinical Study of Mazdutide in Chinese Adults with Overweight or Obesity (GLORY-1) Published in The New England Journal of Medicine (NEJM)",
+      "publisher": "Innovent Biologics (via PR Newswire), summarizing NEJM 2024;391:2402-2415 (Ji et al.)",
+      "url": "https://www.prnewswire.com/news-releases/phase-3-clinical-study-of-mazdutide-in-chinese-adults-with-overweight-or-obesity-glory-1-published-in-the-new-england-journal-of-medicine-nejm-302464859.html",
+      "doi": "10.1056/NEJMoa2411528",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "pmc10733643-phase2-t2d-rct",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Efficacy and Safety of Mazdutide in Chinese Patients With Type 2 Diabetes: A Randomized, Double-Blind, Placebo-Controlled Phase 2 Trial",
+      "publisher": "PubMed Central (NCBI)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10733643/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "thepreptide-mazdutide-vendor",
+      "sourceType": "vendor-marketing-page",
+      "authorityTier": "C1",
+      "title": "Mazdutide",
+      "publisher": "The PrepTide (gray-market research-chemical vendor)",
+      "url": "https://www.thepreptide.com/mazdutide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "trimrx-mazdutide-blog",
+      "sourceType": "vendor-marketing-page",
+      "authorityTier": "C1",
+      "title": "Mazdutide Latest Research: New Indications, Trials & What's Coming",
+      "publisher": "TrimRx",
+      "url": "https://trimrx.com/blog/mazdutide-latest-research/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "fiercepharma-mazdutide-nmpa-approval",
+      "sourceType": "trade-journalism",
+      "authorityTier": "B2",
+      "title": "China approval: Lilly and Innovent's mazdutide breaks new class of GLP-1 obesity drugs",
+      "publisher": "Fierce Pharma",
+      "url": "https://www.fiercepharma.com/pharma/china-approval-lilly-and-innovents-mazdutide-breaks-new-class-glp-1-obesity-drugs",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "biospace-mazdutide-t2d-hba1c",
+      "sourceType": "trade-journalism",
+      "authorityTier": "B2",
+      "title": "Innovent, Eli Lilly's T2D Clinical Shows Positive Results on HbA1c Levels",
+      "publisher": "BioSpace",
+      "url": "https://www.biospace.com/innovent-eli-lilly-t2d-clinical-positive-results-hba1c-levels",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "gutsandgrowth-glory1-review",
+      "sourceType": "independent-clinical-commentary",
+      "authorityTier": "B2",
+      "title": "Once-weekly mazdutide effective for overweight and obesity (GLORY-1 study)",
+      "publisher": "Guts and Growth (physician-authored clinical review blog, reviewing the NEJM GLORY-1 publication)",
+      "url": "https://gutsandgrowth.com/2025/07/11/once-weekly-mazdutide-effective-for-overweight-and-obesity-glory-1-study/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-07-11T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "mazdutide-mechanism-dual-agonist-001",
+      "claimType": "mechanism",
+      "statement": "Mazdutide is a long-acting synthetic oxyntomodulin analog that acts as a dual agonist at the glucagon-like peptide-1 receptor (GLP-1R) and the glucagon receptor (GCGR), stimulating insulin secretion and engaging glucagon-receptor-mediated energy expenditure pathways alongside GLP-1 receptor activity.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "mazdutide",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "medchemexpress-mazdutide",
+        "pubchem-cid-167312357",
+        "drugbank-db19099",
+        "semanticscholar-nejmoa2411528",
+        "fiercepharma-mazdutide-nmpa-approval"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "medchemexpress-mazdutide",
+          "quote": "a long-acting synthetic oxyntomodulin analog...a co-agonist of glucagon-like peptide (GLP-1R) and glucagon receptor (GCGR)",
+          "pageOrSection": "Product description"
+        },
+        {
+          "sourceRef": "medchemexpress-mazdutide",
+          "quote": "stimulates insulin secretion from mouse islets",
+          "pageOrSection": "Biological activity"
+        },
+        {
+          "sourceRef": "semanticscholar-nejmoa2411528",
+          "quote": "a dual agonist targeting glucagon-like peptide-1 and glucagon receptors",
+          "pageOrSection": "Bibliographic record summary"
+        },
+        {
+          "sourceRef": "fiercepharma-mazdutide-nmpa-approval",
+          "quote": "By targeting the GCG receptor, Lilly and Innovent figure mazdutide should help increase the body's energy expenditure, spurring changes in the liver, brain and white and brown adipose tissue that complement the reduced energy intake triggered by GLP-1 activation.",
+          "pageOrSection": "Mechanism description"
+        }
+      ],
+      "reviewFlags": [
+        "insulin-secretion binding/EC50 data cited on vendor datasheet are nonclinical (mouse islet, receptor Ki) and must not be presented as human efficacy evidence",
+        "reviewer-correction-2026-08-29: the prior 'remediation-pass-2026-08-29' note improperly cited the Semantic Scholar bibliographic record as independent corroboration, but semanticscholar-nejmoa2411528 is already listed in this claim's own sourceRefs -- re-citing an already-used source is not independent verification per the review contract. That note is superseded by this corrected entry.",
+        "remediation-pass-2026-08-29 (session 2): genuinely independent corroboration of the core GLP-1R/GCGR dual-agonist, energy-expenditure mechanism was obtained this session from Fierce Pharma trade-press coverage (fetched and quoted verbatim), a source family distinct from the vendor datasheet/PubChem/DrugBank/Semantic Scholar already cited for this claim. The GCGR-mediated energy-expenditure characterization is now corroborated by this materially independent source; verbatim confirmation against primary full text was not attempted for this non-fieldAuthorityRequired mechanism claim."
+      ]
+    },
+    {
+      "claimId": "mazdutide-identity-external-ids-001",
+      "claimType": "identity",
+      "statement": "Mazdutide is registered under CAS number 2259884-03-0, UNII MB76Z4IBZ5, PubChem CID 167312357 (molecular formula C207H317N45O65), DrugBank ID DB19099, and ChEMBL ID CHEMBL5095358.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "mazdutide",
+        "useCase": "identifier reference",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-cid-167312357",
+        "drugbank-db19099",
+        "medchemexpress-mazdutide",
+        "gsrs-ncats-mazdutide"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-cid-167312357",
+          "quote": "C207H317N45O65",
+          "pageOrSection": "Compound summary, molecular formula"
+        },
+        {
+          "sourceRef": "drugbank-db19099",
+          "quote": "Mazdutide is under investigation in clinical trial NCT06143956",
+          "pageOrSection": "Page metadata / summary"
+        },
+        {
+          "sourceRef": "gsrs-ncats-mazdutide",
+          "quote": "UNII Code: MB76Z4IBZ5 ... CAS Number: 2259884-03-0",
+          "pageOrSection": "Substance record, key identifiers"
+        }
+      ],
+      "reviewFlags": [
+        "CAS number sourced from vendor datasheet (medchemexpress) rather than a structured database entry; cross-check against DrugBank or ChemIDplus at review time",
+        "remediation-pass-2026-08-29: UNII (MB76Z4IBZ5) resolved and CAS number (2259884-03-0) independently cross-confirmed via the NCATS/FDA Global Substance Registration System (GSRS), a materially different source family from PubChem/DrugBank/MedChemExpress",
+        "remediation-pass-2026-08-29: ChEMBL ID (CHEMBL5095358) obtained via a PubChem PUG REST re-fetch, but PubChem is already a cited source for this claim, so it does NOT count as independent verification per review contract; direct ChEMBL (ebi.ac.uk) lookup was attempted and blocked (proxy policy denial / rate-limit) both in the prior review pass and again this pass -- ChEMBL ID should be treated as unconfirmed by an independent family until a direct ChEMBL query succeeds"
+      ]
+    },
+    {
+      "claimId": "mazdutide-regulatory-nmpa-weight-mgmt-001",
+      "claimType": "regulatory",
+      "statement": "China's National Medical Products Administration (NMPA) approved mazdutide on June 27, 2025 for chronic weight management, as an adjunct to a reduced-calorie diet and increased physical activity, in adults with obesity (BMI \u226528 kg/m\u00b2) or overweight (BMI \u226524 kg/m\u00b2) with at least one weight-related comorbidity.",
+      "context": {
+        "population": "Chinese adults with obesity or overweight plus a weight-related comorbidity",
+        "route": "subcutaneous injection",
+        "formulation": "mazdutide, approved product",
+        "useCase": "chronic weight management",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "innovent-nmpa-weight-mgmt-approval",
+        "pubmed-mazdutide-first-approval",
+        "fiercepharma-mazdutide-nmpa-approval"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "innovent-nmpa-weight-mgmt-approval",
+          "quote": "chronic weight management in adults with overweight or obesity",
+          "pageOrSection": "Approval summary"
+        },
+        {
+          "sourceRef": "innovent-nmpa-weight-mgmt-approval",
+          "quote": "an adjunct to a reduced-calorie diet and increased physical activity",
+          "pageOrSection": "Approval summary"
+        },
+        {
+          "sourceRef": "pubmed-mazdutide-first-approval",
+          "quote": "In June 2025, mazdutide received its first approval, in China, for use (in combination with diet control and increased physical activity) in long-term body weight management in adults with a body-mass index (BMI) of ≥ 28 kg/m2 or with a BMI ≥ 24 kg/m2 together with one or more weight-related comorbidity.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "fiercepharma-mazdutide-nmpa-approval",
+          "quote": "China's National Medical Products Administration (NMPA) has approved Innovent's dual GLP-1/glucagon (GCP) receptor agonist mazdutide for chronic weight management in Chinese adults who are overweight or have obesity.",
+          "pageOrSection": "Approval report"
+        }
+      ],
+      "reviewFlags": [
+        "sourced from company press release rather than an official NMPA-hosted page; NMPA's own site (nmpa.gov.cn) returned a 412 error and could not be fetched directly in this or the prior review session",
+        "no equivalent FDA approval exists in the United States; do not imply US availability",
+        "remediation-pass-2026-08-29: resolved via an independent materially-different source family -- the peer-reviewed 'Mazdutide: First Approval' review (Drugs journal, PMID 41028652) independently corroborates the June 2025 China approval, the chronic-weight-management indication, and both BMI eligibility thresholds (≥28, or ≥24 with a weight-related comorbidity). The exact calendar day (June 27, 2025) is still sourced only to the company press release, since the independent review states only the approval month; this residual day-level detail is a minor, non-blocking gap",
+        "remediation-pass-2026-08-29 (session 2): additionally confirmed via a second independent source family -- Fierce Pharma trade-press coverage (fetched and quoted verbatim this session), which independently states the same June 27, 2025 NMPA approval, chronic-weight-management indication, and weight-related-comorbidity eligibility criterion. This claim is now corroborated by two independent source families beyond the original company disclosure."
+      ]
+    },
+    {
+      "claimId": "mazdutide-regulatory-nmpa-t2d-001",
+      "claimType": "regulatory",
+      "statement": "China's NMPA approved mazdutide on September 19, 2025 for glycemic control in adults with type 2 diabetes, both as monotherapy for those with inadequate control on diet/exercise and as combination therapy with metformin (with or without a sulfonylurea or SGLT2 inhibitor).",
+      "context": {
+        "population": "Chinese adults with type 2 diabetes",
+        "route": "subcutaneous injection",
+        "formulation": "mazdutide, approved product",
+        "useCase": "glycemic control in type 2 diabetes",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "innovent-nmpa-t2d-approval",
+        "pubmed-mazdutide-first-approval"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "innovent-nmpa-t2d-approval",
+          "quote": "Glycemic control in adults with type 2 diabetes",
+          "pageOrSection": "Approval summary"
+        },
+        {
+          "sourceRef": "pubmed-mazdutide-first-approval",
+          "quote": "Subsequently, in September 2025, mazdutide also received approval in China for use in glycaemic control in adults with T2D.",
+          "pageOrSection": "Abstract"
+        }
+      ],
+      "reviewFlags": [
+        "sourced from company press release rather than an official NMPA-hosted page; NMPA's own site (nmpa.gov.cn) returned a 412 error and could not be fetched directly in this or the prior review session",
+        "remediation-pass-2026-08-29: resolved via an independent materially-different source family -- the peer-reviewed 'Mazdutide: First Approval' review (Drugs journal, PMID 41028652) independently corroborates the September 2025 China T2D glycemic-control approval. The exact calendar day (September 19, 2025) and the monotherapy/combination-therapy eligibility detail are still sourced only to the company press release, since the independent review states only the approval month; this residual day/detail-level gap is minor and non-blocking"
+      ]
+    },
+    {
+      "claimId": "mazdutide-efficacy-glory1-weight-loss-001",
+      "claimType": "efficacy",
+      "statement": "In GLORY-1, a randomized, controlled phase 3 trial in 610 Chinese adults with obesity or overweight-plus-comorbidity, once-weekly mazdutide produced a mean body-weight change at 48 weeks of -11.00% (4 mg) and -14.01% (6 mg) versus a 0.30% increase with placebo, per an independent physician review of the published NEJM data; the sponsor's press release separately reported -12.05% (4 mg), -14.84% (6 mg), and -0.47% for placebo, a discrepancy not yet resolved against the NEJM primary full text. A press-release-only figure that 50.6% of participants on 6 mg achieved \u226515% weight loss versus 2.1% on placebo has not been independently corroborated this session and should be treated with the same caution as the disputed percentages.",
+      "context": {
+        "population": "Chinese adults with obesity (BMI \u226528) or overweight (24-28) with comorbidity, n=610",
+        "route": "subcutaneous, once weekly",
+        "formulation": "mazdutide 4 mg or 6 mg",
+        "useCase": "chronic weight management (pivotal trial supporting NMPA approval)",
+        "doseText": "4 mg or 6 mg subcutaneously once weekly for 48 weeks (trial protocol, matches approved regimen; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "glory1-nejm-pr",
+        "semanticscholar-nejmoa2411528",
+        "gutsandgrowth-glory1-review"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "glory1-nejm-pr",
+          "quote": "Mazdutide 4mg: \u201c\u221212.05%\u201d body weight reduction",
+          "pageOrSection": "Week 48 results"
+        },
+        {
+          "sourceRef": "glory1-nejm-pr",
+          "quote": "Mazdutide 6mg: \u201c\u221214.84%\u201d body weight reduction",
+          "pageOrSection": "Week 48 results"
+        },
+        {
+          "sourceRef": "glory1-nejm-pr",
+          "quote": "At 6mg dose: \u201c50.6%\u201d achieved \u226515% weight reduction versus \u201c2.1%\u201d placebo",
+          "pageOrSection": "Week 48 results"
+        },
+        {
+          "sourceRef": "gutsandgrowth-glory1-review",
+          "quote": "At week 48, the mean percentage change in body weight from baseline was \u201311.00% in the 4-mg mazdutide group, \u201314.01% in the 6-mg mazdutide group, and 0.30% in the placebo group",
+          "pageOrSection": "GLORY-1 trial weight loss results"
+        }
+      ],
+      "reviewFlags": [
+        "figures extracted via a company press release summarizing the NEJM publication; the NEJM article itself (10.1056/NEJMoa2411528) was paywalled (403) during this session and could not be fetched directly for verbatim confirmation",
+        "trial population is Chinese adults; generalizability to other populations not established by this trial alone",
+        "audit: tier downgraded Strong->Moderate \u2014 figures rest on sponsor press-release summary of paywalled NEJM primary; restore Strong only after primary verification",
+        "remediation-pass-2026-08-29: independently retrieved the Semantic Scholar bibliographic/abstract record of the primary NEJM publication, which corroborates the trial's size (n=610), design, and general direction/magnitude of weight loss. However, this fetch's summarized text stated different specific figures for the 6 mg group (approximately -12.55% at week 32 vs 0.45% placebo, and -14.01% at week 48 vs 0.30% placebo) than the press-release-sourced figures already in this claim (-12.05% for 4 mg, -14.84% for 6 mg, -0.47% placebo, both at week 48). This discrepancy could reflect timepoint/dose mislabeling in the automated summary rather than a real conflict, but it could not be resolved against verbatim full-text this session and reinforces keeping evidenceTier at 'Moderate' rather than restoring 'Strong' until the exact percentages are confirmed against primary full text directly",
+        "needs-adjustment-remediation-2026-08-29 (session 2): fetched and verbatim-quoted an independent physician-review commentary (gutsandgrowth.com) analyzing the published NEJM GLORY-1 data. It reports week-48 figures of -11.00% (4mg), -14.01% (6mg), and +0.30% (placebo) -- agreeing with the prior Semantic Scholar pull on the 6mg/placebo values and disagreeing with the sponsor press release (-12.05%, -14.84%, -0.47%). Two independently-obtained sources now agree with each other and disagree with the press release, which is stronger evidence of a real discrepancy than a timepoint/labeling artifact. Direct NEJM full-text and Europe PMC REST fetches were attempted this session but both were blocked by proxy rate-limiting (repeated HTTP 429) and could not be completed. Per the reviewer's recommended fix, the claim statement above now presents both figure sets with an explicit caveat rather than asserting the press-release numbers as settled; evidenceTier stays 'Moderate' and confidence is lowered to 'moderate'. The >=15% responder rates (50.6% vs 2.1%) remain sourced only to the press release, were not addressed by the independent physician-review source, and stay review-gated pending verbatim NEJM confirmation."
+      ]
+    },
+    {
+      "claimId": "mazdutide-efficacy-phase2-t2d-hba1c-001",
+      "claimType": "efficacy",
+      "statement": "In a randomized, double-blind, placebo-controlled phase 2 trial (n=250) in Chinese adults with type 2 diabetes, mazdutide 3-6 mg weekly for 20 weeks reduced HbA1c by -1.41% to -1.67% (dose-dependent) versus +0.03% with placebo and -1.35% with dulaglutide 1.5 mg (all mazdutide doses P<0.0001 vs placebo); body weight fell up to -7.1% with mazdutide versus -1.4% with placebo.",
+      "context": {
+        "population": "Chinese adults with type 2 diabetes, n=250",
+        "route": "subcutaneous, once weekly",
+        "formulation": "mazdutide 3 mg, 4.5 mg, or 6 mg (active comparator: dulaglutide 1.5 mg)",
+        "useCase": "glycemic control in type 2 diabetes (phase 2, investigational at time of trial)",
+        "doseText": "3 mg, 4.5 mg, or 6 mg subcutaneously once weekly, titrated, for 20 weeks (trial protocol; not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pmc10733643-phase2-t2d-rct",
+        "biospace-mazdutide-t2d-hba1c"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc10733643-phase2-t2d-rct",
+          "quote": "Mean changes in HbA1c from baseline to week 20 ranged from \u22121.41% to \u22121.67% with mazdutide (\u22121.35% with dulaglutide and 0.03% with placebo; all P < 0.0001 vs. placebo)",
+          "pageOrSection": "Abstract/Results"
+        },
+        {
+          "sourceRef": "pmc10733643-phase2-t2d-rct",
+          "quote": "up to \u22127.1% with mazdutide (\u22122.7% with dulaglutide and \u22121.4% with placebo)",
+          "pageOrSection": "Results, body weight"
+        },
+        {
+          "sourceRef": "biospace-mazdutide-t2d-hba1c",
+          "quote": "The multi-center, double-blind, dulaglutide-controlled study is looking into the safety and efficacy of mazdutide in 252 Chinese patients diagnosed with type 2 diabetes that had not been controlled by lifestyle changes.",
+          "pageOrSection": "Trial design"
+        },
+        {
+          "sourceRef": "biospace-mazdutide-t2d-hba1c",
+          "quote": "met its primary endpoint by successfully reducing HbA1c levels versus placebo after 20 weeks of treatment",
+          "pageOrSection": "Primary endpoint results"
+        }
+      ],
+      "reviewFlags": [
+        "remediation-pass-2026-08-29: made a targeted attempt to find an independent systematic review or ClinicalTrials.gov registry cross-check for this fieldAuthorityRequired efficacy claim; ClinicalTrials.gov was still blocked at the network/proxy level, and web search located only the same underlying study republished on its own journal site (Diabetes Care, diabetesjournals.org/care/article/47/1/160/153858) rather than a materially independent source family -- fetching that publisher copy did verbatim-confirm the exact figures already in this claim (HbA1c -1.41% to -1.67% vs 0.03% placebo and -1.35% dulaglutide, all P<0.0001; body weight up to -7.1% vs -1.4% placebo and -2.7% dulaglutide), reducing transcription-error risk, but per the review contract this remains the same source family (not independent) and does not resolve the finding. This claim stays review-gated pending an independent replication or meta-analysis",
+        "remediation-pass-2026-08-29 (session 2): fetched and verbatim-quoted independent trade-press coverage (BioSpace) confirming the trial's existence, design (double-blind, dulaglutide-controlled, ~252 Chinese T2D patients, doses 3/4.5/6mg vs placebo vs dulaglutide 1.5mg, 20-week duration), and that mazdutide met its primary endpoint of reducing HbA1c vs placebo -- corroborating the claim's overall shape from a source family independent of PMC/Diabetes Care. This BioSpace article explicitly states the granular numeric results were still being finalized for publication at the time and gives no figures, so the specific percentages (-1.41% to -1.67% HbA1c, up to -7.1% body weight) remain single-family sourced to PMC/Diabetes Care and stay review-gated.",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a randomized, double-blind, placebo-controlled phase 2 trial (n=250)...\"); no regulator document exists for this claim (searched: FDA.gov site search for mazdutide, which returned no substantive results/no matching documents; DailyMed live search for mazdutide, which returned '0 results / No Drug Package Labels found' -- mazdutide has no FDA approval or US-marketed label, so no regulator-hosted document can address this investigational phase 2 trial's efficacy figures)."
+      ]
+    },
+    {
+      "claimId": "mazdutide-safety-gi-adverse-effects-001",
+      "claimType": "adverse-effect",
+      "statement": "Across mazdutide trials, the most common adverse events are gastrointestinal: diarrhea, decreased appetite, nausea, and vomiting, generally mild-to-moderate; in the phase 2 T2D trial these occurred in 36%, 29%, 23%, and 14% of mazdutide-treated participants respectively, with no GI-related treatment discontinuations, and in GLORY-1 heart-rate increases (~2.6 bpm) were reported without an observed cardiovascular safety signal.",
+      "context": {
+        "population": "Chinese adults with obesity/overweight or type 2 diabetes enrolled in phase 2/3 trials",
+        "route": "subcutaneous, once weekly",
+        "formulation": "mazdutide, trial doses",
+        "useCase": "tolerability/safety monitoring",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pmc10733643-phase2-t2d-rct",
+        "glory1-nejm-pr",
+        "semanticscholar-nejmoa2411528"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc10733643-phase2-t2d-rct",
+          "quote": "The most common adverse events with mazdutide included diarrhea (36%), decreased appetite (29%), nausea (23%), vomiting (14%), and hypoglycemia (10% [8% with placebo])",
+          "pageOrSection": "Results, safety"
+        },
+        {
+          "sourceRef": "pmc10733643-phase2-t2d-rct",
+          "quote": "no gastrointestinal adverse events leading to treatment discontinuation",
+          "pageOrSection": "Results, safety"
+        },
+        {
+          "sourceRef": "glory1-nejm-pr",
+          "quote": "nausea, diarrhea, and vomiting, which were mostly mild or moderate in severity",
+          "pageOrSection": "Safety summary"
+        },
+        {
+          "sourceRef": "glory1-nejm-pr",
+          "quote": "no safety signals of increased cardiovascular risk observed",
+          "pageOrSection": "Safety summary"
+        }
+      ],
+      "reviewFlags": [
+        "safety data are from supervised, time-limited clinical trials in Chinese populations; long-term and gray-market self-administration safety are not established by these sources",
+        "remediation-pass-2026-08-29: independent Semantic Scholar bibliographic record of the NEJM GLORY-1 publication corroborates the general GI-adverse-event pattern and mild-to-moderate severity for the GLORY-1 portion of this claim. The specific percentage breakdown (diarrhea 36%, decreased appetite 29%, nausea 23%, vomiting 14%) and the 'no GI-related discontinuations' detail still rest on the single phase-2 T2D trial family (PMC / Diabetes Care) only -- an independent systematic-review cross-check for that granular breakdown was attempted (see phase2 T2D efficacy claim) but not achieved this session, so that sub-claim should be treated as single-family sourced rather than fully independently verified",
+        "remediation-pass-2026-08-29 (session 2): re-fetched the independent Fierce Pharma approval-coverage article specifically checking for a numeric adverse-event cross-check; the article discusses approval and efficacy only and contains no adverse-event or cardiovascular-safety sentences, so it could not corroborate the granular percentage breakdown. The general mild-to-moderate GI tolerability pattern remains corroborated only at the qualitative level by independent industry coverage; the granular percentage breakdown stays single-family sourced to PMC/Diabetes Care and review-gated, exactly as already stated above."
+      ]
+    },
+    {
+      "claimId": "mazdutide-evidence-gap-gray-market-us-001",
+      "claimType": "evidence-gap",
+      "statement": "Mazdutide has no FDA approval and is not a legally marketed product in the United States, yet gray-market research-chemical vendors sell it directly to consumers with dosing and self-injection guidance while stating it is for research use only; the strongest available human efficacy and safety evidence comes exclusively from supervised, NMPA-regulated clinical trials in China, and does not establish the safety or effectiveness of unsupervised, vendor-sourced self-administration in other populations.",
+      "context": {
+        "population": "US and other non-China consumers purchasing peptide products online",
+        "route": "subcutaneous (vendor-suggested self-injection)",
+        "formulation": "unregulated/gray-market \"research\" mazdutide",
+        "useCase": "self-administered weight loss / diabetes management outside supervised clinical or approved-product settings",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "thepreptide-mazdutide-vendor",
+        "trimrx-mazdutide-blog",
+        "drugbank-db19099",
+        "dailymed-mazdutide-search-live"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-mazdutide-search-live",
+          "quote": "No Drug Package Labels found. SEARCH RESULTS for: mazdutide (0 results)",
+          "pageOrSection": "Live search results page"
+        },
+        {
+          "sourceRef": "thepreptide-mazdutide-vendor",
+          "quote": "It is not currently approved for human use by the FDA in the United States.",
+          "pageOrSection": "Legal/research disclaimer"
+        },
+        {
+          "sourceRef": "thepreptide-mazdutide-vendor",
+          "quote": "The use of Mazdutide outside of this defined research context poses unacceptable, unquantified risks to human health.",
+          "pageOrSection": "Legal/research disclaimer"
+        },
+        {
+          "sourceRef": "trimrx-mazdutide-blog",
+          "quote": "In the United States, mazdutide has no FDA approval. Eli Lilly holds global rights outside Greater China and is running phase 3 trials to support a future US filing.",
+          "pageOrSection": "Regulatory status"
+        },
+        {
+          "sourceRef": "drugbank-db19099",
+          "quote": "Mazdutide is under investigation in clinical trial NCT06143956",
+          "pageOrSection": "Page metadata / summary"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: vendor pages pair explicit no-FDA-approval / research-use-only disclaimers with dosing guidance and 'where to buy' sections aimed at consumer self-administration, which is inconsistent with the stated research-only purpose",
+        "no FDA import alert or compounding bulk-substance listing specific to mazdutide was located in this session; absence should be reconfirmed, not treated as evidence of safety",
+        "remediation-pass-2026-08-29: a live DailyMed search performed 2026-08-29 independently confirms 'No Drug Package Labels found' for mazdutide, corroborating the no-FDA-approval / no-legally-marketed-US-product premise from a regulator/label-family source distinct from the vendor-marketing and DrugBank sources already cited"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "mazdutide-conflict-regulatory-source-authority-001",
+      "claimRefs": [
+        "mazdutide-regulatory-nmpa-weight-mgmt-001",
+        "mazdutide-regulatory-nmpa-t2d-001"
+      ],
+      "severity": "moderate",
+      "summary": "NMPA approval claims rely on company (Innovent) press releases rather than a primary NMPA-hosted regulatory document, since no fetchable official NMPA label/page in English was located in this session (nmpa.gov.cn returned a 412 error again on remediation). remediation-pass-2026-08-29: independently resolved via the peer-reviewed 'Mazdutide: First Approval' review (Drugs journal, PMID 41028652, DOI 10.1007/s40265-025-02249-y), which corroborates the June 2025 chronic-weight-management approval (with both BMI eligibility thresholds) and the September 2025 T2D glycemic-control approval, from a source family independent of Innovent's own disclosures. The exact calendar days (June 27 / September 19) remain sourced only to the company press releases, which is a minor residual gap, not a blocking one.",
+      "resolutionStatus": "resolved"
+    },
+    {
+      "conflictId": "mazdutide-conflict-gray-market-vs-approved-use-001",
+      "claimRefs": [
+        "mazdutide-evidence-gap-gray-market-us-001",
+        "mazdutide-regulatory-nmpa-weight-mgmt-001"
+      ],
+      "severity": "moderate",
+      "summary": "Mazdutide is a fully approved prescription product in China but is simultaneously sold in the US/international gray market as an unapproved 'research chemical'; packet consumers must not conflate the China-approved-product evidence base with the safety/legality of gray-market self-administered product.",
+      "resolutionStatus": "unresolved"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "NMPA approval claims are sourced from company press releases; no primary NMPA-hosted document was fetchable in this session and should be located/cross-checked at review time.",
+      "Primary NEJM article (10.1056/NEJMoa2411528) was paywalled (403) during this session; GLORY-1 efficacy figures were taken from a company press release summarizing that publication and should be verified against the journal article directly.",
+      "UNII, ChEMBL, and RxNorm identifiers were not resolved from any fetched structured-database source.",
+      "CAS number was corroborated only by a commercial reagent vendor page (MedChemExpress) plus secondary vendor listings seen in search results, not a structured chemical database entry fetched directly in this session.",
+      "remediation-pass-2026-08-29: RESOLVED -- both NMPA approval claims (weight management, T2D) independently corroborated via peer-reviewed 'Mazdutide: First Approval' review (Drugs journal, PMID 41028652); exact approval day-of-month still traces only to Innovent press releases (minor, non-blocking).",
+      "remediation-pass-2026-08-29: RESOLVED -- UNII (MB76Z4IBZ5) resolved and CAS (2259884-03-0) independently cross-confirmed via NCATS/FDA GSRS, a source family independent of PubChem/DrugBank/MedChemExpress.",
+      "remediation-pass-2026-08-29: STILL GATED -- ChEMBL ID (CHEMBL5095358) was obtained only via PubChem (same source family already cited for this claim, not independent); direct ChEMBL (ebi.ac.uk) lookup remained blocked/rate-limited on this pass as on the prior review pass. RxNorm remains unresolved (expected null -- mazdutide has no US-marketed product/label).",
+      "remediation-pass-2026-08-29: STILL GATED -- GLORY-1 exact weight-loss percentages (-12.05%, -14.84%, 50.6% vs 2.1%) still rest on the sponsor press release; an independent Semantic Scholar paper-level fetch corroborated the trial's size/design/direction but returned different specific percentages for the 6 mg group, which could not be reconciled against verbatim full text this session (NEJM remains paywalled, 403). Keep evidenceTier at 'Moderate'; do not restore 'Strong' until full-text confirmation.",
+      "remediation-pass-2026-08-29: STILL GATED -- phase 2 T2D efficacy/dosing claim (HbA1c, weight) remains single-family sourced to the PMC/Diabetes Care trial; ClinicalTrials.gov remained blocked at the network/proxy level and no independent systematic review or registry cross-check was found this session. Fetching the study's own journal-publisher copy (diabetesjournals.org) did verbatim-confirm the already-cited figures, reducing transcription-error risk, but does not count as an independent family per the review contract.",
+      "remediation-pass-2026-08-29: STILL GATED -- the granular GI adverse-event percentage breakdown (diarrhea 36%, decreased appetite 29%, nausea 23%, vomiting 14%) remains single-family sourced to the phase 2 T2D trial; only the general mild-to-moderate GI pattern was independently corroborated (Semantic Scholar/NEJM record) this session.",
+      "remediation-pass-2026-08-29 (session 2, post-independent-review): CORRECTED a procedural error flagged by the reviewer -- the mechanism claim's prior remediation note improperly cited Semantic Scholar (already a cited source for that claim) as independent corroboration; genuinely independent corroboration was obtained instead from Fierce Pharma trade-press coverage (fetched and quoted verbatim this session).",
+      "remediation-pass-2026-08-29 (session 2, post-independent-review): STILL GATED, TIGHTENED -- per the reviewer's finding, fetched and verbatim-quoted an independent physician-review commentary (gutsandgrowth.com) on the published NEJM GLORY-1 data; it reports week-48 figures of -11.00% (4mg)/-14.01% (6mg)/+0.30% (placebo), agreeing with the prior Semantic Scholar pull and disagreeing with the sponsor press release (-12.05%/-14.84%/-0.47%). Direct NEJM full-text and Europe PMC REST fetches were attempted this session but both were blocked by repeated proxy rate-limiting (HTTP 429). The claim statement now presents both figure sets with an explicit caveat instead of asserting the press-release numbers as settled; evidenceTier stays 'Moderate', confidence lowered to 'moderate'. This remains the single most consequential open item and should be re-attempted against verbatim NEJM/Europe PMC full text at the next review pass.",
+      "remediation-pass-2026-08-29 (session 2, post-independent-review): the two NMPA regulatory claims and the phase-2 T2D HbA1c claim were each additionally corroborated this session by fresh, verbatim-quoted independent trade-press sources (Fierce Pharma; BioSpace) confirming trial/approval shape and direction; granular numeric figures for the T2D and GI-safety claims remain single-family sourced as already documented above, and the ChEMBL identifier remains unconfirmed by an independent family -- both non-blocking per the reviewer's verdict."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "china-nmpa-approved-product",
+      "no-fda-approval",
+      "gray-market-us-availability",
+      "human-rct-evidence-available",
+      "positive-human-efficacy-signal",
+      "remediation-pass-2026-08-29",
+      "remediation-pass-2026-08-29-review-response",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}

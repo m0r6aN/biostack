@@ -306,7 +306,8 @@
       ],
       "reviewFlags": [
         "safety-critical claim sourced from a foreign manufacturer label hosted on a third-party (retailer) CDN, not an official government registry page; reconfirm against the official Russian label/registry at review time",
-        "this is label context only, not a safety assessment for unsupervised gray-market use in populations the label was not written for"
+        "this is label context only, not a safety assessment for unsupervised gray-market use in populations the label was not written for",
+        "authority-support-pass 2026-08-29: claimType contraindication is safety-critical and requires an A1/A2 source; searched FDA.gov bulk drug substances withdrawn-nomination page (mentions only immunogenicity/aggregation safety risk, not hypersensitivity/pediatric/pregnancy/seizure contraindications), DailyMed (0 results for 'semax' - no FDA label exists), and EMA/EPAR (no European Public Assessment Report exists for Semax) - no regulator-grade source addressing this claim's contraindications was found. Claim stays fieldAuthorityRequired=true and human-review-gated pending discovery of an A1/A2 source or removal/softening decision by a human reviewer."
       ]
     },
     {
@@ -322,7 +323,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "shmonin-2018-semax-stroke-meta-analysis"
       ],
@@ -346,7 +347,8 @@
       "reviewFlags": [
         "underlying evidence base is Russian-language, largely open-label clinical studies; no internationally replicated double-blind placebo-controlled RCT was located this session",
         "trial/label dose context must never be presented as a use recommendation",
-        "does not establish efficacy for any indication other than acute ischemic stroke under medical supervision"
+        "does not establish efficacy for any indication other than acute ischemic stroke under medical supervision",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"A 2018 meta-analysis of Russian clinical literature identified 8 studies...\"); no regulator document exists for this claim (searched: FDA.gov bulk drug substances page - covers only compounding safety-risk/immunogenicity status, not stroke efficacy; DailyMed - 0 results for 'semax', no FDA label exists; EMA/EPAR - no European Public Assessment Report exists for Semax; Semax has never been submitted for or granted marketing approval by FDA or EMA, so no regulator efficacy determination can exist)"
       ]
     },
     {
@@ -414,7 +416,8 @@
       "foreign-label-anchor",
       "thin-independently-verified-human-evidence",
       "no-blinded-rct-identified",
-      "gray-market-us-marketing-gap"
+      "gray-market-us-marketing-gap",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

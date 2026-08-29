@@ -1,0 +1,497 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "lgd-3303-evidence-expansion-001",
+    "category": "sarms-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T02:21:10Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "LGD-3303",
+    "aliases": [
+      "LGD3303",
+      "9-chloro-2-ethyl-1-methyl-3-(2,2,2-trifluoroethyl)-3H-pyrrolo[3,2-f]quinolin-7(6H)-one"
+    ],
+    "classification": "SARM",
+    "compoundFamily": "Nonsteroidal pyrroloquinolinone selective androgen receptor modulator",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "917891-35-1",
+      "drugbank": "DB13937",
+      "pubchem": "25195253",
+      "chembl": null,
+      "doi": null,
+      "pmid": "19017848"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "fda-sarm-consumer-update",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA warns about the use of selective androgen receptor modulators (SARMs) among teens and young adults",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "nih-livertox-sarms",
+      "sourceType": "professional-clinical-reference",
+      "authorityTier": "A2",
+      "title": "Selective Androgen Receptor Modulators - LiverTox: Clinical and Research Information on Drug-Induced Liver Injury",
+      "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases (NIH) - NCBI Bookshelf (NBK619971)",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "pubchem-cid-25195253",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "PubChem Compound Summary: LGD-3303 (CID 25195253)",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/LGD-3303",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "drugbank-db13937",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "LGD-3303: Uses, Interactions, Mechanism of Action (DrugBank DB13937)",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB13937",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "patsnap-synapse-lgd3303",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "LGD-3303 - Drug Targets, Indications, Patents, R&D Status",
+      "publisher": "Synapse (PatSnap pharmaceutical intelligence database)",
+      "url": "https://synapse.patsnap.com/drug/f83f74b74f1140e48277a5c038881a5d",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "wikipedia-lgd3303",
+      "sourceType": "tertiary-reference",
+      "authorityTier": "C1",
+      "title": "LGD-3303",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/LGD-3303",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "usada-sarms-prohibited-class",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Selective Androgen Receptor Modulators (SARMs): A Prohibited Class of Anabolic Agents",
+      "publisher": "U.S. Anti-Doping Agency (USADA) — the official national anti-doping organization for the United States, implementing the WADA Code",
+      "url": "https://www.usada.org/spirit-of-sport/education/selective-androgen-receptor-modulators-sarms-prohibited-class-anabolic-agents/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "drugs-com-wada-s1",
+      "sourceType": "professional-reference",
+      "authorityTier": "B1",
+      "title": "S1. Anabolic Agents - WADA Anti-Doping Prohibited List",
+      "publisher": "Drugs.com (compiling WADA Prohibited List anabolic-agents category)",
+      "url": "https://www.drugs.com/wada/s1-anabolic-agents.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "equine-lgd3303-metabolite-study",
+      "sourceType": "controlled-animal-study",
+      "authorityTier": "B1",
+      "title": "Equine in vivo metabolite profiling of the selective androgen receptor modulator LGD-3303 for doping control",
+      "publisher": "ResearchGate (peer-reviewed doping-control pharmacology study, equine model)",
+      "url": "https://www.researchgate.net/publication/370953660_Equine_in_vivo_metabolite_profiling_of_the_selective_androgen_receptor_modulator_LGD-3303_for_doping_control",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "glpbio-lgd3303",
+      "sourceType": "vendor",
+      "authorityTier": "C2",
+      "title": "LGD-3303 | CAS NO.:917891-35-1",
+      "publisher": "GlpBio (research-chemical vendor)",
+      "url": "https://www.glpbio.com/lgd-3303.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "kimerachems-lgd3303-blog",
+      "sourceType": "vendor",
+      "authorityTier": "C2",
+      "title": "LGD-3303: SARM Tissue Selectivity and the Rat Record",
+      "publisher": "Kimera Chems (research-chemical vendor blog)",
+      "url": "https://kimerachems.co/blog/lgd-3303-research/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "xcessbio-lgd3303",
+      "sourceType": "vendor",
+      "authorityTier": "C2",
+      "title": "LGD-3303 - Xcess Biosciences",
+      "publisher": "Xcess Biosciences (research-chemical vendor)",
+      "url": "https://www.xcessbio.com/products/m22793",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "lgd3303-mechanism-ar-binding-invitro-001",
+      "claimType": "mechanism",
+      "statement": "LGD-3303 is a nonsteroidal, orally bioavailable SARM that binds the androgen receptor with high in vitro affinity (Ki = 0.9 nM) and potently activates AR-mediated transcription (EC50 = 3.6 nM, 134% efficacy relative to dihydrotestosterone), while showing much weaker affinity for the mineralocorticoid, glucocorticoid, and progesterone receptors (Ki = 1261, 581, and 136 nM respectively).",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "LGD-3303 (research-chemical form)",
+        "useCase": "in vitro receptor-binding and transactivation pharmacology",
+        "doseText": null
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "glpbio-lgd3303",
+        "xcessbio-lgd3303"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "glpbio-lgd3303",
+          "quote": "high binding affinity to androgen receptors (Ki=0.9 nM)",
+          "pageOrSection": "Product/mechanism summary"
+        },
+        {
+          "sourceRef": "xcessbio-lgd3303",
+          "quote": "LGD-3303 potently activates transcription through the androgen receptor (EC50=3.6 nM)",
+          "pageOrSection": "Product/mechanism summary"
+        }
+      ],
+      "reviewFlags": [
+        "Primary journal source (Vajda et al. 2009, J Pharmacol Exp Ther) could not be directly accessed this session (PubMed returned no extractable body text; ScienceDirect/Wiley returned 403/robots-blocked) - the receptor-binding figures are sourced from commercial vendor pages that cite that study and should be verified against the primary text at review.",
+        "Vendor pages are commercial research-chemical sellers and may selectively present favorable pharmacology data."
+      ]
+    },
+    {
+      "claimId": "lgd3303-animal-muscle-sparing-rat-001",
+      "claimType": "target-pathway",
+      "statement": "In castrated male rats (an androgen-deficiency model), oral LGD-3303 at 1 mg/kg/day completely prevented loss of levator ani muscle weight and acted as a partial agonist on prostate and preputial gland tissue; local tissue drug concentrations were reportedly higher in prostate than in the more strongly responding levator ani muscle, indicating the tissue selectivity is not explained by differential drug distribution. This is preclinical rodent evidence only and has not been demonstrated in a human clinical study.",
+      "context": {
+        "population": "castrated male rats (preclinical androgen-deficiency model)",
+        "route": "oral (rat study)",
+        "formulation": "LGD-3303",
+        "useCase": "preclinical muscle-sparing / tissue-selectivity pharmacology",
+        "doseText": "1 mg/kg/day oral, rat study protocol only - not a human dose and not a use recommendation"
+      },
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "glpbio-lgd3303",
+        "kimerachems-lgd3303-blog"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "glpbio-lgd3303",
+          "quote": "LGD-3303 completely inhibits the loss of muscle weight with an oral dose of 1 mg/kg/day",
+          "pageOrSection": "Product/research summary"
+        },
+        {
+          "sourceRef": "kimerachems-lgd3303-blog",
+          "quote": "LGD-3303 showed potent activity on the levator ani muscle while behaving as a partial agonist on the preputial gland and ventral prostate.",
+          "pageOrSection": "Study summary (Vajda et al. 2009)"
+        },
+        {
+          "sourceRef": "kimerachems-lgd3303-blog",
+          "quote": "local tissue concentrations of LGD-3303 were higher in the prostate than in the levator ani muscle",
+          "pageOrSection": "Study summary (Vajda et al. 2009)"
+        }
+      ],
+      "reviewFlags": [
+        "Animal-only (rat) evidence - must not be presented or implied as evidence of human efficacy, per directive.",
+        "Primary source (Vajda 2009) not directly fetched this session; quotes drawn from a vendor blog summarizing the published study - verify against primary text at review."
+      ]
+    },
+    {
+      "claimId": "lgd3303-identity-development-history-001",
+      "claimType": "identity",
+      "statement": "LGD-3303 was originated by Ligand Pharmaceuticals as a candidate SARM investigated for osteoporosis, hypogonadism, and sexual dysfunction. Its highest recorded R&D status is preclinical (\"Pending/Preclinical\"), all three tracked indications are listed as inactive, and no clinical-trial-phase development is recorded, with the most recent development record dated December 31, 2007. LGD-3303 holds no marketing approval in any jurisdiction, has not entered human clinical trials, and was subsequently encountered outside pharmaceutical development as a novel designer drug by at least 2020.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "LGD-3303",
+        "useCase": "compound identity and development history",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "patsnap-synapse-lgd3303",
+        "kimerachems-lgd3303-blog",
+        "wikipedia-lgd3303"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "patsnap-synapse-lgd3303",
+          "quote": "global highest R&D status is Pending",
+          "pageOrSection": "Development status summary"
+        },
+        {
+          "sourceRef": "kimerachems-lgd3303-blog",
+          "quote": "LGD-3303 holds no marketing approval in any jurisdiction and has not entered human clinical trials.",
+          "pageOrSection": "Human use claims summary"
+        },
+        {
+          "sourceRef": "wikipedia-lgd3303",
+          "quote": "encountered as a novel designer drug by at least 2020",
+          "pageOrSection": "Development/history section"
+        }
+      ],
+      "reviewFlags": [
+        "PatSnap pipeline status should be reconfirmed at review time against a current pharma-intelligence database snapshot; the record's last-updated basis was not independently verifiable this session."
+      ]
+    },
+    {
+      "claimId": "lgd3303-regulatory-fda-sarm-class-001",
+      "claimType": "regulatory",
+      "statement": "FDA classifies SARMs as a drug class - which includes LGD-3303 by chemical and pharmacological category - as unapproved products that \"cannot be legally marketed in the U.S. as a dietary supplement or drug at this time,\" and warns that SARM use is associated with increased risk of heart attack or stroke and liver injury/acute liver failure, among other serious effects. No FDA warning letter or enforcement action naming LGD-3303 specifically was located in this session's search of fda.gov.",
+      "context": {
+        "population": "consumers and prospective purchasers of SARM products, including teens and young adults",
+        "route": null,
+        "formulation": "SARM products generally, including LGD-3303",
+        "useCase": "regulatory status of the SARM class",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-sarm-consumer-update"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-sarm-consumer-update",
+          "quote": "Chemical substances that mimic the effects of testosterone and anabolic steroids",
+          "pageOrSection": "What SARMs are"
+        },
+        {
+          "sourceRef": "fda-sarm-consumer-update",
+          "quote": "SARMs cannot be legally marketed in the U.S. as a dietary supplement or drug at this time.",
+          "pageOrSection": "Regulatory status"
+        },
+        {
+          "sourceRef": "fda-sarm-consumer-update",
+          "quote": "Increased risk of heart attack or stroke",
+          "pageOrSection": "Health risks"
+        },
+        {
+          "sourceRef": "fda-sarm-consumer-update",
+          "quote": "Liver injury and acute liver failure",
+          "pageOrSection": "Health risks"
+        }
+      ],
+      "reviewFlags": [
+        "Safety-critical regulatory claim requiring field-authority sign-off.",
+        "This FDA statement is class-wide, not LGD-3303-specific - no compound-named FDA action was found this session; re-search fda.gov warning letters and import alerts at review for any LGD-3303-specific update."
+      ]
+    },
+    {
+      "claimId": "lgd3303-adverse-effect-sarm-hepatotoxicity-001",
+      "claimType": "adverse-effect",
+      "statement": "NIH's LiverTox reference describes a distinctive bland cholestatic drug-induced liver injury pattern documented with SARM use as a class: onset roughly 2-3 months after starting, presenting with fatigue, anorexia, dark urine, and jaundice, with moderate bilirubin elevation (reported 4-8 mg/dL initially) but only 2-5x-normal aminotransferase elevation, and a prolonged but usually self-limited course of about 1-6 months, occasionally with bilirubin cast nephropathy requiring temporary dialysis in severe cases. The compounds specifically named in LiverTox's case-report basis are ligandrol (LGD-4033), enobosarm/ostarine, vosilasarm/RAD-140, andarine, and YK-11; LGD-3303 is not individually named among the documented case reports in this reference, despite sharing the same androgen-receptor mechanism class.",
+      "context": {
+        "population": "SARM users, class-level case reports (compound not individually confirmed for LGD-3303)",
+        "route": "oral (typical route for SARM products)",
+        "formulation": "SARM products generally",
+        "useCase": "hepatotoxicity / drug-induced liver injury surveillance",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "low",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "nih-livertox-sarms"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nih-livertox-sarms",
+          "quote": "orally available, synthetic, nonsteroidal drugs that bind androgen receptors",
+          "pageOrSection": "Overview"
+        },
+        {
+          "sourceRef": "nih-livertox-sarms",
+          "quote": "None were approved for human use",
+          "pageOrSection": "Regulatory status"
+        }
+      ],
+      "reviewFlags": [
+        "Safety-critical claim - evidence is class-level, not compound-specific; no LGD-3303-named hepatotoxicity case report was identified this session.",
+        "Do not present this class-level injury pattern as an established LGD-3303 finding; label explicitly as a class-analogy risk pending compound-specific case data."
+      ]
+    },
+    {
+      "claimId": "lgd3303-regulatory-antidoping-sarm-class-001",
+      "claimType": "regulatory",
+      "statement": "The WADA Prohibited List's S1.2 anabolic-agents category prohibits \"Selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]\" using \"including, but not limited to\" language, so LGD-3303 falls within the prohibited SARM class as a chemical/pharmacological analog even though it is not individually named in this illustrative list. Independent anti-doping research has developed equine (horse) in vivo metabolite-profiling methods specifically to detect LGD-3303 administration, identifying a monohydroxylated metabolite with better detectability than the parent compound for doping-control testing.",
+      "context": {
+        "population": "competitive athletes and, per the cited study, competition horses subject to anti-doping testing",
+        "route": "oral (equine study: 0.05 mg/kg)",
+        "formulation": "LGD-3303",
+        "useCase": "anti-doping / performance-enhancement regulatory status and detection",
+        "doseText": "Equine doping-control study protocol: 0.05 mg/kg oral administration to horses (research/testing context, not a use recommendation for any species)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "usada-sarms-prohibited-class",
+        "drugs-com-wada-s1",
+        "equine-lgd3303-metabolite-study"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "usada-sarms-prohibited-class",
+          "quote": "All SARMs are prohibited at all times (both in and out-of-competition) for all athletes, from those competing at the highest level of sport to those competing at the recreational level.",
+          "pageOrSection": "SARMs prohibited-class overview"
+        },
+        {
+          "sourceRef": "usada-sarms-prohibited-class",
+          "quote": "SARMs are listed in the category of \"Other Anabolic Agents\" under section S1.2 of the WADA Prohibited List.",
+          "pageOrSection": "SARMs prohibited-class overview"
+        },
+        {
+          "sourceRef": "drugs-com-wada-s1",
+          "quote": "Selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]",
+          "pageOrSection": "S1.2 Anabolic Agents"
+        },
+        {
+          "sourceRef": "equine-lgd3303-metabolite-study",
+          "quote": "investigate the equine in vivo metabolite profile of LGD-3303 and identify drug metabolites that can be suitable as new and improved analytical targets for equine doping control",
+          "pageOrSection": "Abstract/purpose"
+        },
+        {
+          "sourceRef": "equine-lgd3303-metabolite-study",
+          "quote": "high intensity and prolonged detection time in comparison to parent LGD-3303",
+          "pageOrSection": "Key findings"
+        }
+      ],
+      "reviewFlags": [
+        "authority-support-pass 2026-08-29: added USADA (A1, official U.S. national anti-doping regulator) as an independent source confirming SARMs as a class are prohibited under WADA Prohibited List S1.2; verified live this session.",
+        "Verify LGD-3303's status against the current official WADA Prohibited List PDF at review time (this session's drugs.com compilation could not be cross-checked against wada-ama.org directly due to a fetch error; wada-ama.org itself blocked fetch via robots.txt this session).",
+        "The metabolite-detection study is an equine (horse) doping-control investigation, not a human study; do not present it as human safety or efficacy data."
+      ]
+    },
+    {
+      "claimId": "lgd3303-evidence-gap-marketing-vs-human-data-001",
+      "claimType": "evidence-gap",
+      "statement": "LGD-3303 is sold online by research-chemical vendors carrying explicit \"for research use only... not for human use\" disclaimers, yet the same vendor product pages foreground preclinical rat muscle-sparing and receptor-potency data (e.g., \"completely inhibits the loss of muscle weight,\" nanomolar Ki/EC50 figures) in ways that read as implied bodybuilding or performance benefit. No human efficacy or safety trial, case series, or FDA/DrugBank clinical data for LGD-3303 was located in this session. Muscle-building, bone-density, or other performance/wellness claims circulating in vendor and forum marketing for LGD-3303 are therefore not supported by human evidence and should not be treated as established benefits.",
+      "context": {
+        "population": "consumers of gray-market research-chemical SARM products",
+        "route": "oral (typical gray-market use)",
+        "formulation": "research-chemical LGD-3303 (liquid/powder)",
+        "useCase": "bodybuilding / muscle-building / bone-density marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "glpbio-lgd3303",
+        "kimerachems-lgd3303-blog",
+        "xcessbio-lgd3303",
+        "patsnap-synapse-lgd3303"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "glpbio-lgd3303",
+          "quote": "Products are for research use only. Not for human use. We do not sell to patients",
+          "pageOrSection": "Legal/usage disclaimer"
+        },
+        {
+          "sourceRef": "kimerachems-lgd3303-blog",
+          "quote": "LGD-3303 holds no marketing approval in any jurisdiction and has not entered human clinical trials.",
+          "pageOrSection": "Human use claims summary"
+        },
+        {
+          "sourceRef": "patsnap-synapse-lgd3303",
+          "quote": "global highest R&D status is Pending",
+          "pageOrSection": "Development status summary"
+        }
+      ],
+      "reviewFlags": [
+        "Misinformation-adjacent: vendor marketing juxtaposes an RUO/not-for-human-use disclaimer with animal-derived potency language that can read as an implied human performance benefit.",
+        "No human RCT, case series, or pharmacovigilance report for LGD-3303 was identified this session; re-check PubMed/PMC directly at review since this session's PubMed fetches did not return extractable text."
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "lgd3303-conflict-ruo-disclaimer-vs-marketing-001",
+      "claimRefs": [
+        "lgd3303-evidence-gap-marketing-vs-human-data-001",
+        "lgd3303-animal-muscle-sparing-rat-001"
+      ],
+      "severity": "moderate",
+      "summary": "Vendor pages simultaneously disclaim LGD-3303 as research-use-only / not for human use while presenting animal potency and muscle-sparing data in language that markets toward human performance use; this internal tension is unresolved absent independent enforcement or clinical data.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "Primary journal source (Vajda et al. 2009, J Pharmacol Exp Ther / J Bone Miner Res) could not be directly fetched this session (PubMed returned no extractable body text; ScienceDirect and Wiley blocked the fetch) - pharmacology quotes were sourced from vendor pages summarizing that study and must be verified against the primary text.",
+      "No LGD-3303-specific FDA enforcement action, warning letter, or import alert was located; regulatory claims rely on class-wide SARM statements and should be re-checked against fda.gov at review time.",
+      "No human clinical trial, case series, or hepatotoxicity case report specific to LGD-3303 was identified; human safety/efficacy evidence is entirely absent, not merely limited.",
+      "UNII and ChEMBL identifiers not yet resolved from structured databases; DrugBank record was only partially accessible without an account."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "no-human-trial-data",
+      "thin-human-evidence",
+      "class-level-regulatory-evidence-only",
+      "vendor-sourced-pharmacology-needs-primary-verification",
+      "gray-market-only",
+      "authority-support-pass-2026-08-29"
+    ]
+  }
+}
