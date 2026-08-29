@@ -18,11 +18,11 @@
     "compoundFamily": "Synthetic 29-amino-acid peptide; glucagon receptor (GCGR) / GLP-1 receptor (GLP-1R) dual agonist",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
+      "unii": "2ALA66NS64",
       "casNumber": "2805997-46-8",
       "drugbank": "DB18989",
       "pubchem": "168429725",
-      "chembl": null,
+      "chembl": "CHEMBL5314776",
       "doi": "10.1056/NEJMoa2401755",
       "pmid": "38847460"
     }
@@ -173,6 +173,54 @@
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
+      "sourceId": "ncats-gsrs-unii-survodutide",
+      "sourceType": "structured-database",
+      "authorityTier": "A1",
+      "title": "Survodutide - Substance Registration (UNII 2ALA66NS64)",
+      "publisher": "NCATS Global Substance Registration System (GSRS) / FDA UNII",
+      "url": "https://gsrs.ncats.nih.gov/api/v1/substances/search?q=survodutide",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "chembl-molecule-chembl5314776",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Survodutide - ChEMBL Molecule Record (CHEMBL5314776)",
+      "publisher": "European Bioinformatics Institute (EMBL-EBI) / ChEMBL",
+      "url": "https://www.ebi.ac.uk/chembl/api/data/molecule/search?q=survodutide&format=json",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "hcplive-mash-histologic-endpoint",
+      "sourceType": "news-summary-of-primary-study",
+      "authorityTier": "B2",
+      "title": "Survodutide Improves MASH Without Worsening of Fibrosis, Reduces Liver Fat",
+      "publisher": "HCPLive",
+      "url": "https://www.hcplive.com/view/survodutide-improves-mash-without-worsening-of-fibrosis-reduces-liver-fat",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ccjm-ada2026-survodutide-weight",
+      "sourceType": "professional-society-conference-coverage",
+      "authorityTier": "B1",
+      "title": "Survodutide Weight Loss Figures - SYNCHRONIZE-1 (ADA 2026 coverage)",
+      "publisher": "Cleveland Clinic Journal of Medicine",
+      "url": "https://www.ccjm.org/page/ada-2026/survodutide-weight",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "vendor-peptidesgg-survodutide",
       "sourceType": "vendor-marketing-page",
       "authorityTier": "D1",
@@ -203,7 +251,9 @@
       "sourceRefs": [
         "zealand-pharma-pipeline",
         "pubchem-cid-168429725",
-        "drugbank-db18989"
+        "drugbank-db18989",
+        "ncats-gsrs-unii-survodutide",
+        "chembl-molecule-chembl5314776"
       ],
       "extractedEvidence": [
         {
@@ -225,10 +275,21 @@
           "sourceRef": "pubchem-cid-168429725",
           "quote": "C192H289N47O61",
           "pageOrSection": "Compound Summary, Molecular Formula"
+        },
+        {
+          "sourceRef": "ncats-gsrs-unii-survodutide",
+          "quote": "\"Substance Name:\" \"Survodutide\" ... \"Approval ID (UNII):\" \"2ALA66NS64\"",
+          "pageOrSection": "GSRS substance search API, exactMatches"
+        },
+        {
+          "sourceRef": "chembl-molecule-chembl5314776",
+          "quote": "\"molecule_chembl_id\": \"CHEMBL5314776\" ... \"pref_name\": \"SURVODUTIDE\"",
+          "pageOrSection": "ChEMBL molecule search API"
         }
       ],
       "reviewFlags": [
-        "compound is investigational, not FDA-approved; no DailyMed label exists to anchor regulatory/approved-indication claims"
+        "compound is investigational, not FDA-approved; no DailyMed label exists to anchor regulatory/approved-indication claims",
+        "REMEDIATION PASS 2 (2026-08-29): UNII (2ALA66NS64, via NCATS GSRS/FDA UNII registry) and ChEMBL ID (CHEMBL5314776, via ChEMBL API) independently looked up and fetched this session, closing the packet's previously-unresolved identifier gap; both added to compound.externalIdentifiers"
       ]
     },
     {
@@ -338,7 +399,7 @@
     {
       "claimId": "survodutide-efficacy-phase3-obesity-topline-001",
       "claimType": "efficacy",
-      "statement": "The primary peer-reviewed phase 3 SYNCHRONIZE-1 results (76-week, randomized, double-blind, placebo-controlled trial in n=725 adults with obesity without type 2 diabetes; published in the New England Journal of Medicine, PMID 42253238, doi 10.1056/nejmoa2600751) report mean body-weight change from baseline to week 76 of -12.2% with survodutide 3.6 mg and -13.0% with survodutide 6.0 mg, versus -5.4% with placebo (treatment-regimen estimand; P<0.001 for both active doses vs placebo); 72.6% (3.6 mg), 71.9% (6.0 mg), and 46.3% (placebo) of participants achieved at least 5% weight loss. These verified primary-source figures supersede an earlier ConscienHealth secondary-summary topline of approximately 16.6% vs approximately 3.2%, which is now understood to have overstated the drug-arm effect and understated the placebo effect relative to the published peer-reviewed result (the discrepancy's exact source -- e.g., a different interim analysis population, a non-estimand-adjusted announcement figure, or reporting error in the secondary summary -- was not further investigated in this pass and is not asserted here).",
+      "statement": "The primary peer-reviewed phase 3 SYNCHRONIZE-1 results (76-week, randomized, double-blind, placebo-controlled trial in n=725 adults with obesity without type 2 diabetes; published in the New England Journal of Medicine, PMID 42253238, doi 10.1056/nejmoa2600751) report, by the treatment-regimen estimand, mean body-weight change from baseline to week 76 of -12.2% with survodutide 3.6 mg and -13.0% with survodutide 6.0 mg, versus -5.4% with placebo (P<0.001 for both active doses vs placebo); 72.6% (3.6 mg), 71.9% (6.0 mg), and 46.3% (placebo) of participants achieved at least 5% weight loss. Independent professional-society coverage (Cleveland Clinic Journal of Medicine, ADA 2026) reports the same trial's efficacy estimand (the on-treatment effect among participants who remained on drug, excluding the impact of discontinuation/non-adherence) as 16.6% mean weight loss with the 6.0 mg dose -- the figure earlier reported by ConscienHealth. Both figures are legitimate, officially reported results from the same trial under two different, standard dual-estimand reporting conventions (the same convention used in other GLP-1/GCGR obesity trials, e.g. semaglutide, tirzepatide); the treatment-regimen estimand (-13.0%/-12.2%) is not more or less correct than the efficacy estimand (16.6%), and neither supersedes the other -- they answer different questions (effect of the assigned regimen as-treated-in-practice vs. effect while remaining on treatment).",
       "context": {
         "population": "adults with obesity or overweight with >=1 weight-related complication, without type 2 diabetes",
         "route": "subcutaneous",
@@ -352,7 +413,8 @@
       "sourceRefs": [
         "europepmc-42253238-synchronize1-results",
         "conscienhealth-phase3-topline",
-        "pmc-synchronize1-baseline"
+        "pmc-synchronize1-baseline",
+        "ccjm-ada2026-survodutide-weight"
       ],
       "extractedEvidence": [
         {
@@ -373,7 +435,17 @@
         {
           "sourceRef": "conscienhealth-phase3-topline",
           "quote": "16.6% on the drug",
-          "pageOrSection": "SYNCHRONIZE-1 topline weight loss result (superseded by peer-reviewed NEJM figures above -- retained for provenance/discrepancy record only)"
+          "pageOrSection": "SYNCHRONIZE-1 topline weight loss result (this is the trial's efficacy estimand, corroborated by CCJM below -- not an error or overstatement, see ccjm-ada2026-survodutide-weight)"
+        },
+        {
+          "sourceRef": "ccjm-ada2026-survodutide-weight",
+          "quote": "By the efficacy estimand, mean weight loss reached 16.6% with the 6.0-mg dose.",
+          "pageOrSection": "SYNCHRONIZE-1 weight loss figures, ADA 2026 coverage"
+        },
+        {
+          "sourceRef": "ccjm-ada2026-survodutide-weight",
+          "quote": "In the primary analysis, mean body weight fell 13.0% with survodutide 6.0 mg (95% confidence interval -14.4 to -11.6) and 12.2% with 3.6 mg, compared with 5.4% with placebo.",
+          "pageOrSection": "SYNCHRONIZE-1 weight loss figures, ADA 2026 coverage"
         },
         {
           "sourceRef": "pmc-synchronize1-baseline",
@@ -387,8 +459,8 @@
         }
       ],
       "reviewFlags": [
-        "REMEDIATION PASS (2026-08-29): the primary NEJM SYNCHRONIZE-1 results paper (PMID 42253238) is now published and was independently fetched via Europe PMC this session; its verified figures replace the ConscienHealth secondary-summary topline as the claim's headline numbers",
-        "the original ConscienHealth topline (~16.6% vs ~3.2%) materially diverges from the verified peer-reviewed figures (-12.2%/-13.0% vs -5.4%); the source of that discrepancy (different analysis population, non-final announcement figure, or reporting error) was not determined in this pass and should be reconciled on full review if the ConscienHealth figure is to be retained anywhere else in the packet",
+        "REMEDIATION PASS (2026-08-29): the primary NEJM SYNCHRONIZE-1 results paper (PMID 42253238) is now published and was independently fetched via Europe PMC this session; its treatment-regimen-estimand figures are reported as the claim's primary headline numbers",
+        "REMEDIATION PASS 2 (2026-08-29): the ConscienHealth ~16.6% topline is NOT an error or discrepancy -- independently re-fetched Cleveland Clinic Journal of Medicine ADA 2026 coverage (https://www.ccjm.org/page/ada-2026/survodutide-weight) this session confirms verbatim that '[b]y the efficacy estimand, mean weight loss reached 16.6% with the 6.0-mg dose,' while the -13.0%/-12.2% figures are the same trial's treatment-regimen estimand. Both are legitimate, officially reported results under the standard dual-estimand convention used across GLP-1/GCGR obesity trials; the claim statement has been rewritten to explain this rather than imply an unresolved discrepancy",
         "GI adverse events were common (80.9%-89.7% across active-dose groups vs 47.9% placebo) and should be weighed against any marketing claiming easy tolerability; no deaths were reported in the trial"
       ]
     },
@@ -408,7 +480,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "pace-cme-phase2-mash",
-        "pubmed-38847460"
+        "pubmed-38847460",
+        "hcplive-mash-histologic-endpoint"
       ],
       "extractedEvidence": [
         {
@@ -425,12 +498,18 @@
           "sourceRef": "pubmed-38847460",
           "quote": "Survodutide was superior to placebo with respect to improvement in MASH without worsening of fibrosis, warranting further investigation in phase 3 trials.",
           "pageOrSection": "Abstract conclusion"
+        },
+        {
+          "sourceRef": "hcplive-mash-histologic-endpoint",
+          "quote": "47% of participants ... 62% of those ... 43% of those ... compared with 14% of those in the placebo group (P <.001 for the quadratic dose-response curve as best-fitting model)",
+          "pageOrSection": "Primary endpoint results"
         }
       ],
       "reviewFlags": [
         "phase 2 only; phase 3 LIVERAGE/LIVERAGE-Cirrhosis results not yet available and must not be assumed",
         "results specific to biopsy-confirmed MASH population under close trial supervision; not generalizable to unsupervised gray-market self-administration",
-        "REMEDIATION PASS (2026-08-29): an independent Europe PMC literature search (survodutide AND MASH AND histologic) surfaced review literature (Patil et al. 2026; Newsome & Loomba 2025; Stachteas et al. 2025) that directionally corroborates survodutide's histologic benefit in MASH among GCGR/GLP-1R dual agonists, but none of these reviews restated the specific 47%/62%/43% vs 14% primary-endpoint percentages, so this pass could not independently re-derive those exact figures from a second numeric source. This remains a minor residual gap flagged for a follow-up quantitative cross-check (e.g., direct full-text retrieval of the NEJM Sanyal et al. 2024 results section) rather than a full second-source numeric confirmation."
+        "REMEDIATION PASS (2026-08-29): an independent Europe PMC literature search (survodutide AND MASH AND histologic) surfaced review literature (Patil et al. 2026; Newsome & Loomba 2025; Stachteas et al. 2025) that directionally corroborates survodutide's histologic benefit in MASH among GCGR/GLP-1R dual agonists, but none of these reviews restated the specific 47%/62%/43% vs 14% primary-endpoint percentages.",
+        "REMEDIATION PASS 2 (2026-08-29): the 'STILL UNRESOLVED' numeric cross-check flag is now CLOSED -- independently fetched HCPLive's write-up of the NEJM Sanyal et al. 2024 results this session and confirmed it quotes the identical primary-endpoint figures (47% at 2.4 mg, 62% at 4.8 mg, 43% at 6.0 mg vs 14% placebo). HCPLive is, like PACE-CME, a secondary trade-press summary rather than full primary-literature text, so a full-text primary re-derivation remains the stronger fix if pursued, but the numeric gap is closed with reasonable confidence per independent review."
       ]
     },
     {
@@ -487,7 +566,7 @@
         "survodutide-efficacy-phase3-obesity-topline-001"
       ],
       "severity": "moderate",
-      "summary": "RESOLVED IN REMEDIATION PASS (2026-08-29): the primary peer-reviewed NEJM article (doi 10.1056/nejmoa2600751, PMID 42253238) is now published and was successfully fetched via Europe PMC this session -- the earlier note that it 'returned bot-verification pages' is stale and no longer accurate for the Europe PMC route. The fetch revealed a real numeric discrepancy, not merely an access gap: the peer-reviewed results (-12.2%/-13.0% survodutide vs -5.4% placebo at week 76) differ materially from the packet's original ConscienHealth secondary-summary topline (~16.6% vs ~3.2%). The claim statement and extractedEvidence have been updated to lead with the verified NEJM figures; the ConscienHealth figure is retained only as a provenance/discrepancy record. Human review should still confirm the disclosed discrepancy note is prominent enough before promotion, since the root cause of the ConscienHealth figure's divergence was not determined.",
+      "summary": "RESOLVED IN REMEDIATION PASS (2026-08-29): the primary peer-reviewed NEJM article (doi 10.1056/nejmoa2600751, PMID 42253238) is now published and was successfully fetched via Europe PMC this session -- the earlier note that it 'returned bot-verification pages' is stale and no longer accurate for the Europe PMC route. FURTHER RESOLVED IN REMEDIATION PASS 2 (2026-08-29): the apparent numeric divergence between the NEJM treatment-regimen-estimand figures (-12.2%/-13.0% vs -5.4%) and the ConscienHealth ~16.6% topline is not an error -- independently fetched Cleveland Clinic Journal of Medicine ADA 2026 coverage confirms 16.6% is the same trial's efficacy estimand, a standard, separately reported dual-estimand figure in GLP-1/GCGR obesity trials, not a conflicting or erroneous number. The claim statement and extractedEvidence now explain both estimands rather than flagging an unresolved discrepancy.",
       "resolutionStatus": "resolved"
     }
   ],
@@ -496,11 +575,12 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "RESOLVED (2026-08-29): the primary NEJM phase 3 obesity publication (PMID 42253238, doi 10.1056/nejmoa2600751) is now published and WAS successfully fetched via Europe PMC this session -- the prior 'bot-verification blocked' note is stale. Its verified figures (-12.2%/-13.0% survodutide vs -5.4% placebo) have replaced the ConscienHealth secondary-summary topline in the phase 3 claim and materially diverge from that earlier figure (~16.6% vs ~3.2%); the root cause of that divergence was not determined and should be reconciled on full human review.",
+      "RESOLVED (2026-08-29): the primary NEJM phase 3 obesity publication (PMID 42253238, doi 10.1056/nejmoa2600751) is now published and WAS successfully fetched via Europe PMC this session -- the prior 'bot-verification blocked' note is stale. Its treatment-regimen-estimand figures (-12.2%/-13.0% survodutide vs -5.4% placebo) are reported as the claim's primary numbers.",
+      "RESOLVED (2026-08-29, remediation pass 2 / promotionBlocker): the packet previously mischaracterized the ConscienHealth ~16.6% topline as a possibly-erroneous discrepancy from the NEJM figures. Independently fetched CCJM ADA 2026 coverage (https://www.ccjm.org/page/ada-2026/survodutide-weight, quote verified this session) confirms 16.6% is the trial's efficacy estimand, not a data error -- both figures are legitimate under standard dual-estimand reporting. Claim statement, extractedEvidence, and reviewFlags rewritten accordingly; this promotionBlocker is closed.",
       "STILL UNRESOLVED (2026-08-29): FDA Fast Track/Breakthrough Therapy and EMA PRIME designation claims still rely on manufacturer and trade-press sources, not a primary FDA/EMA document. One serious remediation attempt was made this session -- (1) Europe PMC literature search for survodutide + 'Breakthrough Therapy' (rate-limited/inconclusive), (2) Boehringer Ingelheim newsroom page (bot/security interstitial), (3) a guessed direct Boehringer Ingelheim press-release URL (same interstitial) -- none reached a primary regulator or manufacturer-official confirmation. Claim language has been tightened to flag this as manufacturer/trade-press-reported and the claim remains fieldAuthorityRequired and human-review gated.",
-      "UNII and ChEMBL identifiers not resolved from structured databases during this pass; not re-attempted in the 2026-08-29 remediation pass (out of scope of the reviewer's findings for this run) and should be resolved via PubChem/UNII lookup at next review.",
+      "RESOLVED (2026-08-29, remediation pass 2): UNII and ChEMBL identifiers looked up and independently fetched this session -- UNII 2ALA66NS64 (NCATS GSRS / FDA UNII registry) and ChEMBL ID CHEMBL5314776 (ChEMBL API) -- and added to compound.externalIdentifiers and the identity-mechanism claim's extractedEvidence.",
       "PARTIALLY ADDRESSED (2026-08-29): detailed phase 3 adverse-event/tolerability data has now been captured from the primary NEJM publication (GI adverse events in 80.9%-89.7% of active-dose participants vs 47.9% placebo; no deaths) and added to the phase 3 claim's extractedEvidence.",
-      "STILL UNRESOLVED (2026-08-29): the phase 2 MASH histologic-endpoint percentages (47%/62%/43% vs 14%) were not independently re-derived from a second numeric source in this pass. An Europe PMC search for survodutide AND MASH AND histologic surfaced only directional review-literature corroboration (Patil et al. 2026; Newsome & Loomba 2025; Stachteas et al. 2025), none of which restated the specific percentages. Flagged for a follow-up quantitative cross-check (e.g., full-text retrieval of the NEJM Sanyal et al. 2024 results section) before full sign-off.",
+      "RESOLVED (2026-08-29, remediation pass 2): the phase 2 MASH histologic-endpoint percentages (47%/62%/43% vs 14%) are now independently corroborated -- HCPLive's write-up of the NEJM Sanyal et al. 2024 results was fetched this session and quotes the identical figures verbatim. Residual caveat: HCPLive, like the packet's existing PACE-CME source, is a trade-press summary rather than full primary-literature text; a full-text primary re-derivation remains the stronger fix if pursued at a later review, but the numeric cross-check gap itself is closed.",
       "No FDA import alert or warning letter specific to survodutide gray-market sales was found; confirm absence is current, not a search gap, at review time. (Unchanged in this pass -- DailyMed zero-label result independently re-confirmed 2026-08-29, but the FDA import-alert database itself remained unreachable.)"
     ],
     "qualityFlags": [
@@ -509,9 +589,11 @@
       "no-fda-label",
       "positive-human-phase2-rct-data",
       "phase3-primary-source-verified",
-      "phase3-topline-corrected-from-secondary-source",
+      "phase3-topline-dual-estimand-explained",
       "regulatory-designation-still-unresolved",
       "gray-market-marketing-gap-documented",
+      "identifiers-resolved-unii-chembl",
+      "mash-histologic-figures-corroborated",
       "remediation-pass-2026-08-29"
     ]
   }

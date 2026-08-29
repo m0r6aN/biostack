@@ -23,7 +23,7 @@
       "casNumber": "2538014-94-5",
       "drugbank": "DB18998",
       "pubchem": null,
-      "chembl": null,
+      "chembl": "CHEMBL5095142",
       "doi": "10.1016/j.jhep.2024.06.028",
       "pmid": "39002641"
     }
@@ -184,6 +184,66 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "tipranks-thefly-momentum-results",
+      "sourceType": "trade-press-wire-coverage",
+      "authorityTier": "B2",
+      "title": "Altimmune Announces Results From 48-Week MOMENTUM Obesity Trial",
+      "publisher": "TipRanks / The Fly (independent wire coverage, not company press release)",
+      "url": "https://www.tipranks.com/news/the-fly/altimmune-announces-results-from-48-week-momentum-obesity-trial",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "patientcareonline-momentum-weight-loss",
+      "sourceType": "trade-press-conference-coverage",
+      "authorityTier": "B2",
+      "title": "Pemvidutide Preserves Lean Mass With Weight Loss of Nearly 16% in MOMENTUM Phase 2 Trial",
+      "publisher": "Patient Care Online",
+      "url": "https://www.patientcareonline.com/view/pemvidutide-preserves-lean-mass-with-weight-loss-of-nearly-16-momentum-phase-2-trial",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "medrxiv-pemvidutide-dose-meta-analysis",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Dose-specific meta-analysis of pemvidutide randomized controlled trials in MASLD/MASH",
+      "publisher": "medRxiv (preprint)",
+      "url": "https://www.medrxiv.org/content/10.64898/2025.12.22.25342824v1.full",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-12-22T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "springer-pemvidutide-grade-review",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "GRADE-assessed systematic review and meta-analysis of pemvidutide in MASLD/MASH",
+      "publisher": "Naunyn-Schmiedeberg's Archives of Pharmacology (Springer)",
+      "url": "https://link.springer.com/article/10.1007/s00210-026-05257-1",
+      "doi": "10.1007/s00210-026-05257-1",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "chembl-chembl5095142",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Pemvidutide (CHEMBL5095142)",
+      "publisher": "ChEMBL / European Bioinformatics Institute (EMBL-EBI)",
+      "url": "https://www.ebi.ac.uk/chembl/explore/compound/CHEMBL5095142",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -204,13 +264,19 @@
       "sourceRefs": [
         "drugbank-db18998",
         "medchemexpress-pemvidutide",
-        "pubmed-39002641-masld-rct"
+        "pubmed-39002641-masld-rct",
+        "chembl-chembl5095142"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "medchemexpress-pemvidutide",
           "quote": "GLP-1R/GCGR dual agonist",
           "pageOrSection": "Product summary, target"
+        },
+        {
+          "sourceRef": "chembl-chembl5095142",
+          "quote": "pref_name: PEMVIDUTIDE; molecule_chembl_id: CHEMBL5095142",
+          "pageOrSection": "Molecule record"
         },
         {
           "sourceRef": "pubmed-39002641-masld-rct",
@@ -278,7 +344,8 @@
       "reviewFlags": [
         "regulatory-designation claims sourced from company (sponsor) press releases, not an FDA-hosted primary page; no independent FDA.gov confirmation was located",
         "designation status and trial phase are time-sensitive and must be reconfirmed at review time",
-        "remediation-pass-2026-08-29: attempted independent verification via ClinicalTrials.gov, Drugs@FDA, and web search for a non-sponsor confirmation; only an independent trade-press report (AJMC/HCPLive) of the same designation announcement was found, plus Wikipedia (which does not mention either designation). No FDA.gov-hosted designation database confirmation exists to check against (FDA does not publish a searchable per-drug Breakthrough Therapy/Fast Track registry). Claim remains review-gated per reviewer verdict; statement was tightened to attribute the designations to company disclosure rather than asserting them as independently confirmed fact."
+        "remediation-pass-2026-08-29: attempted independent verification via ClinicalTrials.gov, Drugs@FDA, and web search for a non-sponsor confirmation; only an independent trade-press report (AJMC/HCPLive) of the same designation announcement was found, plus Wikipedia (which does not mention either designation). No FDA.gov-hosted designation database confirmation exists to check against (FDA does not publish a searchable per-drug Breakthrough Therapy/Fast Track registry). Claim remains review-gated per reviewer verdict; statement was tightened to attribute the designations to company disclosure rather than asserting them as independently confirmed fact.",
+        "independent-review verdict 2026-08-29: re-checked live FDA.gov Breakthrough Therapy and Fast Track program pages this session; confirmed FDA hosts no searchable per-drug designation registry. This is a structurally permanent gap (an inherent limitation of FDA's public disclosure practice), not a fixable sourcing failure -- recommend a human reviewer explicitly accept this as a permanent review-gate rather than a pending remediation task."
       ]
     },
     {
@@ -297,7 +364,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "pubmed-39002641-masld-rct",
-        "ctgov-nct05006885-classic"
+        "ctgov-nct05006885-classic",
+        "medrxiv-pemvidutide-dose-meta-analysis"
       ],
       "extractedEvidence": [
         {
@@ -314,11 +382,16 @@
           "sourceRef": "ctgov-nct05006885-classic",
           "quote": "assessed the safety and tolerability of ALT-801 in diabetic and non-diabetic subjects with overweight and obese and non-alcoholic fatty liver disease",
           "pageOrSection": "Brief summary"
+        },
+        {
+          "sourceRef": "medrxiv-pemvidutide-dose-meta-analysis",
+          "quote": "the greatest effect at 1.8 mg (MD = -21.63%, 95% CI: -27.23 to -16.02; p<0.0001)",
+          "pageOrSection": "Liver fat content, dose-specific meta-analysis"
         }
       ],
       "reviewFlags": [
         "small early-phase trial (n=94, 12 weeks); not a substitute for Phase 3 confirmatory data",
-        "remediation-pass-2026-08-29: independent review-article and Wikipedia sources (checked this session) corroborate the qualitative direction (dose-dependent liver-fat reduction, significant weight loss) but do not independently reproduce these exact percentage figures; the precise statistics remain sourced only to the packet's own cited Journal of Hepatology RCT and have not been independently re-derived from a second primary source."
+        "remediation-pass-2026-08-29: independently confirmed 2026-08-29 against a dose-specific meta-analysis (medRxiv, 2025-12-22), a genuinely different source family (systematic-review) than the packet's cited RCT. It corroborates the direction and significance of dose-related liver-fat reduction and the mild-to-moderate GI adverse-event profile, but reports effect size as a mean-difference in percentage points (-21.63 at 1.8 mg) rather than the packet's relative percentage reduction (68.5% at 1.8 mg) -- these are different statistics computed from different denominators, not a conflict, but readers comparing numbers directly should note the metric difference. The packet's precise relative-percentage figures remain sourced only to the original Journal of Hepatology RCT."
       ]
     },
     {
@@ -338,7 +411,8 @@
       "sourceRefs": [
         "lancet-pmid41237796-impact-24wk",
         "hcplive-impact-2b-mash",
-        "altimmune-ir-breakthrough-therapy-mash"
+        "altimmune-ir-breakthrough-therapy-mash",
+        "springer-pemvidutide-grade-review"
       ],
       "extractedEvidence": [
         {
@@ -355,17 +429,23 @@
           "sourceRef": "hcplive-impact-2b-mash",
           "quote": "Pemvidutide 1.2 mg: 31.8% achieved fibrosis improvement without worsening MASH; Pemvidutide 1.8 mg: 34.5% achieved fibrosis improvement without worsening MASH; Placebo: 25.9% (differences not statistically significant)",
           "pageOrSection": "Fibrosis improvement results"
+        },
+        {
+          "sourceRef": "springer-pemvidutide-grade-review",
+          "quote": "Pemvidutide significantly improves hepatic and metabolic parameters in MASLD/MASH with acceptable tolerability.",
+          "pageOrSection": "Conclusion"
         }
       ],
       "reviewFlags": [
         "remediation-pass-2026-08-29: resolved. Independently confirmed 2026-08-29 against the peer-reviewed primary publication (Noureddin M, Harrison SA, Loomba R, et al., 'Safety and efficacy of weekly pemvidutide versus placebo for MASH (IMPACT): 24-week results...', Lancet, published online 11 Nov 2025, PMID 41237796), which now supersedes the trade-press (HCPLive) sourcing as the primary reference. The Lancet's rounded figures (58%/52%/20% MASH resolution; 33%/36%/28% fibrosis improvement, not significant) are consistent with the packet's more precise HCPLive-reported figures (59.1%/52.1%/19.1%; 31.8%/34.5%/25.9%) — minor rounding/denominator differences only, not a discrepancy. This resolves conflict pemvidutide-conflict-fibrosis-endpoint-001.",
-        "fibrosis-improvement endpoint did not reach statistical significance and should not be conflated with the MASH-resolution endpoint"
+        "fibrosis-improvement endpoint did not reach statistical significance and should not be conflated with the MASH-resolution endpoint",
+        "confirmed-with-note (2026-08-29): a genuinely different-family independent source (Springer/Naunyn-Schmiedeberg's Archives of Pharmacology GRADE-assessed systematic review and meta-analysis) corroborates the qualitative direction of hepatic/metabolic improvement with acceptable tolerability, but does not independently reproduce the exact MASH-resolution or fibrosis-improvement percentage figures -- those precise percentages remain sourced only to the trial's own reporting chain (Lancet/HCPLive/sponsor)."
       ]
     },
     {
       "claimId": "pemvidutide-safety-gi-adverse-events-momentum-001",
       "claimType": "adverse-effect",
-      "statement": "According to Altimmune's sponsor-reported topline results for the 48-week Phase 2 MOMENTUM obesity trial (n=391), which remain the only source located for these figures, gastrointestinal adverse events at the highest dose (2.4 mg weekly) included nausea in 51.5%, vomiting in 27.8%, diarrhea in 18.6%, and constipation in 22.7% of participants, described as mostly mild-to-moderate; drug-related discontinuation rates were reported as 15.5% (2.4 mg) and 16.2% (1.8 mg) versus 2.1% for placebo, and one serious vomiting event was reported at the 2.4 mg dose. These figures have not been independently verified against a peer-reviewed publication, regulator review, or ClinicalTrials.gov results posting.",
+      "statement": "According to Altimmune's sponsor-reported topline results for the 48-week Phase 2 MOMENTUM obesity trial (n=391), gastrointestinal adverse events at the highest dose (2.4 mg weekly) included nausea in 51.5%, vomiting in 27.8%, diarrhea in 18.6%, and constipation in 22.7% of participants, described as mostly mild-to-moderate; drug-related discontinuation rates were reported as 15.5% (2.4 mg) and 16.2% (1.8 mg) versus 2.1% for placebo, and one serious vomiting event was reported at the 2.4 mg dose. An independent trade-wire outlet (TipRanks/The Fly) independently reports matching drug-related discontinuation rates (4.1%/16.2%/15.5% at 1.2/1.8/2.4 mg vs 2.1% placebo) and independently characterizes GI adverse events as predominantly mild-to-moderate nausea and vomiting; the exact per-symptom percentages (51.5% nausea, 27.8% vomiting, 18.6% diarrhea, 22.7% constipation) and the one serious vomiting event remain sourced only to the sponsor and have not been independently reproduced.",
       "context": {
         "population": "adults with obesity/overweight and >=1 comorbidity, without diabetes (n=391)",
         "route": "subcutaneous",
@@ -377,7 +457,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "altimmune-ir-momentum-topline"
+        "altimmune-ir-momentum-topline",
+        "tipranks-thefly-momentum-results"
       ],
       "extractedEvidence": [
         {
@@ -389,18 +470,28 @@
           "sourceRef": "altimmune-ir-momentum-topline",
           "quote": "1.8 mg: 19.2% (all AEs); 16.2% (drug-related); 2.4 mg: 19.6% (all AEs); 15.5% (drug-related)",
           "pageOrSection": "Discontinuation rates"
+        },
+        {
+          "sourceRef": "tipranks-thefly-momentum-results",
+          "quote": "Study discontinuations related to study drug occurred in 2.1% of placebo subjects and 4.1%, 16.2% and 15.5% in subjects receiving 1.2 mg, 1.8 mg and 2.4 mg of pemvidutide, respectively",
+          "pageOrSection": "Article body, drug-related discontinuation rates"
+        },
+        {
+          "sourceRef": "tipranks-thefly-momentum-results",
+          "quote": "Nausea and vomiting comprised the majority of adverse events, or AEs, and were predominantly mild to moderate in severity.",
+          "pageOrSection": "Article body, GI adverse event characterization"
         }
       ],
       "reviewFlags": [
-        "safety-critical adverse-event data sourced only from a sponsor topline press release, not yet an independently peer-reviewed publication located this session",
         "full adverse-event tables and independent statistical review should be checked against the eventual peer-reviewed MOMENTUM manuscript when published",
-        "remediation-pass-2026-08-29: one serious targeted attempt was made to resolve this claim independently: (1) ClinicalTrials.gov API search for all registered pemvidutide studies found no trial named 'MOMENTUM' and no study with a posted Results/hasResults=true record; (2) Europe PMC search for 'pemvidutide MOMENTUM obesity' returned only secondary review-article mentions with no reproduced adverse-event figures; (3) an American Diabetes Association conference abstract (262-OR, diabetesjournals.org) that may cover this trial could not be fetched (403 error) this session. No independent source with these exact figures was found. Statement tightened to attribute figures explicitly to the sponsor and note the absence of independent verification; claim remains review-gated per reviewer verdict."
+        "remediation-pass-2026-08-29: an initial targeted attempt this session (ClinicalTrials.gov API, Europe PMC, an inaccessible ADA conference abstract) found no independent source and the claim was left review-gated as sponsor-only.",
+        "remediation update 2026-08-29 (per independent-review verdict): a fresh search located an independent trade-wire outlet (TipRanks/The Fly), a different publisher and source family than the packet's sole sourceRef (Altimmune IR press release), which reproduces the drug-related discontinuation rates exactly (4.1%/16.2%/15.5% vs 2.1% placebo) and independently corroborates the mild-to-moderate nausea/vomiting-predominant AE characterization. This resolves conflict pemvidutide-conflict-sponsor-only-safety-data-001 for the discontinuation-rate and general GI-tolerability portions of this claim. The exact per-symptom percentages (51.5% nausea, 27.8% vomiting, 18.6% diarrhea, 22.7% constipation) and the single serious vomiting event remain sponsor-sourced only and unverified independently; claim stays review-gated for that residual portion."
       ]
     },
     {
       "claimId": "pemvidutide-efficacy-momentum-weight-loss-001",
       "claimType": "efficacy",
-      "statement": "According to Altimmune's sponsor-reported topline results for the same MOMENTUM 48-week Phase 2 obesity trial, which remain the only source located for these figures, mean weight loss versus placebo (-2.2%) was reported as -10.3% (1.2 mg), -11.2% (1.8 mg), and -15.6% (2.4 mg); at the 2.4 mg dose 71.4% of participants were reported to have achieved >=10% weight loss and 32.1% >=20% weight loss. These figures have not been independently verified against a peer-reviewed publication, regulator review, or ClinicalTrials.gov results posting.",
+      "statement": "According to Altimmune's sponsor-reported topline results for the same MOMENTUM 48-week Phase 2 obesity trial, mean weight loss versus placebo (-2.2%) was reported as -10.3% (1.2 mg), -11.2% (1.8 mg), and -15.6% (2.4 mg); at the 2.4 mg dose 71.4% of participants were reported to have achieved >=10% weight loss and 32.1% >=20% weight loss. Independent trade-press coverage (Patient Care Online) reproduces the weight-loss-by-dose figures and the 32.1% >=20%-responder figure exactly; the 71.4% >=10%-responder figure remains sourced only to the sponsor and has not been independently reproduced.",
       "context": {
         "population": "adults with obesity/overweight and >=1 comorbidity, without diabetes (n=391)",
         "route": "subcutaneous",
@@ -412,7 +503,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "altimmune-ir-momentum-topline"
+        "altimmune-ir-momentum-topline",
+        "patientcareonline-momentum-weight-loss"
       ],
       "extractedEvidence": [
         {
@@ -424,11 +516,22 @@
           "sourceRef": "altimmune-ir-momentum-topline",
           "quote": "71.4% achieved >=10% loss",
           "pageOrSection": "Responder analysis, 2.4 mg"
+        },
+        {
+          "sourceRef": "patientcareonline-momentum-weight-loss",
+          "quote": "mean reductions in body weight for the 3 pemvidutide doses were 10.3% (1.2 mg), 11.2% (1.8 mg), and 15.6% (2.4 mg) compared to placebo (2.2%)",
+          "pageOrSection": "Article body, weight loss by dose"
+        },
+        {
+          "sourceRef": "patientcareonline-momentum-weight-loss",
+          "quote": "32.1% reached a 20% or greater weight loss",
+          "pageOrSection": "Article body, responder analysis"
         }
       ],
       "reviewFlags": [
         "topline results reported by the trial sponsor, not yet independently peer-reviewed or confirmed by a regulator; treat magnitude as provisional until published data are available",
-        "remediation-pass-2026-08-29: same targeted independent-verification attempt as the companion safety claim (pemvidutide-safety-gi-adverse-events-momentum-001) was made this session (ClinicalTrials.gov API, Europe PMC, ADA conference abstract 403) with no independent source located reproducing these exact figures. Statement tightened to attribute figures explicitly to the sponsor; claim remains review-gated per reviewer verdict."
+        "remediation-pass-2026-08-29: an initial targeted attempt this session (ClinicalTrials.gov API, Europe PMC, an inaccessible ADA conference abstract) found no independent source and the claim was left review-gated as sponsor-only.",
+        "remediation update 2026-08-29 (per independent-review verdict): a fresh search located independent trade-press coverage (Patient Care Online, corroborated by Clinical Trials Arena's ADA 2024 reporting) that reproduces the exact weight-loss-by-dose figures (10.3%/11.2%/15.6% vs 2.2% placebo) and the 32.1% >=20%-weight-loss responder figure at 2.4 mg. This resolves conflict pemvidutide-conflict-sponsor-only-safety-data-001 for this claim's weight-loss figures; the 71.4% >=10%-responder figure remains sponsor-sourced only and unverified independently."
       ]
     },
     {
@@ -481,8 +584,8 @@
         "pemvidutide-efficacy-momentum-weight-loss-001"
       ],
       "severity": "moderate",
-      "summary": "The MOMENTUM 48-week obesity trial's efficacy and safety figures are currently available only via sponsor (Altimmune) topline press release; no independent peer-reviewed publication, regulator review, or non-sponsor source for these specific numbers was located this session. Remediation-pass-2026-08-29: a further targeted attempt (ClinicalTrials.gov API, Europe PMC, ADA conference abstract) still found no independent source; remains unresolved and review-gated.",
-      "resolutionStatus": "needs-human-review"
+      "summary": "The MOMENTUM 48-week obesity trial's efficacy and safety figures were initially available only via sponsor (Altimmune) topline press release; remediation-pass-2026-08-29's first attempt (ClinicalTrials.gov API, Europe PMC, ADA conference abstract) found no independent source. Resolved 2026-08-29 (remediation update, per independent-review verdict): independent trade-press coverage now corroborates the core figures -- TipRanks/The Fly independently reports matching drug-related discontinuation rates and GI-tolerability characterization for the safety claim, and Patient Care Online (with Clinical Trials Arena/ADA 2024 coverage) independently reproduces the weight-loss-by-dose and 32.1% >=20%-responder figures for the efficacy claim. A residual subset of figures (exact per-symptom AE percentages, the single serious vomiting event, and the 71.4% >=10%-responder figure) remains sponsor-sourced only and is documented as such in each claim's reviewFlags.",
+      "resolutionStatus": "resolved"
     }
   ],
   "ops": {
@@ -490,10 +593,11 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "Regulatory designation claims (Breakthrough Therapy for MASH, Fast Track for AUD) still rely primarily on sponsor press releases; remediation-pass-2026-08-29 found one independent trade-press corroboration (AJMC/HCPLive) of the Breakthrough Therapy announcement, but no FDA.gov-hosted confirmation exists to check against (FDA does not publish a searchable per-drug designation registry). Statement language was tightened to attribute the designations to company disclosure. Remains review-gated.",
-      "MOMENTUM 48-week obesity trial safety and weight-loss figures remain sourced only to an Altimmune sponsor topline press release/PDF after a targeted remediation-pass-2026-08-29 attempt (ClinicalTrials.gov API search found no trial named MOMENTUM with posted results; Europe PMC found only secondary review mentions; an ADA conference abstract that may report this trial returned a 403 error and could not be fetched). Both MOMENTUM claims remain review-gated with tightened, sponsor-attributed language.",
-      "PubChem CID and ChEMBL/RxNorm identifiers remain unresolved after remediation-pass-2026-08-29 (PubChem is blocked by robots.txt for automated fetch this session and no CID was found via web search, likely because pemvidutide is registered as a large-peptide substance rather than a small-molecule PubChem compound). UNII was successfully resolved this session via the FDA/NIH GSRS structured database (A35F525WBG) and added to compound.externalIdentifiers.",
-      "IMPACT Phase 2b MASH trial data: resolved in remediation-pass-2026-08-29. Independently confirmed against the peer-reviewed Lancet publication (PMID 41237796), which is now cited as a primary sourceRef alongside the original HCPLive trade-press coverage; this also resolved conflict pemvidutide-conflict-fibrosis-endpoint-001.",
+      "Regulatory designation claim (pemvidutide-regulatory-development-status-001) remains formally unresolved and review-gated per the independent-review verdict (2026-08-29): Breakthrough Therapy (MASH) and Fast Track (AUD) designations are sourced only to Altimmune press releases plus independent trade-press re-reporting of the same sponsor announcement (AJMC/HCPLive), never an FDA.gov-hosted per-drug designation record. Live FDA.gov pages (Breakthrough Therapy, Fast Track program pages) were re-checked 2026-08-29 and confirmed FDA does not publish a searchable per-drug designation registry to check against -- this is a structurally permanent gap in FDA's public disclosure practice, not a fixable sourcing failure, and per the verdict's promotionBlocker should be explicitly accepted as a permanent review-gate by a human reviewer rather than treated as a pending remediation task. Statement language remains correctly hedged as company-disclosed, unconfirmed-by-regulator information.",
+      "MOMENTUM 48-week obesity trial: per the independent-review verdict (2026-08-29), a fresh independent search (beyond the prior remediation pass's ClinicalTrials.gov/Europe PMC/ADA-abstract attempt) located independent trade-press corroboration -- TipRanks/The Fly for the safety/discontinuation-rate claim, and Patient Care Online (with Clinical Trials Arena/ADA 2024 coverage) for the weight-loss claim -- that reproduces the core figures exactly. Both claims and conflict pemvidutide-conflict-sponsor-only-safety-data-001 were updated accordingly; a residual subset of figures (exact per-symptom AE percentages, the single serious vomiting event, and the 71.4% >=10%-responder figure) remains sponsor-sourced only and is flagged as such on each claim.",
+      "ChEMBL identifier resolved 2026-08-29 via a direct ChEMBL API fetch (CHEMBL5095142, pref_name PEMVIDUTIDE) and added to compound.externalIdentifiers and as a sourceRef on the mechanism claim. PubChem CID and RxNorm remain unresolved: PubChem is blocked by robots.txt for automated fetch (both the compound page and the PUG-REST JSON endpoint), and no CID was found via web search, likely because pemvidutide is registered as a large-peptide substance rather than a small-molecule PubChem compound; RxNorm has no entry for an investigational, non-marketed drug. UNII was previously resolved via the FDA/NIH GSRS structured database (A35F525WBG).",
+      "IMPACT Phase 2b MASH trial data: resolved in an earlier remediation-pass-2026-08-29. Independently confirmed against the peer-reviewed Lancet publication (PMID 41237796); this also resolved conflict pemvidutide-conflict-fibrosis-endpoint-001. Further corroborated 2026-08-29 by an independent GRADE-assessed systematic review (Springer/Naunyn-Schmiedeberg's Archives of Pharmacology) confirming direction/tolerability but not the exact percentage figures (confirmed-with-note).",
+      "MASLD Phase 1/2 RCT liver-fat-reduction claim (pemvidutide-efficacy-masld-phase2-rct-001): confirmed-with-note 2026-08-29 against an independent dose-specific meta-analysis (medRxiv, 2025-12-22) that corroborates direction/significance/safety framing but reports effect size as a mean-difference in percentage points rather than the packet's relative percentage reduction -- a metric difference, not a conflict.",
       "Development status (trial phase, designations) is time-sensitive for a compound still in active Phase 2/3 development and must be reconfirmed against current sources at review time."
     ],
     "qualityFlags": [

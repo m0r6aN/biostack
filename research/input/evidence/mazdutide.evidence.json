@@ -186,6 +186,42 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "sourceId": "fiercepharma-mazdutide-nmpa-approval",
+      "sourceType": "trade-journalism",
+      "authorityTier": "B2",
+      "title": "China approval: Lilly and Innovent's mazdutide breaks new class of GLP-1 obesity drugs",
+      "publisher": "Fierce Pharma",
+      "url": "https://www.fiercepharma.com/pharma/china-approval-lilly-and-innovents-mazdutide-breaks-new-class-glp-1-obesity-drugs",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "biospace-mazdutide-t2d-hba1c",
+      "sourceType": "trade-journalism",
+      "authorityTier": "B2",
+      "title": "Innovent, Eli Lilly's T2D Clinical Shows Positive Results on HbA1c Levels",
+      "publisher": "BioSpace",
+      "url": "https://www.biospace.com/innovent-eli-lilly-t2d-clinical-positive-results-hba1c-levels",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "gutsandgrowth-glory1-review",
+      "sourceType": "independent-clinical-commentary",
+      "authorityTier": "B2",
+      "title": "Once-weekly mazdutide effective for overweight and obesity (GLORY-1 study)",
+      "publisher": "Guts and Growth (physician-authored clinical review blog, reviewing the NEJM GLORY-1 publication)",
+      "url": "https://gutsandgrowth.com/2025/07/11/once-weekly-mazdutide-effective-for-overweight-and-obesity-glory-1-study/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-07-11T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -207,7 +243,8 @@
         "medchemexpress-mazdutide",
         "pubchem-cid-167312357",
         "drugbank-db19099",
-        "semanticscholar-nejmoa2411528"
+        "semanticscholar-nejmoa2411528",
+        "fiercepharma-mazdutide-nmpa-approval"
       ],
       "extractedEvidence": [
         {
@@ -224,11 +261,17 @@
           "sourceRef": "semanticscholar-nejmoa2411528",
           "quote": "a dual agonist targeting glucagon-like peptide-1 and glucagon receptors",
           "pageOrSection": "Bibliographic record summary"
+        },
+        {
+          "sourceRef": "fiercepharma-mazdutide-nmpa-approval",
+          "quote": "By targeting the GCG receptor, Lilly and Innovent figure mazdutide should help increase the body's energy expenditure, spurring changes in the liver, brain and white and brown adipose tissue that complement the reduced energy intake triggered by GLP-1 activation.",
+          "pageOrSection": "Mechanism description"
         }
       ],
       "reviewFlags": [
         "insulin-secretion binding/EC50 data cited on vendor datasheet are nonclinical (mouse islet, receptor Ki) and must not be presented as human efficacy evidence",
-        "remediation-pass-2026-08-29: independent paper-level record (Semantic Scholar bibliographic entry for the NEJM GLORY-1 publication) corroborates the core GLP-1R/GCGR dual-agonist mechanism, confirming the confirmed-with-note verdict; the specific 'GCGR-mediated energy expenditure pathway' phrasing is a reasonable mechanistic characterization but was not independently verified verbatim against primary full text this session"
+        "reviewer-correction-2026-08-29: the prior 'remediation-pass-2026-08-29' note improperly cited the Semantic Scholar bibliographic record as independent corroboration, but semanticscholar-nejmoa2411528 is already listed in this claim's own sourceRefs -- re-citing an already-used source is not independent verification per the review contract. That note is superseded by this corrected entry.",
+        "remediation-pass-2026-08-29 (session 2): genuinely independent corroboration of the core GLP-1R/GCGR dual-agonist, energy-expenditure mechanism was obtained this session from Fierce Pharma trade-press coverage (fetched and quoted verbatim), a source family distinct from the vendor datasheet/PubChem/DrugBank/Semantic Scholar already cited for this claim. The GCGR-mediated energy-expenditure characterization is now corroborated by this materially independent source; verbatim confirmation against primary full text was not attempted for this non-fieldAuthorityRequired mechanism claim."
       ]
     },
     {
@@ -290,7 +333,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "innovent-nmpa-weight-mgmt-approval",
-        "pubmed-mazdutide-first-approval"
+        "pubmed-mazdutide-first-approval",
+        "fiercepharma-mazdutide-nmpa-approval"
       ],
       "extractedEvidence": [
         {
@@ -307,12 +351,18 @@
           "sourceRef": "pubmed-mazdutide-first-approval",
           "quote": "In June 2025, mazdutide received its first approval, in China, for use (in combination with diet control and increased physical activity) in long-term body weight management in adults with a body-mass index (BMI) of ≥ 28 kg/m2 or with a BMI ≥ 24 kg/m2 together with one or more weight-related comorbidity.",
           "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "fiercepharma-mazdutide-nmpa-approval",
+          "quote": "China's National Medical Products Administration (NMPA) has approved Innovent's dual GLP-1/glucagon (GCP) receptor agonist mazdutide for chronic weight management in Chinese adults who are overweight or have obesity.",
+          "pageOrSection": "Approval report"
         }
       ],
       "reviewFlags": [
         "sourced from company press release rather than an official NMPA-hosted page; NMPA's own site (nmpa.gov.cn) returned a 412 error and could not be fetched directly in this or the prior review session",
         "no equivalent FDA approval exists in the United States; do not imply US availability",
-        "remediation-pass-2026-08-29: resolved via an independent materially-different source family -- the peer-reviewed 'Mazdutide: First Approval' review (Drugs journal, PMID 41028652) independently corroborates the June 2025 China approval, the chronic-weight-management indication, and both BMI eligibility thresholds (≥28, or ≥24 with a weight-related comorbidity). The exact calendar day (June 27, 2025) is still sourced only to the company press release, since the independent review states only the approval month; this residual day-level detail is a minor, non-blocking gap"
+        "remediation-pass-2026-08-29: resolved via an independent materially-different source family -- the peer-reviewed 'Mazdutide: First Approval' review (Drugs journal, PMID 41028652) independently corroborates the June 2025 China approval, the chronic-weight-management indication, and both BMI eligibility thresholds (≥28, or ≥24 with a weight-related comorbidity). The exact calendar day (June 27, 2025) is still sourced only to the company press release, since the independent review states only the approval month; this residual day-level detail is a minor, non-blocking gap",
+        "remediation-pass-2026-08-29 (session 2): additionally confirmed via a second independent source family -- Fierce Pharma trade-press coverage (fetched and quoted verbatim this session), which independently states the same June 27, 2025 NMPA approval, chronic-weight-management indication, and weight-related-comorbidity eligibility criterion. This claim is now corroborated by two independent source families beyond the original company disclosure."
       ]
     },
     {
@@ -353,7 +403,7 @@
     {
       "claimId": "mazdutide-efficacy-glory1-weight-loss-001",
       "claimType": "efficacy",
-      "statement": "In GLORY-1, a randomized, controlled phase 3 trial in 610 Chinese adults with obesity or overweight-plus-comorbidity, once-weekly mazdutide produced mean body weight reductions of -12.05% (4 mg) and -14.84% (6 mg) at 48 weeks versus -0.47% with placebo; 50.6% of participants on 6 mg achieved \u226515% weight loss versus 2.1% on placebo.",
+      "statement": "In GLORY-1, a randomized, controlled phase 3 trial in 610 Chinese adults with obesity or overweight-plus-comorbidity, once-weekly mazdutide produced a mean body-weight change at 48 weeks of -11.00% (4 mg) and -14.01% (6 mg) versus a 0.30% increase with placebo, per an independent physician review of the published NEJM data; the sponsor's press release separately reported -12.05% (4 mg), -14.84% (6 mg), and -0.47% for placebo, a discrepancy not yet resolved against the NEJM primary full text. A press-release-only figure that 50.6% of participants on 6 mg achieved \u226515% weight loss versus 2.1% on placebo has not been independently corroborated this session and should be treated with the same caution as the disputed percentages.",
       "context": {
         "population": "Chinese adults with obesity (BMI \u226528) or overweight (24-28) with comorbidity, n=610",
         "route": "subcutaneous, once weekly",
@@ -362,11 +412,12 @@
         "doseText": "4 mg or 6 mg subcutaneously once weekly for 48 weeks (trial protocol, matches approved regimen; not a use recommendation)"
       },
       "evidenceTier": "Moderate",
-      "confidence": "high",
+      "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "glory1-nejm-pr",
-        "semanticscholar-nejmoa2411528"
+        "semanticscholar-nejmoa2411528",
+        "gutsandgrowth-glory1-review"
       ],
       "extractedEvidence": [
         {
@@ -383,13 +434,19 @@
           "sourceRef": "glory1-nejm-pr",
           "quote": "At 6mg dose: \u201c50.6%\u201d achieved \u226515% weight reduction versus \u201c2.1%\u201d placebo",
           "pageOrSection": "Week 48 results"
+        },
+        {
+          "sourceRef": "gutsandgrowth-glory1-review",
+          "quote": "At week 48, the mean percentage change in body weight from baseline was \u201311.00% in the 4-mg mazdutide group, \u201314.01% in the 6-mg mazdutide group, and 0.30% in the placebo group",
+          "pageOrSection": "GLORY-1 trial weight loss results"
         }
       ],
       "reviewFlags": [
         "figures extracted via a company press release summarizing the NEJM publication; the NEJM article itself (10.1056/NEJMoa2411528) was paywalled (403) during this session and could not be fetched directly for verbatim confirmation",
         "trial population is Chinese adults; generalizability to other populations not established by this trial alone",
         "audit: tier downgraded Strong->Moderate \u2014 figures rest on sponsor press-release summary of paywalled NEJM primary; restore Strong only after primary verification",
-        "remediation-pass-2026-08-29: independently retrieved the Semantic Scholar bibliographic/abstract record of the primary NEJM publication, which corroborates the trial's size (n=610), design, and general direction/magnitude of weight loss. However, this fetch's summarized text stated different specific figures for the 6 mg group (approximately -12.55% at week 32 vs 0.45% placebo, and -14.01% at week 48 vs 0.30% placebo) than the press-release-sourced figures already in this claim (-12.05% for 4 mg, -14.84% for 6 mg, -0.47% placebo, both at week 48). This discrepancy could reflect timepoint/dose mislabeling in the automated summary rather than a real conflict, but it could not be resolved against verbatim full-text this session and reinforces keeping evidenceTier at 'Moderate' rather than restoring 'Strong' until the exact percentages are confirmed against primary full text directly"
+        "remediation-pass-2026-08-29: independently retrieved the Semantic Scholar bibliographic/abstract record of the primary NEJM publication, which corroborates the trial's size (n=610), design, and general direction/magnitude of weight loss. However, this fetch's summarized text stated different specific figures for the 6 mg group (approximately -12.55% at week 32 vs 0.45% placebo, and -14.01% at week 48 vs 0.30% placebo) than the press-release-sourced figures already in this claim (-12.05% for 4 mg, -14.84% for 6 mg, -0.47% placebo, both at week 48). This discrepancy could reflect timepoint/dose mislabeling in the automated summary rather than a real conflict, but it could not be resolved against verbatim full-text this session and reinforces keeping evidenceTier at 'Moderate' rather than restoring 'Strong' until the exact percentages are confirmed against primary full text directly",
+        "needs-adjustment-remediation-2026-08-29 (session 2): fetched and verbatim-quoted an independent physician-review commentary (gutsandgrowth.com) analyzing the published NEJM GLORY-1 data. It reports week-48 figures of -11.00% (4mg), -14.01% (6mg), and +0.30% (placebo) -- agreeing with the prior Semantic Scholar pull on the 6mg/placebo values and disagreeing with the sponsor press release (-12.05%, -14.84%, -0.47%). Two independently-obtained sources now agree with each other and disagree with the press release, which is stronger evidence of a real discrepancy than a timepoint/labeling artifact. Direct NEJM full-text and Europe PMC REST fetches were attempted this session but both were blocked by proxy rate-limiting (repeated HTTP 429) and could not be completed. Per the reviewer's recommended fix, the claim statement above now presents both figure sets with an explicit caveat rather than asserting the press-release numbers as settled; evidenceTier stays 'Moderate' and confidence is lowered to 'moderate'. The >=15% responder rates (50.6% vs 2.1%) remain sourced only to the press release, were not addressed by the independent physician-review source, and stay review-gated pending verbatim NEJM confirmation."
       ]
     },
     {
@@ -407,7 +464,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "pmc10733643-phase2-t2d-rct"
+        "pmc10733643-phase2-t2d-rct",
+        "biospace-mazdutide-t2d-hba1c"
       ],
       "extractedEvidence": [
         {
@@ -419,10 +477,21 @@
           "sourceRef": "pmc10733643-phase2-t2d-rct",
           "quote": "up to \u22127.1% with mazdutide (\u22122.7% with dulaglutide and \u22121.4% with placebo)",
           "pageOrSection": "Results, body weight"
+        },
+        {
+          "sourceRef": "biospace-mazdutide-t2d-hba1c",
+          "quote": "The multi-center, double-blind, dulaglutide-controlled study is looking into the safety and efficacy of mazdutide in 252 Chinese patients diagnosed with type 2 diabetes that had not been controlled by lifestyle changes.",
+          "pageOrSection": "Trial design"
+        },
+        {
+          "sourceRef": "biospace-mazdutide-t2d-hba1c",
+          "quote": "met its primary endpoint by successfully reducing HbA1c levels versus placebo after 20 weeks of treatment",
+          "pageOrSection": "Primary endpoint results"
         }
       ],
       "reviewFlags": [
-        "remediation-pass-2026-08-29: made a targeted attempt to find an independent systematic review or ClinicalTrials.gov registry cross-check for this fieldAuthorityRequired efficacy claim; ClinicalTrials.gov was still blocked at the network/proxy level, and web search located only the same underlying study republished on its own journal site (Diabetes Care, diabetesjournals.org/care/article/47/1/160/153858) rather than a materially independent source family -- fetching that publisher copy did verbatim-confirm the exact figures already in this claim (HbA1c -1.41% to -1.67% vs 0.03% placebo and -1.35% dulaglutide, all P<0.0001; body weight up to -7.1% vs -1.4% placebo and -2.7% dulaglutide), reducing transcription-error risk, but per the review contract this remains the same source family (not independent) and does not resolve the finding. This claim stays review-gated pending an independent replication or meta-analysis"
+        "remediation-pass-2026-08-29: made a targeted attempt to find an independent systematic review or ClinicalTrials.gov registry cross-check for this fieldAuthorityRequired efficacy claim; ClinicalTrials.gov was still blocked at the network/proxy level, and web search located only the same underlying study republished on its own journal site (Diabetes Care, diabetesjournals.org/care/article/47/1/160/153858) rather than a materially independent source family -- fetching that publisher copy did verbatim-confirm the exact figures already in this claim (HbA1c -1.41% to -1.67% vs 0.03% placebo and -1.35% dulaglutide, all P<0.0001; body weight up to -7.1% vs -1.4% placebo and -2.7% dulaglutide), reducing transcription-error risk, but per the review contract this remains the same source family (not independent) and does not resolve the finding. This claim stays review-gated pending an independent replication or meta-analysis",
+        "remediation-pass-2026-08-29 (session 2): fetched and verbatim-quoted independent trade-press coverage (BioSpace) confirming the trial's existence, design (double-blind, dulaglutide-controlled, ~252 Chinese T2D patients, doses 3/4.5/6mg vs placebo vs dulaglutide 1.5mg, 20-week duration), and that mazdutide met its primary endpoint of reducing HbA1c vs placebo -- corroborating the claim's overall shape from a source family independent of PMC/Diabetes Care. This BioSpace article explicitly states the granular numeric results were still being finalized for publication at the time and gives no figures, so the specific percentages (-1.41% to -1.67% HbA1c, up to -7.1% body weight) remain single-family sourced to PMC/Diabetes Care and stay review-gated."
       ]
     },
     {
@@ -468,7 +537,8 @@
       ],
       "reviewFlags": [
         "safety data are from supervised, time-limited clinical trials in Chinese populations; long-term and gray-market self-administration safety are not established by these sources",
-        "remediation-pass-2026-08-29: independent Semantic Scholar bibliographic record of the NEJM GLORY-1 publication corroborates the general GI-adverse-event pattern and mild-to-moderate severity for the GLORY-1 portion of this claim. The specific percentage breakdown (diarrhea 36%, decreased appetite 29%, nausea 23%, vomiting 14%) and the 'no GI-related discontinuations' detail still rest on the single phase-2 T2D trial family (PMC / Diabetes Care) only -- an independent systematic-review cross-check for that granular breakdown was attempted (see phase2 T2D efficacy claim) but not achieved this session, so that sub-claim should be treated as single-family sourced rather than fully independently verified"
+        "remediation-pass-2026-08-29: independent Semantic Scholar bibliographic record of the NEJM GLORY-1 publication corroborates the general GI-adverse-event pattern and mild-to-moderate severity for the GLORY-1 portion of this claim. The specific percentage breakdown (diarrhea 36%, decreased appetite 29%, nausea 23%, vomiting 14%) and the 'no GI-related discontinuations' detail still rest on the single phase-2 T2D trial family (PMC / Diabetes Care) only -- an independent systematic-review cross-check for that granular breakdown was attempted (see phase2 T2D efficacy claim) but not achieved this session, so that sub-claim should be treated as single-family sourced rather than fully independently verified",
+        "remediation-pass-2026-08-29 (session 2): re-fetched the independent Fierce Pharma approval-coverage article specifically checking for a numeric adverse-event cross-check; the article discusses approval and efficacy only and contains no adverse-event or cardiovascular-safety sentences, so it could not corroborate the granular percentage breakdown. The general mild-to-moderate GI tolerability pattern remains corroborated only at the qualitative level by independent industry coverage; the granular percentage breakdown stays single-family sourced to PMC/Diabetes Care and review-gated, exactly as already stated above."
       ]
     },
     {
@@ -561,7 +631,10 @@
       "remediation-pass-2026-08-29: STILL GATED -- ChEMBL ID (CHEMBL5095358) was obtained only via PubChem (same source family already cited for this claim, not independent); direct ChEMBL (ebi.ac.uk) lookup remained blocked/rate-limited on this pass as on the prior review pass. RxNorm remains unresolved (expected null -- mazdutide has no US-marketed product/label).",
       "remediation-pass-2026-08-29: STILL GATED -- GLORY-1 exact weight-loss percentages (-12.05%, -14.84%, 50.6% vs 2.1%) still rest on the sponsor press release; an independent Semantic Scholar paper-level fetch corroborated the trial's size/design/direction but returned different specific percentages for the 6 mg group, which could not be reconciled against verbatim full text this session (NEJM remains paywalled, 403). Keep evidenceTier at 'Moderate'; do not restore 'Strong' until full-text confirmation.",
       "remediation-pass-2026-08-29: STILL GATED -- phase 2 T2D efficacy/dosing claim (HbA1c, weight) remains single-family sourced to the PMC/Diabetes Care trial; ClinicalTrials.gov remained blocked at the network/proxy level and no independent systematic review or registry cross-check was found this session. Fetching the study's own journal-publisher copy (diabetesjournals.org) did verbatim-confirm the already-cited figures, reducing transcription-error risk, but does not count as an independent family per the review contract.",
-      "remediation-pass-2026-08-29: STILL GATED -- the granular GI adverse-event percentage breakdown (diarrhea 36%, decreased appetite 29%, nausea 23%, vomiting 14%) remains single-family sourced to the phase 2 T2D trial; only the general mild-to-moderate GI pattern was independently corroborated (Semantic Scholar/NEJM record) this session."
+      "remediation-pass-2026-08-29: STILL GATED -- the granular GI adverse-event percentage breakdown (diarrhea 36%, decreased appetite 29%, nausea 23%, vomiting 14%) remains single-family sourced to the phase 2 T2D trial; only the general mild-to-moderate GI pattern was independently corroborated (Semantic Scholar/NEJM record) this session.",
+      "remediation-pass-2026-08-29 (session 2, post-independent-review): CORRECTED a procedural error flagged by the reviewer -- the mechanism claim's prior remediation note improperly cited Semantic Scholar (already a cited source for that claim) as independent corroboration; genuinely independent corroboration was obtained instead from Fierce Pharma trade-press coverage (fetched and quoted verbatim this session).",
+      "remediation-pass-2026-08-29 (session 2, post-independent-review): STILL GATED, TIGHTENED -- per the reviewer's finding, fetched and verbatim-quoted an independent physician-review commentary (gutsandgrowth.com) on the published NEJM GLORY-1 data; it reports week-48 figures of -11.00% (4mg)/-14.01% (6mg)/+0.30% (placebo), agreeing with the prior Semantic Scholar pull and disagreeing with the sponsor press release (-12.05%/-14.84%/-0.47%). Direct NEJM full-text and Europe PMC REST fetches were attempted this session but both were blocked by repeated proxy rate-limiting (HTTP 429). The claim statement now presents both figure sets with an explicit caveat instead of asserting the press-release numbers as settled; evidenceTier stays 'Moderate', confidence lowered to 'moderate'. This remains the single most consequential open item and should be re-attempted against verbatim NEJM/Europe PMC full text at the next review pass.",
+      "remediation-pass-2026-08-29 (session 2, post-independent-review): the two NMPA regulatory claims and the phase-2 T2D HbA1c claim were each additionally corroborated this session by fresh, verbatim-quoted independent trade-press sources (Fierce Pharma; BioSpace) confirming trial/approval shape and direction; granular numeric figures for the T2D and GI-safety claims remain single-family sourced as already documented above, and the ChEMBL identifier remains unconfirmed by an independent family -- both non-blocking per the reviewer's verdict."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -570,7 +643,8 @@
       "gray-market-us-availability",
       "human-rct-evidence-available",
       "positive-human-efficacy-signal",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "remediation-pass-2026-08-29-review-response"
     ]
   }
 }
