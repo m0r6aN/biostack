@@ -17,8 +17,8 @@
     "classification": "Selective estrogen receptor modulator (SERM)",
     "compoundFamily": "Triphenylethylene-derivative, non-hormonal SERM",
     "externalIdentifiers": {
-      "rxnorm": null,
-      "unii": null,
+      "rxnorm": "1370971",
+      "unii": "B0P231ILBK",
       "casNumber": "128607-22-7",
       "drugbank": null,
       "pubchem": "3036505",
@@ -110,6 +110,54 @@
       "doi": null,
       "pmid": null,
       "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "rxnav-rxcui-ospemifene",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "RxNorm RxCUI lookup: ospemifene",
+      "publisher": "U.S. National Library of Medicine / RxNav (RxNorm)",
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ospemifene",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "dovepress-wurz-2014-review",
+      "sourceType": "review-article",
+      "authorityTier": "B1",
+      "title": "Safety and efficacy of ospemifene for the treatment of dyspareunia associated with vulvar and vaginal atrophy due to menopause",
+      "publisher": "Clinical Interventions in Aging (Dove Medical Press) - Wurz GT, Kao CJ, DeGregorio MW, 2014",
+      "url": "https://www.dovepress.com/safety-and-efficacy-of-ospemifene-for-the-treatment-of-dyspareunia-ass-peer-reviewed-fulltext-article-CIA",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2014-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "komi-2004-bone-turnover-pubmed",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B2",
+      "title": "Effects of ospemifene, a novel SERM, on biochemical markers of bone turnover in healthy postmenopausal women (Komi J, Heikkinen J, Rutanen EM, et al.)",
+      "publisher": "Gynecological Endocrinology, 2004 (PMID 15255284)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15255284/",
+      "doi": null,
+      "pmid": "15255284",
+      "publishedAt": "2004-03-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "prnewswire-vulvar-vestibular-2019",
+      "sourceType": "press-release",
+      "authorityTier": "C2",
+      "title": "Effects of Ospemifene on Genitourinary Health: Prospective Vulvar Vestibular Photography and Direct Assessments in Post-Menopausal Women (reporting on a Duchesnay-sponsored phase 3 trial published in Menopause, 2019)",
+      "publisher": "PR Newswire (Duchesnay Inc.)",
+      "url": "https://www.prnewswire.com/news-releases/effects-of-ospemifene-on-genitourinary-health-prospective-vulvar-vestibular-photography-and-direct-assessments-in-post-menopausal-women-300862713.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2019-06-01T00:00:00Z",
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
@@ -253,7 +301,8 @@
         }
       ],
       "reviewFlags": [
-        "safety-critical prescribing-eligibility claim"
+        "safety-critical prescribing-eligibility claim",
+        "independent review note (drugs.com): that source labels the breast-cancer caution a formal 'contraindication', while the FDA label itself places this language under Use in Specific Populations rather than the Contraindications section; the statement above already reflects the label's own structure correctly, but downstream citation of this claim should preserve that distinction rather than adopt drugs.com's looser terminology."
       ]
     },
     {
@@ -305,7 +354,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "ncbi-bookshelf-dare-nbk174699"
+        "ncbi-bookshelf-dare-nbk174699",
+        "dovepress-wurz-2014-review"
       ],
       "extractedEvidence": [
         {
@@ -322,16 +372,37 @@
           "sourceRef": "ncbi-bookshelf-dare-nbk174699",
           "quote": "an effective and safe treatment for dyspareunia associated with postmenopausal vulvar and vaginal atrophy",
           "pageOrSection": "Conclusion"
+        },
+        {
+          "sourceRef": "dovepress-wurz-2014-review",
+          "quote": "Ospemifene treatment also resulted in significant decreases in vaginal pH, with the 30 mg and 60 mg doses decreasing pH by 0.7 and 1.0 points, respectively, compared to a decrease of 0.1 point in placebo-treated patients.",
+          "pageOrSection": "Clinical efficacy summary"
+        },
+        {
+          "sourceRef": "dovepress-wurz-2014-review",
+          "quote": "Parabasal cells were significantly decreased at both 30 mg (−22%) and 60 mg (−30%) ospemifene compared to a 4% increase in the placebo group.",
+          "pageOrSection": "Clinical efficacy summary"
+        },
+        {
+          "sourceRef": "dovepress-wurz-2014-review",
+          "quote": "Ospemifene treatment decreased dyspareunia symptom scores by 1.19 and 1.02 points at the 60 mg and 30 mg doses, respectively, compared to a 0.89-point decrease in the placebo group.",
+          "pageOrSection": "Clinical efficacy summary"
+        },
+        {
+          "sourceRef": "dovepress-wurz-2014-review",
+          "quote": "No cases of endometrial hyperplasia were observed in any group.",
+          "pageOrSection": "Safety summary"
         }
       ],
       "reviewFlags": [
-        "quantitative effect sizes (SMDs) taken from secondary summary of the review; confirm against primary DARE/Cochrane-style record at review time"
+        "quantitative effect sizes (pH, parabasal cells, dyspareunia score) cross-checked this session against a second, independently-authored narrative review (Wurz et al. 2014, Clinical Interventions in Aging) that reports the same underlying trial-level figures; note this second source is itself a secondary review of the pivotal trials, not a primary trial report, so it corroborates but does not replace the need for primary RCT abstracts at a future review pass.",
+        "primary phase III RCT abstracts (e.g. PMID 24679891, PMID 23361170) remain blocked by bot-verification as of this session; not independently re-fetched."
       ]
     },
     {
       "claimId": "ospemifene-studied-use-bone-density-001",
       "claimType": "studied-use",
-      "statement": "In a 12-month controlled study of postmenopausal women with VVA (61 treated with ospemifene 60 mg/day vs 67 untreated controls), the ospemifene group showed significant bone mineral density/T-score decline only at the femoral neck, while total femur and lumbar spine measurements remained stable, versus significant declines at all three sites in the untreated control group; bone alkaline phosphatase decreased in the treated group. Ospemifene is not FDA-approved for osteoporosis or fracture-risk reduction, and the study explicitly states any reduction in fracture risk is not yet proven.",
+      "statement": "In a single 12-month controlled study of postmenopausal women with VVA (61 treated with ospemifene 60 mg/day vs 67 untreated controls), the ospemifene group showed significant bone mineral density/T-score decline only at the femoral neck, while total femur and lumbar spine measurements remained stable, versus significant declines at all three sites in the untreated control group; bone alkaline phosphatase decreased in the treated group. This single-study, exploratory finding is not corroborated by any systematic review, professional-society guideline, or structured database, has not been shown to translate into fracture-risk reduction, and should not be presented as anything beyond a preliminary, review-gated observation. Ospemifene is not FDA-approved for osteoporosis or fracture-risk reduction, and the study explicitly states any reduction in fracture risk is not yet proven.",
       "context": {
         "population": "postmenopausal women with VVA (n=61 treated, n=67 untreated control)",
         "route": "oral",
@@ -344,7 +415,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "mdpi-bone-density-2022",
-        "dailymed-osphena-label"
+        "dailymed-osphena-label",
+        "komi-2004-bone-turnover-pubmed"
       ],
       "extractedEvidence": [
         {
@@ -356,11 +428,22 @@
           "sourceRef": "mdpi-bone-density-2022",
           "quote": "the possibility that ospemifene causes a decrease in fracture risk is not yet proven",
           "pageOrSection": "Abstract - Conclusion"
+        },
+        {
+          "sourceRef": "komi-2004-bone-turnover-pubmed",
+          "quote": "Ospemifene decreased bone resorption dose-dependently, as seen from falls in NTX by 6.1, 9.4 and 12.9%",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "komi-2004-bone-turnover-pubmed",
+          "quote": "These results show that ospemifene is effective in reducing bone turnover in postmenopausal women.",
+          "pageOrSection": "Abstract - Conclusion"
         }
       ],
       "reviewFlags": [
         "not an approved indication; do not present as osteoporosis treatment",
-        "single non-randomized-control comparison; independent confirmation needed"
+        "single non-randomized-control comparison; independent confirmation needed",
+        "unresolved per independent review (2026-08-29): a second controlled-human study (Komi et al. 2004, Gynecological Endocrinology, PMID 15255284) directionally corroborates a bone-turnover-marker benefit, but this is the SAME source family (controlled-human-study) as the existing sourceRefs, not a materially different family, so it does not satisfy the independent-verification bar. No systematic review, professional guideline, or structured database addressing ospemifene's bone effects was located this session (Europe PMC REST and PubMed searches were rate-limited/inconclusive on retry). This claim remains review-gated and must not be framed as anything beyond an exploratory, single-study finding."
       ]
     },
     {
@@ -379,7 +462,8 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pmc-case-report-5005291",
-        "ncbi-bookshelf-dare-nbk174699"
+        "ncbi-bookshelf-dare-nbk174699",
+        "prnewswire-vulvar-vestibular-2019"
       ],
       "extractedEvidence": [
         {
@@ -391,11 +475,22 @@
           "sourceRef": "pmc-case-report-5005291",
           "quote": "vulvar vestibular pain threshold before and after treatment with ospemifene as measured by a calibrated instrument such as a vulvogeisometer",
           "pageOrSection": "Discussion - proposed future research"
+        },
+        {
+          "sourceRef": "prnewswire-vulvar-vestibular-2019",
+          "quote": "This 12-week double blind, multi-institutional, prospective clinical pivotal phase three trial utilized, for the first time, vulvar and vestibular photography to evaluate the effects of ospemifene on the vulva and vagina in postmenopausal women",
+          "pageOrSection": "Press release body"
+        },
+        {
+          "sourceRef": "prnewswire-vulvar-vestibular-2019",
+          "quote": "Photographs showed improvements of vulvar vaginal tissues including increases in moisture of vestibular tissue.",
+          "pageOrSection": "Press release body"
         }
       ],
       "reviewFlags": [
         "based on a 2-patient case report (lowest evidentiary weight); not generalizable",
-        "flags a gap in the approval-trial evidence base itself, distinct from general efficacy claim"
+        "flags a gap in the approval-trial evidence base itself, distinct from general efficacy claim",
+        "update (independent review, 2026-08-29): the case report's premise -- that no ospemifene trial used an objective, instrument-based vulvar-specific assessment -- holds for the ORIGINAL 2013 approval-supporting trials this claim is scoped to, but a later industry-sponsored (Duchesnay-affiliated) phase 3 trial published in Menopause (2019) did use vulvar-vestibular photography and reported improved vestibular tissue moisture/appearance. The claim as scoped remains accurate, but readers should not conclude the vulvar-assessment gap is entirely unaddressed in the broader literature -- it has been partially addressed by this one sponsor-affiliated trial. Source accessed here is a PR Newswire press release describing the study (the primary journal article itself was not accessible this session; treat the Menopause 2019 findings as sponsor-reported pending direct review of the peer-reviewed text)."
       ]
     },
     {
@@ -443,7 +538,7 @@
         "ospemifene-evidence-gap-vulvar-specific-001"
       ],
       "severity": "moderate",
-      "summary": "FDA approval and label indication reference 'vulvar and vaginal atrophy' broadly, but the approval-supporting trials assessed vaginal maturation index and dyspareunia severity rather than an objective, vulvar-tissue-specific outcome measure; a small case report documents non-response of vulvar symptoms specifically, creating a gap between the labeled indication's scope and the direct evidence for vulvar-specific benefit.",
+      "summary": "FDA approval and label indication reference 'vulvar and vaginal atrophy' broadly, but the ORIGINAL 2013 approval-supporting trials assessed vaginal maturation index and dyspareunia severity rather than an objective, vulvar-tissue-specific outcome measure; a small case report documents non-response of vulvar symptoms specifically, creating a gap between the labeled indication's scope and the direct evidence for vulvar-specific benefit as of the approval trials. Update (2026-08-29): a subsequent industry-sponsored phase 3 trial (Duchesnay-affiliated, published in Menopause, 2019) used vulvar-vestibular photography and reported improved vestibular tissue moisture/appearance, partially closing this gap in the post-approval literature, though this later trial is sponsor-affiliated and was reviewed here only via a press-release summary rather than the full peer-reviewed text. The gap in the ORIGINAL approval trials themselves remains, so human review is still warranted.",
       "resolutionStatus": "needs-human-review"
     }
   ],
@@ -452,10 +547,10 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "RxNorm and UNII identifiers were not resolved from a structured database fetch this session and remain null.",
-      "Individual phase III RCT abstracts on PubMed (e.g. PMID 24679891, PMID 23361170) were blocked by bot-verification pages during this session; efficacy evidence instead relies on a systematic review/meta-analysis (NBK174699) and should be cross-checked against primary trial abstracts at review time.",
-      "Bone-density claim rests on a single non-randomized controlled comparison (MDPI 2022) and needs independent confirmation before any public framing beyond 'exploratory'.",
-      "Vulvar-specific evidence gap is documented from a 2-patient case report only; broader literature search for corroborating or contradicting data is recommended."
+      "RESOLVED (remediation pass, 2026-08-29): RxNorm (RxCUI 1370971, via live RxNav REST fetch) and UNII (B0P231ILBK, via live DailyMed label re-fetch) identifiers were confirmed this session and are no longer null.",
+      "Individual phase III RCT abstracts on PubMed (e.g. PMID 24679891, PMID 23361170) remain blocked by bot-verification pages as of this session; a second, independently-authored narrative review (Wurz et al. 2014, Clinical Interventions in Aging) was fetched and corroborates the systematic review's trial-level figures, but the primary RCT abstracts themselves are still not directly re-fetched and should be cross-checked at a future review pass.",
+      "Bone-density claim (ospemifene-studied-use-bone-density-001) rests on a single non-randomized controlled comparison (MDPI 2022). This session made a targeted attempt to find cross-family independent verification (systematic review, professional-society guideline, or structured database) via Europe PMC REST and a PubMed search; both were rate-limited (HTTP 429) on retry and a direct-proxy fallback was blocked, so no cross-family source was found. A second same-family controlled-human study (Komi et al. 2004, PMID 15255284) was located and added as directional corroboration only. Per the independent-review rule this claim remains review-gated and its statement has been tightened to explicitly flag it as a single-study, non-corroborated, exploratory finding; a future review pass should retry the systematic-review/guideline search.",
+      "Vulvar-specific evidence gap: RESOLVED IN PART (2026-08-29). A subsequent Duchesnay-sponsored phase 3 trial (Menopause, 2019, vulvar-vestibular photography) was located and cited (via a PR Newswire summary of the study; the full peer-reviewed text was not accessible this session), partially addressing the gap in the post-approval literature. The case report's premise still holds for the original 2013 approval trials, so the claim and linked conflict remain accurate but have been updated to reflect this newer study; human review is still recommended given the sponsor affiliation and the press-release-only sourcing of the 2019 trial."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -464,7 +559,8 @@
       "boxed-warning-present",
       "systematic-review-backed-efficacy",
       "thin-human-evidence-for-secondary-uses",
-      "misinformation-gap-documented"
+      "misinformation-gap-documented",
+      "remediation-pass-2026-08-29"
     ]
   }
 }
