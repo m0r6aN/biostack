@@ -70,7 +70,7 @@ jobs:
             .payload.comparison.candidateDeclarationsTrusted == false and
             .payload.comparison.effectAuthority == "none" and
             .payload.corpusInventory.snapshotVersion == "1.0.0" and
-            .payload.corpusInventory.seedRecordCount == 52 and
+            .payload.corpusInventory.seedRecordCount == 57 and
             .payload.corpusInventory.candidateRecordCount == 16 and
             .payload.corpusInventory.evidencePacketCount == 78 and
             .payload.corpusInventory.sourceRegistryRecordCount == 13 and
