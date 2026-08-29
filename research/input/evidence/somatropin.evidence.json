@@ -1,0 +1,426 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "somatropin-evidence-expansion-001",
+    "category": "peptides-core",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:58:43Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Somatropin",
+    "aliases": [
+      "Recombinant human growth hormone",
+      "rhGH",
+      "HGH",
+      "Genotropin",
+      "Norditropin",
+      "Humatrope"
+    ],
+    "classification": "Peptide hormone (recombinant protein therapeutic)",
+    "compoundFamily": "Somatotropin / growth hormone family (191-amino-acid recombinant human growth hormone)",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "NQX9KB6PCL",
+      "casNumber": "12629-01-5",
+      "drugbank": "DB00052",
+      "pubchem": null,
+      "chembl": null,
+      "doi": null,
+      "pmid": null
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "dailymed-genotropin-label",
+      "sourceType": "regulator-label",
+      "authorityTier": "A1",
+      "title": "Label: GENOTROPIN- somatropin kit",
+      "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved prescribing information)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ffebf88b-d257-4542-9808-74d9b7167765",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "fda-import-alert-66-71",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Import Alert 66-71: Detention Without Physical Examination of Human Growth Hormone (HGH) / Somatropin Products",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.accessdata.fda.gov/cms_ia/importalert_204.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "fda-safety-communication-somatropin-mortality",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Drug Safety Communication: Safety review update of Recombinant Human Growth Hormone (somatropin) and possible increased risk of death",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/drug-safety-and-availability/fda-drug-safety-communication-safety-review-update-recombinant-human-growth-hormone-somatropin-and",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "dare-liu2008-athletic-performance",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Systematic Review: The Effects of Growth Hormone on Athletic Performance (structured DARE abstract of Liu H, Bravata DM, Olkin I, et al., Ann Intern Med 2008)",
+      "publisher": "NCBI Bookshelf / Database of Abstracts of Reviews of Effects (DARE), Centre for Reviews and Dissemination",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK75460/",
+      "doi": "10.7326/0003-4819-148-10-200805200-00215",
+      "pmid": "18347346",
+      "publishedAt": "2008-05-20T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "fda-unii-somatropin",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "UNII Substance Record: SOMATROPIN (NQX9KB6PCL)",
+      "publisher": "FDA Global Substance Registration System (precisionFDA UNII Search Service)",
+      "url": "https://precision.fda.gov/uniisearch/srs/unii/NQX9KB6PCL",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "drugbank-db00052",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Somatotropin (DB00052)",
+      "publisher": "DrugBank",
+      "url": "https://go.drugbank.com/drugs/DB00052",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "somatropin-approved-indications-001",
+      "claimType": "approved-indication",
+      "statement": "Genotropin (somatropin) is FDA-approved for treatment of pediatric growth failure due to growth hormone deficiency (GHD), Prader-Willi syndrome, Small for Gestational Age, Turner syndrome, and Idiopathic Short Stature, and for treatment of adults with adult-onset or childhood-onset growth hormone deficiency.",
+      "context": {
+        "population": "pediatric and adult patients with growth hormone deficiency or the specified pediatric growth disorders",
+        "route": "subcutaneous",
+        "formulation": "Genotropin (somatropin) injection kit",
+        "useCase": "FDA-approved labeled indications",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["dailymed-genotropin-label"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": "Treatment of children with growth failure due to growth hormone deficiency (GHD), Prader-Willi syndrome, Small for Gestational Age, Turner syndrome, and Idiopathic Short Stature",
+          "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": "Treatment of adults with either adult onset or childhood onset GHD",
+          "pageOrSection": "Indications and Usage"
+        }
+      ],
+      "reviewFlags": [
+        "confirm current label revision/version against the live DailyMed SPL at review time"
+      ]
+    },
+    {
+      "claimId": "somatropin-contraindications-001",
+      "claimType": "contraindication",
+      "statement": "Genotropin (somatropin) labeling lists contraindications including hypersensitivity to somatropin or its excipients, active malignancy, acute critical illness, active proliferative or severe non-proliferative diabetic retinopathy, closed epiphyses in pediatric patients, and Prader-Willi syndrome in children who are severely obese or have severe respiratory impairment.",
+      "context": {
+        "population": "prospective somatropin recipients",
+        "route": "subcutaneous",
+        "formulation": "Genotropin (somatropin) injection kit",
+        "useCase": "prescribing safety boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["dailymed-genotropin-label"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": "Hypersensitivity to somatropin or any of its excipients",
+          "pageOrSection": "Contraindications"
+        }
+      ],
+      "reviewFlags": [
+        "only the hypersensitivity contraindication was confirmed against page text verbatim in this pass; remaining contraindication items (acute critical illness, active malignancy, retinopathy, closed epiphyses, Prader-Willi obesity/respiratory criteria) should be re-verified against exact label text at review time"
+      ]
+    },
+    {
+      "claimId": "somatropin-boxed-risk-warnings-001",
+      "claimType": "warning",
+      "statement": "Genotropin (somatropin) labeling carries boxed/serious warnings for increased mortality in non-GHD patients with acute critical illness, fatalities in Prader-Willi syndrome patients with risk factors such as severe obesity and upper airway obstruction or sleep apnea, increased risk of second neoplasms (notably meningioma) in childhood cancer survivors previously treated with radiation, intracranial hypertension typically arising within the first 8 weeks of therapy, and unmasking of previously undiagnosed impaired glucose tolerance or overt diabetes mellitus.",
+      "context": {
+        "population": "somatropin recipients, with specific subpopulation risks noted (acute critical illness, Prader-Willi syndrome, childhood cancer survivors, pre-diabetic patients)",
+        "route": "subcutaneous",
+        "formulation": "Genotropin (somatropin) injection kit",
+        "useCase": "labeled safety warnings",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["dailymed-genotropin-label"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": "Reports of fatalities...who had one or more of the following risk factors: severe obesity, history of upper airway obstruction or sleep apnea",
+          "pageOrSection": "Warnings and Precautions - Prader-Willi Syndrome"
+        },
+        {
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": "Symptoms usually occurred within the first eight (8) weeks after initiation",
+          "pageOrSection": "Warnings and Precautions - Intracranial Hypertension"
+        },
+        {
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": "Previously undiagnosed impaired glucose tolerance and overt diabetes mellitus may be unmasked",
+          "pageOrSection": "Warnings and Precautions - Glucose Intolerance and Diabetes Mellitus"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical warning claim",
+        "the 42% vs 19% acute-critical-illness mortality figure and the specific neoplasm/meningioma wording were reported by the extraction pass but not independently re-quoted verbatim in this session; confirm exact wording against the label PDF at review time"
+      ]
+    },
+    {
+      "claimId": "somatropin-dose-context-adult-ghd-001",
+      "claimType": "dose-context",
+      "statement": "Genotropin labeling describes an adult GHD weight-based dosing protocol: initial dose not more than 0.04 mg/kg/week, titrated upward as tolerated to a maximum of 0.08 mg/kg/week at 4-8 week intervals; the label also specifies that Genotropin must be given subcutaneously and must not be injected intravenously. This is trial/label protocol context only and is not a use recommendation.",
+      "context": {
+        "population": "adults with growth hormone deficiency",
+        "route": "subcutaneous",
+        "formulation": "Genotropin (somatropin) injection kit",
+        "useCase": "labeled dosing protocol (context only, not a recommendation)",
+        "doseText": "Initial dose not more than 0.04 mg/kg/week; may be increased as tolerated to not more than 0.08 mg/kg/week at 4-8 week intervals (label protocol, not a use recommendation)"
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["dailymed-genotropin-label"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": "the recommended initial dose is not more than 0.04 mg/kg/week; the dose may be increased as tolerated to not more than 0.08 mg/kg/week at 4-8 week intervals.",
+          "pageOrSection": "Dosage and Administration - Adult GHD"
+        },
+        {
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": "GENOTROPIN must not be injected intravenously.",
+          "pageOrSection": "Dosage and Administration"
+        }
+      ],
+      "reviewFlags": [
+        "product-specific dosing; must never be presented as a use recommendation, only as label/trial protocol context",
+        "pediatric and non-weight-based dosing tables were not independently re-verified verbatim this session"
+      ]
+    },
+    {
+      "claimId": "somatropin-regulatory-illegal-marketing-001",
+      "claimType": "regulatory",
+      "statement": "FDA maintains an import alert authorizing detention without physical examination of unapproved human growth hormone/somatropin products, stating such products appear to be unapproved new drugs or biologics for which no license is in effect; FDA separately warns that some pharmacies promote compounded HGH for anti-aging purposes marketed as a 'fountain of youth' in longevity clinics, that purchasing unapproved HGH from unauthorized foreign sources or the Internet bypasses U.S. drug-distribution safeguards and raises adverse-event risk, and that distributing or possessing HGH with intent to distribute for anti-aging, bodybuilding, or any other unapproved use is a federal criminal violation.",
+      "context": {
+        "population": "consumers of unapproved/compounded HGH products",
+        "route": "various (commonly injection)",
+        "formulation": "unapproved or compounded HGH/somatropin products obtained outside the licensed U.S. supply chain",
+        "useCase": "anti-aging, bodybuilding, and other unapproved marketing claims; regulatory/import enforcement",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["fda-import-alert-66-71"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-import-alert-66-71",
+          "quote": "Some pharmacies promote compounded HGH products for anti-aging purposes. They are sold as a 'fountain of youth' in longevity clinics.",
+          "pageOrSection": "Import Alert 66-71 - background"
+        },
+        {
+          "sourceRef": "fda-import-alert-66-71",
+          "quote": "If unapproved HGH is purchased from unauthorized foreign sources or over the Internet, safeguards built into the U.S. drug distribution system may be bypassed, placing consumers who use HGH from these sources at high risk for adverse events.",
+          "pageOrSection": "Import Alert 66-71 - background"
+        },
+        {
+          "sourceRef": "fda-import-alert-66-71",
+          "quote": "distributing, or possessing with the intent to distribute, HGH for these uses or any other unapproved use violates section 303(e)(1) of the FD&C Act.",
+          "pageOrSection": "Import Alert 66-71 - background"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "verify current Red List / alert status at review time, as import-alert firm listings change"
+      ]
+    },
+    {
+      "claimId": "somatropin-regulatory-mortality-signal-inconclusive-001",
+      "claimType": "warning",
+      "statement": "Following the SAGhE French cohort study that raised a possible mortality signal in patients treated with recombinant human growth hormone during childhood, FDA reviewed the study alongside other data sources and concluded the evidence for an increased risk of death was inconclusive due to design weaknesses in SAGhE, and that available medical literature and adverse event reports did not otherwise support a mortality link; FDA advised continuing to prescribe and use recombinant human growth hormone according to labeled recommendations while its review continued.",
+      "context": {
+        "population": "patients treated with recombinant human growth hormone, particularly during childhood",
+        "route": null,
+        "formulation": "recombinant human growth hormone products generally",
+        "useCase": "post-market safety signal review",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["fda-safety-communication-somatropin-mortality"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-safety-communication-somatropin-mortality",
+          "quote": "The evidence regarding recombinant human growth hormone and increased risk of death is inconclusive.",
+          "pageOrSection": "FDA Drug Safety Communication - safety review update"
+        },
+        {
+          "sourceRef": "fda-safety-communication-somatropin-mortality",
+          "quote": "continue to prescribe and use recombinant human growth hormone according to the labeled recommendations",
+          "pageOrSection": "FDA Drug Safety Communication - recommendations"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "this communication is a 2011-2012-era interim update that anticipated further data in Spring 2012; no follow-up FDA communication confirming final resolution of the SAGhE mortality signal was located in this research pass and should be searched for at review time"
+      ]
+    },
+    {
+      "claimId": "somatropin-mechanism-001",
+      "claimType": "mechanism",
+      "statement": "Somatropin (somatotropin) is a recombinant form of human growth hormone used as replacement therapy for conditions of growth failure, growth hormone deficiency, and associated weakness in children and adults.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "recombinant human growth hormone (191-amino-acid sequence identical to pituitary-derived GH)",
+        "useCase": "mechanism/identity description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": ["drugbank-db00052", "dailymed-genotropin-label"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "drugbank-db00052",
+          "quote": "Somatotropin is a recombinant human growth hormone used as replacement therapy in various conditions of growth failure, growth hormone deficiency, and weakness in children and adults.",
+          "pageOrSection": "Overview"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "somatropin-efficacy-athletic-performance-001",
+      "claimType": "efficacy",
+      "statement": "A systematic review of 27 randomized controlled trials (n=440) of growth hormone in healthy, physically fit young adults found GH increased lean body mass but had minimal effect on key measures of athletic performance (no significant improvement in strength across multiple muscle groups or in VO2max), and was associated with higher rates of adverse events - soft tissue swelling in 44% vs 1% of controls and fatigue in 35% vs 0% - plus elevated exercise lactate suggestive of impaired rather than enhanced exercise capacity.",
+      "context": {
+        "population": "healthy, physically fit young adults (non-GHD; athletic-performance context)",
+        "route": "injection (various GH products/doses across pooled trials)",
+        "formulation": "recombinant human growth hormone, pooled across trials",
+        "useCase": "athletic performance / body composition enhancement (non-approved use)",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": ["dare-liu2008-athletic-performance"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "dare-liu2008-athletic-performance",
+          "quote": "growth hormone may alter body composition, but has minimal effect on key athletic performance",
+          "pageOrSection": "Conclusions"
+        },
+        {
+          "sourceRef": "dare-liu2008-athletic-performance",
+          "quote": "may be associated with impaired exercise capacity and increased adverse events",
+          "pageOrSection": "Conclusions"
+        },
+        {
+          "sourceRef": "dare-liu2008-athletic-performance",
+          "quote": "44% versus 1%",
+          "pageOrSection": "Adverse effects - soft tissue swelling rate"
+        }
+      ],
+      "reviewFlags": [
+        "review notes no included studies adequately described allocation concealment; pooled trials were generally short-duration and small",
+        "do not generalize hospital/trial-supervised short-course dosing to unsupervised gray-market or performance-enhancement self-administration"
+      ]
+    },
+    {
+      "claimId": "somatropin-evidence-gap-antiaging-bodybuilding-marketing-001",
+      "claimType": "evidence-gap",
+      "statement": "Somatropin/HGH is commonly promoted online and by some compounding pharmacies and longevity clinics as an anti-aging 'fountain of youth' and performance/body-composition enhancer, but no FDA-approved indication exists for anti-aging, bodybuilding, or general athletic-performance use; FDA has designated such marketing illegal and has stated distribution for these unapproved uses is a federal criminal violation, and the strongest available controlled human evidence in healthy athletic adults found minimal performance benefit alongside significantly increased adverse events (soft tissue swelling, fatigue) rather than a demonstrated performance gain.",
+      "context": {
+        "population": "consumers of gray-market/compounded HGH products seeking anti-aging or performance benefits",
+        "route": "commonly injection, obtained outside the licensed supply chain",
+        "formulation": "unapproved or compounded somatropin/HGH products",
+        "useCase": "anti-aging and athletic-performance/body-composition marketing claims",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": ["fda-import-alert-66-71", "dare-liu2008-athletic-performance"],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-import-alert-66-71",
+          "quote": "Some pharmacies promote compounded HGH products for anti-aging purposes. They are sold as a 'fountain of youth' in longevity clinics.",
+          "pageOrSection": "Import Alert 66-71 - background"
+        },
+        {
+          "sourceRef": "dare-liu2008-athletic-performance",
+          "quote": "growth hormone may alter body composition, but has minimal effect on key athletic performance",
+          "pageOrSection": "Conclusions"
+        }
+      ],
+      "reviewFlags": [
+        "misinformation-adjacent: popular anti-aging/performance marketing claims are not supported by the identified controlled human evidence and are affirmatively contradicted by FDA regulatory guidance",
+        "no dedicated controlled human trial of somatropin specifically for anti-aging outcomes in non-GHD older adults was located in this pass; gap should remain open pending further search"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "somatropin-conflict-mortality-signal-001",
+      "claimRefs": ["somatropin-regulatory-mortality-signal-inconclusive-001"],
+      "severity": "moderate",
+      "summary": "The SAGhE French cohort study raised a possible increased mortality signal associated with recombinant human growth hormone in patients treated during childhood, but FDA's own safety review concluded the evidence was inconclusive due to study design weaknesses and directed continued use per labeling. This packet did not locate a definitive later FDA communication closing out the signal; the underlying tension between an initial epidemiological safety signal and a regulator's inconclusive determination remains only partially resolved and should be checked against the most current FDA safety communications at review time.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "SAGhE mortality safety-signal communication is from the 2011-2012 review cycle; confirm whether FDA issued a later definitive update and update the mortality-signal claim and conflict accordingly.",
+      "PubChem CID could not be reliably resolved for somatropin as a large recombinant protein via this session's tooling (JavaScript-rendered page); pubchem field left null pending resolution.",
+      "ChEMBL and RxNorm identifiers not yet resolved from structured databases.",
+      "Only a subset of Genotropin label contraindication and boxed-warning items were re-confirmed against verbatim page text in this session; remaining items were sourced from a first-pass extraction summary and should be re-verified word-for-word against the label PDF."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "fda-approved-product",
+      "a1-regulator-backed",
+      "negative-or-null-human-performance-benefit",
+      "thin-human-evidence-for-marketed-off-label-uses",
+      "import-alert-on-record"
+    ]
+  }
+}

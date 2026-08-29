@@ -1,0 +1,424 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "compound-evidence-packet",
+  "packet": {
+    "packetId": "maridebart-cafraglutide-evidence-expansion-001",
+    "category": "glp1-incretins",
+    "agentId": "claude-workflow-evidence-expansion",
+    "generatedAt": "2026-08-29T01:58:43Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
+  "compound": {
+    "canonicalName": "Maridebart cafraglutide",
+    "aliases": [
+      "MariTide",
+      "AMG 133",
+      "AMG-133"
+    ],
+    "classification": "Peptide-antibody conjugate (biologic)",
+    "compoundFamily": "Bispecific GIP receptor antagonist / GLP-1 receptor agonist antibody-peptide conjugate",
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": null,
+      "casNumber": "2887445-76-1",
+      "drugbank": "DB19339",
+      "pubchem": null,
+      "chembl": null,
+      "doi": "10.1056/NEJMoa2504214",
+      "pmid": "40549887"
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "pubmed-40549887",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Once-Monthly Maridebart Cafraglutide for the Treatment of Obesity — A Phase 2 Trial",
+      "publisher": "New England Journal of Medicine (Jastreboff AM, Ryan DH, Bays HE, Ebeling PR, et al.)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40549887/",
+      "doi": "10.1056/NEJMoa2504214",
+      "pmid": "40549887",
+      "publishedAt": "2025-09-04T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "amgen-pr-2024-11-phase2-results",
+      "sourceType": "sponsor-communication",
+      "authorityTier": "B2",
+      "title": "Amgen Announces Robust Weight Loss With MariTide In People Living With Obesity Or Overweight At 52 Weeks In A Phase 2 Study",
+      "publisher": "Amgen Inc.",
+      "url": "https://www.amgen.com/newsroom/press-releases/2024/11/amgen-announces-robust-weight-loss-with-maritide-in-people-living-with-obesity-or-overweight-at-52-weeks-in-a-phase-2-study",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2024-11-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "amgen-story-2025-06-phase3-maritime",
+      "sourceType": "sponsor-communication",
+      "authorityTier": "B2",
+      "title": "Inside Amgen's Phase 3 MARITIME Program: Advancing the Future of Obesity Care",
+      "publisher": "Amgen Inc.",
+      "url": "https://www.amgen.com/stories/2025/06/inside-amgens-phase-3-maritime-program---advancing-the-future-of-obesity-care",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-06-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "nct06858839",
+      "sourceType": "clinical-trial-registry",
+      "authorityTier": "B1",
+      "title": "Study Details | NCT06858839 | Evaluation of Maridebart Cafraglutide in Adult Participants Without Type 2 Diabetes Mellitus Who Have Obesity or Are Overweight",
+      "publisher": "ClinicalTrials.gov / U.S. National Library of Medicine",
+      "url": "https://clinicaltrials.gov/study/NCT06858839",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "drugbank-db19339",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Maridebart Cafraglutide: Uses, Interactions, Mechanism of Action | DrugBank",
+      "publisher": "DrugBank Online",
+      "url": "https://go.drugbank.com/drugs/DB19339",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "medchemexpress-amg133",
+      "sourceType": "vendor-chemical-database",
+      "authorityTier": "C1",
+      "title": "Maridebart cafraglutide (AMG 133) | GLP-1R Agonist/GIPR Antagonist | MedChemExpress",
+      "publisher": "MedChemExpress",
+      "url": "https://www.medchemexpress.com/maridebart-cafraglutide.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "meridianmedicalcentre-maritide",
+      "sourceType": "vendor-marketing",
+      "authorityTier": "D1",
+      "title": "Amgen MariTide (product listing)",
+      "publisher": "meridianmedicalcentre.com",
+      "url": "https://meridianmedicalcentre.com/product/amgen-maritide/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "therxindex-maritide-alternatives",
+      "sourceType": "consumer-health-content",
+      "authorityTier": "C2",
+      "title": "Best MariTide Alternatives in 2026: What You Can Actually Get Right Now",
+      "publisher": "TheRxIndex",
+      "url": "https://therxindex.com/best-maritide-alternatives/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "maridebart-mechanism-bispecific-001",
+      "claimType": "mechanism",
+      "statement": "Maridebart cafraglutide (MariTide) is a bispecific molecule combining a monoclonal antibody antagonist of the GIP receptor (GIPR) with two conjugated GLP-1 receptor (GLP-1R) agonist peptides, designed to act as a GLP-1R agonist and GIPR antagonist simultaneously; its long antibody half-life is intended to support monthly or less-frequent dosing.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": "antibody-peptide conjugate biologic",
+        "useCase": "mechanism description",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "amgen-pr-2024-11-phase2-results",
+        "drugbank-db19339"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "amgen-pr-2024-11-phase2-results",
+          "quote": "bispecific glucagon-like peptide 1 (GLP-1) receptor agonist and glucose-dependent insulinotropic polypeptide receptor (GIPR) antagonist",
+          "pageOrSection": "Press release body"
+        },
+        {
+          "sourceRef": "amgen-pr-2024-11-phase2-results",
+          "quote": "monthly or less frequent single-injection administration",
+          "pageOrSection": "Press release body"
+        }
+      ],
+      "reviewFlags": []
+    },
+    {
+      "claimId": "maridebart-regulatory-investigational-status-001",
+      "claimType": "regulatory",
+      "statement": "Maridebart cafraglutide is an investigational drug with no FDA-approved indication as of the packet date; Amgen is running a Phase 3 program (MARITIME-1 in adults with overweight/obesity without type 2 diabetes; MARITIME-2 in adults with overweight/obesity and type 2 diabetes, plus additional studies planned across cardiovascular, heart-failure, kidney-disease, and obstructive-sleep-apnea populations) to generate the evidence regulators require before any approval decision.",
+      "context": {
+        "population": "adults with obesity or overweight, with or without type 2 diabetes",
+        "route": "subcutaneous injection",
+        "formulation": "investigational biologic, not a marketed product",
+        "useCase": "regulatory development status",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "nct06858839",
+        "amgen-story-2025-06-phase3-maritime"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "nct06858839",
+          "quote": "Evaluation of Maridebart Cafraglutide in Adult Participants Without Type 2 Diabetes Mellitus Who Have Obesity or Are Overweight",
+          "pageOrSection": "Study title"
+        },
+        {
+          "sourceRef": "amgen-story-2025-06-phase3-maritime",
+          "quote": "focused on exploring how safe and effective MariTide is as a potential treatment for obesity and obesity related diseases",
+          "pageOrSection": "Program overview"
+        },
+        {
+          "sourceRef": "amgen-story-2025-06-phase3-maritime",
+          "quote": "the gold standard of evidence by which global regulatory bodies assess benefit, risk and approvability for the intended patient population",
+          "pageOrSection": "Program overview"
+        }
+      ],
+      "reviewFlags": [
+        "no FDA label or PCAC/regulator determination exists yet for this compound; anchor future updates to DailyMed/FDA once (if) approved",
+        "confirm live Phase 3 status and any interim readouts at review time"
+      ]
+    },
+    {
+      "claimId": "maridebart-efficacy-phase2-weightloss-001",
+      "claimType": "efficacy",
+      "statement": "In a randomized, double-blind, placebo-controlled Phase 2 trial (11 dose-arms across an obesity cohort of 465 participants and an obesity-with-type-2-diabetes cohort of 127 participants), mean percent body-weight change at the primary endpoint ranged from -12.3% to -16.2% with maridebart cafraglutide versus -2.5% with placebo in the obesity-only cohort, and from -8.4% to -12.3% versus -1.7% with placebo in the obesity-plus-diabetes cohort; glycated hemoglobin fell 1.2-1.6 percentage points with active drug versus 0.1 with placebo in the diabetes cohort.",
+      "context": {
+        "population": "adults with obesity (n=465), and adults with obesity/overweight plus type 2 diabetes (n=127)",
+        "route": "subcutaneous injection",
+        "formulation": "maridebart cafraglutide, investigational",
+        "useCase": "Phase 2 obesity/type 2 diabetes weight-loss trial",
+        "doseText": "140, 280, or 420 mg every 4 weeks, or 420 mg every 8 weeks, with varying dose-escalation schedules (trial protocol only; not a use recommendation)"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pubmed-40549887",
+        "amgen-pr-2024-11-phase2-results"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubmed-40549887",
+          "quote": "mean percent change in body weight...ranged from -12.3% to -16.2% with maridebart cafraglutide",
+          "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "pubmed-40549887",
+          "quote": "-2.5% with placebo",
+          "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "amgen-pr-2024-11-phase2-results",
+          "quote": "up to ~20% average weight loss at week 52 without a weight loss plateau",
+          "pageOrSection": "Press release body"
+        }
+      ],
+      "reviewFlags": [
+        "Phase 2 dose-ranging result only; not yet confirmed by completed Phase 3 (MARITIME) primary endpoints",
+        "trial dose figures must never be presented as a use recommendation"
+      ]
+    },
+    {
+      "claimId": "maridebart-dose-context-phase2-regimen-001",
+      "claimType": "dose-context",
+      "statement": "The Phase 2 trial protocol evaluated maridebart cafraglutide at 140, 280, or 420 mg administered subcutaneously every 4 weeks (and 420 mg every 8 weeks in the obesity-only cohort), with several dose-escalation schedules tested specifically to reduce gastrointestinal tolerability issues; this is trial-protocol context only, not a dosing recommendation, and there is no approved or labeled dose because the product is not FDA-approved.",
+      "context": {
+        "population": "Phase 2 trial participants with obesity, with or without type 2 diabetes",
+        "route": "subcutaneous injection",
+        "formulation": "investigational biologic",
+        "useCase": "Phase 2 trial dosing protocol",
+        "doseText": "140/280/420 mg every 4 weeks or 420 mg every 8 weeks, per randomized trial protocol; not a use recommendation and not an approved dose"
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pubmed-40549887",
+        "amgen-pr-2024-11-phase2-results"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "amgen-pr-2024-11-phase2-results",
+          "quote": "monthly or less frequent single-injection administration",
+          "pageOrSection": "Press release body"
+        }
+      ],
+      "reviewFlags": [
+        "no approved label dose exists; this claim is trial-protocol context only and must be presented as such"
+      ]
+    },
+    {
+      "claimId": "maridebart-adverse-effect-gi-discontinuation-001",
+      "claimType": "adverse-effect",
+      "statement": "In the Phase 2 trial, gastrointestinal adverse events (nausea, vomiting, constipation) were the most common adverse events with maridebart cafraglutide, described as generally less frequent with dose escalation and a lower starting dose; nausea and vomiting were predominantly mild, transient, and mostly associated with the first dose. Amgen reported a discontinuation rate of approximately 11% due to any adverse event in the dose-escalation arms, with less than 8% of discontinuations attributable to GI-related events, and stated no unexpected/additional safety signals were identified.",
+      "context": {
+        "population": "Phase 2 trial participants with obesity, with or without type 2 diabetes",
+        "route": "subcutaneous injection",
+        "formulation": "investigational biologic",
+        "useCase": "Phase 2 trial safety/tolerability",
+        "doseText": null
+      },
+      "evidenceTier": "Moderate",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "pubmed-40549887",
+        "amgen-pr-2024-11-phase2-results"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubmed-40549887",
+          "quote": "Gastrointestinal adverse events were common...although less frequent with dose escalation and a lower starting dose. No unexpected safety signals emerged.",
+          "pageOrSection": "Abstract, Results/Conclusions"
+        },
+        {
+          "sourceRef": "amgen-pr-2024-11-phase2-results",
+          "quote": "Nausea and vomiting were predominately mild, transient and primarily associated with the first dose",
+          "pageOrSection": "Press release body"
+        },
+        {
+          "sourceRef": "amgen-pr-2024-11-phase2-results",
+          "quote": "The discontinuation rate in the dose escalation arms due to any AE was ~11% and less than 8% for GI-related events",
+          "pageOrSection": "Press release body"
+        }
+      ],
+      "reviewFlags": [
+        "long-term (beyond 52-week Phase 2 window) and Phase 3-scale safety data not yet available; monitor MARITIME readouts"
+      ]
+    },
+    {
+      "claimId": "maridebart-misinformation-premature-sale-001",
+      "claimType": "misinformation-claim",
+      "statement": "At least one commercial website (meridianmedicalcentre.com) lists 'Amgen MariTide' as a purchasable product with a price ($1,300.00) and 'Buy From The Official Website' language, despite maridebart cafraglutide being an investigational Amgen drug with no FDA approval and no legitimate retail or telehealth channel; an independent consumer-health source explicitly warns that any site claiming to sell MariTide before FDA approval should be treated as a red flag, since 'No legitimate seller has it.'",
+      "context": {
+        "population": "consumers searching for MariTide/maridebart cafraglutide online",
+        "route": null,
+        "formulation": "purported gray-market or counterfeit product claiming to be maridebart cafraglutide",
+        "useCase": "premature/unauthorized commercial marketing of an unapproved investigational drug",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "meridianmedicalcentre-maritide",
+        "therxindex-maritide-alternatives",
+        "amgen-story-2025-06-phase3-maritime"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "meridianmedicalcentre-maritide",
+          "quote": "$1,300.00",
+          "pageOrSection": "Product listing, price"
+        },
+        {
+          "sourceRef": "meridianmedicalcentre-maritide",
+          "quote": "Buy From The Official Website",
+          "pageOrSection": "Product listing"
+        },
+        {
+          "sourceRef": "therxindex-maritide-alternatives",
+          "quote": "you can't buy it. Not from a pharmacy, not from a telehealth site, and definitely not from a 'research peptide' seller.",
+          "pageOrSection": "Article body"
+        },
+        {
+          "sourceRef": "therxindex-maritide-alternatives",
+          "quote": "MariTide is an investigational Amgen drug. No legitimate seller has it.",
+          "pageOrSection": "Article body"
+        }
+      ],
+      "reviewFlags": [
+        "product-safety concern: any site purporting to sell an unapproved investigational biologic to consumers should be treated as high-risk / potentially counterfeit or fraudulent",
+        "listing content and price are volatile and must be re-verified at review time; site may have changed or been taken down"
+      ]
+    },
+    {
+      "claimId": "maridebart-evidence-gap-longterm-outcomes-001",
+      "claimType": "evidence-gap",
+      "statement": "Published human evidence for maridebart cafraglutide is currently limited to a single Phase 2 dose-ranging trial with a 52-week primary endpoint; there is no completed Phase 3 evidence, no long-term (multi-year) safety or weight-maintenance data, no cardiovascular- or renal-outcomes trial data, and no FDA safety/efficacy determination. Popular online content already cites the Phase 2 percentages as though they were established, approved-product performance; this should not be treated as proof of long-term efficacy or safety in a general population.",
+      "context": {
+        "population": "general public / prospective future patients",
+        "route": null,
+        "formulation": "investigational biologic",
+        "useCase": "long-term efficacy/safety and outcomes evidence",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubmed-40549887",
+        "amgen-story-2025-06-phase3-maritime",
+        "meridianmedicalcentre-maritide"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubmed-40549887",
+          "quote": "mean percent change in body weight...ranged from -12.3% to -16.2% with maridebart cafraglutide",
+          "pageOrSection": "Abstract, Results"
+        },
+        {
+          "sourceRef": "amgen-story-2025-06-phase3-maritime",
+          "quote": "shaping up to be one of the largest clinical trial programs in Amgen's 45-year history",
+          "pageOrSection": "Program overview"
+        }
+      ],
+      "reviewFlags": [
+        "re-check for completed MARITIME Phase 3 primary results at next review; this claim should be revised once Phase 3 data is published",
+        "distinguish Phase 2 dose-ranging results from any future approved-label efficacy claims"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "maridebart-conflict-marketing-vs-investigational-status-001",
+      "claimRefs": [
+        "maridebart-misinformation-premature-sale-001",
+        "maridebart-regulatory-investigational-status-001"
+      ],
+      "severity": "moderate",
+      "summary": "Commercial vendor content (meridianmedicalcentre.com) presents maridebart cafraglutide as a purchasable product, which directly conflicts with its actual investigational, non-FDA-approved status confirmed by ClinicalTrials.gov and Amgen's own Phase 3 program communications; independent consumer-health commentary explicitly flags such sales claims as illegitimate.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Expansion-batch evidence packet requires human review before publication.",
+      "No FDA label, PCAC briefing, or other primary regulator determination exists yet for this investigational compound; anchor to DailyMed/FDA once (if) approved.",
+      "PubChem CID, UNII, RxNorm, and ChEMBL identifiers not resolved this session; only CAS (via vendor chemical database) and DrugBank ID were confirmed.",
+      "Human efficacy/safety evidence is limited to one Phase 2 trial; Phase 3 (MARITIME) results are pending and should supersede current efficacy/adverse-effect claims when published.",
+      "Vendor marketing page (meridianmedicalcentre.com) claiming to sell an unapproved investigational drug is a live, volatile safety concern that should be reverified and potentially escalated at review time."
+    ],
+    "qualityFlags": [
+      "expansion-input",
+      "investigational-not-fda-approved",
+      "single-phase2-rct-only",
+      "phase3-pending",
+      "premature-marketing-flagged",
+      "identifier-gaps"
+    ]
+  }
+}
