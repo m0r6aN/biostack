@@ -67,6 +67,42 @@
       "accessedAt": "2026-08-29T01:20:00Z"
     },
     {
+      "sourceId": "fda-pcac-briefing-193346",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Briefing Document, Pharmacy Compounding Advisory Committee (PCAC) Meeting — KPV (free base) and KPV acetate evaluation",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/193346/download",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:00:00Z"
+    },
+    {
+      "sourceId": "dalmasso-2008-ibd-murine-colitis",
+      "sourceType": "primary-research-animal",
+      "authorityTier": "B1",
+      "title": "Melanocortin-derived tripeptide KPV has anti-inflammatory potential in murine models of inflammatory bowel disease",
+      "publisher": "Inflammatory Bowel Diseases (Dalmasso G, et al., 2008; PubMed ID 18092346)",
+      "url": "https://europepmc.org/article/MED/18092346",
+      "doi": "10.1002/ibd.20334",
+      "pmid": "18092346",
+      "publishedAt": "2008-03-01T00:00:00Z",
+      "accessedAt": "2026-08-29T02:05:00Z"
+    },
+    {
+      "sourceId": "thepeptide-expert-pcac-2026",
+      "sourceType": "professional-news-regulatory-proceeding",
+      "authorityTier": "C1",
+      "title": "PCAC 2026 Regulatory Tracker — KPV Pharmacy Compounding Advisory Committee Vote",
+      "publisher": "The Peptide Expert",
+      "url": "https://thepeptide.expert/regulatory/pcac-2026",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:10:00Z"
+    },
+    {
       "sourceId": "brainflow-kpv-guide-2026",
       "sourceType": "vendor-marketing-content",
       "authorityTier": "D1",
@@ -105,7 +141,8 @@
         }
       ],
       "reviewFlags": [
-        "CAS number and IUPAC name were resolved via a PubChem-derived identifier lookup rather than a directly rendered compound page (PubChem requires JavaScript); confirm CAS 67727-97-3 against the live PubChem record at review time."
+        "CAS number and IUPAC name were resolved via a PubChem-derived identifier lookup rather than a directly rendered compound page (PubChem requires JavaScript); confirm CAS 67727-97-3 against the live PubChem record at review time.",
+        "Independent chemical-registry/vendor listings (e.g., ChemicalBook, Alfa Chemistry) reportedly report the same CAS 67727-97-3 (per 2026-08-29 review pass), but these are lower-authority than a directly rendered PubChem/DrugBank record; the CAS/IUPAC confirmation against a live PubChem record remains open and should not be treated as closed by this corroboration alone."
       ]
     },
     {
@@ -123,7 +160,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "crook-2008-gastro-pept1-kpv"
+        "crook-2008-gastro-pept1-kpv",
+        "fda-pcac-briefing-193346"
       ],
       "extractedEvidence": [
         {
@@ -135,16 +173,22 @@
           "sourceRef": "crook-2008-gastro-pept1-kpv",
           "quote": "This study indicates that KPV is transported into cells by PepT1 and might be a new therapeutic agent for IBD.",
           "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193346",
+          "quote": "The di/tripeptide transporter PepT1 has also been proposed to mediate the anti-inflammatory effects of KPV in the human intestinal epithelial cells Caco2-BBE and HT29-CL.19A",
+          "pageOrSection": "Nonclinical assessment section"
         }
       ],
       "reviewFlags": [
-        "in vitro mechanism finding; must not be presented as a confirmed human mechanism of action"
+        "in vitro mechanism finding; must not be presented as a confirmed human mechanism of action",
+        "Independently corroborated 2026-08-29 by FDA's PCAC briefing document (fda.gov/media/193346/download), a source family distinct from the cited primary paper; FDA's document also treats this strictly as an in vitro finding (Caco2-BBE, HT29-Cl.19A, Jurkat cells) and does not extend it to animal or human mechanism data."
       ]
     },
     {
       "claimId": "kpv-studied-use-animal-colitis-001",
       "claimType": "studied-use",
-      "statement": "In the Dalmasso et al. 2008 (Gastroenterology) study, C57BL/6 mouse models of DSS- and TNBS-induced colitis showed that oral administration of KPV in drinking water reduced colitis incidence and inflammatory markers (including myeloperoxidase activity and pro-inflammatory cytokine expression); this is an animal-model finding, not evidence of efficacy in humans.",
+      "statement": "In the Dalmasso et al. 2008 (Gastroenterology) study, C57BL/6 mouse models of DSS- and TNBS-induced colitis showed that oral administration of KPV in drinking water reduced colitis incidence and inflammatory markers (including myeloperoxidase activity and pro-inflammatory cytokine expression); a second, independent 2008 study (Dalmasso et al., Inflammatory Bowel Diseases, PMID 18092346) corroborates similar anti-inflammatory effects of KPV in DSS-colitis and CD45RB-transfer-colitis mouse models, including significantly reduced myeloperoxidase activity and improved recovery. This is animal-model evidence only, not evidence of efficacy in humans.",
       "context": {
         "population": "C57BL/6 mice (DSS and TNBS chemically-induced colitis models)",
         "route": "oral (drinking water)",
@@ -156,19 +200,26 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "crook-2008-gastro-pept1-kpv"
+        "crook-2008-gastro-pept1-kpv",
+        "dalmasso-2008-ibd-murine-colitis"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "crook-2008-gastro-pept1-kpv",
           "quote": "In vivo experiments administered KPV orally via drinking water at 100 micromolar concentration in two colitis models.",
           "pageOrSection": "Methods/Results summary"
+        },
+        {
+          "sourceRef": "dalmasso-2008-ibd-murine-colitis",
+          "quote": "In the DSS-colitis model, treatment with KPV led to earlier recovery and significantly stronger regain of body weight. Histologically, inflammatory infiltrates were significantly reduced in KPV-treated mice, which was confirmed by the significant reduction of MPO activity in colonic tissue after KPV treatment.",
+          "pageOrSection": "Results"
         }
       ],
       "reviewFlags": [
         "animal-only efficacy signal; per directive, must not be inferred as proven human efficacy",
         "dose context is an animal-study protocol dose and must never be presented as a human use recommendation",
-        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (Dalmasso et al. 2008, Gastroenterology); no regulator document exists for this claim (searched: FDA Pharmacy Compounding Advisory Committee KPV briefing document at fda.gov/media/193346/download, which cites Dalmasso 2008 only for in vitro PepT1 mechanism data and contains no C57BL/6, DSS-induced, or TNBS-induced colitis mouse in vivo efficacy content; DailyMed has no KPV listing, as expected for a non-approved compound)"
+        "No FDA regulator document corroborates this claim's in vivo colitis data: FDA's PCAC briefing document (fda.gov/media/193346/download, independently re-fetched 2026-08-29) cites Dalmasso 2008 (Gastroenterology, PMID 18061177) only for in vitro PepT1 mechanism data and contains no C57BL/6, DSS-induced, or TNBS-induced colitis in vivo efficacy content; DailyMed has no KPV listing, as expected for a non-approved compound. This claimType (studied-use) is outside the directive's fieldAuthorityRequired scope.",
+        "Quantitative specifics of the cited Gastroenterology study (100 micromolar dose in drinking water) rest on that single paper and were not independently re-derived; a second, independently verified primary paper (Dalmasso et al. 2008, Inflammatory Bowel Diseases, PMID 18092346, re-fetched via Europe PMC 2026-08-29) corroborates the general DSS-colitis anti-inflammatory / myeloperoxidase-reduction finding but uses a different protocol and does not confirm the 100 micromolar figure specifically -- treat the exact dose as single-sourced pending further review."
       ]
     },
     {
@@ -186,18 +237,31 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "fda-bulk-substances-withdrawn"
+        "fda-bulk-substances-withdrawn",
+        "fda-pcac-briefing-193346",
+        "thepeptide-expert-pcac-2026"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "fda-bulk-substances-withdrawn",
           "quote": "FDA has not identified any human exposure data on drug products containing KPV administered via any route of administration. FDA lacks important information regarding any safety issues raised by KPV, including whether it would cause harm if administered to humans.",
           "pageOrSection": "Bulk drug substances nominated but withdrawn table, KPV entry"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193346",
+          "quote": "we propose not adding KPV (free base) or KPV acetate to the 503A Bulks List",
+          "pageOrSection": "Recommendation section"
+        },
+        {
+          "sourceRef": "thepeptide-expert-pcac-2026",
+          "quote": "8 Yes, 6 No, 1 Abstain",
+          "pageOrSection": "KPV PCAC vote tracker entry, July 23-24, 2026 meeting"
         }
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "withdrawn-nomination status means KPV is not currently under active FDA 503A evaluation; confirm this has not changed at review time, since FDA revised several peptide listings in April 2026"
+        "withdrawn-nomination status means KPV is not currently under active FDA 503A evaluation; confirm this has not changed at review time, since FDA revised several peptide listings in April 2026",
+        "At the July 23-24, 2026 PCAC meeting, FDA staff's briefing document (fda.gov/media/193346/download) recommended AGAINST adding KPV to the 503A Bulks List (citing inadequate physical/chemical characterization, non-standard nomenclature, unknown extent of compounding use, and no human-use data), but the committee itself voted 8 Yes / 6 No / 1 Abstain to recommend KPV's inclusion despite the staff recommendation (per thepeptide.expert PCAC tracking page, independently re-fetched and corroborated 2026-08-29). This is non-binding advisory committee input, not a final rule, and the live FDA 'bulk drug substances nominated but withdrawn' page (re-checked 2026-08-29) still lists KPV with the same withdrawn / no-human-exposure-data language quoted above -- but readers should be aware KPV is now moving toward possible active 503A consideration despite unresolved safety-data gaps."
       ]
     },
     {
@@ -217,7 +281,8 @@
       "sourceRefs": [
         "fda-bulk-substances-withdrawn",
         "crook-2008-gastro-pept1-kpv",
-        "brainflow-kpv-guide-2026"
+        "brainflow-kpv-guide-2026",
+        "fda-pcac-briefing-193346"
       ],
       "extractedEvidence": [
         {
@@ -229,15 +294,29 @@
           "sourceRef": "brainflow-kpv-guide-2026",
           "quote": "The honest limitation is that there are zero human clinical trials for KPV as of 2026, so everything above is animal and cell data.",
           "pageOrSection": "KPV peptide guide body text"
+        },
+        {
+          "sourceRef": "fda-pcac-briefing-193346",
+          "quote": "No published studies were found in which non-compounded or compounded drug products containing KPV (free base) or KPV acetate were used in humans.",
+          "pageOrSection": "Human use / safety data section"
         }
       ],
       "reviewFlags": [
         "misinformation-adjacent: consumer marketing positions KPV as a gut-health/skin peptide despite the absence of human trial data; even self-aware vendor content that discloses this gap should not be treated as validating the underlying marketing claims",
-        "monitor for vendor pages that omit the animal-only caveat present in the sampled source"
+        "monitor for vendor pages that omit the animal-only caveat present in the sampled source",
+        "Independently corroborated 2026-08-29 by FDA's PCAC briefing document (fda.gov/media/193346/download), a source family distinct from the cited FDA-withdrawn-table, primary paper, and vendor blog; a ClinicalTrials.gov-focused search also returned no registered trials for KPV/alpha-MSH(11-13)."
       ]
     }
   ],
-  "conflicts": [],
+  "conflicts": [
+    {
+      "conflictId": "kpv-conflict-pcac-vote-vs-staff-001",
+      "claimRefs": ["kpv-regulatory-nomination-withdrawn-001"],
+      "severity": "moderate",
+      "summary": "FDA staff's PCAC briefing document (fda.gov/media/193346/download) recommended against adding KPV to the 503A Bulks List, but the July 23-24, 2026 PCAC committee voted 8 Yes / 6 No / 1 Abstain to recommend inclusion despite that staff recommendation and despite documented absence of human safety data; this advisory tension is material to the compound's regulatory trajectory and is not resolved by the current (unchanged) live FDA withdrawn-nomination page.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
   "ops": {
     "completeness": "partial",
     "needsReview": true,
@@ -245,7 +324,10 @@
       "Expansion-batch evidence packet requires human review before publication.",
       "No completed human clinical trial evidence exists for KPV; all efficacy/mechanism claims rest on animal and in vitro data and should be re-checked periodically for newly published human studies.",
       "PubChem CAS/IUPAC identifiers were resolved via an indirect lookup rather than a fully rendered PubChem compound page (PubChem requires JavaScript to render); confirm identifiers against the live PubChem record.",
-      "FDA 503A bulk-substance nomination status (withdrawn) should be reconfirmed at review time given the agency revised multiple peptide compounding listings in April 2026 and held a Pharmacy Compounding Advisory Committee meeting in July 2026."
+      "FDA 503A bulk-substance nomination status (withdrawn) should be reconfirmed at review time given the agency revised multiple peptide compounding listings in April 2026 and held a Pharmacy Compounding Advisory Committee meeting in July 2026.",
+      "Remediation pass 2026-08-29: the July 23-24, 2026 PCAC committee voted 8 Yes / 6 No / 1 Abstain to recommend KPV's inclusion on the 503A Bulks List, overriding FDA staff's own recommendation against inclusion (per fda.gov/media/193346/download and thepeptide.expert regulatory tracking, both independently re-fetched 2026-08-29); this is advisory and non-binding, the live FDA withdrawn-nomination page has not changed, but this development should be monitored closely before any promotion decision.",
+      "Remediation pass 2026-08-29: animal-colitis claim (kpv-studied-use-animal-colitis-001) partially re-verified -- independent primary paper PMID 18092346 (Dalmasso et al., Inflammatory Bowel Diseases 2008) confirms DSS-colitis anti-inflammatory / myeloperoxidase-reduction findings from a materially different source family than the originally cited Gastroenterology paper; the specific 100 micromolar dose figure remains single-sourced to the Gastroenterology paper and should be reconfirmed if a further independent source becomes available.",
+      "Remediation pass 2026-08-29: PubChem CAS/IUPAC identifier verification remains genuinely unresolved because PubChem is JavaScript-gated to automated fetch tools; independent chemical-vendor listings (ChemicalBook, Alfa Chemistry) corroborate CAS 67727-97-3 but are lower-authority than a directly rendered PubChem/DrugBank record and do not close this gap."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -254,7 +336,8 @@
       "animal-in-vitro-only",
       "marketing-evidence-gap",
       "identifier-needs-confirmation",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

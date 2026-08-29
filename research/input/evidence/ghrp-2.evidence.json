@@ -20,8 +20,8 @@
     "compoundFamily": "Synthetic hexapeptide (ghrelin-receptor agonist / growth hormone secretagogue)",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
-      "casNumber": null,
+      "unii": "E6S6E1F19M",
+      "casNumber": "158861-67-7",
       "drugbank": null,
       "pubchem": "5493556",
       "chembl": null,
@@ -109,6 +109,54 @@
       "title": "GHRP-2 10MG product page",
       "publisher": "Rocky Mountain Peptides",
       "url": "https://rmpeptides.com/ghrp-2-10mg/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "fda-ncats-gsrs-pralmorelin",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "GSRS substance record for Pralmorelin (UNII E6S6E1F19M, CAS 158827-34-0) and Pralmorelin Dihydrochloride (UNII R4AVR27MM8, CAS 158861-67-7)",
+      "publisher": "U.S. FDA / NIH-NCATS Global Substance Registration System (GSRS)",
+      "url": "https://gsrs.ncats.nih.gov/ginas/app/api/v1/substances/search?q=pralmorelin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "suzuki-2022-jes-ghrp2-hpd",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Clinical Usefulness of the Growth Hormone-Releasing Peptide-2 Test for Hypothalamic-Pituitary Disorder",
+      "publisher": "Journal of the Endocrine Society (Oxford Academic) / Suzuki S, et al., 2022",
+      "url": "https://academic.oup.com/jes/article/6/8/bvac088/6602336",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2022-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "frontiers-2026-supplement-adulterants-review",
+      "sourceType": "systematic-review",
+      "authorityTier": "B2",
+      "title": "Systematic review of undeclared prohibited substances and pharmacological adulterants in dietary supplements: prevalence, detection, and risks in sport",
+      "publisher": "Frontiers in Sports and Active Living",
+      "url": "https://www.frontiersin.org/journals/sports-and-active-living/articles/10.3389/fspor.2026.1740663/full",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "pmc7466328-doping-controls-review",
+      "sourceType": "systematic-review",
+      "authorityTier": "B2",
+      "title": "Dietary Supplement and Food Contaminations and Their Implications for Doping Controls",
+      "publisher": "PubMed Central (PMC)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7466328/",
       "doi": null,
       "pmid": null,
       "publishedAt": null,
@@ -211,7 +259,8 @@
         }
       ],
       "reviewFlags": [
-        "molecular formula (C45H55N9O6) taken from PubChem title metadata; full structured record (IUPAC name, CAS) requires JavaScript-rendered PubChem page and was not independently confirmed this session"
+        "molecular formula (C45H55N9O6) taken from PubChem title metadata; full structured record (IUPAC name, CAS) requires JavaScript-rendered PubChem page and was not independently confirmed this session",
+        "independent review 2026-08-29: attempted to reach an independent paper-level source (PubMed 15230633, a Drugs R&D-type pralmorelin profile) to corroborate identity/mechanism independent of PubChem; page blocked by reCAPTCHA, no accessible mirror found; general web search returned only vendor/guide pages repeating the same description. This is a non-fieldAuthorityRequired, low-stakes identity claim and the chemistry (D-Ala-D-Nal-Ala-Trp-D-Phe-Lys-NH2, ghrelin-receptor agonist) is uncontroversial and well-established in the field, so it is recorded confirmed-with-note rather than unresolved; a genuine independent-family citation (DrugBank, a review paper) is still missing and should be retried via Europe PMC at the next review pass. CAS (158827-34-0) and UNII (E6S6E1F19M) for pralmorelin free base independently confirmed this session via the FDA/NIH-NCATS Global Substance Registration System (GSRS)."
       ]
     },
     {
@@ -264,7 +313,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "hayashi-2008-endocrj-ghrp2-vs-itt"
+        "hayashi-2008-endocrj-ghrp2-vs-itt",
+        "suzuki-2022-jes-ghrp2-hpd"
       ],
       "extractedEvidence": [
         {
@@ -276,18 +326,29 @@
           "sourceRef": "hayashi-2008-endocrj-ghrp2-vs-itt",
           "quote": "the GHRP-2 test may be a useful diagnostic tool for secondary adrenal insufficiency such as hypothalamic disorder and pituitary damage.",
           "pageOrSection": "Abstract, conclusion"
+        },
+        {
+          "sourceRef": "suzuki-2022-jes-ghrp2-hpd",
+          "quote": "We recommend measuring ACTH as well as GH during the GHRP2 test to avoid overlooking or delaying diagnosis of secondary AI that frequently accompanies GHD.",
+          "pageOrSection": "Discussion/recommendation"
+        },
+        {
+          "sourceRef": "suzuki-2022-jes-ghrp2-hpd",
+          "quote": "the combination of ACTH response and the peak cortisol level in the GHRP2 test using each cutoff value (1.55-fold and 10 microg/dL, respectively) showed high specificity (100%) with high accuracy (0.94) for diagnosis of pituitary-AI.",
+          "pageOrSection": "Results"
         }
       ],
       "reviewFlags": [
         "exact sample size and dosing details not captured from the accessed excerpt; full text should be pulled for precise n and dose at independent review",
         "diagnostic-test finding, not a treatment-efficacy finding",
+        "independent review 2026-08-29: an independent 2022 Journal of the Endocrine Society study (Suzuki et al., distinct from the cited Hayashi 2008 study) corroborates the core claim and adds a refinement the Hayashi-based statement does not: ACTH (not just GH) must be measured during the GHRP-2 test to reliably catch secondary adrenal insufficiency, and reports 100% specificity / 0.94 accuracy for pituitary-AI diagnosis using an ACTH-response plus peak-cortisol cutoff combination",
         "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (Hayashi et al. 2008, Endocrine Journal) at source-level attribution; no regulator document exists for this claim (searched: FDA.gov bulk-compounding significant-safety-risks page [GHRP-2 entry, no diagnostic-protocol content]; DailyMed search for GHRP-2 [0 results]; web search confirmed the only FDA-approved GH-deficiency diagnostic test is Macrilen/macimorelin, a different compound, not GHRP-2)"
       ]
     },
     {
       "claimId": "ghrp2-safety-supplement-contamination-001",
       "claimType": "adverse-effect",
-      "statement": "In a 2010 Drug Testing and Analysis analytical study (Thomas et al.), GHRP-2 was identified by independent analytical testing as an undeclared adulterant in an over-the-counter nutritional supplement product, at approximately 50 micrograms per tablet, indicating GHRP-2 can enter the consumer supply chain undisclosed and without dosing control.",
+      "statement": "In a 2010 Drug Testing and Analysis analytical study (Thomas et al.), GHRP-2 was identified by independent analytical testing in an over-the-counter nutritional supplement product, at approximately 50 micrograms per tablet; whether that specific product declared GHRP-2 on its label could not be confirmed in this review (the full Thomas et al. text remains inaccessible), so this claim is stated as detection of GHRP-2 in a consumer supplement rather than as confirmed undeclared adulteration. Independent 2026 and 2020 reviews corroborate that GHRP-2 has been found, by analytical testing, circulating in consumer/black-market supplement products, though at least one documented case involved a product correctly labeled to contain GHRP-2 (with inaccurate chemical detail on the label), indicating declaration status varies by product and cannot be generalized.",
       "context": {
         "population": "consumers of an unidentified over-the-counter tablet supplement",
         "route": "oral (as adulterant in supplement)",
@@ -299,19 +360,32 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "thomas-2010-dta-ghrp2-supplement"
+        "thomas-2010-dta-ghrp2-supplement",
+        "frontiers-2026-supplement-adulterants-review",
+        "pmc7466328-doping-controls-review"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "thomas-2010-dta-ghrp2-supplement",
-          "quote": "the content of GHRP-2 was determined with approximately 50 µg per tablet.",
+          "quote": "the content of GHRP-2 was determined with approximately 50 \u00b5g per tablet.",
           "pageOrSection": "Findings (per institutional repository summary of the 2010 Drug Testing and Analysis paper)"
+        },
+        {
+          "sourceRef": "frontiers-2026-supplement-adulterants-review",
+          "quote": "Growth Hormone Releasing Peptide (GHRP-2), Ibutamoren (MK-677)",
+          "pageOrSection": "List of peptide hormones detected in supplements"
+        },
+        {
+          "sourceRef": "pmc7466328-doping-controls-review",
+          "quote": "the tablets and drinking solution were bought in Cyprus and both correctly labeled to contain GHRP-2",
+          "pageOrSection": "Case description of a related GHRP-2-containing supplement finding"
         }
       ],
       "reviewFlags": [
-        "safety-critical: undisclosed peptide adulteration in consumer supplements",
+        "safety-critical: peptide detected in consumer supplements without confirmed disclosure status",
         "single product instance reported in 2010; not evidence of current, widespread contamination and should be independently re-verified for currency",
         "sourced via institutional repository summary rather than the full Wiley article (paywalled/403); recommend pulling primary DOI 10.1002/dta.120 record at review",
+        "independent review 2026-08-29: a 2026 Frontiers in Sports and Active Living systematic review and a separate PMC review (PMC7466328, describing a different/earlier finding) both independently corroborate that GHRP-2 has been detected in supplement products, but PMC7466328 documents a case where the product was 'correctly labeled to contain GHRP-2' -- in tension with an unqualified 'undeclared' framing. The Thomas et al. 2010 full text (this claim's original source) could not be retrieved this session (PubMed/ResearchGate blocked) to confirm whether that specific product declared GHRP-2 on its label. Statement wording softened accordingly; this remains a genuine open gap pending full-text confirmation of Thomas et al. 2010, not a resolved contradiction.",
         "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed analytical-study findings (Thomas et al. 2010, Drug Testing and Analysis) at source-level attribution; no regulator document exists for this claim (searched: fda.gov for GHRP-2 supplement/warning-letter adulteration content [none found addressing this specific incident]; FDA bulk-compounding significant-safety-risks page [covers compounded-drug immunogenicity/adverse events, not supplement contamination]; DailyMed search for GHRP-2 [0 results])"
       ]
     },
@@ -360,7 +434,7 @@
     {
       "claimId": "ghrp2-dose-context-diagnostic-protocol-001",
       "claimType": "dose-context",
-      "statement": "The dosing protocol used in the controlled diagnostic literature for GHRP-2 was a single 100 microgram intravenous bolus administered under clinical supervision for GH-axis stimulation testing; this is a trial/diagnostic protocol only and is unrelated to, and far lower in frequency than, the repeated daily subcutaneous self-administration protocols promoted on gray-market vendor and guide sites.",
+      "statement": "As reported in a single published study (pubmed-17609397; no independent or regulator-published corroboration was found in this review), the dosing protocol used in that controlled diagnostic literature for GHRP-2 was a single 100 microgram intravenous bolus administered under clinical supervision for GH-axis stimulation testing; this is a trial/diagnostic protocol only, not a use recommendation, and is unrelated to, and far lower in frequency than, the repeated daily subcutaneous self-administration protocols promoted on gray-market vendor and guide sites.",
       "context": {
         "population": "clinical diagnostic-testing patients",
         "route": "intravenous, single bolus, clinically supervised",
@@ -384,7 +458,8 @@
       "reviewFlags": [
         "trial dose context must never be presented as a use recommendation",
         "clinically supervised single-dose IV diagnostic use must not be generalized to unsupervised chronic subcutaneous gray-market use",
-        "authority-support search 2026-08-29: claimType dose-context is in the pipeline's safety-critical set, so fieldAuthorityRequired stays true and this claim is not eligible for recalibration; searched FDA.gov bulk-compounding significant-safety-risks page (GHRP-2 entry addresses immunogenicity/adverse-event risk only, no dosing-protocol content), DailyMed (search for GHRP-2 returns 0 results), and general web search for an FDA/regulator-published GHRP-2 diagnostic dosing protocol; the only FDA-approved GH-deficiency diagnostic-test drug identified is Macrilen (macimorelin), a different compound, not GHRP-2; no A1/A2 source supporting this specific diagnostic dosing claim was found. Claim remains human-review gated pending regulator-grade support."
+        "authority-support search 2026-08-29: claimType dose-context is in the pipeline's safety-critical set, so fieldAuthorityRequired stays true and this claim is not eligible for recalibration; searched FDA.gov bulk-compounding significant-safety-risks page (GHRP-2 entry addresses immunogenicity/adverse-event risk only, no dosing-protocol content), DailyMed (search for GHRP-2 returns 0 results), and general web search for an FDA/regulator-published GHRP-2 diagnostic dosing protocol; the only FDA-approved GH-deficiency diagnostic-test drug identified is Macrilen (macimorelin), a different compound, not GHRP-2; no A1/A2 source supporting this specific diagnostic dosing claim was found. Claim remains human-review gated pending regulator-grade support.",
+        "remediation review 2026-08-29: made one further targeted independent-source attempt via the Europe PMC REST API (query: GHRP-2 AND diagnostic AND 100 microgram) to find a second, independent paper corroborating the 100 microgram IV diagnostic dose; the five results returned were unrelated (ghrelin/oncology paper, conference-abstract collections) and none corroborated the dosing protocol. No FDA/regulator-published GHRP-2 diagnostic dosing protocol exists. Per directive, this claim is not forced to confirmed; statement wording tightened to explicitly flag single-source, uncorroborated status; claim stays fieldAuthorityRequired=true and human-review gated."
       ]
     }
   ],
@@ -405,10 +480,13 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "CAS/UNII/DrugBank/ChEMBL identifiers not yet resolved from structured databases; PubChem full record required JavaScript rendering and was not independently confirmed.",
+      "Remediation pass 2026-08-29: CAS (158827-34-0) and UNII (E6S6E1F19M) for pralmorelin free base resolved and independently confirmed via the FDA/NIH-NCATS Global Substance Registration System (GSRS); DrugBank and ChEMBL identifiers remain unresolved -- no accessible DrugBank/ChEMBL record was located for GHRP-2/pralmorelin this session.",
+      "Remediation pass 2026-08-29: ghrp2-dose-context-diagnostic-protocol-001 remains unresolved/human-review-gated -- a targeted Europe PMC REST search for an independent corroborating paper on the 100 microgram IV diagnostic dose returned no relevant results; no FDA/regulator-published GHRP-2 diagnostic dosing protocol exists (only macimorelin/Macrilen is FDA-approved for this indication, a different compound). Claim wording tightened to flag single-source status rather than promoted to confirmed.",
+      "Remediation pass 2026-08-29: ghrp2-safety-supplement-contamination-001 wording softened from 'undeclared adulterant' to 'detected'/'identified in' per reviewer finding that at least one related documented case (PMC7466328) involved a product correctly labeled to contain GHRP-2; Thomas et al. 2010 full text remains inaccessible (PubMed/ResearchGate blocked) and should be pulled directly at next review to settle the labeled-vs-undeclared question for that specific product.",
       "Several PubMed abstract pages (17609397, 14513874, 18493103, and the FDA PCAC-related searches) were blocked by bot-check/reCAPTCHA during this session; abstracts were sourced via automated summarization of partially available content or secondary repositories (J-STAGE, europepmc, institutional repository) and should be independently re-verified against primary PubMed/publisher pages at review time.",
       "Human efficacy evidence for GHRP-2 is limited to short-term diagnostic stimulation-test studies; no controlled human trial addressing chronic self-administered use (recovery, body composition, anti-aging) was found, and this thin/absent evidence base should be re-confirmed before any claim expansion.",
-      "FDA 503B bulk-substance listing status and rationale for GHRP-2 should be reconfirmed against the live FDA page at review time given ongoing FDA peptide-listing revisions in 2026."
+      "FDA 503B bulk-substance listing status and rationale for GHRP-2 should be reconfirmed against the live FDA page at review time given ongoing FDA peptide-listing revisions in 2026.",
+      "Audit correction 2026-08-29: remediation pass paired UNII E6S6E1F19M with CAS 158827-34-0; independent spot-check (FDA GSRS, NCATS Inxight, CAS vendor registries) confirms E6S6E1F19M (pralmorelin free base) = CAS 158861-67-7. CAS corrected by operator; 158827-34-0 belongs to a different pralmorelin form and was removed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -417,7 +495,8 @@
       "no-chronic-use-human-trials-found",
       "supplement-adulteration-documented",
       "marketing-evidence-gap-flagged",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }
