@@ -20,8 +20,8 @@
     "compoundFamily": "Non-steroidal oral selective androgen receptor modulator",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
-      "casNumber": null,
+      "unii": "4O87Q44KNC",
+      "casNumber": "1182367-47-0",
       "drugbank": "DB13939",
       "pubchem": "44200882",
       "chembl": null,
@@ -137,6 +137,30 @@
       "pmid": null,
       "publishedAt": "2022-12-05T00:00:00Z",
       "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "ncats-gsrs-vosilasarm-rad140",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "Substance Record: VOSILASARM (RAD140)",
+      "publisher": "National Center for Advancing Translational Sciences (NCATS) Global Substance Registration System (GSRS), FDA Unique Ingredient Identifier registry",
+      "url": "https://gsrs.ncats.nih.gov/ginas/app/api/v1/substances/search?q=RAD140",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ochsner-journal-rad140-dili-2022",
+      "sourceType": "case-report",
+      "authorityTier": "B2",
+      "title": "RAD-140 Drug-Induced Liver Injury",
+      "publisher": "Ochsner Journal",
+      "url": "https://www.ochsnerjournal.org/content/early/2022/07/13/toj.22.0005",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2022-07-13T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -158,9 +182,15 @@
         "pubchem-cid-44200882",
         "drugbank-db13939",
         "ellipses-sabcs-2022-vosilasarm",
-        "fda-warrior-labz-warning-letter-2023"
+        "fda-warrior-labz-warning-letter-2023",
+        "ncats-gsrs-vosilasarm-rad140"
       ],
       "extractedEvidence": [
+        {
+          "sourceRef": "ncats-gsrs-vosilasarm-rad140",
+          "quote": "\"approvalID\":\"4O87Q44KNC\" ... \"_name\":\"VOSILASARM\" ... CAS label \"1182367-47-0\" ... synonym label \"RAD140\" (Code System: WIKIPEDIA) ... \"formula\":\"C20H16ClN5O2\"",
+          "pageOrSection": "GSRS substance record, RAD140/Vosilasarm search result"
+        },
         {
           "sourceRef": "pubchem-cid-44200882",
           "quote": "2-Chloro-4-(((1R,2S)-1-(5-(4-cyanophenyl)-1,3,4-oxadiazol-2-yl)-2-hydroxypropyl)amino)-3-methylbenzonitrile",
@@ -183,7 +213,8 @@
         }
       ],
       "reviewFlags": [
-        "confirm CAS number and UNII against an authoritative registry at review time; not resolved from the sources fetched this session"
+        "remediation-2026-08-29: CAS number (1182367-47-0) and UNII (4O87Q44KNC) resolved this session via live fetch of the NCATS Global Substance Registration System (GSRS) record for VOSILASARM/RAD140 and added to externalIdentifiers; independently cross-check against CAS Common Chemistry at next review, since that site's own search interface returned 'Search failed: Unauthorized' when queried live this session and could not directly corroborate",
+        "residual minor gap: the specific WHO INN Proposed/Recommended List publication assigning 'vosilasarm' was not located this session (WHO INN List 117 predates the assignment and a more recent list was not found); treat as a minor unresolved reference gap, not a defect in the identity claim itself"
       ]
     },
     {
@@ -292,6 +323,8 @@
       ],
       "reviewFlags": [
         "trial status (recruiting/active) should be reconfirmed against the live ClinicalTrials.gov record at review time; this session's fetch of clinicaltrials.gov was blocked by robots.txt and a mirror (CenterWatch) was used instead",
+        "remediation-2026-08-29: made a further targeted attempt to independently confirm live recruitment status -- tried clinicaltrials.gov/study/NCT05573126 (page returned only navigation shell, no study data), the v2 REST API (api/v2/studies/NCT05573126), and the legacy full_studies query API, all of which were blocked by robots.txt this session; live recruitment status for NCT05573126 remains genuinely unresolved and stays review-gated rather than asserted as current",
+        "remediation-2026-08-29: independent tertiary source (Wikipedia, citing AACR/JCO congress-abstract literature) states target enrollment as 'up to 128 patients' vs. 'up to 130 patients' in this claim, which is sourced verbatim from the Ellipses Pharma SABCS press release (re-fetched live this session and re-confirmed to state 'up to 130 patients globally'); the discrepancy is unreconciled between the primary developer press release and secondary tertiary sources -- retaining the press-release-sourced figure of 130 as stated, with this note flagging the minor discrepancy for reviewer awareness",
         "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed/registry findings at source-level attribution (trial registry record NCT05573126 and Ellipses Pharma trial-design disclosure, named by trial code EP0062); no regulator document exists for this claim (searched: FDA.gov warning-letter and compounding bulk-substances pages, DailyMed drug-label search for RAD-140/vosilasarm, and general web search for an FDA record of the EP0062/vosilasarm trial — none found, as expected for a never-approved investigational compound)"
       ]
     },
@@ -327,13 +360,14 @@
       "reviewFlags": [
         "trial dose context must never be presented as a use recommendation",
         "efficacy signal is specific to a heavily pretreated oncology population and route/schedule under medical supervision; not applicable to gray-market self-administration",
-        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the first-in-human Phase 1 dose-escalation study...\", LoRusso et al., Clinical Breast Cancer 2022); no regulator document exists for this claim (searched: FDA.gov warning-letter and compounding bulk-substances pages, DailyMed drug-label search for RAD-140/vosilasarm, and general web search for an FDA record of the EP0062/vosilasarm phase 1 trial results — none found, as expected for a never-approved investigational compound)"
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the first-in-human Phase 1 dose-escalation study...\", LoRusso et al., Clinical Breast Cancer 2022); no regulator document exists for this claim (searched: FDA.gov warning-letter and compounding bulk-substances pages, DailyMed drug-label search for RAD-140/vosilasarm, and general web search for an FDA record of the EP0062/vosilasarm phase 1 trial results — none found, as expected for a never-approved investigational compound)",
+        "remediation-2026-08-29: independent tertiary source (Wikipedia) confirms a newer 2025 congress abstract (JCO 2025, abstract 1057, 'Results of a phase 1 study of vosilasarm') exists reporting further phase 1 results and corroborates the AST-elevation figure (~59%) closely matching this claim's 59.1%; the specific efficacy figures here (clinical benefit rate 18.2%, PFS 2.3 months, MTD 100mg) still rest on the single LoRusso et al. controlled-human-study source -- no independent primary source with these exact figures was fetched this session, so evidenceTier remains 'Limited' and citing the newer 2025 abstract for currency is recommended at next update but was not added as a sourceRef this session since its full text/figures were not independently fetched and verified"
       ]
     },
     {
       "claimId": "vosilasarm-adverse-effect-hepatotoxicity-001",
       "claimType": "adverse-effect",
-      "statement": "Human evidence documents clinically significant, dose- and duration-limited hepatotoxicity with RAD-140/vosilasarm in both the oncology trial setting and gray-market bodybuilding use. In the Phase 1 oncology trial, treatment-related AST/ALT elevation occurred in 59.1%/45.5% of patients and Grade 3/4 AST/ALT elevation in 22.7%; separately, a published case report describes a man who developed severe cholestatic drug-induced liver injury (peak total bilirubin 708 micromol/L, reference <20) after two months of self-administered gray-market RAD-140 for bodybuilding, with biopsy-confirmed bland cholestatic hepatitis; liver biochemistry normalized within five months of discontinuation and monitoring.",
+      "statement": "Human evidence documents clinically significant, dose- and duration-limited hepatotoxicity with RAD-140/vosilasarm in both the oncology trial setting and gray-market bodybuilding use. In the Phase 1 oncology trial, treatment-related AST/ALT elevation occurred in 59.1%/45.5% of patients and Grade 3/4 AST/ALT elevation in 22.7%; separately, multiple published case reports (at least three, as of an independent 2022 case series accounting) describe gray-market RAD-140 users who developed drug-induced liver injury, including one case with severe cholestatic injury (peak total bilirubin 708 micromol/L, reference <20) after two months of self-administered gray-market RAD-140 for bodybuilding, with biopsy-confirmed bland cholestatic hepatitis; liver biochemistry in that case normalized within five months of discontinuation and monitoring. True population-level incidence of hepatotoxicity among unsupervised gray-market users remains unknown despite the growing number of published cases.",
       "context": {
         "population": "oncology trial patients (supervised, dose-escalation) and a gray-market bodybuilding user (unsupervised, self-administered)",
         "route": "oral",
@@ -348,9 +382,15 @@
         "clbc-lorusso-rad140-phase1-2021",
         "australian-prescriber-rad140-liver-injury",
         "pmc-rad140-dili-case-report-2023",
-        "fda-warrior-labz-warning-letter-2023"
+        "fda-warrior-labz-warning-letter-2023",
+        "ochsner-journal-rad140-dili-2022"
       ],
       "extractedEvidence": [
+        {
+          "sourceRef": "ochsner-journal-rad140-dili-2022",
+          "quote": "To our knowledge, ours is the sixth case of SARM-associated drug-induced liver injury and the third case associated with RAD-140 use.",
+          "pageOrSection": "RAD-140 Drug-Induced Liver Injury, case discussion"
+        },
         {
           "sourceRef": "clbc-lorusso-rad140-phase1-2021",
           "quote": "Grade 3/4 TEAEs occurred in 16 (72.7%) patients and included elevations in AST/ALT and hypophosphatemia (22.7% each).",
@@ -374,7 +414,7 @@
       ],
       "reviewFlags": [
         "safety-critical adverse-effect claim requiring monitoring guidance context",
-        "single published case report for the gray-market use setting; incidence in unsupervised use is unknown, not just this one case",
+        "remediation-2026-08-29: corrected undercount -- prior packet version stated only a single published case report documented gray-market RAD-140 hepatotoxicity. An independent primary-literature source (Ochsner Journal, live-fetched this session) states verbatim that its own case is 'the third case associated with RAD-140 use' (and the sixth SARM-associated DILI case overall), citing earlier cases by Flores et al. and Barbara et al. in addition to this packet's own cited PMC10054042 and Australian Prescriber case reports. At least three published RAD-140-specific case reports are now documented across sources; true population-level incidence in unsupervised gray-market users nonetheless remains unknown and should not be inferred from case counts alone",
         "authority-support-pass-2026-08-29: linked A1 regulator source (FDA Warrior Labz warning letter, refetched live this session) explicitly naming liver toxicity among SARM-associated life-threatening reactions, satisfying A1/A2 authority-support requirement for this safety-critical adverse-effect claim"
       ]
     },
@@ -436,19 +476,21 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "CAS number and UNII not resolved from the structured-database sources fetched this session; DrugBank's full identifier panel required an account login and was not accessible.",
-      "ClinicalTrials.gov direct fetch was blocked by robots.txt; trial status was sourced from a CenterWatch mirror and should be reconfirmed against the live registry record at review time.",
-      "Only a single published case report was found documenting gray-market hepatotoxicity; true incidence in unsupervised users is unknown and this packet's adverse-effect claim should not be read as an incidence estimate.",
-      "RAD-140/vosilasarm's presence or absence on FDA's Category 2 compounding bulk-substances list should be reverified at review time; it was not found on the version of that FDA page fetched this session."
+      "remediation-2026-08-29 (resolved): CAS number (1182367-47-0) and UNII (4O87Q44KNC) were previously unresolved; both were resolved this session via a live fetch of the NCATS Global Substance Registration System (GSRS) record for VOSILASARM/RAD140 and written into compound.externalIdentifiers, with the source added to the packet. DrugBank's full identifier panel still required an account login and remained inaccessible.",
+      "ClinicalTrials.gov direct fetch remains blocked by robots.txt as of this session (tried the study page, the v2 REST API, and the legacy full_studies query API -- all disallowed); trial status is still sourced from a CenterWatch mirror and remains genuinely unresolved for live recruitment status. This should be reconfirmed against the live registry record at next review, ideally via a route this session could not reach (e.g. manual/human check, or an allowed proxy).",
+      "remediation-2026-08-29 (resolved): the claim previously understated published case-report count for gray-market RAD-140 hepatotoxicity as 'a single published case report.' An independent case-report source (Ochsner Journal, live-fetched this session) states it is the third published RAD-140-specific case (citing Flores et al. and Barbara et al. as earlier cases) in addition to this packet's own two cited case reports. The claim's statement and reviewFlags were corrected accordingly; true population-level incidence in unsupervised users remains unknown regardless of case count and that caveat is retained.",
+      "RAD-140/vosilasarm's presence or absence on FDA's Category 2 compounding bulk-substances list was reverified this session (live re-fetch, page content dated 2026-04-22): RAD-140/Testolone/Vosilasarm is confirmed NOT on that list. This item is now resolved rather than open.",
+      "remediation-2026-08-29: minor enrollment-count discrepancy (130 patients per the packet's cited Ellipses SABCS press release, re-confirmed live this session, vs. 128 patients per an independent tertiary source/AACR abstract mirror) remains unreconciled between primary developer disclosure and secondary sources; retained as stated (130, sourced to the press release) with the discrepancy flagged for reviewer awareness rather than silently resolved either way."
     ],
     "qualityFlags": [
       "expansion-input",
       "a1-regulator-backed",
       "gray-market-and-oncology-dual-context",
-      "single-case-report-safety-signal",
+      "multiple-case-reports-safety-signal",
       "thin-human-evidence",
       "active-investigational-oncology-program",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

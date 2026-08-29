@@ -102,6 +102,30 @@
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
+      "sourceId": "medchemexpress-tlb150-benzoate",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "TLB-150 Benzoate (RAD150)",
+      "publisher": "MedChemExpress",
+      "url": "https://www.medchemexpress.com/tlb-150-benzoate.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "mdpi-jox-sarm-safety-review-2023",
+      "sourceType": "systematic-review",
+      "authorityTier": "A2",
+      "title": "Systematic Review of Safety of Selective Androgen Receptor Modulators in Healthy Adults: Implications for Recreational Users",
+      "publisher": "Journal of Xenobiotics (MDPI) — Selig DJ et al., 2023; 13(2):218-236",
+      "url": "https://www.mdpi.com/2039-4713/13/2/17",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "genemedics-rad150-marketing",
       "sourceType": "vendor-marketing",
       "authorityTier": "C3",
@@ -144,7 +168,8 @@
       "sourceRefs": [
         "caymanchem-rad150",
         "medkoo-rad150",
-        "pubchem-cid-68547459"
+        "pubchem-cid-68547459",
+        "medchemexpress-tlb150-benzoate"
       ],
       "extractedEvidence": [
         {
@@ -161,11 +186,17 @@
           "sourceRef": "pubchem-cid-68547459",
           "quote": "TLB 150 Benzoate; RAD150; CAS 1208070-53-4",
           "pageOrSection": "Depositor-Supplied Synonyms"
+        },
+        {
+          "sourceRef": "medchemexpress-tlb150-benzoate",
+          "quote": "TLB 150 Benzoate (RAD150) is a nonsteroidal androgen receptor modulator with an IC50 value of 0.13 μM.",
+          "pageOrSection": "Product description"
         }
       ],
       "reviewFlags": [
         "IC50 and formula figures are supplier-reported, not independently verified via a peer-reviewed structure-activity paper",
-        "no PubChem-listed peer-reviewed literature reference was located for this CID"
+        "no PubChem-listed peer-reviewed literature reference was located for this CID",
+        "independent-review note (2026-08-29): MedChemExpress, an independent vendor/reference database from a different vendor family than Cayman/MedKoo/PubChem, was fetched live and corroborates the CAS number, AR-modulator classification, and IC50=130nM figure -- but all sourceRefs for this claim (including this one) remain vendor/structured-database listings ultimately restating the same supplier-originated figure; no independently published peer-reviewed structure-activity paper reporting this IC50 was located anywhere, so the supplier-only caveat stands and this claim remains without a genuinely independent literature confirmation"
       ]
     },
     {
@@ -214,13 +245,19 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "fda-bodybuilding-sarms-harm",
-        "fda-bulk-substances-category2"
+        "fda-bulk-substances-category2",
+        "mdpi-jox-sarm-safety-review-2023"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "fda-bodybuilding-sarms-harm",
           "quote": "unapproved drugs that FDA has not reviewed for safety and effectiveness",
           "pageOrSection": "Regulatory stance"
+        },
+        {
+          "sourceRef": "mdpi-jox-sarm-safety-review-2023",
+          "quote": "Selective Androgen Receptor Modulators (SARMs) are not FDA approved, and obtaining SARMs for personal use is illegal.",
+          "pageOrSection": "Background/Introduction"
         },
         {
           "sourceRef": "fda-bodybuilding-sarms-harm",
@@ -236,7 +273,8 @@
       "reviewFlags": [
         "safety-critical regulatory claim",
         "class-level FDA warning is not RAD-150-specific; no FDA communication naming RAD-150/TLB-150 by name was located",
-        "confirm FDA bulk-substances and import-alert listings have not been updated to name RAD-150/TLB-150 specifically since this access"
+        "confirm FDA bulk-substances and import-alert listings have not been updated to name RAD-150/TLB-150 specifically since this access",
+        "independent-review note (2026-08-29): live re-fetch of both cited FDA pages today confirms the quoted language is unchanged and confirms RAD-150/TLB-150/RAD140 are not named on the live Category 2 bulk-substances list (no SARM is named there at all); an independent systematic review (Journal of Xenobiotics/MDPI, Selig et al. 2023) separately corroborates that SARMs as a class are not FDA approved, but this claim's two sourceRefs remain both FDA-publisher-family -- no genuinely independent regulator, professional-society, or enforcement-action source naming RAD-150 specifically was found, so this is recorded as an open source-diversity gap, not resolved"
       ]
     },
     {
@@ -254,7 +292,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "ncbi-livertox-sarms"
+        "ncbi-livertox-sarms",
+        "mdpi-jox-sarm-safety-review-2023"
       ],
       "extractedEvidence": [
         {
@@ -271,11 +310,22 @@
           "sourceRef": "ncbi-livertox-sarms",
           "quote": "The mechanism by which SARMs cause liver injury is not known but is likely to be the result of excessive androgen receptor engagement.",
           "pageOrSection": "Mechanism"
+        },
+        {
+          "sourceRef": "mdpi-jox-sarm-safety-review-2023",
+          "quote": "case reports of drug-induced liver injury (DILI) (N = 15)",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "mdpi-jox-sarm-safety-review-2023",
+          "quote": "mean peak values for total bilirubin, ALP, and ALT were 28.5 ± 13.4 mg/dL",
+          "pageOrSection": "Results"
         }
       ],
       "reviewFlags": [
         "safety-critical claim extrapolated from SARM class-level case reports (ligandrol, ostarine, RAD140/testolone were the specifically named compounds); must not be read as RAD-150-specific case data",
-        "do not present as proof that RAD-150 itself has caused liver injury absent a compound-specific report"
+        "do not present as proof that RAD-150 itself has caused liver injury absent a compound-specific report",
+        "independent-review note (2026-08-29): an independent systematic review (Journal of Xenobiotics/MDPI, Selig et al. 2023), a different source family from the packet's sole original cited source (NCBI LiverTox), corroborates the cholestatic-jaundice pattern with 15 identified DILI case reports and a mean peak bilirubin of 28.5 mg/dL among recreational SARM users; none of these independent case reports name RAD-150/TLB-150 specifically, so this remains class-level extrapolation and stays fieldAuthorityRequired/human-review-gated, not resolved to a RAD-150-specific finding"
       ]
     },
     {
@@ -392,7 +442,11 @@
       "No PubMed/PMC-indexed literature, PMID, or DOI could be located for RAD-150/TLB-150 specifically; re-run a targeted PubMed/PMC search at review time in case new literature has been indexed.",
       "UNII, DrugBank, and ChEMBL identifiers not resolved for this compound.",
       "Safety and dosing claims rely on SARM class-level sources (FDA general warning, LiverTox) rather than RAD-150-specific data; independent-source expansion should prioritize any compound-specific regulatory action or case report before this packet is published.",
-      "Vendor listing status and marketing claims are volatile (gray-market retail pages change frequently) and should be re-verified against live pages at review time."
+      "Vendor listing status and marketing claims are volatile (gray-market retail pages change frequently) and should be re-verified against live pages at review time.",
+      "Remediation pass (2026-08-29): independent review confirmed rad150-regulatory-unapproved-sarm-class-001 and rad150-safety-classlevel-hepatotoxicity-001 (both fieldAuthorityRequired) remain supported only by SARM class-level sources -- no RAD-150-specific regulatory action, case report, or study was located anywhere independently (MedChemExpress vendor listing, Journal of Xenobiotics/MDPI systematic review, ClinicalTrials.gov, and general web/PubMed/PMC search were all checked). Per the Independent Review Rule this is an acceptable but still-unresolved gap; both claims stay human-review-gated and are NOT promoted as compound-specific.",
+      "Remediation pass (2026-08-29): the regulatory claim's sourceRefs are both FDA-publisher-family; live re-fetch today confirmed content unchanged and RAD-150/TLB-150 still absent from the Category 2 bulk-substances list. No independent regulator, professional-society, or enforcement-action source naming RAD-150/TLB-150 was found. This source-diversity gap is recorded as open, not closed.",
+      "Remediation pass (2026-08-29): confirmed the misinformation claim's vendor dosing text (5-20 mg/day) remains labeled strictly as marketing/dosing-page text, not a use recommendation, and must survive unchanged through any downstream editing or promotion step.",
+      "Remediation pass (2026-08-29): no PMID/DOI/UNII/DrugBank/ChEMBL identifier could be independently resolved for RAD-150 itself (PubChem, MedChemExpress, Cayman, and MedKoo listings checked); the identity claim remains anchored entirely to vendor/structured-database listings of the same general family."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -400,7 +454,8 @@
       "class-level-safety-extrapolation",
       "gray-market-only",
       "marketing-vs-evidence-gap-documented",
-      "thin-human-evidence"
+      "thin-human-evidence",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

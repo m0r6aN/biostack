@@ -110,13 +110,37 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "archtox-2025-sarm-review-acp105-cas",
+      "sourceType": "paper-level primary literature",
+      "authorityTier": "B1",
+      "title": "Toxicological review of selective androgen receptor modulators (SARMs) including ACP-105",
+      "publisher": "Archives of Toxicology (Springer)",
+      "url": "https://link.springer.com/content/pdf/10.1007/s00204-025-04170-5.pdf",
+      "doi": "10.1007/s00204-025-04170-5",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "jes-2026-sarm-case-series-hepatotox",
+      "sourceType": "paper-level primary literature / case-series abstract",
+      "authorityTier": "B1",
+      "title": "SUN-129: SARM-Associated Hepatotoxicity and Metabolic/Hormonal Effects (Case Series)",
+      "publisher": "Journal of the Endocrine Society (Oxford Academic)",
+      "url": "https://academic.oup.com/jes/article/8/Supplement_1/bvae163.2441/8122020",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
     {
       "claimId": "acp105-identity-mechanism-001",
       "claimType": "identity",
-      "statement": "ACP-105 (CAS 899821-23-9) is a non-steroidal, orally available selective androgen receptor modulator (SARM); it is not an FDA-approved drug and has no approved medical indication.",
+      "statement": "ACP-105 is a non-steroidal, orally available selective androgen receptor modulator (SARM); it is not an FDA-approved drug and has no approved medical indication. Its CAS registry number is unsettled: PubChem's structured record for CID 11638442 and vendor listings (e.g., Selleck Chemicals) state CAS 899821-23-9, while an independent 2025 peer-reviewed toxicology paper (Archives of Toxicology) cites CAS 1048998-11-3 for ACP-105. This identifier conflict is unresolved and is documented in conflicts/reviewFlags rather than silently picked one way.",
       "context": {
         "population": null,
         "route": "oral (research/gray-market use)",
@@ -125,12 +149,13 @@
         "doseText": null
       },
       "evidenceTier": "Strong",
-      "confidence": "high",
+      "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "pubchem-cid-11638442",
         "selleckchem-acp-105-product",
-        "fda-sarms-consumer-update"
+        "fda-sarms-consumer-update",
+        "archtox-2025-sarm-review-acp105-cas"
       ],
       "extractedEvidence": [
         {
@@ -142,9 +167,17 @@
           "sourceRef": "fda-sarms-consumer-update",
           "quote": "SARMs, which are chemical substances that mimic the effects of testosterone and anabolic steroids, are not FDA approved.",
           "pageOrSection": "Consumer update body text"
+        },
+        {
+          "sourceRef": "archtox-2025-sarm-review-acp105-cas",
+          "quote": "ACP-105 (CAS: 1048998-11-3) is a novel non-steroidal selective androgen receptor modulator (SARM)",
+          "pageOrSection": "Body text"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "Unresolved CAS-number conflict on a fieldAuthorityRequired identity claim: PubChem CID 11638442 (re-verified directly against PubChem's own record) and vendor listings state CAS 899821-23-9; an independent 2025 Archives of Toxicology paper states CAS 1048998-11-3 for ACP-105. Neither source was found to acknowledge the other's number. This must be reconciled by a human reviewer with field-authority chemistry access (e.g., CAS Common Chemistry direct lookup, which returned 'Unauthorized' during this remediation pass) before public promotion.",
+        "Do not present either CAS number as settled fact until the conflict is reconciled."
+      ]
     },
     {
       "claimId": "acp105-mechanism-anabolic-properties-001",
@@ -265,7 +298,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "fda-sarms-consumer-update",
-        "usada-sarms-overview"
+        "usada-sarms-overview",
+        "jes-2026-sarm-case-series-hepatotox"
       ],
       "extractedEvidence": [
         {
@@ -282,11 +316,17 @@
           "sourceRef": "usada-sarms-overview",
           "quote": "Potential life-threatening side effects from SARMS, including an increased risk of heart attack and stroke have been reported.",
           "pageOrSection": "SARMs key facts"
+        },
+        {
+          "sourceRef": "jes-2026-sarm-case-series-hepatotox",
+          "quote": "ALT (29.4 U/L vs 125.6 U/L, p<0.001)",
+          "pageOrSection": "Abstract results"
         }
       ],
       "reviewFlags": [
         "safety-critical claim is class-level (SARMs generally), not confirmed compound-specific for ACP-105",
-        "seek ACP-105-specific adverse event case reports if any are published"
+        "seek ACP-105-specific adverse event case reports if any are published",
+        "Independently corroborated (remediation pass, 2026-08-29) by an unrelated case-series abstract (Journal of the Endocrine Society, SUN-129) reporting SARM-class hepatotoxicity (ALT 29.4->125.6 U/L, p<0.001), dyslipidemia, elevated CK, and testosterone suppression in Reddit-sourced SARM users; this source, like the packet's own sources, discusses SARMs as a drug class and does not name ACP-105 specifically, so the compound-specific evidence gap noted above remains open."
       ]
     },
     {
@@ -317,7 +357,8 @@
       "reviewFlags": [
         "safety-critical regulatory claim",
         "absence from the Category 2 list was determined by direct page review at accessedAt; FDA bulk-substance lists change and must be reverified at review time",
-        "no FDA PCAC briefing document specific to ACP-105 was located; confirm none exists or has been issued since accessedAt"
+        "no FDA PCAC briefing document specific to ACP-105 was located; confirm none exists or has been issued since accessedAt",
+        "Reconfirmed via independent review (2026-08-29): no SARM, including ACP-105, appears on the current FDA Category 2 list or its withdrawn-nominations table, cross-checked against an independent law-firm regulatory analysis of the April 2026 Category 2 update. Periodic reverification remains required rather than closed, since these lists are actively revised."
       ]
     },
     {
@@ -355,6 +396,15 @@
   ],
   "conflicts": [
     {
+      "conflictId": "acp105-conflict-cas-identifier-001",
+      "claimRefs": [
+        "acp105-identity-mechanism-001"
+      ],
+      "severity": "high",
+      "summary": "CAS registry number conflict on a fieldAuthorityRequired identity claim: PubChem CID 11638442 (verified directly against PubChem's own record during remediation) and vendor listings (Selleck Chemicals) state CAS 899821-23-9 with no caveat, while an independent 2025 peer-reviewed toxicology paper (Archives of Toxicology, 10.1007/s00204-025-04170-5) states CAS 1048998-11-3 for ACP-105. A direct CAS Common Chemistry lookup for both numbers returned an 'Unauthorized' search-failure response during this remediation pass rather than a resolving answer, so the discrepancy could not be independently adjudicated with a field-authority chemistry source. A wrong CAS number on a gray-market research chemical is a real-world sourcing/safety risk and this must be reconciled by a human reviewer with authoritative chemistry-database access before public promotion.",
+      "resolutionStatus": "needs-human-review"
+    },
+    {
       "conflictId": "acp105-conflict-marketing-vs-evidence-001",
       "claimRefs": [
         "acp105-misinformation-marketing-dosing-001",
@@ -371,9 +421,10 @@
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
       "No ACP-105-specific human clinical or adverse-event literature was located; safety claims rely on SARM-class-level FDA/USADA guidance rather than compound-specific human data.",
-      "UNII, DrugBank, and ChEMBL identifiers not resolved from structured databases at time of packet generation.",
-      "FDA bulk drug substance Category 2 compounding list and any future PCAC briefing coverage of ACP-105 must be reverified at review time, as these listings are revised periodically.",
-      "PubMed/PMC primary literature pages could not be fetched directly (access-gated); ADME/toxicology paper coverage should be independently reverified against the primary PubMed/PMC record when accessible."
+      "UNII, DrugBank, and ChEMBL identifiers remain unresolved. Remediation pass (2026-08-29) attempted independent resolution: NCATS GSRS substance search for 'ACP-105' returned zero matches (no UNII on file), and the ChEMBL REST API (www.ebi.ac.uk/chembl/api) rate-limited every request attempted this session (HTTP 429). DrugBank was not queried (no free/authenticated access available). These remain open and should be retried by a reviewer with ChEMBL/DrugBank access.",
+      "FDA bulk drug substance Category 2 compounding list and any future PCAC briefing coverage of ACP-105 must be reverified at review time, as these listings are revised periodically. Re-confirmed absent from the live FDA Category 2 list and withdrawn-nominations table as of 2026-08-29 (remediation pass), cross-checked against an independent law-firm analysis of the April 2026 update; reverification requirement stays open, not closed.",
+      "PubMed/PMC primary literature pages could not be fetched directly (access-gated); ADME/toxicology paper coverage should be independently reverified against the primary PubMed/PMC record when accessible.",
+      "CAS-number conflict on the identity claim (acp105-identity-mechanism-001): PubChem/vendor sources state 899821-23-9; an independent 2025 Archives of Toxicology paper states 1048998-11-3. Verified directly against both the PubChem record and the Archives of Toxicology PDF this session; a CAS Common Chemistry lookup for both numbers returned 'Unauthorized' rather than a resolving answer. Left open as an explicit conflict (see conflicts array) pending a human reviewer with authoritative chemistry-database access -- not silently resolved either way."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -381,7 +432,9 @@
       "no-human-trial-data-located",
       "thin-human-evidence",
       "gray-market-only",
-      "marketing-vs-evidence-gap-documented"
+      "marketing-vs-evidence-gap-documented",
+      "cas-identifier-conflict-open",
+      "remediation-pass-2026-08-29"
     ]
   }
 }
