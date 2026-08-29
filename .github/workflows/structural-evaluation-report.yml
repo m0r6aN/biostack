@@ -70,17 +70,17 @@ jobs:
             .payload.comparison.candidateDeclarationsTrusted == false and
             .payload.comparison.effectAuthority == "none" and
             .payload.corpusInventory.snapshotVersion == "1.0.0" and
-            .payload.corpusInventory.seedRecordCount == 49 and
+            .payload.corpusInventory.seedRecordCount == 52 and
             .payload.corpusInventory.candidateRecordCount == 16 and
-            .payload.corpusInventory.evidencePacketCount == 16 and
+            .payload.corpusInventory.evidencePacketCount == 78 and
             .payload.corpusInventory.sourceRegistryRecordCount == 13 and
-            .payload.corpusInventory.seedCandidateOverlapCount == 10 and
+            .payload.corpusInventory.seedCandidateOverlapCount == 12 and
             (.payload.corpusInventory.identityTokenCollisions | length) == 2 and
             (.payload.corpusInventory.externalIdentifierCollisions | length) == 0 and
             .payload.corpusInventory.approvedRightsSourceCount == 7 and
             .payload.corpusInventory.activeOperationsSourceCount == 7 and
             .payload.corpusInventory.acquisitionEnabledSourceCount == 7 and
-            .payload.corpusInventory.registryAuthorizedEvidencePacketCount == 6 and
+            .payload.corpusInventory.registryAuthorizedEvidencePacketCount == 2 and
             .payload.corpusInventory.modelInvoked == false and
             .payload.corpusInventory.networkAccessed == false and
             .payload.modelInvoked == false and
