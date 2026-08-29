@@ -458,7 +458,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "cadth-nbk594336-saxenda-review"
+        "cadth-nbk594336-saxenda-review",
+        "dailymed-saxenda-label"
       ],
       "extractedEvidence": [
         {
@@ -480,11 +481,17 @@
           "sourceRef": "cadth-nbk594336-saxenda-review",
           "quote": "lack of comparative evidence",
           "pageOrSection": "Limitations"
+        },
+        {
+          "sourceRef": "dailymed-saxenda-label",
+          "quote": "Percent change from baseline (LSMean): -7.4 ... Difference from placebo (LSMean) (95% CI): -4.5* (-5.2; -3.8) ... % of Patients losing greater than or equal to 5% body weight: 62.3%",
+          "pageOrSection": "Clinical Studies (14.1), Study 1 (Obesity/Overweight with Comorbidity)"
         }
       ],
       "reviewFlags": [
         "evidence gap: reviewers note limited comparative/head-to-head trial data",
-        "trial population predominantly White and female \u2014 generalizability caveat noted in source"
+        "trial population predominantly White and female \u2014 generalizability caveat noted in source",
+        "authority-support-pass 2026-08-29: added dailymed-saxenda-label (A1, regulator-label) as an independent authoritative source, fetched live this session, directly quoting the FDA-approved label's Clinical Studies section (14.1) reporting statistically significant placebo-adjusted weight loss from the SCALE trial program \u2014 corroborating this claim's overall finding of statistically significant weight-loss efficacy. Note: the label's Study 1 point estimates (LSMean difference -4.5%, 62.3% achieving \u22655% loss) differ numerically from the CADTH review's cited Study 1839 estimates (-5.39%, 62.3% vs different OR-based framing) due to different analysis populations/estimands reported by each source; both independently confirm statistical significance (p<0.0001) of liraglutide's weight-loss effect versus placebo, so the CADTH-sourced figures in this claim's statement are left unchanged and the label serves as corroborating, not replacement, evidence."
       ]
     },
     {
@@ -564,7 +571,8 @@
       "positive-human-rct-documented",
       "dual-indication-diabetes-and-weight-management",
       "gray-market-risk-documented",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

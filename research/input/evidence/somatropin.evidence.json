@@ -338,7 +338,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": ["dare-liu2008-athletic-performance"],
       "extractedEvidence": [
         {
@@ -359,7 +359,8 @@
       ],
       "reviewFlags": [
         "review notes no included studies adequately described allocation concealment; pooled trials were generally short-duration and small",
-        "do not generalize hospital/trial-supervised short-course dosing to unsupervised gray-market or performance-enhancement self-administration"
+        "do not generalize hospital/trial-supervised short-course dosing to unsupervised gray-market or performance-enhancement self-administration",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"A systematic review of 27 randomized controlled trials... found...\"); no regulator document exists for this claim (searched: FDA.gov site search for 'growth hormone athletic performance', DailyMed search for somatropin athletic-performance efficacy content — no FDA/DailyMed document addresses GH efficacy for athletic performance, since this is not an approved indication)"
       ]
     },
     {
@@ -420,7 +421,8 @@
       "a1-regulator-backed",
       "negative-or-null-human-performance-benefit",
       "thin-human-evidence-for-marketed-off-label-uses",
-      "import-alert-on-record"
+      "import-alert-on-record",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

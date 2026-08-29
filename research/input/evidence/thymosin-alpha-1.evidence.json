@@ -13,7 +13,7 @@
     "aliases": [
       "Thymalfasin",
       "Zadaxin",
-      "T\u03b11",
+      "Tα1",
       "Ta1"
     ],
     "classification": "Peptide",
@@ -34,7 +34,7 @@
       "sourceId": "fda-ta1-bulks-183892",
       "sourceType": "regulator",
       "authorityTier": "A1",
-      "title": "Thymosin Alpha-1 (T\u03b11) Related Bulk Drug Substances",
+      "title": "Thymosin Alpha-1 (Tα1) Related Bulk Drug Substances",
       "publisher": "U.S. Food and Drug Administration",
       "url": "https://www.fda.gov/media/183892/download",
       "doi": null,
@@ -58,7 +58,7 @@
       "sourceId": "pubmed-tests-2025",
       "sourceType": "controlled-human-study",
       "authorityTier": "B1",
-      "title": "The efficacy and safety of thymosin \u03b11 for sepsis (TESTS): multicentre, double blinded, randomised, placebo controlled, phase 3 trial",
+      "title": "The efficacy and safety of thymosin α1 for sepsis (TESTS): multicentre, double blinded, randomised, placebo controlled, phase 3 trial",
       "publisher": "PubMed / U.S. National Library of Medicine",
       "url": "https://pubmed.ncbi.nlm.nih.gov/39814420/",
       "doi": null,
@@ -196,11 +196,11 @@
     {
       "claimId": "ta1-regulatory-bulks-list-evaluation-001",
       "claimType": "regulatory",
-      "statement": "FDA's evaluation of thymosin alpha-1 (T\u03b11, free base and acetate) for the 503A compounding Bulks List found that a balancing of the four evaluation criteria weighs against adding it, citing insufficient physicochemical characterization, an immunogenicity risk potentially amplified by aggregation and peptide-related impurities, and a proposed injectable concentration (3 mg/mL) that exceeds Ta1 free base's aqueous solubility (2 mg/mL); the nomination was subsequently withdrawn and FDA is evaluating the substance at its own discretion rather than under a completed rulemaking.",
+      "statement": "FDA's evaluation of thymosin alpha-1 (Tα1, free base and acetate) for the 503A compounding Bulks List found that a balancing of the four evaluation criteria weighs against adding it, citing insufficient physicochemical characterization, an immunogenicity risk potentially amplified by aggregation and peptide-related impurities, and a proposed injectable concentration (3 mg/mL) that exceeds Ta1 free base's aqueous solubility (2 mg/mL); the nomination was subsequently withdrawn and FDA is evaluating the substance at its own discretion rather than under a completed rulemaking.",
       "context": {
         "population": "prospective compounded-product users",
         "route": "injectable (subcutaneous/IV as compounded)",
-        "formulation": "T\u03b11 free base and T\u03b11 acetate",
+        "formulation": "Tα1 free base and Tα1 acetate",
         "useCase": "regulatory evaluation for compounding eligibility (503A Bulks List)",
         "doseText": null
       },
@@ -213,17 +213,17 @@
       "extractedEvidence": [
         {
           "sourceRef": "fda-ta1-bulks-183892",
-          "quote": "After considering the information currently available, a balancing of the four evaluation criteria weighs against T\u03b11 (free base) and T\u03b11 acetate being added to the 503A Bulks List.",
+          "quote": "After considering the information currently available, a balancing of the four evaluation criteria weighs against Tα1 (free base) and Tα1 acetate being added to the 503A Bulks List.",
           "pageOrSection": "FDA recommendation section"
         },
         {
           "sourceRef": "fda-ta1-bulks-183892",
-          "quote": "T\u03b11 may pose a significant risk for immunogenicity, potentially amplified by aggregation as well as potential peptide-related impurities.",
+          "quote": "Tα1 may pose a significant risk for immunogenicity, potentially amplified by aggregation as well as potential peptide-related impurities.",
           "pageOrSection": "Immunogenicity concerns section"
         },
         {
           "sourceRef": "fda-ta1-bulks-183892",
-          "quote": "The proposed concentration for injectable product (3 mg/mL) is greater than the solubility of T\u03b11 (free base) in water (2 mg/mL).",
+          "quote": "The proposed concentration for injectable product (3 mg/mL) is greater than the solubility of Tα1 (free base) in water (2 mg/mL).",
           "pageOrSection": "Formulation/solubility section"
         },
         {
@@ -244,7 +244,7 @@
       "context": {
         "population": "patients undergoing deliberate immunosuppression, including HSCT recipients",
         "route": "injectable",
-        "formulation": "T\u03b11 free base/acetate",
+        "formulation": "Tα1 free base/acetate",
         "useCase": "safety warning for immunocompromised or transplant populations",
         "doseText": null
       },
@@ -257,7 +257,7 @@
       "extractedEvidence": [
         {
           "sourceRef": "fda-ta1-bulks-183892",
-          "quote": "Potential safety concerns with administering T\u03b11 in patients who are undergoing deliberate immunosuppression.",
+          "quote": "Potential safety concerns with administering Tα1 in patients who are undergoing deliberate immunosuppression.",
           "pageOrSection": "Safety concerns section"
         },
         {
@@ -323,7 +323,7 @@
       },
       "evidenceTier": "Strong",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pubmed-tests-2025"
       ],
@@ -331,7 +331,7 @@
         {
           "sourceRef": "pubmed-tests-2025",
           "quote": "23.4%",
-          "pageOrSection": "Results (thymosin \u03b11 group 28-day mortality)"
+          "pageOrSection": "Results (thymosin α1 group 28-day mortality)"
         },
         {
           "sourceRef": "pubmed-tests-2025",
@@ -340,13 +340,14 @@
         },
         {
           "sourceRef": "pubmed-tests-2025",
-          "quote": "This trial found no clear evidence to suggest that thymosin \u03b11 decreases 28 day all cause mortality in adults with sepsis.",
+          "quote": "This trial found no clear evidence to suggest that thymosin α1 decreases 28 day all cause mortality in adults with sepsis.",
           "pageOrSection": "Conclusion"
         }
       ],
       "reviewFlags": [
         "trial dose/protocol context must never be presented as a use recommendation",
-        "this is the highest-powered human RCT identified for any thymosin alpha-1 indication in this packet and should anchor efficacy framing over smaller/older positive trials"
+        "this is the highest-powered human RCT identified for any thymosin alpha-1 indication in this packet and should anchor efficacy framing over smaller/older positive trials",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov site search for thymalfasin/thymosin alpha-1 sepsis, DailyMed search for thymalfasin [0 results, refetched this session] - thymosin alpha-1 has no FDA-approved label or sepsis indication anywhere, and the packet's only FDA document (fda-ta1-bulks-183892) addresses 503A compounding bulk-substance eligibility, not sepsis efficacy)"
       ]
     },
     {
@@ -362,25 +363,26 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pubmed-etass-2013"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "pubmed-etass-2013",
-          "quote": "The relative risk of death in the T\u03b11 group as compared to the control group was 0.74 (95% CI 0.54 to 1.02).",
+          "quote": "The relative risk of death in the Tα1 group as compared to the control group was 0.74 (95% CI 0.54 to 1.02).",
           "pageOrSection": "Results"
         },
         {
           "sourceRef": "pubmed-etass-2013",
-          "quote": "The use of T\u03b11 therapy in combination with conventional medical therapies may be effective in improving clinical outcomes",
+          "quote": "The use of Tα1 therapy in combination with conventional medical therapies may be effective in improving clinical outcomes",
           "pageOrSection": "Conclusion"
         }
       ],
       "reviewFlags": [
         "superseded in statistical power and rigor by the later, larger TESTS phase 3 trial, which found no mortality benefit - see conflict entry",
-        "single-blind design and marginal (non-significant) result mean this trial alone should not be used to support an efficacy claim"
+        "single-blind design and marginal (non-significant) result mean this trial alone should not be used to support an efficacy claim",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov site search for thymalfasin/thymosin alpha-1 sepsis, DailyMed search for thymalfasin [0 results, refetched this session] - thymosin alpha-1 has no FDA-approved label or sepsis indication anywhere, and the packet's only FDA document (fda-ta1-bulks-183892) addresses 503A compounding bulk-substance eligibility, not sepsis efficacy)"
       ]
     },
     {
@@ -468,7 +470,8 @@
       "discordant-human-trials",
       "not-fda-approved",
       "gray-market-us-status",
-      "misinformation-gap-documented"
+      "misinformation-gap-documented",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

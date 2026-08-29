@@ -231,7 +231,7 @@
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": true,
-      "sourceRefs": ["nsabp-p1-fisher-1998-jnci"],
+      "sourceRefs": ["nsabp-p1-fisher-1998-jnci", "dailymed-tamoxifen-citrate-label"],
       "extractedEvidence": [
         {
           "sourceRef": "nsabp-p1-fisher-1998-jnci",
@@ -247,9 +247,19 @@
           "sourceRef": "nsabp-p1-fisher-1998-jnci",
           "quote": "The rates of stroke, pulmonary embolism, and deep-vein thrombosis were elevated in the tamoxifen group; these events occurred more frequently in women aged 50 years or older.",
           "pageOrSection": "Results (via extraction of JNCI article page)"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "After a median follow-up of 4.2 years, the incidence of invasive breast cancer was reduced by 44% among women assigned to tamoxifen",
+          "pageOrSection": "Clinical Studies - Breast Cancer Risk Reduction (NSABP P-1)"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "In the NSABP P-1 trial, 33 cases of endometrial cancer were observed in the tamoxifen group vs. 14 in the placebo group (RR=2.48, 95% CI: 1.27-4.92).",
+          "pageOrSection": "Clinical Studies - Breast Cancer Risk Reduction (NSABP P-1)"
         }
       ],
-      "reviewFlags": ["quotes extracted via automated page summarization rather than raw PDF; verify exact figures (49%, 43.4 vs 22.0 per 1000, RR 2.53) against the primary JNCI PDF at review time", "this is a risk-reduction/prevention population, not treatment of existing cancer - do not generalize benefit magnitude across indications"]
+      "reviewFlags": ["quotes extracted via automated page summarization rather than raw PDF; verify exact figures (49%, 43.4 vs 22.0 per 1000, RR 2.53) against the primary JNCI PDF at review time", "this is a risk-reduction/prevention population, not treatment of existing cancer - do not generalize benefit magnitude across indications", "authority-support-pass 2026-08-29: added the FDA-approved DailyMed label (A1) as an independent regulator source for the same NSABP P-1 trial, fetched live this session. The label's Clinical Studies section reports a different point estimate for the same trial (44% reduction at 4.2-year median follow-up; 33 vs 14 endometrial cancers, RR 2.48) than the primary JNCI publication cited here (49% reduction at 69-month follow-up; RR 2.53) - same direction of effect, differing follow-up duration/point estimate; a human reviewer should reconcile the two figures before publication and must not average or merge them."]
     },
     {
       "claimId": "tamoxifen-efficacy-atlas-extended-001",
@@ -264,7 +274,7 @@
       },
       "evidenceTier": "Strong",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": ["atlas-davies-2013-summary-wjc"],
       "extractedEvidence": [
         {
@@ -283,7 +293,7 @@
           "pageOrSection": "Outcomes summary - endometrial cancer, 10 vs 5 years tamoxifen"
         }
       ],
-      "reviewFlags": ["sourced from a secondary trial-summary page (Wiki Journal Club), not the primary Lancet full text - the original Davies et al. Lancet 2013 article should be fetched directly at review time to confirm these figures verbatim", "extended-duration benefit vs endometrial cancer risk trade-off must be presented together, never in isolation"]
+      "reviewFlags": ["sourced from a secondary trial-summary page (Wiki Journal Club), not the primary Lancet full text - the original Davies et al. Lancet 2013 article should be fetched directly at review time to confirm these figures verbatim", "extended-duration benefit vs endometrial cancer risk trade-off must be presented together, never in isolation", "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the ATLAS randomized trial...\"); no regulator document supports this claim (searched: DailyMed tamoxifen citrate label, fetched live this session, Clinical Studies section - it contains no ATLAS trial data and instead cites the earlier NSABP B-14 extended-duration study, which concluded 'continuation of therapy beyond 5 years does not provide additional benefit', i.e. the current FDA label does not support and in fact predates/conflicts with the ATLAS 10-vs-5-year finding; also searched fda.gov, no relevant result). Linking the label here would misrepresent it as backing this claim, so no A1/A2 source was added."]
     },
     {
       "claimId": "tamoxifen-evidence-gap-bodybuilding-pct-001",
@@ -359,7 +369,8 @@
       "positive-human-rct-documented",
       "benefit-risk-tradeoff-documented",
       "gray-market-off-label-use-flagged",
-      "secondary-source-for-atlas-trial"
+      "secondary-source-for-atlas-trial",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

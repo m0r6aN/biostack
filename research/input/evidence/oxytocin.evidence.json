@@ -223,7 +223,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "nejm-sikich-2021-asd-rct"
       ],
@@ -241,7 +241,8 @@
       ],
       "reviewFlags": [
         "this is the largest and most rigorous human RCT identified for intranasal oxytocin in a social/behavioral use and is negative; do not let smaller positive proof-of-concept trials override this finding without explicit discussion",
-        "does not address obstetric IV use, which is separately supported (see approved-indication claim)"
+        "does not address obstetric IV use, which is separately supported (see approved-indication claim)",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov for intranasal oxytocin approval/label, DailyMed drug label database for oxytocin products [only injectable Pitocin/generic oxytocin for obstetric use found, no intranasal formulation or ASD indication listed], and web search for FDA intranasal oxytocin autism label/approval \u2014 no regulator document addresses intranasal oxytocin for ASD efficacy or adverse events)."
       ]
     },
     {
@@ -257,7 +258,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "cai-2018-pcn-adverse-events-meta"
       ],
@@ -275,7 +276,8 @@
       ],
       "reviewFlags": [
         "tolerability finding is from supervised, time-limited RCT protocols; must not be generalized to unsupervised chronic gray-market intranasal or compounded use",
-        "pooled n is small (223); reviewers themselves called for larger trials"
+        "pooled n is small (223); reviewers themselves called for larger trials",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov for intranasal oxytocin approval/label, DailyMed drug label database for oxytocin products [only injectable Pitocin/generic oxytocin for obstetric use found, no intranasal formulation or ASD indication listed], and web search for FDA intranasal oxytocin autism label/approval \u2014 no regulator document addresses intranasal oxytocin for ASD efficacy or adverse events)."
       ]
     },
     {
@@ -388,7 +390,8 @@
       "a1-regulator-backed",
       "negative-human-rct-documented",
       "marketing-vs-evidence-gap-flagged",
-      "thin-human-evidence-for-nonapproved-use"
+      "thin-human-evidence-for-nonapproved-use",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

@@ -104,6 +104,18 @@
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
+      "sourceId": "ema-conbriza-epar",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Conbriza (bazedoxifene) - European public assessment report (EPAR)",
+      "publisher": "European Medicines Agency (EMA)",
+      "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/conbriza",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
       "sourceId": "drugbank-db06401",
       "sourceType": "structured-database",
       "authorityTier": "B2",
@@ -294,11 +306,32 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
+        "ema-conbriza-epar",
         "pmc3131985-bazedoxifene-review",
         "statpearls-bazedoxifene",
         "pmc2908075-bazedoxifene-safety"
       ],
       "extractedEvidence": [
+        {
+          "sourceRef": "ema-conbriza-epar",
+          "quote": "After three years, 2% of the patients receiving Conbriza (35 out of 1,724) had new fractures compared with 4% of those receiving placebo (59 out of 1,741).",
+          "pageOrSection": "EPAR summary for the public / efficacy results"
+        },
+        {
+          "sourceRef": "ema-conbriza-epar",
+          "quote": "a significant reduction in the incidence of vertebral fractures",
+          "pageOrSection": "EPAR summary for the public / efficacy results"
+        },
+        {
+          "sourceRef": "ema-conbriza-epar",
+          "quote": "efficacy on hip fractures has not been established",
+          "pageOrSection": "EPAR summary for the public / efficacy results"
+        },
+        {
+          "sourceRef": "ema-conbriza-epar",
+          "quote": "hot flushes, muscle spasms and peripheral oedema",
+          "pageOrSection": "EPAR summary for the public / side effects"
+        },
         {
           "sourceRef": "pmc3131985-bazedoxifene-review",
           "quote": "bazedoxifene...significantly reduced the risk of new vertebral fractures in postmenopausal women compared with placebo",
@@ -426,7 +459,8 @@
       "a1-regulator-backed",
       "boxed-warning-present",
       "gray-market-adjacent-use-documented",
-      "limited-primary-trial-access-this-session"
+      "limited-primary-trial-access-this-session",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

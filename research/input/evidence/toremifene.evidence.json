@@ -112,6 +112,16 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "fda-openfda-drugsfda-toremifene-search-2026",
+      "sourceType": "regulator-database",
+      "authorityTier": "A1",
+      "title": "Drugs@FDA data (openFDA API): drug products with active ingredient TOREMIFENE CITRATE",
+      "publisher": "U.S. Food and Drug Administration (openFDA / Drugs@FDA)",
+      "url": "https://api.fda.gov/drug/drugsfda.json?search=products.active_ingredients.name:%22TOREMIFENE%20CITRATE%22&limit=10",
+      "publishedAt": null,
+      "accessedAt": "2026-08-29"
     }
   ],
   "claims": [
@@ -136,7 +146,7 @@
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-fareston-label",
-          "quote": "FARESTON® is an estrogen agonist/antagonist indicated for the treatment of metastatic breast cancer in postmenopausal women with estrogen-receptor positive or unknown tumors.",
+          "quote": "FARESTON\u00ae is an estrogen agonist/antagonist indicated for the treatment of metastatic breast cancer in postmenopausal women with estrogen-receptor positive or unknown tumors.",
           "pageOrSection": "Indications and Usage"
         },
         {
@@ -261,7 +271,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "fiercebiotech-toremifene-crl-80mg"
+        "fiercebiotech-toremifene-crl-80mg",
+        "fda-openfda-drugsfda-toremifene-search-2026"
       ],
       "extractedEvidence": [
         {
@@ -273,11 +284,17 @@
           "sourceRef": "fiercebiotech-toremifene-crl-80mg",
           "quote": "Results from a second Phase III trial demonstrating safety and efficacy for fracture reduction in men with prostate cancer on ADT",
           "pageOrSection": "Complete Response Letter deficiencies"
+        },
+        {
+          "sourceRef": "fda-openfda-drugsfda-toremifene-search-2026",
+          "quote": "[{\"application_number\": \"ANDA208813\", \"sponsor_name\": \"RISING\", \"product_strength\": \"EQ 60MG BASE\", \"marketing_status\": \"Prescription\"}, {\"application_number\": \"NDA020497\", \"sponsor_name\": \"KYOWA KIRIN\", \"product_strength\": \"EQ 60MG BASE\", \"marketing_status\": \"Discontinued\"}, {\"application_number\": \"ANDA212818\", \"sponsor_name\": \"MSN\", \"product_strength\": \"EQ 60MG BASE\", \"marketing_status\": \"Prescription\"}]",
+          "pageOrSection": "openFDA drugsfda.json search results for active ingredient TOREMIFENE CITRATE (fetched 2026-08-29)"
         }
       ],
       "reviewFlags": [
         "sourced from industry press coverage of the CRL rather than the CRL text itself; verify against a primary FDA record if one becomes available",
-        "confirm no subsequent approval of an 80 mg toremifene product for this indication"
+        "confirm no subsequent approval of an 80 mg toremifene product for this indication",
+        "authority-support-pass 2026-08-29: verified via FDA's own drugsfda database (openFDA API, fetched live) that every FDA-approved/marketed toremifene product is the 60 mg strength (NDA020497 and its ANDA generics, breast-cancer indication); no 80 mg toremifene product exists in FDA's database, corroborating that the ADT-fracture 80 mg indication was never approved and remains unmarketed. The CRL narrative detail (specific deficiencies letter) still rests on Fierce Biotech press coverage, as previously flagged, since FDA does not publicly post pre-2012 Complete Response Letters or unapproved-application dockets for this NDA."
       ]
     },
     {
@@ -293,7 +310,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "fiercebiotech-toremifene-phase3-fracture",
         "fiercebiotech-toremifene-crl-80mg"
@@ -318,7 +335,8 @@
       "reviewFlags": [
         "figures are drawn from industry press summary of trial results, not the peer-reviewed primary publication (Journal of Urology / Smith et al.); primary-source PMID and exact statistics should be independently verified against the published paper at review time",
         "trial population (older men on ADT) differs materially from the younger, non-hypogonadal population using toremifene for bodybuilding PCT; do not generalize efficacy or VTE risk across populations without qualification",
-        "this indication and dose were never FDA-approved (see linked CRL claim)"
+        "this indication and dose were never FDA-approved (see linked CRL claim)",
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed Phase III trial findings (Smith et al., toremifene 80 mg ADT-fracture trial) at source-level attribution (\"In a two-year, double-blind, placebo-controlled Phase III trial of 1,389 men...\"); no regulator document exists for this claim (searched: FDA openFDA drugsfda.json for TOREMIFENE/TOREMIFENE CITRATE -- only 60 mg breast-cancer products found, no 80 mg entry; DailyMed drug-name search for toremifene -- same three 60 mg products only, no 80 mg label; general web search for an FDA advisory-committee briefing document or fda.gov page addressing the 80 mg ADT/fracture trial -- none found, consistent with this NDA never reaching an advisory-committee meeting before its Complete Response Letter)."
       ]
     },
     {
@@ -389,7 +407,8 @@
       "fda-approved-product",
       "unapproved-off-label-use-crl-documented",
       "thin-human-evidence-for-marketed-use",
-      "secondary-source-trial-statistics"
+      "secondary-source-trial-statistics",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

@@ -304,7 +304,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "exscel-nejm-2017",
-        "exscel-mdedge-summary"
+        "exscel-mdedge-summary",
+        "fda-bydureon-label-2024"
       ],
       "extractedEvidence": [
         {
@@ -316,10 +317,16 @@
           "sourceRef": "exscel-nejm-2017",
           "quote": "exenatide, administered once weekly, was noninferior to placebo with respect to safety (P<0.001 for noninferiority) but was not superior to placebo with respect to efficacy (P=0.06 for superiority).",
           "pageOrSection": "Abstract, Conclusions"
+        },
+        {
+          "sourceRef": "fda-bydureon-label-2024",
+          "quote": "BYDUREON did not increase the risk of MACE in adult patients with type 2 diabetes mellitus (HR: 0.91; 95% CI: 0.832, 1.004; P<0.001 for non-inferiority; P=0.06 for superiority).",
+          "pageOrSection": "Section 14.4, Cardiovascular Outcomes Trial (EXSCEL)"
         }
       ],
       "reviewFlags": [
-        "noninferiority result should not be characterized as a proven cardiovascular benefit"
+        "noninferiority result should not be characterized as a proven cardiovascular benefit",
+        "authority-support pass (2026-08-29): fetched FDA prescribing information (accessdata.fda.gov, 2024 Bydureon label) live this session; Section 14.4 independently reports the EXSCEL primary MACE result with the same HR (0.91; 95% CI 0.832-1.004) and noninferiority/superiority p-values as the NEJM source, so an A1 regulator sourceRef now directly supports this claim's statement."
       ]
     },
     {
@@ -335,7 +342,7 @@
       },
       "evidenceTier": "Strong",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "exscel-mdedge-summary",
         "exscel-nejm-2017",
@@ -361,7 +368,8 @@
       "reviewFlags": [
         "sourced originally via a secondary medical-news summary of the trial rather than the primary NEJM full text (NEJM full text returned a 403 on direct fetch this session)",
         "single-trial rare-event reassurance should not be read as definitive absence of risk given the boxed-warning C-cell tumor signal in animal data",
-        "independent-review resolution (2026-08-29): NEJM/PMC full text remained CAPTCHA/403-blocked, so the sponsor-posted ClinicalTrials.gov results record for this same trial (NCT01144338) was pulled instead -- a structured-database primary-results family materially different from the medical-news summary. It independently confirms no pancreatic-malignancy or MTC adverse-event terms reported in either arm, pancreatitis rare in both arms (0.30% placebo vs 0.50% exenatide), and no heart-failure-hospitalization signal (2.98% exenatide vs 3.13% placebo, HR 0.94, 95% CI 0.78-1.13, p=0.485). Claim upgraded from unresolved to independently corroborated."
+        "independent-review resolution (2026-08-29): NEJM/PMC full text remained CAPTCHA/403-blocked, so the sponsor-posted ClinicalTrials.gov results record for this same trial (NCT01144338) was pulled instead -- a structured-database primary-results family materially different from the medical-news summary. It independently confirms no pancreatic-malignancy or MTC adverse-event terms reported in either arm, pancreatitis rare in both arms (0.30% placebo vs 0.50% exenatide), and no heart-failure-hospitalization signal (2.98% exenatide vs 3.13% placebo, HR 0.94, 95% CI 0.78-1.13, p=0.485). Claim upgraded from unresolved to independently corroborated.",
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (statement already opens with \"In the EXSCEL trial...\"); no regulator document exists for this claim (searched: FDA prescribing information for BYDUREON, accessdata.fda.gov 2024 label, Sections 14.4/6/5.1; DailyMed BYETTA label; DailyMed BYDUREON BCise label -- these confirm general postmarketing pancreatitis/thyroid-C-cell warnings and one pooled-trials pancreatitis rate of 0.4% for BYDUREON BCISE, but none report the EXSCEL-specific placebo-controlled comparison of pancreatitis, pancreatic cancer, MTC, or heart-failure-hospitalization rates that this claim states)."
       ]
     },
     {
@@ -453,7 +461,8 @@
       "boxed-warning-present",
       "noninferiority-not-superiority-cv-trial",
       "thin-human-evidence-for-marketed-off-label-use",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

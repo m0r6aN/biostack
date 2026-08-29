@@ -186,7 +186,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "elaine1-wustl-fulltext"
       ],
@@ -216,7 +216,8 @@
         "phase II result, statistically non-significant primary endpoint - must not be characterized as proven superiority over fulvestrant",
         "this is investigational use; not an FDA- or EMA-approved indication",
         "dose is trial protocol context only, not a use recommendation",
-        "confirm whether ELAINE 3 (phase III, lasofoxifene + abemaciclib) has since reported results that would supersede this"
+        "confirm whether ELAINE 3 (phase III, lasofoxifene + abemaciclib) has since reported results that would supersede this",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (ELAINE 1 phase II trial, PMID 38072514); no regulator document exists for this claim (searched: FDA.gov for lasofoxifene ESR1/metastatic breast cancer approval or labeling action - found only an unrelated Fast Track designation news item, no approved indication or label; DailyMed search for lasofoxifene returned 0 results, no current label) since lasofoxifene holds no approved indication for this use"
       ]
     },
     {
@@ -319,7 +320,8 @@
       "no-current-marketing-authorization",
       "negative-or-nonsignificant-human-rct-documented",
       "thin-human-evidence",
-      "investigational-oncology-repurposing"
+      "investigational-oncology-repurposing",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

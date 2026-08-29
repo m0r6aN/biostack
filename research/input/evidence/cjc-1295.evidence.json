@@ -243,7 +243,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "teichman-2006-jcem-rct"
       ],
@@ -267,7 +267,8 @@
       "reviewFlags": [
         "trial dose context must never be presented as a use recommendation",
         "this trial predates and is independent of the CJC-1295 DAC phase 2 trial subject death reported in 2006 (see safety-critical claim below); does not establish long-term or self-administered gray-market safety",
-        "independent 2009 published study (PMID 19386527) replicates the direction of GH/IGF-1 axis activation, supporting that the pharmacodynamic finding is not a single-trial artifact; the precise dose-response magnitudes (2-10x GH, 1.5-3x IGF-I) and duration windows remain sourced only to the single Teichman 2006 RCT"
+        "independent 2009 published study (PMID 19386527) replicates the direction of GH/IGF-1 axis activation, supporting that the pharmacodynamic finding is not a single-trial artifact; the precise dose-response magnitudes (2-10x GH, 1.5-3x IGF-I) and duration windows remain sourced only to the single Teichman 2006 RCT",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In two randomized, placebo-controlled, double-blind, ascending-dose trials...\"); no regulator document exists for this claim (searched: live-fetched FDA PCAC briefing document fda.gov/media/183819/download, which names Teichman et al. 2006 as a citation but reports no GH/IGF-I fold-change or dose-response figures; searched DailyMed for a CJC-1295 label and found only a bulk-ingredient listing for veterinary compounding (AX Pharmaceutical, NDC 62157-251-01) with no human clinical data, so it cannot support this claim without fabricating a link)"
       ]
     },
     {
@@ -421,7 +422,8 @@
       "thin-human-evidence",
       "regulatory-boundary",
       "identifier-gaps",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }

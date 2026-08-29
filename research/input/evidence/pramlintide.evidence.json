@@ -301,7 +301,7 @@
       },
       "evidenceTier": "Moderate",
       "confidence": "high",
-      "fieldAuthorityRequired": true,
+      "fieldAuthorityRequired": false,
       "sourceRefs": [
         "ratner-2004-diabetic-medicine-rct",
         "qiao-2017-oncotarget-meta-analysis"
@@ -326,7 +326,8 @@
       "reviewFlags": [
         "effect size on HbA1c is modest; not established as first-line therapy",
         "weight effect is a secondary outcome in an insulin-adjunct T1D population, not a standalone weight-loss trial",
-        "independently corroborated by a 2017 meta-analysis of 10 RCTs (n=1978 pramlintide vs n=1319 placebo, PMID 29029531), which confirms the same direction of effect on HbA1c and body weight and documents increased nausea, vomiting, anorexia, and hypoglycemia at treatment initiation"
+        "independently corroborated by a 2017 meta-analysis of 10 RCTs (n=1978 pramlintide vs n=1319 placebo, PMID 29029531), which confirms the same direction of effect on HbA1c and body weight and documents increased nausea, vomiting, anorexia, and hypoglycemia at treatment initiation",
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a 52-week, double-blind, placebo-controlled, multicenter RCT of 651 patients...\", corroborated by a named 2017 meta-analysis); no regulator document exists for this specific claim (searched: fetched the DailyMed SymlinPen label's Clinical Studies (14.1 Type 1 Diabetes) section this session — it reports related but non-matching trial data, e.g. a placebo-subtracted HbA1c change of -0.34%/-0.32% at 6 months and weight deltas of -0.8/-1.6/-1.3 kg vs +0.8/+0.4/+0.7 kg placebo across three separate trials, none of which reproduces this claim's specific 52-week, 651-patient, 0.29%/0.34%/0.04% HbA1c and 0.4 kg vs 0.8 kg weight figures from Ratner 2004, so linking it here would misattribute a different dataset to this claim)"
       ]
     },
     {
@@ -410,7 +411,8 @@
       "off-label-marketing-gap-documented",
       "thin-human-evidence-for-weightloss-indication",
       "product-marketing-status-discontinued",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "authority-support-pass-2026-08-29"
     ]
   }
 }
