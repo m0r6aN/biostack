@@ -11,28 +11,45 @@
   },
   "sources": [
     { "sourceId": "pubchem-ghk-cu", "sourceType": "database", "authorityTier": "C1", "title": "PubChem Compound Summary for GHK-Cu", "publisher": "National Center for Biotechnology Information", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/133697840", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
-    { "sourceId": "pmc-ghk-skin-regeneration-2015", "sourceType": "review", "authorityTier": "B1", "title": "GHK Peptide as a Natural Modulator of Multiple Cellular Pathways in Skin Regeneration", "publisher": "BioMed Research International / PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4508379/", "doi": "10.1155/2015/648108", "pmid": null, "publishedAt": "2015-01-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+    { "sourceId": "pmc-ghk-skin-regeneration-2015", "sourceType": "review", "authorityTier": "B1", "title": "GHK Peptide as a Natural Modulator of Multiple Cellular Pathways in Skin Regeneration", "publisher": "BioMed Research International / PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4508379/", "doi": "10.1155/2015/648108", "pmid": null, "publishedAt": "2015-01-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "drugbank-prezatide", "sourceType": "database", "authorityTier": "B1", "title": "Prezatide (GHK-Cu) — DrugBank Drug Entry DB11296", "publisher": "DrugBank", "url": "https://go.drugbank.com/drugs/DB11296", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-08-29T00:00:00Z" },
+    { "sourceId": "ctv-cuheal-trial", "sourceType": "clinical-trial-registry", "authorityTier": "A2", "title": "Topical GHK-Cu Gel for Acute Skin Wound Healing (CuHeal)", "publisher": "CenterWatch/Veeva Clinical Trials Registry", "url": "https://ctv.veeva.com/study/topical-ghk-cu-gel-for-acute-skin-wound-healing", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-08-29T00:00:00Z" },
+    { "sourceId": "orrick-fda-pcac-2026", "sourceType": "regulatory-analysis", "authorityTier": "A1", "title": "FDA Announces Removal of 12 Peptides from Category 2 and Schedules PCAC Meetings", "publisher": "Orrick, Herrington & Sutcliffe LLP", "url": "https://www.orrick.com/en/Insights/2026/04/FDA-Announces-Removal-of-12-Peptides-from-Category-2-and-Schedules-PCAC-Meetings", "doi": null, "pmid": null, "publishedAt": "2026-04-01T00:00:00Z", "accessedAt": "2026-08-29T00:00:00Z" }
   ],
   "claims": [
     {
       "claimId": "ghk-cu-identity-pubchem-001", "claimType": "identity", "statement": "GHK-Cu is indexed by PubChem as CID 133697840 and associated with CAS number 300801-03-0.",
       "context": { "population": null, "route": null, "formulation": null, "useCase": "identity resolution", "doseText": null },
-      "evidenceTier": "Unknown", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pubchem-ghk-cu"],
-      "extractedEvidence": [{ "sourceRef": "pubchem-ghk-cu", "quote": null, "pageOrSection": "Compound summary" }], "reviewFlags": ["verify aliases and CAS across product types"]
+      "evidenceTier": "Unknown", "confidence": "high", "fieldAuthorityRequired": false,
+      "sourceRefs": ["pubchem-ghk-cu", "drugbank-prezatide"],
+      "extractedEvidence": [
+        { "sourceRef": "pubchem-ghk-cu", "quote": null, "pageOrSection": "Compound summary" },
+        { "sourceRef": "drugbank-prezatide", "quote": "Prezatide is a tripeptide consisting of glycine, histidine, and lysine which readily forms a complex with copper ions.", "pageOrSection": "Drug entry description" },
+        { "sourceRef": "drugbank-prezatide", "quote": "Prezatide is used in cosmetic products for the skin and hair.", "pageOrSection": "Drug entry description" }
+      ],
+      "reviewFlags": ["verify aliases and CAS across product types", "independent review: DrugBank entry DB11296 ('Prezatide') corroborates the Gly-His-Lys copper-complex identity and cosmetic-use context; DrugBank's own CAS field was login-gated so CAS 300801-03-0 was cross-confirmed via vendor chemical-safety listings (e.g. Cayman Chemical, MedKoo) rather than a second free structured-database CAS field — flagged for a future stronger CAS cross-check"]
     },
     {
       "claimId": "ghk-cu-skin-regeneration-context-001", "claimType": "studied-use", "statement": "A review describes GHK-Cu research in skin regeneration and wound-healing contexts, with substantial preclinical evidence and cosmetic/topical relevance; BioStack should keep topical/cosmetic claims separate from injectable or systemic claims.",
       "context": { "population": "skin-regeneration and cosmetic research contexts", "route": "topical or studied route-specific contexts", "formulation": "GHK-Cu", "useCase": "skin regeneration literature boundary", "doseText": null },
-      "evidenceTier": "Limited", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-ghk-skin-regeneration-2015"],
-      "extractedEvidence": [{ "sourceRef": "pmc-ghk-skin-regeneration-2015", "quote": "Wound healing activity of GHK-Cu was confirmed in animal experiments", "pageOrSection": "Skin regeneration discussion" }], "reviewFlags": ["route-specific claims must be separated", "do not generalize topical evidence to injectable/systemic use"]
+      "evidenceTier": "Limited", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-ghk-skin-regeneration-2015", "ctv-cuheal-trial"],
+      "extractedEvidence": [
+        { "sourceRef": "pmc-ghk-skin-regeneration-2015", "quote": "Wound healing activity of GHK-Cu was confirmed in animal experiments", "pageOrSection": "Skin regeneration discussion" },
+        { "sourceRef": "ctv-cuheal-trial", "quote": "Topical GHK-Cu Gel for Acute Skin Wound Healing (CuHeal)", "pageOrSection": "Study title/status: Phase 2, Enrolling" }
+      ],
+      "reviewFlags": ["route-specific claims must be separated", "do not generalize topical evidence to injectable/systemic use", "independent review: an independently registered Phase 2 controlled human trial (CuHeal, ctv-cuheal-trial) is testing topical GHK-Cu gel vs. placebo gel on standardized punch-biopsy wounds in adults; as of the accessed date the trial is enrolling with results pending — human efficacy is NOT yet established, so 'substantial preclinical evidence' in this claim must not be read to imply proven human efficacy"]
     },
     {
-      "claimId": "ghk-cu-hype-boundary-001", "claimType": "evidence-gap", "statement": "BioStack should separate GHK-Cu topical/cosmetic evidence from broad anti-aging, systemic healing, or injectable wellness claims unless source-specific human evidence supports those exact claims.",
-      "context": { "population": "consumer anti-aging and peptide users", "route": "topical, injectable, or unspecified", "formulation": "GHK-Cu products", "useCase": "route and marketing-claim boundary", "doseText": null },
-      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-ghk-skin-regeneration-2015", "pubchem-ghk-cu"],
-      "extractedEvidence": [{ "sourceRef": "pmc-ghk-skin-regeneration-2015", "quote": null, "pageOrSection": "Review scope and evidence context" }], "reviewFlags": ["vendor injectable claims require misinformation monitoring"]
+      "claimId": "ghk-cu-hype-boundary-001", "claimType": "evidence-gap", "statement": "BioStack should separate GHK-Cu topical/cosmetic evidence from broad anti-aging, systemic healing, or injectable wellness claims unless source-specific human evidence supports those exact claims. As of the live FDA 503A bulk drug substances nomination record, GHK-Cu has no FDA drug approval and is not on the 503A bulk drug substances list: its Category 1 nomination was withdrawn (removal from Category 1 announced April 2026) and PCAC consultation on its status is not scheduled until before the end of February 2027. Any vendor or marketing claim that injectable or compounded GHK-Cu is FDA-sanctioned or legitimately compounded under an approved bulk-substance listing is false as of the accessed date.",
+      "context": { "population": "consumer anti-aging and peptide users", "route": "topical, injectable, or unspecified", "formulation": "GHK-Cu products", "useCase": "route and marketing-claim boundary; regulatory status of injectable/compounded GHK-Cu", "doseText": null },
+      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["pmc-ghk-skin-regeneration-2015", "pubchem-ghk-cu", "orrick-fda-pcac-2026"],
+      "extractedEvidence": [
+        { "sourceRef": "pmc-ghk-skin-regeneration-2015", "quote": null, "pageOrSection": "Review scope and evidence context" },
+        { "sourceRef": "orrick-fda-pcac-2026", "quote": "Additionally, the FDA is removing one peptide, GHK-Cu, from Category 1 (substances under evaluation that have not been identified as presenting significant safety risks and as to which FDA is exercising enforcement discretion) for the same reason — withdrawal of the nomination — with PCAC consultation planned before the end of February 2027.", "pageOrSection": "FDA 503A Category 1 nomination status" }
+      ],
+      "reviewFlags": ["vendor injectable claims require misinformation monitoring", "marked fieldAuthorityRequired=true: claim discusses injectable/regulatory boundary and safety-relevant vendor claims per extraction rules", "independent review: live FDA/PCAC 503A nomination record (Orrick regulatory analysis, April 2026) confirms GHK-Cu is not on the 503A bulk drug substances list, its Category 1 nomination was withdrawn, and PCAC review is not scheduled until before Feb 2027 — regulatory gap now stated explicitly rather than left implicit"]
     }
   ],
   "conflicts": [],
-  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot misinformation-heavy evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "misinformation-heavy", "route-specific-boundary"] }
+  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot misinformation-heavy evidence packet requires human review before publication.", "Regulatory gap: GHK-Cu's Category 1 FDA 503A bulk drug substances nomination was withdrawn (removal announced April 2026) and it is not currently on the 503A bulk drug substances list; PCAC consultation on its status is not scheduled until before the end of February 2027 (source: orrick-fda-pcac-2026). This is now stated in claim ghk-cu-hype-boundary-001 (fieldAuthorityRequired=true) but remains human-review gated pending confirmation of any subsequent PCAC action.", "Identity claim ghk-cu-identity-pubchem-001: DrugBank's own CAS number field is login-gated, so CAS 300801-03-0 is corroborated only via vendor chemical-safety-data listings rather than a second free structured-database CAS field — a stronger independent CAS cross-check (e.g. CAS Common Chemistry or ChemIDplus) remains an open item."], "qualityFlags": ["pilot-input", "misinformation-heavy", "route-specific-boundary", "remediation-pass-2026-08-29"] }
 }

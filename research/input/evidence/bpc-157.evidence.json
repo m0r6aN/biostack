@@ -1,38 +1,248 @@
 {
   "schemaVersion": "1.0.0",
   "recordType": "compound-evidence-packet",
-  "packet": { "packetId": "bpc-157-evidence-pilot-001", "category": "peptides-core", "agentId": "augment-research-launchpack", "generatedAt": "2026-05-05T00:00:00Z", "sourceRegistryVersion": "pilot-source-registry-001" },
+  "packet": {
+    "packetId": "bpc-157-evidence-pilot-001",
+    "category": "peptides-core",
+    "agentId": "augment-research-launchpack",
+    "generatedAt": "2026-05-05T00:00:00Z",
+    "sourceRegistryVersion": "pilot-source-registry-001"
+  },
   "compound": {
     "canonicalName": "BPC-157",
-    "aliases": ["Body Protection Compound 157", "PL 14736"],
+    "aliases": [
+      "Body Protection Compound 157",
+      "PL 14736"
+    ],
     "classification": "Peptide",
     "compoundFamily": "Synthetic peptide",
-    "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": null, "drugbank": null, "pubchem": null, "chembl": null, "doi": null, "pmid": null }
+    "externalIdentifiers": {
+      "rxnorm": null,
+      "unii": "8ED8NXK95P",
+      "casNumber": "137525-51-0",
+      "drugbank": "DB11882",
+      "pubchem": "9941957",
+      "chembl": "CHEMBL4297358",
+      "doi": null,
+      "pmid": null
+    }
   },
   "sources": [
-    { "sourceId": "fda-bpc157-category2", "sourceType": "regulator", "authorityTier": "A1", "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks", "publisher": "U.S. Food and Drug Administration", "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
-    { "sourceId": "pmc-bpc157-review-2025", "sourceType": "review", "authorityTier": "B1", "title": "Multifunctionality and Possible Medical Application of the BPC 157 Peptide—Literature and Patent Review", "publisher": "Pharmaceuticals / PubMed Central", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11859134/", "doi": "10.3390/ph18020185", "pmid": "40005999", "publishedAt": "2025-02-01T00:00:00Z", "accessedAt": "2026-05-05T00:00:00Z" }
+    {
+      "sourceId": "fda-bpc157-category2",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-05-05T00:00:00Z"
+    },
+    {
+      "sourceId": "pmc-bpc157-review-2025",
+      "sourceType": "review",
+      "authorityTier": "B1",
+      "title": "Multifunctionality and Possible Medical Application of the BPC 157 Peptide\u2014Literature and Patent Review",
+      "publisher": "Pharmaceuticals / PubMed Central",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11859134/",
+      "doi": "10.3390/ph18020185",
+      "pmid": "40005999",
+      "publishedAt": "2025-02-01T00:00:00Z",
+      "accessedAt": "2026-05-05T00:00:00Z"
+    },
+    {
+      "sourceId": "fda-bpc157-category2-recheck-2026-08",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (live re-check, April 2026 update)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-04-22T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "holt-law-fda-bpc157-april2026-alert",
+      "sourceType": "legal/regulatory-commentary",
+      "authorityTier": "C1",
+      "title": "Regulatory Alert: FDA's April 2026 Update on BPC-157 and GHK-Cu",
+      "publisher": "DJ Holt Law",
+      "url": "https://djholtlaw.com/regulatory-alert-fdas-april-2026-update-on-bpc-157-and-ghk-cu/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "pubmed-vasireddi-2025-orthosportsmed",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Emerging Use of BPC-157 in Orthopaedic Sports Medicine",
+      "publisher": "PubMed",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/",
+      "doi": null,
+      "pmid": "40756949",
+      "publishedAt": "2025-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "statnews-bpc157-2026-02",
+      "sourceType": "journalism",
+      "authorityTier": "C1",
+      "title": "BPC-157 peptide science: safety and regulatory questions",
+      "publisher": "STAT News",
+      "url": "https://www.statnews.com/2026/02/03/bpc-157-peptide-science-safety-regulatory-questions/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-02-03T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ncpa-pcac-july-2026-vote",
+      "sourceType": "professional-organization",
+      "authorityTier": "B2",
+      "title": "FDA advisory committee nominates six peptides for pharmacies to compound (NCPA qAM, July 31, 2026)",
+      "publisher": "National Community Pharmacists Association",
+      "url": "https://ncpa.org/newsroom/qam/2026/07/31/fda-advisory-committee-nominates-six-peptides-pharmacies-compound",
+      "publishedAt": "2026-07-31T00:00:00Z",
+      "accessedAt": "2026-08-29T05:50:00Z"
+    }
   ],
   "claims": [
     {
-      "claimId": "bpc157-regulatory-compounding-risk-001", "claimType": "regulatory", "statement": "FDA lists BPC-157 among bulk drug substances that may present significant safety risks for compounding, citing immunogenicity risk for certain routes, peptide-impurity/API-characterization complexity, and limited route-specific safety information.",
-      "context": { "population": "humans exposed to compounded BPC-157 products", "route": "various proposed routes", "formulation": "compounded BPC-157", "useCase": "compounding safety and regulatory boundary", "doseText": null },
-      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["fda-bpc157-category2"],
-      "extractedEvidence": [{ "sourceRef": "fda-bpc157-category2", "quote": "Compounded drugs containing BPC-157 may pose risk for immunogenicity... peptide-related impurities and active pharmaceutical ingredient (API) characterization... limited, safety-related information", "pageOrSection": "BPC-157 row" }], "reviewFlags": ["safety-critical regulatory claim", "do not present compounded or gray-market products as equivalent to approved drugs"]
+      "claimId": "bpc157-regulatory-compounding-risk-001",
+      "claimType": "regulatory",
+      "statement": "As of an April 2026 FDA update, BPC-157 was removed from the FDA's Category 2 'significant safety risks' bulk drug substances list after the original nominators withdrew their nomination; this is a procedural change, not new safety data. BPC-157 now appears under 'bulk drug substances nominated but withdrawn' and remains an unapproved new drug not on any FDA-permitted compounding list (503A or 503B), so compounding it still carries unresolved regulatory and safety uncertainty. At its July 23-24, 2026 meeting, the FDA's Pharmacy Compounding Advisory Committee (PCAC) voted to recommend that FDA include BPC-157 (with KPV, TB-500, MOTS-c, Epitalon, and Semax) on the 503A Bulks List; this recommendation is advisory and non-binding \u2014 BPC-157 remains an unapproved new drug not on any FDA-permitted compounding list unless and until FDA acts on it.",
+      "context": {
+        "population": "humans exposed to compounded BPC-157 products",
+        "route": "various proposed routes",
+        "formulation": "compounded BPC-157",
+        "useCase": "compounding safety and regulatory boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Strong",
+      "confidence": "high",
+      "fieldAuthorityRequired": true,
+      "sourceRefs": [
+        "fda-bpc157-category2-recheck-2026-08",
+        "holt-law-fda-bpc157-april2026-alert",
+        "ncpa-pcac-july-2026-vote"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "fda-bpc157-category2-recheck-2026-08",
+          "quote": "BPC-157: Compounded drugs containing BPC-157 may pose risk for immunogenicity for certain routes of administration and may have complexities with regard to peptide-related impurities and active pharmaceutical ingredient (API) characterization. FDA has identified no, or only limited, safety-related information for the proposed routes of administration. Therefore, the agency lacks sufficient information to know whether the drug would cause harm when administered to humans.",
+          "pageOrSection": "Bulk drug substances nominated but withdrawn"
+        },
+        {
+          "sourceRef": "holt-law-fda-bpc157-april2026-alert",
+          "quote": "BPC-157 is officially being removed from the Category 2 list (the banned list for substances with significant safety risks). This removal was triggered because the original nominators formally withdrew their nominations. Because BPC-157 was removed from Category 2, but not yet added to Category 1, it meets none of the criteria. The FDA has officially announced its intention to consult the Pharmacy Compounding Advisory Committee (PCAC) on July 23, 2026, regarding the potential inclusion of BPC-157 (acetate and free base) onto the approved 503A list.",
+          "pageOrSection": "Regulatory Alert: FDA's April 2026 Update on BPC-157 and GHK-Cu"
+        },
+        {
+          "sourceRef": "ncpa-pcac-july-2026-vote",
+          "quote": "The Food and Drug Administration's Pharmacy Compounding Advisory Committee (PCAC) voted to recommend that the FDA include peptides BPC-157, KPV, TB-500, MOTS-c, Epitalon, and Semax on the 503A Bulks List",
+          "pageOrSection": "article body"
+        }
+      ],
+      "reviewFlags": [
+        "safety-critical regulatory claim",
+        "do not present compounded or gray-market products as equivalent to approved drugs",
+        "regulatory status re-verified 2026-08-29 against live FDA page; superseded a claim based on a now-outdated April 2026 Category 2 listing",
+        "operator correction 2026-08-29: remediation agent phrased the July 23-24 2026 PCAC meeting in future tense; the meeting occurred and voted to RECOMMEND 503A listing (advisory, non-binding). Corrected with live-fetched NCPA trade-press source. Re-verify FDA's final action before publication."
+      ]
     },
     {
-      "claimId": "bpc157-preclinical-human-gap-001", "claimType": "evidence-gap", "statement": "A literature review describes broad preclinical interest in BPC-157 but emphasizes scarce human studies and the need for human-oriented studies to establish therapeutic and toxic profiles.",
-      "context": { "population": "human use claims extrapolated from preclinical literature", "route": null, "formulation": "BPC-157", "useCase": "human-evidence boundary", "doseText": null },
-      "evidenceTier": "Insufficient", "confidence": "high", "fieldAuthorityRequired": false, "sourceRefs": ["pmc-bpc157-review-2025"],
-      "extractedEvidence": [{ "sourceRef": "pmc-bpc157-review-2025", "quote": "Considering the scarcity of human studies... more extensive human-oriented studies indicating therapeutic and toxic profiles of BPC 157 are required", "pageOrSection": "Review discussion" }], "reviewFlags": ["do not infer human efficacy from animal models", "vendor healing claims require misinformation monitoring"]
+      "claimId": "bpc157-preclinical-human-gap-001",
+      "claimType": "evidence-gap",
+      "statement": "A literature review describes broad preclinical interest in BPC-157 but emphasizes scarce human studies and the need for human-oriented studies to establish therapeutic and toxic profiles. An independent 2025 systematic review of 36 studies found only 1 human clinical study (a small retrospective case series, with 7 of 12 patients reporting relief for >6 months after intra-articular knee injection) and stated that no clinical safety data were found for BPC-157.",
+      "context": {
+        "population": "human use claims extrapolated from preclinical literature",
+        "route": null,
+        "formulation": "BPC-157",
+        "useCase": "human-evidence boundary",
+        "doseText": null
+      },
+      "evidenceTier": "Insufficient",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pmc-bpc157-review-2025",
+        "pubmed-vasireddi-2025-orthosportsmed"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc-bpc157-review-2025",
+          "quote": "Considering the scarcity of human studies... more extensive human-oriented studies indicating therapeutic and toxic profiles of BPC 157 are required",
+          "pageOrSection": "Review discussion"
+        },
+        {
+          "sourceRef": "pubmed-vasireddi-2025-orthosportsmed",
+          "quote": "No clinical safety data were found. 36 studies were included (35 preclinical studies, 1 clinical study)... 7 of 12 patients reported relief for >6 months",
+          "pageOrSection": "Abstract/results"
+        }
+      ],
+      "reviewFlags": [
+        "do not infer human efficacy from animal models",
+        "vendor healing claims require misinformation monitoring",
+        "independently corroborated 2026-08-29: essentially zero controlled human safety data across an independent 2025 systematic review of 36 studies"
+      ]
     },
     {
-      "claimId": "bpc157-misinformation-boundary-001", "claimType": "misinformation-claim", "statement": "Online claims commonly present BPC-157 as a proven systemic healing peptide; BioStack should label such claims as unsupported unless tied to high-quality human clinical evidence and product-specific safety review.",
-      "context": { "population": "consumer and biohacker communities", "route": null, "formulation": "research/vendor BPC-157 products", "useCase": "misinformation monitoring", "doseText": null },
-      "evidenceTier": "Anecdotal", "confidence": "moderate", "fieldAuthorityRequired": false, "sourceRefs": ["fda-bpc157-category2", "pmc-bpc157-review-2025"],
-      "extractedEvidence": [{ "sourceRef": "pmc-bpc157-review-2025", "quote": null, "pageOrSection": "Review discussion of human evidence limits and accessibility" }], "reviewFlags": ["do not publish as factual benefit claim"]
+      "claimId": "bpc157-misinformation-boundary-001",
+      "claimType": "misinformation-claim",
+      "statement": "Online claims commonly present BPC-157 as a proven systemic healing peptide; BioStack should label such claims as unsupported unless tied to high-quality human clinical evidence and product-specific safety review.",
+      "context": {
+        "population": "consumer and biohacker communities",
+        "route": null,
+        "formulation": "research/vendor BPC-157 products",
+        "useCase": "misinformation monitoring",
+        "doseText": null
+      },
+      "evidenceTier": "Anecdotal",
+      "confidence": "moderate",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "fda-bpc157-category2",
+        "pmc-bpc157-review-2025",
+        "statnews-bpc157-2026-02"
+      ],
+      "extractedEvidence": [
+        {
+          "sourceRef": "pmc-bpc157-review-2025",
+          "quote": null,
+          "pageOrSection": "Review discussion of human evidence limits and accessibility"
+        },
+        {
+          "sourceRef": "statnews-bpc157-2026-02",
+          "quote": "Should not be used by humans.",
+          "pageOrSection": "Quote from Flynn McGuire, chief medical resident, University of Utah Health"
+        }
+      ],
+      "reviewFlags": [
+        "do not publish as factual benefit claim",
+        "independently corroborated 2026-08-29 by STAT News: a University of Utah Health physician states BPC-157 should not be used by humans absent proper trials; nearly all existing evidence traces to one Croatia-based research group (Sikiric et al.); a 2015 human trial registered on clinicaltrials.gov was withdrawn before external review with no peer-reviewed results ever published"
+      ]
     }
   ],
   "conflicts": [],
-  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot misinformation-heavy evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "misinformation-heavy", "limited-human-evidence", "regulatory-boundary"] }
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Pilot misinformation-heavy evidence packet requires human review before publication.",
+      "Regulatory-status drift resolved 2026-08-29: FDA removed BPC-157 from the Category 2 significant-safety-risk list in April 2026 after nomination withdrawal (procedural, not a safety finding); BPC-157 remains an unapproved new drug not on any permitted compounding list, and at the July 23-24, 2026 PCAC meeting the committee voted to recommend BPC-157 for the 503A Bulks List (advisory, non-binding; awaiting FDA action). Claim bpc157-regulatory-compounding-risk-001 and its sourceRefs were rewritten and re-verified against a live re-fetch of the FDA page plus an independent legal/regulatory commentary source (Holt Law) rather than re-affirming the original stale FDA-page-only citation; next reviewer should re-check the live FDA page again ahead of/after the July 2026 PCAC meeting, since the outcome of that meeting may change status again.",
+      "compound.externalIdentifiers completeness gap closed 2026-08-29 via PubChem REST lookup (CID 9941957; CAS 137525-51-0; UNII 8ED8NXK95P; DrugBank DB11882; ChEMBL CHEMBL4297358); rxnorm/doi/pmid remain null as not applicable to this compound identity record."
+    ],
+    "qualityFlags": [
+      "pilot-input",
+      "misinformation-heavy",
+      "limited-human-evidence",
+      "regulatory-boundary",
+      "remediation-pass-2026-08-29"
+    ]
+  }
 }

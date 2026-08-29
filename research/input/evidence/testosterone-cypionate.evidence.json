@@ -10,7 +10,9 @@
     "externalIdentifiers": { "rxnorm": null, "unii": null, "casNumber": "58-20-8", "drugbank": "DB13946", "pubchem": "441404", "chembl": null, "doi": null, "pmid": null }
   },
   "sources": [
-    { "sourceId": "dailymed-depo-testosterone", "sourceType": "label", "authorityTier": "A1", "title": "DailyMed DEPO-TESTOSTERONE (testosterone cypionate) injection", "publisher": "National Library of Medicine / DailyMed", "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=735b5bf3-4464-412c-a072-1bd02f2e5380", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" }
+    { "sourceId": "dailymed-depo-testosterone", "sourceType": "label", "authorityTier": "A1", "title": "DailyMed DEPO-TESTOSTERONE (testosterone cypionate) injection", "publisher": "National Library of Medicine / DailyMed", "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=735b5bf3-4464-412c-a072-1bd02f2e5380", "doi": null, "pmid": null, "publishedAt": null, "accessedAt": "2026-05-05T00:00:00Z" },
+    { "sourceId": "endocrine-society-2018-guideline", "sourceType": "clinical-guideline", "authorityTier": "A1", "title": "Testosterone Therapy in Men With Hypogonadism: An Endocrine Society Clinical Practice Guideline", "publisher": "Journal of Clinical Endocrinology & Metabolism / Endocrine Society", "url": "https://pubmed.ncbi.nlm.nih.gov/29562364/", "doi": "10.1210/jc.2018-00229", "pmid": "29562364", "publishedAt": "2018-05-01T00:00:00Z", "accessedAt": "2026-08-29T00:00:00Z" },
+    { "sourceId": "fda-azmiro-label-2022", "sourceType": "label", "authorityTier": "A1", "title": "Azmiro (testosterone cypionate injection) FDA-approved label, NDA 216318", "publisher": "U.S. Food and Drug Administration", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/216318s000lbl.pdf", "doi": null, "pmid": null, "publishedAt": "2022-01-01T00:00:00Z", "accessedAt": "2026-08-29T00:00:00Z" }
   ],
   "claims": [
     {
@@ -20,16 +22,30 @@
       "extractedEvidence": [{ "sourceRef": "dailymed-depo-testosterone", "quote": "DEPO-Testosterone Injection is indicated for replacement therapy in the male in conditions associated with symptoms of deficiency or absence of endogenous testosterone.", "pageOrSection": "Indications and Usage" }], "reviewFlags": ["prescription hormone context; do not convert to optimization advice"]
     },
     {
-      "claimId": "testosterone-cypionate-contraindications-001", "claimType": "contraindication", "statement": "DailyMed lists contraindications for testosterone cypionate injection including hypersensitivity, males with breast carcinoma, males with known or suspected prostate carcinoma, pregnancy, and serious cardiac, hepatic, or renal disease.",
+      "claimId": "testosterone-cypionate-contraindications-001", "claimType": "contraindication", "statement": "DailyMed lists the FDA label's contraindications for testosterone cypionate injection -- hypersensitivity, males with breast carcinoma, males with known or suspected prostate carcinoma, pregnancy, and serious cardiac, hepatic, or renal disease. This is the label's absolute-contraindication list only; it is narrower than current clinical-guideline 'do not start' criteria (see reviewFlags) and should not be read as the complete safety-gating list.",
       "context": { "population": "label-specified contraindicated populations", "route": "intramuscular", "formulation": "testosterone cypionate injection", "useCase": "contraindication", "doseText": null },
-      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-depo-testosterone"],
-      "extractedEvidence": [{ "sourceRef": "dailymed-depo-testosterone", "quote": "Known hypersensitivity to the drug... Males with carcinoma of the breast... Males with known or suspected carcinoma of the prostate gland... Women who are pregnant... Patients with serious cardiac, hepatic or renal disease", "pageOrSection": "Contraindications" }], "reviewFlags": ["safety-critical; human review required"]
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-depo-testosterone", "endocrine-society-2018-guideline"],
+      "extractedEvidence": [
+        { "sourceRef": "dailymed-depo-testosterone", "quote": "Known hypersensitivity to the drug... Males with carcinoma of the breast... Males with known or suspected carcinoma of the prostate gland... Women who are pregnant... Patients with serious cardiac, hepatic or renal disease", "pageOrSection": "Contraindications" },
+        { "sourceRef": "endocrine-society-2018-guideline", "quote": "patients who are planning fertility in the near term or have any of the following conditions: breast or prostate cancer, a palpable prostate nodule or induration, prostate-specific antigen level > 4 ng/mL ... prostate-specific antigen > 3 ng/mL in men at increased risk of prostate cancer...without further urological evaluation, elevated hematocrit ... untreated severe obstructive sleep apnea, severe lower urinary tract symptoms, uncontrolled heart failure ... myocardial infarction or stroke within the last 6 months, or thrombophilia", "pageOrSection": "Recommendations against initiating testosterone therapy" }
+      ],
+      "reviewFlags": [
+        "safety-critical; human review required",
+        "Independent review (2026-08-29): FDA label lists only 5 absolute contraindications. The Endocrine Society Clinical Practice Guideline (JCEM 2018, PMID 29562364, verified this session) documents a broader set of 'do not start' factors not on the label -- elevated hematocrit, PSA >3-4 ng/mL, untreated severe obstructive sleep apnea, uncontrolled heart failure, recent MI/stroke, thrombophilia, and near-term fertility plans. Treat 'FDA label contraindications' and 'guideline-recommended cautions' as distinct lists; do not present the label's five items as an exhaustive safety-gating list."
+      ]
     },
     {
-      "claimId": "testosterone-cypionate-warning-hypercalcemia-001", "claimType": "warning", "statement": "DailyMed warns that hypercalcemia may occur in immobilized patients receiving testosterone cypionate, and the drug should be discontinued if this occurs.",
+      "claimId": "testosterone-cypionate-warning-hypercalcemia-001", "claimType": "warning", "statement": "The DailyMed DEPO-TESTOSTERONE label warns that hypercalcemia may occur in immobilized patients receiving testosterone cypionate, and the drug should be discontinued if this occurs. This 'immobilized patients' phrasing is specific to this label and is not a universal testosterone-cypionate-class warning (see reviewFlags).",
       "context": { "population": "immobilized patients", "route": "intramuscular", "formulation": "testosterone cypionate injection", "useCase": "warning", "doseText": null },
-      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-depo-testosterone"],
-      "extractedEvidence": [{ "sourceRef": "dailymed-depo-testosterone", "quote": "Hypercalcemia may occur in immobilized patients. If this occurs, the drug should be discontinued.", "pageOrSection": "Warnings" }], "reviewFlags": ["safety-critical; human review required"]
+      "evidenceTier": "Strong", "confidence": "high", "fieldAuthorityRequired": true, "sourceRefs": ["dailymed-depo-testosterone", "fda-azmiro-label-2022"],
+      "extractedEvidence": [
+        { "sourceRef": "dailymed-depo-testosterone", "quote": "Hypercalcemia may occur in immobilized patients. If this occurs, the drug should be discontinued.", "pageOrSection": "Warnings" },
+        { "sourceRef": "fda-azmiro-label-2022", "quote": "Androgens, including Testosterone Cypionate Injection, should be used with caution in cancer patients at risk of hypercalcemia (and associated hypercalciuria). Monitor serum calcium concentrations periodically in these patients.", "pageOrSection": "Section 5.13 Warnings and Precautions" }
+      ],
+      "reviewFlags": [
+        "safety-critical; human review required",
+        "Independent review (2026-08-29): re-fetched the current FDA label for a different marketed testosterone cypionate product (Azmiro, NDA 216318, 2022) this session; it warns on hypercalcemia only in cancer patients at risk, with no 'immobilized patients' language. The DEPO-TESTOSTERONE 'immobilized patients' warning is therefore label-specific, not a universal testosterone-cypionate-class fact -- do not generalize it across all testosterone cypionate products without checking the specific product's current label."
+      ]
     },
     {
       "claimId": "testosterone-cypionate-misuse-boundary-001", "claimType": "evidence-gap", "statement": "BioStack should separate labeled testosterone replacement therapy contexts from bodybuilding, performance-enhancement, or non-prescribed optimization claims, which require separate legal, safety, and misinformation review.",
@@ -38,6 +54,31 @@
       "extractedEvidence": [{ "sourceRef": "dailymed-depo-testosterone", "quote": null, "pageOrSection": "Indications and Usage / Contraindications" }], "reviewFlags": ["misuse claims must not be presented as medical guidance"]
     }
   ],
-  "conflicts": [],
-  "ops": { "completeness": "partial", "needsReview": true, "reviewReasons": ["Pilot regulatory evidence packet requires human review before publication."], "qualityFlags": ["pilot-input", "a1-label-backed", "prescription-hormone-context"] }
+  "conflicts": [
+    {
+      "conflictId": "testosterone-cypionate-contraindication-scope-001",
+      "claimRefs": ["testosterone-cypionate-contraindications-001"],
+      "severity": "moderate",
+      "summary": "The DailyMed label's 5 absolute contraindications are narrower than the Endocrine Society Clinical Practice Guideline's (JCEM 2018, PMID 29562364) broader 'do not start' criteria (elevated hematocrit, PSA >3-4 ng/mL, untreated severe OSA, uncontrolled heart failure, recent MI/stroke, thrombophilia, near-term fertility plans). Resolved by independent-source verification this session; claim statement and reviewFlags now distinguish the two lists so the label's five items are not read as exhaustive.",
+      "resolutionStatus": "resolved"
+    },
+    {
+      "conflictId": "testosterone-cypionate-hypercalcemia-label-specificity-001",
+      "claimRefs": ["testosterone-cypionate-warning-hypercalcemia-001"],
+      "severity": "low",
+      "summary": "The DEPO-TESTOSTERONE label's 'hypercalcemia may occur in immobilized patients' warning is not present in the Azmiro (NDA 216318) testosterone cypionate label, which instead limits its hypercalcemia caution to cancer patients at risk. Resolved by independently re-fetching the Azmiro label this session; claim statement and reviewFlags now mark the warning as label-specific rather than class-wide.",
+      "resolutionStatus": "resolved"
+    }
+  ],
+  "ops": {
+    "completeness": "partial",
+    "needsReview": true,
+    "reviewReasons": [
+      "Pilot regulatory evidence packet requires human review before publication.",
+      "Independent review (2026-08-29): contraindications claim's FDA-label list (5 items) is narrower than Endocrine Society guideline 'do not start' criteria -- annotated in claim reviewFlags and conflicts; downstream consumers must not treat the label list as exhaustive.",
+      "Independent review (2026-08-29): hypercalcemia warning's 'immobilized patients' phrasing is specific to the DEPO-TESTOSTERONE label and absent from the Azmiro (NDA 216318) testosterone cypionate label -- annotated in claim reviewFlags and conflicts; do not present as a universal class warning.",
+      "All four claims in this packet still rely on a single primary source family (dailymed-depo-testosterone) for their core statements; only two independent corroborating sources have been added to the packet's sources array to date. Continue expanding independent-source coverage, and re-verify the live DailyMed setid (735b5bf3-4464-412c-a072-1bd02f2e5380) before public promotion given ongoing 2025 FDA class-wide testosterone labeling activity (removal of the cardiovascular boxed warning post-TRAVERSE)."
+    ],
+    "qualityFlags": ["pilot-input", "a1-label-backed", "prescription-hormone-context", "remediation-pass-2026-08-29"]
+  }
 }
