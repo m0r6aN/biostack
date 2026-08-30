@@ -96,6 +96,78 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "rxlist-factrel-human-label",
+      "sourceType": "regulator",
+      "authorityTier": "B1",
+      "title": "Factrel (gonadorelin) - historical US FDA human label, reproduced by RxList",
+      "publisher": "RxList (reproducing historical FDA-approved human Factrel labeling)",
+      "url": "https://www.rxlist.com/factrel-drug.htm",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "drugs-com-gonadorelin-cons",
+      "sourceType": "clinical-reference",
+      "authorityTier": "B2",
+      "title": "Gonadorelin (Consumer information)",
+      "publisher": "Drugs.com",
+      "url": "https://www.drugs.com/cons/gonadorelin.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "dailymed-live-search-gonadorelin-2026-08-29",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "DailyMed search results for query GONADORELIN (live, 2026-08-29)",
+      "publisher": "U.S. Food and Drug Administration / DailyMed (NIH)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=GONADORELIN",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "jiang-pmc12336735-chh-gnrh-pump",
+      "sourceType": "retrospective-cohort-study",
+      "authorityTier": "B1",
+      "title": "Therapeutic effects of a pulsatile GnRH pump on adult male patients with congenital hypogonadotropic hypogonadism (CHH): a retrospective study",
+      "publisher": "Translational Andrology and Urology (Jiang H, Li BJ, Jin DC, Zhong QL, Zhu T, Li YF)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12336735/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "chemicalbook-cas-33515-09-2",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Gonadorelin (CAS 33515-09-2) chemical product properties",
+      "publisher": "ChemicalBook",
+      "url": "https://www.chemicalbook.com/ChemicalProductProperty_EN_CB2706342.htm",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "alfa-chemistry-cas-33515-09-2",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "title": "Gonadorelin (CAS 33515-09-2) supplier registry entry",
+      "publisher": "Alfa Chemistry",
+      "url": "https://www.alfa-chemistry.com/cas_33515-09-2.htm",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -113,15 +185,22 @@
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": false,
-      "sourceRefs": ["mayoclinic-gonadorelin-monograph", "pubchem-cid-638793"],
+      "sourceRefs": ["mayoclinic-gonadorelin-monograph", "pubchem-cid-638793", "rxlist-factrel-human-label"],
       "extractedEvidence": [
         {
           "sourceRef": "mayoclinic-gonadorelin-monograph",
           "quote": "Gonadorelin is used to test how well the hypothalamus and the pituitary glands are working.",
           "pageOrSection": "Description"
+        },
+        {
+          "sourceRef": "rxlist-factrel-human-label",
+          "quote": "Factrel (gonadorelin) has been shown to have gonadotropin-releasing effects upon the anterior pituitary.",
+          "pageOrSection": "Clinical Pharmacology"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "independently confirmed 2026-08-29 via RxList reproduction of the historical FDA-derived human Factrel label, closing the prior regulator-source gap for this mechanism claim"
+      ]
     },
     {
       "claimId": "gonadorelin-regulatory-veterinary-approval-001",
@@ -137,7 +216,7 @@
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": true,
-      "sourceRefs": ["dailymed-factrel-veterinary"],
+      "sourceRefs": ["dailymed-factrel-veterinary", "dailymed-live-search-gonadorelin-2026-08-29", "rxlist-factrel-human-label"],
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-factrel-veterinary",
@@ -148,17 +227,27 @@
           "sourceRef": "dailymed-factrel-veterinary",
           "quote": "Federal law restricts this drug to use by or on the order of a licensed veterinarian.",
           "pageOrSection": "Warnings and Precautions"
+        },
+        {
+          "sourceRef": "dailymed-live-search-gonadorelin-2026-08-29",
+          "quote": "CYSTORELIN (Boehringer Ingelheim Animal Health USA Inc.); FACTREL (Zoetis Inc.); FERTAGYL (Merck Sharp & Dohme Corp.); GONABREED (Parnell Technologies Pty Ltd); OVACYST (Bimeda, Inc.) -- all identified as animal drugs.",
+          "pageOrSection": "Search results, query=GONADORELIN"
+        },
+        {
+          "sourceRef": "rxlist-factrel-human-label",
+          "quote": "The brand name Factrel is discontinued, but generic versions may be available.",
+          "pageOrSection": "Overview"
         }
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "human Factrel/Lutrepulse products (gonadorelin acetate for diagnostic/ovulation-induction use) previously carried FDA/Health Canada approval but no current active US DailyMed human listing was found this session; confirm current US marketing-authorization status for any human gonadorelin product at review time"
+        "RESOLVED 2026-08-29: live DailyMed search confirms exactly five gonadorelin products, all veterinary; RxList independently confirms the historical human Factrel product is discontinued in the US (no active human gonadorelin product identified) -- no current US human gonadorelin product exists, consistent with this claim's veterinary-only characterization"
       ]
     },
     {
       "claimId": "gonadorelin-approved-indication-human-historical-001",
       "claimType": "approved-indication",
-      "statement": "In Canada, LUTREPULSE (gonadorelin acetate, delivered via pulsatile subcutaneous pump) is indicated for induction of ovulation in women with primary hypothalamic amenorrhea; gonadorelin has also been used diagnostically to test hypothalamic-pituitary-gonadal axis function.",
+      "statement": "In Canada, LUTREPULSE (gonadorelin acetate, delivered via pulsatile subcutaneous pump) is indicated per its Health Canada product monograph for induction of ovulation in women with primary hypothalamic amenorrhea; this ovulation-induction indication is Canada-specific and historical, not a currently active US indication (the corresponding human Factrel product in the US is confirmed discontinued). Gonadorelin has also historically been used diagnostically, under a since-discontinued US FDA-approved human product, to test hypothalamic-pituitary-gonadal axis function.",
       "context": {
         "population": "women with primary hypothalamic amenorrhea",
         "route": "subcutaneous, pulsatile pump",
@@ -169,7 +258,7 @@
       "evidenceTier": "Moderate",
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
-      "sourceRefs": ["ferring-lutrepulse-pm-canada", "mayoclinic-gonadorelin-monograph"],
+      "sourceRefs": ["ferring-lutrepulse-pm-canada", "mayoclinic-gonadorelin-monograph", "rxlist-factrel-human-label"],
       "extractedEvidence": [
         {
           "sourceRef": "ferring-lutrepulse-pm-canada",
@@ -185,11 +274,17 @@
           "sourceRef": "mayoclinic-gonadorelin-monograph",
           "quote": "It is also used to cause ovulation (release of an egg from the ovary) in women who do not have regular ovulation and menstrual periods because the hypothalamus gland does not release enough GnRH.",
           "pageOrSection": "Uses"
+        },
+        {
+          "sourceRef": "rxlist-factrel-human-label",
+          "quote": "The brand name Factrel is discontinued, but generic versions may be available.",
+          "pageOrSection": "Overview"
         }
       ],
       "reviewFlags": [
         "product-specific dosing claim - Canadian product monograph, not a US label; confirm whether an equivalent human product currently holds US marketing authorization",
-        "this indication is unrelated to gray-market TRT-adjunct use and must not be conflated with it"
+        "this indication is unrelated to gray-market TRT-adjunct use and must not be conflated with it",
+        "RESOLVED (wording) 2026-08-29: statement reworded to explicitly mark the ovulation-induction indication as Canada-only/historical per independent review finding; RxList independently confirms the corresponding US human Factrel product is discontinued. The ovulation-induction indication's current Canadian marketing status was not itself re-verified this session (2016 monograph is the only source) and remains a narrower residual gap for review"
       ]
     },
     {
@@ -206,7 +301,7 @@
       "evidenceTier": "Moderate",
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
-      "sourceRefs": ["ferring-lutrepulse-pm-canada", "mayoclinic-gonadorelin-monograph"],
+      "sourceRefs": ["ferring-lutrepulse-pm-canada", "mayoclinic-gonadorelin-monograph", "rxlist-factrel-human-label", "drugs-com-gonadorelin-cons"],
       "extractedEvidence": [
         {
           "sourceRef": "mayoclinic-gonadorelin-monograph",
@@ -227,11 +322,21 @@
           "sourceRef": "ferring-lutrepulse-pm-canada",
           "quote": "any condition that could be exacerbated by pregnancy",
           "pageOrSection": "Contraindications"
+        },
+        {
+          "sourceRef": "rxlist-factrel-human-label",
+          "quote": "There has been a report of pituitary apoplexy and sudden blindness following gonadotropin-releasing hormone administration to a patient with a gonadotropin-secreting adenoma.",
+          "pageOrSection": "Warnings"
+        },
+        {
+          "sourceRef": "drugs-com-gonadorelin-cons",
+          "quote": "The increase of estrogens and progestins in women or androgens in men that can result from use of multiple doses of gonadorelin may make a tumor worse if the tumor depends on estrogens, progestins, or androgens for growth",
+          "pageOrSection": "Warnings"
         }
       ],
       "reviewFlags": [
         "safety-critical warning claim",
-        "sourced from a Canadian product monograph and a secondary clinical reference (Mayo/Micromedex), not a current US FDA human label"
+        "RESOLVED 2026-08-29: independently confirmed by RxList's reproduction of the US FDA-derived human Factrel label (pituitary apoplexy/sudden blindness warning, verbatim) and by Drugs.com (hormone-dependent tumor worsening warning), closing the prior gap where this claim was sourced only from a Canadian monograph and Mayo/Micromedex"
       ]
     },
     {
@@ -248,7 +353,7 @@
       "evidenceTier": "Limited",
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
-      "sourceRefs": ["zhang-2019-pulsatile-gonadorelin-chh"],
+      "sourceRefs": ["zhang-2019-pulsatile-gonadorelin-chh", "jiang-pmc12336735-chh-gnrh-pump"],
       "extractedEvidence": [
         {
           "sourceRef": "zhang-2019-pulsatile-gonadorelin-chh",
@@ -264,12 +369,22 @@
           "sourceRef": "zhang-2019-pulsatile-gonadorelin-chh",
           "quote": "Overall success rates were comparable: 90% in the pulsatile group versus 83.3% in the cyclical group, without statistically significant differences.",
           "pageOrSection": "Results (as summarized from article)"
+        },
+        {
+          "sourceRef": "jiang-pmc12336735-chh-gnrh-pump",
+          "quote": "the 6.48±1.84 months sperm emergence time shown in this study is significantly shorter than the 9–18 months reported in hCG studies",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "jiang-pmc12336735-chh-gnrh-pump",
+          "quote": "The sperm production rate of 79.4% in this study is slightly better than the 75.8% and 76.9% rates reported in multiple hCG studies.",
+          "pageOrSection": "Results"
         }
       ],
       "reviewFlags": [
         "study population (CHH, requiring a mechanical pulsatile pump) is not equivalent to men on exogenous testosterone therapy with an intact hypothalamic-pituitary axis; do not extrapolate to gray-market TRT-adjunct dosing",
         "treatment arm was self-selected, not randomized - confounding possible",
-        "independent verification of full-text results (beyond fetchable summary) recommended at review",
+        "RESOLVED 2026-08-29: an independent, separate primary study (Jiang et al., PMC12336735, different authors/cohort than Zhang 2019) was fetched and corroborates the same qualitative finding -- pulsatile GnRH pump therapy produces faster spermatogenesis onset (6.48 vs 9-18 months) and comparable-or-better success rate (79.4% vs 75.8-76.9%) versus hCG/gonadotropin therapy. This is not an exact replication of Zhang 2019's specific figures (6 vs 14 months; 90% vs 83.3%) but independently supports the same direction of effect; the original Zhang 2019 primary PMC full text itself remains reCAPTCHA-blocked and was not independently re-pulled this session",
         "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a prospective, self-selected open-label comparison in 28 azoospermic men with congenital hypogonadotropic hypogonadism (CHH)...\"); no regulator document exists for this claim (searched: FDA.gov and DailyMed for gonadorelin human products and any spermatogenesis/CHH indication - DailyMed lists only 5 veterinary gonadorelin products (CYSTORELIN, FACTREL, FERTAGYL, GONABREED, OVACYST), none addressing human fertility or spermatogenesis induction; no current FDA-approved human gonadorelin product or label was located)"
       ]
     },
@@ -308,7 +423,8 @@
       "reviewFlags": [
         "misinformation-adjacent: popular TRT-clinic marketing claims (testicular-size and fertility preservation) lack supporting controlled human outcome trials specific to this use and dosing pattern",
         "no product used for this purpose has any current FDA approval; compounded/gray-market sourcing implicated",
-        "distinguish clearly from the CHH pulsatile-pump spermatogenesis-induction evidence, which is a different population, mechanism-consistent but not directly transferable"
+        "distinguish clearly from the CHH pulsatile-pump spermatogenesis-induction evidence, which is a different population, mechanism-consistent but not directly transferable",
+        "independently re-checked 2026-08-29: attempted to fetch a potentially relevant controlled trial (Fertility and Sterility, low-dose hCG for fertility preservation during TRT, https://www.fertstert.org/article/S0015-0282(10)01624-9/fulltext) to test whether it changes the gap characterization; the page returned a 403 error this session and could not be independently read, so no quote from it was added. That trial concerns hCG, not gonadorelin, so its inaccessibility does not affect this claim's evidence-gap conclusion -- no controlled trial of gonadorelin specifically for this TRT-adjunct use was located, and the evidence-gap statement stands unchanged"
       ]
     },
     {
@@ -325,16 +441,27 @@
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": false,
-      "sourceRefs": ["pubchem-cid-638793"],
+      "sourceRefs": ["pubchem-cid-638793", "chemicalbook-cas-33515-09-2", "alfa-chemistry-cas-33515-09-2"],
       "extractedEvidence": [
         {
           "sourceRef": "pubchem-cid-638793",
           "quote": "Gonadorelin | C55H75N17O13 | CID 638793",
           "pageOrSection": "Compound summary header"
+        },
+        {
+          "sourceRef": "chemicalbook-cas-33515-09-2",
+          "quote": "CAS Number: 33515-09-2; Chemical Name: Gonadorelin; molecular formula C55H75N17O13, molecular weight 1182.31",
+          "pageOrSection": "Product properties"
+        },
+        {
+          "sourceRef": "alfa-chemistry-cas-33515-09-2",
+          "quote": "CAS 33515-09-2 -- Gonadorelin",
+          "pageOrSection": "Product listing"
         }
       ],
       "reviewFlags": [
-        "CAS number 33515-09-2 obtained via PubChem PUG-View CAS section during this session; independently confirm against DrugBank/ChEMBL directly at review time since neither was directly fetchable this session"
+        "CAS number 33515-09-2 obtained via PubChem PUG-View CAS section during this session; independently confirmed 2026-08-29 against two independent chemical registries (ChemicalBook, Alfa Chemistry), both matching CAS 33515-09-2 to gonadorelin (free-base form)",
+        "RESIDUAL GAP (kept open per independent review): neither ChemicalBook nor Alfa Chemistry independently confirmed a distinct CAS number for the acetate salt form this session (Alfa Chemistry explicitly lists only the single base-form CAS with no separate salt-form number) -- do not state a specific acetate-salt CAS number until independently verified against a fetched page; DrugBank/ChEMBL numeric cross-reference (CAS, formula, IDs) also remains unconfirmed from their native databases this session"
       ]
     }
   ],
@@ -343,7 +470,7 @@
       "conflictId": "gonadorelin-conflict-approval-status-001",
       "claimRefs": ["gonadorelin-regulatory-veterinary-approval-001", "gonadorelin-approved-indication-human-historical-001"],
       "severity": "moderate",
-      "summary": "Only a veterinary gonadorelin product (FACTREL for cattle) was confirmed on current US DailyMed; a human indication (LUTREPULSE, ovulation induction) is documented only via a Canadian Health Canada product monograph, and no current active US DailyMed listing for a human gonadorelin product was located this session. Current US human marketing-authorization status is unresolved.",
+      "summary": "Only veterinary gonadorelin products (FACTREL and four others, confirmed via a live DailyMed search 2026-08-29) are currently listed on US DailyMed; a human indication (LUTREPULSE, ovulation induction) is documented only via a Canadian Health Canada product monograph. RxList independently confirms 2026-08-29 that the historical US human Factrel product is discontinued, resolving the narrow question of whether a human gonadorelin product is currently US-marketed (it is not). The claim wording has been updated to state the ovulation-induction indication is Canada-only/historical. Residual open question: whether LUTREPULSE remains currently active in Canada was not independently re-verified this session (source is a 2016 monograph).",
       "resolutionStatus": "needs-human-review"
     }
   ],
@@ -352,10 +479,10 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "Current US FDA marketing-authorization status for any human gonadorelin product (vs. veterinary-only FACTREL) is unresolved and needs direct DailyMed/FDA Orange Book confirmation.",
-      "PubMed/PMC primary-literature pages were blocked by bot-verification (reCAPTCHA) during this session; the CHH spermatogenesis study was sourced via a publisher (SAGE) summary rather than the primary PMC full text - verify against primary text at review.",
-      "No controlled human trial specific to gray-market TRT-adjunct dosing (testicular size/fertility preservation while on exogenous testosterone) was found; this remains an evidence gap rather than a resolved question.",
-      "DrugBank/ChEMBL/UNII identifiers not independently confirmed from their native databases this session."
+      "RESOLVED 2026-08-29 (veterinary/human-US split): live DailyMed search confirms exactly 5 gonadorelin products, all veterinary, and RxList independently confirms the historical human Factrel product is discontinued in the US -- no current US human gonadorelin product exists. The Canada-only LUTREPULSE ovulation-induction indication (gonadorelin-approved-indication-human-historical-001) has been reworded to make this explicit; whether LUTREPULSE remains currently active in Canada itself was not independently re-verified this session (source is a 2016 monograph) and is a narrower residual item for reviewer spot-check.",
+      "PubMed/PMC primary-literature pages were blocked by bot-verification (reCAPTCHA) during this session for the original Zhang 2019 article; an independent, separate primary study (Jiang et al., PMC12336735, fetched successfully 2026-08-29) corroborates the same qualitative CHH spermatogenesis finding and has been added as a second citation. The Zhang 2019 primary full text itself (exact 6-vs-14-month, 90%-vs-83.3% figures) remains unverified against PMC directly and should still be pulled at review if those exact figures need primary-source confirmation.",
+      "No controlled human trial specific to gray-market TRT-adjunct dosing (testicular size/fertility preservation while on exogenous testosterone) was found; a candidate hCG (not gonadorelin) trial in Fertility and Sterility was attempted this session (https://www.fertstert.org/article/S0015-0282(10)01624-9/fulltext) but returned a 403 error and could not be independently read -- this remains an evidence gap rather than a resolved question, and the claim language is unchanged since it already asserts no more than the absence of trials.",
+      "DrugBank/ChEMBL/UNII identifiers not independently confirmed from their native databases this session. Independent chemical registries (ChemicalBook, Alfa Chemistry) confirmed 2026-08-29 that CAS 33515-09-2 matches gonadorelin base form, but neither surfaced a distinct salt-form (e.g., acetate) CAS number, so no specific acetate-salt CAS figure has been added to the packet -- DrugBank/ChEMBL/UNII should still be pulled directly from their native databases at review time to close this gap fully."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -364,7 +491,8 @@
       "thin-human-evidence",
       "marketing-use-evidence-gap",
       "primary-literature-access-limited",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

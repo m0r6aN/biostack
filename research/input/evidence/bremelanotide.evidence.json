@@ -19,7 +19,7 @@
     "compoundFamily": "Cyclic heptapeptide melanocortin receptor (MC4R) agonist",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
+      "unii": "6Y24O4F92S",
       "casNumber": "189691-06-3",
       "drugbank": "DB11653",
       "pubchem": "9941379",
@@ -88,6 +88,66 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "fda-label-2020-210557s002lbl",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "VYLEESI (bremelanotide) injection, full prescribing information and patient labeling, label revision 210557s002",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2020/210557s002lbl.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ncbi-bookshelf-bremelanotide-NBK573221",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "Bremelanotide (StatPearls / NCBI Bookshelf)",
+      "publisher": "National Center for Biotechnology Information / NCBI Bookshelf",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK573221/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "fda-gsrs-unii-6y24o4f92s",
+      "sourceType": "structured-database",
+      "authorityTier": "A1",
+      "title": "Bremelanotide - UNII 6Y24O4F92S (Global Substance Registration System)",
+      "publisher": "U.S. Food and Drug Administration / precision FDA GSRS",
+      "url": "https://precision.fda.gov/uniisearch/srs/unii/6Y24O4F92S",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "diamond-2005-urology-pt141-nasal-ed",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Co-administration of low doses of intranasal PT-141, a melanocortin receptor agonist, and sildenafil to men with erectile dysfunction results in an enhanced erectile response",
+      "publisher": "Urology (Diamond LE, Earle DC, Garcia WD, Spana C, 2005); indexed PubMed/Europe PMC",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15833522/",
+      "doi": null,
+      "pmid": "15833522",
+      "publishedAt": "2005-04-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "spielmans-2021-jsr-reanalysis",
+      "sourceType": "paper-level-reanalysis",
+      "authorityTier": "B1",
+      "title": "Re-Analyzing Phase III Bremelanotide Trials for \"Hypoactive Sexual Desire Disorder\" in Women",
+      "publisher": "Journal of Sex Research (Spielmans G, 2021); independent of the original Kingsberg et al. RECONNECT trial report",
+      "url": "https://www.tandfonline.com/doi/abs/10.1080/00224499.2021.1885601",
+      "doi": "10.1080/00224499.2021.1885601",
+      "pmid": null,
+      "publishedAt": "2021-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -165,7 +225,7 @@
     {
       "claimId": "bremelanotide-adverse-effects-001",
       "claimType": "adverse-effect",
-      "statement": "In FDA-approved labeling, nausea was reported by 40% of patients receiving up to 8 monthly doses of Vyleesi, requiring anti-emetic therapy in 13% of patients; focal hyperpigmentation (face, gingiva, breasts) was reported by 1% of patients receiving up to 8 doses per month. The RECONNECT phase 3 trials separately reported nausea, flushing, and headache each occurring in 10% or more of bremelanotide-treated patients versus placebo, mostly mild to moderate in intensity.",
+      "statement": "In FDA-approved labeling, nausea was reported by 40% of patients receiving up to 8 monthly doses of Vyleesi, requiring anti-emetic therapy in 13% of patients; focal hyperpigmentation (face, gingiva, breasts) was reported by 1% of patients receiving up to 8 doses per month, and the label states resolution of this hyperpigmentation was not confirmed in all patients after discontinuation -- i.e. it may be permanent in some patients. The RECONNECT phase 3 trials separately reported nausea, flushing, and headache each occurring in 10% or more of bremelanotide-treated patients versus placebo, mostly mild to moderate in intensity.",
       "context": {
         "population": "premenopausal women with HSDD treated in clinical trials and post-approval labeling review",
         "route": "subcutaneous",
@@ -178,7 +238,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "dailymed-vyleesi-label",
-        "kingsberg-2019-obgyn-reconnect-rct"
+        "kingsberg-2019-obgyn-reconnect-rct",
+        "fda-label-2020-210557s002lbl"
       ],
       "extractedEvidence": [
         {
@@ -195,16 +256,26 @@
           "sourceRef": "kingsberg-2019-obgyn-reconnect-rct",
           "quote": "Patients taking bremelanotide experienced more nausea, flushing, and headache (10% or more in both studies) compared with placebo.",
           "pageOrSection": "Abstract/Results"
+        },
+        {
+          "sourceRef": "fda-label-2020-210557s002lbl",
+          "quote": "Resolution of the focal hyperpigmentation was not confirmed in all patients after discontinuation of VYLEESI.",
+          "pageOrSection": "Warnings and Precautions"
+        },
+        {
+          "sourceRef": "fda-label-2020-210557s002lbl",
+          "quote": "Darkening of the skin may not go away, even after you stop using VYLEESI.",
+          "pageOrSection": "Patient Information"
         }
       ],
       "reviewFlags": [
-        "focal hyperpigmentation may be irreversible in some cases per label context; confirm reversibility language at review"
+        "Remediation 2026-08-29: independently confirmed via the live FDA label PDF (210557s002) that focal hyperpigmentation resolution 'was not confirmed in all patients after discontinuation' and patient labeling states darkening 'may not go away' -- statement updated to disclose possible irreversibility rather than reporting incidence alone."
       ]
     },
     {
       "claimId": "bremelanotide-mechanism-mc4r-001",
       "claimType": "mechanism",
-      "statement": "Bremelanotide is a synthetic cyclic heptapeptide melanocortin receptor agonist (active metabolite of the earlier candidate melanotan II) that acts on melanocortin receptors, including MC4R, implicated in central regulation of sexual arousal/desire pathways.",
+      "statement": "Bremelanotide is a synthetic cyclic heptapeptide melanocortin receptor agonist (active metabolite of the earlier candidate melanotan II) that engages several melanocortin receptors, predominantly MC4R (implicated in central regulation of sexual arousal/desire pathways) and MC1R (implicated in skin pigmentation, the accepted mechanistic explanation for the focal hyperpigmentation adverse effect documented elsewhere in this packet).",
       "context": {
         "population": null,
         "route": null,
@@ -217,23 +288,29 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "dailymed-vyleesi-label",
-        "drugbank-db11653"
+        "drugbank-db11653",
+        "ncbi-bookshelf-bremelanotide-NBK573221"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-vyleesi-label",
           "quote": "VYLEESI is a melanocortin receptor agonist indicated for the treatment of premenopausal women with acquired, generalized hypoactive sexual desire disorder (HSDD)",
           "pageOrSection": "Indications and Usage"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-bremelanotide-NBK573221",
+          "quote": "Bremelanotide engages several melanocortin receptors (MCR), predominantly MC1R and MC4R, the latter of which is believed to modulate sexual desire.",
+          "pageOrSection": "Mechanism of Action"
         }
       ],
       "reviewFlags": [
-        "DrugBank mechanism-of-action page did not fully render in this session; verify receptor-subtype specificity (MC4R vs other melanocortin receptors) against a primary pharmacology source at review time"
+        "Remediation 2026-08-29: receptor-subtype specificity independently confirmed via NCBI Bookshelf (structured clinical reference, independent of DailyMed/DrugBank); statement updated to name MC1R alongside MC4R since MC1R engagement explains the hyperpigmentation adverse effect."
       ]
     },
     {
       "claimId": "bremelanotide-efficacy-reconnect-001",
       "claimType": "efficacy",
-      "statement": "In two identical phase 3, randomized, double-blind, placebo-controlled trials (RECONNECT; total 1,267 premenopausal women with HSDD randomized, 1,202 in the efficacy population), as-needed subcutaneous bremelanotide 1.75 mg over 24 weeks produced statistically significant improvements versus placebo on both co-primary endpoints: increase in Female Sexual Function Index-desire domain score (Study 301: +0.30, P<.001; Study 302: +0.42, P<.001) and reduction in Female Sexual Distress Scale-Desire/Arousal/Orgasm score (Study 301: -0.37, P<.001; Study 302: -0.29, P=.005).",
+      "statement": "In two identical phase 3, randomized, double-blind, placebo-controlled trials (RECONNECT; total 1,267 premenopausal women with HSDD randomized, 1,202 in the efficacy population), as-needed subcutaneous bremelanotide 1.75 mg over 24 weeks produced statistically significant improvements versus placebo on both co-primary endpoints: increase in Female Sexual Function Index-desire domain score (Study 301: +0.30, P<.001; Study 302: +0.42, P<.001) and reduction in Female Sexual Distress Scale-Desire/Arousal/Orgasm score (Study 301: -0.37, P<.001; Study 302: -0.29, P=.005). An independent published reanalysis of the same trials found that a majority of protocol-listed outcomes were not reported in the original publication and that participants showed a preference for placebo over bremelanotide when offered the choice to continue treatment; these co-primary results should be read alongside that tolerability/preference context rather than in isolation.",
       "context": {
         "population": "premenopausal women with acquired, generalized HSDD (n=1,267 randomized)",
         "route": "subcutaneous",
@@ -246,7 +323,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "kingsberg-2019-obgyn-reconnect-rct",
-        "dailymed-vyleesi-label"
+        "dailymed-vyleesi-label",
+        "spielmans-2021-jsr-reanalysis"
       ],
       "extractedEvidence": [
         {
@@ -258,16 +336,28 @@
           "sourceRef": "kingsberg-2019-obgyn-reconnect-rct",
           "quote": "Female Sexual Distress Scale: Significant reductions in distress (Study 301: -0.37, P<.001; Study 302: -0.29, P=.005; integrated: -0.33, P<.001)",
           "pageOrSection": "Abstract/Results"
+        },
+        {
+          "sourceRef": "spielmans-2021-jsr-reanalysis",
+          "quote": "72.72% of protocol-listed outcomes were not reported",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "spielmans-2021-jsr-reanalysis",
+          "quote": "participants showed preference for placebo over the drug treatment",
+          "pageOrSection": "Abstract"
         }
       ],
       "reviewFlags": [
-        "effect sizes are modest on validated instrument scales; clinical-meaningfulness interpretation should not be overstated"
+        "effect sizes are modest on validated instrument scales; clinical-meaningfulness interpretation should not be overstated",
+        "Remediation 2026-08-29: independently confirmed via Spielmans 2021 (Journal of Sex Research reanalysis, a source family independent of the original Kingsberg RCT report) that ~73% of protocol-prespecified outcomes went unreported and that participants preferred placebo when given the choice to continue; statement updated to disclose this tolerability/preference context alongside the favorable co-primary results.",
+        "The more granular figures cited in the independent-review finding (exact open-label-extension continuation rates by arm, and the specific magnitude of the AE-driven dropout differential) were not independently re-verified against a fetched primary source this session (Europe PMC and the publisher page were unreachable/paywalled); those specific figures remain unconfirmed and are not asserted in this statement -- see ops.reviewReasons."
       ]
     },
     {
       "claimId": "bremelanotide-evidence-gap-nasal-offlabel-001",
       "claimType": "evidence-gap",
-      "statement": "Only the FDA-approved subcutaneous autoinjector form (Vyleesi, 1.75 mg) has controlled human efficacy and safety data supporting the HSDD indication. Compounded PT-141 nasal spray products sold online (commonly 1-2 mg per spray, per vendor marketing) are not FDA-approved formulations and are not supported by the RECONNECT trial evidence, which tested only the subcutaneous route; a vendor page explicitly frames intranasal PT-141 as 'off-label' even while acknowledging Vyleesi's approval status.",
+      "statement": "Only the FDA-approved subcutaneous autoinjector form (Vyleesi, 1.75 mg) has controlled human efficacy and safety data supporting the HSDD indication. Intranasal PT-141/bremelanotide was studied in early-phase, published controlled human trials from the original pre-Vyleesi development program (e.g., a placebo-controlled dose/pharmacodynamic study in men with erectile dysfunction, including co-administration with sildenafil); the intranasal route was where the drug's transient blood-pressure/heart-rate signal was first characterized, which is part of why later development shifted to the subcutaneous route used in Vyleesi. That early intranasal research does not establish safety or efficacy for today's unregulated compounded PT-141 nasal spray products sold online (commonly 1-2 mg per spray, per vendor marketing): those products are not FDA-approved formulations, are untested at their marketed concentrations, and are not supported by the RECONNECT trial evidence, which tested only the subcutaneous route. A vendor page explicitly frames intranasal PT-141 as 'off-label' even while acknowledging Vyleesi's approval status.",
       "context": {
         "population": "consumers/patients seeking PT-141 outside the approved indication or route",
         "route": "intranasal (compounded, off-label) vs. subcutaneous (FDA-approved)",
@@ -280,7 +370,8 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "vendor-thepeptidelist-pt141-nasal",
-        "dailymed-vyleesi-label"
+        "dailymed-vyleesi-label",
+        "diamond-2005-urology-pt141-nasal-ed"
       ],
       "extractedEvidence": [
         {
@@ -297,17 +388,23 @@
           "sourceRef": "dailymed-vyleesi-label",
           "quote": "VYLEESI is a melanocortin receptor agonist indicated for the treatment of premenopausal women with acquired, generalized hypoactive sexual desire disorder (HSDD)",
           "pageOrSection": "Indications and Usage (route: subcutaneous only)"
+        },
+        {
+          "sourceRef": "diamond-2005-urology-pt141-nasal-ed",
+          "quote": "Co-administration of low doses of intranasal PT-141, a melanocortin receptor agonist, and sildenafil to men with erectile dysfunction results in an enhanced erectile response; the erectile response induced by co-administration of PT-141 and sildenafil was significantly greater than sildenafil alone, with no increased adverse events.",
+          "pageOrSection": "Title/Abstract"
         }
       ],
       "reviewFlags": [
         "misinformation-adjacent: vendor marketing extrapolates an approved subcutaneous product's evidence to an unapproved intranasal route and broader 'sexual enhancement' framing not supported by the label, which explicitly excludes performance-enhancement use",
-        "no controlled human trial for intranasal PT-141 was located in this session; confirm absence/presence at independent review"
+        "Remediation 2026-08-29: the packet's original reviewFlag stating 'no controlled human trial for intranasal PT-141 was located' was inaccurate. Independently confirmed (Europe PMC, source family independent of the vendor page and label) that published early-phase human trials of intranasal PT-141 exist from the original Palatin development program (Diamond et al. 2005, PMID 15833522). Statement corrected from an absence-of-evidence claim to an accurate description: early intranasal human data exist but do not validate current unregulated compounded products.",
+        "A separate reviewer-cited intranasal trial in women (Safarinejad 2008, PMID 18179455) was reported by the independent reviewer as later formally retracted; this session made a targeted attempt to independently verify that retraction status (Europe PMC REST, Semantic Scholar API, Crossref) but all routes were rate-limited or unreachable before confirmation, so the retraction claim is NOT included in the statement above and remains unverified -- see ops.reviewReasons."
       ]
     },
     {
       "claimId": "bremelanotide-identity-external-ids-001",
       "claimType": "identity",
-      "statement": "Bremelanotide (PubChem CID 9941379, molecular formula C50H68N14O10, CAS 189691-06-3, DrugBank DB11653) is a cyclic heptapeptide melanocortin receptor agonist and the active metabolite of melanotan II.",
+      "statement": "Bremelanotide (PubChem CID 9941379, molecular formula C50H68N14O10, CAS 189691-06-3, DrugBank DB11653, UNII 6Y24O4F92S) is a cyclic heptapeptide melanocortin receptor agonist and the active metabolite of melanotan II.",
       "context": {
         "population": null,
         "route": null,
@@ -320,7 +417,8 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pubchem-cid-9941379",
-        "drugbank-db11653"
+        "drugbank-db11653",
+        "fda-gsrs-unii-6y24o4f92s"
       ],
       "extractedEvidence": [
         {
@@ -332,11 +430,15 @@
           "sourceRef": "drugbank-db11653",
           "quote": "DrugBank ID: DB11653",
           "pageOrSection": "Identification"
+        },
+        {
+          "sourceRef": "fda-gsrs-unii-6y24o4f92s",
+          "quote": "UNII: 6Y24O4F92S; CAS: 189691-06-3; Molecular Formula: C50H68N14O10",
+          "pageOrSection": "Substance record"
         }
       ],
       "reviewFlags": [
-        "UNII not resolved from a fetched source in this session; identifier remains null pending independent verification",
-        "CAS number sourced from commercial supplier listings cross-referencing 189691-06-3, not directly confirmed on the fetched PubChem/DrugBank pages this session; verify against a structured-database page directly at review"
+        "Remediation 2026-08-29: UNII gap closed and CAS number independently confirmed via the FDA's own Global Substance Registration System record (precision.fda.gov), a structured authority database independent of PubChem/DrugBank. UNII 6Y24O4F92S added to compound.externalIdentifiers; CAS and molecular formula both cross-verified on the same record."
       ]
     }
   ],
@@ -346,16 +448,22 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "UNII and ChEMBL identifiers not yet resolved from structured databases; CAS number requires direct confirmation against a fetched PubChem/DrugBank record rather than supplier listings.",
-      "DrugBank mechanism-of-action detail page did not fully render in this session (JavaScript-gated content); mechanism claim relies primarily on the FDA label and should be cross-checked against a primary pharmacology source.",
-      "No controlled human trial for the compounded/off-label intranasal PT-141 route was located; the evidence-gap claim should be re-checked for any newer literature at independent review."
+      "Remediation 2026-08-29 (resolved): UNII resolved to 6Y24O4F92S and CAS independently confirmed via FDA GSRS (precision.fda.gov), a structured authority database fetched this session; ChEMBL remains unresolved and is still null pending a future session.",
+      "Remediation 2026-08-29 (resolved): mechanism claim's receptor-subtype specificity (MC1R alongside MC4R) independently confirmed via NCBI Bookshelf, fetched this session.",
+      "Remediation 2026-08-29 (resolved): the packet's prior 'no controlled human trial for intranasal PT-141' statement was independently found to be inaccurate -- Diamond et al. 2005 (PMID 15833522) is a published controlled human trial of intranasal PT-141, confirmed via Europe PMC this session; the evidence-gap claim was corrected accordingly.",
+      "Remediation 2026-08-29 (resolved): adverse-effect claim updated to disclose that focal hyperpigmentation resolution 'was not confirmed in all patients after discontinuation,' per the live FDA label PDF fetched this session.",
+      "Remediation 2026-08-29 (resolved): efficacy claim updated to disclose the Spielmans 2021 independent reanalysis finding (outcome underreporting; patient preference for placebo), confirmed via Semantic Scholar API this session.",
+      "Remediation 2026-08-29 (still open): the independent-review finding's more granular reanalysis figures -- exact open-label-extension continuation rates by arm (~40.5% vs ~69.4%) and the specific magnitude of the AE-driven dropout differential (~12-fold) -- could not be independently re-verified this session; Europe PMC (rate-limited/blocked repeatedly), the tandfonline publisher page (403, paywalled), and Semantic Scholar (abstract-only) were all attempted. Only the abstract-level facts (majority of outcomes unreported; placebo preference) were confirmed and written into the claim; the granular figures remain unconfirmed and are not asserted in the packet.",
+      "Remediation 2026-08-29 (still open): the independent reviewer's note that a related intranasal trial in women (Safarinejad 2008, PMID 18179455) was later formally retracted could not be independently verified this session (Europe PMC REST, Semantic Scholar search, and Crossref lookups were rate-limited, 429'd, or targeted the wrong record); this retraction status is not asserted in the packet and should be checked at the next review pass.",
+      "ChEMBL identifier remains unresolved from a structured database; still null."
     ],
     "qualityFlags": [
       "expansion-input",
       "fda-approved-product",
       "a1-regulator-backed",
       "positive-human-rct-documented",
-      "vendor-marketing-scope-mismatch-flagged"
+      "vendor-marketing-scope-mismatch-flagged",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

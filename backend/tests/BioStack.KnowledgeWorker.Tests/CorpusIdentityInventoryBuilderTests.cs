@@ -13,12 +13,12 @@ public sealed class CorpusIdentityInventoryBuilderTests
 
         Assert.Equal("1.0.0", snapshot.SnapshotVersion);
         Assert.Equal("repository-identity-and-provenance-metadata-only", snapshot.Scope);
-        Assert.Equal(52, snapshot.SeedRecordCount);
+        Assert.Equal(57, snapshot.SeedRecordCount);
         Assert.Equal(16, snapshot.CandidateRecordCount);
         Assert.Equal(78, snapshot.EvidencePacketCount);
         Assert.Equal(13, snapshot.SourceRegistryRecordCount);
         Assert.Equal(12, snapshot.SeedCandidateOverlapCount);
-        Assert.Equal(40, snapshot.SeedOnlyCanonicalIds.Count);
+        Assert.Equal(45, snapshot.SeedOnlyCanonicalIds.Count);
         Assert.Equal(4, snapshot.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(snapshot.CandidatesMissingEvidenceCanonicalIds);
         Assert.Equal(62, snapshot.EvidenceWithoutCandidateCanonicalIds.Count);

@@ -20,11 +20,11 @@
     "compoundFamily": "Non-steroidal arylpropionamide-class SARM",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
+      "unii": "7UT2HAH49H",
       "casNumber": "401900-40-1",
       "drugbank": null,
       "pubchem": "9824562",
-      "chembl": null,
+      "chembl": "CHEMBL125236",
       "doi": null,
       "pmid": null
     }
@@ -113,6 +113,54 @@
       "pmid": null,
       "publishedAt": "2026-01-01T00:00:00Z",
       "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "wikipedia-andarine-2026",
+      "sourceType": "tertiary-reference",
+      "authorityTier": "C1",
+      "title": "Andarine",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Andarine",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "sec-gtx-2003-s1",
+      "sourceType": "company-regulatory-filing",
+      "authorityTier": "B2",
+      "title": "GTx, Inc. Form S-1/A Registration Statement",
+      "publisher": "GTx, Inc. via U.S. Securities and Exchange Commission EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1260990/000089161803006388/g85196a2sv1za.htm",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2003-12-22T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "livertox-sarms-nbk619971",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "Selective Androgen Receptor Modulators (SARMs) - LiverTox: Clinical and Research Information on Drug-Induced Liver Injury",
+      "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases / NCBI Bookshelf",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "gsrs-unii-andarine",
+      "sourceType": "structured-database",
+      "authorityTier": "A1",
+      "title": "Andarine - UNII 7UT2HAH49H (FDA Global Substance Registration System)",
+      "publisher": "U.S. FDA / NCATS Global Substance Registration System (GSRS)",
+      "url": "https://gsrs.ncats.nih.gov/ginas/app/beta/substances/7UT2HAH49H",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -132,7 +180,8 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "sec-gtx-2004-press-release",
-        "cayman-chem-gtx-007"
+        "cayman-chem-gtx-007",
+        "wikipedia-andarine-2026"
       ],
       "extractedEvidence": [
         {
@@ -144,10 +193,16 @@
           "sourceRef": "cayman-chem-gtx-007",
           "quote": "GTx-007 is a non-steroidal selective androgen receptor modulator (SARM) that has tissue-selective androgenic and anabolic effects in animals.",
           "pageOrSection": "Product description"
+        },
+        {
+          "sourceRef": "wikipedia-andarine-2026",
+          "quote": "Andarine is thought to have been the first SARM to enter human clinical trials.",
+          "pageOrSection": "Development history section (citing GTx Form 8-K, SEC, March 3, 2004, and Gao W et al. 2004 Endocrinology; Gao W, Kim J, Dalton JT 2006 Pharmaceutical Research)"
         }
       ],
       "reviewFlags": [
-        "Mechanism corroborated only by a company press release and a vendor chemical-supplier description, not by an independent peer-reviewed pharmacology paper in this pass."
+        "Mechanism corroborated only by a company press release and a vendor chemical-supplier description, not by an independent peer-reviewed pharmacology paper in this pass.",
+        "independent-verification-pass-2026-08-29: Wikipedia's andarine article (tertiary reference citing Gao et al. 2004 Endocrinology and Gao/Kim/Dalton 2006 Pharmaceutical Research) independently corroborates the tissue-selective partial-androgen-receptor-agonist mechanism and states andarine was 'the first SARM to enter human clinical trials.' Direct fetch of the primary Gao et al. papers (PubMed/PMC) was blocked by a reCAPTCHA wall this session, so this remains tertiary corroboration of the primary literature rather than verification of the primary text itself."
       ]
     },
     {
@@ -200,7 +255,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "fda-warning-letter-titan-sarms",
-        "ejcp-2023-sarm-adverse-events"
+        "ejcp-2023-sarm-adverse-events",
+        "livertox-sarms-nbk619971"
       ],
       "extractedEvidence": [
         {
@@ -217,11 +273,17 @@
           "sourceRef": "ejcp-2023-sarm-adverse-events",
           "quote": "Since 2020, 20 reports of adverse events, most described as drug-induced liver injury associated with the use of SARM agonists, have been published.",
           "pageOrSection": "Results/liver injury summary"
+        },
+        {
+          "sourceRef": "livertox-sarms-nbk619971",
+          "quote": "most frequently ibutamoren [n=62], ligandrol [48], ostarine [46], cardarine [45], andarine [34], RAD-140 [26]",
+          "pageOrSection": "SARMs overview, product/case analysis"
         }
       ],
       "reviewFlags": [
         "safety-critical claim",
-        "no case report specifically naming andarine as the causal agent for liver injury was located in this pass; the structural-toxicity concern and the case-series harm data must not be conflated as one andarine-specific finding"
+        "no case report specifically naming andarine as the causal agent for liver injury was located in this pass; the structural-toxicity concern and the case-series harm data must not be conflated as one andarine-specific finding",
+        "independent-verification-pass-2026-08-29: LiverTox (NCBI Bookshelf, NBK619971 \u2014 a source family independent of both the FDA warning letter and the EJCP review) confirms case reports of drug-induced liver injury naming LGD-4033, RAD-140, ostarine, and YK-11, but no case report names andarine as the sole causal agent; andarine does appear in multi-agent product/case-mention data (34 mentions in the underlying case set), which is a clarifying nuance and does not contradict this claim's careful framing"
       ]
     },
     {
@@ -235,28 +297,35 @@
         "useCase": "reported adverse effect / discontinuation rationale",
         "doseText": null
       },
-      "evidenceTier": "Anecdotal",
-      "confidence": "low",
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "bscg-andarine-compliance"
+        "bscg-andarine-compliance",
+        "wikipedia-andarine-2026"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "bscg-andarine-compliance",
           "quote": "Frequently reported symptoms include blurred vision, yellowish shade to vision, and vision flashes, particularly noticeable at night.",
           "pageOrSection": "Safety concerns section"
+        },
+        {
+          "sourceRef": "wikipedia-andarine-2026",
+          "quote": "the study had to be stopped due to adverse side-effects involving visual disturbances.",
+          "pageOrSection": "Adverse effects section (citing Starcevic BD, Ahrens BD, Butch AW. 'Detection of the selective androgen receptor modulator S-4 (Andarine) in a doping control sample.' Drug Testing and Analysis, 2013;5(5):377-379, PMID 23427117)"
         }
       ],
       "reviewFlags": [
         "sourced from a compliance-advocacy summary rather than a primary clinical trial report or FDA document; independent primary source (e.g. the original GTx Phase I study report) not located and should be sought at review time",
-        "authority-support-pass 2026-08-29: searched for A1/A2 support for the vision-disturbance claim \u2014 fetched the FDA Titan SARMS warning letter (fda-warning-letter-titan-sarms), which does not mention vision, blurred vision, or ocular effects; DailyMed has no andarine label because no andarine product is FDA-approved; searched Europe PMC and general web/PubMed-adjacent literature for a published andarine phase 1 trial or FDA safety communication documenting vision effects and found none. No A1/A2 source located; fieldAuthorityRequired remains true and this claim stays authority-gated pending a primary clinical source (e.g., an original GTx Phase I study report)."
+        "authority-support-pass 2026-08-29: searched for A1/A2 support for the vision-disturbance claim \u2014 fetched the FDA Titan SARMS warning letter (fda-warning-letter-titan-sarms), which does not mention vision, blurred vision, or ocular effects; DailyMed has no andarine label because no andarine product is FDA-approved; searched Europe PMC and general web/PubMed-adjacent literature for a published andarine phase 1 trial or FDA safety communication documenting vision effects and found none. No A1/A2 source located; fieldAuthorityRequired remains true and this claim stays authority-gated pending a primary clinical source (e.g., an original GTx Phase I study report).",
+        "remediation-pass-2026-08-29: located independent tertiary corroboration (Wikipedia's andarine article, citing Starcevic BD, Ahrens BD, Butch AW. Drug Test Anal. 2013;5(5):377-379, PMID 23427117 \u2014 a peer-reviewed doping-detection paper, a materially different source family than BSCG) stating the andarine study was stopped due to visual-disturbance adverse effects. Direct fetch of the primary Starcevic paper was attempted this session via PubMed (pubmed.ncbi.nlm.nih.gov/23427117) and via the Europe PMC REST API (blocked by the outbound proxy's policy denial for ebi.ac.uk); both routes were blocked, so evidenceTier is upgraded from Anecdotal to Limited (tertiary corroboration of a named peer-reviewed primary source) rather than to Strong/Moderate. A reviewer with normal browser/institutional access should pull PMID 23427117 directly, quote it verbatim, and add it as a paper-level sourceRef to complete the upgrade."
       ]
     },
     {
       "claimId": "andarine-controversy-trial-history-001",
       "claimType": "controversy",
-      "statement": "Sources disagree on how far andarine's human clinical development actually progressed: a 2004 GTx, Inc. corporate press release states the company had 'completed several Phase I clinical trials' and planned a Phase II study, while a 2023 peer-reviewed SARM adverse-event review states preclinical andarine studies 'were suspended and did not advance to phase I of clinical trials.' This discrepancy was not resolved with a third independent source in this research pass.",
+      "statement": "Sources disagree on how far andarine's human clinical development actually progressed: a 2004 GTx, Inc. corporate press release states the company had 'completed several Phase I clinical trials' and planned a Phase II study, while a 2023 peer-reviewed SARM adverse-event review states preclinical andarine studies 'were suspended and did not advance to phase I of clinical trials.' Independent verification directly against GTx's SEC Form S-1 registration statement (filed Dec 22, 2003, a legally attested regulatory disclosure distinct from the press release) corroborates the Phase-I-completed account: it states three Phase I trials were completed and andarine was well-tolerated with no serious adverse events. This independent primary-source check leans the evidence toward the GTx account being accurate and the EJCP review's contrary characterization being imprecise or in error, though it has not been reconciled against a fully independent third-party source (e.g., FDA historical archives) and a human reviewer should make the final determination.",
       "context": {
         "population": null,
         "route": null,
@@ -264,12 +333,14 @@
         "useCase": "clinical development history",
         "doseText": null
       },
-      "evidenceTier": "Insufficient",
-      "confidence": "low",
+      "evidenceTier": "Limited",
+      "confidence": "moderate",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "sec-gtx-2004-press-release",
-        "ejcp-2023-sarm-adverse-events"
+        "ejcp-2023-sarm-adverse-events",
+        "sec-gtx-2003-s1",
+        "wikipedia-andarine-2026"
       ],
       "extractedEvidence": [
         {
@@ -281,11 +352,22 @@
           "sourceRef": "ejcp-2023-sarm-adverse-events",
           "quote": "preclinical studies on the andarine (S-4) compound, which is also available for sale online, were suspended and did not advance to phase I of clinical trials",
           "pageOrSection": "Background/history section"
+        },
+        {
+          "sourceRef": "sec-gtx-2003-s1",
+          "quote": "We have completed three Phase I clinical trials of Andarine in which Andarine was well-tolerated by all participants with no serious adverse events.",
+          "pageOrSection": "Business — Clinical Development section, Form S-1/A (filed Dec 22, 2003)"
+        },
+        {
+          "sourceRef": "wikipedia-andarine-2026",
+          "quote": "Three phase 1 trials (1a, 1b, 1c) were completed with the drug involving 86 healthy male and female volunteers.",
+          "pageOrSection": "Clinical development history (citing SEC Form S-1, GTx Inc., Dec 22, 2003)"
         }
       ],
       "reviewFlags": [
         "unresolved conflict between a primary company source and a secondary peer-reviewed review",
-        "requires independent verification against FDA historical records, GTx SEC 10-K filings, or a contemporaneous clinicaltrials.gov-era registry entry"
+        "requires independent verification against FDA historical records, GTx SEC 10-K filings, or a contemporaneous clinicaltrials.gov-era registry entry",
+        "remediation-pass-2026-08-29: fetched GTx's SEC Form S-1/A directly (sec-gtx-2003-s1) and independently confirmed the 'three Phase I trials completed, well-tolerated, no serious adverse events' account in the company's own attested regulatory filing text (not merely the press release). Wikipedia's andarine article, citing that same S-1 filing, adds the detail that three sub-trials (1a/1b/1c) involving 86 volunteers were completed. This shifts the claim from a flatly unresolved conflict to one leaning toward the Phase-I-completed account, though the S-1 and press release are both GTx-originated documents, so a fully independent third-party source (e.g., FDA archives) is still recommended before final resolution."
       ]
     },
     {
@@ -395,7 +477,7 @@
         "andarine-controversy-trial-history-001"
       ],
       "severity": "moderate",
-      "summary": "GTx, Inc.'s own 2004 corporate press release states the company had completed several Phase I clinical trials of andarine in humans and planned a Phase II trial, while a 2023 peer-reviewed SARM adverse-event review states preclinical andarine studies were suspended and never advanced to Phase I. These accounts are not reconcilable as literally stated and were not resolved against a third independent source (e.g. FDA archives, GTx 10-K filings) in this research pass.",
+      "summary": "GTx, Inc.'s own 2004 corporate press release states the company had completed several Phase I clinical trials of andarine in humans and planned a Phase II trial, while a 2023 peer-reviewed SARM adverse-event review states preclinical andarine studies were suspended and never advanced to Phase I. Remediation-pass 2026-08-29: independent verification directly against GTx's SEC Form S-1/A filing (Dec 22, 2003) confirms the company's own attested regulatory disclosure states three Phase I trials were completed (86 volunteers, per Wikipedia's citation of the same filing), which corroborates the press-release account over the EJCP review's 'never reached Phase I' framing. Status is leaning-resolved toward Phase I completion, but the S-1 and press release remain GTx-originated documents rather than a fully independent third party (e.g. FDA archives), so this stays flagged for human review rather than marked fully resolved.",
       "resolutionStatus": "needs-human-review"
     }
   ],
@@ -408,7 +490,11 @@
       "WADA prohibited-list status and reported vision-disturbance adverse effects are sourced from a compliance-advocacy secondary summary (BSCG), not fetched directly from the primary WADA Prohibited List or an original clinical trial report; verify at review time.",
       "No human case report specifically naming andarine as the causal agent for liver injury was located; SARM-class liver injury signal in the current sources is drawn from ostarine/RAD-140/ligandrol cases only.",
       "UNII, ChEMBL, RxNorm, and DrugBank identifiers not yet resolved from structured databases; PubChem page content was largely JavaScript-gated during this pass and only partially retrievable.",
-      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
+      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification",
+      "remediation-pass-2026-08-29: resolved UNII (7UT2HAH49H) and ChEMBL (CHEMBL125236) identifiers via PubChem PUG-View and cross-verified the UNII independently against the FDA/NCATS Global Substance Registration System (GSRS); RxNorm and DrugBank still have no andarine entry (RxNorm/DrugBank do not list unapproved/delisted research chemicals) and remain null; CAS Common Chemistry lookup for 401900-40-1 was attempted but returned no retrievable compound-specific content this session.",
+      "remediation-pass-2026-08-29: clinical-trial-history conflict (andarine-conflict-phase1-history-001 / andarine-controversy-trial-history-001) updated with independent verification of GTx's SEC Form S-1/A filing, leaning the evidence toward the Phase-I-completed account; still flagged needs-human-review because the S-1 and the original press release are both GTx-originated rather than a fully independent third party (e.g. FDA archives).",
+      "remediation-pass-2026-08-29: vision-adverse-effect claim (andarine-adverse-vision-001) partially upgraded via independent tertiary corroboration (Wikipedia citing Starcevic et al. 2013, PMID 23427117); primary paper fetch attempted via PubMed and Europe PMC REST API this session, both blocked (PubMed reCAPTCHA wall; Europe PMC blocked by outbound proxy policy for ebi.ac.uk) — claim remains fieldAuthorityRequired and gated pending a reviewer pulling PMID 23427117 directly.",
+      "remediation-pass-2026-08-29: liver-safety claim (andarine-safety-liver-cardiovascular-001) updated with a clarifying note per LiverTox (NBK619971): andarine appears in multi-agent DILI case/product data but no case report names it as sole causal agent; not a blocking error, addressed per promotionBlocker."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -417,7 +503,8 @@
       "thin-human-evidence",
       "unresolved-clinical-history-conflict",
       "regulatory-enforcement-documented",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

@@ -19,13 +19,13 @@
     "compoundFamily": "Nonsteroidal SARM (androgen receptor agonist, investigational)",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
+      "unii": "4O87Q44KNC",
       "casNumber": "1182367-47-0",
-      "drugbank": null,
+      "drugbank": "DB13939",
       "pubchem": "44200882",
       "chembl": "CHEMBL1672635",
       "doi": null,
-      "pmid": null
+      "pmid": "24900290"
     }
   },
   "sources": [
@@ -88,13 +88,73 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "miller-2011-acsmedchemlett-rad140",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Design, Synthesis, and Preclinical Characterization of the Selective Androgen Receptor Modulator (SARM) RAD140",
+      "publisher": "ACS Medicinal Chemistry Letters (Miller CP, Shomali M, Lyttle CR, et al.)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24900290/",
+      "doi": null,
+      "pmid": "24900290",
+      "publishedAt": "2010-12-02T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ochsner-2022-rad140-dili",
+      "sourceType": "case-report",
+      "authorityTier": "B1",
+      "title": "RAD-140 Drug-Induced Liver Injury",
+      "publisher": "Ochsner Journal (Leung K, Yaramada P, Goyal P, Cai CX, Thung I, Hammami MB)",
+      "url": "https://www.ochsnerjournal.org/content/early/2022/07/13/toj.22.0005",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2022-07-13T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ncbi-livertox-sarms",
+      "sourceType": "structured-database",
+      "authorityTier": "A1",
+      "title": "Selective Androgen Receptor Modulators (LiverTox: Clinical and Research Information on Drug-Induced Liver Injury)",
+      "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases / NCBI",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "fda-sarms-consumer-update-2024",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "FDA Warns About the Use of Selective Androgen Receptor Modulators (SARMs) Among Teens and Young Adults",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "gsrs-rad140-unii-record",
+      "sourceType": "structured-database",
+      "authorityTier": "A1",
+      "title": "Global Substance Registration System (GSRS) Record: RAD140 / Testolone (UNII 4O87Q44KNC)",
+      "publisher": "NCATS / FDA Substance Registration System",
+      "url": "https://gsrs.ncats.nih.gov/api/v1/substances/4O87Q44KNC",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
     {
       "claimId": "testolone-mechanism-sarm-ar-agonist-001",
       "claimType": "mechanism",
-      "statement": "RAD-140 (Testolone) is a nonsteroidal selective androgen receptor modulator (SARM) and anabolic agent with reported high in vitro binding affinity for the androgen receptor (Ki = 7 nM), selective over the progesterone, estrogen, and glucocorticoid receptors; it is a research chemical, not an approved or licensed pharmaceutical.",
+      "statement": "RAD-140 (Testolone) is a nonsteroidal selective androgen receptor modulator (SARM) and anabolic agent, confirmed as such by the primary discovery/characterization literature; supplier data report high in vitro binding affinity for the androgen receptor (Ki = 7 nM), selective over the progesterone, estrogen, and glucocorticoid receptors, though this specific Ki figure has not been independently confirmed against the primary pharmacology paper's full text. It is a research chemical, not an approved or licensed pharmaceutical.",
       "context": {
         "population": null,
         "route": null,
@@ -107,7 +167,8 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "caymanchem-rad140-product",
-        "pubchem-cid-44200882"
+        "pubchem-cid-44200882",
+        "miller-2011-acsmedchemlett-rad140"
       ],
       "extractedEvidence": [
         {
@@ -124,10 +185,16 @@
           "sourceRef": "caymanchem-rad140-product",
           "quote": "WARNING This product is not for human or veterinary use.",
           "pageOrSection": "Safety/handling notice"
+        },
+        {
+          "sourceRef": "miller-2011-acsmedchemlett-rad140",
+          "quote": "This report describes the discovery of RAD140, a potent, orally bioavailable, nonsteroidal selective androgen receptor modulator (SARM).",
+          "pageOrSection": "Abstract"
         }
       ],
       "reviewFlags": [
-        "Mechanism sourced from a supplier/vendor chemical-data page rather than a peer-reviewed pharmacology paper; verify Ki value and receptor-selectivity data against primary pharmacology literature at review.",
+        "Re-fetched 2026-08-29: PubMed abstract (PMID 24900290, Miller et al., the original RAD140 discovery/characterization paper) independently confirms RAD140's identity as a nonsteroidal SARM, corroborating this claim from primary pharmacology literature rather than a vendor page alone.",
+        "The specific Ki = 7 nM binding-affinity figure and receptor-selectivity data could not be confirmed against that paper's full text (paywalled abstract only) in this pass; that figure remains sourced only to the Cayman Chemical vendor page and is labeled as supplier-reported in the statement.",
         "Vendor 'not for human use' language reflects RUO labeling, not a clinical safety determination."
       ]
     },
@@ -146,7 +213,9 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "fda-warrior-labz-warning-letter-2023"
+        "fda-warrior-labz-warning-letter-2023",
+        "fda-sarms-consumer-update-2024",
+        "ncbi-livertox-sarms"
       ],
       "extractedEvidence": [
         {
@@ -163,11 +232,27 @@
           "sourceRef": "fda-warrior-labz-warning-letter-2023",
           "quote": "are not generally recognized as safe and effective for the above referenced uses and, therefore, are 'new drugs'",
           "pageOrSection": "Warning letter body, unapproved new drug determination"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update-2024",
+          "quote": "SARMs, which are chemical substances that mimic the effects of testosterone and anabolic steroids, are not FDA approved.",
+          "pageOrSection": "Consumer update body"
+        },
+        {
+          "sourceRef": "fda-sarms-consumer-update-2024",
+          "quote": "SARMs cannot be legally marketed in the U.S. as a dietary supplement or drug at this time.",
+          "pageOrSection": "Consumer update body"
+        },
+        {
+          "sourceRef": "ncbi-livertox-sarms",
+          "quote": "none of which are approved for use in humans by the FDA",
+          "pageOrSection": "LiverTox, Selective Androgen Receptor Modulators overview"
         }
       ],
       "reviewFlags": [
         "Safety-critical regulatory claim.",
-        "Confirm current enforcement/market status of the specific cited seller at review time; warning letters describe a point-in-time enforcement action, not an ongoing product ban."
+        "Confirm current enforcement/market status of the specific cited seller at review time; warning letters describe a point-in-time enforcement action, not an ongoing product ban.",
+        "Independently corroborated 2026-08-29 by a materially different FDA resource (consumer-update page, distinct from the cited warning letter) and by NCBI LiverTox, both confirming no SARM is FDA-approved. Nuance: the FDA consumer-update page addresses SARMs as a drug class and does not name RAD-140/Testolone specifically, so the RAD-140-specific product/marketing details in this claim still rely on the single warning letter cited above."
       ]
     },
     {
@@ -186,7 +271,9 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "case-report-jmcr-2023-dili",
-        "fda-warrior-labz-warning-letter-2023"
+        "fda-warrior-labz-warning-letter-2023",
+        "ochsner-2022-rad140-dili",
+        "ncbi-livertox-sarms"
       ],
       "extractedEvidence": [
         {
@@ -208,13 +295,38 @@
           "sourceRef": "fda-warrior-labz-warning-letter-2023",
           "quote": "Life-threatening reactions, including liver toxicity, have occurred in people taking products containing SARMs.",
           "pageOrSection": "Warning letter body, safety warning section (letter cites RAD-140/Testolone-labeled products by name)"
+        },
+        {
+          "sourceRef": "ochsner-2022-rad140-dili",
+          "quote": "started taking up to 15 mg daily of RAD-140 for a total of 5 weeks for muscle growth",
+          "pageOrSection": "Case presentation"
+        },
+        {
+          "sourceRef": "ochsner-2022-rad140-dili",
+          "quote": "total bilirubin of 38.5 mg/dL",
+          "pageOrSection": "Hospital course / labs"
+        },
+        {
+          "sourceRef": "ochsner-2022-rad140-dili",
+          "quote": "symptoms and liver injury resolved after cessation of the offending agent",
+          "pageOrSection": "Outcome"
+        },
+        {
+          "sourceRef": "ncbi-livertox-sarms",
+          "quote": "bland cholestasis ... canalicular cholestasis with mild inflammation and variable degrees of bile duct injury",
+          "pageOrSection": "Selective Androgen Receptor Modulators overview, hepatotoxicity pattern"
+        },
+        {
+          "sourceRef": "ncbi-livertox-sarms",
+          "quote": "developed jaundice 2 months after starting RAD-140 in doses up to 15 mg daily",
+          "pageOrSection": "Selective Androgen Receptor Modulators overview, RAD-140 case discussion"
         }
       ],
       "reviewFlags": [
         "Single case report - establishes plausibility, not population-level incidence or proven causality.",
         "Safety-critical adverse-effect claim.",
-        "Independent case reports of RAD-140-associated liver injury exist in other journals (e.g., Ochsner Journal, PMC7535764 covering related SARM products); cross-check those at review for a fuller adverse-event picture.",
-        "authority-support: A1 regulator source (FDA warning letter, re-fetched and verified 2026-08-29) added as independent corroboration - it names RAD-140/Testolone products specifically and states liver toxicity has occurred in people taking SARM-containing products, consistent with this case report's finding; it does not itself report this individual patient's lab values, which remain sourced to the case report."
+        "Corrected 2026-08-29: a prior reviewFlag on this claim mischaracterized a re-fetch of the FDA warning letter (already one of this claim's own sourceRefs) as 'independent corroboration'; re-reading the original source does not resolve a review item and that entry has been removed.",
+        "Independent corroboration added 2026-08-29 from a genuinely different source family: the Ochsner Journal (2022) documents a separate, unrelated 24-year-old male patient with RAD-140-induced cholestatic liver injury (peak total bilirubin 38.5 mg/dL) who fully recovered after stopping the drug, matching this case report's pattern without being the same source. NCBI LiverTox (structured clinical-toxicology database) independently characterizes SARM/RAD-140 hepatotoxicity as bland, self-limited cholestatic injury, consistent with both cases' outcomes."
       ]
     },
     {
@@ -254,7 +366,8 @@
       "reviewFlags": [
         "Trial dose/protocol context must never be presented as a use recommendation.",
         "This is an investigational oncology trial in a specific patient population and must not be generalized to bodybuilding, performance, or anti-aging use.",
-        "Posted efficacy/adverse-event results were not confirmed from a fetched primary source in this pass; confirm results status directly on the registry or via the peer-reviewed trial publication at review."
+        "Posted efficacy/adverse-event results were not confirmed from a fetched primary source in this pass; confirm results status directly on the registry or via the peer-reviewed trial publication at review.",
+        "Remediation attempt 2026-08-29: a published peer-reviewed report of this trial exists (Clinical Breast Cancer, 2021, PMID 33513026) confirming the trial was completed with a drug-in-capsule oral formulation, matching this claim's description; however full-text results (efficacy/adverse-event specifics) could not be retrieved this pass despite multiple attempts (PubMed abstract page, Europe PMC REST API, Europe PMC article page, NCBI eutils efetch all returned no usable abstract/full-text content - JS-rendered, rate-limited, or robots-disallowed). This claim remains explicitly review-gated on results specifics; do not upgrade to confirmed on efficacy/safety numbers without a successful fetch of that full text."
       ]
     },
     {
@@ -314,7 +427,8 @@
       "sourceRefs": [
         "clinicaltrials-nct03088527",
         "case-report-jmcr-2023-dili",
-        "fda-warrior-labz-warning-letter-2023"
+        "fda-warrior-labz-warning-letter-2023",
+        "ncbi-livertox-sarms"
       ],
       "extractedEvidence": [
         {
@@ -326,11 +440,17 @@
           "sourceRef": "case-report-jmcr-2023-dili",
           "quote": "RAD140 (Testalone) is a novel selective androgen receptor modulator with very limited data currently available on adverse effects related to this compound.",
           "pageOrSection": "Abstract/Introduction"
+        },
+        {
+          "sourceRef": "ncbi-livertox-sarms",
+          "quote": "none of which are approved for use in humans by the FDA",
+          "pageOrSection": "LiverTox, Selective Androgen Receptor Modulators overview"
         }
       ],
       "reviewFlags": [
         "Thin human evidence overall: one completed oncology Phase 1 trial (results not confirmed from a fetched source) plus isolated case reports; no RCT in a healthy or performance-use population was located.",
-        "Re-search literature and trial registries for newer controlled human data at each review cycle."
+        "Re-search literature and trial registries for newer controlled human data at each review cycle.",
+        "Independently corroborated 2026-08-29 by NCBI LiverTox (structured clinical-toxicology database), confirming no SARM is FDA-approved and that human data are limited to the oncology trial plus case reports; no independent RCT in a healthy/performance population was found in this pass either."
       ]
     }
   ],
@@ -341,9 +461,11 @@
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
       "Human evidence remains thin: one completed oncology Phase 1 trial without confirmed public efficacy/safety results plus isolated case reports; reassess if new controlled human data emerges.",
-      "UNII, DrugBank, and PMID identifiers were not resolved from a fetched primary structured-database source in this pass; confirm before publication.",
       "Gray-market marketing-claim landscape is volatile; the specific vendor listings cited in the FDA warning letter should be reconfirmed as still active (or superseded) at review time.",
-      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
+      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification",
+      "Remediation pass 2026-08-29: UNII (4O87Q44KNC) and DrugBank ID (DB13939) resolved and cross-verified via the NCATS/FDA Global Substance Registration System (GSRS) API against this packet's existing CAS number (1182367-47-0) and PubChem CID (44200882), which matched exactly. compound.pmid populated with 24900290 (Miller et al., the primary RAD140 discovery/characterization paper, fetched and confirmed this pass).",
+      "Remediation pass 2026-08-29: testolone-studied-use-breast-cancer-trial-001 remains review-gated on trial results specifics. A published peer-reviewed report of the trial (PMID 33513026, Clinical Breast Cancer 2021) was located and its existence/title/completion status confirmed, but full-text efficacy/adverse-event results could not be fetched despite multiple attempted routes (PubMed abstract page, Europe PMC REST API x3, Europe PMC article page, NCBI eutils efetch) - all were blocked by JS-rendering, rate-limiting, or robots.txt disallow. Do not upgrade results-specific language without a successful full-text fetch.",
+      "Remediation pass 2026-08-29: corrected a mislabeled reviewFlag on testolone-adverse-effect-liver-injury-case-001 that had described a same-source FDA re-fetch as independent corroboration; replaced with genuinely independent Ochsner Journal (2022) case report and NCBI LiverTox citations, both fetched and quoted this pass."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -352,7 +474,7 @@
       "thin-human-evidence",
       "no-fda-approved-product",
       "gray-market-marketing-vs-evidence-gap",
-      "authority-support-pass-2026-08-29"
+      "remediation-pass-2026-08-29"
     ]
   }
 }

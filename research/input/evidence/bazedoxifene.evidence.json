@@ -20,8 +20,8 @@
     "classification": "Selective estrogen receptor modulator (SERM)",
     "compoundFamily": "Third-generation SERM (indole-based)",
     "externalIdentifiers": {
-      "rxnorm": null,
-      "unii": null,
+      "rxnorm": "1441386",
+      "unii": "Q16TT9C5BK",
       "casNumber": "198481-32-2",
       "drugbank": "DB06401",
       "pubchem": "154257",
@@ -126,6 +126,42 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "fda-drugsatfda-nda022247",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Drugs@FDA: NDA 022247 (DUAVEE) application overview and approval history",
+      "publisher": "U.S. Food and Drug Administration (Drugs@FDA)",
+      "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022247",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T15:41:00Z"
+    },
+    {
+      "sourceId": "jbmr-silverman-2008",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "A2",
+      "title": "Efficacy of Bazedoxifene in Reducing New Vertebral Fracture Risk in Postmenopausal Women With Osteoporosis: Results From a 3-Year, Randomized, Placebo-, and Active-Controlled Clinical Trial",
+      "publisher": "Journal of Bone and Mineral Research (Silverman et al. 2008)",
+      "url": "https://academic.oup.com/jbmr/article-abstract/23/12/1923/7599523",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T15:38:00Z"
+    },
+    {
+      "sourceId": "pmc5728840-vte-metaanalysis",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Independent meta-analysis of venous thromboembolism risk across the bazedoxifene clinical trial program",
+      "publisher": "PMC (PMC5728840)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5728840",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T15:38:30Z"
     }
   ],
   "claims": [
@@ -144,7 +180,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "dailymed-duavee-label"
+        "dailymed-duavee-label",
+        "fda-drugsatfda-nda022247"
       ],
       "extractedEvidence": [
         {
@@ -161,10 +198,17 @@
           "sourceRef": "dailymed-duavee-label",
           "quote": "the shortest duration consistent with treatment goals and risks for the individual woman",
           "pageOrSection": "Indications and Usage / dosage guidance"
+        },
+        {
+          "sourceRef": "fda-drugsatfda-nda022247",
+          "quote": "marketing status is listed as \"Prescription\"; most recent submission (SUPPL-10, approved March 4, 2024) was a Labeling-Package Insert update, with no discontinuation notice",
+          "pageOrSection": "Application overview / approval history table"
         }
       ],
       "reviewFlags": [
-        "bazedoxifene-only (Viviant) was never approved as a standalone U.S. product; verify current marketing status is unchanged at review time"
+        "bazedoxifene-only (Viviant) was never approved as a standalone U.S. product; verify current marketing status is unchanged at review time",
+        "independently confirmed via live Drugs@FDA record (2026-08-29): NDA 022247 remains active/approved, most recent labeling supplement approved March 2024",
+        "independent 2026 consumer-pharmacy reporting describes intermittent, sometimes hard-to-find retail supply of DUAVEE (not a formal FDA shortage listing, not a discontinuation); this is real-world availability friction, not a change to regulatory-approval status, and was not independently re-verified this session against a fetched primary source"
       ]
     },
     {
@@ -294,9 +338,9 @@
     {
       "claimId": "bazedoxifene-efficacy-vertebral-fracture-001",
       "claimType": "efficacy",
-      "statement": "In a 3-year randomized, placebo- and active(raloxifene)-controlled phase 3 trial in postmenopausal women with osteoporosis, bazedoxifene significantly reduced the risk of new vertebral fractures compared with placebo; the same body of trial evidence reported no evidence of endometrial or breast stimulation with bazedoxifene. Adverse effects including hot flushes (vasodilatation), leg cramps, and venous thromboembolic events were significantly more frequent with bazedoxifene (and with raloxifene) than with placebo.",
+      "statement": "In the pivotal 3-year randomized, placebo- and active(raloxifene)-controlled phase 3 trial in postmenopausal women with osteoporosis (6847 subjects, intent-to-treat population), bazedoxifene 20 mg significantly reduced the risk of new vertebral fractures compared with placebo (42% relative risk reduction; 2.3% incidence with bazedoxifene 20 mg vs. 4.1% with placebo); the same body of trial evidence reported no evidence of endometrial or breast stimulation with bazedoxifene. In a post hoc analysis of a high-risk subgroup within that trial (femoral neck T-score ≤ -3.0 and/or ≥ 1 moderate-or-severe vertebral fracture or multiple mild vertebral fractures at baseline; n=1772), bazedoxifene 20 mg was associated with a 50% reduction in nonvertebral fracture risk relative to placebo (p=0.02) and a 44% reduction relative to raloxifene 60 mg (p=0.05); this is a post hoc, subgroup-defined finding and should not be read as an overall-population nonvertebral-fracture result. Adverse effects including hot flushes (vasodilatation), leg cramps, and venous thromboembolic events were significantly more frequent with bazedoxifene (and with raloxifene) than with placebo.",
       "context": {
-        "population": "postmenopausal women with osteoporosis enrolled in phase 3 trials (approximately 1583 subjects in supporting phase 3 program per secondary source)",
+        "population": "postmenopausal women with osteoporosis enrolled in the pivotal 3-year phase 3 fracture trial (6847 subjects, intent-to-treat population, per Silverman et al. 2008 JBMR primary source); a separate, smaller 2-year BMD sub-study (approximately 1583 subjects, per StatPearls) is distinct from this ITT population and should not be conflated with it",
         "route": "oral",
         "formulation": "bazedoxifene 20 mg or 40 mg daily (trial doses)",
         "useCase": "postmenopausal osteoporosis, vertebral fracture prevention",
@@ -309,7 +353,8 @@
         "ema-conbriza-epar",
         "pmc3131985-bazedoxifene-review",
         "statpearls-bazedoxifene",
-        "pmc2908075-bazedoxifene-safety"
+        "pmc2908075-bazedoxifene-safety",
+        "jbmr-silverman-2008"
       ],
       "extractedEvidence": [
         {
@@ -356,10 +401,31 @@
           "sourceRef": "statpearls-bazedoxifene",
           "quote": "1583 healthy postmenopausal women at risk for osteoporosis",
           "pageOrSection": "Clinical trials"
+        },
+        {
+          "sourceRef": "jbmr-silverman-2008",
+          "quote": "Among 6847 subjects in the intent-to-treat population",
+          "pageOrSection": "Results / study population"
+        },
+        {
+          "sourceRef": "jbmr-silverman-2008",
+          "quote": "bazedoxifene 20 mg (2.3%)...compared with placebo (4.1%)",
+          "pageOrSection": "Results / vertebral fracture incidence"
+        },
+        {
+          "sourceRef": "jbmr-silverman-2008",
+          "quote": "femoral neck T-score ≤ -3.0 and/or ≥1 moderate or severe vertebral fracture or multiple mild vertebral fractures; n = 1772",
+          "pageOrSection": "Results / post hoc high-risk subgroup definition"
+        },
+        {
+          "sourceRef": "jbmr-silverman-2008",
+          "quote": "50% and 44% reduction in nonvertebral fracture risk relative to placebo (p = 0.02) and raloxifene 60 mg (p = 0.05), respectively",
+          "pageOrSection": "Results / post hoc nonvertebral fracture subgroup analysis"
         }
       ],
       "reviewFlags": [
-        "verify against primary trial (Silverman et al., J Bone Miner Res 2008) for exact vertebral-fracture percent-reduction figures and nonvertebral fracture subgroup findings; primary PubMed/PMC pages were blocked by a CAPTCHA this session and could not be quoted directly",
+        "resolved 2026-08-29: primary trial (Silverman et al., J Bone Miner Res 2008) independently retrieved and quoted directly this session via an alternate route (Oxford Academic abstract page), closing the prior CAPTCHA-block gap; ITT population corrected from a conflated ~1583 BMD-substudy figure to the pivotal trial's actual 6847",
+          "nonvertebral-fracture subgroup finding (50% RRR, n=1772, p=0.02) is a post hoc, high-risk-subgroup-defined result, not an overall-population finding; do not present as a general nonvertebral-fracture efficacy claim",
         "efficacy shown is bone-density and vertebral fracture endpoints in a diagnosed-osteoporosis trial population; do not generalize to other populations or endpoints"
       ]
     },
@@ -379,7 +445,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "pmc2908075-bazedoxifene-safety",
-        "dailymed-duavee-label"
+        "dailymed-duavee-label",
+        "pmc5728840-vte-metaanalysis"
       ],
       "extractedEvidence": [
         {
@@ -401,10 +468,16 @@
           "sourceRef": "pmc2908075-bazedoxifene-safety",
           "quote": "The rates of DVT per 1,000 women-years were 1.7 with bazedoxifene 20 mg, 2.0 with bazedoxifene 40 mg, 1.5 with raloxifene 60 mg, and 0.2 with placebo",
           "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "pmc5728840-vte-metaanalysis",
+          "quote": "venous thromboembolic event (RR = 1.56; 95% CI = 0.92-2.64; P = .10)",
+          "pageOrSection": "Pooled safety analysis / VTE risk ratio"
         }
       ],
       "reviewFlags": [
-        "safety-critical adverse-effect claim; cross-check against DUAVEE label VTE/DVT language at next review"
+        "safety-critical adverse-effect claim; cross-check against DUAVEE label VTE/DVT language at next review",
+        "independent 2017 meta-analysis pooling VTE data across the broader bazedoxifene trial program found the overall risk ratio numerically elevated but not statistically significant (RR 1.56, 95% CI 0.92-2.64, p=.10); the packet's per-1,000-women-years figures are accurately quoted from the single-trial source (PMC2908075) and consistent with EMA's VTE-related contraindication, but readers should understand the VTE signal is not uniformly statistically robust across the full pooled evidence base"
       ]
     },
     {
@@ -449,9 +522,10 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "Primary pivotal trial pages (PubMed 18665787 / PMC full texts for the Silverman et al. 3-year vertebral fracture RCT) were blocked by CAPTCHA this session; fracture-efficacy claim is currently sourced through secondary review articles and StatPearls rather than the primary trial text, and should be re-verified against the primary source at review time.",
-      "RxNorm, UNII, and ChEMBL identifiers not yet resolved from structured databases.",
-      "Nonvertebral-fracture subgroup findings (bazedoxifene vs. bisphosphonates, FRAX high-risk subgroup) referenced in search results but not independently quoted/verified this session; flagged rather than included as a claim."
+      "RESOLVED 2026-08-29: primary pivotal trial (Silverman et al. 2008 JBMR) independently retrieved this session via an alternate route (Oxford Academic abstract page), quoted directly, and used to correct the fracture-efficacy claim's population figure (6847 ITT, not the previously conflated ~1583 BMD-substudy figure) and to add the verified nonvertebral-fracture subgroup finding.",
+      "RESOLVED 2026-08-29: RxNorm (RxCUI 1441386, confirmed via RxNav name lookup) and UNII (Q16TT9C5BK, confirmed via NCATS GSRS substance search) identifiers independently verified and added.",
+      "STILL UNRESOLVED: ChEMBL identifier could not be independently confirmed this session -- ChEMBL's own REST API (ebi.ac.uk) was persistently rate-limited/blocked across multiple attempts, and the only route that returned data (DrugCentral drug card 4334) listed two candidate ChEMBL IDs (CHEMBL46740, CHEMBL2106615, likely free-base vs. acetate-salt forms) without a way to confirm which corresponds to the base compound this session; left null rather than guessing. Attempted routes: ChEMBL REST/JSON API (blocked), ChEMBL explore UI (blocked), Wikidata (domain not fetchable), DrugCentral (ambiguous two-ID result).",
+      "Independent 2026 consumer-pharmacy reporting (medfinder.com) of intermittent DUAVEE retail supply was cited by review but could not be independently re-fetched this session (page not found at the attempted URL); regulatory-approval claim itself was independently confirmed via a live Drugs@FDA record (NDA 022247, active, most recent labeling supplement approved March 2024), and a hedged availability-friction note (without a specific unverified source) was added to that claim's reviewFlags."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -460,7 +534,8 @@
       "boxed-warning-present",
       "gray-market-adjacent-use-documented",
       "limited-primary-trial-access-this-session",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

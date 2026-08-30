@@ -21,12 +21,12 @@
     "classification": "Peptide hormone (recombinant protein therapeutic)",
     "compoundFamily": "Somatotropin / growth hormone family (191-amino-acid recombinant human growth hormone)",
     "externalIdentifiers": {
-      "rxnorm": null,
+      "rxnorm": "61148",
       "unii": "NQX9KB6PCL",
       "casNumber": "12629-01-5",
       "drugbank": "DB00052",
       "pubchem": null,
-      "chembl": null,
+      "chembl": "CHEMBL1201621",
       "doi": null,
       "pmid": null
     }
@@ -103,6 +103,18 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pubmed-saghe-2020-mortality-followup",
+      "sourceType": "cohort-study",
+      "authorityTier": "B1",
+      "title": "Long-term mortality after childhood growth hormone treatment: the SAGhE cohort study",
+      "publisher": "The Lancet Diabetes & Endocrinology",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32707116/",
+      "doi": null,
+      "pmid": "32707116",
+      "publishedAt": "2020-08-01T00:00:00Z",
+      "accessedAt": "2026-08-29T12:00:00Z"
     }
   ],
   "claims": [
@@ -134,7 +146,8 @@
         }
       ],
       "reviewFlags": [
-        "confirm current label revision/version against the live DailyMed SPL at review time"
+        "confirm current label revision/version against the live DailyMed SPL at review time",
+        "Prader-Willi syndrome as an approved indication is specific to Genotropin's own FDA label, not a somatropin-class-wide indication; independent general drug references (e.g., Mayo Clinic's pooled somatropin monograph, checked 2026-08-29) frame PWS only as a contraindication subgroup (children who are severely obese or have severe respiratory impairment), not as a labeled indication, because such references pool multiple brands. Do not present PWS as uniformly an approved use across all somatropin products."
       ]
     },
     {
@@ -193,11 +206,21 @@
           "sourceRef": "dailymed-genotropin-label",
           "quote": "Previously undiagnosed impaired glucose tolerance and overt diabetes mellitus may be unmasked",
           "pageOrSection": "Warnings and Precautions - Glucose Intolerance and Diabetes Mellitus"
+        },
+        {
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": "Two placebo-controlled clinical trials in non-growth hormone deficient adult patients (n=522) with these conditions in intensive care units revealed a significant increase in mortality (42% vs. 19%) among somatropin-treated patients (doses 5.3-8 mg/day) compared to those receiving placebo.",
+          "pageOrSection": "Warnings and Precautions - Acute Critical Illness"
+        },
+        {
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": "In childhood cancer survivors who were treated with radiation to the brain/head for their first neoplasm and who developed subsequent GHD and were treated with somatropin, an increased risk of a second neoplasm has been reported. Intracranial tumors, in particular meningiomas, were the most common of these second neoplasms.",
+          "pageOrSection": "Warnings and Precautions - Neoplasms"
         }
       ],
       "reviewFlags": [
         "safety-critical warning claim",
-        "the 42% vs 19% acute-critical-illness mortality figure and the specific neoplasm/meningioma wording were reported by the extraction pass but not independently re-quoted verbatim in this session; confirm exact wording against the label PDF at review time"
+        "resolved 2026-08-29: the 42% vs 19% acute-critical-illness mortality figure and the second-neoplasm/meningioma wording were independently re-fetched and verbatim-confirmed against the live DailyMed Genotropin label this session"
       ]
     },
     {
@@ -272,7 +295,7 @@
     {
       "claimId": "somatropin-regulatory-mortality-signal-inconclusive-001",
       "claimType": "warning",
-      "statement": "Following the SAGhE French cohort study that raised a possible mortality signal in patients treated with recombinant human growth hormone during childhood, FDA reviewed the study alongside other data sources and concluded the evidence for an increased risk of death was inconclusive due to design weaknesses in SAGhE, and that available medical literature and adverse event reports did not otherwise support a mortality link; FDA advised continuing to prescribe and use recombinant human growth hormone according to labeled recommendations while its review continued.",
+      "statement": "Following the SAGhE French cohort study that raised a possible mortality signal in patients treated with recombinant human growth hormone during childhood, FDA reviewed the study alongside other data sources and concluded the evidence for an increased risk of death was inconclusive due to design weaknesses in SAGhE, and that available medical literature and adverse event reports did not otherwise support a mortality link; FDA advised continuing to prescribe and use recombinant human growth hormone according to labeled recommendations while its review continued. A subsequent 2020 SAGhE cohort follow-up study (The Lancet Diabetes & Endocrinology; 24,232 patients, over 400,000 patient-years of follow-up) found that all-cause mortality was not significantly increased in low-risk patients with isolated growth hormone deficiency or idiopathic short stature (SMR 1.1, 95% CI 0.9-1.3), while cause-specific mortality from diseases of the circulatory and haematological systems was increased across all risk groups, indicating the elevated mortality seen in moderate/high-risk groups tracks underlying diagnosis rather than growth hormone treatment itself, but warranting continued monitoring of circulatory/haematological causes.",
       "context": {
         "population": "patients treated with recombinant human growth hormone, particularly during childhood",
         "route": null,
@@ -283,7 +306,7 @@
       "evidenceTier": "Moderate",
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
-      "sourceRefs": ["fda-safety-communication-somatropin-mortality"],
+      "sourceRefs": ["fda-safety-communication-somatropin-mortality", "pubmed-saghe-2020-mortality-followup"],
       "extractedEvidence": [
         {
           "sourceRef": "fda-safety-communication-somatropin-mortality",
@@ -294,11 +317,22 @@
           "sourceRef": "fda-safety-communication-somatropin-mortality",
           "quote": "continue to prescribe and use recombinant human growth hormone according to the labeled recommendations",
           "pageOrSection": "FDA Drug Safety Communication - recommendations"
+        },
+        {
+          "sourceRef": "pubmed-saghe-2020-mortality-followup",
+          "quote": "In low-risk patients with isolated growth hormone deficiency or idiopathic short stature, all-cause mortality was not significantly increased (SMR 1·1, 95% CI 0·9-1·3).",
+          "pageOrSection": "Abstract - Findings"
+        },
+        {
+          "sourceRef": "pubmed-saghe-2020-mortality-followup",
+          "quote": "Cause-specific mortality from diseases of the circulatory and haematological systems was increased in all risk groups.",
+          "pageOrSection": "Abstract - Findings"
         }
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "this communication is a 2011-2012-era interim update that anticipated further data in Spring 2012; no follow-up FDA communication confirming final resolution of the SAGhE mortality signal was located in this research pass and should be searched for at review time"
+        "the original 2011-2012 FDA communication is an interim update that anticipated further data in Spring 2012; no later FDA communication confirming final resolution of the SAGhE mortality signal was located",
+        "resolved 2026-08-29: added the 2020 SAGhE cohort follow-up (Lancet Diabetes & Endocrinology, PMID 32707116), independently fetched this session, which is reassuring for low-risk GHD/idiopathic-short-stature patients but flags a residual circulatory/haematological cause-specific mortality signal across all risk groups; this remains a fieldAuthorityRequired safety claim and stays review-gated pending a definitive FDA statement"
       ]
     },
     {
@@ -401,7 +435,7 @@
       "conflictId": "somatropin-conflict-mortality-signal-001",
       "claimRefs": ["somatropin-regulatory-mortality-signal-inconclusive-001"],
       "severity": "moderate",
-      "summary": "The SAGhE French cohort study raised a possible increased mortality signal associated with recombinant human growth hormone in patients treated during childhood, but FDA's own safety review concluded the evidence was inconclusive due to study design weaknesses and directed continued use per labeling. This packet did not locate a definitive later FDA communication closing out the signal; the underlying tension between an initial epidemiological safety signal and a regulator's inconclusive determination remains only partially resolved and should be checked against the most current FDA safety communications at review time.",
+      "summary": "The SAGhE French cohort study raised a possible increased mortality signal associated with recombinant human growth hormone in patients treated during childhood, but FDA's own safety review concluded the evidence was inconclusive due to study design weaknesses and directed continued use per labeling. This packet did not locate a definitive later FDA communication closing out the signal. Updated 2026-08-29: a 2020 SAGhE cohort follow-up (Lancet Diabetes & Endocrinology, PMID 32707116; 24,232 patients, 400,000+ patient-years) was independently fetched and added -- it found no significantly increased all-cause mortality in low-risk GHD/idiopathic-short-stature patients (SMR 1.1), with elevated mortality in higher-risk groups tracking underlying diagnosis rather than treatment, but it also identified a residual increase in cause-specific circulatory/haematological mortality across all risk groups. This narrows but does not fully close the tension between the epidemiological signal and FDA's inconclusive determination, since no later FDA communication addressing this newer data was located; still needs human review against the most current FDA safety communications at review time.",
       "resolutionStatus": "needs-human-review"
     }
   ],
@@ -410,10 +444,12 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "SAGhE mortality safety-signal communication is from the 2011-2012 review cycle; confirm whether FDA issued a later definitive update and update the mortality-signal claim and conflict accordingly.",
-      "PubChem CID could not be reliably resolved for somatropin as a large recombinant protein via this session's tooling (JavaScript-rendered page); pubchem field left null pending resolution.",
-      "ChEMBL and RxNorm identifiers not yet resolved from structured databases.",
-      "Only a subset of Genotropin label contraindication and boxed-warning items were re-confirmed against verbatim page text in this session; remaining items were sourced from a first-pass extraction summary and should be re-verified word-for-word against the label PDF."
+      "Resolved 2026-08-29: SAGhE mortality safety-signal was anchored only to the 2011-2012 FDA communication; added the 2020 SAGhE cohort follow-up (Lancet Diabetes & Endocrinology, PMID 32707116), independently fetched and verbatim-quoted this session, to the claim and conflict record. No later definitive FDA communication closing out the original signal was located, so this remains flagged for human review as a safety-critical, fieldAuthorityRequired claim.",
+      "PubChem CID still could not be resolved for somatropin as a large recombinant protein: re-attempted this session (2026-08-29) via PubChem PUG-REST (blocked by robots.txt) and the PubChem compound page (404 not found); pubchem field left null -- likely no small-molecule PubChem CID exists for this protein therapeutic.",
+      "Resolved 2026-08-29: ChEMBL (CHEMBL1201621, via ChEMBL REST API) and RxNorm (RxCUI 61148, via RxNav REST API) identifiers independently confirmed this session and added to compound.externalIdentifiers.",
+      "Resolved 2026-08-29: the boxed-warning 42% vs 19% acute-critical-illness mortality figure and the second-neoplasm/meningioma wording were independently re-fetched and verbatim-confirmed against the live DailyMed Genotropin label this session.",
+      "Resolved 2026-08-29: annotated that Prader-Willi syndrome as an approved indication is specific to Genotropin's own FDA label rather than a somatropin-class-wide indication, per independent-review finding.",
+      "Only a subset of Genotropin label contraindication items (hypersensitivity) were re-confirmed against verbatim page text; the remaining contraindication items (acute critical illness, active malignancy, retinopathy, closed epiphyses, Prader-Willi obesity/respiratory criteria) were sourced from a first-pass extraction summary and, while corroborated in substance by independent Mayo Clinic/StatPearls references per the review, still have not been individually re-quoted verbatim against the label PDF and should be at next review."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -422,7 +458,8 @@
       "negative-or-null-human-performance-benefit",
       "thin-human-evidence-for-marketed-off-label-uses",
       "import-alert-on-record",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

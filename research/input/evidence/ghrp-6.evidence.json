@@ -19,8 +19,8 @@
     "compoundFamily": "Synthetic hexapeptide (ghrelin mimetic / growth hormone secretagogue)",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
-      "casNumber": null,
+      "unii": "4H7N4I6X6A",
+      "casNumber": "87616-84-0",
       "drugbank": null,
       "pubchem": "4345065",
       "chembl": null,
@@ -39,7 +39,19 @@
       "doi": null,
       "pmid": null,
       "publishedAt": null,
-      "accessedAt": "2026-08-28T23:50:00Z"
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "gsrs-unii-ghrp6-4h7n4i6x6a",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "Hexapeptide-2 (GHRP-6) substance record, UNII 4H7N4I6X6A",
+      "publisher": "FDA / NIH NCATS Global Substance Registration System (GSRS)",
+      "url": "https://gsrs.ncats.nih.gov/api/v1/substances/4H7N4I6X6A",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
       "sourceId": "pubchem-cid-4345065",
@@ -94,10 +106,10 @@
     {
       "claimId": "ghrp6-regulatory-compounding-risk-001",
       "claimType": "regulatory",
-      "statement": "FDA lists GHRP-6 among Category 2 bulk drug substances that may present significant safety risks for compounding via injectable and nasal routes, citing potential immunogenicity from aggregation or peptide-related impurities, added to this category on September 29, 2023.",
+      "statement": "FDA lists GHRP-6 among Category 2 bulk drug substances that may present significant safety risks for compounding, citing potential immunogenicity for certain (unspecified) routes of administration due to aggregation or peptide-related impurities, added to this category on September 29, 2023.",
       "context": {
         "population": "humans exposed to compounded GHRP-6 products",
-        "route": "injectable and nasal (routes specifically flagged)",
+        "route": "certain routes of administration (unspecified in GHRP-6's own FDA entry; not qualified to injectable/nasal, unlike the adjacent GHRP-2 entry)",
         "formulation": "compounded GHRP-6",
         "useCase": "compounding safety and regulatory boundary",
         "doseText": null
@@ -112,12 +124,13 @@
         {
           "sourceRef": "fda-ghrp6-category2",
           "quote": "Compounded drugs containing GHRP-6 may pose risk for immunogenicity for certain routes of administration due to the potential for aggregation and peptide-related impurities.",
-          "pageOrSection": "Category 2 table, GHRP-6 row (503B route: injectable, nasal); added 9/29/2023"
+          "pageOrSection": "Category 2 table, GHRP-6 row; added 9/29/2023. Re-verified verbatim on the live FDA page on 2026-08-29: GHRP-6's row carries no injectable/nasal route qualifier (unlike the adjacent GHRP-2 row, which reads 'for injectable and nasal routes of administration'); GHRP-6's own text says only 'certain routes of administration' (unspecified)."
         }
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "verify current Category 2 status and route scope at review time against the live FDA page"
+        "corrected 2026-08-29 (remediation pass): prior version incorrectly copied GHRP-2's 'injectable and nasal' route qualifier onto GHRP-6; re-fetched the live FDA Category 2 page this session and confirmed GHRP-6's own row/text specifies no route qualifier, only 'certain routes of administration'",
+        "confirmed 2026-08-29: GHRP-6 remains Category 2 (added 9/29/2023) and was not among the 12 peptides FDA removed from Category 2 in April 2026"
       ]
     },
     {
@@ -146,7 +159,8 @@
       ],
       "reviewFlags": [
         "FDA itself characterizes underlying safety data as limited; do not overstate certainty",
-        "safety-critical"
+        "safety-critical",
+        "independent-review note (2026-08-29): independent human endocrine literature (PMC systematic review of GH secretagogue safety, plus controlled ACTH/cortisol challenge studies) corroborates both the cortisol/ACTH effect and the insulin-sensitivity/glucose signal as fairly consistent acute physiological findings, somewhat more concrete than FDA's own hedged 'potential effect' framing; the packet's language correctly preserves FDA's hedge rather than overstating certainty"
       ]
     },
     {
@@ -186,7 +200,7 @@
     {
       "claimId": "ghrp6-studied-use-oral-short-stature-001",
       "claimType": "studied-use",
-      "statement": "In a small controlled human study, oral GHRP-6 (300 micrograms/kg) produced a GH-releasing response in prepubertal children with short stature comparable to that of intravenous GHRH, and the authors concluded oral GHRP-6 could be clinically useful to stimulate GH secretion in short children; co-administration of oral arginine did not further potentiate this GH response, unlike arginine's known potentiation of GHRH.",
+      "statement": "In one small 1995 controlled human study (not independently corroborated by a separate study, systematic review, or guideline located to date), oral GHRP-6 (300 micrograms/kg) produced a GH-releasing response in prepubertal children with short stature comparable to that of intravenous GHRH, and the study's authors concluded oral GHRP-6 could be clinically useful to stimulate GH secretion in short children; co-administration of oral arginine did not further potentiate this GH response, unlike arginine's known potentiation of GHRH. This finding should be read as a single-study result pending independent replication.",
       "context": {
         "population": "13 prepubertal children (ages 6.2-10.5 years) with normal short stature",
         "route": "oral",
@@ -215,13 +229,14 @@
       "reviewFlags": [
         "very small sample (n=13), single study, 1995, no approved product resulted; GH-release response only, not a demonstrated growth/height outcome",
         "must not be generalized to unsupervised gray-market subcutaneous self-administration in adults",
-        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a small controlled human study...\"); no regulator document exists for this claim (searched: fda.gov site search for GHRP-6 short stature/oral administration, dailymed.nlm.nih.gov for GHRP-6 label entries — no FDA or DailyMed document addresses this 1995 investigational pediatric short-stature study; GHRP-6 has no approved product and the only FDA document found, the Category 2 compounding-risk listing, does not address this efficacy finding)"
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a small controlled human study...\"); no regulator document exists for this claim (searched: fda.gov site search for GHRP-6 short stature/oral administration, dailymed.nlm.nih.gov for GHRP-6 label entries — no FDA or DailyMed document addresses this 1995 investigational pediatric short-stature study; GHRP-6 has no approved product and the only FDA document found, the Category 2 compounding-risk listing, does not address this efficacy finding)",
+        "remediation-pass-2026-08-29: unresolved after a targeted independent-corroboration attempt (Europe PMC REST search, PubMed/PMC direct lookup, and open web search for any independent replication of the Munoz/Ghigo 1995 oral GHRP-6 short-stature finding); only the same study and a related-but-distinct 1992 paper on oral hexapeptide GH-releasing activity in normal men and short-statured children were located, neither of which independently confirms or conflicts with the specific pediatric no-arginine-potentiation finding; claim language above narrowed to flag single-study status pending replication"
       ]
     },
     {
       "claimId": "ghrp6-efficacy-stroke-combination-rct-001",
       "claimType": "efficacy",
-      "statement": "In a phase I/II open-label randomized controlled trial of intravenous EGF plus GHRP-6 in acute ischemic stroke patients (an unrelated, unapproved investigational use, not a growth-hormone-optimization or bodybuilding context), the combination groups had numerically fewer serious adverse events than standard-care controls (30% and 20% vs 56.2%) with only two treatment-attributed events, and the treated groups showed a favorable neurological and functional trend at 90 and 180 days; the trial was small, open-label, and non-blinded.",
+      "statement": "In one phase I/II open-label randomized controlled trial (Frontiers in Neurology, 2024, not independently corroborated by a separate registry entry or study located to date) of intravenous EGF plus GHRP-6 in acute ischemic stroke patients (an unrelated, unapproved investigational use, not a growth-hormone-optimization or bodybuilding context), the combination groups had numerically fewer serious adverse events than standard-care controls as reported by the trial (30% and 20% vs 56.2%) with only two treatment-attributed events, and the treated groups showed a favorable neurological and functional trend at 90 and 180 days per the trial's own report; the trial was small, open-label, non-blinded, and its reported figures should be treated as single-source pending independent confirmation.",
       "context": {
         "population": "36 adult acute ischemic stroke patients (mean age 66, baseline NIHSS ~9)",
         "route": "intravenous",
@@ -250,7 +265,8 @@
       "reviewFlags": [
         "open-label, non-blinded, small n=36 trial; safety/efficacy signal is preliminary and specific to acute ischemic stroke, not generalizable to other uses",
         "not related to and must not be cited to support bodybuilding/anti-aging/appetite marketing claims",
-        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a phase I/II open-label randomized controlled trial...\"); no regulator document exists for this claim (searched: fda.gov site search for GHRP-6 stroke/EGF combination trial, dailymed.nlm.nih.gov for GHRP-6 label entries — no FDA or DailyMed document addresses this 2024 investigational acute-ischemic-stroke combination trial; GHRP-6 has no approved product and the only FDA document found, the Category 2 compounding-risk listing, does not address this efficacy finding)"
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a phase I/II open-label randomized controlled trial...\"); no regulator document exists for this claim (searched: fda.gov site search for GHRP-6 stroke/EGF combination trial, dailymed.nlm.nih.gov for GHRP-6 label entries — no FDA or DailyMed document addresses this 2024 investigational acute-ischemic-stroke combination trial; GHRP-6 has no approved product and the only FDA document found, the Category 2 compounding-risk listing, does not address this efficacy finding)",
+        "remediation-pass-2026-08-29: unresolved after a targeted independent-corroboration attempt — searched the Cuban Public Registry of Clinical Trials (RPCEC, the trial's home-country registry) sponsor listing, attempted direct PMC full-text retrieval (blocked by a reCAPTCHA wall), and ran an open web/Europe PMC search for independent citation or replication of the trial's SAE percentages; none surfaced a corroborating or conflicting independent source, so the reported SAE percentages (56.2%/30%/20%) and 90/180-day functional trend remain single-source (Frontiers in Neurology paper only); claim language above narrowed to attribute these figures explicitly to the trial's own report pending independent confirmation"
       ]
     },
     {
@@ -282,18 +298,42 @@
       "reviewFlags": [
         "misinformation-adjacent: popular bodybuilding/appetite/anti-aging marketing claims are not supported by the human controlled trials located in this pass",
         "animal (rodent, fish) data on appetite/body composition must not be presented as established human effects",
-        "gray-market self-administered subcutaneous dosing is unstudied; the controlled human data used oral or supervised IV/short-course dosing in different populations"
+        "gray-market self-administered subcutaneous dosing is unstudied; the controlled human data used oral or supervised IV/short-course dosing in different populations",
+        "independent-review note (2026-08-29): an independent systematic review of GH secretagogues corroborates that human appetite-stimulation data in the literature is attributed specifically to GHRP-2, not GHRP-6; the goldfish appetite study was independently confirmed to be a real animal (Carassius auratus) model. Vendor/marketing pages routinely blur GHRP-6 and GHRP-2 -- this GHRP-6/GHRP-2 attribution distinction should be re-checked for precision on any future update."
       ]
     }
   ],
-  "conflicts": [],
+  "conflicts": [
+    {
+      "conflictId": "ghrp6-conflict-route-detail-001",
+      "claimRefs": ["ghrp6-regulatory-compounding-risk-001"],
+      "severity": "high",
+      "summary": "Prior packet version stated GHRP-6's FDA Category 2 listing specifically flags injectable and nasal routes; this route qualifier belongs to the adjacent GHRP-2 entry, not GHRP-6's. Re-fetched the live FDA page on 2026-08-29 and corrected the claim statement, context.route, and extractedEvidence to reflect that GHRP-6's own text says only 'certain routes of administration' (unspecified).",
+      "resolutionStatus": "resolved"
+    },
+    {
+      "conflictId": "ghrp6-conflict-oral-shortstature-unresolved-001",
+      "claimRefs": ["ghrp6-studied-use-oral-short-stature-001"],
+      "severity": "review",
+      "summary": "No independent study, systematic review, or guideline corroborating the 1995 Munoz/Ghigo oral GHRP-6 short-stature finding was located despite a targeted search (Europe PMC, PubMed/PMC, open web). The claim remains single-source; language was narrowed accordingly and this gap should be reconfirmed by a human reviewer before any promotion that relies on this claim's specificity.",
+      "resolutionStatus": "needs-human-review"
+    },
+    {
+      "conflictId": "ghrp6-conflict-stroke-rct-unresolved-001",
+      "claimRefs": ["ghrp6-efficacy-stroke-combination-rct-001"],
+      "severity": "review",
+      "summary": "No independent registry entry (RPCEC sponsor listing checked) or independent citation of the 2024 Frontiers in Neurology EGF+GHRP-6 stroke trial's reported SAE percentages was located; PMC full text was blocked by a reCAPTCHA wall. The claim remains single-source; language was narrowed accordingly and this gap should be reconfirmed by a human reviewer before any promotion that relies on this claim's specific figures.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
   "ops": {
     "completeness": "partial",
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "CAS/UNII/DrugBank/ChEMBL identifiers not yet resolved from structured databases.",
-      "FDA Category 2 peptide listings are subject to revision; current GHRP-6 status and route scope must be reconfirmed against the live FDA page at review time.",
+      "Remediation pass 2026-08-29: UNII (4H7N4I6X6A) and CAS (87616-84-0) resolved via FDA/NIH NCATS Global Substance Registration System (GSRS) record confirming 'GHRP-6' as a listed name; DrugBank and ChEMBL identifiers still not resolved from structured databases -- no matching DrugBank or ChEMBL entry was located for GHRP-6 in this pass.",
+      "Remediation pass 2026-08-29: FDA Category 2 route-of-administration detail for GHRP-6 was corrected after live re-fetch confirmed the prior 'injectable and nasal' qualifier belonged to the adjacent GHRP-2 row, not GHRP-6's; GHRP-6's current Category 2 status (added 9/29/2023, not among the 12 peptides removed in April 2026) was reconfirmed against the live FDA page.",
+      "Remediation pass 2026-08-29: claims ghrp6-studied-use-oral-short-stature-001 and ghrp6-efficacy-stroke-combination-rct-001 remain unresolved after a targeted independent-corroboration attempt each (Europe PMC REST, PubMed/PMC direct lookup, RPCEC registry, open web search); no independent source was found to confirm or conflict with either claim's specific figures. Both claims' statements were narrowed to flag single-source status and both are tracked via conflicts[] pending human reviewer sign-off; neither is fieldAuthorityRequired so this does not block promotion on its own.",
       "Human evidence base is thin: located controlled human studies are small, decades-old (1995, 1998) pharmacology studies or a single small unrelated stroke trial (2024); no modern controlled human trial addresses the uses for which GHRP-6 is popularly marketed."
     ],
     "qualityFlags": [
@@ -303,7 +343,8 @@
       "no-approved-product",
       "gray-market-marketing-gap",
       "regulatory-boundary",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

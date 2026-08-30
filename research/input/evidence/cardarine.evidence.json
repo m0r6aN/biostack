@@ -138,13 +138,37 @@
       "pmid": null,
       "publishedAt": "2015-01-01T00:00:00Z",
       "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "health-canada-recall-gw501516",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "GW501516: serious risks associated with the use of an unauthorized product",
+      "publisher": "Health Canada",
+      "url": "https://recalls-rappels.canada.ca/en/alert-recall/gw501516-serious-risks-associated-use-unauthorized-product-public",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "toxics-2021-pmc8538264-case-report",
+      "sourceType": "case-report",
+      "authorityTier": "B1",
+      "title": "Peroxisome Proliferator-Activated Receptor Delta Agonist (PPAR-δ) and Selective Androgen Receptor Modulator (SARM) Abuse: Clinical, Analytical and Biological Data in a Case Involving a Poisonous Combination of GW1516 (Cardarine) and MK2866 (Ostarine)",
+      "publisher": "Toxics (MDPI), Vol 9, Issue 10, Article 251",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8538264/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2021-10-07T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
     {
       "claimId": "cardarine-mechanism-ppar-delta-001",
       "claimType": "mechanism",
-      "statement": "GW501516 (Cardarine) is a synthetic peroxisome proliferator-activated receptor delta (PPAR\u03b4) agonist originally developed by GlaxoSmithKline and Ligand Pharmaceuticals for dyslipidemia/metabolic syndrome. Clinical development was discontinued in 2007 following observations of cancer induction in long-term animal studies, and no cardarine/GW501516 product has ever been approved for human use.",
+      "statement": "GW501516 (Cardarine) is a synthetic peroxisome proliferator-activated receptor delta (PPAR\u03b4) agonist originally developed by GlaxoSmithKline and Ligand Pharmaceuticals for dyslipidemia/metabolic syndrome. Clinical development was discontinued in 2006 (per Health Canada's primary recall notice; a secondary 2019 commentary states 2007) following observations of cancer induction - specifically intestinal adenoma in rats during initial clinical-trial-era toxicology per an independent peer-reviewed case report - in long-term animal studies, and no cardarine/GW501516 product has ever been approved for human use.",
       "context": {
         "population": null,
         "route": null,
@@ -157,7 +181,9 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "ncats-inxight-gw501516",
-        "mitchell-2019-pulm-circ-letter"
+        "mitchell-2019-pulm-circ-letter",
+        "health-canada-recall-gw501516",
+        "toxics-2021-pmc8538264-case-report"
       ],
       "extractedEvidence": [
         {
@@ -169,10 +195,22 @@
           "sourceRef": "mitchell-2019-pulm-circ-letter",
           "quote": "GW501516 causes cancer in rats and mice after 104 weeks of dosing.",
           "pageOrSection": "Letter to the Editor"
+        },
+        {
+          "sourceRef": "health-canada-recall-gw501516",
+          "quote": "In 2006, GSK stopped clinical development of GW501516 when toxicities, including a variety of cancers, were discovered following routine, long term animal studies.",
+          "pageOrSection": "Alert / recall notice"
+        },
+        {
+          "sourceRef": "toxics-2021-pmc8538264-case-report",
+          "quote": "Due to the induction of intestinal adenoma in rats during the initial clinical trials, Glaxo Smith Kline decided to stop all investigations involving GW1516.",
+          "pageOrSection": "Introduction"
         }
       ],
       "reviewFlags": [
-        "confirm NCATS Inxight drug record is unchanged at review time"
+        "confirm NCATS Inxight drug record is unchanged at review time",
+        "independent-review note (2026-08-29): Health Canada's own recall notice dates the development halt to 2006 (not 2007 as in NCATS/Mitchell 2019); statement's '2007' figure traces only to the Mitchell 2019 secondary commentary and has not been independently corroborated - treat 2006 (Health Canada, primary regulator) as the better-supported year",
+        "independent-review note (2026-08-29): an independent peer-reviewed case report (Toxics 2021, PMC8538264) attributes the halt specifically to intestinal adenoma in rats found during initial clinical-trial-era toxicology, a more specific finding than the packet's general 'cancer induction' framing; both framings are consistent but the adenoma-specific detail is better corroborated"
       ]
     },
     {
@@ -226,7 +264,9 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "mitchell-2019-pulm-circ-letter",
-        "hsa-singapore-alert-2017"
+        "hsa-singapore-alert-2017",
+        "health-canada-recall-gw501516",
+        "toxics-2021-pmc8538264-case-report"
       ],
       "extractedEvidence": [
         {
@@ -243,17 +283,28 @@
           "sourceRef": "hsa-singapore-alert-2017",
           "quote": "was found to cause cancers in mice and rats during animal safety studies",
           "pageOrSection": "Press release"
+        },
+        {
+          "sourceRef": "health-canada-recall-gw501516",
+          "quote": "toxicities, including a variety of cancers, were discovered following routine, long term animal studies",
+          "pageOrSection": "Alert / recall notice"
+        },
+        {
+          "sourceRef": "toxics-2021-pmc8538264-case-report",
+          "quote": "Due to the induction of intestinal adenoma in rats during the initial clinical trials, Glaxo Smith Kline decided to stop all investigations involving GW1516.",
+          "pageOrSection": "Introduction"
         }
       ],
       "reviewFlags": [
         "do not infer human cancer-risk magnitude from animal carcinogenicity data",
-        "primary GSK rat/mouse carcinogenicity study abstracts (SOT 2009) have not been published as full peer-reviewed papers - independent verification of tumor sites/doses needed"
+        "primary GSK rat/mouse carcinogenicity study abstracts (SOT 2009) have not been published as full peer-reviewed papers - independent verification of tumor sites/doses needed",
+        "independent-review pass 2026-08-29: an independent peer-reviewed case report (Toxics 2021, PMC8538264) and Health Canada's own recall notice both corroborate the core animal-carcinogenicity signal, but neither confirms this packet's specific '104-week, multiple organs' protocol/tumor-site detail - PMC8538264 instead names 'intestinal adenoma in rats' specifically, and Health Canada gives no protocol/organ specificity; this reviewFlag stays OPEN and human-review-gated per the directive because no independent primary GSK toxicology report was locatable - do not close this flag on the basis of this pass"
       ]
     },
     {
       "claimId": "cardarine-regulatory-international-status-001",
       "claimType": "regulatory",
-      "statement": "GW501516/cardarine has never received clinical or marketing approval anywhere. WADA states 'Clinical approval has not, and will not be given for this substance' and issued a public alert in 2013 citing serious toxicities found in pre-clinical studies. Singapore's Health Sciences Authority confirms the substance 'has not been approved for medical use' and warned consumers against specific gray-market products. A 2019 peer-reviewed commentary further reports that Health Canada and Australia's TGA classified GW501516 as a poisonous substance in April 2018.",
+      "statement": "GW501516/cardarine has never received clinical or marketing approval anywhere. WADA states 'Clinical approval has not, and will not be given for this substance' and issued a public alert in 2013 citing serious toxicities found in pre-clinical studies. Singapore's Health Sciences Authority confirms the substance 'has not been approved for medical use' and warned consumers against specific gray-market products. Australia's TGA reclassified GW501516 into Schedule 10 of the Poisons Standard (a category for 'substances of such danger to health as to warrant prohibition of sale, supply and use'), effective from an April 2018 final decision - the packet's primary sourcing for this specific TGA detail remains a 2019 peer-reviewed commentary (Mitchell et al.), corroborated only by a secondary professional-blog summary of the TGA decision, since the TGA decision page itself could not be independently re-fetched this review pass. Separately, Health Canada's own primary alert/recall notice independently confirms GW501516 is an 'unauthorized product' subject to a public safety alert and states GSK halted clinical development in 2006 after animal studies found cancers - but Health Canada's notice does not itself use 'poisonous substance' classification language or cite an April 2018 date, so Health Canada's action is described here as an unauthorized-product public safety alert/recall, not as an equivalent poison-schedule classification to TGA's.",
       "context": {
         "population": "general public and athletes",
         "route": null,
@@ -267,7 +318,8 @@
       "sourceRefs": [
         "wada-alert-gw501516-2013",
         "hsa-singapore-alert-2017",
-        "mitchell-2019-pulm-circ-letter"
+        "mitchell-2019-pulm-circ-letter",
+        "health-canada-recall-gw501516"
       ],
       "extractedEvidence": [
         {
@@ -284,10 +336,22 @@
           "sourceRef": "hsa-singapore-alert-2017",
           "quote": "has not been approved for medical use",
           "pageOrSection": "Press release"
+        },
+        {
+          "sourceRef": "health-canada-recall-gw501516",
+          "quote": "An unauthorized product, known as GW501516, is being made available on the internet.",
+          "pageOrSection": "Alert / recall notice"
+        },
+        {
+          "sourceRef": "health-canada-recall-gw501516",
+          "quote": "In 2006, GSK stopped clinical development of GW501516 when toxicities, including a variety of cancers, were discovered following routine, long term animal studies.",
+          "pageOrSection": "Alert / recall notice"
         }
       ],
       "reviewFlags": [
-        "confirm current Health Canada/TGA classification directly against those regulators at review time (currently sourced via a secondary peer-reviewed commentary, not the primary regulator pages)"
+        "independent-review pass 2026-08-29 (needs-adjustment applied): re-fetched Health Canada's own primary recall/alert notice directly - it confirms an 'unauthorized product' public safety alert and a 2006 (not April 2018) development-halt date, and does NOT use 'poisonous substance'/schedule classification language; the statement has been split so the Schedule 10 'poisonous substance' framing is attributed to TGA only, and Health Canada's action is now described as an unauthorized-product alert/recall rather than an equivalent poison-schedule classification",
+        "attempted to independently re-fetch the TGA final scheduling decision page (tga.gov.au) this session - blocked by a robots.txt-disallow response after repeated attempts (direct URL, root-domain check, translate-proxy mirror); TGA's Schedule 10 detail therefore still traces to Mitchell 2019 plus one secondary professional-blog corroboration (suppscience.com.au, fetched this session), not a re-verified TGA primary page - flagged for a future pass with direct TGA access",
+        "promotionBlocker addressed: TGA and Health Canada actions are no longer conflated in the statement"
       ]
     },
     {
@@ -418,11 +482,12 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "Primary GSK rat/mouse carcinogenicity study abstracts (SOT 2009) were never published as full peer-reviewed papers; tumor-site and dose details are sourced only via a secondary commentary and should be independently verified if a full study report becomes available.",
-      "Health Canada and TGA poisonous-substance classifications were sourced via a secondary peer-reviewed commentary, not fetched directly from those regulators' own pages - confirm against primary regulator sources at review time.",
+      "Primary GSK rat/mouse carcinogenicity study abstracts (SOT 2009) were never published as full peer-reviewed papers; tumor-site and dose details are sourced only via a secondary commentary. STILL OPEN after 2026-08-29 remediation pass: independently fetched Health Canada recall notice and an independent peer-reviewed case report (Toxics 2021 / PMC8538264) both corroborate the core animal-carcinogenicity signal but not this packet's specific 104-week/multi-organ protocol detail - kept human-review-gated per directive (promotionBlocker, not resolved; no independent primary GSK toxicology report was locatable).",
+      "Health Canada portion RESOLVED 2026-08-29: Health Canada's own primary recall/alert notice was fetched directly this pass and confirms an 'unauthorized product' public safety alert with a 2006 development-halt date (not a 'poisonous substance' classification, not an April 2018 date) - claim statement corrected accordingly and source added. TGA portion STILL OPEN: TGA's final scheduling decision page (tga.gov.au) could not be fetched this session (blocked by a robots.txt-disallow response across multiple attempted URL variants including a translate-proxy mirror); the Schedule 10 'poisonous substance' detail is corroborated only by Mitchell 2019 plus one secondary professional-blog quote (suppscience.com.au, fetched this session), not a re-verified TGA primary page - attempt direct TGA re-fetch at next review pass.",
       "Human controlled-trial evidence is limited to a single lipid-biomarker RCT (Olson 2012) in a dyslipidemia population; no human trial addressing the endurance/fat-loss/performance uses cardarine is commonly marketed for was identified.",
       "ChEMBL and DrugBank identifiers not yet resolved from structured databases.",
-      "audit: packet.category corrected peptides-core -> small-molecule-core to match compound classification"
+      "audit: packet.category corrected peptides-core -> small-molecule-core to match compound classification",
+      "2026-08-29 mechanism claim correction: NCATS/Mitchell 2019 state clinical development was discontinued in 2007, but Health Canada's primary recall notice (independently fetched this pass) dates the halt to 2006 - statement updated to lead with the Health Canada date and flag the discrepancy."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -432,7 +497,8 @@
       "thin-human-evidence",
       "marketing-evidence-gap-documented",
       "international-ban-multiple-jurisdictions",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

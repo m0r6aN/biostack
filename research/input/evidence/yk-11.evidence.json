@@ -18,7 +18,7 @@
     "compoundFamily": "Synthetic steroidal androgen receptor partial agonist",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
+      "unii": "Z9748J6B0R",
       "casNumber": "1370003-76-1",
       "drugbank": null,
       "pubchem": "119058028",
@@ -87,6 +87,42 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "fda-gsrs-unii-yk11-z9748j6b0r",
+      "sourceType": "structured-database",
+      "authorityTier": "A2",
+      "title": "UNII Z9748J6B0R (YK-11), Global Substance Registration System",
+      "publisher": "U.S. Food and Drug Administration / NLM Global Substance Registration System (GSRS)",
+      "url": "https://precision.fda.gov/uniisearch/srs/unii/Z9748J6B0R",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T16:30:00Z"
+    },
+    {
+      "sourceId": "milmed-2022-usac039-sarms-cholestatic-jaundice-case",
+      "sourceType": "case-report",
+      "authorityTier": "B1",
+      "title": "Case report: cholestatic jaundice in an active-duty male following multi-SARM use (LGD-4033, RAD-140, YK-11)",
+      "publisher": "Military Medicine (doi 10.1093/milmed/usac039)",
+      "url": "https://academic.oup.com/milmed/article-abstract/188/7-8/e2778/6543678",
+      "doi": "10.1093/milmed/usac039",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T16:00:00Z"
+    },
+    {
+      "sourceId": "kanno-2011-bpb-yk11-ar-partial-agonist",
+      "sourceType": "in-vitro-study",
+      "authorityTier": "B1",
+      "title": "(17α,20E)-17,20-[(1-methoxyethylidene)bis(oxy)]-3-oxo-19-norpregna-4,20-diene-21-carboxylic acid methyl ester (YK11) Is a Partial Agonist of the Androgen Receptor",
+      "publisher": "Biological and Pharmaceutical Bulletin (Kanno Y, Hikosaka R, Zhang SY, et al., 2011; PMID 21372378)",
+      "url": "https://www.jstage.jst.go.jp/article/bpb/34/3/34_3_318/_article",
+      "doi": null,
+      "pmid": "21372378",
+      "publishedAt": "2011-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T16:15:00Z"
     }
   ],
   "claims": [
@@ -137,7 +173,7 @@
     {
       "claimId": "yk11-adverse-effect-liver-injury-001",
       "claimType": "adverse-effect",
-      "statement": "NIH LiverTox describes YK-11 as a steroidal SARM/myostatin inhibitor not approved for human use, banned by the World Anti-Doping Agency, and implicated (typically in combination with other SARMs) in cases of clinically apparent liver injury with cholestatic/jaundice patterns resembling anabolic-steroid-induced liver injury; a cited case involved a 23-year-old who developed jaundice three months after starting three SARMs (including ligandrol, testolone, and YK-11), with bilirubin peaking at 36.4 mg/dL and slow recovery over three months.",
+      "statement": "NIH LiverTox describes YK-11 as a steroidal SARM/myostatin inhibitor not approved for human use, banned by the World Anti-Doping Agency, and implicated (typically in combination with other SARMs) in cases of clinically apparent liver injury with cholestatic/jaundice patterns resembling anabolic-steroid-induced liver injury; the underlying published case report (Military Medicine, doi 10.1093/milmed/usac039) involved a previously healthy 23-year-old active-duty male who developed jaundice after using three SARMs (LGD-4033/ligandrol, RAD-140/testolone, and YK-11) for three months, with total bilirubin of 29.2 mg/dL at presentation, peaking at 36.37 mg/dL on hospital day 2 (bilirubin/alkaline phosphatase continued as high as 37 mg/dL per the case figure), and liver chemistry abnormalities persisting for approximately five months before resolving.",
       "context": {
         "population": "recreational bodybuilding users of multi-SARM stacks",
         "route": "oral (typical recreational use)",
@@ -149,7 +185,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "livertox-sarms-nbk619971"
+        "livertox-sarms-nbk619971",
+        "milmed-2022-usac039-sarms-cholestatic-jaundice-case"
       ],
       "extractedEvidence": [
         {
@@ -176,12 +213,33 @@
           "sourceRef": "livertox-sarms-nbk619971",
           "quote": "Reported cases of liver injury and jaundice with SARMs have often been prolonged but have invariably resolved.",
           "pageOrSection": "SARMs class hepatotoxicity summary"
+        },
+        {
+          "sourceRef": "milmed-2022-usac039-sarms-cholestatic-jaundice-case",
+          "quote": "A previously healthy 23-year-old active duty male... endorsed using multiple SARMs including LGD4033, RAD140, and YK11 for 3 months before presentation",
+          "pageOrSection": "Case presentation"
+        },
+        {
+          "sourceRef": "milmed-2022-usac039-sarms-cholestatic-jaundice-case",
+          "quote": "total bilirubin of 29.2 mg/dL",
+          "pageOrSection": "Case presentation, initial labs"
+        },
+        {
+          "sourceRef": "milmed-2022-usac039-sarms-cholestatic-jaundice-case",
+          "quote": "peak bilirubin of 36.37 mg/dL on day 2 of admission",
+          "pageOrSection": "Hospital course"
+        },
+        {
+          "sourceRef": "milmed-2022-usac039-sarms-cholestatic-jaundice-case",
+          "quote": "Bilirubin and alkaline phosphatase levels peaked as high as 37 mg/dL",
+          "pageOrSection": "Case figure caption"
         }
       ],
       "reviewFlags": [
         "safety-critical adverse-effect claim",
         "case reports involve multi-SARM stacks; liver injury cannot be attributed to YK-11 in isolation from a single case report",
-        "no dedicated YK-11-only case series identified"
+        "no dedicated YK-11-only case series identified",
+        "remediation-2026-08-29: reconciled bilirubin figure against the primary Military Medicine case report (independently re-fetched this session) -- initial 29.2 mg/dL, peak 36.37 mg/dL on hospital day 2, with the case figure separately showing bilirubin/alkaline phosphatase as high as 37 mg/dL; the packet's prior 36.4 mg/dL figure is confirmed consistent with the day-2 peak value"
       ]
     },
     {
@@ -200,7 +258,8 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "cayman-chem-yk11-insert",
-        "livertox-sarms-nbk619971"
+        "livertox-sarms-nbk619971",
+        "kanno-2011-bpb-yk11-ar-partial-agonist"
       ],
       "extractedEvidence": [
         {
@@ -222,11 +281,26 @@
           "sourceRef": "livertox-sarms-nbk619971",
           "quote": "YK-11 is a steroidal selective androgen receptor modulator and acts as a partial agonist of the androgen receptor but with unique downstream effects In addition, it is a myostatin inhibitor which promotes muscle growth.",
           "pageOrSection": "SARMs background, YK-11 subsection"
+        },
+        {
+          "sourceRef": "kanno-2011-bpb-yk11-ar-partial-agonist",
+          "quote": "YK11 was found to be a partial agonist of the androgen receptor (AR) in an androgen responsive element (ARE)-luciferase reporter assay.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "kanno-2011-bpb-yk11-ar-partial-agonist",
+          "quote": "YK11 accelerates nuclear translocation of AR.",
+          "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "kanno-2011-bpb-yk11-ar-partial-agonist",
+          "quote": "YK11 does not induce amino/carboxyl-terminal (N/C) interaction and prevents 5-alpha-dihydrotestosterone (DHT)-mediated N/C interaction.",
+          "pageOrSection": "Abstract"
         }
       ],
       "reviewFlags": [
         "mechanism data is preclinical (cell-based, non-human); does not establish human efficacy",
-        "underlying primary literature (Kanno et al. 2011/2013) accessed only via secondary vendor summary in this pass; verify against primary journal article on next review"
+        "remediation-2026-08-29: Kanno et al. 2011 (AR-partial-agonist / nuclear-translocation / no-N/C-interaction mechanism) independently re-fetched directly from the primary journal (Biol. Pharm. Bull. 34(3):318-23, J-STAGE) this session, resolving the prior vendor-datasheet-only sourcing gap; abstract text matches the packet's extracted quotes"
       ]
     },
     {
@@ -355,9 +429,12 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "PubMed abstract pages (23995658, 38521455, 30379415) returned reCAPTCHA/robots-blocked content to automated fetch this session; primary-literature quotes for the original Kanno et al. 2011/2013 mechanism papers and the hippocampal oxidative-stress rodent studies were not independently re-verified from the primary journal source and are currently sourced via a vendor technical datasheet (Cayman Chemical) instead.",
-      "PubChem CID (119058028) and CAS number were cross-confirmed across PubChem, Cayman Chemical, and MedKoo vendor pages but ChEMBL/UNII/DrugBank identifiers remain unresolved.",
-      "No dedicated YK-11-only human case series or controlled human study was located; human safety/efficacy evidence rests entirely on multi-SARM case reports and a single FDA adulterated-product adverse-event report.",
+      "remediation-2026-08-29: bilirubin figure in yk11-adverse-effect-liver-injury-001 reconciled against the primary Military Medicine case report (doi 10.1093/milmed/usac039), independently re-fetched this session -- initial 29.2 mg/dL, peak 36.37 mg/dL on hospital day 2 (case figure shows as high as 37 mg/dL); packet's prior 36.4 mg/dL is consistent with the day-2 peak and the claim now cites the primary report directly rather than only LiverTox.",
+      "remediation-2026-08-29: compound.externalIdentifiers.unii resolved to Z9748J6B0R via the FDA/NLM Global Substance Registration System (GSRS) record for CAS 1370003-76-1, independently re-fetched this session; source added to packet.",
+      "remediation-2026-08-29: Kanno et al. 2011 AR-partial-agonist mechanism paper independently re-fetched directly from the primary journal (Biol. Pharm. Bull. 34(3):318-23, J-STAGE) this session, resolving the prior vendor-datasheet-only sourcing gap noted in the last review.",
+      "Kanno et al. 2013 hippocampal/oxidative-stress rodent studies referenced in earlier review passes were not part of this remediation's scope and remain unverified against primary source; ChEMBL and DrugBank identifiers remain unresolved after this pass -- no independent structured-database match was found for either.",
+      "ops.completeness remains 'partial' and ops.needsReview remains true per packet policy: this expansion-batch packet is still not cleared for publication regardless of the claim-level fixes made in this remediation pass.",
+      "No dedicated YK-11-only human case series or controlled human study was located; human safety/efficacy evidence still rests entirely on multi-SARM case reports and a single FDA adulterated-product adverse-event report.",
       "Vendor/marketing landscape for YK-11 changes frequently (product reformulations, delisting); marketing claim example should be re-checked for currency at each review cycle.",
       "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
     ],
@@ -367,7 +444,8 @@
       "no-approved-human-indication",
       "thin-human-evidence",
       "combination-product-confound",
-      "preclinical-mechanism-only"
+      "preclinical-mechanism-only",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

@@ -39,8 +39,8 @@
       "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=70c3ccf7-4df0-4c75-ba07-fede9970c8d9",
       "doi": null,
       "pmid": null,
-      "publishedAt": null,
-      "accessedAt": "2026-08-29T01:20:00Z"
+      "publishedAt": "2026-04-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
       "sourceId": "fda-imcivree-first-approval-announcement",
@@ -101,6 +101,30 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "europepmc-abstract-33137293",
+      "sourceType": "paper-level-primary-literature",
+      "authorityTier": "A2",
+      "title": "Europe PMC abstract record: Efficacy and safety of setmelanotide, an MC4R agonist, in individuals with severe obesity due to LEPR or POMC deficiency (PMID 33137293)",
+      "publisher": "Europe PMC / EMBL-EBI (abstract of Clement K, et al., Lancet Diabetes & Endocrinology 2020)",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:33137293&format=json&resultType=core",
+      "doi": "10.1016/S2213-8587(20)30364-8",
+      "pmid": "33137293",
+      "publishedAt": "2020-11-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "fda-warning-letters-database-search-2026",
+      "sourceType": "regulator-enforcement",
+      "authorityTier": "A1",
+      "title": "FDA Warning Letters database (searched for setmelanotide/research-chemical-vendor entries; example unrelated result: Gram Peptides, 3/31/2026)",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/gram-peptides-721806-03312026",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-03-31T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -169,7 +193,7 @@
     {
       "claimId": "setmelanotide-efficacy-pomc-lepr-phase3-001",
       "claimType": "efficacy",
-      "statement": "In the pivotal single-arm, open-label phase 3 trials supporting FDA approval, 80% of patients with POMC or PCSK1 deficiency and 46% of patients with LEPR deficiency lost 10% or more of their body weight after approximately one year of setmelanotide treatment; this is genotype-specific efficacy in a small, molecularly confirmed rare-disease population and does not generalize to common obesity.",
+      "statement": "In the pivotal single-arm, open-label phase 3 trials supporting FDA approval, 80% (8 of 10) of patients with POMC or PCSK1 deficiency and 45% (5 of 11) of patients with LEPR deficiency lost 10% or more of their body weight after approximately one year of setmelanotide treatment (the FDA approval announcement rounds the LEPR figure to 46%; the peer-reviewed primary paper's own abstract states 45%, and that figure is treated as authoritative here); this is genotype-specific efficacy in a small, molecularly confirmed rare-disease population and does not generalize to common obesity.",
       "context": {
         "population": "patients with genetically confirmed POMC/PCSK1 or LEPR deficiency and obesity",
         "route": "subcutaneous",
@@ -194,17 +218,22 @@
           "sourceRef": "fda-imcivree-first-approval-announcement",
           "quote": "46 percent of patients with LEPR deficiency lost 10 percent or more of their body weight",
           "pageOrSection": "Approval announcement, trial efficacy results"
+        },
+        {
+          "sourceRef": "europepmc-abstract-33137293",
+          "quote": "Eight (80%) participants in the POMC trial and five (45%) participants in the LEPR trial achieved at least 10% weight loss at approximately 1 year.",
+          "pageOrSection": "Abstract (Europe PMC record for Clement K, et al., Lancet Diabetes Endocrinol 2020; PMID 33137293)"
         }
       ],
       "reviewFlags": [
         "small single-arm trial populations (rare disease); no placebo comparator in these specific phase 3 studies",
-        "verify against full published Lancet Diabetes & Endocrinology results (PMID 33137293) at next review pass for cohort sizes and confidence intervals"
+        "resolved 2026-08-29: independently checked against the primary paper's own abstract via Europe PMC (PMID 33137293) rather than the FDA press release alone; the primary paper states 45% (5 of 11) for the LEPR cohort, not the 46% rounded figure used in the FDA press release. Statement corrected to 45% (5 of 11) with the discrepancy noted explicitly."
       ]
     },
     {
       "claimId": "setmelanotide-safety-warnings-001",
       "claimType": "warning",
-      "statement": "Labeling and the FDA approval announcement identify depression and suicidal ideation, spontaneous penile erections in males and adverse sexual reactions in females, generalized/focal skin hyperpigmentation and new or darkening moles, serious hypersensitivity reactions including anaphylaxis, and injection site reactions as recognized risks of setmelanotide; patients must be monitored for new-onset or worsening depression or suicidal thoughts, and men experiencing erections lasting over 4 hours are advised to seek emergency care.",
+      "statement": "Labeling and the FDA approval announcement identify depression and suicidal ideation, spontaneous penile erections in males and adverse sexual reactions in females, generalized/focal skin hyperpigmentation and new or darkening moles, serious hypersensitivity reactions including anaphylaxis, and injection site reactions as recognized risks of setmelanotide; patients must be monitored for new-onset or worsening depression or suicidal thoughts, and men experiencing erections lasting over 4 hours are advised to seek emergency care. For the acquired hypothalamic obesity (aHO) population specifically, the current label (revised 4/2026) also warns of acute adrenal insufficiency (reported in 5% of IMCIVREE-treated patients with acquired HO and secondary adrenal insufficiency versus 0% of placebo-treated patients) and sodium imbalance (hyponatremia in 6% of IMCIVREE-treated versus 2% of placebo-treated patients, and hypernatremia in 5% of IMCIVREE-treated versus 4% of placebo-treated patients) in aHO patients with concomitant central diabetes insipidus/AVP deficiency.",
       "context": {
         "population": "patients prescribed IMCIVREE",
         "route": "subcutaneous",
@@ -234,11 +263,22 @@
           "sourceRef": "fda-imcivree-first-approval-announcement",
           "quote": "Spontaneous penile erections in males and adverse sexual reactions in females have occurred with treatment. Depression and suicidal ideation have also occurred with Imcivree.",
           "pageOrSection": "Approval announcement, safety summary"
+        },
+        {
+          "sourceRef": "dailymed-imcivree-label",
+          "quote": "In a clinical trial of adults and pediatric patients aged 4 years and older with acquired HO and secondary adrenal insufficiency, serious adverse reactions related to acute adrenal insufficiency were reported by 5% of IMCIVREE-treated patients and no placebo-treated patients.",
+          "pageOrSection": "Warnings and Precautions, Section 5.5 (Acute Adrenal Insufficiency in Patients with Acquired HO) — re-fetched 2026-08-29, revision 4/2026"
+        },
+        {
+          "sourceRef": "dailymed-imcivree-label",
+          "quote": "Hyponatremia was reported in 6% of IMCIVREE-treated patients and 2% of placebo-treated patients, and hypernatremia was reported in 5% of IMCIVREE-treated patients and 4% of placebo-treated patients.",
+          "pageOrSection": "Warnings and Precautions, Section 5.6 (Sodium Imbalance in Patients with Acquired HO and Central Diabetes Insipidus) — re-fetched 2026-08-29, revision 4/2026"
         }
       ],
       "reviewFlags": [
         "safety-critical claim requiring clinician-level monitoring guidance",
-        "no boxed warning identified on the label version fetched; confirm no boxed warning was added in a subsequent label revision"
+        "resolved 2026-08-29: re-fetched the live DailyMed label (revision 4/2026) directly; confirmed there is still no boxed warning on the current label. This closes the prior open flag on boxed-warning status.",
+        "resolved 2026-08-29: the 4/2026 label revision added two aHO-specific warnings (Section 5.5 acute adrenal insufficiency; Section 5.6 sodium imbalance/hyponatremia-hypernatremia) not previously captured in this claim; both are now included in the statement and extractedEvidence above."
       ]
     },
     {
@@ -272,7 +312,8 @@
         }
       ],
       "reviewFlags": [
-        "cardiovascular-neutral finding sourced from a secondary review article, not directly quoted from a primary trial paper; verify against primary trial safety tables at next review"
+        "cardiovascular-neutral finding sourced from a secondary review article, not directly quoted from a primary trial paper; verify against primary trial safety tables at next review",
+        "independent review (2026-08-29) confirmed the common-AE list (injection site reactions, hyperpigmentation, headache, GI effects) via a professional-society summary (Pediatric Endocrine Society), but neither that source nor StatPearls/NCBI Bookshelf discuss cardiovascular endpoints or fasting glucose; the cardiovascular-neutrality and fasting-glucose-improvement sub-claims remain unresolved/review-gated and should not be presented with the same confidence as the AE list until corroborated"
       ]
     },
     {
@@ -314,7 +355,8 @@
       "reviewFlags": [
         "misinformation-adjacent: vendor cites real trial statistics out of the genotype-restricted context in which FDA evaluated them",
         "no FDA import alert or warning letter specific to setmelanotide research-chemical sellers was located in this research pass; search again at next review",
-        "gray-market product identity/purity is unverified; do not equate with pharmacy-dispensed IMCIVREE"
+        "gray-market product identity/purity is unverified; do not equate with pharmacy-dispensed IMCIVREE",
+        "independent recheck (2026-08-29) searched the FDA Warning Letters database directly (found only unrelated 2025-2026 peptide-vendor letters, e.g. Gram Peptides 3/31/2026, naming retatrutide/tirzepatide, not setmelanotide); this reconfirms rather than resolves the gap, so this sub-item stays review-gated for a future recheck"
       ]
     }
   ],
@@ -335,10 +377,11 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "CAS/UNII/DrugBank/ChEMBL identifiers not yet resolved from structured databases; PubChem page did not render full identifier table via fetch.",
-      "Primary phase 3 trial (PMID 33137293) full text was inaccessible behind a bot-check page during this research pass; efficacy quotes were corroborated via the FDA approval announcement and a secondary PMC review article instead of the primary paper directly \u2014 re-fetch PMC/journal full text at next review to source cohort sizes and CIs directly from the primary study.",
-      "No FDA import alert, warning letter, or compounding-risk listing specific to setmelanotide research-chemical sales was located in this pass; confirm absence (or find one) at next review.",
-      "DailyMed label version accessed via WebFetch summary; confirm no boxed warning or newer label revision exists at review time given multiple indication expansions (2020, 2022, 2024/2025)."
+      "CAS/UNII/DrugBank/ChEMBL identifiers not yet resolved from structured databases; PubChem page did not render full identifier table via fetch. Attempted resolution again during remediation pass (2026-08-29): PubChem/UNII/CAS Common Chemistry lookups were not re-attempted this pass because the verdict did not flag identifiers as a promotion blocker; identifiers remain unresolved and review-gated.",
+      "RESOLVED 2026-08-29: Primary phase 3 trial (PMID 33137293) abstract was independently fetched via the Europe PMC REST API this pass, confirming the LEPR responder rate is 45% (5 of 11), not the 46% rounded figure in the FDA press release; claim setmelanotide-efficacy-pomc-lepr-phase3-001 corrected accordingly and the primary-paper source added.",
+      "No FDA import alert, warning letter, or compounding-risk listing specific to setmelanotide research-chemical sales was located in this pass. RECHECKED 2026-08-29: searched the FDA Warning Letters database directly again; still no setmelanotide-specific entry found (only unrelated peptide-vendor letters, e.g. Gram Peptides 3/31/2026). Gap reconfirmed, remains open/review-gated for a future recheck.",
+      "RESOLVED 2026-08-29: re-fetched the live DailyMed label directly (revision 4/2026); confirmed no boxed warning exists, and identified two aHO-specific safety warnings (Section 5.5 acute adrenal insufficiency; Section 5.6 sodium imbalance/hyponatremia-hypernatremia) that were missing from claim setmelanotide-safety-warnings-001 and have now been added with verbatim quotes. This closes both the boxed-warning open question and the safety-warnings promotion blocker from the 2026-08-29 review.",
+      "Cardiovascular-neutrality and fasting-glucose sub-claims within setmelanotide-adverse-effect-common-001 remain unresolved: independent sources checked this pass (Pediatric Endocrine Society summary, StatPearls/NCBI Bookshelf) do not discuss cardiovascular endpoints or fasting glucose; sub-claim stays review-gated pending a primary-trial safety-table check."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -346,7 +389,8 @@
       "a1-regulator-backed",
       "genotype-restricted-indication",
       "gray-market-marketing-mismatch",
-      "thin-primary-source-access"
+      "thin-primary-source-access",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

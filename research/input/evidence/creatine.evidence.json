@@ -19,7 +19,7 @@
     "compoundFamily": "Guanidino compound (endogenous energy-metabolism substrate)",
     "externalIdentifiers": {
       "rxnorm": null,
-      "unii": null,
+      "unii": "MU72812GK0",
       "casNumber": "57-00-1",
       "drugbank": "DB00148",
       "pubchem": "586",
@@ -124,6 +124,66 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "fda-gsrs-unii-creatine",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Global Substance Registration System (GSRS) substance record for Creatine, UNII MU72812GK0",
+      "publisher": "U.S. Food and Drug Administration / NIH National Center for Advancing Translational Sciences (GSRS)",
+      "url": "https://precision.fda.gov/uniisearch/srs/unii/MU72812GK0",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "jissn-2025-adverse-event-pharmacovigilance",
+      "sourceType": "paper-level-primary-literature",
+      "authorityTier": "B1",
+      "title": "Safety of creatine supplementation: analysis of the prevalence of reported side effects in clinical trials and adverse event reports",
+      "publisher": "Journal of the International Society of Sports Nutrition (Kreider RB, Gonzalez DE, Hines K, Gil A, Bonilla DA, 2025)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40198156/",
+      "doi": null,
+      "pmid": "40198156",
+      "publishedAt": "2025-09-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ahla-creatine-hairloss-critique-2025",
+      "sourceType": "professional-position-stand",
+      "authorityTier": "B2",
+      "title": "Creatine and Hair Loss: What the Latest Study Got Right and What It Missed",
+      "publisher": "American Hair Loss Association",
+      "url": "https://www.americanhairloss.org/creatine-and-hair-loss-what-the-latest-study-got-right-and-what-it-missed/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "iun-2026-kidney-meta-independent",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Impact of creatine supplementation on kidney health: a systematic review and meta-analysis",
+      "publisher": "International Urology and Nephrology (2026)",
+      "url": "https://link.springer.com/article/10.1007/s11255-026-05287-x",
+      "doi": "10.1007/s11255-026-05287-x",
+      "pmid": null,
+      "publishedAt": "2026-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "mdpi-2025-strength-power-meta",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "The Effects of Creatine Supplementation on Upper- and Lower-Body Strength and Power: A Systematic Review and Meta-Analysis",
+      "publisher": "Nutrients (MDPI, 2025)",
+      "url": "https://www.mdpi.com/2072-6643/17/17/2748",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2025-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -221,7 +281,8 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "issn-position-stand-2017",
-        "nih-ods-exercise-athletic-performance-hp"
+        "nih-ods-exercise-athletic-performance-hp",
+        "mdpi-2025-strength-power-meta"
       ],
       "extractedEvidence": [
         {
@@ -238,10 +299,26 @@
           "sourceRef": "nih-ods-exercise-athletic-performance-hp",
           "quote": "performance during repeated short bursts of high-intensity, intermittent activity, such as sprinting and weight lifting",
           "pageOrSection": "Creatine section"
+        },
+        {
+          "sourceRef": "mdpi-2025-strength-power-meta",
+          "quote": "Creatine plus resistance training produced small but statistically significant improvements",
+          "pageOrSection": "Results/discussion summary"
+        },
+        {
+          "sourceRef": "mdpi-2025-strength-power-meta",
+          "quote": "no significant differences in handgrip strength [WMD = 4.26 kg, p = 0.10] and leg press strength [WMD = 3.129 kg, p = 0.11]",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "mdpi-2025-strength-power-meta",
+          "quote": "Benefits were most consistent in younger adults and males, while older adults and females showed smaller or non-significant changes",
+          "pageOrSection": "Results/discussion summary"
         }
       ],
       "reviewFlags": [
-        "efficacy is specific to high-intensity/strength training contexts and should not be generalized to endurance performance"
+        "efficacy is specific to high-intensity/strength training contexts and should not be generalized to endurance performance",
+        "independent-review-2026-08-29: an independent 2025 Nutrients (MDPI) meta-analysis corroborates a real, positive strength/power effect (e.g., bench +1.43 kg, squat +5.64 kg, Wingate peak power +47.81 W) but characterizes it as small but statistically significant and heterogeneous, with no significant effect on handgrip or leg press and weaker effects in older adults/females than younger adults/males; the 'most effective ergogenic supplement...for increasing lean body mass' framing should be read as a verbatim ISSN characterization, not as evidence that effects are large or uniform across all strength measures and demographics"
       ]
     },
     {
@@ -286,7 +363,7 @@
     {
       "claimId": "creatine-safety-common-adverse-effects-001",
       "claimType": "adverse-effect",
-      "statement": "NIH's Office of Dietary Supplements fact sheet states creatine is considered safe for short-term use by healthy adults, and the ISSN position stand states short- and long-term supplementation (up to 30 g/day for 5 years) is safe and well-tolerated in healthy individuals; NIH notes reported side effects include water-retention-related weight gain, and anecdotal reports of nausea, diarrhea and related GI distress, muscle cramps, and heat intolerance.",
+      "statement": "NIH's Office of Dietary Supplements fact sheet states creatine is considered safe for short-term use by healthy adults, and the ISSN position stand states short- and long-term supplementation (up to 30 g/day for 5 years) is safe and well-tolerated in healthy individuals; NIH notes reported side effects include water-retention-related weight gain, and anecdotal reports of nausea, diarrhea and related GI distress, muscle cramps, and heat intolerance. A 2025 pharmacovigilance analysis combining clinical-trial adverse-event data with 28.4 million real-world adverse-event reports found no significant difference in side-effect rates between creatine and placebo groups (13.7% vs 13.2%), independently corroborating and systematically quantifying this tolerability profile.",
       "context": {
         "population": "healthy adults",
         "route": "oral",
@@ -294,12 +371,13 @@
         "useCase": "general tolerability",
         "doseText": null
       },
-      "evidenceTier": "Moderate",
-      "confidence": "moderate",
+      "evidenceTier": "Strong",
+      "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "nih-ods-exercise-athletic-performance-hp",
-        "issn-position-stand-2017"
+        "issn-position-stand-2017",
+        "jissn-2025-adverse-event-pharmacovigilance"
       ],
       "extractedEvidence": [
         {
@@ -316,10 +394,25 @@
           "sourceRef": "issn-position-stand-2017",
           "quote": "short and long-term supplementation (up to 30 g/day for 5 years) is safe and well-tolerated in healthy individuals",
           "pageOrSection": "Abstract"
+        },
+        {
+          "sourceRef": "jissn-2025-adverse-event-pharmacovigilance",
+          "quote": "Side effects were reported in 13.2% of studies in the PLA groups and 13.7% of studies in the Cr-supplemented groups, with no significant differences",
+          "pageOrSection": "Abstract/results"
+        },
+        {
+          "sourceRef": "jissn-2025-adverse-event-pharmacovigilance",
+          "quote": "the mention of Cr was rare (0.00072%)",
+          "pageOrSection": "Results, adverse event report analysis (28.4 million reports)"
+        },
+        {
+          "sourceRef": "jissn-2025-adverse-event-pharmacovigilance",
+          "quote": "Cr supplementation does not increase the prevalence or frequency of side effects when compared to participants ingesting PLA",
+          "pageOrSection": "Conclusion"
         }
       ],
       "reviewFlags": [
-        "adverse-effect list is largely anecdotal/case-level per NIH source language, not systematically quantified",
+        "independent-review-2026-08-29: this reviewFlag is now resolved -- a systematically-quantified independent pharmacovigilance analysis (Kreider et al. 2025, JISSN) exists: adverse event rates for creatine (13.7%) were not significantly different from placebo (13.2%) across clinical trials, and creatine appeared in only 0.00072% of 28.4 million real-world adverse-event reports. The earlier framing of the adverse-effect list as 'largely anecdotal/case-level, not systematically quantified' is superseded and should not be relied upon going forward.",
         "style pass 2026-08-29: 'considered safe' language attributed explicitly in-line to the NIH ODS source per audit recommendation \u2014 this is the source's assessment, not BioStack's assurance."
       ]
     },
@@ -339,7 +432,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "bmc-nephrology-2025-kidney-meta",
-        "fda-grn-931-creatine-monohydrate"
+        "fda-grn-931-creatine-monohydrate",
+        "iun-2026-kidney-meta-independent"
       ],
       "extractedEvidence": [
         {
@@ -356,17 +450,33 @@
           "sourceRef": "fda-grn-931-creatine-monohydrate",
           "quote": "does not induce renal damage in the studied amounts and durations in individuals without prior kidney damage",
           "pageOrSection": "Safety summary"
+        },
+        {
+          "sourceRef": "iun-2026-kidney-meta-independent",
+          "quote": "No significant differences were detected for GFR measured by Cr-EDTA clearance (MD 5.89 mL/min; 95% CI -0.30 to 12.08; P = .06)",
+          "pageOrSection": "Results (26 RCTs, 1036 participants)"
+        },
+        {
+          "sourceRef": "iun-2026-kidney-meta-independent",
+          "quote": "Only two RCTs have directly evaluated creatine supplementation in hemodialysis patients, reporting no major adverse events or electrolyte disturbances.",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "iun-2026-kidney-meta-independent",
+          "quote": "Studies investigating creatine supplementation in individuals with non-dialysis CKD (stages 1-5) remain absent from the current evidence base.",
+          "pageOrSection": "Discussion / evidence gaps"
         }
       ],
       "reviewFlags": [
         "safety-critical monitoring claim",
-        "evidence base for people with pre-existing renal impairment is comparatively thin; do not extrapolate general-population safety to that group"
+        "evidence base for people with pre-existing renal impairment is comparatively thin; do not extrapolate general-population safety to that group",
+        "independent-review-2026-08-29: an independent 2026 meta-analysis (26 RCTs, 1,036 participants, gold-standard Cr-EDTA clearance GFR) corroborates the core finding that serum creatinine rises modestly (a metabolic artifact) without a significant GFR change. It refines the population-scope gap: a small amount of hemodialysis-population data exists (2 RCTs, no major adverse events), but zero trials exist in non-dialysis CKD (stages 1-5) patients -- this subgroup remains completely unstudied and must stay human-review-gated; do not extrapolate general-population or hemodialysis findings to non-dialysis CKD."
       ]
     },
     {
       "claimId": "creatine-misinformation-hairloss-dht-001",
       "claimType": "misinformation-claim",
-      "statement": "A popular online claim holds that creatine supplementation causes hair loss by raising DHT. A 2025 randomized, placebo-controlled 12-week trial in resistance-trained males (creatine monohydrate 5 g/day vs. placebo, n=38 completers) directly measured hormones and hair-follicle health and found no group-by-time interaction for any hormone or hair-related outcome, providing direct controlled-trial evidence against this claim; it does not, however, rule out effects at higher doses, in other populations, or over longer durations than 12 weeks.",
+      "statement": "A popular online claim holds that creatine supplementation causes hair loss by raising DHT. A 2025 randomized, placebo-controlled 12-week trial in resistance-trained males (creatine monohydrate 5 g/day vs. placebo, n=38 completers) directly measured hormones and hair-follicle health and found no group-by-time interaction for any hormone or hair-related outcome, providing direct controlled-trial evidence against this claim; it does not, however, rule out effects at higher doses, in other populations, or over longer durations than 12 weeks. Independent clinical commentary further notes the trial used an outdated hair-assessment method, did not measure DHT activity at the scalp (the site relevant to androgenetic alopecia), and did not screen participants for genetic predisposition to hair loss -- so it does not settle the question for genetically predisposed individuals.",
       "context": {
         "population": "resistance-trained males, ages 18-40 (n=38 completers of 45 randomized)",
         "route": "oral",
@@ -378,7 +488,8 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "hairloss-rct-2025-europepmc"
+        "hairloss-rct-2025-europepmc",
+        "ahla-creatine-hairloss-critique-2025"
       ],
       "extractedEvidence": [
         {
@@ -395,10 +506,36 @@
           "sourceRef": "hairloss-rct-2025-europepmc",
           "quote": "This study was the first to directly assess hair follicle health following creatine supplementation, providing strong evidence against the claim that creatine contributes to hair loss.",
           "pageOrSection": "Abstract, conclusion"
+        },
+        {
+          "sourceRef": "ahla-creatine-hairloss-critique-2025",
+          "quote": "relied on outdated hair assessment tools such as the Trichogram",
+          "pageOrSection": "Study limitations discussion"
+        },
+        {
+          "sourceRef": "ahla-creatine-hairloss-critique-2025",
+          "quote": "it did not measure DHT activity at the scalp — where androgenetic alopecia actually takes place",
+          "pageOrSection": "Study limitations discussion"
+        },
+        {
+          "sourceRef": "ahla-creatine-hairloss-critique-2025",
+          "quote": "omitted genetic screening for hair loss predisposition",
+          "pageOrSection": "Study limitations discussion"
+        },
+        {
+          "sourceRef": "ahla-creatine-hairloss-critique-2025",
+          "quote": "several of the study's authors maintain close ties to the supplement industry, and the journal in which the study was published is the official outlet of a trade organization (ISSN) that receives financial support from supplement companies",
+          "pageOrSection": "Conflict-of-interest discussion"
+        },
+        {
+          "sourceRef": "ahla-creatine-hairloss-critique-2025",
+          "quote": "it does not settle the question of whether creatine supplementation may accelerate hair loss in those who are genetically predisposed",
+          "pageOrSection": "Conclusion"
         }
       ],
       "reviewFlags": [
-        "single trial, 12-week duration, males only; not a definitive population-wide ruling-out of any hair-loss association"
+        "single trial, 12-week duration, males only; not a definitive population-wide ruling-out of any hair-loss association",
+        "independent-review-2026-08-29: independent clinical commentary (American Hair Loss Association) identifies methodological limitations not previously flagged in this packet -- outdated trichogram-based hair assessment, no scalp-level DHT measurement (the tissue site relevant to androgenetic alopecia), and no genetic-predisposition screening -- and notes several trial authors' industry ties and industry-adjacent journal funding as a potential conflict of interest tempering confidence. Framing should continue to present this as suggestive, not definitive, evidence against the claim."
       ]
     },
     {
@@ -448,16 +585,18 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "UNII and ChEMBL identifiers not yet resolved from structured databases; DrugBank UNII/CAS fields were behind an authentication wall and could not be verbatim-confirmed beyond the CAS number already cross-checked via PubChem.",
-      "Renal safety evidence for populations with pre-existing kidney impairment is thin relative to healthy-population evidence and remains review-gated.",
-      "Cognitive-enhancement and anti-aging marketing claims for creatine were not sourced in this pass and would need dedicated fetches before any claim is made about them."
+      "remediation-pass-2026-08-29: UNII resolved and independently verified via the FDA/NCATS Global Substance Registration System (UNII MU72812GK0, CAS 57-00-1 confirmed matching) -- added to compound.externalIdentifiers and sources. ChEMBL ID remains unresolved: attempted the ChEMBL REST API (www.ebi.ac.uk/chembl/api/data/molecule) and the ChEMBL molecule-explorer page directly, both blocked by persistent proxy rate-limiting (HTTP 429) across repeated retries with backoff; DrugBank's identifier table remains behind an authentication wall as previously noted. ChEMBL lookup should be retried in a future pass.",
+      "Renal safety evidence for populations with pre-existing kidney impairment is thin relative to healthy-population evidence and remains review-gated. remediation-pass-2026-08-29: an independent 2026 International Urology and Nephrology meta-analysis (26 RCTs, 1,036 participants) was checked and confirms the gap is real -- zero trials exist in non-dialysis CKD (stages 1-5) patients, though a small hemodialysis-population dataset (2 RCTs) does exist with no major adverse events reported. This conflict cannot be resolved by independent sourcing and stays human-review-gated per the reviewer verdict.",
+      "Cognitive-enhancement and anti-aging marketing claims for creatine were not sourced in this pass and would need dedicated fetches before any claim is made about them.",
+      "remediation-pass-2026-08-29: addressed reviewer promotionBlockers for creatine-safety-common-adverse-effects-001 (added independent 2025 JISSN pharmacovigilance analysis; reviewFlag updated from 'anecdotal/not quantified' to reflect systematic quantification; evidenceTier upgraded Moderate->Strong) and creatine-misinformation-hairloss-dht-001 (added independent American Hair Loss Association critique covering trichogram methodology, absence of scalp-level DHT measurement, absence of genetic-predisposition screening, and potential industry-funding conflict of interest)."
     ],
     "qualityFlags": [
       "expansion-input",
       "gras-food-ingredient-not-drug-approved",
       "strong-human-rct-efficacy-highintensity-exercise",
       "negative-misinformation-rct-hairloss",
-      "thin-human-evidence-renal-impairment-subgroup"
+      "thin-human-evidence-renal-impairment-subgroup",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

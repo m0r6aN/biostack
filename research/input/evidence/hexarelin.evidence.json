@@ -138,6 +138,30 @@
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
+      "sourceId": "vada-prohibited-list-2026",
+      "sourceType": "regulator",
+      "authorityTier": "A2",
+      "title": "VADA Prohibited List 2026 (transposition of the WADA Prohibited List)",
+      "publisher": "Voluntary Anti-Doping Association (VADA)",
+      "url": "https://vada-testing.org/wp-content/uploads/2026/02/VADA-Prohibited-List-2026-.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-02-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "caymanchem-hexarelin-product-page",
+      "sourceType": "structured-database",
+      "authorityTier": "C2",
+      "title": "Hexarelin | Product 30716",
+      "publisher": "Cayman Chemical",
+      "url": "https://www.caymanchem.com/product/30716/hexarelin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "peptidedeck-hexarelin-vendor-page",
       "sourceType": "vendor-marketing",
       "authorityTier": "D1",
@@ -215,7 +239,8 @@
       "reviewFlags": [
         "acute GH pharmacodynamic endpoint only; no downstream clinical outcome (body composition, strength, disease outcome) was measured in this trial",
         "small single-dose acute study (n=12); not generalizable to chronic subcutaneous self-administration protocols marketed online",
-        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a double-blind, placebo-controlled, rising-dose study of 12 healthy adult male volunteers...\"); no regulator document exists for this claim (searched: FDA.gov site search for hexarelin -- no FDA-approved product or PCAC/bulk-substance document addressing this trial; DailyMed site search for hexarelin -- no label results; hexarelin has no FDA-approved drug product)."
+        "claimType efficacy is not on the directive's fieldAuthorityRequired list (regulatory, safety-critical, monitoring, product-specific dosing, formulation, storage/reconstitution); no FDA/DailyMed document exists for this trial since hexarelin has no FDA-approved product, so fieldAuthorityRequired remains false",
+        "independent review (systematic review, Sexual Medicine Reviews PMID 28400207) corroborates the class's dose-dependent acute GH pharmacology and reinforces that few long-term controlled studies exist for GHSs; the exact numeric Cmax figures (3.9/26.9/52.3/55.0 ng/mL) could not be independently re-verified outside the original Imbimbo 1994 controlled-human-study source"
       ]
     },
     {
@@ -249,7 +274,8 @@
       ],
       "reviewFlags": [
         "animal-only evidence (rat model); must not be presented as demonstrated human cardioprotective benefit",
-        "vendor and consumer content online extrapolates this rodent mechanism into human cardiac benefit claims without human trial support"
+        "vendor and consumer content online extrapolates this rodent mechanism into human cardiac benefit claims without human trial support",
+        "independent review noted a second, separately-authored preclinical paper (a mouse myocardial ischemia-reperfusion model) reporting a similar hexarelin cardioprotective mechanism, strengthening confidence the preclinical signal reproduces across labs/species-models; that source could not be fetched this session (blocked) so it is not added to sourceRefs, but the 'preclinical only, not human evidence' framing is confirmed correct and must not be loosened"
       ]
     },
     {
@@ -279,7 +305,8 @@
       ],
       "reviewFlags": [
         "absence from the FDA Category 2 table was confirmed by direct page fetch on 2026-08-28 but this list is revised periodically and must be re-verified at review time",
-        "no direct FDA compounding-substance evaluation document (e.g. PCAC briefing) for hexarelin was located in this pass"
+        "no direct FDA compounding-substance evaluation document (e.g. PCAC briefing) for hexarelin was located in this pass",
+        "independent re-verification (live page re-fetch, 2026-08-29): hexarelin/examorelin still does not appear anywhere on the FDA Category 2 bulk drug substances page (current GHRP-class Category 2 entries are GHRP-2 and GHRP-6); the claim's 'not currently listed, re-check at review time' framing holds"
       ]
     },
     {
@@ -297,17 +324,24 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "wada-s2-prohibited-list-drugscom"
+        "wada-s2-prohibited-list-drugscom",
+        "vada-prohibited-list-2026"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "wada-s2-prohibited-list-drugscom",
           "quote": "examorelin (hexarelin), GHRP-1, GHRP-2 (pralmorelin), GHRP-3, GHRP-4, GHRP-5 and GHRP-6",
           "pageOrSection": "S2.2.4 Growth Hormone Releasing Factors"
+        },
+        {
+          "sourceRef": "vada-prohibited-list-2026",
+          "quote": "GH-releasing peptides (GHRPs) (e.g. alexamorelin, examorelin (hexarelin), GHRP-1, GHRP-2",
+          "pageOrSection": "S2.2.4 Growth Hormone Releasing Factors"
         }
       ],
       "reviewFlags": [
-        "sourced via a Drugs.com mirror of the WADA list rather than the primary wada-ama.org document; cross-check against the current-year official WADA Prohibited List PDF at review time"
+        "sourced via a Drugs.com mirror of the WADA list rather than the primary wada-ama.org document; cross-check against the current-year official WADA Prohibited List PDF at review time",
+        "independent re-verification 2026-08-29: an independent anti-doping-authority transposition of the 2026 WADA Prohibited List (VADA) lists 'GH-releasing peptides (GHRPs) (e.g. alexamorelin, examorelin (hexarelin), GHRP-1, GHRP-2...)' under S2.2.4, corroborating this claim from a source materially different from the Drugs.com mirror; direct fetch of wada-ama.org itself was blocked by robots.txt this session, so the primary WADA document remains unconfirmed by direct read and this residual gap is retained rather than treated as fully closed"
       ]
     },
     {
@@ -326,18 +360,25 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pubchem-cid-6918297",
-        "scbt-hexarelin-product-page"
+        "scbt-hexarelin-product-page",
+        "caymanchem-hexarelin-product-page"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "scbt-hexarelin-product-page",
           "quote": "CAS Number: 140703-51-1 | Molecular Formula: C47H58N12O6",
           "pageOrSection": "Product identifiers"
+        },
+        {
+          "sourceRef": "caymanchem-hexarelin-product-page",
+          "quote": "CAS Number: 140703-51-1; Molecular Formula: C47H58N12O6",
+          "pageOrSection": "Technical Information"
         }
       ],
       "reviewFlags": [
         "PubChem's primary compound record for hexarelin resolves under the synonym 'Examorelin' (CID 6918297); confirm no separate hexarelin-specific CID exists at review time",
-        "UNII, RxNorm, DrugBank, and ChEMBL identifiers were not resolved in this pass"
+        "UNII, RxNorm, DrugBank, and ChEMBL identifiers were not resolved in this pass",
+        "independent re-verification 2026-08-29: an independent chemical supplier database (Cayman Chemical, materially different from PubChem and SCBT) confirms CAS 140703-51-1 and molecular formula C47H58N12O6"
       ]
     },
     {
@@ -390,7 +431,7 @@
       },
       "evidenceTier": "Limited",
       "confidence": "moderate",
-      "fieldAuthorityRequired": false,
+      "fieldAuthorityRequired": true,
       "sourceRefs": [
         "massoud-1996-jcem-cortisol-prolactin-doseresponse",
         "rahim-1999-clinendo-chronic-hpa-axis",
@@ -420,7 +461,7 @@
       ],
       "reviewFlags": [
         "primary-literature sources for cortisol/prolactin/HPA-axis effects (Massoud 1996; Rahim 1999) added on independent review, replacing sole reliance on a consumer-health secondary source",
-        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov site search for hexarelin cortisol/prolactin/HPA-axis -- no results addressing hexarelin, only unrelated NDA/compound matches; DailyMed site search for hexarelin cortisol/prolactin/HPA-axis -- no results, hexarelin has no FDA-approved label; hexarelin is not an FDA-approved drug so no label-based AE documentation exists)."
+        "corrected 2026-08-29: this is a safety-critical adverse-effect claim about pituitary-adrenal axis and prolactin stimulation; per the directive's requirement that safety-critical claims be marked fieldAuthorityRequired=true, this claim's fieldAuthorityRequired was corrected from false to true (a prior 'authority-flag recalibrated' reviewFlag had argued this claimType was outside the directive's scope; that reasoning was removed as it ran counter to the directive's explicit safety-critical criterion). No FDA-approved label exists for hexarelin (searched FDA.gov and DailyMed for hexarelin cortisol/prolactin/HPA-axis -- no results), so there is no regulator/label document to check this claim against; it remains gated on the primary controlled-human-study literature and requires field-authority (clinical/regulatory) sign-off before promotion."
       ]
     }
   ],
@@ -444,7 +485,13 @@
       "No FDA PCAC briefing document or bulk-substance evaluation specific to hexarelin was located in this pass; confirm whether one exists before finalizing regulatory claims.",
       "UNII, RxNorm, DrugBank, and ChEMBL identifiers not yet resolved from structured databases.",
       "Human evidence is thin: only one controlled human study was located (acute IV GH-release pharmacodynamics, n=12); no human data on chronic subcutaneous use, cardioprotection, body composition, or safety in the populations that self-administer it.",
-      "WADA prohibited-status claim was sourced via a secondary mirror (Drugs.com) rather than the primary wada-ama.org document; verify against the current official list."
+      "WADA prohibited-status claim was sourced via a secondary mirror (Drugs.com) rather than the primary wada-ama.org document; verify against the current official list.",
+      "Remediation pass 2026-08-29: hexarelin-safety-hpa-axis-001.fieldAuthorityRequired corrected from false to true per the directive's safety-critical criterion (promotion blocker); self-justifying 'authority-flag recalibrated' reviewFlag language removed from both the efficacy and adverse-effect claims.",
+      "Remediation pass 2026-08-29: WADA-prohibited claim independently corroborated via VADA's 2026 Prohibited List transposition (added as a source); the primary wada-ama.org PDF itself remains blocked by robots.txt and unconfirmed by direct read this session -- this residual gap is retained, not treated as closed.",
+      "Remediation pass 2026-08-29: FDA Category 2 bulk drug substances page re-fetched live; hexarelin/examorelin confirmed still absent (current GHRP-class Category 2 entries: GHRP-2, GHRP-6).",
+      "Remediation pass 2026-08-29: CAS 140703-51-1 / formula C47H58N12O6 independently corroborated via a live fetch of Cayman Chemical's product page (added as a source).",
+      "hexarelin-conflict-cardioprotection-species-001 remains open by design: no human cardioprotection trial exists; must stay human-review-gated and must never be promoted with wording implying human cardioprotective benefit.",
+      "UNII, RxNorm, DrugBank, and ChEMBL identifiers remain unresolved; carried forward, not resolved by inference."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -452,7 +499,8 @@
       "animal-data-marketed-as-human-benefit",
       "regulatory-status-unresolved",
       "identifier-gaps",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

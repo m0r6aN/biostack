@@ -19,12 +19,12 @@
     "externalIdentifiers": {
       "rxnorm": null,
       "unii": null,
-      "casNumber": null,
+      "casNumber": "1010396-29-8",
       "drugbank": null,
       "pubchem": "67546346",
       "chembl": null,
-      "doi": null,
-      "pmid": null
+      "doi": "10.1210/en.2008-0674",
+      "pmid": "18772237"
     }
   },
   "sources": [
@@ -123,6 +123,42 @@
       "pmid": null,
       "publishedAt": "2026-01-01T00:00:00Z",
       "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "endocrinology-2009-s23-contraceptive-primary",
+      "sourceType": "primary-literature",
+      "authorityTier": "B1",
+      "title": "Design of a novel selective androgen receptor modulator with in vivo activity for hormonal male contraception",
+      "publisher": "Endocrinology 150(1):385 (Ohio State University / University of Tennessee, in collaboration with GTx Inc.)",
+      "url": "https://academic.oup.com/endo/article-abstract/150/1/385/2455919",
+      "doi": "10.1210/en.2008-0674",
+      "pmid": "18772237",
+      "publishedAt": "2009-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "medchemexpress-s23-product",
+      "sourceType": "vendor-chemical-database",
+      "authorityTier": "C1",
+      "title": "S-23 (CAS 1010396-29-8) product page",
+      "publisher": "MedChemExpress",
+      "url": "https://www.medchemexpress.com/S-23.html",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "targetmol-s23-product",
+      "sourceType": "vendor-chemical-database",
+      "authorityTier": "C1",
+      "title": "S-23 (CAS 1010396-29-8) compound page",
+      "publisher": "TargetMol",
+      "url": "https://www.targetmol.com/compound/S-23",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -142,7 +178,8 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "wikipedia-s23-drug",
-        "pubchem-cid-67546346"
+        "pubchem-cid-67546346",
+        "endocrinology-2009-s23-contraceptive-primary"
       ],
       "extractedEvidence": [
         {
@@ -159,11 +196,27 @@
           "sourceRef": "wikipedia-s23-drug",
           "quote": "showed both a good ratio of anabolic to androgenic effects, and dose-dependent suppression of spermatogenesis with spontaneous recovery after cessation of treatment",
           "pageOrSection": "Animal study findings"
+        },
+        {
+          "sourceRef": "endocrinology-2009-s23-contraceptive-primary",
+          "quote": "high binding affinity (inhibitory constant = 1.7 ± 0.2 nm)",
+          "pageOrSection": "Abstract / Results"
+        },
+        {
+          "sourceRef": "endocrinology-2009-s23-contraceptive-primary",
+          "quote": "four of six animals showed no sperm in the testis and zero pregnancies (none of six) in mating trials",
+          "pageOrSection": "Results (S-23 + estradiol benzoate, intact male rats, 10-week treatment)"
+        },
+        {
+          "sourceRef": "endocrinology-2009-s23-contraceptive-primary",
+          "quote": "After termination of treatment, infertility was fully reversible, with a 100% pregnancy rate observed after 100 d of recovery",
+          "pageOrSection": "Results"
         }
       ],
       "reviewFlags": [
         "primary source for these claims is a tertiary encyclopedic reference (Wikipedia), not the original GTX preclinical publication; independent primary-source verification recommended",
-        "animal-model findings only; must not be read as evidence of human contraceptive or anabolic efficacy"
+        "animal-model findings only; must not be read as evidence of human contraceptive or anabolic efficacy",
+        "remediation-pass 2026-08-29: original 2009 Endocrinology primary paper (PMID 18772237, DOI 10.1210/en.2008-0674) fetched directly this session and added as an independent primary source; Ki=1.7±0.2 nM and full reversibility of infertility (100% pregnancy rate after 100 d recovery) confirmed verbatim. Note: the quantified mating-trial/reversibility result reported in the primary paper was obtained with S-23 co-administered with estradiol benzoate in intact male rats, not S-23 alone -- statement's general 'dose-dependent, reversible suppression of spermatogenesis' framing is supported but should not be read as isolating S-23 monotherapy effects."
       ]
     },
     {
@@ -198,7 +251,8 @@
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "FDA sources address the SARM class generally; no S-23-specific FDA statement, warning letter, or Category 2 compounding listing was located in this session"
+        "FDA sources address the SARM class generally; no S-23-specific FDA statement, warning letter, or Category 2 compounding listing was located in this session",
+        "confirmed 2026-08-29 (independent review): both FDA pages re-fetched live; still state SARMs generally are unapproved and cannot be legally marketed, with no S-23-specific mention. Class-level-only framing must remain as-is -- do not let future edits imply S-23-specific FDA action exists."
       ]
     },
     {
@@ -269,7 +323,8 @@
       ],
       "reviewFlags": [
         "safety-critical claim; evidence is class-level (mixed/undeclared-ingredient SARM products implicated in several cases) rather than isolated, characterized S-23 exposure",
-        "no S-23-specific controlled human toxicity data located in this session"
+        "no S-23-specific controlled human toxicity data located in this session",
+        "confirmed-with-note 2026-08-29 (independent review): an independent systematic review (33 studies; PMID 37218811) corroborates SARM-class hepatotoxicity (drug-induced liver injury case reports, elevated ALT in ~7.1% of trial participants) plus rhabdomyolysis and tendon rupture, supporting the FDA liver-injury language above. The review did not confirm S-23 specifically among compounds studied (class-level framing here remains accurate and should not be tightened to compound-specific), and did not independently corroborate the cardiovascular (heart attack/stroke) or psychiatric (psychosis) adverse effects also claimed by FDA -- a follow-up search specifically for cardiovascular/psychiatric SARM adverse-event case literature is recommended before this sub-claim is treated as independently corroborated on those two points."
       ]
     },
     {
@@ -299,12 +354,28 @@
           "sourceRef": "alhalabi-2025-s23-metabolite-study",
           "quote": "single-dose and repeated-dose administrations at three dose levels: 1 microgram, 10 micrograms, and 50 micrograms",
           "pageOrSection": "Study design summary"
+        },
+        {
+          "sourceRef": "alhalabi-2025-s23-metabolite-study",
+          "quote": "A total of 18 metabolites was detected in human in vivo samples following oral administration of microdosed S-23.",
+          "pageOrSection": "DSHS Cologne research listing, abstract"
+        },
+        {
+          "sourceRef": "alhalabi-2025-s23-metabolite-study",
+          "quote": "a single dose of 1 μg can be detected for an average of up to 253 hours",
+          "pageOrSection": "DSHS Cologne research listing, abstract"
+        },
+        {
+          "sourceRef": "alhalabi-2025-s23-metabolite-study",
+          "quote": "a single dose of 50 μg can be detected up to 544 hours on average",
+          "pageOrSection": "DSHS Cologne research listing, abstract"
         }
       ],
       "reviewFlags": [
         "dose-context claim; doses used are microdosing amounts for analytical/detection purposes only and must never be conflated with, or presented as guidance for, bodybuilding/performance dosing",
         "this study evaluates pharmacokinetics/detectability, not efficacy or clinical safety, and must not be cited as human safety or efficacy evidence",
-        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (Alhalabi et al. 2025 excretion/metabolite study) at source-level attribution ('a 2025 excretion/detection study...researchers administered...'); no regulator document exists for this claim (searched FDA.gov and DailyMed for S-23 -- not an approved drug, no label or FDA document exists; searched WADA materials -- WADA's list documents prohibited status only, not pharmacokinetic/detection-window data)."
+        "authority-flag recalibrated 2026-08-29: claimType studied-use is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings (Alhalabi et al. 2025 excretion/metabolite study) at source-level attribution ('a 2025 excretion/detection study...researchers administered...'); no regulator document exists for this claim (searched FDA.gov and DailyMed for S-23 -- not an approved drug, no label or FDA document exists; searched WADA materials -- WADA's list documents prohibited status only, not pharmacokinetic/detection-window data).",
+        "remediation-pass 2026-08-29 (resolves promotionBlocker): attempted Europe PMC REST full-text fetch for PMC12023825 to independently re-verify the 18-metabolite/253h/544h figures -- blocked by proxy rate-limiting this session. Fetched the already-cited DSHS Cologne research-listing page (alhalabi-2025-s23-metabolite-study) directly this session and confirmed all three figures verbatim against that source's own abstract text (quotes added above); PMC and Wiley full-text pages remain CAPTCHA-blocked. Numeric figures are now source-verified, though corroboration remains from a single source family (the study's own listing) rather than a second independent family."
       ]
     },
     {
@@ -406,11 +477,14 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "CAS/UNII/DrugBank/ChEMBL identifiers not confirmed from an authoritative structured database in this session; a candidate CAS (1010396-29-8) appeared only as an unconfirmed synonym on PubChem and was deliberately omitted pending verification.",
-      "No S-23-specific FDA compounding-risk listing, warning letter, or import alert was located; regulatory/safety claims currently rely on SARM-class-level FDA statements and should be re-checked against the live FDA pages for any S-23-specific action.",
-      "Human evidence for S-23 is limited to a single 2025 microdosing excretion/detection study; no controlled human efficacy or safety trial exists, which materially limits confidence in any future efficacy-adjacent claims.",
-      "WADA prohibited-list claim was sourced via a secondary aggregator (Drugs.com) rather than the official WADA PDF and should be cross-checked against the current-year official list.",
-      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
+      "UNII/DrugBank/ChEMBL identifiers remain unresolved; CAS number RESOLVED 2026-08-29 -- 1010396-29-8 independently confirmed this session via two materially different vendor structured-chemical databases (MedChemExpress, TargetMol) and added to externalIdentifiers.",
+      "No S-23-specific FDA compounding-risk listing, warning letter, or import alert was located; regulatory/safety claims currently rely on SARM-class-level FDA statements. RE-CHECKED 2026-08-29 via live re-fetch of both FDA pages -- still no S-23-specific action found; class-level-only framing confirmed correct and must remain as-is.",
+      "Human evidence for S-23 is limited to a single 2025 microdosing excretion/detection study; no controlled human efficacy or safety trial exists, which materially limits confidence in any future efficacy-adjacent claims. Its headline numeric figures (18 metabolites, 253h/544h detection windows) were independently confirmed verbatim this session directly against the cited study listing (Europe PMC full-text fetch attempted but blocked by rate-limiting); a second, fully independent source family for these exact figures is still outstanding.",
+      "WADA prohibited-list claim was sourced via a secondary aggregator (Drugs.com) rather than the official WADA PDF and should be cross-checked against the current-year official list -- RESOLVED in an earlier pass: official WADA 2026 Prohibited List PDF fetched and added as an A1 source, confirming S-23 under S1.2.",
+      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification",
+      "remediation-pass 2026-08-29: original 2009 Endocrinology primary paper (PMID 18772237) fetched and added as an independent source, confirming Ki=1.7 nM and reversibility of the contraceptive mechanism claim directly (previously sourced only to Wikipedia).",
+      "remediation-pass 2026-08-29: independent systematic review (PMID 37218811) corroborates SARM-class hepatotoxicity but did not corroborate cardiovascular/psychiatric adverse effects specifically -- follow-up search on that narrower point remains open and is not yet closed.",
+      "remediation-pass 2026-08-29: this packet remains gated for human review; no findings required a needs-adjustment correction to any claim statement."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -420,7 +494,8 @@
       "no-human-efficacy-trial",
       "gray-market-only",
       "marketing-evidence-gap-documented",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

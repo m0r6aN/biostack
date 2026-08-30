@@ -34,12 +34,12 @@ public sealed class StructuralEvaluationReportBuilderTests
         Assert.Equal("none", report.Payload.Comparison.EffectAuthority);
         Assert.Equal(4, report.Payload.Comparison.CandidateCaseCount);
         Assert.Equal("1.0.0", report.Payload.CorpusInventory.SnapshotVersion);
-        Assert.Equal(52, report.Payload.CorpusInventory.SeedRecordCount);
+        Assert.Equal(57, report.Payload.CorpusInventory.SeedRecordCount);
         Assert.Equal(16, report.Payload.CorpusInventory.CandidateRecordCount);
         Assert.Equal(78, report.Payload.CorpusInventory.EvidencePacketCount);
         Assert.Equal(13, report.Payload.CorpusInventory.SourceRegistryRecordCount);
         Assert.Equal(12, report.Payload.CorpusInventory.SeedCandidateOverlapCount);
-        Assert.Equal(40, report.Payload.CorpusInventory.SeedOnlyCanonicalIds.Count);
+        Assert.Equal(45, report.Payload.CorpusInventory.SeedOnlyCanonicalIds.Count);
         Assert.Equal(4, report.Payload.CorpusInventory.CandidateOnlyCanonicalIds.Count);
         Assert.Empty(report.Payload.CorpusInventory.CandidatesMissingEvidenceCanonicalIds);
         Assert.Equal(62, report.Payload.CorpusInventory.EvidenceWithoutCandidateCanonicalIds.Count);

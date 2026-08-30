@@ -66,6 +66,30 @@
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
+      "sourceId": "acog-practice-bulletin-107",
+      "sourceType": "clinical-guideline",
+      "authorityTier": "A2",
+      "title": "ACOG Practice Bulletin No. 107: Induction of Labor",
+      "publisher": "American College of Obstetricians and Gynecologists",
+      "url": "https://www.mnhospitals.org/wp-content/uploads/Portals/Documents/patientsafety/Perinatal/acog--practice_bulletin_107_2009.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2009-08-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "frontiersin-2024-oxt-asd-dose-response-meta",
+      "sourceType": "systematic-review",
+      "authorityTier": "B1",
+      "title": "Dose-response meta-analysis of intranasal oxytocin for core symptoms of autism spectrum disorder (Frontiers in Psychiatry, 2024)",
+      "publisher": "Frontiers in Psychiatry",
+      "url": "https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2024.1477076/full",
+      "doi": "10.3389/fpsyt.2024.1477076",
+      "pmid": null,
+      "publishedAt": "2024-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
       "sourceId": "drugbank-db00107",
       "sourceType": "structured-database",
       "authorityTier": "B2",
@@ -84,6 +108,18 @@
       "title": "Oxytocin | C43H66N12O12S2 | CID 439302 - PubChem Compound Summary",
       "publisher": "National Center for Biotechnology Information / PubChem",
       "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Oxytocin",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "fda-503a-bulk-substance-safety-risk-list",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "Certain Bulk Drug Substances That May Present Significant Safety Risks When Used in Compounding",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
       "doi": null,
       "pmid": null,
       "publishedAt": null,
@@ -142,10 +178,16 @@
           "sourceRef": "dailymed-pitocin-label",
           "quote": "Elective induction of labor is defined as the initiation of labor in a pregnant individual who has no medical indications for induction...Pitocin is not indicated for elective induction of labor.",
           "pageOrSection": "Important Notice"
+        },
+        {
+          "sourceRef": "acog-practice-bulletin-107",
+          "quote": "Labor also may be induced for logistic reasons, for example, risk of rapid labor, distance from hospital, or psychosocial indications. In such circumstances, at least one of the gestational age criteria in the box should be met, or fetal lung maturity should be established.",
+          "pageOrSection": "Elective Induction of Labor"
         }
       ],
       "reviewFlags": [
-        "regulatory claim - reconfirm current label text at review time; multiple NDA/ANDA oxytocin injection labels exist on DailyMed and wording can vary by holder"
+        "regulatory claim - reconfirm current label text at review time; multiple NDA/ANDA oxytocin injection labels exist on DailyMed and wording can vary by holder",
+        "re-verified 2026-08-29: live DailyMed Pitocin label unchanged and verbatim matches the quotes above. Independent professional-society source (ACOG Practice Bulletin 107) confirms the label's 'not indicated for elective induction' is manufacturer-label language specific to this product, not a categorical clinical prohibition -- ACOG's own guidance permits elective induction when specific gestational-age/informed-choice criteria are met. Read the label statement as 'not indicated on this label,' not as 'never done in practice.'"
       ]
     },
     {
@@ -184,11 +226,11 @@
     {
       "claimId": "oxytocin-mechanism-identity-001",
       "claimType": "identity",
-      "statement": "Oxytocin (CAS 50-56-6, molecular formula C43H66N12O12S2, PubChem CID 439302, DrugBank DB00107) is a nonapeptide hormone; the approved injectable form is a recombinant/synthetic version used to induce or strengthen uterine contractions for labor and delivery or to control postpartum bleeding.",
+      "statement": "Oxytocin (CAS 50-56-6, molecular formula C43H66N12O12S2, PubChem CID 439302, DrugBank DB00107) is a nonapeptide hormone; the approved injectable form is a synthetic version used to induce or strengthen uterine contractions for labor and delivery or to control postpartum bleeding.",
       "context": {
         "population": null,
         "route": null,
-        "formulation": "synthetic/recombinant oxytocin",
+        "formulation": "synthetic oxytocin",
         "useCase": "compound identity",
         "doseText": null
       },
@@ -197,9 +239,15 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "pubchem-cid-439302",
-        "drugbank-db00107"
+        "drugbank-db00107",
+        "dailymed-pitocin-label"
       ],
       "extractedEvidence": [
+        {
+          "sourceRef": "dailymed-pitocin-label",
+          "quote": "Pitocin (oxytocin injection, USP) is a sterile, clear, colorless aqueous solution of synthetic oxytocin, for intravenous infusion or intramuscular injection. The hormone is prepared synthetically to avoid possible contamination with vasopressin (ADH) and other small polypeptides with biologic activity.",
+          "pageOrSection": "Description"
+        },
         {
           "sourceRef": "drugbank-db00107",
           "quote": "Oxytocin is a recombinant hormone used to induce or strengthen uterine contractions in pregnant women to aid in labor and delivery or to control postpartum bleeding.",
@@ -207,7 +255,8 @@
         }
       ],
       "reviewFlags": [
-        "UNII and ChEMBL identifiers not resolved from structured databases fetched this session"
+        "UNII and ChEMBL identifiers not resolved from structured databases fetched this session; attempted NCATS GSRS substance-search API and ChEMBL REST API this pass, both rate-limited (HTTP 429) at fetch time -- not resolved, left null",
+        "corrected 2026-08-29: independent regulator-label source (live-fetched DailyMed Pitocin label) uniformly describes the approved injectable as 'synthetic,' never 'recombinant'; 'recombinant' specifically denotes production via recombinant-DNA/cell-expression systems, which is not how this peptide is manufactured (chemical/solid-phase synthesis). DrugBank's 'recombinant hormone' wording is retained above as a verbatim quote of that source but is flagged as imprecise and is no longer repeated in the claim statement."
       ]
     },
     {
@@ -225,7 +274,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "nejm-sikich-2021-asd-rct"
+        "nejm-sikich-2021-asd-rct",
+        "frontiersin-2024-oxt-asd-dose-response-meta"
       ],
       "extractedEvidence": [
         {
@@ -237,12 +287,23 @@
           "sourceRef": "nejm-sikich-2021-asd-rct",
           "quote": "This placebo-controlled trial of intranasal oxytocin therapy in children and adolescents with autism spectrum disorder showed no significant between-group differences in the least-squares mean change from baseline on measures of social or cognitive functioning over a period of 24 weeks.",
           "pageOrSection": "Conclusions"
+        },
+        {
+          "sourceRef": "frontiersin-2024-oxt-asd-dose-response-meta",
+          "quote": "Although these findings show no consistent beneficial effects, the results of the dose-response meta-analysis suggest that high doses of intranasal OXT per day may be more effective in ASD.",
+          "pageOrSection": "Discussion/Conclusion"
+        },
+        {
+          "sourceRef": "frontiersin-2024-oxt-asd-dose-response-meta",
+          "quote": "the dose over 48 IU per day revealed significant results and the dose-response meta-analysis suggested that higher doses could be more effective",
+          "pageOrSection": "Results (repetitive behavior)"
         }
       ],
       "reviewFlags": [
         "this is the largest and most rigorous human RCT identified for intranasal oxytocin in a social/behavioral use and is negative; do not let smaller positive proof-of-concept trials override this finding without explicit discussion",
         "does not address obstetric IV use, which is separately supported (see approved-indication claim)",
-        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov for intranasal oxytocin approval/label, DailyMed drug label database for oxytocin products [only injectable Pitocin/generic oxytocin for obstetric use found, no intranasal formulation or ASD indication listed], and web search for FDA intranasal oxytocin autism label/approval \u2014 no regulator document addresses intranasal oxytocin for ASD efficacy or adverse events)."
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution; no regulator document exists for this claim (searched: FDA.gov for intranasal oxytocin approval/label, DailyMed drug label database for oxytocin products [only injectable Pitocin/generic oxytocin for obstetric use found, no intranasal formulation or ASD indication listed], and web search for FDA intranasal oxytocin autism label/approval \u2014 no regulator document addresses intranasal oxytocin for ASD efficacy or adverse events).",
+        "updated 2026-08-29 with independent 2024 Frontiers in Psychiatry dose-response meta-analysis (fetched and quoted above), replacing the prior hypothetical caveat about 'smaller positive proof-of-concept trials': pooled/overall analysis remains null on social impairment and repetitive behavior at typical doses, consistent with this trial's own negative primary outcome, but a dose-response signal at >=48 IU/day (the same target dose used here) showed a beneficial effect in some analyses. This nuances, but does not overturn, the negative primary-outcome finding above."
       ]
     },
     {
@@ -342,7 +403,8 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "dailymed-pitocin-label",
-        "nejm-sikich-2021-asd-rct"
+        "nejm-sikich-2021-asd-rct",
+        "fda-503a-bulk-substance-safety-risk-list"
       ],
       "extractedEvidence": [
         {
@@ -354,11 +416,16 @@
           "sourceRef": "nejm-sikich-2021-asd-rct",
           "quote": "This placebo-controlled trial of intranasal oxytocin therapy in children and adolescents with autism spectrum disorder showed no significant between-group differences in the least-squares mean change from baseline on measures of social or cognitive functioning over a period of 24 weeks.",
           "pageOrSection": "Conclusions"
+        },
+        {
+          "sourceRef": "fda-503a-bulk-substance-safety-risk-list",
+          "quote": "Oxytocin does not appear on this page. It is neither listed in the \"Bulk drug substances under category 2 of the interim policies\" table nor in the \"Bulk drug substances nominated but withdrawn\" table.",
+          "pageOrSection": "Category 2 / Withdrawn Nominations tables"
         }
       ],
       "reviewFlags": [
         "positive proof-of-concept single-dose adult trials exist in the broader literature but were not fetched this session; if added later they must be weighed against this larger negative pediatric RCT, not substituted for it",
-        "no FDA compounding bulk-substances or import-alert page for oxytocin was located this session; confirm at review time whether one exists"
+        "checked 2026-08-29: live-fetched the FDA 503A bulk drug substance safety-risk list; oxytocin does not appear in the interim-policies safety-risk table or the withdrawn-nominations table. Closes the prior open question -- see ops.reviewReasons for the corresponding update."
       ]
     }
   ],
@@ -379,10 +446,11 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "UNII and ChEMBL identifiers not resolved from structured databases fetched this session.",
-      "No FDA compounding/bulk-substances or import-alert page for oxytocin was located; confirm whether one exists at review time.",
-      "Positive single-dose adult proof-of-concept oxytocin trials referenced in secondary literature were not independently fetched and verified this session; the packet currently anchors on the larger negative pediatric RCT only.",
-      "Marketing-claim quotes are from a small, non-representative sample of two compounding/telehealth vendor pages and should not be treated as exhaustive of gray-market marketing."
+      "UNII and ChEMBL identifiers not resolved from structured databases fetched this session; remediation pass 2026-08-29 attempted NCATS GSRS substance-search and ChEMBL REST API lookups, both returned HTTP 429 (rate-limited) at fetch time -- still unresolved, left null in externalIdentifiers.",
+      "Resolved 2026-08-29: FDA 503A bulk drug substance safety-risk list was live-fetched this pass; oxytocin does not appear on it or on the withdrawn-nominations table. Prior open question is closed (see fda-503a-bulk-substance-safety-risk-list source and the evidence-gap claim).",
+      "Positive single-dose adult proof-of-concept oxytocin trials referenced in secondary literature were not independently fetched and verified this session; the packet currently anchors on the larger negative pediatric RCT, now supplemented with the independently-fetched 2024 Frontiers dose-response meta-analysis (see efficacy claim).",
+      "Marketing-claim quotes are from a small, non-representative sample of two compounding/telehealth vendor pages and should not be treated as exhaustive of gray-market marketing.",
+      "Conflict oxytocin-conflict-marketing-vs-rct-001 remains needs-human-review by design: independent sources sharpen but do not fully resolve the marketing-vs-evidence tension, so it stays human-review-gated with the 2024 Frontiers meta-analysis now available as a citation for the reviewer."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -391,7 +459,8 @@
       "negative-human-rct-documented",
       "marketing-vs-evidence-gap-flagged",
       "thin-human-evidence-for-nonapproved-use",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

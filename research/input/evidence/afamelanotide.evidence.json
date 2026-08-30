@@ -19,7 +19,7 @@
     "classification": "Peptide",
     "compoundFamily": "Synthetic alpha-melanocyte-stimulating hormone (alpha-MSH) analog / melanocortin-1 receptor agonist",
     "externalIdentifiers": {
-      "rxnorm": null,
+      "rxnorm": "2262250",
       "unii": "QW68W3J66U",
       "casNumber": "75921-69-6",
       "drugbank": "DB04931",
@@ -89,6 +89,42 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "fda-accessdata-scenesse-label-2024-s007",
+      "sourceType": "regulator",
+      "authorityTier": "A1",
+      "title": "SCENESSE (afamelanotide) implant, for subcutaneous use - current approved labeling (revision s007)",
+      "publisher": "U.S. Food and Drug Administration (Drugs@FDA, NDA 210797)",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/210797s007lbl.pdf",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2024-08-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "pubchem-pugview-16197727-mechanism",
+      "sourceType": "structured-database",
+      "authorityTier": "A1",
+      "title": "PubChem Compound Summary: Afamelanotide (CID 16197727) - Pharmacology and Biochemistry narrative",
+      "publisher": "National Center for Biotechnology Information / PubChem (PUG-View)",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/16197727/JSON",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "semanticscholar-nejmoa1411481",
+      "sourceType": "structured-database",
+      "authorityTier": "B1",
+      "title": "Afamelanotide for Erythropoietic Protoporphyria - independent paper record/abstract",
+      "publisher": "Semantic Scholar (Allen Institute for AI), independent aggregation of Langendonk JG, Balwani M, Anderson KE, et al., NEJM 2015",
+      "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1056/NEJMoa1411481",
+      "doi": "10.1056/NEJMoa1411481",
+      "pmid": "25671653",
+      "publishedAt": "2015-01-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -108,7 +144,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "dailymed-scenesse-label",
-        "fda-accessdata-scenesse-label-2019"
+        "fda-accessdata-scenesse-label-2019",
+        "fda-accessdata-scenesse-label-2024-s007"
       ],
       "extractedEvidence": [
         {
@@ -120,10 +157,16 @@
           "sourceRef": "fda-accessdata-scenesse-label-2019",
           "quote": "increase pain free light exposure in adult patients with a history of phototoxic reactions from erythropoietic protoporphyria (EPP)",
           "pageOrSection": "1 INDICATIONS AND USAGE"
+        },
+        {
+          "sourceRef": "fda-accessdata-scenesse-label-2024-s007",
+          "quote": "SCENESSE is a melanocortin 1 receptor (MC1-R) agonist indicated to increase pain free light exposure in adult patients with a history of phototoxic reactions from erythropoietic protoporphyria (EPP).",
+          "pageOrSection": "1 INDICATIONS AND USAGE (label revision 08/2024)"
         }
       ],
       "reviewFlags": [
-        "product-specific dosing/administration language - confirm current label version at review time (label has been revised since 2019 initial approval)"
+        "product-specific dosing/administration language - confirm current label version at review time (label has been revised since 2019 initial approval)",
+        "independent review (2026-08-29) re-verified the indication text against the live current FDA label (2024 revision s007, not just the 2019 s000 PDF originally cited): the indication statement is unchanged. Cite the s007 revision going forward as the primary label sourceRef since the label has been revised in other sections since 2019."
       ]
     },
     {
@@ -142,7 +185,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "dailymed-scenesse-label",
-        "fda-accessdata-scenesse-label-2019"
+        "fda-accessdata-scenesse-label-2019",
+        "fda-accessdata-scenesse-label-2024-s007"
       ],
       "extractedEvidence": [
         {
@@ -152,13 +196,24 @@
         },
         {
           "sourceRef": "dailymed-scenesse-label",
-          "quote": "Refrigerate at 2\u00b0C\u20138\u00b0C (36\u00b0F\u201346\u00b0F); protect from light",
+          "quote": "Refrigerate at 2°C–8°C (36°F–46°F); protect from light",
           "pageOrSection": "Dosage Forms and Strengths / Storage"
+        },
+        {
+          "sourceRef": "fda-accessdata-scenesse-label-2024-s007",
+          "quote": "Store in a refrigerator at 2°C – 8°C (36°F-46°F). Protect from light.",
+          "pageOrSection": "2 DOSAGE AND ADMINISTRATION (label revision 08/2024)"
+        },
+        {
+          "sourceRef": "fda-accessdata-scenesse-label-2024-s007",
+          "quote": "Insert a single SCENESSE implant subcutaneously above the anterior supra-iliac crest every 2 months",
+          "pageOrSection": "2 DOSAGE AND ADMINISTRATION (label revision 08/2024)"
         }
       ],
       "reviewFlags": [
         "storage/reconstitution and administration claim requires field-authority sign-off",
-        "must never be rendered as a self-administration guide"
+        "must never be rendered as a self-administration guide",
+        "independent review (2026-08-29) re-verified dosing/storage text against the live current FDA label (2024 revision s007): the 16 mg/every-2-months dosing, insertion site, and 2-8C storage-protected-from-light facts are unchanged. Cite the s007 revision going forward rather than the superseded 2019 PDF."
       ]
     },
     {
@@ -177,17 +232,28 @@
       "fieldAuthorityRequired": false,
       "sourceRefs": [
         "unii-srs-afamelanotide",
-        "dailymed-scenesse-label"
+        "dailymed-scenesse-label",
+        "pubchem-pugview-16197727-mechanism"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "unii-srs-afamelanotide",
           "quote": "AFAMELANOTIDE",
           "pageOrSection": "UNII Search Results, substance record QW68W3J66U (also listed as Melanotan I / NDP-alpha-MSH)"
+        },
+        {
+          "sourceRef": "pubchem-pugview-16197727-mechanism",
+          "quote": "melanocortin-1 receptor agonist that stimulates melanin production in the skin",
+          "pageOrSection": "PubChem CID 16197727, Pharmacology and Biochemistry narrative"
+        },
+        {
+          "sourceRef": "pubchem-pugview-16197727-mechanism",
+          "quote": "increases the production of eumelanin, an endogenous photoprotective agent, to attenuate UV-induced skin damage",
+          "pageOrSection": "PubChem CID 16197727, Pharmacology and Biochemistry narrative"
         }
       ],
       "reviewFlags": [
-        "verbatim mechanism-of-action sentence should be re-quoted directly from the label's Clinical Pharmacology section at review time"
+        "independent review (2026-08-29) noted the packet's original UNII-sourced quote was only the substance name, not an actual mechanism description; this has been resolved by adding a verbatim PubChem pharmacology-narrative quote that independently supports the MC1R-agonist/eumelanin-production mechanism statement as written"
       ]
     },
     {
@@ -205,7 +271,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "nejm-langendonk-2015-rct"
+        "nejm-langendonk-2015-rct",
+        "semanticscholar-nejmoa1411481"
       ],
       "extractedEvidence": [
         {
@@ -222,10 +289,16 @@
           "sourceRef": "nejm-langendonk-2015-rct",
           "quote": "77 vs. 146, P=0.04",
           "pageOrSection": "Results, EU trial, phototoxic reactions"
+        },
+        {
+          "sourceRef": "semanticscholar-nejmoa1411481",
+          "quote": "In the U.S. study, the duration of pain-free time after 6 months was longer in the afamelanotide group (median, 69.4 hours, vs. 40.8 hours in the placebo group; P = 0.04). In the European Union study, the duration of pain-free time after 9 months was also longer in the afamelanotide group than in the placebo group (median, 6.0 hours vs. 0.8 hours; P = 0.005), and the number of phototoxic reactions was lower in the afamelanotide group (77 vs. 146, P = 0.04).",
+          "pageOrSection": "Abstract, Results (independent Semantic Scholar record)"
         }
       ],
       "reviewFlags": [
-        "efficacy is specific to EPP phototoxicity endpoint under clinical supervision; does not generalize to cosmetic tanning use"
+        "efficacy is specific to EPP phototoxicity endpoint under clinical supervision; does not generalize to cosmetic tanning use",
+        "independent review (2026-08-29) cross-checked all figures against Semantic Scholar's independent abstract record of the same NEJM publication (retrieved separately from the packet's ResearchGate-hosted reproduction); all numbers match exactly"
       ]
     },
     {
@@ -244,7 +317,9 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "nejm-langendonk-2015-rct",
-        "dailymed-scenesse-label"
+        "dailymed-scenesse-label",
+        "fda-accessdata-scenesse-label-2024-s007",
+        "semanticscholar-nejmoa1411481"
       ],
       "extractedEvidence": [
         {
@@ -261,11 +336,26 @@
           "sourceRef": "dailymed-scenesse-label",
           "quote": "may induce darkening of pre-existing nevi and ephelides",
           "pageOrSection": "Warnings and Precautions"
+        },
+        {
+          "sourceRef": "fda-accessdata-scenesse-label-2024-s007",
+          "quote": "Serious hypersensitivity reactions, including anaphylaxis, have been reported with postmarket use of SCENESSE. Warn patients of the risk of hypersensitivity reactions, including anaphylaxis.",
+          "pageOrSection": "Warnings and Precautions (label revision 08/2024)"
+        },
+        {
+          "sourceRef": "fda-accessdata-scenesse-label-2024-s007",
+          "quote": "SCENESSE may lead to generalized increased skin pigmentation and darkening of pre-existing nevi and ephelides because of its pharmacologic effect. A full body skin examination (twice yearly) is recommended to monitor pre-existing and new skin pigmentary lesions.",
+          "pageOrSection": "Warnings and Precautions (label revision 08/2024)"
+        },
+        {
+          "sourceRef": "semanticscholar-nejmoa1411481",
+          "quote": "Adverse events were mostly mild; serious adverse events were not thought to be related to the study drug.",
+          "pageOrSection": "Abstract, Results/Conclusions (independent Semantic Scholar record)"
         }
       ],
       "reviewFlags": [
         "safety-critical claim requiring field-authority review",
-        "postmarketing hypersensitivity language should be re-verified against the current DailyMed label revision at review time"
+        "postmarketing hypersensitivity language re-verified (2026-08-29) against the live current 2024 FDA label (revision s007), independent of the packet's original DailyMed/2019-label citations: the hypersensitivity/anaphylaxis warning and twice-yearly full-body skin exam recommendation both hold unchanged. Cite the s007 revision going forward."
       ]
     },
     {
@@ -300,7 +390,8 @@
       ],
       "reviewFlags": [
         "misinformation-adjacent: cited FDA enforcement action concerns Melanotan II specifically, not Melanotan I/afamelanotide by name - confirm whether an afamelanotide-specific enforcement action exists at review time",
-        "captures the online-marketing-vs-evidence gap required by directive; needs independent source family (e.g., an import alert or warning letter naming afamelanotide/Melanotan I directly) before this claim can be resolved out of review-gated status"
+        "captures the online-marketing-vs-evidence gap required by directive; needs independent source family (e.g., an import alert or warning letter naming afamelanotide/Melanotan I directly) before this claim can be resolved out of review-gated status",
+        "remediation pass (2026-08-29): made a targeted independent-source attempt (FDA warning-letter database search, FDA import-alert database, and secondary enforcement reporting on the Melanocorp warning letter) specifically for an afamelanotide/Melanotan-I-named action; none was located this session either (the only located enforcement source still names Melanotan II only). Claim remains review-gated; statement kept as-is since it already asserts no more than the located sources support (it does not claim FDA action against afamelanotide/Melanotan I by name)."
       ]
     },
     {
@@ -350,17 +441,21 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "ChEMBL and RxNorm identifiers not yet resolved from structured databases.",
-      "FDA enforcement source (Manookian NOOH) names Melanotan II specifically; an afamelanotide/Melanotan I-specific import alert or warning letter was not located this session and should be searched for during independent review.",
-      "PMC and PubMed full pages returned bot-verification (reCAPTCHA) walls this session; NEJM RCT quotes were sourced via a ResearchGate-hosted reproduction of the same paper and should be cross-checked against the primary NEJM/PMC page at review time.",
-      "Current DailyMed label revision (contraindications, full warnings list, REMS status) should be re-confirmed against the live page at review time, as label content can be updated post-approval."
+      "RESOLVED (2026-08-29): RxNorm RXCUI 2262250 confirmed via live RxNav REST lookup (RxNorm Name property = \"afamelanotide\") and written to compound.externalIdentifiers.rxnorm.",
+      "ChEMBL identifier still unresolved: attempted live lookups via the ChEMBL REST API (rate-limited/blocked this session) and DrugBank's cross-reference page (no ChEMBL ID exposed in the fetched content); left null pending a future structured-database pass.",
+      "FDA enforcement source (Manookian NOOH) names Melanotan II specifically; an afamelanotide/Melanotan I-specific import alert or warning letter was not located this session (attempted: FDA warning-letter search, FDA import-alert database, and general web search restricted to fda.gov — all returned 404s or no qualifying results) and should be searched for again during human review.",
+      "PMC and PubMed full pages returned bot-verification (reCAPTCHA) walls this session; NEJM RCT quotes were sourced via a ResearchGate-hosted reproduction of the same paper. RESOLVED (2026-08-29): cross-checked against an independent Semantic Scholar abstract record of the same DOI — all figures matched exactly.",
+      "RESOLVED (2026-08-29): current FDA label (2024 revision s007) fetched live and cross-checked against the indication, dosing/storage, hypersensitivity/anaphylaxis, and skin-exam claims — all confirmed unchanged from the 2019 label text originally cited; the s007 label has been added to sources and cited alongside the original 2019 PDF and DailyMed pull.",
+      "Mechanism-of-action claim: RESOLVED (2026-08-29) by adding a verbatim PubChem pharmacology-narrative quote (the packet's original UNII-sourced quote was only the substance name and did not itself substantiate the mechanism sentence).",
+      "Claim afamelanotide-controversy-melanotan-conflation-001 remains unresolved/review-gated: no independent source naming afamelanotide/Melanotan I directly was located despite a targeted remediation-pass attempt; do not promote this claim to non-gated status without a human reviewer either finding such a source or explicitly signing off on the documented evidence gap."
     ],
     "qualityFlags": [
       "expansion-input",
       "a1-regulator-backed",
       "fda-approved-product",
       "positive-human-rct-documented",
-      "gray-market-conflation-risk"
+      "gray-market-conflation-risk",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

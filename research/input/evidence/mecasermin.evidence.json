@@ -18,12 +18,12 @@
     "classification": "Peptide",
     "compoundFamily": "Recombinant human insulin-like growth factor-1 (rhIGF-1) analog",
     "externalIdentifiers": {
-      "rxnorm": null,
+      "rxnorm": "274403",
       "unii": "7GR9I2683O",
-      "casNumber": null,
+      "casNumber": "68562-41-4",
       "drugbank": "DB01277",
       "pubchem": "400",
-      "chembl": null,
+      "chembl": "CHEMBL1201716",
       "doi": null,
       "pmid": null
     }
@@ -88,6 +88,30 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
+    },
+    {
+      "sourceId": "ncats-inxight-drugs-mecasermin",
+      "sourceType": "structured-database",
+      "authorityTier": "B1",
+      "title": "Mecasermin (UNII: 7GR9I2683O) - Inxight Drugs",
+      "publisher": "National Center for Advancing Translational Sciences (NCATS) / NIH - Inxight Drugs",
+      "url": "https://drugs.ncats.io/drug/7GR9I2683O",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "frontiersin-spigfd-registry-2022",
+      "sourceType": "observational-registry-study",
+      "authorityTier": "B1",
+      "title": "Real-world growth outcomes with mecasermin in the European Increlex Growth Forum Database (SPIGFD registry, 213 patients)",
+      "publisher": "Frontiers in Endocrinology (2022)",
+      "url": "https://public-pages-files-2025.frontiersin.org/journals/endocrinology/articles/10.3389/fendo.2022.812568/text",
+      "doi": "10.3389/fendo.2022.812568",
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -150,7 +174,7 @@
     {
       "claimId": "mecasermin-contraindication-001",
       "claimType": "contraindication",
-      "statement": "INCRELEX is contraindicated in patients with known hypersensitivity to mecasermin, in patients with closed epiphyses, and in patients with active or suspected malignant neoplasia.",
+      "statement": "INCRELEX is contraindicated in patients with known hypersensitivity to mecasermin, in patients with closed epiphyses, and in patients with active or suspected malignant neoplasia; it should also not be used to promote growth in premature infants or neonates.",
       "context": {
         "population": "pediatric patients considered for INCRELEX therapy",
         "route": "subcutaneous injection",
@@ -179,9 +203,16 @@
           "sourceRef": "dailymed-increlex-label",
           "quote": "Malignant Neoplasia",
           "pageOrSection": "CONTRAINDICATIONS"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-mecasermin-clinical-review",
+          "quote": "Mecasermin should not be used to promote growth in patients with closed epiphyses; those who are hypersensitive to the drug or to any ingredient in the formulation, those with active or suspect neoplasia or any condition that increases the risk of benign or malignant neoplasia, or premature infants or neonates.",
+          "pageOrSection": "Standards of Therapy"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "independent review (NCBI Bookshelf, fetched 2026-08-29) confirms an additional contraindicated/excluded population -- premature infants or neonates -- not present in the original DailyMed extraction; added per reviewer finding"
+      ]
     },
     {
       "claimId": "mecasermin-dose-context-label-001",
@@ -257,7 +288,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "ncbi-bookshelf-mecasermin-clinical-review"
+        "ncbi-bookshelf-mecasermin-clinical-review",
+        "frontiersin-spigfd-registry-2022"
       ],
       "extractedEvidence": [
         {
@@ -269,10 +301,21 @@
           "sourceRef": "ncbi-bookshelf-mecasermin-clinical-review",
           "quote": "Height velocities for years 2 through 8 of treatment remained greater than baseline (i.e., 5.9 cm per year [SD = 1.7] in year 2 and 4.4 cm per year [SD = 1.5] in year 8).",
           "pageOrSection": "Controlled Clinical Trial Results - Growth Velocity"
+        },
+        {
+          "sourceRef": "frontiersin-spigfd-registry-2022",
+          "quote": "height SDS increased from -3.7 (1.4) at baseline in the Eu-IGFD Registry to -2.6 (1.4) at T5 in boys and from -3.1 (1.1) to -2.3 (1.5) in girls.",
+          "pageOrSection": "Results"
+        },
+        {
+          "sourceRef": "frontiersin-spigfd-registry-2022",
+          "quote": "Median (range) PPHV was 8.0 (0.3-13.0) cm/year in boys and 6.8 (1.3-9.6) cm/year in girls.",
+          "pageOrSection": "Results"
         }
       ],
       "reviewFlags": [
-        "growth-velocity effect size specific to severe primary IGF-1 deficiency population; not evidence of benefit in other uses"
+        "growth-velocity effect size specific to severe primary IGF-1 deficiency population; not evidence of benefit in other uses",
+        "independent review cross-check (SPIGFD real-world registry, 213 patients, fetched 2026-08-29) corroborates the direction and clinical significance of growth-velocity/height-SDS improvement but reports different magnitude figures from a different cohort; the packet's 2.6->8.0 cm/yr and SDS -3.4->1.7 figures are specific to the single cited clinical-review cohort and should not be presented as a single definitive population-wide effect size -- magnitude varies by cohort/registry"
       ]
     },
     {
@@ -290,7 +333,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "ncbi-bookshelf-mecasermin-clinical-review"
+        "ncbi-bookshelf-mecasermin-clinical-review",
+        "frontiersin-spigfd-registry-2022"
       ],
       "extractedEvidence": [
         {
@@ -307,10 +351,16 @@
           "sourceRef": "ncbi-bookshelf-mecasermin-clinical-review",
           "quote": "Eighteen patients (20%) had at least 1 serious adverse event (SAE) that required hospitalization.",
           "pageOrSection": "Adverse Effects"
+        },
+        {
+          "sourceRef": "frontiersin-spigfd-registry-2022",
+          "quote": "Overall, the adverse events seen in this analysis were in line with the known safety profile of rhIGF-1.",
+          "pageOrSection": "Results"
         }
       ],
       "reviewFlags": [
-        "safety-critical adverse-event data specific to the labeled pediatric IGFD population; incidence in unsupervised gray-market/adult use is not established"
+        "safety-critical adverse-event data specific to the labeled pediatric IGFD population; incidence in unsupervised gray-market/adult use is not established",
+        "these percentages (83%/47%/35%/21%/20%) are traceable to a single reviewed trial cohort, not a pooled/aggregate estimate across studies; an independent real-world registry (SPIGFD, 213 patients, fetched 2026-08-29) corroborates that observed adverse events were directionally consistent with the known rhIGF-1 safety profile but does not itself break out matching percentages, so the specific figures here should not be presented as population-wide incidence rates"
       ]
     },
     {
@@ -402,9 +452,11 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "CAS number and ChEMBL/RxNorm identifiers not resolved from a verifiable fetched source; multiple secondary chemistry sites list CAS 68562-41-4 but this was not confirmed against PubChem/DrugBank primary content during this session.",
-      "Gray-market marketing claim (mecasermin-misinformation-bodybuilding-marketing-001) is documented from a source discussing an IGF-1 analog (IGF-1 DES) rather than mecasermin itself; a mecasermin-specific gray-market marketing source should be located on review.",
-      "No adult healthy-volunteer controlled human trial data located for mecasermin; confirm this evidence gap against an additional independent source family (e.g., a systematic review or sports-medicine/anti-doping literature) during review."
+      "RESOLVED (remediation pass, 2026-08-29): CAS number, ChEMBL ID, and RxNorm/RxCUI identifiers were unresolved after PubChem/DrugBank/CAS Common Chemistry were blocked by JS-gated rendering or authorization errors in this session. Fetched NCATS Inxight Drugs (drugs.ncats.io/drug/7GR9I2683O, NIH/NCATS structured database, independent of PubChem/DrugBank) directly, which returned CAS 68562-41-4 (marked PRIMARY; 67763-96-6 listed as a related generic-family CAS), ChEMBL CHEMBL1201716, and RxCUI 274403 for UNII 7GR9I2683O = Mecasermin. Identifiers added to compound.externalIdentifiers and source added to sources.",
+      "RESOLVED (remediation pass, 2026-08-29): contraindication claim mecasermin-contraindication-001 updated to add 'premature infants or neonates' as an additional excluded/contraindicated population, per verbatim quote re-fetched from NCBI Bookshelf (NBK596664) Standards of Therapy section.",
+      "RESOLVED (remediation pass, 2026-08-29): efficacy (mecasermin-efficacy-growth-velocity-001) and adverse-effect (mecasermin-adverse-effect-profile-001) claims now carry an explicit reviewFlag and added independent-source quotes (Frontiers in Endocrinology 2022 SPIGFD registry, 213 patients, re-fetched this session) noting that the packet's specific percentage/magnitude figures are single-cohort statistics corroborated in direction only, not a pooled/aggregate estimate, per promotionBlocker.",
+      "Gray-market marketing claim (mecasermin-misinformation-bodybuilding-marketing-001) is documented from a source discussing an IGF-1 analog (IGF-1 DES) rather than mecasermin itself; a mecasermin-specific gray-market marketing source should be located on review. STILL GATED: no mecasermin-specific vendor marketing source was located in this remediation pass either -- broader web search corroborated the absence of controlled human trial data (per verdict) but did not surface a mecasermin-specific (as opposed to analog-specific) vendor page; claim remains review-gated pending that source.",
+      "No adult healthy-volunteer controlled human trial data located for mecasermin; independently confirmed by reviewer via broader PubMed/Europe PMC/web search plus the current FDA label -- item closed per verdict (mecasermin-evidence-gap-adult-offlabel-001, confirmed)."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -412,7 +464,8 @@
       "a1-label-backed",
       "pediatric-only-approved-indication",
       "thin-human-evidence-outside-label",
-      "misinformation-gap-documented"
+      "misinformation-gap-documented",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

@@ -88,6 +88,18 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "fda-law-blog-pcac-503a-vote-2026",
+      "sourceType": "industry-legal-reporting",
+      "authorityTier": "C1",
+      "title": "The Peptide L-Wave Rolls On: PCAC Adds Two More Bulk Drug Substances for the 503A List",
+      "publisher": "FDA Law Blog (Hyman, Phelps & McNamara, P.C.)",
+      "url": "https://www.thefdalawblog.com/2026/07/the-peptide-l-wave-rolls-on-pcac-adds-two-more-bulk-drug-substances-for-the-503a-list/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2026-07-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -117,13 +129,14 @@
         }
       ],
       "reviewFlags": [
-        "mechanism claim relies on decades-old literature synthesized secondhand in the 2026 FDA briefing; primary mechanistic studies not independently pulled"
+        "mechanism claim relies on decades-old literature synthesized secondhand in the 2026 FDA briefing; primary mechanistic studies not independently pulled",
+        "independent-review note: a secondary literature synthesis (Wikipedia's DSIP article, used as an accessible proxy after PubMed/Europe PMC full-text access was blocked by CAPTCHA/JS walls) corroborates that no gene, precursor, or receptor for DSIP has been identified and that human EEG/sleep evidence is conflicting, consistent with this claim's hedged framing; the delta-EEG effect is best documented in rabbit ICV studies, not confirmed human pharmacology; a future pass should retry paper-level primary/review literature (e.g., Kovalzon 2006) via a different access route"
       ]
     },
     {
       "claimId": "emideltide-regulatory-not-characterized-503a-001",
       "claimType": "regulatory",
-      "statement": "Emideltide is not a component of any FDA-approved drug and has no applicable USP/NF drug substance monograph; in its July 2026 Pharmacy Compounding Advisory Committee briefing, FDA states the evaluation criteria weigh against placing both emideltide (free base) and emideltide acetate on the 503A Bulks List of substances eligible for compounding.",
+      "statement": "Emideltide is not a component of any FDA-approved drug and has no applicable USP/NF drug substance monograph; in its July 2026 Pharmacy Compounding Advisory Committee briefing, FDA stated the evaluation criteria weigh against placing both emideltide (free base) and emideltide acetate on the 503A Bulks List of substances eligible for compounding. At the July 23-24, 2026 PCAC meeting, the committee vote on adding emideltide (free base and acetate) to the 503A Bulks List failed, 6 in favor to 7 against with 1 abstention, meaning the committee did not recommend emideltide for 503A Bulks List inclusion; this outcome is reported by independent industry/legal sources, since FDA's own advisory-committee page had not yet posted an official post-meeting outcome document as of this review.",
       "context": {
         "population": "prospective compounded-product users in the United States",
         "route": null,
@@ -136,7 +149,8 @@
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "fda-pcac-briefing-193344-emideltide",
-        "fda-pcac-calendar-july2026"
+        "fda-pcac-calendar-july2026",
+        "fda-law-blog-pcac-503a-vote-2026"
       ],
       "extractedEvidence": [
         {
@@ -153,12 +167,23 @@
           "sourceRef": "fda-pcac-calendar-july2026",
           "quote": "Emideltide (also referred to as delta sleeping inducing peptide (DSIP))-related bulk drug substances",
           "pageOrSection": "Meeting agenda, July 24, 2026 session"
+        },
+        {
+          "sourceRef": "fda-law-blog-pcac-503a-vote-2026",
+          "quote": "The vote on Emideltide (free base and acetate) failed, 6 in favor to 7 against, with 1 abstention.",
+          "pageOrSection": "Meeting results summary, emideltide/DSIP vote"
+        },
+        {
+          "sourceRef": "fda-law-blog-pcac-503a-vote-2026",
+          "quote": "the sole supporting study is over 30 years old",
+          "pageOrSection": "Discussion of committee's stated reasons for the vote"
         }
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "confirm final PCAC committee vote/outcome versus this pre-meeting briefing-document position at review time",
-        "confirm whether emideltide is added to or excluded from any FDA Category list following the July 2026 meeting"
+        "PCAC committee vote outcome (failed, 6-7-1) confirmed post-meeting via independent industry/legal reporting (FDA Law Blog), cross-consistent with other peptide-industry sources, as of 2026-08-29",
+        "FDA's own advisory-committee page has not yet posted an official post-meeting outcome document; the vote-count detail remains corroborated only by secondary/industry reporting and should be re-confirmed against a primary FDA record (updated advisory-committee page or 503A list update) once FDA publishes one",
+        "residual review-gate: treat the exact vote tally as provisional pending an official FDA summary, though directionally consistent with the packet's pre-meeting framing"
       ]
     },
     {
@@ -191,7 +216,8 @@
         }
       ],
       "reviewFlags": [
-        "safety-critical, product-quality-dependent finding; risk level depends on specific manufacturer/compounder practices not assessed here"
+        "safety-critical, product-quality-dependent finding; risk level depends on specific manufacturer/compounder practices not assessed here",
+        "independent-review note: peer-reviewed peptide-immunogenicity risk literature and separate FDA peptide-impurity guidance confirm the general scientific principle that peptide aggregation/impurities are a recognized driver of immunogenicity risk in injectable peptide products, supporting the plausibility of FDA's concern; the DSIP-specific characterization gaps (missing impurity/aggregate/endotoxin data, inconsistent nomenclature) remain an FDA-sourced, product-specific finding not independently replicated by an outside source"
       ]
     },
     {
@@ -231,7 +257,8 @@
       ],
       "reviewFlags": [
         "trial dose context (IV, laboratory-supervised, historical formulation) must never be presented as a use recommendation for gray-market subcutaneous products",
-        "underlying trials are small (n=16 or fewer) and decades old; no modern, adequately powered RCT identified"
+        "underlying trials are small (n=16 or fewer) and decades old; no modern, adequately powered RCT identified",
+        "independent-review note: secondary literature synthesis corroborates that human insomnia evidence is old, small, and conflicting, with no modern RCT identifiable; the FDA briefing also discusses a further historical study (Bes et al. 1992) that found no significant difference vs. placebo on objective/subjective sleep measures, a more negative data point than the Schneider-Helmert 1992 results already cited, reinforcing rather than contradicting this claim's 'inconclusive, at best preliminary' characterization"
       ]
     },
     {
@@ -264,7 +291,8 @@
         }
       ],
       "reviewFlags": [
-        "narcolepsy evidence rests on a single case report; opioid withdrawal use should not be inferred as proven or as a substitute for standard-of-care withdrawal management"
+        "narcolepsy evidence rests on a single case report; opioid withdrawal use should not be inferred as proven or as a substitute for standard-of-care withdrawal management",
+        "independent-review note: secondary literature synthesis and independent PCAC vote reporting both corroborate that narcolepsy/opioid-withdrawal evidence is thin (isolated small studies, no rigorous trial design), with committee vote reporting explicitly citing 'the sole supporting study is over 30 years old' as a stated reason for rejecting emideltide from the 503A Bulks List"
       ]
     },
     {
@@ -299,7 +327,8 @@
       ],
       "reviewFlags": [
         "misinformation-adjacent: popular wellness-clinic marketing outpaces the strength of published human evidence and FDA's own characterization of the substance",
-        "the single small open-label trial cited by marketers (n=7, uncontrolled) should not be treated as confirmatory of consistent benefit"
+        "the single small open-label trial cited by marketers (n=7, uncontrolled) should not be treated as confirmatory of consistent benefit",
+        "independent-review note: direct web search independently confirmed numerous current (2026) commercial/vendor pages (e.g., Rite Aid, Innerbody, BioLongevity Labs, PeptideInsight) marketing DSIP/emideltide for sleep and other uses, several of which frame benefits more confidently than the underlying evidence supports; this corroborates and keeps active the packet's misinformation-adjacent flag"
       ]
     }
   ],
@@ -320,8 +349,8 @@
     "needsReview": true,
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
-      "Final outcome of the July 23-24, 2026 PCAC meeting (committee vote, any subsequent FDA listing decision) had not been confirmed as of packet generation and must be checked against the live FDA advisory committee page at review time.",
-      "CAS/UNII/DrugBank/ChEMBL identifiers not resolved from an authoritative structured database in this session; PubChem detail page required JavaScript and could not be fully parsed, so only the PubChem CID was confirmed.",
+      "Remediation pass (2026-08-29): live FDA advisory-committee page was re-checked and still shows only pre-meeting materials with no official outcome document posted. Independent industry/legal reporting (FDA Law Blog, cross-consistent with other peptide-industry sources) was used to confirm the PCAC vote failed 6-for/7-against/1-abstain, rejecting emideltide from the 503A Bulks List; this outcome has been added to the regulatory claim, but remains flagged for re-confirmation against a primary FDA record once FDA publishes an official post-meeting summary or updates the 503A list.",
+      "CAS/UNII/DrugBank/ChEMBL identifiers remain unresolved after this review's independent attempts: CAS Common Chemistry API search returned no result (403), the FDA/NIH UNII (GSRS) lookup returned no result (404), and PubChem's own compound page still requires JavaScript to render structured identifier fields (only molecular formula C35H48N10O15 and CID 68816 could be confirmed from rendered text). These fields stay null pending a successful authoritative lookup.",
       "Human efficacy evidence base is thin (small, decades-old studies; only one modern-era FDA synthesis document reviewed) and should be expanded with any additional controlled studies at review time."
     ],
     "qualityFlags": [
@@ -330,7 +359,8 @@
       "gray-market-only",
       "thin-human-evidence",
       "regulatory-decision-pending-2026-pcac",
-      "marketing-outpaces-evidence"
+      "marketing-outpaces-evidence",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

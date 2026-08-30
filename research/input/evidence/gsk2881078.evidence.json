@@ -112,6 +112,30 @@
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
+      "sourceId": "livertox-sarms-nbk619971",
+      "sourceType": "clinical-reference",
+      "authorityTier": "A2",
+      "title": "Selective Androgen Receptor Modulators (SARMs)",
+      "publisher": "LiverTox: Clinical and Research Information on Drug-Induced Liver Injury, NCBI Bookshelf (National Institute of Diabetes and Digestive and Kidney Diseases)",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "tabberer-2024-jpro-copd-qualitative",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B1",
+      "title": "Qualitative interviews of patients with COPD and muscle weakness enrolled in a clinical trial evaluating a new anabolic treatment: patient perspectives of disease experience, trial participation and outcome assessments",
+      "publisher": "Journal of Patient-Reported Outcomes (Tabberer M, Williamson N, Tatlock S, Gater A, Grimes R, Akinseye C, Neil D, Mahon-Smith A, Nelsen L, 2024)",
+      "url": "https://doi.org/10.1186/s41687-024-00712-0",
+      "doi": "10.1186/s41687-024-00712-0",
+      "pmid": null,
+      "publishedAt": "2024-04-01T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
       "sourceId": "invivochem-vendor-listing",
       "sourceType": "vendor",
       "authorityTier": "D1",
@@ -189,13 +213,14 @@
       "reviewFlags": [
         "healthy-volunteer lean mass gain must not be extrapolated to functional strength or clinical benefit in disease populations",
         "trial dose context must never be presented as a use recommendation",
-        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a randomized, placebo-controlled, dose-escalation phase 1 study...\"); no regulator document exists for this claim (searched: FDA.gov fraudulent-products SARMs/bodybuilding alert page — no GSK2881078-specific or efficacy content; DailyMed drug label search for GSK2881078/GSK-2881078 — 0 results, no label exists for this never-approved investigational compound)"
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In a randomized, placebo-controlled, dose-escalation phase 1 study...\"); no regulator document exists for this claim (searched: FDA.gov fraudulent-products SARMs/bodybuilding alert page — no GSK2881078-specific or efficacy content; DailyMed drug label search for GSK2881078/GSK-2881078 — 0 results, no label exists for this never-approved investigational compound)",
+        "independent-review 2026-08-29: an independent narrative review of SARM RCTs corroborates dose-dependent lean-mass gains in a healthy-volunteer phase 1 SARM study, consistent with this claim's framing; however, the specific magnitude figures (women ~3.39 kg, men ~1.76 kg) could not be reproduced from a second independent source this pass (PubMed/PMC/Wiley/ResearchGate all blocked or rate-limited) — these kg figures still rest on the single cited Clark 2018 JCEM primary paper and should be treated accordingly at review"
       ]
     },
     {
       "claimId": "gsk2881078-adverse-effect-hdl-testosterone-001",
       "claimType": "adverse-effect",
-      "statement": "In the same phase 1 study, all GSK2881078-dosed subjects showed reductions in HDL cholesterol (30-45% at the highest doses), and male subjects showed reversible reductions in total testosterone; changes reversed after stopping the drug. No serious adverse events were reported and the compound was described as generally well tolerated in this healthy-volunteer setting, but suppression of HDL cholesterol and androgen axis parameters are class-consistent safety signals for SARMs.",
+      "statement": "In the same phase 1 study, all GSK2881078-dosed subjects showed reductions in HDL cholesterol (30-45% at the highest doses), and male subjects showed reversible reductions in total testosterone; changes reversed after stopping the drug. No serious adverse events were reported and the compound was described as generally well tolerated in this healthy-volunteer setting, but suppression of HDL cholesterol and androgen axis parameters are class-consistent safety signals for SARMs. An independent clinical-reference source (LiverTox) additionally reports that in this GSK2881078 trial, ALT rose above the upper limit of normal in over 50% of treated subjects (versus 13% of placebo) and above 5x ULN in 3% of treated subjects — a hepatic-transaminase-elevation signal not described in the primary paper's HDL/testosterone results and now added here as a distinct safety-critical signal.",
       "context": {
         "population": "healthy older men and postmenopausal women",
         "route": "oral",
@@ -207,7 +232,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "clark-2018-jcem-lean-mass"
+        "clark-2018-jcem-lean-mass",
+        "livertox-sarms-nbk619971"
       ],
       "extractedEvidence": [
         {
@@ -224,18 +250,24 @@
           "sourceRef": "clark-2018-jcem-lean-mass",
           "quote": "GSK2881078 was generally well tolerated and no serious adverse events were reported",
           "pageOrSection": "Results/Safety summary"
+        },
+        {
+          "sourceRef": "livertox-sarms-nbk619971",
+          "quote": "ALT levels rose to above normal in over 50% of treated patients vs 13% of placebo controls] and above 5 times ULN in 3%",
+          "pageOrSection": "SARMs / GSK2881078 hepatotoxicity discussion"
         }
       ],
       "reviewFlags": [
         "safety-critical: lipid and androgen-axis suppression not established as clinically safe over durations longer than the 56-day study window",
         "no long-term (>2 month) human safety data located this pass",
-        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the same phase 1 study, all GSK2881078-dosed subjects showed reductions in HDL cholesterol...\"); no regulator document exists for this claim (searched: FDA.gov fraudulent-products SARMs/bodybuilding alert page — lists heart attack/stroke risk, liver injury, testicular shrinkage, infertility, sexual dysfunction for SARMs as a class but contains no HDL-cholesterol or testosterone-suppression-specific language; DailyMed drug label search for GSK2881078/GSK-2881078 — 0 results, no label exists for this never-approved investigational compound)"
+        "authority-flag recalibrated 2026-08-29: claimType adverse-effect is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the same phase 1 study, all GSK2881078-dosed subjects showed reductions in HDL cholesterol...\"); no regulator document exists for this claim (searched: FDA.gov fraudulent-products SARMs/bodybuilding alert page — lists heart attack/stroke risk, liver injury, testicular shrinkage, infertility, sexual dysfunction for SARMs as a class but contains no HDL-cholesterol or testosterone-suppression-specific language; DailyMed drug label search for GSK2881078/GSK-2881078 — 0 results, no label exists for this never-approved investigational compound)",
+        "remediation 2026-08-29: added independent LiverTox-sourced hepatic transaminase (ALT) elevation signal (>50% of treated subjects above ULN, 3% above 5x ULN) per reviewer promotionBlocker; this is a distinct safety-critical detail from the HDL/testosterone findings and should be weighed alongside them at review"
       ]
     },
     {
       "claimId": "gsk2881078-studied-use-copd-muscle-weakness-001",
       "claimType": "studied-use",
-      "statement": "GSK2881078 was studied in a 13-week, randomized, double-blind, placebo-controlled phase 2a trial (NCT03359473) in 96 dosed COPD patients aged 50-75 with muscle weakness, using sex-specific doses (2 mg/day in men, 1 mg/day in women) alongside a home exercise program, with leg-press strength and DXA lean mass as primary/secondary endpoints. The trial completed in November 2019 with 77 of 96 participants completing and 10 discontinuations attributed to adverse events; a secondary source (not independently verified against the primary Thorax publication in this pass) reports the drug increased muscle strength in men but the sex-specific and full quantitative results were not independently confirmed from the primary journal article in this research pass.",
+      "statement": "GSK2881078 was studied in a 13-week, randomized, double-blind, placebo-controlled phase 2a trial (NCT03359473) in 96 dosed COPD patients aged 50-75 with muscle weakness, using sex-specific doses (2 mg/day in men, 1 mg/day in women) alongside a home exercise program, with leg-press strength and DXA lean mass as primary/secondary endpoints. The trial completed in November 2019 with 77 of 96 participants completing and 10 discontinuations attributed to adverse events. A secondary source (Wikipedia, not independently verified against the primary Thorax publication) states the drug increased muscle strength in men; this sex-specific efficacy framing and the full quantitative leg-press/DXA results remain unconfirmed and are not asserted here as established findings. A separate, independently accessed companion patient-reported-outcomes study of the same trial (Tabberer et al. 2024) reports that in a qualitative interview subsample (n=32), most participants described improvements in muscle strength and functional limitations and all reported a positive trial experience; this corroborates a general positive direction of participant-perceived effect but does not confirm, quantify, or sex-differentiate the efficacy result, and does not substitute for the primary trial's quantitative endpoints.",
       "context": {
         "population": "adults 50-75 years with COPD and muscle weakness (n=96 dosed, n=97 screened)",
         "route": "oral",
@@ -249,7 +281,8 @@
       "sourceRefs": [
         "clinicaltrials-nct03359473",
         "gsk-study-register-200182",
-        "wikipedia-gsk2881078"
+        "wikipedia-gsk2881078",
+        "tabberer-2024-jpro-copd-qualitative"
       ],
       "extractedEvidence": [
         {
@@ -266,12 +299,23 @@
           "sourceRef": "wikipedia-gsk2881078",
           "quote": "well tolerated",
           "pageOrSection": "Clinical trials section"
+        },
+        {
+          "sourceRef": "tabberer-2024-jpro-copd-qualitative",
+          "quote": "Improvements in muscle strength and functional limitations were reported by most participants.",
+          "pageOrSection": "Results (n=32 qualitative interview subsample)"
+        },
+        {
+          "sourceRef": "tabberer-2024-jpro-copd-qualitative",
+          "quote": "All participants (n = 32) reported a positive trial experience.",
+          "pageOrSection": "Results (n=32 qualitative interview subsample)"
         }
       ],
       "reviewFlags": [
         "primary Thorax (2022/2023) journal publication with full quantitative leg-press and lean-mass results could not be accessed directly this pass (PMC access blocked); statement of sex-specific efficacy is sourced from a secondary reference (Wikipedia) and must be verified against the primary article before publication",
         "fieldAuthorityRequired due to dosing/trial-protocol content",
-        "no approved indication exists; do not present as evidence of a treatment benefit for COPD"
+        "no approved indication exists; do not present as evidence of a treatment benefit for COPD",
+        "remediation 2026-08-29: independent targeted re-attempt to reach the primary Thorax/PMC9985744 paper (Europe PMC REST API, two attempts) was rate-limited (HTTP 429) both times this pass, matching the packet's previously documented access block; no new primary-source access achieved. Independently located and added a companion patient-reported-outcomes qualitative substudy (Tabberer et al. 2024, Journal of Patient-Reported Outcomes, DOI 10.1186/s41687-024-00712-0) which corroborates a general positive direction of participant-perceived muscle-strength/function effect but does NOT confirm the sex-specific ('men only') framing or any quantitative result. Claim remains fieldAuthorityRequired and human-review-gated; statement language tightened to not assert the sex-specific finding as confirmed."
       ]
     },
     {
@@ -369,7 +413,10 @@
       "Primary Thorax journal publication (COPD trial full results, PMC9985744) could not be accessed directly this pass due to bot-verification blocking on PMC/PubMed/ResearchGate/Imperial repository domains; sex-specific efficacy statement is sourced secondhand from Wikipedia and needs verification against the primary article.",
       "BJCP phase 1 safety/PK paper (Clark 2017, DOI 10.1111/bcp.13316) could not be accessed (403 error); confirm PK/safety details against that primary source at review time.",
       "DrugBank and ChEMBL identifiers not independently cross-verified from their native databases; ChEMBL ID sourced from NCATS Inxight only.",
-      "No compound-specific FDA action (import alert, warning letter, or 503A/503B listing) located for GSK2881078 by name; only class-level SARM warnings were found — confirm this remains the case at review time."
+      "No compound-specific FDA action (import alert, warning letter, or 503A/503B listing) located for GSK2881078 by name; only class-level SARM warnings were found — confirm this remains the case at review time.",
+      "Remediation pass 2026-08-29 (against independent-review verdict): added independent LiverTox-sourced ALT/transaminase elevation signal (>50% of GSK2881078-treated subjects above ULN, 3% above 5x ULN) to the HDL/testosterone adverse-effect claim per reviewer promotionBlocker — resolved.",
+      "Remediation pass 2026-08-29: field-authority-required COPD claim (gsk2881078-studied-use-copd-muscle-weakness-001, sex-specific efficacy) remains UNRESOLVED and human-review-gated — one further independent targeted attempt to reach the primary Thorax/PMC9985744 article via Europe PMC REST API was rate-limited (HTTP 429) twice this pass; routes previously exhausted by the reviewer (PMC bot-check, PubMed 429, Imperial Spiral repository 429, ResearchGate 429, 2025 Wiley SARM systematic review 403) were not re-attempted since they were already conclusively blocked. A companion PRO qualitative substudy (Tabberer et al. 2024) was added as partial independent corroboration, but the sex-specific ('men only') efficacy statement is still not confirmed against the primary article and must not be promoted until it is.",
+      "DrugBank and ChEMBL identifiers remain not independently cross-verified from their native databases (ChEMBL ID sourced from NCATS Inxight only) — not re-attempted this pass; flagged for review-time verification via ChEMBL/DrugBank direct lookup."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -377,7 +424,8 @@
       "limited-human-evidence",
       "gray-market-research-chemical",
       "primary-source-access-blocked",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

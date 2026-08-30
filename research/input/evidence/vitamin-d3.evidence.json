@@ -99,6 +99,42 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T04:46:26Z"
+    },
+    {
+      "sourceId": "uspstf-vitamind-calcium-fracture-fall-draft-2024",
+      "sourceType": "professional-guidance-draft",
+      "authorityTier": "A1",
+      "title": "Vitamin D and Calcium Combined Supplementation for the Primary Prevention of Falls and Fractures in Community-Dwelling Adults (Draft Recommendation, Dec 17, 2024)",
+      "publisher": "U.S. Preventive Services Task Force",
+      "url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/vitamin-d-calcium-combined-supplementation-primary-prevention-falls-fractures-communitydwelling-adults",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2024-12-17T00:00:00Z",
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "ncbi-bookshelf-vitamind-toxicity-statpearls",
+      "sourceType": "clinical-reference",
+      "authorityTier": "B1",
+      "title": "Vitamin D Toxicity (StatPearls)",
+      "publisher": "National Center for Biotechnology Information / NCBI Bookshelf (StatPearls)",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK557876/",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
+    },
+    {
+      "sourceId": "nci-vital-trial-cancer-currents-2018",
+      "sourceType": "government-science-communication",
+      "authorityTier": "A2",
+      "title": "Large Study Finds No Benefit for Vitamin D Supplements in Preventing Cancer (Cancer Currents Blog)",
+      "publisher": "National Institutes of Health / National Cancer Institute",
+      "url": "https://www.cancer.gov/news-events/cancer-currents-blog/2018/vitamin-d-supplement-cancer-prevention",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
   "claims": [
@@ -133,7 +169,9 @@
       ],
       "reviewFlags": [
         "product-specific label; other cholecalciferol SKUs on DailyMed (prescription-strength, combination, or drug-classified products) may carry different labeling and must not be assumed identical",
-        "verify at review time whether any cholecalciferol product currently holds FDA-approved drug status distinct from this dietary-supplement SKU"
+        "verify at review time whether any cholecalciferol product currently holds FDA-approved drug status distinct from this dietary-supplement SKU",
+        "re-verified live (2026-08-29): DailyMed label remains active/current with unchanged marketing-status coding and directions text; independently cross-checked against NIH's DSLD structured database, which likewise catalogs vitamin D3 as a dietary-supplement ingredient",
+        "FDA held a public meeting (March 27, 2026) exploring modernization of dietary-supplement regulation (ingredient scope, GRAS pathway), with industry comments due April 27, 2026; this is exploratory only and as of this review has not changed single-ingredient vitamin D3's supplement classification, but should be monitored for finalized rule changes"
       ]
     },
     {
@@ -189,7 +227,8 @@
       ],
       "reviewFlags": [
         "dosing/reference-intake claim requires field authority sign-off before publication",
-        "confirm no revision to RDA/UL values at review time"
+        "confirm no revision to RDA/UL values at review time",
+        "independently corroborated via Harvard T.H. Chan School of Public Health Nutrition Source (identical RDA/UL figures); these values trace to the IOM/NASEM 2010 Dietary Reference Intake report and have not been revised since, but remain current as of Aug 2026 — note the 2010 provenance for full traceability"
       ]
     },
     {
@@ -207,7 +246,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "tctmd-vital-trial-summary-2018"
+        "tctmd-vital-trial-summary-2018",
+        "nci-vital-trial-cancer-currents-2018"
       ],
       "extractedEvidence": [
         {
@@ -219,19 +259,36 @@
           "sourceRef": "tctmd-vital-trial-summary-2018",
           "quote": "no differences were seen across a wide range of secondary endpoints, including an expanded composite primary endpoint (that included revascularization), myocardial infarction, stroke, cardiovascular death, death from any cause, and a range of cancers and cancer death",
           "pageOrSection": "Article body"
+        },
+        {
+          "sourceRef": "nci-vital-trial-cancer-currents-2018",
+          "quote": "793 participants in the vitamin D group (6.1%) received a cancer diagnosis during the trial, compared with 824 in the placebo group (6.3%)",
+          "pageOrSection": "Article body"
+        },
+        {
+          "sourceRef": "nci-vital-trial-cancer-currents-2018",
+          "quote": "154 among participants who took vitamin D (1.1%) and 187 among those who took the placebo (1.4%)",
+          "pageOrSection": "Article body, cancer deaths"
+        },
+        {
+          "sourceRef": "nci-vital-trial-cancer-currents-2018",
+          "quote": "Participants taking vitamin D saw their blood levels of the vitamin rise by 40% on average during the trial.",
+          "pageOrSection": "Article body"
         }
       ],
       "reviewFlags": [
-        "quotes sourced from a secondary media summary of the NEJM article; original NEJM/PubMed full text was inaccessible this session (blocked by CAPTCHA/403) and should be independently re-verified against the primary paper at review time",
-        "do not extrapolate this negative primary-prevention finding to deficiency-correction or musculoskeletal endpoints, which VITAL was not primarily designed to test"
+        "quotes originally sourced from a secondary media summary of the NEJM article; original NEJM/PubMed full text remained inaccessible this session (blocked by CAPTCHA/403)",
+        "independently corroborated via NCI's own account of the same VITAL trial (invasive cancer 6.1% vs 6.3%, cancer deaths 1.1% vs 1.4% not significant, no CV event reduction despite ~40% rise in serum 25(OH)D) — a materially different, authoritative independent source family that resolves the substantive verification gap even though direct PMC full text access remained blocked",
+        "do not extrapolate this negative primary-prevention finding to deficiency-correction or musculoskeletal endpoints, which VITAL was not primarily designed to test",
+        "the BMI-subgroup / hypothesis-generating cancer-risk framing was not separately re-confirmed against NCI's account but is already appropriately hedged in this claim's wording"
       ]
     },
     {
       "claimId": "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
       "claimType": "efficacy",
-      "statement": "USPSTF recommends against daily supplementation with 400 IU or less of vitamin D (with 1000 mg or less of calcium) for primary prevention of fractures in postmenopausal women (Grade D), finds current evidence insufficient to assess the balance of benefits and harms for fracture prevention in men and premenopausal women (Grade I), and separately recommends against vitamin D supplementation to prevent falls in community-dwelling older adults (Grade D).",
+      "statement": "USPSTF's 2018 final recommendation states: against daily supplementation with 400 IU or less of vitamin D (with 1000 mg or less of calcium) for primary prevention of fractures in postmenopausal women (Grade D); evidence insufficient to assess benefits/harms for fracture prevention in men and premenopausal women (Grade I); and separately, against vitamin D supplementation to prevent falls in community-dwelling older adults (Grade D). This topic is under active revision: USPSTF's own site marks it \"being updated,\" and a December 17, 2024 draft recommendation consolidates the separate fracture and falls recommendations into one, broadens the against-recommendation (Grade D) to cover community-dwelling postmenopausal women AND men age 60 or older for both fracture and fall prevention, and documents a small increased kidney-stone risk not mentioned in the 2018 statement. As of this review the draft is not yet finalized, so the 2018 grades remain the official USPSTF position, but this claim should not be presented as settled current guidance without disclosing the pending revision.",
       "context": {
-        "population": "community-dwelling adults, primarily postmenopausal women and older adults without known osteoporosis or vitamin D deficiency",
+        "population": "community-dwelling adults; 2018 statement covers primarily postmenopausal women and older adults without known osteoporosis or vitamin D deficiency, while the December 2024 draft broadens coverage to community-dwelling postmenopausal women and men age 60 or older",
         "route": "oral",
         "formulation": "vitamin D supplementation (with or without calcium), primary-prevention dosing",
         "useCase": "primary prevention of fractures and falls",
@@ -241,7 +298,8 @@
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
-        "uspstf-vitamind-calcium-fracture-fall-prevention"
+        "uspstf-vitamind-calcium-fracture-fall-prevention",
+        "uspstf-vitamind-calcium-fracture-fall-draft-2024"
       ],
       "extractedEvidence": [
         {
@@ -258,11 +316,32 @@
           "sourceRef": "uspstf-vitamind-calcium-fracture-fall-prevention",
           "quote": "recommends against vitamin D supplementation to prevent falls in community-dwelling older adults",
           "pageOrSection": "Related falls-prevention recommendation"
+        },
+        {
+          "sourceRef": "uspstf-vitamind-calcium-fracture-fall-draft-2024",
+          "quote": "This topic is being updated. Please use the link(s) below to see the latest documents available.",
+          "pageOrSection": "Update notice banner"
+        },
+        {
+          "sourceRef": "uspstf-vitamind-calcium-fracture-fall-draft-2024",
+          "quote": "The USPSTF recommends against supplementation with vitamin D with or without calcium for the primary prevention of fractures in community-dwelling postmenopausal women and men age 60 years or older.",
+          "pageOrSection": "Draft Recommendation, December 17, 2024, fracture prevention (Grade D)"
+        },
+        {
+          "sourceRef": "uspstf-vitamind-calcium-fracture-fall-draft-2024",
+          "quote": "The USPSTF recommends against supplementation with vitamin D for the prevention of falls in community-dwelling postmenopausal women and men age 60 years or older.",
+          "pageOrSection": "Draft Recommendation, December 17, 2024, fall prevention (Grade D)"
+        },
+        {
+          "sourceRef": "uspstf-vitamind-calcium-fracture-fall-draft-2024",
+          "quote": "2 more participants with kidney stones per 1,000 persons treated",
+          "pageOrSection": "Draft Recommendation, harms of supplementation (pooled relative risk 1.11, 2.5-7 years follow-up)"
         }
       ],
       "reviewFlags": [
         "USPSTF recommendation is population/primary-prevention specific and does not address treatment of diagnosed deficiency or osteoporosis, which is a materially different clinical context",
-        "confirm this remains the current, non-superseded USPSTF recommendation at review time"
+        "RESOLVED (2026-08-29): this topic is confirmed under active USPSTF revision; re-fetched the live USPSTF page directly and confirmed the 'being updated' banner, the December 17, 2024 draft's broadened Grade D against-recommendation covering men age 60+, and the added kidney-stone harm signal (pooled RR 1.11). The 2018 grades remain the technically official position pending finalization, but the packet now discloses the pending revision rather than presenting 2018 as settled current guidance.",
+        "monitor for finalization of the December 2024 draft and update this claim once USPSTF publishes its final consolidated recommendation"
       ]
     },
     {
@@ -309,20 +388,21 @@
     {
       "claimId": "vitamind3-adverse-effect-hypercalcemia-toxicity-001",
       "claimType": "adverse-effect",
-      "statement": "Excess vitamin D intake, generally from supplements rather than diet or sun exposure, can raise serum 25-hydroxyvitamin D above thresholds associated with adverse effects (per NIH ODS, above 125 nmol/L / 50 ng/mL is linked to potential harm), and the reviewed cholecalciferol product label warns against exceeding the recommended dose and instructs consultation with a physician for people with vascular disease, diabetes, pregnancy/nursing status, or bleeding/anticoagulation concerns before use.",
+      "statement": "Excess vitamin D intake, generally from supplements rather than diet or sun exposure, can raise serum 25-hydroxyvitamin D above thresholds associated with adverse effects. NIH ODS cites a lower 'potential adverse effect' caution level above 125 nmol/L (50 ng/mL), which is distinct from the higher threshold at which frank clinical vitamin D toxicity/hypercalcemia typically presents — per StatPearls, serum 25(OH)D concentrations often exceed 375 nmol/L (150 ng/mL) in documented toxicity cases; these are two different severity thresholds and should not be conflated. The reviewed cholecalciferol product label warns against exceeding the recommended dose and instructs consultation with a physician for people with vascular disease, diabetes, pregnancy/nursing status, or bleeding/anticoagulation concerns before use.",
       "context": {
         "population": "supplement users, particularly those combining multiple vitamin D-containing products or exceeding label dosing",
         "route": "oral",
         "formulation": "cholecalciferol supplements, various doses",
         "useCase": "toxicity / excess-intake safety context",
-        "doseText": "Adverse-effect risk threshold cited at serum 25(OH)D >125 nmol/L (>50 ng/mL); label states 'Do not exceed recommended dosage' (safety context, not a treatment protocol)"
+        "doseText": "NIH ODS 'potential adverse effect' caution threshold: serum 25(OH)D >125 nmol/L (>50 ng/mL). StatPearls frank-toxicity threshold: serum 25(OH)D often >375 nmol/L (>150 ng/mL). Label states 'Do not exceed recommended dosage' (safety context, not a treatment protocol)."
       },
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "nih-ods-vitamind-health-professional",
-        "dailymed-cholecalciferol-25mcg-tab"
+        "dailymed-cholecalciferol-25mcg-tab",
+        "ncbi-bookshelf-vitamind-toxicity-statpearls"
       ],
       "extractedEvidence": [
         {
@@ -334,11 +414,26 @@
           "sourceRef": "dailymed-cholecalciferol-25mcg-tab",
           "quote": "Do not exceed recommended dosage. Consult your physician before taking this product if you have vascular disease (such as heart disease or history of stroke) or diabetes, are pregnant or nursing, taking medication, facing surgery, have bleeding problems, or undergoing any treatment which may affect the ability of blood to clot.",
           "pageOrSection": "Warnings"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-vitamind-toxicity-statpearls",
+          "quote": "serum levels of 25(OH)D concentration often exceed 150 ng/mL (375 nmol/L)",
+          "pageOrSection": "Vitamin D Toxicity, toxicity thresholds"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-vitamind-toxicity-statpearls",
+          "quote": "Hypervitaminosis D is rare and usually caused by excessive doses of vitamin D due to misuse of over-the-counter supplements or erroneous prescriptions.",
+          "pageOrSection": "Vitamin D Toxicity, etiology"
+        },
+        {
+          "sourceRef": "ncbi-bookshelf-vitamind-toxicity-statpearls",
+          "quote": "The maximum suggested daily requirement is 4000 IU/d for everyone older than 8 years.",
+          "pageOrSection": "Vitamin D Toxicity, upper limit reference"
         }
       ],
       "reviewFlags": [
         "safety-critical claim requiring field authority sign-off",
-        "hypercalcemia mechanism and symptom detail not independently sourced this session from a clinical-toxicology reference; add at review time"
+        "RESOLVED (2026-08-29): hypercalcemia/toxicity mechanism now independently sourced from StatPearls (NCBI Bookshelf), which confirms toxicity arises almost exclusively from supplement over-use (not diet/sun) and confirms 4,000 IU/day as the standard upper-limit reference; the NIH ODS >125 nmol/L figure is a lower caution threshold, distinct from the StatPearls ~375 nmol/L frank-toxicity threshold — the claim text now distinguishes the two"
       ]
     }
   ],
@@ -347,18 +442,22 @@
     "completeness": "partial",
     "needsReview": true,
     "reviewReasons": [
-      "Expansion-batch evidence packet requires human review before publication.",
-      "Primary NEJM/PubMed full text for the VITAL trial was inaccessible this session (CAPTCHA/403 blocks); the efficacy claim currently rests on a secondary media summary (TCTMD) and should be re-verified against the original NEJM article and/or PMC full text at review time.",
-      "RxNorm identifier not resolved this session.",
-      "Confirm USPSTF and NIH ODS reference values/recommendations have not been superseded since fetch date.",
-      "Multiple distinct cholecalciferol product labels exist on DailyMed (OTC supplement SKUs, combination products, and possibly prescription-strength products); only one representative OTC label was reviewed, and label content should not be assumed uniform across SKUs."
+      "Expansion-batch evidence packet requires human review before publication (pilot expansion-batch review process).",
+      "RESOLVED (2026-08-29): USPSTF fracture/falls claim revised to disclose that the 2018 recommendation is under active revision; re-fetched the live USPSTF page, confirmed the 'being updated' banner and quoted the December 17, 2024 draft (broadened Grade D against-recommendation covering men age 60+, and a kidney-stone harm signal, pooled RR 1.11). 2018 grades remain technically official pending finalization — monitor for the final consolidated recommendation and update again then.",
+      "RESOLVED (2026-08-29): VITAL trial negative-finding claim independently corroborated via NCI's own account of the same trial (fetched this session), resolving the CAPTCHA/403 access gap for the primary NEJM/PMC text via a materially different authoritative source family; direct PMC full-text access itself remains blocked and should still be attempted at a future review if feasible.",
+      "RxNorm identifier not resolved this session; not attempted in this remediation pass since it was not flagged as a promotionBlocker by the reviewer — remains open for a future pass.",
+      "RESOLVED (2026-08-29): NIH ODS RDA/UL values re-confirmed as unrevised via independent cross-check against Harvard T.H. Chan Nutrition Source; values trace to the 2010 IOM/NASEM DRI report and have not been updated since.",
+      "RESOLVED (2026-08-29): DailyMed dietary-supplement label re-verified live as current/unchanged; cross-checked against NIH DSLD. FDA's March 27, 2026 public meeting on dietary-supplement regulatory modernization is exploratory only and does not currently change single-ingredient vitamin D3's classification, but should be monitored for a finalized rule.",
+      "RESOLVED (2026-08-29): hypercalcemia/toxicity claim now distinguishes the NIH ODS caution threshold (>125 nmol/L) from the StatPearls frank-toxicity threshold (>375 nmol/L), sourced from StatPearls (NCBI Bookshelf), fetched this session.",
+      "Multiple distinct cholecalciferol product labels exist on DailyMed (OTC supplement SKUs, combination products, and possibly prescription-strength products); only one representative OTC label was reviewed, and label content should not be assumed uniform across SKUs — remains open."
     ],
     "qualityFlags": [
       "expansion-input",
       "otc-dietary-supplement-not-fda-approved-drug",
       "negative-human-rct-documented",
       "professional-guidance-recommends-against-primary-prevention-use",
-      "marketing-evidence-gap-documented"
+      "marketing-evidence-gap-documented",
+      "remediation-pass-2026-08-29"
     ]
   }
 }

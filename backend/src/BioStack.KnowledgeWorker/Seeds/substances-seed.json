@@ -8061,313 +8061,263 @@
       "slug": "raloxifene",
       "aliases": [
         "Evista",
-        "raloxifene hydrochloride"
+        "Raloxifene hydrochloride",
+        "LY156758"
       ],
       "brandNames": [],
-      "synonyms": [],
-      "classification": "SERM",
-      "compoundFamily": "selective estrogen receptor modulator",
+      "synonyms": [
+        "Evista",
+        "Raloxifene hydrochloride",
+        "LY156758"
+      ],
+      "classification": "Other",
+      "compoundFamily": "Selective estrogen receptor modulator (SERM), benzothiophene class",
       "isCombinationProduct": false,
       "activeMoieties": [
         "Raloxifene"
       ],
       "externalIdentifiers": {
         "rxnorm": null,
-        "unii": null,
-        "casNumber": null,
-        "drugbank": null,
-        "pubchem": null
+        "unii": "YX9162EO3I",
+        "casNumber": "84449-90-1",
+        "drugbank": "DB00481",
+        "pubchem": "5035"
       }
     },
     "regulatory": {
-      "requiresPrescription": true,
-      "regulatoryStatus": "FDA-approved prescription product or labeled drug class",
-      "labelStatusByUseCase": [
-        {
-          "useCase": "osteoporosis treatment/prevention or breast cancer risk reduction per label",
-          "labelStatus": "on-label"
-        }
-      ],
-      "jurisdiction": "US",
-      "approvedIndications": [
-        "osteoporosis treatment/prevention or breast cancer risk reduction per label"
-      ],
-      "offLabelNotes": []
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
     },
     "mechanism": {
-      "mechanismSummary": "Raloxifene is represented by its commonly described selective estrogen receptor modulator mechanism. This conservative launch record supports search and overlap detection, not medical recommendation.",
+      "mechanismSummary": "Raloxifene acts as a selective estrogen receptor modulator, binding estrogen receptors to produce tissue-selective estrogen-agonist effects (e.g., decreased bone resorption and increased bone mineral density) alongside estrogen-antagonist effects in other tissues such as breast and endometrium.",
       "primaryMechanisms": [
-        "selective estrogen receptor modulator",
-        "bone-density-support"
+        "Raloxifene acts as a selective estrogen receptor modulator, binding estrogen receptors to produce tissue-selective estrogen-agonist effects (e.g., decreased bone resorption and increased bone mineral density) alongside estrogen-antagonist effects in other tissues such as breast and endometrium."
       ],
-      "pathways": [
-        "estrogen-receptor-modulation",
-        "bone-density"
-      ],
-      "targets": [
-        "selective estrogen receptor modulator"
-      ],
-      "effectTags": [
-        "bone-density-support",
-        "estrogen-modulating"
-      ],
-      "goalTags": [
-        "bone-health",
-        "hormone-management"
-      ]
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
     },
-    "formulations": [
-      {
-        "formulationId": "raloxifene-oral",
-        "productName": "Raloxifene",
-        "manufacturer": null,
-        "route": "oral",
-        "dosageForm": "tablet",
-        "strength": null,
-        "concentration": null,
-        "unit": null,
-        "substitutableWith": [],
-        "storage": {
-          "beforeReconstitution": "Store according to product labeling or manufacturer instructions.",
-          "afterReconstitution": null,
-          "temperatureNotes": "Avoid excessive heat and moisture unless labeling states otherwise.",
-          "lightSensitivity": null,
-          "stabilityWindow": null
-        },
-        "reconstitution": {
-          "required": false,
-          "diluent": null,
-          "diluentVolume": null,
-          "instructions": null,
-          "productSpecific": false
-        }
-      }
-    ],
-    "indications": [
-      {
-        "useCase": "osteoporosis treatment/prevention or breast cancer risk reduction per label",
-        "labelStatus": "on-label",
-        "population": "Adults; specific eligibility depends on labeling, clinician assessment, or research context.",
-        "benefitSummary": "Evidence reviewed for osteoporosis treatment/prevention or breast cancer risk reduction per label; BioStack presents this as educational reference, not a recommendation.",
-        "evidenceTier": "Strong",
-        "sources": [
-          "src:raloxifene"
-        ]
-      }
-    ],
-    "dosingGuidance": [
-      {
-        "guidanceId": "raloxifene-guidance",
-        "context": {
-          "useCase": "osteoporosis treatment/prevention or breast cancer risk reduction per label",
-          "population": "Adults where appropriate",
-          "formulation": null,
-          "route": "oral"
-        },
-        "dose": {
-          "amount": 60.0,
-          "unit": "mg",
-          "frequency": "daily",
-          "scheduleText": "Follow product-specific prescribing information.",
-          "preferredTimeOfDay": null
-        },
-        "notes": [
-          "Educational reference only; not medical advice."
-        ],
-        "productSpecific": true,
-        "sources": [
-          "src:raloxifene"
-        ]
-      }
-    ],
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
     "compatibility": {
-      "vialCompatibilitySummary": "Not applicable or unknown for non-injectable use; avoid assuming compatibility across products.",
-      "blendingRules": [
-        {
-          "ruleType": "co-use",
-          "target": "other compounds",
-          "status": "review",
-          "message": "No hard-safe compatibility conclusion is established by this seed record.",
-          "sources": [
-            "src:raloxifene"
-          ]
-        }
-      ],
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
       "compatibleBlends": [],
       "incompatibleBlends": [],
-      "unknownCompatibility": [
-        "other compounds"
-      ]
+      "unknownCompatibility": []
     },
     "safety": {
-      "contraindications": [
-        {
-          "item": "Known hypersensitivity to the active ingredient or formulation components",
-          "severity": "high",
-          "notes": "Confirm full labeled contraindications before use.",
-          "sources": [
-            "src:raloxifene"
-          ]
-        }
-      ],
-      "warnings": [
-        {
-          "item": "Use requires review of full prescribing information or regulator warning",
-          "severity": "review",
-          "notes": "BioStack stores a launch-safe summary only; primary sources may include additional risks and population-specific limits.",
-          "sources": [
-            "src:raloxifene"
-          ]
-        }
-      ],
-      "precautions": [
-        {
-          "item": "Medication and condition review",
-          "notes": "Check concurrent medications, conditions, pregnancy status, and labs where applicable.",
-          "sources": [
-            "src:raloxifene"
-          ]
-        }
-      ],
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
       "adverseEffects": {
-        "common": [
-          "source-dependent"
-        ],
-        "serious": [
-          "source-dependent"
-        ]
+        "common": [],
+        "serious": []
       },
-      "monitoring": [
-        {
-          "parameter": "Clinical response and adverse effects",
-          "reason": "Detect intolerance or clinically meaningful safety signals.",
-          "frequency": "Per label, regulator warning, and clinician judgment",
-          "sources": [
-            "src:raloxifene"
-          ]
-        }
-      ]
+      "monitoring": []
     },
-    "interactions": [
-      {
-        "interactionId": "raloxifene-cholestyramine",
-        "type": "drug-drug",
-        "target": "cholestyramine",
-        "severity": "review",
-        "mechanism": "Pathway or pharmacologic overlap",
-        "effect": "Potential additive or opposing effects may occur.",
-        "recommendedAction": "Flag for review; do not treat as automatically compatible.",
-        "sources": [
-          "src:raloxifene"
-        ]
-      }
-    ],
+    "interactions": [],
     "stackIntelligence": {
       "pairsWellWith": [],
-      "avoidWith": [
-        {
-          "target": "tamoxifen duplication",
-          "reason": "Potentially overlapping pharmacology or safety monitoring burden.",
-          "severity": "review",
-          "sources": [
-            "src:raloxifene"
-          ]
-        }
-      ],
-      "overlapRules": [
-        {
-          "ruleId": "raloxifene-estrogen-receptor-modulation-overlap",
-          "ruleType": "pathway-overlap",
-          "tag": "estrogen-receptor-modulation",
-          "severity": "review",
-          "message": "Shared pathway tag: estrogen-receptor-modulation.",
-          "action": "Show overlap and require interpretation rather than returning no relationship.",
-          "sources": [
-            "src:raloxifene"
-          ]
-        }
-      ],
+      "avoidWith": [],
+      "overlapRules": [],
       "synergyRules": [],
       "conflictRules": [],
       "redundancyRules": [],
       "timingRules": []
     },
     "supportiveGuidance": {
-      "nutrition": [
-        {
-          "topic": "Baseline",
-          "guidance": "Keep nutrition context stable when evaluating response; avoid attributing changes to a compound without observation data."
-        }
-      ],
-      "supplements": [
-        {
-          "topic": "Stack review",
-          "guidance": "Avoid adding multiple new compounds at once when trying to interpret response."
-        }
-      ],
-      "sleep": [
-        {
-          "guidance": "Track sleep because it can confound energy, recovery, appetite, and hormone-related outcomes."
-        }
-      ],
-      "exercise": [
-        {
-          "guidance": "Track training load because it can confound performance, recovery, and body-composition outcomes."
-        }
-      ],
-      "applicabilityNotes": [
-        "Supportive guidance is general tracking context and is not a treatment recommendation."
-      ],
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
       "sources": [
-        "src:internal-guidance"
+        "dailymed-evista-label",
+        "jama-more-trial-1999",
+        "ncbi-statpearls-raloxifene",
+        "drugbank-db00481",
+        "pubchem-cid-5035",
+        "chemicalbook-raloxifene",
+        "elitefitness-forum-gyno-dosing"
       ]
     },
     "evidence": {
       "overallTier": "Strong",
       "claimSpecificEvidence": [
         {
-          "claim": "Raloxifene has evidence relevant to osteoporosis treatment/prevention or breast cancer risk reduction per label.",
+          "claim": "Raloxifene is a benzothiophene-derivative selective estrogen receptor modulator (SERM), marketed as Evista (raloxifene hydrochloride); its structured-database identifiers are PubChem CID 5035, DrugBank DB00481, CAS 84449-90-1, and UNII YX9162EO3I.",
           "tier": "Strong",
           "confidence": "high",
           "sources": [
-            "src:raloxifene"
+            "pubchem-cid-5035",
+            "drugbank-db00481",
+            "chemicalbook-raloxifene"
+          ]
+        },
+        {
+          "claim": "FDA-approved EVISTA (raloxifene hydrochloride) labeling covers two indications in postmenopausal women: treatment and prevention of osteoporosis, and reduction of risk of invasive breast cancer in postmenopausal women with osteoporosis or at high risk for invasive breast cancer.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-evista-label"
+          ]
+        },
+        {
+          "claim": "EVISTA carries an FDA boxed warning for increased risk of venous thromboembolism (deep vein thrombosis, pulmonary embolism, retinal vein thrombosis) and for increased risk of death due to stroke in a trial of postmenopausal women with documented coronary heart disease or elevated coronary risk; the drug is contraindicated in women with active or past history of venous thromboembolism and in pregnancy.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-evista-label"
+          ]
+        },
+        {
+          "claim": "Raloxifene acts as a selective estrogen receptor modulator, binding estrogen receptors to produce tissue-selective estrogen-agonist effects (e.g., decreased bone resorption and increased bone mineral density) alongside estrogen-antagonist effects in other tissues such as breast and endometrium.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "ncbi-statpearls-raloxifene",
+            "drugbank-db00481"
+          ]
+        },
+        {
+          "claim": "In the MORE randomized, double-blind, placebo-controlled trial (7,705 postmenopausal women with osteoporosis, 180 centers, 25 countries, median 40 months follow-up), raloxifene reduced the risk of invasive breast cancer versus placebo: 13 cases among 5,129 women on raloxifene vs 27 among 2,576 on placebo (relative risk 0.24, 95% CI 0.13-0.44, P<.001); estrogen-receptor-positive breast cancer risk was reduced by 90% (RR 0.10, 95% CI 0.04-0.24).",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "jama-more-trial-1999",
+            "dailymed-evista-label"
+          ]
+        },
+        {
+          "claim": "In the MORE trial, raloxifene significantly increased the risk of venous thromboembolic disease relative to placebo (relative risk 3.1, 95% CI 1.5-6.2), independently corroborating the magnitude of the VTE risk described qualitatively in FDA boxed-warning labeling.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "jama-more-trial-1999",
+            "dailymed-evista-label"
+          ]
+        },
+        {
+          "claim": "Anabolic-androgenic-steroid-using bodybuilding forums promote self-directed raloxifene dosing (posts described protocols ranging from 30-120 mg/day, including a 17-week taper starting at 120 mg/day) to reverse gynecomastia, citing a pediatric case series (\"J Pediatr. 2004\") reporting 91% of raloxifene-treated patients improved and \"no side effects were seen in any patients\"; no controlled human trial of raloxifene for gynecomastia in adult anabolic-steroid users was identified, the cited pediatric population and setting do not generalize to self-directed adult AAS-user dosing, and this use is not an FDA-approved indication.",
+          "tier": "Insufficient",
+          "confidence": "low",
+          "sources": [
+            "elitefitness-forum-gyno-dosing",
+            "dailymed-evista-label"
           ]
         }
       ],
-      "evidenceGaps": [
-        "Seed record is intentionally conservative; review primary sources for details."
-      ],
-      "controversies": []
+      "evidenceGaps": [],
+      "controversies": [
+        "Anabolic-androgenic-steroid-using bodybuilding forums promote self-directed raloxifene dosing (posts described protocols ranging from 30-120 mg/day, including a 17-week taper starting at 120 mg/day) to reverse gynecomastia, citing a pediatric case series (\"J Pediatr. 2004\") reporting 91% of raloxifene-treated patients improved and \"no side effects were seen in any patients\"; no controlled human trial of raloxifene for gynecomastia in adult anabolic-steroid users was identified, the cited pediatric population and setting do not generalize to self-directed adult AAS-user dosing, and this use is not an FDA-approved indication."
+      ]
     },
     "provenance": {
       "sourceRecords": [
         {
-          "sourceType": "label",
-          "title": "Prescribing information for Raloxifene",
-          "publisher": "DailyMed",
-          "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=Raloxifene",
-          "publishedAt": "2024-01-01T00:00:00Z",
-          "lastCheckedAt": "2026-04-20T00:00:00Z"
+          "sourceType": "regulator",
+          "title": "EVISTA (raloxifene hydrochloride) tablet - Label",
+          "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=fcaaa6dc-74e8-4fb8-800c-5574bf0f8de9",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "The Effect of Raloxifene on Risk of Breast Cancer in Postmenopausal Women: Results From the MORE Randomized Trial",
+          "publisher": "JAMA (Cummings SR, Eckert S, Krueger KA, et al., 1999)",
+          "url": "https://jamanetwork.com/journals/jama/fullarticle/190420",
+          "publishedAt": "1999-06-16T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Raloxifene (StatPearls)",
+          "publisher": "StatPearls Publishing / NCBI Bookshelf, National Library of Medicine",
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK544233/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Raloxifene: Uses, Interactions, Mechanism of Action (DB00481)",
+          "publisher": "DrugBank",
+          "url": "https://go.drugbank.com/drugs/DB00481",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Raloxifene, CID 5035",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Raloxifene",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Raloxifene | 84449-90-1",
+          "publisher": "ChemicalBook (commercial chemical supplier database)",
+          "url": "https://www.chemicalbook.com/ChemicalProductProperty_EN_CB1290431.htm",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Raloxifene Doses For Reversal Of Existing Gyno (forum thread)",
+          "publisher": "EliteFitness.com Bodybuilding Forums (user-generated content)",
+          "url": "https://www.elitefitness.com/forum/threads/raloxifene-doses-for-reversal-of-existing-gyno.599350/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
         }
       ],
       "curationNotes": [
-        "Launch seed record; conservative fields selected for validation and honest coverage."
+        "Expansion-batch evidence packet requires human review before publication.",
+        "CAS/UNII identifiers were sourced from a commercial chemical-supplier database rather than a government registry (FDA GSRS/ChemIDplus); confirm at review time.",
+        "RxNorm and ChEMBL identifiers not yet resolved from structured databases.",
+        "Off-label bodybuilding/gynecomastia use in adult anabolic-steroid users is supported only by forum anecdote and an unverified secondary citation to a pediatric case series; no controlled human trial for this population/use was located and human evidence for this specific use is thin to absent.",
+        "Compiled draft requires human review before publication."
       ],
-      "lastReviewedAt": "2026-04-20T00:00:00Z",
-      "reviewStatus": "approved"
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
     },
     "ops": {
       "recordVersion": 1,
       "contentHash": null,
-      "ingestionSource": "seed:substances-seed.json",
-      "ingestedAt": null,
-      "updatedAt": null,
+      "ingestionSource": "evidence-packet:raloxifene-evidence-expansion-001",
+      "ingestedAt": "2026-08-29T01:58:43Z",
+      "updatedAt": "2026-08-29T01:58:43Z",
       "lastChangeType": "seed",
-      "isActive": true,
-      "completeness": "substantial",
-      "needsReview": false,
-      "reviewReasons": [],
-      "qualityFlags": []
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "CAS/UNII identifiers were sourced from a commercial chemical-supplier database rather than a government registry (FDA GSRS/ChemIDplus); confirm at review time.",
+        "RxNorm and ChEMBL identifiers not yet resolved from structured databases.",
+        "Off-label bodybuilding/gynecomastia use in adult anabolic-steroid users is supported only by forum anecdote and an unverified secondary citation to a pediatric case series; no controlled human trial for this population/use was located and human evidence for this specific use is thin to absent.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "fda-approved-product",
+        "a1-regulator-backed",
+        "boxed-warning-present",
+        "positive-human-rct-documented",
+        "quantified-adverse-effect",
+        "gray-market-off-label-use-flagged",
+        "thin-human-evidence-for-off-label-use",
+        "compiled-from-evidence-packet"
+      ]
     }
   },
   {
@@ -15314,6 +15264,1337 @@
         "pilot-input",
         "emerging-longevity-compound",
         "hype-boundary",
+        "compiled-from-evidence-packet"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "ac-262536",
+      "canonicalName": "AC-262536",
+      "slug": "ac-262536",
+      "aliases": [
+        "AC-262,536",
+        "Accadine",
+        "Accadrine"
+      ],
+      "brandNames": [],
+      "synonyms": [
+        "AC-262,536",
+        "Accadine",
+        "Accadrine"
+      ],
+      "classification": "Other",
+      "compoundFamily": "Aniline-class SARM (related to ACP-105 and RAD140/vosilasarm)",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "AC-262536"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": "870888-46-3",
+        "drugbank": "DB13935",
+        "pubchem": null
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "In a cell-based functional assay, AC-262536 was identified as a potent, selective androgen-receptor ligand acting as a partial agonist relative to testosterone (reported Ki approximately 5 nM); in castrated male rats it produced anabolic effects on the levator ani muscle (reported at roughly 66% of testosterone's maximal effect) while producing substantially weaker effects on prostate gland weight (roughly 27% of testosterone's maximal effect), indicating tissue-selective activity in animal models. This is preclinical (in vitro and rodent) evidence only and has not been demonstrated in humans.",
+      "primaryMechanisms": [
+        "In a cell-based functional assay, AC-262536 was identified as a potent, selective androgen-receptor ligand acting as a partial agonist relative to testosterone (reported Ki approximately 5 nM); in castrated male rats it produced anabolic effects on the levator ani muscle (reported at roughly 66% of testosterone's maximal effect) while producing substantially weaker effects on prostate gland weight (roughly 27% of testosterone's maximal effect), indicating tissue-selective activity in animal models. This is preclinical (in vitro and rodent) evidence only and has not been demonstrated in humans."
+      ],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": [
+        "fda-sarms-consumer-update",
+        "caymanchem-ac262536",
+        "medchemexpress-ac262536",
+        "vanoeveren-2007-ac262536-pharm",
+        "wikipedia-ac262536",
+        "sarmguide-ac262536-review",
+        "moreplatesmoredates-ac262536"
+      ]
+    },
+    "evidence": {
+      "overallTier": "Strong",
+      "claimSpecificEvidence": [
+        {
+          "claim": "AC-262536 (Accadine/Accadrine, CAS 870888-46-3, C18H18N2O, MW 278.4) is a non-steroidal selective androgen receptor modulator originally developed by Acadia Pharmaceuticals; it exhibits endo-exo isomerism with the endo form being pharmacologically active, and it is not an approved pharmaceutical product.",
+          "tier": "Moderate",
+          "confidence": "high",
+          "sources": [
+            "caymanchem-ac262536",
+            "wikipedia-ac262536"
+          ]
+        },
+        {
+          "claim": "In a cell-based functional assay, AC-262536 was identified as a potent, selective androgen-receptor ligand acting as a partial agonist relative to testosterone (reported Ki approximately 5 nM); in castrated male rats it produced anabolic effects on the levator ani muscle (reported at roughly 66% of testosterone's maximal effect) while producing substantially weaker effects on prostate gland weight (roughly 27% of testosterone's maximal effect), indicating tissue-selective activity in animal models. This is preclinical (in vitro and rodent) evidence only and has not been demonstrated in humans.",
+          "tier": "Limited",
+          "confidence": "moderate",
+          "sources": [
+            "vanoeveren-2007-ac262536-pharm",
+            "wikipedia-ac262536",
+            "medchemexpress-ac262536"
+          ]
+        },
+        {
+          "claim": "AC-262536 has no approved medical use and is not a licensed pharmaceutical product in the United States; FDA states that SARMs as a class 'are not FDA approved' and 'cannot be legally marketed in the U.S. as a dietary supplement or drug at this time,' and AC-262536 has additionally been documented as encountered in the illicit/novel-designer-drug market.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "fda-sarms-consumer-update",
+            "wikipedia-ac262536"
+          ]
+        },
+        {
+          "claim": "FDA has warned that SARMs as a class are 'associated with serious or life-threatening health problems,' specifically citing increased risk of heart attack or stroke and liver injury/acute liver failure, along with psychosis/hallucinations, sleep disturbances, sexual dysfunction, infertility, pregnancy/miscarriage risk, and testicular shrinkage; this warning targets the SARM drug class broadly (including products marketed to teens and young adults) and is not derived from AC-262536-specific human safety data, which does not exist.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "fda-sarms-consumer-update"
+          ]
+        },
+        {
+          "claim": "No published human clinical trials of AC-262536 exist; all pharmacological and efficacy data available come from a single in vitro/rodent characterization study. Human safety, dosing, and efficacy are entirely unestablished.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "moreplatesmoredates-ac262536",
+            "vanoeveren-2007-ac262536-pharm"
+          ]
+        },
+        {
+          "claim": "AC-262536/Accadrine is marketed online (as a bodybuilding/'SARM' supplement) with claims that it builds muscle and strength, raises testosterone, 'slows down the onset of Alzheimer's disease,' shrinks the prostate favorably, and produces 'no exogenous side effects' \u2014 claims drawn entirely from a single rodent/in-vitro pharmacology study and not supported by any human data; the marketing does not disclose the absence of human trials or FDA's class-wide SARM safety warnings.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "sarmguide-ac262536-review",
+            "moreplatesmoredates-ac262536",
+            "fda-sarms-consumer-update"
+          ]
+        }
+      ],
+      "evidenceGaps": [
+        "No published human clinical trials of AC-262536 exist; all pharmacological and efficacy data available come from a single in vitro/rodent characterization study. Human safety, dosing, and efficacy are entirely unestablished."
+      ],
+      "controversies": [
+        "AC-262536/Accadrine is marketed online (as a bodybuilding/'SARM' supplement) with claims that it builds muscle and strength, raises testosterone, 'slows down the onset of Alzheimer's disease,' shrinks the prostate favorably, and produces 'no exogenous side effects' \u2014 claims drawn entirely from a single rodent/in-vitro pharmacology study and not supported by any human data; the marketing does not disclose the absence of human trials or FDA's class-wide SARM safety warnings."
+      ]
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "regulator",
+          "title": "FDA Warns Against Use of SARMs in Body-building Products",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "AC-262536 (CAS Number: 870888-46-3) Product Page",
+          "publisher": "Cayman Chemical Company",
+          "url": "https://www.caymanchem.com/product/31598/ac-262536",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "AC-262536 | Androgen Receptor Agonist",
+          "publisher": "MedChemExpress",
+          "url": "https://www.medchemexpress.com/ac-262536.html",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Pharmacological characterization of AC-262536, a novel selective androgen receptor modulator",
+          "publisher": "Journal of Steroid Biochemistry and Molecular Biology (via ResearchGate abstract record; PMID 18164613)",
+          "url": "https://www.researchgate.net/publication/5684238_Pharmacological_characterization_of_AC-262536_a_novel_selective_androgen_receptor_modulator",
+          "publishedAt": "2008-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "AC-262,536",
+          "publisher": "Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/AC-262,536",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "AC-262536 Review, Dosage, Results And More",
+          "publisher": "sarmguide.com",
+          "url": "https://sarmguide.com/ac-262536-review/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "AC-262536 SARM Overview - What To Expect (Based On Clinical Studies)",
+          "publisher": "More Plates More Dates",
+          "url": "https://moreplatesmoredates.com/ac-262536-sarm-overview/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        }
+      ],
+      "curationNotes": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "No AC-262536-specific human trial, case-report, or FDA enforcement action (warning letter/import alert) was located this session; all safety framing relies on class-wide SARM sources and must be re-checked for a compound-specific update at review.",
+        "PubChem CID and other structured-database identifiers (UNII, ChEMBL, RxNorm) could not be reliably resolved this session; the candidate PubChem CID found had a mismatched molecular formula and was excluded rather than cited.",
+        "Primary pharmacology study (PMID 18164613) was only accessible as an abstract via a secondary aggregator, not the publisher or PubMed page directly; verify against the original journal record at review.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "evidence-packet:ac-262536-evidence-expansion-001",
+      "ingestedAt": "2026-08-29T02:21:10Z",
+      "updatedAt": "2026-08-29T02:21:10Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "No AC-262536-specific human trial, case-report, or FDA enforcement action (warning letter/import alert) was located this session; all safety framing relies on class-wide SARM sources and must be re-checked for a compound-specific update at review.",
+        "PubChem CID and other structured-database identifiers (UNII, ChEMBL, RxNorm) could not be reliably resolved this session; the candidate PubChem CID found had a mismatched molecular formula and was excluded rather than cited.",
+        "Primary pharmacology study (PMID 18164613) was only accessible as an abstract via a secondary aggregator, not the publisher or PubMed page directly; verify against the original journal record at review.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "gray-market-only-no-approved-product",
+        "no-human-clinical-data",
+        "class-level-regulatory-warning-only",
+        "unresolved-structured-identifiers",
+        "marketing-evidence-gap-documented",
+        "compiled-from-evidence-packet"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "lasofoxifene",
+      "canonicalName": "Lasofoxifene",
+      "slug": "lasofoxifene",
+      "aliases": [
+        "Fablyn",
+        "CP-336156",
+        "Lasofoxifene tartrate",
+        "Oporia"
+      ],
+      "brandNames": [],
+      "synonyms": [
+        "Fablyn",
+        "CP-336156",
+        "Lasofoxifene tartrate",
+        "Oporia"
+      ],
+      "classification": "Other",
+      "compoundFamily": "Nonsteroidal third-generation SERM (naphthalene derivative)",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Lasofoxifene"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": "337G83N988",
+        "casNumber": "180916-16-9",
+        "drugbank": "DB06202",
+        "pubchem": "216416"
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Lasofoxifene is a nonsteroidal, third-generation selective estrogen receptor modulator that binds both ER\u03b1 and ER\u03b2 with high affinity, acting as an estrogen-receptor antagonist in breast and endometrial tissue while producing estrogen-agonist effects in bone.",
+      "primaryMechanisms": [
+        "Lasofoxifene is a nonsteroidal, third-generation selective estrogen receptor modulator that binds both ER\u03b1 and ER\u03b2 with high affinity, acting as an estrogen-receptor antagonist in breast and endometrial tissue while producing estrogen-agonist effects in bone."
+      ],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": [
+        "ema-epar-fablyn",
+        "drugscom-fablyn-history",
+        "elaine1-wustl-fulltext",
+        "pubchem-cid-216416",
+        "sermonix-lasofoxifene-page",
+        "drugbank-db06202"
+      ]
+    },
+    "evidence": {
+      "overallTier": "Strong",
+      "claimSpecificEvidence": [
+        {
+          "claim": "Lasofoxifene has no currently valid marketing authorization anywhere. It was rejected by FDA for a US osteoporosis indication (Complete Response Letter, January 2009, after an earlier 2005 non-approvable letter under the name Oporia) and never launched in the US; the EU authorization for Fablyn (granted by the European Commission on 24 February 2009 for osteoporosis in postmenopausal women at increased fracture risk) automatically lapsed on 27 February 2012 under the sunset clause because the product was never marketed in any EU member state.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "ema-epar-fablyn",
+            "drugscom-fablyn-history"
+          ]
+        },
+        {
+          "claim": "Lasofoxifene is a nonsteroidal, third-generation selective estrogen receptor modulator that binds both ER\u03b1 and ER\u03b2 with high affinity, acting as an estrogen-receptor antagonist in breast and endometrial tissue while producing estrogen-agonist effects in bone.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "drugbank-db06202",
+            "pubchem-cid-216416"
+          ]
+        },
+        {
+          "claim": "In ELAINE 1, an open-label, randomized, phase II, multicenter trial in 103 patients with ER+/HER2- metastatic breast cancer harboring an ESR1 mutation who had progressed on prior aromatase-inhibitor-based therapy, oral lasofoxifene 5 mg daily (n=52) numerically improved median progression-free survival versus intramuscular fulvestrant 500 mg (n=51) - 24.2 weeks (~5.6 months) vs 16.2 weeks (~3.7 months) - with a hazard ratio of 0.699 (95% CI 0.434-1.125); the difference did not reach statistical significance (p=0.138). Both arms showed grade 3/4 toxicity in roughly 20% of patients with no unexpected safety signals; the most frequent lasofoxifene adverse events were nausea, fatigue, arthralgia, and hot flushes.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "elaine1-wustl-fulltext"
+          ]
+        },
+        {
+          "claim": "Lasofoxifene's active clinical development is now centered on oncology rather than its original osteoporosis indication: the drug sponsor describes it as under investigation as an endocrine therapy, combined with the CDK4/6 inhibitor abemaciclib, for postmenopausal and ovarian-suppressed premenopausal women with locally advanced or metastatic ER+ breast cancer, via the ELAINE trial program (ELAINE 1, 2, and the phase III ELAINE 3 study).",
+          "tier": "Limited",
+          "confidence": "moderate",
+          "sources": [
+            "sermonix-lasofoxifene-page",
+            "elaine1-wustl-fulltext"
+          ]
+        },
+        {
+          "claim": "Because lasofoxifene currently holds no active marketing authorization in the US or EU, any online or secondary-source description of it as an 'FDA-approved' or 'approved SERM' for osteoporosis, vaginal atrophy, or breast cancer is inaccurate; its only human outcome evidence in breast cancer to date (ELAINE 1) is a phase II trial that missed statistical significance on its primary endpoint, and larger phase III confirmatory data (ELAINE 3) had not been shown to change this packet's sourced regulatory status as of the sources reviewed.",
+          "tier": "Insufficient",
+          "confidence": "moderate",
+          "sources": [
+            "ema-epar-fablyn",
+            "drugscom-fablyn-history",
+            "elaine1-wustl-fulltext"
+          ]
+        }
+      ],
+      "evidenceGaps": [
+        "Because lasofoxifene currently holds no active marketing authorization in the US or EU, any online or secondary-source description of it as an 'FDA-approved' or 'approved SERM' for osteoporosis, vaginal atrophy, or breast cancer is inaccurate; its only human outcome evidence in breast cancer to date (ELAINE 1) is a phase II trial that missed statistical significance on its primary endpoint, and larger phase III confirmatory data (ELAINE 3) had not been shown to change this packet's sourced regulatory status as of the sources reviewed."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "regulator",
+          "title": "Fablyn (lasofoxifene) - European Public Assessment Report (EPAR)",
+          "publisher": "European Medicines Agency",
+          "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/fablyn",
+          "publishedAt": "2009-02-24T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Fablyn (Lasofoxifene): FDA Approval History",
+          "publisher": "Drugs.com",
+          "url": "https://www.drugs.com/history/fablyn.html",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Lasofoxifene versus fulvestrant for ER+/HER2- metastatic breast cancer with an ESR1 mutation: results from the randomized, phase II ELAINE 1 trial",
+          "publisher": "Annals of Oncology (Bardia A, Neven P, Streich G, et al., 2024); open-access copy via Washington University in St. Louis Digital Commons",
+          "url": "https://digitalcommons.wustl.edu/cgi/viewcontent.cgi?article=4488&context=oa_4",
+          "publishedAt": "2024-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Lasofoxifene, CID 216416 (compound record, including FDA GSRS UNII and CAS cross-references)",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Lasofoxifene",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Lasofoxifene",
+          "publisher": "Sermonix Pharmaceuticals",
+          "url": "https://sermonixpharma.com/lasofoxifene/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Lasofoxifene: Uses, Interactions, Mechanism of Action (DB06202)",
+          "publisher": "DrugBank Online",
+          "url": "https://go.drugbank.com/drugs/DB06202",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        }
+      ],
+      "curationNotes": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "DailyMed has no current label for lasofoxifene (no valid US marketing authorization was found); confirm this absence directly against DailyMed at review time rather than relying on this packet's regulatory-history sources alone.",
+        "ELAINE 1 primary endpoint was not statistically significant (p=0.138); confirm whether phase III ELAINE 3 has since reported results that should be incorporated.",
+        "PMID/DOI for ELAINE 1 confirmed via PubMed listing, but full text was retrieved from an open-access institutional repository mirror rather than the publisher site (publisher and ScienceDirect pages blocked automated access); verify mirror fidelity against publisher version at review time.",
+        "Sponsor-authored source (Sermonix) used for development-status claim; independent confirmation against ClinicalTrials.gov not yet completed in this pass.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "evidence-packet:lasofoxifene-evidence-expansion-001",
+      "ingestedAt": "2026-08-29T01:58:43Z",
+      "updatedAt": "2026-08-29T01:58:43Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "DailyMed has no current label for lasofoxifene (no valid US marketing authorization was found); confirm this absence directly against DailyMed at review time rather than relying on this packet's regulatory-history sources alone.",
+        "ELAINE 1 primary endpoint was not statistically significant (p=0.138); confirm whether phase III ELAINE 3 has since reported results that should be incorporated.",
+        "PMID/DOI for ELAINE 1 confirmed via PubMed listing, but full text was retrieved from an open-access institutional repository mirror rather than the publisher site (publisher and ScienceDirect pages blocked automated access); verify mirror fidelity against publisher version at review time.",
+        "Sponsor-authored source (Sermonix) used for development-status claim; independent confirmation against ClinicalTrials.gov not yet completed in this pass.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "a1-regulator-backed",
+        "no-current-marketing-authorization",
+        "negative-or-nonsignificant-human-rct-documented",
+        "thin-human-evidence",
+        "investigational-oncology-repurposing",
+        "authority-support-pass-2026-08-29",
+        "compiled-from-evidence-packet"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "lgd-3303",
+      "canonicalName": "LGD-3303",
+      "slug": "lgd-3303",
+      "aliases": [
+        "LGD3303",
+        "9-chloro-2-ethyl-1-methyl-3-(2,2,2-trifluoroethyl)-3H-pyrrolo[3,2-f]quinolin-7(6H)-one"
+      ],
+      "brandNames": [],
+      "synonyms": [
+        "LGD3303",
+        "9-chloro-2-ethyl-1-methyl-3-(2,2,2-trifluoroethyl)-3H-pyrrolo[3,2-f]quinolin-7(6H)-one"
+      ],
+      "classification": "SARM",
+      "compoundFamily": "Nonsteroidal pyrroloquinolinone selective androgen receptor modulator",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "LGD-3303"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": "917891-35-1",
+        "drugbank": "DB13937",
+        "pubchem": "25195253"
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "LGD-3303 is a nonsteroidal, orally bioavailable SARM that binds the androgen receptor with high in vitro affinity (Ki = 0.9 nM) and potently activates AR-mediated transcription (EC50 = 3.6 nM, 134% efficacy relative to dihydrotestosterone), while showing much weaker affinity for the mineralocorticoid, glucocorticoid, and progesterone receptors (Ki = 1261, 581, and 136 nM respectively).",
+      "primaryMechanisms": [
+        "LGD-3303 is a nonsteroidal, orally bioavailable SARM that binds the androgen receptor with high in vitro affinity (Ki = 0.9 nM) and potently activates AR-mediated transcription (EC50 = 3.6 nM, 134% efficacy relative to dihydrotestosterone), while showing much weaker affinity for the mineralocorticoid, glucocorticoid, and progesterone receptors (Ki = 1261, 581, and 136 nM respectively).",
+        "In castrated male rats (an androgen-deficiency model), oral LGD-3303 at 1 mg/kg/day completely prevented loss of levator ani muscle weight and acted as a partial agonist on prostate and preputial gland tissue; local tissue drug concentrations were reportedly higher in prostate than in the more strongly responding levator ani muscle, indicating the tissue selectivity is not explained by differential drug distribution. This is preclinical rodent evidence only and has not been demonstrated in a human clinical study."
+      ],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": [
+        "fda-sarm-consumer-update",
+        "nih-livertox-sarms",
+        "pubchem-cid-25195253",
+        "drugbank-db13937",
+        "patsnap-synapse-lgd3303",
+        "wikipedia-lgd3303",
+        "usada-sarms-prohibited-class",
+        "drugs-com-wada-s1",
+        "equine-lgd3303-metabolite-study",
+        "glpbio-lgd3303",
+        "kimerachems-lgd3303-blog",
+        "xcessbio-lgd3303"
+      ]
+    },
+    "evidence": {
+      "overallTier": "Strong",
+      "claimSpecificEvidence": [
+        {
+          "claim": "LGD-3303 is a nonsteroidal, orally bioavailable SARM that binds the androgen receptor with high in vitro affinity (Ki = 0.9 nM) and potently activates AR-mediated transcription (EC50 = 3.6 nM, 134% efficacy relative to dihydrotestosterone), while showing much weaker affinity for the mineralocorticoid, glucocorticoid, and progesterone receptors (Ki = 1261, 581, and 136 nM respectively).",
+          "tier": "Limited",
+          "confidence": "moderate",
+          "sources": [
+            "glpbio-lgd3303",
+            "xcessbio-lgd3303"
+          ]
+        },
+        {
+          "claim": "In castrated male rats (an androgen-deficiency model), oral LGD-3303 at 1 mg/kg/day completely prevented loss of levator ani muscle weight and acted as a partial agonist on prostate and preputial gland tissue; local tissue drug concentrations were reportedly higher in prostate than in the more strongly responding levator ani muscle, indicating the tissue selectivity is not explained by differential drug distribution. This is preclinical rodent evidence only and has not been demonstrated in a human clinical study.",
+          "tier": "Limited",
+          "confidence": "moderate",
+          "sources": [
+            "glpbio-lgd3303",
+            "kimerachems-lgd3303-blog"
+          ]
+        },
+        {
+          "claim": "LGD-3303 was originated by Ligand Pharmaceuticals as a candidate SARM investigated for osteoporosis, hypogonadism, and sexual dysfunction. Its highest recorded R&D status is preclinical (\"Pending/Preclinical\"), all three tracked indications are listed as inactive, and no clinical-trial-phase development is recorded, with the most recent development record dated December 31, 2007. LGD-3303 holds no marketing approval in any jurisdiction, has not entered human clinical trials, and was subsequently encountered outside pharmaceutical development as a novel designer drug by at least 2020.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "patsnap-synapse-lgd3303",
+            "kimerachems-lgd3303-blog",
+            "wikipedia-lgd3303"
+          ]
+        },
+        {
+          "claim": "FDA classifies SARMs as a drug class - which includes LGD-3303 by chemical and pharmacological category - as unapproved products that \"cannot be legally marketed in the U.S. as a dietary supplement or drug at this time,\" and warns that SARM use is associated with increased risk of heart attack or stroke and liver injury/acute liver failure, among other serious effects. No FDA warning letter or enforcement action naming LGD-3303 specifically was located in this session's search of fda.gov.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "fda-sarm-consumer-update"
+          ]
+        },
+        {
+          "claim": "NIH's LiverTox reference describes a distinctive bland cholestatic drug-induced liver injury pattern documented with SARM use as a class: onset roughly 2-3 months after starting, presenting with fatigue, anorexia, dark urine, and jaundice, with moderate bilirubin elevation (reported 4-8 mg/dL initially) but only 2-5x-normal aminotransferase elevation, and a prolonged but usually self-limited course of about 1-6 months, occasionally with bilirubin cast nephropathy requiring temporary dialysis in severe cases. The compounds specifically named in LiverTox's case-report basis are ligandrol (LGD-4033), enobosarm/ostarine, vosilasarm/RAD-140, andarine, and YK-11; LGD-3303 is not individually named among the documented case reports in this reference, despite sharing the same androgen-receptor mechanism class.",
+          "tier": "Insufficient",
+          "confidence": "low",
+          "sources": [
+            "nih-livertox-sarms"
+          ]
+        },
+        {
+          "claim": "The WADA Prohibited List's S1.2 anabolic-agents category prohibits \"Selective androgen receptor modulators [SARMs, e.g. andarine, enobosarm (ostarine), LGD-4033 (ligandrol), RAD140, S-23 and YK-11]\" using \"including, but not limited to\" language, so LGD-3303 falls within the prohibited SARM class as a chemical/pharmacological analog even though it is not individually named in this illustrative list. Independent anti-doping research has developed equine (horse) in vivo metabolite-profiling methods specifically to detect LGD-3303 administration, identifying a monohydroxylated metabolite with better detectability than the parent compound for doping-control testing.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "usada-sarms-prohibited-class",
+            "drugs-com-wada-s1",
+            "equine-lgd3303-metabolite-study"
+          ]
+        },
+        {
+          "claim": "LGD-3303 is sold online by research-chemical vendors carrying explicit \"for research use only... not for human use\" disclaimers, yet the same vendor product pages foreground preclinical rat muscle-sparing and receptor-potency data (e.g., \"completely inhibits the loss of muscle weight,\" nanomolar Ki/EC50 figures) in ways that read as implied bodybuilding or performance benefit. No human efficacy or safety trial, case series, or FDA/DrugBank clinical data for LGD-3303 was located in this session. Muscle-building, bone-density, or other performance/wellness claims circulating in vendor and forum marketing for LGD-3303 are therefore not supported by human evidence and should not be treated as established benefits.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "glpbio-lgd3303",
+            "kimerachems-lgd3303-blog",
+            "xcessbio-lgd3303",
+            "patsnap-synapse-lgd3303"
+          ]
+        }
+      ],
+      "evidenceGaps": [
+        "LGD-3303 is sold online by research-chemical vendors carrying explicit \"for research use only... not for human use\" disclaimers, yet the same vendor product pages foreground preclinical rat muscle-sparing and receptor-potency data (e.g., \"completely inhibits the loss of muscle weight,\" nanomolar Ki/EC50 figures) in ways that read as implied bodybuilding or performance benefit. No human efficacy or safety trial, case series, or FDA/DrugBank clinical data for LGD-3303 was located in this session. Muscle-building, bone-density, or other performance/wellness claims circulating in vendor and forum marketing for LGD-3303 are therefore not supported by human evidence and should not be treated as established benefits."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "regulator",
+          "title": "FDA warns about the use of selective androgen receptor modulators (SARMs) among teens and young adults",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Selective Androgen Receptor Modulators - LiverTox: Clinical and Research Information on Drug-Induced Liver Injury",
+          "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases (NIH) - NCBI Bookshelf (NBK619971)",
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "PubChem Compound Summary: LGD-3303 (CID 25195253)",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/LGD-3303",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "LGD-3303: Uses, Interactions, Mechanism of Action (DrugBank DB13937)",
+          "publisher": "DrugBank",
+          "url": "https://go.drugbank.com/drugs/DB13937",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "LGD-3303 - Drug Targets, Indications, Patents, R&D Status",
+          "publisher": "Synapse (PatSnap pharmaceutical intelligence database)",
+          "url": "https://synapse.patsnap.com/drug/f83f74b74f1140e48277a5c038881a5d",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "LGD-3303",
+          "publisher": "Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/LGD-3303",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Selective Androgen Receptor Modulators (SARMs): A Prohibited Class of Anabolic Agents",
+          "publisher": "U.S. Anti-Doping Agency (USADA) \u2014 the official national anti-doping organization for the United States, implementing the WADA Code",
+          "url": "https://www.usada.org/spirit-of-sport/education/selective-androgen-receptor-modulators-sarms-prohibited-class-anabolic-agents/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "S1. Anabolic Agents - WADA Anti-Doping Prohibited List",
+          "publisher": "Drugs.com (compiling WADA Prohibited List anabolic-agents category)",
+          "url": "https://www.drugs.com/wada/s1-anabolic-agents.html",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Equine in vivo metabolite profiling of the selective androgen receptor modulator LGD-3303 for doping control",
+          "publisher": "ResearchGate (peer-reviewed doping-control pharmacology study, equine model)",
+          "url": "https://www.researchgate.net/publication/370953660_Equine_in_vivo_metabolite_profiling_of_the_selective_androgen_receptor_modulator_LGD-3303_for_doping_control",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "LGD-3303 | CAS NO.:917891-35-1",
+          "publisher": "GlpBio (research-chemical vendor)",
+          "url": "https://www.glpbio.com/lgd-3303.html",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "LGD-3303: SARM Tissue Selectivity and the Rat Record",
+          "publisher": "Kimera Chems (research-chemical vendor blog)",
+          "url": "https://kimerachems.co/blog/lgd-3303-research/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "LGD-3303 - Xcess Biosciences",
+          "publisher": "Xcess Biosciences (research-chemical vendor)",
+          "url": "https://www.xcessbio.com/products/m22793",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        }
+      ],
+      "curationNotes": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "Primary journal source (Vajda et al. 2009, J Pharmacol Exp Ther / J Bone Miner Res) could not be directly fetched this session (PubMed returned no extractable body text; ScienceDirect and Wiley blocked the fetch) - pharmacology quotes were sourced from vendor pages summarizing that study and must be verified against the primary text.",
+        "No LGD-3303-specific FDA enforcement action, warning letter, or import alert was located; regulatory claims rely on class-wide SARM statements and should be re-checked against fda.gov at review time.",
+        "No human clinical trial, case series, or hepatotoxicity case report specific to LGD-3303 was identified; human safety/efficacy evidence is entirely absent, not merely limited.",
+        "UNII and ChEMBL identifiers not yet resolved from structured databases; DrugBank record was only partially accessible without an account.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "evidence-packet:lgd-3303-evidence-expansion-001",
+      "ingestedAt": "2026-08-29T02:21:10Z",
+      "updatedAt": "2026-08-29T02:21:10Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "Primary journal source (Vajda et al. 2009, J Pharmacol Exp Ther / J Bone Miner Res) could not be directly fetched this session (PubMed returned no extractable body text; ScienceDirect and Wiley blocked the fetch) - pharmacology quotes were sourced from vendor pages summarizing that study and must be verified against the primary text.",
+        "No LGD-3303-specific FDA enforcement action, warning letter, or import alert was located; regulatory claims rely on class-wide SARM statements and should be re-checked against fda.gov at review time.",
+        "No human clinical trial, case series, or hepatotoxicity case report specific to LGD-3303 was identified; human safety/efficacy evidence is entirely absent, not merely limited.",
+        "UNII and ChEMBL identifiers not yet resolved from structured databases; DrugBank record was only partially accessible without an account.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "no-human-trial-data",
+        "thin-human-evidence",
+        "class-level-regulatory-evidence-only",
+        "vendor-sourced-pharmacology-needs-primary-verification",
+        "gray-market-only",
+        "authority-support-pass-2026-08-29",
+        "compiled-from-evidence-packet"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "ll-37",
+      "canonicalName": "LL-37",
+      "slug": "ll-37",
+      "aliases": [
+        "Cathelicidin",
+        "Cathelicidin LL-37",
+        "CAP-18 peptide",
+        "hCAP-18/LL-37",
+        "Ropocamptide"
+      ],
+      "brandNames": [],
+      "synonyms": [
+        "Cathelicidin",
+        "Cathelicidin LL-37",
+        "CAP-18 peptide",
+        "hCAP-18/LL-37",
+        "Ropocamptide"
+      ],
+      "classification": "Peptide",
+      "compoundFamily": "Endogenous human cathelicidin antimicrobial peptide (host-defense peptide); synthetic form used in compounding and topical research",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "LL-37"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": null,
+        "drugbank": null,
+        "pubchem": "16198951"
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "LL-37 exhibits antimicrobial, anti-inflammatory, immunostimulating and potential antineoplastic activities, including regulation of leukocyte chemotaxis and cytokine production and support of wound-healing processes; nonclinical work also reports pro-apoptotic tumor-suppressive activity via p53 induction in some cancer cell contexts.",
+      "primaryMechanisms": [
+        "LL-37 exhibits antimicrobial, anti-inflammatory, immunostimulating and potential antineoplastic activities, including regulation of leukocyte chemotaxis and cytokine production and support of wound-healing processes; nonclinical work also reports pro-apoptotic tumor-suppressive activity via p53 induction in some cancer cell contexts."
+      ],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": [
+        "fda-ll37-bulk-nominated-withdrawn",
+        "mahlapuu-2021-wrr-pmc9298190",
+        "pubchem-cid-16198951",
+        "evolvepeptides-ll37-vendor"
+      ]
+    },
+    "evidence": {
+      "overallTier": "Strong",
+      "claimSpecificEvidence": [
+        {
+          "claim": "LL-37 (ropocamptide) is the sole human cathelicidin-derived antimicrobial peptide, a 37-amino-acid amphipathic peptide (molecular formula C205H340N60O53) secreted by bone marrow cells, circulating leukocytes, and epithelial tissue as part of innate host defense.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "pubchem-cid-16198951"
+          ]
+        },
+        {
+          "claim": "LL-37 exhibits antimicrobial, anti-inflammatory, immunostimulating and potential antineoplastic activities, including regulation of leukocyte chemotaxis and cytokine production and support of wound-healing processes; nonclinical work also reports pro-apoptotic tumor-suppressive activity via p53 induction in some cancer cell contexts.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "pubchem-cid-16198951"
+          ]
+        },
+        {
+          "claim": "FDA lists cathelicidin LL-37 among bulk drug substances nominated but withdrawn from consideration for the 503A compounding bulks list, stating that compounded drugs containing it may pose immunogenicity risk for certain routes of administration and complexities regarding peptide-related impurities and API characterization, that FDA lacks sufficient safety information to know whether the drug would cause harm when administered to humans, and that nonclinical research suggests detrimental effects on male reproduction and protumorigenic potential in some tissues.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "fda-ll37-bulk-nominated-withdrawn"
+          ]
+        },
+        {
+          "claim": "FDA's compounding safety review states that nonclinical (animal/preclinical) research findings suggest LL-37 has detrimental effects on male reproduction and can be protumorigenic in some tissues; these are nonclinical safety signals, not confirmed human adverse effects, and no human dose-response or incidence data for these signals were identified.",
+          "tier": "Limited",
+          "confidence": "moderate",
+          "sources": [
+            "fda-ll37-bulk-nominated-withdrawn"
+          ]
+        },
+        {
+          "claim": "In a phase IIb, multicentric, randomized, placebo-controlled trial in 149 patients (144 in the full analysis set) with hard-to-heal venous leg ulcers, topical LL-37 (0.5 or 1.6 mg/mL, twice weekly) did not significantly improve complete wound closure versus placebo in the overall population (26.5% and 24.7% vs 25.3%, p>0.05); a post-hoc subgroup analysis in larger ulcers (\u226510 cm\u00b2) found the 0.5 mg/mL dose significantly improved wound closure (28.1% vs 8.1%, p=0.0458) and healing rate versus placebo. The study drug was reported well tolerated, with six serious adverse events judged possibly (none probably) treatment-related and no deaths.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "mahlapuu-2021-wrr-pmc9298190"
+          ]
+        },
+        {
+          "claim": "LL-37 is sold by research-chemical/peptide vendors framed around antimicrobial, wound-healing, and 'innate immune response' research applications, but the only substantive human controlled-trial evidence located is a single topical trial in venous leg ulcers whose overall result was negative; no human evidence was identified supporting systemic immune-support, anti-aging, longevity, or general antimicrobial-supplementation uses for which cathelicidin/LL-37 products are informally marketed, and FDA states it lacks sufficient safety information on the compound in humans.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "evolvepeptides-ll37-vendor",
+            "fda-ll37-bulk-nominated-withdrawn",
+            "mahlapuu-2021-wrr-pmc9298190"
+          ]
+        }
+      ],
+      "evidenceGaps": [
+        "LL-37 is sold by research-chemical/peptide vendors framed around antimicrobial, wound-healing, and 'innate immune response' research applications, but the only substantive human controlled-trial evidence located is a single topical trial in venous leg ulcers whose overall result was negative; no human evidence was identified supporting systemic immune-support, anti-aging, longevity, or general antimicrobial-supplementation uses for which cathelicidin/LL-37 products are informally marketed, and FDA states it lacks sufficient safety information on the compound in humans."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "regulator",
+          "title": "Certain Bulk Drug Substances for Use in Compounding that May Present Significant Safety Risks (Bulk drug substances nominated but withdrawn table, Cathelicidin LL-37 entry)",
+          "publisher": "U.S. Food and Drug Administration",
+          "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Evaluation of LL-37 in healing of hard-to-heal venous leg ulcers: A multicentric prospective randomized placebo-controlled clinical trial",
+          "publisher": "Wound Repair and Regeneration (Mahlapuu M, et al., 2021, PMC9298190)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9298190/",
+          "publishedAt": "2021-01-01T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "LL-37 | C205H340N60O53 | CID 16198951 - PubChem Compound Summary",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/ll-37",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Buy LL-37 2mg | Antimicrobial Peptide | 99%+ Purity",
+          "publisher": "Evolve Peptides (research-chemical vendor)",
+          "url": "https://www.evolvepeptides.com/product/ll-37-2-mg/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T02:21:10Z"
+        }
+      ],
+      "curationNotes": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "FDA bulk drug substance nomination/withdrawal status is volatile and under active 2026 peptide-reclassification review; confirm current listing status against the live FDA page at review time.",
+        "CAS/UNII/ChEMBL/RxNorm identifiers not resolved from structured databases.",
+        "Only one controlled human trial (topical, venous leg ulcers) was located; human evidence for any non-wound-care use remains thin and unconfirmed.",
+        "Post-hoc subgroup efficacy finding in the 2021 RCT is unresolved pending a dedicated confirmatory trial.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "evidence-packet:ll-37-evidence-expansion-001",
+      "ingestedAt": "2026-08-29T02:21:10Z",
+      "updatedAt": "2026-08-29T02:21:10Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "FDA bulk drug substance nomination/withdrawal status is volatile and under active 2026 peptide-reclassification review; confirm current listing status against the live FDA page at review time.",
+        "CAS/UNII/ChEMBL/RxNorm identifiers not resolved from structured databases.",
+        "Only one controlled human trial (topical, venous leg ulcers) was located; human evidence for any non-wound-care use remains thin and unconfirmed.",
+        "Post-hoc subgroup efficacy finding in the 2021 RCT is unresolved pending a dedicated confirmatory trial.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "a1-regulator-backed",
+        "single-human-rct-mixed-result",
+        "thin-human-evidence",
+        "gray-market-marketing-gap",
+        "regulatory-status-volatile",
+        "authority-support-pass-2026-08-29",
+        "compiled-from-evidence-packet"
+      ]
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "recordType": "substance",
+    "identity": {
+      "canonicalId": "toremifene",
+      "canonicalName": "Toremifene",
+      "slug": "toremifene",
+      "aliases": [
+        "Fareston",
+        "Toremifene citrate",
+        "FC-1157a"
+      ],
+      "brandNames": [],
+      "synonyms": [
+        "Fareston",
+        "Toremifene citrate",
+        "FC-1157a"
+      ],
+      "classification": "Other",
+      "compoundFamily": "Triphenylethylene selective estrogen receptor modulator (SERM)",
+      "isCombinationProduct": false,
+      "activeMoieties": [
+        "Toremifene"
+      ],
+      "externalIdentifiers": {
+        "rxnorm": null,
+        "unii": null,
+        "casNumber": "89778-26-7",
+        "drugbank": "DB00539",
+        "pubchem": "3005573"
+      }
+    },
+    "regulatory": {
+      "requiresPrescription": false,
+      "regulatoryStatus": "unknown",
+      "labelStatusByUseCase": [],
+      "jurisdiction": "unknown",
+      "approvedIndications": [],
+      "offLabelNotes": [
+        "Draft record: regulatory status has not been authoritatively established."
+      ]
+    },
+    "mechanism": {
+      "mechanismSummary": "Toremifene is a triphenylethylene-derivative selective estrogen receptor modulator (SERM); its antitumor effect in breast cancer is believed to be mainly due to antiestrogenic activity, competing with estrogen for receptor binding sites in the tumor and blocking estrogen's growth-stimulating effects, while displaying estrogen-agonist activity in other tissues such as bone.",
+      "primaryMechanisms": [
+        "Toremifene is a triphenylethylene-derivative selective estrogen receptor modulator (SERM); its antitumor effect in breast cancer is believed to be mainly due to antiestrogenic activity, competing with estrogen for receptor binding sites in the tumor and blocking estrogen's growth-stimulating effects, while displaying estrogen-agonist activity in other tissues such as bone."
+      ],
+      "pathways": [],
+      "targets": [],
+      "effectTags": [],
+      "goalTags": []
+    },
+    "formulations": [],
+    "indications": [],
+    "dosingGuidance": [],
+    "compatibility": {
+      "vialCompatibilitySummary": null,
+      "blendingRules": [],
+      "compatibleBlends": [],
+      "incompatibleBlends": [],
+      "unknownCompatibility": []
+    },
+    "safety": {
+      "contraindications": [],
+      "warnings": [],
+      "precautions": [],
+      "adverseEffects": {
+        "common": [],
+        "serious": []
+      },
+      "monitoring": []
+    },
+    "interactions": [],
+    "stackIntelligence": {
+      "pairsWellWith": [],
+      "avoidWith": [],
+      "overlapRules": [],
+      "synergyRules": [],
+      "conflictRules": [],
+      "redundancyRules": [],
+      "timingRules": []
+    },
+    "supportiveGuidance": {
+      "nutrition": [],
+      "supplements": [],
+      "sleep": [],
+      "exercise": [],
+      "applicabilityNotes": [],
+      "sources": [
+        "dailymed-fareston-label",
+        "fda-fareston-sndsa-2024ltr",
+        "pubchem-cid-3005573",
+        "fiercebiotech-toremifene-phase3-fracture",
+        "fiercebiotech-toremifene-crl-80mg",
+        "wikipedia-toremifene",
+        "sarms-io-vendor-pct",
+        "fda-openfda-drugsfda-toremifene-search-2026"
+      ]
+    },
+    "evidence": {
+      "overallTier": "Strong",
+      "claimSpecificEvidence": [
+        {
+          "claim": "FDA-approved indication for toremifene (as Fareston, toremifene citrate) is treatment of metastatic breast cancer in postmenopausal women with estrogen-receptor positive or unknown tumors, at an oral dose of 60 mg once daily; the product remains an active approved NDA (020497), most recently updated by a December 2024 labeling supplement.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-fareston-label",
+            "fda-fareston-sndsa-2024ltr"
+          ]
+        },
+        {
+          "claim": "Toremifene is contraindicated in patients with known hypersensitivity to the drug, and should not be prescribed to patients with congenital or acquired QT prolongation (long QT syndrome), uncorrected hypokalemia, or uncorrected hypomagnesemia.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-fareston-label"
+          ]
+        },
+        {
+          "claim": "FDA's boxed warning states toremifene prolongs the QTc interval in a dose- and concentration-related manner, which can result in Torsade de pointes, syncope, seizure, and/or death; drugs known to prolong the QT interval and strong CYP3A4 inhibitors should be avoided, and the label separately warns of thromboembolic disease risk and endometrial malignancy (hyperplasia, polyps, cancer) requiring baseline and periodic monitoring.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-fareston-label"
+          ]
+        },
+        {
+          "claim": "Toremifene is a triphenylethylene-derivative selective estrogen receptor modulator (SERM); its antitumor effect in breast cancer is believed to be mainly due to antiestrogenic activity, competing with estrogen for receptor binding sites in the tumor and blocking estrogen's growth-stimulating effects, while displaying estrogen-agonist activity in other tissues such as bone.",
+          "tier": "Strong",
+          "confidence": "high",
+          "sources": [
+            "dailymed-fareston-label",
+            "wikipedia-toremifene"
+          ]
+        },
+        {
+          "claim": "A higher-dose toremifene 80 mg product developed specifically to reduce fracture risk in men on androgen deprivation therapy (ADT) for prostate cancer was never approved: FDA issued a Complete Response Letter requiring a second confirmatory Phase III fracture trial and additional data showing no adverse effect on time-to-disease-progression or overall survival before that indication could be approved; toremifene 80 mg for this use remains unapproved.",
+          "tier": "Moderate",
+          "confidence": "moderate",
+          "sources": [
+            "fiercebiotech-toremifene-crl-80mg",
+            "fda-openfda-drugsfda-toremifene-search-2026"
+          ]
+        },
+        {
+          "claim": "In a two-year, double-blind, placebo-controlled Phase III trial of 1,389 men on ADT for prostate cancer, toremifene 80 mg/day reduced new morphometric vertebral fractures versus placebo (reported as roughly 50-53% relative reduction depending on analysis population, p<0.05) and increased lumbar spine and hip bone mineral density (p<0.0001), but venous thromboembolic events were more frequent with toremifene than placebo (reported 2.4% vs 1.02%), concentrated in patients with pre-existing VTE risk factors; this trial supports a mechanistic bone effect in older ADT-treated men and does not establish efficacy or safety for young, non-hypogonadal men using toremifene for post-cycle recovery.",
+          "tier": "Limited",
+          "confidence": "moderate",
+          "sources": [
+            "fiercebiotech-toremifene-phase3-fracture",
+            "fiercebiotech-toremifene-crl-80mg"
+          ]
+        },
+        {
+          "claim": "Toremifene is marketed on gray-market/bodybuilding vendor sites as a post-cycle-therapy (PCT) SERM claimed to restore natural testosterone, increase free testosterone by inhibiting SHBG, prevent or reduce gynecomastia, and outperform tamoxifen in receptor binding and efficacy; no controlled human trial in anabolic-steroid-using or PCT populations was identified to support these specific claims, and the only comparable randomized human efficacy data (the ADT fracture trial) was conducted in older, hypogonadal prostate cancer patients on a different unapproved dose, not in healthy men recovering endogenous testosterone after steroid use.",
+          "tier": "Insufficient",
+          "confidence": "high",
+          "sources": [
+            "sarms-io-vendor-pct",
+            "fiercebiotech-toremifene-phase3-fracture"
+          ]
+        }
+      ],
+      "evidenceGaps": [
+        "Toremifene is marketed on gray-market/bodybuilding vendor sites as a post-cycle-therapy (PCT) SERM claimed to restore natural testosterone, increase free testosterone by inhibiting SHBG, prevent or reduce gynecomastia, and outperform tamoxifen in receptor binding and efficacy; no controlled human trial in anabolic-steroid-using or PCT populations was identified to support these specific claims, and the only comparable randomized human efficacy data (the ADT fracture trial) was conducted in older, hypogonadal prostate cancer patients on a different unapproved dose, not in healthy men recovering endogenous testosterone after steroid use."
+      ],
+      "controversies": []
+    },
+    "provenance": {
+      "sourceRecords": [
+        {
+          "sourceType": "other",
+          "title": "FARESTON (toremifene citrate) tablet - Prescribing Information",
+          "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=2cab8dd1-3a10-48e6-86ce-0e5275ed49e5",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "regulator",
+          "title": "Fareston (toremifene citrate) Tablets - Supplement Approval Letter, Application 020497Orig1s018",
+          "publisher": "U.S. Food and Drug Administration, Center for Drug Evaluation and Research",
+          "url": "https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2024/020497Orig1s018ltr.pdf",
+          "publishedAt": "2024-12-13T00:00:00Z",
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Toremifene, CID 3005573",
+          "publisher": "National Center for Biotechnology Information / PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Toremifene",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "GTx's Toremifene Citrate 80 mg Meets Primary and Key Endpoints in Phase III Trial in Advanced Prostate Cancer Patients on Androgen Deprivation Therapy",
+          "publisher": "Fierce Biotech",
+          "url": "https://www.fiercebiotech.com/biotech/gtx-s-toremifene-citrate-80-mg-meets-primary-and-key-endpoints-phase-iii-trial",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "GTx Receives Complete Response Letter from FDA for Toremifene 80 mg New Drug Application",
+          "publisher": "Fierce Biotech",
+          "url": "https://www.fiercebiotech.com/biotech/gtx-receives-complete-response-letter-from-fda-for-toremifene-80-mg-new-drug-application",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Toremifene",
+          "publisher": "Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Toremifene",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Toremifene (Fareston) PCT: Best SERM For Post Cycle Results?",
+          "publisher": "sarms.io (gray-market vendor/content site)",
+          "url": "https://sarms.io/toremifene-pct/",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T01:58:43Z"
+        },
+        {
+          "sourceType": "other",
+          "title": "Drugs@FDA data (openFDA API): drug products with active ingredient TOREMIFENE CITRATE",
+          "publisher": "U.S. Food and Drug Administration (openFDA / Drugs@FDA)",
+          "url": "https://api.fda.gov/drug/drugsfda.json?search=products.active_ingredients.name:%22TOREMIFENE%20CITRATE%22&limit=10",
+          "publishedAt": null,
+          "lastCheckedAt": "2026-08-29T03:40:00Z"
+        }
+      ],
+      "curationNotes": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "Phase III ADT fracture trial statistics were extracted from industry press coverage (Fierce Biotech), not the peer-reviewed primary journal article (Journal of Urology, Smith et al.); PubMed/PMC access was blocked (robots.txt / CAPTCHA) during this research session and the primary publication's exact PMID and quoted results must be independently verified.",
+        "UNII, RxNorm, ChEMBL, DOI, and PMID identifiers were not resolved from an accessible structured-database page in this session and are left null pending review.",
+        "No controlled human trial specific to PCT/bodybuilding populations was located; evidence-gap claim should be revisited if new literature emerges.",
+        "Compiled draft requires human review before publication."
+      ],
+      "lastReviewedAt": null,
+      "reviewStatus": "draft"
+    },
+    "ops": {
+      "recordVersion": 1,
+      "contentHash": null,
+      "ingestionSource": "evidence-packet:toremifene-evidence-expansion-001",
+      "ingestedAt": "2026-08-29T01:58:43Z",
+      "updatedAt": "2026-08-29T01:58:43Z",
+      "lastChangeType": "seed",
+      "isActive": false,
+      "completeness": "partial",
+      "needsReview": true,
+      "reviewReasons": [
+        "Expansion-batch evidence packet requires human review before publication.",
+        "Phase III ADT fracture trial statistics were extracted from industry press coverage (Fierce Biotech), not the peer-reviewed primary journal article (Journal of Urology, Smith et al.); PubMed/PMC access was blocked (robots.txt / CAPTCHA) during this research session and the primary publication's exact PMID and quoted results must be independently verified.",
+        "UNII, RxNorm, ChEMBL, DOI, and PMID identifiers were not resolved from an accessible structured-database page in this session and are left null pending review.",
+        "No controlled human trial specific to PCT/bodybuilding populations was located; evidence-gap claim should be revisited if new literature emerges.",
+        "Compiled draft requires human review before publication."
+      ],
+      "qualityFlags": [
+        "expansion-input",
+        "a1-regulator-backed",
+        "fda-approved-product",
+        "unapproved-off-label-use-crl-documented",
+        "thin-human-evidence-for-marketed-use",
+        "secondary-source-trial-statistics",
+        "authority-support-pass-2026-08-29",
         "compiled-from-evidence-packet"
       ]
     }
