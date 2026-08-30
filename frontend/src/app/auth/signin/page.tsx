@@ -136,7 +136,7 @@ function SignInPageContent() {
               <div className="mb-7 text-center">
                 <h1 className="text-2xl font-bold tracking-tight text-white">Sign in to BioStack</h1>
                 <p className="mt-2 text-sm leading-6 text-white/45">
-                  Use a passkey for your quickest return, or email for registration and recovery.
+                  Already added a passkey? Use it for one-tap sign-in. New here, or on a new device? Email yourself a sign-in link — you can add a passkey once you’re in.
                 </p>
                 <p className="mt-3 text-sm leading-6 text-white/55">
                   Create a free profile to save your analysis and track how your stack changes over time. No card required.
@@ -184,7 +184,7 @@ function SignInPageContent() {
                   </button>
                   <div className="my-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/25">
                     <span className="h-px flex-1 bg-white/10" />
-                    <span>Email fallback</span>
+                    <span>Or use email</span>
                     <span className="h-px flex-1 bg-white/10" />
                   </div>
                 </>
