@@ -3,11 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useAuth } from '@/lib/AuthProvider';
 
 export function MobileStickyCta() {
   const [isVisible, setIsVisible] = useState(false);
   const pathname = usePathname();
   const isStartRoute = pathname === '/start';
+  const { user, loading } = useAuth();
+  const isAuthenticated = !loading && user !== null;
 
   useEffect(() => {
     function updateVisibility() {
@@ -32,12 +35,21 @@ export function MobileStickyCta() {
       }`}
     >
       <div className="grid grid-cols-4 gap-2">
-        <Link
-          href="/start"
-          className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950"
-        >
-          Start free
-        </Link>
+        {isAuthenticated ? (
+          <Link
+            href="/protocol-console"
+            className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950"
+          >
+            Dashboard
+          </Link>
+        ) : (
+          <Link
+            href="/start"
+            className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950"
+          >
+            Start free
+          </Link>
+        )}
         <Link
           href="/knowledge"
           className="flex min-h-12 items-center justify-center rounded-lg border border-cyan-300/16 bg-cyan-400/[0.06] px-2 text-center text-sm font-semibold text-white"

@@ -1,8 +1,14 @@
+'use client';
+
 import Link from 'next/link';
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
+import { useAuth } from '@/lib/AuthProvider';
 import { MobileStickyCta } from './MobileStickyCta';
 
 export function MarketingNav() {
+  const { user, loading, logout } = useAuth();
+  const isAuthenticated = !loading && user !== null;
+
   return (
     <>
       <header className="sticky top-0 z-30 border-b border-white/8 bg-[#0B0F14]/75 backdrop-blur-xl">
@@ -37,18 +43,38 @@ export function MarketingNav() {
             >
               Analyze My Stack
             </Link>
-            <Link
-              href="/auth/signin"
-              className="px-2 py-2 text-sm text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/start"
-              className="rounded-full border border-emerald-300/30 bg-emerald-400/12 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/50 hover:text-white focus-visible:outline-none focus-visible:ring-2"
-            >
-              Start Free
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => void logout()}
+                  className="px-2 py-2 text-sm text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2"
+                >
+                  Sign out
+                </button>
+                <Link
+                  href="/protocol-console"
+                  className="rounded-full border border-emerald-300/30 bg-emerald-400/12 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/50 hover:text-white focus-visible:outline-none focus-visible:ring-2"
+                >
+                  Dashboard
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/auth/signin"
+                  className="px-2 py-2 text-sm text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  href="/start"
+                  className="rounded-full border border-emerald-300/30 bg-emerald-400/12 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-200/50 hover:text-white focus-visible:outline-none focus-visible:ring-2"
+                >
+                  Start Free
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
