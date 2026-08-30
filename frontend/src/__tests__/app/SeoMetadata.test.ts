@@ -2,6 +2,7 @@ import { metadata as faqMetadata } from '@/app/faq/page';
 import { metadata as howItWorksMetadata } from '@/app/how-it-works/page';
 import { metadata as knowledgeMetadata } from '@/app/knowledge/layout';
 import { metadata as methodologyMetadata } from '@/app/knowledge/methodology/page';
+import { metadata as pcacInsightMetadata } from '@/app/knowledge/insights/fda-pcac-2026-peptide-vote/page';
 import { metadata as homeMetadata } from '@/app/page';
 import { metadata as pricingMetadata } from '@/app/pricing/page';
 import { metadata as providersMetadata } from '@/app/providers/page';
@@ -31,6 +32,7 @@ const publicPages: Array<{ path: string; metadata: Metadata }> = [
   { path: '/providers', metadata: providersMetadata },
   { path: '/knowledge', metadata: knowledgeMetadata },
   { path: '/knowledge/methodology', metadata: methodologyMetadata },
+  { path: '/knowledge/insights/fda-pcac-2026-peptide-vote', metadata: pcacInsightMetadata },
   { path: '/how-it-works', metadata: howItWorksMetadata },
   { path: '/safety', metadata: safetyMetadata },
   { path: '/pricing', metadata: pricingMetadata },

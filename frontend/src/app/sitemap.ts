@@ -8,6 +8,7 @@ const STATIC_PATHS = [
   '/providers',
   '/knowledge',
   '/knowledge/methodology',
+  '/knowledge/insights/fda-pcac-2026-peptide-vote',
   '/how-it-works',
   '/safety',
   '/pricing',
