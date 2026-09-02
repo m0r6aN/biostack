@@ -44,6 +44,21 @@ Status: **live coordinator record; no merge or release authority**
 - Residual informational coverage: no direct rows for every mixed-case/duplicate/oversized citation variant; source review found the ratified grammar deterministic and fail-closed
 - Custody: clean local branch `codex/biostack-remediation-p04`; not pushed, merged, deployed, or released
 
+## P08 — Collective outbound authorization
+
+- Base: `339f259b1a467034db4f57cf9d774c292f11b53a`
+- Candidate: `47c2be0358e7ca024b524c7693af8b06846671d6`; tree `24f59b756f09b5895c7bd70319f5eaad8764e38a`; sole parent is the pinned base
+- Changed paths: exactly all eight AF-P08 files; `git diff --check`, ancestry, and clean status passed
+- Boundary: authorization completes before submit request, named client, API client, headers/body, or send construction; denied/error/authorized local-handler counts are exactly `0/0/1`
+- Real composition: current-user plus existing `ConsentGate` integration passed `1/1`, with zero sends before consent and one after current consent
+- Verification: target `3/3`; adjacent `6/6` and `26/26`; Application `612 passed / 5 skipped`; API `378/378`; full solution `2,021 passed / 5 expected skips / 0 failed`
+- Rework custody: reviewer A's false-green finding was fixed with explicit degraded-envelope and no-client-borrow assertions; the byte-identical verified tree was normalized into the one-commit candidate, while prior history remains at `codex/biostack-remediation-p08-review-history-20260902`
+- Adversarial reviewer A: ACCEPT, no blocking findings
+- Adversarial reviewer B: ACCEPT, no blocking findings; independent full solution green
+- Defensive security review: ACCEPT; SG-OUTBOUND PASS; SG-SCOPE PASS; no Critical/High/Medium/Low findings
+- Ratified residuals: one authorization decision per `RunAsync`; no authenticated-user-to-intent tenant/actor binding; no mid-poll consent re-check; no endpoint-wide coverage conclusion
+- Custody: clean local branch `codex/biostack-remediation-p08`; not pushed, merged, deployed, enabled, or released
+
 ## Q04 — Frontend dependency readiness
 
 - Base/head: `339f259b1a467034db4f57cf9d774c292f11b53a`; no repository changes
@@ -96,4 +111,4 @@ Status: **live coordinator record; no merge or release authority**
 
 ## Gate custody
 
-P01, P02, and P04 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01 and 02 were explicitly ratified on 2026-09-02, activating their replacement decisions and contingent Gate 2 authority through P08. P05 shaping is blocked pending Narrow Gate 1 Amendment 03, and P06 remains downstream. P03's scoped target/adjacent/Application chain is green but its uncommitted candidate is held pending Amendment 04 for one stale API fixture. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
+P01, P02, P04, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01 and 02 were explicitly ratified on 2026-09-02, activating their replacement decisions and contingent Gate 2 authority through P08. P05 shaping is blocked pending Narrow Gate 1 Amendment 03, and P06 remains downstream. P03's scoped target/adjacent/Application chain is green but its uncommitted candidate is held pending Amendment 04 for one stale API fixture. P07 is in reviewer-directed rework on its isolated branch. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.

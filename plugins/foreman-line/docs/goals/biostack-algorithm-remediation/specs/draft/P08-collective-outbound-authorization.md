@@ -1,8 +1,10 @@
 # Parcel Spec: P08 Collective Outbound Authorization
 
-Status: **active — Amendment 02 ratified; awaiting clean isolated worktree and confirmed Step 0**
+Status: **review-complete local candidate — Gate 3 ungranted**
 
 Coordinator lint: **PASSED 2026-09-02**. The eight-file scope covers every verified constructor/DI/test compile site without adding a project reference; scoped adapter/orchestrator/board composition avoids captive dependencies; targeted and aggregate count deltas match the pinned receipts. The local named-client override in the new API integration test remains an implementation tripwire: if AF-P08 cannot provide a non-delegating handler inside that one file, the parcel stops rather than widening scope. One-check-per-`RunAsync`, no authenticated-user-to-intent actor/tenant binding, and no mid-poll consent re-check are explicit residual boundaries.
+
+Completion receipt: **REVIEW-COMPLETE 2026-09-02.** Sole-parent local candidate `47c2be0358e7ca024b524c7693af8b06846671d6` / tree `24f59b756f09b5895c7bd70319f5eaad8764e38a` changes exactly AF-P08. Target `3/3`, API integration `1/1`, adjacent `6/6` and `26/26`, Application `612 passed / 5 skipped`, API `378/378`, and full solution `2,021 passed / 5 expected skips / 0 failed` are green. Two fresh adversarial reviewers and the separate SG-OUTBOUND/SG-SCOPE reviewer accepted the exact candidate. The rejected two-commit review history remains preserved on `codex/biostack-remediation-p08-review-history-20260902`; no candidate or evidence branch was merged or pushed. Gate 3 remains ungranted.
 
 ## Identity
 
