@@ -16,6 +16,9 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Gate 2: contingent authorization granted for Q01-Q04 and P01-P07
 - Gate 3: ungranted
 - Diagnostic coordination and five parcel branches: preserved and unmerged
+- P01 candidate `751090eabf3ee6f066c17ee83861ae04711fd4a0`: deterministic chain green; one fresh adversarial ACCEPT; held unmerged
+- P02 candidate `1b5742051ee2b54a80dac9bbdf68c68e5a6b5992`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SCOPE/SG-OUTBOUND ACCEPT; held unmerged
+- Q04 first run: rejected because npm consumed the deterministic worker flags; corrected offline rerun pending under goal commit `f5af63ea313d4c5dcb4cebd221d9df1677f29d28`; P07 remains blocked
 
 ## Standing authorizations
 
