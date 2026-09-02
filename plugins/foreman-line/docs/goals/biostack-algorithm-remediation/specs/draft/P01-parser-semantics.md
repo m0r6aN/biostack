@@ -34,7 +34,7 @@ The parcel branch must be created from the required starting commit, not from a 
 3. The coordinator, not the builder, owns any required `origin/main` comparison. The builder must not fetch. If the coordinator reports that `origin/main` moved materially from the pinned base, this parcel stops under the charter's base-change rule.
 4. P01 has no dependency on Q04 or another implementation parcel and must not consume another parcel branch. No other live builder may edit either AF-P01 file.
 5. The diagnostic reproduction file exists at the diagnostic commit and is absent at the pinned base. The SDK-style test project at `backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj` targets `net10.0`, is marked as a test project, and includes ordinary `.cs` files by default; no project-file change is required or allowed.
-6. Required .NET SDK, NuGet cache, and restore assets must already be available locally. This parcel may not access a registry or other network service to obtain them. Missing local assets are an environment blocker, not authority to restore online or change package files.
+6. Required .NET SDK and NuGet packages must already be available locally. Before builder execution, the coordinator may seed only ignored NuGet restore metadata (`project.assets.json`, `project.nuget.cache`, and `*.nuget.g.props`/`*.nuget.g.targets`) from the clean ambient `main` worktree after proving source and destination are at the identical base/tree and recording a file/hash manifest. This is environment provisioning, not a source change. The parcel may not run restore or access a registry/network service; missing or mismatched local assets after the seed remain an environment blocker.
 
 ## Security and Release Gates
 
@@ -151,7 +151,7 @@ dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.
 dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --no-restore --disable-build-servers --logger "console;verbosity=minimal"
 ```
 
-Expected static receipts: `HEAD` equals the pinned base; status is empty; the production blob is `eaad1b314db45753fa942adb0dc6f6a13600f873`; `git cat-file -e` exits `128` because the reproduction path is absent on base. Record the adjacent and full-project `Passed`, `Failed`, `Skipped`, and `Total` summaries as `B_adj` and `B_app`. A failing baseline or missing local restore assets stops the parcel; it does not authorize network access.
+Expected static receipts: `HEAD` equals the pinned base; status is empty; the production blob is `eaad1b314db45753fa942adb0dc6f6a13600f873`; `git cat-file -e` exits `128` because the reproduction path is absent on base. The coordinator's restore-metadata manifest must match the copied ignored files. Record the adjacent and full-project `Passed`, `Failed`, `Skipped`, and `Total` summaries as `B_adj` and `B_app`. A failing baseline or missing/mismatched local restore asset after the seed stops the parcel; it does not authorize restore or network access.
 
 ### Targeted regression
 

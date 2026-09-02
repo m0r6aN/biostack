@@ -35,6 +35,7 @@ Close the two reproduced protocol-ingestion defects without broadening behavior:
 - The pinned base already provides `IConsentGate.IsConsentGrantedAsync(CancellationToken)` in `ConsentGate.cs`, registers `IConsentGate` and `IProtocolOcrService` as scoped services in `BioStack.Api/Program.cs`, and includes `Moq` plus xUnit in the application test project. These are read-only dependencies, not Allowed Files.
 - P02 has no implementation dependency on Q04, P07, or ratification of the frontend-only D9(b) clauses. It has no collision with another ratified remediation parcel, but the large shared ingestion source remains a high-risk integration surface.
 - A material movement of `origin/main` from the pinned base invokes the charter's base-change rule and stops dispatch pending coordinator adjudication.
+- Required .NET SDK and NuGet packages must already be local. Before builder execution, the coordinator may seed only ignored NuGet restore metadata (`project.assets.json`, `project.nuget.cache`, and `*.nuget.g.props`/`*.nuget.g.targets`) from the clean ambient `main` worktree after proving source and destination have the identical base/tree and recording a file/hash manifest. The builder may not run restore or contact a registry; missing or mismatched assets after the seed are `ENVIRONMENT_BLOCKED`.
 
 ## Verified Existing Patterns
 
@@ -150,7 +151,7 @@ No edit, import, build, or test begins until the coordinator confirms Step 0.
 
 ## Deterministic Verification Commands
 
-Run from `C:\Users\clint\.codex\worktrees\biostack-remediation-p02\BioStack` in PowerShell with already-restored local dependencies. `--no-restore` is mandatory for parcel commands; if required packages are unavailable, report `ENVIRONMENT_BLOCKED` rather than accessing a registry.
+Run from `C:\Users\clint\.codex\worktrees\biostack-remediation-p02\BioStack` in PowerShell with the coordinator-provisioned, hash-verified local restore metadata. `--no-restore` is mandatory for parcel commands; if required packages remain unavailable, report `ENVIRONMENT_BLOCKED` rather than restoring or accessing a registry.
 
 ### Base receipt, before edits
 

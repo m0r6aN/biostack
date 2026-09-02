@@ -54,6 +54,7 @@ The coordinator advances this queue in dependency order while allowing only coll
 3. Shape one parcel in a fresh frontier session. The shaper may write only its spec in this goal's coordination directory.
 4. Coordinator-lint every factual claim on disk: file existence, test-project inclusion, source ownership, dependencies, exact commands, baseline counts, collision points, and security gates.
 5. Confirm the Gate 2 contingencies. Create or verify one `codex/` branch and one isolated worktree named in the spec. No parcel branches from a diagnostic branch.
+   - If a fresh .NET worktree lacks ignored restore metadata, the coordinator may copy only `project.assets.json`, `project.nuget.cache`, and generated NuGet props/targets from a clean ambient worktree at the identical base/tree. Record relative paths plus SHA-256 before/after, keep tracked status clean, and permit no restore or network access.
 6. Dispatch a fresh builder/investigator. Step 0 restates goal, base, exact Allowed Files, forbidden work, invariants, tests, security/network limits, and stop conditions, then stops for coordinator confirmation before any edit.
 7. Rule on flags. Any missing decision, new file, production dependency, changed invariant, or new reproduced Q defect stops the affected parcel for a narrow amendment.
 8. On completion claim, inspect the exact commit and diff before rerunning anything. Wrong-shaped claims are presumptively empty. Verify all required files and no forbidden files.
