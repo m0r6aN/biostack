@@ -1,6 +1,6 @@
 # Narrow Gate 1 Amendment 05 — P03 Graph Artifact Identity
 
-**Status:** AWAITING HUMAN RATIFICATION — coordinator lint passed 2026-09-02
+**Status:** RATIFIED 2026-09-02 — coordinator lint passed
 
 **Scope:** D6 artifact-identity/provenance supplement and P03 regression/count replacement only
 
@@ -50,3 +50,7 @@ Ratification reactivates only P03's existing contingent Gate 2 authority after t
 ## Exact ratification form
 
 > Narrow Gate 1 Amendment 05: I ratify the D6 artifact-identity/provenance supplement and replacement P03 regression census and verification counts as written. AF-P03 remains the same three files, and the Amendment 04 API fixture restriction remains unchanged. P03 retains contingent Gate 2 authorization subject to its amended shaped spec and fresh Step 0. All other decisions and authorizations remain unchanged. Gate 3 remains ungranted.
+
+## Human ratification receipt
+
+The developer supplied the exact ratification form above on 2026-09-02. The D6 artifact-identity/provenance supplement and replacement 11-case P03 census are active. AF-P03 remains exactly three files, the Amendment 04 API fixture restriction is unchanged, and P03 is reactivated only subject to its amended shaped spec and a fresh coordinator-confirmed Step 0. All other decisions and authorizations remain unchanged. Gate 3 remains ungranted.

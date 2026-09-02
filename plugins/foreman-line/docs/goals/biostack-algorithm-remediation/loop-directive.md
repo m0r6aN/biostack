@@ -16,7 +16,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Narrow Gate 1 Amendment 02: ratified 2026-09-02; D3/D4/D11/D12 replacements and D15 active
 - Narrow Gate 1 Amendment 03: ratified 2026-09-02; D8 timeout-terminalization supplement and replacement AF-P05 active
 - Narrow Gate 1 Amendment 04: ratified 2026-09-02; replacement AF-P03 and exact reviewed-fixture correction active
-- Narrow Gate 1 Amendment 05: awaiting human ratification; P03 artifact-identity/provenance supplement and 11-case census proposed
+- Narrow Gate 1 Amendment 05: ratified 2026-09-02; P03 artifact-identity/provenance supplement and exact 11-case census active
 - Gate 2: contingent authorization granted for Q01-Q04 and P01-P08
 - Gate 3: ungranted
 - Diagnostic coordination and five parcel branches: preserved and unmerged
@@ -30,7 +30,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Q04: final transcript fresh review ACCEPT; `READY`; P07 remediation candidate is review-complete and held unmerged
 - Q02: v1 evidence commit `dea721288521a5789350e2398d0d7292b01ad10f` is preserved but review-rejected; v2 stopped terminally before transcript/test execution when the Baseline procedure encountered an unsupported `New-Item -LiteralPath`; no retry/v3 is authorized and endpoint-wide coverage remains inconclusive
 - P05 candidate `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SIDECAR/SG-SCOPE ACCEPT; rejected parent `923900c66d7046c282d397ba60d85b9eebcf1a58` preserved in history; P06 shaping may proceed against the exact accepted hash
-- P03 candidate `7e8087a00722e38c2a090d49826fa6289c880356`: complete shaped verification green but review-rejected for cross-artifact provenance misattribution; Amendment 05 is required before regression-count rework.
+- P03 candidate `7e8087a00722e38c2a090d49826fa6289c880356`: complete prior shaped verification green but review-rejected for cross-artifact provenance misattribution; preserved as rejected history. Amendment 05 is ratified and P03 rework is reactivated subject to its amended shaped spec and fresh Step 0.
 - P06 candidate `c435caf3cf0cf95fb1bfbc51d2924ea960183957`: standalone and exact P05+P06 combined chains green; two fresh adversarial ACCEPTs plus SG-SIDECAR/SG-SCOPE ACCEPT; held unmerged
 - Cerebras routing inventory: user-scope credential presence is confirmed without reading its value, but the current Codex process does not inherit it, no Cerebras CLI or reviewed callable adapter is present, and the existing governed Cerebras shadow route is public-only/candidate-only with Coordinator and verifier roles prohibited. State is `configured_unverified`; no BioStack source, test payload, secret, or provider request has been sent.
 
@@ -48,10 +48,12 @@ The developer granted exactly:
 
 > Narrow Gate 1 Amendment 04: I replace AF-P03 with the three files listed and authorize only the stale API graph-positive fixture change from `provisional` to exactly `reviewed`. Ratified D6 and all other decisions and authorizations remain unchanged. Gate 3 remains ungranted.
 
+> Narrow Gate 1 Amendment 05: I ratify the D6 artifact-identity/provenance supplement and replacement P03 regression census and verification counts as written. AF-P03 remains the same three files, and the Amendment 04 API fixture restriction remains unchanged. P03 retains contingent Gate 2 authorization subject to its amended shaped spec and fresh Step 0. All other decisions and authorizations remain unchanged. Gate 3 remains ungranted.
+
 Operational effect:
 
 1. Q01-Q04 and P01-P08 may be shaped and dispatched only after their specs exactly match the ratified charter and ratified amendments, name an isolated branch/worktree, pass Step 0, and retain exact Allowed Files.
-2. Amendment 01 unblocks P03-P07; Amendment 02 authorizes P08; Amendments 03 and 04 resolve the scoped P05 and P03 blockers. P05 must precede final P06 integration verification, and Q04's accepted `READY` disposition remains a prerequisite for P07.
+2. Amendment 01 unblocks P03-P07; Amendment 02 authorizes P08; Amendments 03 and 04 resolve the scoped P05 and initial P03 blockers; Amendment 05 reactivates only P03's cross-artifact provenance rework after amended-spec lint and fresh Step 0. P05 must precede final P06 integration verification, and Q04's accepted `READY` disposition remains a prerequisite for P07.
 3. The authority does not permit any further new parcel, changed Allowed Files, external network/provider access, production/cloud data, secrets, pushes, pull requests, merges, deployment, publication, release, or cleanup of diagnostic branches.
 4. Gate 3 remains human-only for the exact candidate commit set and exact merge/release action after the complete verification chain is green.
 
@@ -62,9 +64,9 @@ The coordinator advances this queue in dependency order while allowing only coll
 1. Ratification receipts for Amendments 01 and 02: complete.
 2. Q01-Q04 adjudication: complete; Q02 remains a durable inconclusive terminal stop.
 3. P01 and P02 implementation/review chains: complete and held unmerged.
-4. Amendments 03 and 04 ratification receipts: complete. Obtain Amendment 05 ratification or changes; P03 remains held.
+4. Amendments 03-05 ratification receipts: complete. Incorporate Amendment 05 into P03 and obtain a fresh Step 0 before rework.
 5. P04, P07, and P08 implementation/review chains: complete and held unmerged.
-6. P05 and P06 implementation/review chains: complete and held unmerged. Complete P03 only after Amendment 05.
+6. P05 and P06 implementation/review chains: complete and held unmerged. Complete the Amendment-05 P03 rework and fresh review.
 7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
 8. Assemble the exact green candidate commit set and request human Gate 3. Do not push, open a PR, merge, deploy, or release before approval.
 9. After exact Gate 3 approval: rebase/verify/merge only the approved set, verify merged main and CI, then complete Stage F.

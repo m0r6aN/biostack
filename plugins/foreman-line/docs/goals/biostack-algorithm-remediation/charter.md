@@ -192,7 +192,7 @@ The coordinator consumes, but does not author, parcel verification evidence. Bef
 
 - P01: targeted parser reproduction class is green; existing parser and ingestion suites pass.
 - P02: PDF cancellation and OCR boundary regressions are green; existing ingestion suites pass; denial records zero fake sends and authorized-consented path records exactly one fake send.
-- P03: all four interaction regressions are green; existing interaction/counterfactual suites pass.
+- P03: all four retained interaction regressions, all six Amendment-01 hostile cases, and the Amendment-05 cross-artifact provenance case are green (exact target `11/11`); the independent adjacent interaction/public-boundary/swap set remains `20/20`; Application is exactly 620 passed plus 5 skipped; focused API is `8/8`; full API remains 377; and only Application gains 11 cases in the solution aggregate. A graph relationship is eligible only when its `GraphArtifactId` matches the same present, active, exactly reviewed artifact whose hash is cited; mismatch or rotation fails closed and preserves existing next-source behavior.
 - P04: both provenance regressions are green; existing EvidenceGate and scientific-research staging suites pass; valid external locator cases remain green.
 - P05/P06: both sidecar regressions are green; existing executor, health/job, inference-policy, allowlist, and workflow-sequence suites pass.
 - P07: the outbound regression and existing suggestion-route suite are green in a dependency-complete isolated worktree; unauthenticated, unauthorised, or unconsented paths record zero provider calls; the authorized-consented path records exactly one local-fake provider call.
@@ -212,7 +212,7 @@ Passing builder tests alone does not satisfy this chain.
 - **Narrow Gate 1 Amendment 02 — ratified 2026-09-02:** D3, D4, D11, and D12 are replaced; D15, AF-P08, and P08 are approved; contingent Gate 2 dispatch authority includes P08 subject to its shaped spec, isolated worktree, exact Allowed Files, and confirmed Step 0.
 - **Narrow Gate 1 Amendment 03 — ratified 2026-09-02:** the D8 timeout-terminalization supplement and replacement three-file AF-P05 in `gate-1-amendment-03.md` are active. P05 retains contingent Gate 2 authority subject to its amended shaped spec and fresh Step 0; P06 remains downstream of the verified P05 candidate.
 - **Narrow Gate 1 Amendment 04 — ratified 2026-09-02:** replacement three-file AF-P03 in `gate-1-amendment-04.md` is active. Only the stale API graph-positive fixture state may change from `provisional` to exactly `reviewed`; ratified D6 and all other P03 constraints remain unchanged.
-- **Narrow Gate 1 Amendment 05 — awaiting human ratification:** `gate-1-amendment-05.md` proposes the D6 artifact-identity/provenance supplement and an exact 11-case P03 census. It grants no authority unless ratified; P03 is held.
+- **Narrow Gate 1 Amendment 05 — ratified 2026-09-02:** the D6 artifact-identity/provenance supplement and replacement exact 11-case P03 census in `gate-1-amendment-05.md` are active. AF-P03 remains the same three files and Amendment 04's single API fixture-state restriction remains unchanged. P03 retains contingent Gate 2 authority subject to its amended shaped spec and fresh Step 0.
 - **Gate 3 — human-only and not requested now:** after the complete green chain, present exact candidate commits, review/security dispositions, merge order, rollback notes, and remaining uncertainty. The human approves or rejects the specific merge/release action.
 
 ## Merge and Stage-F closure

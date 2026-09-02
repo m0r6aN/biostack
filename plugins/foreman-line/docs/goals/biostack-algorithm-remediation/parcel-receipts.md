@@ -131,7 +131,7 @@ Status: **live coordinator record; no merge or release authority**
 - Verification: target `10/10`; adjacent `20/20`; Application `619 passed / 5 skipped`; focused API `8/8`; full solution Domain 7, Application 619+5, verifier 158, API 377, KnowledgeWorker 866; zero failures
 - Amendment 04 fixture custody: API diff is exactly one `provisional` to `reviewed` value
 - Fresh adversarial review: REWORK_REQUIRED; cached reviewed artifact A can authorize and misattribute an edge from independently resolved active artifact B because `GraphArtifactId` is not matched
-- Disposition: candidate is preserved but not review-complete. Amendment 05 awaits ratification for the D6 artifact-identity supplement and exact 11-case replacement before any rework.
+- Disposition: candidate is preserved but not review-complete. Amendment 05 was ratified 2026-09-02; the D6 artifact-identity supplement and exact 11-case replacement are active, and P03 rework is reactivated only after amended-spec lint and fresh Step 0.
 
 ## P05 — Sidecar terminal-state custody
 
@@ -161,4 +161,4 @@ Status: **live coordinator record; no merge or release authority**
 
 ## Gate custody
 
-P01, P02, P04, P05, P06, P07, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01-04 were explicitly ratified on 2026-09-02. P03 is held pending Narrow Gate 1 Amendment 05. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
+P01, P02, P04, P05, P06, P07, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01-05 were explicitly ratified on 2026-09-02. P03 is reactivated for the Amendment-05 rework only after amended-spec lint and fresh Step 0. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
