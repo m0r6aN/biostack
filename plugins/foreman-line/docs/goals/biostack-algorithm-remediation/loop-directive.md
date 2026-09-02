@@ -21,7 +21,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Q01 evidence `83d1235b3a964ddf7130f67900f4dcd3b38dcf42`: fresh review ACCEPT; reproduced config-only Collective transmission; production fix blocked pending a new P08 Gate 1/Gate 2 amendment
 - Q03: fresh review ACCEPT; `INCONCLUSIVE_NO_DETERMINISTIC_SEAM`; zero repository changes
 - Q04: final transcript fresh review ACCEPT; `READY`; P07 shaping may proceed only after Amendment 01, and P07 dispatch remains independently gated
-- Q02: v1 evidence commit `dea721288521a5789350e2398d0d7292b01ad10f` is preserved but review-rejected; one clean base-rooted v2 rerun is authorized after coordinator re-lint, with a new write-once transcript and exactly one post-teardown outcome; any further failure is terminal
+- Q02: v1 evidence commit `dea721288521a5789350e2398d0d7292b01ad10f` is preserved but review-rejected; v2 stopped terminally before transcript/test execution when the Baseline procedure encountered an unsupported `New-Item -LiteralPath`; no retry/v3 is authorized and endpoint-wide coverage remains inconclusive
 
 ## Standing authorizations
 

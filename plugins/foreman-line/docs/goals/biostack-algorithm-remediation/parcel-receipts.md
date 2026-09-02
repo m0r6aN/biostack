@@ -56,8 +56,9 @@ Status: **live coordinator record; no merge or release authority**
 - Baseline: adjacent 21 passed; API project 377 passed
 - Bounded runtime inventory: all 11 exact rows observed; expected `INCONCLUSIVE_NO_COMPLETE_RECOMMENDATION_SURFACE_MARKER` emitted
 - Rejected v1 evidence: commit `dea721288521a5789350e2398d0d7292b01ad10f` and transcript SHA-256 `767AA4D74D3F7E71CB8CED33BF411B91B4E193EC6BE0DE4B90D487B8C1EC9375` are preserved but not accepted; review found pre-teardown outcome emission and incomplete native transcript evidence
-- V2 disposition: coordinator re-lint passed for one fresh base-rooted branch/worktree, post-teardown exactly-one-outcome control flow, and a new two-phase write-once transcript capturing native output, counts, rows, outcome, and Git receipts
-- V2 authority: AF-Q02 only; no HTTP or production change; any further cleanup, evidence, taxonomy, scope, or review failure is terminal
+- V2 disposition: `TERMINALLY BLOCKED`; after fresh Step 0 and clean base-rooted worktree creation, the first Baseline procedure invocation failed before transcript creation because `New-Item` in the installed PowerShell does not expose `-LiteralPath`
+- V2 custody: no test ran, AF-Q02 remains absent, no transcript or commit exists, Git status is clean at base `339f259b1a467034db4f57cf9d774c292f11b53a` / tree `0f6d0b609ce255aad5cca81698eb3ad0917cfda6`, temporary-database count is zero, and v1 custody is unchanged
+- Final Q02 conclusion: endpoint-wide gate coverage remains inconclusive; no v3 or retry is authorized under this goal
 
 ## Q03 — Regex exploitability
 
@@ -69,4 +70,4 @@ Status: **live coordinator record; no merge or release authority**
 
 ## Gate custody
 
-P01 and P02 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 v2 remains pending. Amendments 01 and 02 remain pending. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
+P01 and P02 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01 and 02 remain pending. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.

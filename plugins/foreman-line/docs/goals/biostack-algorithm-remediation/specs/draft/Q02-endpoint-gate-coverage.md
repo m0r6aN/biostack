@@ -1,6 +1,6 @@
 # Inquiry Parcel Q02: Endpoint Gate Coverage
 
-Status: **active v2 rework — rejected v1 evidence is preserved; dispatch remains contingent on coordinator re-lint and a fresh v2 Step 0 confirmation**
+Status: **TERMINALLY BLOCKED 2026-09-02 — rejected v1 evidence is preserved; v2 stopped before evidence execution and no v3 is authorized**
 
 Coordinator lint: **PASSED 2026-09-02**. The eleven exact endpoint identities/patterns, project and production blobs, 21-case adjacent count, AF-Q02 absence, and runtime metadata approach were independently rechecked. The parcel is intentionally bounded and may not claim endpoint-wide completeness. Any executable inventory outcome must preserve its single test in one local evidence-only commit for exact review.
 
@@ -9,6 +9,8 @@ V1 review disposition: **REJECTED 2026-09-02**. Candidate `dea721288521a5789350e
 V2 shaping disposition: start once from the pinned base on a new branch/worktree and create a new write-once transcript. V2 may copy and rework only AF-Q02 from the rejected commit. Any further outcome-cardinality, teardown-ordering, transcript-completeness, count, scope, or taxonomy defect terminally blocks Q02.
 
 V2 coordinator re-lint: **PASSED 2026-09-02**. The embedded native-output helper parses with zero PowerShell errors; `git diff --check` is clean; the new branch, worktree, and transcript are absent; and the v1 branch/commit/transcript custody is preserved. Fresh v2 Step 0 remains mandatory before any v2 write.
+
+V2 execution disposition: **TERMINALLY BLOCKED 2026-09-02**. After a correct fresh Step 0 and clean base-rooted worktree creation, the first `Baseline` invocation failed before transcript creation because the installed PowerShell exposes no `-LiteralPath` parameter for `New-Item`. The procedure-exception stop rule therefore applied: no tests ran, AF-Q02 remained absent, no v2 transcript or commit exists, the v2 worktree remained clean at the pinned base/tree, and no retry or v3 is authorized. This is an evidence-environment/procedure failure, not an endpoint-gate finding.
 
 ## Identity
 
