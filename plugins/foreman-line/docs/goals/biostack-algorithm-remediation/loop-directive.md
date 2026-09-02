@@ -30,7 +30,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Q04: final transcript fresh review ACCEPT; `READY`; P07 remediation candidate is review-complete and held unmerged
 - Q02: v1 evidence commit `dea721288521a5789350e2398d0d7292b01ad10f` is preserved but review-rejected; v2 stopped terminally before transcript/test execution when the Baseline procedure encountered an unsupported `New-Item -LiteralPath`; no retry/v3 is authorized and endpoint-wide coverage remains inconclusive
 - P05 candidate `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SIDECAR/SG-SCOPE ACCEPT; rejected parent `923900c66d7046c282d397ba60d85b9eebcf1a58` preserved in history; P06 shaping may proceed against the exact accepted hash
-- P03 candidate `7e8087a00722e38c2a090d49826fa6289c880356`: complete prior shaped verification green but review-rejected for cross-artifact provenance misattribution; preserved as rejected history. Amendment 05 is ratified and P03 rework is reactivated subject to its amended shaped spec and fresh Step 0.
+- P03 candidate `a69d945a3cd8a3655911707031386441fc55079f` / tree `7205d5ea11148eac865534cf5ae545634eb84be5`: Amendment-05 rework chain green and fresh independent adversarial review ACCEPT with no actionable findings; rejected parent `7e8087a00722e38c2a090d49826fa6289c880356` preserved in history; held unmerged.
 - P06 candidate `c435caf3cf0cf95fb1bfbc51d2924ea960183957`: standalone and exact P05+P06 combined chains green; two fresh adversarial ACCEPTs plus SG-SIDECAR/SG-SCOPE ACCEPT; held unmerged
 - Cerebras routing inventory: user-scope credential presence is confirmed without reading its value, but the current Codex process does not inherit it, no Cerebras CLI or reviewed callable adapter is present, and the existing governed Cerebras shadow route is public-only/candidate-only with Coordinator and verifier roles prohibited. State is `configured_unverified`; no BioStack source, test payload, secret, or provider request has been sent.
 
@@ -64,9 +64,9 @@ The coordinator advances this queue in dependency order while allowing only coll
 1. Ratification receipts for Amendments 01 and 02: complete.
 2. Q01-Q04 adjudication: complete; Q02 remains a durable inconclusive terminal stop.
 3. P01 and P02 implementation/review chains: complete and held unmerged.
-4. Amendments 03-05 ratification receipts: complete. Incorporate Amendment 05 into P03 and obtain a fresh Step 0 before rework.
+4. Amendments 03-05 ratification receipts and P03 Amendment-05 implementation/review chain: complete; held unmerged.
 5. P04, P07, and P08 implementation/review chains: complete and held unmerged.
-6. P05 and P06 implementation/review chains: complete and held unmerged. Complete the Amendment-05 P03 rework and fresh review.
+6. P05 and P06 implementation/review chains: complete and held unmerged.
 7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
 8. Assemble the exact green candidate commit set and request human Gate 3. Do not push, open a PR, merge, deploy, or release before approval.
 9. After exact Gate 3 approval: rebase/verify/merge only the approved set, verify merged main and CI, then complete Stage F.

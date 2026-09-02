@@ -1,6 +1,6 @@
 # Parcel P03: Interaction Safety
 
-Status: **active rework — Narrow Gate 1 Amendment 05 ratified; fresh Step 0 required**
+Status: **review-complete — candidate held unmerged; Gate 3 ungranted**
 
 Coordinator lint: **PASSED 2026-09-02 after Narrow Gate 1 Amendment 05.** Replacement three-file AF-P03, the one-value API fixture restriction, base/tree, production and diagnostic blobs, all seven amended D6 clauses, the 4 retained plus 7 hostile-case census, the independent 20-case adjacent filter, the 609-passed/5-skipped Application baseline, API 377 tripwire, replacement count deltas, offline commands, and single-review depth were checked against the pinned repository and ratified amendments. Resumption remains contingent on an exact fresh Step 0 restatement.
 
@@ -8,7 +8,7 @@ Import-receipt correction: **PASSED 2026-09-02 after a pre-edit builder stop.** 
 
 Amendment 04 disposition: **COMPLETED 2026-09-02.** The initial scoped state passed target `10/10`, adjacent `20/20`, and Application `619 passed / 5 skipped`, but the full solution exposed one API graph-positive helper publishing a `provisional` artifact. Amendment 04 added only `CompoundGraphIntelligenceTests.cs` and authorized only that stale fixture state to change from `provisional` to exactly `reviewed`. Candidate `7e8087a00722e38c2a090d49826fa6289c880356` contains that exact correction and passed the amended full verification chain before adversarial review.
 
-Adversarial disposition: **REWORK AUTHORIZED SUBJECT TO FRESH STEP 0.** Candidate `7e8087a00722e38c2a090d49826fa6289c880356` passed its prior shaped verification chain but was rejected because a relationship returned after active-artifact rotation can belong to a different artifact while being attributed to the cached reviewed artifact's hash. Narrow Gate 1 Amendment 05 ratified the D6 artifact-identity supplement and exact 11-case replacement. The rejected candidate remains preserved in Git history; its prior receipts and review do not apply to the reworked candidate.
+Adversarial disposition: **ACCEPT 2026-09-02.** Candidate `a69d945a3cd8a3655911707031386441fc55079f`, tree `7205d5ea11148eac865534cf5ae545634eb84be5`, passed the complete amended shaped verification chain and a fresh independent read-only adversarial review with no actionable findings. Target `11/11`, adjacent `20/20`, Application `620 passed / 5 skipped`, focused API `8/8`, and full solution counts 7 / 620+5 / 158 / 377 / 866 were independently reproduced offline. Rejected parent `7e8087a00722e38c2a090d49826fa6289c880356` and diagnostic history remain preserved and unmerged. Gate 3 remains ungranted.
 
 ## Goal
 
