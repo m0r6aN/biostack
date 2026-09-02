@@ -4,6 +4,8 @@ Status: **active — coordinator lint passed; dispatch remains contingent on exa
 
 Coordinator lint: **PASSED 2026-09-02**. The procedure is command-only, requires an offline npm install with no registry fallback, selects only the existing network-faked route test, validates exact Git/blob identities, and bounds recursive cleanup to three pre-absent, resolved paths inside the isolated Q04 frontend directory.
 
+Procedural amendment 2026-09-02: the first run proved offline dependency readiness and `2/2` default-worker test success, but fresh review rejected `READY` because npm 11.6.2 consumed the worker flags instead of forwarding them. The corrected procedure invokes the installed local Vitest entrypoint through `node`, emits the exact argument vector, rejects unknown-option/config warnings, and requires a complete transcript at `C:\Users\clint\.codex\evidence\biostack-algorithm-remediation\q04-rerun-2026-09-02.transcript.txt`. This is a command-level repair only; it does not alter a Gate 1 decision or unblock P07 before fresh acceptance.
+
 ## Goal
 
 Determine whether the pinned BioStack frontend dependency graph can be installed entirely from the local npm cache and whether the one existing `main`-based research-suggestion route test passes under the deterministic worker settings required by plan-review finding F1. Q04 may produce only terminal evidence. It makes no repository source change, imports no diagnostic test, creates no candidate commit, and does not remediate P07.
@@ -160,7 +162,17 @@ try {
     $q04CiExit = $LASTEXITCODE
 
     if ($q04CiExit -eq 0) {
-        npm test -- src/__tests__/app/api/research/suggest.route.test.ts --pool=threads --maxWorkers=2 --no-file-parallelism
+        $q04VitestArgs = @(
+            '.\node_modules\vitest\vitest.mjs',
+            'run',
+            'src/__tests__/app/api/research/suggest.route.test.ts',
+            '--pool=threads',
+            '--maxWorkers=2',
+            '--no-file-parallelism'
+        )
+        Write-Output "Q04_VITEST_EXECUTABLE=node"
+        Write-Output "Q04_VITEST_ARGV=$($q04VitestArgs | ConvertTo-Json -Compress)"
+        node @q04VitestArgs
         $q04TestExit = $LASTEXITCODE
     }
 }
@@ -258,10 +270,10 @@ exit 0
 The exact test invocation is the F1 repair and must remain:
 
 ```powershell
-npm test -- src/__tests__/app/api/research/suggest.route.test.ts --pool=threads --maxWorkers=2 --no-file-parallelism
+node .\node_modules\vitest\vitest.mjs run src/__tests__/app/api/research/suggest.route.test.ts --pool=threads --maxWorkers=2 --no-file-parallelism
 ```
 
-It selects only the existing main-based file. The `npm test --` separator forwards the remaining arguments to the repository's `vitest run` script. Do not substitute `npx vitest`, a wildcard, a directory, the diagnostic reproduction, or different worker settings.
+It selects only the existing main-based file and bypasses npm's CLI configuration parser. The emitted `Q04_VITEST_ARGV` JSON is the authoritative argument-vector receipt. Any npm-style unknown-config warning, Vitest unknown-option warning, omitted argument, or different echoed vector is `BASELINE_TEST_FAILED`, even if tests otherwise pass. Do not substitute `npm test`, `npx vitest`, a wildcard, a directory, the diagnostic reproduction, or different worker settings.
 
 ## Outcome Classification and Acceptance
 
@@ -270,7 +282,7 @@ It selects only the existing main-based file. The `npm test --` separator forwar
 All of the following are required:
 
 - `npm ci --offline` exits `0` without a retry or registry fallback;
-- the exact single-file Vitest command exits `0` and reports one file and exactly `2/2` tests passed, `0` failed, and `0` skipped;
+- the exact direct-node single-file Vitest command emits the required argument vector without unknown-config/unknown-option warnings, exits `0`, and reports one file and exactly `2/2` tests passed, `0` failed, and `0` skipped;
 - the existing test blob is unchanged, so its local fetch fake and missing-key no-call behavior remain intact;
 - pre/post porcelain receipts are identical and empty;
 - generated roots are absent after exact-path cleanup;
@@ -290,14 +302,14 @@ If the exact offline `npm ci` command exits nonzero because a cached package, de
 
 ## Evidence Package
 
-The investigator hands the coordinator the complete terminal transcript and one concise evidence record containing:
+The investigator hands the coordinator the complete terminal transcript and one concise evidence record containing the items below. The transcript must be created outside every Git worktree at exactly `C:\Users\clint\.codex\evidence\biostack-algorithm-remediation\q04-rerun-2026-09-02.transcript.txt`, must include the complete native npm/Vitest stream plus explicit receipt lines, and must remain available to the fresh reviewer:
 
 - parcel `Q04`, exact branch/worktree, starting and ending commit/tree, and base ancestry;
 - `node --version` and `npm --version` output and exits;
 - the package, lockfile, and main-based test blob receipts, plus lockfile version `3`;
 - exact pre-run and post-cleanup `git status --porcelain=v1 --untracked-files=all` outputs and exit codes, rendered as `<empty>` when empty, plus an explicit byte-for-byte equality result;
 - the exact `npm ci --offline` command, exit code, and sanitized output;
-- if install succeeded, the exact single-file Vitest command, exit code, final summary, discovered/executed/passed/failed/skipped counts, and expected delta `2 -> 2 (+0)`;
+- if install succeeded, the exact direct-node single-file Vitest command, emitted JSON argument vector, absence of unknown-config/unknown-option warnings, exit code, final summary, discovered/executed/passed/failed/skipped counts, and expected delta `2 -> 2 (+0)`;
 - explicit confirmation that only the main-based test ran, the outbound reproduction was absent/not imported/not run, the existing local fetch fake was preserved, no credential was supplied, and no registry/provider/cloud/production/protected-data access occurred;
 - exact cleanup targets considered, confirmation they were absent before execution, exact targets removed, any cleanup error, and confirmation all are absent afterward;
 - final `git diff --check`, empty `git diff --name-only <base>`, unchanged test blob, and empty final status;
