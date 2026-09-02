@@ -1,8 +1,10 @@
 # Inquiry Parcel Q02: Endpoint Gate Coverage
 
-Status: **active — coordinator lint passed; dispatch remains contingent on exact worktree/base verification and Step 0 confirmation**
+Status: **active — teardown-only continuation passed coordinator re-lint; dispatch remains contingent on fresh Step 0 confirmation**
 
 Coordinator lint: **PASSED 2026-09-02**. The eleven exact endpoint identities/patterns, project and production blobs, 21-case adjacent count, AF-Q02 absence, and runtime metadata approach were independently rechecked. The parcel is intentionally bounded and may not claim endpoint-wide completeness. Any executable inventory outcome must preserve its single test in one local evidence-only commit for exact review.
+
+Teardown-continuation re-lint: **PASSED 2026-09-02**. The existing AF-Q02 identity and failed-run transcript were rechecked; local `Microsoft.Data.Sqlite.Core` 10.0.0 exposes `ClearAllPools`; no package/project change is needed. Its process-wide pool effect is accepted only inside this synthetic test process and must be checked by the mandatory API/solution aggregate. A repeated cleanup or aggregate failure is terminal for Q02.
 
 ## Identity
 
@@ -49,6 +51,26 @@ Permitted non-repository effects are limited to one uniquely named synthetic SQL
 The test must dispose its factory/client resources and delete only the exact temporary database file it created. No project, production, configuration, fixture, package/lock, snapshot, goal, handoff, or other test file may change. If the test cannot compile or access runtime endpoint metadata in this file alone, stop rather than adding a seam.
 
 After all required receipts and exact temporary-file cleanup, an executable inventory outcome must create exactly one local test-only commit containing only AF-Q02. Environment-, scope-, cleanup-, or inventory-drift stops create no commit. The evidence commit is never pushed or merged and is not a remediation candidate.
+
+## One Authorized Same-AF Teardown Repair
+
+The first targeted run failed to compile because AF-Q02 lacked the already-existing integration-extension namespace; the investigator corrected only that import inside AF-Q02. The second targeted run completed all eleven rows and emitted `INCONCLUSIVE_NO_COMPLETE_RECOMMENDATION_SURFACE_MARKER`, but the final test result was `0` passed / `1` failed because the exact SQLite file remained locked during teardown. The omitted exception text must not be invented or reconstructed. The continuation remains bounded by the original outcome taxonomy and the no-absence-inference rule.
+
+The locked file was `C:\Users\clint\AppData\Local\Temp\biostack-q02-endpoint-inventory-42c215732fd442d2b42f19f9e5f3bc87.db`, size `565248` bytes, with no `-wal` or `-shm` sibling. Only after the test process exited, the investigator validated the resolved OS-temporary parent and exact GUID filename grammar, deleted that one file, and verified it absent. That post-process recovery establishes clean custody but does not satisfy the test's deterministic in-process cleanup invariant. The transcript is `7403` bytes with SHA-256 `4E664A6144506C988FA5C6F87DD0FA30CD608DDA36CD086AFDAEEB8C673AC45A`.
+
+After coordinator re-lint and a new Step 0 confirmation, exactly one teardown-only repair attempt is permitted in AF-Q02. At the continuation preflight, AF-Q02 must be the sole Git-visible path, remain untracked, and match both of these identities:
+
+- SHA-256: `CDB62C0F6FE7C5203CF788FA8E298E762DBB7B05F5E38369404BC1C46FAFD9C5`
+- Git blob identity: `98ad70ed8681b18e03f4eae3b4d4692e0ab29f1d`
+
+The repair may make only these two code changes:
+
+1. add `using Microsoft.Data.Sqlite;`; and
+2. in the existing `finally` block, after the `WebApplicationFactory` disposal attempt has completed and before the existing exact-path `File.Exists` / `File.Delete` block begins, call `SqliteConnection.ClearAllPools()` in its own `try` / `catch`, preserving the first cleanup exception with the existing `cleanupFailure ??= exception` rule.
+
+This ordering is mandatory: application/factory disposal, SQLite pool release, exact-path existence/deletion validation. The repair must not change the connection string, inventory catalog, assertions, outcome tokens, metadata interpretation, test name, configuration, network posture, or any other behavior. Do not add sleeps, retries, garbage collection, wildcard deletion, directory deletion, process termination, or a second file. The locally resolved `Microsoft.Data.Sqlite.Core` 10.0.0 reference exposes `SqliteConnection.ClearAllPools()`, and the existing test assets already contain that compile reference; no package, project, restore, or network change is authorized.
+
+If pool release throws, exact-path deletion throws, the exact file still exists after deletion, or any cleanup uncertainty remains, emit `SCOPE_OR_CLEANUP_BLOCKED`, create no commit, preserve AF-Q02 and the evidence, and terminally stop Q02. A second teardown repair or retry is not authorized.
 
 ## Pinned-Base Identities and Existing Receipts
 
@@ -132,6 +154,24 @@ dotnet test backend/tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-rest
 
 Expected static receipt: exact base commit/tree, empty status, target absence (`git cat-file -e` exit `128`), and exactly 21 adjacent tests passed with zero failed/skipped. Record the full API-project baseline as `B_api`. Any different adjacent count or baseline failure stops Q02 before the file is created.
 
+### Fresh continuation preflight after the cleanup-blocked run
+
+The original baseline remains the comparison receipt; do not recreate the test or relabel the uncommitted continuation as a clean-start baseline. Before the single teardown repair, rerun only this read-only identity preflight and stop for coordinator confirmation:
+
+```powershell
+$q02Worktree = 'C:\Users\clint\.codex\worktrees\biostack-remediation-q02\BioStack'
+$q02Test = Join-Path $q02Worktree 'backend\tests\BioStack.Api.Tests\Architecture\UserFacingGateCoverageInvestigationTests.cs'
+git -C $q02Worktree rev-parse HEAD
+git -C $q02Worktree show -s --format=%T HEAD
+git -C $q02Worktree status --porcelain=v1 --untracked-files=all
+(Get-FileHash -Algorithm SHA256 -LiteralPath $q02Test).Hash
+git -C $q02Worktree hash-object -- $q02Test
+git -C $q02Worktree diff --check
+git -C $q02Worktree diff --name-only
+```
+
+Expected continuation receipt: HEAD `339f259b1a467034db4f57cf9d774c292f11b53a`; tree `0f6d0b609ce255aad5cca81698eb3ad0917cfda6`; status exactly `?? backend/tests/BioStack.Api.Tests/Architecture/UserFacingGateCoverageInvestigationTests.cs`; the two AF-Q02 identities above; empty tracked diff, changed-path list, and diff-check output. Any mismatch terminally stops this continuation without editing.
+
 ### Targeted inventory
 
 ```powershell
@@ -156,6 +196,8 @@ git status --porcelain=v1 --untracked-files=all
 ```
 
 Expected candidate receipt: adjacent remains exactly 21 passed; relative to `B_api`, the API project total and passed count increase by exactly one, with failed zero and skipped unchanged; only the API test assembly gains one test in the solution run. The changed-path list contains exactly AF-Q02, temporary state is gone, and `git diff --check` is clean.
+
+For the teardown continuation, the full post-repair chain is mandatory and cannot be shortened based on the earlier attempts: targeted inventory exactly `1` passed / `0` failed / `0` skipped; adjacent exactly `21` passed / `0` failed / `0` skipped; full API totals exactly `B_api + 1` passed with `0` failed and skipped unchanged from `B_api`; solution totals changed only by the API assembly's one added test; exact temporary SQLite path absent; and all scope/diff receipts green. Do not stage or commit between commands. Only after this entire chain is green may the investigator create the one AF-Q02 evidence commit and then recheck that the commit has the pinned base as sole parent, contains only AF-Q02, and leaves the worktree clean.
 
 ## Evidence and Handoff
 
@@ -194,8 +236,22 @@ Before creating the test, the investigator must restate and then stop for coordi
 
 Silence is not confirmation. Any discrepancy stops Q02.
 
+### Fresh Step 0 for the teardown continuation
+
+The prior Step 0 does not carry forward. Before changing AF-Q02, the investigator must restate and stop again for coordinator confirmation:
+
+1. the exact continuation branch/worktree/base/tree, sole untracked AF-Q02 path, SHA-256, Git blob identity, and empty tracked diff;
+2. that this is one teardown-only repair: add the SQLite namespace import and call `SqliteConnection.ClearAllPools()` after factory disposal and before exact-path deletion, preserving first cleanup failure;
+3. that no inventory, catalog, assertion, outcome, configuration, request, network, source/IL heuristic, or absence-inference behavior may change;
+4. the mandatory rerun counts: targeted `1/0/0`, adjacent `21/0/0`, API `B_api + 1` with failed `0` and skipped unchanged, and solution delta only in the API assembly;
+5. that there is no stage or commit until targeted, adjacent, API, solution, exact-path cleanup, diff, and status receipts are all green;
+6. that any repeated cleanup failure is terminal `SCOPE_OR_CLEANUP_BLOCKED`: no second repair, no retry, no commit, and preserved AF-Q02/evidence for coordinator adjudication; and
+7. the unchanged bounded-inconclusive/no-HTTP/no-network/no-production/no-Gate-3/no-push/PR/merge/deploy/publish/release authority boundary.
+
+Silence is not confirmation. Any discrepancy terminally stops the continuation.
+
 ## Stop Rules
 
-Stop without widening scope if Step 0 is unconfirmed; base/tree/status or a pinned blob differs; AF-Q02 is insufficient; another repository path changes; runtime endpoint data is unavailable; a source-text/IL scan, route-keyword classifier, private-handler invocation, or HTTP request is proposed; an external resource or real data is needed; the temporary database cannot be safely deleted by its exact path; a result cannot be separated from harness failure; `origin/main` was reported materially moved; or any push, PR, merge, deployment, publication, release, or diagnostic-branch mutation is proposed.
+Stop without widening scope if Step 0 is unconfirmed; base/tree/status or a pinned blob differs; AF-Q02 is insufficient; another repository path changes; runtime endpoint data is unavailable; a source-text/IL scan, route-keyword classifier, private-handler invocation, or HTTP request is proposed; an external resource or real data is needed; the temporary database cannot be safely deleted by its exact path; a result cannot be separated from harness failure; `origin/main` was reported materially moved; or any push, PR, merge, deployment, publication, release, or diagnostic-branch mutation is proposed. For the one teardown continuation, any second cleanup or pool-release failure is terminal: do not retry, widen the repair, stage, or commit.
 
 BioStack lacks the native Foreman shaping emitter/linter, so this draft intentionally creates no `ShapingResult`. Coordinator lint remains authoritative.
