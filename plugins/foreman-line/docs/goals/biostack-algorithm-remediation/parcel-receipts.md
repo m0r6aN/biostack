@@ -145,6 +145,20 @@ Status: **live coordinator record; no merge or release authority**
 - Non-blocking residuals: trusted in-process callers still receive mutable `JobRecord` aliases; timeout/cancellation does not forcibly stop already-running provider work; both are outside ratified P05 scope
 - Custody: accepted P05 hash may now be pinned into P06 shaping and final combined verification; local only, unmerged, unpushed, undeployed, unreleased
 
+## P06 — Sidecar accepted-source cap
+
+- Candidate: `c435caf3cf0cf95fb1bfbc51d2924ea960183957`; tree `942d51ae9b0605af66f8d1d4ec2d7d1745dd1cf3`; direct child of the pinned base; clean local worktree
+- Changed paths: exactly AF-P06 (`workflows/executor.py` and retained `test_request_constraint_reproduction.py`)
+- Boundary: non-negative ordered result-occurrence prefix is applied immediately after sequence return and before tool lists, provenance results, warnings, claims/source IDs, and status calculation; provider invocation itself remains explicitly outside this seam
+- Standalone verification: target `5/5`; adjacent `38 passed / 1 expected skip`; aggregate `43 passed / 1 expected skip` from 44; exactly five pinned executor lint findings
+- Combined custody: detached HEAD is exact accepted P05 `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`; staged diff is exactly AF-P06 and byte-identical to P06 patch SHA-256 `B2882552D186668F800F1E943EEF831C73DF939955208C8625ADD122C34E57CC`
+- Combined verification: targets `15/15`; adjacent `38 passed / 1 expected skip`; aggregate `53 passed / 1 expected skip` from 54; exactly thirteen pinned combined lint findings
+- Adversarial reviewer A: ACCEPT; no Critical/High/Medium/Low findings; independent standalone and combined reruns green
+- Adversarial reviewer B: ACCEPT; no actionable findings; additional blank/unmatched/excess/failed/discarded hostile probes passed
+- Defensive security review: ACCEPT; SG-SIDECAR PASS; SG-SCOPE PASS; no Critical/High/Medium/Low findings
+- Informational residual: accepted result arguments are stored directly and future nested mutable structures may merit separate copy/redaction hardening; no discarded data leaked in current scope
+- Custody: local only, unmerged, unpushed, undeployed, unreleased; combined verification worktree preserved for evidence; Gate 3 ungranted
+
 ## Gate custody
 
-P01, P02, P04, P05, P07, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01-04 were explicitly ratified on 2026-09-02. P06 may be shaped against accepted P05 hash `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`. P03 is held pending Narrow Gate 1 Amendment 05. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
+P01, P02, P04, P05, P06, P07, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01-04 were explicitly ratified on 2026-09-02. P03 is held pending Narrow Gate 1 Amendment 05. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.

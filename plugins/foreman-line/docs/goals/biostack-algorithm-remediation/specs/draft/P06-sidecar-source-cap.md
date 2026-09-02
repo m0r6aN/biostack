@@ -1,7 +1,7 @@
 ---
 parcel: P06
 title: Sidecar accepted-source cap
-status: ready-for-step-0
+status: review-complete-held-unmerged
 goal: biostack-algorithm-remediation
 initiative: BioStack Algorithm Remediation
 project: BioStack research sidecar
@@ -21,6 +21,8 @@ p05_candidate: 2f4a092fb7f0ec534996e6ad1116e8b50d612b77
 Shaper lint: **PASSED 2026-09-02.** The source owner, diagnostic fixture, P05 custody, exact Allowed Files, offline commands, test counts, security gates, and Gate 3 boundary were reconciled against Git and the local accepted P05 worktree. Coordinator lint, clean worktree creation, and a confirmed fresh Step 0 remain mandatory before implementation.
 
 Coordinator lint: **PASSED 2026-09-02.** Local `main` and `origin/main`, pinned base/tree, executor blob, diagnostic test blob, accepted P05 hash/tree/reviews, exact two-file AF-P06, five-case census, standalone and combined counts, offline commands, lint baselines, security/review depth, and Gate 3 boundary were independently reconciled. Dispatch remains contingent on a clean isolated base-rooted worktree and exact Step 0 restatement.
+
+Final disposition: **REVIEW COMPLETE 2026-09-02.** Candidate `c435caf3cf0cf95fb1bfbc51d2924ea960183957` passes target `5/5`, adjacent `38 passed / 1 expected skip`, aggregate `43 passed / 1 expected skip`, exact five-finding lint baseline, scope, ancestry, and offline boundaries. Coordinator-controlled combined verification with accepted P05 `2f4a092fb7f0ec534996e6ad1116e8b50d612b77` and P06 patch SHA-256 `B2882552D186668F800F1E943EEF831C73DF939955208C8625ADD122C34E57CC` passes targets `15/15`, adjacent `38 passed / 1 expected skip`, aggregate `53 passed / 1 expected skip`, and exact thirteen-finding lint baseline. Two fresh adversarial reviewers and a fresh separate SG-SIDECAR/SG-SCOPE reviewer ACCEPT this exact candidate/custody. Local only and held unmerged; Gate 3 remains ungranted.
 
 ## Goal and outcome
 
