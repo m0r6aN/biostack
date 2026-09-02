@@ -81,6 +81,22 @@ Status: **live coordinator record; no merge or release authority**
 - Fresh review: ACCEPT; endpoint authentication and processor status remain explicit non-conclusions
 - Current status: evidence branch clean and unmerged; any production fix requires a new P08 production owner/invariant/Allowed Files, SG-OUTBOUND, narrow Gate 1 ratification, and contingent Gate 2 authority
 
+## P07 — Frontend authenticated-consented relay
+
+- Base: `339f259b1a467034db4f57cf9d774c292f11b53a`
+- Candidate: `c35df75be835d26b4c37618874cf502335b9a24c`; tree `88241d74bb42dadfcfb9fab3c7d01a377ff82eac`; sole parent is the pinned base
+- Changed paths: exactly all three AF-P07 files; diff check, ancestry, generated-root cleanup, and clean status passed
+- Boundary: exact trusted backend consent GET with only one named session cookie, manual redirects, no-store, 2-second abort, 16,384-byte streamed bound, strict seven-field response, and `accepted === true` before provider construction
+- Call matrix: eight denial tests retain zero provider calls; the sole positive performs exactly one consent call and one provider call; session, decoy cookies, and inbound authorization never reach the provider
+- Verification: target `2 files / 10 tests`; research directory `7/26`; full frontend `136/989`; exact ambient lint equality `98 = 48 errors + 50 warnings`; focused AF lint zero; build exit `0`; backend consent `17/17`
+- Rework custody: first review found whitespace around the named cookie's `=` was normalized into authority; the parser and retained regression now reject both variants. Rejected commit `842fb33749290dcd96a12350bc530312f080c652` remains at `codex/biostack-remediation-p07-review-history-20260902`
+- Adversarial reviewer A: ACCEPT, no blocking findings
+- Adversarial reviewer B: ACCEPT, no findings
+- Defensive security review: ACCEPT; SG-OUTBOUND PASS; SG-SCOPE PASS; no Critical/High/Medium/Low findings
+- Traceability: exact candidate runtime results are in the signed builder handoff rather than a standalone transcript; reviewers accepted this under the shaped contract
+- Residuals: configured backend origin is an operator-controlled credential-receiving trust root; after-headers stream abort and several malformed response modes are statically fail-closed but not separate runtime rows
+- Custody: clean local branch `codex/biostack-remediation-p07`; not pushed, merged, deployed, enabled, or released
+
 ## P07 — Clean-base lint evidence
 
 - Evidence worktree: `codex/biostack-remediation-p07-lint-baseline` at exact base/tree; no source change or commit
@@ -111,4 +127,4 @@ Status: **live coordinator record; no merge or release authority**
 
 ## Gate custody
 
-P01, P02, P04, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01 and 02 were explicitly ratified on 2026-09-02, activating their replacement decisions and contingent Gate 2 authority through P08. P05 shaping is blocked pending Narrow Gate 1 Amendment 03, and P06 remains downstream. P03's scoped target/adjacent/Application chain is green but its uncommitted candidate is held pending Amendment 04 for one stale API fixture. P07 is in reviewer-directed rework on its isolated branch. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
+P01, P02, P04, P07, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01 and 02 were explicitly ratified on 2026-09-02, activating their replacement decisions and contingent Gate 2 authority through P08. P05 shaping is blocked pending Narrow Gate 1 Amendment 03, and P06 remains downstream. P03's scoped target/adjacent/Application chain is green but its uncommitted candidate is held pending Amendment 04 for one stale API fixture. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.

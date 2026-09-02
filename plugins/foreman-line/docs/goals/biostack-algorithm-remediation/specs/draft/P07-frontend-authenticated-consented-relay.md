@@ -1,10 +1,12 @@
 # Parcel Spec: P07 Frontend Authenticated-Consented Relay
 
-Status: **active — implementation functionally green; clean-base lint evidence accepted and verification contract re-linted; awaiting fresh builder restatement**
+Status: **review-complete local candidate — Gate 3 ungranted**
 
 Coordinator lint: **PASSED 2026-09-02.** AF-P07, pinned route/test/contract/diagnostic blobs, Q04 transcript custody, trusted-origin and named-cookie boundary, exact consent request/response controls, eight-denial plus one-positive call matrix, baseline and candidate count deltas, offline install/cleanup rules, paired backend consent verification, and dual-adversarial plus separate security-review depth were checked against the pinned repository and ratified D9(b).
 
 Lint-evidence re-lint: **PASSED 2026-09-02 after the first builder stopped on the aggregate lint tripwire.** A fresh clean-base evidence parcel proved that `npm run lint` already exits `1` with exactly `98` ambient findings (`48` errors and `50` warnings) across `49` paths outside AF-P07, while direct local ESLint on the two base AF-P07 files exits `0` with zero findings. Candidate verification therefore retains the full lint command as an exact ambient-delta receipt and adds focused local ESLint over all three candidate AF-P07 files. This changes no D9(b) decision, invariant, Allowed File, security gate, test count, or Gate authority.
+
+Completion receipt: **REVIEW-COMPLETE 2026-09-02.** Sole-parent local candidate `c35df75be835d26b4c37618874cf502335b9a24c` / tree `88241d74bb42dadfcfb9fab3c7d01a377ff82eac` changes exactly AF-P07. Target `2 files / 10 tests`, research directory `7/26`, full frontend `136/989`, focused lint zero, exact ambient lint equality `98 = 48 errors + 50 warnings`, production build exit `0`, and backend consent `17/17` are green. Reviewer-directed malformed-cookie rework is included while the rejected candidate remains preserved at `codex/biostack-remediation-p07-review-history-20260902`. Two fresh adversarial reviewers and the separate SG-OUTBOUND/SG-SCOPE reviewer accepted the exact candidate with no blocking findings. Runtime counts are preserved in the signed builder handoff rather than a standalone candidate transcript; all reviewers accepted that traceability limitation under the shaped contract. Gate 3 remains ungranted.
 
 ## Identity
 
