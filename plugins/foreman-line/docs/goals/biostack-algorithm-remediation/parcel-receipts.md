@@ -66,6 +66,17 @@ Status: **live coordinator record; no merge or release authority**
 - Fresh review: ACCEPT; endpoint authentication and processor status remain explicit non-conclusions
 - Current status: evidence branch clean and unmerged; any production fix requires a new P08 production owner/invariant/Allowed Files, SG-OUTBOUND, narrow Gate 1 ratification, and contingent Gate 2 authority
 
+## P07 — Clean-base lint evidence
+
+- Evidence worktree: `codex/biostack-remediation-p07-lint-baseline` at exact base/tree; no source change or commit
+- Offline install: `npm ci --offline` exit `0`; no registry fallback
+- Full base lint: exit `1`; exactly `98` ambient findings (`48` errors, `50` warnings) across `49` paths outside AF-P07
+- Focused base lint: direct local ESLint on `route.ts` and `suggest.route.test.ts` exit `0`, zero findings
+- Transcript: `97,999` bytes; SHA-256 `EDBCCF6EDA244649D6EB99B08E589F8E4887E0118B14BBDE818BA19A2380E181`
+- Raw lint: `67,767` bytes; SHA-256 `21F740C507C0E255CBBCAE38726828C668CC5D638E32F35DAA915ADB2D2D3EA3`
+- Cleanup/custody: generated roots final-absent; package/lock blobs unchanged; exact base/tree and clean status restored
+- Disposition: P07 full lint becomes an ambient-delta receipt, while all three candidate AF-P07 files must pass focused lint with zero findings; no Gate 1 product decision or authority changed
+
 ## Q02 — Endpoint gate inventory
 
 - Baseline: adjacent 21 passed; API project 377 passed

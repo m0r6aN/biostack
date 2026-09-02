@@ -1,8 +1,10 @@
 # Parcel Spec: P07 Frontend Authenticated-Consented Relay
 
-Status: **active — Amendment 01 ratified, Q04 accepted `READY`, and coordinator lint passed; awaiting clean isolated worktree and confirmed Step 0**
+Status: **active — implementation functionally green; clean-base lint evidence accepted and verification contract re-linted; awaiting fresh builder restatement**
 
 Coordinator lint: **PASSED 2026-09-02.** AF-P07, pinned route/test/contract/diagnostic blobs, Q04 transcript custody, trusted-origin and named-cookie boundary, exact consent request/response controls, eight-denial plus one-positive call matrix, baseline and candidate count deltas, offline install/cleanup rules, paired backend consent verification, and dual-adversarial plus separate security-review depth were checked against the pinned repository and ratified D9(b).
+
+Lint-evidence re-lint: **PASSED 2026-09-02 after the first builder stopped on the aggregate lint tripwire.** A fresh clean-base evidence parcel proved that `npm run lint` already exits `1` with exactly `98` ambient findings (`48` errors and `50` warnings) across `49` paths outside AF-P07, while direct local ESLint on the two base AF-P07 files exits `0` with zero findings. Candidate verification therefore retains the full lint command as an exact ambient-delta receipt and adds focused local ESLint over all three candidate AF-P07 files. This changes no D9(b) decision, invariant, Allowed File, security gate, test count, or Gate authority.
 
 ## Identity
 
@@ -92,6 +94,7 @@ Inspected at base `339f259b1a467034db4f57cf9d774c292f11b53a`:
 - `ConsentGateIntegrationTests.cs`, blob `338a415bc5ce52c8aecef8bf75cac50b2f881dd5`, has seventeen passing cases on the pinned base and proves anonymous denial plus current server-consent behavior.
 - `frontend/package.json`, blob `c961913b9c7fd598f4a6c5a6be811edbe35bfe07`, maps `test` to `vitest run`; lock blob `6772a07e5d8cfb575788f78afda23ec388bc5720` resolves Vitest `4.1.10`.
 - Fresh shaping receipts on the pinned base: the research API directory passed `6` files / `18` tests, and the deterministic full frontend suite passed `135` files / `981` tests with zero failures/skips under two workers. Q04 separately proved the unchanged suggestion-route file at `1` file / `2` tests using an offline dependency install.
+- Fresh clean-base lint receipt: full `npm run lint` exits `1` with exactly `98` ambient findings (`48` errors, `50` warnings) across `49` paths outside AF-P07; direct local ESLint on `route.ts` and `suggest.route.test.ts` exits `0` with zero findings. Transcript `C:\Users\clint\.codex\evidence\biostack-algorithm-remediation\p07-clean-base-lint-20260902-152511-1425010.transcript.txt` is `97,999` bytes with SHA-256 `EDBCCF6EDA244649D6EB99B08E589F8E4887E0118B14BBDE818BA19A2380E181`; raw lint output `C:\Users\clint\.codex\evidence\biostack-algorithm-remediation\p07-clean-base-lint-20260902-152511-1425010.full-lint.raw.txt` is `67,767` bytes with SHA-256 `21F740C507C0E255CBBCAE38726828C668CC5D638E32F35DAA915ADB2D2D3EA3`. The evidence worktree returned exactly to the pinned base/tree with all generated roots absent.
 - At shaping time, `main` and `origin/main` both resolve to the pinned base/tree, and neither the P07 branch nor worktree exists.
 
 `rtk` was not resolvable during shaping. Commands below use the repository's raw debugging fallback. If `rtk` is available during dispatch, the builder may use semantically identical wrapped commands but must preserve every argument and record which form ran.
@@ -154,7 +157,7 @@ Before importing/editing/installing/building/testing, a fresh builder sends one 
 3. diagnostic commit/blob, exact retained method, copy-by-content/no-cherry-pick custody, and preservation of all diagnostic branches;
 4. the trusted-origin order/default, unique named cookie, exact consent endpoint/method/request policy, `2,000 ms` timeout, `16,384`-byte streamed bound, strict seven-field response, and `accepted === true` rule;
 5. all eight independent denial cases in the reproduction file plus exactly one positive local-fake case in the existing route-test file; denial provider count zero and sole positive provider count one; cookie never reaches provider;
-6. existing two-test adaptation, research-directory and full-suite expected counts/deltas, backend `ConsentGateIntegrationTests` `17/0/0`, lint/build, scope, ancestry, cleanup, and no-network receipts;
+6. existing two-test adaptation, research-directory and full-suite expected counts/deltas, backend `ConsentGateIntegrationTests` `17/0/0`, the accepted full-lint `98 = 48 errors + 50 warnings` outside-AF baseline plus zero-finding three-file focused lint, build, scope, ancestry, cleanup, and no-network receipts;
 7. offline-only dependency install, permitted pre-absent ignored roots, no registry fallback, and exact cleanup limits;
 8. two fresh adversarial reviews plus separate SG-OUTBOUND/SG-SCOPE security review; and
 9. Gate 3 ungranted and no push/PR/merge/deploy/enable/publish/release/diagnostic mutation.
@@ -206,6 +209,7 @@ The detailed targeted receipt must enumerate consent/provider calls per case: re
 ```powershell
 Push-Location frontend
 npm run lint
+node .\node_modules\eslint\bin\eslint.js src/app/api/research/suggest/route.ts src/__tests__/app/api/research/suggest.route.test.ts src/__tests__/app/api/research/suggest.outbound-boundary.reproduction.test.ts
 node .\node_modules\vitest\vitest.mjs run --pool=threads --maxWorkers=2 --no-file-parallelism
 $env:NEXT_TELEMETRY_DISABLED = '1'
 npm run build
@@ -213,7 +217,7 @@ Pop-Location
 dotnet test backend/tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-restore --filter 'FullyQualifiedName~BioStack.Api.Tests.Integration.ConsentGateIntegrationTests' --disable-build-servers --logger 'console;verbosity=minimal'
 ```
 
-Expected: lint exit `0`; full frontend `136` files / `989` passed, zero failed/skipped, exact `+1` file / `+8` tests from base; production build exit `0`; real backend consent integration `17` passed, zero failed/skipped. The backend result proves the server contract independently; it does not replace the frontend local contract tests.
+Expected: full lint exit `1` with exactly the accepted ambient baseline of `98` findings (`48` errors, `50` warnings) across the same `49` outside-AF paths and no AF-P07 finding; focused local ESLint exit `0` with zero findings across all three candidate AF-P07 files. Any new, changed, or AF-P07 lint finding is a failure even though the aggregate command already exits nonzero on the pinned base. Full frontend must report `136` files / `989` passed, zero failed/skipped, exact `+1` file / `+8` tests from base; production build exits `0`; real backend consent integration reports `17` passed, zero failed/skipped. The backend result proves the server contract independently; it does not replace the frontend local contract tests.
 
 ### Scope, cleanup, ancestry, and custody
 
@@ -237,7 +241,7 @@ Expected: changed paths are exactly AF-P07; the candidate has the pinned base as
 - Trusted backend origin, exact endpoint/method, unique named cookie, no-store, manual redirect, bounded timeout, streamed size limit, strict response contract, and `accepted === true` are directly asserted.
 - The session cookie and all inbound credentials are absent from the provider request; caller body/header/config claims cannot bypass consent.
 - Existing provider request/response normalization behavior remains green, including the two original suggestion-route tests.
-- Exact targeted/adjacent/full frontend counts, lint, production build, and all seventeen real backend consent integration tests are green.
+- Exact targeted/adjacent/full frontend counts, the accepted full-lint ambient delta plus zero-finding focused lint, production build, and all seventeen real backend consent integration tests satisfy their contracts.
 - All fakes are local and non-delegating; no network/provider/registry/cloud/production/protected-data/secret access occurs.
 - Exact Allowed Files, ancestry, diff check, generated-root cleanup, and clean final status pass.
 - Two fresh adversarial reviewers and one separate defensive security reviewer accept the exact candidate, or all findings are fixed and the entire verification/review chain reruns against the new hash.
@@ -253,7 +257,7 @@ The builder handoff records:
 4. Q04 accepted transcript path/size/hash and the fresh offline-install receipt;
 5. static order proof that current consent completes before provider request construction/fetch;
 6. all eight denial case names plus the existing-route sole positive case, consent/provider call counts, response classifications, exact trusted URL/request policy, timeout/size/strict-contract receipts, and provider-header cookie absence;
-7. exact baseline and candidate targeted/adjacent/full frontend, lint, build, and backend consent commands with exit codes/counts/deltas;
+7. exact baseline and candidate targeted/adjacent/full frontend, full/focused lint, build, and backend consent commands with exit codes/counts/deltas, including equality to the accepted 98-finding ambient lint set;
 8. non-delegating fake identities, cleared shell environment, and explicit no-network/no-provider/no-registry/no-protected-data/no-secret receipt;
 9. generated-root pre-absence, resolved cleanup targets, removal results, and post-absence;
 10. residual risk, rollback, decisions needed/blockers, and next safe action; and
@@ -309,7 +313,7 @@ Do not open or update a PR. These notes are a future Gate-3 handoff template, no
 
 ## Stop-and-Report Rules
 
-Stop immediately if Step 0 is not confirmed; origin/base/tree/status/blob/counts differ materially; Q04 or Amendment 01 custody is absent; AF-P07 is insufficient; another file/dependency/config is needed; the retained method/scenario would be deleted, renamed, or weakened; any D9(b) denial cannot be independently tested; consent cannot precede provider relay; the cookie can reach a provider/redirect; the response must be read unbounded; a fake could delegate; offline dependencies or verified backend assets are unavailable; lint/test/build/backend integration, count, scope, ancestry, cleanup, or security review fails; the same tripwire recurs twice; or any network/provider/registry/cloud/production/protected-data/secret/push/PR/merge/deploy/enable/publish/release/diagnostic mutation is proposed.
+Stop immediately if Step 0 is not confirmed; origin/base/tree/status/blob/counts differ materially; Q04 or Amendment 01 custody is absent; AF-P07 is insufficient; another file/dependency/config is needed; the retained method/scenario would be deleted, renamed, or weakened; any D9(b) denial cannot be independently tested; consent cannot precede provider relay; the cookie can reach a provider/redirect; the response must be read unbounded; a fake could delegate; offline dependencies or verified backend assets are unavailable; full lint diverges from the accepted 98-finding outside-AF baseline, focused lint reports any AF-P07 finding, or any test/build/backend integration, count, scope, ancestry, cleanup, or security review fails; the same tripwire recurs twice; or any network/provider/registry/cloud/production/protected-data/secret/push/PR/merge/deploy/enable/publish/release/diagnostic mutation is proposed.
 
 If the backend contract changed, retain fail-closed behavior and stop for a narrow contract/spec amendment. Do not broaden AF-P07 or silently relax strict parsing.
 
