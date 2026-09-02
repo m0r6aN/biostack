@@ -24,4 +24,8 @@ After all parcels finish, reconcile:
 - Rechecked all five parcel branch heads and their diffs from the contract commit. Each worktree is clean; each branch descends from the contract commit and has execution base `339f259b1a467034db4f57cf9d774c292f11b53a` as an ancestor.
 - Re-ran the parser, interaction, evidence/provenance, OCR outbound, and sidecar commands recorded in `SESSION-HANDOFFS.md`; each reached only its intended assertion failures.
 - The frontend outbound reproduction could not be independently collected in this environment because the outbound worktree lacks local npm dependencies. This is an environment blocker, not a reproduction result; the prior dependency-complete assertion-level result remains recorded as historical evidence.
-- Gate 1 is pending explicit developer ratification in this coordinator run. Gate 3 remains ungranted; no failing parcel branch may be merged.
+- At the initial coordinator closure, Gate 1 was pending explicit developer ratification. Gate 3 remains ungranted; no failing parcel branch may be merged.
+
+## Ratification update (2026-09-02)
+
+- D1-D6 were explicitly ratified as written by the developer. No scope, execution base, Allowed File, exit-criterion, or Gate 3 change was authorized by that ratification.

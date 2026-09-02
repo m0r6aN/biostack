@@ -45,13 +45,13 @@ The initiative is complete only when every parcel has an independently committed
 
 ## Human gates and standing authorizations
 
-- Gate 1 (charter ratification): **pending explicit developer ratification in this coordinator run**. The dated test-only authority in `DISCOVERY.md` and the decisions in `DECISIONS.md` establish prior scope, but are not silently upgraded to a new Gate 1 sign-off.
+- Gate 1 (charter ratification): **D1-D6 ratified as written on 2026-09-02** by explicit developer direction: “D1-D6 are ratified, as written.” This ratifies the locked decisions only; it does not grant Gate 3 or alter the exit criterion.
 - Gate 2 (dispatch): historical test-only dispatch of the five named branches is recorded in `DISPATCH.md`; this run authorizes no new parcel dispatch.
 - Gate 3 (merge/release): not granted. The five intentionally failing reproduction branches remain unmerged, and this initiative grants no release, provider, publication, or production-fix authority.
 
 ## Stop conditions
 
-- Stop awaiting Gate 1 until the developer explicitly ratifies the locked decisions and exit criterion.
+- Stop if a new decision, scope change, or exit-criterion change is not explicitly ratified.
 - Stop if a future request changes the frozen execution base, exact Allowed Files, or test-only posture.
 - Stop on any environmental or harness failure that cannot be separated from the intended assertion failure.
 - Stop before any merge, release, provider enablement, external transmission, or production fix.

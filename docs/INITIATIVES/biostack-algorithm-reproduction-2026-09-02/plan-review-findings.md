@@ -14,4 +14,8 @@ Scope: initiative control pack, parcel branch identity, Allowed Files, evidence 
 
 ## Overall verdict
 
-The five-way decomposition is operationally disjoint and the parcel branch deltas are test-only, but the initiative is not fully closed: Gate 1 awaits explicit developer ratification, Gate 3 is not granted, and the frontend reproduction requires a dependency-complete environment for independent recollection. Inconclusive claims remain open residuals.
+At review time, the five-way decomposition was operationally disjoint and the parcel branch deltas were test-only, but the initiative was not fully closed: Gate 1 awaited explicit developer ratification, Gate 3 was not granted, and the frontend reproduction required a dependency-complete environment for independent recollection. Inconclusive claims remain open residuals.
+
+## Ratification addendum (2026-09-02)
+
+The developer explicitly ratified D1-D6 as written. No locked decision changed, so no plan-review re-open is required. The ratification does not grant Gate 3, merge authority, production-fix authority, or external-provider authority; the recorded residuals remain unchanged.
