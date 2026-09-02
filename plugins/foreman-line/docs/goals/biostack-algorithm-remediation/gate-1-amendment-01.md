@@ -2,11 +2,11 @@
 
 **Status:** AWAITING HUMAN RE-RATIFICATION
 
-**Scope:** D6, D8, and D9 only
+**Scope:** D6, D7, D8, and D9 only
 
 **Trigger:** mandatory post-Gate-1 plan-level adversarial review of charter commit `6720edb7b37162757f14809e1eded130dc8f3cae`
 
-All other locked decisions D1-D5, D7, and D10-D14 remain ratified and unchanged. Existing contingent Gate 2 authority remains unchanged for orthogonal work. Gate 3 remains ungranted.
+All other locked decisions D1-D5 and D10-D14 remain ratified and unchanged. Existing contingent Gate 2 authority remains unchanged for orthogonal work. Gate 3 remains ungranted.
 
 ## D6 replacement — interaction safety
 
@@ -20,6 +20,20 @@ Required P03 regressions retain the four reproduced scenarios and add:
 - inactive/missing or non-reviewed graph artifact cannot authorize graph intelligence;
 - non-reviewed edge cannot authorize graph intelligence;
 - `NeedsReview` remains ineligible independently of the other checks.
+
+## D7 replacement — evidence provenance
+
+Replace D7 with:
+
+> **D7 — Evidence provenance.** Only `PendingReview` and `Partial` research artifacts are candidate outputs eligible for the review-staging lane. `Queued`, `ResolvingIdentity`, `GatheringEvidence`, `Normalizing`, `Completed`, `Failed`, `Cancelled`, and `RejectedByPolicy` artifacts fail before any staging-store lookup or upsert, using the existing `ScientificResearchProviderException` with error code `artifact_not_stageable`. Internal `research_job:`, `workflow:`, `tooluniverse:`, and `tool:` labels remain provenance and never count as citations, including when their value contains locator-looking text. In addition to every existing tier, review-state, target, mechanism, fixture, and safety check, opening `EvidenceGate` requires the pipe-delimited `citations` metadata to contain at least one trimmed stable external locator: an absolute `http` or `https` URI with a nonempty host; `doi:` followed by a no-whitespace value beginning `10.` and containing `/`; or `pmid:` followed only by one or more ASCII digits. Prefix and scheme matching is case-insensitive. Missing/nonblank citations retain `missing_citations`; citations without a qualifying external locator fail with `missing_external_source_locator`. Locator validation is syntax-only and performs no I/O.
+
+Required P04 regressions retain the two reproduced scenarios and directly prove:
+
+- all eight ineligible states cause zero staging upserts;
+- both eligible candidate states stage and preserve idempotency;
+- internal-only and prefix-smuggled labels remain ineligible;
+- each of the four external locator forms has a valid positive control;
+- malformed and unsupported locators fail closed without network access.
 
 ## D8 replacement — sidecar lifecycle and source cap
 
@@ -44,4 +58,4 @@ Required P07 hostile regressions independently cover every denial listed above p
 
 ## Exact re-ratification form
 
-> Narrow Gate 1 Amendment 01: I ratify the replacement text for D6, D8, and D9 as written. All other decisions and the existing contingent Gate 2 authorization remain unchanged. Gate 3 remains ungranted.
+> Narrow Gate 1 Amendment 01: I ratify the replacement text for D6, D7, D8, and D9 as written. All other decisions and the existing contingent Gate 2 authorization remain unchanged. Gate 3 remains ungranted.

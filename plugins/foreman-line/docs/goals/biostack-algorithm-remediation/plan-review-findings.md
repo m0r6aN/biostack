@@ -25,6 +25,7 @@
 | F9 | High | Fix | Q03 may not make a deterministic exploitability claim from wall-clock timing. It must record `inconclusive — no deterministic seam` unless static/runtime evidence already on the pinned base proves a bounded regex timeout. It creates no test merely to restate P02 cancellation. | None; D4 already permits an evidence-backed inconclusive disposition with no production write. | Q03 only. |
 | F10 | Medium | Fix | Q custody is outcome-specific: reproduced branches/tests remain preserved and unmerged pending a separately ratified remediation; not-reproduced, inconclusive, and environment-blocked outcomes remain evidence-only; every Q branch and outcome is recorded at Stage F and no Q branch is deleted without explicit cleanup authority. | None; this installs the branch-custody detail already required by D14. | Q01-Q04 Stage F until receipts exist. |
 | F11 | Medium | Fix | Shaped specs and the loop directive must carry exact targeted, adjacent, and aggregate commands, base test-count receipts, offline/network controls, sequencing, and expected count deltas before their Gate 2 contingency is satisfied. | None. | Gate 2 for any spec missing the matrix; Gate 3 globally until aggregate verification is green. |
+| F12 | Critical | Fix plus narrow re-ratification | Coordinator lint found that D7's “otherwise non-candidate” phrase does not classify `Completed` or `Partial`, and its locator forms lack executable syntax. Current executor evidence supports `PendingReview`/`Partial` as candidate outputs, but a builder cannot silently choose that product contract. | **D7 amendment required.** | P04. |
 
 ## Coordinator reproduction evidence
 
@@ -37,6 +38,7 @@
 - F7/F8: the frontend currently calls the provider directly; the authenticated backend contract is `GET /api/v1/consent`; the existing middleware demonstrates a server-controlled origin, named cookie, and `cache: no-store`; `ConsentGateIntegrationTests` exercises the real endpoint.
 - F9: PDF extraction uses synchronous `Regex.Matches` without a timeout or deterministic instrumentation seam.
 - F11: repository commands exist for .NET, Vitest/lint/build, and sidecar pytest/ruff, but the charter did not pin an aggregate command matrix or count receipts.
+- F12: the current sidecar executor emits `PendingReview` for full candidate success and `Partial` for partial candidate output; it does not emit `Completed`. The .NET enum nevertheless exposes all ten states, and D7 did not turn “otherwise non-candidate” into an exact allowlist or locator grammar.
 
 ## Repairs that do not reopen Gate 1
 
@@ -57,11 +59,12 @@
 
 ## Narrow Gate 1 reopening
 
-Only D6, D8, and D9 are reopened. The proposed replacement text is recorded in `gate-1-amendment-01.md`.
+Only D6, D7, D8, and D9 are reopened. The proposed replacement text is recorded in `gate-1-amendment-01.md`.
 
 - P03 is paused on D6.
+- P04 is paused on D7.
 - P05 and P06 are paused on D8.
 - P07 is paused on D9.
 - D9(a), the OCR half implemented by P02, is unchanged and orthogonal to the reopened frontend clauses.
-- P01, P02, P04, and Q01-Q04 remain eligible for shaping under the original contingent Gate 2 authorization, provided their specs incorporate every applicable non-decision repair above.
+- P01, P02, and Q01-Q04 remain eligible for shaping under the original contingent Gate 2 authorization, provided their specs incorporate every applicable non-decision repair above.
 - Gate 3 remains ungranted.

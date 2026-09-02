@@ -12,7 +12,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Remediation base: `main` / `origin/main` at `339f259b1a467034db4f57cf9d774c292f11b53a`
 - Gate 1: D1-D14 ratified 2026-09-02
 - Plan review: complete; triage commit `ef4376b0a186dd0c0fe9e4b7772bde07e39756eb`
-- Narrow Gate 1 Amendment 01: pending for D6, D8, and D9
+- Narrow Gate 1 Amendment 01: pending for D6, D7, D8, and D9
 - Gate 2: contingent authorization granted for Q01-Q04 and P01-P07
 - Gate 3: ungranted
 - Diagnostic coordination and five parcel branches: preserved and unmerged
@@ -26,7 +26,7 @@ The developer granted exactly:
 Operational effect:
 
 1. Q01-Q04 and P01-P07 may be shaped and dispatched only after their specs exactly match the ratified charter and any ratified amendment, name an isolated branch/worktree, pass Step 0, and retain exact Allowed Files.
-2. While Amendment 01 is pending, P03 is blocked by D6; P05/P06 are blocked by D8; P07 is blocked by D9. Orthogonal shaping may continue for P01, P02, P04, and Q01-Q04.
+2. While Amendment 01 is pending, P03 is blocked by D6; P04 is blocked by D7; P05/P06 are blocked by D8; P07 is blocked by D9. Orthogonal shaping may continue for P01, P02, and Q01-Q04.
 3. The authority does not permit a new parcel, changed Allowed Files, external network/provider access, production/cloud data, secrets, pushes, pull requests, merges, deployment, publication, release, or cleanup of diagnostic branches.
 4. Gate 3 remains human-only for the exact candidate commit set and exact merge/release action after the complete verification chain is green.
 
@@ -38,8 +38,8 @@ The coordinator advances this queue in dependency order while allowing only coll
 2. Q04 frontend dependency readiness; command-only, no repository changes.
 3. Shape and lint P01 parser semantics.
 4. Shape and lint P02 protocol-ingestion cancellation/OCR boundary.
-5. Shape and lint P04 evidence provenance with the repaired staging/gate harness.
-6. Shape and lint Q01 Collective outbound, Q02 endpoint inventory, and Q03 regex adjudication as three independent evidence lanes.
+5. Shape and lint Q01 Collective outbound, Q02 endpoint inventory, and Q03 regex adjudication as three independent evidence lanes.
+6. After Amendment 01: activate the already drafted P04 evidence-provenance contract with the repaired staging/gate harness.
 7. After Amendment 01: shape and lint P03 interaction safety.
 8. After Amendment 01: shape and lint P05 terminal-state custody, then P06 source-cap enforcement; P05 precedes final P06 integration verification.
 9. After Amendment 01 and successful Q04: shape and lint P07 authenticated-consented frontend relay.
