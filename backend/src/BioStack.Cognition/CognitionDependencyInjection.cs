@@ -16,7 +16,7 @@ public static class CognitionServiceCollectionExtensions
     public static IServiceCollection AddBioStackCognition(this IServiceCollection services)
     {
         services.AddSingleton<IStackDeliberationTranslator, StackDeliberationTranslator>();
-        services.AddSingleton<IStackReviewBoardService, StackReviewBoardService>();
+        services.AddScoped<IStackReviewBoardService, StackReviewBoardService>();
         return services;
     }
 
@@ -50,10 +50,11 @@ public static class CognitionServiceCollectionExtensions
                 http.Timeout     = TimeSpan.FromMilliseconds(options.TimeoutMs);
             });
 
-            services.AddSingleton<ICognitiveDensityOrchestrator>(sp =>
+            services.AddScoped<ICognitiveDensityOrchestrator>(sp =>
                 new CollectiveLiveOrchestrator(
                     sp.GetRequiredService<IHttpClientFactory>(),
                     options,
+                    sp.GetRequiredService<ICollectiveOutboundAuthorizationGate>(),
                     sp.GetRequiredService<ILogger<CollectiveLiveOrchestrator>>()));
         }
         else

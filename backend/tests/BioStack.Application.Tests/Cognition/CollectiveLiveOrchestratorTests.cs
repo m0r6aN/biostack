@@ -98,7 +98,16 @@ public sealed class CollectiveLiveOrchestratorTests
         mockFactory.Setup(f => f.CreateClient(CollectiveLiveOrchestrator.HttpClientName)).Returns(http);
 
         return new CollectiveLiveOrchestrator(
-            mockFactory.Object, opts, NullLogger<CollectiveLiveOrchestrator>.Instance);
+            mockFactory.Object,
+            opts,
+            new AuthorizedGate(),
+            NullLogger<CollectiveLiveOrchestrator>.Instance);
+    }
+
+    private sealed class AuthorizedGate : ICollectiveOutboundAuthorizationGate
+    {
+        public Task<bool> IsAuthorizedAsync(CancellationToken cancellationToken = default) =>
+            Task.FromResult(true);
     }
 
     // ── T_Live1: Happy path — POST succeeds, surfaces fully mapped ────────────
