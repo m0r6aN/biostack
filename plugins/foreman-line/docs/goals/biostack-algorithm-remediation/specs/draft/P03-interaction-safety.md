@@ -1,12 +1,14 @@
 # Parcel P03: Interaction Safety
 
-Status: **active — Amendment 04 ratified; amended Step 0 required before resumption**
+Status: **blocked — candidate rejected; Narrow Gate 1 Amendment 05 awaiting ratification**
 
 Coordinator lint: **PASSED 2026-09-02 after Narrow Gate 1 Amendment 04.** Replacement three-file AF-P03, the one-value API fixture restriction, base/tree, production and diagnostic blobs, all six amended D6 clauses, the 4 retained plus 6 hostile-case census, the independent 20-case adjacent filter, the 609-passed/5-skipped Application baseline, API 377 tripwire, count deltas, offline commands, and single-review depth were checked against the pinned repository and ratified amendments. Resumption remains contingent on an exact fresh Step 0 restatement.
 
 Import-receipt correction: **PASSED 2026-09-02 after a pre-edit builder stop.** Because the reproduction path is absent from the pinned index, restoring it into the worktree creates an untracked file; pre-commit `git diff --name-only` correctly emits nothing. The import tripwire therefore uses `git status --short --untracked-files=all` plus `git ls-files --others --exclude-standard` and requires exactly the one AF-P03 test path. This changes no invariant, Allowed File, case/count expectation, or Gate authority.
 
-Aggregate disposition: **REACTIVATED 2026-09-02.** The scoped uncommitted candidate passed target `10/10`, adjacent `20/20`, and Application `619 passed / 5 skipped`, but the full solution failed one API case whose graph-positive helper publishes a `provisional` artifact. Narrow Gate 1 Amendment 04 is ratified and adds only `CompoundGraphIntelligenceTests.cs` to AF-P03, authorizing only that stale fixture state to change from `provisional` to exactly `reviewed`. Preserve the current two-file uncommitted state. An amended Step 0 restatement and explicit coordinator confirmation are required before the exact fixture edit, verification, stage, or commit.
+Amendment 04 disposition: **COMPLETED 2026-09-02.** The initial scoped state passed target `10/10`, adjacent `20/20`, and Application `619 passed / 5 skipped`, but the full solution exposed one API graph-positive helper publishing a `provisional` artifact. Amendment 04 added only `CompoundGraphIntelligenceTests.cs` and authorized only that stale fixture state to change from `provisional` to exactly `reviewed`. Candidate `7e8087a00722e38c2a090d49826fa6289c880356` contains that exact correction and passed the amended full verification chain before adversarial review.
+
+Adversarial disposition: **REWORK REQUIRED 2026-09-02.** Candidate `7e8087a00722e38c2a090d49826fa6289c880356` passed its complete shaped verification chain but was rejected because a relationship returned after active-artifact rotation can belong to a different artifact while being attributed to the cached reviewed artifact's hash. The required artifact-ID mismatch regression would change the exact 10-case census. Narrow Gate 1 Amendment 05 proposes the D6 supplement and exact 11-case replacement. No P03 rework is authorized until ratification, spec incorporation, and fresh Step 0.
 
 ## Goal
 

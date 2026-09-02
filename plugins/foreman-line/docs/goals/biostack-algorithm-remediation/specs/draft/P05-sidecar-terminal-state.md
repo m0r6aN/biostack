@@ -1,7 +1,7 @@
 ---
 parcel: P05
 title: Sidecar terminal-state custody
-status: active-awaiting-step-0
+status: active-rework
 goal: biostack-algorithm-remediation
 initiative: BioStack Algorithm Remediation
 project: BioStack research sidecar
@@ -18,6 +18,8 @@ diagnostic_commit: 82295c3f36b412b9917eaf047a70b10ee2a67cdc
 # P05 - Sidecar terminal-state custody
 
 Coordinator lint: **PASSED 2026-09-02 after Narrow Gate 1 Amendment 03.** The ratified D8 timeout-terminalization supplement and replacement three-file AF-P05 resolve the pinned cancel-then-fail conflict. Dispatch remains contingent on the named clean isolated worktree and an exact fresh Step 0 restatement.
+
+Review disposition: **REWORK REQUIRED 2026-09-02.** Candidate `923900c66d7046c282d397ba60d85b9eebcf1a58` passed the shaped verification chain but both adversarial review A and the separate security review found that `update` validates and mutates fields in one loop. A trailing invalid key can therefore raise `AttributeError` after partially installing an incomplete immutable terminal snapshot. Rework must prevalidate all keys under the existing lock before any mutation, preserve `AttributeError`, prove the entire active snapshot is unchanged, and strengthen the preserved timeout case's complete-snapshot assertions without changing the exact 10-case census. All reviews of that candidate are invalidated; the replacement requires two fresh adversarial reviews and a fresh security review.
 
 ## Goal and outcome
 

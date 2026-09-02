@@ -212,6 +212,7 @@ Passing builder tests alone does not satisfy this chain.
 - **Narrow Gate 1 Amendment 02 — ratified 2026-09-02:** D3, D4, D11, and D12 are replaced; D15, AF-P08, and P08 are approved; contingent Gate 2 dispatch authority includes P08 subject to its shaped spec, isolated worktree, exact Allowed Files, and confirmed Step 0.
 - **Narrow Gate 1 Amendment 03 — ratified 2026-09-02:** the D8 timeout-terminalization supplement and replacement three-file AF-P05 in `gate-1-amendment-03.md` are active. P05 retains contingent Gate 2 authority subject to its amended shaped spec and fresh Step 0; P06 remains downstream of the verified P05 candidate.
 - **Narrow Gate 1 Amendment 04 — ratified 2026-09-02:** replacement three-file AF-P03 in `gate-1-amendment-04.md` is active. Only the stale API graph-positive fixture state may change from `provisional` to exactly `reviewed`; ratified D6 and all other P03 constraints remain unchanged.
+- **Narrow Gate 1 Amendment 05 — awaiting human ratification:** `gate-1-amendment-05.md` proposes the D6 artifact-identity/provenance supplement and an exact 11-case P03 census. It grants no authority unless ratified; P03 is held.
 - **Gate 3 — human-only and not requested now:** after the complete green chain, present exact candidate commits, review/security dispositions, merge order, rollback notes, and remaining uncertainty. The human approves or rejects the specific merge/release action.
 
 ## Merge and Stage-F closure

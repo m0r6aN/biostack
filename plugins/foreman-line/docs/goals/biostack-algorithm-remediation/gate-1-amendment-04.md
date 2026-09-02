@@ -6,7 +6,7 @@
 
 **Trigger:** the scoped P03 candidate passed its 10-case target, 20-case adjacent set, and Application aggregate, but the full solution exposed one stale API fixture. `CompoundGraphIntelligenceTests.InteractionIntelligence_PrefersGraph_OverStringInference` expects graph-backed intelligence while its shared `PublishGraphAsync` helper creates the artifact with `ReviewState = "provisional"`. Ratified D6 correctly rejects that artifact and falls back. The relationship fixture is already exactly `reviewed`.
 
-Amendments 01-02 remain ratified; Amendment 03 remains separately pending. Every other decision and authorization remains unchanged. Gate 3 remains ungranted.
+Amendments 01-03 remain ratified. Every other decision and authorization remains unchanged. Gate 3 remains ungranted.
 
 ## Fixture decision
 

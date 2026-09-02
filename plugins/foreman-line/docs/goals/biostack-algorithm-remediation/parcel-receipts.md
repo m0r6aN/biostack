@@ -69,7 +69,7 @@ Status: **live coordinator record; no merge or release authority**
 - Final attempt: `READY`; `npm ci --offline` exit 0; exact direct-node worker argv; one file and 2/2 tests passed; no unknown config/option warnings; exact cleanup and Git equality green
 - Final transcript: `3529` bytes; SHA-256 `F185ADCD538B813814C73ADBA67FC43B9F0D0A9FB2A7ACB35BF7DFFC53383633`
 - Fresh review: ACCEPT, no blocking findings
-- Current status: Q04 accepted; P07 shaping may proceed only after Amendment 01, and P07 remains subject to its own Step 0, verification, two adversarial reviews, security review, and gates
+- Current status: Q04 accepted; P07 candidate `c35df75be835d26b4c37618874cf502335b9a24c` is review-complete and held unmerged
 
 ## Q01 — Collective outbound behavior
 
@@ -79,7 +79,7 @@ Status: **live coordinator record; no merge or release authority**
 - Verification: targeted 1/1 intended failure; adjacent 6/6 passed; application aggregate gained exactly the intended failing test and no unrelated failure
 - Transcript SHA-256: `40AFC7C374BD4A393532823266CD8A54A4009AE69786C1A2F399CE5046A4AC66`
 - Fresh review: ACCEPT; endpoint authentication and processor status remain explicit non-conclusions
-- Current status: evidence branch clean and unmerged; any production fix requires a new P08 production owner/invariant/Allowed Files, SG-OUTBOUND, narrow Gate 1 ratification, and contingent Gate 2 authority
+- Current status: evidence branch clean and unmerged; P08 candidate `47c2be0358e7ca024b524c7693af8b06846671d6` is review-complete and held unmerged
 
 ## P07 — Frontend authenticated-consented relay
 
@@ -125,6 +125,22 @@ Status: **live coordinator record; no merge or release authority**
 - Transcript: `7193` bytes; SHA-256 `5212639568C112446E3258A865A2894D797C3481903A8425730B74F4EC8EB45C`
 - Fresh review: ACCEPT; practical exploitability remains unproved and unexcluded
 
+## P03 — Interaction safety
+
+- Rejected candidate: `7e8087a00722e38c2a090d49826fa6289c880356`; direct child of the pinned base; exact three-file AF-P03; clean local worktree
+- Verification: target `10/10`; adjacent `20/20`; Application `619 passed / 5 skipped`; focused API `8/8`; full solution Domain 7, Application 619+5, verifier 158, API 377, KnowledgeWorker 866; zero failures
+- Amendment 04 fixture custody: API diff is exactly one `provisional` to `reviewed` value
+- Fresh adversarial review: REWORK_REQUIRED; cached reviewed artifact A can authorize and misattribute an edge from independently resolved active artifact B because `GraphArtifactId` is not matched
+- Disposition: candidate is preserved but not review-complete. Amendment 05 awaits ratification for the D6 artifact-identity supplement and exact 11-case replacement before any rework.
+
+## P05 — Sidecar terminal-state custody
+
+- Rejected candidate: `923900c66d7046c282d397ba60d85b9eebcf1a58`; direct child of the pinned base; exact three-file AF-P05; clean local worktree
+- Verification: target `10/10`; adjacent `38 passed / 1 expected skip`; aggregate `48 passed / 1 expected skip`; exact eight pinned lint findings unchanged
+- Adversarial review A and separate defensive security review: REWORK_REQUIRED; `store.update` validates and mutates in one loop, so a trailing invalid key can install an incomplete immutable terminal record
+- Required in-scope repair: prevalidate all keys under the lock before mutation; fold unchanged-active-snapshot and complete real-timeout-snapshot assertions into the existing exact 10-case census
+- Disposition: rework Step 0 required; all candidate reviews invalidated; P06 remains held until a final verified and accepted P05 candidate exists
+
 ## Gate custody
 
-P01, P02, P04, P07, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01-04 were explicitly ratified on 2026-09-02. Amendment 03 reactivates P05 under its replacement three-file scope while P06 remains downstream of its verified candidate. Amendment 04 reactivates P03 for the exact reviewed-fixture correction without weakening D6. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
+P01, P02, P04, P07, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01-04 were explicitly ratified on 2026-09-02. P05 is in authorized in-scope rework and P06 remains downstream. P03 is held pending Narrow Gate 1 Amendment 05. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.

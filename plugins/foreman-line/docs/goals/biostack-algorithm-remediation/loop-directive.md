@@ -16,6 +16,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Narrow Gate 1 Amendment 02: ratified 2026-09-02; D3/D4/D11/D12 replacements and D15 active
 - Narrow Gate 1 Amendment 03: ratified 2026-09-02; D8 timeout-terminalization supplement and replacement AF-P05 active
 - Narrow Gate 1 Amendment 04: ratified 2026-09-02; replacement AF-P03 and exact reviewed-fixture correction active
+- Narrow Gate 1 Amendment 05: awaiting human ratification; P03 artifact-identity/provenance supplement and 11-case census proposed
 - Gate 2: contingent authorization granted for Q01-Q04 and P01-P08
 - Gate 3: ungranted
 - Diagnostic coordination and five parcel branches: preserved and unmerged
@@ -28,8 +29,8 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Q03: fresh review ACCEPT; `INCONCLUSIVE_NO_DETERMINISTIC_SEAM`; zero repository changes
 - Q04: final transcript fresh review ACCEPT; `READY`; P07 remediation candidate is review-complete and held unmerged
 - Q02: v1 evidence commit `dea721288521a5789350e2398d0d7292b01ad10f` is preserved but review-rejected; v2 stopped terminally before transcript/test execution when the Baseline procedure encountered an unsupported `New-Item -LiteralPath`; no retry/v3 is authorized and endpoint-wide coverage remains inconclusive
-- P05: Amendment 03 resolved the timeout-transition ownership conflict and reactivated P05; re-lint and fresh Step 0 are next. P06 remains held until the exact verified P05 candidate exists.
-- P03: target `10/10`, adjacent `20/20`, and Application `619 passed / 5 skipped` are green. Amendment 04 authorizes the exact stale API graph-positive fixture correction; amended Step 0 and full verification are next.
+- P05 candidate `923900c66d7046c282d397ba60d85b9eebcf1a58`: target/adjacent/aggregate green but review-rejected because field validation can partially install an immutable terminal snapshot; rework Step 0 is active. P06 remains held.
+- P03 candidate `7e8087a00722e38c2a090d49826fa6289c880356`: complete shaped verification green but review-rejected for cross-artifact provenance misattribution; Amendment 05 is required before regression-count rework.
 - Cerebras routing inventory: user-scope credential presence is confirmed without reading its value, but the current Codex process does not inherit it, no Cerebras CLI or reviewed callable adapter is present, and the existing governed Cerebras shadow route is public-only/candidate-only with Coordinator and verifier roles prohibited. State is `configured_unverified`; no BioStack source, test payload, secret, or provider request has been sent.
 
 ## Standing authorizations
@@ -60,9 +61,9 @@ The coordinator advances this queue in dependency order while allowing only coll
 1. Ratification receipts for Amendments 01 and 02: complete.
 2. Q01-Q04 adjudication: complete; Q02 remains a durable inconclusive terminal stop.
 3. P01 and P02 implementation/review chains: complete and held unmerged.
-4. Amendments 03 and 04 ratification receipts: complete. Resume P03 with amended Step 0 and dispatch P05 after re-lint/Step 0.
+4. Amendments 03 and 04 ratification receipts: complete. Obtain Amendment 05 ratification or changes; P03 remains held.
 5. P04, P07, and P08 implementation/review chains: complete and held unmerged.
-6. Complete P03 and P05 review chains; only after final P05 candidate exists, shape/verify P06 against that exact behavior.
+6. Complete P05 rework/review; complete P03 only after Amendment 05; only after final accepted P05 candidate exists, shape/verify P06 against that exact behavior.
 7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
 8. Assemble the exact green candidate commit set and request human Gate 3. Do not push, open a PR, merge, deploy, or release before approval.
 9. After exact Gate 3 approval: rebase/verify/merge only the approved set, verify merged main and CI, then complete Stage F.
