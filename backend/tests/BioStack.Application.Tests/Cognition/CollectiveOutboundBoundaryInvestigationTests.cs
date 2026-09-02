@@ -94,6 +94,8 @@ public sealed class CollectiveOutboundBoundaryInvestigationTests
         Assert.True(
             handler.Requests.Count == 0 && handler.Requests.All(request => request.Body.Length == 0),
             "Without a current-user authorization or consent decision, no Collective request or body may cross the outbound handler boundary.");
+        Assert.Equal("COLLECTIVE_UNAVAILABLE", envelope.ConfidenceProfile.Model);
+        Assert.Null(factory.RequestedName);
     }
 
     [Fact]
