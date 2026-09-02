@@ -1,6 +1,6 @@
 # Narrow Gate 1 Amendment 01 — Plan-Review Corrections
 
-**Status:** AWAITING HUMAN RE-RATIFICATION
+**Status:** RATIFIED 2026-09-02
 
 **Scope:** D6, D7, D8, and D9 only
 
@@ -59,3 +59,7 @@ Required P07 hostile regressions independently cover every denial listed above p
 ## Exact re-ratification form
 
 > Narrow Gate 1 Amendment 01: I ratify the replacement text for D6, D7, D8, and D9 as written. All other decisions and the existing contingent Gate 2 authorization remain unchanged. Gate 3 remains ungranted.
+
+## Human receipt
+
+The developer supplied the exact re-ratification form above on 2026-09-02. D6-D9 are replaced as written; affected parcels P03-P07 are unblocked subject to their existing contingent Gate 2 conditions. Gate 3 remains ungranted.

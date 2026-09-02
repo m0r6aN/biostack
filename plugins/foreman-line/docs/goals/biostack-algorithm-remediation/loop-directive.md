@@ -12,8 +12,9 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Remediation base: `main` / `origin/main` at `339f259b1a467034db4f57cf9d774c292f11b53a`
 - Gate 1: D1-D14 ratified 2026-09-02
 - Plan review: complete; triage commit `ef4376b0a186dd0c0fe9e4b7772bde07e39756eb`
-- Narrow Gate 1 Amendment 01: pending for D6, D7, D8, and D9
-- Gate 2: contingent authorization granted for Q01-Q04 and P01-P07
+- Narrow Gate 1 Amendment 01: ratified 2026-09-02; D6-D9 replacements active
+- Narrow Gate 1 Amendment 02: ratified 2026-09-02; D3/D4/D11/D12 replacements and D15 active
+- Gate 2: contingent authorization granted for Q01-Q04 and P01-P08
 - Gate 3: ungranted
 - Diagnostic coordination and five parcel branches: preserved and unmerged
 - P01 candidate `751090eabf3ee6f066c17ee83861ae04711fd4a0`: deterministic chain green; one fresh adversarial ACCEPT; held unmerged
@@ -29,29 +30,30 @@ The developer granted exactly:
 
 > Gate 1: I ratify D1-D14 as written and grant contingent Gate 2 dispatch authorization for Q01-Q04 and P01-P07. Gate 3 remains ungranted.
 
+> Narrow Gate 1 Amendment 01: I ratify the replacement text for D6, D7, D8, and D9 as written. All other decisions and the existing contingent Gate 2 authorization remain unchanged. Gate 3 remains ungranted.
+
+> Narrow Gate 1 Amendment 02: I ratify the D3, D4, D11, and D12 replacements, add D15, approve AF-P08 and P08 as written, and grant contingent Gate 2 dispatch authorization for P08. Amendment 01 is concurrently ratified by the preceding statement; all other decisions and existing authorizations remain unchanged. Gate 3 remains ungranted.
+
 Operational effect:
 
-1. Q01-Q04 and P01-P07 may be shaped and dispatched only after their specs exactly match the ratified charter and any ratified amendment, name an isolated branch/worktree, pass Step 0, and retain exact Allowed Files.
-2. While Amendment 01 is pending, P03 is blocked by D6; P04 is blocked by D7; P05/P06 are blocked by D8; P07 is blocked by D9. Orthogonal shaping may continue for P01, P02, and Q01-Q04.
-3. The authority does not permit a new parcel, changed Allowed Files, external network/provider access, production/cloud data, secrets, pushes, pull requests, merges, deployment, publication, release, or cleanup of diagnostic branches.
+1. Q01-Q04 and P01-P08 may be shaped and dispatched only after their specs exactly match the ratified charter and ratified amendments, name an isolated branch/worktree, pass Step 0, and retain exact Allowed Files.
+2. Amendment 01 unblocks P03-P07; Amendment 02 authorizes P08. P05 must precede final P06 integration verification, and Q04's accepted `READY` disposition remains a prerequisite for P07.
+3. The authority does not permit any further new parcel, changed Allowed Files, external network/provider access, production/cloud data, secrets, pushes, pull requests, merges, deployment, publication, release, or cleanup of diagnostic branches.
 4. Gate 3 remains human-only for the exact candidate commit set and exact merge/release action after the complete verification chain is green.
 
 ## Queue
 
 The coordinator advances this queue in dependency order while allowing only collision-free work to run concurrently.
 
-1. Record Amendment 01 ratification or requested changes. Unblock only its affected parcels.
-2. Q04 frontend dependency readiness; command-only, no repository changes.
-3. Shape and lint P01 parser semantics.
-4. Shape and lint P02 protocol-ingestion cancellation/OCR boundary.
-5. Shape and lint Q01 Collective outbound, Q02 endpoint inventory, and Q03 regex adjudication as three independent evidence lanes.
-6. After Amendment 01: activate the already drafted P04 evidence-provenance contract with the repaired staging/gate harness.
-7. After Amendment 01: shape and lint P03 interaction safety.
-8. After Amendment 01: shape and lint P05 terminal-state custody, then P06 source-cap enforcement; P05 precedes final P06 integration verification.
-9. After Amendment 01 and successful Q04: shape and lint P07 authenticated-consented frontend relay.
-10. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build/investigation, closure check, deterministic pass, required adversarial/security review, and rework loop.
-11. Assemble the exact green candidate commit set and request human Gate 3. Do not push, open a PR, merge, deploy, or release before approval.
-12. After exact Gate 3 approval: rebase/verify/merge only the approved set, verify merged main and CI, then complete Stage F.
+1. Ratification receipts for Amendments 01 and 02: complete.
+2. Q01-Q04 adjudication: complete; Q02 remains a durable inconclusive terminal stop.
+3. P01 and P02 implementation/review chains: complete and held unmerged.
+4. Shape and lint P03 interaction safety and P04 evidence provenance.
+5. Shape and lint P05 terminal-state custody; only after its final candidate exists, shape/verify P06 source-cap enforcement against that behavior.
+6. Shape and lint P07 authenticated-consented frontend relay and P08 Collective outbound authorization.
+7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
+8. Assemble the exact green candidate commit set and request human Gate 3. Do not push, open a PR, merge, deploy, or release before approval.
+9. After exact Gate 3 approval: rebase/verify/merge only the approved set, verify merged main and CI, then complete Stage F.
 
 ## Per-iteration algorithm
 

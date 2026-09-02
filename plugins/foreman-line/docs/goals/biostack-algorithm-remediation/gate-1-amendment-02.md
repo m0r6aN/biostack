@@ -1,6 +1,6 @@
 # Narrow Gate 1 Amendment 02 — Collective Outbound Authorization
 
-**Status:** AWAITING HUMAN RATIFICATION — coordinator lint passed 2026-09-02
+**Status:** RATIFIED 2026-09-02 — coordinator lint passed
 
 **Scope:** D3, D4, D11, D12, new D15, AF-P08, and contingent Gate 2 authority for P08 only
 
@@ -8,7 +8,7 @@
 
 Q01 deterministically reproduced `REPRODUCED_CONFIG_ONLY_TRANSMISSION`: with live mode enabled, no current-user authorization/consent input, and no static Authorization header, the production `CollectiveLiveOrchestrator.RunAsync` path emitted exactly one local-handler `POST /api/collective/live-runs`. The synthetic objective, tenant, actor, correlation, and intent sentinels crossed the adapter boundary. The handler never delegated to the network. The evidence does not determine endpoint authentication or first-party/third-party processor status.
 
-Gate 1 Amendment 01 remains a separate pending decision. All other ratified decisions and the existing contingent Gate 2 authority for Q01-Q04 and P01-P07 remain unchanged. Gate 3 remains ungranted.
+Gate 1 Amendment 01 was ratified concurrently. All other ratified decisions and the existing contingent Gate 2 authority for Q01-Q04 and P01-P07 remain unchanged. Gate 3 remains ungranted.
 
 ## D3 replacement — eight implementation parcels
 
@@ -112,3 +112,7 @@ Gate 3 remains human-only and ungranted. P08 may be proposed for Gate 3 only aft
 If Amendment 01 is ratified in the same human message, use the Amendment 01 exact form followed by this non-conflicting concurrent form:
 
 > Narrow Gate 1 Amendment 02: I ratify the D3, D4, D11, and D12 replacements, add D15, approve AF-P08 and P08 as written, and grant contingent Gate 2 dispatch authorization for P08. Amendment 01 is concurrently ratified by the preceding statement; all other decisions and existing authorizations remain unchanged. Gate 3 remains ungranted.
+
+## Human receipt
+
+The developer supplied the concurrent ratification form above on 2026-09-02. D3, D4, D11, and D12 are replaced; D15, AF-P08, and P08 are approved; and contingent Gate 2 dispatch authority now includes P08. Gate 3 remains ungranted.
