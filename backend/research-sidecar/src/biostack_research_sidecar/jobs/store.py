@@ -16,6 +16,22 @@ from biostack_research_sidecar.contracts.models import (
     ScientificResearchRequest,
 )
 
+_ACTIVE_STATUSES = {
+    ResearchJobStatusCode.QUEUED,
+    ResearchJobStatusCode.RESOLVING_IDENTITY,
+    ResearchJobStatusCode.GATHERING_EVIDENCE,
+    ResearchJobStatusCode.NORMALIZING,
+}
+
+_TERMINAL_STATUSES = {
+    ResearchJobStatusCode.PENDING_REVIEW,
+    ResearchJobStatusCode.COMPLETED,
+    ResearchJobStatusCode.FAILED,
+    ResearchJobStatusCode.CANCELLED,
+    ResearchJobStatusCode.PARTIAL,
+    ResearchJobStatusCode.REJECTED_BY_POLICY,
+}
+
 
 @dataclass
 class JobRecord:
@@ -66,13 +82,7 @@ class InMemoryJobStore:
             job_id
             for job_id, record in self._jobs.items()
             if record.updated_at_utc < cutoff
-            and record.status
-            not in {
-                ResearchJobStatusCode.QUEUED,
-                ResearchJobStatusCode.RESOLVING_IDENTITY,
-                ResearchJobStatusCode.GATHERING_EVIDENCE,
-                ResearchJobStatusCode.NORMALIZING,
-            }
+            and record.status not in _ACTIVE_STATUSES
         ]
         for job_id in expired:
             del self._jobs[job_id]
@@ -82,6 +92,8 @@ class InMemoryJobStore:
             record = self._jobs.get(job_id)
             if record is None:
                 return None
+            if record.status in _TERMINAL_STATUSES:
+                return record
             for key, value in kwargs.items():
                 if not hasattr(record, key):
                     raise AttributeError(key)
@@ -94,13 +106,10 @@ class InMemoryJobStore:
             record = self._jobs.get(job_id)
             if record is None:
                 return None
+            if record.status in _TERMINAL_STATUSES:
+                return record
             record.cancel_requested = True
-            if record.status in {
-                ResearchJobStatusCode.QUEUED,
-                ResearchJobStatusCode.RESOLVING_IDENTITY,
-                ResearchJobStatusCode.GATHERING_EVIDENCE,
-                ResearchJobStatusCode.NORMALIZING,
-            }:
+            if record.status in _ACTIVE_STATUSES:
                 record.status = ResearchJobStatusCode.CANCELLED
                 record.finished_at_utc = datetime.now(timezone.utc)
                 record.progress_message = "cancelled"
