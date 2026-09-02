@@ -32,6 +32,13 @@ public sealed class ScientificResearchCandidateStagingService(
         ArgumentException.ThrowIfNullOrWhiteSpace(jobId);
 
         var artifact = await researchProvider.GetResultAsync(jobId, cancellationToken);
+        if (artifact.Status is not (ResearchJobStatusCode.PendingReview or ResearchJobStatusCode.Partial))
+        {
+            throw new ScientificResearchProviderException(
+                "Scientific research artifact is not eligible for review staging.",
+                "artifact_not_stageable");
+        }
+
         var artifactId = ArtifactIdPrefix + artifact.JobId;
         var now = DateTimeOffset.UtcNow.ToString("O");
 
