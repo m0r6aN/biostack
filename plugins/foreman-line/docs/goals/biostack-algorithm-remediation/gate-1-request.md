@@ -1,14 +1,14 @@
-# Gate 1 Ratification Request — BioStack Algorithm Remediation
+# Gate 1 Ratification Receipt — BioStack Algorithm Remediation
 
-**Status:** AWAITING HUMAN RATIFICATION
+**Status:** RATIFIED 2026-09-02
 
 **Requested:** 2026-09-02
 
 **Authoritative charter:** `plugins/foreman-line/docs/goals/biostack-algorithm-remediation/charter.md`
 
-**Charter commit:** `0c4c0204d7ca512ad3de903e3caf257dc5b28b40`
+**Ratified decision-set commit:** `0c4c0204d7ca512ad3de903e3caf257dc5b28b40`
 
-**Charter SHA-256:** `991151BF01718B3A8D283666B5A110F7D60CF360E290D84A440553F4B8D318B8`
+**Ratified decision-set SHA-256:** `991151BF01718B3A8D283666B5A110F7D60CF360E290D84A440553F4B8D318B8`
 
 **Verified base:** `main` / `origin/main` at `339f259b1a467034db4f57cf9d774c292f11b53a`
 
@@ -49,4 +49,4 @@ After ratification, the next action is a fresh independent plan-level adversaria
 
 > Gate 1: I ratify D1-D14 as written and grant contingent Gate 2 dispatch authorization for Q01-Q04 and P01-P07. Gate 3 remains ungranted.
 
-An amendment may instead name the affected decision(s) and replacement language. Silence, acknowledgement, general encouragement, or continuation of the goal is not ratification.
+The developer supplied this exact statement on 2026-09-02. Gate 1 is granted, contingent Gate 2 is active only under D12, and Gate 3 remains ungranted.

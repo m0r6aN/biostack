@@ -1,6 +1,6 @@
 # Goal Charter: BioStack Algorithm Remediation
 
-Status: **DRAFT — GATE 1 RATIFICATION REQUIRED**
+Status: **RATIFIED — GATE 1 GRANTED; CONTINGENT GATE 2 ACTIVE; GATE 3 UNGRANTED**
 
 Goal slug: `biostack-algorithm-remediation`
 
@@ -205,9 +205,9 @@ Passing builder tests alone does not satisfy this chain.
 
 ## Human gates and requested standing authorization
 
-- **Gate 1 — pending:** ratify or amend D1-D14. Gate 1 is never inferred from silence and cannot be delegated.
+- **Gate 1 — granted 2026-09-02:** the developer explicitly ratified D1-D14 as written. The ratified decision-set commit is `0c4c0204d7ca512ad3de903e3caf257dc5b28b40`, SHA-256 `991151BF01718B3A8D283666B5A110F7D60CF360E290D84A440553F4B8D318B8`.
 - **Plan adversarial review — mandatory after Gate 1:** a fresh frontier reviewer receives only this charter and repository canon. Findings are triaged as fix, accept-as-documented, or informational. Any finding that changes D1-D14 reopens Gate 1 narrowly.
-- **Gate 2 — requested at Gate 1:** standing dispatch authorization for Q01-Q04 and P01-P07 only, contingent on shaped specs matching the ratified charter exactly. It does not authorize merges, pushes, PRs, external access, or release.
+- **Gate 2 — contingent authorization granted 2026-09-02:** standing dispatch authorization covers Q01-Q04 and P01-P07 only after shaped specs match the ratified charter exactly, name isolated worktrees/branches, pass Step 0, and preserve exact Allowed Files. It does not authorize merges, pushes, PRs, external access, or release.
 - **Gate 3 — human-only and not requested now:** after the complete green chain, present exact candidate commits, review/security dispositions, merge order, rollback notes, and remaining uncertainty. The human approves or rejects the specific merge/release action.
 
 ## Merge and Stage-F closure
