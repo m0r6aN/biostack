@@ -258,6 +258,50 @@ public sealed class InteractionIntelligenceReproductionTests
         Assert.Null(interaction.GraphArtifactHash);
     }
 
+    [Fact]
+    public async Task EvaluateAsync_GraphEdgeFromDifferentArtifact_IsNotAttributedToReviewedArtifact()
+    {
+        var compoundA = Entry("Synthetic Pi");
+        var compoundB = Entry("Synthetic Rho");
+        var reviewedArtifact = new CompoundGraphArtifact
+        {
+            Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+            ArtifactHash = "sha256:synthetic-reviewed-artifact-a",
+            ReviewState = "reviewed",
+            IsActive = true
+        };
+        var graph = GraphReturning(
+            new CompoundGraphRelationship
+            {
+                GraphArtifactId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                SubjectCompound = compoundA.CanonicalName,
+                ObjectCompound = compoundB.CanonicalName,
+                RelationshipType = GraphRelationshipType.SynergizesWith,
+                Confidence = "high",
+                ReviewState = "reviewed",
+                NeedsReview = false,
+                Reason = "Synthetic reviewed edge from artifact B."
+            },
+            reviewedArtifact);
+        var hints = HintReturning(new CompoundInteractionHint
+        {
+            CompoundA = compoundA.CanonicalName,
+            CompoundB = compoundB.CanonicalName,
+            InteractionType = InteractionType.Synergistic,
+            Strength = 0.79m,
+            Notes = "Synthetic eligible fallback hint."
+        });
+
+        var result = await CreateService(graphStore: graph.Object, hintRepository: hints.Object)
+            .EvaluateAsync([compoundA, compoundB]);
+
+        var interaction = Assert.Single(result.Interactions);
+        Assert.NotEqual(IntelligenceSource.Graph, interaction.Source);
+        Assert.Null(interaction.GraphArtifactHash);
+        Assert.True(interaction.HintBacked);
+        Assert.Equal(InteractionType.Synergistic, interaction.Type);
+    }
+
     private static InteractionIntelligenceService CreateService(
         IKnowledgeSource? knowledgeSource = null,
         ICompoundGraphStore? graphStore = null,

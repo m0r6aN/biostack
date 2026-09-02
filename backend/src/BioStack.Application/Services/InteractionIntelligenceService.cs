@@ -291,6 +291,7 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
         var edge = await _graphStore.FindRelationshipAsync(
             compoundA.CanonicalName, compoundB.CanonicalName, cancellationToken);
         if (edge is null
+            || edge.GraphArtifactId != artifact.Id
             || edge.NeedsReview
             || !string.Equals(edge.ReviewState, "reviewed", StringComparison.Ordinal))
         {
