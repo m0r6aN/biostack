@@ -147,7 +147,9 @@ def _execute_with_tooluniverse(
         dict(request.known_identifiers or {}),
     )
 
-    tools_invoked = [item.tool_name for item in results]
+    effective_source_limit = max(0, request.maximum_source_count)
+    accepted_results = results[:effective_source_limit]
+    tools_invoked = [item.tool_name for item in accepted_results]
     warnings: list[str] = [
         f"ToolUniverse pin={settings.tooluniverse_version}",
         f"allowlist={allowlist.allowlist_version}",
@@ -164,7 +166,7 @@ def _execute_with_tooluniverse(
         "sequence_skips": skips,
     }
 
-    for item in results:
+    for item in accepted_results:
         provenance_extra["tool_results"].append(
             {
                 "tool": item.tool_name,
@@ -179,22 +181,38 @@ def _execute_with_tooluniverse(
                 f"{item.tool_name}: {item.error_code or 'error'} — {item.error_message}"
             )
 
+    successful_tool_occurrences = [
+        item.tool_name for item in accepted_results if item.success
+    ]
+    next_tool_occurrence = 0
     for index, row in enumerate(claim_rows):
+        source_id = str(row.get("tool_name") or "")
+        if not source_id:
+            continue
+        try:
+            matched_occurrence = successful_tool_occurrences.index(
+                source_id, next_tool_occurrence
+            )
+        except ValueError:
+            continue
+        next_tool_occurrence = matched_occurrence + 1
         claims.append(
             NormalizedClaim(
                 claim_id=f"{job_id}-{row['claim_type']}-{index}",
                 claim_type=str(row["claim_type"]),
                 text=str(row["text"]),
                 evidence_class="unknown",
-                source_ids=[str(row.get("tool_name") or "")],
+                source_ids=[source_id],
                 review_status="candidate",
             )
         )
 
     # Terminal status mapping (S6): distinguish full success, partial, and failure.
     # Candidate claims still require human review — PENDING_REVIEW is the success path.
-    any_success = any(item.success for item in results)
-    all_success = bool(tools_invoked) and all(item.success for item in results)
+    any_success = any(item.success for item in accepted_results)
+    all_success = bool(tools_invoked) and all(
+        item.success for item in accepted_results
+    )
     if tools_invoked and all_success:
         status = ResearchJobStatusCode.PENDING_REVIEW
         partial = False
