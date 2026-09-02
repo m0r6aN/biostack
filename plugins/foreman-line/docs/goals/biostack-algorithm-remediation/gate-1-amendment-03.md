@@ -1,6 +1,6 @@
 # Narrow Gate 1 Amendment 03 — Sidecar Timeout Terminalization
 
-**Status:** AWAITING HUMAN RATIFICATION — coordinator lint passed 2026-09-02
+**Status:** RATIFIED 2026-09-02 — coordinator lint passed
 
 **Scope:** amended D8 timeout semantics and replacement AF-P05 only
 
@@ -57,3 +57,7 @@ Gate 3 remains human-only and ungranted.
 ## Exact ratification form
 
 > Narrow Gate 1 Amendment 03: I ratify the D8 timeout-terminalization supplement and replace AF-P05 with the three files listed, including `jobs/runner.py`. P05 retains contingent Gate 2 authorization subject to its shaped spec and Step 0; P06 remains downstream of the verified P05 candidate. All other decisions and authorizations remain unchanged. Gate 3 remains ungranted.
+
+## Human receipt
+
+The developer supplied the exact ratification form above on 2026-09-02. The D8 timeout-terminalization supplement and replacement three-file AF-P05 are active; contingent Gate 2 authority for P05 is reactivated subject to its shaped spec and Step 0. P06 remains downstream of the verified P05 candidate. Gate 3 remains ungranted.

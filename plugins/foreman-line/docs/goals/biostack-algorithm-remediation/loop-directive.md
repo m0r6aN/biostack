@@ -14,19 +14,23 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Plan review: complete; triage commit `ef4376b0a186dd0c0fe9e4b7772bde07e39756eb`
 - Narrow Gate 1 Amendment 01: ratified 2026-09-02; D6-D9 replacements active
 - Narrow Gate 1 Amendment 02: ratified 2026-09-02; D3/D4/D11/D12 replacements and D15 active
-- Narrow Gate 1 Amendment 03: pending; P05 and downstream P06 held
-- Narrow Gate 1 Amendment 04: pending; P03 held with a scoped uncommitted candidate
+- Narrow Gate 1 Amendment 03: ratified 2026-09-02; D8 timeout-terminalization supplement and replacement AF-P05 active
+- Narrow Gate 1 Amendment 04: ratified 2026-09-02; replacement AF-P03 and exact reviewed-fixture correction active
 - Gate 2: contingent authorization granted for Q01-Q04 and P01-P08
 - Gate 3: ungranted
 - Diagnostic coordination and five parcel branches: preserved and unmerged
 - P01 candidate `751090eabf3ee6f066c17ee83861ae04711fd4a0`: deterministic chain green; one fresh adversarial ACCEPT; held unmerged
 - P02 candidate `1b5742051ee2b54a80dac9bbdf68c68e5a6b5992`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SCOPE/SG-OUTBOUND ACCEPT; held unmerged
-- Q01 evidence `83d1235b3a964ddf7130f67900f4dcd3b38dcf42`: fresh review ACCEPT; reproduced config-only Collective transmission; production fix blocked pending a new P08 Gate 1/Gate 2 amendment
+- P04 candidate `38ebffb10411c763ed4f570fdcfece51ab177aa3`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-EVIDENCE/SG-SCOPE ACCEPT; held unmerged
+- P07 candidate `c35df75be835d26b4c37618874cf502335b9a24c`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-OUTBOUND/SG-SCOPE ACCEPT; held unmerged
+- P08 candidate `47c2be0358e7ca024b524c7693af8b06846671d6`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-OUTBOUND/SG-SCOPE ACCEPT; held unmerged
+- Q01 evidence `83d1235b3a964ddf7130f67900f4dcd3b38dcf42`: fresh review ACCEPT; reproduced config-only Collective transmission; P08 remediation candidate is review-complete and held unmerged
 - Q03: fresh review ACCEPT; `INCONCLUSIVE_NO_DETERMINISTIC_SEAM`; zero repository changes
-- Q04: final transcript fresh review ACCEPT; `READY`; P07 shaping may proceed only after Amendment 01, and P07 dispatch remains independently gated
+- Q04: final transcript fresh review ACCEPT; `READY`; P07 remediation candidate is review-complete and held unmerged
 - Q02: v1 evidence commit `dea721288521a5789350e2398d0d7292b01ad10f` is preserved but review-rejected; v2 stopped terminally before transcript/test execution when the Baseline procedure encountered an unsupported `New-Item -LiteralPath`; no retry/v3 is authorized and endpoint-wide coverage remains inconclusive
-- P05: shaping found the timeout path writes terminal `cancelled` before `failed/execution_timeout`; current AF-P05 is insufficient under first-terminal-writer custody. Amendment 03 proposes adding only `jobs/runner.py`; P05/P06 remain held.
-- P03: target `10/10`, adjacent `20/20`, and Application `619 passed / 5 skipped` are green, but a stale API graph-positive fixture publishes a `provisional` artifact and fails under ratified D6. Amendment 04 proposes adding only that API test file for an exact `reviewed` fixture correction; P03 remains uncommitted and held.
+- P05: Amendment 03 resolved the timeout-transition ownership conflict and reactivated P05; re-lint and fresh Step 0 are next. P06 remains held until the exact verified P05 candidate exists.
+- P03: target `10/10`, adjacent `20/20`, and Application `619 passed / 5 skipped` are green. Amendment 04 authorizes the exact stale API graph-positive fixture correction; amended Step 0 and full verification are next.
+- Cerebras routing inventory: user-scope credential presence is confirmed without reading its value, but the current Codex process does not inherit it, no Cerebras CLI or reviewed callable adapter is present, and the existing governed Cerebras shadow route is public-only/candidate-only with Coordinator and verifier roles prohibited. State is `configured_unverified`; no BioStack source, test payload, secret, or provider request has been sent.
 
 ## Standing authorizations
 
@@ -38,10 +42,14 @@ The developer granted exactly:
 
 > Narrow Gate 1 Amendment 02: I ratify the D3, D4, D11, and D12 replacements, add D15, approve AF-P08 and P08 as written, and grant contingent Gate 2 dispatch authorization for P08. Amendment 01 is concurrently ratified by the preceding statement; all other decisions and existing authorizations remain unchanged. Gate 3 remains ungranted.
 
+> Narrow Gate 1 Amendment 03: I ratify the D8 timeout-terminalization supplement and replace AF-P05 with the three files listed, including `jobs/runner.py`. P05 retains contingent Gate 2 authorization subject to its shaped spec and Step 0; P06 remains downstream of the verified P05 candidate. All other decisions and authorizations remain unchanged. Gate 3 remains ungranted.
+
+> Narrow Gate 1 Amendment 04: I replace AF-P03 with the three files listed and authorize only the stale API graph-positive fixture change from `provisional` to exactly `reviewed`. Ratified D6 and all other decisions and authorizations remain unchanged. Gate 3 remains ungranted.
+
 Operational effect:
 
 1. Q01-Q04 and P01-P08 may be shaped and dispatched only after their specs exactly match the ratified charter and ratified amendments, name an isolated branch/worktree, pass Step 0, and retain exact Allowed Files.
-2. Amendment 01 unblocks P03-P07; Amendment 02 authorizes P08. P05 must precede final P06 integration verification, and Q04's accepted `READY` disposition remains a prerequisite for P07.
+2. Amendment 01 unblocks P03-P07; Amendment 02 authorizes P08; Amendments 03 and 04 resolve the scoped P05 and P03 blockers. P05 must precede final P06 integration verification, and Q04's accepted `READY` disposition remains a prerequisite for P07.
 3. The authority does not permit any further new parcel, changed Allowed Files, external network/provider access, production/cloud data, secrets, pushes, pull requests, merges, deployment, publication, release, or cleanup of diagnostic branches.
 4. Gate 3 remains human-only for the exact candidate commit set and exact merge/release action after the complete verification chain is green.
 
@@ -52,9 +60,9 @@ The coordinator advances this queue in dependency order while allowing only coll
 1. Ratification receipts for Amendments 01 and 02: complete.
 2. Q01-Q04 adjudication: complete; Q02 remains a durable inconclusive terminal stop.
 3. P01 and P02 implementation/review chains: complete and held unmerged.
-4. Obtain Amendment 04 ratification or requested changes; preserve the scoped P03 state. Continue orthogonal P04 evidence provenance.
-5. Obtain Amendment 03 ratification or requested changes; P05 and P06 remain held. After ratification, re-lint/dispatch P05; only after its final candidate exists, shape/verify P06 against that behavior.
-6. Shape and lint P07 authenticated-consented frontend relay and P08 Collective outbound authorization.
+4. Amendments 03 and 04 ratification receipts: complete. Resume P03 with amended Step 0 and dispatch P05 after re-lint/Step 0.
+5. P04, P07, and P08 implementation/review chains: complete and held unmerged.
+6. Complete P03 and P05 review chains; only after final P05 candidate exists, shape/verify P06 against that exact behavior.
 7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
 8. Assemble the exact green candidate commit set and request human Gate 3. Do not push, open a PR, merge, deploy, or release before approval.
 9. After exact Gate 3 approval: rebase/verify/merge only the approved set, verify merged main and CI, then complete Stage F.

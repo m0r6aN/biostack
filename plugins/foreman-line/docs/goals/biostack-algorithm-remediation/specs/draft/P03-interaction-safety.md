@@ -1,12 +1,12 @@
 # Parcel P03: Interaction Safety
 
-Status: **blocked — target/adjacent/Application green; stale outside-AF API fixture requires Narrow Gate 1 Amendment 04**
+Status: **active — Amendment 04 ratified; amended Step 0 required before resumption**
 
-Coordinator lint: **PASSED 2026-09-02.** AF-P03, base/tree, production and diagnostic blobs, all six amended D6 clauses, the 4 retained plus 6 hostile-case census, the independent 20-case adjacent filter, the 609-passed/5-skipped Application baseline, count deltas, offline commands, and single-review depth were checked against the pinned repository and ratified amendment. Dispatch authority remains contingent on a clean isolated worktree and exact Step 0 restatement.
+Coordinator lint: **PASSED 2026-09-02 after Narrow Gate 1 Amendment 04.** Replacement three-file AF-P03, the one-value API fixture restriction, base/tree, production and diagnostic blobs, all six amended D6 clauses, the 4 retained plus 6 hostile-case census, the independent 20-case adjacent filter, the 609-passed/5-skipped Application baseline, API 377 tripwire, count deltas, offline commands, and single-review depth were checked against the pinned repository and ratified amendments. Resumption remains contingent on an exact fresh Step 0 restatement.
 
 Import-receipt correction: **PASSED 2026-09-02 after a pre-edit builder stop.** Because the reproduction path is absent from the pinned index, restoring it into the worktree creates an untracked file; pre-commit `git diff --name-only` correctly emits nothing. The import tripwire therefore uses `git status --short --untracked-files=all` plus `git ls-files --others --exclude-standard` and requires exactly the one AF-P03 test path. This changes no invariant, Allowed File, case/count expectation, or Gate authority.
 
-Aggregate disposition: **BLOCKED 2026-09-02.** The scoped uncommitted candidate passed target `10/10`, adjacent `20/20`, and Application `619 passed / 5 skipped`, but the full solution failed one API case whose graph-positive helper publishes a `provisional` artifact. D6 requires exactly `reviewed`; production must not be weakened. Amendment 04 proposes adding only `CompoundGraphIntelligenceTests.cs` to AF-P03 and changing only that stale fixture state. Preserve the current two-file uncommitted state; no further edit, test, stage, or commit is authorized before ratification and an amended Step 0 restatement.
+Aggregate disposition: **REACTIVATED 2026-09-02.** The scoped uncommitted candidate passed target `10/10`, adjacent `20/20`, and Application `619 passed / 5 skipped`, but the full solution failed one API case whose graph-positive helper publishes a `provisional` artifact. Narrow Gate 1 Amendment 04 is ratified and adds only `CompoundGraphIntelligenceTests.cs` to AF-P03, authorizing only that stale fixture state to change from `provisional` to exactly `reviewed`. Preserve the current two-file uncommitted state. An amended Step 0 restatement and explicit coordinator confirmation are required before the exact fixture edit, verification, stage, or commit.
 
 ## Goal
 
@@ -35,10 +35,10 @@ The parcel branch must be created from the required starting commit, never from 
 
 ## Dependencies and Preconditions
 
-1. Original Gate 1 D1-D14 and Narrow Gate 1 Amendment 01 are ratified. The replacement D6 in `gate-1-amendment-01.md` is the controlling interaction contract. Amendment 02 does not alter P03.
+1. Original Gate 1 D1-D14 and Narrow Gate 1 Amendments 01-04 are ratified. The replacement D6 in `gate-1-amendment-01.md` is the controlling interaction contract. Amendment 04 replaces AF-P03 and authorizes only the exact stale API fixture correction described below.
 2. Contingent Gate 2 covers P03 only after the coordinator lints this spec, verifies an isolated branch/worktree at the exact base/tree, confirms AF-P03, and approves the builder's Step 0 restatement.
 3. The coordinator owns the required `origin/main` comparison. The builder must not fetch. If the coordinator reports material movement from the pinned base, stop under the charter's base-change rule.
-4. P03 has no implementation dependency on P01, P02, P04-P08, or Q01-Q04, and it must consume no candidate branch. No other live builder may edit either AF-P03 path.
+4. P03 has no implementation dependency on P01, P02, P04-P08, or Q01-Q04, and it must consume no candidate branch. No other live builder may edit any AF-P03 path.
 5. The diagnostic reproduction file exists at the diagnostic commit and is absent at the pinned base. `backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj` is an SDK-style `net10.0` xUnit test project that includes ordinary `.cs` files by default. No project-file change is needed or allowed.
 6. Required .NET SDK and NuGet packages must already be available locally. If the fresh worktree lacks ignored restore metadata, only the coordinator may seed `project.assets.json`, `project.nuget.cache`, and generated NuGet props/targets from a clean ambient worktree proven to have the identical base/tree, with a relative-path and SHA-256 manifest. This is environment provisioning, not source authority. No restore or registry/network access is authorized.
 
@@ -60,16 +60,18 @@ This is a repo-local service parcel. It changes no endpoint, persistence schema,
 
 ## Allowed Files — AF-P03
 
-Exactly these two repository paths may be created or modified:
+Exactly these three repository paths may be created or modified:
 
 1. `backend/src/BioStack.Application/Services/InteractionIntelligenceService.cs`
 2. `backend/tests/BioStack.Application.Tests/Services/InteractionIntelligenceReproductionTests.cs`
+3. `backend/tests/BioStack.Api.Tests/CompoundGraphIntelligenceTests.cs`
 
-If either path is missing, insufficient, or cannot carry the complete ratified D6 contract, stop for a charter/spec amendment. Do not substitute a nearby file.
+The third path may change only in its stale graph-positive fixture helper, from `provisional` to exactly `reviewed`; no other edit in that file is authorized. If a path is missing, insufficient, or cannot carry the complete ratified D6 contract, stop for a charter/spec amendment. Do not substitute a nearby file.
 
 ## Forbidden and Out of Scope
 
-- Every repository path outside AF-P03 is forbidden, including project/solution files, graph entities, graph-store interfaces/implementations, repositories, migrations, contracts/responses, endpoint code, package/lock files, build configuration, goal documents, fixtures, generated files, and handoff records.
+- Every repository path outside AF-P03 is forbidden, including project/solution files, graph entities, graph-store interfaces/implementations, repositories, migrations, contracts/responses, endpoint code, package/lock files, build configuration, other fixtures, generated files, and handoff records.
+- Within `CompoundGraphIntelligenceTests.cs`, every change except the one ratified `provisional`-to-`reviewed` fixture-state correction is forbidden.
 - Do not merge or cherry-pick diagnostic commit `56b7ad229a34a6f151f5bf7b96a8bfdcbce8132f`; restore only the one AF-P03 test file's contents.
 - Do not mutate, rebase, force-update, delete, or clean the diagnostic coordination branch or any diagnostic parcel branch.
 - Do not rename, delete, skip, weaken, or replace the four diagnostic scenarios or their assertions. The original failing conditions must remain observable regressions.
@@ -151,7 +153,8 @@ Make the smallest coherent change to `InteractionIntelligenceService.cs` that en
 - Adjacent interaction/public-boundary/swap suite remains exactly 20 passed, 0 failed, 0 skipped.
 - Full `BioStack.Application.Tests` is exactly 619 passed, 5 skipped, 0 failed, total 624: the pinned 614 total plus exactly 10 P03 cases.
 - Backend solution aggregate is green offline. Only `BioStack.Application.Tests` gains 10 passed/discovered cases; Domain remains 7, verifier remains 158, API remains 377, and KnowledgeWorker remains 866, with no new skips.
-- Exactly the two AF-P03 paths differ from base; no staged, modified, or untracked path exists outside AF-P03.
+- The focused `CompoundGraphIntelligenceTests` API class passes after the exact fixture-state correction; the complete API suite remains exactly 377 passed.
+- Exactly the three AF-P03 paths differ from base; no staged, modified, or untracked path exists outside AF-P03.
 - Candidate descends from the pinned base, contains no merge commit from diagnostic history, and diagnostic commit `56b7ad2...` is not its ancestor.
 - `git diff --check` is clean, and no command contacted an external service.
 
@@ -210,7 +213,13 @@ dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.
 dotnet test backend/BioStack.sln --no-restore --verbosity minimal --disable-build-servers
 ```
 
-Expected Application receipt: 619 passed, 5 skipped, 0 failed, total 624. Expected solution delta: only Application gains 10; Domain stays 7, verifier 158, API 377, KnowledgeWorker 866. Record every assembly summary and exit code. The later goal-level aggregate may consume its separately mandated command only in an already dependency-ready, network-prohibited environment; P03 grants no implicit restore/network authority.
+Expected Application receipt: 619 passed, 5 skipped, 0 failed, total 624. Before the aggregate, run the focused API class:
+
+```powershell
+dotnet test backend/tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-restore --filter "FullyQualifiedName~BioStack.Api.Tests.CompoundGraphIntelligenceTests" --disable-build-servers --logger "console;verbosity=minimal"
+```
+
+Expected: the class is green with its existing discovered count. Expected solution delta: only Application gains 10; Domain stays 7, verifier 158, API stays exactly 377, and KnowledgeWorker stays 866. Record every assembly summary and exit code. The later goal-level aggregate may consume its separately mandated command only in an already dependency-ready, network-prohibited environment; P03 grants no implicit restore/network authority.
 
 ### Diff, ancestry, scope, and cleanliness receipts after candidate commit
 
@@ -221,10 +230,11 @@ git rev-list --merges 339f259b1a467034db4f57cf9d774c292f11b53a..HEAD
 git diff --check 339f259b1a467034db4f57cf9d774c292f11b53a..HEAD
 git diff --name-only 339f259b1a467034db4f57cf9d774c292f11b53a..HEAD
 git diff -- backend/tests/BioStack.Application.Tests/Services/InteractionIntelligenceReproductionTests.cs
+git diff -- backend/tests/BioStack.Api.Tests/CompoundGraphIntelligenceTests.cs
 git status --short
 ```
 
-Expected results: base-ancestor exit 0; diagnostic-ancestor exit 1; merge list empty; diff-check exit 0; name-only output exactly the two AF-P03 paths; reproduction diff visibly retains all four original methods/assertions and adds only the six specified cases/helper support; final status empty after one local candidate commit. Capture native exit codes explicitly because empty output alone is not proof.
+Expected results: base-ancestor exit 0; diagnostic-ancestor exit 1; merge list empty; diff-check exit 0; name-only output exactly the three AF-P03 paths; reproduction diff visibly retains all four original methods/assertions and adds only the six specified cases/helper support; API diff contains only the one `provisional`-to-`reviewed` fixture-state correction; final status empty after one local candidate commit. Capture native exit codes explicitly because empty output alone is not proof.
 
 ## Count and Scope Tripwire Method
 
@@ -257,11 +267,11 @@ Inter-parcel file collision is low: no other authorized parcel owns `Interaction
 Before any import, edit, test build, dependency action, stage, or commit, the builder must inspect the named local objects and send one restatement containing:
 
 1. goal, initiative, parcel, Wave 1/frontier routing, branch, isolated worktree, pinned base commit/tree, current HEAD, and clean status;
-2. the two exact AF-P03 paths and the statement that every other repository path is forbidden;
+2. the three exact AF-P03 paths, the third-file one-value restriction, and the statement that every other repository path is forbidden;
 3. all six exact D6 clauses, including safety-before-graph-and-hint, active/exactly-reviewed artifact and edge eligibility, independent `NeedsReview` denial, canonical identity deduplication, finite/clamped confidence, and next-source fallthrough;
 4. diagnostic commit, one-file restore command, diagnostic blob, all four retained method names, six hostile-case shape/row counts, and the prohibition on importing diagnostic history;
 5. dependencies, ratification status, and confirmation that P03 consumes no other parcel branch;
-6. baseline, targeted, adjacent, Application, solution, count-delta, diff, ancestry, and cleanliness commands and exact expected receipts;
+6. baseline, targeted, adjacent, Application, focused API, full API/solution, count-delta, diff, ancestry, and cleanliness commands and exact expected receipts;
 7. SG-SCOPE, synthetic-only/offline/no-network/no-restore/no-provider/no-production-data constraints, local-assets-only rule, one fresh read-only adversarial review, and ungranted Gate 3;
 8. every stop condition below and any mismatch or ambiguity found.
 
@@ -309,7 +319,7 @@ Stop immediately and report if:
 - the branch/worktree is missing, dirty before work, not exactly at the pinned base/tree, or derived from a diagnostic/candidate branch;
 - the coordinator has not explicitly confirmed Step 0, reports material `origin/main` movement, or identifies another live owner for AF-P03;
 - an AF-P03 path is missing/insufficient, the production blob differs, the initial diagnostic blob differs, or a retained method/assertion is changed or removed;
-- implementation needs any path, dependency, package, interface, entity, schema, config, fixture, endpoint, or product decision outside this spec;
+- implementation needs any path, dependency, package, interface, entity, schema, config, fixture change other than the exact ratified API correction, endpoint, or product decision outside this spec;
 - D6 can pass only by weakening `AvoidWith`, treating unreviewed graph state as eligible, suppressing fallback, using input-string/reference deduplication instead of canonical identity, or allowing non-finite/out-of-range confidence;
 - a required case must be renamed, skipped, weakened, deleted, or have its expected safety/provenance result changed merely to pass;
 - targeted, adjacent, Application, or solution counts differ from the exact tripwires; a new skip/failure appears; or a harness/build problem cannot be separated from the assertion;

@@ -1,7 +1,7 @@
 ---
 parcel: P05
 title: Sidecar terminal-state custody
-status: blocked-needs-narrow-gate-1-amendment
+status: active-awaiting-step-0
 goal: biostack-algorithm-remediation
 initiative: BioStack Algorithm Remediation
 project: BioStack research sidecar
@@ -17,13 +17,13 @@ diagnostic_commit: 82295c3f36b412b9917eaf047a70b10ee2a67cdc
 
 # P05 - Sidecar terminal-state custody
 
-Coordinator lint: **BLOCKED 2026-09-02.** The pinned `runner.py` timeout call order and `store.py` cancellation behavior independently confirm that current AF-P05 cannot preserve both first-terminal-writer custody and the retained `failed` / `execution_timeout` provenance. Narrow Gate 1 Amendment 03 proposes the smallest three-file resolution. No P05 branch, worktree, Step 0, or production edit is authorized before ratification.
+Coordinator lint: **PASSED 2026-09-02 after Narrow Gate 1 Amendment 03.** The ratified D8 timeout-terminalization supplement and replacement three-file AF-P05 resolve the pinned cancel-then-fail conflict. Dispatch remains contingent on the named clean isolated worktree and an exact fresh Step 0 restatement.
 
 ## Goal and outcome
 
 Remediate R-SIDE-01 from the pinned `main` base. The in-memory sidecar job store must make the first terminal transition atomically authoritative and preserve that complete terminal snapshot against every late worker update, identical replay, and later cancellation request. Preserve the diagnostic timeout/late-worker scenario as a regression, repair its plan-review-invalid wait with a deterministic worker-completion signal, add direct hostile state/race coverage for the full ratified D8 contract, make the smallest production change in AF-P05, and return one committed local candidate plus deterministic evidence for independent review.
 
-**Shaping disposition: blocked before Gate 2 dispatch.** The pinned runner calls `request_cancel` before `_mark_timeout`. Because `request_cancel` changes an active record to terminal `cancelled`, the ratified first-terminal-writer rule requires a correct AF-P05 store guard to reject the subsequent `failed` / `execution_timeout` write. The retained timeout-failure regression and its error provenance therefore cannot be preserved inside the exact AF-P05 files. No builder Step 0 or production edit is authorized until a human ratifies a narrow resolution.
+**Shaping disposition: active under contingent Gate 2.** The pinned runner calls `request_cancel` before `_mark_timeout`. Amendment 03 authorizes the smallest resolution: the timeout path installs one atomic `failed` / `execution_timeout` terminal snapshot with `cancel_requested=True`, and the store rejects every later terminal mutation. A fresh Step 0 and coordinator confirmation remain mandatory before edits.
 
 This parcel does not implement or verify the `maximum_source_count` half of D8; P06 owns that disjoint production behavior. P05 establishes the terminal-custody candidate that must precede P06 shaping and final combined P06 verification.
 
@@ -33,7 +33,7 @@ This parcel does not authorize a push, pull request, merge, deployment, provider
 
 - Controlling goal: `biostack-algorithm-remediation`.
 - Controlling decisions: ratified D1-D14 in `plugins/foreman-line/docs/goals/biostack-algorithm-remediation/charter.md`; P05 depends specifically on D1, D2, amended D8, and D10-D14.
-- Narrow Gate 1 Amendment 01 is ratified and supplies the exact active-state set, terminal-state set, first-terminal-writer rule, immutable terminal fields, idempotent replay rule, later-cancellation rule, and P05-before-P06 custody below.
+- Narrow Gate 1 Amendments 01 and 03 are ratified. Amendment 01 supplies the exact lifecycle custody contract; Amendment 03 supplies the timeout-terminalization supplement and replacement AF-P05.
 - Remediation base: `339f259b1a467034db4f57cf9d774c292f11b53a` from `main` / `origin/main`; pinned tree `0f6d0b609ce255aad5cca81698eb3ad0917cfda6`.
 - Diagnostic evidence source: `82295c3f36b412b9917eaf047a70b10ee2a67cdc`, whose retained lifecycle test blob is `689fb7db2545ce1df87cabfb7e448da77d05b14a`. Import only the named test-file contents into the remediation branch; do not merge, rebase, cherry-pick, rewrite, delete, or clean the diagnostic branch or its history.
 - Plan-review dependencies: F2 requires a deterministic worker-completion signal instead of waiting for the forbidden overwrite; F3 requires the complete D8 state/snapshot contract and serializes P06 after P05; F11 requires exact commands, grounded base counts, offline controls, expected deltas, and evidence receipts.
@@ -43,7 +43,7 @@ This parcel does not authorize a push, pull request, merge, deployment, provider
 
 P01-P04, P07, P08, and Q01-Q04 are not code dependencies. P06 is a downstream custody dependency only: no P06 shaping or dispatch proceeds until P05 has a final candidate, and final P06 integration verification must contain the exact accepted P05 candidate behavior before exercising the P06 candidate.
 
-## Shaping blocker and required human decision
+## Ratified timeout-terminalization resolution
 
 The exact pinned call sequence is visible at `jobs/runner.py:91-98` and `jobs/store.py:92-108` in base `339f259b1a467034db4f57cf9d774c292f11b53a`:
 
@@ -56,18 +56,7 @@ Under amended D8, step 3 is the first terminal transition and must win. A correc
 
 The preserved diagnostic scenario explicitly observes a timeout failure with `error_code="execution_timeout"`, and R-SIDE-01 is framed as a late worker overwriting that timeout failure. The required amended-D8 coverage also distinguishes timeout from cancellation and failure. Silently changing the regression to accept `cancelled` would weaken the reproduced invariant and discard terminal error provenance.
 
-The recommended narrow resolution is to add exactly `backend/research-sidecar/src/biostack_research_sidecar/jobs/runner.py` to AF-P05 and authorize the timeout path to install one atomic first terminal snapshot containing `status=failed`, `cancel_requested=True`, `error_code="execution_timeout"`, the timeout error/progress fields, finish time, and timeout artifact, without first calling the user-cancellation transition. `store.py` would still enforce first-terminal-writer custody for every later update/cancellation. This is a proposed amendment, not current authority.
-
-An alternative would be to re-ratify timeout as terminal `cancelled` without the existing timeout failure/error provenance. That changes R-SIDE-01's required behavior and is not recommended.
-
-Until one resolution is explicitly ratified:
-
-- AF-P05 remains exactly the two files below;
-- `runner.py` remains forbidden;
-- this spec is not Gate-2-dispatchable;
-- Step 0 may not be accepted;
-- P06 remains blocked by P05 custody; and
-- Gate 3 remains ungranted.
+The ratified resolution adds exactly `backend/research-sidecar/src/biostack_research_sidecar/jobs/runner.py` to AF-P05 and authorizes the timeout path to install one atomic first terminal snapshot containing `status=failed`, `cancel_requested=True`, `error_code="execution_timeout"`, the existing timeout error/progress text, one finish timestamp, and timeout artifact, without first calling the user-cancellation transition. `store.py` enforces first-terminal-writer custody for every later update/cancellation. User cancellation that wins while active remains terminal `cancelled` and immutable. No other timeout policy or runner behavior may change.
 
 ## Exact branch, worktree, and source custody
 
@@ -83,23 +72,14 @@ Until one resolution is explicitly ratified:
 The builder may edit exactly these files:
 
 1. `backend/research-sidecar/src/biostack_research_sidecar/jobs/store.py`
-2. `backend/research-sidecar/tests/test_runner_terminal_state_reproduction.py`
-
-The second path is absent on the pinned base and must be reconstructed from diagnostic commit `82295c3f36b412b9917eaf047a70b10ee2a67cdc`, then repaired in place. No substitute or nearby file is authorized.
-
-### Proposed narrow AF-P05 replacement — not yet ratified
-
-The smallest proposed amendment replaces AF-P05 with exactly:
-
-1. `backend/research-sidecar/src/biostack_research_sidecar/jobs/store.py`
 2. `backend/research-sidecar/src/biostack_research_sidecar/jobs/runner.py`
 3. `backend/research-sidecar/tests/test_runner_terminal_state_reproduction.py`
 
-No fourth file is proposed. This list is evidence for a human Gate 1 decision only and does not authorize edits until ratified and incorporated into the charter and this spec.
+The third path is absent on the pinned base and must be reconstructed from diagnostic commit `82295c3f36b412b9917eaf047a70b10ee2a67cdc`, then repaired in place. No substitute, nearby file, or fourth file is authorized.
 
 ## Forbidden and out of scope
 
-- Every repository path outside AF-P05 is forbidden, including `jobs/runner.py`, `contracts/models.py`, `workflows/executor.py`, request/response models, app routes, configuration, package/project/lock files, existing adjacent tests, P06's source-cap regression, frontend/backend .NET code, schemas, workflows, and goal documents.
+- Every repository path outside AF-P05 is forbidden, including `contracts/models.py`, `workflows/executor.py`, request/response models, app routes, configuration, package/project/lock files, existing adjacent tests, P06's source-cap regression, frontend/backend .NET code, schemas, workflows, and goal documents.
 - Do not implement `maximum_source_count`, alter result/claim/provenance/tool materialization, or begin P06 work in this parcel.
 - No public API redesign, status-enum change, durable-storage design, schema or serialization change, timeout-policy change, executor/runner refactor, concurrency-setting change, dependency upgrade, unrelated lint cleanup, or broad copy-on-read rewrite.
 - Do not weaken, delete, rename away, skip, or replace `test_timed_out_job_cannot_be_overwritten_by_late_worker`. Repair its completion observation while retaining the same timeout-versus-late-worker sequence and exact test name.
@@ -120,7 +100,7 @@ If any required change falls outside AF-P05, stop for a charter/spec amendment. 
 - The current store returns the existing in-memory `JobRecord` object. Current production writers use the synchronized `update` and `request_cancel` boundaries; no pinned production caller directly assigns lifecycle fields outside the store.
 - The pinned sidecar has five adjacent test files and 39 collected cases: `test_executor_status.py` (4), `test_health_and_jobs.py` (15), `test_inference_policy.py` (4), `test_tooluniverse_allowlist.py` (11), and `test_workflow_sequences.py` (5). The grounded baseline run is 38 passed and 1 expected skip (`test_legacy_config_copy_has_not_drifted`).
 - The target reproduction path is absent on the pinned base, so its base count is zero. The diagnostic snapshot contains one target case.
-- A pinned-tree `uv run --offline ruff check .` currently reports 37 pre-existing findings. Current AF-P05's `store.py` accounts for five pre-existing `UP017` findings. The proposed additional `runner.py` has three pre-existing findings (`I001` and two `UP017`), so the proposed three-file AF baseline is eight findings. A future candidate must introduce no new lint finding and must not widen scope to clean ambient debt.
+- A pinned-tree `uv run --offline ruff check .` currently reports 37 pre-existing findings. AF-P05's `store.py` accounts for five pre-existing `UP017` findings and `runner.py` has three pre-existing findings (`I001` and two `UP017`), so the three-file AF baseline is eight findings. The candidate must introduce no new lint finding and must not widen scope to clean ambient debt.
 
 ## Exact amended D8 contract
 
@@ -138,13 +118,14 @@ P05 binds the terminal-custody half of that decision as follows:
 6. Once a record is terminal, `request_cancel` returns that record without changing `cancel_requested`, status, timestamps, progress, partial/error fields, artifact, or tools. Cancellation may be the first terminal writer only while the record is active.
 7. Terminal custody is snapshot-wide and never field-by-field. A concurrent race may finish with either complete contender snapshot according to lock order, but never a mixed snapshot and never the later contender's overwrite of the first.
 8. Missing-job behavior remains unchanged (`None`). Unknown-field validation for an active record remains unchanged (`AttributeError`). TTL behavior and the four-active-state expiry exclusion remain unchanged.
-9. The change is store-local. The builder does not alter `JobRunner`, workflow execution, status contracts, API serialization, or source-cap behavior.
+9. Except for the ratified atomic timeout write in `JobRunner`, the change is store-local. The builder does not alter other runner behavior, workflow execution, status contracts, API serialization, or source-cap behavior.
+10. On timeout, `JobRunner` must not first call the user-cancellation transition. Its first terminal write atomically carries `failed`, `cancel_requested=True`, `error_code="execution_timeout"`, the existing timeout error/progress text, timeout artifact, and one finish timestamp. If user cancellation wins while active, `cancelled` remains the immutable first terminal snapshot.
 
-If the builder believes a seventh terminal status, a different cancellation policy, a copy-on-read contract, or a runner/executor change is required, stop for a narrow decision rather than widening D8.
+If the builder believes a seventh terminal status, a different cancellation policy, a copy-on-read contract, another runner change, or any executor change is required, stop for a narrow decision rather than widening D8.
 
 ## Required regression harness
 
-The following is the complete conditional harness for the recommended narrow amendment. It is recorded so the human and coordinator can assess the exact scope, but it is not dispatch authority while the shaping blocker remains open.
+The following is the complete required harness under ratified Amendment 03 after fresh Step 0 confirmation.
 
 Preserve the class/module and exact original test name:
 
@@ -163,18 +144,12 @@ Use deep value snapshots for assertions; do not retain only another alias to the
 
 ## Smallest production change
 
-No authorized production change can currently satisfy the complete contract:
-
-- The authorized `store.py` portion is to define the exact terminal-state membership, return an already-terminal record before applying any `update` field/timestamp, and make a later `request_cancel` a complete no-op, all under the existing `RLock`.
-- That correct store guard necessarily preserves the runner's earlier `cancelled` write and rejects its later timeout-failure write.
-- Preserving `failed` / `execution_timeout` as the first complete timeout snapshot requires changing the runner's ordering/payload, but `runner.py` is outside AF-P05.
-
-After the recommended narrow AF amendment only, the smallest complete production change would be:
+The smallest complete production change is:
 
 1. the store-local terminal guard above; and
 2. in `runner.py`, replace the timeout's cancel-then-fail pair with one `store.update` that atomically includes `cancel_requested=True` and every timeout terminal field already produced by `_mark_timeout`.
 
-Keep the existing lock as the atomicity boundary. Do not introduce another store, scheduler, queue, process, persistence layer, dependency, status value, public signature, or unrelated reformat. No implementation begins before ratification.
+Keep the existing lock as the atomicity boundary. Do not introduce another store, scheduler, queue, process, persistence layer, dependency, status value, public signature, or unrelated reformat. No implementation begins before fresh Step 0 confirmation.
 
 ## Security gates
 
@@ -199,7 +174,7 @@ Keep the existing lock as the atomicity boundary. Do not introduce another store
 
 ## Deterministic verification and count receipts
 
-These commands/counts are grounded on the pinned tree and define the conditional verification chain after a narrow amendment is ratified. They must not be used to begin implementation under the currently insufficient AF-P05.
+These commands/counts are grounded on the pinned tree and define the verification chain under ratified Amendment 03 after Step 0 confirmation.
 
 Run commands from the P05 worktree's `backend/research-sidecar` directory in PowerShell. `rtk` is preferred when available; if unavailable, record that once and run the exact underlying commands. Do not restore from or contact a registry. `UV_OFFLINE=1` and `uv run --offline` are mandatory. If the pinned lock/cache cannot create the external environment offline, stop as `ENVIRONMENT_BLOCKED`; do not remove `--offline`.
 
@@ -222,7 +197,7 @@ uv run --offline pytest tests/test_executor_status.py tests/test_health_and_jobs
 uv run --offline ruff check src/biostack_research_sidecar/jobs/store.py src/biostack_research_sidecar/jobs/runner.py --output-format concise
 ```
 
-Expected pinned-base facts are: target path absent; full collection 39; adjacent execution 38 passed and 1 expected skip, with zero failures/errors; and exactly eight existing findings across the proposed production files (five `UP017` in `store.py`; one `I001` and two `UP017` in `runner.py`). A mismatch stops edits for coordinator reconciliation. The nonzero base ruff exit is ambient pinned-tree evidence, not permission to clean it.
+Expected pinned-base facts are: target path absent; full collection 39; adjacent execution 38 passed and 1 expected skip, with zero failures/errors; and exactly eight existing findings across the production files (five `UP017` in `store.py`; one `I001` and two `UP017` in `runner.py`). A mismatch stops edits for coordinator reconciliation. The nonzero base ruff exit is ambient pinned-tree evidence, not permission to clean it.
 
 After implementation, run the exact target and adjacent commands:
 
@@ -250,7 +225,7 @@ git diff --name-only 339f259b1a467034db4f57cf9d774c292f11b53a..HEAD
 git status --short --branch --untracked-files=all
 ```
 
-After the recommended amendment, the final proposed-AF ruff output may contain only the same eight pinned findings: five `UP017` in `store.py`, one `I001` and two `UP017` in `runner.py`; the new test must add zero findings and no finding type/path/count may increase. Full-repository ruff remains a coordinator aggregate baseline check and is not authority for P05 to edit other files. The name-only output must equal the ratified AF-P05 exactly, base ancestry must succeed, the base tree receipt must equal `0f6d0b609ce255aad5cca81698eb3ad0917cfda6`, and final status must have no tracked or untracked residue after the candidate commit. Record that all tests used offline package resolution, synthetic local values, in-process fakes, and no external provider/network/cloud/production-data path.
+The final AF ruff output may contain only the same eight pinned findings: five `UP017` in `store.py`, one `I001` and two `UP017` in `runner.py`; the new test must add zero findings and no finding type/path/count may increase. Full-repository ruff remains a coordinator aggregate baseline check and is not authority for P05 to edit other files. The name-only output must equal the ratified AF-P05 exactly, base ancestry must succeed, the base tree receipt must equal `0f6d0b609ce255aad5cca81698eb3ad0917cfda6`, and final status must have no tracked or untracked residue after the candidate commit. Record that all tests used offline package resolution, synthetic local values, in-process fakes, and no external provider/network/cloud/production-data path.
 
 ## Evidence package
 
@@ -291,12 +266,12 @@ Reviewers do not edit, fix, stage, or commit. Every finding is dispositioned as 
 
 ## Step 0 - restate and stop
 
-**Step 0 is unavailable while the shaping blocker remains open.** The coordinator may not dispatch a builder or confirm edits under the current spec. After the human ratifies a narrow resolution and the coordinator updates/re-lints this spec, the builder must send one restatement containing all of the following, then stop for explicit confirmation:
+The builder must send one fresh restatement containing all of the following, then stop for explicit confirmation:
 
 1. goal, initiative, P05 identifier, Wave 1, critical-lifecycle risk, and P05-before-P06 dependency;
 2. branch `codex/biostack-remediation-p05`, worktree `C:\Users\clint\.codex\worktrees\biostack-remediation-p05\BioStack`, base `339f259b1a467034db4f57cf9d774c292f11b53a`, and tree `0f6d0b609ce255aad5cca81698eb3ad0917cfda6`;
-3. the newly ratified exact AF-P05 paths and the rule that every other file is forbidden;
-4. the exact four active states, six terminal states, first-terminal-writer atomicity, whole immutable terminal snapshot, identical replay, later cancellation, and active-update positive requirements;
+3. the three ratified exact AF-P05 paths and the rule that every other file is forbidden;
+4. the exact four active states, six terminal states, first-terminal-writer atomicity, whole immutable terminal snapshot, identical replay, later cancellation, active-update positive requirements, and the atomic timeout snapshot that does not first call user cancellation;
 5. the preserved test name, repaired worker-completion event, seven terminal semantic rows, active-state and concurrent-writer controls, exact target 10 / adjacent 39 / aggregate 49 counts, expected one adjacent skip, and exact commands;
 6. SG-SCOPE, SG-SIDECAR, synthetic/offline/no-provider/no-network limits, two adversarial plus separate security review, Gate 3 prohibition, and every stop rule.
 
@@ -326,7 +301,7 @@ Stop the parcel and report without widening scope if any of the following occurs
 - a named AF-P05 file is absent/insufficient, or a required change touches any other file;
 - Step 0 is not explicitly confirmed;
 - the active/terminal membership, cancellation semantics, whole-snapshot behavior, or idempotent replay contract needs a new decision;
-- the invariant can pass only by weakening/deleting the preserved race, waiting for a forbidden overwrite, using sleeps instead of completion signals, freezing active updates, or changing runner/executor/model behavior;
+- the invariant can pass only by weakening/deleting the preserved race, waiting for a forbidden overwrite, using sleeps instead of completion signals, freezing active updates, or changing runner behavior beyond the ratified timeout write, executor behavior, or model behavior;
 - offline dependencies are unavailable, a test needs a provider/network/cloud/production/protected-data path, or an external connection is attempted;
 - target/adjacent/aggregate counts, expected skip, or lint delta differ from this grounded contract without a reconciled source explanation;
 - a thread does not complete within its bounded wait, cleanup cannot shut down the runner, or the race harness leaks work;

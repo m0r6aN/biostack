@@ -1,6 +1,6 @@
 # Narrow Gate 1 Amendment 04 — P03 Reviewed-Graph Fixture
 
-**Status:** AWAITING HUMAN RATIFICATION — coordinator lint passed 2026-09-02
+**Status:** RATIFIED 2026-09-02 — coordinator lint passed
 
 **Scope:** replacement AF-P03 only; no production invariant change
 
@@ -41,3 +41,7 @@ Ratification reactivates only P03's existing contingent Gate 2 authority after t
 ## Exact ratification form
 
 > Narrow Gate 1 Amendment 04: I replace AF-P03 with the three files listed and authorize only the stale API graph-positive fixture change from `provisional` to exactly `reviewed`. Ratified D6 and all other decisions and authorizations remain unchanged. Gate 3 remains ungranted.
+
+## Human receipt
+
+The developer supplied the exact ratification form above on 2026-09-02. Replacement AF-P03 is active and permits only the named stale API graph-positive fixture correction from `provisional` to exactly `reviewed`; ratified D6 is unchanged. Contingent Gate 2 authority for P03 is reactivated subject to its amended spec and Step 0. Gate 3 remains ungranted.
