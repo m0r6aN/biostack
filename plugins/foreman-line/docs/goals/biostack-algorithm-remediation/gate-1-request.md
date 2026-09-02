@@ -6,11 +6,13 @@
 
 **Authoritative charter:** `plugins/foreman-line/docs/goals/biostack-algorithm-remediation/charter.md`
 
-**Charter commit:** `02e939f19205ecb2b6c1698b433409b683a06724`
+**Charter commit:** `0c4c0204d7ca512ad3de903e3caf257dc5b28b40`
 
-**Charter SHA-256:** `3D596470C54D474C79450500CB4DC01E467AB4AD0E865A6C3B65EBC59ABF63DC`
+**Charter SHA-256:** `991151BF01718B3A8D283666B5A110F7D60CF360E290D84A440553F4B8D318B8`
 
 **Verified base:** `main` / `origin/main` at `339f259b1a467034db4f57cf9d774c292f11b53a`
+
+**Governing diagnostic coordination head:** `codex/test-repro-contracts` at `879def179654d0fb44ab57a8e29b02b20e2239d0`
 
 ## Decision requested
 
