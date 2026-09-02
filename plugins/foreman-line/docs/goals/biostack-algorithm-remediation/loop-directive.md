@@ -31,6 +31,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Q02: v1 evidence commit `dea721288521a5789350e2398d0d7292b01ad10f` is preserved but review-rejected; v2 stopped terminally before transcript/test execution when the Baseline procedure encountered an unsupported `New-Item -LiteralPath`; no retry/v3 is authorized and endpoint-wide coverage remains inconclusive
 - P05 candidate `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SIDECAR/SG-SCOPE ACCEPT; rejected parent `923900c66d7046c282d397ba60d85b9eebcf1a58` preserved in history; P06 shaping may proceed against the exact accepted hash
 - P03 candidate `7e8087a00722e38c2a090d49826fa6289c880356`: complete shaped verification green but review-rejected for cross-artifact provenance misattribution; Amendment 05 is required before regression-count rework.
+- P06: shaped and coordinator-linted against accepted P05 `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`; exact two-file AF and five-case source-cap census are ready for isolated Step 0
 - Cerebras routing inventory: user-scope credential presence is confirmed without reading its value, but the current Codex process does not inherit it, no Cerebras CLI or reviewed callable adapter is present, and the existing governed Cerebras shadow route is public-only/candidate-only with Coordinator and verifier roles prohibited. State is `configured_unverified`; no BioStack source, test payload, secret, or provider request has been sent.
 
 ## Standing authorizations
