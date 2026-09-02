@@ -108,3 +108,7 @@ Gate 3 remains human-only and ungranted. P08 may be proposed for Gate 3 only aft
 ## Exact ratification form
 
 > Narrow Gate 1 Amendment 02: I ratify the D3, D4, D11, and D12 replacements, add D15, approve AF-P08 and P08 as written, and grant contingent Gate 2 dispatch authorization for P08. Amendment 01 remains separately pending; all other decisions and existing authorizations remain unchanged. Gate 3 remains ungranted.
+
+If Amendment 01 is ratified in the same human message, use the Amendment 01 exact form followed by this non-conflicting concurrent form:
+
+> Narrow Gate 1 Amendment 02: I ratify the D3, D4, D11, and D12 replacements, add D15, approve AF-P08 and P08 as written, and grant contingent Gate 2 dispatch authorization for P08. Amendment 01 is concurrently ratified by the preceding statement; all other decisions and existing authorizations remain unchanged. Gate 3 remains ungranted.
