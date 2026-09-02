@@ -1,7 +1,7 @@
 ---
 parcel: P04
 title: Evidence provenance
-status: active-awaiting-step-0
+status: active-awaiting-evidence-matrix-restatement
 goal: biostack-algorithm-remediation
 initiative: BioStack Algorithm Remediation
 project: BioStack backend
@@ -15,6 +15,8 @@ diagnostic_commit: 2c9d6cabce4bad853a63365c03e55c2fc612cb70
 ---
 
 # P04 - Evidence provenance
+
+Evidence-matrix re-lint: **PASSED 2026-09-02 after a pre-edit builder stop.** A fixed `LogFileName` on `dotnet test backend/BioStack.sln` was overwritten once per test project and could not prove aggregate deltas. P04 therefore uses five uniquely named per-project TRX receipts for base/candidate counters plus a separate solution orchestration command. This changes no product decision, invariant, Allowed File, count expectation, security gate, or Gate authority. The initial target `0`, adjacent `36/36`, and solution exit `0` remain valid preliminary receipts; the builder must add the complete five-project base vector before any edit.
 
 ## Goal and outcome
 
@@ -150,10 +152,15 @@ Before importing the diagnostic test, run and retain the base receipts:
 ```powershell
 dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --no-restore --filter "FullyQualifiedName~BioStack.Application.Tests.ScientificResearch.EvidenceProvenanceReproductionTests" --logger "trx;LogFileName=p04-base-target.trx" --results-directory $p04ReceiptDir --verbosity minimal
 dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --no-restore --filter "FullyQualifiedName~BioStack.Application.Tests.Services.EvidenceGateTests|FullyQualifiedName~BioStack.Application.Tests.ScientificResearch.ScientificResearchCandidateStagingServiceTests" --logger "trx;LogFileName=p04-base-adjacent.trx" --results-directory $p04ReceiptDir --verbosity minimal
-dotnet test backend/BioStack.sln --no-restore --logger "trx;LogFileName=p04-base-solution.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/tests/BioStack.Domain.Tests/BioStack.Domain.Tests.csproj --no-restore --logger "trx;LogFileName=p04-base-domain.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --no-restore --logger "trx;LogFileName=p04-base-application.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/tests/BioStack.ProtocolOperationsExportBundleVerifierCli.Tests/BioStack.ProtocolOperationsExportBundleVerifierCli.Tests.csproj --no-restore --logger "trx;LogFileName=p04-base-verifier.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-restore --logger "trx;LogFileName=p04-base-api.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/tests/BioStack.KnowledgeWorker.Tests/BioStack.KnowledgeWorker.Tests.csproj --no-restore --logger "trx;LogFileName=p04-base-knowledge-worker.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/BioStack.sln --no-restore --verbosity minimal
 ```
 
-Expected pinned-base counts are target `0` and adjacent `36` passed cases. The builder must record the actual TRX counters and stop before edits if the adjacent discovery count differs. A test-filter no-match result for the absent base target class is recorded as zero, not represented as a product pass.
+Expected pinned-base counts are target `0`, adjacent `36` passed cases, and the five-project vector Domain `7`, Application `609 passed / 5 skipped`, verifier `158`, API `377`, and KnowledgeWorker `866`, with zero failures. The builder must record every actual TRX counter and stop before edits if any discovery count differs. A test-filter no-match result for the absent base target class is recorded as zero, not represented as a product pass. The already captured overwritten solution TRX is explicitly non-evidence and must not be cited.
 
 After implementation, run the exact targeted and adjacent commands:
 
@@ -162,13 +169,18 @@ dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.
 dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --no-restore --filter "FullyQualifiedName~BioStack.Application.Tests.Services.EvidenceGateTests|FullyQualifiedName~BioStack.Application.Tests.ScientificResearch.ScientificResearchCandidateStagingServiceTests" --logger "trx;LogFileName=p04-new-adjacent.trx" --results-directory $p04ReceiptDir --verbosity minimal
 ```
 
-Expected final counts are target `23/23` passed and adjacent `36/36` passed, with zero failed, skipped, or not-executed cases. Then run the aggregate command:
+Expected final counts are target `23/23` passed and adjacent `36/36` passed, with zero failed, skipped, or not-executed cases. Then run the candidate five-project receipt vector and solution orchestration command:
 
 ```powershell
-dotnet test backend/BioStack.sln --no-restore --logger "trx;LogFileName=p04-new-solution.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/tests/BioStack.Domain.Tests/BioStack.Domain.Tests.csproj --no-restore --logger "trx;LogFileName=p04-new-domain.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/tests/BioStack.Application.Tests/BioStack.Application.Tests.csproj --no-restore --logger "trx;LogFileName=p04-new-application.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/tests/BioStack.ProtocolOperationsExportBundleVerifierCli.Tests/BioStack.ProtocolOperationsExportBundleVerifierCli.Tests.csproj --no-restore --logger "trx;LogFileName=p04-new-verifier.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/tests/BioStack.Api.Tests/BioStack.Api.Tests.csproj --no-restore --logger "trx;LogFileName=p04-new-api.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/tests/BioStack.KnowledgeWorker.Tests/BioStack.KnowledgeWorker.Tests.csproj --no-restore --logger "trx;LogFileName=p04-new-knowledge-worker.trx" --results-directory $p04ReceiptDir --verbosity minimal
+dotnet test backend/BioStack.sln --no-restore --verbosity minimal
 ```
 
-The final solution receipt must have exactly 23 more discovered/executed/passed cases than the base solution receipt, with no increase in failed, skipped, not-executed, aborted, or error counters. Read each receipt from its `TestRun/ResultSummary/Counters` element and record the exact path, command, exit code, total, executed, passed, failed, skipped/not-executed, and timestamp. Do not rely on source counting or an intermediate console line as the final receipt.
+The final five-project vector must differ from base only in Application, which has exactly 23 more discovered/executed/passed cases; every other project's counters remain identical, and no project increases failed, skipped, not-executed, aborted, or error counters. The separate solution command must exit `0`. Read each uniquely named receipt from its `TestRun/ResultSummary/Counters` element and record the exact path, command, exit code, total, executed, passed, failed, skipped/not-executed, and timestamp. Do not sum an overwritten solution TRX, source counts, or intermediate console lines as the final receipt.
 
 Run the scope and ancestry checks:
 
