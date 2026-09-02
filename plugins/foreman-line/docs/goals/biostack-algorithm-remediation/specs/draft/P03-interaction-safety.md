@@ -4,6 +4,8 @@ Status: **active — shaping and coordinator lint passed; exact worktree/base ve
 
 Coordinator lint: **PASSED 2026-09-02.** AF-P03, base/tree, production and diagnostic blobs, all six amended D6 clauses, the 4 retained plus 6 hostile-case census, the independent 20-case adjacent filter, the 609-passed/5-skipped Application baseline, count deltas, offline commands, and single-review depth were checked against the pinned repository and ratified amendment. Dispatch authority remains contingent on a clean isolated worktree and exact Step 0 restatement.
 
+Import-receipt correction: **PASSED 2026-09-02 after a pre-edit builder stop.** Because the reproduction path is absent from the pinned index, restoring it into the worktree creates an untracked file; pre-commit `git diff --name-only` correctly emits nothing. The import tripwire therefore uses `git status --short --untracked-files=all` plus `git ls-files --others --exclude-standard` and requires exactly the one AF-P03 test path. This changes no invariant, Allowed File, case/count expectation, or Gate authority.
+
 ## Goal
 
 Remediate only the four reproduced interaction-intelligence defects and the hostile coverage required by ratified D6 Amendment 01. Preserve the diagnostic scenarios as regressions, add the smallest production repair inside `InteractionIntelligenceService.cs`, and prove that safety metadata, graph provenance, canonical identity, and confidence bounds remain fail-closed under offline deterministic verification. This parcel does not authorize a push, pull request, merge, deployment, release, publication, or mutation of any diagnostic branch.
@@ -177,10 +179,11 @@ Expected receipts: HEAD/base and tree equal the pinned values; status is empty; 
 ```powershell
 git restore --source=56b7ad229a34a6f151f5bf7b96a8bfdcbce8132f --worktree -- backend/tests/BioStack.Application.Tests/Services/InteractionIntelligenceReproductionTests.cs
 git hash-object backend/tests/BioStack.Application.Tests/Services/InteractionIntelligenceReproductionTests.cs
-git diff --name-only
+git status --short --untracked-files=all
+git ls-files --others --exclude-standard
 ```
 
-Expected before extension: hash `a234e398b4d8f226ee43baf0ecb69f352c584307`; changed-path output contains only the reproduction test.
+Expected before extension: hash `a234e398b4d8f226ee43baf0ecb69f352c584307`; status is exactly one untracked AF-P03 reproduction test and the untracked-file listing contains exactly that path. Empty `git diff --name-only` output at this stage is normal and is not scope evidence because the path is not yet indexed.
 
 ### Targeted regression
 
