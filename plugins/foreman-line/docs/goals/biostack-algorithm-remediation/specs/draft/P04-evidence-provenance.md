@@ -1,7 +1,7 @@
 ---
 parcel: P04
 title: Evidence provenance
-status: draft-blocked-pending-amendment-01
+status: active-awaiting-step-0
 goal: biostack-algorithm-remediation
 initiative: BioStack Algorithm Remediation
 project: BioStack backend
@@ -29,8 +29,8 @@ This parcel does not authorize a push, pull request, merge, deployment, provider
 - Remediation base: `339f259b1a467034db4f57cf9d774c292f11b53a` from `main` / `origin/main`.
 - Diagnostic evidence source: `2c9d6cabce4bad853a63365c03e55c2fc612cb70`. Import the test-file contents into the remediation branch; do not merge, rebase, cherry-pick, rewrite, or delete the diagnostic branch or its history.
 - Plan-review dependency: F5 in `plan-review-findings.md` must be satisfied by direct no-upsert assertions for every ineligible status, an independent internal-only attribution denial, and positive controls for candidate staging and external locators.
-- Original Gate 1 is granted, but coordinator lint reopened D7 in Amendment 01 to ratify the exact candidate-status allowlist, locator grammar, and rejection codes below. P04 remains draft and blocked until that amendment is explicitly re-ratified.
-- Gate 2 is contingent: after Amendment 01 is ratified, the coordinator must lint this spec against the amended charter, verify `origin/main` has not moved materially, create or verify the named isolated branch/worktree from the pinned base, and accept the builder's Step 0 restatement before edits.
+- Original Gate 1 and Narrow Gate 1 Amendment 01 are ratified. Amendment 01 supplies the exact candidate-status allowlist, locator grammar, and rejection codes below.
+- Gate 2 is contingent: coordinator lint must pass against the amended charter, `main` and the locally verified `origin/main` ref must remain at the pinned base, the named isolated branch/worktree must start from that base, and the builder's Step 0 restatement must be accepted before edits.
 - SG-SCOPE and SG-EVIDENCE are mandatory. Two fresh adversarial reviews and a separate defensive security review are required on the exact final candidate commit. A review failure blocks Gate 3.
 - Gate 3 remains ungranted. The parcel candidate stays local and unmerged until the full goal chain is green and the human approves the exact commit/merge set and release action.
 
@@ -259,4 +259,4 @@ Stop the parcel and report without widening scope if any of the following occurs
 - any push, PR, merge, deployment, publication, release, or diagnostic-branch mutation is proposed before exact human Gate 3;
 - the builder or a reviewer is asked to edit outside its authorized role.
 
-BioStack does not contain the Foreman emitter/linter required for a `ShapingResult`. This draft intentionally creates no `ShapingResult` JSON and makes no promotion from `draft` to `active`.
+BioStack does not contain the Foreman emitter/linter required for a `ShapingResult`. This spec intentionally creates no `ShapingResult` JSON. Coordinator lint passed after Amendment 01 ratification; dispatch remains contingent on the clean isolated worktree and confirmed Step 0.

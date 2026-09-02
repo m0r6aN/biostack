@@ -1,6 +1,6 @@
 # Parcel Spec: P08 Collective Outbound Authorization
 
-Status: **blocked — awaiting human ratification of Narrow Gate 1 Amendment 02; no Step 0 or dispatch authority**
+Status: **active — Amendment 02 ratified; awaiting clean isolated worktree and confirmed Step 0**
 
 Coordinator lint: **PASSED 2026-09-02**. The eight-file scope covers every verified constructor/DI/test compile site without adding a project reference; scoped adapter/orchestrator/board composition avoids captive dependencies; targeted and aggregate count deltas match the pinned receipts. The local named-client override in the new API integration test remains an implementation tripwire: if AF-P08 cannot provide a non-delegating handler inside that one file, the parcel stops rather than widening scope. One-check-per-`RunAsync`, no authenticated-user-to-intent actor/tenant binding, and no mid-poll consent re-check are explicit residual boundaries.
 
@@ -21,11 +21,11 @@ Coordinator lint: **PASSED 2026-09-02**. The eight-file scope covers every verif
 
 Retain Q01's reproduced Collective config-only transmission as a regression and make the smallest fail-closed production change: the live orchestrator must obtain the current authenticated user's current server-side consent before constructing a submit request, borrowing a client, constructing an API client, materializing headers/body, or sending. Denial or gate failure produces the existing degraded envelope and zero local-handler calls; an affirmative current-consent decision permits exactly one initial local-fake submit and preserves existing mapping/poll behavior.
 
-P08 is not authorized until Amendment 02 is explicitly ratified. Existing Gate 2 covers only Q01-Q04 and P01-P07. Gate 3 is ungranted.
+Amendment 02 is explicitly ratified and extends contingent Gate 2 authority to P08. Dispatch still requires the exact isolated base/worktree and confirmed Step 0. Gate 3 is ungranted.
 
 ## Authority and Evidence
 
-- Controlling documents: the ratified charter, plan-review findings, loop directive, Gate 1 receipts, and—only if ratified—Narrow Gate 1 Amendment 02.
+- Controlling documents: the ratified charter, plan-review findings, loop directive, Gate 1 receipts, and ratified Narrow Gate 1 Amendment 02.
 - Q01 evidence source: local evidence-only commit `83d1235b3a964ddf7130f67900f4dcd3b38dcf42`, sole parent `339f259b1a467034db4f57cf9d774c292f11b53a`, changed path exactly `backend/tests/BioStack.Application.Tests/Cognition/CollectiveOutboundBoundaryInvestigationTests.cs`.
 - Q01 test blob: `02e966837595b0284029acb280cbc8b79c6780f8`; file SHA-256 `0302578C83C89C78A55E3ED3AAD2F7DEECEAA8C8A15366A0C42D30275AD25CC4`.
 - Q01 transcript: `C:\Users\clint\.codex\evidence\biostack-algorithm-remediation\q01-collective-outbound-2026-09-02.transcript.txt`.
@@ -146,7 +146,7 @@ After Amendment 02 ratification and before any edit/import/build/test, a fresh b
 7. SG-OUTBOUND, SG-SCOPE, synthetic/local-only boundary, two adversarial plus separate security reviews; and
 8. Gate 3 ungranted and no push/PR/merge/deploy/enable/publish/release/diagnostic mutation.
 
-Silence is not confirmation. Any mismatch or unratified Amendment 02 stops P08.
+Silence is not confirmation. Any mismatch or loss of Amendment 02 custody stops P08.
 
 ## Deterministic Verification
 
@@ -251,8 +251,8 @@ Logical rollback is the one P08 candidate commit after any future authorized mer
 
 ## Stop Rules
 
-Stop immediately if Amendment 02 is unratified; Step 0 is unconfirmed; base/tree/status differs; `origin/main` moved materially; AF-P08 is insufficient; any project/package/config/endpoint/ConsentGate/CollectiveApiClient edit is needed; the retained test is weakened/deleted/renamed; gate order cannot precede all submit construction; a singleton captures a scoped dependency; a project cycle/service locator is proposed; real network/provider/registry/cloud/production/protected data/credentials are needed; count/scope/ancestry/DI/no-network verification fails; a security finding cannot close in AF-P08; the same tripwire recurs twice; or any push/PR/merge/deploy/enable/publish/release/diagnostic mutation is proposed before exact human Gate 3.
+Stop immediately if Amendment 02 custody is absent; Step 0 is unconfirmed; base/tree/status differs; `origin/main` moved materially; AF-P08 is insufficient; any project/package/config/endpoint/ConsentGate/CollectiveApiClient edit is needed; the retained test is weakened/deleted/renamed; gate order cannot precede all submit construction; a singleton captures a scoped dependency; a project cycle/service locator is proposed; real network/provider/registry/cloud/production/protected data/credentials are needed; count/scope/ancestry/DI/no-network verification fails; a security finding cannot close in AF-P08; the same tripwire recurs twice; or any push/PR/merge/deploy/enable/publish/release/diagnostic mutation is proposed before exact human Gate 3.
 
 ## Shaping Boundary
 
-BioStack lacks the Foreman emitter/linter. This docs-only draft creates no `ShapingResult`. Coordinator lint is authoritative. Its location under `specs/draft` and blocked status confer no dispatch authority.
+BioStack lacks the Foreman emitter/linter. This docs-only spec creates no `ShapingResult`. Coordinator lint is authoritative; its active status confers only contingent Gate 2 authority and no authority before the clean isolated worktree and confirmed Step 0.
