@@ -10,6 +10,19 @@ import type {
 export const runtime = 'nodejs';
 
 const DEFAULT_MODEL = 'gpt-5.5';
+const DEFAULT_BACKEND_ORIGIN = 'http://localhost:5050';
+const SESSION_COOKIE_NAME = 'biostack_session';
+const CONSENT_TIMEOUT_MS = 2_000;
+const MAX_CONSENT_RESPONSE_BYTES = 16_384;
+const CONSENT_STATUS_FIELDS = [
+  'accepted',
+  'consentAcceptedAtUtc',
+  'consentVersion',
+  'declined',
+  'consentDeclinedAtUtc',
+  'consentDeclinedVersion',
+  'currentVersion',
+] as const;
 
 type SuggestionRequest = {
   compound: ResearchSummaryCompound;
@@ -82,6 +95,167 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 function isSuggestionRequest(value: unknown): value is SuggestionRequest {
   if (!isRecord(value)) return false;
   return isRecord(value.compound) && isRecord(value.candidate) && ('evidencePacket' in value) && Array.isArray(value.planItems);
+}
+
+function resolveBackendOrigin(): string {
+  return (process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || DEFAULT_BACKEND_ORIGIN)
+    .replace(/\/+$/, '');
+}
+
+function extractUniqueSessionCookie(cookieHeader: string | null): string | null {
+  if (!cookieHeader) return null;
+
+  const matches: string[] = [];
+  for (const rawSegment of cookieHeader.split(';')) {
+    const segment = rawSegment.trim();
+    const separator = segment.indexOf('=');
+    if (separator < 0) {
+      if (segment === SESSION_COOKIE_NAME) return null;
+      continue;
+    }
+
+    const name = segment.slice(0, separator);
+    if (name !== SESSION_COOKIE_NAME) {
+      if (name.trim() === SESSION_COOKIE_NAME) return null;
+      continue;
+    }
+    matches.push(segment.slice(separator + 1));
+  }
+
+  if (matches.length !== 1) return null;
+  const [value] = matches;
+  if (!value || !/^[\x21-\x2B\x2D-\x3A\x3C-\x5B\x5D-\x7E]+$/.test(value)) return null;
+  return value;
+}
+
+function hasNullableString(value: unknown): value is string | null {
+  return value === null || typeof value === 'string';
+}
+
+function isCanonicalConsentStatus(value: unknown): value is Record<string, unknown> {
+  if (!isRecord(value)) return false;
+  const keys = Object.keys(value);
+  if (keys.length !== CONSENT_STATUS_FIELDS.length) return false;
+  if (CONSENT_STATUS_FIELDS.some(field => !Object.prototype.hasOwnProperty.call(value, field))) return false;
+
+  return typeof value.accepted === 'boolean'
+    && hasNullableString(value.consentAcceptedAtUtc)
+    && hasNullableString(value.consentVersion)
+    && typeof value.declined === 'boolean'
+    && hasNullableString(value.consentDeclinedAtUtc)
+    && hasNullableString(value.consentDeclinedVersion)
+    && typeof value.currentVersion === 'string'
+    && value.currentVersion.trim().length > 0;
+}
+
+async function cancelResponseBody(response: Response): Promise<void> {
+  try {
+    await response.body?.cancel();
+  } catch {
+    // A denial remains fail-closed even when the runtime cannot cancel the body.
+  }
+}
+
+async function readBoundedConsentBody(response: Response): Promise<string | null> {
+  const contentType = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
+  if (contentType !== 'application/json' && !contentType?.endsWith('+json')) {
+    await cancelResponseBody(response);
+    return null;
+  }
+
+  const declaredLength = response.headers.get('content-length');
+  if (declaredLength !== null) {
+    const normalizedLength = declaredLength.trim();
+    if (!/^\d+$/.test(normalizedLength)) {
+      await cancelResponseBody(response);
+      return null;
+    }
+
+    const byteLength = Number(normalizedLength);
+    if (!Number.isSafeInteger(byteLength) || byteLength > MAX_CONSENT_RESPONSE_BYTES) {
+      await cancelResponseBody(response);
+      return null;
+    }
+  }
+
+  const reader = response.body?.getReader();
+  if (!reader) return null;
+
+  const chunks: Uint8Array[] = [];
+  let totalBytes = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      totalBytes += value.byteLength;
+      if (totalBytes > MAX_CONSENT_RESPONSE_BYTES) {
+        try {
+          await reader.cancel();
+        } catch {
+          // The response is denied regardless of cancellation support.
+        }
+        return null;
+      }
+      chunks.push(value);
+    }
+  } catch {
+    return null;
+  } finally {
+    reader.releaseLock();
+  }
+
+  const bytes = new Uint8Array(totalBytes);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+
+  try {
+    return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  } catch {
+    return null;
+  }
+}
+
+async function hasCurrentConsent(request: Request): Promise<boolean> {
+  const sessionCookie = extractUniqueSessionCookie(request.headers.get('cookie'));
+  if (!sessionCookie) return false;
+
+  const abortController = new AbortController();
+  const timeout = setTimeout(() => abortController.abort(), CONSENT_TIMEOUT_MS);
+  try {
+    const response = await fetch(`${resolveBackendOrigin()}/api/v1/consent`, {
+      method: 'GET',
+      headers: {
+        cookie: `${SESSION_COOKIE_NAME}=${sessionCookie}`,
+      },
+      cache: 'no-store',
+      redirect: 'manual',
+      signal: abortController.signal,
+    });
+
+    if (response.redirected || (response.status >= 300 && response.status < 400) || !response.ok) {
+      await cancelResponseBody(response);
+      return false;
+    }
+
+    const responseText = await readBoundedConsentBody(response);
+    if (responseText === null) return false;
+
+    let status: unknown;
+    try {
+      status = JSON.parse(responseText) as unknown;
+    } catch {
+      return false;
+    }
+
+    return isCanonicalConsentStatus(status) && status.accepted === true;
+  } catch {
+    return false;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function compactContext(body: SuggestionRequest) {
@@ -219,6 +393,10 @@ export async function POST(request: Request) {
 
   if (!isSuggestionRequest(body)) {
     return Response.json({ error: 'Invalid suggestion request.' }, { status: 400 });
+  }
+
+  if (!await hasCurrentConsent(request)) {
+    return Response.json({ error: 'Research suggestion is unavailable.' }, { status: 403 });
   }
 
   const model = process.env.OPENAI_REVIEW_MODEL ?? DEFAULT_MODEL;
