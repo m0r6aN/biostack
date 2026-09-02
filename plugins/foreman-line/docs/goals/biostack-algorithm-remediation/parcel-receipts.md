@@ -135,12 +135,16 @@ Status: **live coordinator record; no merge or release authority**
 
 ## P05 — Sidecar terminal-state custody
 
-- Rejected candidate: `923900c66d7046c282d397ba60d85b9eebcf1a58`; direct child of the pinned base; exact three-file AF-P05; clean local worktree
+- Accepted candidate: `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`; tree `1c0f8406cde32eefeba4411ecde6df3bb680fcf4`; base ancestor pinned; clean local worktree
+- Rejected parent: `923900c66d7046c282d397ba60d85b9eebcf1a58`; preserved in candidate history and never accepted for merge custody
+- Changed paths: exactly the three AF-P05 files; timeout is one atomic `failed`/`execution_timeout` snapshot, and store updates prevalidate all keys before mutation
 - Verification: target `10/10`; adjacent `38 passed / 1 expected skip`; aggregate `48 passed / 1 expected skip`; exact eight pinned lint findings unchanged
-- Adversarial review A and separate defensive security review: REWORK_REQUIRED; `store.update` validates and mutates in one loop, so a trailing invalid key can install an incomplete immutable terminal record
-- Required in-scope repair: prevalidate all keys under the lock before mutation; fold unchanged-active-snapshot and complete real-timeout-snapshot assertions into the existing exact 10-case census
-- Disposition: rework Step 0 required; all candidate reviews invalidated; P06 remains held until a final verified and accepted P05 candidate exists
+- Adversarial reviewer A: ACCEPT; independent offline target/adjacent/aggregate rerun green; no findings or coverage gaps
+- Adversarial reviewer B: ACCEPT; independent offline rerun plus 200-iteration three-way race produced only complete winner snapshots; no actionable findings
+- Defensive security review: ACCEPT; SG-SIDECAR PASS; SG-SCOPE PASS; no blocking findings
+- Non-blocking residuals: trusted in-process callers still receive mutable `JobRecord` aliases; timeout/cancellation does not forcibly stop already-running provider work; both are outside ratified P05 scope
+- Custody: accepted P05 hash may now be pinned into P06 shaping and final combined verification; local only, unmerged, unpushed, undeployed, unreleased
 
 ## Gate custody
 
-P01, P02, P04, P07, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01-04 were explicitly ratified on 2026-09-02. P05 is in authorized in-scope rework and P06 remains downstream. P03 is held pending Narrow Gate 1 Amendment 05. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
+P01, P02, P04, P05, P07, and P08 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01-04 were explicitly ratified on 2026-09-02. P06 may be shaped against accepted P05 hash `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`. P03 is held pending Narrow Gate 1 Amendment 05. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
