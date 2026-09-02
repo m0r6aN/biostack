@@ -197,7 +197,18 @@ def test_timed_out_job_cannot_be_overwritten_by_late_worker(
         timeout_record = store.get(record.job_id)
         assert timeout_record is not None
         timeout_snapshot = deepcopy(timeout_record)
+        timeout_message = "Job exceeded maximum execution time (1s)."
+        assert timeout_snapshot.status == ResearchJobStatusCode.FAILED
         assert timeout_snapshot.cancel_requested is True
+        assert timeout_snapshot.error_code == "execution_timeout"
+        assert timeout_snapshot.error_message == timeout_message
+        assert timeout_snapshot.progress_message == timeout_message
+        assert timeout_snapshot.finished_at_utc is not None
+        assert timeout_snapshot.artifact is not None
+        assert timeout_snapshot.artifact.status == ResearchJobStatusCode.FAILED
+        assert timeout_snapshot.artifact.failure_details == timeout_message
+        assert timeout_snapshot.artifact.warnings == [timeout_message]
+        assert timeout_snapshot.artifact.finished_at_utc == timeout_snapshot.finished_at_utc
 
         release_sequence.set()
         assert worker_completed.wait(timeout=4.0)
@@ -275,6 +286,17 @@ def test_first_terminal_snapshot_is_immutable(case: _TerminalCase) -> None:
 def test_all_active_states_accept_progress_updates() -> None:
     store = InMemoryJobStore()
     record = store.create(_request())
+    active_snapshot = deepcopy(record)
+    with pytest.raises(AttributeError, match="invalid_terminal_field"):
+        store.update(
+            record.job_id,
+            status=ResearchJobStatusCode.COMPLETED,
+            finished_at_utc=datetime(2026, 9, 2, 12, 0, tzinfo=UTC),
+            progress_message="must-not-stick",
+            invalid_terminal_field="rejected",
+        )
+    _assert_snapshot(store, record.job_id, active_snapshot)
+
     active_states = (
         ResearchJobStatusCode.QUEUED,
         ResearchJobStatusCode.RESOLVING_IDENTITY,

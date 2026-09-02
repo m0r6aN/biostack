@@ -94,9 +94,10 @@ class InMemoryJobStore:
                 return None
             if record.status in _TERMINAL_STATUSES:
                 return record
-            for key, value in kwargs.items():
+            for key in kwargs:
                 if not hasattr(record, key):
                     raise AttributeError(key)
+            for key, value in kwargs.items():
                 setattr(record, key, value)
             record.updated_at_utc = datetime.now(timezone.utc)
             return record
