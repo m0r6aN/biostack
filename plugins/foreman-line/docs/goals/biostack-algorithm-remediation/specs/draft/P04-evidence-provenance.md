@@ -1,7 +1,7 @@
 ---
 parcel: P04
 title: Evidence provenance
-status: active-awaiting-evidence-matrix-restatement
+status: review-complete-local-candidate
 goal: biostack-algorithm-remediation
 initiative: BioStack Algorithm Remediation
 project: BioStack backend
@@ -15,6 +15,8 @@ diagnostic_commit: 2c9d6cabce4bad853a63365c03e55c2fc612cb70
 ---
 
 # P04 - Evidence provenance
+
+Completion receipt: **REVIEW-COMPLETE 2026-09-02.** Local candidate `38ebffb10411c763ed4f570fdcfece51ab177aa3` is a direct child of the pinned base and changes exactly AF-P04. Target `23/23`, adjacent `36/36`, the five-project base/candidate matrix, and separate solution orchestration are green. Two fresh adversarial reviewers and the separate SG-EVIDENCE/SG-SCOPE security reviewer accepted the exact candidate with no findings. The candidate remains local, unmerged, undeployed, and unreleased; Gate 3 remains ungranted.
 
 Evidence-matrix re-lint: **PASSED 2026-09-02 after a pre-edit builder stop.** A fixed `LogFileName` on `dotnet test backend/BioStack.sln` was overwritten once per test project and could not prove aggregate deltas. P04 therefore uses five uniquely named per-project TRX receipts for base/candidate counters plus a separate solution orchestration command. This changes no product decision, invariant, Allowed File, count expectation, security gate, or Gate authority. The initial target `0`, adjacent `36/36`, and solution exit `0` remain valid preliminary receipts; the builder must add the complete five-project base vector before any edit.
 

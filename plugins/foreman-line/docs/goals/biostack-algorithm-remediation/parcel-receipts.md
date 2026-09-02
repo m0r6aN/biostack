@@ -29,6 +29,21 @@ Status: **live coordinator record; no merge or release authority**
 - Defensive security review: ACCEPT; SG-SCOPE PASS; SG-OUTBOUND PASS; no security findings
 - Custody: clean local branch `codex/biostack-remediation-p02`; not pushed, merged, deployed, or released
 
+## P04 — Evidence provenance
+
+- Base: `339f259b1a467034db4f57cf9d774c292f11b53a`
+- Candidate: `38ebffb10411c763ed4f570fdcfece51ab177aa3`; direct child of the pinned base
+- Changed paths: exactly AF-P04 (`ScientificResearchCandidateStagingService.cs`, `EvidenceGate.cs`, and retained `EvidenceProvenanceReproductionTests.cs`)
+- Target: base `0`; candidate `23/23` passed
+- Adjacent evidence/staging: base and candidate `36/36` passed
+- Five-project matrix: Domain `7`, verifier `158`, API `377`, and KnowledgeWorker `866` unchanged; Application `609 passed / 5 skipped` to `632 passed / 5 skipped`, exactly `+23`; zero failures
+- Solution orchestration: exact builder command recorded exit `0`; durable counters come from the unique per-project TRXs, and the overwritten solution TRX remains explicitly excluded
+- Adversarial review A: ACCEPT, no findings
+- Adversarial review B: ACCEPT, no findings; standalone solution-log absence is informational only under the shaped evidence contract
+- Defensive security review: ACCEPT; SG-EVIDENCE PASS; SG-SCOPE PASS; no Critical/High/Medium/Low findings
+- Residual informational coverage: no direct rows for every mixed-case/duplicate/oversized citation variant; source review found the ratified grammar deterministic and fail-closed
+- Custody: clean local branch `codex/biostack-remediation-p04`; not pushed, merged, deployed, or released
+
 ## Q04 — Frontend dependency readiness
 
 - Base/head: `339f259b1a467034db4f57cf9d774c292f11b53a`; no repository changes
@@ -70,4 +85,4 @@ Status: **live coordinator record; no merge or release authority**
 
 ## Gate custody
 
-P01 and P02 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01 and 02 were explicitly ratified on 2026-09-02, activating their replacement decisions and contingent Gate 2 authority through P08. P05 shaping is blocked pending Narrow Gate 1 Amendment 03, and P06 remains downstream. P03's scoped target/adjacent/Application chain is green but its uncommitted candidate is held pending Amendment 04 for one stale API fixture. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
+P01, P02, and P04 are review-complete candidate commits, not approved merge commits. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01 and 02 were explicitly ratified on 2026-09-02, activating their replacement decisions and contingent Gate 2 authority through P08. P05 shaping is blocked pending Narrow Gate 1 Amendment 03, and P06 remains downstream. P03's scoped target/adjacent/Application chain is green but its uncommitted candidate is held pending Amendment 04 for one stale API fixture. Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
