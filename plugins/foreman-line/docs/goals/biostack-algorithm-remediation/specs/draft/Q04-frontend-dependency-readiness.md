@@ -1,10 +1,10 @@
 # Parcel Q04: Frontend Dependency Readiness
 
-Status: **active — coordinator lint passed; dispatch remains contingent on exact worktree/base verification and Step 0 confirmation**
+Status: **active — final-attempt procedural amendment passed coordinator re-lint; no rerun authority exists until a new Step 0 confirmation**
 
-Coordinator lint: **PASSED 2026-09-02**. The procedure is command-only, requires an offline npm install with no registry fallback, selects only the existing network-faked route test, validates exact Git/blob identities, and bounds recursive cleanup to three pre-absent, resolved paths inside the isolated Q04 frontend directory.
+Coordinator re-lint: **PASSED 2026-09-02**. The unchanged parcel boundary remains command-only, requires an offline npm install with no registry fallback, selects only the existing network-faked route test, validates exact Git/blob identities, and bounds recursive cleanup to three pre-absent, resolved paths inside the isolated Q04 frontend directory. The embedded final-attempt PowerShell parses with zero errors; the installed `Tee-Object` exposes `FilePath` and `Append`; the new write-once transcript path is absent. Runtime capture behavior remains subject to the final execution and fresh review.
 
-Procedural amendment 2026-09-02: the first run proved offline dependency readiness and `2/2` default-worker test success, but fresh review rejected `READY` because npm 11.6.2 consumed the worker flags instead of forwarding them. The corrected procedure invokes the installed local Vitest entrypoint through `node`, emits the exact argument vector, rejects unknown-option/config warnings, and requires a complete transcript at `C:\Users\clint\.codex\evidence\biostack-algorithm-remediation\q04-rerun-2026-09-02.transcript.txt`. This is a command-level repair only; it does not alter a Gate 1 decision or unblock P07 before fresh acceptance.
+Procedural amendment 2026-09-02: two bounded runs are rejected and remain preserved as non-controlling evidence. Run 1 proved offline dependency readiness and `2/2` default-worker test success, but npm 11.6.2 consumed the required worker flags instead of forwarding them. Run 2 emitted the corrected direct-node argument vector and displayed `1/1` file and `2/2` tests passing in the live terminal, but `Start-Transcript` omitted the native npm/Vitest stream, the transcript-based count checks were false, and separately submitted `elseif`/`else` clauses failed to bind to the preceding `if`; therefore it did not produce an acceptable outcome token. This spec defines one third and final bounded attempt. It uses a new transcript path, captures every native stdout/stderr stream explicitly through `Tee-Object`, preserves `$LASTEXITCODE` immediately after each native command, and assigns outcome precedence without `elseif`. A further evidence-capture failure terminally blocks Q04; it does not authorize another run. This is a command-level repair only; it does not alter a Gate 1 decision or unblock P07 before fresh acceptance.
 
 ## Goal
 
@@ -29,11 +29,11 @@ Determine whether the pinned BioStack frontend dependency graph can be installed
 - Pinned `frontend/package-lock.json` blob: `6772a07e5d8cfb575788f78afda23ec388bc5720`
 - Pinned main-based test blob: `b1619779e26cdf34d7d47d3e51858c54b43a31fc`
 
-The coordinator creates the branch and worktree from the required commit, never from a diagnostic branch. At shaping time the named branch and worktree do not exist. If either appears under another owner before dispatch, stop for coordinator reconciliation.
+The branch and worktree persist from the two rejected attempts. Before this final attempt, the coordinator must reconfirm their ownership, exact base/head/tree, empty status, and absence of generated roots. Do not recreate them from, merge, or otherwise consume a diagnostic branch. If either is under another owner or has drifted, stop for coordinator reconciliation.
 
 ## Dependencies and Preconditions
 
-1. Gate 1 D1-D14 and contingent Gate 2 authority cover Q04. Pending Amendment 01 does not reopen a Q04 decision, so Q04 may proceed after this draft is coordinator-linted.
+1. Gate 1 D1-D14 and contingent Gate 2 authority cover Q04. Pending Amendment 01 does not reopen a Q04 decision, but this final-attempt amendment must pass fresh coordinator lint and receive a new Step 0 confirmation before Q04 may run.
 2. Before dispatch, the coordinator owns the `origin/main` comparison and must confirm it still equals the pinned base or apply the charter's base-change rule. The investigator must not fetch, pull, or contact a remote Git host.
 3. The worktree must begin on the exact branch, commit, and tree above with an empty `git status --porcelain=v1 --untracked-files=all` receipt.
 4. The three pinned frontend blobs must match before dependency installation. The lockfile is lockfile version 3 and has 636 package entries on the pinned base. `frontend/package.json` maps `npm test` to `vitest run`; the lock resolves Vitest `4.1.10`.
@@ -77,7 +77,7 @@ The execution receipt, not source counting, is authoritative. Expected pinned-ba
 
 ## Exact Command Procedure
 
-Run the following as one PowerShell session from the Q04 worktree root after Step 0 confirmation. Preserve the complete terminal stream, including the explicit receipt lines and native command output. Do not remove or weaken any preflight, `--offline`, worker, cleanup, or equality check.
+This is the third and final bounded attempt. Run the following as one parsed PowerShell script from the Q04 worktree root only after a new Step 0 confirmation. Do not submit its compound statements one line at a time. The new external transcript path must not already exist; do not overwrite either rejected-run transcript. `Start-Transcript` is forbidden. Every native command sends stdout and stderr through `Tee-Object`, and `$LASTEXITCODE` is copied immediately after that exact native pipeline. Explicit receipt lines use the same append-only `Tee-Object` path. Do not remove or weaken any preflight, `--offline`, worker, capture, cleanup, equality, count, or warning check.
 
 ```powershell
 Set-StrictMode -Version Latest
@@ -87,25 +87,57 @@ $PSNativeCommandUseErrorActionPreference = $false
 $q04Base = '339f259b1a467034db4f57cf9d774c292f11b53a'
 $q04Tree = '0f6d0b609ce255aad5cca81698eb3ad0917cfda6'
 $q04ExpectedRoot = [IO.Path]::GetFullPath('C:\Users\clint\.codex\worktrees\biostack-remediation-q04\BioStack')
+$q04TranscriptPath = [IO.Path]::GetFullPath('C:\Users\clint\.codex\evidence\biostack-algorithm-remediation\q04-final-attempt-2026-09-02.transcript.txt')
+$q04ExpectedEvidenceRoot = [IO.Path]::GetFullPath('C:\Users\clint\.codex\evidence\biostack-algorithm-remediation')
+$q04ActualEvidenceRoot = [IO.Path]::GetFullPath((Split-Path -Parent $q04TranscriptPath))
+if (-not $q04ActualEvidenceRoot.Equals($q04ExpectedEvidenceRoot, [StringComparison]::OrdinalIgnoreCase)) {
+    throw "Q04 evidence path escaped its exact root: $q04TranscriptPath"
+}
+if (-not (Test-Path -LiteralPath $q04ExpectedEvidenceRoot -PathType Container)) {
+    throw "Q04 evidence root is absent: $q04ExpectedEvidenceRoot"
+}
+if (Test-Path -LiteralPath $q04TranscriptPath) {
+    throw "Q04 final-attempt transcript already exists; do not overwrite or rerun: $q04TranscriptPath"
+}
+[IO.File]::WriteAllText($q04TranscriptPath, '', [Text.UTF8Encoding]::new($false))
+
+function Write-Q04Line {
+    param([Parameter(Mandatory)][AllowEmptyString()][string]$Text)
+    $Text | Tee-Object -FilePath $q04TranscriptPath -Append
+}
+
+Write-Q04Line "Q04_ATTEMPT=3-final"
+Write-Q04Line "Q04_TRANSCRIPT_PATH=$q04TranscriptPath"
+Write-Q04Line 'Q04_CAPTURE_MODE=explicit native stdout+stderr via Tee-Object; no Start-Transcript'
+
 $q04ActualRoot = [IO.Path]::GetFullPath((Get-Location).Path)
 if (-not $q04ActualRoot.Equals($q04ExpectedRoot, [StringComparison]::OrdinalIgnoreCase)) {
     throw "Q04 wrong worktree: $q04ActualRoot"
 }
 
-$q04Branch = git branch --show-current
-if ($LASTEXITCODE -ne 0 -or $q04Branch -cne 'codex/biostack-remediation-q04') {
+$q04BranchLines = @(& git branch --show-current 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append)
+$q04BranchExit = $LASTEXITCODE
+$q04Branch = ($q04BranchLines | ForEach-Object { $_.ToString() }) -join "`n"
+if ($q04BranchExit -ne 0 -or $q04Branch -cne 'codex/biostack-remediation-q04') {
     throw "Q04 wrong branch: $q04Branch"
 }
-$q04Head = git rev-parse HEAD
-if ($LASTEXITCODE -ne 0 -or $q04Head -cne $q04Base) {
+$q04HeadLines = @(& git rev-parse HEAD 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append)
+$q04HeadExit = $LASTEXITCODE
+$q04Head = ($q04HeadLines | ForEach-Object { $_.ToString() }) -join "`n"
+if ($q04HeadExit -ne 0 -or $q04Head -cne $q04Base) {
     throw "Q04 wrong HEAD: $q04Head"
 }
-$q04HeadTree = git rev-parse 'HEAD^{tree}'
-if ($LASTEXITCODE -ne 0 -or $q04HeadTree -cne $q04Tree) {
+$q04HeadTreeLines = @(& git rev-parse 'HEAD^{tree}' 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append)
+$q04HeadTreeExit = $LASTEXITCODE
+$q04HeadTree = ($q04HeadTreeLines | ForEach-Object { $_.ToString() }) -join "`n"
+if ($q04HeadTreeExit -ne 0 -or $q04HeadTree -cne $q04Tree) {
     throw "Q04 wrong tree: $q04HeadTree"
 }
+Write-Q04Line "Q04_START_BRANCH=$q04Branch"
+Write-Q04Line "Q04_START_HEAD=$q04Head"
+Write-Q04Line "Q04_START_TREE=$q04HeadTree"
 
-$q04PreStatus = @(git status --porcelain=v1 --untracked-files=all)
+$q04PreStatus = @(& git status --porcelain=v1 --untracked-files=all 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append)
 $q04PreStatusExit = $LASTEXITCODE
 if ($q04PreStatusExit -ne 0 -or $q04PreStatus.Count -ne 0) {
     throw 'Q04 requires an exactly clean pre-run porcelain receipt.'
@@ -117,16 +149,20 @@ $q04BlobChecks = @(
     @{ Path = 'frontend/src/__tests__/app/api/research/suggest.route.test.ts'; Expected = 'b1619779e26cdf34d7d47d3e51858c54b43a31fc' }
 )
 foreach ($q04BlobCheck in $q04BlobChecks) {
-    $q04ActualBlob = git hash-object -- $q04BlobCheck.Path
-    if ($LASTEXITCODE -ne 0 -or $q04ActualBlob -cne $q04BlobCheck.Expected) {
+    $q04ActualBlobLines = @(& git hash-object -- $q04BlobCheck.Path 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append)
+    $q04ActualBlobExit = $LASTEXITCODE
+    $q04ActualBlob = ($q04ActualBlobLines | ForEach-Object { $_.ToString() }) -join "`n"
+    if ($q04ActualBlobExit -ne 0 -or $q04ActualBlob -cne $q04BlobCheck.Expected) {
         throw "Q04 blob mismatch: $($q04BlobCheck.Path) => $q04ActualBlob"
     }
+    Write-Q04Line "Q04_PINNED_BLOB=$($q04BlobCheck.Path)|$q04ActualBlob"
 }
 
 $q04OutboundReproduction = Join-Path $q04ExpectedRoot 'frontend\src\__tests__\app\api\research\suggest.outbound-boundary.reproduction.test.ts'
 if (Test-Path -LiteralPath $q04OutboundReproduction) {
     throw 'Q04 outbound reproduction is present; do not import or run it.'
 }
+Write-Q04Line 'Q04_OUTBOUND_REPRODUCTION_PRESENT=false'
 
 $q04GeneratedPaths = @(
     (Join-Path $q04ExpectedRoot 'frontend\node_modules'),
@@ -138,6 +174,7 @@ foreach ($q04GeneratedPath in $q04GeneratedPaths) {
         throw "Q04 will not delete pre-existing ignored state: $q04GeneratedPath"
     }
 }
+Write-Q04Line "Q04_GENERATED_PATHS_PREABSENT=$($q04GeneratedPaths -join ' | ')"
 
 $env:npm_config_offline = 'true'
 $env:npm_config_audit = 'false'
@@ -150,15 +187,16 @@ $q04RemovedPaths = @()
 
 Push-Location (Join-Path $q04ExpectedRoot 'frontend')
 try {
-    node --version
+    & node --version 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append
     $q04NodeVersionExit = $LASTEXITCODE
-    npm --version
+    & npm --version 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append
     $q04NpmVersionExit = $LASTEXITCODE
     if ($q04NodeVersionExit -ne 0 -or $q04NpmVersionExit -ne 0) {
         throw 'Q04 Node/npm version receipt failed.'
     }
 
-    npm ci --offline
+    Write-Q04Line 'Q04_INSTALL_COMMAND=npm ci --offline'
+    & npm ci --offline 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append
     $q04CiExit = $LASTEXITCODE
 
     if ($q04CiExit -eq 0) {
@@ -170,9 +208,10 @@ try {
             '--maxWorkers=2',
             '--no-file-parallelism'
         )
-        Write-Output "Q04_VITEST_EXECUTABLE=node"
-        Write-Output "Q04_VITEST_ARGV=$($q04VitestArgs | ConvertTo-Json -Compress)"
-        node @q04VitestArgs
+        Write-Q04Line 'Q04_VITEST_COMMAND=node .\node_modules\vitest\vitest.mjs run src/__tests__/app/api/research/suggest.route.test.ts --pool=threads --maxWorkers=2 --no-file-parallelism'
+        Write-Q04Line 'Q04_VITEST_EXECUTABLE=node'
+        Write-Q04Line "Q04_VITEST_ARGV=$($q04VitestArgs | ConvertTo-Json -Compress)"
+        & node @q04VitestArgs 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append
         $q04TestExit = $LASTEXITCODE
     }
 }
@@ -202,42 +241,66 @@ finally {
     }
 }
 
-$q04PostStatus = @(git status --porcelain=v1 --untracked-files=all)
+$q04TranscriptSoFar = Get-Content -LiteralPath $q04TranscriptPath -Raw
+$q04UnknownConfigToken = 'Unknown' + ' cli config'
+$q04UnknownOptionToken = 'Unknown' + ' option'
+$q04UnknownConfigWarning = $q04TranscriptSoFar.Contains($q04UnknownConfigToken, [StringComparison]::OrdinalIgnoreCase)
+$q04UnknownOptionWarning = $q04TranscriptSoFar.Contains($q04UnknownOptionToken, [StringComparison]::OrdinalIgnoreCase)
+$q04OneFilePattern = 'Test' + ' Files\s+1 passed \(1\)'
+$q04TwoTestsPattern = 'Tests' + '\s+2 passed \(2\)'
+$q04OneFileReceipt = [regex]::IsMatch($q04TranscriptSoFar, $q04OneFilePattern)
+$q04TwoTestsReceipt = [regex]::IsMatch($q04TranscriptSoFar, $q04TwoTestsPattern)
+$q04CountReceipt = $q04OneFileReceipt -and $q04TwoTestsReceipt
+
+$q04PostStatus = @(& git status --porcelain=v1 --untracked-files=all 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append)
 $q04PostStatusExit = $LASTEXITCODE
 $q04PreStatusText = $q04PreStatus -join "`n"
 $q04PostStatusText = $q04PostStatus -join "`n"
-$q04FinalHead = git rev-parse HEAD
+$q04FinalHeadLines = @(& git rev-parse HEAD 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append)
 $q04FinalHeadExit = $LASTEXITCODE
-$q04FinalTree = git rev-parse 'HEAD^{tree}'
+$q04FinalHead = ($q04FinalHeadLines | ForEach-Object { $_.ToString() }) -join "`n"
+$q04FinalTreeLines = @(& git rev-parse 'HEAD^{tree}' 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append)
 $q04FinalTreeExit = $LASTEXITCODE
-git merge-base --is-ancestor $q04Base HEAD
+$q04FinalTree = ($q04FinalTreeLines | ForEach-Object { $_.ToString() }) -join "`n"
+& git merge-base --is-ancestor $q04Base HEAD 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append
 $q04BaseAncestryExit = $LASTEXITCODE
-$q04DiffNames = @(git diff --name-only $q04Base)
+$q04DiffNames = @(& git diff --name-only $q04Base 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append)
 $q04DiffNamesExit = $LASTEXITCODE
-git diff --check $q04Base
+& git diff --check $q04Base 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append
 $q04DiffCheckExit = $LASTEXITCODE
-$q04FinalTestBlob = git hash-object -- frontend/src/__tests__/app/api/research/suggest.route.test.ts
+$q04FinalTestBlobLines = @(& git hash-object -- frontend/src/__tests__/app/api/research/suggest.route.test.ts 2>&1 | Tee-Object -FilePath $q04TranscriptPath -Append)
 $q04FinalTestBlobExit = $LASTEXITCODE
+$q04FinalTestBlob = ($q04FinalTestBlobLines | ForEach-Object { $_.ToString() }) -join "`n"
 $q04Residue = @($q04GeneratedPaths | Where-Object { Test-Path -LiteralPath $_ })
 
-Write-Output "Q04_PRE_STATUS=$($(if ($q04PreStatus.Count -eq 0) { '<empty>' } else { $q04PreStatusText }))"
-Write-Output "Q04_PRE_STATUS_EXIT=$q04PreStatusExit"
-Write-Output "Q04_POST_STATUS=$($(if ($q04PostStatus.Count -eq 0) { '<empty>' } else { $q04PostStatusText }))"
-Write-Output "Q04_POST_STATUS_EXIT=$q04PostStatusExit"
-Write-Output "Q04_NODE_VERSION_EXIT=$q04NodeVersionExit"
-Write-Output "Q04_NPM_VERSION_EXIT=$q04NpmVersionExit"
-Write-Output "Q04_NPM_CI_EXIT=$q04CiExit"
-Write-Output "Q04_TEST_EXIT=$q04TestExit"
-Write-Output "Q04_REMOVED_PATHS=$($q04RemovedPaths -join ' | ')"
-Write-Output "Q04_CLEANUP_ERRORS=$($q04CleanupErrors -join ' | ')"
-Write-Output "Q04_RESIDUE=$($q04Residue -join ' | ')"
-Write-Output "Q04_FINAL_HEAD=$q04FinalHead"
-Write-Output "Q04_FINAL_TREE=$q04FinalTree"
-Write-Output "Q04_BASE_ANCESTRY_EXIT=$q04BaseAncestryExit"
-Write-Output "Q04_FINAL_TEST_BLOB=$q04FinalTestBlob"
-Write-Output "Q04_DIFF_NAMES=$($q04DiffNames -join ' | ')"
-Write-Output "Q04_DIFF_NAMES_EXIT=$q04DiffNamesExit"
-Write-Output "Q04_DIFF_CHECK_EXIT=$q04DiffCheckExit"
+Write-Q04Line "Q04_PRE_STATUS=$($(if ($q04PreStatus.Count -eq 0) { '<empty>' } else { $q04PreStatusText }))"
+Write-Q04Line "Q04_PRE_STATUS_EXIT=$q04PreStatusExit"
+Write-Q04Line "Q04_POST_STATUS=$($(if ($q04PostStatus.Count -eq 0) { '<empty>' } else { $q04PostStatusText }))"
+Write-Q04Line "Q04_POST_STATUS_EXIT=$q04PostStatusExit"
+Write-Q04Line "Q04_STATUS_EQUAL=$($q04PreStatusText -ceq $q04PostStatusText)"
+Write-Q04Line "Q04_NODE_VERSION_EXIT=$q04NodeVersionExit"
+Write-Q04Line "Q04_NPM_VERSION_EXIT=$q04NpmVersionExit"
+Write-Q04Line "Q04_NPM_CI_EXIT=$q04CiExit"
+Write-Q04Line "Q04_TEST_EXIT=$q04TestExit"
+Write-Q04Line "Q04_UNKNOWN_CONFIG_WARNING=$q04UnknownConfigWarning"
+Write-Q04Line "Q04_UNKNOWN_OPTION_WARNING=$q04UnknownOptionWarning"
+Write-Q04Line "Q04_ONE_FILE_RECEIPT=$q04OneFileReceipt"
+Write-Q04Line "Q04_TWO_TESTS_RECEIPT=$q04TwoTestsReceipt"
+$q04TestCountText = 'unverified'
+if ($q04CountReceipt) {
+    $q04TestCountText = 'discovered=2;executed=2;passed=2;failed=0;skipped=0;delta=2->2(+0)'
+}
+Write-Q04Line "Q04_TEST_COUNTS=$q04TestCountText"
+Write-Q04Line "Q04_REMOVED_PATHS=$($q04RemovedPaths -join ' | ')"
+Write-Q04Line "Q04_CLEANUP_ERRORS=$($q04CleanupErrors -join ' | ')"
+Write-Q04Line "Q04_RESIDUE=$($q04Residue -join ' | ')"
+Write-Q04Line "Q04_FINAL_HEAD=$q04FinalHead"
+Write-Q04Line "Q04_FINAL_TREE=$q04FinalTree"
+Write-Q04Line "Q04_BASE_ANCESTRY_EXIT=$q04BaseAncestryExit"
+Write-Q04Line "Q04_FINAL_TEST_BLOB=$q04FinalTestBlob"
+Write-Q04Line "Q04_DIFF_NAMES=$($q04DiffNames -join ' | ')"
+Write-Q04Line "Q04_DIFF_NAMES_EXIT=$q04DiffNamesExit"
+Write-Q04Line "Q04_DIFF_CHECK_EXIT=$q04DiffCheckExit"
 
 $q04ScopeFailure = (
     $q04CleanupErrors.Count -ne 0 -or
@@ -251,20 +314,71 @@ $q04ScopeFailure = (
     $q04DiffCheckExit -ne 0 -or
     $q04FinalTestBlobExit -ne 0 -or $q04FinalTestBlob -cne 'b1619779e26cdf34d7d47d3e51858c54b43a31fc'
 )
-if ($q04ScopeFailure) {
-    Write-Output 'Q04_OUTCOME=SCOPE_CLEANUP_BLOCKED'
-    exit 90
+
+$q04FinalCaptureText = ''
+$q04CaptureReadFailed = $false
+try {
+    $q04FinalCaptureText = Get-Content -LiteralPath $q04TranscriptPath -Raw
+}
+catch {
+    $q04CaptureReadFailed = $true
+}
+$q04CaptureFailure = (
+    $q04CaptureReadFailed -or
+    -not (Test-Path -LiteralPath $q04TranscriptPath -PathType Leaf) -or
+    [string]::IsNullOrWhiteSpace($q04FinalCaptureText) -or
+    -not $q04FinalCaptureText.Contains('Q04_INSTALL_COMMAND=npm ci --offline', [StringComparison]::Ordinal) -or
+    ($q04CiExit -eq 0 -and (
+        -not $q04FinalCaptureText.Contains('Q04_VITEST_EXECUTABLE=node', [StringComparison]::Ordinal) -or
+        -not $q04FinalCaptureText.Contains('Q04_VITEST_ARGV=', [StringComparison]::Ordinal) -or
+        -not $q04FinalCaptureText.Contains('Test Files', [StringComparison]::Ordinal) -or
+        -not $q04FinalCaptureText.Contains('Tests', [StringComparison]::Ordinal)
+    ))
+)
+
+$q04Outcome = 'READY'
+$q04OutcomeExit = 0
+if ($q04CiExit -eq 0 -and (
+    $q04TestExit -ne 0 -or
+    $q04UnknownConfigWarning -or
+    $q04UnknownOptionWarning -or
+    -not $q04CountReceipt
+)) {
+    $q04Outcome = 'BASELINE_TEST_FAILED'
+    $q04OutcomeExit = 21
 }
 if ($q04CiExit -ne 0) {
-    Write-Output 'Q04_OUTCOME=ENVIRONMENT_BLOCKED'
-    exit 20
+    $q04Outcome = 'ENVIRONMENT_BLOCKED'
+    $q04OutcomeExit = 20
 }
-if ($q04TestExit -ne 0) {
-    Write-Output 'Q04_OUTCOME=BASELINE_TEST_FAILED'
-    exit 21
+if ($q04CaptureFailure) {
+    $q04Outcome = 'EVIDENCE_CAPTURE_BLOCKED'
+    $q04OutcomeExit = 91
 }
-Write-Output 'Q04_OUTCOME=READY'
-exit 0
+if ($q04ScopeFailure) {
+    $q04Outcome = 'SCOPE_CLEANUP_BLOCKED'
+    $q04OutcomeExit = 90
+}
+
+Write-Q04Line "Q04_CAPTURE_MARKERS_PRESENT=$(-not $q04CaptureFailure)"
+Write-Q04Line "Q04_OUTCOME=$q04Outcome"
+Write-Q04Line 'Q04_AUTHORITY_CLOSE=no repository changes; no commit; local evidence only; not pushed; no PR; not merged; not deployed or released; Gate 3 ungranted; diagnostic branches untouched'
+
+try {
+    $q04TranscriptInfo = Get-Item -LiteralPath $q04TranscriptPath
+    $q04TranscriptHash = Get-FileHash -LiteralPath $q04TranscriptPath -Algorithm SHA256
+    if ($q04TranscriptInfo.Length -le 0 -or [string]::IsNullOrWhiteSpace($q04TranscriptHash.Hash)) {
+        throw 'Q04 final transcript size/hash receipt is empty.'
+    }
+    Write-Output "Q04_TRANSCRIPT_BYTES=$($q04TranscriptInfo.Length)"
+    Write-Output "Q04_TRANSCRIPT_SHA256=$($q04TranscriptHash.Hash)"
+}
+catch {
+    Write-Error "Q04_OUTCOME=EVIDENCE_CAPTURE_BLOCKED; transcript size/hash failed: $($_.Exception.Message)"
+    exit 91
+}
+
+exit $q04OutcomeExit
 ```
 
 The exact test invocation is the F1 repair and must remain:
@@ -274,6 +388,8 @@ node .\node_modules\vitest\vitest.mjs run src/__tests__/app/api/research/suggest
 ```
 
 It selects only the existing main-based file and bypasses npm's CLI configuration parser. The emitted `Q04_VITEST_ARGV` JSON is the authoritative argument-vector receipt. Any npm-style unknown-config warning, Vitest unknown-option warning, omitted argument, or different echoed vector is `BASELINE_TEST_FAILED`, even if tests otherwise pass. Do not substitute `npm test`, `npx vitest`, a wildcard, a directory, the diagnostic reproduction, or different worker settings.
+
+The final transcript path is exactly `C:\Users\clint\.codex\evidence\biostack-algorithm-remediation\q04-final-attempt-2026-09-02.transcript.txt`. It is distinct from both rejected-run evidence paths and is write-once for this parcel. The post-capture byte count and SHA-256 are external receipts over the final transcript bytes; they are not appended to the hashed file. The coordinator must independently recompute both before review.
 
 ## Outcome Classification and Acceptance
 
@@ -298,11 +414,12 @@ If the exact offline `npm ci` command exits nonzero because a cached package, de
 
 - `BASELINE_TEST_FAILED`: offline install succeeded, but the exact main-based two-test file failed or did not report exactly the expected count. Preserve the output and stop. Do not edit or import the P07 reproduction.
 - `SCOPE_CLEANUP_BLOCKED`: cleanup failed, a generated root remains, pre/post status differs, a blob changed, a diff exists, or `HEAD`/tree moved. This overrides any dependency/test result. Stop for coordinator recovery; do not broaden deletion or commit a cleanup.
+- `EVIDENCE_CAPTURE_BLOCKED`: the new transcript is absent/empty, lacks required command/native-summary markers after a successful install, cannot be hashed, or lacks a nonzero byte-size receipt. This overrides any otherwise green runtime observation. Because this is the third and final bounded attempt, this outcome terminally blocks Q04 and P07; do not create another transcript, rerun npm/Vitest, change capture mechanisms, or request an automatic retry. Any future attempt requires a new human-authorized procedure outside this parcel.
 - Base, branch, worktree, starting-status, blob, or pre-existing-ignored-state preflight failure: stop before `npm ci` and report the exact mismatch. It is not a Q04 readiness result.
 
 ## Evidence Package
 
-The investigator hands the coordinator the complete terminal transcript and one concise evidence record containing the items below. The transcript must be created outside every Git worktree at exactly `C:\Users\clint\.codex\evidence\biostack-algorithm-remediation\q04-rerun-2026-09-02.transcript.txt`, must include the complete native npm/Vitest stream plus explicit receipt lines, and must remain available to the fresh reviewer:
+The investigator hands the coordinator the complete terminal transcript and one concise evidence record containing the items below. The transcript must be created outside every Git worktree at exactly `C:\Users\clint\.codex\evidence\biostack-algorithm-remediation\q04-final-attempt-2026-09-02.transcript.txt`, must include the complete native npm/Vitest stdout and stderr plus explicit receipt lines, and must remain available to the fresh reviewer. The investigator must also report the post-close transcript byte size and SHA-256; the coordinator independently recomputes both before accepting the evidence:
 
 - parcel `Q04`, exact branch/worktree, starting and ending commit/tree, and base ancestry;
 - `node --version` and `npm --version` output and exits;
@@ -313,7 +430,8 @@ The investigator hands the coordinator the complete terminal transcript and one 
 - explicit confirmation that only the main-based test ran, the outbound reproduction was absent/not imported/not run, the existing local fetch fake was preserved, no credential was supplied, and no registry/provider/cloud/production/protected-data access occurred;
 - exact cleanup targets considered, confirmation they were absent before execution, exact targets removed, any cleanup error, and confirmation all are absent afterward;
 - final `git diff --check`, empty `git diff --name-only <base>`, unchanged test blob, and empty final status;
-- one outcome exactly: `READY`, `ENVIRONMENT_BLOCKED`, `BASELINE_TEST_FAILED`, or `SCOPE_CLEANUP_BLOCKED`, with the controlling evidence;
+- final-attempt marker, exact new transcript path, explicit `Tee-Object` capture mode, post-close byte size, and SHA-256;
+- one outcome exactly: `READY`, `ENVIRONMENT_BLOCKED`, `BASELINE_TEST_FAILED`, `SCOPE_CLEANUP_BLOCKED`, or `EVIDENCE_CAPTURE_BLOCKED`, with the controlling evidence;
 - residual risks, unexpected observations, and requested decision, or an explicit `none`.
 
 Do not write the evidence record into the repository. The coordinator preserves it in the goal/session handoff and later Stage-F record.
@@ -325,7 +443,7 @@ After the Q04 evidence record exists, the coordinator obtains a fresh read-only 
 Q04 custody is outcome-specific under plan-review finding F10:
 
 - `READY` allows the coordinator to proceed to P07 shaping/dispatch only after all independent P07 gates are satisfied.
-- `ENVIRONMENT_BLOCKED`, `BASELINE_TEST_FAILED`, and `SCOPE_CLEANUP_BLOCKED` remain evidence-only and do not authorize a repository change or P07 dispatch.
+- `ENVIRONMENT_BLOCKED`, `BASELINE_TEST_FAILED`, `SCOPE_CLEANUP_BLOCKED`, and `EVIDENCE_CAPTURE_BLOCKED` remain evidence-only and do not authorize a repository change or P07 dispatch. `EVIDENCE_CAPTURE_BLOCKED` is terminal for this procedure; no fourth attempt is authorized.
 - The Q04 branch and outcome are recorded at Stage F. The branch is not deleted without explicit cleanup authority.
 
 ## Step 0 — Restate and Stop
@@ -335,10 +453,11 @@ Before running any command that can create an ignored artifact, the investigator
 1. goal, Q04 identifier, Wave Q, command-only/no-repository-change authority, and Q04's prerequisite relationship to P07;
 2. branch `codex/biostack-remediation-q04`, worktree `C:\Users\clint\.codex\worktrees\biostack-remediation-q04\BioStack`, base `339f259b1a467034db4f57cf9d774c292f11b53a`, tree `0f6d0b609ce255aad5cca81698eb3ad0917cfda6`, and the three pinned blobs;
 3. AF-Q04's empty repository change set, exact permitted ignored roots, exact pre/post porcelain equality requirement, and the no-stage/no-commit rule;
-4. the exact offline install and deterministic single-file Vitest commands, expected one-file/two-test receipt, and expected count delta `2 -> 2 (+0)`;
+4. the exact offline install and deterministic single-file Vitest commands, expected one-file/two-test receipt, expected count delta `2 -> 2 (+0)`, and immediate preservation of each native `$LASTEXITCODE` after its `Tee-Object` pipeline;
 5. the prohibition on importing or running `suggest.outbound-boundary.reproduction.test.ts`, the fact that it belongs to P07 after Q04, and preservation of the existing network-faked tests;
-6. outcome rules, especially that an offline cache/dependency failure is `ENVIRONMENT_BLOCKED` with no registry fallback;
-7. no network/provider/cloud/production/protected-data/secret authority, exact-path cleanup rules, fresh read-only review, Gate 3 ungranted, and no push/PR/merge/deploy/publish/release/diagnostic-branch mutation.
+6. this is attempt 3 and final; the new write-once transcript path, no `Start-Transcript`, complete native stdout/stderr capture, byte-size/SHA-256 receipts, and the terminal no-rerun effect of `EVIDENCE_CAPTURE_BLOCKED`;
+7. outcome rules, especially that an offline cache/dependency failure is `ENVIRONMENT_BLOCKED` with no registry fallback;
+8. no network/provider/cloud/production/protected-data/secret authority, exact-path cleanup rules, fresh read-only review, Gate 3 ungranted, and no push/PR/merge/deploy/publish/release/diagnostic-branch mutation.
 
 Silence is not confirmation. Any discrepancy blocks execution.
 
@@ -351,11 +470,12 @@ The investigator sends one concise record with this exact field order:
 3. `Pinned identities`: all three blob hashes and lockfile version.
 4. `Environment`: Node/npm versions; no secrets or cache contents.
 5. `Install receipt`: exact offline command, exit code, sanitized result, and explicit no-registry-fallback statement.
-6. `Test receipt`: exact command or `not run because ENVIRONMENT_BLOCKED`; if run, file/test counts and exit code.
-7. `Network boundary`: main-based test only, local fetch fake preserved, outbound reproduction absent/not imported/not run, and no external access.
-8. `Cleanup / Git equality`: exact cleanup targets, pre/post porcelain receipts, equality result, residual generated paths, diff check, empty changed-path list, unchanged test blob.
-9. `Findings / residual risk / decision requested`: exact items or `none`.
-10. `Authority close`: `no repository changes; no commit; local evidence only; not pushed; no PR; not merged; not deployed or released; Gate 3 ungranted; diagnostic branches untouched`.
+6. `Test receipt`: exact command or `not run because ENVIRONMENT_BLOCKED`; if run, exact argv, warning scans, file/test counts, and exit code.
+7. `Capture receipt`: attempt `3-final`, exact new transcript path, `Tee-Object` native stdout/stderr method, capture-marker result, final byte size, and SHA-256.
+8. `Network boundary`: main-based test only, local fetch fake preserved, outbound reproduction absent/not imported/not run, and no external access.
+9. `Cleanup / Git equality`: exact cleanup targets, pre/post porcelain receipts, equality result, residual generated paths, diff check, empty changed-path list, unchanged test blob.
+10. `Findings / residual risk / decision requested`: exact items or `none`.
+11. `Authority close`: `no repository changes; no commit; local evidence only; not pushed; no PR; not merged; not deployed or released; Gate 3 ungranted; diagnostic branches untouched`.
 
 The coordinator verifies the handoff against Git and the transcript. A handoff claim is not acceptance by itself.
 
@@ -371,6 +491,7 @@ Stop without widening scope if:
 - a test needs a real external provider, credential, cloud/production resource, protected data, or non-faked outbound request;
 - any repository path changes, a cleanup target resolves outside its exact expected frontend path, cleanup encounters a link, cleanup fails, or pre/post porcelain differs;
 - a package, lockfile, config, test, source, receipt file, or nearby path would need modification;
+- the new final-attempt transcript already exists, its explicit native capture is incomplete, or its post-close byte size/SHA-256 cannot be produced; this terminally blocks Q04 and no further attempt is authorized;
 - the same tripwire or false-closure condition fires twice;
 - any staging, commit, push, PR, merge, deployment, provider enablement, publication, release, or diagnostic-branch mutation is proposed.
 

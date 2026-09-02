@@ -35,7 +35,8 @@ Status: **live coordinator record; no merge or release authority**
 - First run: `npm ci --offline` succeeded and the main-based route test passed 2/2, but npm 11.6.2 consumed the required worker flags
 - Fresh review: REJECT; the first `READY` token is void and does not unblock P07
 - Procedural repair: goal commit `f5af63ea313d4c5dcb4cebd221d9df1677f29d28` uses the installed local Vitest entrypoint through `node`, emits exact argv, rejects unknown-option/config warnings, and requires a preserved external transcript
-- Current status: amended Step 0 confirmed; corrected offline rerun pending
+- Second run: direct-node argv was exact and the live terminal displayed 1/1 file and 2/2 tests passing, but `Start-Transcript` omitted native npm/Vitest output; outcome `BASELINE_TEST_FAILED`; P07 remained blocked
+- Final-attempt capture repair: explicit native stdout/stderr `Tee-Object` pipelines, immediate exit-code capture, a new write-once transcript, and terminal `EVIDENCE_CAPTURE_BLOCKED` if durable evidence fails again; coordinator re-lint passed, new Step 0 pending
 
 ## Gate custody
 
