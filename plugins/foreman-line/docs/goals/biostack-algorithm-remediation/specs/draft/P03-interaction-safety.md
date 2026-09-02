@@ -1,10 +1,12 @@
 # Parcel P03: Interaction Safety
 
-Status: **active — shaping and coordinator lint passed; exact worktree/base verification and Step 0 confirmation required before implementation**
+Status: **blocked — target/adjacent/Application green; stale outside-AF API fixture requires Narrow Gate 1 Amendment 04**
 
 Coordinator lint: **PASSED 2026-09-02.** AF-P03, base/tree, production and diagnostic blobs, all six amended D6 clauses, the 4 retained plus 6 hostile-case census, the independent 20-case adjacent filter, the 609-passed/5-skipped Application baseline, count deltas, offline commands, and single-review depth were checked against the pinned repository and ratified amendment. Dispatch authority remains contingent on a clean isolated worktree and exact Step 0 restatement.
 
 Import-receipt correction: **PASSED 2026-09-02 after a pre-edit builder stop.** Because the reproduction path is absent from the pinned index, restoring it into the worktree creates an untracked file; pre-commit `git diff --name-only` correctly emits nothing. The import tripwire therefore uses `git status --short --untracked-files=all` plus `git ls-files --others --exclude-standard` and requires exactly the one AF-P03 test path. This changes no invariant, Allowed File, case/count expectation, or Gate authority.
+
+Aggregate disposition: **BLOCKED 2026-09-02.** The scoped uncommitted candidate passed target `10/10`, adjacent `20/20`, and Application `619 passed / 5 skipped`, but the full solution failed one API case whose graph-positive helper publishes a `provisional` artifact. D6 requires exactly `reviewed`; production must not be weakened. Amendment 04 proposes adding only `CompoundGraphIntelligenceTests.cs` to AF-P03 and changing only that stale fixture state. Preserve the current two-file uncommitted state; no further edit, test, stage, or commit is authorized before ratification and an amended Step 0 restatement.
 
 ## Goal
 
