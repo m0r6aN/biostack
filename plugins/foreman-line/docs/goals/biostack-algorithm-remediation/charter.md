@@ -14,8 +14,9 @@ Remediate every defect deterministically reproduced by the BioStack algorithm-im
 
 - Remediation execution base: `main` / `origin/main` at `339f259b1a467034db4f57cf9d774c292f11b53a`.
 - Execution-base tree: `0f6d0b609ce255aad5cca81698eb3ad0917cfda6`.
-- Diagnostic coordination evidence: `codex/test-repro-contracts` at `7660de171c409699a0b419d5701bf3a1eb8d078f`.
-- Governing diagnostic release constraints: `RELEASE-GATES.md` and `CHARTER.md` at the diagnostic coordination commit.
+- Governing diagnostic coordination head: `codex/test-repro-contracts` at `879def179654d0fb44ab57a8e29b02b20e2239d0`.
+- Reproduction-evidence snapshot in that lineage: `7660de171c409699a0b419d5701bf3a1eb8d078f`.
+- Governing diagnostic release constraints: `RELEASE-GATES.md` and `CHARTER.md` at the governing diagnostic coordination head.
 - Diagnostic parcel commits:
   - parser: `817f6f3331c2b7c3410da63289c02fb27a98ed74`;
   - interaction: `56b7ad229a34a6f151f5bf7b96a8bfdcbce8132f`;
