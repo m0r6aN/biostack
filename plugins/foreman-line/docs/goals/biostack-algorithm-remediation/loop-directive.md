@@ -14,6 +14,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Plan review: complete; triage commit `ef4376b0a186dd0c0fe9e4b7772bde07e39756eb`
 - Narrow Gate 1 Amendment 01: ratified 2026-09-02; D6-D9 replacements active
 - Narrow Gate 1 Amendment 02: ratified 2026-09-02; D3/D4/D11/D12 replacements and D15 active
+- Narrow Gate 1 Amendment 03: pending; P05 and downstream P06 held
 - Gate 2: contingent authorization granted for Q01-Q04 and P01-P08
 - Gate 3: ungranted
 - Diagnostic coordination and five parcel branches: preserved and unmerged
@@ -23,6 +24,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Q03: fresh review ACCEPT; `INCONCLUSIVE_NO_DETERMINISTIC_SEAM`; zero repository changes
 - Q04: final transcript fresh review ACCEPT; `READY`; P07 shaping may proceed only after Amendment 01, and P07 dispatch remains independently gated
 - Q02: v1 evidence commit `dea721288521a5789350e2398d0d7292b01ad10f` is preserved but review-rejected; v2 stopped terminally before transcript/test execution when the Baseline procedure encountered an unsupported `New-Item -LiteralPath`; no retry/v3 is authorized and endpoint-wide coverage remains inconclusive
+- P05: shaping found the timeout path writes terminal `cancelled` before `failed/execution_timeout`; current AF-P05 is insufficient under first-terminal-writer custody. Amendment 03 proposes adding only `jobs/runner.py`; P05/P06 remain held.
 
 ## Standing authorizations
 
@@ -49,7 +51,7 @@ The coordinator advances this queue in dependency order while allowing only coll
 2. Q01-Q04 adjudication: complete; Q02 remains a durable inconclusive terminal stop.
 3. P01 and P02 implementation/review chains: complete and held unmerged.
 4. Shape and lint P03 interaction safety and P04 evidence provenance.
-5. Shape and lint P05 terminal-state custody; only after its final candidate exists, shape/verify P06 source-cap enforcement against that behavior.
+5. Obtain Amendment 03 ratification or requested changes; P05 and P06 remain held. After ratification, re-lint/dispatch P05; only after its final candidate exists, shape/verify P06 against that behavior.
 6. Shape and lint P07 authenticated-consented frontend relay and P08 Collective outbound authorization.
 7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
 8. Assemble the exact green candidate commit set and request human Gate 3. Do not push, open a PR, merge, deploy, or release before approval.
