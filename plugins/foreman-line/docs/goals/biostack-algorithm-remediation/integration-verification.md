@@ -1,6 +1,6 @@
 # Goal-Level Integration Verification
 
-Status: **REVIEW-COMPLETE BASELINE; NARROW FRONTEND RETRY 01 AUTHORIZED**
+Status: **NORMALIZED LOCAL RELEASE CHAIN GREEN; REMOTE GATE 3 SEQUENCE ACTIVE**
 
 Date: 2026-09-02
 
@@ -108,3 +108,5 @@ This review-complete green integration receipt remains the pre-release evidence 
 During normalized release verification on 2026-09-03, release head `aa747f7c5840344d4949c0a24df2aedabfab372f` reproduced exact tree `17b3ff60c74098f67edec222f1854f6486df7fe5`, backend `2,065+5`, consent `17/17`, sidecar `53+1`, 13 expected sidecar lint findings, and frontend target `10/10`. The full frontend suite then stopped the release at 135/136 files and 988/989 tests because unchanged out-of-scope `day7Review.test.ts` exceeded its 5-second timeout by about 89 ms. Per the ratified stop condition, no retry, remaining lint/build, push, PR, merge, or deployment followed.
 
 Narrow Gate 3 Retry 01 authorizes one isolated rerun of the unchanged timed-out test. A green isolated result conditionally authorizes one full frontend-suite rerun using the ratified runner; two green results then authorize focused lint/build and resumption of the existing Gate 3 sequence. No code, test, timeout, scope, or sidecar-deployment change is authorized.
+
+Retry 01 completed green: unchanged `day7Review.test.ts` passed 1 file/3 tests with 4 ms test execution; the single full-suite retry passed 136 files/989 tests; focused AF-P07 ESLint returned zero findings; and the production frontend build exited 0. No code, test, timeout, configuration, scope, or sidecar-deployment change occurred. Combined with the already-green normalized backend, consent, sidecar, scope, ancestry, blob-parity, and exact-tree receipts above, the normalized local release chain is complete and green.
