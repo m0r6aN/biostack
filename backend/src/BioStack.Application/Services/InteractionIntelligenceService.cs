@@ -27,11 +27,10 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
     private readonly ICompoundInteractionHintRepository _hintRepository;
     private readonly ICompoundGraphStore? _graphStore;
 
-    // Cache of the active graph artifact hash for the lifetime of this (scoped) service so pairwise
-    // graph lookups don't re-query the active artifact for every pair. Null until first resolved;
-    // _graphHashResolved guards the "no active graph" case from being re-checked.
-    private string? _activeGraphHash;
-    private bool _graphHashResolved;
+    // Cache the active artifact for the lifetime of this scoped service so graph eligibility and
+    // provenance are evaluated from the same artifact for every pair in one response.
+    private CompoundGraphArtifact? _activeGraphArtifact;
+    private bool _graphArtifactResolved;
 
     public InteractionIntelligenceService(
         IKnowledgeSource knowledgeSource,
@@ -72,10 +71,11 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             .ToList();
 
         var entries = new List<KnowledgeEntry>();
+        var canonicalNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var name in names)
         {
             var entry = await _knowledgeSource.GetCompoundAsync(name, cancellationToken);
-            if (entry is not null)
+            if (entry is not null && canonicalNames.Add(entry.CanonicalName))
             {
                 entries.Add(entry);
             }
@@ -162,6 +162,18 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             .OrderBy(pathway => pathway, StringComparer.OrdinalIgnoreCase)
             .ToList();
 
+        if (HasNamedMatch(compoundA.AvoidWith, compoundB) || HasNamedMatch(compoundB.AvoidWith, compoundA))
+        {
+            return new InteractionResultResponse(
+                compoundA.CanonicalName,
+                compoundB.CanonicalName,
+                InteractionType.Interfering,
+                0.72d,
+                sharedPathways,
+                "Avoid-with guidance directly links these compounds.",
+                HintBacked: false);
+        }
+
         // Lane C: the reviewed compound graph is the preferred truth source. If it has an edge for
         // this pair, use it (graph-backed) instead of re-deriving from KnowledgeEntry string fields.
         var graphResult = await TryEvaluateFromGraphAsync(compoundA, compoundB, sharedPathways, cancellationToken);
@@ -181,18 +193,6 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
                 sharedPathways,
                 string.IsNullOrWhiteSpace(hint.Notes) ? "Known interaction pattern" : hint.Notes,
                 HintBacked: true);
-        }
-
-        if (HasNamedMatch(compoundA.AvoidWith, compoundB) || HasNamedMatch(compoundB.AvoidWith, compoundA))
-        {
-            return new InteractionResultResponse(
-                compoundA.CanonicalName,
-                compoundB.CanonicalName,
-                InteractionType.Interfering,
-                0.72d,
-                sharedPathways,
-                "Avoid-with guidance directly links these compounds.",
-                HintBacked: false);
         }
 
         if (HasNamedInteraction(compoundA.DrugInteractions, compoundB) || HasNamedInteraction(compoundB.DrugInteractions, compoundA))
@@ -280,14 +280,23 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
             return null;
         }
 
-        var edge = await _graphStore.FindRelationshipAsync(
-            compoundA.CanonicalName, compoundB.CanonicalName, cancellationToken);
-        if (edge is null)
+        var artifact = await GetActiveGraphArtifactAsync(cancellationToken);
+        if (artifact is null
+            || !artifact.IsActive
+            || !string.Equals(artifact.ReviewState, "reviewed", StringComparison.Ordinal))
         {
             return null;
         }
 
-        var graphHash = await GetActiveGraphHashAsync(cancellationToken);
+        var edge = await _graphStore.FindRelationshipAsync(
+            compoundA.CanonicalName, compoundB.CanonicalName, cancellationToken);
+        if (edge is null
+            || edge.GraphArtifactId != artifact.Id
+            || edge.NeedsReview
+            || !string.Equals(edge.ReviewState, "reviewed", StringComparison.Ordinal))
+        {
+            return null;
+        }
 
         return new InteractionResultResponse(
             compoundA.CanonicalName,
@@ -300,24 +309,23 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
                 : edge.Reason!,
             HintBacked: false,
             Source: IntelligenceSource.Graph,
-            GraphArtifactHash: graphHash);
+            GraphArtifactHash: artifact.ArtifactHash);
     }
 
-    private async Task<string?> GetActiveGraphHashAsync(CancellationToken cancellationToken)
+    private async Task<CompoundGraphArtifact?> GetActiveGraphArtifactAsync(CancellationToken cancellationToken)
     {
-        if (_graphHashResolved)
+        if (_graphArtifactResolved)
         {
-            return _activeGraphHash;
+            return _activeGraphArtifact;
         }
 
         if (_graphStore is not null)
         {
-            var artifact = await _graphStore.GetActiveArtifactAsync(cancellationToken);
-            _activeGraphHash = artifact?.ArtifactHash;
+            _activeGraphArtifact = await _graphStore.GetActiveArtifactAsync(cancellationToken);
         }
 
-        _graphHashResolved = true;
-        return _activeGraphHash;
+        _graphArtifactResolved = true;
+        return _activeGraphArtifact;
     }
 
     private static InteractionType MapRelationshipTypeToInteraction(string relationshipType)
@@ -344,7 +352,8 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
 
         // Numeric confidence (e.g. "0.82") is preserved as-is when parseable.
         if (double.TryParse(confidence, System.Globalization.NumberStyles.Float,
-                System.Globalization.CultureInfo.InvariantCulture, out var numeric))
+                System.Globalization.CultureInfo.InvariantCulture, out var numeric)
+            && double.IsFinite(numeric))
         {
             return Math.Round(Math.Clamp(numeric, 0d, 1d), 2);
         }
