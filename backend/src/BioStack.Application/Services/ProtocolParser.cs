@@ -1,5 +1,6 @@
 namespace BioStack.Application.Services;
 
+using System.Globalization;
 using System.Text.RegularExpressions;
 using BioStack.Contracts.Responses;
 using BioStack.Domain.Entities;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Caching.Memory;
 public sealed class ProtocolParser : IProtocolParser
 {
     private static readonly Regex DosePattern = new(
-        @"(?<dose>\d+(?:\.\d+)?)\s*(?<unit>mcg|micrograms?|ug|μg|mg|milligrams?)\b",
+        @"(?<dose>(?:\d+(?:\.\d+)?|\.\d+))\s*(?<unit>mcg|micrograms?|ug|μg|µg|mg|milligrams?)\b",
         RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
     private static readonly Regex DurationPattern = new(
@@ -96,7 +97,7 @@ public sealed class ProtocolParser : IProtocolParser
             return Array.Empty<ProtocolEntryResponse>();
         }
 
-        var cleaned = Regex.Replace(segment.Trim(), @"^[\-\*\u2022\d\.\)\s]+", string.Empty).Trim();
+        var cleaned = Regex.Replace(segment.Trim(), @"^(?:(?:[\-\*\u2022]\s*)|(?:\d+[\.\)]\s+))+", string.Empty).Trim();
         var frequency = ExtractMatch(FrequencyPattern, cleaned);
         var duration = ExtractMatch(DurationPattern, cleaned);
         var blend = _blendDecomposerService.Decompose(cleaned);
@@ -117,7 +118,7 @@ public sealed class ProtocolParser : IProtocolParser
                 if (recommendedDoses.Count == blend.Components.Count)
                 {
                     var doseMatch = recommendedDoses[index];
-                    double.TryParse(doseMatch.Groups["dose"].Value, out dose);
+                    TryParseDose(doseMatch.Groups["dose"].Value, out dose);
                     unit = NormalizeUnit(doseMatch.Groups["unit"].Value);
                 }
 
@@ -139,7 +140,7 @@ public sealed class ProtocolParser : IProtocolParser
 
         if (singleDoseMatch.Success)
         {
-            double.TryParse(singleDoseMatch.Groups["dose"].Value, out parsedDose);
+            TryParseDose(singleDoseMatch.Groups["dose"].Value, out parsedDose);
             parsedUnit = NormalizeUnit(singleDoseMatch.Groups["unit"].Value);
         }
 
@@ -364,7 +365,10 @@ public sealed class ProtocolParser : IProtocolParser
     private static bool ContainsAlias(string segment, string normalizedAlias)
     {
         var normalizedSegment = NormalizeLookupKey(segment);
-        return normalizedSegment.Contains(normalizedAlias, StringComparison.OrdinalIgnoreCase);
+        return normalizedSegment.Equals(normalizedAlias, StringComparison.OrdinalIgnoreCase)
+            || normalizedSegment.StartsWith(normalizedAlias + " ", StringComparison.OrdinalIgnoreCase)
+            || normalizedSegment.EndsWith(" " + normalizedAlias, StringComparison.OrdinalIgnoreCase)
+            || normalizedSegment.Contains(" " + normalizedAlias + " ", StringComparison.OrdinalIgnoreCase);
     }
 
     private static IEnumerable<string> SplitIntoSegments(string inputText)
@@ -375,13 +379,24 @@ public sealed class ProtocolParser : IProtocolParser
         // to a different column, and isolates prose/structure cells so the
         // recognition gate can drop them.
         return Regex.Split(inputText, @"(?:\r?\n|;|\s\+\s|\s*\|\s*)")
+            .SelectMany(SplitCommaSeparatedDoseClauses)
             .Select(segment => segment.Trim())
             .Where(segment => segment.Length > 0);
     }
 
+    private static IEnumerable<string> SplitCommaSeparatedDoseClauses(string segment)
+    {
+        var clauses = segment.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        return clauses.Length > 1 && clauses.All(clause => DosePattern.IsMatch(clause))
+            ? clauses
+            : new[] { segment };
+    }
+
     private static string NormalizeLookupKey(string value)
     {
-        var normalized = value.Replace("μ", "u", StringComparison.OrdinalIgnoreCase);
+        var normalized = value
+            .Replace("μ", "u", StringComparison.OrdinalIgnoreCase)
+            .Replace("µ", "u", StringComparison.OrdinalIgnoreCase);
         normalized = Regex.Replace(normalized, @"[^a-zA-Z0-9\+]+", " ");
         return Regex.Replace(normalized, @"\s+", " ").Trim().ToLowerInvariant();
     }
@@ -396,11 +411,14 @@ public sealed class ProtocolParser : IProtocolParser
     {
         return unit.ToLowerInvariant() switch
         {
-            "microgram" or "micrograms" or "ug" or "μg" or "mcg" => "mcg",
+            "microgram" or "micrograms" or "ug" or "μg" or "µg" or "mcg" => "mcg",
             "milligram" or "milligrams" or "mg" => "mg",
             _ => unit.ToLowerInvariant()
         };
     }
+
+    private static bool TryParseDose(string value, out double dose) =>
+        double.TryParse(value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out dose);
 
     private static string NormalizeFrequency(string frequency)
     {

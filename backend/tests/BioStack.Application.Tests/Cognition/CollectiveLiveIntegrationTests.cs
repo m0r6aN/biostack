@@ -68,7 +68,16 @@ public sealed class CollectiveLiveIntegrationTests
                               .GetRequiredService<IHttpClientFactory>();
 
         return new CollectiveLiveOrchestrator(
-            factory, options, NullLogger<CollectiveLiveOrchestrator>.Instance);
+            factory,
+            options,
+            new AuthorizedGate(),
+            NullLogger<CollectiveLiveOrchestrator>.Instance);
+    }
+
+    private sealed class AuthorizedGate : ICollectiveOutboundAuthorizationGate
+    {
+        public Task<bool> IsAuthorizedAsync(CancellationToken cancellationToken = default) =>
+            Task.FromResult(true);
     }
 
     private static CollectiveIntent MakeIntent(string id = "int-live-integration-001") => new(

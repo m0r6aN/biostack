@@ -219,7 +219,7 @@ public sealed class CompoundGraphIntelligenceTests : IDisposable
             ArtifactHash = hash,
             BuilderVersion = "1.0.0",
             GeneratedAtUtc = DateTime.UtcNow,
-            ReviewState = "provisional",
+            ReviewState = "reviewed",
         };
 
         var rels = relationships.Select(r => new CompoundGraphRelationship

@@ -5,6 +5,14 @@ using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
+/// Authorizes a live Collective operation using the current server-side request context.
+/// </summary>
+public interface ICollectiveOutboundAuthorizationGate
+{
+    Task<bool> IsAuthorizedAsync(CancellationToken cancellationToken = default);
+}
+
+/// <summary>
 /// Live implementation of <see cref="ICognitiveDensityOrchestrator"/> that calls
 /// Keon Control /api/collective/live-runs rather than using the rule-based stub.
 ///
@@ -26,6 +34,7 @@ internal sealed class CollectiveLiveOrchestrator : ICognitiveDensityOrchestrator
 
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly CollectiveApiOptions _options;
+    private readonly ICollectiveOutboundAuthorizationGate _authorizationGate;
     private readonly ILogger<CollectiveLiveOrchestrator> _logger;
 
     // Degraded sentinel values
@@ -35,10 +44,12 @@ internal sealed class CollectiveLiveOrchestrator : ICognitiveDensityOrchestrator
     public CollectiveLiveOrchestrator(
         IHttpClientFactory httpClientFactory,
         CollectiveApiOptions options,
+        ICollectiveOutboundAuthorizationGate authorizationGate,
         ILogger<CollectiveLiveOrchestrator> logger)
     {
         _httpClientFactory = httpClientFactory;
         _options           = options;
+        _authorizationGate = authorizationGate;
         _logger            = logger;
     }
 
@@ -50,6 +61,19 @@ internal sealed class CollectiveLiveOrchestrator : ICognitiveDensityOrchestrator
         IReadOnlyList<BranchCollapseRecord>? historicalCollapses = null,
         CancellationToken ct = default)
     {
+        try
+        {
+            if (!await _authorizationGate.IsAuthorizedAsync(ct))
+            {
+                return BuildDegradedEnvelope();
+            }
+        }
+        catch (Exception)
+        {
+            _logger.LogWarning("CollectiveLiveOrchestrator: outbound authorization failed");
+            return BuildDegradedEnvelope();
+        }
+
         var submitRequest = new CollectiveSubmitRequest(
             Objective:     intent.Goal,
             TenantId:      intent.TenantContext.TenantId,

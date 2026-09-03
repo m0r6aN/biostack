@@ -150,11 +150,15 @@ public sealed class PdfProtocolExtractor : IProtocolTextExtractor
             throw new ProtocolIngestionException("The uploaded PDF was empty.");
         }
 
+        cancellationToken.ThrowIfCancellationRequested();
         var warnings = new List<string>();
         var artifacts = new List<ProtocolIngestionArtifact>();
         var decoded = Encoding.GetEncoding("ISO-8859-1").GetString(request.SourceBytes);
-        var pageMatches = Regex.Matches(decoded, @"/Type\s*/Page\b", RegexOptions.IgnoreCase);
-        var extractedLines = ExtractPdfText(decoded).ToList();
+        cancellationToken.ThrowIfCancellationRequested();
+        var pageCount = Regex.Matches(decoded, @"/Type\s*/Page\b", RegexOptions.IgnoreCase).Count;
+        cancellationToken.ThrowIfCancellationRequested();
+        var extractedLines = ExtractPdfText(decoded, cancellationToken);
+        cancellationToken.ThrowIfCancellationRequested();
         foreach (var (line, index) in extractedLines.Select((line, index) => (line, index)))
         {
             var preview = ProtocolExtractorSupport.CreatePreview(line);
@@ -164,17 +168,19 @@ public sealed class PdfProtocolExtractor : IProtocolTextExtractor
             }
         }
 
+        cancellationToken.ThrowIfCancellationRequested();
         var text = string.Join(Environment.NewLine, extractedLines).Trim();
         if (string.IsNullOrWhiteSpace(text))
         {
             throw new ProtocolIngestionException("This PDF did not expose readable text. Try a clearer source file or a direct image scan.");
         }
 
-        if (pageMatches.Count > 0 && text.Length / pageMatches.Count < 120)
+        if (pageCount > 0 && text.Length / pageCount < 120)
         {
             warnings.Add("This PDF appears to be image-heavy or low text density. Review the extracted protocol carefully.");
         }
 
+        cancellationToken.ThrowIfCancellationRequested();
         return Task.FromResult(new ProtocolExtractionResult(
             text,
             warnings,
@@ -182,19 +188,27 @@ public sealed class PdfProtocolExtractor : IProtocolTextExtractor
             warnings.Count > 0));
     }
 
-    private static IEnumerable<string> ExtractPdfText(string content)
+    private static IReadOnlyList<string> ExtractPdfText(string content, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         var directText = Regex.Matches(content, @"\((?<text>(?:\\\)|\\\(|\\\\|[^\)])+)\)\s*Tj", RegexOptions.Singleline)
-            .Select(match => DecodePdfString(match.Groups["text"].Value));
+            .Select(match => DecodePdfString(match.Groups["text"].Value))
+            .ToList();
 
+        cancellationToken.ThrowIfCancellationRequested();
         var arrayText = Regex.Matches(content, @"\[(?<items>.*?)\]\s*TJ", RegexOptions.Singleline)
             .Select(match => string.Join(" ", Regex.Matches(match.Groups["items"].Value, @"\((?<text>(?:\\\)|\\\(|\\\\|[^\)])+)\)")
-                .Select(inner => DecodePdfString(inner.Groups["text"].Value))));
+                .Select(inner => DecodePdfString(inner.Groups["text"].Value))))
+            .ToList();
 
-        return directText
+        cancellationToken.ThrowIfCancellationRequested();
+        var extractedText = directText
             .Concat(arrayText)
             .Select(value => Regex.Replace(value, @"\s+", " ").Trim())
-            .Where(value => !string.IsNullOrWhiteSpace(value));
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .ToList();
+        cancellationToken.ThrowIfCancellationRequested();
+        return extractedText;
     }
 
     private static string DecodePdfString(string value)
@@ -787,11 +801,16 @@ public sealed class AzureVisionProtocolOcrService : IProtocolOcrService
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ProtocolOcrOptions _options;
+    private readonly IConsentGate _consentGate;
 
-    public AzureVisionProtocolOcrService(IHttpClientFactory httpClientFactory, Microsoft.Extensions.Options.IOptions<ProtocolOcrOptions> options)
+    public AzureVisionProtocolOcrService(
+        IHttpClientFactory httpClientFactory,
+        Microsoft.Extensions.Options.IOptions<ProtocolOcrOptions> options,
+        IConsentGate consentGate)
     {
         _httpClientFactory = httpClientFactory;
         _options = options.Value;
+        _consentGate = consentGate;
     }
 
     public async Task<ProtocolOcrResult> ExtractAsync(byte[] imageBytes, string? sourceName, CancellationToken cancellationToken = default)
@@ -801,6 +820,13 @@ public sealed class AzureVisionProtocolOcrService : IProtocolOcrService
             throw new ProtocolIngestionException("Image OCR is not configured yet for this environment. Upload text-based files or paste the protocol for now.");
         }
 
+        cancellationToken.ThrowIfCancellationRequested();
+        if (!await _consentGate.IsConsentGrantedAsync(cancellationToken))
+        {
+            throw new ProtocolIngestionException("Current consent is required before image bytes can be sent for OCR.");
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
         var client = _httpClientFactory.CreateClient("protocol-ocr");
         using var request = new HttpRequestMessage(HttpMethod.Post, $"{_options.Endpoint.TrimEnd('/')}/computervision/imageanalysis:analyze?api-version=2024-02-01&features=read");
         request.Headers.Add("Ocp-Apim-Subscription-Key", _options.ApiKey);
