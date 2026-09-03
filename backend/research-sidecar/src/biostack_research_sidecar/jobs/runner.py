@@ -94,7 +94,6 @@ class JobRunner:
                 )
                 # Best-effort: mark failed. The worker thread may still be running;
                 # cooperative cancel is checked at job start only in the foundation.
-                self._store.request_cancel(job_id)
                 self._mark_timeout(job_id, record, timeout_seconds)
             except Exception as exc:  # noqa: BLE001 — last-line defence for worker
                 logger.exception("research job %s failed", job_id)
@@ -133,6 +132,7 @@ class JobRunner:
         self._store.update(
             job_id,
             status=ResearchJobStatusCode.FAILED,
+            cancel_requested=True,
             partial=False,
             finished_at_utc=finished,
             error_code="execution_timeout",
