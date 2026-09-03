@@ -1,7 +1,7 @@
 ---
 parcel: P06
 title: Sidecar accepted-source cap
-status: review-complete-held-unmerged
+status: complete-merged-pr-265
 goal: biostack-algorithm-remediation
 initiative: BioStack Algorithm Remediation
 project: BioStack research sidecar

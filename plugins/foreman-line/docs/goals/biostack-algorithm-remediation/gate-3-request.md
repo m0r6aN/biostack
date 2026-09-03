@@ -1,6 +1,6 @@
 # Gate 3 Request — BioStack Algorithm Remediation
 
-Status: **RATIFIED 2026-09-03 — NORMALIZED LOCAL CHAIN GREEN; REMOTE SEQUENCE ACTIVE**
+Status: **COMPLETE — PR #265 MERGED; API/FRONTEND DEPLOYMENT GREEN; STAGE F CLOSED**
 
 Date: 2026-09-02
 
@@ -39,6 +39,16 @@ Retry 01 completed without modifying source, tests, timeouts, configuration, or 
 - Release head remains `aa747f7c5840344d4949c0a24df2aedabfab372f`, exact tree `17b3ff60c74098f67edec222f1854f6486df7fe5`, with a clean tracked worktree.
 
 The complete normalized local chain is green. The next action is the already-ratified remote base revalidation followed, only if unchanged, by the normalized branch push and PR sequence.
+
+## Remote execution receipt — 2026-09-03
+
+- Final pre-push fetch confirmed `origin/main` remained the pinned base. Only normalized branch `codex/biostack-algorithm-remediation-integration` was pushed.
+- PR [#265](https://github.com/m0r6aN/biostack/pull/265) retained exact head `aa747f7c5840344d4949c0a24df2aedabfab372f`, exact base `339f259b1a467034db4f57cf9d774c292f11b53a`, and all required green checks.
+- Two PR review comments were dispositioned without a tree change: P06's pre-sequence invocation behavior is the parcel's explicit residual, and P04's internal-only sidecar promotion denial is the intentional D7 fail-closed boundary pending a separately ratified real-locator enrichment capability.
+- PR #265 merged without squash/rebase as merge commit `4d8754c670a7d4553ade857be80aa170ede85653`; merged tree is exactly `17b3ff60c74098f67edec222f1854f6486df7fe5`.
+- All five merged-main workflows completed successfully. Deploy run `33743439471` pushed commit-tagged API/frontend images, verified API revision `0000125`, API TLS/health, frontend revision `0000100`, and HTTP 200 pinned-ready smoke checks.
+- API digest: `sha256:043f4044c708ff7d435b97b832784d2f22c26c951b7afa98482f25e1dc36432e`. Frontend digest: `sha256:1479194eb9349065861a06295727e11a1c9b91b0086361516d9a4341797ae01e`.
+- The research sidecar remains undeployed. No rollback or cleanup was required or performed. Diagnostic branches and user-owned untracked files remain preserved.
 
 ## Exact approved-source candidate set
 

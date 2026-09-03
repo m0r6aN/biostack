@@ -1,6 +1,6 @@
 # Goal-Level Integration Verification
 
-Status: **NORMALIZED LOCAL RELEASE CHAIN GREEN; REMOTE GATE 3 SEQUENCE ACTIVE**
+Status: **MERGED-MAIN AND API/FRONTEND DEPLOYMENT VERIFIED GREEN**
 
 Date: 2026-09-02
 
@@ -110,3 +110,5 @@ During normalized release verification on 2026-09-03, release head `aa747f7c5840
 Narrow Gate 3 Retry 01 authorizes one isolated rerun of the unchanged timed-out test. A green isolated result conditionally authorizes one full frontend-suite rerun using the ratified runner; two green results then authorize focused lint/build and resumption of the existing Gate 3 sequence. No code, test, timeout, scope, or sidecar-deployment change is authorized.
 
 Retry 01 completed green: unchanged `day7Review.test.ts` passed 1 file/3 tests with 4 ms test execution; the single full-suite retry passed 136 files/989 tests; focused AF-P07 ESLint returned zero findings; and the production frontend build exited 0. No code, test, timeout, configuration, scope, or sidecar-deployment change occurred. Combined with the already-green normalized backend, consent, sidecar, scope, ancestry, blob-parity, and exact-tree receipts above, the normalized local release chain is complete and green.
+
+PR #265 preserved the exact normalized head and tree; every required PR check passed. Merge commit `4d8754c670a7d4553ade857be80aa170ede85653` has the pinned base and normalized head as its two parents and retains tree `17b3ff60c74098f67edec222f1854f6486df7fe5`. All five merged-main workflows passed. Deploy run `33743439471` produced commit-tagged API/frontend images, ready revisions, API TLS/health `Healthy`, and pinned HTTP 200 smoke checks. The sidecar remains undeployed. Full receipts are in `stage-f-closure.md`.

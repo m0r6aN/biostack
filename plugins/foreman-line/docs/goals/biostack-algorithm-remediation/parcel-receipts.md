@@ -1,6 +1,6 @@
 # Parcel Receipts — BioStack Algorithm Remediation
 
-Status: **live coordinator record; exact Gate 3 merge/release authority active**
+Status: **COMPLETE — P01-P08 NORMALIZED, MERGED, VERIFIED, AND RELEASED WITHIN GATE 3**
 
 ## P01 — Parser semantics
 
@@ -164,4 +164,4 @@ Status: **live coordinator record; exact Gate 3 merge/release authority active**
 
 ## Gate custody
 
-P01-P08 are review-complete source candidates whose exact aggregate blobs form staged integration tree `17b3ff60c74098f67edec222f1854f6486df7fe5` in the preserved detached integration worktree; the full backend, sidecar, frontend, build, lint, scope, and byte-parity chain is green. Fresh independent integration review ACCEPTED the exact tree with no blocking findings and mandated aggregate-patch normalization for P03/P05 rejected-parent custody. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally stopped and remains inconclusive. Amendments 01-05 were explicitly ratified on 2026-09-02. On 2026-09-03 the developer ratified `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede` as written. The exact normalized-branch push, PR, merge-commit, API/frontend deployment, monitoring, guarded rollback, and Stage-F authority is active; all request stop conditions and exclusions remain controlling, including no research-sidecar deployment or diagnostic cleanup.
+P01-P08 were normalized into eight ordered non-merge commits and merged through PR #265 as merge commit `4d8754c670a7d4553ade857be80aa170ede85653`, exact tree `17b3ff60c74098f67edec222f1854f6486df7fe5`. The complete local, PR, merged-main, API/frontend deployment, revision, TLS, and health chain is green. The sidecar remains undeployed; diagnostic branches and user-owned untracked files remain preserved; no rollback or cleanup occurred. Exact commit, test, review, Q-lane, deployment, residual, and custody receipts are in `stage-f-closure.md`.

@@ -1,6 +1,6 @@
 # Parcel Spec: P02 Protocol Ingestion Boundaries
 
-Status: **active — coordinator lint passed 2026-09-02; dispatch remains contingent on exact worktree/base verification and Step 0 confirmation**
+Status: **COMPLETE — accepted candidate normalized and merged through PR #265**
 
 ## Identity
 

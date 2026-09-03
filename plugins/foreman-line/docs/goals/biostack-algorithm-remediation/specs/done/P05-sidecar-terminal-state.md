@@ -1,7 +1,7 @@
 ---
 parcel: P05
 title: Sidecar terminal-state custody
-status: review-complete-held-unmerged
+status: complete-merged-pr-265
 goal: biostack-algorithm-remediation
 initiative: BioStack Algorithm Remediation
 project: BioStack research sidecar

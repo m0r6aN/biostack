@@ -1,6 +1,6 @@
 # Goal Charter: BioStack Algorithm Remediation
 
-Status: **RATIFIED — GATES 1-3 GRANTED; EXACT RELEASE EXECUTION ACTIVE**
+Status: **COMPLETE — GATE 3 MERGED; API/FRONTEND DEPLOYED; STAGE F CLOSED**
 
 Goal slug: `biostack-algorithm-remediation`
 
@@ -228,6 +228,8 @@ After explicit Gate 3:
 7. verify the original diagnostic branches still exist and remain unmerged.
 
 No deployment or public release is implied by a code merge unless the Gate 3 approval explicitly includes it.
+
+Completed 2026-09-03 through PR #265 and merge commit `4d8754c670a7d4553ade857be80aa170ede85653`. The authorized API/frontend deployment and health chain passed; the research sidecar remains undeployed. See `stage-f-closure.md`.
 
 ## Exit criterion
 

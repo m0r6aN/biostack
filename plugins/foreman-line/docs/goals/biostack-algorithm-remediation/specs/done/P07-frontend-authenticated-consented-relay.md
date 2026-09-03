@@ -1,6 +1,6 @@
 # Parcel Spec: P07 Frontend Authenticated-Consented Relay
 
-Status: **review-complete local candidate — Gate 3 ungranted**
+Status: **COMPLETE — accepted candidate normalized and merged through PR #265**
 
 Coordinator lint: **PASSED 2026-09-02.** AF-P07, pinned route/test/contract/diagnostic blobs, Q04 transcript custody, trusted-origin and named-cookie boundary, exact consent request/response controls, eight-denial plus one-positive call matrix, baseline and candidate count deltas, offline install/cleanup rules, paired backend consent verification, and dual-adversarial plus separate security-review depth were checked against the pinned repository and ratified D9(b).
 

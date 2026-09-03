@@ -1,6 +1,6 @@
 # Parcel P03: Interaction Safety
 
-Status: **review-complete — candidate held unmerged; Gate 3 ungranted**
+Status: **COMPLETE — accepted candidate normalized and merged through PR #265**
 
 Coordinator lint: **PASSED 2026-09-02 after Narrow Gate 1 Amendment 05.** Replacement three-file AF-P03, the one-value API fixture restriction, base/tree, production and diagnostic blobs, all seven amended D6 clauses, the 4 retained plus 7 hostile-case census, the independent 20-case adjacent filter, the 609-passed/5-skipped Application baseline, API 377 tripwire, replacement count deltas, offline commands, and single-review depth were checked against the pinned repository and ratified amendments. Resumption remains contingent on an exact fresh Step 0 restatement.
 

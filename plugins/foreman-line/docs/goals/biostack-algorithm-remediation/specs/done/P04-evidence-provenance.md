@@ -1,7 +1,7 @@
 ---
 parcel: P04
 title: Evidence provenance
-status: review-complete-local-candidate
+status: complete-merged-pr-265
 goal: biostack-algorithm-remediation
 initiative: BioStack Algorithm Remediation
 project: BioStack backend

@@ -1,6 +1,6 @@
 # Inquiry Parcel Q01: Collective Outbound Behavior
 
-Status: **active — coordinator lint passed; dispatch remains contingent on exact worktree/base verification and Step 0 confirmation**
+Status: **COMPLETE — config-only transmission reproduced; production remediation merged as P08**
 
 Coordinator lint: **PASSED 2026-09-02**. The pinned project/blobs, six-case adjacent count, internal-access seam, local-handler request path, and AF-Q01 absence were independently rechecked. Any executable outcome other than an environment/scope stop must preserve the single test in one local evidence-only commit for exact review; no production remediation is authorized.
 

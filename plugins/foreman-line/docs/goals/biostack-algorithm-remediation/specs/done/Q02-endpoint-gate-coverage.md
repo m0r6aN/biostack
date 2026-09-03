@@ -1,6 +1,6 @@
 # Inquiry Parcel Q02: Endpoint Gate Coverage
 
-Status: **TERMINALLY BLOCKED 2026-09-02 — rejected v1 evidence is preserved; v2 stopped before evidence execution and no v3 is authorized**
+Status: **DONE — terminally stopped; endpoint-wide coverage remains inconclusive and preserved**
 
 Coordinator lint: **PASSED 2026-09-02**. The eleven exact endpoint identities/patterns, project and production blobs, 21-case adjacent count, AF-Q02 absence, and runtime metadata approach were independently rechecked. The parcel is intentionally bounded and may not claim endpoint-wide completeness. Any executable inventory outcome must preserve its single test in one local evidence-only commit for exact review.
 

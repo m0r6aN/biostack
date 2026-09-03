@@ -1,6 +1,6 @@
 # Parcel Spec: P08 Collective Outbound Authorization
 
-Status: **review-complete local candidate — Gate 3 ungranted**
+Status: **COMPLETE — accepted candidate normalized and merged through PR #265**
 
 Coordinator lint: **PASSED 2026-09-02**. The eight-file scope covers every verified constructor/DI/test compile site without adding a project reference; scoped adapter/orchestrator/board composition avoids captive dependencies; targeted and aggregate count deltas match the pinned receipts. The local named-client override in the new API integration test remains an implementation tripwire: if AF-P08 cannot provide a non-delegating handler inside that one file, the parcel stops rather than widening scope. One-check-per-`RunAsync`, no authenticated-user-to-intent actor/tenant binding, and no mid-poll consent re-check are explicit residual boundaries.
 

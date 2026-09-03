@@ -18,7 +18,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Narrow Gate 1 Amendment 04: ratified 2026-09-02; replacement AF-P03 and exact reviewed-fixture correction active
 - Narrow Gate 1 Amendment 05: ratified 2026-09-02; P03 artifact-identity/provenance supplement and exact 11-case census active
 - Gate 2: contingent authorization granted for Q01-Q04 and P01-P08
-- Gate 3: granted 2026-09-03 by ratification of `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede`; Narrow Gate 3 Retry 01 completed green with isolated `3/3`, full frontend `989/989`, focused lint zero, and build exit 0; the existing remote Gate 3 sequence is active
+- Gate 3: complete 2026-09-03; PR #265 merged as `4d8754c670a7d4553ade857be80aa170ede85653`, all merged-main workflows and the API/frontend deployment/health chain passed, sidecar remained undeployed, and Stage F is closed
 - Diagnostic coordination and five parcel branches: preserved and unmerged
 - P01 candidate `751090eabf3ee6f066c17ee83861ae04711fd4a0`: deterministic chain green; one fresh adversarial ACCEPT; held unmerged
 - P02 candidate `1b5742051ee2b54a80dac9bbdf68c68e5a6b5992`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SCOPE/SG-OUTBOUND ACCEPT; held unmerged
@@ -74,7 +74,7 @@ The coordinator advances this queue in dependency order while allowing only coll
 6. P05 and P06 implementation/review chains: complete and held unmerged.
 7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
 8. Exact green candidate set and independently accepted integration tree assembled; human Gate 3 ratified on 2026-09-03. Complete.
-9. Active: Narrow Gate 3 Retry 01 and the complete normalized local verification chain are green. Revalidate the remote base, then push the exact normalized branch, open the PR, require green checks, merge by merge commit, monitor the authorized API/frontend deployment, and complete Stage F. Any new drift or failure stops.
+9. Complete: Retry 01, exact normalization, local chain, PR checks, merge-commit merge, merged-main workflows, API/frontend deployment/health verification, branch custody, and Stage-F closure are green. No rollback or cleanup was required.
 
 ## Per-iteration algorithm
 
