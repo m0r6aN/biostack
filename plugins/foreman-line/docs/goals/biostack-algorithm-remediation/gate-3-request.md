@@ -1,6 +1,6 @@
 # Gate 3 Request — BioStack Algorithm Remediation
 
-Status: **RATIFIED 2026-09-03 — RELEASE EXECUTION AUTHORIZED AS WRITTEN**
+Status: **RATIFIED 2026-09-03 — EXECUTION STOPPED ON FRONTEND COUNT DRIFT; NARROW HUMAN DECISION REQUIRED**
 
 Date: 2026-09-02
 
@@ -11,6 +11,16 @@ At goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede`, the developer granted
 > Gate 3: I ratify `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede` as written.
 
 This activates the exact approval form below without modification. All stop conditions, exclusions, rollback limits, diagnostic-branch custody, user-file preservation, and the research-sidecar undeployed boundary remain controlling.
+
+## Gate 3 execution stop — 2026-09-03
+
+- Fresh `git fetch origin` confirmed local `main` and `origin/main` remained exactly at pinned base `339f259b1a467034db4f57cf9d774c292f11b53a`, tree `0f6d0b609ce255aad5cca81698eb3ad0917cfda6`; the user-owned untracked `.audit/` and `.codex-temp/` directories remained untouched.
+- A fresh isolated branch normalized P01-P08 into eight non-merge commits in the ratified order. Release head is `aa747f7c5840344d4949c0a24df2aedabfab372f`; its 27-path, zero-collision tree is exactly `17b3ff60c74098f67edec222f1854f6486df7fe5`; rejected P03/P05 intermediate commits are not ancestors.
+- Normalized backend verification remained exact: 2,065 passed and 5 expected skips; the paired current-user/consent integration remained 17/17.
+- Normalized sidecar verification remained exact: 53 passed and 1 expected skip; the combined Allowed-File Ruff census remained exactly 13 ratified ambient findings.
+- Normalized frontend target verification remained exact: 2 files and 10 tests passed.
+- The normalized full frontend suite then produced 135 passed files, 1 failed file, 988 passed tests, and 1 failed test. `frontend/src/__tests__/lib/day7Review.test.ts` timed out at 5,089 ms against its 5,000 ms limit. That file is outside all remediation Allowed Files and is byte-identical between pinned base and release head (blob `e680a01f023c8c8075764df87b1e16bfe2313155`).
+- Because the ratified request makes any count drift or new failure a stop condition, execution stopped. Focused frontend lint/build, push, PR, merge, deployment, and Stage-F closure were not attempted. No remote branch or production state changed.
 
 ## Exact approved-source candidate set
 

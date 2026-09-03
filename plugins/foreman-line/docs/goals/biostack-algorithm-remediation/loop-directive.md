@@ -18,7 +18,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Narrow Gate 1 Amendment 04: ratified 2026-09-02; replacement AF-P03 and exact reviewed-fixture correction active
 - Narrow Gate 1 Amendment 05: ratified 2026-09-02; P03 artifact-identity/provenance supplement and exact 11-case census active
 - Gate 2: contingent authorization granted for Q01-Q04 and P01-P08
-- Gate 3: granted 2026-09-03 by ratification of `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede`; exact normalization, PR, merge, API/frontend deployment, rollback, and exclusion terms are active
+- Gate 3: granted 2026-09-03 by ratification of `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede`; execution is stopped before push because the normalized full frontend suite drifted to 135/136 files and 988/989 tests after one unrelated 5,089 ms timeout; a narrow human retry decision is required
 - Diagnostic coordination and five parcel branches: preserved and unmerged
 - P01 candidate `751090eabf3ee6f066c17ee83861ae04711fd4a0`: deterministic chain green; one fresh adversarial ACCEPT; held unmerged
 - P02 candidate `1b5742051ee2b54a80dac9bbdf68c68e5a6b5992`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SCOPE/SG-OUTBOUND ACCEPT; held unmerged
@@ -72,7 +72,7 @@ The coordinator advances this queue in dependency order while allowing only coll
 6. P05 and P06 implementation/review chains: complete and held unmerged.
 7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
 8. Exact green candidate set and independently accepted integration tree assembled; human Gate 3 ratified on 2026-09-03. Complete.
-9. Active: fetch and revalidate the pinned base, aggregate-patch normalize the eight approved candidates without rebase/squash, reproduce the exact tree and full green chain, then push, open the PR, require green checks, merge by merge commit, monitor the authorized API/frontend deployment, and complete Stage F.
+9. Stopped before push: base and exact aggregate tree revalidated; backend, consent, sidecar, and frontend target chains remained exact; the full frontend suite had one unrelated timeout and triggered the ratified count-drift/new-failure stop condition. Await a narrow human decision before any retry or remaining release action.
 
 ## Per-iteration algorithm
 
