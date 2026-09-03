@@ -63,15 +63,34 @@ Shaping session (docs-only) → coordinator lint (verify every factual claim on 
 
 ## Worktree and branch convention
 
-| Parcel | Branch | Worktree |
-|---|---|---|
-| P01 | `parcel/sidecar-P01` | `D:\Repos\BioStack-sidecar-P01` |
-| P02 | `parcel/sidecar-P02` | `D:\Repos\BioStack-sidecar-P02` |
-| P03 | `parcel/sidecar-P03` | `D:\Repos\BioStack-sidecar-P03` |
-| P04 | `parcel/sidecar-P04` | `D:\Repos\BioStack-sidecar-P04` |
-| Reviews | detached | `D:\Repos\BioStack-sidecar-<parcel>-review-<A|B|SEC>` |
+| Parcel | Branch | Branched from | Worktree |
+|---|---|---|---|
+| P01 | `parcel/sidecar-P01` | goal branch | `D:\Repos\BioStack-sidecar-P01` |
+| P02 | `parcel/sidecar-P02` | goal branch + P01 | `D:\Repos\BioStack-sidecar-P02` |
+| P03 | `parcel/sidecar-P03` | goal branch + P01 + P02 | `D:\Repos\BioStack-sidecar-P03` |
+| P04 | `parcel/sidecar-P04` | goal branch + P03 (rebased) | `D:\Repos\BioStack-sidecar-P04` |
+| Reviews | detached | the parcel commit under review | `D:\Repos\BioStack-sidecar-<parcel>-review-<A|B|SEC>` |
 
 Worktrees live on `D:` beside the main checkout (existing repo precedent: `D:\Repos\BioStack-api-tls-fix`, `D:\Repos\BioStack-ci-kompress`). Never `C:\Users\clint\.codex\worktrees\` — that tree is Codex-managed and holds other agents' live work. The branch and worktree are named in every directive, never ambient.
+
+### Parcels branch from the GOAL branch, not from `main` (coordinator decision, 2026-09-03)
+
+`main` at the pinned base carries **none** of this goal's canon: no `charter.md`, no `plan-review-findings.md`, no spec, no standing constraints. A builder branched from `main` could not read its own binding scope. Parcels therefore branch from `codex/goal-biostack-sidecar-deployment`, which is `main` plus docs-only commits.
+
+Consequences, made explicit so no agent has to infer them:
+
+- A parcel branch's diff **versus the goal branch** is exactly that parcel's Allowed Files. That diff — not the diff versus `main` — is what the coordinator closure-checks and what a reviewer reviews.
+- Inheriting the goal docs from the base branch is **not** a violation of a parcel's Allowed Files. Allowed Files govern what the builder *writes*. A builder still must not edit any goal doc.
+- The eventual Gate 3A merge candidate is the goal branch with the parcel branches integrated. Composing it is Gate 3A work and is not authorized here.
+- This is a branch-topology decision, not a charter amendment: the charter fixes the pinned base and the parcel dependency order, and both are preserved.
+
+### Where specs live
+
+`plugins/foreman-line/docs/goals/biostack-sidecar-deployment/specs/P0N-<slug>.md`. BioStack has no `docs/specs/` tree, so the goal directory holds them. Specs are written by the shaping session, linted and approved by the coordinator, and committed to the **goal branch** before the parcel branch is cut — so the builder inherits its own spec.
+
+### Standing constraints are vendored, not referenced
+
+`plugins/foreman-line/docs/kickstarters/STANDING-CONSTRAINTS.md` **does not exist in this repository** — it ships with the Foreman Line plugin install. A verbatim copy is vendored to `plugins/foreman-line/docs/goals/biostack-sidecar-deployment/STANDING-CONSTRAINTS.md` so it travels with every parcel branch. Kickstarters reference the vendored path. Never cite the plugin-install path to an agent working in a BioStack worktree.
 
 The primary checkout `D:\Repos\BioStack` carries user-owned untracked `.audit/` and `.codex-temp/`. It is **read-only for this goal** and stays untouched.
 
@@ -94,7 +113,7 @@ This is the tripwire number. Discovery claimed 53 + 1 expected legacy-config ski
 
 1. Read `charter.md`, `plan-review-findings.md`, and this file. Identify the active queue item and the cycle step it sits at.
 2. If a background agent was expected: **check for its completion first.** If it is not running and delivered no completion claim, assume process death, not completion. Disk state without a claim is UNCLAIMED work — never accept it as done. Recover by dispatching a fresh agent with a resume directive whose Step 0 restates the ORIGINAL directive, inventories disk against it, states the live test count, flags gaps and half-written files, then stops for a ruling.
-3. Advance as far as the iteration allows. Builders, shapers, and reviewers are fresh sessions/agents with kickstarters that include standing constraints by reference (`plugins/foreman-line/docs/kickstarters/STANDING-CONSTRAINTS.md`).
+3. Advance as far as the iteration allows. Builders, shapers, and reviewers are fresh sessions/agents with kickstarters that include standing constraints by reference (the vendored `plugins/foreman-line/docs/goals/biostack-sidecar-deployment/STANDING-CONSTRAINTS.md`).
 4. Verify every claim on disk before accepting it. Green checks verify state; only per-item closure checks verify work.
 5. Rework directives say "every X," never "the listed X" — findings are a floor, not a ceiling, and no role is exempt from the sweep, including the coordinator.
 6. Where two reviews disagree, reproduce the disputed finding yourself before triaging. The reproduction is the tie-breaker at triage and the closure proof at acceptance.
