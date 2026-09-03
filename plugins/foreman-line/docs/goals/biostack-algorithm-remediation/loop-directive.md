@@ -18,7 +18,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Narrow Gate 1 Amendment 04: ratified 2026-09-02; replacement AF-P03 and exact reviewed-fixture correction active
 - Narrow Gate 1 Amendment 05: ratified 2026-09-02; P03 artifact-identity/provenance supplement and exact 11-case census active
 - Gate 2: contingent authorization granted for Q01-Q04 and P01-P08
-- Gate 3: granted 2026-09-03 by ratification of `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede`; execution is stopped before push because the normalized full frontend suite drifted to 135/136 files and 988/989 tests after one unrelated 5,089 ms timeout; a narrow human retry decision is required
+- Gate 3: granted 2026-09-03 by ratification of `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede`; Narrow Gate 3 Retry 01 now authorizes exactly one isolated unchanged `day7Review.test.ts` rerun, then conditionally one full frontend rerun, focused lint/build, and resumption of the existing Gate 3 sequence
 - Diagnostic coordination and five parcel branches: preserved and unmerged
 - P01 candidate `751090eabf3ee6f066c17ee83861ae04711fd4a0`: deterministic chain green; one fresh adversarial ACCEPT; held unmerged
 - P02 candidate `1b5742051ee2b54a80dac9bbdf68c68e5a6b5992`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SCOPE/SG-OUTBOUND ACCEPT; held unmerged
@@ -53,6 +53,8 @@ The developer granted exactly:
 
 > Gate 3: I ratify `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede` as written.
 
+> Narrow Gate 3 Retry 01: I authorize one isolated rerun of the unchanged `day7Review.test.ts`, followed—only if green—by one full frontend-suite rerun using the ratified runner. If both are green, authorize completing focused lint/build and resuming the already-ratified Gate 3 sequence. Any repeated failure or other drift stops execution. No production or test modification, timeout change, scope expansion, or sidecar deployment is authorized.
+
 Operational effect:
 
 1. Q01-Q04 and P01-P08 may be shaped and dispatched only after their specs exactly match the ratified charter and ratified amendments, name an isolated branch/worktree, pass Step 0, and retain exact Allowed Files.
@@ -72,7 +74,7 @@ The coordinator advances this queue in dependency order while allowing only coll
 6. P05 and P06 implementation/review chains: complete and held unmerged.
 7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
 8. Exact green candidate set and independently accepted integration tree assembled; human Gate 3 ratified on 2026-09-03. Complete.
-9. Stopped before push: base and exact aggregate tree revalidated; backend, consent, sidecar, and frontend target chains remained exact; the full frontend suite had one unrelated timeout and triggered the ratified count-drift/new-failure stop condition. Await a narrow human decision before any retry or remaining release action.
+9. Active under Narrow Gate 3 Retry 01: run exactly one isolated unchanged `day7Review.test.ts` retry; only if green, run exactly one full frontend retry; only if both are green, complete focused lint/build and resume the already-ratified push/PR/checks/merge/deploy/Stage-F sequence. Any repeated failure or drift stops.
 
 ## Per-iteration algorithm
 

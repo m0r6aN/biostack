@@ -1,6 +1,6 @@
 # Gate 3 Request — BioStack Algorithm Remediation
 
-Status: **RATIFIED 2026-09-03 — EXECUTION STOPPED ON FRONTEND COUNT DRIFT; NARROW HUMAN DECISION REQUIRED**
+Status: **RATIFIED 2026-09-03 — NARROW RETRY 01 AUTHORIZED; ISOLATED RETRY PENDING**
 
 Date: 2026-09-02
 
@@ -21,6 +21,14 @@ This activates the exact approval form below without modification. All stop cond
 - Normalized frontend target verification remained exact: 2 files and 10 tests passed.
 - The normalized full frontend suite then produced 135 passed files, 1 failed file, 988 passed tests, and 1 failed test. `frontend/src/__tests__/lib/day7Review.test.ts` timed out at 5,089 ms against its 5,000 ms limit. That file is outside all remediation Allowed Files and is byte-identical between pinned base and release head (blob `e680a01f023c8c8075764df87b1e16bfe2313155`).
 - Because the ratified request makes any count drift or new failure a stop condition, execution stopped. Focused frontend lint/build, push, PR, merge, deployment, and Stage-F closure were not attempted. No remote branch or production state changed.
+
+## Narrow Gate 3 Retry 01 receipt — 2026-09-03
+
+The developer granted exactly:
+
+> Narrow Gate 3 Retry 01: I authorize one isolated rerun of the unchanged `day7Review.test.ts`, followed—only if green—by one full frontend-suite rerun using the ratified runner. If both are green, authorize completing focused lint/build and resuming the already-ratified Gate 3 sequence. Any repeated failure or other drift stops execution. No production or test modification, timeout change, scope expansion, or sidecar deployment is authorized.
+
+The first isolated retry is the only active next action. No full-suite retry or later release action is authorized unless that isolated test is green.
 
 ## Exact approved-source candidate set
 
