@@ -32,7 +32,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - P05 candidate `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SIDECAR/SG-SCOPE ACCEPT; rejected parent `923900c66d7046c282d397ba60d85b9eebcf1a58` preserved in history; P06 shaping may proceed against the exact accepted hash
 - P03 candidate `a69d945a3cd8a3655911707031386441fc55079f` / tree `7205d5ea11148eac865534cf5ae545634eb84be5`: Amendment-05 rework chain green and fresh independent adversarial review ACCEPT with no actionable findings; rejected parent `7e8087a00722e38c2a090d49826fa6289c880356` preserved in history; held unmerged.
 - P06 candidate `c435caf3cf0cf95fb1bfbc51d2924ea960183957`: standalone and exact P05+P06 combined chains green; two fresh adversarial ACCEPTs plus SG-SIDECAR/SG-SCOPE ACCEPT; held unmerged
-- Goal-level integration tree `17b3ff60c74098f67edec222f1854f6486df7fe5`: exact blobs from all eight accepted candidates, 27 unique paths and zero collisions; backend `2,065 passed / 5 expected skips`, sidecar `53 passed / 1 expected skip`, frontend `989/989`, focused lint/build and backend consent `17/17` green; awaiting fresh independent integration review
+- Goal-level integration tree `17b3ff60c74098f67edec222f1854f6486df7fe5`: exact blobs from all eight accepted candidates, 27 unique paths and zero collisions; backend `2,065 passed / 5 expected skips`, sidecar `53 passed / 1 expected skip`, frontend `989/989`, focused lint/build and backend consent `17/17` green; fresh independent integration review ACCEPT with no blocking findings; ready to request Gate 3
 - Cerebras routing inventory: user-scope credential presence is confirmed without reading its value, but the current Codex process does not inherit it, no Cerebras CLI or reviewed callable adapter is present, and the existing governed Cerebras shadow route is public-only/candidate-only with Coordinator and verifier roles prohibited. State is `configured_unverified`; no BioStack source, test payload, secret, or provider request has been sent.
 
 ## Standing authorizations
@@ -69,7 +69,7 @@ The coordinator advances this queue in dependency order while allowing only coll
 5. P04, P07, and P08 implementation/review chains: complete and held unmerged.
 6. P05 and P06 implementation/review chains: complete and held unmerged.
 7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
-8. Assemble the exact green candidate commit set and request human Gate 3. Do not push, open a PR, merge, deploy, or release before approval.
+8. Exact green candidate set and independently accepted integration tree assembled. Request human Gate 3 using `gate-3-request.md`. Do not push, open a PR, merge, deploy, or release before exact approval.
 9. After exact Gate 3 approval: rebase/verify/merge only the approved set, verify merged main and CI, then complete Stage F.
 
 ## Per-iteration algorithm

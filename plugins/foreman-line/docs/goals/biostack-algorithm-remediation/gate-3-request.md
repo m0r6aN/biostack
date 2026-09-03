@@ -1,0 +1,82 @@
+# Gate 3 Request — BioStack Algorithm Remediation
+
+Status: **AWAITING HUMAN APPROVAL**
+
+Date: 2026-09-02
+
+## Exact approved-source candidate set
+
+1. P01 `751090eabf3ee6f066c17ee83861ae04711fd4a0`
+2. P02 `1b5742051ee2b54a80dac9bbdf68c68e5a6b5992`
+3. P03 `a69d945a3cd8a3655911707031386441fc55079f`
+4. P04 `38ebffb10411c763ed4f570fdcfece51ab177aa3`
+5. P05 `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`
+6. P06 `c435caf3cf0cf95fb1bfbc51d2924ea960183957`
+7. P07 `c35df75be835d26b4c37618874cf502335b9a24c`
+8. P08 `47c2be0358e7ca024b524c7693af8b06846671d6`
+
+Pinned base: `339f259b1a467034db4f57cf9d774c292f11b53a`, tree `0f6d0b609ce255aad5cca81698eb3ad0917cfda6`.
+
+Verified exact aggregate integration tree: `17b3ff60c74098f67edec222f1854f6486df7fe5`, 27 unique paths, zero collisions, and byte-identical accepted-candidate blobs.
+
+Goal governance receipt: `b7406e8b2daaea212323c06b12dc0b52fdc8fad9` plus the subsequent Gate-3-request custody commit.
+
+## Green chain
+
+- Every P01-P08 candidate has its required fresh adversarial review acceptance; P02/P07/P08 have accepted SG-OUTBOUND reviews, P04 SG-EVIDENCE, and P05/P06 SG-SIDECAR, all with SG-SCOPE.
+- P03 Amendment-05 candidate and exact tree have a fresh independent ACCEPT with no actionable findings.
+- Fresh goal-level integration review ACCEPTED exact tree `17b3ff60...` with no Critical, High, Medium, or Low blocking finding.
+- Integrated backend: 2,065 passed, 5 expected live-Collective skips, zero failures.
+- Integrated sidecar: 53 passed, 1 expected skip, zero failures/errors; unchanged 13-finding AF lint baseline.
+- Integrated frontend: target 10/10; full 989/989; focused AF lint zero; production build exit 0.
+- Backend current-user/consent integration: 17/17.
+- No restore/network/provider/cloud/production-data/secret path was used; local synthetic fakes and explicit offline controls were retained.
+- Main and locally recorded `origin/main` remain at the pinned base. Main has no tracked change; pre-existing user-owned untracked `.audit/` and `.codex-temp/` content must remain untouched.
+- Original diagnostic branches remain present and unmerged.
+
+## Mandatory normalization and merge order
+
+P03 and P05 final commits are rework deltas atop rejected parents. Therefore:
+
+- do not cherry-pick only P03 `a69d945...` or P05 `2f4a092...`;
+- do not merge or rebase their full parcel histories, which would promote rejected intermediate commits;
+- create a fresh isolated integration branch from the exact pinned base and, for each P01-P08 final candidate, apply the complete `pinned-base..accepted-candidate` aggregate patch as one normalized local parcel commit;
+- use order P01, P02, P03, P04, P05, P06, P07, P08; P05 must precede P06;
+- require every normalized parcel output to remain byte-identical to its accepted candidate and require the final tree to equal `17b3ff60c74098f67edec222f1854f6486df7fe5` before push or PR;
+- rerun the complete backend, sidecar, frontend, lint/build, consent, scope, and no-network chain on the normalized branch.
+
+Any base movement, patch conflict, blob/tree mismatch, count drift, new skip/failure, security regression, or external-data/provider need stops the operation and returns for a new Gate 3 decision.
+
+## Requested remote merge and release action
+
+If normalization and verification remain exact:
+
+1. push only the normalized integration branch;
+2. open one PR to `main` with the candidate/tree/review/rollback evidence;
+3. require the PR checks to finish green; on `pull_request`, `.github/workflows/deploy.yml` runs audits/tests/build but skips Azure login, image push, and Container App updates;
+4. merge the exact reviewed PR without squash/rebase so the normalized parcel order remains auditable;
+5. monitor the resulting `main` workflows through completion.
+
+Important production coupling: `deploy.yml` also runs on pushes to `main`. A successful merge will build and push new API/frontend images, update the Azure API and frontend Container Apps, verify revision readiness, check API TLS/health, and verify frontend health. It does **not** deploy the research sidecar. This Gate 3 request therefore seeks explicit approval for the API/frontend production deployment caused by the merge; sidecar remains merged but undeployed unless separately authorized.
+
+No unrelated release, provider enablement, data migration, schema change, publication, billing action, or diagnostic cleanup is authorized.
+
+## Rollback and Stage-F custody
+
+- Before merge: close the PR or stop the branch; main and production remain unchanged.
+- After merge but before/while deployment: if a blocking CI, deployment-readiness, revision, TLS, or health failure occurs, stop release claims and revert the remediation merge through a normal Git revert—never reset or force-push—then allow the same guarded workflow to redeploy the reverted API/frontend tree. Report the failure and rollback evidence.
+- After success: verify merged `main`, required GitHub checks, exact deployed API/frontend image SHA and health receipts, sidecar's explicit undeployed status, and original diagnostic-branch preservation; then complete Stage-F records on the goal branch.
+- Remediation and integration worktrees/branches are retained unless separately authorized for cleanup.
+
+## Residual uncertainty accepted only as disclosed
+
+- Q02 endpoint-wide gate coverage remains inconclusive and terminally stopped.
+- Regex practical exploitability remains unproved and unexcluded; the reproduced cancellation boundary is fixed.
+- P03 rotation is tested by deterministic cross-artifact mock, not a live concurrent publication.
+- No OS-level packet capture was used during local verification.
+- P08 retains its ratified one-decision-per-run, actor-binding, mid-poll-consent, and endpoint-coverage residuals.
+- The main-triggered workflow deploys API/frontend only; sidecar deployment is outside this Gate 3 request.
+
+## Exact approval form
+
+> Gate 3: I approve the exact P01-P08 source-candidate set and verified aggregate integration tree `17b3ff60c74098f67edec222f1854f6486df7fe5`. Authorize aggregate-patch normalization from pinned base `339f259b1a467034db4f57cf9d774c292f11b53a` in order P01, P02, P03, P04, P05, P06, P07, P08, with P05 before P06, excluding rejected intermediate histories. If and only if base, blob/tree parity, the complete local verification chain, and all PR checks remain green, authorize pushing the normalized branch, opening the PR, merging it without squash/rebase, and the resulting `deploy.yml` API/frontend Azure production deployment. The research sidecar remains undeployed. If post-merge CI/deployment/health fails, authorize a normal revert rollback and guarded redeployment of the reverted API/frontend tree. Preserve all original diagnostic branches and user-owned untracked files. No other deployment, release, provider enablement, publication, migration, billing action, cleanup, reset, or force-push is authorized.

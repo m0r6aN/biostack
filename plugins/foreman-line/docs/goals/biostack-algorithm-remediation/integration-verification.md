@@ -1,6 +1,6 @@
 # Goal-Level Integration Verification
 
-Status: **GREEN — awaiting fresh independent integration review; Gate 3 ungranted**
+Status: **REVIEW-COMPLETE GREEN — ready to request human Gate 3; Gate 3 ungranted**
 
 Date: 2026-09-02
 
@@ -95,6 +95,12 @@ Known jsdom navigation notices and the existing Next.js middleware deprecation w
 
 No OS-level packet capture was used. Network denial is evidenced by the explicit offline flags, cleared provider-related shell variables, local-fake design, absence of network-capable live-test execution, and skipped live Collective cases.
 
+## Fresh independent integration review
+
+Reviewer `/root/review_integration_candidate` returned **ACCEPT** on governance commit `b7406e8b2daaea212323c06b12dc0b52fdc8fad9` and exact staged tree `17b3ff60c74098f67edec222f1854f6486df7fe5`, with no Critical, High, Medium, or Low blocking findings. The reviewer independently reproduced the 27-path/zero-collision/blob-parity receipts, backend `2,065+5`, sidecar `53+1`, frontend `989/989`, 73-entry NuGet manifest, unchanged main/origin base, and diagnostic-branch preservation.
+
+The review makes aggregate-tree normalization a mandatory Gate 3 condition: do not cherry-pick only P03 `a69d945...` or P05 `2f4a092...`, and do not merge/rebase either full parcel history. Materialize each complete pinned-base-to-final-candidate aggregate patch, with P05 before P06, and require the resulting tree to equal `17b3ff60...` before any merge.
+
 ## Gate boundary and next action
 
-This green integration receipt authorizes no commit, merge, push, PR, deployment, publication, release, provider enablement, or diagnostic cleanup. Obtain a fresh independent review of the exact staged integration tree and this receipt. Only after acceptance may the coordinator present the exact candidate set, integration tree, merge method/order, rollback plan, and residual uncertainty for human Gate 3.
+This review-complete green integration receipt authorizes no commit, merge, push, PR, deployment, publication, release, provider enablement, or diagnostic cleanup. The coordinator may now present the exact candidate set, integration tree, normalization method/order, rollback plan, deployment coupling, and residual uncertainty for human Gate 3.
