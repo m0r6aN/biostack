@@ -60,3 +60,4 @@ The algorithm-remediation release merged the P05 terminal-state fix and P06 acce
 3. Initial enabled operation must use one continuously available replica because the job store is in-memory and work continues after `202`.
 4. Dark deployment and scaffold-mode API enablement can be completed without any external scientific-provider call.
 5. ToolUniverse/provider enablement and real-source-locator enrichment require later, separately ratified goals.
+6. P05/P06 can be proven in deterministic pre-image tests and carried into production by exact digest identity. Their race/source-cap conditions are not safely inducible through the existing production admin contract, so this goal must not add production fault-injection hooks or claim a live reproduction it cannot perform.
