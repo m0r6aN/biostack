@@ -1,6 +1,6 @@
 # Parcel Receipts — BioStack Algorithm Remediation
 
-Status: **live coordinator record; no merge or release authority**
+Status: **live coordinator record; exact Gate 3 merge/release authority active**
 
 ## P01 — Parser semantics
 
@@ -164,4 +164,4 @@ Status: **live coordinator record; no merge or release authority**
 
 ## Gate custody
 
-P01-P08 are review-complete candidate commits, not approved merge commits. Their exact aggregate blobs form staged integration tree `17b3ff60c74098f67edec222f1854f6486df7fe5` in the preserved detached integration worktree; the full backend, sidecar, frontend, build, lint, scope, and byte-parity chain is green. Fresh independent integration review ACCEPTED the exact tree with no blocking findings and mandated aggregate-patch normalization for P03/P05 rejected-parent custody. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally blocked and remains inconclusive. Amendments 01-05 were explicitly ratified on 2026-09-02. The chain is ready to request Gate 3, but Gate 3 remains ungranted, so no push, PR, merge, deployment, publication, or release is authorized.
+P01-P08 are review-complete source candidates whose exact aggregate blobs form staged integration tree `17b3ff60c74098f67edec222f1854f6486df7fe5` in the preserved detached integration worktree; the full backend, sidecar, frontend, build, lint, scope, and byte-parity chain is green. Fresh independent integration review ACCEPTED the exact tree with no blocking findings and mandated aggregate-patch normalization for P03/P05 rejected-parent custody. Q01, Q03, and Q04 have accepted inquiry reviews; Q02 is terminally stopped and remains inconclusive. Amendments 01-05 were explicitly ratified on 2026-09-02. On 2026-09-03 the developer ratified `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede` as written. The exact normalized-branch push, PR, merge-commit, API/frontend deployment, monitoring, guarded rollback, and Stage-F authority is active; all request stop conditions and exclusions remain controlling, including no research-sidecar deployment or diagnostic cleanup.

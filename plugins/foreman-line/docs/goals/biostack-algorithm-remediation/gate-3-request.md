@@ -1,8 +1,16 @@
 # Gate 3 Request — BioStack Algorithm Remediation
 
-Status: **AWAITING HUMAN APPROVAL**
+Status: **RATIFIED 2026-09-03 — RELEASE EXECUTION AUTHORIZED AS WRITTEN**
 
 Date: 2026-09-02
+
+## Human ratification receipt
+
+At goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede`, the developer granted:
+
+> Gate 3: I ratify `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede` as written.
+
+This activates the exact approval form below without modification. All stop conditions, exclusions, rollback limits, diagnostic-branch custody, user-file preservation, and the research-sidecar undeployed boundary remain controlling.
 
 ## Exact approved-source candidate set
 

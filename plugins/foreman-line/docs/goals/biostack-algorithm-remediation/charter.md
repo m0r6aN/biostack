@@ -1,6 +1,6 @@
 # Goal Charter: BioStack Algorithm Remediation
 
-Status: **RATIFIED — GATE 1 GRANTED; CONTINGENT GATE 2 ACTIVE; GATE 3 UNGRANTED**
+Status: **RATIFIED — GATES 1-3 GRANTED; EXACT RELEASE EXECUTION ACTIVE**
 
 Goal slug: `biostack-algorithm-remediation`
 
@@ -213,7 +213,7 @@ Passing builder tests alone does not satisfy this chain.
 - **Narrow Gate 1 Amendment 03 — ratified 2026-09-02:** the D8 timeout-terminalization supplement and replacement three-file AF-P05 in `gate-1-amendment-03.md` are active. P05 retains contingent Gate 2 authority subject to its amended shaped spec and fresh Step 0; P06 remains downstream of the verified P05 candidate.
 - **Narrow Gate 1 Amendment 04 — ratified 2026-09-02:** replacement three-file AF-P03 in `gate-1-amendment-04.md` is active. Only the stale API graph-positive fixture state may change from `provisional` to exactly `reviewed`; ratified D6 and all other P03 constraints remain unchanged.
 - **Narrow Gate 1 Amendment 05 — ratified 2026-09-02:** the D6 artifact-identity/provenance supplement and replacement exact 11-case P03 census in `gate-1-amendment-05.md` are active. AF-P03 remains the same three files and Amendment 04's single API fixture-state restriction remains unchanged. P03 retains contingent Gate 2 authority subject to its amended shaped spec and fresh Step 0.
-- **Gate 3 — human-only and not requested now:** after the complete green chain, present exact candidate commits, review/security dispositions, merge order, rollback notes, and remaining uncertainty. The human approves or rejects the specific merge/release action.
+- **Gate 3 — granted 2026-09-03:** the developer ratified `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede` as written. Only its exact aggregate-patch normalization, PR, merge-commit, API/frontend deployment, monitoring, guarded rollback, and Stage-F actions are authorized; all stated stop conditions and exclusions remain controlling.
 
 ## Merge and Stage-F closure
 

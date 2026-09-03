@@ -1,6 +1,6 @@
 # Goal-Level Integration Verification
 
-Status: **REVIEW-COMPLETE GREEN — ready to request human Gate 3; Gate 3 ungranted**
+Status: **REVIEW-COMPLETE GREEN — GATE 3 RATIFIED; NORMALIZED RELEASE VERIFICATION PENDING**
 
 Date: 2026-09-02
 
@@ -27,7 +27,7 @@ The staged integration worktree is preserved for review. Ignored build/dependenc
 7. P07 `c35df75be835d26b4c37618874cf502335b9a24c`
 8. P08 `47c2be0358e7ca024b524c7693af8b06846671d6`
 
-P03 and P05 final candidates contain rejected parents in their parcel histories. Only their final aggregate trees are accepted. A future Gate 3 request must specify a merge method that does not promote an intermediate rejected tree as independently accepted custody.
+P03 and P05 final candidates contain rejected parents in their parcel histories. Only their final aggregate trees are accepted. The ratified Gate 3 requires aggregate-patch normalization that does not promote an intermediate rejected tree as independently accepted custody.
 
 ## Deterministic integrated verification
 
@@ -103,4 +103,4 @@ The review makes aggregate-tree normalization a mandatory Gate 3 condition: do n
 
 ## Gate boundary and next action
 
-This review-complete green integration receipt authorizes no commit, merge, push, PR, deployment, publication, release, provider enablement, or diagnostic cleanup. The coordinator may now present the exact candidate set, integration tree, normalization method/order, rollback plan, deployment coupling, and residual uncertainty for human Gate 3.
+This review-complete green integration receipt remains the pre-release evidence baseline. Gate 3 was ratified on 2026-09-03 at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede`; execution is limited to the exact normalization, verification, PR, merge-commit, API/frontend deployment, monitoring, rollback, and Stage-F terms in `gate-3-request.md`. Publication, provider enablement, diagnostic cleanup, and research-sidecar deployment remain unauthorized.

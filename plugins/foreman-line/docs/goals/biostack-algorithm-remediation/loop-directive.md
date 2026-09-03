@@ -18,7 +18,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - Narrow Gate 1 Amendment 04: ratified 2026-09-02; replacement AF-P03 and exact reviewed-fixture correction active
 - Narrow Gate 1 Amendment 05: ratified 2026-09-02; P03 artifact-identity/provenance supplement and exact 11-case census active
 - Gate 2: contingent authorization granted for Q01-Q04 and P01-P08
-- Gate 3: ungranted
+- Gate 3: granted 2026-09-03 by ratification of `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede`; exact normalization, PR, merge, API/frontend deployment, rollback, and exclusion terms are active
 - Diagnostic coordination and five parcel branches: preserved and unmerged
 - P01 candidate `751090eabf3ee6f066c17ee83861ae04711fd4a0`: deterministic chain green; one fresh adversarial ACCEPT; held unmerged
 - P02 candidate `1b5742051ee2b54a80dac9bbdf68c68e5a6b5992`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SCOPE/SG-OUTBOUND ACCEPT; held unmerged
@@ -32,7 +32,7 @@ One goal has one coordinator. Ownership may transfer only at a parcel boundary t
 - P05 candidate `2f4a092fb7f0ec534996e6ad1116e8b50d612b77`: deterministic chain green; two fresh adversarial ACCEPTs plus SG-SIDECAR/SG-SCOPE ACCEPT; rejected parent `923900c66d7046c282d397ba60d85b9eebcf1a58` preserved in history; P06 shaping may proceed against the exact accepted hash
 - P03 candidate `a69d945a3cd8a3655911707031386441fc55079f` / tree `7205d5ea11148eac865534cf5ae545634eb84be5`: Amendment-05 rework chain green and fresh independent adversarial review ACCEPT with no actionable findings; rejected parent `7e8087a00722e38c2a090d49826fa6289c880356` preserved in history; held unmerged.
 - P06 candidate `c435caf3cf0cf95fb1bfbc51d2924ea960183957`: standalone and exact P05+P06 combined chains green; two fresh adversarial ACCEPTs plus SG-SIDECAR/SG-SCOPE ACCEPT; held unmerged
-- Goal-level integration tree `17b3ff60c74098f67edec222f1854f6486df7fe5`: exact blobs from all eight accepted candidates, 27 unique paths and zero collisions; backend `2,065 passed / 5 expected skips`, sidecar `53 passed / 1 expected skip`, frontend `989/989`, focused lint/build and backend consent `17/17` green; fresh independent integration review ACCEPT with no blocking findings; ready to request Gate 3
+- Goal-level integration tree `17b3ff60c74098f67edec222f1854f6486df7fe5`: exact blobs from all eight accepted candidates, 27 unique paths and zero collisions; backend `2,065 passed / 5 expected skips`, sidecar `53 passed / 1 expected skip`, frontend `989/989`, focused lint/build and backend consent `17/17` green; fresh independent integration review ACCEPT with no blocking findings; Gate 3 ratified and release execution active
 - Cerebras routing inventory: user-scope credential presence is confirmed without reading its value, but the current Codex process does not inherit it, no Cerebras CLI or reviewed callable adapter is present, and the existing governed Cerebras shadow route is public-only/candidate-only with Coordinator and verifier roles prohibited. State is `configured_unverified`; no BioStack source, test payload, secret, or provider request has been sent.
 
 ## Standing authorizations
@@ -51,12 +51,14 @@ The developer granted exactly:
 
 > Narrow Gate 1 Amendment 05: I ratify the D6 artifact-identity/provenance supplement and replacement P03 regression census and verification counts as written. AF-P03 remains the same three files, and the Amendment 04 API fixture restriction remains unchanged. P03 retains contingent Gate 2 authorization subject to its amended shaped spec and fresh Step 0. All other decisions and authorizations remain unchanged. Gate 3 remains ungranted.
 
+> Gate 3: I ratify `gate-3-request.md` at goal commit `ebb3318e3fb5f1b5186d23736719150d28a5fede` as written.
+
 Operational effect:
 
 1. Q01-Q04 and P01-P08 may be shaped and dispatched only after their specs exactly match the ratified charter and ratified amendments, name an isolated branch/worktree, pass Step 0, and retain exact Allowed Files.
 2. Amendment 01 unblocks P03-P07; Amendment 02 authorizes P08; Amendments 03 and 04 resolve the scoped P05 and initial P03 blockers; Amendment 05 reactivates only P03's cross-artifact provenance rework after amended-spec lint and fresh Step 0. P05 must precede final P06 integration verification, and Q04's accepted `READY` disposition remains a prerequisite for P07.
-3. The authority does not permit any further new parcel, changed Allowed Files, external network/provider access, production/cloud data, secrets, pushes, pull requests, merges, deployment, publication, release, or cleanup of diagnostic branches.
-4. Gate 3 remains human-only for the exact candidate commit set and exact merge/release action after the complete verification chain is green.
+3. No further new parcel, changed Allowed Files, external data/provider use, production/cloud data access, secret disclosure, publication, migration, billing action, cleanup, reset, or force-push is authorized. Gate 3 authorizes only the exact normalized branch, PR, merge-commit, API/frontend deployment, monitoring, and guarded normal-revert rollback described in the ratified request.
+4. The research sidecar remains undeployed. Every Gate 3 stop condition and exact tree/blob/count requirement remains active.
 
 ## Queue
 
@@ -69,8 +71,8 @@ The coordinator advances this queue in dependency order while allowing only coll
 5. P04, P07, and P08 implementation/review chains: complete and held unmerged.
 6. P05 and P06 implementation/review chains: complete and held unmerged.
 7. For each shaped parcel: Gate 2 contingency check, isolated dispatch, Step 0 ruling, build, closure check, deterministic evidence, required adversarial/security review, and rework loop.
-8. Exact green candidate set and independently accepted integration tree assembled. Request human Gate 3 using `gate-3-request.md`. Do not push, open a PR, merge, deploy, or release before exact approval.
-9. After exact Gate 3 approval: rebase/verify/merge only the approved set, verify merged main and CI, then complete Stage F.
+8. Exact green candidate set and independently accepted integration tree assembled; human Gate 3 ratified on 2026-09-03. Complete.
+9. Active: fetch and revalidate the pinned base, aggregate-patch normalize the eight approved candidates without rebase/squash, reproduce the exact tree and full green chain, then push, open the PR, require green checks, merge by merge commit, monitor the authorized API/frontend deployment, and complete Stage F.
 
 ## Per-iteration algorithm
 
