@@ -1,10 +1,29 @@
 # Goal Charter — BioStack Research Sidecar Deployment
 
-Status: **DRAFT — AWAITING HUMAN GATE 1; NO PARCEL DISPATCH OR REMOTE MUTATION AUTHORIZED**
+Status: **RATIFIED AT GATE 1 (2026-09-03) — D1-D18 AND THE P01-P04 PLAN STAND AS WRITTEN. CONTINGENT GATE 2 GRANTED FOR P01-P04 LOCAL WORK ONLY. GATE 3A AND GATE 3B REMAIN UNGRANTED.**
 
 Goal slug: `biostack-sidecar-deployment`
 
 Pinned base: `4d8754c670a7d4553ade857be80aa170ede85653`
+
+## Coordinator ownership
+
+| Field | Value |
+|---|---|
+| Owner | Claude Opus 5 coordinator session, claimed 2026-09-03 |
+| Goal slug | `biostack-sidecar-deployment` |
+| Goal branch | `codex/goal-biostack-sidecar-deployment` |
+| Goal worktree | `C:\Users\clint\.codex\worktrees\biostack-sidecar-deployment-goal\BioStack` |
+| Prior owner | Codex coordinator (drafted charter through `bf7ef39`); no live claim recorded, no conflicting in-flight parcel |
+| Transfer rule | One goal, one coordinator. Ownership transfers only at a parcel boundary, by editing this block. |
+
+## Gate 1 — ratified 2026-09-03
+
+The developer ratified verbatim the exact form in `gate-1-request.md`:
+
+> Gate 1: I ratify D1-D18 and the P01-P04 parcel plan in `charter.md` as written, and grant contingent Gate 2 authorization for isolated shaping, implementation, deterministic verification, adversarial review, and security review of P01-P04 subject to their final exact Allowed Files, Step 0, dependency order, and stop conditions. Gate 3A and Gate 3B remain ungranted. No push, PR, merge, Azure mutation, secret creation/rotation, provider enablement, external call, protected-data use, public ingress, or sidecar/API production configuration change is authorized by this ratification.
+
+**Consequence for the exit criterion.** The exit criterion in this charter requires Gate 3A and Gate 3B, which are withheld and are human-only under D18. The goal is therefore not completable under this authorization. The coordinator drives to the reachable terminal state — P01-P04 independently accepted, verified, and adversarially/security reviewed, held unmerged on their parcel branches, with a Gate 3A request package prepared — and then stops. Gate 3A/3B remain open exit conditions carried to the final report.
 
 ## Objective
 
