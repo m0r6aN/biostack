@@ -21,7 +21,7 @@ The Coordinator (D4): you consume verification results, you never produce them. 
 
 ## Standing authorizations (granted by Clint at Gate 1, 2026-09-03; scoped to this goal only)
 
-1. **Gate 2 / dispatch approval** is granted for exactly parcels **P01, P02, P03, P04** — no others. Dispatch is contingent on: the parcel's spec passing coordinator lint, its final exact Allowed Files being fixed in the spec, its Step 0 restate-and-stop gate being present in the kickstarter, and its charter dependency order being satisfied. A new parcel idea is a stop-and-report, not a dispatch.
+1. **Gate 2 / dispatch approval** is granted for exactly parcels **P01, P02, P03, P04a** — no others. **P04b is explicitly NOT covered** (charter, post-split 2026-09-03): it is the live API-configuration transition and requires a fresh dispatch approval after Gate 3B. Dispatch is contingent on: the parcel's spec passing coordinator lint, its final exact Allowed Files being fixed in the spec, its Step 0 restate-and-stop gate being present in the kickstarter, and its charter dependency order being satisfied. A new parcel idea is a stop-and-report, not a dispatch.
 2. **Step 0 rulings** stay with the coordinator — except a flag that requires modifying the ratified charter, which becomes a coordinator-drafted amendment requiring Clint's ratification, committed alone before any code.
 3. **Local-only work is authorized:** worktree creation, branch creation, local commits on parcel branches, local test/lint/build runs, local Docker container builds and probes against `127.0.0.1`.
 4. **Gate 3A and Gate 3B are NOT granted.** Explicitly denied by the ratification text and by D18.
@@ -50,12 +50,13 @@ Gate 3A and Gate 3B are recorded as **open exit conditions** carried to the fina
 
 | # | Parcel | Depends on | Routing | Review depth (D17) |
 |---|---|---|---|---|
-| 1 | **P01** — Deterministic sidecar CI and container contract | — | frontier builder | 2 adversarial + 1 security |
-| 2 | **P02** — Internal Azure Container App definition | P01 accepted | frontier builder | 2 adversarial + 1 security |
+| 1 | **P01** — Deterministic sidecar CI and container contract (incl. D19 no-provider-SDK build) | — | frontier builder | 2 adversarial + 1 security |
+| 2 | **P02** — Internal Azure Container App definition (incl. D20 encrypted transport) | P01 accepted | frontier builder | 2 adversarial + 1 security |
 | 3 | **P03** — Manual OIDC release workflow and deployment verifier | P01 + P02 accepted | frontier builder | 2 adversarial + 1 security |
-| 4 | **P04** — Controlled enablement and operator runbook | P03 accepted **and rebased** | frontier builder | 2 adversarial + 1 security |
+| 4 | **P04a** — Live-boundary verifier, runbook, negative tests (incl. D21 rotation runbook) | verified P03 dark candidate | frontier builder | 2 adversarial + 1 security |
+| — | ~~P04b~~ — API config transition + live rollback | P04a accepted, **Gate 3B granted** | not dispatched by this ratification | n/a |
 
-**Serialization rule (charter, mandatory):** P03 owns `.github/workflows/deploy-research-sidecar.yml` first. P04 may touch that file only after P03 is accepted and P04 is rebased onto it. This is the one collision the charter names; the plan review is tasked with finding others.
+**Serialization rule (charter, mandatory):** P03 owns `.github/workflows/deploy-research-sidecar.yml` first. P04b may touch that file only after P03 is accepted and P04b is rebased onto it, and only after Gate 3B. P04a never touches that file. This is the one file-level collision the charter names; the plan-level adversarial review (2026-09-03, findings in `plan-review-findings.md`) found others resolved via Allowed Files corrections rather than a serialization rule: P02's bicep parameter contract must be frozen for P03 to code against without discovery, and P03 now extends `scripts/verify-containerapp-deployment.mjs` rather than forking a third verifier.
 
 ## Per-parcel cycle
 

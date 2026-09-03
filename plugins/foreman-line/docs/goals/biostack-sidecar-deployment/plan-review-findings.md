@@ -2,6 +2,8 @@
 
 Goal: `biostack-sidecar-deployment`. Charter status at review time: ratified at Gate 1 (2026-09-03), contingent Gate 2 not yet exercised — zero parcels dispatched.
 
+**Amendment status: RATIFIED 2026-09-03.** The developer ratified D5, D12, D19, D20, and D21 "as drafted" — the exact scoped re-open requested below. All five are now applied to `charter.md`; the parcel plan's Allowed Files corrections and the P04→P04a/P04b split are applied alongside them. Gate 2 is now live for P01, P02, P03, P04a. P04b remains ungranted pending Gate 3B.
+
 Two fresh, independent, zero-context frontier reviews were dispatched per `COORDINATOR-PATTERN.md` ("Plan-level adversarial review — always"): Reviewer A (decomposition/boundary mandate), Reviewer B (security mandate, D17-aligned given this goal's architecture/risk routing). Neither reviewer read the other's output. The coordinator then reproduced every load-bearing claim on disk before triaging (loop-directive.md step 6 / lesson: reproduction is the tie-breaker and the closure proof).
 
 **Every claim the coordinator attempted to verify reproduced exactly as reported.** No finding below is marked UNVERIFIED-and-discarded; the two the reviewers themselves flagged UNVERIFIED are carried as such.
