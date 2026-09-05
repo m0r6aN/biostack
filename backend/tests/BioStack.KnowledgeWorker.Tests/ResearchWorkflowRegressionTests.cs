@@ -6,6 +6,43 @@ using Xunit;
 
 public class ResearchWorkflowRegressionTests
 {
+    [Theory]
+    [InlineData("Creatine", "creatine")]
+    [InlineData("Vitamin D3", "vitamin-d3")]
+    [InlineData("Tamoxifen", "tamoxifen")]
+    public void SourceTruthRereview_ValidScopes_BlockPromotionAfterEarlierClaimReview(string compoundName, string slug)
+    {
+        var root = Directory.GetParent(TestPaths.BackendRoot())!.FullName;
+        var reviewDirectory = Path.Combine(root, "research", "review-decisions");
+        var batch = JsonNode.Parse(File.ReadAllText(Path.Combine(reviewDirectory,
+            "review-decision-batch-2026-09-05-gtm-source-truth-001.json")))!;
+        var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+        var validation = validator.Validate(ResearchArtifactKind.ReviewDecisionBatch, batch);
+        Assert.True(validation.IsValid, validation.Summary());
+
+        var decision = Assert.Single(batch["decisions"]!.AsArray(), node =>
+            node!["compoundName"]!.GetValue<string>() == compoundName)!;
+        Assert.Equal("request-changes", decision["decision"]!.GetValue<string>());
+        Assert.False(decision["clearsSoftPromotionBlockers"]!.GetValue<bool>());
+        Assert.NotEmpty(decision["scope"]!["promotionBlockers"]!.AsArray());
+        var packet = JsonNode.Parse(File.ReadAllText(Path.Combine(root, "research", "input", "evidence", $"{slug}.evidence.json")))!;
+        var claimIds = packet["claims"]!.AsArray().Select(node => node!["claimId"]!.GetValue<string>()).ToHashSet();
+        foreach (var claimId in decision["scope"]!["claimIds"]!.AsArray())
+            Assert.Contains(claimId!.GetValue<string>(), claimIds);
+
+        var earlier = JsonNode.Parse(File.ReadAllText(Path.Combine(reviewDirectory,
+            "review-decision-batch-2026-08-29-wave-r1-005.json")))!;
+        var index = ReviewDecisionIndex.FromBatches(new[] { earlier, batch });
+        Assert.Equal(decision["decisionId"]!.GetValue<string>(), index.ForCompound(compoundName)[0].DecisionId);
+        Assert.True(index.HasPendingRequestedChanges(compoundName));
+
+        // Even an otherwise clean draft must not bypass the new requested changes.
+        var drafts = new JsonArray(Draft(compoundName, "Strong", "complete", needsReview: false));
+        var (summary, manifest, _, _) = BuildWorkflow(drafts, ResearchRequestIndex.Empty, index);
+        Assert.Equal("review-required", Assert.Single(summary.Compounds).PromotionReadiness);
+        Assert.Empty(manifest.CandidatesForPromotion);
+    }
+
     [Fact]
     public void RequestedCompound_RemediationDecision_CarriesIntoInitialResearchTask()
     {

@@ -1,0 +1,11 @@
+Captured CLI verdict. Candidate analysis, not ground truth. See directive.md for rejected conclusions.
+
+TOP 3 FINDINGS
+1. The Tamoxifen packet misrepresents ATLAS endpoints by incorrectly labeling 18.6%/21.1% all-cause death crude proportions as breast-cancer mortality (which is 12.2%/15.0%) and misstating endometrial cancer incidence rates.
+2. The Creatine packet conflates denominators, mistakenly citing the percentage of studies reporting side effects (13.7%/13.2%) rather than the actual participant-level side-effect frequency (4.60%/4.21%).
+3. The Vitamin D3 packet lacks intervention and population consistency by attributing kidney stone risk to isolated D3 instead of the combined calcium plus vitamin D intervention, and omitting the community-dwelling 65+ population constraint for falls.
+
+TOP 3 MOVES
+1. Reject the Tamoxifen packet and correct the ATLAS breast-cancer mortality to 12.2%/15.0% (years 5-14) while updating endometrial incidence to 3.1%/1.6% using the exact 12,894-woman safety population.
+2. Revise the Creatine packet to use the 4.60%/4.21% participant-level side-effect denominator and initiate a manual review to resolve the incomplete renal-population conflict.
+3. Update the Vitamin D3 packet to explicitly tie the kidney stone risk to the combined calcium plus vitamin D intervention and restrict falls guidance to the community-dwelling 65+ population.
