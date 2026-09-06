@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "gtm-source-truth-2026-09-05-001",
+    "reviewerId": "opencode-gtm-lead(session-kickoff-2026-09-05)",
+    "reviewedAt": "2026-09-05T10:38:11Z",
+    "notes": [
+      "Bounded independent re-review of Creatine, Vitamin D3, and Tamoxifen by three fresh-context reviewers, with lead verification of the headline primary-source contradictions.",
+      "Evidence and source-access limitations: research/review-decisions/receipts/gtm-source-truth-2026-09-05/brief.md.",
+      "These are request-changes decisions, not promotion wave 006. No claims, source tiers, authority flags, seed records, routes, or production data are changed.",
+      "Reviewer identity records the current OpenCode lead, not the named Claude grantee in OPERATOR-DELEGATION-2026-08-28.md. No approval authority is inferred from that older named grant; no approval is issued here.",
+      "Other remediated packets are outside this bounded re-review. Existing blockers remain; this is not a 78-packet clearance."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "gtm-source-truth-2026-09-05-creatine",
+      "compoundName": "Creatine",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-kickoff-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:38:11Z",
+      "scope": {
+        "claimIds": [
+          "creatine-safety-common-adverse-effects-001",
+          "creatine-monitoring-renal-function-001",
+          "creatine-misinformation-hairloss-dht-001"
+        ],
+        "qualityFlags": ["independent-source-rereview", "numeric-denominator-correction-required"],
+        "reviewCategories": ["primary-source-verification", "source-family-independence", "population-scope"],
+        "promotionBlockers": [
+          "Correct the adverse-event denominator in the statement and repeated resolved flags: 13.7% creatine versus 13.2% placebo are percentages of studies reporting side effects, not participant side-effect rates. Keep the separate 28.4 million report analysis distinct from clinical trials and never present report mentions as exposed-person incidence.",
+          "Remove the unsupported author-independent characterization of Kreider 2025 relative to the Kreider-led ISSN 2017 position stand. Reassess the prior Moderate-to-Strong change through independent review, not an automatic tier reversal or clearance.",
+          "Reconcile the hair-outcome denominator (37 versus 38 hormone participants) and describe FotoFinder/TrichoScale alongside Trichogram. Attribute the outdated-method criticism to AHLA rather than presenting it as established fact. Preserve short duration, male-only population, missing family history, and no scalp-androgen measurement limitations.",
+          "Distinguish measured from creatinine-estimated GFR and the overall meta-analysis population from its measured-GFR subset. Preserve the non-dialysis CKD conflict and qualify evidence absence by the review's search scope. FDA hosting of an applicant GRAS notice does not by itself establish an FDA safety conclusion; authority review remains open."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "PMID 40198156 Results distinguishes study-level reporting from participant frequency; the lead re-fetched this indexed primary abstract.",
+        "Hair and renal primary-source review details and access failures are recorded in the linked brief. No new approval is issued for other packet claims.",
+        "No safety-critical claimType or fieldAuthorityRequired value may be recalibrated to resolve this request."
+      ]
+    },
+    {
+      "decisionId": "gtm-source-truth-2026-09-05-vitamin-d3",
+      "compoundName": "Vitamin D3",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-kickoff-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:38:11Z",
+      "scope": {
+        "claimIds": [
+          "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
+          "vitamind3-efficacy-vital-cancer-cvd-negative-001",
+          "vitamind3-adverse-effect-hypercalcemia-toxicity-001"
+        ],
+        "qualityFlags": ["independent-source-rereview", "historical-guidance-correction-required"],
+        "reviewCategories": ["primary-source-verification", "guideline-version-scope", "safety-threshold-scope"],
+        "promotionBlockers": [
+          "Remove the false assertion that kidney-stone risk was not mentioned in 2018. USPSTF's April 17, 2018 final statement explicitly identifies a small increased risk with combined vitamin D/calcium. Describe the 2024 draft estimate as updated synthesis, not newly discovered harm, and do not attribute the combined-intervention result to D3 alone.",
+          "Include the omitted 2018 higher-dose I statement, specify the historical falls age threshold of 65 years, and preserve population/exclusion distinctions. Reconcile separate current falls guidance before certifying that all 2018 grades remain current; the retrieved consolidated December 2024 page is still labeled draft.",
+          "Add the now-accessible VITAL primary manuscript and update access/provenance notes without erasing historical failures. Scope null findings to overall analyses, retain hypothesis-generating subgroup caveats, and distinguish the repeat-measurement serum subset from the whole cohort.",
+          "Describe 125 versus 375 nmol/L as a lower caution level versus a concentration often observed in toxicity, not universal diagnostic or safety boundaries. Complete independent live authority verification of remaining ODS, StatPearls, and product-specific label content before any safety clearance."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "The lead independently fetched the 2018 USPSTF final statement and confirmed its explicit kidney-stone harm wording. WHI primary-study provenance provides a distinct source family for the historical combined-intervention signal.",
+        "The central VITAL negative primary-endpoint interpretation is supported by primary full text; that does not approve the entire packet or clear unreviewed regulatory, dosing, immune/mood, or safety portions.",
+        "No protected authority type or fieldAuthorityRequired value is changed."
+      ]
+    },
+    {
+      "decisionId": "gtm-source-truth-2026-09-05-tamoxifen",
+      "compoundName": "Tamoxifen",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-kickoff-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:38:11Z",
+      "scope": {
+        "claimIds": ["tamoxifen-efficacy-atlas-extended-001", "tamoxifen-efficacy-nsabp-p1-001"],
+        "qualityFlags": ["independent-source-rereview", "endpoint-misattribution-correction-required"],
+        "reviewCategories": ["primary-source-verification", "endpoint-cohort-window-reconciliation"],
+        "promotionBlockers": [
+          "Replace the ATLAS endpoint misattribution: 18.6% versus 21.1%, RR 0.87, describes crude all-cause mortality in the ER-positive cohort, not cumulative breast-cancer mortality. Primary years 5-14 cumulative breast-cancer mortality is 12.2% versus 15.0% for continuation versus stopping.",
+          "Use coherent ATLAS endpoints, windows, and populations: years 5-14 cumulative recurrence 21.4% versus 25.1% in ER-positive women, and endometrial cancer 3.1% versus 1.6% in the separately defined safety analysis. Explain exclusion of women with hysterectomy for uterine-tumour incidence and avoid crude proportions mislabeled cumulative risk. Keep benefits and harms together.",
+          "Attach ATLAS primary Lancet evidence plus independent NCI synthesis; update extracted-evidence labels and conflict prose. This is a correction of the earlier numbers, not confirmation of them.",
+          "Attribute P-1's 49% reduction and cumulative incidence through 69 months to Fisher 1998 and the label's 44% reduction at median 4.2 years to its separate analysis. Do not conflate cumulative horizon with median follow-up, average the results, or assert duration alone explains the discrepancy without primary analysis-level verification.",
+          "The previously required structured CAS/UNII/DrugBank/ChEMBL/RxNorm verification and remaining packet sign-off are not cleared by correcting ATLAS."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "The lead independently fetched PMC3596060 and confirmed Table 2 Any death and the years 5-14 cumulative outcomes. NCI is an independent editorial source family, not a second trial; PMC/Europe PMC are mirrors of the primary publication.",
+        "This newer request-changes decision leaves pending changes for Tamoxifen despite its older approve-claims decision; no old receipt is edited.",
+        "Other tamoxifen claims were not comprehensively re-reviewed here and receive no new approval. No safety-critical claimType is recalibrated."
+      ]
+    }
+  ]
+}

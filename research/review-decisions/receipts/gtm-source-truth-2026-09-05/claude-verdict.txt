@@ -1,0 +1,11 @@
+Captured CLI verdict; punctuation normalized to ASCII. Candidate analysis, not ground truth. See directive.md for rejected conclusions.
+
+TOP 3 FINDINGS
+1. Creatine's "independent corroboration" fails source-family independence (2025 paper and 2017 ISSN stand share first author Kreider), and the cited 13.2%/13.7% are study-level side-effect proportions, not the participant-level rates (4.21%/4.60%, p=0.828) that actually bear on exposed-population risk.
+2. Vitamin D3's kidney-stone harm is sourced from a combined calcium+vitamin-D WHI trial and USPSTF's combined-supplementation statement; no isolated-D3 source supports attributing this risk to D3 alone; VITAL's non-significant primary outcomes and unadjusted, hypothesis-generating BMI subgroup cannot support an efficacy claim.
+3. Tamoxifen's paired benefit (18.6%/21.1%, ER-positive n=6,846) and endometrial-cancer harm (1.80%/0.97%, mixed-ER safety n=12,894) come from non-overlapping cohorts; an unsupported inference to present as one risk-benefit picture; NCI's page synthesizes the same ATLAS trial, not a second source family.
+
+TOP 3 MOVES
+1. Creatine: cite an author-independent RCT/meta-analysis for tolerability, use participant-level not study-level rates, and reconcile the hair-loss trial's 38-vs-37 participant discrepancy before any use.
+2. Vitamin D3: relabel kidney-stone risk as combined calcium+D3 (pending a D3-only source), drop VITAL as efficacy evidence given non-significant primaries, and mark the 2024 USPSTF page as draft, not a 2018 supersession.
+3. Tamoxifen: block pairing ATLAS benefit/harm figures without an explicit population-mismatch disclosure or same-population source, and flag the NSABP P-1 49%/44% discrepancy as unresolved methodology (not duration) rather than averaging or reporting either figure unqualified.
