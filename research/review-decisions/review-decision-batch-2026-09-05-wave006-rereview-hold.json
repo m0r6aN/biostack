@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "wave006-rereview-hold-2026-09-05",
+    "reviewerId": "opencode-gtm-lead(session-delegation-2026-09-05)",
+    "reviewedAt": "2026-09-05T10:46:48Z",
+    "notes": [
+      "Six request-changes decisions; zero promotion or claim approvals. Standing lead authority renewed in the 2026-09-05 session; OPERATOR-DELEGATION-2026-08-28.md remains the review-method contract, not a claim that OpenCode is Claude.",
+      "Fresh-context native reviewers did not author or modify the evidence packets. All claims were assessed within bounded retrieval budgets for Creatine (8), Vitamin D3 (7), and Tamoxifen (8), with verification gaps explicitly retained. PCAC review was blocker-focused, not complete coverage of its 18 claims. Same-host reviewers are not independent model or experimental replications.",
+      "Per-claim verdicts, fetched URLs, excerpts, source-family ancestry, and access limitations are in receipts/wave006-*-2026-09-05-review.md. A same-publication mirror can establish fidelity, not independent replication. Independently authored appraisal may share underlying evidence when that ancestry is disclosed.",
+      "Lead independently rechecked the ATLAS mortality endpoint, creatine study/participant safety denominators, and the 2018 USPSTF kidney-stone statement. No safety-critical claimType or fieldAuthorityRequired value is recalibrated.",
+      "This batch does not remediate, approve, publish, remove existing production records, or authorize a production Refresh. Claims outside scoped PCAC blockers remain unreviewed in this pass."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "wave006-hold-creatine-20260905",
+      "compoundName": "Creatine",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-delegation-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:46:48Z",
+      "scope": {
+        "claimIds": [
+          "creatine-regulatory-status-001",
+          "creatine-mechanism-atp-phosphocreatine-001",
+          "creatine-efficacy-highintensity-strength-lbm-001",
+          "creatine-dose-context-loading-maintenance-001",
+          "creatine-safety-common-adverse-effects-001",
+          "creatine-monitoring-renal-function-001",
+          "creatine-misinformation-hairloss-dht-001",
+          "creatine-evidence-gap-endurance-broad-marketing-001"
+        ],
+        "qualityFlags": ["independent-rereview", "wave006-hold"],
+        "reviewCategories": ["source-fidelity", "endpoint-denominator-verification", "field-authority", "independent-source-family-verification"],
+        "promotionBlockers": [
+          "creatine-safety-common-adverse-effects-001: 13.2% placebo and 13.7% creatine are proportions of STUDIES reporting side effects, not participant rates. The abstract separately reports 4.21% and 4.60% participant frequencies. Keep spontaneous-report counts distinct from exposed participants and person-time.",
+          "creatine-monitoring-renal-function-001: distinguish measured Cr-EDTA GFR from creatinine-estimated GFR, use endpoint-specific denominators, and bound the CKD evidence gap to the review search period. FDA hosting of a notifier GRAS submission does not establish FDA-authored A1 monitoring authority.",
+          "creatine-misinformation-hairloss-dht-001: distinguish 38 completers/blood analyses from 37 hair assessments; reconcile recruitment/allocation wording and report Trichogram plus FotoFinder rather than adopting commentary's outdated-method judgment as fact.",
+          "Correct regulatory notification-only wording, exact quotation locators and publication metadata. Complete independent corroboration and accessible claim-matched A1/A2 support for regulatory, dose and safety content; retain renal conflict and unresolved scope."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": ["See receipts/wave006-creatine-2026-09-05-review.md. No per-claim approval; unresolved mechanism/efficacy sourcing is not a finding those mechanisms or benefits are false."]
+    },
+    {
+      "decisionId": "wave006-hold-vitamin-d3-20260905",
+      "compoundName": "Vitamin D3",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-delegation-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:46:48Z",
+      "scope": {
+        "claimIds": [
+          "vitamind3-regulatory-supplement-status-001",
+          "vitamind3-mechanism-calcium-bone-001",
+          "vitamind3-dose-context-rda-ul-001",
+          "vitamind3-efficacy-vital-cancer-cvd-negative-001",
+          "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
+          "vitamind3-evidence-gap-immune-covid-marketing-001",
+          "vitamind3-adverse-effect-hypercalcemia-toxicity-001"
+        ],
+        "qualityFlags": ["independent-rereview", "wave006-hold"],
+        "reviewCategories": ["source-fidelity", "guideline-currentness", "field-authority", "independent-source-family-verification"],
+        "promotionBlockers": [
+          "vitamind3-efficacy-fracture-falls-uspstf-negative-001: the 2018 FINAL explicitly describes increased kidney-stone incidence, contrary to the packet's claim that it was not mentioned. Correct the statement and self-declared RESOLVED notes; separately verify current final falls guidance rather than inferring it from the consolidated draft.",
+          "vitamind3-regulatory-supplement-status-001: restrict a single DailyMed supplement SKU's classification and warnings to that product; manufacturer-submitted SPL hosting is not FDA drug approval or evidence of predominant market status.",
+          "vitamind3-efficacy-vital-cancer-cvd-negative-001: primary PMC text is now accessible; anchor endpoints, population and follow-up there, reconcile serum-subset and cancer-death percentage context, and distinguish prespecified full-follow-up outcomes from exploratory latency analyses. NCI/TCTMD retellings share VITAL ancestry and do not constitute independent clinical replication.",
+          "Complete accessible authoritative reference-intake/toxicity evidence and original extraction verification, with serum concentrations distinct from intake UL and individualized diagnostic thresholds. Independently authored appraisals may share IOM ancestry but must not be counted as independent derivations. Remaining mechanism, depression/COVID and marketing-scope gaps remain gated."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": ["See receipts/wave006-vitamin-d3-2026-09-05-review.md. Seven claims is the correct packet count; the review prompt's initial count of eight was a coordinator error, not a missing-data blocker."]
+    },
+    {
+      "decisionId": "wave006-hold-tamoxifen-20260905",
+      "compoundName": "Tamoxifen",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-delegation-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:46:48Z",
+      "scope": {
+        "claimIds": [
+          "tamoxifen-approved-indication-001",
+          "tamoxifen-warning-boxed-001",
+          "tamoxifen-contraindication-001",
+          "tamoxifen-mechanism-serm-001",
+          "tamoxifen-dose-context-001",
+          "tamoxifen-efficacy-nsabp-p1-001",
+          "tamoxifen-efficacy-atlas-extended-001",
+          "tamoxifen-evidence-gap-bodybuilding-pct-001"
+        ],
+        "qualityFlags": ["independent-rereview", "wave006-hold"],
+        "reviewCategories": ["source-fidelity", "endpoint-denominator-verification", "field-authority", "independent-source-family-verification"],
+        "promotionBlockers": [
+          "tamoxifen-efficacy-atlas-extended-001: 18.6% versus 21.1% and RR 0.87 describe all-cause mortality crude proportions, not cumulative breast-cancer mortality. Primary years 5-14 cumulative breast-cancer mortality is 12.2% versus 15.0%; endometrial cumulative incidence is 3.1% versus 1.6%. Correct endpoints, populations, risk sets and time windows without mixing crude and cumulative measures.",
+          "tamoxifen-efficacy-nsabp-p1-001: a cumulative estimate through 69 months is not median follow-up. Reconcile primary publication versus label analysis sets, cutoffs and endometrial risk sets; do not average or assert follow-up alone explains differences while full methods remain inaccessible.",
+          "Restore product-specific indication/population qualifiers and explicit DCIS scope for risk-reduction contraindications. Restrict historical 20 mg/day for five years to named protocols and tamoxifen-equivalent units, not every approved use or a universal current duration.",
+          "tamoxifen-evidence-gap-bodybuilding-pct-001: the 2025 source is seized-product laboratory analysis; SERM adverse-event figures are prior forum research cited in its introduction, not clinical outcomes measured in its results. Correct study design, attribution and extrapolation. Existing benefit-risk conflicts and all safety authority gates remain open."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": ["See receipts/wave006-tamoxifen-2026-09-05-review.md. This newer request-changes decision supersedes reliance on the prior broad approve-claims receipt for publication readiness; even supported mechanism/warning substance receives no new approval here."]
+    },
+    {
+      "decisionId": "wave006-hold-epitalon-20260905",
+      "compoundName": "Epitalon",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-delegation-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:46:48Z",
+      "scope": {
+        "claimIds": ["epitalon-regulatory-503a-recommendation-001", "epitalon-warning-immunogenicity-carcinogenicity-001", "epitalon-identity-mechanism-001"],
+        "qualityFlags": ["independent-rereview", "wave006-hold", "blocker-focused-review"],
+        "reviewCategories": ["regulatory-provenance", "identity-formulation", "field-authority"],
+        "promotionBlockers": [
+          "Independently verify the reported committee tally and subsequent agency action; staff briefing, advisory recommendation, interim category and codified list are separate facts. Current positive-list absence is not a blanket legal-status opinion.",
+          "Retain Epitalon/Epithalamin and free-base/acetate distinctions, unresolved formulation and theoretical telomerase-safety conflicts, and claim-specific independent safety verification. Correct live PDF excerpt locations and complete the unreviewed claims before whole-packet promotion."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": ["See receipts/wave006-pcac-2026-09-05-review.md. Scoped blocker review only; keep the PCAC article dossier link live:false. Legal interpretation is escalated to Clint."]
+    },
+    {
+      "decisionId": "wave006-hold-semax-20260905",
+      "compoundName": "Semax",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-delegation-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:46:48Z",
+      "scope": {
+        "claimIds": ["semax-warnings-contraindications-001", "semax-russia-approved-indication-001", "semax-us-regulatory-status-001", "semax-identity-structure-001"],
+        "qualityFlags": ["independent-rereview", "wave006-hold", "blocker-focused-review"],
+        "reviewCategories": ["regulatory-provenance", "identity-formulation", "field-authority"],
+        "promotionBlockers": [
+          "semax-warnings-contraindications-001 lacks claim-matched A1/A2 support: retailer-hosted B1 insert and unrelated FDA immunogenicity text cannot authorize its specific contraindications. Preserve the hard gate; do not recalibrate the claim type or authority flag.",
+          "Authenticate current official Russian product/strength-specific label and registration provenance; reconcile ACTH fragment aliases, nomination versus interim category, and current advisory/agency status. Full independent review of remaining claims is still required."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": ["See receipts/wave006-pcac-2026-09-05-review.md. No promotion approval can waive missing authoritative support. Keep the article dossier link live:false; foreign-label/legal interpretation is escalated to Clint."]
+    },
+    {
+      "decisionId": "wave006-hold-kpv-20260905",
+      "compoundName": "KPV",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-delegation-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:46:48Z",
+      "scope": {
+        "claimIds": ["kpv-regulatory-nomination-withdrawn-001", "kpv-identity-structure-001", "kpv-evidence-gap-no-human-trials-001"],
+        "qualityFlags": ["independent-rereview", "wave006-hold", "blocker-focused-review"],
+        "reviewCategories": ["regulatory-provenance", "identity-formulation", "field-authority"],
+        "promotionBlockers": [
+          "kpv-regulatory-nomination-withdrawn-001: withdrawn nomination does not mean no active evaluation; FDA briefing and official July agenda document consideration. Verify tally separately and avoid suggesting a committee vote overrides agency authority or creates approval/list inclusion.",
+          "PubChem confirms CAS presence, not free-base/acetate equivalence. FDA briefing documents inconsistent identity/formulation information. Preserve identity and vote-versus-staff conflicts, complete independent safety/evidence-gap and animal-protocol checks, and do not call two FDA documents distinct source families."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": ["See receipts/wave006-pcac-2026-09-05-review.md. Scoped blocker review only; keep the article dossier link live:false. No patient safety conclusion or legal opinion is issued."]
+    }
+  ]
+}
