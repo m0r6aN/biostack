@@ -170,16 +170,5 @@ public sealed class RelationshipPacketAuthorizer : IRelationshipPacketAuthorizer
     }
 
     private static string? LookupTier(string sourceRef, JsonNode? sourceRegistry)
-    {
-        if (sourceRegistry is null) return null;
-        try
-        {
-            var registrySources = sourceRegistry["sources"] as JsonArray;
-            return LookupTier(sourceRef, registrySources);
-        }
-        catch
-        {
-            return null;
-        }
-    }
+        => SourceRegistryTierLookup.LookupAuthorityTier(sourceRef, sourceRegistry);
 }

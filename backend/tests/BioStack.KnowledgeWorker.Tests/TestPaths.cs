@@ -15,6 +15,10 @@ internal static class TestPaths
         throw new DirectoryNotFoundException("Could not locate backend root from test output directory.");
     }
 
+    public static string RepositoryRoot()
+        => Directory.GetParent(BackendRoot())?.FullName
+           ?? throw new DirectoryNotFoundException("Could not locate repository root from backend root.");
+
     public static string WorkerSchemaDirectory()
         => Path.Combine(BackendRoot(), "src", "BioStack.KnowledgeWorker", "Schemas");
 
