@@ -86,7 +86,7 @@
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7148395/",
       "doi": "10.1007/s13730-020-00447-z",
       "pmid": null,
-      "publishedAt": "2020-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T21:30:00Z"
     }
   ],
@@ -370,7 +370,8 @@
       "CAS/UNII/ChEMBL/DrugBank identifiers not yet resolved from structured databases; PubChem currently lists at least three distinct CIDs across free-base/acetate salt/synonym entries (92432, 139211148, 91971817) that should be reconciled before this packet is finalized.",
       "Primary PubMed/PMC pages for the rhabdomyolysis case report (Clinical Toxicology, PMID 23121206) and a second melanoma case report (PMID 24355990) could not be fetched this session (blocked by an interstitial/CAPTCHA); their claims are only indirectly corroborated via the FDA page's case-report summary and should be independently verified against the primary sources at review time.",
       "FDA bulk drug substances page listings and table placement are subject to periodic revision; confirm Melanotan II's current table/category status against the live page at review time.",
-      "Human evidence base is thin: only one controlled human trial (n=20, single-dose crossover, erectile function endpoint) was located; no systematic review or long-term controlled safety study of chronic self-administered Melanotan II was found."
+      "Human evidence base is thin: only one controlled human trial (n=20, single-dose crossover, erectile function endpoint) was located; no systematic review or long-term controlled safety study of chronic self-administered Melanotan II was found.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -379,7 +380,8 @@
       "gray-market-only",
       "case-report-safety-signal",
       "marketing-evidence-gap",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

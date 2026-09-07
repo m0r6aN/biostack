@@ -88,7 +88,7 @@
       "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:7561636&format=json&resultType=core",
       "doi": null,
       "pmid": "7561636",
-      "publishedAt": "1995-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
     },
     {
@@ -436,7 +436,8 @@
       "No PubChem CID (only a PubChem SID) resolved for IGF-1 LR3; ChEMBL and DrugBank identifiers were not found this session.",
       "Human evidence for IGF-1 LR3 itself is thin: sources located this session cover identifiers, an unrelated FDA-approved product (Increlex/mecasermin, a chemically distinct molecule), one animal (guinea pig) study, and vendor/anti-doping informational pages - no direct human efficacy or safety study of IGF-1 LR3 was located.",
       "Finland-specific doping-classification claim needs corroboration directly against the WADA Prohibited List.",
-      "2026-08-29 authority-support pass: doping-status claim (igf1lr3-regulatory-doping-status-001) corroborated against the WADA 2026 Prohibited List (S2.3) and linked as A1 source; animal-study mechanism claim (igf1lr3-animal-study-organ-growth-001) had fieldAuthorityRequired recalibrated to false (mechanism claimType is outside directive scope; no regulator document exists for this preclinical endpoint)."
+      "2026-08-29 authority-support pass: doping-status claim (igf1lr3-regulatory-doping-status-001) corroborated against the WADA 2026 Prohibited List (S2.3) and linked as A1 source; animal-study mechanism claim (igf1lr3-animal-study-organ-growth-001) had fieldAuthorityRequired recalibrated to false (mechanism claimType is outside directive scope; no regulator document exists for this preclinical endpoint).",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -444,7 +445,8 @@
       "thin-human-evidence",
       "identifier-conflict-unresolved",
       "misinformation-gap-documented",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

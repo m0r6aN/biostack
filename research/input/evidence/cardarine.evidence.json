@@ -100,7 +100,7 @@
       "url": "https://journals.sagepub.com/doi/pdf/10.1177/2045894018812053",
       "doi": "10.1177/2045894018812053",
       "pmid": null,
-      "publishedAt": "2019-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
     },
     {
@@ -136,7 +136,7 @@
       "url": "https://www.nature.com/articles/srep09884",
       "doi": "10.1038/srep09884",
       "pmid": null,
-      "publishedAt": "2015-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
     },
     {
@@ -487,7 +487,8 @@
       "Human controlled-trial evidence is limited to a single lipid-biomarker RCT (Olson 2012) in a dyslipidemia population; no human trial addressing the endurance/fat-loss/performance uses cardarine is commonly marketed for was identified.",
       "ChEMBL and DrugBank identifiers not yet resolved from structured databases.",
       "audit: packet.category corrected peptides-core -> small-molecule-core to match compound classification",
-      "2026-08-29 mechanism claim correction: NCATS/Mitchell 2019 state clinical development was discontinued in 2007, but Health Canada's primary recall notice (independently fetched this pass) dates the halt to 2006 - statement updated to lead with the Health Canada date and flag the discrepancy."
+      "2026-08-29 mechanism claim correction: NCATS/Mitchell 2019 state clinical development was discontinued in 2007, but Health Canada's primary recall notice (independently fetched this pass) dates the halt to 2006 - statement updated to lead with the Health Canada date and flag the discrepancy.",
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -498,7 +499,8 @@
       "marketing-evidence-gap-documented",
       "international-ban-multiple-jurisdictions",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

@@ -99,7 +99,7 @@
       "url": "https://link.springer.com/article/10.1186/s13098-024-01405-w",
       "doi": "10.1186/s13098-024-01405-w",
       "pmid": null,
-      "publishedAt": "2024-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
@@ -377,7 +377,8 @@
       "NCT07505745 is actively recruiting; re-check status and results at review time.",
       "FDA withdrawn-nomination and PCAC briefing status for MOTS-c should be reconfirmed against the live FDA page at review time, since FDA revised Category 2 peptide listings in April 2026 and MOTS-c was among peptides discussed at the July 2026 PCAC meeting cycle.",
       "RESOLVED 2026-08-29: PCAC committee actually voted 7-5 (2 abstentions) on 2026-07-23 to recommend MOTS-c for the 503A Bulks List, overriding the FDA staff briefing recommendation documented in the packet -- added to mots-c-regulatory-pcac-no-human-data-001 with the caveat that an advisory vote is not a final rule; re-check FDA's Federal Register docket for the completed rulemaking at next review.",
-      "Attempted but unresolved: NCT07505745 (studied-use claim) was checked only against an independent registry mirror (ichgcp.net), still within the same 'structured database' source family as the packet's own clinicaltrials.gov source; no news/trade coverage of this specific trial was found this session to fully diversify the source family. Low risk since the claim makes no efficacy assertion; kept review-gated."
+      "Attempted but unresolved: NCT07505745 (studied-use claim) was checked only against an independent registry mirror (ichgcp.net), still within the same 'structured database' source family as the packet's own clinicaltrials.gov source; no news/trade coverage of this specific trial was found this session to fully diversify the source family. Low risk since the claim makes no efficacy assertion; kept review-gated.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -387,7 +388,8 @@
       "gray-market-only",
       "fabricated-vendor-citation-confirmed",
       "pcac-committee-recommended-listing-pending-rulemaking",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

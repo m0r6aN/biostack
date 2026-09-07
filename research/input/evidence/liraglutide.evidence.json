@@ -109,7 +109,7 @@
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6130125",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2018-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T22:30:00Z"
     },
     {
@@ -133,7 +133,7 @@
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4985288/",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2016-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
@@ -562,7 +562,8 @@
       "PARTIAL 2026-08-29: for the Victoza/Saxenda approved-indication and boxed-warning claims, independent review this session added a second, materially different source family (Drugs@FDA structured-database records, NDA 022341 and NDA 206321) beyond the live FDA label PDFs already checked, confirming active approval and marketing status. A professional-guideline family (e.g., ADA Standards of Care) has not yet been consulted for these fieldAuthorityRequired claims; remains a documented gap pending further review.",
       "PMID for compound.externalIdentifiers.pmid intentionally left null: no single canonical PMID applies to a compound identity record (liraglutide is associated with many publications, not one defining PMID).",
       "Liraglutide-specific counterfeit/falsified-product incident data remains unconfirmed after an independent 2026-08-29 search across FDA, WHO, and peer-reviewed pharmacovigilance sources; every documented incident found was semaglutide/Ozempic-specific. Claim's class-level framing is accurate and stays review-gated as-is.",
-      "Boxed-warning and pancreatitis adverse-effect claims were independently corroborated this session (live FDA labels; Cleveland Clinic Journal of Medicine review) but a professional-guideline or systematic-review cross-check beyond the regulator/label and single-review sources used was not exhaustively pursued; low-risk given source authority tier, documented for completeness."
+      "Boxed-warning and pancreatitis adverse-effect claims were independently corroborated this session (live FDA labels; Cleveland Clinic Journal of Medicine review) but a professional-guideline or systematic-review cross-check beyond the regulator/label and single-review sources used was not exhaustively pursued; low-risk given source authority tier, documented for completeness.",
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -572,7 +573,8 @@
       "dual-indication-diabetes-and-weight-management",
       "gray-market-risk-documented",
       "remediation-pass-2026-08-29",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

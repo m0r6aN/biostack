@@ -51,7 +51,7 @@
       "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/022200s035lbl.pdf",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2024-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T22:30:00Z"
     },
     {
@@ -452,7 +452,8 @@
       "RESOLVED 2026-08-29: EXSCEL trial safety-detail claim (exenatide-adverse-effect-exscel-safety-001) was unresolved at independent review because NEJM and PMC full text were CAPTCHA/403-blocked. This pass pulled the sponsor-posted ClinicalTrials.gov results record for the same trial (NCT01144338), a structured-database primary-results family, and it independently confirms the packet's pancreatitis/pancreatic-malignancy/MTC/heart-failure comparisons. Claim and reviewFlags updated; promotion blocker cleared.",
       "RESOLVED 2026-08-29: exenatide-approved-indication-001 promotion blocker (missing discontinued-market disclosure) addressed by adding a note, sourced to UHCprovider's Oct. 2024 discontinuation bulletin, that AstraZeneca discontinued Byetta (Oct. 25, 2024) and Bydureon BCise (Oct. 28, 2024) for commercial reasons; underlying FDA approval/labeling is unaffected.",
       "Weight-loss-marketing evidence-gap claim rests on a single lower-authority fact-check source; seek an independent corroborating source (e.g., FDA consumer update or a peer-reviewed comparative review) at review time.",
-      "exenatide-dose-context-byetta-001 independent corroboration (RxList) largely republishes FDA label text rather than being a materially independent verification family; no controlled-study or clinical-guideline family source was reached within this session's budget to independently corroborate the specific titration schedule -- open, low-risk gap."
+      "exenatide-dose-context-byetta-001 independent corroboration (RxList) largely republishes FDA label text rather than being a materially independent verification family; no controlled-study or clinical-guideline family source was reached within this session's budget to independently corroborate the specific titration schedule -- open, low-risk gap.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -462,7 +463,8 @@
       "noninferiority-not-superiority-cv-trial",
       "thin-human-evidence-for-marketed-off-label-use",
       "remediation-pass-2026-08-29",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

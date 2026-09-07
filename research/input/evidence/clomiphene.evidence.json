@@ -111,7 +111,7 @@
       "url": "https://europepmc.org/article/MED/41147237",
       "doi": null,
       "pmid": "41147237",
-      "publishedAt": "2026-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
@@ -503,7 +503,8 @@
       "Remediation pass 2026-08-29: PCT evidence-gap claim updated with two newly published 2026 independent sources fetched this session (BJU International dual-centre cohort study, PMID 41147237; Andrology narrative review, PMID 42387872) that post-date the packet's original 'no controlled human trials' line. Both are non-randomized/narrative, not RCTs, so the underlying gap (no RCT-grade PCT-specific efficacy or safety data; vendor 'safely' claim unsupported) still holds and the claim remains review-gated; recommend obtaining full-text methodology (PubMed access was blocked by a CAPTCHA this session) at next review.",
       "Remediation pass 2026-08-29 (process fix): removed self-certifying inline reviewFlags language on the adverse-effects claim that had asserted its own completed independent search inline. That search context is recorded here instead: DailyMed CLOMID label ADVERSE REACTIONS section and an FDA.gov safety-communication search were checked and do not address male-hypogonadism-specific adverse-event rates; no regulator document exists for this off-label population, so the claim remains sourced to the peer-reviewed meta-analysis only and stays outside fieldAuthorityRequired scope per the directive.",
       "Male-hypogonadism and PCT-specific evidence is comparatively thin (meta-analysis flags its own safety analysis as underpowered; PCT-specific data is now a non-randomized cohort study, not an RCT) and should be reconfirmed against additional independent source families (e.g., an endocrine society guideline) at review time.",
-      "Vendor/marketing source (ro.co) is a single non-independent example of PCT marketing language; broader marketing-claim sampling recommended before publication."
+      "Vendor/marketing source (ro.co) is a single non-independent example of PCT marketing language; broader marketing-claim sampling recommended before publication.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -512,7 +513,8 @@
       "thin-human-evidence-for-pct-specific-claims",
       "misinformation-adjacent-marketing-flagged",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

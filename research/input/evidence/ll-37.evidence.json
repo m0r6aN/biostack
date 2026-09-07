@@ -52,7 +52,7 @@
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9298190/",
       "doi": "10.1111/wrr.12977",
       "pmid": null,
-      "publishedAt": "2021-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
@@ -306,7 +306,8 @@
       "FDA bulk drug substance nomination/withdrawal status is volatile and under active 2026 peptide-reclassification review; confirm current listing status against the live FDA page at review time.",
       "CAS/UNII/ChEMBL/RxNorm identifiers not resolved from structured databases.",
       "Only one controlled human trial (topical, venous leg ulcers) was located; human evidence for any non-wound-care use remains thin and unconfirmed.",
-      "Post-hoc subgroup efficacy finding in the 2021 RCT is unresolved pending a dedicated confirmatory trial."
+      "Post-hoc subgroup efficacy finding in the 2021 RCT is unresolved pending a dedicated confirmatory trial.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -315,7 +316,8 @@
       "thin-human-evidence",
       "gray-market-marketing-gap",
       "regulatory-status-volatile",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

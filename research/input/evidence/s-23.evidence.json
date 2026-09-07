@@ -97,7 +97,7 @@
       "url": "https://fis.dshs-koeln.de/en/publications/investigations-into-the-urinary-metabolite-elimination-profile-of-2/",
       "doi": "10.1002/bmc.70090",
       "pmid": null,
-      "publishedAt": "2025-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
     },
     {
@@ -121,7 +121,7 @@
       "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2026-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
@@ -133,7 +133,7 @@
       "url": "https://academic.oup.com/endo/article-abstract/150/1/385/2455919",
       "doi": "10.1210/en.2008-0674",
       "pmid": "18772237",
-      "publishedAt": "2009-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
@@ -484,7 +484,8 @@
       "audit: packet.category corrected peptides-core -> sarms-core to match compound classification",
       "remediation-pass 2026-08-29: original 2009 Endocrinology primary paper (PMID 18772237) fetched and added as an independent source, confirming Ki=1.7 nM and reversibility of the contraceptive mechanism claim directly (previously sourced only to Wikipedia).",
       "remediation-pass 2026-08-29: independent systematic review (PMID 37218811) corroborates SARM-class hepatotoxicity but did not corroborate cardiovascular/psychiatric adverse effects specifically -- follow-up search on that narrower point remains open and is not yet closed.",
-      "remediation-pass 2026-08-29: this packet remains gated for human review; no findings required a needs-adjustment correction to any claim statement."
+      "remediation-pass 2026-08-29: this packet remains gated for human review; no findings required a needs-adjustment correction to any claim statement.",
+      "placeholder-date-cleanup-2026-09-07: 3 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -495,7 +496,8 @@
       "gray-market-only",
       "marketing-evidence-gap-documented",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

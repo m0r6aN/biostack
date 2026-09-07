@@ -86,7 +86,7 @@
       "url": "https://link.springer.com/article/10.1186/s12882-025-04558-6",
       "doi": "10.1186/s12882-025-04558-6",
       "pmid": null,
-      "publishedAt": "2025-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T04:46:26Z"
     },
     {
@@ -98,7 +98,7 @@
       "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:10.1080/15502783.2025.2495229&format=json&resultType=core",
       "doi": "10.1080/15502783.2025.2495229",
       "pmid": "40265319",
-      "publishedAt": "2025-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T04:46:26Z"
     },
     {
@@ -170,7 +170,7 @@
       "url": "https://link.springer.com/article/10.1007/s11255-026-05287-x",
       "doi": "10.1007/s11255-026-05287-x",
       "pmid": null,
-      "publishedAt": "2026-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
@@ -182,7 +182,7 @@
       "url": "https://www.mdpi.com/2072-6643/17/17/2748",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2025-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
@@ -599,7 +599,8 @@
       "Renal safety evidence for populations with pre-existing kidney impairment is thin relative to healthy-population evidence and remains review-gated. remediation-pass-2026-08-29: an independent 2026 International Urology and Nephrology meta-analysis (26 RCTs, 1,036 participants) was checked and confirms the gap is real -- zero trials exist in non-dialysis CKD (stages 1-5) patients, though a small hemodialysis-population dataset (2 RCTs) does exist with no major adverse events reported. This conflict cannot be resolved by independent sourcing and stays human-review-gated per the reviewer verdict.",
       "Cognitive-enhancement and anti-aging marketing claims for creatine were not sourced in this pass and would need dedicated fetches before any claim is made about them.",
       "remediation-pass-2026-08-29: addressed reviewer promotionBlockers for creatine-safety-common-adverse-effects-001 (added independent 2025 JISSN pharmacovigilance analysis; reviewFlag updated from 'anecdotal/not quantified' to reflect systematic quantification; evidenceTier upgraded Moderate->Strong) and creatine-misinformation-hairloss-dht-001 (added independent American Hair Loss Association critique covering trichogram methodology, absence of scalp-level DHT measurement, absence of genetic-predisposition screening, and potential industry-funding conflict of interest).",
-      "wave006 re-review (2026-09-05) demonstrated a study-versus-participant denominator error in the safety claim and a false source-independence attribution; corrected 2026-09-06 in packet-authoring only. Remaining dose, monitoring, regulatory, and misinformation dispositions are not addressed by that pass."
+      "wave006 re-review (2026-09-05) demonstrated a study-versus-participant denominator error in the safety claim and a false source-independence attribution; corrected 2026-09-06 in packet-authoring only. Remaining dose, monitoring, regulatory, and misinformation dispositions are not addressed by that pass.",
+      "placeholder-date-cleanup-2026-09-07: 4 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -608,7 +609,8 @@
       "negative-misinformation-rct-hairloss",
       "thin-human-evidence-renal-impairment-subgroup",
       "remediation-pass-2026-08-29",
-      "wave006-correction-pass-2026-09-06"
+      "wave006-correction-pass-2026-09-06",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

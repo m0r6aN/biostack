@@ -75,7 +75,7 @@
       "url": "https://www.jstage.jst.go.jp/article/endocrj/55/4/55_K07E-168/_article",
       "doi": null,
       "pmid": "18493103",
-      "publishedAt": "2008-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
     },
     {
@@ -99,7 +99,7 @@
       "url": "https://fis.dshs-koeln.de/en/publications/identification-of-the-growth-hormone-releasing-peptide-2-ghrp-2-i/",
       "doi": "10.1002/dta.120",
       "pmid": "20878896",
-      "publishedAt": "2010-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
     },
     {
@@ -135,7 +135,7 @@
       "url": "https://academic.oup.com/jes/article/6/8/bvac088/6602336",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2022-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
     },
     {
@@ -147,7 +147,7 @@
       "url": "https://www.frontiersin.org/journals/sports-and-active-living/articles/10.3389/fspor.2026.1740663/full",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2026-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
     },
     {
@@ -486,7 +486,8 @@
       "Several PubMed abstract pages (17609397, 14513874, 18493103, and the FDA PCAC-related searches) were blocked by bot-check/reCAPTCHA during this session; abstracts were sourced via automated summarization of partially available content or secondary repositories (J-STAGE, europepmc, institutional repository) and should be independently re-verified against primary PubMed/publisher pages at review time.",
       "Human efficacy evidence for GHRP-2 is limited to short-term diagnostic stimulation-test studies; no controlled human trial addressing chronic self-administered use (recovery, body composition, anti-aging) was found, and this thin/absent evidence base should be re-confirmed before any claim expansion.",
       "FDA 503B bulk-substance listing status and rationale for GHRP-2 should be reconfirmed against the live FDA page at review time given ongoing FDA peptide-listing revisions in 2026.",
-      "Audit correction 2026-08-29: remediation pass paired UNII E6S6E1F19M with CAS 158827-34-0; independent spot-check (FDA GSRS, NCATS Inxight, CAS vendor registries) confirms E6S6E1F19M (pralmorelin free base) = CAS 158861-67-7. CAS corrected by operator; 158827-34-0 belongs to a different pralmorelin form and was removed."
+      "Audit correction 2026-08-29: remediation pass paired UNII E6S6E1F19M with CAS 158827-34-0; independent spot-check (FDA GSRS, NCATS Inxight, CAS vendor registries) confirms E6S6E1F19M (pralmorelin free base) = CAS 158861-67-7. CAS corrected by operator; 158827-34-0 belongs to a different pralmorelin form and was removed.",
+      "placeholder-date-cleanup-2026-09-07: 4 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -496,7 +497,8 @@
       "supplement-adulteration-documented",
       "marketing-evidence-gap-flagged",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

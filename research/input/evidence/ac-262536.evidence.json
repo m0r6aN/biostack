@@ -74,7 +74,7 @@
       "url": "https://www.researchgate.net/publication/5684238_Pharmacological_characterization_of_AC-262536_a_novel_selective_androgen_receptor_modulator",
       "doi": null,
       "pmid": "18164613",
-      "publishedAt": "2008-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
@@ -380,7 +380,8 @@
       "Expansion-batch evidence packet requires human review before publication.",
       "No AC-262536-specific human trial, case-report, or FDA enforcement action (warning letter/import alert) was located this session; all safety framing relies on class-wide SARM sources and must be re-checked for a compound-specific update at review.",
       "PubChem CID and other structured-database identifiers (UNII, ChEMBL, RxNorm) could not be reliably resolved this session; the candidate PubChem CID found had a mismatched molecular formula and was excluded rather than cited.",
-      "Primary pharmacology study (PMID 18164613) was only accessible as an abstract via a secondary aggregator, not the publisher or PubMed page directly; verify against the original journal record at review."
+      "Primary pharmacology study (PMID 18164613) was only accessible as an abstract via a secondary aggregator, not the publisher or PubMed page directly; verify against the original journal record at review.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -388,7 +389,8 @@
       "no-human-clinical-data",
       "class-level-regulatory-warning-only",
       "unresolved-structured-identifiers",
-      "marketing-evidence-gap-documented"
+      "marketing-evidence-gap-documented",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

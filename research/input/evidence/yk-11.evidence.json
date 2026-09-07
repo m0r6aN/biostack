@@ -61,7 +61,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/29491216/",
       "doi": null,
       "pmid": "29491216",
-      "publishedAt": "2018-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
     },
     {
@@ -121,7 +121,7 @@
       "url": "https://www.jstage.jst.go.jp/article/bpb/34/3/34_3_318/_article",
       "doi": null,
       "pmid": "21372378",
-      "publishedAt": "2011-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T16:15:00Z"
     }
   ],
@@ -436,7 +436,8 @@
       "ops.completeness remains 'partial' and ops.needsReview remains true per packet policy: this expansion-batch packet is still not cleared for publication regardless of the claim-level fixes made in this remediation pass.",
       "No dedicated YK-11-only human case series or controlled human study was located; human safety/efficacy evidence still rests entirely on multi-SARM case reports and a single FDA adulterated-product adverse-event report.",
       "Vendor/marketing landscape for YK-11 changes frequently (product reformulations, delisting); marketing claim example should be re-checked for currency at each review cycle.",
-      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
+      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification",
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -445,7 +446,8 @@
       "thin-human-evidence",
       "combination-product-confound",
       "preclinical-mechanism-only",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

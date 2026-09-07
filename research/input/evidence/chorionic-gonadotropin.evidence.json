@@ -64,7 +64,7 @@
       "url": "https://www.ncbi.nlm.nih.gov/books/NBK66355/",
       "doi": null,
       "pmid": null,
-      "publishedAt": "1995-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
@@ -76,7 +76,7 @@
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12223563/",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2025-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
@@ -366,7 +366,8 @@
       "Expansion-batch evidence packet requires human review before publication.",
       "PubChem CID and CAS number for chorionic gonadotropin could not be reliably resolved this session (PubChem's compound page returned data for an apparently mismatched small-molecule entry); leave externalIdentifiers.pubchem and casNumber null until confirmed against a structured database query in a follow-up session.",
       "DrugBank DB09126 full pharmacodynamics/mechanism-of-action section was gated behind login and could not be fully quoted; mechanism claim should be cross-checked against DrugBank or a pharmacology textbook source at review.",
-      "Human evidence for the common off-label post-cycle-therapy/fertility-preservation use is thin (single small retrospective uncontrolled cohort); do not upgrade evidenceTier without an independent controlled study."
+      "Human evidence for the common off-label post-cycle-therapy/fertility-preservation use is thin (single small retrospective uncontrolled cohort); do not upgrade evidenceTier without an independent controlled study.",
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -375,7 +376,8 @@
       "negative-human-trial-documented",
       "thin-human-evidence-off-label-use",
       "misinformation-marketing-gap-documented",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

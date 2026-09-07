@@ -70,7 +70,7 @@
       "url": "https://journals.sagepub.com/doi/10.1177/1557988318818280",
       "doi": "10.1177/1557988318818280",
       "pmid": null,
-      "publishedAt": "2019-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
@@ -482,7 +482,8 @@
       "RESOLVED 2026-08-29 (veterinary/human-US split): live DailyMed search confirms exactly 5 gonadorelin products, all veterinary, and RxList independently confirms the historical human Factrel product is discontinued in the US -- no current US human gonadorelin product exists. The Canada-only LUTREPULSE ovulation-induction indication (gonadorelin-approved-indication-human-historical-001) has been reworded to make this explicit; whether LUTREPULSE remains currently active in Canada itself was not independently re-verified this session (source is a 2016 monograph) and is a narrower residual item for reviewer spot-check.",
       "PubMed/PMC primary-literature pages were blocked by bot-verification (reCAPTCHA) during this session for the original Zhang 2019 article; an independent, separate primary study (Jiang et al., PMC12336735, fetched successfully 2026-08-29) corroborates the same qualitative CHH spermatogenesis finding and has been added as a second citation. The Zhang 2019 primary full text itself (exact 6-vs-14-month, 90%-vs-83.3% figures) remains unverified against PMC directly and should still be pulled at review if those exact figures need primary-source confirmation.",
       "No controlled human trial specific to gray-market TRT-adjunct dosing (testicular size/fertility preservation while on exogenous testosterone) was found; a candidate hCG (not gonadorelin) trial in Fertility and Sterility was attempted this session (https://www.fertstert.org/article/S0015-0282(10)01624-9/fulltext) but returned a 403 error and could not be independently read -- this remains an evidence gap rather than a resolved question, and the claim language is unchanged since it already asserts no more than the absence of trials.",
-      "DrugBank/ChEMBL/UNII identifiers not independently confirmed from their native databases this session. Independent chemical registries (ChemicalBook, Alfa Chemistry) confirmed 2026-08-29 that CAS 33515-09-2 matches gonadorelin base form, but neither surfaced a distinct salt-form (e.g., acetate) CAS number, so no specific acetate-salt CAS figure has been added to the packet -- DrugBank/ChEMBL/UNII should still be pulled directly from their native databases at review time to close this gap fully."
+      "DrugBank/ChEMBL/UNII identifiers not independently confirmed from their native databases this session. Independent chemical registries (ChemicalBook, Alfa Chemistry) confirmed 2026-08-29 that CAS 33515-09-2 matches gonadorelin base form, but neither surfaced a distinct salt-form (e.g., acetate) CAS number, so no specific acetate-salt CAS figure has been added to the packet -- DrugBank/ChEMBL/UNII should still be pulled directly from their native databases at review time to close this gap fully.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -492,7 +493,8 @@
       "marketing-use-evidence-gap",
       "primary-literature-access-limited",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

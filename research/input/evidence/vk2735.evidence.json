@@ -72,7 +72,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/41508550/",
       "doi": "10.1002/oby.70106",
       "pmid": "41508550",
-      "publishedAt": "2026-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T22:30:00Z"
     },
     {
@@ -552,7 +552,8 @@
       "All human efficacy/safety evidence is sponsor-funded (Viking Therapeutics); Phase 3 VANQUISH-1/VANQUISH-2 results were not yet reported as of the access date and should be incorporated once available.",
       "FDA Category 2 bulk-substances listing status is absence-based and was re-verified live against the FDA page on 2026-08-29 (still absent); should continue to be rechecked at each review given the fast-changing compounding-peptide regulatory landscape.",
       "VENTURE-Oral outcome numbers (claim vk2735-efficacy-oral-venture-oral-001) remain unresolved after a targeted remediation attempt: ClinicalTrials.gov API v2 confirms NCT06828055 is Completed with hasResults:false, and a PubMed search for 'VK2735 oral' returned zero publications; a WebSearch also surfaced only a further company/trade-press conference disclosure (ECO 2026), not an independent source family. Claim statement has been tightened to sponsor-reported-only framing and stays review-gated pending peer-reviewed publication or a CT.gov results posting.",
-      "The granular GI adverse-event percentages and single dehydration SAE in claim vk2735-adverse-effects-gi-001 remain corroborated only at the general-direction level (Europe PMC abstract) and not at the specific-figure level; flagged for a follow-up check against the full published paper or a CT.gov results posting."
+      "The granular GI adverse-event percentages and single dehydration SAE in claim vk2735-adverse-effects-gi-001 remain corroborated only at the general-direction level (Europe PMC abstract) and not at the specific-figure level; flagged for a follow-up check against the full published paper or a CT.gov results posting.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -562,7 +563,8 @@
       "gray-market-misinformation-risk",
       "unresolved-structured-identifiers",
       "remediation-pass-2026-08-29",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

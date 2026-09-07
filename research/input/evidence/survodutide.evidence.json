@@ -97,7 +97,7 @@
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12673442/",
       "doi": null,
       "pmid": "41187967",
-      "publishedAt": "2026-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T22:30:00Z"
     },
     {
@@ -584,7 +584,8 @@
       "RESOLVED (2026-08-29, remediation pass 2): UNII and ChEMBL identifiers looked up and independently fetched this session -- UNII 2ALA66NS64 (NCATS GSRS / FDA UNII registry) and ChEMBL ID CHEMBL5314776 (ChEMBL API) -- and added to compound.externalIdentifiers and the identity-mechanism claim's extractedEvidence.",
       "PARTIALLY ADDRESSED (2026-08-29): detailed phase 3 adverse-event/tolerability data has now been captured from the primary NEJM publication (GI adverse events in 80.9%-89.7% of active-dose participants vs 47.9% placebo; no deaths) and added to the phase 3 claim's extractedEvidence.",
       "RESOLVED (2026-08-29, remediation pass 2): the phase 2 MASH histologic-endpoint percentages (47%/62%/43% vs 14%) are now independently corroborated -- HCPLive's write-up of the NEJM Sanyal et al. 2024 results was fetched this session and quotes the identical figures verbatim. Residual caveat: HCPLive, like the packet's existing PACE-CME source, is a trade-press summary rather than full primary-literature text; a full-text primary re-derivation remains the stronger fix if pursued at a later review, but the numeric cross-check gap itself is closed.",
-      "No FDA import alert or warning letter specific to survodutide gray-market sales was found; confirm absence is current, not a search gap, at review time. (Unchanged in this pass -- DailyMed zero-label result independently re-confirmed 2026-08-29, but the FDA import-alert database itself remained unreachable.)"
+      "No FDA import alert or warning letter specific to survodutide gray-market sales was found; confirm absence is current, not a search gap, at review time. (Unchanged in this pass -- DailyMed zero-label result independently re-confirmed 2026-08-29, but the FDA import-alert database itself remained unreachable.)",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -598,7 +599,8 @@
       "identifiers-resolved-unii-chembl",
       "mash-histologic-figures-corroborated",
       "remediation-pass-2026-08-29",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

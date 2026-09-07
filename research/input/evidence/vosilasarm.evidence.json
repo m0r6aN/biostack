@@ -63,7 +63,7 @@
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10054042",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2023-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
@@ -480,7 +480,8 @@
       "ClinicalTrials.gov direct fetch remains blocked by robots.txt as of this session (tried the study page, the v2 REST API, and the legacy full_studies query API -- all disallowed); trial status is still sourced from a CenterWatch mirror and remains genuinely unresolved for live recruitment status. This should be reconfirmed against the live registry record at next review, ideally via a route this session could not reach (e.g. manual/human check, or an allowed proxy).",
       "remediation-2026-08-29 (resolved): the claim previously understated published case-report count for gray-market RAD-140 hepatotoxicity as 'a single published case report.' An independent case-report source (Ochsner Journal, live-fetched this session) states it is the third published RAD-140-specific case (citing Flores et al. and Barbara et al. as earlier cases) in addition to this packet's own two cited case reports. The claim's statement and reviewFlags were corrected accordingly; true population-level incidence in unsupervised users remains unknown regardless of case count and that caveat is retained.",
       "RAD-140/vosilasarm's presence or absence on FDA's Category 2 compounding bulk-substances list was reverified this session (live re-fetch, page content dated 2026-04-22): RAD-140/Testolone/Vosilasarm is confirmed NOT on that list. This item is now resolved rather than open.",
-      "remediation-2026-08-29: minor enrollment-count discrepancy (130 patients per the packet's cited Ellipses SABCS press release, re-confirmed live this session, vs. 128 patients per an independent tertiary source/AACR abstract mirror) remains unreconciled between primary developer disclosure and secondary sources; retained as stated (130, sourced to the press release) with the discrepancy flagged for reviewer awareness rather than silently resolved either way."
+      "remediation-2026-08-29: minor enrollment-count discrepancy (130 patients per the packet's cited Ellipses SABCS press release, re-confirmed live this session, vs. 128 patients per an independent tertiary source/AACR abstract mirror) remains unreconciled between primary developer disclosure and secondary sources; retained as stated (130, sourced to the press release) with the discrepancy flagged for reviewer awareness rather than silently resolved either way.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -490,7 +491,8 @@
       "thin-human-evidence",
       "active-investigational-oncology-program",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

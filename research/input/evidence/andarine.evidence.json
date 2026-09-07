@@ -111,7 +111,7 @@
       "url": "https://www.wada-ama.org/sites/default/files/2025-09/2026list_en_final_clean_september_2025.pdf",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2026-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
@@ -494,7 +494,8 @@
       "remediation-pass-2026-08-29: resolved UNII (7UT2HAH49H) and ChEMBL (CHEMBL125236) identifiers via PubChem PUG-View and cross-verified the UNII independently against the FDA/NCATS Global Substance Registration System (GSRS); RxNorm and DrugBank still have no andarine entry (RxNorm/DrugBank do not list unapproved/delisted research chemicals) and remain null; CAS Common Chemistry lookup for 401900-40-1 was attempted but returned no retrievable compound-specific content this session.",
       "remediation-pass-2026-08-29: clinical-trial-history conflict (andarine-conflict-phase1-history-001 / andarine-controversy-trial-history-001) updated with independent verification of GTx's SEC Form S-1/A filing, leaning the evidence toward the Phase-I-completed account; still flagged needs-human-review because the S-1 and the original press release are both GTx-originated rather than a fully independent third party (e.g. FDA archives).",
       "remediation-pass-2026-08-29: vision-adverse-effect claim (andarine-adverse-vision-001) partially upgraded via independent tertiary corroboration (Wikipedia citing Starcevic et al. 2013, PMID 23427117); primary paper fetch attempted via PubMed and Europe PMC REST API this session, both blocked (PubMed reCAPTCHA wall; Europe PMC blocked by outbound proxy policy for ebi.ac.uk) — claim remains fieldAuthorityRequired and gated pending a reviewer pulling PMID 23427117 directly.",
-      "remediation-pass-2026-08-29: liver-safety claim (andarine-safety-liver-cardiovascular-001) updated with a clarifying note per LiverTox (NBK619971): andarine appears in multi-agent DILI case/product data but no case report names it as sole causal agent; not a blocking error, addressed per promotionBlocker."
+      "remediation-pass-2026-08-29: liver-safety claim (andarine-safety-liver-cardiovascular-001) updated with a clarifying note per LiverTox (NBK619971): andarine appears in multi-agent DILI case/product data but no case report names it as sole causal agent; not a blocking error, addressed per promotionBlocker.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -504,7 +505,8 @@
       "unresolved-clinical-history-conflict",
       "regulatory-enforcement-documented",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

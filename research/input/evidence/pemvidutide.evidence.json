@@ -38,7 +38,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/39002641/",
       "doi": "10.1016/j.jhep.2024.06.028",
       "pmid": "39002641",
-      "publishedAt": "2025-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T22:30:00Z"
     },
     {
@@ -602,7 +602,8 @@
       "ChEMBL identifier resolved 2026-08-29 via a direct ChEMBL API fetch (CHEMBL5095142, pref_name PEMVIDUTIDE) and added to compound.externalIdentifiers and as a sourceRef on the mechanism claim. PubChem CID and RxNorm remain unresolved: PubChem is blocked by robots.txt for automated fetch (both the compound page and the PUG-REST JSON endpoint), and no CID was found via web search, likely because pemvidutide is registered as a large-peptide substance rather than a small-molecule PubChem compound; RxNorm has no entry for an investigational, non-marketed drug. UNII was previously resolved via the FDA/NIH GSRS structured database (A35F525WBG).",
       "IMPACT Phase 2b MASH trial data: resolved in an earlier remediation-pass-2026-08-29. Independently confirmed against the peer-reviewed Lancet publication (PMID 41237796); this also resolved conflict pemvidutide-conflict-fibrosis-endpoint-001. Further corroborated 2026-08-29 by an independent GRADE-assessed systematic review (Springer/Naunyn-Schmiedeberg's Archives of Pharmacology) confirming direction/tolerability but not the exact percentage figures (confirmed-with-note).",
       "MASLD Phase 1/2 RCT liver-fat-reduction claim (pemvidutide-efficacy-masld-phase2-rct-001): confirmed-with-note 2026-08-29 against an independent dose-specific meta-analysis (medRxiv, 2025-12-22) that corroborates direction/significance/safety framing but reports effect size as a mean-difference in percentage points rather than the packet's relative percentage reduction -- a metric difference, not a conflict.",
-      "Development status (trial phase, designations) is time-sensitive for a compound still in active Phase 2/3 development and must be reconfirmed against current sources at review time."
+      "Development status (trial phase, designations) is time-sensitive for a compound still in active Phase 2/3 development and must be reconfirmed against current sources at review time.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -611,7 +612,8 @@
       "thin-independent-safety-data",
       "active-late-stage-development",
       "remediation-pass-2026-08-29",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

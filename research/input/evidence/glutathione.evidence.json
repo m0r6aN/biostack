@@ -98,7 +98,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/20524875/",
       "doi": null,
       "pmid": "20524875",
-      "publishedAt": "2012-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
@@ -511,7 +511,8 @@
       "remediation-pass-2026-08-29: glutathione-dose-context-oral-bioavailability-001 promotionBlocker remains OPEN and correctly so — a third independent search pass (Drugs@FDA) still found no A1/A2 regulator-tier source addressing the proprietary micellar-vs-standard oral glutathione PK/bioavailability comparison; fieldAuthorityRequired stays true, claim stays human-review-gated, and its statement was tightened to avoid overstating the single small (n=14) trial as an established comparative finding.",
       "remediation-pass-2026-08-29: added corroborating/strengthening sources per reviewer notes for three confirmed-with-note claims (US FDA 2015 consumer update for injectable skin-lightening; FDA Dec 2022 homeopathic-drug-products guidance for the OTC unapproved claim; Dilokthornsakul 2019 systematic review for the oral-whitening RCT claim) — all quotes independently fetched and verified this session.",
       "the fda.gov original of the 2015 injectable-skin-lightening consumer update returned 404 (www.fda.gov path) and 403 (cacmap.fda.gov mirror) to direct fetch this session; quotes were instead sourced from an American Med Spa Association republication of the same FDA text, tagged authorityTier A2 pending a successful direct fda.gov fetch on a future pass.",
-      "remediation-pass-2026-08-29: filled the previously-null UNII identifier (GAN16C9B8O) by directly fetching FDA's Global Substance Registration System (precision.fda.gov UNII Search Service) this session, which confirmed the code's preferred substance name as 'GLUTATHIONE'; rxnorm and chembl remain unverified/null and are left as-is rather than guessed."
+      "remediation-pass-2026-08-29: filled the previously-null UNII identifier (GAN16C9B8O) by directly fetching FDA's Global Substance Registration System (precision.fda.gov UNII Search Service) this session, which confirmed the code's preferred substance name as 'GLUTATHIONE'; rxnorm and chembl remain unverified/null and are left as-is rather than guessed.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -521,7 +522,8 @@
       "gray-market-injectable-use",
       "otc-and-compounded-both-in-market",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }
