@@ -19,9 +19,14 @@ is **not** where the risk is. Total registered worktrees: **125**, in four locat
 | `D:/Repos/BioStack/.worktrees/*` | 15 | Mixed — holds the one real recovery candidate |
 | `D:/Repos/BioStack/.claude/worktrees/*` | 3 | Low — superseded 2026-05/06 work |
 
-**Bottom line: 118 of 125 worktrees hold nothing that is not already in `origin/main`.**
-The material findings are 1 active goal, 1 recovery candidate, 6 retained diagnostic trees,
-and 4 orphaned commits.
+**Bottom line: 114 of 125 worktrees hold nothing that is not already in `origin/main`.**
+The other **11** do, and all 11 were retained: 1 active goal, 1 recovery candidate,
+6 diagnostic reproduction trees, 1 unmerged diagnostic test, and 2 unresolved governance
+trees. (114 + 11 = 125.)
+
+Separately, 4 detached HEADs held commits reachable from **no branch and no tag**. Their
+*content* proved superseded, so they are counted among the 114 — but the commit objects
+themselves were genuinely at risk and are now preserved as `salvage/*` tags.
 
 ---
 
@@ -230,7 +235,7 @@ Nothing below has been executed.
 **Batch 1 — `D:/Repos/BioStack-*`, 59 worktrees** (26 ancestors + 33 squash-merged). **~24.2 GB on disk.**
 Full list: `wt/list_cleanup_core.txt`. All verified clean, zero unique patches, content upstream.
 
-**Batch 2 — same location, 8 more after the corrections above:**
+**Batch 2 — same location, 10 more after the corrections above:**
 `keo84-seo-ledger-023`, `keo68-billing-deeplink-sparse-025`, `export-bundle-pr`, plus the 6 non-git
 orphan dirs (`billing-tier`, `production-readiness`, `production-readiness-phase2`,
 `track-b-biostack-rc`, `verify`, `...-027`) and the orphaned `...-028`. These need plain directory

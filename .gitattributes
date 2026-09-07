@@ -1,0 +1,6 @@
+# Archived diff artifacts are verbatim captures and must stay byte-exact.
+# Diff context lines legitimately carry trailing whitespace (a blank context
+# line is a single space), so whitespace checks must not apply to them --
+# "fixing" it would corrupt the patch and break `git apply`.
+*.patch -whitespace
+*.diff  -whitespace
