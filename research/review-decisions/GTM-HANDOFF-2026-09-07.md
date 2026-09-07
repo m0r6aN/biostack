@@ -7,6 +7,21 @@ items exposed. **No compound was promoted. No production action was taken.**
 Read this before the receipts. It exists so the next session starts grounded in the repository rather than in
 a previous session's summary.
 
+## Read First: An Open Governance Breach
+
+**PRs #277 and #281 activated 17 source lanes without the approval this repository requires, and PR #285
+deactivates them.** `research/source-authorization/recommended-seven-source-decisions.v1.json` binds the
+registry by exact bytes, authorizes exactly seven lanes, and requires a `legalRights` approval to activate a
+source. That approval belongs to **Johnathan Harper**. Clint Morgan holds `product-owner` and
+`evidence-reviewer` and **cannot** supply it. Product-owner ratification is not source authorization.
+
+Eight worker tests are red and **should stay red** until a v2 decision batch is issued by the right humans:
+three source-count assertions, two registry-hash bindings, and the acquisition plan producing **0 ready
+intents instead of 490** — the system correctly refusing an unauthorized registry state. **Do not "fix" them
+by editing `registryBinding.sha256`.** That would manufacture an authorization no human issued.
+
+Full detail: `receipts/source-activation-governance-breach-2026-09-07.md`.
+
 ## The Standing Rule
 
 **The worker is the source of truth for what is authorized. An audit script is not.**
@@ -17,6 +32,11 @@ The worker additionally requires `acquisition.enabled` and roughly twenty other 
 (`SourceRegistryActivationPolicy.AddUnless`), and by its reckoning the same change authorized almost nothing
 until PR #281. Measure by re-running the worker and counting `ops.qualityFlags` on the emitted packets under
 `research/output/<tag>/evidence-packet/`.
+
+**Run the full worker test suite before shipping any change to `research/input/sources/`,
+`research/source-authorization/`, or the worker's policy classes.** A green `run-knowledge-research.ps1`
+proves nothing about governance bindings: the pipeline ran clean through three PRs that had already broken
+them. The suite is the only thing that catches it.
 
 There are **two** authority gates, and they are easy to confuse:
 
@@ -41,12 +61,14 @@ pwsh -NoProfile -File tools/research/run-knowledge-research.ps1 -SourceRegistryF
 | `source-registry-source-disabled` | 29 |
 | `missing-authoritative-support` | 19 |
 
-Manifest: **71 blocked, 5 review-required, 1 research-requested, 2 candidates** (LL-37, Semaglutide).
-Registry: 30 classes. Run health: `Scanned=78 Created=78 Failed=0`.
+Manifest after PR #285: **72 blocked, 5 review-required, 1 research-requested, 1 candidate**
+(Semaglutide). Registry: 30 classes, of which only the 7 authorized lanes are active. Run health:
+`Scanned=78 Created=78 Failed=0`.
 
 ## Open Decisions — Clint Only
 
-1. **LL-37 promotion eligibility.** It moved Blocked → CandidatesForPromotion in PR #281 as a side effect of
+1. **LL-37 promotion eligibility — now moot pending re-activation.** PR #285 reverts it to blocked,
+   because the activation it rode on was unauthorized. Restated for the record: It moved Blocked → CandidatesForPromotion in PR #281 as a side effect of
    enabling acquisition on the ratified classes — because its only blocker was an authorization issue, not
    because its evidence improved. It is eligible for promotion *review*, not promoted: `Completeness:
    partial`, 7 open review-queue items, flags `thin-human-evidence`, `single-human-rct-mixed-result`,
