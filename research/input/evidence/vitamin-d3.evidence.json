@@ -286,7 +286,7 @@
     {
       "claimId": "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
       "claimType": "efficacy",
-      "statement": "USPSTF's 2018 final recommendation states: against daily supplementation with 400 IU or less of vitamin D (with 1000 mg or less of calcium) for primary prevention of fractures in postmenopausal women (Grade D); evidence insufficient to assess benefits/harms for fracture prevention in men and premenopausal women (Grade I); and separately, against vitamin D supplementation to prevent falls in community-dwelling older adults (Grade D). This topic is under active revision: USPSTF's own site marks it \"being updated,\" and a December 17, 2024 draft recommendation consolidates the separate fracture and falls recommendations into one, broadens the against-recommendation (Grade D) to cover community-dwelling postmenopausal women AND men age 60 or older for both fracture and fall prevention, and documents a small increased kidney-stone risk not mentioned in the 2018 statement. As of this review the draft is not yet finalized, so the 2018 grades remain the official USPSTF position, but this claim should not be presented as settled current guidance without disclosing the pending revision.",
+      "statement": "USPSTF's 2018 final recommendation states: against daily supplementation with 400 IU or less of vitamin D (with 1000 mg or less of calcium) for primary prevention of fractures in postmenopausal women (Grade D); evidence insufficient to assess benefits/harms for fracture prevention in men and premenopausal women (Grade I); and separately, against vitamin D supplementation to prevent falls in community-dwelling older adults (Grade D). This topic is under active revision: USPSTF's own site marks it \"being updated,\" and a December 17, 2024 draft recommendation consolidates the separate fracture and falls recommendations into one, broadens the against-recommendation (Grade D) to cover community-dwelling postmenopausal women AND men age 60 or older for both fracture and fall prevention, and updates the pooled kidney-stone harm estimate (pooled relative risk 1.11; approximately 2 more participants with kidney stones per 1,000 treated). The 2018 final statement had already described this harm explicitly, stating that supplementation with vitamin D and calcium increases the incidence of kidney stones and assessing the magnitude as small (pooled relative risk 1.18, 95% CI 1.04-1.35 for combined supplementation); the December 2024 draft therefore updates an existing pooled analysis rather than identifying a previously unrecognized harm. As of this review the draft is not yet finalized, so the 2018 grades remain the official USPSTF position, but this claim should not be presented as settled current guidance without disclosing the pending revision.",
       "context": {
         "population": "community-dwelling adults; 2018 statement covers primarily postmenopausal women and older adults without known osteoporosis or vitamin D deficiency, while the December 2024 draft broadens coverage to community-dwelling postmenopausal women and men age 60 or older",
         "route": "oral",
@@ -336,12 +336,18 @@
           "sourceRef": "uspstf-vitamind-calcium-fracture-fall-draft-2024",
           "quote": "2 more participants with kidney stones per 1,000 persons treated",
           "pageOrSection": "Draft Recommendation, harms of supplementation (pooled relative risk 1.11, 2.5-7 years follow-up)"
+        },
+        {
+          "sourceRef": "uspstf-vitamind-calcium-fracture-fall-prevention",
+          "quote": "increases the incidence of kidney stones",
+          "pageOrSection": "Final Recommendation Statement, harms of preventive medication (magnitude assessed as small; pooled RR 1.18, 95% CI 1.04-1.35 for combined vitamin D and calcium supplementation)"
         }
       ],
       "reviewFlags": [
         "USPSTF recommendation is population/primary-prevention specific and does not address treatment of diagnosed deficiency or osteoporosis, which is a materially different clinical context",
-        "RESOLVED (2026-08-29): this topic is confirmed under active USPSTF revision; re-fetched the live USPSTF page directly and confirmed the 'being updated' banner, the December 17, 2024 draft's broadened Grade D against-recommendation covering men age 60+, and the added kidney-stone harm signal (pooled RR 1.11). The 2018 grades remain the technically official position pending finalization, but the packet now discloses the pending revision rather than presenting 2018 as settled current guidance.",
-        "monitor for finalization of the December 2024 draft and update this claim once USPSTF publishes its final consolidated recommendation"
+        "wave006-correction-2026-09-06: the prior RESOLVED (2026-08-29) narrative on this flag is withdrawn as partly false and this claim is not resolved. The live-page findings it recorded (the being-updated banner, the December 17, 2024 draft broadened Grade D covering men age 60+, and pooled RR 1.11) stand. Its characterization of kidney stones as an added harm signal does not: the 2018 final statement explicitly describes the harm, as independently reconfirmed by the wave006 lead fetch on 2026-09-05. The December 2024 page was still labeled a draft on that date; recheck currency at the next review.",
+        "monitor for finalization of the December 2024 draft and update this claim once USPSTF publishes its final consolidated recommendation",
+        "wave006-correction-2026-09-06: exact reference-intake, serum-threshold, and toxicity assertions elsewhere in this packet remain independently unverified under eligible A1/A2 authority, and the packet NIH ODS tier conflicts with the source registry C2 policy. No authority tier or flag was changed by this correction pass."
       ]
     },
     {
@@ -437,7 +443,17 @@
       ]
     }
   ],
-  "conflicts": [],
+  "conflicts": [
+    {
+      "conflictId": "vitamind3-uspstf-2018-vs-2024-harm-provenance-001",
+      "claimRefs": [
+        "vitamind3-efficacy-fracture-falls-uspstf-negative-001"
+      ],
+      "severity": "high",
+      "summary": "This packet previously asserted that the kidney-stone harm was not mentioned in the 2018 USPSTF final statement. The official 2018 statement describes it explicitly. The 2018 final statement and the December 17, 2024 draft must be kept distinct: the draft revises the pooled estimate (RR 1.11) of a harm the final statement had already reported (RR 1.18), and the 2018 grades remain the official position until the draft is finalized.",
+      "resolutionStatus": "needs-human-review"
+    }
+  ],
   "ops": {
     "completeness": "partial",
     "needsReview": true,
@@ -449,7 +465,8 @@
       "RESOLVED (2026-08-29): NIH ODS RDA/UL values re-confirmed as unrevised via independent cross-check against Harvard T.H. Chan Nutrition Source; values trace to the 2010 IOM/NASEM DRI report and have not been updated since.",
       "RESOLVED (2026-08-29): DailyMed dietary-supplement label re-verified live as current/unchanged; cross-checked against NIH DSLD. FDA's March 27, 2026 public meeting on dietary-supplement regulatory modernization is exploratory only and does not currently change single-ingredient vitamin D3's classification, but should be monitored for a finalized rule.",
       "RESOLVED (2026-08-29): hypercalcemia/toxicity claim now distinguishes the NIH ODS caution threshold (>125 nmol/L) from the StatPearls frank-toxicity threshold (>375 nmol/L), sourced from StatPearls (NCBI Bookshelf), fetched this session.",
-      "Multiple distinct cholecalciferol product labels exist on DailyMed (OTC supplement SKUs, combination products, and possibly prescription-strength products); only one representative OTC label was reviewed, and label content should not be assumed uniform across SKUs — remains open."
+      "Multiple distinct cholecalciferol product labels exist on DailyMed (OTC supplement SKUs, combination products, and possibly prescription-strength products); only one representative OTC label was reviewed, and label content should not be assumed uniform across SKUs — remains open.",
+      "wave006 re-review (2026-09-05) demonstrated a false historical assertion about the 2018 USPSTF statement treatment of kidney-stone harm; corrected 2026-09-06 in packet-authoring only. Remaining regulatory-scope, reference-intake, mechanism, immune/COVID, and toxicity dispositions are not addressed by that pass."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -457,7 +474,8 @@
       "negative-human-rct-documented",
       "professional-guidance-recommends-against-primary-prevention-use",
       "marketing-evidence-gap-documented",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "wave006-correction-pass-2026-09-06"
     ]
   }
 }

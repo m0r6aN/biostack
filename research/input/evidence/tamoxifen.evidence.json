@@ -264,7 +264,7 @@
     {
       "claimId": "tamoxifen-efficacy-atlas-extended-001",
       "claimType": "efficacy",
-      "statement": "In the ATLAS randomized trial of women with ER-positive breast cancer already on adjuvant tamoxifen, continuing tamoxifen to 10 years versus stopping at 5 years further reduced breast cancer recurrence (18.0% vs 20.8%; RR 0.84) and breast cancer mortality (18.6% vs 21.1% cumulative; RR 0.87), but roughly doubled the cumulative incidence of endometrial cancer (1.80% vs 0.97%; RR 1.74).",
+      "statement": "In the ATLAS randomized trial of women with ER-positive breast cancer already on adjuvant tamoxifen, continuing tamoxifen to 10 years versus stopping at 5 years reduced breast cancer recurrence (18.0% vs 20.8%; RR 0.84) and all-cause mortality (18.6% vs 21.1%; RR 0.87), and increased endometrial cancer incidence (1.80% vs 0.97%; RR 1.74). The 18.6% versus 21.1% comparison is deaths from any cause, not breast cancer mortality, and is labeled breast cancer mortality by the secondary summary this packet cites. All figures above are crude event proportions and must not be presented as cumulative risks: the primary Lancet report gives separate years-5-to-14 cumulative risk estimates for recurrence, breast cancer mortality, and endometrial cancer. The recurrence and mortality comparisons come from the ER-positive efficacy population, while endometrial-cancer analyses use a different safety population; the two denominators must not be reported as one.",
       "context": {
         "population": "women with ER-positive breast cancer already completing 5 years of adjuvant tamoxifen",
         "route": "oral",
@@ -285,7 +285,7 @@
         {
           "sourceRef": "atlas-davies-2013-summary-wjc",
           "quote": "18.6% vs. 21.1% (RR 0.87; 95% CI 0.78-0.97; P=0.01)",
-          "pageOrSection": "Outcomes summary - breast cancer mortality, 10 vs 5 years tamoxifen"
+          "pageOrSection": "Outcomes summary - labeled breast cancer mortality by the secondary source; the primary Lancet report attributes these proportions to deaths from any cause (see conflict tamoxifen-atlas-endpoint-mislabel-001)"
         },
         {
           "sourceRef": "atlas-davies-2013-summary-wjc",
@@ -293,7 +293,7 @@
           "pageOrSection": "Outcomes summary - endometrial cancer, 10 vs 5 years tamoxifen"
         }
       ],
-      "reviewFlags": ["sourced from a secondary trial-summary page (Wiki Journal Club), not the primary Lancet full text - the original Davies et al. Lancet 2013 article should be fetched directly at review time to confirm these figures verbatim", "extended-duration benefit vs endometrial cancer risk trade-off must be presented together, never in isolation", "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the ATLAS randomized trial...\"); no regulator document supports this claim (searched: DailyMed tamoxifen citrate label, fetched live this session, Clinical Studies section - it contains no ATLAS trial data and instead cites the earlier NSABP B-14 extended-duration study, which concluded 'continuation of therapy beyond 5 years does not provide additional benefit', i.e. the current FDA label does not support and in fact predates/conflicts with the ATLAS 10-vs-5-year finding; also searched fda.gov, no relevant result). Linking the label here would misrepresent it as backing this claim, so no A1/A2 source was added."]
+      "reviewFlags": ["sourced from a secondary trial-summary page (Wiki Journal Club), not the primary Lancet full text. wave006-correction-2026-09-06: the wave006 re-review fetched the primary full text (PMID 23219286) and demonstrated that the secondary summary mislabels the 18.6% versus 21.1% all-cause mortality comparison as breast cancer mortality. The statement is corrected here, but the primary-text figures, including the years-5-to-14 cumulative risks and the distinct efficacy and safety populations, are NOT yet anchored in this packet: adding the primary source requires source authorization and was deliberately not performed in this correction pass. This claim remains review-gated pending that anchoring and reconciliation.", "extended-duration benefit vs endometrial cancer risk trade-off must be presented together, never in isolation", "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the ATLAS randomized trial...\"); no regulator document supports this claim (searched: DailyMed tamoxifen citrate label, fetched live this session, Clinical Studies section - it contains no ATLAS trial data and instead cites the earlier NSABP B-14 extended-duration study, which concluded 'continuation of therapy beyond 5 years does not provide additional benefit', i.e. the current FDA label does not support and in fact predates/conflicts with the ATLAS 10-vs-5-year finding; also searched fda.gov, no relevant result). Linking the label here would misrepresent it as backing this claim, so no A1/A2 source was added.", "wave006-correction-2026-09-06: authority flags on this claim were left unchanged. The prior efficacy classification is not permission to bypass review of the safety assertions embedded in this claim (endometrial cancer incidence), which the wave006 re-review flagged as requiring eligible A1/A2 support."]
     },
     {
       "claimId": "tamoxifen-evidence-gap-bodybuilding-pct-001",
@@ -339,8 +339,8 @@
     {
       "conflictId": "tamoxifen-extended-duration-benefit-risk-001",
       "claimRefs": ["tamoxifen-efficacy-atlas-extended-001"],
-      "severity": "moderate",
-      "summary": "Extending adjuvant tamoxifen from 5 to 10 years (ATLAS trial) reduces breast cancer recurrence and mortality but nearly doubles endometrial cancer incidence; the ATLAS figures in this packet were extracted from a secondary trial-summary page rather than the primary Lancet full text, so the underlying numbers require confirmation against the original publication before this benefit/risk trade-off is finalized for publication.",
+      "severity": "high",
+      "summary": "Extending adjuvant tamoxifen from 5 to 10 years (ATLAS trial) reduces breast cancer recurrence and mortality but increases endometrial cancer incidence; the benefit and risk must always be presented together. The ATLAS figures in this packet were extracted from a secondary trial-summary page rather than the primary Lancet full text, and the wave006 re-review confirmed at least one endpoint mislabel in that summary. The crude proportions carried here still require reconciliation against the primary publication years-5-to-14 cumulative risk estimates and its separate efficacy and safety populations before this trade-off is finalized for publication.",
       "resolutionStatus": "needs-human-review"
     },
     {
@@ -348,6 +348,15 @@
       "claimRefs": ["tamoxifen-evidence-gap-bodybuilding-pct-001", "tamoxifen-approved-indication-001"],
       "severity": "moderate",
       "summary": "Popular online marketing frames tamoxifen (Nolvadex) as a bodybuilding PCT/gynecomastia agent, while the only FDA-approved, evidence-backed uses are breast cancer treatment, DCIS, and risk reduction in high-risk women; no controlled human trial evidence in this packet establishes efficacy or safety for unsupervised post-cycle testosterone recovery.",
+      "resolutionStatus": "needs-human-review"
+    },
+    {
+      "conflictId": "tamoxifen-atlas-endpoint-mislabel-001",
+      "claimRefs": [
+        "tamoxifen-efficacy-atlas-extended-001"
+      ],
+      "severity": "high",
+      "summary": "The secondary trial-summary page cited for ATLAS labels the 18.6% versus 21.1% comparison (RR 0.87) as breast cancer mortality. The primary Lancet report (PMID 23219286) attributes those proportions to deaths from any cause in the ER-positive efficacy population and reports a separate, smaller years-5-to-14 breast cancer mortality estimate. The claim statement has been corrected to all-cause mortality, but this packet still cites only the mislabeling secondary source; the primary publication must be authorized and anchored before these figures are published.",
       "resolutionStatus": "needs-human-review"
     }
   ],
@@ -359,7 +368,8 @@
       "CAS/UNII/DrugBank/ChEMBL/RxNorm identifiers not yet resolved from structured databases; only PubChem CID confirmed via fetch.",
       "ATLAS trial figures were sourced from a secondary trial-summary page (Wiki Journal Club) rather than the primary Lancet full text; confirm against thelancet.com or PMC at review time.",
       "DailyMed and JNCI page content was extracted via automated summarization of fetched pages rather than raw HTML/PDF; spot-check exact wording and numeric figures against source pages at review time.",
-      "Human evidence for the popular bodybuilding/PCT off-label use pattern remains thin to absent; only a single 2025 survey/product-testing study was located."
+      "Human evidence for the popular bodybuilding/PCT off-label use pattern remains thin to absent; only a single 2025 survey/product-testing study was located.",
+      "wave006 re-review (2026-09-05) demonstrated an ATLAS endpoint misclassification (all-cause mortality reported as breast cancer mortality) and crude-proportion versus cumulative-risk conflation; corrected 2026-09-06 in packet-authoring only. Remaining labeled-indication scope, boxed-warning denominators, contraindication scope, dose attribution, NSABP P-1 reconciliation, and PCT source-provenance dispositions are not addressed by that pass."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -370,7 +380,8 @@
       "benefit-risk-tradeoff-documented",
       "gray-market-off-label-use-flagged",
       "secondary-source-for-atlas-trial",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "wave006-correction-pass-2026-09-06"
     ]
   }
 }
