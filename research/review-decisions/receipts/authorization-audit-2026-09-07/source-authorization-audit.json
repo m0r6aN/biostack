@@ -9,7 +9,9 @@
     "passUnderRegistryBacked": 13,
     "gapClaims": 199,
     "distinctSelfAssertedSources": 146,
-    "placeholderJan1Dates": 67
+    "placeholderJan1Dates": 0,
+    "fieldUseGaps": 0,
+    "projectedFieldUseGaps": 43
   },
   "bucketCounts": {
     "A-over-asserted": {
@@ -2093,343 +2095,7 @@
       }
     ]
   },
-  "placeholderDates": [
-    {
-      "compound": "ac-262536",
-      "sourceId": "vanoeveren-2007-ac262536-pharm",
-      "publishedAt": "2008-01-01T00:00:00Z"
-    },
-    {
-      "compound": "afamelanotide",
-      "sourceId": "nejm-langendonk-2015-rct",
-      "publishedAt": "2015-01-01T00:00:00Z"
-    },
-    {
-      "compound": "afamelanotide",
-      "sourceId": "semanticscholar-nejmoa1411481",
-      "publishedAt": "2015-01-01T00:00:00Z"
-    },
-    {
-      "compound": "andarine",
-      "sourceId": "wada-prohibited-list-2026",
-      "publishedAt": "2026-01-01T00:00:00Z"
-    },
-    {
-      "compound": "aod-9604",
-      "sourceId": "stier-2013-jofem-safety-tolerability",
-      "publishedAt": "2013-01-01T00:00:00Z"
-    },
-    {
-      "compound": "bazedoxifene",
-      "sourceId": "frontiers-pct-illicit-serms",
-      "publishedAt": "2025-01-01T00:00:00Z"
-    },
-    {
-      "compound": "bpc-157",
-      "sourceId": "pubmed-vasireddi-2025-orthosportsmed",
-      "publishedAt": "2025-01-01T00:00:00Z"
-    },
-    {
-      "compound": "bremelanotide",
-      "sourceId": "spielmans-2021-jsr-reanalysis",
-      "publishedAt": "2021-01-01T00:00:00Z"
-    },
-    {
-      "compound": "cardarine",
-      "sourceId": "mitchell-2019-pulm-circ-letter",
-      "publishedAt": "2019-01-01T00:00:00Z"
-    },
-    {
-      "compound": "cardarine",
-      "sourceId": "nature-srep09884-mouse-endurance",
-      "publishedAt": "2015-01-01T00:00:00Z"
-    },
-    {
-      "compound": "chorionic-gonadotropin",
-      "sourceId": "lijesen-1995-bjcp-meta-analysis",
-      "publishedAt": "1995-01-01T00:00:00Z"
-    },
-    {
-      "compound": "chorionic-gonadotropin",
-      "sourceId": "hcg-spermatogenesis-retrospective-2025",
-      "publishedAt": "2025-01-01T00:00:00Z"
-    },
-    {
-      "compound": "clomiphene",
-      "sourceId": "europepmc-pct-bju-cohort-2026",
-      "publishedAt": "2026-01-01T00:00:00Z"
-    },
-    {
-      "compound": "creatine",
-      "sourceId": "bmc-nephrology-2025-kidney-meta",
-      "publishedAt": "2025-01-01T00:00:00Z"
-    },
-    {
-      "compound": "creatine",
-      "sourceId": "hairloss-rct-2025-europepmc",
-      "publishedAt": "2025-01-01T00:00:00Z"
-    },
-    {
-      "compound": "creatine",
-      "sourceId": "iun-2026-kidney-meta-independent",
-      "publishedAt": "2026-01-01T00:00:00Z"
-    },
-    {
-      "compound": "creatine",
-      "sourceId": "mdpi-2025-strength-power-meta",
-      "publishedAt": "2025-01-01T00:00:00Z"
-    },
-    {
-      "compound": "emideltide",
-      "sourceId": "schneider-1992-double-blind-insomnia",
-      "publishedAt": "1992-01-01T00:00:00Z"
-    },
-    {
-      "compound": "emideltide",
-      "sourceId": "pubmed-6391926-open-trial",
-      "publishedAt": "1984-01-01T00:00:00Z"
-    },
-    {
-      "compound": "enclomiphene",
-      "sourceId": "pmc-enclomiphene-pkpd-2014",
-      "publishedAt": "2014-01-01T00:00:00Z"
-    },
-    {
-      "compound": "enclomiphene",
-      "sourceId": "pmc-enclomiphene-secondary-hypogonadism-2016",
-      "publishedAt": "2016-01-01T00:00:00Z"
-    },
-    {
-      "compound": "epitalon",
-      "sourceId": "korkushko-2004-melatonin-human",
-      "publishedAt": "2004-01-01T00:00:00Z"
-    },
-    {
-      "compound": "exenatide",
-      "sourceId": "fda-bydureon-label-2024",
-      "publishedAt": "2024-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ghk-cu",
-      "sourceId": "pmc-ghk-skin-regeneration-2015",
-      "publishedAt": "2015-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ghrp-2",
-      "sourceId": "hayashi-2008-endocrj-ghrp2-vs-itt",
-      "publishedAt": "2008-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ghrp-2",
-      "sourceId": "thomas-2010-dta-ghrp2-supplement",
-      "publishedAt": "2010-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ghrp-2",
-      "sourceId": "suzuki-2022-jes-ghrp2-hpd",
-      "publishedAt": "2022-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ghrp-2",
-      "sourceId": "frontiers-2026-supplement-adulterants-review",
-      "publishedAt": "2026-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ghrp-6",
-      "sourceId": "frontiers-2024-egf-ghrp6-stroke-rct",
-      "publishedAt": "2024-01-01T00:00:00Z"
-    },
-    {
-      "compound": "glutathione",
-      "sourceId": "watanabe-2012-oral-whitening-rct",
-      "publishedAt": "2012-01-01T00:00:00Z"
-    },
-    {
-      "compound": "gonadorelin",
-      "sourceId": "zhang-2019-pulsatile-gonadorelin-chh",
-      "publishedAt": "2019-01-01T00:00:00Z"
-    },
-    {
-      "compound": "hexarelin",
-      "sourceId": "imbimbo-1994-ejcp-dose-response",
-      "publishedAt": "1994-01-01T00:00:00Z"
-    },
-    {
-      "compound": "hexarelin",
-      "sourceId": "kong-2017-ihj-rat-cardioprotection",
-      "publishedAt": "2017-01-01T00:00:00Z"
-    },
-    {
-      "compound": "hexarelin",
-      "sourceId": "rahim-1999-clinendo-chronic-hpa-axis",
-      "publishedAt": "1999-01-01T00:00:00Z"
-    },
-    {
-      "compound": "igf-1-lr3",
-      "sourceId": "conlon-1995-guinea-pig",
-      "publishedAt": "1995-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ipamorelin",
-      "sourceId": "beck-2014-ijcd-poi-rct",
-      "publishedAt": "2014-01-01T00:00:00Z"
-    },
-    {
-      "compound": "kpv",
-      "sourceId": "crook-2008-gastro-pept1-kpv",
-      "publishedAt": "2008-01-01T00:00:00Z"
-    },
-    {
-      "compound": "lasofoxifene",
-      "sourceId": "elaine1-wustl-fulltext",
-      "publishedAt": "2024-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ligandrol",
-      "sourceId": "basaria-2013-jgerontol-rct",
-      "publishedAt": "2013-01-01T00:00:00Z"
-    },
-    {
-      "compound": "liraglutide",
-      "sourceId": "pmc-6130125-leader-mi-subgroup",
-      "publishedAt": "2018-01-01T00:00:00Z"
-    },
-    {
-      "compound": "liraglutide",
-      "sourceId": "pmc-4985288-leader-primary",
-      "publishedAt": "2016-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ll-37",
-      "sourceId": "mahlapuu-2021-wrr-pmc9298190",
-      "publishedAt": "2021-01-01T00:00:00Z"
-    },
-    {
-      "compound": "melanotan-ii",
-      "sourceId": "peters-2020-cen-case-reports-renal-infarction",
-      "publishedAt": "2020-01-01T00:00:00Z"
-    },
-    {
-      "compound": "mots-c",
-      "sourceId": "diabetology-mds-mdp-systematic-review-2024",
-      "publishedAt": "2024-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ospemifene",
-      "sourceId": "fda-osphena-label-pdf",
-      "publishedAt": "2019-01-01T00:00:00Z"
-    },
-    {
-      "compound": "ospemifene",
-      "sourceId": "dovepress-wurz-2014-review",
-      "publishedAt": "2014-01-01T00:00:00Z"
-    },
-    {
-      "compound": "oxytocin",
-      "sourceId": "cai-2018-pcn-adverse-events-meta",
-      "publishedAt": "2018-01-01T00:00:00Z"
-    },
-    {
-      "compound": "oxytocin",
-      "sourceId": "frontiersin-2024-oxt-asd-dose-response-meta",
-      "publishedAt": "2024-01-01T00:00:00Z"
-    },
-    {
-      "compound": "oxytocin",
-      "sourceId": "hillstone-oxytocin-nasal-spray-marketing",
-      "publishedAt": "2026-01-01T00:00:00Z"
-    },
-    {
-      "compound": "pemvidutide",
-      "sourceId": "pubmed-39002641-masld-rct",
-      "publishedAt": "2025-01-01T00:00:00Z"
-    },
-    {
-      "compound": "s-23",
-      "sourceId": "alhalabi-2025-s23-metabolite-study",
-      "publishedAt": "2025-01-01T00:00:00Z"
-    },
-    {
-      "compound": "s-23",
-      "sourceId": "wada-2026-prohibited-list-official",
-      "publishedAt": "2026-01-01T00:00:00Z"
-    },
-    {
-      "compound": "s-23",
-      "sourceId": "endocrinology-2009-s23-contraceptive-primary",
-      "publishedAt": "2009-01-01T00:00:00Z"
-    },
-    {
-      "compound": "selank",
-      "sourceId": "pubmed-18454096-zozulya",
-      "publishedAt": "2008-01-01T00:00:00Z"
-    },
-    {
-      "compound": "selank",
-      "sourceId": "europepmc-18454096-zozulya",
-      "publishedAt": "2008-01-01T00:00:00Z"
-    },
-    {
-      "compound": "semax",
-      "sourceId": "shmonin-2018-semax-stroke-meta-analysis",
-      "publishedAt": "2018-01-01T00:00:00Z"
-    },
-    {
-      "compound": "sermorelin",
-      "sourceId": "vittone-1997-ghrh-elderly-men",
-      "publishedAt": "1997-01-01T00:00:00Z"
-    },
-    {
-      "compound": "survodutide",
-      "sourceId": "pmc-synchronize1-baseline",
-      "publishedAt": "2026-01-01T00:00:00Z"
-    },
-    {
-      "compound": "tamoxifen",
-      "sourceId": "atlas-davies-2013-summary-wjc",
-      "publishedAt": "2013-01-01T00:00:00Z"
-    },
-    {
-      "compound": "tamoxifen",
-      "sourceId": "frontiers-2025-illegal-pct-aas",
-      "publishedAt": "2025-01-01T00:00:00Z"
-    },
-    {
-      "compound": "testosterone-cypionate",
-      "sourceId": "fda-azmiro-label-2022",
-      "publishedAt": "2022-01-01T00:00:00Z"
-    },
-    {
-      "compound": "thymosin-alpha-1",
-      "sourceId": "pubmed-tests-2025",
-      "publishedAt": "2025-01-01T00:00:00Z"
-    },
-    {
-      "compound": "thymosin-alpha-1",
-      "sourceId": "pubmed-etass-2013",
-      "publishedAt": "2013-01-01T00:00:00Z"
-    },
-    {
-      "compound": "vk2735",
-      "sourceId": "pubmed-41508550",
-      "publishedAt": "2026-01-01T00:00:00Z"
-    },
-    {
-      "compound": "vosilasarm",
-      "sourceId": "pmc-rad140-dili-case-report-2023",
-      "publishedAt": "2023-01-01T00:00:00Z"
-    },
-    {
-      "compound": "yk-11",
-      "sourceId": "yatsu-2018-biophys-res-commun-osteoblast",
-      "publishedAt": "2018-01-01T00:00:00Z"
-    },
-    {
-      "compound": "yk-11",
-      "sourceId": "kanno-2011-bpb-yk11-ar-partial-agonist",
-      "publishedAt": "2011-01-01T00:00:00Z"
-    }
-  ],
+  "placeholderDates": [],
   "gapClaims": [
     {
       "compound": "ac-262536",
@@ -4288,6 +3954,541 @@
       "fieldAuthorityRequired": true,
       "selfAssertedSources": [
         "livertox-sarms-nbk619971"
+      ]
+    }
+  ],
+  "fieldUseGaps": [],
+  "projectedFieldUseGaps": [
+    {
+      "compound": "aod-9604",
+      "claimId": "aod9604-efficacy-negative-weight-loss-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "fda-pcac-briefing-183584"
+      ],
+      "inferredClasses": [
+        "fda"
+      ]
+    },
+    {
+      "compound": "bazedoxifene",
+      "claimId": "bazedoxifene-efficacy-vertebral-fracture-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "ema-conbriza-epar",
+        "jbmr-silverman-2008"
+      ],
+      "inferredClasses": [
+        null,
+        null
+      ]
+    },
+    {
+      "compound": "bremelanotide",
+      "claimId": "bremelanotide-efficacy-reconnect-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "dailymed-vyleesi-label"
+      ],
+      "inferredClasses": [
+        "dailymed"
+      ]
+    },
+    {
+      "compound": "cardarine",
+      "claimId": "cardarine-warning-carcinogenicity-animal-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "hsa-singapore-alert-2017",
+        "health-canada-recall-gw501516"
+      ],
+      "inferredClasses": [
+        null,
+        null
+      ]
+    },
+    {
+      "compound": "clomiphene",
+      "claimId": "clomiphene-efficacy-male-hypogonadism-testosterone-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "dailymed-clomid-label"
+      ],
+      "inferredClasses": [
+        "dailymed"
+      ]
+    },
+    {
+      "compound": "creatine",
+      "claimId": "creatine-dose-context-loading-maintenance-001",
+      "claimType": "dose-context",
+      "requiredField": "product-specific-dosing",
+      "selfAssertedSources": [
+        "nih-ods-exercise-athletic-performance-hp"
+      ],
+      "inferredClasses": [
+        "nih-ods"
+      ]
+    },
+    {
+      "compound": "creatine",
+      "claimId": "creatine-safety-common-adverse-effects-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "nih-ods-exercise-athletic-performance-hp"
+      ],
+      "inferredClasses": [
+        "nih-ods"
+      ]
+    },
+    {
+      "compound": "dulaglutide",
+      "claimId": "dulaglutide-efficacy-rewind-cv-outcomes-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "dailymed-trulicity-label"
+      ],
+      "inferredClasses": [
+        "dailymed"
+      ]
+    },
+    {
+      "compound": "elamipretide",
+      "claimId": "elamipretide-human-rct-negative-pmm-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "clinicaltrials-gov-nct03323749"
+      ],
+      "inferredClasses": [
+        "clinicaltrials"
+      ]
+    },
+    {
+      "compound": "emideltide",
+      "claimId": "emideltide-efficacy-insomnia-inconclusive-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "fda-pcac-briefing-193344-emideltide"
+      ],
+      "inferredClasses": [
+        "fda"
+      ]
+    },
+    {
+      "compound": "exenatide",
+      "claimId": "exenatide-efficacy-exscel-cv-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "fda-bydureon-label-2024"
+      ],
+      "inferredClasses": [
+        "fda"
+      ]
+    },
+    {
+      "compound": "gonadorelin",
+      "claimId": "gonadorelin-approved-indication-human-historical-001",
+      "claimType": "approved-indication",
+      "requiredField": "approved-indications",
+      "selfAssertedSources": [
+        "ferring-lutrepulse-pm-canada"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "gonadorelin",
+      "claimId": "gonadorelin-warning-tumor-vision-001",
+      "claimType": "warning",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "ferring-lutrepulse-pm-canada"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "gsk2881078",
+      "claimId": "gsk2881078-studied-use-copd-muscle-weakness-001",
+      "claimType": "studied-use",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "clinicaltrials-nct03359473",
+        "gsk-study-register-200182"
+      ],
+      "inferredClasses": [
+        "clinicaltrials",
+        null
+      ]
+    },
+    {
+      "compound": "ibutamoren",
+      "claimId": "ibutamoren-efficacy-fatfreemass-mixed-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "fda-pcac-briefing-2026-ibutamoren-sarcopenia"
+      ],
+      "inferredClasses": [
+        "fda"
+      ]
+    },
+    {
+      "compound": "igf-1-lr3",
+      "claimId": "igf1lr3-identity-structure-001",
+      "claimType": "mechanism",
+      "requiredField": "mechanism",
+      "selfAssertedSources": [
+        "fda-unii-srs-m9l22y19h9"
+      ],
+      "inferredClasses": [
+        "fda"
+      ]
+    },
+    {
+      "compound": "ipamorelin",
+      "claimId": "ipamorelin-human-rct-negative-poi-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "fda-pcac-briefing-182088"
+      ],
+      "inferredClasses": [
+        "fda"
+      ]
+    },
+    {
+      "compound": "lasofoxifene",
+      "claimId": "lasofoxifene-regulatory-no-current-approval-001",
+      "claimType": "regulatory",
+      "requiredField": "regulatory",
+      "selfAssertedSources": [
+        "ema-epar-fablyn"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "lgd-3303",
+      "claimId": "lgd3303-adverse-effect-sarm-hepatotoxicity-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "nih-livertox-sarms"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "lgd-3303",
+      "claimId": "lgd3303-regulatory-antidoping-sarm-class-001",
+      "claimType": "regulatory",
+      "requiredField": "regulatory",
+      "selfAssertedSources": [
+        "usada-sarms-prohibited-class"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "liraglutide",
+      "claimId": "liraglutide-efficacy-leader-cv-outcomes-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "pmc-4985288-leader-primary",
+        "dailymed-victoza-label"
+      ],
+      "inferredClasses": [
+        null,
+        "dailymed"
+      ]
+    },
+    {
+      "compound": "liraglutide",
+      "claimId": "liraglutide-efficacy-scale-weight-loss-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "dailymed-saxenda-label"
+      ],
+      "inferredClasses": [
+        "dailymed"
+      ]
+    },
+    {
+      "compound": "mazdutide",
+      "claimId": "mazdutide-regulatory-nmpa-weight-mgmt-001",
+      "claimType": "regulatory",
+      "requiredField": "regulatory",
+      "selfAssertedSources": [
+        "pubmed-mazdutide-first-approval"
+      ],
+      "inferredClasses": [
+        "pubmed"
+      ]
+    },
+    {
+      "compound": "mazdutide",
+      "claimId": "mazdutide-regulatory-nmpa-t2d-001",
+      "claimType": "regulatory",
+      "requiredField": "regulatory",
+      "selfAssertedSources": [
+        "pubmed-mazdutide-first-approval"
+      ],
+      "inferredClasses": [
+        "pubmed"
+      ]
+    },
+    {
+      "compound": "mazdutide",
+      "claimId": "mazdutide-efficacy-glory1-weight-loss-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "semanticscholar-nejmoa2411528"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "mazdutide",
+      "claimId": "mazdutide-safety-gi-adverse-effects-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "semanticscholar-nejmoa2411528"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "mecasermin",
+      "claimId": "mecasermin-efficacy-growth-velocity-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "ncbi-bookshelf-mecasermin-clinical-review"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "mecasermin",
+      "claimId": "mecasermin-adverse-effect-profile-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "ncbi-bookshelf-mecasermin-clinical-review"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "mots-c",
+      "claimId": "mots-c-studied-use-phase2a-prediabetes-trial-001",
+      "claimType": "studied-use",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "clinicaltrials-nct07505745"
+      ],
+      "inferredClasses": [
+        "clinicaltrials"
+      ]
+    },
+    {
+      "compound": "ospemifene",
+      "claimId": "ospemifene-studied-use-bone-density-001",
+      "claimType": "studied-use",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "dailymed-osphena-label"
+      ],
+      "inferredClasses": [
+        "dailymed"
+      ]
+    },
+    {
+      "compound": "pemvidutide",
+      "claimId": "pemvidutide-efficacy-masld-phase2-rct-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "ctgov-nct05006885-classic"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "rad-150",
+      "claimId": "rad150-safety-classlevel-hepatotoxicity-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "ncbi-livertox-sarms",
+        "mdpi-jox-sarm-safety-review-2023"
+      ],
+      "inferredClasses": [
+        null,
+        null
+      ]
+    },
+    {
+      "compound": "raloxifene",
+      "claimId": "raloxifene-efficacy-breast-cancer-risk-reduction-more-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "dailymed-evista-label"
+      ],
+      "inferredClasses": [
+        "dailymed"
+      ]
+    },
+    {
+      "compound": "sermorelin",
+      "claimId": "sermorelin-regulatory-discontinuation-not-safety-001",
+      "claimType": "regulatory",
+      "requiredField": "regulatory",
+      "selfAssertedSources": [
+        "fedreg-geref-determination-2013"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "setmelanotide",
+      "claimId": "setmelanotide-efficacy-pomc-lepr-phase3-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "fda-imcivree-first-approval-announcement"
+      ],
+      "inferredClasses": [
+        "fda"
+      ]
+    },
+    {
+      "compound": "tamoxifen",
+      "claimId": "tamoxifen-efficacy-nsabp-p1-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "dailymed-tamoxifen-citrate-label"
+      ],
+      "inferredClasses": [
+        "dailymed"
+      ]
+    },
+    {
+      "compound": "vitamin-d3",
+      "claimId": "vitamind3-dose-context-rda-ul-001",
+      "claimType": "dose-context",
+      "requiredField": "product-specific-dosing",
+      "selfAssertedSources": [
+        "nih-ods-vitamind-health-professional"
+      ],
+      "inferredClasses": [
+        "nih-ods"
+      ]
+    },
+    {
+      "compound": "vitamin-d3",
+      "claimId": "vitamind3-efficacy-vital-cancer-cvd-negative-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "nci-vital-trial-cancer-currents-2018"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "vitamin-d3",
+      "claimId": "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "uspstf-vitamind-calcium-fracture-fall-prevention",
+        "uspstf-vitamind-calcium-fracture-fall-draft-2024"
+      ],
+      "inferredClasses": [
+        null,
+        null
+      ]
+    },
+    {
+      "compound": "vk2735",
+      "claimId": "vk2735-regulatory-investigational-status-001",
+      "claimType": "regulatory",
+      "requiredField": "regulatory",
+      "selfAssertedSources": [
+        "nct06828055"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "vk2735",
+      "claimId": "vk2735-efficacy-oral-venture-oral-001",
+      "claimType": "efficacy",
+      "requiredField": "efficacy-claims",
+      "selfAssertedSources": [
+        "nct06828055",
+        "ctgov-nct06828055-results-status",
+        "pubmed-search-vk2735-oral-2026"
+      ],
+      "inferredClasses": [
+        null,
+        null,
+        "pubmed"
+      ]
+    },
+    {
+      "compound": "vk2735",
+      "claimId": "vk2735-dose-context-phase3-001",
+      "claimType": "dose-context",
+      "requiredField": "product-specific-dosing",
+      "selfAssertedSources": [
+        "ctgov-nct07104500-arms-2026"
+      ],
+      "inferredClasses": [
+        null
+      ]
+    },
+    {
+      "compound": "yk-11",
+      "claimId": "yk11-adverse-effect-liver-injury-001",
+      "claimType": "adverse-effect",
+      "requiredField": "contraindications-warnings",
+      "selfAssertedSources": [
+        "livertox-sarms-nbk619971"
+      ],
+      "inferredClasses": [
+        null
       ]
     }
   ],

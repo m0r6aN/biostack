@@ -27,6 +27,29 @@ SAFETY_CRITICAL_CLAIM_TYPES = {
     "storage-reconstitution", "contraindication", "warning", "monitoring", "interaction",
 }
 AUTHORITATIVE_TIERS = {"A1", "A2"}
+
+# claimType -> the authorizedFieldUse value a source must carry to support it.
+# A source can be tiered A1 and still be unauthorized for the field a claim needs:
+# nih-ods is registry-authorized for identity/mechanism/efficacy-claims/interactions
+# and explicitly states it "cannot independently support safety-critical or
+# product-specific dosing claims". Tier alone does not catch that.
+CLAIM_TYPE_FIELD = {
+    "regulatory": "regulatory",
+    "approved-indication": "approved-indications",
+    "dose-context": "product-specific-dosing",
+    "formulation": "product-specific-dosing",
+    "storage-reconstitution": "storage-reconstitution",
+    "contraindication": "contraindications-warnings",
+    "warning": "contraindications-warnings",
+    "adverse-effect": "contraindications-warnings",
+    "monitoring": "monitoring",
+    "interaction": "interactions",
+    "mechanism": "mechanism",
+    "efficacy": "efficacy-claims",
+    "studied-use": "efficacy-claims",
+    "misinformation-claim": "misinformation-monitoring",
+    "controversy": "misinformation-monitoring",
+}
 TIER_ORDER = {"A1": 1, "A2": 2, "B1": 3, "B2": 4, "C1": 5, "C2": 6, "D": 7}
 
 # Packet sourceId prefix -> registry class sourceId. Used ONLY to diagnose which
@@ -65,8 +88,11 @@ def infer_class(source_id):
 
 
 def audit(evidence_glob, registry_path):
-    reg, classes, by_key = load_registry(registry_path)
+    reg, classes_by_id, by_key = load_registry(registry_path)
+    classes = classes_by_id
     per_packet, gap_claims, placeholder_dates = [], [], []
+    field_use_gaps = []
+    projected_field_use_gaps = []
     source_records = {}
 
     for path in sorted(glob.glob(evidence_glob)):
@@ -106,6 +132,45 @@ def audit(evidence_glob, registry_path):
                     backed.append(r)
             if backed:
                 n_pass_registry += 1
+
+            # field-use check: of the registry-backed sources, do any carry the
+            # authorizedFieldUse this claim type requires?
+            need = CLAIM_TYPE_FIELD.get(claim_type or "")
+            if need and backed:
+                ok = [r for r in backed
+                      if need in (by_key[r.lower()]["evidencePolicy"].get("authorizedFieldUse") or [])]
+                if not ok:
+                    field_use_gaps.append({
+                        "compound": compound, "claimId": claim["claimId"],
+                        "claimType": claim_type, "requiredField": need,
+                        "registryBackedSources": backed,
+                    })
+
+            # Projected field-use gap: if the currently-unregistered sources were
+            # registered into the class their id implies, would the claim then have a
+            # source authorized for the field it needs? This is the number that matters
+            # BEFORE registration, because registering by class can hand a claim an
+            # A1 source that is still not authorized for, say, product-specific dosing.
+            if need and not backed and today:
+                projected_ok = False
+                for r in today:
+                    cls = infer_class(r)
+                    if not cls:
+                        continue
+                    ent = classes_by_id.get(cls)
+                    if not ent:
+                        continue
+                    if (ent["evidencePolicy"]["authorityTier"] in AUTHORITATIVE_TIERS
+                            and need in (ent["evidencePolicy"].get("authorizedFieldUse") or [])):
+                        projected_ok = True
+                        break
+                if not projected_ok:
+                    projected_field_use_gaps.append({
+                        "compound": compound, "claimId": claim["claimId"],
+                        "claimType": claim_type, "requiredField": need,
+                        "selfAssertedSources": today,
+                        "inferredClasses": [infer_class(r) for r in today],
+                    })
 
             if today and not backed:
                 gap_claims.append({
@@ -161,6 +226,8 @@ def audit(evidence_glob, registry_path):
             "gapClaims": len(gap_claims),
             "distinctSelfAssertedSources": len(source_records),
             "placeholderJan1Dates": len(placeholder_dates),
+            "fieldUseGaps": len(field_use_gaps),
+            "projectedFieldUseGaps": len(projected_field_use_gaps),
         },
         "bucketCounts": {
             k: {"sources": len(v), "claimReferences": sum(r["claimCount"] for r in v)}
@@ -169,6 +236,8 @@ def audit(evidence_glob, registry_path):
         "buckets": {k: sorted(v, key=lambda r: -r["claimCount"]) for k, v in sorted(buckets.items())},
         "placeholderDates": placeholder_dates,
         "gapClaims": gap_claims,
+        "fieldUseGaps": field_use_gaps,
+        "projectedFieldUseGaps": projected_field_use_gaps,
         "perPacket": per_packet,
     }
 
@@ -192,6 +261,10 @@ def main():
     print("  pass under a registry-backed gate:      %d" % t["passUnderRegistryBacked"])
     print("  gap (pass only by self-assertion):      %d" % t["gapClaims"])
     print("placeholder Jan-1 publication dates: %d" % t["placeholderJan1Dates"])
+    print("claims whose registry-backed source is NOT authorized for that field: %d"
+          % t["fieldUseGaps"])
+    print("claims that would STILL fail on field-use after class registration: %d"
+          % t["projectedFieldUseGaps"])
     print()
     labels = {
         "A-over-asserted": "A. OVER-ASSERTED (packet tier stronger than its own registry class)",
