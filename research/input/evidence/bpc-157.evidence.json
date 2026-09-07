@@ -85,7 +85,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/",
       "doi": null,
       "pmid": "40756949",
-      "publishedAt": "2025-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
@@ -235,14 +235,16 @@
     "reviewReasons": [
       "Pilot misinformation-heavy evidence packet requires human review before publication.",
       "Regulatory-status drift resolved 2026-08-29: FDA removed BPC-157 from the Category 2 significant-safety-risk list in April 2026 after nomination withdrawal (procedural, not a safety finding); BPC-157 remains an unapproved new drug not on any permitted compounding list, and at the July 23-24, 2026 PCAC meeting the committee voted to recommend BPC-157 for the 503A Bulks List (advisory, non-binding; awaiting FDA action). Claim bpc157-regulatory-compounding-risk-001 and its sourceRefs were rewritten and re-verified against a live re-fetch of the FDA page plus an independent legal/regulatory commentary source (Holt Law) rather than re-affirming the original stale FDA-page-only citation; next reviewer should re-check the live FDA page again ahead of/after the July 2026 PCAC meeting, since the outcome of that meeting may change status again.",
-      "compound.externalIdentifiers completeness gap closed 2026-08-29 via PubChem REST lookup (CID 9941957; CAS 137525-51-0; UNII 8ED8NXK95P; DrugBank DB11882; ChEMBL CHEMBL4297358); rxnorm/doi/pmid remain null as not applicable to this compound identity record."
+      "compound.externalIdentifiers completeness gap closed 2026-08-29 via PubChem REST lookup (CID 9941957; CAS 137525-51-0; UNII 8ED8NXK95P; DrugBank DB11882; ChEMBL CHEMBL4297358); rxnorm/doi/pmid remain null as not applicable to this compound identity record.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "pilot-input",
       "misinformation-heavy",
       "limited-human-evidence",
       "regulatory-boundary",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

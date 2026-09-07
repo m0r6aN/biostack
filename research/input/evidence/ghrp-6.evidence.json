@@ -98,7 +98,7 @@
       "url": "https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2024.1303402/full",
       "doi": "10.3389/fneur.2024.1303402",
       "pmid": null,
-      "publishedAt": "2024-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
     }
   ],
@@ -334,7 +334,8 @@
       "Remediation pass 2026-08-29: UNII (4H7N4I6X6A) and CAS (87616-84-0) resolved via FDA/NIH NCATS Global Substance Registration System (GSRS) record confirming 'GHRP-6' as a listed name; DrugBank and ChEMBL identifiers still not resolved from structured databases -- no matching DrugBank or ChEMBL entry was located for GHRP-6 in this pass.",
       "Remediation pass 2026-08-29: FDA Category 2 route-of-administration detail for GHRP-6 was corrected after live re-fetch confirmed the prior 'injectable and nasal' qualifier belonged to the adjacent GHRP-2 row, not GHRP-6's; GHRP-6's current Category 2 status (added 9/29/2023, not among the 12 peptides removed in April 2026) was reconfirmed against the live FDA page.",
       "Remediation pass 2026-08-29: claims ghrp6-studied-use-oral-short-stature-001 and ghrp6-efficacy-stroke-combination-rct-001 remain unresolved after a targeted independent-corroboration attempt each (Europe PMC REST, PubMed/PMC direct lookup, RPCEC registry, open web search); no independent source was found to confirm or conflict with either claim's specific figures. Both claims' statements were narrowed to flag single-source status and both are tracked via conflicts[] pending human reviewer sign-off; neither is fieldAuthorityRequired so this does not block promotion on its own.",
-      "Human evidence base is thin: located controlled human studies are small, decades-old (1995, 1998) pharmacology studies or a single small unrelated stroke trial (2024); no modern controlled human trial addresses the uses for which GHRP-6 is popularly marketed."
+      "Human evidence base is thin: located controlled human studies are small, decades-old (1995, 1998) pharmacology studies or a single small unrelated stroke trial (2024); no modern controlled human trial addresses the uses for which GHRP-6 is popularly marketed.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -344,7 +345,8 @@
       "gray-market-marketing-gap",
       "regulatory-boundary",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

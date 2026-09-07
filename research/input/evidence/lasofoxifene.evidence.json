@@ -63,7 +63,7 @@
       "url": "https://digitalcommons.wustl.edu/cgi/viewcontent.cgi?article=4488&context=oa_4",
       "doi": "10.1016/j.annonc.2023.12.001",
       "pmid": "38072514",
-      "publishedAt": "2024-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
@@ -312,7 +312,8 @@
       "DailyMed has no current label for lasofoxifene (no valid US marketing authorization was found); confirm this absence directly against DailyMed at review time rather than relying on this packet's regulatory-history sources alone.",
       "ELAINE 1 primary endpoint was not statistically significant (p=0.138); confirm whether phase III ELAINE 3 has since reported results that should be incorporated.",
       "PMID/DOI for ELAINE 1 confirmed via PubMed listing, but full text was retrieved from an open-access institutional repository mirror rather than the publisher site (publisher and ScienceDirect pages blocked automated access); verify mirror fidelity against publisher version at review time.",
-      "Sponsor-authored source (Sermonix) used for development-status claim; independent confirmation against ClinicalTrials.gov not yet completed in this pass."
+      "Sponsor-authored source (Sermonix) used for development-status claim; independent confirmation against ClinicalTrials.gov not yet completed in this pass.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -321,7 +322,8 @@
       "negative-or-nonsignificant-human-rct-documented",
       "thin-human-evidence",
       "investigational-oncology-repurposing",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

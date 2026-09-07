@@ -70,7 +70,7 @@
       "url": "https://www.wikijournalclub.org/wiki/ATLAS",
       "doi": null,
       "pmid": "23219286",
-      "publishedAt": "2013-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
@@ -82,7 +82,7 @@
       "url": "https://www.frontiersin.org/journals/chemistry/articles/10.3389/fchem.2025.1536858/full",
       "doi": "10.3389/fchem.2025.1536858",
       "pmid": null,
-      "publishedAt": "2025-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
     }
   ],
@@ -369,7 +369,8 @@
       "ATLAS trial figures were sourced from a secondary trial-summary page (Wiki Journal Club) rather than the primary Lancet full text; confirm against thelancet.com or PMC at review time.",
       "DailyMed and JNCI page content was extracted via automated summarization of fetched pages rather than raw HTML/PDF; spot-check exact wording and numeric figures against source pages at review time.",
       "Human evidence for the popular bodybuilding/PCT off-label use pattern remains thin to absent; only a single 2025 survey/product-testing study was located.",
-      "wave006 re-review (2026-09-05) demonstrated an ATLAS endpoint misclassification (all-cause mortality reported as breast cancer mortality) and crude-proportion versus cumulative-risk conflation; corrected 2026-09-06 in packet-authoring only. Remaining labeled-indication scope, boxed-warning denominators, contraindication scope, dose attribution, NSABP P-1 reconciliation, and PCT source-provenance dispositions are not addressed by that pass."
+      "wave006 re-review (2026-09-05) demonstrated an ATLAS endpoint misclassification (all-cause mortality reported as breast cancer mortality) and crude-proportion versus cumulative-risk conflation; corrected 2026-09-06 in packet-authoring only. Remaining labeled-indication scope, boxed-warning denominators, contraindication scope, dose attribution, NSABP P-1 reconciliation, and PCT source-provenance dispositions are not addressed by that pass.",
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -381,7 +382,8 @@
       "gray-market-off-label-use-flagged",
       "secondary-source-for-atlas-trial",
       "authority-support-pass-2026-08-29",
-      "wave006-correction-pass-2026-09-06"
+      "wave006-correction-pass-2026-09-06",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

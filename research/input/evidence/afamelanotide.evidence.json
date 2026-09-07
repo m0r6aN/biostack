@@ -63,7 +63,7 @@
       "url": "https://www.researchgate.net/publication/279530268_Afamelanotide_for_Erythropoietic_Protoporphyria",
       "doi": "10.1056/NEJMoa1411481",
       "pmid": "25671653",
-      "publishedAt": "2015-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
     },
     {
@@ -123,7 +123,7 @@
       "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1056/NEJMoa1411481",
       "doi": "10.1056/NEJMoa1411481",
       "pmid": "25671653",
-      "publishedAt": "2015-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
@@ -447,7 +447,8 @@
       "PMC and PubMed full pages returned bot-verification (reCAPTCHA) walls this session; NEJM RCT quotes were sourced via a ResearchGate-hosted reproduction of the same paper. RESOLVED (2026-08-29): cross-checked against an independent Semantic Scholar abstract record of the same DOI — all figures matched exactly.",
       "RESOLVED (2026-08-29): current FDA label (2024 revision s007) fetched live and cross-checked against the indication, dosing/storage, hypersensitivity/anaphylaxis, and skin-exam claims — all confirmed unchanged from the 2019 label text originally cited; the s007 label has been added to sources and cited alongside the original 2019 PDF and DailyMed pull.",
       "Mechanism-of-action claim: RESOLVED (2026-08-29) by adding a verbatim PubChem pharmacology-narrative quote (the packet's original UNII-sourced quote was only the substance name and did not itself substantiate the mechanism sentence).",
-      "Claim afamelanotide-controversy-melanotan-conflation-001 remains unresolved/review-gated: no independent source naming afamelanotide/Melanotan I directly was located despite a targeted remediation-pass attempt; do not promote this claim to non-gated status without a human reviewer either finding such a source or explicitly signing off on the documented evidence gap."
+      "Claim afamelanotide-controversy-melanotan-conflation-001 remains unresolved/review-gated: no independent source naming afamelanotide/Melanotan I directly was located despite a targeted remediation-pass attempt; do not promote this claim to non-gated status without a human reviewer either finding such a source or explicitly signing off on the documented evidence gap.",
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -455,7 +456,8 @@
       "fda-approved-product",
       "positive-human-rct-documented",
       "gray-market-conflation-risk",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

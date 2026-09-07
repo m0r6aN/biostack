@@ -62,7 +62,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/1299794/",
       "doi": null,
       "pmid": "1299794",
-      "publishedAt": "1992-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
@@ -74,7 +74,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/6391926/",
       "doi": null,
       "pmid": "6391926",
-      "publishedAt": "1984-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
     },
     {
@@ -351,7 +351,8 @@
       "Expansion-batch evidence packet requires human review before publication.",
       "Remediation pass (2026-08-29): live FDA advisory-committee page was re-checked and still shows only pre-meeting materials with no official outcome document posted. Independent industry/legal reporting (FDA Law Blog, cross-consistent with other peptide-industry sources) was used to confirm the PCAC vote failed 6-for/7-against/1-abstain, rejecting emideltide from the 503A Bulks List; this outcome has been added to the regulatory claim, but remains flagged for re-confirmation against a primary FDA record once FDA publishes an official post-meeting summary or updates the 503A list.",
       "CAS/UNII/DrugBank/ChEMBL identifiers remain unresolved after this review's independent attempts: CAS Common Chemistry API search returned no result (403), the FDA/NIH UNII (GSRS) lookup returned no result (404), and PubChem's own compound page still requires JavaScript to render structured identifier fields (only molecular formula C35H48N10O15 and CID 68816 could be confirmed from rendered text). These fields stay null pending a successful authoritative lookup.",
-      "Human efficacy evidence base is thin (small, decades-old studies; only one modern-era FDA synthesis document reviewed) and should be expanded with any additional controlled studies at review time."
+      "Human efficacy evidence base is thin (small, decades-old studies; only one modern-era FDA synthesis document reviewed) and should be expanded with any additional controlled studies at review time.",
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -360,7 +361,8 @@
       "thin-human-evidence",
       "regulatory-decision-pending-2026-pcac",
       "marketing-outpaces-evidence",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

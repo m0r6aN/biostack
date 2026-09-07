@@ -49,7 +49,7 @@
       "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/203505s015lbl.pdf",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2019-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
@@ -133,7 +133,7 @@
       "url": "https://www.dovepress.com/safety-and-efficacy-of-ospemifene-for-the-treatment-of-dyspareunia-ass-peer-reviewed-fulltext-article-CIA",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2014-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
@@ -550,7 +550,8 @@
       "RESOLVED (remediation pass, 2026-08-29): RxNorm (RxCUI 1370971, via live RxNav REST fetch) and UNII (B0P231ILBK, via live DailyMed label re-fetch) identifiers were confirmed this session and are no longer null.",
       "Individual phase III RCT abstracts on PubMed (e.g. PMID 24679891, PMID 23361170) remain blocked by bot-verification pages as of this session; a second, independently-authored narrative review (Wurz et al. 2014, Clinical Interventions in Aging) was fetched and corroborates the systematic review's trial-level figures, but the primary RCT abstracts themselves are still not directly re-fetched and should be cross-checked at a future review pass.",
       "Bone-density claim (ospemifene-studied-use-bone-density-001) rests on a single non-randomized controlled comparison (MDPI 2022). This session made a targeted attempt to find cross-family independent verification (systematic review, professional-society guideline, or structured database) via Europe PMC REST and a PubMed search; both were rate-limited (HTTP 429) on retry and a direct-proxy fallback was blocked, so no cross-family source was found. A second same-family controlled-human study (Komi et al. 2004, PMID 15255284) was located and added as directional corroboration only. Per the independent-review rule this claim remains review-gated and its statement has been tightened to explicitly flag it as a single-study, non-corroborated, exploratory finding; a future review pass should retry the systematic-review/guideline search.",
-      "Vulvar-specific evidence gap: RESOLVED IN PART (2026-08-29). A subsequent Duchesnay-sponsored phase 3 trial (Menopause, 2019, vulvar-vestibular photography) was located and cited (via a PR Newswire summary of the study; the full peer-reviewed text was not accessible this session), partially addressing the gap in the post-approval literature. The case report's premise still holds for the original 2013 approval trials, so the claim and linked conflict remain accurate but have been updated to reflect this newer study; human review is still recommended given the sponsor affiliation and the press-release-only sourcing of the 2019 trial."
+      "Vulvar-specific evidence gap: RESOLVED IN PART (2026-08-29). A subsequent Duchesnay-sponsored phase 3 trial (Menopause, 2019, vulvar-vestibular photography) was located and cited (via a PR Newswire summary of the study; the full peer-reviewed text was not accessible this session), partially addressing the gap in the post-approval literature. The case report's premise still holds for the original 2013 approval trials, so the claim and linked conflict remain accurate but have been updated to reflect this newer study; human review is still recommended given the sponsor affiliation and the press-release-only sourcing of the 2019 trial.",
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -560,7 +561,8 @@
       "systematic-review-backed-efficacy",
       "thin-human-evidence-for-secondary-uses",
       "misinformation-gap-documented",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

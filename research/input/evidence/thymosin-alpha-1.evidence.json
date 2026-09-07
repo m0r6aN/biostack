@@ -63,7 +63,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/39814420/",
       "doi": null,
       "pmid": "39814420",
-      "publishedAt": "2025-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T21:30:00Z"
     },
     {
@@ -75,7 +75,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/23327199/",
       "doi": null,
       "pmid": "23327199",
-      "publishedAt": "2013-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T21:30:00Z"
     },
     {
@@ -461,7 +461,8 @@
       "Sepsis efficacy evidence is discordant between the early ETASS trial and the later, larger TESTS trial; resolve via an independent systematic review/meta-analysis source not yet fetched.",
       "A conflicting FDA-approval claim from a public-docket presentation was identified but not independently reconciled against a primary orphan-drug-designation or NDA history record.",
       "UNII and ChEMBL identifiers not yet resolved from structured databases; two candidate CAS numbers (62304-98-7 and 69521-94-4) were found and only one was selected without independent confirmation of which corresponds to free base vs. acetate salt.",
-      "Ex-U.S. approval-country claims rest on a secondary informational source, not a primary foreign regulator page or label registry."
+      "Ex-U.S. approval-country claims rest on a secondary informational source, not a primary foreign regulator page or label registry.",
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -471,7 +472,8 @@
       "not-fda-approved",
       "gray-market-us-status",
       "misinformation-gap-documented",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

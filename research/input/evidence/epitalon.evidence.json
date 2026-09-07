@@ -147,7 +147,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/15452611/",
       "doi": null,
       "pmid": "15452611",
-      "publishedAt": "2004-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T21:30:00Z"
     },
     {
@@ -492,7 +492,8 @@
       "Compound-identity ambiguity between Epitalon (tetrapeptide) and Epithalamin (polypeptide extract) affects most efficacy-adjacent claims and needs independent confirmation against primary Khavinson-group publications; kept as needs-human-review per conflict epitalon-conflict-formulation-001.",
       "Human evidence base for the Epitalon tetrapeptide itself is thin to nonexistent; nearly all human data pertains to a related but distinct formulation (Epithalamin) from a single non-independently-replicated research group.",
       "RESOLVED 2026-08-29 remediation pass: independent professional-legal-analysis source (McDermott Will & Emery) confirms the July 24, 2026 PCAC committee voted 7-4 (1 abstention) IN FAVOR of recommending epitalon for the 503A Bulks List, reversing the staff briefing's negative pre-meeting evaluation; claim epitalon-regulatory-503a-recommendation-001 has been rewritten accordingly and the vote is noted as non-binding pending final FDA rulemaking. Also re-checked FDA's Category 2 significant-safety-risk compounding list: epitalon is not currently listed (nomination withdrawn by nominator); folded into claim epitalon-warning-immunogenicity-carcinogenicity-001.",
-      "Conflicts epitalon-conflict-formulation-001 and epitalon-conflict-telomerase-safety-001 remain legitimately unresolved/needs-human-review after this independent-review pass; that gating is correct and has been kept, not resolved by re-affirmation."
+      "Conflicts epitalon-conflict-formulation-001 and epitalon-conflict-telomerase-safety-001 remain legitimately unresolved/needs-human-review after this independent-review pass; that gating is correct and has been kept, not resolved by re-affirmation.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -502,7 +503,8 @@
       "no-independent-replication",
       "gray-market-only",
       "remediation-pass-2026-08-29",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

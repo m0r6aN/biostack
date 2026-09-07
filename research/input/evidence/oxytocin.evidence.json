@@ -62,7 +62,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/29232031/",
       "doi": null,
       "pmid": "29232031",
-      "publishedAt": "2018-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
@@ -86,7 +86,7 @@
       "url": "https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2024.1477076/full",
       "doi": "10.3389/fpsyt.2024.1477076",
       "pmid": null,
-      "publishedAt": "2024-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
@@ -146,7 +146,7 @@
       "url": "https://www.hillstonepharmacy.com/blog-posts/oxytocin-nasal-spray-2026",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2026-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
     }
   ],
@@ -450,7 +450,8 @@
       "Resolved 2026-08-29: FDA 503A bulk drug substance safety-risk list was live-fetched this pass; oxytocin does not appear on it or on the withdrawn-nominations table. Prior open question is closed (see fda-503a-bulk-substance-safety-risk-list source and the evidence-gap claim).",
       "Positive single-dose adult proof-of-concept oxytocin trials referenced in secondary literature were not independently fetched and verified this session; the packet currently anchors on the larger negative pediatric RCT, now supplemented with the independently-fetched 2024 Frontiers dose-response meta-analysis (see efficacy claim).",
       "Marketing-claim quotes are from a small, non-representative sample of two compounding/telehealth vendor pages and should not be treated as exhaustive of gray-market marketing.",
-      "Conflict oxytocin-conflict-marketing-vs-rct-001 remains needs-human-review by design: independent sources sharpen but do not fully resolve the marketing-vs-evidence tension, so it stays human-review-gated with the 2024 Frontiers meta-analysis now available as a citation for the reviewer."
+      "Conflict oxytocin-conflict-marketing-vs-rct-001 remains needs-human-review by design: independent sources sharpen but do not fully resolve the marketing-vs-evidence tension, so it stays human-review-gated with the 2024 Frontiers meta-analysis now available as a citation for the reviewer.",
+      "placeholder-date-cleanup-2026-09-07: 3 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -460,7 +461,8 @@
       "marketing-vs-evidence-gap-flagged",
       "thin-human-evidence-for-nonapproved-use",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

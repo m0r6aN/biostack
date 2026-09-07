@@ -86,7 +86,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/18454096/",
       "doi": null,
       "pmid": "18454096",
-      "publishedAt": "2008-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T21:30:00Z"
     },
     {
@@ -110,7 +110,7 @@
       "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18454096&format=json&resultType=core",
       "doi": null,
       "pmid": "18454096",
-      "publishedAt": "2008-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
@@ -420,7 +420,8 @@
       "STILL OPEN: DrugBank and ChEMBL identifiers not resolved by any independent source reached this session.",
       "STILL OPEN: PubChem's own live compound page still renders as a JavaScript-gated shell on direct fetch; identity confirmation relies on the independent GSRS cross-reference instead.",
       "STILL OPEN (fieldAuthorityRequired, human-review-gated): dependence/withdrawal risk for Selank was never assessed in the one available human comparator trial, and the vendor 'matches benzodiazepines, no dependence' claim remains unsupported by any dependence/withdrawal data identified in this review.",
-      "STILL OPEN: the '2009 Russian Ministry of Health registration' date and the '0.15% intranasal drop' formulation detail in the mechanism/tuftsin-analog claim remain sourced only to the packet's own review-article citation; no independent source confirmed these two sub-facts this session."
+      "STILL OPEN: the '2009 Russian Ministry of Health registration' date and the '0.15% intranasal drop' formulation detail in the mechanism/tuftsin-analog claim remain sourced only to the packet's own review-article citation; no independent source confirmed these two sub-facts this session.",
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -431,7 +432,8 @@
       "misinformation-claim-documented",
       "identifier-gaps",
       "remediation-pass-2026-08-29",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

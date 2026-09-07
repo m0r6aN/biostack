@@ -100,7 +100,7 @@
       "url": "https://www.frontiersin.org/journals/chemistry/articles/10.3389/fchem.2025.1536858/full",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2025-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
@@ -525,7 +525,8 @@
       "RESOLVED 2026-08-29: primary pivotal trial (Silverman et al. 2008 JBMR) independently retrieved this session via an alternate route (Oxford Academic abstract page), quoted directly, and used to correct the fracture-efficacy claim's population figure (6847 ITT, not the previously conflated ~1583 BMD-substudy figure) and to add the verified nonvertebral-fracture subgroup finding.",
       "RESOLVED 2026-08-29: RxNorm (RxCUI 1441386, confirmed via RxNav name lookup) and UNII (Q16TT9C5BK, confirmed via NCATS GSRS substance search) identifiers independently verified and added.",
       "STILL UNRESOLVED: ChEMBL identifier could not be independently confirmed this session -- ChEMBL's own REST API (ebi.ac.uk) was persistently rate-limited/blocked across multiple attempts, and the only route that returned data (DrugCentral drug card 4334) listed two candidate ChEMBL IDs (CHEMBL46740, CHEMBL2106615, likely free-base vs. acetate-salt forms) without a way to confirm which corresponds to the base compound this session; left null rather than guessing. Attempted routes: ChEMBL REST/JSON API (blocked), ChEMBL explore UI (blocked), Wikidata (domain not fetchable), DrugCentral (ambiguous two-ID result).",
-      "Independent 2026 consumer-pharmacy reporting (medfinder.com) of intermittent DUAVEE retail supply was cited by review but could not be independently re-fetched this session (page not found at the attempted URL); regulatory-approval claim itself was independently confirmed via a live Drugs@FDA record (NDA 022247, active, most recent labeling supplement approved March 2024), and a hedged availability-friction note (without a specific unverified source) was added to that claim's reviewFlags."
+      "Independent 2026 consumer-pharmacy reporting (medfinder.com) of intermittent DUAVEE retail supply was cited by review but could not be independently re-fetched this session (page not found at the attempted URL); regulatory-approval claim itself was independently confirmed via a live Drugs@FDA record (NDA 022247, active, most recent labeling supplement approved March 2024), and a hedged availability-friction note (without a specific unverified source) was added to that claim's reviewFlags.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -535,7 +536,8 @@
       "gray-market-adjacent-use-documented",
       "limited-primary-trial-access-this-session",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

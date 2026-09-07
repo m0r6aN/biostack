@@ -146,7 +146,7 @@
       "url": "https://www.tandfonline.com/doi/abs/10.1080/00224499.2021.1885601",
       "doi": "10.1080/00224499.2021.1885601",
       "pmid": null,
-      "publishedAt": "2021-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     }
   ],
@@ -455,7 +455,8 @@
       "Remediation 2026-08-29 (resolved): efficacy claim updated to disclose the Spielmans 2021 independent reanalysis finding (outcome underreporting; patient preference for placebo), confirmed via Semantic Scholar API this session.",
       "Remediation 2026-08-29 (still open): the independent-review finding's more granular reanalysis figures -- exact open-label-extension continuation rates by arm (~40.5% vs ~69.4%) and the specific magnitude of the AE-driven dropout differential (~12-fold) -- could not be independently re-verified this session; Europe PMC (rate-limited/blocked repeatedly), the tandfonline publisher page (403, paywalled), and Semantic Scholar (abstract-only) were all attempted. Only the abstract-level facts (majority of outcomes unreported; placebo preference) were confirmed and written into the claim; the granular figures remain unconfirmed and are not asserted in the packet.",
       "Remediation 2026-08-29 (still open): the independent reviewer's note that a related intranasal trial in women (Safarinejad 2008, PMID 18179455) was later formally retracted could not be independently verified this session (Europe PMC REST, Semantic Scholar search, and Crossref lookups were rate-limited, 429'd, or targeted the wrong record); this retraction status is not asserted in the packet and should be checked at the next review pass.",
-      "ChEMBL identifier remains unresolved from a structured database; still null."
+      "ChEMBL identifier remains unresolved from a structured database; still null.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -463,7 +464,8 @@
       "a1-regulator-backed",
       "positive-human-rct-documented",
       "vendor-marketing-scope-mismatch-flagged",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

@@ -63,7 +63,7 @@
       "url": "https://go.drugbank.com/articles/A31488",
       "doi": "10.1093/gerona/gls078",
       "pmid": "22459616",
-      "publishedAt": "2013-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
     },
     {
@@ -428,7 +428,8 @@
       "VK5211 Phase 2 hip-fracture results are sourced from a company press release, not a peer-reviewed publication; confirm whether a full peer-reviewed report exists and whether the program has since advanced or been discontinued.",
       "UNII, DrugBank ID, ChEMBL ID, and RxNorm identifiers not yet resolved from structured databases.",
       "Confirm current status of the cited FDA warning letter (issued 2025-12-12) and whether additional/updated warning letters specifically naming LGD-4033/Ligandrol exist at review time.",
-      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification"
+      "audit: packet.category corrected peptides-core -> sarms-core to match compound classification",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -437,7 +438,8 @@
       "thin-human-evidence",
       "press-release-sourced-trial-data",
       "marketing-dose-mismatch",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

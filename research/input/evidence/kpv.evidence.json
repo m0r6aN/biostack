@@ -51,7 +51,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/18061177/",
       "doi": null,
       "pmid": "18061177",
-      "publishedAt": "2008-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T01:20:00Z"
     },
     {
@@ -327,7 +327,8 @@
       "FDA 503A bulk-substance nomination status (withdrawn) should be reconfirmed at review time given the agency revised multiple peptide compounding listings in April 2026 and held a Pharmacy Compounding Advisory Committee meeting in July 2026.",
       "Remediation pass 2026-08-29: the July 23-24, 2026 PCAC committee voted 8 Yes / 6 No / 1 Abstain to recommend KPV's inclusion on the 503A Bulks List, overriding FDA staff's own recommendation against inclusion (per fda.gov/media/193346/download and thepeptide.expert regulatory tracking, both independently re-fetched 2026-08-29); this is advisory and non-binding, the live FDA withdrawn-nomination page has not changed, but this development should be monitored closely before any promotion decision.",
       "Remediation pass 2026-08-29: animal-colitis claim (kpv-studied-use-animal-colitis-001) partially re-verified -- independent primary paper PMID 18092346 (Dalmasso et al., Inflammatory Bowel Diseases 2008) confirms DSS-colitis anti-inflammatory / myeloperoxidase-reduction findings from a materially different source family than the originally cited Gastroenterology paper; the specific 100 micromolar dose figure remains single-sourced to the Gastroenterology paper and should be reconfirmed if a further independent source becomes available.",
-      "Remediation pass 2026-08-29: PubChem CAS/IUPAC identifier verification remains genuinely unresolved because PubChem is JavaScript-gated to automated fetch tools; independent chemical-vendor listings (ChemicalBook, Alfa Chemistry) corroborate CAS 67727-97-3 but are lower-authority than a directly rendered PubChem/DrugBank record and do not close this gap."
+      "Remediation pass 2026-08-29: PubChem CAS/IUPAC identifier verification remains genuinely unresolved because PubChem is JavaScript-gated to automated fetch tools; independent chemical-vendor listings (ChemicalBook, Alfa Chemistry) corroborate CAS 67727-97-3 but are lower-authority than a directly rendered PubChem/DrugBank record and do not close this gap.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -337,7 +338,8 @@
       "marketing-evidence-gap",
       "identifier-needs-confirmation",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

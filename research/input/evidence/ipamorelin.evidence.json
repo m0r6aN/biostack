@@ -61,7 +61,7 @@
       "url": "https://link.springer.com/article/10.1007/s00384-014-2030-8",
       "doi": "10.1007/s00384-014-2030-8",
       "pmid": null,
-      "publishedAt": "2014-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T00:00:00Z"
     },
     {
@@ -241,14 +241,16 @@
     "reviewReasons": [
       "Expansion-batch evidence packet requires human review before publication.",
       "FDA Category 2 peptide listings were revised in April 2026; current ipamorelin status must be confirmed against the live FDA page at review time.",
-      "CAS/UNII/ChEMBL identifiers not yet resolved from structured databases."
+      "CAS/UNII/ChEMBL identifiers not yet resolved from structured databases.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
       "a1-regulator-backed",
       "negative-human-rct-documented",
       "limited-human-evidence",
-      "regulatory-boundary"
+      "regulatory-boundary",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

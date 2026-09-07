@@ -136,7 +136,7 @@
       "url": "https://pure.johnshopkins.edu/en/publications/effects-of-single-nightly-injections-of-growth-hormone-releasing--6/",
       "doi": "10.1016/S0026-0495(97)90174-8",
       "pmid": "9005976",
-      "publishedAt": "1997-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-29T00:00:00Z"
     },
     {
@@ -443,7 +443,8 @@
       "ChEMBL identifier not yet resolved (EBI ChEMBL API was rate-limited/unreachable this session); RxNorm identifier resolved this session via NLM RxNav (RxCUI 56188).",
       "Current FDA 503A/503B bulk-substance listing status for sermorelin was re-verified live against the FDA bulk drug substances page and DailyMed on 2026-08-28 per the independent review; still absent from both. Continue to re-verify at each review cycle since these lists are revised periodically.",
       "Verify DailyMed absence-of-listing finding is still current, since compounded or newly approved products could appear between snapshots.",
-      "Reviewer's recommended fix for the lean-body-mass marketing claim (that Vittone et al. 1997 showed increased lean mass and decreased visceral fat) was checked against the primary-source citation this session and found to be incorrect — the trial actually found no DEXA body-composition change, only partial strength/muscle-endurance improvement. The packet was corrected to reflect the verified result, not the reviewer's characterization; this discrepancy should be flagged back to the review process."
+      "Reviewer's recommended fix for the lean-body-mass marketing claim (that Vittone et al. 1997 showed increased lean mass and decreased visceral fat) was checked against the primary-source citation this session and found to be incorrect — the trial actually found no DEXA body-composition change, only partial strength/muscle-endurance improvement. The packet was corrected to reflect the verified result, not the reviewer's characterization; this discrepancy should be flagged back to the review process.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -452,7 +453,8 @@
       "no-current-fda-approved-product",
       "gray-market-only",
       "marketing-vs-evidence-gap-documented",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

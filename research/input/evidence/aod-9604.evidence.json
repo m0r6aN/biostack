@@ -77,7 +77,7 @@
       "url": "https://www.jofem.org/index.php/jofem/article/view/157/194",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2013-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T21:30:00Z"
     },
     {
@@ -391,7 +391,8 @@
       "Human efficacy evidence for the compound's popularly marketed fat-loss use is thin and specifically negative in the definitive trial; this must not be softened during review.",
       "Sponsor-linked JOFEM safety publications (Stier 2013, More & Kenley 2014) were the only human tolerability sources found; an independent, non-sponsor-affiliated human safety source was not identified and should be sought during review.",
       "Remediation pass (2026-08-29), claim aod9604-safety-human-tolerability-001: made one serious targeted attempt to resolve via PubMed (query \"AOD9604\", 23 results across 3 pages reviewed in full) and Europe PMC REST; no independent non-sponsor-affiliated human safety source was found, and the Europe PMC REST endpoint (www.ebi.ac.uk) was unreachable due to network egress policy this session. Claim statement tightened to make explicit it rests on sponsor-affiliated sources only; remains fieldAuthorityRequired=true and human-review gated per promotion blocker.",
-      "Remediation pass (2026-08-29), claim aod9604-regulatory-pcac-recommendation-001: same PubMed search found no independent publication repeating the FDA briefing's specific nonclinical toxicology findings (osteocalcin, periportal hepatocyte vacuolation, equivocal genotoxicity); this remains sourced solely to fda-pcac-briefing-183584 and stays human-review gated per promotion blocker. Independently corroborated context (July 2026 PCAC meeting excluded AOD-9604 from its 7-peptide recommended batch) was added to the claim's reviewFlags."
+      "Remediation pass (2026-08-29), claim aod9604-regulatory-pcac-recommendation-001: same PubMed search found no independent publication repeating the FDA briefing's specific nonclinical toxicology findings (osteocalcin, periportal hepatocyte vacuolation, equivocal genotoxicity); this remains sourced solely to fda-pcac-briefing-183584 and stays human-review gated per promotion blocker. Independently corroborated context (July 2026 PCAC meeting excluded AOD-9604 from its 7-peptide recommended batch) was added to the claim's reviewFlags.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -401,7 +402,8 @@
       "sponsor-linked-safety-sources",
       "regulatory-boundary",
       "marketing-evidence-gap",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }

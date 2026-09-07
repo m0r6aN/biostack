@@ -87,7 +87,7 @@
       "url": "https://journals.eco-vector.com/2078-1962/article/view/609445",
       "doi": null,
       "pmid": null,
-      "publishedAt": "2018-01-01T00:00:00Z",
+      "publishedAt": null,
       "accessedAt": "2026-08-28T21:30:00Z"
     },
     {
@@ -408,7 +408,8 @@
       "No internationally indexed, PMC/PubMed-verified double-blind placebo-controlled human RCT for Semax was located this session; PMC and PubMed article pages returned reCAPTCHA challenge pages instead of content on repeated attempts, so mechanism and trial-level primary literature could not be independently re-verified beyond the meta-analysis abstract and label.",
       "RxNorm, UNII, DrugBank, and ChEMBL identifiers not resolved from structured databases this session.",
       "Confirm current FDA bulk-substances withdrawn-nomination status for Semax against the live FDA page at review time, since peptide listings have been revised in recent cycles.",
-      "Russian product label was sourced via a third-party retailer-hosted PDF rather than an official government registry; verify against the official Russian State Register of Medicines / manufacturer source at review time."
+      "Russian product label was sourced via a third-party retailer-hosted PDF rather than an official government registry; verify against the official Russian State Register of Medicines / manufacturer source at review time.",
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -417,7 +418,8 @@
       "thin-independently-verified-human-evidence",
       "no-blinded-rct-identified",
       "gray-market-us-marketing-gap",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "placeholder-date-cleanup-2026-09-07"
     ]
   }
 }
