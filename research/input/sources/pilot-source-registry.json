@@ -61,15 +61,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -169,15 +169,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "A2",
@@ -780,15 +780,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -1073,15 +1073,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Hosted on fda.gov but deliberately tiered below the fda class; see limitations."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "C1",
@@ -1175,15 +1175,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -1277,15 +1277,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -1377,15 +1377,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -1481,15 +1481,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -1687,15 +1687,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "B2",
@@ -1804,15 +1804,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "B1",
@@ -1909,15 +1909,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "A2",
@@ -2252,15 +2252,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "B2",
@@ -2586,15 +2586,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "B2",
@@ -3021,15 +3021,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "C1",
@@ -3124,15 +3124,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "A2",
@@ -3227,15 +3227,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "A2",
@@ -3329,15 +3329,15 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": false,
+        "enabled": true,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
         "requiresAccount": false,
-        "robotsPolicyStatus": "not-reviewed",
+        "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Rights are ratified, but no automated acquisition adapter exists for this class: records are retrieved manually at review time. Enable only after a robots and API-terms review."
+        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
       },
       "evidencePolicy": {
         "authorityTier": "B1",
