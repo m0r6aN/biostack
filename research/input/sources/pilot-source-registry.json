@@ -61,7 +61,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -69,7 +69,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -169,7 +169,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -177,7 +177,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "A2",
@@ -780,7 +780,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -788,7 +788,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -1073,7 +1073,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -1081,7 +1081,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "C1",
@@ -1175,7 +1175,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -1183,7 +1183,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -1277,7 +1277,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -1285,7 +1285,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -1377,7 +1377,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -1385,7 +1385,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -1481,7 +1481,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -1489,7 +1489,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "A1",
@@ -1687,7 +1687,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -1695,7 +1695,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "B2",
@@ -1804,7 +1804,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -1812,7 +1812,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "B1",
@@ -1909,7 +1909,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -1917,7 +1917,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "A2",
@@ -2252,7 +2252,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -2260,7 +2260,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "B2",
@@ -2586,7 +2586,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -2594,7 +2594,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "B2",
@@ -3021,7 +3021,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -3029,7 +3029,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "C1",
@@ -3124,7 +3124,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -3132,7 +3132,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "A2",
@@ -3227,7 +3227,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -3235,7 +3235,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "A2",
@@ -3329,7 +3329,7 @@
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
-        "enabled": true,
+        "enabled": false,
         "method": "manual-review",
         "hasApi": false,
         "hasBulkExport": false,
@@ -3337,7 +3337,7 @@
         "robotsPolicyStatus": "not-applicable",
         "apiTermsStatus": "not-applicable",
         "rateLimitPolicy": "Manual, low-volume retrieval only; back off on any 4xx or 5xx response.",
-        "accessNotes": "Manual, document-level retrieval of specific cited records; no crawler is run, so robots policy is not applicable. Rights ratified by the product owner on 2026-09-07. Acquisition is enabled so that registered sources can authorize the field uses their class permits."
+        "accessNotes": "DEACTIVATED 2026-09-07. This lane was enabled without the legalRights approval that stageGates.sourceActivationRequiredApprovals requires. That approval belongs to the legal-rights-approver named in research/source-authorization/recommended-seven-source-decisions.v1.json and was never obtained. Registration and rights ratification are recorded, but the lane stays inactive until a source-authorization decision batch covering it is issued and bound to this registry."
       },
       "evidencePolicy": {
         "authorityTier": "B1",
