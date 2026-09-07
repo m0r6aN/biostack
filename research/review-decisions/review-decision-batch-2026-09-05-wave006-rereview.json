@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "wave006-rereview-2026-09-05",
+    "reviewerId": "opencode-gtm-lead(session-kickoff-2026-09-05)",
+    "reviewedAt": "2026-09-05T10:45:42Z",
+    "notes": [
+      "Bounded re-review of the three operator-nominated wave006 candidates, not the entire remediated corpus. All three require changes; no promotion is authorized.",
+      "Three fresh-context host reviewers independently inspected one packet each and retrieved public sources, including different editorial/source families. They did not author or edit the packets. Model selection was unavailable; this is not a verified multi-model council.",
+      "Claim-level dispositions, source URLs, retrieval limitations, and reviewer task IDs are preserved in receipts/wave006-rereview-2026-09-05.md.",
+      "The 2026-08-28 delegation names Claude. This batch identifies the actual OpenCode reviewer under the renewed GTM kickoff; it grants no approval and does not impersonate that grantee.",
+      "All existing authority flags, claim types, packet conflicts, source authorization, and human-review gates remain unchanged. No soft blockers are cleared."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "wave006-rereview-creatine-2026-09-05",
+      "compoundName": "Creatine",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-kickoff-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:45:42Z",
+      "scope": {
+        "claimIds": [
+          "creatine-regulatory-status-001",
+          "creatine-mechanism-atp-phosphocreatine-001",
+          "creatine-efficacy-highintensity-strength-lbm-001",
+          "creatine-dose-context-loading-maintenance-001",
+          "creatine-safety-common-adverse-effects-001",
+          "creatine-monitoring-renal-function-001",
+          "creatine-misinformation-hairloss-dht-001",
+          "creatine-evidence-gap-endurance-broad-marketing-001"
+        ],
+        "qualityFlags": ["wave006-rereview", "independent-review", "no-promotion-clearance"],
+        "reviewCategories": ["endpoint-denominator-verification", "source-provenance", "independent-source-family-verification"],
+        "promotionBlockers": [
+          "Correct the 13.7% versus 13.2% safety figures: PMID 40198156 reports percentages of studies reporting side effects, not participant side-effect rates. Separate clinical-trial and spontaneous-report denominators; update the resolved remediation narratives as well.",
+          "Establish exact eligible A1/A2 support for dose-context and safety/monitoring assertions. NIH ODS packet tiers conflict with the registry's C2 policy; an FDA-hosted industry GRAS submission is not automatically an FDA-authored safety assessment. Do not weaken authority requirements to resolve this.",
+          "Reconcile creatinine-estimated versus measured GFR results in DOI 10.1007/s11255-026-05287-x and retain the renal-impairment population conflict. The non-dialysis CKD trial-absence assertion was not independently confirmed in this bounded review.",
+          "Reconcile the hair-method criticism with the primary trial's use of both Trichogram and FotoFinder. Scalp-DHT and genetic-screening criticism remains incompletely verified; independent commentary is not a second trial.",
+          "Correct the regulatory claim's only-subject-to-notification wording, verify creatine-specific regulatory disposition, resolve loading daily-total quotation ambiguity, and complete the remaining independent corroboration and publication-date provenance."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Packet creatine-evidence-expansion-001 remains review-gated. Whole-claim reviewer results: five request-changes and three unresolved; unresolved is not a finding of falsity.",
+        "New editorial family: Mayo Clinic clinical summary. Europe PMC copies of already cited papers are direct verification, not new independent families."
+      ]
+    },
+    {
+      "decisionId": "wave006-rereview-vitamin-d3-2026-09-05",
+      "compoundName": "Vitamin D3",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-kickoff-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:45:42Z",
+      "scope": {
+        "claimIds": [
+          "vitamind3-regulatory-supplement-status-001",
+          "vitamind3-mechanism-calcium-bone-001",
+          "vitamind3-dose-context-rda-ul-001",
+          "vitamind3-efficacy-vital-cancer-cvd-negative-001",
+          "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
+          "vitamind3-evidence-gap-immune-covid-marketing-001",
+          "vitamind3-adverse-effect-hypercalcemia-toxicity-001"
+        ],
+        "qualityFlags": ["wave006-rereview", "independent-review", "no-promotion-clearance"],
+        "reviewCategories": ["guideline-currency", "product-specific-scope", "independent-source-family-verification"],
+        "promotionBlockers": [
+          "Correct the false assertion that kidney-stone risk was not mentioned in the 2018 USPSTF statement. The official final statement explicitly describes a small increase. The 2024 draft updates the pooled analysis; it does not introduce a previously unrecognized harm. Correct corresponding remediation narratives.",
+          "Restrict regulatory conclusions to the exact DailyMed SKU. One product does not establish predominant U.S. market status or every cholecalciferol product's approval status; label directions are not universally physician-directed.",
+          "Independently verify the complete reference-intake, serum-threshold, and toxicity assertions using eligible A1/A2 support. NIH ODS retrieval failed twice, and its packet authority tier also differs from the registry policy. No authority flags or tiers may be weakened or self-authorized.",
+          "Complete verification of the mechanism and immune/depression/COVID assertions with exact population, endpoint, and analysis-set boundaries. The adult COVID study is not evidence for every immune outcome or population.",
+          "Preserve the distinction between the 2018 final statement and the December 2024 draft, still identified as a draft on the retrieved official pages on 2026-09-05. Preserve osteoporosis/deficiency exclusions and the historical higher-dose I statement."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Packet vitamin-d3-evidence-expansion-001 remains review-gated. Whole-claim reviewer results: one confirm, two request-changes, four unresolved. This packet-scoped request-changes decision does not declare every claim false.",
+        "VITAL primary manuscript was accessible and supports the overall primary-endpoint finding and hypothesis-generating BMI caveat. It is the same study, not independent replication, and no approve-claims decision is issued here.",
+        "New editorial family: Endocrine Society 2024 guideline. It corroborates reference intakes but does not independently establish every safety threshold in the packet."
+      ]
+    },
+    {
+      "decisionId": "wave006-rereview-tamoxifen-2026-09-05",
+      "compoundName": "Tamoxifen",
+      "decision": "request-changes",
+      "reviewerId": "opencode-gtm-lead(session-kickoff-2026-09-05)",
+      "reviewedAt": "2026-09-05T10:45:42Z",
+      "scope": {
+        "claimIds": [
+          "tamoxifen-approved-indication-001",
+          "tamoxifen-warning-boxed-001",
+          "tamoxifen-contraindication-001",
+          "tamoxifen-mechanism-serm-001",
+          "tamoxifen-dose-context-001",
+          "tamoxifen-efficacy-nsabp-p1-001",
+          "tamoxifen-efficacy-atlas-extended-001",
+          "tamoxifen-evidence-gap-bodybuilding-pct-001"
+        ],
+        "qualityFlags": ["wave006-rereview", "independent-review", "no-promotion-clearance"],
+        "reviewCategories": ["endpoint-denominator-verification", "label-population-scope", "independent-source-family-verification"],
+        "promotionBlockers": [
+          "Correct the confirmed ATLAS endpoint error: 18.6% versus 21.1% and RR 0.87 refer to all-cause mortality, not breast-cancer mortality. Separate crude event proportions from years-5-14 cumulative risks, and retain the distinct efficacy/safety populations and hysterectomy exclusion.",
+          "Restore exact labeled indication limits, including age at least 35 for high-risk incidence reduction, postmenopausal node-positive scope, postoperative context, and the explicit DCIS risk-reduction purpose. Tablet evidence does not establish all oral-solution label details.",
+          "Make DCIS warning/contraindication scope explicit and distinguish uterus-at-risk denominators and the different follow-up windows for warning rates. Independently confirm exact safety assertions against eligible A1/A2 sources.",
+          "Restrict dose context to named verified trials rather than implying all approved-use trials used one dose/duration. Leave the exact NSABP P-1 numerical bundle unresolved until primary evidence reconciles it; label RR 2.48 does not support an exact RR 2.53 assertion.",
+          "Correct PCT source design and attribution: the Frontiers study tested seized products; its adverse-event percentages cite prior literature, not its own patient survey. Distinguish product and patient denominators and accurately describe the two discordant tamoxifen samples.",
+          "Complete independent-family coverage, current product-label verification, and unresolved identifiers. Preserve existing authority flags and conflicts; the prior ATLAS efficacy classification is not permission to bypass embedded safety-assertion review."
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Packet tamoxifen-evidence-expansion-001 remains review-gated. Whole-claim reviewer results: six request-changes and two unresolved.",
+        "This later request-changes disposition follows wave-r1-tamoxifen, which recorded approve-claims with retained blockers. The ATLAS error is an endpoint misclassification, not merely different reporting windows.",
+        "New editorial families: NCI prevention PDQ and Anawalt's JCEM clinical review. ATLAS primary text verifies the same underlying trial, not independent replication. The readable packet label is dated 2007; live retrieval alone does not establish current labeling across products."
+      ]
+    }
+  ]
+}
