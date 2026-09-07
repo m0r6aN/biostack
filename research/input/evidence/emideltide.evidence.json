@@ -223,7 +223,7 @@
     {
       "claimId": "emideltide-efficacy-insomnia-inconclusive-001",
       "claimType": "efficacy",
-      "statement": "Human evidence for emideltide/DSIP in chronic insomnia is limited and inconclusive: FDA's review of the historical clinical literature concludes short-term IV DSIP showed effects on disturbed sleep but results were 'inconclusive and at best preliminary,' and a double-blind, matched-pairs study of 16 chronic insomniac patients found higher objective sleep efficiency and shorter sleep latency with IV DSIP (25 nmol/kg) versus placebo, but the authors concluded short-term DSIP treatment of chronic insomnia is not likely to be of major therapeutic benefit.",
+      "statement": "Human evidence for emideltide/DSIP in chronic insomnia is limited and inconclusive. The basis for that characterization in this packet is FDA's Pharmacy Compounding Advisory Committee briefing document, which reviews the historical clinical literature and concludes that short-term IV DSIP showed effects on disturbed sleep but that the results were 'inconclusive and at best preliminary'; an advisory-committee briefing package is review material compiled for a committee meeting, not itself an efficacy finding. The only underlying study read directly for this packet is a 1992 double-blind, matched-pairs study of 16 chronic insomniac patients, which reported higher objective sleep efficiency and shorter sleep latency with IV DSIP (25 nmol/kg) versus placebo but whose authors concluded that short-term DSIP treatment of chronic insomnia is not likely to be of major therapeutic benefit. No modern, adequately powered trial has been retrieved, and no efficacy conclusion in either direction should be drawn from this packet.",
       "context": {
         "population": "adult chronic insomnia patients (n=16 in the double-blind study)",
         "route": "intravenous",
@@ -231,8 +231,8 @@
         "useCase": "chronic insomnia (investigational, not an approved indication)",
         "doseText": "25 nmol/kg body weight IV, administered on three separate nights in a laboratory sleep study (trial protocol; not a use recommendation)"
       },
-      "evidenceTier": "Limited",
-      "confidence": "moderate",
+      "evidenceTier": "Insufficient",
+      "confidence": "low",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "fda-pcac-briefing-193344-emideltide",
@@ -258,7 +258,8 @@
       "reviewFlags": [
         "trial dose context (IV, laboratory-supervised, historical formulation) must never be presented as a use recommendation for gray-market subcutaneous products",
         "underlying trials are small (n=16 or fewer) and decades old; no modern, adequately powered RCT identified",
-        "independent-review note: secondary literature synthesis corroborates that human insomnia evidence is old, small, and conflicting, with no modern RCT identifiable; the FDA briefing also discusses a further historical study (Bes et al. 1992) that found no significant difference vs. placebo on objective/subjective sleep measures, a more negative data point than the Schneider-Helmert 1992 results already cited, reinforcing rather than contradicting this claim's 'inconclusive, at best preliminary' characterization"
+        "independent-review note: secondary literature synthesis corroborates that human insomnia evidence is old, small, and conflicting, with no modern RCT identifiable; the FDA briefing also discusses a further historical study (Bes et al. 1992) that found no significant difference vs. placebo on objective/subjective sleep measures, a more negative data point than the Schneider-Helmert 1992 results already cited, reinforcing rather than contradicting this claim's 'inconclusive, at best preliminary' characterization",
+        "efficacy-basis-2026-09-07: outcome claim (asserts the evidence is inconclusive) - evidenceTier lowered Limited -> Insufficient and confidence lowered moderate -> low. The 'inconclusive and at best preliminary' synthesis comes from an FDA advisory-committee briefing package, which is compiled review material rather than an efficacy finding; the only primary study read directly is a 1992 n=16 double-blind study whose own authors concluded no major therapeutic benefit. Statement reworded to name the briefing document as the basis for the synthesis and to state that no efficacy conclusion in either direction should be drawn. No source, sourceRef, authorityTier, claimType, context or extractedEvidence was changed."
       ]
     },
     {
@@ -352,7 +353,8 @@
       "Remediation pass (2026-08-29): live FDA advisory-committee page was re-checked and still shows only pre-meeting materials with no official outcome document posted. Independent industry/legal reporting (FDA Law Blog, cross-consistent with other peptide-industry sources) was used to confirm the PCAC vote failed 6-for/7-against/1-abstain, rejecting emideltide from the 503A Bulks List; this outcome has been added to the regulatory claim, but remains flagged for re-confirmation against a primary FDA record once FDA publishes an official post-meeting summary or updates the 503A list.",
       "CAS/UNII/DrugBank/ChEMBL identifiers remain unresolved after this review's independent attempts: CAS Common Chemistry API search returned no result (403), the FDA/NIH UNII (GSRS) lookup returned no result (404), and PubChem's own compound page still requires JavaScript to render structured identifier fields (only molecular formula C35H48N10O15 and CID 68816 could be confirmed from rendered text). These fields stay null pending a successful authoritative lookup.",
       "Human efficacy evidence base is thin (small, decades-old studies; only one modern-era FDA synthesis document reviewed) and should be expanded with any additional controlled studies at review time.",
-      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "efficacy-basis-2026-09-07: claim emideltide-efficacy-insomnia-inconclusive-001 was relabelled because its inconclusive-evidence synthesis rests on an FDA advisory-committee briefing package rather than on retrieved trial results. evidenceTier lowered Limited -> Insufficient, confidence lowered moderate -> low, and the statement now names that evidence basis in plain language. No tier or confidence was raised; no source, sourceRef, authority tier, claimType, context or extracted evidence was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -362,7 +364,8 @@
       "regulatory-decision-pending-2026-pcac",
       "marketing-outpaces-evidence",
       "remediation-pass-2026-08-29",
-      "placeholder-date-cleanup-2026-09-07"
+      "placeholder-date-cleanup-2026-09-07",
+      "efficacy-basis-2026-09-07"
     ]
   }
 }

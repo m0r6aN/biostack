@@ -305,7 +305,7 @@
     {
       "claimId": "elamipretide-human-rct-negative-pmm-001",
       "claimType": "efficacy",
-      "statement": "In MMPOWER-3, the phase 3 randomized controlled trial of elamipretide in primary mitochondrial myopathy (a different, non-approved indication from Barth syndrome), elamipretide did not meet its co-primary endpoints - change in 6-minute walk test distance and change in Primary Mitochondrial Myopathy Symptom Assessment (PMMSA) total fatigue score - versus placebo, despite an earlier phase 2 trial having shown improvement on patient-reported outcomes without benefit on the 6-minute walk test. The treatment was reported tolerable, with mostly mild-to-moderate adverse events.",
+      "statement": "MMPOWER-3, the phase 3 randomized controlled trial of elamipretide in primary mitochondrial myopathy (a different, non-approved indication from Barth syndrome), is reported not to have met its co-primary endpoints - change in 6-minute walk test distance and change in Primary Mitochondrial Myopathy Symptom Assessment (PMMSA) total fatigue score - versus placebo. The evidence basis for that reported outcome in this packet is the ClinicalTrials.gov registration record for NCT03323749, whose whyStopped field states the double-blind portion did not meet the primary endpoints, together with a secondary medical-news summary of the publication; the primary Neurology publication itself was never retrieved. A trial registration establishes that a trial exists and how it was recorded as ending, not what it found. The earlier phase 2 patient-reported-outcome improvement and the mild-to-moderate tolerability characterization likewise rest on that news summary rather than on published results this packet has read.",
       "context": {
         "population": "adults with genetically confirmed primary mitochondrial myopathy",
         "route": "subcutaneous (per MMPOWER program dosing)",
@@ -313,8 +313,8 @@
         "useCase": "primary mitochondrial myopathy - efficacy trial, NOT an FDA-approved indication",
         "doseText": null
       },
-      "evidenceTier": "Moderate",
-      "confidence": "moderate",
+      "evidenceTier": "Insufficient",
+      "confidence": "low",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "neurologylive-mmpower3-fail",
@@ -347,7 +347,8 @@
         "negative-human-RCT finding is for a different indication (primary mitochondrial myopathy) than the approved Barth syndrome indication and must not be conflated with it",
         "independent re-verification against the primary Neurology publication or PMC full text required at next review pass",
         "2026-08-29 authority-support pass: added ClinicalTrials.gov official study record (NCT03323749, FDAAA 801-mandated results database, authorityTier A2) fetched live this session via the public API (clinicaltrials.gov/api/v2/studies/NCT03323749), whose whyStopped field independently confirms the double-blind portion 'did not meet the primary end points', resolving the A1/A2 authority-support deficit for this fieldAuthorityRequired claim",
-        "authority-disposition-2026-09-07: source 'clinicaltrials-gov-nct03323749' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
+        "authority-disposition-2026-09-07: source 'clinicaltrials-gov-nct03323749' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
+        "efficacy-basis-2026-09-07: outcome claim - evidenceTier lowered Moderate -> Insufficient and confidence lowered moderate -> low. The basis is a trial-registration field (ClinicalTrials.gov whyStopped for NCT03323749, a source already dispositioned to tier C1) plus a secondary medical-news summary; the primary Neurology publication was never retrieved (403 / CAPTCHA), so no published results underlie this claim. Statement reworded to state that basis in plain language. No source, sourceRef, authorityTier, claimType, context or extractedEvidence was changed."
       ]
     },
     {
@@ -419,7 +420,8 @@
       "CAS number, UNII, ChEMBL ID, DrugBank ID, DOI, and PMID identifiers not yet resolved from structured databases or fetched directly from PubChem's full record (JavaScript-rendered detail panel was not accessible to the fetch tool).",
       "Accelerated approval for the Barth syndrome indication is conditional on a confirmatory trial not due to report until March 2030; approval status should be reconfirmed against the live FDA/DailyMed record at review time.",
       "Human efficacy evidence outside the narrow Barth syndrome accelerated-approval population is thin to negative (MMPOWER-3) and must not be generalized to gray-market wellness/anti-aging use.",
-      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed.",
+      "efficacy-basis-2026-09-07: claim elamipretide-human-rct-negative-pmm-001 was relabelled because its asserted outcome rests on a ClinicalTrials.gov registration field and a secondary news summary rather than on the primary publication, which was never retrieved. evidenceTier lowered Moderate -> Insufficient, confidence lowered moderate -> low, and the statement now names that evidence basis in plain language. No tier or confidence was raised; no source, sourceRef, authority tier, claimType, context or extracted evidence was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -430,7 +432,8 @@
       "thin-human-evidence-outside-label",
       "identifiers-incomplete",
       "authority-support-pass-2026-08-29",
-      "authority-disposition-2026-09-07"
+      "authority-disposition-2026-09-07",
+      "efficacy-basis-2026-09-07"
     ]
   }
 }
