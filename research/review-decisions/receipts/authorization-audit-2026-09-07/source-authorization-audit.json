@@ -1,380 +1,34 @@
 {
   "recordType": "source-authorization-audit",
   "registry": "research/input/sources/pilot-source-registry.json",
-  "registrySourceCount": 13,
+  "registrySourceCount": 30,
   "packetCount": 78,
   "totals": {
     "claimsRequiringAuthority": 224,
-    "passTodaySelfAsserted": 212,
-    "passUnderRegistryBacked": 13,
-    "gapClaims": 199,
-    "distinctSelfAssertedSources": 146,
+    "passTodaySelfAsserted": 198,
+    "passUnderRegistryBacked": 166,
+    "gapClaims": 32,
+    "distinctSelfAssertedSources": 26,
     "placeholderJan1Dates": 0,
-    "fieldUseGaps": 0,
-    "projectedFieldUseGaps": 43
+    "fieldUseGaps": 2,
+    "projectedFieldUseGaps": 11
   },
   "bucketCounts": {
-    "A-over-asserted": {
-      "sources": 7,
-      "claimReferences": 11
-    },
     "B-registration-missing": {
-      "sources": 102,
-      "claimReferences": 204
+      "sources": 9,
+      "claimReferences": 16
     },
     "C-class-rights-pending": {
-      "sources": 7,
-      "claimReferences": 7
+      "sources": 6,
+      "claimReferences": 6
     },
     "D-no-registry-class": {
-      "sources": 30,
-      "claimReferences": 45
+      "sources": 11,
+      "claimReferences": 14
     }
   },
   "buckets": {
-    "A-over-asserted": [
-      {
-        "sourceId": "nih-ods-exercise-athletic-performance-hp",
-        "packetTier": "A2",
-        "publisher": "NIH Office of Dietary Supplements",
-        "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
-        "claimCount": 3,
-        "compounds": [
-          "creatine"
-        ],
-        "inferredClass": "nih-ods",
-        "classTier": "C2",
-        "classRights": "approved",
-        "bucket": "A-over-asserted"
-      },
-      {
-        "sourceId": "pubmed-mazdutide-first-approval",
-        "packetTier": "A1",
-        "publisher": "Drugs (Springer/Adis Journal), Shirley M., 2025;85(12):1621-1627",
-        "url": "https://pubmed.ncbi.nlm.nih.gov/41028652/",
-        "claimCount": 2,
-        "compounds": [
-          "mazdutide"
-        ],
-        "inferredClass": "pubmed",
-        "classTier": "C1",
-        "classRights": "approved",
-        "bucket": "A-over-asserted"
-      },
-      {
-        "sourceId": "nih-ods-vitamind-health-professional",
-        "packetTier": "A1",
-        "publisher": "National Institutes of Health, Office of Dietary Supplements (ODS)",
-        "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
-        "claimCount": 2,
-        "compounds": [
-          "vitamin-d3"
-        ],
-        "inferredClass": "nih-ods",
-        "classTier": "C2",
-        "classRights": "approved",
-        "bucket": "A-over-asserted"
-      },
-      {
-        "sourceId": "clinicaltrials-gov-nct03323749",
-        "packetTier": "A2",
-        "publisher": "U.S. National Library of Medicine / National Institutes of Health - ClinicalTrials.gov (FDAAA 801 mandated results database)",
-        "url": "https://clinicaltrials.gov/study/NCT03323749",
-        "claimCount": 1,
-        "compounds": [
-          "elamipretide"
-        ],
-        "inferredClass": "clinicaltrials",
-        "classTier": "C1",
-        "classRights": "approved",
-        "bucket": "A-over-asserted"
-      },
-      {
-        "sourceId": "clinicaltrials-nct03359473",
-        "packetTier": "A2",
-        "publisher": "ClinicalTrials.gov / GlaxoSmithKline",
-        "url": "https://clinicaltrials.gov/api/v2/studies/NCT03359473",
-        "claimCount": 1,
-        "compounds": [
-          "gsk2881078"
-        ],
-        "inferredClass": "clinicaltrials",
-        "classTier": "C1",
-        "classRights": "approved",
-        "bucket": "A-over-asserted"
-      },
-      {
-        "sourceId": "clinicaltrials-nct07505745",
-        "packetTier": "A2",
-        "publisher": "ClinicalTrials.gov / U.S. National Library of Medicine",
-        "url": "https://clinicaltrials.gov/study/NCT07505745",
-        "claimCount": 1,
-        "compounds": [
-          "mots-c"
-        ],
-        "inferredClass": "clinicaltrials",
-        "classTier": "C1",
-        "classRights": "approved",
-        "bucket": "A-over-asserted"
-      },
-      {
-        "sourceId": "pubmed-search-vk2735-oral-2026",
-        "packetTier": "A2",
-        "publisher": "PubMed, NCBI (U.S. National Library of Medicine)",
-        "url": "https://pubmed.ncbi.nlm.nih.gov/?term=VK2735+oral",
-        "claimCount": 1,
-        "compounds": [
-          "vk2735"
-        ],
-        "inferredClass": "pubmed",
-        "classTier": "C1",
-        "classRights": "approved",
-        "bucket": "A-over-asserted"
-      }
-    ],
     "B-registration-missing": [
-      {
-        "sourceId": "fda-sarms-consumer-update",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
-        "claimCount": 7,
-        "compounds": [
-          "ac-262536",
-          "acp-105",
-          "s-23"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-increlex-label",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / National Library of Medicine DailyMed",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a8b27a1b-a611-4f91-ad22-76d4b390c3ae",
-        "claimCount": 6,
-        "compounds": [
-          "igf-1-lr3",
-          "mecasermin"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-trulicity-label",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling, Eli Lilly and Company)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=463050bd-2b1c-40f5-b3c3-0a04bb433309",
-        "claimCount": 5,
-        "compounds": [
-          "dulaglutide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-tamoxifen-citrate-label",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8f642753-9e12-433c-a0bc-ab33dac41ddf",
-        "claimCount": 5,
-        "compounds": [
-          "tamoxifen"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-scenesse-label",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=94f53286-11dd-7fbb-e053-2a95a90a7c48",
-        "claimCount": 4,
-        "compounds": [
-          "afamelanotide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-duavee-label",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine (labeling text sourced from FDA-approved labeling)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16705d8-4472-4f83-96ac-69fa2be066cb",
-        "claimCount": 4,
-        "compounds": [
-          "bazedoxifene"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-vyleesi-label",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf",
-        "claimCount": 4,
-        "compounds": [
-          "bremelanotide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-clomid-label",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2ca373c1-4dba-4126-8616-5c533d606fe5",
-        "claimCount": 4,
-        "compounds": [
-          "clomiphene"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-victoza-label",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5a9ef4ea-c76a-4d34-a604-27c5b505f5a4",
-        "claimCount": 4,
-        "compounds": [
-          "liraglutide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-osphena-label",
-        "packetTier": "A1",
-        "publisher": "U.S. National Library of Medicine / DailyMed (source: Shionogi Inc.)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=9accbcc9-78ee-4f84-9b7e-704f2ab1c413",
-        "claimCount": 4,
-        "compounds": [
-          "ospemifene"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-symlinpen-label",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4aea30ff-eb0d-45c1-b114-3127966328ff",
-        "claimCount": 4,
-        "compounds": [
-          "pramlintide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-evista-label",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=fcaaa6dc-74e8-4fb8-800c-5574bf0f8de9",
-        "claimCount": 4,
-        "compounds": [
-          "raloxifene"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-imcivree-first-approval-announcement",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/news-events-human-drugs/fda-approves-first-treatment-weight-management-people-certain-rare-genetic-conditions",
-        "claimCount": 4,
-        "compounds": [
-          "setmelanotide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-genotropin-label",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved prescribing information)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ffebf88b-d257-4542-9808-74d9b7167765",
-        "claimCount": 4,
-        "compounds": [
-          "somatropin"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-egrifta-sv-label",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3d783378-b02d-4f19-99dd-0fc91a042224",
-        "claimCount": 4,
-        "compounds": [
-          "tesamorelin"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-warrior-labz-warning-letter-2023",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/warrior-labz-sarms-655280-06122023",
-        "claimCount": 4,
-        "compounds": [
-          "testolone",
-          "vosilasarm"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-accessdata-scenesse-label-2024-s007",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration (Drugs@FDA, NDA 210797)",
-        "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/210797s007lbl.pdf",
-        "claimCount": 3,
-        "compounds": [
-          "afamelanotide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
       {
         "sourceId": "fda-pcac-briefing-183584",
         "packetTier": "A1",
@@ -385,34 +39,6 @@
           "aod-9604"
         ],
         "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-pregnyl-label",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=dc604794-6dd6-43a7-85fa-2f04ed325c33",
-        "claimCount": 3,
-        "compounds": [
-          "chorionic-gonadotropin"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-forzinity-label",
-        "packetTier": "A1",
-        "publisher": "U.S. National Library of Medicine / DailyMed (FDA-approved labeling)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=146bf34c-76f2-48db-ac07-fb29cce2cd75",
-        "claimCount": 3,
-        "compounds": [
-          "elamipretide"
-        ],
-        "inferredClass": "dailymed",
         "classTier": "A1",
         "classRights": "approved",
         "bucket": "B-registration-missing"
@@ -432,119 +58,6 @@
         "bucket": "B-registration-missing"
       },
       {
-        "sourceId": "fda-bydureon-label-2024",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/022200s035lbl.pdf",
-        "claimCount": 3,
-        "compounds": [
-          "exenatide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-saxenda-label",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3946d389-0926-4f77-a708-0acb8153b143",
-        "claimCount": 3,
-        "compounds": [
-          "liraglutide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bulk-substances-melanotan-ii",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 3,
-        "compounds": [
-          "melanotan-ii"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-osphena-label-pdf",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/203505s015lbl.pdf",
-        "claimCount": 3,
-        "compounds": [
-          "ospemifene"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bodybuilding-sarms-harm",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
-        "claimCount": 3,
-        "compounds": [
-          "rad-150",
-          "yk-11"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-fareston-label",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=2cab8dd1-3a10-48e6-86ce-0e5275ed49e5",
-        "claimCount": 3,
-        "compounds": [
-          "toremifene"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-accessdata-scenesse-label-2019",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration (Drugs@FDA, NDA 210797)",
-        "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/210797s000lbl.pdf",
-        "claimCount": 2,
-        "compounds": [
-          "afamelanotide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-warning-letter-titan-sarms",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/titan-sarms-llc-719645-12122025",
-        "claimCount": 2,
-        "compounds": [
-          "andarine"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
         "sourceId": "fda-pcac-briefing-183819",
         "packetTier": "A1",
         "publisher": "U.S. Food and Drug Administration",
@@ -552,105 +65,6 @@
         "claimCount": 2,
         "compounds": [
           "cjc-1295"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-grn-931-creatine-monohydrate",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/media/143525/download",
-        "claimCount": 2,
-        "compounds": [
-          "creatine"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-forzinity-approval-package-215244",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2025/215244Orig1s000Approv.pdf",
-        "claimCount": 2,
-        "compounds": [
-          "elamipretide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-pcac-briefing-193345",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/media/193345/download",
-        "claimCount": 2,
-        "compounds": [
-          "epitalon"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-byetta-label",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=53d03c03-ebf7-418d-88a8-533eabd2ee4f",
-        "claimCount": 2,
-        "compounds": [
-          "exenatide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-ghrp6-category2",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 2,
-        "compounds": [
-          "ghrp-6"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-us-glutathione-compounding-concerns",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/fda-highlights-concerns-using-dietary-ingredient-glutathione-compound-sterile-injectables",
-        "claimCount": 2,
-        "compounds": [
-          "glutathione"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bulk-substances-cat2",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 2,
-        "compounds": [
-          "igf-1-lr3",
-          "stenabolic"
         ],
         "inferredClass": "fda",
         "classTier": "A1",
@@ -686,400 +100,6 @@
         "bucket": "B-registration-missing"
       },
       {
-        "sourceId": "fda-bulk-substances-withdrawn",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 2,
-        "compounds": [
-          "kpv",
-          "selank"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-warning-letter-prime-sports-2025",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/prime-sports-nutrition-719433-12122025",
-        "claimCount": 2,
-        "compounds": [
-          "ligandrol"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-consumer-sarms-update",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
-        "claimCount": 2,
-        "compounds": [
-          "ligandrol"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-ll37-bulk-nominated-withdrawn",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 2,
-        "compounds": [
-          "ll-37"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-pitocin-label",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. Food and Drug Administration",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=969d5b35-0add-4c23-9605-6a5b6ab65c95",
-        "claimCount": 2,
-        "compounds": [
-          "oxytocin"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-peg-mgf-bulk-withdrawn",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 2,
-        "compounds": [
-          "peg-mgf"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bulk-substances-category2",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 2,
-        "compounds": [
-          "rad-150",
-          "vk2735"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bodybuilding-fraudulent-products",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
-        "claimCount": 2,
-        "compounds": [
-          "s-23"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-semax-withdrawn-nomination",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 2,
-        "compounds": [
-          "semax"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-search-sermorelin",
-        "packetTier": "A1",
-        "publisher": "U.S. National Library of Medicine / DailyMed (FDA-sourced labeling repository)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=sermorelin",
-        "claimCount": 2,
-        "compounds": [
-          "sermorelin"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-imcivree-label",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine (labeler: Rhythm Pharmaceuticals, Inc.)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=70c3ccf7-4df0-4c75-ba07-fede9970c8d9",
-        "claimCount": 2,
-        "compounds": [
-          "setmelanotide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-ta1-bulks-183892",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/media/183892/download",
-        "claimCount": 2,
-        "compounds": [
-          "thymosin-alpha-1"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-cholecalciferol-25mcg-tab",
-        "packetTier": "A2",
-        "publisher": "U.S. National Library of Medicine DailyMed / FDA Structured Product Labeling",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ef102aff-a775-4f99-b90d-53507e24a558",
-        "claimCount": 2,
-        "compounds": [
-          "vitamin-d3"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bulk-substances-category2-list",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "acp-105"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-manookian-nooh-melanotan-ii",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/media/128834/download",
-        "claimCount": 1,
-        "compounds": [
-          "afamelanotide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-aod9604-withdrawn-bulk-list",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "aod-9604"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-drugsatfda-nda022247",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration (Drugs@FDA)",
-        "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022247",
-        "claimCount": 1,
-        "compounds": [
-          "bazedoxifene"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bpc157-category2-recheck-2026-08",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "bpc-157"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-label-2020-210557s002lbl",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2020/210557s002lbl.pdf",
-        "claimCount": 1,
-        "compounds": [
-          "bremelanotide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-novel-drug-approvals-2026-live",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2026",
-        "claimCount": 1,
-        "compounds": [
-          "cagrilintide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-cagrilintide-search-2026",
-        "packetTier": "A1",
-        "publisher": "U.S. National Library of Medicine (DailyMed)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=cagrilintide&searchtype=all",
-        "claimCount": 1,
-        "compounds": [
-          "cagrilintide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bulk-substances-503a-page",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/bulk-drug-substances-used-compounding-under-section-503a-fdc-act",
-        "claimCount": 1,
-        "compounds": [
-          "cagrilintide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-category2-bulk-substances-page",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "cagrilintide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-warning-letter-sarms-america-2025",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/dynamic-health-group-dba-sarms-america-719257-12122025",
-        "claimCount": 1,
-        "compounds": [
-          "cardarine"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-sarms-bodybuilding-fraud",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
-        "claimCount": 1,
-        "compounds": [
-          "cardarine"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-drugs-com-hcg-diet-illegal",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration (via Drugs.com FDA Consumer Updates archive)",
-        "url": "https://www.drugs.com/fda-consumer/hcg-diet-products-are-illegal-204.html",
-        "claimCount": 1,
-        "compounds": [
-          "chorionic-gonadotropin"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bulk-substances-withdrawn-nominations",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "cjc-1295"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-structure-function-claims",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/food/information-industry-dietary-supplements/notifications-structurefunction-and-related-claims-dietary-supplement-labeling",
-        "claimCount": 1,
-        "compounds": [
-          "creatine"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
         "sourceId": "fda-pcac-calendar-july2026",
         "packetTier": "A1",
         "publisher": "U.S. Food and Drug Administration",
@@ -1094,209 +114,13 @@
         "bucket": "B-registration-missing"
       },
       {
-        "sourceId": "fda-category2-bulk-substances",
+        "sourceId": "fda-pcac-briefing-193345",
         "packetTier": "A1",
         "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+        "url": "https://www.fda.gov/media/193345/download",
         "claimCount": 1,
         "compounds": [
           "epitalon"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-bydureon-bcise-label",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine (FDA-approved labeling)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2d18cfc4-e0de-4814-a712-c1b7c504bff5&audience=consumer",
-        "claimCount": 1,
-        "compounds": [
-          "exenatide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bulk-compounding-significant-safety-risks",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "ghrp-2"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-search-ghrp-2",
-        "packetTier": "A1",
-        "publisher": "U.S. National Library of Medicine / DailyMed",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=GHRP-2",
-        "claimCount": 1,
-        "compounds": [
-          "ghrp-2"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-2026-optimal-balance-recall",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/optimal-balance-pharmacy-issues-voluntary-nationwide-recall-certain-lots-compounded-glutathione-200",
-        "claimCount": 1,
-        "compounds": [
-          "glutathione"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-2026-victory-medical-recall",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/victory-medical-center-pharmacy-issues-voluntary-nationwide-recall-certain-lots-compounded",
-        "claimCount": 1,
-        "compounds": [
-          "glutathione"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-ph-advisory-2019-182",
-        "packetTier": "A2",
-        "publisher": "Philippines Food and Drug Administration",
-        "url": "https://www.fda.gov.ph/fda-advisory-no-2019-182-unsafe-use-of-glutathione-as-skin-lightening-agent/",
-        "claimCount": 1,
-        "compounds": [
-          "glutathione"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-consumer-update-injectable-skin-lightening-2015",
-        "packetTier": "A2",
-        "publisher": "U.S. Food and Drug Administration (content republished by American Med Spa Association; the fda.gov original returned 404/403 to direct fetch this session)",
-        "url": "https://www.americanmedspa.org/news/fda-releases-consumer-update-on-injectable-skin-lightening-products/",
-        "claimCount": 1,
-        "compounds": [
-          "glutathione"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-glutathione-liquid-otc",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine (labeler: Energique, Inc.)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3a369e12-984c-4b94-9b77-eb8d77c545bb",
-        "claimCount": 1,
-        "compounds": [
-          "glutathione"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-homeopathic-guidance-2022",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/homeopathic-drug-products-guidance-fda-staff-and-industry",
-        "claimCount": 1,
-        "compounds": [
-          "glutathione"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-factrel-veterinary",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / DailyMed (NIH)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1451663c-b85a-4b45-8b27-6d572d0032f9",
-        "claimCount": 1,
-        "compounds": [
-          "gonadorelin"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-live-search-gonadorelin-2026-08-29",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / DailyMed (NIH)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=GONADORELIN",
-        "claimCount": 1,
-        "compounds": [
-          "gonadorelin"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-sarms-bodybuilding-alert",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/fraudulent-products/certain-bodybuilding-products-put-consumers-risk-heart-attack-stroke-serious-liver-damage-and-more",
-        "claimCount": 1,
-        "compounds": [
-          "gsk2881078"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bulk-drugs-category2-listing",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "hexarelin"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bulk-substances-category2-ibutamoren",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "ibutamoren"
         ],
         "inferredClass": "fda",
         "classTier": "A1",
@@ -1318,118 +142,6 @@
         "bucket": "B-registration-missing"
       },
       {
-        "sourceId": "fda-unii-srs-m9l22y19h9",
-        "packetTier": "A2",
-        "publisher": "U.S. Food and Drug Administration / Global Substance Registration System",
-        "url": "https://precision.fda.gov/uniisearch/srs/unii/M9L22Y19H9",
-        "claimCount": 1,
-        "compounds": [
-          "igf-1-lr3"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-ipamorelin-category2",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "ipamorelin"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-pcac-briefing-193346",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/media/193346/download",
-        "claimCount": 1,
-        "compounds": [
-          "kpv"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-sarm-consumer-update",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
-        "claimCount": 1,
-        "compounds": [
-          "lgd-3303"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-daf-victoza-nda022341",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
-        "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022341",
-        "claimCount": 1,
-        "compounds": [
-          "liraglutide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-daf-saxenda-nda206321",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / Drugs@FDA",
-        "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=206321",
-        "claimCount": 1,
-        "compounds": [
-          "liraglutide"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-dietary-supplements-consumer-info",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/food/dietary-supplements/information-consumers-using-dietary-supplements",
-        "claimCount": 1,
-        "compounds": [
-          "melatonin"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-mots-c-withdrawn-nomination",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "mots-c"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
         "sourceId": "fda-pcac-briefing-193347",
         "packetTier": "A1",
         "publisher": "U.S. Food and Drug Administration",
@@ -1439,132 +151,6 @@
           "mots-c"
         ],
         "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-bulk-drug-substances-category2",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
-        "claimCount": 1,
-        "compounds": [
-          "sermorelin"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-import-alert-66-71",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.accessdata.fda.gov/cms_ia/importalert_204.html",
-        "claimCount": 1,
-        "compounds": [
-          "somatropin"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-safety-communication-somatropin-mortality",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/drugs/drug-safety-and-availability/fda-drug-safety-communication-safety-review-update-recombinant-human-growth-hormone-somatropin-and",
-        "claimCount": 1,
-        "compounds": [
-          "somatropin"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-survodutide-search",
-        "packetTier": "A1",
-        "publisher": "DailyMed / U.S. National Library of Medicine",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=survodutide",
-        "claimCount": 1,
-        "compounds": [
-          "survodutide"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-sarms-consumer-update-2024",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.fda.gov/consumers/consumer-updates/fda-warns-use-selective-androgen-receptor-modulators-sarms-among-teens-young-adults",
-        "claimCount": 1,
-        "compounds": [
-          "testolone"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-search-thymalfasin",
-        "packetTier": "A1",
-        "publisher": "U.S. National Library of Medicine (DailyMed)",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=thymalfasin",
-        "claimCount": 1,
-        "compounds": [
-          "thymosin-alpha-1"
-        ],
-        "inferredClass": "dailymed",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-fareston-sndsa-2024ltr",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration, Center for Drug Evaluation and Research",
-        "url": "https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2024/020497Orig1s018ltr.pdf",
-        "claimCount": 1,
-        "compounds": [
-          "toremifene"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "fda-openfda-drugsfda-toremifene-search-2026",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration (openFDA / Drugs@FDA)",
-        "url": "https://api.fda.gov/drug/drugsfda.json?search=products.active_ingredients.name:%22TOREMIFENE%20CITRATE%22&limit=10",
-        "claimCount": 1,
-        "compounds": [
-          "toremifene"
-        ],
-        "inferredClass": "fda",
-        "classTier": "A1",
-        "classRights": "approved",
-        "bucket": "B-registration-missing"
-      },
-      {
-        "sourceId": "dailymed-search-vk2735-2026",
-        "packetTier": "A1",
-        "publisher": "DailyMed, U.S. National Library of Medicine / FDA-sourced label data",
-        "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=VK2735",
-        "claimCount": 1,
-        "compounds": [
-          "vk2735"
-        ],
-        "inferredClass": "dailymed",
         "classTier": "A1",
         "classRights": "approved",
         "bucket": "B-registration-missing"
@@ -1579,20 +165,6 @@
         "claimCount": 1,
         "compounds": [
           "andarine"
-        ],
-        "inferredClass": "wada",
-        "classTier": "A1",
-        "classRights": "pending-human-legal",
-        "bucket": "C-class-rights-pending"
-      },
-      {
-        "sourceId": "wada-alert-gw501516-2013",
-        "packetTier": "A1",
-        "publisher": "World Anti-Doping Agency",
-        "url": "https://www.wada-ama.org/en/news/wada-issues-alert-gw501516",
-        "claimCount": 1,
-        "compounds": [
-          "cardarine"
         ],
         "inferredClass": "wada",
         "classTier": "A1",
@@ -1672,134 +244,6 @@
     ],
     "D-no-registry-class": [
       {
-        "sourceId": "ncbi-livertox-sarms",
-        "packetTier": "A2",
-        "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases / NCBI Bookshelf",
-        "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
-        "claimCount": 3,
-        "compounds": [
-          "rad-150",
-          "testolone"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "fedreg-geref-determination-2013",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration / Federal Register",
-        "url": "https://www.federalregister.gov/documents/2013/03/04/2013-04827/determination-that-geref-sermorelin-acetate-injection-05-milligrams-basevial-and-10-milligrams",
-        "claimCount": 3,
-        "compounds": [
-          "sermorelin"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "livertox-sarms-nbk619971",
-        "packetTier": "A2",
-        "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases / NCBI Bookshelf",
-        "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
-        "claimCount": 2,
-        "compounds": [
-          "andarine",
-          "yk-11"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "hsa-singapore-alert-2017",
-        "packetTier": "A1",
-        "publisher": "Health Sciences Authority, Singapore",
-        "url": "https://www.hsa.gov.sg/docs/default-source/announcements-csg/press-releases/pr-bodybuilding-products-sold-online_20oct2017.pdf?sfvrsn=fb4b6eb2_0",
-        "claimCount": 2,
-        "compounds": [
-          "cardarine"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "health-canada-recall-gw501516",
-        "packetTier": "A1",
-        "publisher": "Health Canada",
-        "url": "https://recalls-rappels.canada.ca/en/alert-recall/gw501516-serious-risks-associated-use-unauthorized-product-public",
-        "claimCount": 2,
-        "compounds": [
-          "cardarine"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "ferring-lutrepulse-pm-canada",
-        "packetTier": "A2",
-        "publisher": "Health Canada / Ferring Inc.",
-        "url": "https://ferring.ca/media/1018/lutrepulse-pm-control-no-187199-32-mg-en_17may2016.pdf",
-        "claimCount": 2,
-        "compounds": [
-          "gonadorelin"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "ema-epar-fablyn",
-        "packetTier": "A1",
-        "publisher": "European Medicines Agency",
-        "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/fablyn",
-        "claimCount": 2,
-        "compounds": [
-          "lasofoxifene"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "accessdata-fda-victoza-label-2025",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/022341s046lbl.pdf",
-        "claimCount": 2,
-        "compounds": [
-          "liraglutide"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "accessdata-fda-saxenda-label-2026",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/206321s025lbl.pdf",
-        "claimCount": 2,
-        "compounds": [
-          "liraglutide"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
         "sourceId": "semanticscholar-nejmoa2411528",
         "packetTier": "A2",
         "publisher": "Semantic Scholar (Allen Institute for AI), record of NEJM publication",
@@ -1828,20 +272,6 @@
         "bucket": "D-no-registry-class"
       },
       {
-        "sourceId": "mdpi-jox-sarm-safety-review-2023",
-        "packetTier": "A2",
-        "publisher": "Journal of Xenobiotics (MDPI) — Selig DJ et al., 2023; 13(2):218-236",
-        "url": "https://www.mdpi.com/2039-4713/13/2/17",
-        "claimCount": 2,
-        "compounds": [
-          "rad-150"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
         "sourceId": "nct06828055",
         "packetTier": "A2",
         "publisher": "ClinicalTrials.gov (U.S. National Library of Medicine)",
@@ -1849,62 +279,6 @@
         "claimCount": 2,
         "compounds": [
           "vk2735"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "ema-conbriza-epar",
-        "packetTier": "A1",
-        "publisher": "European Medicines Agency (EMA)",
-        "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/conbriza",
-        "claimCount": 1,
-        "compounds": [
-          "bazedoxifene"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "jbmr-silverman-2008",
-        "packetTier": "A2",
-        "publisher": "Journal of Bone and Mineral Research (Silverman et al. 2008)",
-        "url": "https://academic.oup.com/jbmr/article-abstract/23/12/1923/7599523",
-        "claimCount": 1,
-        "compounds": [
-          "bazedoxifene"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "orrick-fda-pcac-2026",
-        "packetTier": "A1",
-        "publisher": "Orrick, Herrington & Sutcliffe LLP",
-        "url": "https://www.orrick.com/en/Insights/2026/04/FDA-Announces-Removal-of-12-Peptides-from-Category-2-and-Schedules-PCAC-Meetings",
-        "claimCount": 1,
-        "compounds": [
-          "ghk-cu"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "gsk-study-register-200182",
-        "packetTier": "A2",
-        "publisher": "GlaxoSmithKline",
-        "url": "https://www.gsk-studyregister.com/en/trial-details/?id=200182",
-        "claimCount": 1,
-        "compounds": [
-          "gsk2881078"
         ],
         "inferredClass": null,
         "classTier": null,
@@ -1940,48 +314,6 @@
         "bucket": "D-no-registry-class"
       },
       {
-        "sourceId": "usada-sarms-prohibited-class",
-        "packetTier": "A1",
-        "publisher": "U.S. Anti-Doping Agency (USADA) — the official national anti-doping organization for the United States, implementing the WADA Code",
-        "url": "https://www.usada.org/spirit-of-sport/education/selective-androgen-receptor-modulators-sarms-prohibited-class-anabolic-agents/",
-        "claimCount": 1,
-        "compounds": [
-          "lgd-3303"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "pmc-4985288-leader-primary",
-        "packetTier": "A1",
-        "publisher": "New England Journal of Medicine (Marso SP, Daniels GH, Brown-Frandsen K, et al., 2016;375:311-322) via PubMed Central",
-        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4985288/",
-        "claimCount": 1,
-        "compounds": [
-          "liraglutide"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "cdc-mmwr-pediatric-melatonin-2022",
-        "packetTier": "A2",
-        "publisher": "US Centers for Disease Control and Prevention, MMWR",
-        "url": "https://www.cdc.gov/mmwr/volumes/71/wr/mm7122a1.htm",
-        "claimCount": 1,
-        "compounds": [
-          "melatonin"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
         "sourceId": "ctgov-nct05006885-classic",
         "packetTier": "A2",
         "publisher": "ClinicalTrials.gov / Altimmune, Inc.",
@@ -1996,27 +328,13 @@
         "bucket": "D-no-registry-class"
       },
       {
-        "sourceId": "accessdata-fda-daf-021332",
-        "packetTier": "A1",
-        "publisher": "U.S. Food and Drug Administration",
-        "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021332",
-        "claimCount": 1,
-        "compounds": [
-          "pramlintide"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "drugscom-egrifta-approval-history",
+        "sourceId": "ncbi-livertox-sarms",
         "packetTier": "A2",
-        "publisher": "Drugs.com (aggregating FDA approval announcements)",
-        "url": "https://www.drugs.com/history/egrifta-wr.html",
+        "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases / NCBI Bookshelf",
+        "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
         "claimCount": 1,
         "compounds": [
-          "tesamorelin"
+          "rad-150"
         ],
         "inferredClass": null,
         "classTier": null,
@@ -2024,41 +342,13 @@
         "bucket": "D-no-registry-class"
       },
       {
-        "sourceId": "nci-vital-trial-cancer-currents-2018",
+        "sourceId": "mdpi-jox-sarm-safety-review-2023",
         "packetTier": "A2",
-        "publisher": "National Institutes of Health / National Cancer Institute",
-        "url": "https://www.cancer.gov/news-events/cancer-currents-blog/2018/vitamin-d-supplement-cancer-prevention",
+        "publisher": "Journal of Xenobiotics (MDPI) — Selig DJ et al., 2023; 13(2):218-236",
+        "url": "https://www.mdpi.com/2039-4713/13/2/17",
         "claimCount": 1,
         "compounds": [
-          "vitamin-d3"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "uspstf-vitamind-calcium-fracture-fall-prevention",
-        "packetTier": "A1",
-        "publisher": "U.S. Preventive Services Task Force",
-        "url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/vitamin-d-calcium-or-combined-supplementation-for-the-primary-prevention-of-fractures-in-adults-preventive-medication",
-        "claimCount": 1,
-        "compounds": [
-          "vitamin-d3"
-        ],
-        "inferredClass": null,
-        "classTier": null,
-        "classRights": null,
-        "bucket": "D-no-registry-class"
-      },
-      {
-        "sourceId": "uspstf-vitamind-calcium-fracture-fall-draft-2024",
-        "packetTier": "A1",
-        "publisher": "U.S. Preventive Services Task Force",
-        "url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/vitamin-d-calcium-combined-supplementation-primary-prevention-falls-fractures-communitydwelling-adults",
-        "claimCount": 1,
-        "compounds": [
-          "vitamin-d3"
+          "rad-150"
         ],
         "inferredClass": null,
         "classTier": null,
@@ -2092,118 +382,25 @@
         "classTier": null,
         "classRights": null,
         "bucket": "D-no-registry-class"
+      },
+      {
+        "sourceId": "livertox-sarms-nbk619971",
+        "packetTier": "A2",
+        "publisher": "National Institute of Diabetes and Digestive and Kidney Diseases / NCBI Bookshelf",
+        "url": "https://www.ncbi.nlm.nih.gov/books/NBK619971/",
+        "claimCount": 1,
+        "compounds": [
+          "yk-11"
+        ],
+        "inferredClass": null,
+        "classTier": null,
+        "classRights": null,
+        "bucket": "D-no-registry-class"
       }
     ]
   },
   "placeholderDates": [],
   "gapClaims": [
-    {
-      "compound": "ac-262536",
-      "claimId": "ac262536-regulatory-not-approved-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-sarms-consumer-update"
-      ]
-    },
-    {
-      "compound": "ac-262536",
-      "claimId": "ac262536-warning-class-sarm-risks-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-sarms-consumer-update"
-      ]
-    },
-    {
-      "compound": "acp-105",
-      "claimId": "acp105-identity-mechanism-001",
-      "claimType": "identity",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-sarms-consumer-update"
-      ]
-    },
-    {
-      "compound": "acp-105",
-      "claimId": "acp105-warning-sarm-class-safety-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-sarms-consumer-update"
-      ]
-    },
-    {
-      "compound": "acp-105",
-      "claimId": "acp105-regulatory-not-on-compounding-lists-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-category2-list",
-        "fda-sarms-consumer-update"
-      ]
-    },
-    {
-      "compound": "afamelanotide",
-      "claimId": "afamelanotide-regulatory-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-scenesse-label",
-        "fda-accessdata-scenesse-label-2019",
-        "fda-accessdata-scenesse-label-2024-s007"
-      ]
-    },
-    {
-      "compound": "afamelanotide",
-      "claimId": "afamelanotide-dosing-administration-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-scenesse-label",
-        "fda-accessdata-scenesse-label-2019",
-        "fda-accessdata-scenesse-label-2024-s007"
-      ]
-    },
-    {
-      "compound": "afamelanotide",
-      "claimId": "afamelanotide-safety-adverse-events-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-scenesse-label",
-        "fda-accessdata-scenesse-label-2024-s007"
-      ]
-    },
-    {
-      "compound": "afamelanotide",
-      "claimId": "afamelanotide-controversy-melanotan-conflation-001",
-      "claimType": "controversy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-manookian-nooh-melanotan-ii",
-        "dailymed-scenesse-label"
-      ]
-    },
-    {
-      "compound": "andarine",
-      "claimId": "andarine-regulatory-fda-unapproved-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-warning-letter-titan-sarms"
-      ]
-    },
-    {
-      "compound": "andarine",
-      "claimId": "andarine-safety-liver-cardiovascular-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-warning-letter-titan-sarms",
-        "livertox-sarms-nbk619971"
-      ]
-    },
     {
       "compound": "andarine",
       "claimId": "andarine-regulatory-wada-001",
@@ -2211,15 +408,6 @@
       "fieldAuthorityRequired": true,
       "selfAssertedSources": [
         "wada-prohibited-list-2026"
-      ]
-    },
-    {
-      "compound": "aod-9604",
-      "claimId": "aod9604-regulatory-withdrawn-nomination-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-aod9604-withdrawn-bulk-list"
       ]
     },
     {
@@ -2250,178 +438,6 @@
       ]
     },
     {
-      "compound": "bazedoxifene",
-      "claimId": "bazedoxifene-regulatory-approved-product-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-duavee-label",
-        "fda-drugsatfda-nda022247"
-      ]
-    },
-    {
-      "compound": "bazedoxifene",
-      "claimId": "bazedoxifene-warning-boxed-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-duavee-label"
-      ]
-    },
-    {
-      "compound": "bazedoxifene",
-      "claimId": "bazedoxifene-contraindication-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-duavee-label"
-      ]
-    },
-    {
-      "compound": "bazedoxifene",
-      "claimId": "bazedoxifene-efficacy-vertebral-fracture-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "ema-conbriza-epar",
-        "jbmr-silverman-2008"
-      ]
-    },
-    {
-      "compound": "bazedoxifene",
-      "claimId": "bazedoxifene-adverse-effect-vte-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-duavee-label"
-      ]
-    },
-    {
-      "compound": "bpc-157",
-      "claimId": "bpc157-regulatory-compounding-risk-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bpc157-category2-recheck-2026-08"
-      ]
-    },
-    {
-      "compound": "bremelanotide",
-      "claimId": "bremelanotide-regulatory-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-vyleesi-label"
-      ]
-    },
-    {
-      "compound": "bremelanotide",
-      "claimId": "bremelanotide-contraindication-cv-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-vyleesi-label"
-      ]
-    },
-    {
-      "compound": "bremelanotide",
-      "claimId": "bremelanotide-adverse-effects-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-vyleesi-label",
-        "fda-label-2020-210557s002lbl"
-      ]
-    },
-    {
-      "compound": "bremelanotide",
-      "claimId": "bremelanotide-efficacy-reconnect-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-vyleesi-label"
-      ]
-    },
-    {
-      "compound": "cagrilintide",
-      "claimId": "cagrilintide-regulatory-not-approved-nda-filed-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-novel-drug-approvals-2026-live",
-        "dailymed-cagrilintide-search-2026"
-      ]
-    },
-    {
-      "compound": "cagrilintide",
-      "claimId": "cagrilintide-regulatory-not-on-fda-compounding-lists-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-503a-page",
-        "fda-category2-bulk-substances-page"
-      ]
-    },
-    {
-      "compound": "cardarine",
-      "claimId": "cardarine-regulatory-fda-unapproved-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-warning-letter-sarms-america-2025",
-        "fda-sarms-bodybuilding-fraud"
-      ]
-    },
-    {
-      "compound": "cardarine",
-      "claimId": "cardarine-warning-carcinogenicity-animal-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "hsa-singapore-alert-2017",
-        "health-canada-recall-gw501516"
-      ]
-    },
-    {
-      "compound": "cardarine",
-      "claimId": "cardarine-regulatory-international-status-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "wada-alert-gw501516-2013",
-        "hsa-singapore-alert-2017",
-        "health-canada-recall-gw501516"
-      ]
-    },
-    {
-      "compound": "chorionic-gonadotropin",
-      "claimId": "hcg-regulatory-approved-indications-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-pregnyl-label"
-      ]
-    },
-    {
-      "compound": "chorionic-gonadotropin",
-      "claimId": "hcg-regulatory-weight-loss-not-effective-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-pregnyl-label",
-        "fda-drugs-com-hcg-diet-illegal"
-      ]
-    },
-    {
-      "compound": "chorionic-gonadotropin",
-      "claimId": "hcg-adverse-effects-fertility-use-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-pregnyl-label"
-      ]
-    },
-    {
       "compound": "cjc-1295",
       "claimId": "cjc1295-regulatory-503a-recommendation-001",
       "claimType": "regulatory",
@@ -2432,185 +448,11 @@
     },
     {
       "compound": "cjc-1295",
-      "claimId": "cjc1295-regulatory-withdrawn-nomination-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-withdrawn-nominations"
-      ]
-    },
-    {
-      "compound": "cjc-1295",
       "claimId": "cjc1295-adverse-effect-phase2-death-001",
       "claimType": "adverse-effect",
       "fieldAuthorityRequired": true,
       "selfAssertedSources": [
         "fda-pcac-briefing-183819"
-      ]
-    },
-    {
-      "compound": "clomiphene",
-      "claimId": "clomiphene-approved-indication-ovulatory-dysfunction-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-clomid-label"
-      ]
-    },
-    {
-      "compound": "clomiphene",
-      "claimId": "clomiphene-warning-ohss-visual-multiple-pregnancy-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-clomid-label"
-      ]
-    },
-    {
-      "compound": "clomiphene",
-      "claimId": "clomiphene-contraindications-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-clomid-label"
-      ]
-    },
-    {
-      "compound": "clomiphene",
-      "claimId": "clomiphene-efficacy-male-hypogonadism-testosterone-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-clomid-label"
-      ]
-    },
-    {
-      "compound": "creatine",
-      "claimId": "creatine-regulatory-status-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-grn-931-creatine-monohydrate",
-        "fda-structure-function-claims",
-        "nih-ods-exercise-athletic-performance-hp"
-      ]
-    },
-    {
-      "compound": "creatine",
-      "claimId": "creatine-dose-context-loading-maintenance-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "nih-ods-exercise-athletic-performance-hp"
-      ]
-    },
-    {
-      "compound": "creatine",
-      "claimId": "creatine-safety-common-adverse-effects-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "nih-ods-exercise-athletic-performance-hp"
-      ]
-    },
-    {
-      "compound": "creatine",
-      "claimId": "creatine-monitoring-renal-function-001",
-      "claimType": "monitoring",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-grn-931-creatine-monohydrate"
-      ]
-    },
-    {
-      "compound": "dulaglutide",
-      "claimId": "dulaglutide-regulatory-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-trulicity-label"
-      ]
-    },
-    {
-      "compound": "dulaglutide",
-      "claimId": "dulaglutide-regulatory-boxed-warning-contraindication-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-trulicity-label"
-      ]
-    },
-    {
-      "compound": "dulaglutide",
-      "claimId": "dulaglutide-warning-pancreatitis-aki-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-trulicity-label"
-      ]
-    },
-    {
-      "compound": "dulaglutide",
-      "claimId": "dulaglutide-dose-context-label-regimen-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-trulicity-label"
-      ]
-    },
-    {
-      "compound": "dulaglutide",
-      "claimId": "dulaglutide-efficacy-rewind-cv-outcomes-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-trulicity-label"
-      ]
-    },
-    {
-      "compound": "elamipretide",
-      "claimId": "elamipretide-regulatory-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-forzinity-label",
-        "fda-forzinity-approval-package-215244"
-      ]
-    },
-    {
-      "compound": "elamipretide",
-      "claimId": "elamipretide-regulatory-accelerated-approval-basis-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-forzinity-approval-package-215244"
-      ]
-    },
-    {
-      "compound": "elamipretide",
-      "claimId": "elamipretide-dosing-context-forzinity-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-forzinity-label"
-      ]
-    },
-    {
-      "compound": "elamipretide",
-      "claimId": "elamipretide-safety-adverse-effects-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-forzinity-label"
-      ]
-    },
-    {
-      "compound": "elamipretide",
-      "claimId": "elamipretide-human-rct-negative-pmm-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "clinicaltrials-gov-nct03323749"
       ]
     },
     {
@@ -2651,195 +493,6 @@
       ]
     },
     {
-      "compound": "epitalon",
-      "claimId": "epitalon-warning-immunogenicity-carcinogenicity-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-pcac-briefing-193345",
-        "fda-category2-bulk-substances"
-      ]
-    },
-    {
-      "compound": "exenatide",
-      "claimId": "exenatide-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-byetta-label",
-        "fda-bydureon-label-2024"
-      ]
-    },
-    {
-      "compound": "exenatide",
-      "claimId": "exenatide-warning-thyroid-ccell-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bydureon-label-2024",
-        "dailymed-bydureon-bcise-label"
-      ]
-    },
-    {
-      "compound": "exenatide",
-      "claimId": "exenatide-dose-context-byetta-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-byetta-label"
-      ]
-    },
-    {
-      "compound": "exenatide",
-      "claimId": "exenatide-efficacy-exscel-cv-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bydureon-label-2024"
-      ]
-    },
-    {
-      "compound": "ghk-cu",
-      "claimId": "ghk-cu-hype-boundary-001",
-      "claimType": "evidence-gap",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "orrick-fda-pcac-2026"
-      ]
-    },
-    {
-      "compound": "ghrp-2",
-      "claimId": "ghrp2-regulatory-compounding-risk-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-compounding-significant-safety-risks"
-      ]
-    },
-    {
-      "compound": "ghrp-2",
-      "claimId": "ghrp2-regulatory-no-approved-us-product-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-search-ghrp-2"
-      ]
-    },
-    {
-      "compound": "ghrp-6",
-      "claimId": "ghrp6-regulatory-compounding-risk-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-ghrp6-category2"
-      ]
-    },
-    {
-      "compound": "ghrp-6",
-      "claimId": "ghrp6-warning-cortisol-glucose-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-ghrp6-category2"
-      ]
-    },
-    {
-      "compound": "glutathione",
-      "claimId": "glutathione-regulatory-compounding-endotoxin-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-us-glutathione-compounding-concerns",
-        "fda-2026-optimal-balance-recall",
-        "fda-2026-victory-medical-recall"
-      ]
-    },
-    {
-      "compound": "glutathione",
-      "claimId": "glutathione-adverse-effect-endotoxin-symptoms-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-us-glutathione-compounding-concerns"
-      ]
-    },
-    {
-      "compound": "glutathione",
-      "claimId": "glutathione-regulatory-injectable-skin-lightening-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-ph-advisory-2019-182",
-        "fda-consumer-update-injectable-skin-lightening-2015"
-      ]
-    },
-    {
-      "compound": "glutathione",
-      "claimId": "glutathione-regulatory-otc-unapproved-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-glutathione-liquid-otc",
-        "fda-homeopathic-guidance-2022"
-      ]
-    },
-    {
-      "compound": "gonadorelin",
-      "claimId": "gonadorelin-regulatory-veterinary-approval-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-factrel-veterinary",
-        "dailymed-live-search-gonadorelin-2026-08-29"
-      ]
-    },
-    {
-      "compound": "gonadorelin",
-      "claimId": "gonadorelin-approved-indication-human-historical-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "ferring-lutrepulse-pm-canada"
-      ]
-    },
-    {
-      "compound": "gonadorelin",
-      "claimId": "gonadorelin-warning-tumor-vision-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "ferring-lutrepulse-pm-canada"
-      ]
-    },
-    {
-      "compound": "gsk2881078",
-      "claimId": "gsk2881078-studied-use-copd-muscle-weakness-001",
-      "claimType": "studied-use",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "clinicaltrials-nct03359473",
-        "gsk-study-register-200182"
-      ]
-    },
-    {
-      "compound": "gsk2881078",
-      "claimId": "gsk2881078-regulatory-sarm-class-not-approved-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-sarms-bodybuilding-alert"
-      ]
-    },
-    {
-      "compound": "hexarelin",
-      "claimId": "hexarelin-regulatory-status-unapproved-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-drugs-category2-listing"
-      ]
-    },
-    {
       "compound": "hexarelin",
       "claimId": "hexarelin-regulatory-wada-prohibited-001",
       "claimType": "regulatory",
@@ -2847,15 +500,6 @@
       "selfAssertedSources": [
         "wada-s2-prohibited-list-drugscom",
         "vada-prohibited-list-2026"
-      ]
-    },
-    {
-      "compound": "ibutamoren",
-      "claimId": "ibutamoren-regulatory-compounding-chf-signal-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-category2-ibutamoren"
       ]
     },
     {
@@ -2869,48 +513,11 @@
     },
     {
       "compound": "igf-1-lr3",
-      "claimId": "igf1lr3-identity-structure-001",
-      "claimType": "mechanism",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-unii-srs-m9l22y19h9"
-      ]
-    },
-    {
-      "compound": "igf-1-lr3",
-      "claimId": "igf1lr3-regulatory-no-approved-product-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-increlex-label",
-        "fda-bulk-substances-cat2"
-      ]
-    },
-    {
-      "compound": "igf-1-lr3",
-      "claimId": "igf1lr3-adverse-effect-hypoglycemia-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-increlex-label"
-      ]
-    },
-    {
-      "compound": "igf-1-lr3",
       "claimId": "igf1lr3-regulatory-doping-status-001",
       "claimType": "regulatory",
       "fieldAuthorityRequired": true,
       "selfAssertedSources": [
         "wada-2026-prohibited-list"
-      ]
-    },
-    {
-      "compound": "ipamorelin",
-      "claimId": "ipamorelin-regulatory-compounding-risk-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-ipamorelin-category2"
       ]
     },
     {
@@ -2950,176 +557,12 @@
       ]
     },
     {
-      "compound": "kpv",
-      "claimId": "kpv-regulatory-nomination-withdrawn-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-withdrawn",
-        "fda-pcac-briefing-193346"
-      ]
-    },
-    {
-      "compound": "lasofoxifene",
-      "claimId": "lasofoxifene-regulatory-no-current-approval-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "ema-epar-fablyn"
-      ]
-    },
-    {
-      "compound": "lasofoxifene",
-      "claimId": "lasofoxifene-evidence-gap-approval-status-001",
-      "claimType": "evidence-gap",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "ema-epar-fablyn"
-      ]
-    },
-    {
-      "compound": "lgd-3303",
-      "claimId": "lgd3303-regulatory-fda-sarm-class-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-sarm-consumer-update"
-      ]
-    },
-    {
       "compound": "lgd-3303",
       "claimId": "lgd3303-adverse-effect-sarm-hepatotoxicity-001",
       "claimType": "adverse-effect",
       "fieldAuthorityRequired": true,
       "selfAssertedSources": [
         "nih-livertox-sarms"
-      ]
-    },
-    {
-      "compound": "lgd-3303",
-      "claimId": "lgd3303-regulatory-antidoping-sarm-class-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "usada-sarms-prohibited-class"
-      ]
-    },
-    {
-      "compound": "ligandrol",
-      "claimId": "ligandrol-regulatory-unapproved-status-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-warning-letter-prime-sports-2025",
-        "fda-consumer-sarms-update"
-      ]
-    },
-    {
-      "compound": "ligandrol",
-      "claimId": "ligandrol-warning-serious-risks-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-consumer-sarms-update",
-        "fda-warning-letter-prime-sports-2025"
-      ]
-    },
-    {
-      "compound": "liraglutide",
-      "claimId": "liraglutide-approved-indication-victoza-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-victoza-label",
-        "accessdata-fda-victoza-label-2025",
-        "fda-daf-victoza-nda022341"
-      ]
-    },
-    {
-      "compound": "liraglutide",
-      "claimId": "liraglutide-approved-indication-saxenda-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-saxenda-label",
-        "accessdata-fda-saxenda-label-2026",
-        "fda-daf-saxenda-nda206321"
-      ]
-    },
-    {
-      "compound": "liraglutide",
-      "claimId": "liraglutide-boxed-warning-thyroid-ccell-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-victoza-label",
-        "dailymed-saxenda-label",
-        "accessdata-fda-victoza-label-2025",
-        "accessdata-fda-saxenda-label-2026"
-      ]
-    },
-    {
-      "compound": "liraglutide",
-      "claimId": "liraglutide-adverse-effects-gi-pancreatitis-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-victoza-label"
-      ]
-    },
-    {
-      "compound": "liraglutide",
-      "claimId": "liraglutide-efficacy-leader-cv-outcomes-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "pmc-4985288-leader-primary",
-        "dailymed-victoza-label"
-      ]
-    },
-    {
-      "compound": "liraglutide",
-      "claimId": "liraglutide-efficacy-scale-weight-loss-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-saxenda-label"
-      ]
-    },
-    {
-      "compound": "ll-37",
-      "claimId": "ll37-regulatory-bulk-nominated-withdrawn-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-ll37-bulk-nominated-withdrawn"
-      ]
-    },
-    {
-      "compound": "ll-37",
-      "claimId": "ll37-adverse-nonclinical-reproductive-tumor-signal-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-ll37-bulk-nominated-withdrawn"
-      ]
-    },
-    {
-      "compound": "mazdutide",
-      "claimId": "mazdutide-regulatory-nmpa-weight-mgmt-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "pubmed-mazdutide-first-approval"
-      ]
-    },
-    {
-      "compound": "mazdutide",
-      "claimId": "mazdutide-regulatory-nmpa-t2d-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "pubmed-mazdutide-first-approval"
       ]
     },
     {
@@ -3142,42 +585,6 @@
     },
     {
       "compound": "mecasermin",
-      "claimId": "mecasermin-regulatory-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-increlex-label"
-      ]
-    },
-    {
-      "compound": "mecasermin",
-      "claimId": "mecasermin-warning-hypoglycemia-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-increlex-label"
-      ]
-    },
-    {
-      "compound": "mecasermin",
-      "claimId": "mecasermin-contraindication-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-increlex-label"
-      ]
-    },
-    {
-      "compound": "mecasermin",
-      "claimId": "mecasermin-dose-context-label-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-increlex-label"
-      ]
-    },
-    {
-      "compound": "mecasermin",
       "claimId": "mecasermin-efficacy-growth-velocity-001",
       "claimType": "efficacy",
       "fieldAuthorityRequired": true,
@@ -3192,60 +599,6 @@
       "fieldAuthorityRequired": true,
       "selfAssertedSources": [
         "ncbi-bookshelf-mecasermin-clinical-review"
-      ]
-    },
-    {
-      "compound": "melanotan-ii",
-      "claimId": "mt2-regulatory-fda-withdrawn-nomination-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-melanotan-ii"
-      ]
-    },
-    {
-      "compound": "melanotan-ii",
-      "claimId": "mt2-adverse-effects-short-term-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-melanotan-ii"
-      ]
-    },
-    {
-      "compound": "melanotan-ii",
-      "claimId": "mt2-warning-melanoma-nevus-vascular-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-melanotan-ii"
-      ]
-    },
-    {
-      "compound": "melatonin",
-      "claimId": "melatonin-long-term-safety-gap-001",
-      "claimType": "evidence-gap",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "cdc-mmwr-pediatric-melatonin-2022"
-      ]
-    },
-    {
-      "compound": "melatonin",
-      "claimId": "melatonin-regulatory-status-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-dietary-supplements-consumer-info"
-      ]
-    },
-    {
-      "compound": "mots-c",
-      "claimId": "mots-c-regulatory-nomination-withdrawn-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-mots-c-withdrawn-nomination"
       ]
     },
     {
@@ -3258,144 +611,12 @@
       ]
     },
     {
-      "compound": "mots-c",
-      "claimId": "mots-c-studied-use-phase2a-prediabetes-trial-001",
-      "claimType": "studied-use",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "clinicaltrials-nct07505745"
-      ]
-    },
-    {
-      "compound": "ospemifene",
-      "claimId": "ospemifene-regulatory-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-osphena-label",
-        "fda-osphena-label-pdf"
-      ]
-    },
-    {
-      "compound": "ospemifene",
-      "claimId": "ospemifene-regulatory-boxed-warning-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-osphena-label",
-        "fda-osphena-label-pdf"
-      ]
-    },
-    {
-      "compound": "ospemifene",
-      "claimId": "ospemifene-contraindication-breastcancer-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-osphena-label",
-        "fda-osphena-label-pdf"
-      ]
-    },
-    {
-      "compound": "ospemifene",
-      "claimId": "ospemifene-studied-use-bone-density-001",
-      "claimType": "studied-use",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-osphena-label"
-      ]
-    },
-    {
-      "compound": "oxytocin",
-      "claimId": "oxytocin-regulatory-approved-indications-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-pitocin-label"
-      ]
-    },
-    {
-      "compound": "oxytocin",
-      "claimId": "oxytocin-safety-obstetric-warnings-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-pitocin-label"
-      ]
-    },
-    {
-      "compound": "peg-mgf",
-      "claimId": "peg-mgf-regulatory-nominated-withdrawn-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-peg-mgf-bulk-withdrawn"
-      ]
-    },
-    {
-      "compound": "peg-mgf",
-      "claimId": "peg-mgf-warning-immunogenicity-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-peg-mgf-bulk-withdrawn"
-      ]
-    },
-    {
       "compound": "pemvidutide",
       "claimId": "pemvidutide-efficacy-masld-phase2-rct-001",
       "claimType": "efficacy",
       "fieldAuthorityRequired": true,
       "selfAssertedSources": [
         "ctgov-nct05006885-classic"
-      ]
-    },
-    {
-      "compound": "pramlintide",
-      "claimId": "pramlintide-regulatory-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-symlinpen-label",
-        "accessdata-fda-daf-021332"
-      ]
-    },
-    {
-      "compound": "pramlintide",
-      "claimId": "pramlintide-warning-severe-hypoglycemia-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-symlinpen-label"
-      ]
-    },
-    {
-      "compound": "pramlintide",
-      "claimId": "pramlintide-contraindication-gastroparesis-hypoawareness-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-symlinpen-label"
-      ]
-    },
-    {
-      "compound": "pramlintide",
-      "claimId": "pramlintide-dose-context-label-titration-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-symlinpen-label"
-      ]
-    },
-    {
-      "compound": "rad-150",
-      "claimId": "rad150-regulatory-unapproved-sarm-class-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bodybuilding-sarms-harm",
-        "fda-bulk-substances-category2",
-        "mdpi-jox-sarm-safety-review-2023"
       ]
     },
     {
@@ -3409,235 +630,12 @@
       ]
     },
     {
-      "compound": "rad-150",
-      "claimId": "rad150-misinformation-marketing-vs-evidence-001",
-      "claimType": "misinformation-claim",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bodybuilding-sarms-harm"
-      ]
-    },
-    {
-      "compound": "raloxifene",
-      "claimId": "raloxifene-regulatory-approved-indications-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-evista-label"
-      ]
-    },
-    {
-      "compound": "raloxifene",
-      "claimId": "raloxifene-warning-boxed-vte-stroke-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-evista-label"
-      ]
-    },
-    {
-      "compound": "raloxifene",
-      "claimId": "raloxifene-efficacy-breast-cancer-risk-reduction-more-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-evista-label"
-      ]
-    },
-    {
-      "compound": "raloxifene",
-      "claimId": "raloxifene-adverse-effect-vte-quantified-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-evista-label"
-      ]
-    },
-    {
-      "compound": "s-23",
-      "claimId": "s23-regulatory-unapproved-sarm-class-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-sarms-consumer-update",
-        "fda-bodybuilding-fraudulent-products"
-      ]
-    },
-    {
       "compound": "s-23",
       "claimId": "s23-regulatory-wada-prohibited-001",
       "claimType": "regulatory",
       "fieldAuthorityRequired": true,
       "selfAssertedSources": [
         "wada-2026-prohibited-list-official"
-      ]
-    },
-    {
-      "compound": "s-23",
-      "claimId": "s23-adverse-effect-sarm-class-safety-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bodybuilding-fraudulent-products",
-        "fda-sarms-consumer-update"
-      ]
-    },
-    {
-      "compound": "selank",
-      "claimId": "selank-regulatory-bulk-nomination-withdrawn-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-withdrawn"
-      ]
-    },
-    {
-      "compound": "semax",
-      "claimId": "semax-russia-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-semax-withdrawn-nomination"
-      ]
-    },
-    {
-      "compound": "semax",
-      "claimId": "semax-us-regulatory-status-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-semax-withdrawn-nomination"
-      ]
-    },
-    {
-      "compound": "sermorelin",
-      "claimId": "sermorelin-regulatory-discontinuation-not-safety-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fedreg-geref-determination-2013"
-      ]
-    },
-    {
-      "compound": "sermorelin",
-      "claimId": "sermorelin-regulatory-no-current-fda-product-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-search-sermorelin",
-        "fda-bulk-drug-substances-category2",
-        "fedreg-geref-determination-2013"
-      ]
-    },
-    {
-      "compound": "sermorelin",
-      "claimId": "sermorelin-formulation-historical-approved-product-001",
-      "claimType": "formulation",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fedreg-geref-determination-2013",
-        "dailymed-search-sermorelin"
-      ]
-    },
-    {
-      "compound": "setmelanotide",
-      "claimId": "setmelanotide-regulatory-approved-indications-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-imcivree-label",
-        "fda-imcivree-first-approval-announcement"
-      ]
-    },
-    {
-      "compound": "setmelanotide",
-      "claimId": "setmelanotide-efficacy-pomc-lepr-phase3-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-imcivree-first-approval-announcement"
-      ]
-    },
-    {
-      "compound": "setmelanotide",
-      "claimId": "setmelanotide-safety-warnings-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-imcivree-label",
-        "fda-imcivree-first-approval-announcement"
-      ]
-    },
-    {
-      "compound": "setmelanotide",
-      "claimId": "setmelanotide-adverse-effect-common-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-imcivree-first-approval-announcement"
-      ]
-    },
-    {
-      "compound": "somatropin",
-      "claimId": "somatropin-approved-indications-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-genotropin-label"
-      ]
-    },
-    {
-      "compound": "somatropin",
-      "claimId": "somatropin-contraindications-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-genotropin-label"
-      ]
-    },
-    {
-      "compound": "somatropin",
-      "claimId": "somatropin-boxed-risk-warnings-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-genotropin-label"
-      ]
-    },
-    {
-      "compound": "somatropin",
-      "claimId": "somatropin-dose-context-adult-ghd-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-genotropin-label"
-      ]
-    },
-    {
-      "compound": "somatropin",
-      "claimId": "somatropin-regulatory-illegal-marketing-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-import-alert-66-71"
-      ]
-    },
-    {
-      "compound": "somatropin",
-      "claimId": "somatropin-regulatory-mortality-signal-inconclusive-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-safety-communication-somatropin-mortality"
-      ]
-    },
-    {
-      "compound": "stenabolic",
-      "claimId": "stenabolic-identity-status-001",
-      "claimType": "identity",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-cat2"
       ]
     },
     {
@@ -3650,235 +648,12 @@
       ]
     },
     {
-      "compound": "survodutide",
-      "claimId": "survodutide-regulatory-breakthrough-fasttrack-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-survodutide-search"
-      ]
-    },
-    {
-      "compound": "tamoxifen",
-      "claimId": "tamoxifen-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-tamoxifen-citrate-label"
-      ]
-    },
-    {
-      "compound": "tamoxifen",
-      "claimId": "tamoxifen-warning-boxed-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-tamoxifen-citrate-label"
-      ]
-    },
-    {
-      "compound": "tamoxifen",
-      "claimId": "tamoxifen-contraindication-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-tamoxifen-citrate-label"
-      ]
-    },
-    {
-      "compound": "tamoxifen",
-      "claimId": "tamoxifen-dose-context-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-tamoxifen-citrate-label"
-      ]
-    },
-    {
-      "compound": "tamoxifen",
-      "claimId": "tamoxifen-efficacy-nsabp-p1-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-tamoxifen-citrate-label"
-      ]
-    },
-    {
       "compound": "tb-500",
       "claimId": "tb500-wada-prohibited-001",
       "claimType": "regulatory",
       "fieldAuthorityRequired": true,
       "selfAssertedSources": [
         "wada-prohibited-list-tb500"
-      ]
-    },
-    {
-      "compound": "tesamorelin",
-      "claimId": "tesamorelin-regulatory-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-egrifta-sv-label",
-        "drugscom-egrifta-approval-history"
-      ]
-    },
-    {
-      "compound": "tesamorelin",
-      "claimId": "tesamorelin-regulatory-limitations-of-use-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-egrifta-sv-label"
-      ]
-    },
-    {
-      "compound": "tesamorelin",
-      "claimId": "tesamorelin-contraindications-warnings-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-egrifta-sv-label"
-      ]
-    },
-    {
-      "compound": "tesamorelin",
-      "claimId": "tesamorelin-dose-context-label-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-egrifta-sv-label"
-      ]
-    },
-    {
-      "compound": "testolone",
-      "claimId": "testolone-regulatory-unapproved-new-drug-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-warrior-labz-warning-letter-2023",
-        "fda-sarms-consumer-update-2024",
-        "ncbi-livertox-sarms"
-      ]
-    },
-    {
-      "compound": "testolone",
-      "claimId": "testolone-adverse-effect-liver-injury-case-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-warrior-labz-warning-letter-2023",
-        "ncbi-livertox-sarms"
-      ]
-    },
-    {
-      "compound": "thymosin-alpha-1",
-      "claimId": "ta1-regulatory-not-fda-approved-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-search-thymalfasin"
-      ]
-    },
-    {
-      "compound": "thymosin-alpha-1",
-      "claimId": "ta1-regulatory-bulks-list-evaluation-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-ta1-bulks-183892"
-      ]
-    },
-    {
-      "compound": "thymosin-alpha-1",
-      "claimId": "ta1-warning-immunosuppressed-gvhd-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-ta1-bulks-183892"
-      ]
-    },
-    {
-      "compound": "toremifene",
-      "claimId": "toremifene-regulatory-approved-indication-001",
-      "claimType": "approved-indication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-fareston-label",
-        "fda-fareston-sndsa-2024ltr"
-      ]
-    },
-    {
-      "compound": "toremifene",
-      "claimId": "toremifene-contraindication-001",
-      "claimType": "contraindication",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-fareston-label"
-      ]
-    },
-    {
-      "compound": "toremifene",
-      "claimId": "toremifene-warning-qt-prolongation-boxed-001",
-      "claimType": "warning",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-fareston-label"
-      ]
-    },
-    {
-      "compound": "toremifene",
-      "claimId": "toremifene-regulatory-crl-80mg-adt-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-openfda-drugsfda-toremifene-search-2026"
-      ]
-    },
-    {
-      "compound": "vitamin-d3",
-      "claimId": "vitamind3-regulatory-supplement-status-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "dailymed-cholecalciferol-25mcg-tab"
-      ]
-    },
-    {
-      "compound": "vitamin-d3",
-      "claimId": "vitamind3-dose-context-rda-ul-001",
-      "claimType": "dose-context",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "nih-ods-vitamind-health-professional"
-      ]
-    },
-    {
-      "compound": "vitamin-d3",
-      "claimId": "vitamind3-efficacy-vital-cancer-cvd-negative-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "nci-vital-trial-cancer-currents-2018"
-      ]
-    },
-    {
-      "compound": "vitamin-d3",
-      "claimId": "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
-      "claimType": "efficacy",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "uspstf-vitamind-calcium-fracture-fall-prevention",
-        "uspstf-vitamind-calcium-fracture-fall-draft-2024"
-      ]
-    },
-    {
-      "compound": "vitamin-d3",
-      "claimId": "vitamind3-adverse-effect-hypercalcemia-toxicity-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "nih-ods-vitamind-health-professional",
-        "dailymed-cholecalciferol-25mcg-tab"
       ]
     },
     {
@@ -3897,18 +672,7 @@
       "fieldAuthorityRequired": true,
       "selfAssertedSources": [
         "nct06828055",
-        "ctgov-nct06828055-results-status",
-        "pubmed-search-vk2735-oral-2026"
-      ]
-    },
-    {
-      "compound": "vk2735",
-      "claimId": "vk2735-regulatory-no-compounding-listing-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bulk-substances-category2",
-        "dailymed-search-vk2735-2026"
+        "ctgov-nct06828055-results-status"
       ]
     },
     {
@@ -3921,33 +685,6 @@
       ]
     },
     {
-      "compound": "vosilasarm",
-      "claimId": "vosilasarm-regulatory-unapproved-illegal-marketing-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-warrior-labz-warning-letter-2023"
-      ]
-    },
-    {
-      "compound": "vosilasarm",
-      "claimId": "vosilasarm-adverse-effect-hepatotoxicity-001",
-      "claimType": "adverse-effect",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-warrior-labz-warning-letter-2023"
-      ]
-    },
-    {
-      "compound": "yk-11",
-      "claimId": "yk11-regulatory-not-approved-adverse-event-001",
-      "claimType": "regulatory",
-      "fieldAuthorityRequired": true,
-      "selfAssertedSources": [
-        "fda-bodybuilding-sarms-harm"
-      ]
-    },
-    {
       "compound": "yk-11",
       "claimId": "yk11-adverse-effect-liver-injury-001",
       "claimType": "adverse-effect",
@@ -3957,192 +694,14 @@
       ]
     }
   ],
-  "fieldUseGaps": [],
-  "projectedFieldUseGaps": [
+  "fieldUseGaps": [
     {
-      "compound": "aod-9604",
-      "claimId": "aod9604-efficacy-negative-weight-loss-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "fda-pcac-briefing-183584"
-      ],
-      "inferredClasses": [
-        "fda"
-      ]
-    },
-    {
-      "compound": "bazedoxifene",
-      "claimId": "bazedoxifene-efficacy-vertebral-fracture-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "ema-conbriza-epar",
-        "jbmr-silverman-2008"
-      ],
-      "inferredClasses": [
-        null,
-        null
-      ]
-    },
-    {
-      "compound": "bremelanotide",
-      "claimId": "bremelanotide-efficacy-reconnect-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "dailymed-vyleesi-label"
-      ],
-      "inferredClasses": [
-        "dailymed"
-      ]
-    },
-    {
-      "compound": "cardarine",
-      "claimId": "cardarine-warning-carcinogenicity-animal-001",
-      "claimType": "adverse-effect",
-      "requiredField": "contraindications-warnings",
-      "selfAssertedSources": [
-        "hsa-singapore-alert-2017",
-        "health-canada-recall-gw501516"
-      ],
-      "inferredClasses": [
-        null,
-        null
-      ]
-    },
-    {
-      "compound": "clomiphene",
-      "claimId": "clomiphene-efficacy-male-hypogonadism-testosterone-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "dailymed-clomid-label"
-      ],
-      "inferredClasses": [
-        "dailymed"
-      ]
-    },
-    {
-      "compound": "creatine",
-      "claimId": "creatine-dose-context-loading-maintenance-001",
-      "claimType": "dose-context",
-      "requiredField": "product-specific-dosing",
-      "selfAssertedSources": [
-        "nih-ods-exercise-athletic-performance-hp"
-      ],
-      "inferredClasses": [
-        "nih-ods"
-      ]
-    },
-    {
-      "compound": "creatine",
-      "claimId": "creatine-safety-common-adverse-effects-001",
-      "claimType": "adverse-effect",
-      "requiredField": "contraindications-warnings",
-      "selfAssertedSources": [
-        "nih-ods-exercise-athletic-performance-hp"
-      ],
-      "inferredClasses": [
-        "nih-ods"
-      ]
-    },
-    {
-      "compound": "dulaglutide",
-      "claimId": "dulaglutide-efficacy-rewind-cv-outcomes-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "dailymed-trulicity-label"
-      ],
-      "inferredClasses": [
-        "dailymed"
-      ]
-    },
-    {
-      "compound": "elamipretide",
-      "claimId": "elamipretide-human-rct-negative-pmm-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "clinicaltrials-gov-nct03323749"
-      ],
-      "inferredClasses": [
-        "clinicaltrials"
-      ]
-    },
-    {
-      "compound": "emideltide",
-      "claimId": "emideltide-efficacy-insomnia-inconclusive-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "fda-pcac-briefing-193344-emideltide"
-      ],
-      "inferredClasses": [
-        "fda"
-      ]
-    },
-    {
-      "compound": "exenatide",
-      "claimId": "exenatide-efficacy-exscel-cv-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "fda-bydureon-label-2024"
-      ],
-      "inferredClasses": [
-        "fda"
-      ]
-    },
-    {
-      "compound": "gonadorelin",
-      "claimId": "gonadorelin-approved-indication-human-historical-001",
-      "claimType": "approved-indication",
-      "requiredField": "approved-indications",
-      "selfAssertedSources": [
-        "ferring-lutrepulse-pm-canada"
-      ],
-      "inferredClasses": [
-        null
-      ]
-    },
-    {
-      "compound": "gonadorelin",
-      "claimId": "gonadorelin-warning-tumor-vision-001",
-      "claimType": "warning",
-      "requiredField": "contraindications-warnings",
-      "selfAssertedSources": [
-        "ferring-lutrepulse-pm-canada"
-      ],
-      "inferredClasses": [
-        null
-      ]
-    },
-    {
-      "compound": "gsk2881078",
-      "claimId": "gsk2881078-studied-use-copd-muscle-weakness-001",
-      "claimType": "studied-use",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "clinicaltrials-nct03359473",
-        "gsk-study-register-200182"
-      ],
-      "inferredClasses": [
-        "clinicaltrials",
-        null
-      ]
-    },
-    {
-      "compound": "ibutamoren",
-      "claimId": "ibutamoren-efficacy-fatfreemass-mixed-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "fda-pcac-briefing-2026-ibutamoren-sarcopenia"
-      ],
-      "inferredClasses": [
-        "fda"
+      "compound": "afamelanotide",
+      "claimId": "afamelanotide-controversy-melanotan-conflation-001",
+      "claimType": "controversy",
+      "requiredField": "misinformation-monitoring",
+      "registryBackedSources": [
+        "dailymed-scenesse-label"
       ]
     },
     {
@@ -4150,37 +709,12 @@
       "claimId": "igf1lr3-identity-structure-001",
       "claimType": "mechanism",
       "requiredField": "mechanism",
-      "selfAssertedSources": [
+      "registryBackedSources": [
         "fda-unii-srs-m9l22y19h9"
-      ],
-      "inferredClasses": [
-        "fda"
       ]
-    },
-    {
-      "compound": "ipamorelin",
-      "claimId": "ipamorelin-human-rct-negative-poi-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "fda-pcac-briefing-182088"
-      ],
-      "inferredClasses": [
-        "fda"
-      ]
-    },
-    {
-      "compound": "lasofoxifene",
-      "claimId": "lasofoxifene-regulatory-no-current-approval-001",
-      "claimType": "regulatory",
-      "requiredField": "regulatory",
-      "selfAssertedSources": [
-        "ema-epar-fablyn"
-      ],
-      "inferredClasses": [
-        null
-      ]
-    },
+    }
+  ],
+  "projectedFieldUseGaps": [
     {
       "compound": "lgd-3303",
       "claimId": "lgd3303-adverse-effect-sarm-hepatotoxicity-001",
@@ -4191,68 +725,6 @@
       ],
       "inferredClasses": [
         null
-      ]
-    },
-    {
-      "compound": "lgd-3303",
-      "claimId": "lgd3303-regulatory-antidoping-sarm-class-001",
-      "claimType": "regulatory",
-      "requiredField": "regulatory",
-      "selfAssertedSources": [
-        "usada-sarms-prohibited-class"
-      ],
-      "inferredClasses": [
-        null
-      ]
-    },
-    {
-      "compound": "liraglutide",
-      "claimId": "liraglutide-efficacy-leader-cv-outcomes-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "pmc-4985288-leader-primary",
-        "dailymed-victoza-label"
-      ],
-      "inferredClasses": [
-        null,
-        "dailymed"
-      ]
-    },
-    {
-      "compound": "liraglutide",
-      "claimId": "liraglutide-efficacy-scale-weight-loss-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "dailymed-saxenda-label"
-      ],
-      "inferredClasses": [
-        "dailymed"
-      ]
-    },
-    {
-      "compound": "mazdutide",
-      "claimId": "mazdutide-regulatory-nmpa-weight-mgmt-001",
-      "claimType": "regulatory",
-      "requiredField": "regulatory",
-      "selfAssertedSources": [
-        "pubmed-mazdutide-first-approval"
-      ],
-      "inferredClasses": [
-        "pubmed"
-      ]
-    },
-    {
-      "compound": "mazdutide",
-      "claimId": "mazdutide-regulatory-nmpa-t2d-001",
-      "claimType": "regulatory",
-      "requiredField": "regulatory",
-      "selfAssertedSources": [
-        "pubmed-mazdutide-first-approval"
-      ],
-      "inferredClasses": [
-        "pubmed"
       ]
     },
     {
@@ -4304,30 +776,6 @@
       ]
     },
     {
-      "compound": "mots-c",
-      "claimId": "mots-c-studied-use-phase2a-prediabetes-trial-001",
-      "claimType": "studied-use",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "clinicaltrials-nct07505745"
-      ],
-      "inferredClasses": [
-        "clinicaltrials"
-      ]
-    },
-    {
-      "compound": "ospemifene",
-      "claimId": "ospemifene-studied-use-bone-density-001",
-      "claimType": "studied-use",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "dailymed-osphena-label"
-      ],
-      "inferredClasses": [
-        "dailymed"
-      ]
-    },
-    {
       "compound": "pemvidutide",
       "claimId": "pemvidutide-efficacy-masld-phase2-rct-001",
       "claimType": "efficacy",
@@ -4354,92 +802,6 @@
       ]
     },
     {
-      "compound": "raloxifene",
-      "claimId": "raloxifene-efficacy-breast-cancer-risk-reduction-more-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "dailymed-evista-label"
-      ],
-      "inferredClasses": [
-        "dailymed"
-      ]
-    },
-    {
-      "compound": "sermorelin",
-      "claimId": "sermorelin-regulatory-discontinuation-not-safety-001",
-      "claimType": "regulatory",
-      "requiredField": "regulatory",
-      "selfAssertedSources": [
-        "fedreg-geref-determination-2013"
-      ],
-      "inferredClasses": [
-        null
-      ]
-    },
-    {
-      "compound": "setmelanotide",
-      "claimId": "setmelanotide-efficacy-pomc-lepr-phase3-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "fda-imcivree-first-approval-announcement"
-      ],
-      "inferredClasses": [
-        "fda"
-      ]
-    },
-    {
-      "compound": "tamoxifen",
-      "claimId": "tamoxifen-efficacy-nsabp-p1-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "dailymed-tamoxifen-citrate-label"
-      ],
-      "inferredClasses": [
-        "dailymed"
-      ]
-    },
-    {
-      "compound": "vitamin-d3",
-      "claimId": "vitamind3-dose-context-rda-ul-001",
-      "claimType": "dose-context",
-      "requiredField": "product-specific-dosing",
-      "selfAssertedSources": [
-        "nih-ods-vitamind-health-professional"
-      ],
-      "inferredClasses": [
-        "nih-ods"
-      ]
-    },
-    {
-      "compound": "vitamin-d3",
-      "claimId": "vitamind3-efficacy-vital-cancer-cvd-negative-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "nci-vital-trial-cancer-currents-2018"
-      ],
-      "inferredClasses": [
-        null
-      ]
-    },
-    {
-      "compound": "vitamin-d3",
-      "claimId": "vitamind3-efficacy-fracture-falls-uspstf-negative-001",
-      "claimType": "efficacy",
-      "requiredField": "efficacy-claims",
-      "selfAssertedSources": [
-        "uspstf-vitamind-calcium-fracture-fall-prevention",
-        "uspstf-vitamind-calcium-fracture-fall-draft-2024"
-      ],
-      "inferredClasses": [
-        null,
-        null
-      ]
-    },
-    {
       "compound": "vk2735",
       "claimId": "vk2735-regulatory-investigational-status-001",
       "claimType": "regulatory",
@@ -4458,13 +820,11 @@
       "requiredField": "efficacy-claims",
       "selfAssertedSources": [
         "nct06828055",
-        "ctgov-nct06828055-results-status",
-        "pubmed-search-vk2735-oral-2026"
+        "ctgov-nct06828055-results-status"
       ],
       "inferredClasses": [
         null,
-        null,
-        "pubmed"
+        null
       ]
     },
     {
@@ -4497,19 +857,19 @@
       "compound": "ac-262536",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "acp-105",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 3
     },
     {
       "compound": "afamelanotide",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "amycretin",
@@ -4521,31 +881,31 @@
       "compound": "andarine",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "aod-9604",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "bazedoxifene",
       "claimsRequiringAuthority": 5,
       "passTodaySelfAsserted": 5,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 5
     },
     {
       "compound": "bpc-157",
       "claimsRequiringAuthority": 1,
       "passTodaySelfAsserted": 1,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "bremelanotide",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "caffeine",
@@ -4557,49 +917,49 @@
       "compound": "cagrilintide",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "cardarine",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 3
     },
     {
       "compound": "chorionic-gonadotropin",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 3
     },
     {
       "compound": "cjc-1295",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "clomiphene",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "creatine",
       "claimsRequiringAuthority": 4,
-      "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "dulaglutide",
       "claimsRequiringAuthority": 5,
       "passTodaySelfAsserted": 5,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 5
     },
     {
       "compound": "elamipretide",
       "claimsRequiringAuthority": 5,
-      "passTodaySelfAsserted": 5,
-      "passUnderRegistryBacked": 0
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "emideltide",
@@ -4617,73 +977,73 @@
       "compound": "epitalon",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "exenatide",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "ghk-cu",
       "claimsRequiringAuthority": 1,
-      "passTodaySelfAsserted": 1,
+      "passTodaySelfAsserted": 0,
       "passUnderRegistryBacked": 0
     },
     {
       "compound": "ghrp-2",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "ghrp-6",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "glutathione",
       "claimsRequiringAuthority": 5,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "gonadorelin",
       "claimsRequiringAuthority": 3,
-      "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "gsk2881078",
       "claimsRequiringAuthority": 2,
-      "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "hexarelin",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "ibutamoren",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "igf-1-lr3",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 3
     },
     {
       "compound": "ipamorelin",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "kisspeptin-10",
@@ -4695,37 +1055,37 @@
       "compound": "kpv",
       "claimsRequiringAuthority": 1,
       "passTodaySelfAsserted": 1,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "lasofoxifene",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "lgd-3303",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "ligandrol",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "liraglutide",
       "claimsRequiringAuthority": 6,
       "passTodaySelfAsserted": 6,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 6
     },
     {
       "compound": "ll-37",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "magnesium",
@@ -4742,38 +1102,38 @@
     {
       "compound": "mazdutide",
       "claimsRequiringAuthority": 4,
-      "passTodaySelfAsserted": 4,
+      "passTodaySelfAsserted": 2,
       "passUnderRegistryBacked": 0
     },
     {
       "compound": "mecasermin",
       "claimsRequiringAuthority": 6,
       "passTodaySelfAsserted": 6,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "melanotan-ii",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 3
     },
     {
       "compound": "melatonin",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "mots-c",
       "claimsRequiringAuthority": 3,
-      "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passTodaySelfAsserted": 2,
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "ospemifene",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "ostarine",
@@ -4785,13 +1145,13 @@
       "compound": "oxytocin",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "peg-mgf",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "pemvidutide",
@@ -4803,19 +1163,19 @@
       "compound": "pramlintide",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "rad-150",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "raloxifene",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "retatrutide",
@@ -4827,13 +1187,13 @@
       "compound": "s-23",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "selank",
       "claimsRequiringAuthority": 1,
       "passTodaySelfAsserted": 1,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "semaglutide",
@@ -4845,25 +1205,25 @@
       "compound": "semax",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "sermorelin",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 3
     },
     {
       "compound": "setmelanotide",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "somatropin",
       "claimsRequiringAuthority": 6,
       "passTodaySelfAsserted": 6,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 6
     },
     {
       "compound": "spermidine",
@@ -4875,19 +1235,19 @@
       "compound": "stenabolic",
       "claimsRequiringAuthority": 3,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "survodutide",
       "claimsRequiringAuthority": 1,
       "passTodaySelfAsserted": 1,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "tamoxifen",
       "claimsRequiringAuthority": 5,
       "passTodaySelfAsserted": 5,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 5
     },
     {
       "compound": "tb-500",
@@ -4899,13 +1259,13 @@
       "compound": "tesamorelin",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "testolone",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "testosterone-cypionate",
@@ -4916,8 +1276,8 @@
     {
       "compound": "thymosin-alpha-1",
       "claimsRequiringAuthority": 3,
-      "passTodaySelfAsserted": 3,
-      "passUnderRegistryBacked": 0
+      "passTodaySelfAsserted": 1,
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "tirzepatide",
@@ -4929,7 +1289,7 @@
       "compound": "toremifene",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "urolithin-a",
@@ -4940,26 +1300,26 @@
     {
       "compound": "vitamin-d3",
       "claimsRequiringAuthority": 5,
-      "passTodaySelfAsserted": 5,
-      "passUnderRegistryBacked": 0
+      "passTodaySelfAsserted": 4,
+      "passUnderRegistryBacked": 4
     },
     {
       "compound": "vk2735",
       "claimsRequiringAuthority": 4,
       "passTodaySelfAsserted": 4,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     },
     {
       "compound": "vosilasarm",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 2
     },
     {
       "compound": "yk-11",
       "claimsRequiringAuthority": 2,
       "passTodaySelfAsserted": 2,
-      "passUnderRegistryBacked": 0
+      "passUnderRegistryBacked": 1
     }
   ]
 }
