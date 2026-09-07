@@ -363,7 +363,7 @@
     {
       "claimId": "creatine-safety-common-adverse-effects-001",
       "claimType": "adverse-effect",
-      "statement": "NIH's Office of Dietary Supplements fact sheet states creatine is considered safe for short-term use by healthy adults, and the ISSN position stand states short- and long-term supplementation (up to 30 g/day for 5 years) is safe and well-tolerated in healthy individuals; NIH notes reported side effects include water-retention-related weight gain, and anecdotal reports of nausea, diarrhea and related GI distress, muscle cramps, and heat intolerance. A 2025 pharmacovigilance analysis combining clinical-trial adverse-event data with 28.4 million real-world adverse-event reports found no significant difference in side-effect rates between creatine and placebo groups (13.7% vs 13.2%), independently corroborating and systematically quantifying this tolerability profile.",
+      "statement": "NIH's Office of Dietary Supplements fact sheet states creatine is considered safe for short-term use by healthy adults, and the ISSN position stand states short- and long-term supplementation (up to 30 g/day for 5 years) is safe and well-tolerated in healthy individuals; NIH notes reported side effects include water-retention-related weight gain, and anecdotal reports of nausea, diarrhea and related GI distress, muscle cramps, and heat intolerance. A 2025 pharmacovigilance analysis reported no significant difference in side-effect reporting between creatine and placebo groups. Its 13.7% versus 13.2% figures are the proportion of studies reporting side effects, not the proportion of participants who experienced them; the analysis reports participant-frequency figures separately, and the 0.00072% figure is a distinct spontaneous-report denominator drawn from 28.4 million real-world adverse-event reports. These three denominators must not be conflated or presented as one tolerability rate. This analysis shares author and venue lineage with the ISSN position stand cited in this same claim, so it is direct quantification of a related evidence base rather than independent institutional corroboration.",
       "context": {
         "population": "healthy adults",
         "route": "oral",
@@ -412,8 +412,9 @@
         }
       ],
       "reviewFlags": [
-        "independent-review-2026-08-29: this reviewFlag is now resolved -- a systematically-quantified independent pharmacovigilance analysis (Kreider et al. 2025, JISSN) exists: adverse event rates for creatine (13.7%) were not significantly different from placebo (13.2%) across clinical trials, and creatine appeared in only 0.00072% of 28.4 million real-world adverse-event reports. The earlier framing of the adverse-effect list as 'largely anecdotal/case-level, not systematically quantified' is superseded and should not be relied upon going forward.",
-        "style pass 2026-08-29: 'considered safe' language attributed explicitly in-line to the NIH ODS source per audit recommendation \u2014 this is the source's assessment, not BioStack's assurance."
+        "wave006-correction-2026-09-06: the prior in-band resolved narrative on this flag was factually wrong and is withdrawn. It described 13.7% and 13.2% as adverse-event rates for creatine and placebo participants; PMID 40198156 reports those as percentages of studies reporting side effects. The wave006 re-review recorded separately reported participant-frequency figures of 4.21% (placebo) versus 4.60% (creatine); these require verbatim extraction from the primary abstract before they may appear in any claim statement, and are deliberately not asserted here. The original 2026-08-29 concern, that the adverse-effect list was largely anecdotal/case-level and not systematically quantified, is therefore NOT resolved by this source, and this claim remains review-gated.",
+        "style pass 2026-08-29: 'considered safe' language attributed explicitly in-line to the NIH ODS source per audit recommendation \u2014 this is the source's assessment, not BioStack's assurance.",
+        "wave006-correction-2026-09-06: exact eligible A1/A2 support for the safety and tolerability assertions is still outstanding. Packet NIH ODS tiering conflicts with the source registry C2 policy for that publisher, and an FDA-hosted industry GRAS submission is not an FDA-authored safety assessment. No authority tier or flag was changed by this correction pass."
       ]
     },
     {
@@ -578,6 +579,15 @@
       "severity": "moderate",
       "summary": "General-population renal safety data (no significant GFR change; transient creatinine rise) is drawn mainly from healthy individuals and mixed clinical populations; the FDA GRAS safety conclusion is explicitly scoped to 'individuals without prior kidney damage.' Safety in people with pre-existing kidney impairment is comparatively under-studied and should not be assumed equivalent.",
       "resolutionStatus": "needs-human-review"
+    },
+    {
+      "conflictId": "creatine-pharmacovigilance-source-independence-001",
+      "claimRefs": [
+        "creatine-safety-common-adverse-effects-001"
+      ],
+      "severity": "high",
+      "summary": "The 2025 pharmacovigilance analysis (PMID 40198156) was previously described in this packet as independently corroborating the ISSN position stand tolerability conclusion. The wave006 re-review established that the two share author and venue lineage, so the analysis cannot be counted as an independent institutional source family for this claim. Independent corroboration from a different editorial family is still required.",
+      "resolutionStatus": "needs-human-review"
     }
   ],
   "ops": {
@@ -588,7 +598,8 @@
       "remediation-pass-2026-08-29: UNII resolved and independently verified via the FDA/NCATS Global Substance Registration System (UNII MU72812GK0, CAS 57-00-1 confirmed matching) -- added to compound.externalIdentifiers and sources. ChEMBL ID remains unresolved: attempted the ChEMBL REST API (www.ebi.ac.uk/chembl/api/data/molecule) and the ChEMBL molecule-explorer page directly, both blocked by persistent proxy rate-limiting (HTTP 429) across repeated retries with backoff; DrugBank's identifier table remains behind an authentication wall as previously noted. ChEMBL lookup should be retried in a future pass.",
       "Renal safety evidence for populations with pre-existing kidney impairment is thin relative to healthy-population evidence and remains review-gated. remediation-pass-2026-08-29: an independent 2026 International Urology and Nephrology meta-analysis (26 RCTs, 1,036 participants) was checked and confirms the gap is real -- zero trials exist in non-dialysis CKD (stages 1-5) patients, though a small hemodialysis-population dataset (2 RCTs) does exist with no major adverse events reported. This conflict cannot be resolved by independent sourcing and stays human-review-gated per the reviewer verdict.",
       "Cognitive-enhancement and anti-aging marketing claims for creatine were not sourced in this pass and would need dedicated fetches before any claim is made about them.",
-      "remediation-pass-2026-08-29: addressed reviewer promotionBlockers for creatine-safety-common-adverse-effects-001 (added independent 2025 JISSN pharmacovigilance analysis; reviewFlag updated from 'anecdotal/not quantified' to reflect systematic quantification; evidenceTier upgraded Moderate->Strong) and creatine-misinformation-hairloss-dht-001 (added independent American Hair Loss Association critique covering trichogram methodology, absence of scalp-level DHT measurement, absence of genetic-predisposition screening, and potential industry-funding conflict of interest)."
+      "remediation-pass-2026-08-29: addressed reviewer promotionBlockers for creatine-safety-common-adverse-effects-001 (added independent 2025 JISSN pharmacovigilance analysis; reviewFlag updated from 'anecdotal/not quantified' to reflect systematic quantification; evidenceTier upgraded Moderate->Strong) and creatine-misinformation-hairloss-dht-001 (added independent American Hair Loss Association critique covering trichogram methodology, absence of scalp-level DHT measurement, absence of genetic-predisposition screening, and potential industry-funding conflict of interest).",
+      "wave006 re-review (2026-09-05) demonstrated a study-versus-participant denominator error in the safety claim and a false source-independence attribution; corrected 2026-09-06 in packet-authoring only. Remaining dose, monitoring, regulatory, and misinformation dispositions are not addressed by that pass."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -596,7 +607,8 @@
       "strong-human-rct-efficacy-highintensity-exercise",
       "negative-misinformation-rct-hairloss",
       "thin-human-evidence-renal-impairment-subgroup",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "wave006-correction-pass-2026-09-06"
     ]
   }
 }
