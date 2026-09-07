@@ -81,7 +81,7 @@
     {
       "sourceId": "fda-manookian-nooh-melanotan-ii",
       "sourceType": "regulator",
-      "authorityTier": "A1",
+      "authorityTier": "X",
       "title": "Notice of Opportunity for Hearing (NOOH), Edward Manookian, Docket No. FDA-2015-N-4169",
       "publisher": "U.S. Food and Drug Administration",
       "url": "https://www.fda.gov/media/128834/download",
@@ -391,7 +391,8 @@
       "reviewFlags": [
         "misinformation-adjacent: cited FDA enforcement action concerns Melanotan II specifically, not Melanotan I/afamelanotide by name - confirm whether an afamelanotide-specific enforcement action exists at review time",
         "captures the online-marketing-vs-evidence gap required by directive; needs independent source family (e.g., an import alert or warning letter naming afamelanotide/Melanotan I directly) before this claim can be resolved out of review-gated status",
-        "remediation pass (2026-08-29): made a targeted independent-source attempt (FDA warning-letter database search, FDA import-alert database, and secondary enforcement reporting on the Melanocorp warning letter) specifically for an afamelanotide/Melanotan-I-named action; none was located this session either (the only located enforcement source still names Melanotan II only). Claim remains review-gated; statement kept as-is since it already asserts no more than the located sources support (it does not claim FDA action against afamelanotide/Melanotan I by name)."
+        "remediation pass (2026-08-29): made a targeted independent-source attempt (FDA warning-letter database search, FDA import-alert database, and secondary enforcement reporting on the Melanocorp warning letter) specifically for an afamelanotide/Melanotan-I-named action; none was located this session either (the only located enforcement source still names Melanotan II only). Claim remains review-gated; statement kept as-is since it already asserts no more than the located sources support (it does not claim FDA action against afamelanotide/Melanotan I by name).",
+        "authority-disposition-2026-09-07: source 'fda-manookian-nooh-melanotan-ii' was not FDA-authored despite the fda- prefix, and its authority tier is set to X. This claim must be re-anchored to an eligible source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -448,7 +449,8 @@
       "RESOLVED (2026-08-29): current FDA label (2024 revision s007) fetched live and cross-checked against the indication, dosing/storage, hypersensitivity/anaphylaxis, and skin-exam claims — all confirmed unchanged from the 2019 label text originally cited; the s007 label has been added to sources and cited alongside the original 2019 PDF and DailyMed pull.",
       "Mechanism-of-action claim: RESOLVED (2026-08-29) by adding a verbatim PubChem pharmacology-narrative quote (the packet's original UNII-sourced quote was only the substance name and did not itself substantiate the mechanism sentence).",
       "Claim afamelanotide-controversy-melanotan-conflation-001 remains unresolved/review-gated: no independent source naming afamelanotide/Melanotan I directly was located despite a targeted remediation-pass attempt; do not promote this claim to non-gated status without a human reviewer either finding such a source or explicitly signing off on the documented evidence gap.",
-      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -457,7 +459,8 @@
       "positive-human-rct-documented",
       "gray-market-conflation-risk",
       "remediation-pass-2026-08-29",
-      "placeholder-date-cleanup-2026-09-07"
+      "placeholder-date-cleanup-2026-09-07",
+      "authority-disposition-2026-09-07"
     ]
   }
 }

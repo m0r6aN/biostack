@@ -94,7 +94,7 @@
     {
       "sourceId": "clinicaltrials-gov-nct03323749",
       "sourceType": "regulator",
-      "authorityTier": "A2",
+      "authorityTier": "C1",
       "title": "ClinicalTrials.gov Study Record: A Trial to Evaluate Safety and Efficacy of Elamipretide Primary Mitochondrial Myopathy Followed by Open-Label Extension (NCT03323749) - MMPOWER-3",
       "publisher": "U.S. National Library of Medicine / National Institutes of Health - ClinicalTrials.gov (FDAAA 801 mandated results database)",
       "url": "https://clinicaltrials.gov/study/NCT03323749",
@@ -346,7 +346,8 @@
         "confidence set to moderate because the narrative safety/tolerability summary is sourced from a secondary news summary of the published MMPOWER-3 RCT (Neurology, DOI 10.1212/WNL.0000000000207402) rather than a directly fetched and quoted primary-source abstract; the primary Neurology page and PMC mirror both blocked automated fetch (403 / CAPTCHA) this session",
         "negative-human-RCT finding is for a different indication (primary mitochondrial myopathy) than the approved Barth syndrome indication and must not be conflated with it",
         "independent re-verification against the primary Neurology publication or PMC full text required at next review pass",
-        "2026-08-29 authority-support pass: added ClinicalTrials.gov official study record (NCT03323749, FDAAA 801-mandated results database, authorityTier A2) fetched live this session via the public API (clinicaltrials.gov/api/v2/studies/NCT03323749), whose whyStopped field independently confirms the double-blind portion 'did not meet the primary end points', resolving the A1/A2 authority-support deficit for this fieldAuthorityRequired claim"
+        "2026-08-29 authority-support pass: added ClinicalTrials.gov official study record (NCT03323749, FDAAA 801-mandated results database, authorityTier A2) fetched live this session via the public API (clinicaltrials.gov/api/v2/studies/NCT03323749), whose whyStopped field independently confirms the double-blind portion 'did not meet the primary end points', resolving the A1/A2 authority-support deficit for this fieldAuthorityRequired claim",
+        "authority-disposition-2026-09-07: source 'clinicaltrials-gov-nct03323749' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -417,7 +418,8 @@
       "MMPOWER-3 negative-RCT claim was sourced from a secondary news summary because the primary Neurology journal page (403) and its PMC mirror (CAPTCHA-gated) could not be fetched directly this session; re-verify against the primary publication at next review pass.",
       "CAS number, UNII, ChEMBL ID, DrugBank ID, DOI, and PMID identifiers not yet resolved from structured databases or fetched directly from PubChem's full record (JavaScript-rendered detail panel was not accessible to the fetch tool).",
       "Accelerated approval for the Barth syndrome indication is conditional on a confirmatory trial not due to report until March 2030; approval status should be reconfirmed against the live FDA/DailyMed record at review time.",
-      "Human efficacy evidence outside the narrow Barth syndrome accelerated-approval population is thin to negative (MMPOWER-3) and must not be generalized to gray-market wellness/anti-aging use."
+      "Human efficacy evidence outside the narrow Barth syndrome accelerated-approval population is thin to negative (MMPOWER-3) and must not be generalized to gray-market wellness/anti-aging use.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -427,7 +429,8 @@
       "negative-human-rct-different-indication",
       "thin-human-evidence-outside-label",
       "identifiers-incomplete",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "authority-disposition-2026-09-07"
     ]
   }
 }

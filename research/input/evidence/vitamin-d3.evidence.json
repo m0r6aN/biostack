@@ -43,7 +43,7 @@
     {
       "sourceId": "nih-ods-vitamind-health-professional",
       "sourceType": "professional-guidance",
-      "authorityTier": "A1",
+      "authorityTier": "C2",
       "title": "Vitamin D: Fact Sheet for Health Professionals",
       "publisher": "National Institutes of Health, Office of Dietary Supplements (ODS)",
       "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
@@ -199,7 +199,9 @@
           "pageOrSection": "Overview / Function"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "authority-disposition-2026-09-07: source 'nih-ods-vitamind-health-professional' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A1 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
+      ]
     },
     {
       "claimId": "vitamind3-dose-context-rda-ul-001",
@@ -228,7 +230,8 @@
       "reviewFlags": [
         "dosing/reference-intake claim requires field authority sign-off before publication",
         "confirm no revision to RDA/UL values at review time",
-        "independently corroborated via Harvard T.H. Chan School of Public Health Nutrition Source (identical RDA/UL figures); these values trace to the IOM/NASEM 2010 Dietary Reference Intake report and have not been revised since, but remain current as of Aug 2026 — note the 2010 provenance for full traceability"
+        "independently corroborated via Harvard T.H. Chan School of Public Health Nutrition Source (identical RDA/UL figures); these values trace to the IOM/NASEM 2010 Dietary Reference Intake report and have not been revised since, but remain current as of Aug 2026 — note the 2010 provenance for full traceability",
+        "authority-disposition-2026-09-07: source 'nih-ods-vitamind-health-professional' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A1 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -388,7 +391,8 @@
       "reviewFlags": [
         "misinformation-adjacent: online 'immune support' and mood marketing for vitamin D outpaces the controlled human evidence base",
         "long-COVID signal was described as nonsignificant/borderline in the underlying trial and should not be presented as an established benefit",
-        "capture immune-function mechanistic claims (vitamin D receptor in immune cells) separately from clinical outcome claims if added in a future revision"
+        "capture immune-function mechanistic claims (vitamin D receptor in immune cells) separately from clinical outcome claims if added in a future revision",
+        "authority-disposition-2026-09-07: source 'nih-ods-vitamind-health-professional' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A1 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -439,7 +443,8 @@
       ],
       "reviewFlags": [
         "safety-critical claim requiring field authority sign-off",
-        "RESOLVED (2026-08-29): hypercalcemia/toxicity mechanism now independently sourced from StatPearls (NCBI Bookshelf), which confirms toxicity arises almost exclusively from supplement over-use (not diet/sun) and confirms 4,000 IU/day as the standard upper-limit reference; the NIH ODS >125 nmol/L figure is a lower caution threshold, distinct from the StatPearls ~375 nmol/L frank-toxicity threshold — the claim text now distinguishes the two"
+        "RESOLVED (2026-08-29): hypercalcemia/toxicity mechanism now independently sourced from StatPearls (NCBI Bookshelf), which confirms toxicity arises almost exclusively from supplement over-use (not diet/sun) and confirms 4,000 IU/day as the standard upper-limit reference; the NIH ODS >125 nmol/L figure is a lower caution threshold, distinct from the StatPearls ~375 nmol/L frank-toxicity threshold — the claim text now distinguishes the two",
+        "authority-disposition-2026-09-07: source 'nih-ods-vitamind-health-professional' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A1 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     }
   ],
@@ -466,7 +471,8 @@
       "RESOLVED (2026-08-29): DailyMed dietary-supplement label re-verified live as current/unchanged; cross-checked against NIH DSLD. FDA's March 27, 2026 public meeting on dietary-supplement regulatory modernization is exploratory only and does not currently change single-ingredient vitamin D3's classification, but should be monitored for a finalized rule.",
       "RESOLVED (2026-08-29): hypercalcemia/toxicity claim now distinguishes the NIH ODS caution threshold (>125 nmol/L) from the StatPearls frank-toxicity threshold (>375 nmol/L), sourced from StatPearls (NCBI Bookshelf), fetched this session.",
       "Multiple distinct cholecalciferol product labels exist on DailyMed (OTC supplement SKUs, combination products, and possibly prescription-strength products); only one representative OTC label was reviewed, and label content should not be assumed uniform across SKUs — remains open.",
-      "wave006 re-review (2026-09-05) demonstrated a false historical assertion about the 2018 USPSTF statement treatment of kidney-stone harm; corrected 2026-09-06 in packet-authoring only. Remaining regulatory-scope, reference-intake, mechanism, immune/COVID, and toxicity dispositions are not addressed by that pass."
+      "wave006 re-review (2026-09-05) demonstrated a false historical assertion about the 2018 USPSTF statement treatment of kidney-stone harm; corrected 2026-09-06 in packet-authoring only. Remaining regulatory-scope, reference-intake, mechanism, immune/COVID, and toxicity dispositions are not addressed by that pass.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -475,7 +481,8 @@
       "professional-guidance-recommends-against-primary-prevention-use",
       "marketing-evidence-gap-documented",
       "remediation-pass-2026-08-29",
-      "wave006-correction-pass-2026-09-06"
+      "wave006-correction-pass-2026-09-06",
+      "authority-disposition-2026-09-07"
     ]
   }
 }
