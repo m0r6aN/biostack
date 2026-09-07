@@ -243,7 +243,7 @@
     {
       "claimId": "aod9604-efficacy-negative-weight-loss-001",
       "claimType": "efficacy",
-      "statement": "The largest and most definitive controlled human trial of AOD-9604 for obesity, the OPTIONS study (502 randomized adults, ages 18-65, BMI 30-45, oral AOD-9604 at 0.25, 0.5, or 1 mg daily plus supervised diet/exercise versus placebo for 24 weeks), found no statistically significant difference in the primary weight-loss endpoint between AOD-9604 and placebo at any dose. Earlier, smaller phase 1/2 studies (Wilding 2004) similarly showed no statistically significant weight loss versus placebo for intravenous or most oral dose arms, with one small 1-week, low-dose oral arm (36 men) showing a numerically greater but non-definitive difference (about 1 kg vs 0.6 kg for placebo). A subsequent published review of the AOD9604 program summarized that early positive signals were not reproduced once an intensive diet-and-exercise regimen was incorporated in later trials.",
+      "statement": "FDA's Pharmacy Compounding Advisory Committee briefing document summarizes the largest controlled human trial of AOD-9604 for obesity, the OPTIONS study (502 randomized adults, ages 18-65, BMI 30-45, oral AOD-9604 at 0.25, 0.5, or 1 mg daily plus supervised diet/exercise versus placebo for 24 weeks), as finding no statistically significant difference in the primary weight-loss endpoint between AOD-9604 and placebo at any dose, and summarizes earlier, smaller phase 1/2 studies (Wilding 2004) as similarly showing no statistically significant weight loss versus placebo for intravenous or most oral dose arms, with one small 1-week, low-dose oral arm (36 men) showing a numerically greater but non-definitive difference (about 1 kg vs 0.6 kg for placebo). The evidence basis for these trial outcomes in this packet is that advisory-committee briefing document's summary of the trials - advisory material compiled for a committee meeting, not a trial report or a peer-reviewed publication - and no trial report for either study was retrieved. A separately published, sponsor-affiliated review of the AOD9604 program states that early positive signals were not reproduced once an intensive diet-and-exercise regimen was incorporated in later trials, which corroborates the direction but not the specific figures. This negative characterization should therefore be read as 'no published controlled-trial evidence of weight-loss efficacy has been retrieved', not as an independently verified null finding.",
       "context": {
         "population": "adults with obesity (BMI 30-45) enrolled in AOD-9604 obesity trials",
         "route": "oral (OPTIONS study); intravenous and oral in earlier phase 1/2 studies",
@@ -251,8 +251,8 @@
         "useCase": "obesity / weight loss (investigational, discontinued)",
         "doseText": "OPTIONS study: 0.25, 0.5, or 1 mg oral daily for 24 weeks plus supervised diet/exercise (trial protocol; not a use recommendation)"
       },
-      "evidenceTier": "Moderate",
-      "confidence": "high",
+      "evidenceTier": "Insufficient",
+      "confidence": "low",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "fda-pcac-briefing-183584",
@@ -277,7 +277,8 @@
       ],
       "reviewFlags": [
         "no controlled human trial has demonstrated statistically significant weight loss versus placebo in the definitive, adequately powered study",
-        "do not present early small-trial signals as confirmed efficacy"
+        "do not present early small-trial signals as confirmed efficacy",
+        "efficacy-basis-2026-09-07: outcome claim - evidenceTier lowered Moderate -> Insufficient and confidence lowered high -> low. The asserted OPTIONS and Wilding 2004 results are known to this packet only through FDA's PCAC advisory-committee briefing document, which is advisory material compiled for a committee meeting rather than a trial report or peer-reviewed publication; no trial report for either study was retrieved. Statement reworded to attribute the outcomes to that briefing document and to state that the negative characterization means no published efficacy evidence has been retrieved. No source, sourceRef, authorityTier, claimType, context or extractedEvidence was changed."
       ]
     },
     {
@@ -392,7 +393,8 @@
       "Sponsor-linked JOFEM safety publications (Stier 2013, More & Kenley 2014) were the only human tolerability sources found; an independent, non-sponsor-affiliated human safety source was not identified and should be sought during review.",
       "Remediation pass (2026-08-29), claim aod9604-safety-human-tolerability-001: made one serious targeted attempt to resolve via PubMed (query \"AOD9604\", 23 results across 3 pages reviewed in full) and Europe PMC REST; no independent non-sponsor-affiliated human safety source was found, and the Europe PMC REST endpoint (www.ebi.ac.uk) was unreachable due to network egress policy this session. Claim statement tightened to make explicit it rests on sponsor-affiliated sources only; remains fieldAuthorityRequired=true and human-review gated per promotion blocker.",
       "Remediation pass (2026-08-29), claim aod9604-regulatory-pcac-recommendation-001: same PubMed search found no independent publication repeating the FDA briefing's specific nonclinical toxicology findings (osteocalcin, periportal hepatocyte vacuolation, equivocal genotoxicity); this remains sourced solely to fda-pcac-briefing-183584 and stays human-review gated per promotion blocker. Independently corroborated context (July 2026 PCAC meeting excluded AOD-9604 from its 7-peptide recommended batch) was added to the claim's reviewFlags.",
-      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "efficacy-basis-2026-09-07: claim aod9604-efficacy-negative-weight-loss-001 was relabelled because its asserted trial outcomes rest on an FDA advisory-committee briefing document rather than on a retrieved trial report. evidenceTier lowered Moderate -> Insufficient, confidence lowered high -> low, and the statement now names that evidence basis in plain language. No tier or confidence was raised; no source, sourceRef, authority tier, claimType, context or extracted evidence was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -403,7 +405,8 @@
       "regulatory-boundary",
       "marketing-evidence-gap",
       "remediation-pass-2026-08-29",
-      "placeholder-date-cleanup-2026-09-07"
+      "placeholder-date-cleanup-2026-09-07",
+      "efficacy-basis-2026-09-07"
     ]
   }
 }

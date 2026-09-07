@@ -318,7 +318,7 @@
     {
       "claimId": "vk2735-efficacy-oral-venture-oral-001",
       "claimType": "efficacy",
-      "statement": "In the sponsor-funded Phase 2 VENTURE-Oral trial (13 weeks, n=280 adults with obesity or overweight plus a comorbidity, six once-daily oral VK2735 dose arms plus placebo), the sponsor (via topline company disclosure, echoed in trade press) has reported statistically significant mean body-weight reductions of up to 12.2% from baseline at week 13, with up to 80% of participants on higher doses achieving at least 10% weight loss versus 5-10% on placebo, and higher discontinuation due to adverse events with VK2735 (20%) than placebo (13%). As of this review pass (2026-08-29), these figures are NOT independently confirmed: ClinicalTrials.gov's record for NCT06828055 shows the trial as Completed with no results posted (hasResults: false), and a PubMed search for a VENTURE-Oral publication returned zero results. These outcome numbers should therefore be treated as sponsor-reported only, pending peer-reviewed publication or a ClinicalTrials.gov results posting.",
+      "statement": "The sponsor-funded Phase 2 VENTURE-Oral trial (13 weeks, n=280 adults with obesity or overweight plus a weight-related comorbidity, six once-daily oral VK2735 dose arms plus placebo) is registered as NCT06828055, is recorded in ClinicalTrials.gov as Completed with no results posted (hasResults: false), and has no publication: a PubMed search for a VENTURE-Oral publication returned zero results. Those registration records establish only that the trial was conducted and finished; they say nothing about what it found. The sole account of the trial's outcome available to this packet is a sponsor topline company disclosure echoed in trade press, which reported statistically significant mean body-weight reductions of up to 12.2% from baseline at week 13, up to 80% of participants on higher doses achieving at least 10% weight loss versus 5-10% on placebo, and higher discontinuation due to adverse events with VK2735 (20%) than placebo (13%). Because no results have been posted or published, these figures are unverified sponsor-reported claims and must not be presented as an established efficacy finding.",
       "context": {
         "population": "adults with obesity (BMI >=30) or overweight (BMI >=27) with a weight-related comorbidity (n=280 randomized)",
         "route": "oral",
@@ -326,8 +326,8 @@
         "useCase": "investigational weight management (obesity), Phase 2 trial",
         "doseText": "Six escalating once-daily oral dose levels over 13 weeks (trial protocol only; not a use recommendation)"
       },
-      "evidenceTier": "Moderate",
-      "confidence": "moderate",
+      "evidenceTier": "Insufficient",
+      "confidence": "low",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
         "acto-venture-oral-2026",
@@ -361,7 +361,8 @@
         "single sponsor-funded trial; not yet independently replicated or peer-reviewed at time of packet generation",
         "trial dose context must never be presented as a use recommendation",
         "unresolved-remediation-attempted-2026-08-29: targeted attempt made via ClinicalTrials.gov API v2 (NCT06828055 confirmed hasResults:false despite Completed status) and PubMed search (zero VENTURE-Oral publications found); no independent source family located, claim remains review-gated and statement language tightened to sponsor-reported-only framing",
-        "authority-disposition-2026-09-07: source 'pubmed-search-vk2735-oral-2026' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
+        "authority-disposition-2026-09-07: source 'pubmed-search-vk2735-oral-2026' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
+        "efficacy-basis-2026-09-07: outcome claim - evidenceTier lowered Moderate -> Insufficient and confidence lowered moderate -> low. The registration and results-status records establish only that NCT06828055 ran and completed with no results posted, and the PubMed-search source establishes only that no publication exists; the outcome figures come solely from a sponsor topline disclosure echoed in trade press. Statement reworded to lead with what the registration actually shows and to state plainly that the figures are unverified sponsor-reported claims. No source, sourceRef, authorityTier, claimType, context or extractedEvidence was changed."
       ]
     },
     {
@@ -555,7 +556,8 @@
       "VENTURE-Oral outcome numbers (claim vk2735-efficacy-oral-venture-oral-001) remain unresolved after a targeted remediation attempt: ClinicalTrials.gov API v2 confirms NCT06828055 is Completed with hasResults:false, and a PubMed search for 'VK2735 oral' returned zero publications; a WebSearch also surfaced only a further company/trade-press conference disclosure (ECO 2026), not an independent source family. Claim statement has been tightened to sponsor-reported-only framing and stays review-gated pending peer-reviewed publication or a CT.gov results posting.",
       "The granular GI adverse-event percentages and single dehydration SAE in claim vk2735-adverse-effects-gi-001 remain corroborated only at the general-direction level (Europe PMC abstract) and not at the specific-figure level; flagged for a follow-up check against the full published paper or a CT.gov results posting.",
       "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
-      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed.",
+      "efficacy-basis-2026-09-07: claim vk2735-efficacy-oral-venture-oral-001 was relabelled because its outcome figures rest on a sponsor topline disclosure and trade press, with the ClinicalTrials.gov records establishing only that the trial ran and posted no results. evidenceTier lowered Moderate -> Insufficient, confidence lowered moderate -> low, and the statement now leads with what the registration actually shows. No tier or confidence was raised; no source, sourceRef, authority tier, claimType, context or extracted evidence was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -567,7 +569,8 @@
       "remediation-pass-2026-08-29",
       "authority-support-pass-2026-08-29",
       "placeholder-date-cleanup-2026-09-07",
-      "authority-disposition-2026-09-07"
+      "authority-disposition-2026-09-07",
+      "efficacy-basis-2026-09-07"
     ]
   }
 }
