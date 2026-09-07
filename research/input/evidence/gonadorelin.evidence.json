@@ -40,7 +40,7 @@
     {
       "sourceId": "ferring-lutrepulse-pm-canada",
       "sourceType": "regulator",
-      "authorityTier": "A2",
+      "authorityTier": "X",
       "title": "LUTREPULSE (gonadorelin acetate) Product Monograph",
       "publisher": "Health Canada / Ferring Inc.",
       "url": "https://ferring.ca/media/1018/lutrepulse-pm-control-no-187199-32-mg-en_17may2016.pdf",
@@ -284,7 +284,8 @@
       "reviewFlags": [
         "product-specific dosing claim - Canadian product monograph, not a US label; confirm whether an equivalent human product currently holds US marketing authorization",
         "this indication is unrelated to gray-market TRT-adjunct use and must not be conflated with it",
-        "RESOLVED (wording) 2026-08-29: statement reworded to explicitly mark the ovulation-induction indication as Canada-only/historical per independent review finding; RxList independently confirms the corresponding US human Factrel product is discontinued. The ovulation-induction indication's current Canadian marketing status was not itself re-verified this session (2016 monograph is the only source) and remains a narrower residual gap for review"
+        "RESOLVED (wording) 2026-08-29: statement reworded to explicitly mark the ovulation-induction indication as Canada-only/historical per independent review finding; RxList independently confirms the corresponding US human Factrel product is discontinued. The ovulation-induction indication's current Canadian marketing status was not itself re-verified this session (2016 monograph is the only source) and remains a narrower residual gap for review",
+        "authority-disposition-2026-09-07: source 'ferring-lutrepulse-pm-canada' was the manufacturer's own hosted product monograph; re-anchor to the Health Canada record, and its authority tier is set to X. This claim must be re-anchored to an eligible source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -336,7 +337,8 @@
       ],
       "reviewFlags": [
         "safety-critical warning claim",
-        "RESOLVED 2026-08-29: independently confirmed by RxList's reproduction of the US FDA-derived human Factrel label (pituitary apoplexy/sudden blindness warning, verbatim) and by Drugs.com (hormone-dependent tumor worsening warning), closing the prior gap where this claim was sourced only from a Canadian monograph and Mayo/Micromedex"
+        "RESOLVED 2026-08-29: independently confirmed by RxList's reproduction of the US FDA-derived human Factrel label (pituitary apoplexy/sudden blindness warning, verbatim) and by Drugs.com (hormone-dependent tumor worsening warning), closing the prior gap where this claim was sourced only from a Canadian monograph and Mayo/Micromedex",
+        "authority-disposition-2026-09-07: source 'ferring-lutrepulse-pm-canada' was the manufacturer's own hosted product monograph; re-anchor to the Health Canada record, and its authority tier is set to X. This claim must be re-anchored to an eligible source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -483,7 +485,8 @@
       "PubMed/PMC primary-literature pages were blocked by bot-verification (reCAPTCHA) during this session for the original Zhang 2019 article; an independent, separate primary study (Jiang et al., PMC12336735, fetched successfully 2026-08-29) corroborates the same qualitative CHH spermatogenesis finding and has been added as a second citation. The Zhang 2019 primary full text itself (exact 6-vs-14-month, 90%-vs-83.3% figures) remains unverified against PMC directly and should still be pulled at review if those exact figures need primary-source confirmation.",
       "No controlled human trial specific to gray-market TRT-adjunct dosing (testicular size/fertility preservation while on exogenous testosterone) was found; a candidate hCG (not gonadorelin) trial in Fertility and Sterility was attempted this session (https://www.fertstert.org/article/S0015-0282(10)01624-9/fulltext) but returned a 403 error and could not be independently read -- this remains an evidence gap rather than a resolved question, and the claim language is unchanged since it already asserts no more than the absence of trials.",
       "DrugBank/ChEMBL/UNII identifiers not independently confirmed from their native databases this session. Independent chemical registries (ChemicalBook, Alfa Chemistry) confirmed 2026-08-29 that CAS 33515-09-2 matches gonadorelin base form, but neither surfaced a distinct salt-form (e.g., acetate) CAS number, so no specific acetate-salt CAS figure has been added to the packet -- DrugBank/ChEMBL/UNII should still be pulled directly from their native databases at review time to close this gap fully.",
-      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -494,7 +497,8 @@
       "primary-literature-access-limited",
       "authority-support-pass-2026-08-29",
       "remediation-pass-2026-08-29",
-      "placeholder-date-cleanup-2026-09-07"
+      "placeholder-date-cleanup-2026-09-07",
+      "authority-disposition-2026-09-07"
     ]
   }
 }

@@ -162,7 +162,7 @@
     {
       "sourceId": "pubmed-search-vk2735-oral-2026",
       "sourceType": "structured-literature-database",
-      "authorityTier": "A2",
+      "authorityTier": "C1",
       "title": "PubMed search results for query 'VK2735 oral' -- no publications found",
       "publisher": "PubMed, NCBI (U.S. National Library of Medicine)",
       "url": "https://pubmed.ncbi.nlm.nih.gov/?term=VK2735+oral",
@@ -360,7 +360,8 @@
       "reviewFlags": [
         "single sponsor-funded trial; not yet independently replicated or peer-reviewed at time of packet generation",
         "trial dose context must never be presented as a use recommendation",
-        "unresolved-remediation-attempted-2026-08-29: targeted attempt made via ClinicalTrials.gov API v2 (NCT06828055 confirmed hasResults:false despite Completed status) and PubMed search (zero VENTURE-Oral publications found); no independent source family located, claim remains review-gated and statement language tightened to sponsor-reported-only framing"
+        "unresolved-remediation-attempted-2026-08-29: targeted attempt made via ClinicalTrials.gov API v2 (NCT06828055 confirmed hasResults:false despite Completed status) and PubMed search (zero VENTURE-Oral publications found); no independent source family located, claim remains review-gated and statement language tightened to sponsor-reported-only framing",
+        "authority-disposition-2026-09-07: source 'pubmed-search-vk2735-oral-2026' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -553,7 +554,8 @@
       "FDA Category 2 bulk-substances listing status is absence-based and was re-verified live against the FDA page on 2026-08-29 (still absent); should continue to be rechecked at each review given the fast-changing compounding-peptide regulatory landscape.",
       "VENTURE-Oral outcome numbers (claim vk2735-efficacy-oral-venture-oral-001) remain unresolved after a targeted remediation attempt: ClinicalTrials.gov API v2 confirms NCT06828055 is Completed with hasResults:false, and a PubMed search for 'VK2735 oral' returned zero publications; a WebSearch also surfaced only a further company/trade-press conference disclosure (ECO 2026), not an independent source family. Claim statement has been tightened to sponsor-reported-only framing and stays review-gated pending peer-reviewed publication or a CT.gov results posting.",
       "The granular GI adverse-event percentages and single dehydration SAE in claim vk2735-adverse-effects-gi-001 remain corroborated only at the general-direction level (Europe PMC abstract) and not at the specific-figure level; flagged for a follow-up check against the full published paper or a CT.gov results posting.",
-      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -564,7 +566,8 @@
       "unresolved-structured-identifiers",
       "remediation-pass-2026-08-29",
       "authority-support-pass-2026-08-29",
-      "placeholder-date-cleanup-2026-09-07"
+      "placeholder-date-cleanup-2026-09-07",
+      "authority-disposition-2026-09-07"
     ]
   }
 }

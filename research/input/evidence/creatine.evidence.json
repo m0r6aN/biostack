@@ -32,7 +32,7 @@
     {
       "sourceId": "fda-grn-931-creatine-monohydrate",
       "sourceType": "regulator",
-      "authorityTier": "A1",
+      "authorityTier": "X",
       "title": "GRAS Notice No. GRN 000931; Creatine Monohydrate (Creapure)",
       "publisher": "U.S. Food and Drug Administration",
       "url": "https://www.fda.gov/media/143525/download",
@@ -56,7 +56,7 @@
     {
       "sourceId": "nih-ods-exercise-athletic-performance-hp",
       "sourceType": "government-fact-sheet",
-      "authorityTier": "A2",
+      "authorityTier": "C2",
       "title": "Dietary Supplements for Exercise and Athletic Performance - Health Professional Fact Sheet",
       "publisher": "NIH Office of Dietary Supplements",
       "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
@@ -224,7 +224,9 @@
         }
       ],
       "reviewFlags": [
-        "regulatory-status claim; confirm no subsequent FDA action (e.g., warning letters, NDI objections) at review time"
+        "regulatory-status claim; confirm no subsequent FDA action (e.g., warning letters, NDI objections) at review time",
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
+        "authority-disposition-2026-09-07: source 'fda-grn-931-creatine-monohydrate' was a manufacturer GRAS notice hosted by FDA, not an FDA-authored safety assessment; the filing is not evidence for these claims, and its authority tier is set to X. This claim must be re-anchored to an eligible source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -263,7 +265,9 @@
           "pageOrSection": "Creatine section"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
+      ]
     },
     {
       "claimId": "creatine-efficacy-highintensity-strength-lbm-001",
@@ -318,7 +322,8 @@
       ],
       "reviewFlags": [
         "efficacy is specific to high-intensity/strength training contexts and should not be generalized to endurance performance",
-        "independent-review-2026-08-29: an independent 2025 Nutrients (MDPI) meta-analysis corroborates a real, positive strength/power effect (e.g., bench +1.43 kg, squat +5.64 kg, Wingate peak power +47.81 W) but characterizes it as small but statistically significant and heterogeneous, with no significant effect on handgrip or leg press and weaker effects in older adults/females than younger adults/males; the 'most effective ergogenic supplement...for increasing lean body mass' framing should be read as a verbatim ISSN characterization, not as evidence that effects are large or uniform across all strength measures and demographics"
+        "independent-review-2026-08-29: an independent 2025 Nutrients (MDPI) meta-analysis corroborates a real, positive strength/power effect (e.g., bench +1.43 kg, squat +5.64 kg, Wingate peak power +47.81 W) but characterizes it as small but statistically significant and heterogeneous, with no significant effect on handgrip or leg press and weaker effects in older adults/females than younger adults/males; the 'most effective ergogenic supplement...for increasing lean body mass' framing should be read as a verbatim ISSN characterization, not as evidence that effects are large or uniform across all strength measures and demographics",
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -357,7 +362,8 @@
         }
       ],
       "reviewFlags": [
-        "dose-context claim must never be presented as a use/dosing recommendation"
+        "dose-context claim must never be presented as a use/dosing recommendation",
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -414,7 +420,8 @@
       "reviewFlags": [
         "wave006-correction-2026-09-06: the prior in-band resolved narrative on this flag was factually wrong and is withdrawn. It described 13.7% and 13.2% as adverse-event rates for creatine and placebo participants; PMID 40198156 reports those as percentages of studies reporting side effects. The wave006 re-review recorded separately reported participant-frequency figures of 4.21% (placebo) versus 4.60% (creatine); these require verbatim extraction from the primary abstract before they may appear in any claim statement, and are deliberately not asserted here. The original 2026-08-29 concern, that the adverse-effect list was largely anecdotal/case-level and not systematically quantified, is therefore NOT resolved by this source, and this claim remains review-gated.",
         "style pass 2026-08-29: 'considered safe' language attributed explicitly in-line to the NIH ODS source per audit recommendation \u2014 this is the source's assessment, not BioStack's assurance.",
-        "wave006-correction-2026-09-06: exact eligible A1/A2 support for the safety and tolerability assertions is still outstanding. Packet NIH ODS tiering conflicts with the source registry C2 policy for that publisher, and an FDA-hosted industry GRAS submission is not an FDA-authored safety assessment. No authority tier or flag was changed by this correction pass."
+        "wave006-correction-2026-09-06: exact eligible A1/A2 support for the safety and tolerability assertions is still outstanding. Packet NIH ODS tiering conflicts with the source registry C2 policy for that publisher, and an FDA-hosted industry GRAS submission is not an FDA-authored safety assessment. No authority tier or flag was changed by this correction pass.",
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -471,7 +478,8 @@
       "reviewFlags": [
         "safety-critical monitoring claim",
         "evidence base for people with pre-existing renal impairment is comparatively thin; do not extrapolate general-population safety to that group",
-        "independent-review-2026-08-29: an independent 2026 meta-analysis (26 RCTs, 1,036 participants, gold-standard Cr-EDTA clearance GFR) corroborates the core finding that serum creatinine rises modestly (a metabolic artifact) without a significant GFR change. It refines the population-scope gap: a small amount of hemodialysis-population data exists (2 RCTs, no major adverse events), but zero trials exist in non-dialysis CKD (stages 1-5) patients -- this subgroup remains completely unstudied and must stay human-review-gated; do not extrapolate general-population or hemodialysis findings to non-dialysis CKD."
+        "independent-review-2026-08-29: an independent 2026 meta-analysis (26 RCTs, 1,036 participants, gold-standard Cr-EDTA clearance GFR) corroborates the core finding that serum creatinine rises modestly (a metabolic artifact) without a significant GFR change. It refines the population-scope gap: a small amount of hemodialysis-population data exists (2 RCTs, no major adverse events), but zero trials exist in non-dialysis CKD (stages 1-5) patients -- this subgroup remains completely unstudied and must stay human-review-gated; do not extrapolate general-population or hemodialysis findings to non-dialysis CKD.",
+        "authority-disposition-2026-09-07: source 'fda-grn-931-creatine-monohydrate' was a manufacturer GRAS notice hosted by FDA, not an FDA-authored safety assessment; the filing is not evidence for these claims, and its authority tier is set to X. This claim must be re-anchored to an eligible source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -566,7 +574,8 @@
       ],
       "reviewFlags": [
         "misinformation-adjacent: distinguish narrow, well-supported use case (high-intensity/resistance exercise) from broad marketing claims covering all sport types and non-exercise wellness/cognitive uses",
-        "cognitive/anti-aging marketing claims for creatine were not evaluated in this expansion pass and should be sourced separately if added"
+        "cognitive/anti-aging marketing claims for creatine were not evaluated in this expansion pass and should be sourced separately if added",
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     }
   ],
@@ -600,7 +609,8 @@
       "Cognitive-enhancement and anti-aging marketing claims for creatine were not sourced in this pass and would need dedicated fetches before any claim is made about them.",
       "remediation-pass-2026-08-29: addressed reviewer promotionBlockers for creatine-safety-common-adverse-effects-001 (added independent 2025 JISSN pharmacovigilance analysis; reviewFlag updated from 'anecdotal/not quantified' to reflect systematic quantification; evidenceTier upgraded Moderate->Strong) and creatine-misinformation-hairloss-dht-001 (added independent American Hair Loss Association critique covering trichogram methodology, absence of scalp-level DHT measurement, absence of genetic-predisposition screening, and potential industry-funding conflict of interest).",
       "wave006 re-review (2026-09-05) demonstrated a study-versus-participant denominator error in the safety claim and a false source-independence attribution; corrected 2026-09-06 in packet-authoring only. Remaining dose, monitoring, regulatory, and misinformation dispositions are not addressed by that pass.",
-      "placeholder-date-cleanup-2026-09-07: 4 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+      "placeholder-date-cleanup-2026-09-07: 4 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -610,7 +620,8 @@
       "thin-human-evidence-renal-impairment-subgroup",
       "remediation-pass-2026-08-29",
       "wave006-correction-pass-2026-09-06",
-      "placeholder-date-cleanup-2026-09-07"
+      "placeholder-date-cleanup-2026-09-07",
+      "authority-disposition-2026-09-07"
     ]
   }
 }

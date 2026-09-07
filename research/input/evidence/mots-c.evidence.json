@@ -105,7 +105,7 @@
     {
       "sourceId": "clinicaltrials-nct07505745",
       "sourceType": "clinical-trial-registry",
-      "authorityTier": "A2",
+      "authorityTier": "C1",
       "title": "MOTS-c for Improving Insulin Sensitivity in Adults With Prediabetes and Overweight/Obesity (NCT07505745)",
       "publisher": "ClinicalTrials.gov / U.S. National Library of Medicine",
       "url": "https://clinicaltrials.gov/study/NCT07505745",
@@ -301,7 +301,8 @@
       "reviewFlags": [
         "trial is actively recruiting as of the March 2026 verification date reviewed; outcome not yet available - re-check status/results at review time",
         "trial dose/route context must never be presented as a use recommendation",
-        "independent-review note (2026-08-29): trial details were cross-checked against an independent registry mirror (ichgcp.net/clinical-trials-registry/NCT07505745) rather than clinicaltrials.gov directly and corroborate the packet's description (Phase 2a, ages 18-65, BMI 27-40, prediabetes, subcutaneous once-daily x12 weeks, placebo-controlled, still recruiting); this mirror is still within the same 'structured database' source family as the packet's own source, not a fully independent family (no news/trade coverage of the trial was found). Flagged as a minor methodological gap, not a blocker, since the claim asserts no efficacy outcome."
+        "independent-review note (2026-08-29): trial details were cross-checked against an independent registry mirror (ichgcp.net/clinical-trials-registry/NCT07505745) rather than clinicaltrials.gov directly and corroborate the packet's description (Phase 2a, ages 18-65, BMI 27-40, prediabetes, subcutaneous once-daily x12 weeks, placebo-controlled, still recruiting); this mirror is still within the same 'structured database' source family as the packet's own source, not a fully independent family (no news/trade coverage of the trial was found). Flagged as a minor methodological gap, not a blocker, since the claim asserts no efficacy outcome.",
+        "authority-disposition-2026-09-07: source 'clinicaltrials-nct07505745' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -378,7 +379,8 @@
       "FDA withdrawn-nomination and PCAC briefing status for MOTS-c should be reconfirmed against the live FDA page at review time, since FDA revised Category 2 peptide listings in April 2026 and MOTS-c was among peptides discussed at the July 2026 PCAC meeting cycle.",
       "RESOLVED 2026-08-29: PCAC committee actually voted 7-5 (2 abstentions) on 2026-07-23 to recommend MOTS-c for the 503A Bulks List, overriding the FDA staff briefing recommendation documented in the packet -- added to mots-c-regulatory-pcac-no-human-data-001 with the caveat that an advisory vote is not a final rule; re-check FDA's Federal Register docket for the completed rulemaking at next review.",
       "Attempted but unresolved: NCT07505745 (studied-use claim) was checked only against an independent registry mirror (ichgcp.net), still within the same 'structured database' source family as the packet's own clinicaltrials.gov source; no news/trade coverage of this specific trial was found this session to fully diversify the source family. Low risk since the claim makes no efficacy assertion; kept review-gated.",
-      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -389,7 +391,8 @@
       "fabricated-vendor-citation-confirmed",
       "pcac-committee-recommended-listing-pending-rulemaking",
       "remediation-pass-2026-08-29",
-      "placeholder-date-cleanup-2026-09-07"
+      "placeholder-date-cleanup-2026-09-07",
+      "authority-disposition-2026-09-07"
     ]
   }
 }

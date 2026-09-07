@@ -33,7 +33,7 @@
     {
       "sourceId": "fda-ta1-bulks-183892",
       "sourceType": "regulator",
-      "authorityTier": "A1",
+      "authorityTier": "X",
       "title": "Thymosin Alpha-1 (Tα1) Related Bulk Drug Substances",
       "publisher": "U.S. Food and Drug Administration",
       "url": "https://www.fda.gov/media/183892/download",
@@ -234,7 +234,8 @@
       ],
       "reviewFlags": [
         "safety-critical regulatory claim",
-        "nomination was withdrawn rather than formally decided - status is not a final FDA determination and must be re-checked against the live FDA compounding bulk substances list at review time"
+        "nomination was withdrawn rather than formally decided - status is not a final FDA determination and must be re-checked against the live FDA compounding bulk substances list at review time",
+        "authority-disposition-2026-09-07: source 'fda-ta1-bulks-183892' was rejected as an FDA-authored authority source, and its authority tier is set to X. This is the SOLE source for this claim, which therefore has no remaining authority support and must be re-anchored or withdrawn before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -268,7 +269,8 @@
       ],
       "reviewFlags": [
         "safety-critical warning claim",
-        "FDA characterizes this as a theoretical/mechanistic concern from an immune-stimulating agent, not a confirmed adverse-event signal from human data reviewed here; verify whether post-market case reports exist"
+        "FDA characterizes this as a theoretical/mechanistic concern from an immune-stimulating agent, not a confirmed adverse-event signal from human data reviewed here; verify whether post-market case reports exist",
+        "authority-disposition-2026-09-07: source 'fda-ta1-bulks-183892' was rejected as an FDA-authored authority source, and its authority tier is set to X. This is the SOLE source for this claim, which therefore has no remaining authority support and must be re-anchored or withdrawn before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -462,7 +464,8 @@
       "A conflicting FDA-approval claim from a public-docket presentation was identified but not independently reconciled against a primary orphan-drug-designation or NDA history record.",
       "UNII and ChEMBL identifiers not yet resolved from structured databases; two candidate CAS numbers (62304-98-7 and 69521-94-4) were found and only one was selected without independent confirmation of which corresponds to free base vs. acetate salt.",
       "Ex-U.S. approval-country claims rest on a secondary informational source, not a primary foreign regulator page or label registry.",
-      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+      "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -473,7 +476,8 @@
       "gray-market-us-status",
       "misinformation-gap-documented",
       "authority-support-pass-2026-08-29",
-      "placeholder-date-cleanup-2026-09-07"
+      "placeholder-date-cleanup-2026-09-07",
+      "authority-disposition-2026-09-07"
     ]
   }
 }

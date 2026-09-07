@@ -70,7 +70,7 @@
     {
       "sourceId": "pubmed-mazdutide-first-approval",
       "sourceType": "peer-reviewed-drug-review-article",
-      "authorityTier": "A1",
+      "authorityTier": "C1",
       "title": "Mazdutide: First Approval",
       "publisher": "Drugs (Springer/Adis Journal), Shirley M., 2025;85(12):1621-1627",
       "url": "https://pubmed.ncbi.nlm.nih.gov/41028652/",
@@ -362,7 +362,8 @@
         "sourced from company press release rather than an official NMPA-hosted page; NMPA's own site (nmpa.gov.cn) returned a 412 error and could not be fetched directly in this or the prior review session",
         "no equivalent FDA approval exists in the United States; do not imply US availability",
         "remediation-pass-2026-08-29: resolved via an independent materially-different source family -- the peer-reviewed 'Mazdutide: First Approval' review (Drugs journal, PMID 41028652) independently corroborates the June 2025 China approval, the chronic-weight-management indication, and both BMI eligibility thresholds (≥28, or ≥24 with a weight-related comorbidity). The exact calendar day (June 27, 2025) is still sourced only to the company press release, since the independent review states only the approval month; this residual day-level detail is a minor, non-blocking gap",
-        "remediation-pass-2026-08-29 (session 2): additionally confirmed via a second independent source family -- Fierce Pharma trade-press coverage (fetched and quoted verbatim this session), which independently states the same June 27, 2025 NMPA approval, chronic-weight-management indication, and weight-related-comorbidity eligibility criterion. This claim is now corroborated by two independent source families beyond the original company disclosure."
+        "remediation-pass-2026-08-29 (session 2): additionally confirmed via a second independent source family -- Fierce Pharma trade-press coverage (fetched and quoted verbatim this session), which independently states the same June 27, 2025 NMPA approval, chronic-weight-management indication, and weight-related-comorbidity eligibility criterion. This claim is now corroborated by two independent source families beyond the original company disclosure.",
+        "authority-disposition-2026-09-07: source 'pubmed-mazdutide-first-approval' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A1 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -397,7 +398,8 @@
       ],
       "reviewFlags": [
         "sourced from company press release rather than an official NMPA-hosted page; NMPA's own site (nmpa.gov.cn) returned a 412 error and could not be fetched directly in this or the prior review session",
-        "remediation-pass-2026-08-29: resolved via an independent materially-different source family -- the peer-reviewed 'Mazdutide: First Approval' review (Drugs journal, PMID 41028652) independently corroborates the September 2025 China T2D glycemic-control approval. The exact calendar day (September 19, 2025) and the monotherapy/combination-therapy eligibility detail are still sourced only to the company press release, since the independent review states only the approval month; this residual day/detail-level gap is minor and non-blocking"
+        "remediation-pass-2026-08-29: resolved via an independent materially-different source family -- the peer-reviewed 'Mazdutide: First Approval' review (Drugs journal, PMID 41028652) independently corroborates the September 2025 China T2D glycemic-control approval. The exact calendar day (September 19, 2025) and the monotherapy/combination-therapy eligibility detail are still sourced only to the company press release, since the independent review states only the approval month; this residual day/detail-level gap is minor and non-blocking",
+        "authority-disposition-2026-09-07: source 'pubmed-mazdutide-first-approval' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A1 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -635,7 +637,8 @@
       "remediation-pass-2026-08-29: STILL GATED -- the granular GI adverse-event percentage breakdown (diarrhea 36%, decreased appetite 29%, nausea 23%, vomiting 14%) remains single-family sourced to the phase 2 T2D trial; only the general mild-to-moderate GI pattern was independently corroborated (Semantic Scholar/NEJM record) this session.",
       "remediation-pass-2026-08-29 (session 2, post-independent-review): CORRECTED a procedural error flagged by the reviewer -- the mechanism claim's prior remediation note improperly cited Semantic Scholar (already a cited source for that claim) as independent corroboration; genuinely independent corroboration was obtained instead from Fierce Pharma trade-press coverage (fetched and quoted verbatim this session).",
       "remediation-pass-2026-08-29 (session 2, post-independent-review): STILL GATED, TIGHTENED -- per the reviewer's finding, fetched and verbatim-quoted an independent physician-review commentary (gutsandgrowth.com) on the published NEJM GLORY-1 data; it reports week-48 figures of -11.00% (4mg)/-14.01% (6mg)/+0.30% (placebo), agreeing with the prior Semantic Scholar pull and disagreeing with the sponsor press release (-12.05%/-14.84%/-0.47%). Direct NEJM full-text and Europe PMC REST fetches were attempted this session but both were blocked by repeated proxy rate-limiting (HTTP 429). The claim statement now presents both figure sets with an explicit caveat instead of asserting the press-release numbers as settled; evidenceTier stays 'Moderate', confidence lowered to 'moderate'. This remains the single most consequential open item and should be re-attempted against verbatim NEJM/Europe PMC full text at the next review pass.",
-      "remediation-pass-2026-08-29 (session 2, post-independent-review): the two NMPA regulatory claims and the phase-2 T2D HbA1c claim were each additionally corroborated this session by fresh, verbatim-quoted independent trade-press sources (Fierce Pharma; BioSpace) confirming trial/approval shape and direction; granular numeric figures for the T2D and GI-safety claims remain single-family sourced as already documented above, and the ChEMBL identifier remains unconfirmed by an independent family -- both non-blocking per the reviewer's verdict."
+      "remediation-pass-2026-08-29 (session 2, post-independent-review): the two NMPA regulatory claims and the phase-2 T2D HbA1c claim were each additionally corroborated this session by fresh, verbatim-quoted independent trade-press sources (Fierce Pharma; BioSpace) confirming trial/approval shape and direction; granular numeric figures for the T2D and GI-safety claims remain single-family sourced as already documented above, and the ChEMBL identifier remains unconfirmed by an independent family -- both non-blocking per the reviewer's verdict.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -646,7 +649,8 @@
       "positive-human-efficacy-signal",
       "remediation-pass-2026-08-29",
       "remediation-pass-2026-08-29-review-response",
-      "authority-support-pass-2026-08-29"
+      "authority-support-pass-2026-08-29",
+      "authority-disposition-2026-09-07"
     ]
   }
 }

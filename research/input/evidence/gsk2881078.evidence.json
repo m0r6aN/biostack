@@ -66,7 +66,7 @@
     {
       "sourceId": "clinicaltrials-nct03359473",
       "sourceType": "trial-registry",
-      "authorityTier": "A2",
+      "authorityTier": "C1",
       "title": "Study to Evaluate the Safety and Efficacy of 13 Weeks of the Selective Androgen Receptor Modulator (SARM) GSK2881078 in Chronic Obstructive Pulmonary Disease (COPD) (NCT03359473)",
       "publisher": "ClinicalTrials.gov / GlaxoSmithKline",
       "url": "https://clinicaltrials.gov/api/v2/studies/NCT03359473",
@@ -78,7 +78,7 @@
     {
       "sourceId": "gsk-study-register-200182",
       "sourceType": "trial-registry",
-      "authorityTier": "A2",
+      "authorityTier": "X",
       "title": "GSK Study Register: Study to evaluate the safety and efficacy of 13 weeks of the SARM GSK2881078 in COPD (Study 200182)",
       "publisher": "GlaxoSmithKline",
       "url": "https://www.gsk-studyregister.com/en/trial-details/?id=200182",
@@ -315,7 +315,9 @@
         "primary Thorax (2022/2023) journal publication with full quantitative leg-press and lean-mass results could not be accessed directly this pass (PMC access blocked); statement of sex-specific efficacy is sourced from a secondary reference (Wikipedia) and must be verified against the primary article before publication",
         "fieldAuthorityRequired due to dosing/trial-protocol content",
         "no approved indication exists; do not present as evidence of a treatment benefit for COPD",
-        "remediation 2026-08-29: independent targeted re-attempt to reach the primary Thorax/PMC9985744 paper (Europe PMC REST API, two attempts) was rate-limited (HTTP 429) both times this pass, matching the packet's previously documented access block; no new primary-source access achieved. Independently located and added a companion patient-reported-outcomes qualitative substudy (Tabberer et al. 2024, Journal of Patient-Reported Outcomes, DOI 10.1186/s41687-024-00712-0) which corroborates a general positive direction of participant-perceived muscle-strength/function effect but does NOT confirm the sex-specific ('men only') framing or any quantitative result. Claim remains fieldAuthorityRequired and human-review-gated; statement language tightened to not assert the sex-specific finding as confirmed."
+        "remediation 2026-08-29: independent targeted re-attempt to reach the primary Thorax/PMC9985744 paper (Europe PMC REST API, two attempts) was rate-limited (HTTP 429) both times this pass, matching the packet's previously documented access block; no new primary-source access achieved. Independently located and added a companion patient-reported-outcomes qualitative substudy (Tabberer et al. 2024, Journal of Patient-Reported Outcomes, DOI 10.1186/s41687-024-00712-0) which corroborates a general positive direction of participant-perceived muscle-strength/function effect but does NOT confirm the sex-specific ('men only') framing or any quantitative result. Claim remains fieldAuthorityRequired and human-review-gated; statement language tightened to not assert the sex-specific finding as confirmed.",
+        "authority-disposition-2026-09-07: source 'clinicaltrials-nct03359473' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C1). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
+        "authority-disposition-2026-09-07: source 'gsk-study-register-200182' was the sponsor's own study register; re-anchor to the ClinicalTrials.gov record, and its authority tier is set to X. This claim must be re-anchored to an eligible source before publication. No claim text was changed by this disposition."
       ]
     },
     {
@@ -416,7 +418,8 @@
       "No compound-specific FDA action (import alert, warning letter, or 503A/503B listing) located for GSK2881078 by name; only class-level SARM warnings were found — confirm this remains the case at review time.",
       "Remediation pass 2026-08-29 (against independent-review verdict): added independent LiverTox-sourced ALT/transaminase elevation signal (>50% of GSK2881078-treated subjects above ULN, 3% above 5x ULN) to the HDL/testosterone adverse-effect claim per reviewer promotionBlocker — resolved.",
       "Remediation pass 2026-08-29: field-authority-required COPD claim (gsk2881078-studied-use-copd-muscle-weakness-001, sex-specific efficacy) remains UNRESOLVED and human-review-gated — one further independent targeted attempt to reach the primary Thorax/PMC9985744 article via Europe PMC REST API was rate-limited (HTTP 429) twice this pass; routes previously exhausted by the reviewer (PMC bot-check, PubMed 429, Imperial Spiral repository 429, ResearchGate 429, 2025 Wiley SARM systematic review 403) were not re-attempted since they were already conclusively blocked. A companion PRO qualitative substudy (Tabberer et al. 2024) was added as partial independent corroboration, but the sex-specific ('men only') efficacy statement is still not confirmed against the primary article and must not be promoted until it is.",
-      "DrugBank and ChEMBL identifiers remain not independently cross-verified from their native databases (ChEMBL ID sourced from NCATS Inxight only) — not re-attempted this pass; flagged for review-time verification via ChEMBL/DrugBank direct lookup."
+      "DrugBank and ChEMBL identifiers remain not independently cross-verified from their native databases (ChEMBL ID sourced from NCATS Inxight only) — not re-attempted this pass; flagged for review-time verification via ChEMBL/DrugBank direct lookup.",
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -425,7 +428,8 @@
       "gray-market-research-chemical",
       "primary-source-access-blocked",
       "authority-support-pass-2026-08-29",
-      "remediation-pass-2026-08-29"
+      "remediation-pass-2026-08-29",
+      "authority-disposition-2026-09-07"
     ]
   }
 }
