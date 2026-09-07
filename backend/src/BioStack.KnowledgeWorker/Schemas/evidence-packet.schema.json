@@ -78,7 +78,7 @@
     },
     "sourceSnapshot": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": ["sourceId", "sourceType", "authorityTier", "title", "publisher", "url", "publishedAt", "accessedAt"],
       "properties": {
         "sourceId": { "$ref": "#/$defs/nonEmptyString" },
@@ -90,6 +90,8 @@
         "doi": { "$ref": "#/$defs/nullableString" },
         "pmid": { "$ref": "#/$defs/nullableString" },
         "publishedAt": { "type": ["string", "null"], "format": "date-time" },
+        "effectiveDate": { "type": ["string", "null"], "format": "date-time" },
+        "dateNote": { "$ref": "#/$defs/nullableString" },
         "accessedAt": { "type": "string", "format": "date-time" }
       }
     },
