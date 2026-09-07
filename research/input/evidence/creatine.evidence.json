@@ -377,7 +377,7 @@
         "useCase": "general tolerability",
         "doseText": null
       },
-      "evidenceTier": "Strong",
+      "evidenceTier": "Moderate",
       "confidence": "high",
       "fieldAuthorityRequired": true,
       "sourceRefs": [
@@ -421,7 +421,8 @@
         "wave006-correction-2026-09-06: the prior in-band resolved narrative on this flag was factually wrong and is withdrawn. It described 13.7% and 13.2% as adverse-event rates for creatine and placebo participants; PMID 40198156 reports those as percentages of studies reporting side effects. The wave006 re-review recorded separately reported participant-frequency figures of 4.21% (placebo) versus 4.60% (creatine); these require verbatim extraction from the primary abstract before they may appear in any claim statement, and are deliberately not asserted here. The original 2026-08-29 concern, that the adverse-effect list was largely anecdotal/case-level and not systematically quantified, is therefore NOT resolved by this source, and this claim remains review-gated.",
         "style pass 2026-08-29: 'considered safe' language attributed explicitly in-line to the NIH ODS source per audit recommendation \u2014 this is the source's assessment, not BioStack's assurance.",
         "wave006-correction-2026-09-06: exact eligible A1/A2 support for the safety and tolerability assertions is still outstanding. Packet NIH ODS tiering conflicts with the source registry C2 policy for that publisher, and an FDA-hosted industry GRAS submission is not an FDA-authored safety assessment. No authority tier or flag was changed by this correction pass.",
-        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition."
+        "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
+        "rereview-disposition-2026-09-07: evidenceTier lowered Strong -> Moderate. The 2026-08-29 pass raised this claim to Strong on the stated ground that the 2025 pharmacovigilance analysis supplied systematic quantification and independent corroboration. The 2026-09-06 correction withdrew the independence half of that ground but left the tier, leaving the claim asserting Strong beside its own flag saying the concern is not resolved. Independent re-review on 2026-09-07 confirmed the correction and identified this contradiction; the tier now matches the evidence actually claimed."
       ]
     },
     {
@@ -610,7 +611,8 @@
       "remediation-pass-2026-08-29: addressed reviewer promotionBlockers for creatine-safety-common-adverse-effects-001 (added independent 2025 JISSN pharmacovigilance analysis; reviewFlag updated from 'anecdotal/not quantified' to reflect systematic quantification; evidenceTier upgraded Moderate->Strong) and creatine-misinformation-hairloss-dht-001 (added independent American Hair Loss Association critique covering trichogram methodology, absence of scalp-level DHT measurement, absence of genetic-predisposition screening, and potential industry-funding conflict of interest).",
       "wave006 re-review (2026-09-05) demonstrated a study-versus-participant denominator error in the safety claim and a false source-independence attribution; corrected 2026-09-06 in packet-authoring only. Remaining dose, monitoring, regulatory, and misinformation dispositions are not addressed by that pass.",
       "placeholder-date-cleanup-2026-09-07: 4 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
-      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed.",
+      "rereview-disposition-2026-09-07: creatine-safety-common-adverse-effects-001 evidenceTier lowered Strong -> Moderate to match the withdrawn independence premise. Independent re-review also found a selective-reporting defect in creatine-monitoring-renal-function-001 (the cited 2026 meta-analysis reports a significant creatinine-based GFR reduction that the packet omits while quoting only the null Cr-EDTA arm), and escalated two endurance dispositions to request-changes; those remain open."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -621,7 +623,8 @@
       "remediation-pass-2026-08-29",
       "wave006-correction-pass-2026-09-06",
       "placeholder-date-cleanup-2026-09-07",
-      "authority-disposition-2026-09-07"
+      "authority-disposition-2026-09-07",
+      "rereview-disposition-2026-09-07"
     ]
   }
 }
