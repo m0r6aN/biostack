@@ -1,0 +1,3521 @@
+diff --git a/backend/research-sidecar/src/biostack_research_sidecar/jobs/runner.py b/backend/research-sidecar/src/biostack_research_sidecar/jobs/runner.py
+index d265217..737d41a 100644
+--- a/backend/research-sidecar/src/biostack_research_sidecar/jobs/runner.py
++++ b/backend/research-sidecar/src/biostack_research_sidecar/jobs/runner.py
+@@ -94,7 +94,6 @@ class JobRunner:
+                 )
+                 # Best-effort: mark failed. The worker thread may still be running;
+                 # cooperative cancel is checked at job start only in the foundation.
+-                self._store.request_cancel(job_id)
+                 self._mark_timeout(job_id, record, timeout_seconds)
+             except Exception as exc:  # noqa: BLE001 — last-line defence for worker
+                 logger.exception("research job %s failed", job_id)
+@@ -133,6 +132,7 @@ class JobRunner:
+         self._store.update(
+             job_id,
+             status=ResearchJobStatusCode.FAILED,
++            cancel_requested=True,
+             partial=False,
+             finished_at_utc=finished,
+             error_code="execution_timeout",
+diff --git a/backend/research-sidecar/src/biostack_research_sidecar/jobs/store.py b/backend/research-sidecar/src/biostack_research_sidecar/jobs/store.py
+index 4edc5d4..2afb4d6 100644
+--- a/backend/research-sidecar/src/biostack_research_sidecar/jobs/store.py
++++ b/backend/research-sidecar/src/biostack_research_sidecar/jobs/store.py
+@@ -16,6 +16,22 @@ from biostack_research_sidecar.contracts.models import (
+     ScientificResearchRequest,
+ )
+ 
++_ACTIVE_STATUSES = {
++    ResearchJobStatusCode.QUEUED,
++    ResearchJobStatusCode.RESOLVING_IDENTITY,
++    ResearchJobStatusCode.GATHERING_EVIDENCE,
++    ResearchJobStatusCode.NORMALIZING,
++}
++
++_TERMINAL_STATUSES = {
++    ResearchJobStatusCode.PENDING_REVIEW,
++    ResearchJobStatusCode.COMPLETED,
++    ResearchJobStatusCode.FAILED,
++    ResearchJobStatusCode.CANCELLED,
++    ResearchJobStatusCode.PARTIAL,
++    ResearchJobStatusCode.REJECTED_BY_POLICY,
++}
++
+ 
+ @dataclass
+ class JobRecord:
+@@ -66,13 +82,7 @@ class InMemoryJobStore:
+             job_id
+             for job_id, record in self._jobs.items()
+             if record.updated_at_utc < cutoff
+-            and record.status
+-            not in {
+-                ResearchJobStatusCode.QUEUED,
+-                ResearchJobStatusCode.RESOLVING_IDENTITY,
+-                ResearchJobStatusCode.GATHERING_EVIDENCE,
+-                ResearchJobStatusCode.NORMALIZING,
+-            }
++            and record.status not in _ACTIVE_STATUSES
+         ]
+         for job_id in expired:
+             del self._jobs[job_id]
+@@ -82,9 +92,12 @@ class InMemoryJobStore:
+             record = self._jobs.get(job_id)
+             if record is None:
+                 return None
+-            for key, value in kwargs.items():
++            if record.status in _TERMINAL_STATUSES:
++                return record
++            for key in kwargs:
+                 if not hasattr(record, key):
+                     raise AttributeError(key)
++            for key, value in kwargs.items():
+                 setattr(record, key, value)
+             record.updated_at_utc = datetime.now(timezone.utc)
+             return record
+@@ -94,13 +107,10 @@ class InMemoryJobStore:
+             record = self._jobs.get(job_id)
+             if record is None:
+                 return None
++            if record.status in _TERMINAL_STATUSES:
++                return record
+             record.cancel_requested = True
+-            if record.status in {
+-                ResearchJobStatusCode.QUEUED,
+-                ResearchJobStatusCode.RESOLVING_IDENTITY,
+-                ResearchJobStatusCode.GATHERING_EVIDENCE,
+-                ResearchJobStatusCode.NORMALIZING,
+-            }:
++            if record.status in _ACTIVE_STATUSES:
+                 record.status = ResearchJobStatusCode.CANCELLED
+                 record.finished_at_utc = datetime.now(timezone.utc)
+                 record.progress_message = "cancelled"
+diff --git a/backend/research-sidecar/src/biostack_research_sidecar/workflows/executor.py b/backend/research-sidecar/src/biostack_research_sidecar/workflows/executor.py
+index 611a091..4b0cc49 100644
+--- a/backend/research-sidecar/src/biostack_research_sidecar/workflows/executor.py
++++ b/backend/research-sidecar/src/biostack_research_sidecar/workflows/executor.py
+@@ -147,7 +147,9 @@ def _execute_with_tooluniverse(
+         dict(request.known_identifiers or {}),
+     )
+ 
+-    tools_invoked = [item.tool_name for item in results]
++    effective_source_limit = max(0, request.maximum_source_count)
++    accepted_results = results[:effective_source_limit]
++    tools_invoked = [item.tool_name for item in accepted_results]
+     warnings: list[str] = [
+         f"ToolUniverse pin={settings.tooluniverse_version}",
+         f"allowlist={allowlist.allowlist_version}",
+@@ -164,7 +166,7 @@ def _execute_with_tooluniverse(
+         "sequence_skips": skips,
+     }
+ 
+-    for item in results:
++    for item in accepted_results:
+         provenance_extra["tool_results"].append(
+             {
+                 "tool": item.tool_name,
+@@ -179,22 +181,38 @@ def _execute_with_tooluniverse(
+                 f"{item.tool_name}: {item.error_code or 'error'} — {item.error_message}"
+             )
+ 
++    successful_tool_occurrences = [
++        item.tool_name for item in accepted_results if item.success
++    ]
++    next_tool_occurrence = 0
+     for index, row in enumerate(claim_rows):
++        source_id = str(row.get("tool_name") or "")
++        if not source_id:
++            continue
++        try:
++            matched_occurrence = successful_tool_occurrences.index(
++                source_id, next_tool_occurrence
++            )
++        except ValueError:
++            continue
++        next_tool_occurrence = matched_occurrence + 1
+         claims.append(
+             NormalizedClaim(
+                 claim_id=f"{job_id}-{row['claim_type']}-{index}",
+                 claim_type=str(row["claim_type"]),
+                 text=str(row["text"]),
+                 evidence_class="unknown",
+-                source_ids=[str(row.get("tool_name") or "")],
++                source_ids=[source_id],
+                 review_status="candidate",
+             )
+         )
+ 
+     # Terminal status mapping (S6): distinguish full success, partial, and failure.
+     # Candidate claims still require human review — PENDING_REVIEW is the success path.
+-    any_success = any(item.success for item in results)
+-    all_success = bool(tools_invoked) and all(item.success for item in results)
++    any_success = any(item.success for item in accepted_results)
++    all_success = bool(tools_invoked) and all(
++        item.success for item in accepted_results
++    )
+     if tools_invoked and all_success:
+         status = ResearchJobStatusCode.PENDING_REVIEW
+         partial = False
+diff --git a/backend/research-sidecar/tests/test_request_constraint_reproduction.py b/backend/research-sidecar/tests/test_request_constraint_reproduction.py
+new file mode 100644
+index 0000000..0ec0779
+--- /dev/null
++++ b/backend/research-sidecar/tests/test_request_constraint_reproduction.py
+@@ -0,0 +1,242 @@
++"""Regression coverage for the executor's accepted-source boundary."""
++
++from __future__ import annotations
++
++from dataclasses import dataclass
++from typing import Any
++from unittest.mock import MagicMock
++
++import pytest
++
++from biostack_research_sidecar.config import Settings
++from biostack_research_sidecar.contracts.models import (
++    ResearchJobStatusCode,
++    ScientificResearchRequest,
++)
++from biostack_research_sidecar.jobs.store import InMemoryJobStore
++from biostack_research_sidecar.workflows.executor import execute_research_job
++
++
++@dataclass
++class _FakeResult:
++    tool_name: str
++    success: bool = True
++    error_code: str | None = None
++    error_message: str | None = None
++    arguments: dict[str, Any] | None = None
++
++    def __post_init__(self) -> None:
++        if self.arguments is None:
++            self.arguments = {}
++
++
++def _claim(tool_name: str, marker: str) -> dict[str, str]:
++    return {
++        "claim_type": f"{marker}_type",
++        "text": f"{marker}_text",
++        "tool_name": tool_name,
++    }
++
++
++def _run(
++    monkeypatch: pytest.MonkeyPatch,
++    *,
++    maximum_source_count: int,
++    results: list[_FakeResult],
++    claim_rows: list[dict[str, str]],
++) -> Any:
++    import biostack_research_sidecar.tooluniverse_integration.adapter as adapter_mod
++    import biostack_research_sidecar.tooluniverse_integration.allowlist as allowlist_mod
++    import biostack_research_sidecar.workflows.sequences as sequences_mod
++
++    allowlist = MagicMock()
++    allowlist.allowlist_version = "test-only"
++    allowlist.skills_for_workflow.return_value = ("synthetic-skill",)
++    monkeypatch.setattr(allowlist_mod, "load_allowlist", lambda _path=None: allowlist)
++    monkeypatch.setattr(adapter_mod, "create_adapter", lambda _path=None: MagicMock())
++    monkeypatch.setattr(
++        sequences_mod,
++        "run_workflow_sequence",
++        lambda *_args, **_kwargs: (results, claim_rows, []),
++    )
++
++    settings = Settings(
++        host="127.0.0.1",
++        service_token="test-only",
++        tooluniverse_enabled=True,
++        allow_insecure_dev_auth=False,
++    )
++    store = InMemoryJobStore()
++    request = ScientificResearchRequest.model_validate(
++        {
++            "subject_name": "SyntheticCompound",
++            "workflow": "resolve_compound_identity",
++            "known_identifiers": {"cid": "1"},
++            "maximum_source_count": maximum_source_count,
++            "data_classification": "public_scientific",
++        }
++    )
++    return execute_research_job(store, store.create(request), settings)
++
++
++def test_maximum_source_count_bounds_accepted_results(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    """The retained reproduction binds every accepted-result collection."""
++    results = [
++        _FakeResult("Synthetic_source_one", arguments={"marker": "accepted_arg"}),
++        _FakeResult("Synthetic_source_two", arguments={"marker": "discarded_arg"}),
++        _FakeResult(
++            "Synthetic_source_failed",
++            success=False,
++            error_code="discarded_error_code",
++            error_message="discarded_error_message",
++            arguments={"marker": "discarded_failure_arg"},
++        ),
++    ]
++    updated = _run(
++        monkeypatch,
++        maximum_source_count=1,
++        results=results,
++        claim_rows=[
++            _claim("Synthetic_source_one", "accepted_claim"),
++            _claim("Synthetic_source_two", "discarded_claim"),
++            _claim("Synthetic_source_failed", "discarded_failure_claim"),
++        ],
++    )
++
++    artifact = updated.artifact
++    assert artifact is not None
++    assert updated.tools_invoked == ["Synthetic_source_one"]
++    assert artifact.tools_invoked == ["Synthetic_source_one"]
++    assert artifact.provenance["tool_results"] == [
++        {
++            "tool": "Synthetic_source_one",
++            "success": True,
++            "error_code": None,
++            "error_message": None,
++            "arguments": {"marker": "accepted_arg"},
++        }
++    ]
++    assert [claim.text for claim in artifact.normalized_claims] == [
++        "accepted_claim_text"
++    ]
++    assert [claim.source_ids for claim in artifact.normalized_claims] == [
++        ["Synthetic_source_one"]
++    ]
++    governed_payload = artifact.model_dump_json()
++    for discarded_sentinel in (
++        "Synthetic_source_two",
++        "Synthetic_source_failed",
++        "discarded_arg",
++        "discarded_failure_arg",
++        "discarded_error_code",
++        "discarded_error_message",
++        "discarded_claim",
++        "discarded_failure_claim",
++    ):
++        assert discarded_sentinel not in governed_payload
++    assert updated.status == ResearchJobStatusCode.PENDING_REVIEW
++    assert artifact.status == ResearchJobStatusCode.PENDING_REVIEW
++    assert updated.partial is False
++
++
++def test_source_cap_preserves_two_ordered_occurrences(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    results = [
++        _FakeResult("Synthetic_order_one", arguments={"order": 1}),
++        _FakeResult("Synthetic_order_two", arguments={"order": 2}),
++        _FakeResult("Synthetic_order_three", arguments={"order": 3}),
++    ]
++    updated = _run(
++        monkeypatch,
++        maximum_source_count=2,
++        results=results,
++        claim_rows=[
++            _claim("Synthetic_order_one", "ordered_one"),
++            _claim("Synthetic_order_two", "ordered_two"),
++            _claim("Synthetic_order_three", "ordered_three"),
++        ],
++    )
++
++    artifact = updated.artifact
++    assert artifact is not None
++    expected_tools = ["Synthetic_order_one", "Synthetic_order_two"]
++    assert updated.tools_invoked == expected_tools
++    assert artifact.tools_invoked == expected_tools
++    assert [row["tool"] for row in artifact.provenance["tool_results"]] == expected_tools
++    assert [claim.text for claim in artifact.normalized_claims] == [
++        "ordered_one_text",
++        "ordered_two_text",
++    ]
++    assert [claim.source_ids for claim in artifact.normalized_claims] == [
++        ["Synthetic_order_one"],
++        ["Synthetic_order_two"],
++    ]
++    assert "Synthetic_order_three" not in artifact.model_dump_json()
++
++
++def test_repeated_tool_names_consume_accepted_occurrences(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    updated = _run(
++        monkeypatch,
++        maximum_source_count=1,
++        results=[
++            _FakeResult("Synthetic_repeat", arguments={"occurrence": "first"}),
++            _FakeResult("Synthetic_repeat", arguments={"occurrence": "second"}),
++        ],
++        claim_rows=[
++            _claim("Synthetic_repeat", "repeat_first"),
++            _claim("Synthetic_repeat", "repeat_second"),
++        ],
++    )
++
++    artifact = updated.artifact
++    assert artifact is not None
++    assert updated.tools_invoked == ["Synthetic_repeat"]
++    assert artifact.tools_invoked == ["Synthetic_repeat"]
++    assert artifact.provenance["tool_results"][0]["arguments"] == {
++        "occurrence": "first"
++    }
++    assert [claim.text for claim in artifact.normalized_claims] == [
++        "repeat_first_text"
++    ]
++    assert [claim.source_ids for claim in artifact.normalized_claims] == [
++        ["Synthetic_repeat"]
++    ]
++    assert "repeat_second" not in artifact.model_dump_json()
++
++
++@pytest.mark.parametrize("maximum_source_count", [0, -1])
++def test_non_positive_source_caps_accept_nothing(
++    monkeypatch: pytest.MonkeyPatch,
++    maximum_source_count: int,
++) -> None:
++    updated = _run(
++        monkeypatch,
++        maximum_source_count=maximum_source_count,
++        results=[
++            _FakeResult("Synthetic_nonpositive", arguments={"marker": "must_not_leak"})
++        ],
++        claim_rows=[_claim("Synthetic_nonpositive", "must_not_materialize")],
++    )
++
++    artifact = updated.artifact
++    assert artifact is not None
++    assert updated.tools_invoked == []
++    assert artifact.tools_invoked == []
++    assert artifact.provenance["tool_results"] == []
++    assert artifact.normalized_claims == []
++    assert artifact.source_manifest == []
++    assert artifact.raw_artifact_hashes == []
++    assert updated.status == ResearchJobStatusCode.FAILED
++    assert artifact.status == ResearchJobStatusCode.FAILED
++    assert updated.partial is False
++    assert artifact.partial is False
++    assert artifact.failure_details == (
++        "no tool steps executed (missing identifiers or empty sequence)"
++    )
++    assert "must_not_leak" not in artifact.model_dump_json()
++    assert "must_not_materialize" not in artifact.model_dump_json()
+diff --git a/backend/research-sidecar/tests/test_runner_terminal_state_reproduction.py b/backend/research-sidecar/tests/test_runner_terminal_state_reproduction.py
+new file mode 100644
+index 0000000..bf47b21
+--- /dev/null
++++ b/backend/research-sidecar/tests/test_runner_terminal_state_reproduction.py
+@@ -0,0 +1,389 @@
++"""Reproduce timeout terminal-state regression without external services."""
++
++from __future__ import annotations
++
++import threading
++import time
++from copy import deepcopy
++from dataclasses import dataclass
++from datetime import UTC, datetime, timedelta
++from typing import Any
++from unittest.mock import MagicMock
++
++import pytest
++
++from biostack_research_sidecar.config import Settings
++from biostack_research_sidecar.contracts.models import (
++    ResearchJobStatusCode,
++    ScientificResearchArtifact,
++    ScientificResearchRequest,
++)
++from biostack_research_sidecar.jobs.runner import JobRunner
++from biostack_research_sidecar.jobs.store import InMemoryJobStore, JobRecord
++
++
++@dataclass
++class _FakeResult:
++    tool_name: str
++    success: bool = True
++    error_code: str | None = None
++    error_message: str | None = None
++    arguments: dict[str, Any] | None = None
++
++    def __post_init__(self) -> None:
++        if self.arguments is None:
++            self.arguments = {}
++
++
++@dataclass(frozen=True)
++class _TerminalCase:
++    status: ResearchJobStatusCode
++    error_code: str | None
++    partial: bool = False
++    via_cancel: bool = False
++    cancel_requested: bool = False
++
++
++_TERMINAL_CASES = (
++    pytest.param(
++        _TerminalCase(
++            ResearchJobStatusCode.FAILED,
++            "execution_timeout",
++            cancel_requested=True,
++        ),
++        id="timeout-failure",
++    ),
++    pytest.param(
++        _TerminalCase(ResearchJobStatusCode.FAILED, "worker_error"),
++        id="ordinary-failure",
++    ),
++    pytest.param(
++        _TerminalCase(
++            ResearchJobStatusCode.CANCELLED,
++            None,
++            via_cancel=True,
++            cancel_requested=True,
++        ),
++        id="cancellation",
++    ),
++    pytest.param(
++        _TerminalCase(ResearchJobStatusCode.PARTIAL, None, partial=True),
++        id="partial",
++    ),
++    pytest.param(
++        _TerminalCase(ResearchJobStatusCode.REJECTED_BY_POLICY, "policy_rejection"),
++        id="policy-rejection",
++    ),
++    pytest.param(
++        _TerminalCase(ResearchJobStatusCode.PENDING_REVIEW, None),
++        id="pending-review",
++    ),
++    pytest.param(
++        _TerminalCase(ResearchJobStatusCode.COMPLETED, None),
++        id="completion",
++    ),
++)
++
++
++def _request() -> ScientificResearchRequest:
++    return ScientificResearchRequest.model_validate(
++        {
++            "subject_name": "SyntheticCompound",
++            "workflow": "resolve_compound_identity",
++            "known_identifiers": {"cid": "1"},
++            "maximum_execution_time_seconds": 1,
++            "execution": {"maximum_execution_duration_seconds": 1},
++            "data_classification": "public_scientific",
++        }
++    )
++
++
++def _artifact(
++    record: JobRecord,
++    status: ResearchJobStatusCode,
++    marker: str,
++    finished: datetime,
++) -> ScientificResearchArtifact:
++    return ScientificResearchArtifact(
++        research_artifact_id=f"artifact-{marker}",
++        job_id=record.job_id,
++        research_request_id=record.request.research_request_id,
++        provider_version="test-only",
++        workflow=record.request.workflow,
++        status=status,
++        partial=status == ResearchJobStatusCode.PARTIAL,
++        started_at_utc=record.submitted_at_utc,
++        finished_at_utc=finished,
++        warnings=[marker],
++        provenance={"marker": marker},
++    )
++
++
++def _wait_until(predicate: Any, *, timeout: float = 4.0) -> None:
++    deadline = time.monotonic() + timeout
++    while time.monotonic() < deadline:
++        if predicate():
++            return
++        time.sleep(0.01)
++    raise AssertionError("condition was not reached before the deterministic test deadline")
++
++
++def _assert_snapshot(store: InMemoryJobStore, job_id: str, expected: JobRecord) -> None:
++    current = store.get(job_id)
++    assert current is not None
++    assert deepcopy(current) == expected
++
++
++def test_timed_out_job_cannot_be_overwritten_by_late_worker(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    """A timeout must remain terminal after the already-running worker returns."""
++    import biostack_research_sidecar.jobs.runner as runner_mod
++    import biostack_research_sidecar.tooluniverse_integration.adapter as adapter_mod
++    import biostack_research_sidecar.tooluniverse_integration.allowlist as allowlist_mod
++    import biostack_research_sidecar.workflows.sequences as sequences_mod
++
++    entered_sequence = threading.Event()
++    release_sequence = threading.Event()
++    worker_completed = threading.Event()
++
++    allowlist = MagicMock()
++    allowlist.allowlist_version = "test-only"
++    allowlist.skills_for_workflow.return_value = ("synthetic-skill",)
++
++    monkeypatch.setattr(allowlist_mod, "load_allowlist", lambda _path=None: allowlist)
++    monkeypatch.setattr(adapter_mod, "create_adapter", lambda _path=None: MagicMock())
++
++    def blocked_sequence(*_args: object, **_kwargs: object) -> tuple:
++        entered_sequence.set()
++        assert release_sequence.wait(timeout=4.0)
++        return [_FakeResult("Synthetic_lookup")], [], []
++
++    monkeypatch.setattr(sequences_mod, "run_workflow_sequence", blocked_sequence)
++
++    execute_research_job = runner_mod.execute_research_job
++
++    def tracked_execute_research_job(*args: object, **kwargs: object) -> object:
++        try:
++            return execute_research_job(*args, **kwargs)
++        finally:
++            worker_completed.set()
++
++    monkeypatch.setattr(runner_mod, "execute_research_job", tracked_execute_research_job)
++
++    settings = Settings(
++        host="127.0.0.1",
++        service_token="test-only",
++        tooluniverse_enabled=True,
++        allow_insecure_dev_auth=False,
++        max_concurrent_research_jobs=1,
++    )
++    store = InMemoryJobStore()
++    record = store.create(_request())
++    runner = JobRunner(store, settings)
++
++    try:
++        assert runner.try_reserve_slot()
++        runner.submit(record.job_id)
++        assert entered_sequence.wait(timeout=2.0)
++
++        _wait_until(
++            lambda: (
++                (current := store.get(record.job_id)) is not None
++                and current.error_code == "execution_timeout"
++                and current.status == ResearchJobStatusCode.FAILED
++            )
++        )
++        timeout_record = store.get(record.job_id)
++        assert timeout_record is not None
++        timeout_snapshot = deepcopy(timeout_record)
++        timeout_message = "Job exceeded maximum execution time (1s)."
++        assert timeout_snapshot.status == ResearchJobStatusCode.FAILED
++        assert timeout_snapshot.cancel_requested is True
++        assert timeout_snapshot.error_code == "execution_timeout"
++        assert timeout_snapshot.error_message == timeout_message
++        assert timeout_snapshot.progress_message == timeout_message
++        assert timeout_snapshot.finished_at_utc is not None
++        assert timeout_snapshot.artifact is not None
++        assert timeout_snapshot.artifact.status == ResearchJobStatusCode.FAILED
++        assert timeout_snapshot.artifact.failure_details == timeout_message
++        assert timeout_snapshot.artifact.warnings == [timeout_message]
++        assert timeout_snapshot.artifact.finished_at_utc == timeout_snapshot.finished_at_utc
++
++        release_sequence.set()
++        assert worker_completed.wait(timeout=4.0)
++        _assert_snapshot(store, record.job_id, timeout_snapshot)
++    finally:
++        release_sequence.set()
++        runner.shutdown(wait=True)
++
++
++@pytest.mark.parametrize("case", _TERMINAL_CASES)
++def test_first_terminal_snapshot_is_immutable(case: _TerminalCase) -> None:
++    store = InMemoryJobStore()
++    record = store.create(_request())
++    finished = datetime(2026, 9, 2, 12, 0, tzinfo=UTC)
++
++    if case.via_cancel:
++        first = store.request_cancel(record.job_id)
++    else:
++        first = store.update(
++            record.job_id,
++            status=case.status,
++            finished_at_utc=finished,
++            progress_message=f"first-{case.status.value}",
++            partial=case.partial,
++            error_code=case.error_code,
++            error_message=f"error-{case.error_code}" if case.error_code else None,
++            artifact=_artifact(record, case.status, "first", finished),
++            cancel_requested=case.cancel_requested,
++            tools_invoked=["first-tool"],
++        )
++    assert first is not None
++    snapshot = deepcopy(first)
++
++    store.update(
++        record.job_id,
++        status=snapshot.status,
++        finished_at_utc=snapshot.finished_at_utc,
++        progress_message=snapshot.progress_message,
++        partial=snapshot.partial,
++        error_code=snapshot.error_code,
++        error_message=snapshot.error_message,
++        artifact=deepcopy(snapshot.artifact),
++        cancel_requested=snapshot.cancel_requested,
++        tools_invoked=deepcopy(snapshot.tools_invoked),
++    )
++    _assert_snapshot(store, record.job_id, snapshot)
++
++    store.update(record.job_id, progress_message="late-progress")
++    _assert_snapshot(store, record.job_id, snapshot)
++
++    hostile_status = (
++        ResearchJobStatusCode.FAILED
++        if case.status == ResearchJobStatusCode.COMPLETED
++        else ResearchJobStatusCode.COMPLETED
++    )
++    hostile_finished = finished + timedelta(hours=1)
++    store.update(
++        record.job_id,
++        status=hostile_status,
++        finished_at_utc=hostile_finished,
++        progress_message="hostile-progress",
++        partial=not snapshot.partial,
++        error_code="hostile-error",
++        error_message="hostile-message",
++        artifact=_artifact(record, hostile_status, "hostile", hostile_finished),
++        cancel_requested=not snapshot.cancel_requested,
++        tools_invoked=["hostile-tool"],
++    )
++    _assert_snapshot(store, record.job_id, snapshot)
++
++    store.request_cancel(record.job_id)
++    _assert_snapshot(store, record.job_id, snapshot)
++
++
++def test_all_active_states_accept_progress_updates() -> None:
++    store = InMemoryJobStore()
++    record = store.create(_request())
++    active_snapshot = deepcopy(record)
++    with pytest.raises(AttributeError, match="invalid_terminal_field"):
++        store.update(
++            record.job_id,
++            status=ResearchJobStatusCode.COMPLETED,
++            finished_at_utc=datetime(2026, 9, 2, 12, 0, tzinfo=UTC),
++            progress_message="must-not-stick",
++            invalid_terminal_field="rejected",
++        )
++    _assert_snapshot(store, record.job_id, active_snapshot)
++
++    active_states = (
++        ResearchJobStatusCode.QUEUED,
++        ResearchJobStatusCode.RESOLVING_IDENTITY,
++        ResearchJobStatusCode.GATHERING_EVIDENCE,
++        ResearchJobStatusCode.NORMALIZING,
++    )
++
++    for index, status in enumerate(active_states):
++        progress = f"active-{index}-{status.value}"
++        updated = store.update(record.job_id, status=status, progress_message=progress)
++        assert updated is not None
++        assert updated.status == status
++        assert updated.progress_message == progress
++
++
++def test_simultaneous_terminal_writers_preserve_one_complete_snapshot() -> None:
++    store = InMemoryJobStore()
++    record = store.create(_request())
++    before = deepcopy(record)
++    barrier = threading.Barrier(3)
++    errors: list[BaseException] = []
++    results: list[JobRecord] = []
++    first_finished = datetime(2026, 9, 2, 12, 0, tzinfo=UTC)
++    second_finished = first_finished + timedelta(hours=1)
++    payloads = (
++        {
++            "status": ResearchJobStatusCode.PARTIAL,
++            "finished_at_utc": first_finished,
++            "progress_message": "contender-a",
++            "partial": True,
++            "error_code": "partial-a",
++            "error_message": "message-a",
++            "artifact": _artifact(
++                record, ResearchJobStatusCode.PARTIAL, "contender-a", first_finished
++            ),
++            "cancel_requested": False,
++            "tools_invoked": ["tool-a"],
++        },
++        {
++            "status": ResearchJobStatusCode.FAILED,
++            "finished_at_utc": second_finished,
++            "progress_message": "contender-b",
++            "partial": False,
++            "error_code": "failure-b",
++            "error_message": "message-b",
++            "artifact": _artifact(
++                record, ResearchJobStatusCode.FAILED, "contender-b", second_finished
++            ),
++            "cancel_requested": True,
++            "tools_invoked": ["tool-b"],
++        },
++    )
++
++    def write_terminal(payload: dict[str, object]) -> None:
++        try:
++            barrier.wait(timeout=2.0)
++            result = store.update(record.job_id, **payload)
++            assert result is not None
++            results.append(deepcopy(result))
++        except BaseException as exc:  # noqa: BLE001 - surfaced on the test thread
++            errors.append(exc)
++
++    threads = [
++        threading.Thread(target=write_terminal, args=(payload,), daemon=True)
++        for payload in payloads
++    ]
++    for thread in threads:
++        thread.start()
++    barrier.wait(timeout=2.0)
++    for thread in threads:
++        thread.join(timeout=2.0)
++        assert not thread.is_alive(), "terminal writer did not complete within its deadline"
++
++    assert not errors
++    final = store.get(record.job_id)
++    assert final is not None
++    final_snapshot = deepcopy(final)
++    assert results == [final_snapshot, final_snapshot]
++
++    expected_snapshots = []
++    for payload in payloads:
++        expected = deepcopy(before)
++        for key, value in payload.items():
++            setattr(expected, key, deepcopy(value))
++        expected.updated_at_utc = final_snapshot.updated_at_utc
++        expected_snapshots.append(expected)
++    assert final_snapshot in expected_snapshots
++
++    store.request_cancel(record.job_id)
++    _assert_snapshot(store, record.job_id, final_snapshot)
+diff --git a/backend/src/BioStack.Api/Auth/CollectiveOutboundAuthorizationGate.cs b/backend/src/BioStack.Api/Auth/CollectiveOutboundAuthorizationGate.cs
+new file mode 100644
+index 0000000..09d4034
+--- /dev/null
++++ b/backend/src/BioStack.Api/Auth/CollectiveOutboundAuthorizationGate.cs
+@@ -0,0 +1,17 @@
++namespace BioStack.Api.Auth;
++
++using BioStack.Application.Services;
++using BioStack.Cognition.CollectiveApi;
++
++public sealed class CollectiveOutboundAuthorizationGate : ICollectiveOutboundAuthorizationGate
++{
++    private readonly IConsentGate _consentGate;
++
++    public CollectiveOutboundAuthorizationGate(IConsentGate consentGate)
++    {
++        _consentGate = consentGate;
++    }
++
++    public Task<bool> IsAuthorizedAsync(CancellationToken cancellationToken = default) =>
++        _consentGate.IsConsentGrantedAsync(cancellationToken);
++}
+diff --git a/backend/src/BioStack.Api/Program.cs b/backend/src/BioStack.Api/Program.cs
+index 26ad336..bca0789 100644
+--- a/backend/src/BioStack.Api/Program.cs
++++ b/backend/src/BioStack.Api/Program.cs
+@@ -17,6 +17,7 @@ using BioStack.Application.Abstractions;
+ using BioStack.Api.Endpoints;
+ using BioStack.Api;
+ using BioStack.Cognition;
++using BioStack.Cognition.CollectiveApi;
+ using BioStack.Infrastructure.Keon;
+ using BioStack.Application.ScientificResearch;
+ using BioStack.Application.Evidence;
+@@ -402,6 +403,7 @@ builder.Services.AddScoped<IProfileService, ProfileService>();
+ builder.Services.AddScoped<IGoalService, GoalService>();
+ builder.Services.AddScoped<IOwnershipGuard, OwnershipGuard>();
+ builder.Services.AddScoped<IConsentGate, ConsentGate>();
++builder.Services.AddScoped<ICollectiveOutboundAuthorizationGate, CollectiveOutboundAuthorizationGate>();
+ builder.Services.AddScoped<BioStack.Api.Auth.RequireConsentFilter>();
+ builder.Services.AddScoped<IFeatureGate, FeatureGate>();
+ builder.Services.AddScoped<IBillingService, BillingService>();
+diff --git a/backend/src/BioStack.Application/ScientificResearch/ScientificResearchCandidateStagingService.cs b/backend/src/BioStack.Application/ScientificResearch/ScientificResearchCandidateStagingService.cs
+index 5678d7d..7254526 100644
+--- a/backend/src/BioStack.Application/ScientificResearch/ScientificResearchCandidateStagingService.cs
++++ b/backend/src/BioStack.Application/ScientificResearch/ScientificResearchCandidateStagingService.cs
+@@ -32,6 +32,13 @@ public sealed class ScientificResearchCandidateStagingService(
+         ArgumentException.ThrowIfNullOrWhiteSpace(jobId);
+ 
+         var artifact = await researchProvider.GetResultAsync(jobId, cancellationToken);
++        if (artifact.Status is not (ResearchJobStatusCode.PendingReview or ResearchJobStatusCode.Partial))
++        {
++            throw new ScientificResearchProviderException(
++                "Scientific research artifact is not eligible for review staging.",
++                "artifact_not_stageable");
++        }
++
+         var artifactId = ArtifactIdPrefix + artifact.JobId;
+         var now = DateTimeOffset.UtcNow.ToString("O");
+ 
+diff --git a/backend/src/BioStack.Application/Services/EvidenceGate.cs b/backend/src/BioStack.Application/Services/EvidenceGate.cs
+index 094d0ad..d4a30e6 100644
+--- a/backend/src/BioStack.Application/Services/EvidenceGate.cs
++++ b/backend/src/BioStack.Application/Services/EvidenceGate.cs
+@@ -71,7 +71,7 @@ public sealed class EvidenceGateViolationException : InvalidOperationException
+ ///   3. TargetCanonicalName is set
+ ///   4. 'evidenceTier' key present and non-empty
+ ///   5. evidenceTier is a supported tier
+-///   6. 'citations' key present and non-empty
++///   6. 'citations' key present, non-empty, and includes a stable external source locator
+ ///   7. Tiers requiring mechanism: 'mechanismSummary' present and non-empty
+ ///   8. No personalized medical direction in scanned text fields. Evaluated as
+ ///      source-attributed, which Check 6 guarantees — see the inline note (F2).
+@@ -164,6 +164,13 @@ public sealed class EvidenceGate : IEvidenceGate
+                 "Evidence gate requires at least one citation in source metadata key 'citations'.");
+         }
+ 
++        if (!HasExternalSourceLocator(citations))
++        {
++            return Reject(
++                "missing_external_source_locator",
++                "Evidence gate requires at least one stable external source locator.");
++        }
++
+         // Check 7 — mechanism required for certain tiers.
+         if (TiersRequiringMechanism.Contains(evidenceTier))
+         {
+@@ -204,6 +211,43 @@ public sealed class EvidenceGate : IEvidenceGate
+         return new EvidenceGateResult(IsGateOpen: true, RejectionCode: null, RejectionReason: null);
+     }
+ 
++    private static bool HasExternalSourceLocator(string citations)
++    {
++        foreach (var entry in citations.Split('|'))
++        {
++            var candidate = entry.Trim();
++            if (Uri.TryCreate(candidate, UriKind.Absolute, out var uri) &&
++                (string.Equals(uri.Scheme, Uri.UriSchemeHttp, StringComparison.OrdinalIgnoreCase) ||
++                 string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase)) &&
++                !string.IsNullOrEmpty(uri.Host))
++            {
++                return true;
++            }
++
++            if (candidate.StartsWith("doi:", StringComparison.OrdinalIgnoreCase))
++            {
++                var doi = candidate[4..];
++                if (doi.StartsWith("10.", StringComparison.Ordinal) &&
++                    doi.Contains('/') &&
++                    !doi.Any(char.IsWhiteSpace))
++                {
++                    return true;
++                }
++            }
++
++            if (candidate.StartsWith("pmid:", StringComparison.OrdinalIgnoreCase))
++            {
++                var pmid = candidate[5..];
++                if (pmid.Length > 0 && pmid.All(character => character is >= '0' and <= '9'))
++                {
++                    return true;
++                }
++            }
++        }
++
++        return false;
++    }
++
+     private static EvidenceGateResult Reject(string code, string reason)
+         => new(IsGateOpen: false, RejectionCode: code, RejectionReason: reason);
+ }
+diff --git a/backend/src/BioStack.Application/Services/InteractionIntelligenceService.cs b/backend/src/BioStack.Application/Services/InteractionIntelligenceService.cs
+index 3ce1f40..c2e0edf 100644
+--- a/backend/src/BioStack.Application/Services/InteractionIntelligenceService.cs
++++ b/backend/src/BioStack.Application/Services/InteractionIntelligenceService.cs
+@@ -27,11 +27,10 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
+     private readonly ICompoundInteractionHintRepository _hintRepository;
+     private readonly ICompoundGraphStore? _graphStore;
+ 
+-    // Cache of the active graph artifact hash for the lifetime of this (scoped) service so pairwise
+-    // graph lookups don't re-query the active artifact for every pair. Null until first resolved;
+-    // _graphHashResolved guards the "no active graph" case from being re-checked.
+-    private string? _activeGraphHash;
+-    private bool _graphHashResolved;
++    // Cache the active artifact for the lifetime of this scoped service so graph eligibility and
++    // provenance are evaluated from the same artifact for every pair in one response.
++    private CompoundGraphArtifact? _activeGraphArtifact;
++    private bool _graphArtifactResolved;
+ 
+     public InteractionIntelligenceService(
+         IKnowledgeSource knowledgeSource,
+@@ -72,10 +71,11 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
+             .ToList();
+ 
+         var entries = new List<KnowledgeEntry>();
++        var canonicalNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+         foreach (var name in names)
+         {
+             var entry = await _knowledgeSource.GetCompoundAsync(name, cancellationToken);
+-            if (entry is not null)
++            if (entry is not null && canonicalNames.Add(entry.CanonicalName))
+             {
+                 entries.Add(entry);
+             }
+@@ -162,6 +162,18 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
+             .OrderBy(pathway => pathway, StringComparer.OrdinalIgnoreCase)
+             .ToList();
+ 
++        if (HasNamedMatch(compoundA.AvoidWith, compoundB) || HasNamedMatch(compoundB.AvoidWith, compoundA))
++        {
++            return new InteractionResultResponse(
++                compoundA.CanonicalName,
++                compoundB.CanonicalName,
++                InteractionType.Interfering,
++                0.72d,
++                sharedPathways,
++                "Avoid-with guidance directly links these compounds.",
++                HintBacked: false);
++        }
++
+         // Lane C: the reviewed compound graph is the preferred truth source. If it has an edge for
+         // this pair, use it (graph-backed) instead of re-deriving from KnowledgeEntry string fields.
+         var graphResult = await TryEvaluateFromGraphAsync(compoundA, compoundB, sharedPathways, cancellationToken);
+@@ -183,18 +195,6 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
+                 HintBacked: true);
+         }
+ 
+-        if (HasNamedMatch(compoundA.AvoidWith, compoundB) || HasNamedMatch(compoundB.AvoidWith, compoundA))
+-        {
+-            return new InteractionResultResponse(
+-                compoundA.CanonicalName,
+-                compoundB.CanonicalName,
+-                InteractionType.Interfering,
+-                0.72d,
+-                sharedPathways,
+-                "Avoid-with guidance directly links these compounds.",
+-                HintBacked: false);
+-        }
+-
+         if (HasNamedInteraction(compoundA.DrugInteractions, compoundB) || HasNamedInteraction(compoundB.DrugInteractions, compoundA))
+         {
+             return new InteractionResultResponse(
+@@ -280,15 +280,24 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
+             return null;
+         }
+ 
++        var artifact = await GetActiveGraphArtifactAsync(cancellationToken);
++        if (artifact is null
++            || !artifact.IsActive
++            || !string.Equals(artifact.ReviewState, "reviewed", StringComparison.Ordinal))
++        {
++            return null;
++        }
++
+         var edge = await _graphStore.FindRelationshipAsync(
+             compoundA.CanonicalName, compoundB.CanonicalName, cancellationToken);
+-        if (edge is null)
++        if (edge is null
++            || edge.GraphArtifactId != artifact.Id
++            || edge.NeedsReview
++            || !string.Equals(edge.ReviewState, "reviewed", StringComparison.Ordinal))
+         {
+             return null;
+         }
+ 
+-        var graphHash = await GetActiveGraphHashAsync(cancellationToken);
+-
+         return new InteractionResultResponse(
+             compoundA.CanonicalName,
+             compoundB.CanonicalName,
+@@ -300,24 +309,23 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
+                 : edge.Reason!,
+             HintBacked: false,
+             Source: IntelligenceSource.Graph,
+-            GraphArtifactHash: graphHash);
++            GraphArtifactHash: artifact.ArtifactHash);
+     }
+ 
+-    private async Task<string?> GetActiveGraphHashAsync(CancellationToken cancellationToken)
++    private async Task<CompoundGraphArtifact?> GetActiveGraphArtifactAsync(CancellationToken cancellationToken)
+     {
+-        if (_graphHashResolved)
++        if (_graphArtifactResolved)
+         {
+-            return _activeGraphHash;
++            return _activeGraphArtifact;
+         }
+ 
+         if (_graphStore is not null)
+         {
+-            var artifact = await _graphStore.GetActiveArtifactAsync(cancellationToken);
+-            _activeGraphHash = artifact?.ArtifactHash;
++            _activeGraphArtifact = await _graphStore.GetActiveArtifactAsync(cancellationToken);
+         }
+ 
+-        _graphHashResolved = true;
+-        return _activeGraphHash;
++        _graphArtifactResolved = true;
++        return _activeGraphArtifact;
+     }
+ 
+     private static InteractionType MapRelationshipTypeToInteraction(string relationshipType)
+@@ -344,7 +352,8 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
+ 
+         // Numeric confidence (e.g. "0.82") is preserved as-is when parseable.
+         if (double.TryParse(confidence, System.Globalization.NumberStyles.Float,
+-                System.Globalization.CultureInfo.InvariantCulture, out var numeric))
++                System.Globalization.CultureInfo.InvariantCulture, out var numeric)
++            && double.IsFinite(numeric))
+         {
+             return Math.Round(Math.Clamp(numeric, 0d, 1d), 2);
+         }
+diff --git a/backend/src/BioStack.Application/Services/ProtocolIngestionService.cs b/backend/src/BioStack.Application/Services/ProtocolIngestionService.cs
+index 0a1b40d..92a49df 100644
+--- a/backend/src/BioStack.Application/Services/ProtocolIngestionService.cs
++++ b/backend/src/BioStack.Application/Services/ProtocolIngestionService.cs
+@@ -150,11 +150,15 @@ public sealed class PdfProtocolExtractor : IProtocolTextExtractor
+             throw new ProtocolIngestionException("The uploaded PDF was empty.");
+         }
+ 
++        cancellationToken.ThrowIfCancellationRequested();
+         var warnings = new List<string>();
+         var artifacts = new List<ProtocolIngestionArtifact>();
+         var decoded = Encoding.GetEncoding("ISO-8859-1").GetString(request.SourceBytes);
+-        var pageMatches = Regex.Matches(decoded, @"/Type\s*/Page\b", RegexOptions.IgnoreCase);
+-        var extractedLines = ExtractPdfText(decoded).ToList();
++        cancellationToken.ThrowIfCancellationRequested();
++        var pageCount = Regex.Matches(decoded, @"/Type\s*/Page\b", RegexOptions.IgnoreCase).Count;
++        cancellationToken.ThrowIfCancellationRequested();
++        var extractedLines = ExtractPdfText(decoded, cancellationToken);
++        cancellationToken.ThrowIfCancellationRequested();
+         foreach (var (line, index) in extractedLines.Select((line, index) => (line, index)))
+         {
+             var preview = ProtocolExtractorSupport.CreatePreview(line);
+@@ -164,17 +168,19 @@ public sealed class PdfProtocolExtractor : IProtocolTextExtractor
+             }
+         }
+ 
++        cancellationToken.ThrowIfCancellationRequested();
+         var text = string.Join(Environment.NewLine, extractedLines).Trim();
+         if (string.IsNullOrWhiteSpace(text))
+         {
+             throw new ProtocolIngestionException("This PDF did not expose readable text. Try a clearer source file or a direct image scan.");
+         }
+ 
+-        if (pageMatches.Count > 0 && text.Length / pageMatches.Count < 120)
++        if (pageCount > 0 && text.Length / pageCount < 120)
+         {
+             warnings.Add("This PDF appears to be image-heavy or low text density. Review the extracted protocol carefully.");
+         }
+ 
++        cancellationToken.ThrowIfCancellationRequested();
+         return Task.FromResult(new ProtocolExtractionResult(
+             text,
+             warnings,
+@@ -182,19 +188,27 @@ public sealed class PdfProtocolExtractor : IProtocolTextExtractor
+             warnings.Count > 0));
+     }
+ 
+-    private static IEnumerable<string> ExtractPdfText(string content)
++    private static IReadOnlyList<string> ExtractPdfText(string content, CancellationToken cancellationToken)
+     {
++        cancellationToken.ThrowIfCancellationRequested();
+         var directText = Regex.Matches(content, @"\((?<text>(?:\\\)|\\\(|\\\\|[^\)])+)\)\s*Tj", RegexOptions.Singleline)
+-            .Select(match => DecodePdfString(match.Groups["text"].Value));
++            .Select(match => DecodePdfString(match.Groups["text"].Value))
++            .ToList();
+ 
++        cancellationToken.ThrowIfCancellationRequested();
+         var arrayText = Regex.Matches(content, @"\[(?<items>.*?)\]\s*TJ", RegexOptions.Singleline)
+             .Select(match => string.Join(" ", Regex.Matches(match.Groups["items"].Value, @"\((?<text>(?:\\\)|\\\(|\\\\|[^\)])+)\)")
+-                .Select(inner => DecodePdfString(inner.Groups["text"].Value))));
++                .Select(inner => DecodePdfString(inner.Groups["text"].Value))))
++            .ToList();
+ 
+-        return directText
++        cancellationToken.ThrowIfCancellationRequested();
++        var extractedText = directText
+             .Concat(arrayText)
+             .Select(value => Regex.Replace(value, @"\s+", " ").Trim())
+-            .Where(value => !string.IsNullOrWhiteSpace(value));
++            .Where(value => !string.IsNullOrWhiteSpace(value))
++            .ToList();
++        cancellationToken.ThrowIfCancellationRequested();
++        return extractedText;
+     }
+ 
+     private static string DecodePdfString(string value)
+@@ -787,11 +801,16 @@ public sealed class AzureVisionProtocolOcrService : IProtocolOcrService
+ {
+     private readonly IHttpClientFactory _httpClientFactory;
+     private readonly ProtocolOcrOptions _options;
++    private readonly IConsentGate _consentGate;
+ 
+-    public AzureVisionProtocolOcrService(IHttpClientFactory httpClientFactory, Microsoft.Extensions.Options.IOptions<ProtocolOcrOptions> options)
++    public AzureVisionProtocolOcrService(
++        IHttpClientFactory httpClientFactory,
++        Microsoft.Extensions.Options.IOptions<ProtocolOcrOptions> options,
++        IConsentGate consentGate)
+     {
+         _httpClientFactory = httpClientFactory;
+         _options = options.Value;
++        _consentGate = consentGate;
+     }
+ 
+     public async Task<ProtocolOcrResult> ExtractAsync(byte[] imageBytes, string? sourceName, CancellationToken cancellationToken = default)
+@@ -801,6 +820,13 @@ public sealed class AzureVisionProtocolOcrService : IProtocolOcrService
+             throw new ProtocolIngestionException("Image OCR is not configured yet for this environment. Upload text-based files or paste the protocol for now.");
+         }
+ 
++        cancellationToken.ThrowIfCancellationRequested();
++        if (!await _consentGate.IsConsentGrantedAsync(cancellationToken))
++        {
++            throw new ProtocolIngestionException("Current consent is required before image bytes can be sent for OCR.");
++        }
++
++        cancellationToken.ThrowIfCancellationRequested();
+         var client = _httpClientFactory.CreateClient("protocol-ocr");
+         using var request = new HttpRequestMessage(HttpMethod.Post, $"{_options.Endpoint.TrimEnd('/')}/computervision/imageanalysis:analyze?api-version=2024-02-01&features=read");
+         request.Headers.Add("Ocp-Apim-Subscription-Key", _options.ApiKey);
+diff --git a/backend/src/BioStack.Application/Services/ProtocolParser.cs b/backend/src/BioStack.Application/Services/ProtocolParser.cs
+index eaad1b3..b400d9a 100644
+--- a/backend/src/BioStack.Application/Services/ProtocolParser.cs
++++ b/backend/src/BioStack.Application/Services/ProtocolParser.cs
+@@ -1,5 +1,6 @@
+ namespace BioStack.Application.Services;
+ 
++using System.Globalization;
+ using System.Text.RegularExpressions;
+ using BioStack.Contracts.Responses;
+ using BioStack.Domain.Entities;
+@@ -9,7 +10,7 @@ using Microsoft.Extensions.Caching.Memory;
+ public sealed class ProtocolParser : IProtocolParser
+ {
+     private static readonly Regex DosePattern = new(
+-        @"(?<dose>\d+(?:\.\d+)?)\s*(?<unit>mcg|micrograms?|ug|μg|mg|milligrams?)\b",
++        @"(?<dose>(?:\d+(?:\.\d+)?|\.\d+))\s*(?<unit>mcg|micrograms?|ug|μg|µg|mg|milligrams?)\b",
+         RegexOptions.IgnoreCase | RegexOptions.Compiled);
+ 
+     private static readonly Regex DurationPattern = new(
+@@ -96,7 +97,7 @@ public sealed class ProtocolParser : IProtocolParser
+             return Array.Empty<ProtocolEntryResponse>();
+         }
+ 
+-        var cleaned = Regex.Replace(segment.Trim(), @"^[\-\*\u2022\d\.\)\s]+", string.Empty).Trim();
++        var cleaned = Regex.Replace(segment.Trim(), @"^(?:(?:[\-\*\u2022]\s*)|(?:\d+[\.\)]\s+))+", string.Empty).Trim();
+         var frequency = ExtractMatch(FrequencyPattern, cleaned);
+         var duration = ExtractMatch(DurationPattern, cleaned);
+         var blend = _blendDecomposerService.Decompose(cleaned);
+@@ -117,7 +118,7 @@ public sealed class ProtocolParser : IProtocolParser
+                 if (recommendedDoses.Count == blend.Components.Count)
+                 {
+                     var doseMatch = recommendedDoses[index];
+-                    double.TryParse(doseMatch.Groups["dose"].Value, out dose);
++                    TryParseDose(doseMatch.Groups["dose"].Value, out dose);
+                     unit = NormalizeUnit(doseMatch.Groups["unit"].Value);
+                 }
+ 
+@@ -139,7 +140,7 @@ public sealed class ProtocolParser : IProtocolParser
+ 
+         if (singleDoseMatch.Success)
+         {
+-            double.TryParse(singleDoseMatch.Groups["dose"].Value, out parsedDose);
++            TryParseDose(singleDoseMatch.Groups["dose"].Value, out parsedDose);
+             parsedUnit = NormalizeUnit(singleDoseMatch.Groups["unit"].Value);
+         }
+ 
+@@ -364,7 +365,10 @@ public sealed class ProtocolParser : IProtocolParser
+     private static bool ContainsAlias(string segment, string normalizedAlias)
+     {
+         var normalizedSegment = NormalizeLookupKey(segment);
+-        return normalizedSegment.Contains(normalizedAlias, StringComparison.OrdinalIgnoreCase);
++        return normalizedSegment.Equals(normalizedAlias, StringComparison.OrdinalIgnoreCase)
++            || normalizedSegment.StartsWith(normalizedAlias + " ", StringComparison.OrdinalIgnoreCase)
++            || normalizedSegment.EndsWith(" " + normalizedAlias, StringComparison.OrdinalIgnoreCase)
++            || normalizedSegment.Contains(" " + normalizedAlias + " ", StringComparison.OrdinalIgnoreCase);
+     }
+ 
+     private static IEnumerable<string> SplitIntoSegments(string inputText)
+@@ -375,13 +379,24 @@ public sealed class ProtocolParser : IProtocolParser
+         // to a different column, and isolates prose/structure cells so the
+         // recognition gate can drop them.
+         return Regex.Split(inputText, @"(?:\r?\n|;|\s\+\s|\s*\|\s*)")
++            .SelectMany(SplitCommaSeparatedDoseClauses)
+             .Select(segment => segment.Trim())
+             .Where(segment => segment.Length > 0);
+     }
+ 
++    private static IEnumerable<string> SplitCommaSeparatedDoseClauses(string segment)
++    {
++        var clauses = segment.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
++        return clauses.Length > 1 && clauses.All(clause => DosePattern.IsMatch(clause))
++            ? clauses
++            : new[] { segment };
++    }
++
+     private static string NormalizeLookupKey(string value)
+     {
+-        var normalized = value.Replace("μ", "u", StringComparison.OrdinalIgnoreCase);
++        var normalized = value
++            .Replace("μ", "u", StringComparison.OrdinalIgnoreCase)
++            .Replace("µ", "u", StringComparison.OrdinalIgnoreCase);
+         normalized = Regex.Replace(normalized, @"[^a-zA-Z0-9\+]+", " ");
+         return Regex.Replace(normalized, @"\s+", " ").Trim().ToLowerInvariant();
+     }
+@@ -396,12 +411,15 @@ public sealed class ProtocolParser : IProtocolParser
+     {
+         return unit.ToLowerInvariant() switch
+         {
+-            "microgram" or "micrograms" or "ug" or "μg" or "mcg" => "mcg",
++            "microgram" or "micrograms" or "ug" or "μg" or "µg" or "mcg" => "mcg",
+             "milligram" or "milligrams" or "mg" => "mg",
+             _ => unit.ToLowerInvariant()
+         };
+     }
+ 
++    private static bool TryParseDose(string value, out double dose) =>
++        double.TryParse(value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out dose);
++
+     private static string NormalizeFrequency(string frequency)
+     {
+         if (string.IsNullOrWhiteSpace(frequency))
+diff --git a/backend/src/BioStack.Cognition/CognitionDependencyInjection.cs b/backend/src/BioStack.Cognition/CognitionDependencyInjection.cs
+index d2a7afb..356a6c8 100644
+--- a/backend/src/BioStack.Cognition/CognitionDependencyInjection.cs
++++ b/backend/src/BioStack.Cognition/CognitionDependencyInjection.cs
+@@ -16,7 +16,7 @@ public static class CognitionServiceCollectionExtensions
+     public static IServiceCollection AddBioStackCognition(this IServiceCollection services)
+     {
+         services.AddSingleton<IStackDeliberationTranslator, StackDeliberationTranslator>();
+-        services.AddSingleton<IStackReviewBoardService, StackReviewBoardService>();
++        services.AddScoped<IStackReviewBoardService, StackReviewBoardService>();
+         return services;
+     }
+ 
+@@ -50,10 +50,11 @@ public static class CognitionServiceCollectionExtensions
+                 http.Timeout     = TimeSpan.FromMilliseconds(options.TimeoutMs);
+             });
+ 
+-            services.AddSingleton<ICognitiveDensityOrchestrator>(sp =>
++            services.AddScoped<ICognitiveDensityOrchestrator>(sp =>
+                 new CollectiveLiveOrchestrator(
+                     sp.GetRequiredService<IHttpClientFactory>(),
+                     options,
++                    sp.GetRequiredService<ICollectiveOutboundAuthorizationGate>(),
+                     sp.GetRequiredService<ILogger<CollectiveLiveOrchestrator>>()));
+         }
+         else
+diff --git a/backend/src/BioStack.Cognition/CollectiveApi/CollectiveLiveOrchestrator.cs b/backend/src/BioStack.Cognition/CollectiveApi/CollectiveLiveOrchestrator.cs
+index b3a7f2f..54ebe3e 100644
+--- a/backend/src/BioStack.Cognition/CollectiveApi/CollectiveLiveOrchestrator.cs
++++ b/backend/src/BioStack.Cognition/CollectiveApi/CollectiveLiveOrchestrator.cs
+@@ -4,6 +4,14 @@ using Keon.Collective;
+ using Microsoft.Extensions.Http;
+ using Microsoft.Extensions.Logging;
+ 
++/// <summary>
++/// Authorizes a live Collective operation using the current server-side request context.
++/// </summary>
++public interface ICollectiveOutboundAuthorizationGate
++{
++    Task<bool> IsAuthorizedAsync(CancellationToken cancellationToken = default);
++}
++
+ /// <summary>
+ /// Live implementation of <see cref="ICognitiveDensityOrchestrator"/> that calls
+ /// Keon Control /api/collective/live-runs rather than using the rule-based stub.
+@@ -26,6 +34,7 @@ internal sealed class CollectiveLiveOrchestrator : ICognitiveDensityOrchestrator
+ 
+     private readonly IHttpClientFactory _httpClientFactory;
+     private readonly CollectiveApiOptions _options;
++    private readonly ICollectiveOutboundAuthorizationGate _authorizationGate;
+     private readonly ILogger<CollectiveLiveOrchestrator> _logger;
+ 
+     // Degraded sentinel values
+@@ -35,10 +44,12 @@ internal sealed class CollectiveLiveOrchestrator : ICognitiveDensityOrchestrator
+     public CollectiveLiveOrchestrator(
+         IHttpClientFactory httpClientFactory,
+         CollectiveApiOptions options,
++        ICollectiveOutboundAuthorizationGate authorizationGate,
+         ILogger<CollectiveLiveOrchestrator> logger)
+     {
+         _httpClientFactory = httpClientFactory;
+         _options           = options;
++        _authorizationGate = authorizationGate;
+         _logger            = logger;
+     }
+ 
+@@ -50,6 +61,19 @@ internal sealed class CollectiveLiveOrchestrator : ICognitiveDensityOrchestrator
+         IReadOnlyList<BranchCollapseRecord>? historicalCollapses = null,
+         CancellationToken ct = default)
+     {
++        try
++        {
++            if (!await _authorizationGate.IsAuthorizedAsync(ct))
++            {
++                return BuildDegradedEnvelope();
++            }
++        }
++        catch (Exception)
++        {
++            _logger.LogWarning("CollectiveLiveOrchestrator: outbound authorization failed");
++            return BuildDegradedEnvelope();
++        }
++
+         var submitRequest = new CollectiveSubmitRequest(
+             Objective:     intent.Goal,
+             TenantId:      intent.TenantContext.TenantId,
+diff --git a/backend/tests/BioStack.Api.Tests/CompoundGraphIntelligenceTests.cs b/backend/tests/BioStack.Api.Tests/CompoundGraphIntelligenceTests.cs
+index 28e3f04..c1f26a0 100644
+--- a/backend/tests/BioStack.Api.Tests/CompoundGraphIntelligenceTests.cs
++++ b/backend/tests/BioStack.Api.Tests/CompoundGraphIntelligenceTests.cs
+@@ -219,7 +219,7 @@ public sealed class CompoundGraphIntelligenceTests : IDisposable
+             ArtifactHash = hash,
+             BuilderVersion = "1.0.0",
+             GeneratedAtUtc = DateTime.UtcNow,
+-            ReviewState = "provisional",
++            ReviewState = "reviewed",
+         };
+ 
+         var rels = relationships.Select(r => new CompoundGraphRelationship
+diff --git a/backend/tests/BioStack.Api.Tests/Integration/CollectiveOutboundAuthorizationIntegrationTests.cs b/backend/tests/BioStack.Api.Tests/Integration/CollectiveOutboundAuthorizationIntegrationTests.cs
+new file mode 100644
+index 0000000..c0f832c
+--- /dev/null
++++ b/backend/tests/BioStack.Api.Tests/Integration/CollectiveOutboundAuthorizationIntegrationTests.cs
+@@ -0,0 +1,218 @@
++namespace BioStack.Api.Tests.Integration;
++
++using System.Net;
++using System.Net.Http.Json;
++using System.Text.Json;
++using BioStack.Api;
++using BioStack.Api.Auth;
++using BioStack.Application.Services;
++using BioStack.Cognition.CollectiveApi;
++using BioStack.Contracts.Requests;
++using BioStack.Contracts.Responses;
++using BioStack.Infrastructure.Persistence;
++using Keon.Collective;
++using Microsoft.AspNetCore.Hosting;
++using Microsoft.AspNetCore.Mvc.Testing;
++using Microsoft.AspNetCore.TestHost;
++using Microsoft.EntityFrameworkCore;
++using Microsoft.Extensions.Configuration;
++using Microsoft.Extensions.DependencyInjection;
++using Microsoft.Extensions.Logging;
++using Xunit;
++
++[Trait("Category", "Integration")]
++public sealed class CollectiveOutboundAuthorizationIntegrationTests : IAsyncLifetime
++{
++    private const string CollectiveClientName = "keon-collective";
++
++    private readonly RecordingHandler _collectiveHandler = new();
++    private WebApplicationFactory<Program> _factory = null!;
++    private HttpClient _client = null!;
++    private string _dbPath = string.Empty;
++
++    public Task InitializeAsync()
++    {
++        _dbPath = Path.Combine(Path.GetTempPath(), $"biostack-collective-auth-{Guid.NewGuid():N}.db");
++        _factory = new WebApplicationFactory<Program>()
++            .WithWebHostBuilder(builder =>
++            {
++                builder.UseSetting("environment", "Development");
++                builder.UseSetting("KeonCollective:LiveMode", "true");
++                builder.UseSetting("KeonCollective:ControlBaseUrl", "https://p08-collective.invalid");
++                builder.UseSetting("KeonCollective:PollDelayMs", "0");
++                builder.ConfigureLogging(logging => logging.ClearProviders());
++                builder.ConfigureAppConfiguration((_, config) =>
++                {
++                    config.AddInMemoryCollection(new Dictionary<string, string?>
++                    {
++                        ["ConnectionStrings:DefaultConnection"] = $"Data Source={_dbPath}",
++                        ["Database:Provider"] = "sqlite",
++                        ["FrontendUrl"] = "http://localhost:3043",
++                        ["PublicApiUrl"] = "http://localhost:5000",
++                        ["Jwt:Secret"] = "test-secret-value-that-is-long-enough-for-hmac",
++                    });
++                });
++                builder.ConfigureServices(services =>
++                {
++                    services.UseTestKeonRuntimeClient();
++                    services.RemoveBioStackDbContext();
++                    services.AddDbContext<BioStackDbContext>(options =>
++                        options.UseSqlite($"Data Source={_dbPath}"));
++                });
++                builder.ConfigureTestServices(services =>
++                {
++                    services.AddHttpClient(CollectiveClientName)
++                        .ConfigurePrimaryHttpMessageHandler(() => _collectiveHandler);
++                });
++            });
++
++        _client = _factory.CreateClient(new WebApplicationFactoryClientOptions
++        {
++            AllowAutoRedirect = false,
++        });
++        return Task.CompletedTask;
++    }
++
++    public async Task DisposeAsync()
++    {
++        _client.Dispose();
++        await _factory.DisposeAsync();
++        try
++        {
++            if (File.Exists(_dbPath))
++            {
++                File.Delete(_dbPath);
++            }
++        }
++        catch (IOException)
++        {
++        }
++    }
++
++    [Fact]
++    public async Task Stack_review_uses_current_user_consent_before_collective_submit()
++    {
++        await SignInAsync("p08-collective@example.com");
++
++        using (var scope = _factory.Services.CreateScope())
++        {
++            Assert.IsType<CollectiveOutboundAuthorizationGate>(
++                scope.ServiceProvider.GetRequiredService<ICollectiveOutboundAuthorizationGate>());
++            Assert.IsType<ConsentGate>(scope.ServiceProvider.GetRequiredService<IConsentGate>());
++            Assert.IsType<HttpContextCurrentUserAccessor>(
++                scope.ServiceProvider.GetRequiredService<ICurrentUserAccessor>());
++            Assert.Equal(
++                "CollectiveLiveOrchestrator",
++                scope.ServiceProvider.GetRequiredService<ICognitiveDensityOrchestrator>()
++                    .GetType()
++                    .Name);
++        }
++
++        var beforeConsent = await _client.PostAsJsonAsync(
++            "/api/v1/stack-review/envelope",
++            BuildSyntheticRequest());
++
++        Assert.Equal(HttpStatusCode.OK, beforeConsent.StatusCode);
++        Assert.Empty(_collectiveHandler.Requests);
++
++        var consent = await _client.PostAsJsonAsync("/api/v1/consent", new { });
++        Assert.Equal(HttpStatusCode.OK, consent.StatusCode);
++        var consentStatus = await consent.Content.ReadFromJsonAsync<ConsentStatusResponse>();
++        Assert.NotNull(consentStatus);
++        Assert.True(consentStatus.Accepted);
++
++        var afterConsent = await _client.PostAsJsonAsync(
++            "/api/v1/stack-review/envelope",
++            BuildSyntheticRequest());
++
++        Assert.Equal(HttpStatusCode.OK, afterConsent.StatusCode);
++        var request = Assert.Single(_collectiveHandler.Requests);
++        Assert.Equal(HttpMethod.Post, request.Method);
++        Assert.Equal("/api/collective/live-runs", request.Path);
++    }
++
++    private async Task SignInAsync(string email)
++    {
++        await _client.PostAsJsonAsync(
++            "/api/v1/auth/start",
++            new StartAuthRequest(email, "email", "/profiles"));
++        using var document = await JsonDocument.ParseAsync(
++            await _client.GetStreamAsync("/dev/auth/inbox"));
++        var link = document.RootElement.EnumerateArray().First().GetProperty("link").GetString()!;
++        var uri = new Uri(link);
++        var response = await _client.GetAsync($"{uri.AbsolutePath}{uri.Query}");
++        Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
++    }
++
++    private static StackReviewRequest BuildSyntheticRequest() =>
++        new(
++            new StackReviewEnvelopePayload(
++                Goal: "P08 synthetic local-only review",
++                Compounds:
++                [
++                    new("p08-synthetic", "P08 Synthetic", "test", "Synthetic", "None"),
++                ],
++                Pathways: ["synthetic-pathway"],
++                DeterministicFindings:
++                [
++                    new(
++                        "P08-SYNTHETIC",
++                        "Synthetic",
++                        "Synthetic local-only finding",
++                        ["p08-synthetic"],
++                        0m),
++                ],
++                KnownPatternNames: [],
++                ProviderReviewPressure: 0m));
++
++    private sealed class RecordingHandler : HttpMessageHandler
++    {
++        public List<CapturedRequest> Requests { get; } = [];
++
++        protected override Task<HttpResponseMessage> SendAsync(
++            HttpRequestMessage request,
++            CancellationToken cancellationToken)
++        {
++            Requests.Add(new CapturedRequest(
++                request.Method,
++                request.RequestUri?.AbsolutePath ?? string.Empty));
++
++            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
++            {
++                Content = JsonContent.Create(new
++                {
++                    dataMode = "SYNTHETIC",
++                    retrievalMode = "LOCAL_FAKE",
++                    run = new
++                    {
++                        intentId = "p08-synthetic-intent",
++                        correlationId = "p08-synthetic-correlation",
++                        cognitionSurfaces = new
++                        {
++                            perspectiveReviews = new Dictionary<string, object>(),
++                            contradictionReview = (object?)null,
++                            confidenceProfile = new
++                            {
++                                model = "P08_SYNTHETIC_MODEL",
++                                epistemic = "synthetic",
++                                evidenceSupport = "synthetic",
++                                contradictionDensity = "synthetic",
++                                calibrationVersion = "synthetic",
++                            },
++                            reasoningGraphRef = new
++                            {
++                                graphId = "p08-synthetic-graph",
++                                nodeCount = 0,
++                                edgeCount = 0,
++                            },
++                            witnessSignature = "p08-synthetic-signature",
++                        },
++                    },
++                    operatorMessages = Array.Empty<object>(),
++                }),
++            });
++        }
++    }
++
++    private sealed record CapturedRequest(HttpMethod Method, string Path);
++}
+diff --git a/backend/tests/BioStack.Application.Tests/Cognition/CollectiveLiveIntegrationTests.cs b/backend/tests/BioStack.Application.Tests/Cognition/CollectiveLiveIntegrationTests.cs
+index 1f5981c..4bd3733 100644
+--- a/backend/tests/BioStack.Application.Tests/Cognition/CollectiveLiveIntegrationTests.cs
++++ b/backend/tests/BioStack.Application.Tests/Cognition/CollectiveLiveIntegrationTests.cs
+@@ -68,7 +68,16 @@ public sealed class CollectiveLiveIntegrationTests
+                               .GetRequiredService<IHttpClientFactory>();
+ 
+         return new CollectiveLiveOrchestrator(
+-            factory, options, NullLogger<CollectiveLiveOrchestrator>.Instance);
++            factory,
++            options,
++            new AuthorizedGate(),
++            NullLogger<CollectiveLiveOrchestrator>.Instance);
++    }
++
++    private sealed class AuthorizedGate : ICollectiveOutboundAuthorizationGate
++    {
++        public Task<bool> IsAuthorizedAsync(CancellationToken cancellationToken = default) =>
++            Task.FromResult(true);
+     }
+ 
+     private static CollectiveIntent MakeIntent(string id = "int-live-integration-001") => new(
+diff --git a/backend/tests/BioStack.Application.Tests/Cognition/CollectiveLiveOrchestratorTests.cs b/backend/tests/BioStack.Application.Tests/Cognition/CollectiveLiveOrchestratorTests.cs
+index 5a0df07..b3ba048 100644
+--- a/backend/tests/BioStack.Application.Tests/Cognition/CollectiveLiveOrchestratorTests.cs
++++ b/backend/tests/BioStack.Application.Tests/Cognition/CollectiveLiveOrchestratorTests.cs
+@@ -98,7 +98,16 @@ public sealed class CollectiveLiveOrchestratorTests
+         mockFactory.Setup(f => f.CreateClient(CollectiveLiveOrchestrator.HttpClientName)).Returns(http);
+ 
+         return new CollectiveLiveOrchestrator(
+-            mockFactory.Object, opts, NullLogger<CollectiveLiveOrchestrator>.Instance);
++            mockFactory.Object,
++            opts,
++            new AuthorizedGate(),
++            NullLogger<CollectiveLiveOrchestrator>.Instance);
++    }
++
++    private sealed class AuthorizedGate : ICollectiveOutboundAuthorizationGate
++    {
++        public Task<bool> IsAuthorizedAsync(CancellationToken cancellationToken = default) =>
++            Task.FromResult(true);
+     }
+ 
+     // ── T_Live1: Happy path — POST succeeds, surfaces fully mapped ────────────
+diff --git a/backend/tests/BioStack.Application.Tests/Cognition/CollectiveOutboundBoundaryInvestigationTests.cs b/backend/tests/BioStack.Application.Tests/Cognition/CollectiveOutboundBoundaryInvestigationTests.cs
+new file mode 100644
+index 0000000..d38f136
+--- /dev/null
++++ b/backend/tests/BioStack.Application.Tests/Cognition/CollectiveOutboundBoundaryInvestigationTests.cs
+@@ -0,0 +1,296 @@
++namespace BioStack.Application.Tests.Cognition;
++
++using System.Net;
++using System.Net.Http.Json;
++using System.Text.Json;
++using BioStack.Cognition.CollectiveApi;
++using Keon.Collective;
++using Microsoft.Extensions.Http;
++using Microsoft.Extensions.Logging.Abstractions;
++using Xunit;
++using Xunit.Abstractions;
++
++public sealed class CollectiveOutboundBoundaryInvestigationTests
++{
++    private const string CompoundSentinel = "Q01_SYNTHETIC_COMPOUND_SENTINEL";
++    private const string UserGoalSentinel = "Q01_SYNTHETIC_USER_GOAL_SENTINEL";
++    private const string TenantSentinel = "q01-synthetic-tenant";
++    private const string ActorSentinel = "q01-synthetic-actor";
++    private const string CorrelationSentinel = "q01-synthetic-correlation";
++    private const string IntentSentinel = "q01-synthetic-intent";
++
++    private readonly ITestOutputHelper _output;
++
++    public CollectiveOutboundBoundaryInvestigationTests(ITestOutputHelper output)
++    {
++        _output = output;
++    }
++
++    [Fact]
++    public async Task RunAsync_without_current_user_authorization_must_not_emit_collective_payload()
++    {
++        var options = new CollectiveApiOptions
++        {
++            LiveMode = true,
++            ControlBaseUrl = "https://q01-collective.invalid",
++            AuthorizationHeader = null,
++            BearerToken = null,
++            PollDelayMs = 0,
++        };
++
++        var intent = new CollectiveIntent(
++            new IntentId(IntentSentinel),
++            $"Evaluate {CompoundSentinel} for {UserGoalSentinel}",
++            "{\"synthetic\":true}",
++            new TenantContext(TenantSentinel),
++            new ActorContext(ActorSentinel, "SyntheticActor"),
++            new CorrelationContext(CorrelationSentinel));
++
++        var handler = new RecordingHandler();
++        var http = new HttpClient(handler)
++        {
++            BaseAddress = new Uri(options.ControlBaseUrl + "/"),
++        };
++        var factory = new NamedClientFactory(http);
++        var orchestrator = new CollectiveLiveOrchestrator(
++            factory,
++            options,
++            new FixedAuthorizationGate(false),
++            NullLogger<CollectiveLiveOrchestrator>.Instance);
++
++        var envelope = await orchestrator.RunAsync(intent);
++
++        _output.WriteLine($"Q01_REQUEST_COUNT={handler.Requests.Count}");
++        _output.WriteLine($"Q01_FACTORY_CLIENT_NAME={factory.RequestedName ?? "<none>"}");
++        _output.WriteLine($"Q01_SYNTHETIC_RESPONSE_MODEL={envelope.ConfidenceProfile.Model}");
++
++        if (handler.Requests.Count == 1)
++        {
++            var request = handler.Requests[0];
++            using var document = JsonDocument.Parse(request.Body);
++            var root = document.RootElement;
++            var fields = root.EnumerateObject()
++                .Select(property => property.Name)
++                .OrderBy(name => name, StringComparer.Ordinal)
++                .ToArray();
++
++            _output.WriteLine($"Q01_METHOD={request.Method}");
++            _output.WriteLine($"Q01_RESOLVED_URI={request.ResolvedUri}");
++            _output.WriteLine($"Q01_PATH={request.Path}");
++            _output.WriteLine($"Q01_FIELDS={string.Join(",", fields)}");
++            _output.WriteLine($"Q01_COMPOUND_SENTINEL_CROSSED={Contains(root, "objective", CompoundSentinel)}");
++            _output.WriteLine($"Q01_USER_GOAL_SENTINEL_CROSSED={Contains(root, "objective", UserGoalSentinel)}");
++            _output.WriteLine($"Q01_TENANT_SENTINEL_CROSSED={Equals(root, "tenantId", TenantSentinel)}");
++            _output.WriteLine($"Q01_ACTOR_SENTINEL_CROSSED={Equals(root, "actorId", ActorSentinel)}");
++            _output.WriteLine($"Q01_CORRELATION_SENTINEL_CROSSED={Equals(root, "correlationId", CorrelationSentinel)}");
++            _output.WriteLine($"Q01_INTENT_SENTINEL_CROSSED={Equals(root, "intentId", IntentSentinel)}");
++            _output.WriteLine($"Q01_CONTEXT_IS_NULL={root.TryGetProperty("context", out var context) && context.ValueKind == JsonValueKind.Null}");
++            _output.WriteLine($"Q01_AUTHORIZATION_HEADER_PRESENT={request.AuthorizationHeaderPresent}");
++            _output.WriteLine($"Q01_TENANT_HEADER={request.TenantHeader ?? "<absent>"}");
++            _output.WriteLine($"Q01_ACTOR_HEADER={request.ActorHeader ?? "<absent>"}");
++            _output.WriteLine($"Q01_CORRELATION_HEADER={request.CorrelationHeader ?? "<absent>"}");
++        }
++
++        Assert.True(
++            handler.Requests.Count == 0 && handler.Requests.All(request => request.Body.Length == 0),
++            "Without a current-user authorization or consent decision, no Collective request or body may cross the outbound handler boundary.");
++        Assert.Equal("COLLECTIVE_UNAVAILABLE", envelope.ConfidenceProfile.Model);
++        Assert.Null(factory.RequestedName);
++    }
++
++    [Fact]
++    public async Task RunAsync_when_authorization_gate_fails_must_not_emit_collective_payload()
++    {
++        var options = CreateOptions();
++        var handler = new RecordingHandler();
++        var factory = new NamedClientFactory(new HttpClient(handler)
++        {
++            BaseAddress = new Uri(options.ControlBaseUrl + "/"),
++        });
++        var orchestrator = new CollectiveLiveOrchestrator(
++            factory,
++            options,
++            new ThrowingAuthorizationGate(),
++            NullLogger<CollectiveLiveOrchestrator>.Instance);
++
++        var envelope = await orchestrator.RunAsync(CreateIntent());
++
++        Assert.Equal("COLLECTIVE_UNAVAILABLE", envelope.ConfidenceProfile.Model);
++        Assert.Empty(handler.Requests);
++        Assert.Null(factory.RequestedName);
++    }
++
++    [Fact]
++    public async Task RunAsync_with_current_authorization_emits_one_synthetic_collective_submit()
++    {
++        var options = CreateOptions();
++        var handler = new RecordingHandler();
++        var factory = new NamedClientFactory(new HttpClient(handler)
++        {
++            BaseAddress = new Uri(options.ControlBaseUrl + "/"),
++        });
++        var orchestrator = new CollectiveLiveOrchestrator(
++            factory,
++            options,
++            new FixedAuthorizationGate(true),
++            NullLogger<CollectiveLiveOrchestrator>.Instance);
++
++        var envelope = await orchestrator.RunAsync(CreateIntent());
++
++        var request = Assert.Single(handler.Requests);
++        Assert.Equal("POST", request.Method);
++        Assert.Equal("/api/collective/live-runs", request.Path);
++        Assert.Equal(CollectiveLiveOrchestrator.HttpClientName, factory.RequestedName);
++        Assert.Equal("Q01_SYNTHETIC_MODEL", envelope.ConfidenceProfile.Model);
++
++        using var document = JsonDocument.Parse(request.Body);
++        var root = document.RootElement;
++        Assert.True(Contains(root, "objective", CompoundSentinel));
++        Assert.True(Contains(root, "objective", UserGoalSentinel));
++        Assert.True(Equals(root, "tenantId", TenantSentinel));
++        Assert.True(Equals(root, "actorId", ActorSentinel));
++        Assert.True(Equals(root, "correlationId", CorrelationSentinel));
++        Assert.True(Equals(root, "intentId", IntentSentinel));
++    }
++
++    private static CollectiveApiOptions CreateOptions() => new()
++    {
++        LiveMode = true,
++        ControlBaseUrl = "https://q01-collective.invalid",
++        AuthorizationHeader = null,
++        BearerToken = null,
++        PollDelayMs = 0,
++    };
++
++    private static CollectiveIntent CreateIntent() => new(
++        new IntentId(IntentSentinel),
++        $"Evaluate {CompoundSentinel} for {UserGoalSentinel}",
++        "{\"synthetic\":true}",
++        new TenantContext(TenantSentinel),
++        new ActorContext(ActorSentinel, "SyntheticActor"),
++        new CorrelationContext(CorrelationSentinel));
++
++    private static bool Contains(JsonElement root, string propertyName, string sentinel) =>
++        root.TryGetProperty(propertyName, out var value)
++        && value.ValueKind == JsonValueKind.String
++        && value.GetString()!.Contains(sentinel, StringComparison.Ordinal);
++
++    private static bool Equals(JsonElement root, string propertyName, string sentinel) =>
++        root.TryGetProperty(propertyName, out var value)
++        && value.ValueKind == JsonValueKind.String
++        && string.Equals(value.GetString(), sentinel, StringComparison.Ordinal);
++
++    private sealed class FixedAuthorizationGate : ICollectiveOutboundAuthorizationGate
++    {
++        private readonly bool _authorized;
++
++        public FixedAuthorizationGate(bool authorized)
++        {
++            _authorized = authorized;
++        }
++
++        public Task<bool> IsAuthorizedAsync(CancellationToken cancellationToken = default) =>
++            Task.FromResult(_authorized);
++    }
++
++    private sealed class ThrowingAuthorizationGate : ICollectiveOutboundAuthorizationGate
++    {
++        public Task<bool> IsAuthorizedAsync(CancellationToken cancellationToken = default) =>
++            throw new InvalidOperationException("Synthetic current-user authorization failure.");
++    }
++
++    private sealed class NamedClientFactory : IHttpClientFactory
++    {
++        private readonly HttpClient _client;
++
++        public NamedClientFactory(HttpClient client)
++        {
++            _client = client;
++        }
++
++        public string? RequestedName { get; private set; }
++
++        public HttpClient CreateClient(string name)
++        {
++            RequestedName = name;
++            if (!string.Equals(name, CollectiveLiveOrchestrator.HttpClientName, StringComparison.Ordinal))
++            {
++                throw new InvalidOperationException($"Unexpected client name: {name}");
++            }
++
++            return _client;
++        }
++    }
++
++    private sealed class RecordingHandler : HttpMessageHandler
++    {
++        public List<CapturedRequest> Requests { get; } = [];
++
++        protected override async Task<HttpResponseMessage> SendAsync(
++            HttpRequestMessage request,
++            CancellationToken cancellationToken)
++        {
++            var body = request.Content is null
++                ? string.Empty
++                : await request.Content.ReadAsStringAsync(cancellationToken);
++
++            Requests.Add(new CapturedRequest(
++                request.Method.Method,
++                request.RequestUri?.AbsoluteUri ?? string.Empty,
++                request.RequestUri?.AbsolutePath ?? string.Empty,
++                body,
++                request.Headers.Contains("Authorization"),
++                Header(request, "X-Keon-Tenant-Id"),
++                Header(request, "X-Keon-Actor-Id"),
++                Header(request, "X-Correlation-Id")));
++
++            return new HttpResponseMessage(HttpStatusCode.OK)
++            {
++                Content = JsonContent.Create(new
++                {
++                    dataMode = "SYNTHETIC",
++                    retrievalMode = "LOCAL_FAKE",
++                    run = new
++                    {
++                        intentId = IntentSentinel,
++                        correlationId = CorrelationSentinel,
++                        cognitionSurfaces = new
++                        {
++                            perspectiveReviews = new Dictionary<string, object>(),
++                            contradictionReview = (object?)null,
++                            confidenceProfile = new
++                            {
++                                model = "Q01_SYNTHETIC_MODEL",
++                                epistemic = "synthetic",
++                                evidenceSupport = "synthetic",
++                                contradictionDensity = "synthetic",
++                                calibrationVersion = "synthetic",
++                            },
++                            reasoningGraphRef = new
++                            {
++                                graphId = "q01-synthetic-graph",
++                                nodeCount = 0,
++                                edgeCount = 0,
++                            },
++                            witnessSignature = "q01-synthetic-signature",
++                        },
++                    },
++                    operatorMessages = Array.Empty<object>(),
++                }),
++            };
++        }
++
++        private static string? Header(HttpRequestMessage request, string name) =>
++            request.Headers.TryGetValues(name, out var values) ? values.SingleOrDefault() : null;
++    }
++
++    private sealed record CapturedRequest(
++        string Method,
++        string ResolvedUri,
++        string Path,
++        string Body,
++        bool AuthorizationHeaderPresent,
++        string? TenantHeader,
++        string? ActorHeader,
++        string? CorrelationHeader);
++}
+diff --git a/backend/tests/BioStack.Application.Tests/ScientificResearch/EvidenceProvenanceReproductionTests.cs b/backend/tests/BioStack.Application.Tests/ScientificResearch/EvidenceProvenanceReproductionTests.cs
+new file mode 100644
+index 0000000..6c6734c
+--- /dev/null
++++ b/backend/tests/BioStack.Application.Tests/ScientificResearch/EvidenceProvenanceReproductionTests.cs
+@@ -0,0 +1,237 @@
++namespace BioStack.Application.Tests.ScientificResearch;
++
++using BioStack.Application.Abstractions.ScientificResearch;
++using BioStack.Application.ScientificResearch;
++using BioStack.Application.Services;
++using Xunit;
++
++/// <summary>
++/// Regression coverage for evidence-staging eligibility and external source attribution.
++/// All artifacts, identifiers, and locators are deterministic synthetic values.
++/// </summary>
++public sealed class EvidenceProvenanceReproductionTests
++{
++    [Fact]
++    public async Task Failed_research_artifact_must_not_reach_an_open_evidence_gate()
++    {
++        var store = new InMemoryReviewStore();
++        var staging = CreateStaging(ResearchJobStatusCode.Failed, store);
++
++        var exception = await Assert.ThrowsAsync<ScientificResearchProviderException>(
++            () => staging.StageFromJobAsync("synthetic-failed-job"));
++
++        Assert.Equal("artifact_not_stageable", exception.ErrorCode);
++        Assert.Equal(0, store.LookupCount);
++        Assert.Equal(0, store.UpsertCount);
++    }
++
++    [Theory]
++    [InlineData(ResearchJobStatusCode.Cancelled)]
++    [InlineData(ResearchJobStatusCode.RejectedByPolicy)]
++    [InlineData(ResearchJobStatusCode.Queued)]
++    [InlineData(ResearchJobStatusCode.ResolvingIdentity)]
++    [InlineData(ResearchJobStatusCode.GatheringEvidence)]
++    [InlineData(ResearchJobStatusCode.Normalizing)]
++    [InlineData(ResearchJobStatusCode.Completed)]
++    public async Task Ineligible_research_artifact_must_not_enter_review_staging(
++        ResearchJobStatusCode status)
++    {
++        var store = new InMemoryReviewStore();
++        var staging = CreateStaging(status, store);
++
++        var exception = await Assert.ThrowsAsync<ScientificResearchProviderException>(
++            () => staging.StageFromJobAsync("synthetic-ineligible-job"));
++
++        Assert.Equal("artifact_not_stageable", exception.ErrorCode);
++        Assert.Equal(0, store.LookupCount);
++        Assert.Equal(0, store.UpsertCount);
++    }
++
++    [Fact]
++    public void Synthetic_job_identifier_must_not_satisfy_source_attribution()
++    {
++        var result = EvaluateCitations(
++            "research_job:synthetic-failed-job | workflow:synthetic_workflow | " +
++            "tooluniverse:0.0-test | tool:synthetic_tool");
++
++        Assert.False(result.IsGateOpen);
++        Assert.Equal("missing_external_source_locator", result.RejectionCode);
++    }
++
++    [Theory]
++    [InlineData(ResearchJobStatusCode.PendingReview, true)]
++    [InlineData(ResearchJobStatusCode.Partial, false)]
++    public async Task Candidate_research_artifact_stages_once_and_remains_non_canonical(
++        ResearchJobStatusCode status,
++        bool repeatStaging)
++    {
++        var store = new InMemoryReviewStore();
++        var staging = CreateStaging(status, store);
++
++        var record = await staging.StageFromJobAsync("synthetic-candidate-job");
++
++        Assert.Equal(TranscriptCandidateReviewRecord.NonCanonical, record.Canonicality);
++        Assert.Equal(TranscriptCandidateReviewState.PendingReview, record.ReviewState);
++        Assert.Equal(1, store.UpsertCount);
++
++        if (repeatStaging)
++        {
++            var repeated = await staging.StageFromJobAsync("synthetic-candidate-job");
++            Assert.Equal(record, repeated);
++            Assert.Equal(1, store.UpsertCount);
++        }
++    }
++
++    [Theory]
++    [InlineData("https://example.test/study-1", true)]
++    [InlineData("http://example.test/study-1", false)]
++    [InlineData("DOI:10.1000/182", false)]
++    [InlineData("  PMID:12345678  ", false)]
++    public void Stable_external_source_locator_opens_gate(
++        string locator,
++        bool includeInternalProvenance)
++    {
++        var citations = includeInternalProvenance
++            ? $"research_job:synthetic-job | tool:synthetic-tool | {locator}"
++            : locator;
++
++        var result = EvaluateCitations(citations);
++
++        Assert.True(result.IsGateOpen);
++        Assert.Null(result.RejectionCode);
++    }
++
++    [Theory]
++    [InlineData("ftp://example.test/study-1")]
++    [InlineData("tool:https://example.test/study-1")]
++    [InlineData("https:///study-1")]
++    [InlineData("doi:")]
++    [InlineData("doi:10.1000")]
++    [InlineData("doi:10.1000/has space")]
++    [InlineData("pmid:")]
++    [InlineData("pmid:12x")]
++    public void Invalid_or_internal_locator_keeps_gate_closed(string citations)
++    {
++        var result = EvaluateCitations(citations);
++
++        Assert.False(result.IsGateOpen);
++        Assert.Equal("missing_external_source_locator", result.RejectionCode);
++    }
++
++    private static ScientificResearchCandidateStagingService CreateStaging(
++        ResearchJobStatusCode status,
++        InMemoryReviewStore store)
++        => new(new SyntheticResearchProvider(status), store);
++
++    private static EvidenceGateResult EvaluateCitations(string citations)
++    {
++        var gate = new EvidenceGate();
++        return gate.Evaluate(new EvidenceGateRequest(
++            ReviewState: TranscriptCandidateReviewState.ReviewApprovedForPromotion,
++            TargetCanonicalName: "Synthetic Compound",
++            IsDeterministicFixture: false,
++            SourceMetadata: new Dictionary<string, string>(StringComparer.Ordinal)
++            {
++                ["evidenceTier"] = EvidenceTierCode.Observational,
++                ["citations"] = citations,
++                ["summary"] = "Synthetic evidence metadata for deterministic testing.",
++            }));
++    }
++
++    private sealed class SyntheticResearchProvider(ResearchJobStatusCode status)
++        : IScientificResearchProvider
++    {
++        public Task<ScientificResearchArtifact> GetResultAsync(
++            string jobId,
++            CancellationToken cancellationToken = default)
++            => Task.FromResult(new ScientificResearchArtifact(
++                ResearchArtifactId: "synthetic-artifact",
++                JobId: jobId,
++                ResearchRequestId: "synthetic-request",
++                Provider: "synthetic-provider",
++                ProviderVersion: "0.0-test",
++                Workflow: "synthetic_workflow",
++                WorkflowVersion: "0.0-test",
++                ToolUniverseVersion: "0.0-test",
++                Status: status,
++                Partial: status == ResearchJobStatusCode.Partial,
++                StartedAtUtc: DateTimeOffset.UnixEpoch,
++                FinishedAtUtc: DateTimeOffset.UnixEpoch.AddSeconds(1),
++                ToolsInvoked: ["synthetic_tool"],
++                Warnings: ["synthetic candidate warning"],
++                FailureDetails: null,
++                ExecutionDevice: "test",
++                Provenance: new Dictionary<string, string>(StringComparer.Ordinal)
++                {
++                    ["correlation_id"] = "synthetic-correlation",
++                }));
++
++        public Task<ResearchJobHandle> SubmitAsync(
++            ScientificResearchRequest request,
++            CancellationToken cancellationToken = default)
++            => throw new NotSupportedException();
++
++        public Task<ResearchJobStatus> GetStatusAsync(
++            string jobId,
++            CancellationToken cancellationToken = default)
++            => throw new NotSupportedException();
++
++        public Task CancelAsync(
++            string jobId,
++            CancellationToken cancellationToken = default)
++            => throw new NotSupportedException();
++    }
++
++    private sealed class InMemoryReviewStore : ITranscriptCandidateReviewStore
++    {
++        private readonly Dictionary<string, TranscriptCandidateReviewRecord> _records = new(StringComparer.Ordinal);
++
++        public int LookupCount { get; private set; }
++
++        public int UpsertCount { get; private set; }
++
++        public Task<TranscriptCandidateReviewRecord?> GetByArtifactIdAsync(
++            string artifactId,
++            CancellationToken cancellationToken = default)
++        {
++            LookupCount++;
++            return Task.FromResult(_records.TryGetValue(artifactId, out var record) ? record : null);
++        }
++
++        public Task UpsertAsync(
++            TranscriptCandidateReviewRecord record,
++            CancellationToken cancellationToken = default)
++        {
++            UpsertCount++;
++            _records[record.ArtifactId] = record;
++            return Task.CompletedTask;
++        }
++
++        public Task<IReadOnlyList<TranscriptCandidateReviewRecord>> ListAsync(
++            TranscriptCandidateReviewFilter filter,
++            CancellationToken cancellationToken = default)
++            => Task.FromResult<IReadOnlyList<TranscriptCandidateReviewRecord>>(_records.Values.ToList());
++
++        public Task<TranscriptCandidateReviewRecord> UpdateReviewStateAsync(
++            string artifactId,
++            string expectedCurrentReviewState,
++            string nextReviewState,
++            string updatedAtUtc,
++            string? expectedRowVersion = null,
++            CancellationToken cancellationToken = default)
++            => throw new NotSupportedException();
++
++        public Task<TranscriptCandidateReviewRecord> AssignPromotionTargetAsync(
++            string artifactId,
++            string targetCanonicalName,
++            CancellationToken cancellationToken = default)
++            => throw new NotSupportedException();
++
++        public Task<TranscriptCandidateReviewRecord> RecordPromotionCompletionAsync(
++            string artifactId,
++            Guid promotedKnowledgeEntryId,
++            string promotedAtUtc,
++            CancellationToken cancellationToken = default)
++            => throw new NotSupportedException();
++    }
++}
+diff --git a/backend/tests/BioStack.Application.Tests/Services/InteractionIntelligenceReproductionTests.cs b/backend/tests/BioStack.Application.Tests/Services/InteractionIntelligenceReproductionTests.cs
+new file mode 100644
+index 0000000..78313fa
+--- /dev/null
++++ b/backend/tests/BioStack.Application.Tests/Services/InteractionIntelligenceReproductionTests.cs
+@@ -0,0 +1,378 @@
++namespace BioStack.Application.Tests.Services;
++
++using BioStack.Application.Services;
++using BioStack.Contracts.Responses;
++using BioStack.Domain.Entities;
++using BioStack.Domain.Entities.Graph;
++using BioStack.Domain.Enums;
++using BioStack.Infrastructure.Knowledge;
++using BioStack.Infrastructure.Repositories;
++using Moq;
++using Xunit;
++
++public sealed class InteractionIntelligenceReproductionTests
++{
++    [Fact]
++    public async Task EvaluateAsync_AvoidWithSafetySignal_OutranksPositiveGraphEdge()
++    {
++        var compoundA = Entry("Synthetic Alpha", avoidWith: ["Synthetic Beta"]);
++        var compoundB = Entry("Synthetic Beta");
++        var graph = GraphReturning(new CompoundGraphRelationship
++        {
++            SubjectCompound = compoundA.CanonicalName,
++            ObjectCompound = compoundB.CanonicalName,
++            RelationshipType = GraphRelationshipType.SynergizesWith,
++            Confidence = "high",
++            ReviewState = "reviewed",
++            NeedsReview = false,
++            Reason = "Synthetic positive edge."
++        });
++
++        var result = await CreateService(graphStore: graph.Object)
++            .EvaluateAsync([compoundA, compoundB]);
++
++        var interaction = Assert.Single(result.Interactions);
++        Assert.True(
++            interaction.Type == InteractionType.Interfering,
++            $"Avoid-with safety metadata must outrank a positive graph edge, but the service returned {interaction.Type} from {interaction.Source}.");
++    }
++
++    [Fact]
++    public async Task EvaluateAsync_NeedsReviewGraphEdge_IsNotServedAsReviewedIntelligence()
++    {
++        var compoundA = Entry("Synthetic Gamma");
++        var compoundB = Entry("Synthetic Delta");
++        var graph = GraphReturning(new CompoundGraphRelationship
++        {
++            SubjectCompound = compoundA.CanonicalName,
++            ObjectCompound = compoundB.CanonicalName,
++            RelationshipType = GraphRelationshipType.SynergizesWith,
++            Confidence = "high",
++            ReviewState = "needs-review",
++            NeedsReview = true,
++            Reason = "Synthetic provisional edge."
++        });
++
++        var result = await CreateService(graphStore: graph.Object)
++            .EvaluateAsync([compoundA, compoundB]);
++
++        var interaction = Assert.Single(result.Interactions);
++        Assert.True(
++            interaction.Source != IntelligenceSource.Graph,
++            "A NeedsReview graph edge must not be emitted as graph-backed reviewed intelligence.");
++    }
++
++    [Fact]
++    public async Task EvaluateByNamesAsync_CanonicalNameAndAlias_DoNotCreateSelfPair()
++    {
++        var canonical = Entry("Synthetic Epsilon", aliases: ["Epsilon Alias"]);
++        var knowledgeSource = new Mock<IKnowledgeSource>();
++        knowledgeSource
++            .Setup(source => source.GetCompoundAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
++            .ReturnsAsync(canonical);
++        knowledgeSource
++            .Setup(source => source.GetAllCompoundsAsync(It.IsAny<CancellationToken>()))
++            .ReturnsAsync([]);
++
++        var result = await CreateService(knowledgeSource.Object)
++            .EvaluateByNamesAsync([canonical.CanonicalName, canonical.Aliases[0]]);
++
++        Assert.True(
++            result.Interactions.Count == 0,
++            $"Canonical and alias inputs resolved to the same knowledge entry but produced {result.Interactions.Count} self-interaction(s).");
++    }
++
++    [Fact]
++    public async Task EvaluateAsync_NonFiniteGraphConfidence_IsRejectedOrNormalized()
++    {
++        var compoundA = Entry("Synthetic Zeta");
++        var compoundB = Entry("Synthetic Eta");
++        var graph = GraphReturning(new CompoundGraphRelationship
++        {
++            SubjectCompound = compoundA.CanonicalName,
++            ObjectCompound = compoundB.CanonicalName,
++            RelationshipType = GraphRelationshipType.SynergizesWith,
++            Confidence = "NaN",
++            ReviewState = "reviewed",
++            NeedsReview = false,
++            Reason = "Synthetic edge with invalid confidence."
++        });
++
++        var result = await CreateService(graphStore: graph.Object)
++            .EvaluateAsync([compoundA, compoundB]);
++
++        var interaction = Assert.Single(result.Interactions);
++        Assert.True(
++            double.IsFinite(interaction.Confidence)
++            && interaction.Confidence >= 0d
++            && interaction.Confidence <= 1d,
++            $"Interaction confidence must be finite and within [0,1], but was {interaction.Confidence}.");
++    }
++
++    [Fact]
++    public async Task EvaluateAsync_AvoidWithSafetySignal_OutranksPositiveStoredHint()
++    {
++        var compoundA = Entry("Synthetic Theta", avoidWith: ["Synthetic Iota"]);
++        var compoundB = Entry("Synthetic Iota");
++        var graph = GraphReturning(new CompoundGraphRelationship
++        {
++            SubjectCompound = compoundA.CanonicalName,
++            ObjectCompound = compoundB.CanonicalName,
++            RelationshipType = GraphRelationshipType.SynergizesWith,
++            Confidence = "high",
++            ReviewState = "reviewed",
++            NeedsReview = false,
++            Reason = "Synthetic positive edge."
++        });
++        var hints = HintReturning(new CompoundInteractionHint
++        {
++            CompoundA = compoundA.CanonicalName,
++            CompoundB = compoundB.CanonicalName,
++            InteractionType = InteractionType.Synergistic,
++            Strength = 0.91m,
++            Notes = "Synthetic positive stored hint."
++        });
++
++        var result = await CreateService(graphStore: graph.Object, hintRepository: hints.Object)
++            .EvaluateAsync([compoundA, compoundB]);
++
++        var interaction = Assert.Single(result.Interactions);
++        Assert.Equal(InteractionType.Interfering, interaction.Type);
++        graph.Verify(
++            store => store.GetActiveArtifactAsync(It.IsAny<CancellationToken>()),
++            Times.Never);
++        graph.Verify(
++            store => store.FindRelationshipAsync(
++                It.IsAny<string>(),
++                It.IsAny<string>(),
++                It.IsAny<CancellationToken>()),
++            Times.Never);
++        hints.Verify(
++            repository => repository.FindPairAsync(
++                It.IsAny<string>(),
++                It.IsAny<string>(),
++                It.IsAny<CancellationToken>()),
++            Times.Never);
++    }
++
++    [Theory]
++    [InlineData(false, false, "reviewed", true)]
++    [InlineData(true, false, "reviewed", false)]
++    [InlineData(true, true, "provisional", false)]
++    public async Task EvaluateAsync_IneligibleGraphArtifact_DoesNotAuthorizeGraphIntelligence(
++        bool hasArtifact,
++        bool isActive,
++        string reviewState,
++        bool includeStoredHint)
++    {
++        var compoundA = Entry("Synthetic Kappa");
++        var compoundB = Entry("Synthetic Lambda");
++        var edge = new CompoundGraphRelationship
++        {
++            SubjectCompound = compoundA.CanonicalName,
++            ObjectCompound = compoundB.CanonicalName,
++            RelationshipType = GraphRelationshipType.SynergizesWith,
++            Confidence = "high",
++            ReviewState = "reviewed",
++            NeedsReview = false,
++            Reason = "Synthetic reviewed edge."
++        };
++        var artifact = hasArtifact
++            ? new CompoundGraphArtifact
++            {
++                ArtifactHash = "sha256:synthetic-artifact",
++                ReviewState = reviewState,
++                IsActive = isActive
++            }
++            : null;
++        var graph = GraphReturning(edge, artifact);
++        var hints = HintReturning(includeStoredHint
++            ? new CompoundInteractionHint
++            {
++                CompoundA = compoundA.CanonicalName,
++                CompoundB = compoundB.CanonicalName,
++                InteractionType = InteractionType.Synergistic,
++                Strength = 0.83m,
++                Notes = "Synthetic eligible fallback hint."
++            }
++            : null);
++
++        var result = await CreateService(graphStore: graph.Object, hintRepository: hints.Object)
++            .EvaluateAsync([compoundA, compoundB]);
++
++        var interaction = Assert.Single(result.Interactions);
++        Assert.NotEqual(IntelligenceSource.Graph, interaction.Source);
++        Assert.Null(interaction.GraphArtifactHash);
++        if (includeStoredHint)
++        {
++            Assert.True(interaction.HintBacked);
++            Assert.Equal(InteractionType.Synergistic, interaction.Type);
++        }
++    }
++
++    [Fact]
++    public async Task EvaluateAsync_NonReviewedGraphEdge_DoesNotAuthorizeGraphIntelligence()
++    {
++        var compoundA = Entry("Synthetic Mu");
++        var compoundB = Entry("Synthetic Nu");
++        var graph = GraphReturning(new CompoundGraphRelationship
++        {
++            SubjectCompound = compoundA.CanonicalName,
++            ObjectCompound = compoundB.CanonicalName,
++            RelationshipType = GraphRelationshipType.SynergizesWith,
++            Confidence = "high",
++            ReviewState = "Reviewed",
++            NeedsReview = false,
++            Reason = "Synthetic case-variant edge."
++        });
++
++        var result = await CreateService(graphStore: graph.Object)
++            .EvaluateAsync([compoundA, compoundB]);
++
++        var interaction = Assert.Single(result.Interactions);
++        Assert.NotEqual(IntelligenceSource.Graph, interaction.Source);
++        Assert.Null(interaction.GraphArtifactHash);
++    }
++
++    [Fact]
++    public async Task EvaluateAsync_NeedsReviewFlag_IsIneligible_WhenArtifactAndEdgeAreReviewed()
++    {
++        var compoundA = Entry("Synthetic Xi");
++        var compoundB = Entry("Synthetic Omicron");
++        var graph = GraphReturning(new CompoundGraphRelationship
++        {
++            SubjectCompound = compoundA.CanonicalName,
++            ObjectCompound = compoundB.CanonicalName,
++            RelationshipType = GraphRelationshipType.SynergizesWith,
++            Confidence = "high",
++            ReviewState = "reviewed",
++            NeedsReview = true,
++            Reason = "Synthetic flagged edge."
++        });
++
++        var result = await CreateService(graphStore: graph.Object)
++            .EvaluateAsync([compoundA, compoundB]);
++
++        var interaction = Assert.Single(result.Interactions);
++        Assert.NotEqual(IntelligenceSource.Graph, interaction.Source);
++        Assert.Null(interaction.GraphArtifactHash);
++    }
++
++    [Fact]
++    public async Task EvaluateAsync_GraphEdgeFromDifferentArtifact_IsNotAttributedToReviewedArtifact()
++    {
++        var compoundA = Entry("Synthetic Pi");
++        var compoundB = Entry("Synthetic Rho");
++        var reviewedArtifact = new CompoundGraphArtifact
++        {
++            Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
++            ArtifactHash = "sha256:synthetic-reviewed-artifact-a",
++            ReviewState = "reviewed",
++            IsActive = true
++        };
++        var graph = GraphReturning(
++            new CompoundGraphRelationship
++            {
++                GraphArtifactId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
++                SubjectCompound = compoundA.CanonicalName,
++                ObjectCompound = compoundB.CanonicalName,
++                RelationshipType = GraphRelationshipType.SynergizesWith,
++                Confidence = "high",
++                ReviewState = "reviewed",
++                NeedsReview = false,
++                Reason = "Synthetic reviewed edge from artifact B."
++            },
++            reviewedArtifact);
++        var hints = HintReturning(new CompoundInteractionHint
++        {
++            CompoundA = compoundA.CanonicalName,
++            CompoundB = compoundB.CanonicalName,
++            InteractionType = InteractionType.Synergistic,
++            Strength = 0.79m,
++            Notes = "Synthetic eligible fallback hint."
++        });
++
++        var result = await CreateService(graphStore: graph.Object, hintRepository: hints.Object)
++            .EvaluateAsync([compoundA, compoundB]);
++
++        var interaction = Assert.Single(result.Interactions);
++        Assert.NotEqual(IntelligenceSource.Graph, interaction.Source);
++        Assert.Null(interaction.GraphArtifactHash);
++        Assert.True(interaction.HintBacked);
++        Assert.Equal(InteractionType.Synergistic, interaction.Type);
++    }
++
++    private static InteractionIntelligenceService CreateService(
++        IKnowledgeSource? knowledgeSource = null,
++        ICompoundGraphStore? graphStore = null,
++        ICompoundInteractionHintRepository? hintRepository = null)
++    {
++        hintRepository ??= HintReturning(null).Object;
++
++        knowledgeSource ??= EmptyKnowledgeSource().Object;
++        return new InteractionIntelligenceService(knowledgeSource, hintRepository, graphStore);
++    }
++
++    private static Mock<IKnowledgeSource> EmptyKnowledgeSource()
++    {
++        var source = new Mock<IKnowledgeSource>();
++        source
++            .Setup(service => service.GetAllCompoundsAsync(It.IsAny<CancellationToken>()))
++            .ReturnsAsync([]);
++        return source;
++    }
++
++    private static Mock<ICompoundGraphStore> GraphReturning(CompoundGraphRelationship relationship)
++    {
++        return GraphReturning(
++            relationship,
++            new CompoundGraphArtifact
++            {
++                ArtifactHash = "sha256:synthetic-reviewed-graph",
++                ReviewState = "reviewed",
++                IsActive = true
++            });
++    }
++
++    private static Mock<ICompoundGraphStore> GraphReturning(
++        CompoundGraphRelationship relationship,
++        CompoundGraphArtifact? artifact)
++    {
++        var graph = new Mock<ICompoundGraphStore>();
++        graph
++            .Setup(store => store.FindRelationshipAsync(
++                It.IsAny<string>(),
++                It.IsAny<string>(),
++                It.IsAny<CancellationToken>()))
++            .ReturnsAsync(relationship);
++        graph
++            .Setup(store => store.GetActiveArtifactAsync(It.IsAny<CancellationToken>()))
++            .ReturnsAsync(artifact);
++        return graph;
++    }
++
++    private static Mock<ICompoundInteractionHintRepository> HintReturning(CompoundInteractionHint? hint)
++    {
++        var hints = new Mock<ICompoundInteractionHintRepository>();
++        hints
++            .Setup(repository => repository.FindPairAsync(
++                It.IsAny<string>(),
++                It.IsAny<string>(),
++                It.IsAny<CancellationToken>()))
++            .ReturnsAsync(hint);
++        return hints;
++    }
++
++    private static KnowledgeEntry Entry(
++        string canonicalName,
++        List<string>? aliases = null,
++        List<string>? avoidWith = null)
++    {
++        return new KnowledgeEntry
++        {
++            CanonicalName = canonicalName,
++            Aliases = aliases ?? [],
++            AvoidWith = avoidWith ?? []
++        };
++    }
++}
+diff --git a/backend/tests/BioStack.Application.Tests/Services/ProtocolIngestionPdfReproductionTests.cs b/backend/tests/BioStack.Application.Tests/Services/ProtocolIngestionPdfReproductionTests.cs
+new file mode 100644
+index 0000000..a7c59d9
+--- /dev/null
++++ b/backend/tests/BioStack.Application.Tests/Services/ProtocolIngestionPdfReproductionTests.cs
+@@ -0,0 +1,27 @@
++namespace BioStack.Application.Tests.Services;
++
++using System.Text;
++using BioStack.Application.Services;
++using BioStack.Contracts.Requests;
++using Xunit;
++
++public sealed class ProtocolIngestionPdfReproductionTests
++{
++    [Fact]
++    public async Task ExtractAsync_AlreadyCancelledRequest_DoesNotEnterRegexExtraction()
++    {
++        var extractor = new PdfProtocolExtractor();
++        var request = new ProtocolIngestionRequest(
++            ProtocolInputType.FileUpload,
++            null,
++            null,
++            "synthetic-protocol.pdf",
++            "application/pdf",
++            Encoding.ASCII.GetBytes("%PDF-1.4\n1 0 obj << /Type /Page >> stream\n(BPC-157 500mcg daily) Tj\nendstream\nendobj"));
++        using var cancellation = new CancellationTokenSource();
++        cancellation.Cancel();
++
++        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
++            extractor.ExtractAsync(request, cancellation.Token));
++    }
++}
+diff --git a/backend/tests/BioStack.Application.Tests/Services/ProtocolOcrOutboundBoundaryReproductionTests.cs b/backend/tests/BioStack.Application.Tests/Services/ProtocolOcrOutboundBoundaryReproductionTests.cs
+new file mode 100644
+index 0000000..170efa9
+--- /dev/null
++++ b/backend/tests/BioStack.Application.Tests/Services/ProtocolOcrOutboundBoundaryReproductionTests.cs
+@@ -0,0 +1,128 @@
++namespace BioStack.Application.Tests.Services;
++
++using System.Net;
++using System.Text;
++using BioStack.Application.Services;
++using Microsoft.Extensions.Options;
++using Xunit;
++
++public sealed class ProtocolOcrOutboundBoundaryReproductionTests
++{
++    [Fact]
++    public async Task ConfiguredOcr_DoesNotTransmitRawBytesWithoutExplicitOutboundAuthorization()
++    {
++        var syntheticDocumentBytes = "synthetic private document payload"u8.ToArray();
++        var handler = new InterceptingHandler();
++        var factory = new SingleClientFactory(new HttpClient(handler));
++        var service = CreateService(factory, new StubConsentGate(_ => Task.FromResult(false)));
++
++        await Assert.ThrowsAsync<ProtocolIngestionException>(() =>
++            service.ExtractAsync(syntheticDocumentBytes, "synthetic-scan.png"));
++
++        var rawBytesCrossedBoundary = handler.RequestCount > 0 &&
++            syntheticDocumentBytes.SequenceEqual(handler.CapturedBody ?? []);
++        Assert.False(
++            rawBytesCrossedBoundary,
++            $"Raw document bytes reached the configured OCR endpoint without an explicit outbound authorization boundary. " +
++            $"interceptedRequests={handler.RequestCount}; destination={handler.CapturedUri}");
++        Assert.Equal(0, factory.CreateClientCount);
++        Assert.Equal(0, handler.RequestCount);
++    }
++
++    [Fact]
++    public async Task ConfiguredOcr_ConsentGateFailure_DoesNotSendProviderRequest()
++    {
++        var handler = new InterceptingHandler();
++        var factory = new SingleClientFactory(new HttpClient(handler));
++        var service = CreateService(
++            factory,
++            new StubConsentGate(_ => Task.FromException<bool>(new InvalidOperationException("Synthetic consent gate failure."))));
++
++        await Assert.ThrowsAsync<InvalidOperationException>(() =>
++            service.ExtractAsync("synthetic private document payload"u8.ToArray(), "synthetic-scan.png"));
++
++        Assert.Equal(0, factory.CreateClientCount);
++        Assert.Equal(0, handler.RequestCount);
++    }
++
++    [Fact]
++    public async Task ConfiguredOcr_CurrentConsentGranted_SendsExactlyOneSyntheticRequest()
++    {
++        var syntheticDocumentBytes = "synthetic private document payload"u8.ToArray();
++        var handler = new InterceptingHandler();
++        var factory = new SingleClientFactory(new HttpClient(handler));
++        var service = CreateService(factory, new StubConsentGate(_ => Task.FromResult(true)));
++
++        var result = await service.ExtractAsync(syntheticDocumentBytes, "synthetic-scan.png");
++
++        Assert.Equal(1, factory.CreateClientCount);
++        Assert.Equal(1, handler.RequestCount);
++        Assert.Equal(new Uri("https://synthetic-ocr.invalid/computervision/imageanalysis:analyze?api-version=2024-02-01&features=read"), handler.CapturedUri);
++        Assert.True(syntheticDocumentBytes.SequenceEqual(handler.CapturedBody ?? []));
++        Assert.Equal("BPC-157 500mcg daily", result.ExtractedText);
++    }
++
++    private static AzureVisionProtocolOcrService CreateService(
++        SingleClientFactory factory,
++        IConsentGate consentGate) =>
++        new(
++            factory,
++            Options.Create(new ProtocolOcrOptions
++            {
++                Endpoint = "https://synthetic-ocr.invalid",
++                ApiKey = "synthetic-test-key",
++            }),
++            consentGate);
++
++    private sealed class StubConsentGate(Func<CancellationToken, Task<bool>> isGranted) : IConsentGate
++    {
++        public Task<bool> IsConsentGrantedAsync(CancellationToken cancellationToken = default) =>
++            isGranted(cancellationToken);
++
++        public Task<ConsentStatus> GetStatusAsync(CancellationToken cancellationToken = default) =>
++            throw new NotSupportedException();
++
++        public Task<ConsentStatus> RecordAsync(string? requestedVersion, CancellationToken cancellationToken = default) =>
++            throw new NotSupportedException();
++
++        public Task<ConsentStatus> DeclineAsync(string? requestedVersion, CancellationToken cancellationToken = default) =>
++            throw new NotSupportedException();
++    }
++
++    private sealed class SingleClientFactory(HttpClient client) : IHttpClientFactory
++    {
++        public int CreateClientCount { get; private set; }
++
++        public HttpClient CreateClient(string name)
++        {
++            CreateClientCount++;
++            return client;
++        }
++    }
++
++    private sealed class InterceptingHandler : HttpMessageHandler
++    {
++        public int RequestCount { get; private set; }
++        public byte[]? CapturedBody { get; private set; }
++        public Uri? CapturedUri { get; private set; }
++
++        protected override async Task<HttpResponseMessage> SendAsync(
++            HttpRequestMessage request,
++            CancellationToken cancellationToken)
++        {
++            RequestCount++;
++            CapturedUri = request.RequestUri;
++            CapturedBody = request.Content is null
++                ? null
++                : await request.Content.ReadAsByteArrayAsync(cancellationToken);
++
++            return new HttpResponseMessage(HttpStatusCode.OK)
++            {
++                Content = new StringContent(
++                    "{\"readResult\":{\"blocks\":[{\"lines\":[{\"text\":\"BPC-157 500mcg daily\"}]}]}}",
++                    Encoding.UTF8,
++                    "application/json"),
++            };
++        }
++    }
++}
+diff --git a/backend/tests/BioStack.Application.Tests/Services/ProtocolParserReproductionTests.cs b/backend/tests/BioStack.Application.Tests/Services/ProtocolParserReproductionTests.cs
+new file mode 100644
+index 0000000..ab4bd92
+--- /dev/null
++++ b/backend/tests/BioStack.Application.Tests/Services/ProtocolParserReproductionTests.cs
+@@ -0,0 +1,114 @@
++namespace BioStack.Application.Tests.Services;
++
++using System.Globalization;
++using BioStack.Application.Services;
++using BioStack.Infrastructure.Knowledge;
++using Microsoft.Extensions.Caching.Memory;
++using Xunit;
++
++public sealed class ProtocolParserReproductionTests
++{
++    [Fact]
++    public async Task ParseAsync_AliasInsideUnrelatedTokens_DoesNotCreateCompound()
++    {
++        using var cache = new MemoryCache(new MemoryCacheOptions());
++        var parser = CreateParser(cache);
++
++        var result = await parser.ParseAsync("At 4000 steps nightly");
++
++        Assert.Empty(result.Entries);
++    }
++
++    [Fact]
++    public async Task ParseAsync_CommaSeparatedCompounds_PreservesEveryCompound()
++    {
++        using var cache = new MemoryCache(new MemoryCacheOptions());
++        var parser = CreateParser(cache);
++
++        var result = await parser.ParseAsync("BPC-157 500mcg daily, TB-500 2mg twice weekly");
++
++        Assert.Collection(
++            result.Entries.OrderBy(entry => entry.CompoundName, StringComparer.Ordinal),
++            entry =>
++            {
++                Assert.Equal("BPC-157", entry.CompoundName);
++                Assert.Equal(500d, entry.Dose);
++                Assert.Equal("mcg", entry.Unit);
++            },
++            entry =>
++            {
++                Assert.Equal("TB-500", entry.CompoundName);
++                Assert.Equal(2d, entry.Dose);
++                Assert.Equal("mg", entry.Unit);
++            });
++    }
++
++    [Fact]
++    public async Task ParseAsync_DotDecimalDose_IsCultureInvariant()
++    {
++        using var cache = new MemoryCache(new MemoryCacheOptions());
++        var parser = CreateParser(cache);
++        var originalCulture = CultureInfo.CurrentCulture;
++        var originalUiCulture = CultureInfo.CurrentUICulture;
++
++        try
++        {
++            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("fr-FR");
++            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("fr-FR");
++
++            var result = await parser.ParseAsync("BPC-157 0.5mg daily");
++
++            var entry = Assert.Single(result.Entries);
++            Assert.Equal(0.5d, entry.Dose);
++            Assert.Equal("mg", entry.Unit);
++        }
++        finally
++        {
++            CultureInfo.CurrentCulture = originalCulture;
++            CultureInfo.CurrentUICulture = originalUiCulture;
++        }
++    }
++
++    [Fact]
++    public async Task ParseAsync_UnicodeMicroSign_PreservesDoseAndNormalizesUnit()
++    {
++        using var cache = new MemoryCache(new MemoryCacheOptions());
++        var parser = CreateParser(cache);
++
++        var result = await parser.ParseAsync("BPC-157 500\u00b5g daily");
++
++        var entry = Assert.Single(result.Entries);
++        Assert.Equal(500d, entry.Dose);
++        Assert.Equal("mcg", entry.Unit);
++    }
++
++    [Fact]
++    public async Task ParseAsync_LeadingDigitCompoundName_PreservesFullName()
++    {
++        using var cache = new MemoryCache(new MemoryCacheOptions());
++        var parser = CreateParser(cache);
++
++        var result = await parser.ParseAsync("5-Amino-1MQ 50mg daily");
++
++        var entry = Assert.Single(result.Entries);
++        Assert.Equal("5-Amino-1MQ", entry.CompoundName);
++        Assert.Equal(50d, entry.Dose);
++        Assert.Equal("mg", entry.Unit);
++    }
++
++    [Fact]
++    public async Task ParseAsync_LeadingDecimalDose_PreservesPrecision()
++    {
++        using var cache = new MemoryCache(new MemoryCacheOptions());
++        var parser = CreateParser(cache);
++
++        var result = await parser.ParseAsync("BPC-157 .25mg daily");
++
++        var entry = Assert.Single(result.Entries);
++        Assert.Equal(0.25d, entry.Dose);
++        Assert.Equal("mg", entry.Unit);
++    }
++
++    private static ProtocolParser CreateParser(IMemoryCache cache) =>
++        new(new LocalKnowledgeSource(), new BlendDecomposerService(), cache);
++}
+diff --git a/frontend/src/__tests__/app/api/research/suggest.outbound-boundary.reproduction.test.ts b/frontend/src/__tests__/app/api/research/suggest.outbound-boundary.reproduction.test.ts
+new file mode 100644
+index 0000000..9f4a9fc
+--- /dev/null
++++ b/frontend/src/__tests__/app/api/research/suggest.outbound-boundary.reproduction.test.ts
+@@ -0,0 +1,310 @@
++import { POST } from '@/app/api/research/suggest/route';
++
++const CONSENT_URL = 'http://trusted-biostack.test/api/v1/consent';
++const PROVIDER_URL = 'https://api.openai.com/v1/responses';
++const SESSION_COOKIE = 'biostack_session=synthetic-session';
++
++const unauthenticatedBody = {
++  compound: { name: 'Synthetic Compound Alpha' },
++  candidate: { blockers: [] },
++  evidencePacket: null,
++  planItems: [],
++};
++
++function canonicalConsent(accepted: boolean) {
++  return {
++    accepted,
++    consentAcceptedAtUtc: accepted ? '2026-09-02T00:00:00Z' : null,
++    consentVersion: accepted ? 'v1' : null,
++    declined: false,
++    consentDeclinedAtUtc: null,
++    consentDeclinedVersion: null,
++    currentVersion: 'v1',
++  };
++}
++
++function consentResponse(value: unknown) {
++  return new Response(JSON.stringify(value), {
++    status: 200,
++    headers: { 'content-type': 'application/json; charset=utf-8' },
++  });
++}
++
++function inboundRequest(cookie?: string, body: unknown = unauthenticatedBody, extraHeaders?: HeadersInit) {
++  const headers = new Headers(extraHeaders);
++  if (cookie !== undefined) headers.set('cookie', cookie);
++  return new Request('https://hostile-client.invalid/api/research/suggest?consented=true', {
++    method: 'POST',
++    headers,
++    body: JSON.stringify(body),
++  });
++}
++
++function requestUrl(input: string | URL | Request) {
++  return typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
++}
++
++function assertConsentRequest(init: RequestInit | undefined) {
++  expect(init?.method).toBe('GET');
++  expect(init?.body).toBeUndefined();
++  expect(init?.cache).toBe('no-store');
++  expect(init?.redirect).toBe('manual');
++  expect(init?.signal).toBeInstanceOf(AbortSignal);
++  expect([...new Headers(init?.headers).entries()]).toEqual([
++    ['cookie', SESSION_COOKIE],
++  ]);
++}
++
++function expectDenied(response: Response) {
++  expect(response.status >= 200 && response.status < 300).toBe(false);
++}
++
++describe('research suggestion outbound boundary reproduction', () => {
++  const originalApiKey = process.env.OPENAI_API_KEY;
++  const originalSuggestEnabled = process.env.RESEARCH_AI_SUGGEST_ENABLED;
++  const originalApiUrl = process.env.API_URL;
++  const originalNextPublicApiUrl = process.env.NEXT_PUBLIC_API_URL;
++
++  beforeEach(() => {
++    process.env.OPENAI_API_KEY = 'synthetic-test-key';
++    process.env.RESEARCH_AI_SUGGEST_ENABLED = 'true';
++    process.env.API_URL = 'http://trusted-biostack.test/';
++    delete process.env.NEXT_PUBLIC_API_URL;
++  });
++
++  afterEach(() => {
++    if (originalApiKey === undefined) delete process.env.OPENAI_API_KEY;
++    else process.env.OPENAI_API_KEY = originalApiKey;
++
++    if (originalSuggestEnabled === undefined) delete process.env.RESEARCH_AI_SUGGEST_ENABLED;
++    else process.env.RESEARCH_AI_SUGGEST_ENABLED = originalSuggestEnabled;
++
++    if (originalApiUrl === undefined) delete process.env.API_URL;
++    else process.env.API_URL = originalApiUrl;
++
++    if (originalNextPublicApiUrl === undefined) delete process.env.NEXT_PUBLIC_API_URL;
++    else process.env.NEXT_PUBLIC_API_URL = originalNextPublicApiUrl;
++
++    vi.useRealTimers();
++    vi.unstubAllGlobals();
++  });
++
++  it('does not relay a provider request without an authenticated or consented caller', async () => {
++    let consentCalls = 0;
++    let providerCalls = 0;
++    const localFetch = vi.fn(async (input: string | URL | Request) => {
++      const url = requestUrl(input);
++      if (url === CONSENT_URL) consentCalls += 1;
++      if (url === PROVIDER_URL) providerCalls += 1;
++      throw new Error(`Unexpected fetch without one valid session cookie: ${url}`);
++    });
++    vi.stubGlobal('fetch', localFetch);
++
++    const variants: Array<string | undefined> = [
++      undefined,
++      'decoy=one; biostack_session=',
++      'biostack_session',
++      'biostack_session =synthetic-session',
++      'biostack_session= synthetic-session',
++      'biostack_session=first; decoy=one; biostack_session=second',
++    ];
++    for (const cookie of variants) {
++      const response = await POST(inboundRequest(cookie));
++      expectDenied(response);
++    }
++
++    expect(consentCalls).toBe(0);
++    expect(providerCalls).toBe(0);
++    expect(localFetch).not.toHaveBeenCalled();
++  });
++
++  it('denies when the consent request fails', async () => {
++    let consentCalls = 0;
++    let providerCalls = 0;
++    const localFetch = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
++      const url = requestUrl(input);
++      if (url === CONSENT_URL) {
++        consentCalls += 1;
++        assertConsentRequest(init);
++        throw new Error('Synthetic local consent failure');
++      }
++      if (url === PROVIDER_URL) providerCalls += 1;
++      throw new Error(`Unexpected non-local fetch target: ${url}`);
++    });
++    vi.stubGlobal('fetch', localFetch);
++
++    const response = await POST(inboundRequest(SESSION_COOKIE));
++
++    expectDenied(response);
++    expect(consentCalls).toBe(1);
++    expect(providerCalls).toBe(0);
++  });
++
++  it('denies when the consent request exceeds the exact timeout', async () => {
++    vi.useFakeTimers();
++    let consentCalls = 0;
++    let providerCalls = 0;
++    let observedSignal: AbortSignal | undefined;
++    let markConsentStarted: (() => void) | undefined;
++    const consentStarted = new Promise<void>(resolve => { markConsentStarted = resolve; });
++    const localFetch = vi.fn((input: string | URL | Request, init?: RequestInit) => {
++      const url = requestUrl(input);
++      if (url === CONSENT_URL) {
++        consentCalls += 1;
++        assertConsentRequest(init);
++        observedSignal = init?.signal ?? undefined;
++        markConsentStarted?.();
++        return new Promise<Response>((_resolve, reject) => {
++          observedSignal?.addEventListener('abort', () => reject(new Error('Synthetic abort')), { once: true });
++        });
++      }
++      if (url === PROVIDER_URL) providerCalls += 1;
++      throw new Error(`Unexpected non-local fetch target: ${url}`);
++    });
++    vi.stubGlobal('fetch', localFetch);
++
++    const pendingResponse = POST(inboundRequest(SESSION_COOKIE));
++    await consentStarted;
++    expect(observedSignal?.aborted).toBe(false);
++    await vi.advanceTimersByTimeAsync(1_999);
++    expect(observedSignal?.aborted).toBe(false);
++    await vi.advanceTimersByTimeAsync(1);
++    const response = await pendingResponse;
++
++    expectDenied(response);
++    expect(observedSignal?.aborted).toBe(true);
++    expect(consentCalls).toBe(1);
++    expect(providerCalls).toBe(0);
++  });
++
++  it('denies a consent redirect without following it', async () => {
++    let consentCalls = 0;
++    let providerCalls = 0;
++    const localFetch = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
++      const url = requestUrl(input);
++      if (url === CONSENT_URL) {
++        consentCalls += 1;
++        assertConsentRequest(init);
++        return new Response(null, { status: 302, headers: { location: 'https://redirect.invalid/consent' } });
++      }
++      if (url === PROVIDER_URL) providerCalls += 1;
++      throw new Error(`Unexpected non-local fetch target: ${url}`);
++    });
++    vi.stubGlobal('fetch', localFetch);
++
++    const response = await POST(inboundRequest(SESSION_COOKIE));
++
++    expectDenied(response);
++    expect(consentCalls).toBe(1);
++    expect(providerCalls).toBe(0);
++  });
++
++  it('denies a non-success consent response', async () => {
++    let consentCalls = 0;
++    let providerCalls = 0;
++    const localFetch = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
++      const url = requestUrl(input);
++      if (url === CONSENT_URL) {
++        consentCalls += 1;
++        assertConsentRequest(init);
++        return new Response('Synthetic unavailable', { status: 503 });
++      }
++      if (url === PROVIDER_URL) providerCalls += 1;
++      throw new Error(`Unexpected non-local fetch target: ${url}`);
++    });
++    vi.stubGlobal('fetch', localFetch);
++
++    const response = await POST(inboundRequest(SESSION_COOKIE));
++
++    expectDenied(response);
++    expect(consentCalls).toBe(1);
++    expect(providerCalls).toBe(0);
++  });
++
++  it('denies a malformed consent response', async () => {
++    let consentCalls = 0;
++    let providerCalls = 0;
++    const localFetch = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
++      const url = requestUrl(input);
++      if (url === CONSENT_URL) {
++        consentCalls += 1;
++        assertConsentRequest(init);
++        return consentResponse({ ...canonicalConsent(true), callerSuppliedAuthority: true });
++      }
++      if (url === PROVIDER_URL) providerCalls += 1;
++      throw new Error(`Unexpected non-local fetch target: ${url}`);
++    });
++    vi.stubGlobal('fetch', localFetch);
++
++    const response = await POST(inboundRequest(SESSION_COOKIE));
++
++    expectDenied(response);
++    expect(consentCalls).toBe(1);
++    expect(providerCalls).toBe(0);
++  });
++
++  it('denies an oversized streamed consent response', async () => {
++    let consentCalls = 0;
++    let providerCalls = 0;
++    let streamCancelled = false;
++    const oversizedBody = new ReadableStream<Uint8Array>({
++      start(controller) {
++        controller.enqueue(new TextEncoder().encode(`{"padding":"${'x'.repeat(16_384)}"}`));
++      },
++      cancel() {
++        streamCancelled = true;
++      },
++    });
++    const localFetch = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
++      const url = requestUrl(input);
++      if (url === CONSENT_URL) {
++        consentCalls += 1;
++        assertConsentRequest(init);
++        return new Response(oversizedBody, {
++          status: 200,
++          headers: { 'content-type': 'application/json' },
++        });
++      }
++      if (url === PROVIDER_URL) providerCalls += 1;
++      throw new Error(`Unexpected non-local fetch target: ${url}`);
++    });
++    vi.stubGlobal('fetch', localFetch);
++
++    const response = await POST(inboundRequest(SESSION_COOKIE));
++
++    expectDenied(response);
++    expect(streamCancelled).toBe(true);
++    expect(consentCalls).toBe(1);
++    expect(providerCalls).toBe(0);
++  });
++
++  it('denies when current server consent is not accepted despite caller spoofing', async () => {
++    let consentCalls = 0;
++    let providerCalls = 0;
++    const localFetch = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
++      const url = requestUrl(input);
++      if (url === CONSENT_URL) {
++        consentCalls += 1;
++        assertConsentRequest(init);
++        return consentResponse(canonicalConsent(false));
++      }
++      if (url === PROVIDER_URL) providerCalls += 1;
++      throw new Error(`Unexpected non-local fetch target: ${url}`);
++    });
++    vi.stubGlobal('fetch', localFetch);
++
++    const response = await POST(inboundRequest(
++      SESSION_COOKIE,
++      { ...unauthenticatedBody, authenticated: true, consentAccepted: true },
++      {
++        authorization: 'Bearer caller-supplied-token',
++        'x-authenticated': 'true',
++        'x-consent-accepted': 'true',
++      },
++    ));
++
++    expectDenied(response);
++    expect(consentCalls).toBe(1);
++    expect(providerCalls).toBe(0);
++  });
++});
+diff --git a/frontend/src/__tests__/app/api/research/suggest.route.test.ts b/frontend/src/__tests__/app/api/research/suggest.route.test.ts
+index b161977..75c7922 100644
+--- a/frontend/src/__tests__/app/api/research/suggest.route.test.ts
++++ b/frontend/src/__tests__/app/api/research/suggest.route.test.ts
+@@ -26,19 +26,28 @@ const baseBody = {
+   planItems: [],
+ };
+ 
+-function request(body: unknown) {
+-  return new Request('http://localhost/api/research/suggest', { method: 'POST', body: JSON.stringify(body) });
++function request(body: unknown, url = 'http://localhost/api/research/suggest', headers?: HeadersInit) {
++  return new Request(url, { method: 'POST', headers, body: JSON.stringify(body) });
+ }
+ 
+ describe('research AI suggestion route', () => {
+   const originalKey = process.env.OPENAI_API_KEY;
+   const originalModel = process.env.OPENAI_REVIEW_MODEL;
++  const originalApiUrl = process.env.API_URL;
++  const originalNextPublicApiUrl = process.env.NEXT_PUBLIC_API_URL;
++  const originalSuggestEnabled = process.env.RESEARCH_AI_SUGGEST_ENABLED;
+ 
+   afterEach(() => {
+     if (originalKey === undefined) delete process.env.OPENAI_API_KEY;
+     else process.env.OPENAI_API_KEY = originalKey;
+     if (originalModel === undefined) delete process.env.OPENAI_REVIEW_MODEL;
+     else process.env.OPENAI_REVIEW_MODEL = originalModel;
++    if (originalApiUrl === undefined) delete process.env.API_URL;
++    else process.env.API_URL = originalApiUrl;
++    if (originalNextPublicApiUrl === undefined) delete process.env.NEXT_PUBLIC_API_URL;
++    else process.env.NEXT_PUBLIC_API_URL = originalNextPublicApiUrl;
++    if (originalSuggestEnabled === undefined) delete process.env.RESEARCH_AI_SUGGEST_ENABLED;
++    else process.env.RESEARCH_AI_SUGGEST_ENABLED = originalSuggestEnabled;
+     vi.unstubAllGlobals();
+   });
+ 
+@@ -54,17 +63,66 @@ describe('research AI suggestion route', () => {
+   it('calls OpenAI and normalizes unsafe promotion suggestions when hard blockers remain', async () => {
+     process.env.OPENAI_API_KEY = 'sk-test';
+     process.env.OPENAI_REVIEW_MODEL = 'gpt-5.5';
+-    const openAiFetch = vi.fn().mockResolvedValue(new Response(JSON.stringify({
+-      output_text: JSON.stringify({
+-        decision: 'approve-for-promotion', confidence: 'high', summary: 'Looks ready.',
+-        rationale: ['AI wanted to promote.'], claimIdsToApprove: ['claim-1', 'unknown-claim'],
+-        reviewQueueItemIdsToResolve: ['bpc-157-ops-review-1', 'unknown-queue-item'],
+-        clearsSoftPromotionBlockers: true, draftNotes: 'Promote the draft.', safetyWarnings: [], openQuestions: [],
+-      }),
+-    }), { status: 200 }));
+-    vi.stubGlobal('fetch', openAiFetch);
++    process.env.RESEARCH_AI_SUGGEST_ENABLED = 'true';
++    process.env.API_URL = 'http://trusted-biostack.test/';
++    delete process.env.NEXT_PUBLIC_API_URL;
++    let consentCalls = 0;
++    let providerCalls = 0;
++    const localFetch = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
++      const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
++      if (url === 'http://trusted-biostack.test/api/v1/consent') {
++        consentCalls += 1;
++        expect(init?.method).toBe('GET');
++        expect(init?.body).toBeUndefined();
++        expect(init?.cache).toBe('no-store');
++        expect(init?.redirect).toBe('manual');
++        expect(init?.signal).toBeInstanceOf(AbortSignal);
++        expect(init?.signal?.aborted).toBe(false);
++        expect([...new Headers(init?.headers).entries()]).toEqual([
++          ['cookie', 'biostack_session=synthetic-session'],
++        ]);
++        return new Response(JSON.stringify({
++          accepted: true,
++          consentAcceptedAtUtc: '2026-09-02T00:00:00Z',
++          consentVersion: 'v1',
++          declined: false,
++          consentDeclinedAtUtc: null,
++          consentDeclinedVersion: null,
++          currentVersion: 'v1',
++        }), { status: 200, headers: { 'content-type': 'application/json; charset=utf-8' } });
++      }
++      if (url === 'https://api.openai.com/v1/responses') {
++        providerCalls += 1;
++        expect(init?.method).toBe('POST');
++        const providerHeaders = new Headers(init?.headers);
++        expect(providerHeaders.get('authorization')).toBe('Bearer sk-test');
++        expect(providerHeaders.get('content-type')).toBe('application/json');
++        expect(providerHeaders.has('cookie')).toBe(false);
++        expect(JSON.stringify(init)).not.toContain('biostack_session');
++        expect(JSON.stringify(init)).not.toContain('decoy-cookie');
++        expect(JSON.stringify(init)).not.toContain('inbound-token');
++        return new Response(JSON.stringify({
++          output_text: JSON.stringify({
++            decision: 'approve-for-promotion', confidence: 'high', summary: 'Looks ready.',
++            rationale: ['AI wanted to promote.'], claimIdsToApprove: ['claim-1', 'unknown-claim'],
++            reviewQueueItemIdsToResolve: ['bpc-157-ops-review-1', 'unknown-queue-item'],
++            clearsSoftPromotionBlockers: true, draftNotes: 'Promote the draft.', safetyWarnings: [], openQuestions: [],
++          }),
++        }), { status: 200 });
++      }
++      throw new Error(`Unexpected non-local fetch target: ${url}`);
++    });
++    vi.stubGlobal('fetch', localFetch);
+ 
+-    const response = await POST(request(baseBody));
++    const response = await POST(request(
++      baseBody,
++      'https://hostile-client.invalid/api/research/suggest?consented=true',
++      {
++        cookie: 'decoy_cookie=decoy-cookie; biostack_session=synthetic-session; preferences=private',
++        authorization: 'Bearer inbound-token',
++        'x-consent-accepted': 'true',
++      },
++    ));
+     const payload = await response.json();
+ 
+     expect(response.status).toBe(200);
+@@ -76,8 +134,10 @@ describe('research AI suggestion route', () => {
+       clearsSoftPromotionBlockers: false,
+     });
+     expect(payload.suggestion.rationale[0]).toMatch(/hard blockers/i);
+-    expect(openAiFetch).toHaveBeenCalledWith('https://api.openai.com/v1/responses', expect.objectContaining({ method: 'POST' }));
+-    const requestInit = openAiFetch.mock.calls[0][1] as RequestInit;
++    expect(consentCalls).toBe(1);
++    expect(providerCalls).toBe(1);
++    expect(localFetch).toHaveBeenCalledTimes(2);
++    const requestInit = localFetch.mock.calls[1][1] as RequestInit;
+     expect(JSON.parse(String(requestInit.body)).model).toBe('gpt-5.5');
+   });
+-});
+\ No newline at end of file
++});
+diff --git a/frontend/src/app/api/research/suggest/route.ts b/frontend/src/app/api/research/suggest/route.ts
+index ec34ec2..7585234 100644
+--- a/frontend/src/app/api/research/suggest/route.ts
++++ b/frontend/src/app/api/research/suggest/route.ts
+@@ -10,6 +10,19 @@ import type {
+ export const runtime = 'nodejs';
+ 
+ const DEFAULT_MODEL = 'gpt-5.5';
++const DEFAULT_BACKEND_ORIGIN = 'http://localhost:5050';
++const SESSION_COOKIE_NAME = 'biostack_session';
++const CONSENT_TIMEOUT_MS = 2_000;
++const MAX_CONSENT_RESPONSE_BYTES = 16_384;
++const CONSENT_STATUS_FIELDS = [
++  'accepted',
++  'consentAcceptedAtUtc',
++  'consentVersion',
++  'declined',
++  'consentDeclinedAtUtc',
++  'consentDeclinedVersion',
++  'currentVersion',
++] as const;
+ 
+ type SuggestionRequest = {
+   compound: ResearchSummaryCompound;
+@@ -84,6 +97,167 @@ function isSuggestionRequest(value: unknown): value is SuggestionRequest {
+   return isRecord(value.compound) && isRecord(value.candidate) && ('evidencePacket' in value) && Array.isArray(value.planItems);
+ }
+ 
++function resolveBackendOrigin(): string {
++  return (process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || DEFAULT_BACKEND_ORIGIN)
++    .replace(/\/+$/, '');
++}
++
++function extractUniqueSessionCookie(cookieHeader: string | null): string | null {
++  if (!cookieHeader) return null;
++
++  const matches: string[] = [];
++  for (const rawSegment of cookieHeader.split(';')) {
++    const segment = rawSegment.trim();
++    const separator = segment.indexOf('=');
++    if (separator < 0) {
++      if (segment === SESSION_COOKIE_NAME) return null;
++      continue;
++    }
++
++    const name = segment.slice(0, separator);
++    if (name !== SESSION_COOKIE_NAME) {
++      if (name.trim() === SESSION_COOKIE_NAME) return null;
++      continue;
++    }
++    matches.push(segment.slice(separator + 1));
++  }
++
++  if (matches.length !== 1) return null;
++  const [value] = matches;
++  if (!value || !/^[\x21-\x2B\x2D-\x3A\x3C-\x5B\x5D-\x7E]+$/.test(value)) return null;
++  return value;
++}
++
++function hasNullableString(value: unknown): value is string | null {
++  return value === null || typeof value === 'string';
++}
++
++function isCanonicalConsentStatus(value: unknown): value is Record<string, unknown> {
++  if (!isRecord(value)) return false;
++  const keys = Object.keys(value);
++  if (keys.length !== CONSENT_STATUS_FIELDS.length) return false;
++  if (CONSENT_STATUS_FIELDS.some(field => !Object.prototype.hasOwnProperty.call(value, field))) return false;
++
++  return typeof value.accepted === 'boolean'
++    && hasNullableString(value.consentAcceptedAtUtc)
++    && hasNullableString(value.consentVersion)
++    && typeof value.declined === 'boolean'
++    && hasNullableString(value.consentDeclinedAtUtc)
++    && hasNullableString(value.consentDeclinedVersion)
++    && typeof value.currentVersion === 'string'
++    && value.currentVersion.trim().length > 0;
++}
++
++async function cancelResponseBody(response: Response): Promise<void> {
++  try {
++    await response.body?.cancel();
++  } catch {
++    // A denial remains fail-closed even when the runtime cannot cancel the body.
++  }
++}
++
++async function readBoundedConsentBody(response: Response): Promise<string | null> {
++  const contentType = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
++  if (contentType !== 'application/json' && !contentType?.endsWith('+json')) {
++    await cancelResponseBody(response);
++    return null;
++  }
++
++  const declaredLength = response.headers.get('content-length');
++  if (declaredLength !== null) {
++    const normalizedLength = declaredLength.trim();
++    if (!/^\d+$/.test(normalizedLength)) {
++      await cancelResponseBody(response);
++      return null;
++    }
++
++    const byteLength = Number(normalizedLength);
++    if (!Number.isSafeInteger(byteLength) || byteLength > MAX_CONSENT_RESPONSE_BYTES) {
++      await cancelResponseBody(response);
++      return null;
++    }
++  }
++
++  const reader = response.body?.getReader();
++  if (!reader) return null;
++
++  const chunks: Uint8Array[] = [];
++  let totalBytes = 0;
++  try {
++    while (true) {
++      const { done, value } = await reader.read();
++      if (done) break;
++      totalBytes += value.byteLength;
++      if (totalBytes > MAX_CONSENT_RESPONSE_BYTES) {
++        try {
++          await reader.cancel();
++        } catch {
++          // The response is denied regardless of cancellation support.
++        }
++        return null;
++      }
++      chunks.push(value);
++    }
++  } catch {
++    return null;
++  } finally {
++    reader.releaseLock();
++  }
++
++  const bytes = new Uint8Array(totalBytes);
++  let offset = 0;
++  for (const chunk of chunks) {
++    bytes.set(chunk, offset);
++    offset += chunk.byteLength;
++  }
++
++  try {
++    return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
++  } catch {
++    return null;
++  }
++}
++
++async function hasCurrentConsent(request: Request): Promise<boolean> {
++  const sessionCookie = extractUniqueSessionCookie(request.headers.get('cookie'));
++  if (!sessionCookie) return false;
++
++  const abortController = new AbortController();
++  const timeout = setTimeout(() => abortController.abort(), CONSENT_TIMEOUT_MS);
++  try {
++    const response = await fetch(`${resolveBackendOrigin()}/api/v1/consent`, {
++      method: 'GET',
++      headers: {
++        cookie: `${SESSION_COOKIE_NAME}=${sessionCookie}`,
++      },
++      cache: 'no-store',
++      redirect: 'manual',
++      signal: abortController.signal,
++    });
++
++    if (response.redirected || (response.status >= 300 && response.status < 400) || !response.ok) {
++      await cancelResponseBody(response);
++      return false;
++    }
++
++    const responseText = await readBoundedConsentBody(response);
++    if (responseText === null) return false;
++
++    let status: unknown;
++    try {
++      status = JSON.parse(responseText) as unknown;
++    } catch {
++      return false;
++    }
++
++    return isCanonicalConsentStatus(status) && status.accepted === true;
++  } catch {
++    return false;
++  } finally {
++    clearTimeout(timeout);
++  }
++}
++
+ function compactContext(body: SuggestionRequest) {
+   const sources = body.evidencePacket?.sources.map(source => ({
+     sourceId: source.sourceId,
+@@ -221,6 +395,10 @@ export async function POST(request: Request) {
+     return Response.json({ error: 'Invalid suggestion request.' }, { status: 400 });
+   }
+ 
++  if (!await hasCurrentConsent(request)) {
++    return Response.json({ error: 'Research suggestion is unavailable.' }, { status: 403 });
++  }
++
+   const model = process.env.OPENAI_REVIEW_MODEL ?? DEFAULT_MODEL;
+   const openAiResponse = await fetch('https://api.openai.com/v1/responses', {
+     method: 'POST',
+@@ -257,4 +435,4 @@ export async function POST(request: Request) {
+   }
+ 
+   return Response.json({ suggestion: normalizeSuggestion(body, suggestion), modelUsed: model });
+-}
+\ No newline at end of file
++}

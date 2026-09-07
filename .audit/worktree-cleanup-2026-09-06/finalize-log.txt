@@ -1,0 +1,28 @@
+=== batch3 done: OK=14 FAIL=0 ===
+=== removing export-bundle-pr (safe.directory override) ===
+OK export-bundle-pr
+=== git worktree prune -v ===
+=== removing stray tmp pack files ===
+ls: cannot access '.git/objects/pack/tmp_*': No such file or directory
+(tmp packs gone)
+=== pre-gc count ===
+count: 10844
+size: 23.78 MiB
+in-pack: 4631
+packs: 8
+size-pack: 13.84 MiB
+prune-packable: 715
+garbage: 0
+size-garbage: 0 bytes
+=== git gc ===
+gc exit=0
+=== post-gc count ===
+count: 0
+size: 0 bytes
+in-pack: 11063
+packs: 3
+size-pack: 24.27 MiB
+prune-packable: 0
+garbage: 0
+size-garbage: 0 bytes
+DONE
