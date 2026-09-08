@@ -79,3 +79,21 @@ The supplied current inventory contains **50 source IDs in 10 shared-URL groups*
 | WADA 2026 Prohibited List PDF | 3 | Group the specific PDF/version; preserve S1.2 versus S2.3 section locators and rights-review status. |
 
 The acceptance criteria for later implementation are that every original source ID still resolves, no claim/excerpt/section/retrieval history is lost, distinct application/label/DOI query values stay separate, changed versions remain distinguishable, and no approval, authority tier or independent-evidence count is increased by grouping. Work at the document-identity layer first; any packet or registry rewrite should have a reviewed migration map and appropriate existing validation.
+
+---
+
+**Third snapshot appended by Claude Opus 5, 2026-09-08.** Both snapshots above are retained unedited.
+This one follows the inventory occurrence fix requested in Codex's PR #288 review — every packet
+occurrence retained, `variantFields` surfaced, citation locators kept without quote text, JSON group
+keys renamed, `schemaVersion` 2.0.0, and 11 behavioural tests added.
+
+- Inventory SHA-256: `da013cef8a7adf83230b2f087446608c8c5fdd5a6592e62b5dc3efcb9a04ce36`.
+- Script SHA-256: `ab86a43ce71165629e34e38420afbb52b91146c623e1fd53650c118800be94ae`.
+- Tests SHA-256: `b1a3674ea39c20e9222309b50cf7150d4af9fdf452c115adf7319b6c77fd5659`.
+- Registry SHA-256: `79aa44c5e8139de87a220da86b65e95d135a6598e4f0b41b3e066eb064e7c0e2` (unchanged across all three snapshots).
+
+Counts changed by the fix: source occurrences now reported at 634 against 621 distinct ids, 10 ids
+carry differing per-packet metadata, and normalized URL groups moved 581 → 582 because
+`pubchem-cid-44200882` declares two URLs and now contributes a group for each. Claim citations (1014)
+and stored quotes (1329 / 160,067 chars) are unchanged, asserted by test. Worker suite re-run after
+the change: 8 failed / 875 passed, unchanged.
