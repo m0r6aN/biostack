@@ -93,6 +93,7 @@ public sealed class SourceAcquisitionJob : ISourceAcquisitionJob
             cancellationToken);
 
         var registrySha256 = Sha256(registry.Bytes);
+        SourceAuthorizationScopeGuard.RequireMatchingActiveSources(decisions.Node, registry.Node);
         var bindings = new SourceAcquisitionInputBindings(
             Sha256(request.Bytes),
             Sha256(decisions.Bytes),

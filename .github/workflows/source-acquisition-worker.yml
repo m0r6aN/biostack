@@ -23,7 +23,7 @@ on:
       - "research/input/sources/pilot-source-registry.json"
       - "research/research-requests/market-interest-coverage-2026-07-24.v1.json"
       - "research/routing-events/keo-74-managed-blob-runtime-20260726.json"
-      - "research/source-authorization/recommended-seven-source-decisions.v1.json"
+      - "research/source-authorization/**"
   push:
     branches: [main]
     paths:
@@ -47,7 +47,7 @@ on:
       - "research/input/sources/pilot-source-registry.json"
       - "research/research-requests/market-interest-coverage-2026-07-24.v1.json"
       - "research/routing-events/keo-74-managed-blob-runtime-20260726.json"
-      - "research/source-authorization/recommended-seven-source-decisions.v1.json"
+      - "research/source-authorization/**"
   workflow_dispatch:
     inputs:
       publish:
@@ -77,7 +77,7 @@ jobs:
         run: >-
           dotnet test
           backend/tests/BioStack.KnowledgeWorker.Tests/BioStack.KnowledgeWorker.Tests.csproj
-          --filter "FullyQualifiedName~SourceAcquisitionStorageTests|FullyQualifiedName~SourceAcquisitionRuntimeTests|FullyQualifiedName~RestrictedExcerptPolicyTests|FullyQualifiedName~ResearchJobContainmentTests"
+          --filter "FullyQualifiedName~SourceAcquisitionStorageTests|FullyQualifiedName~SourceAcquisitionRuntimeTests|FullyQualifiedName~SourceAuthorizationVersionTests|FullyQualifiedName~ResearchArtifactValidatorTests|FullyQualifiedName~RestrictedExcerptPolicyTests|FullyQualifiedName~ResearchJobContainmentTests"
           --disable-build-servers
 
       - name: Validate scheduled-job templates

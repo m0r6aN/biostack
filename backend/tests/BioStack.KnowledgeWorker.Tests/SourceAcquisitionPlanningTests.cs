@@ -74,7 +74,7 @@ public class SourceAcquisitionPlanningTests
         Assert.Contains("sourceItemId", intent.RequiredProvenanceFields);
         Assert.Equal("2.0.0", intent.RegistrySchemaVersion);
         Assert.Equal(
-            "3c8425e090f31ea17eb4d6a10f8ea8a5e2f352f753f3c5312fc7fcce80d03e28",
+            "71ed755fbf532f69ccec516e95aa0c821f645263dc081d97f24a6ab3f9c2503d",
             intent.RegistryBindingSha256);
     }
 
@@ -802,7 +802,7 @@ public class SourceAcquisitionPlanningTests
             RepositoryRoot(),
             "research",
             "source-authorization",
-            "recommended-seven-source-decisions.v1.json"));
+            "recommended-seven-source-decisions.v2.json"));
 
     private static JsonNode LoadPilotRegistry()
         => LoadJson(PilotRegistryPath());

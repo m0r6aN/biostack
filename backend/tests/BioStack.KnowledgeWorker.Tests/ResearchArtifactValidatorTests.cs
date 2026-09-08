@@ -68,7 +68,7 @@ public class ResearchArtifactValidatorTests
 
         Assert.True(result.IsValid, result.Summary());
         var sources = artifact.Node["sources"]!.AsArray();
-        Assert.Equal(13, sources.Count);
+        Assert.Equal(30, sources.Count);
         var approvedSourceIds = new HashSet<string>(StringComparer.Ordinal)
         {
             "fda",
@@ -78,6 +78,11 @@ public class ResearchArtifactValidatorTests
             "dailymed",
             "nih-ods",
             "nih-nccih",
+        };
+        var retiredSourceIds = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "peer-reviewed-paper",
+            "peer-reviewed-review",
         };
         foreach (var source in sources)
         {
@@ -91,8 +96,13 @@ public class ResearchArtifactValidatorTests
                 continue;
             }
 
-            Assert.Equal("pending-human-legal", source["rights"]!["reviewStatus"]!.GetValue<string>());
-            Assert.Equal("disabled", source["operations"]!["status"]!.GetValue<string>());
+            // Owner decision C3 (2026-09-08) retired these two generic authorization classes, so
+            // "rejected" is their ratified state rather than a pending review. Retirement applies to
+            // the authorization class only; it is not a finding about the underlying literature.
+            var expectedStatus = retiredSourceIds.Contains(sourceId) ? "rejected" : "pending-human-legal";
+            Assert.Equal(expectedStatus, source["rights"]!["reviewStatus"]!.GetValue<string>());
+            var expectedOperations = retiredSourceIds.Contains(sourceId) ? "retired" : "disabled";
+            Assert.Equal(expectedOperations, source["operations"]!["status"]!.GetValue<string>());
             Assert.False(source["acquisition"]!["enabled"]!.GetValue<bool>());
             Assert.Empty(source["rights"]!["allowedUses"]!.AsArray());
         }
@@ -106,7 +116,7 @@ public class ResearchArtifactValidatorTests
             repositoryRoot,
             "research",
             "source-authorization",
-            "recommended-seven-source-decisions.v1.json");
+            "recommended-seven-source-decisions.v2.json");
         var registryPath = Path.Combine(
             repositoryRoot,
             "research",
@@ -130,7 +140,7 @@ public class ResearchArtifactValidatorTests
         Assert.Equal(
             registrySha256,
             artifact.Node["registryBinding"]!["sha256"]!.GetValue<string>());
-        Assert.Equal("3c8425e090f31ea17eb4d6a10f8ea8a5e2f352f753f3c5312fc7fcce80d03e28", registrySha256);
+        Assert.Equal("71ed755fbf532f69ccec516e95aa0c821f645263dc081d97f24a6ab3f9c2503d", registrySha256);
     }
 
     [Fact]
@@ -808,6 +818,7 @@ public class ResearchArtifactValidatorTests
 
     private static LoadedResearchArtifact LoadSevenSourceDecisionArtifact()
     {
+        // These semantic/overlay fixtures intentionally exercise the immutable issued v1 batch.
         var repositoryRoot = Directory.GetParent(TestPaths.BackendRoot())!.FullName;
         var decisionPath = Path.Combine(
             repositoryRoot,

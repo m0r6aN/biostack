@@ -4,3 +4,10 @@
 # "fixing" it would corrupt the patch and break `git apply`.
 *.patch -whitespace
 *.diff  -whitespace
+
+# Authorization artifacts and registry snapshots are bound by raw SHA-256 bytes.
+# Do not let checkout line-ending conversion invalidate their recorded bindings.
+research/source-authorization/*.json -text
+research/source-authorization/snapshots/*.json -text
+research/input/sources/pilot-source-registry.json -text
+backend/src/BioStack.KnowledgeWorker/Schemas/source-authorization-decision*.schema.json -text
