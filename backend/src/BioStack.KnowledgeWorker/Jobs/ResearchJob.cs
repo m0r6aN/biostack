@@ -247,7 +247,7 @@ public sealed class ResearchJob : IResearchJob
                 return null;
             }
 
-            WriteEvidencePacketArtifact(evidencePacketOutputDir, packet);
+            WriteEvidencePacketArtifact(evidencePacketOutputDir, packet, sourceRegistry);
 
             var draft = _compiler.CompileDraft(packet);
             var draftValidation = _substanceValidator.Validate(draft);
@@ -283,14 +283,19 @@ public sealed class ResearchJob : IResearchJob
         }
     }
 
-    private static void WriteEvidencePacketArtifact(string outputDir, JsonNode packet)
+    private static void WriteEvidencePacketArtifact(string outputDir, JsonNode packet, JsonNode? sourceRegistry)
     {
         var canonicalName = ReadString(packet["compound"]?["canonicalName"]);
         var slug = SubstanceRecordNormalizer.Slugify(canonicalName);
         if (slug.Length == 0) return;
 
+        // Apply C1 at export while preserving the input used for draft compilation and review.
+        // Historical reads and client-submitted AI packets also need their own containment;
+        // filtering this writer alone cannot protect those paths. This grants no source authority.
+        var artifact = RestrictedExcerptPolicy.WithholdRestrictedExcerpts(packet, sourceRegistry);
+
         var artifactPath = Path.Combine(outputDir, $"{slug}.json");
-        File.WriteAllText(artifactPath, packet.ToJsonString(JsonOptions));
+        File.WriteAllText(artifactPath, artifact.ToJsonString(JsonOptions));
     }
 
     private void WriteReport(string outputDir, ResearchRunReport report)

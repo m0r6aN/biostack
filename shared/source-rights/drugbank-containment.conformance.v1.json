@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "1.0.0",
+  "scope": "C1 shared semantics, with no optional registry. All excerpt text is synthetic. Includes host lookalikes, missing source metadata, case/space normalization, permitted lanes, null/empty and malformed quote values.",
+  "packet": {
+    "sources": [
+      {
+        "sourceId": "real-host",
+        "url": "https://go.drugbank.com/drugs/DB00010"
+      },
+      {
+        "sourceId": "final-dot",
+        "url": "https://DRUGBANK.COM./record"
+      },
+      {
+        "sourceId": "lookalike-prefix",
+        "url": "https://notdrugbank.com/record"
+      },
+      {
+        "sourceId": "lookalike-suffix",
+        "url": "https://drugbank.com.example.org/record"
+      },
+      {
+        "sourceId": "query-only",
+        "url": "https://example.org/?source=drugbank.com"
+      },
+      {
+        "sourceId": "path-only",
+        "url": "https://example.org/drugbank.com"
+      },
+      {
+        "sourceId": "user-info",
+        "url": "https://drugbank.com@example.org/record"
+      },
+      {
+        "sourceId": "invalid-url",
+        "url": "not-a-url"
+      },
+      {
+        "sourceId": " MIXED-HOST ",
+        "url": "https://Go.DrugBank.com/record"
+      }
+    ],
+    "claims": [
+      {
+        "claimId": "synthetic-conformance",
+        "sourceRefs": [
+          "drugbank-db00010",
+          " BASARIA-2013-JGERONTOL-RCT ",
+          "real-host",
+          "final-dot",
+          "lookalike-prefix",
+          "lookalike-suffix",
+          "query-only",
+          "path-only",
+          "user-info",
+          "invalid-url",
+          " mixed-host ",
+          "dailymed-test",
+          "chembl-chembl5095142",
+          "drugbank-db00052",
+          "drugbank-db00052",
+          "drugbank-db00052"
+        ],
+        "reviewFlags": [
+          "existing-review"
+        ],
+        "extractedEvidence": [
+          {
+            "sourceRef": "drugbank-db00010",
+            "quote": "synthetic text 0",
+            "pageOrSection": "case 0"
+          },
+          {
+            "sourceRef": " BASARIA-2013-JGERONTOL-RCT ",
+            "quote": "synthetic text 1",
+            "pageOrSection": "case 1"
+          },
+          {
+            "sourceRef": "real-host",
+            "quote": "synthetic text 2",
+            "pageOrSection": "case 2"
+          },
+          {
+            "sourceRef": "final-dot",
+            "quote": "synthetic text 3",
+            "pageOrSection": "case 3"
+          },
+          {
+            "sourceRef": "lookalike-prefix",
+            "quote": "synthetic text 4",
+            "pageOrSection": "case 4"
+          },
+          {
+            "sourceRef": "lookalike-suffix",
+            "quote": "synthetic text 5",
+            "pageOrSection": "case 5"
+          },
+          {
+            "sourceRef": "query-only",
+            "quote": "synthetic text 6",
+            "pageOrSection": "case 6"
+          },
+          {
+            "sourceRef": "path-only",
+            "quote": "synthetic text 7",
+            "pageOrSection": "case 7"
+          },
+          {
+            "sourceRef": "user-info",
+            "quote": "synthetic text 8",
+            "pageOrSection": "case 8"
+          },
+          {
+            "sourceRef": "invalid-url",
+            "quote": "synthetic text 9",
+            "pageOrSection": "case 9"
+          },
+          {
+            "sourceRef": " mixed-host ",
+            "quote": "synthetic text 10",
+            "pageOrSection": "case 10"
+          },
+          {
+            "sourceRef": "dailymed-test",
+            "quote": "synthetic text 11",
+            "pageOrSection": "case 11"
+          },
+          {
+            "sourceRef": "chembl-chembl5095142",
+            "quote": "synthetic text 12",
+            "pageOrSection": "case 12"
+          },
+          {
+            "sourceRef": "drugbank-db00052",
+            "quote": null,
+            "pageOrSection": "case 13"
+          },
+          {
+            "sourceRef": "drugbank-db00052",
+            "quote": "",
+            "pageOrSection": "case 14"
+          },
+          {
+            "sourceRef": "drugbank-db00052",
+            "quote": {
+              "unexpected": "synthetic malformed quote"
+            },
+            "pageOrSection": "case 15"
+          }
+        ]
+      }
+    ],
+    "ops": {
+      "needsReview": true,
+      "qualityFlags": [
+        "existing-flag"
+      ]
+    }
+  },
+  "expectedQuotes": [
+    null,
+    null,
+    null,
+    null,
+    "synthetic text 4",
+    "synthetic text 5",
+    "synthetic text 6",
+    "synthetic text 7",
+    "synthetic text 8",
+    "synthetic text 9",
+    null,
+    "synthetic text 11",
+    "synthetic text 12",
+    null,
+    null,
+    null
+  ]
+}

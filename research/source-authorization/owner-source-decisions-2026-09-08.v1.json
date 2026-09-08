@@ -1,0 +1,207 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "owner-source-permission-decision-receipt",
+  "receiptId": "owner-source-decisions-20260908-001",
+  "recordedAtUtc": "2026-09-08T17:58:45Z",
+  "originalDecisionAtUtc": null,
+  "timestampBasis": "recording-time-after-user-message-not-original-decision-time",
+  "decisionSource": "explicit-user-message-in-authorized-Codex-task",
+  "decisionMaker": {
+    "personName": "Clint Morgan",
+    "capacity": "sole owner; owner review of permissions"
+  },
+  "userMessageVerbatim": "A1: Yes\nB1: Yes\nC1: Contain and re-source\nC2: Approve the two retained excerpts conditionally\nC3: Yes",
+  "reviewedProposal": {
+    "path": "research/source-authorization/OWNER-DECISION-SHEET-2026-09-08.md",
+    "sha256": "29068eff293990545332b89f3d0a07395514232e4302b5a2076d8a17054ab0a7",
+    "gitRevision": "4e62d8d6860b0fef90a3c5ac5b236764d7e9b478"
+  },
+  "historicalInputs": [
+    {
+      "path": "research/source-authorization/recommended-seven-source-decisions.v1.json",
+      "sha256": "a5ad6ef136b3b7628416ea4fc516548dbf3d3fb1f0a77ff74a60e74d54968ea2"
+    },
+    {
+      "path": "research/input/sources/pilot-source-registry.json",
+      "sha256": "248d8f02d9c812f524e7fa48eba3971de8de17b936537d74df15a82898445d8f"
+    }
+  ],
+  "scopeDisclaimer": "These are actual scoped owner decisions. They are not external licences, a blanket approval of the 23 other dispositions, a replacement of the issued registry binding, source activation, evidence promotion, or release/deployment approval.",
+  "decisions": [
+    {
+      "decisionId": "A1",
+      "decision": "approved",
+      "roleId": "legal-rights-approver",
+      "departingPersonName": "Johnathan Harper",
+      "successorPersonName": "Clint Morgan",
+      "reviewDescription": "owner review of permissions",
+      "supersessionScope": "legal-rights-approver assignment for future decisions; prior decisions remain historical",
+      "effectiveOwners": [
+        {
+          "roleId": "product-owner",
+          "personName": "Clint Morgan",
+          "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
+          "assignmentStatus": "assigned"
+        },
+        {
+          "roleId": "legal-rights-approver",
+          "personName": "Clint Morgan",
+          "assignmentStatus": "assigned"
+        },
+        {
+          "roleId": "evidence-reviewer",
+          "personName": "Clint Morgan",
+          "entraObjectId": "461a4112-8e91-41cb-afef-6889b8f48ff0",
+          "assignmentStatus": "assigned"
+        },
+        {
+          "roleId": "security-data-owner",
+          "personName": "Pradic Patel",
+          "assignmentStatus": "assigned"
+        }
+      ],
+      "preservedControls": [
+        "NCCIH distinct operator/reviewer and actual reviewer action",
+        "Separate stage approvals, including security and evidence review",
+        "Prior issued registry binding remains unchanged"
+      ]
+    },
+    {
+      "decisionId": "B1",
+      "decision": "approved-with-controls",
+      "scope": "Public NCATS GSRS displayed substance name, UNII and record version for the seven reviewed identities",
+      "uniiValues": [
+        "QW68W3J66U",
+        "6Y24O4F92S",
+        "20ED16GHEB",
+        "MU72812GK0",
+        "M9L22Y19H9",
+        "NQX9KB6PCL",
+        "Z9748J6B0R"
+      ],
+      "allowedFields": [
+        "displayedName",
+        "unii",
+        "recordVersion"
+      ],
+      "origin": "https://gsrs.ncats.nih.gov/",
+      "reviewedPublicRecordUrls": [
+        "https://gsrs.ncats.nih.gov/ginas/app/ui/substances/QW68W3J66U",
+        "https://gsrs.ncats.nih.gov/ginas/app/ui/substances/6Y24O4F92S",
+        "https://gsrs.ncats.nih.gov/ginas/app/ui/substances/20ED16GHEB",
+        "https://gsrs.ncats.nih.gov/ginas/app/ui/substances/MU72812GK0",
+        "https://gsrs.ncats.nih.gov/ginas/app/ui/substances/M9L22Y19H9",
+        "https://gsrs.ncats.nih.gov/ginas/app/ui/substances/NQX9KB6PCL",
+        "https://gsrs.ncats.nih.gov/ginas/app/ui/substances/Z9748J6B0R"
+      ],
+      "license": "CC0-1.0",
+      "licenseEvidenceUrl": "https://gsrs.ncats.nih.gov/licensing",
+      "controls": [
+        "Document exact access method before acquisition",
+        "Preserve historical precisionFDA provenance; do not backfill new versions into old observations",
+        "Verify needed fields and notices before proposing broader scope",
+        "Do not infer medical or regulatory approval from UNII validation"
+      ],
+      "outsideThisApproval": [
+        "synonyms",
+        "classifications",
+        "structures",
+        "molecular formulae",
+        "external database identifiers including CAS",
+        "references",
+        "clinical attributes"
+      ],
+      "runtimeActivationGranted": false
+    },
+    {
+      "decisionId": "C1",
+      "decision": "contain-and-re-source",
+      "registryClass": "drugbank",
+      "scope": {
+        "sourceIdsAtDecision": 24,
+        "referencingClaimsAtDecision": 30,
+        "storedQuoteFieldsAtDecision": 29,
+        "storedQuoteCharsAtDecision": 3501
+      },
+      "authorizedActions": [
+        "Keep DrugBank acquisition disabled",
+        "Exclude the identified retained excerpts from customer display and product AI retrieval",
+        "Re-anchor underlying facts to primary sources with verified reuse scope",
+        "Remove content that cannot be re-sourced after a recorded disposition"
+      ],
+      "controls": [
+        "Preserve historical provenance and review records",
+        "Assess an underlying third-party article independently of its DrugBank index route",
+        "Keep unresolved claims blocked; do not invent replacement evidence"
+      ],
+      "productionContainmentVerified": false
+    },
+    {
+      "decisionId": "C2",
+      "decision": "approved-with-controls",
+      "scope": "Only the two retained ChEMBL identifier excerpts bound below; no whole-database approval",
+      "items": [
+        {
+          "packetPath": "research/input/evidence/pemvidutide.evidence.json",
+          "packetSha256AtDecision": "86a8ee39aca95f8e6b2af9d18672fa39dc1bcc9605433913f89030b51c11059e",
+          "claimId": "pemvidutide-mechanism-dual-agonist-001",
+          "sourceId": "chembl-chembl5095142",
+          "evidenceIndexAtDecision": 1,
+          "quoteSha256": "e9fbf0b204ac7e49321551670a72f73c5771ebbc815b84189b07003680c96523",
+          "quoteChars": 57,
+          "sourceTitle": "Pemvidutide (CHEMBL5095142)",
+          "sourceUrl": "https://www.ebi.ac.uk/chembl/explore/compound/CHEMBL5095142",
+          "sourcePublisher": "ChEMBL / European Bioinformatics Institute (EMBL-EBI)",
+          "accessedAt": "2026-08-29T00:00:00Z",
+          "locator": "Molecule record"
+        },
+        {
+          "packetPath": "research/input/evidence/survodutide.evidence.json",
+          "packetSha256AtDecision": "4fa7972c7643ac45e7761bb8e040946d9a78869d4939e56f02988876141eee73",
+          "claimId": "survodutide-identity-mechanism-001",
+          "sourceId": "chembl-molecule-chembl5314776",
+          "evidenceIndexAtDecision": 5,
+          "quoteSha256": "657df06e987e31e9c481f3beabc355307feac4cc33c102957c0fb20f0c346251",
+          "quoteChars": 68,
+          "sourceTitle": "Survodutide - ChEMBL Molecule Record (CHEMBL5314776)",
+          "sourceUrl": "https://www.ebi.ac.uk/chembl/api/data/molecule/search?q=survodutide&format=json",
+          "sourcePublisher": "European Bioinformatics Institute (EMBL-EBI) / ChEMBL",
+          "accessedAt": "2026-08-29T00:00:00Z",
+          "locator": "ChEMBL molecule search API"
+        }
+      ],
+      "license": "CC-BY-SA-3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "licenseEvidenceUrl": "https://chembl.gitbook.io/chembl-interface-documentation/frequently-asked-questions/general-questions",
+      "controls": [
+        "Record and carry appropriate attribution with reused material",
+        "Link the licence and identify any changes or excerpting",
+        "Apply redistribution terms to licensed material and adaptations actually distributed",
+        "Review any broader derived dataset separately; no commercial-software calculations approved",
+        "These name/identifier excerpts do not independently substantiate a mechanism or clinical claim"
+      ],
+      "runtimeActivationGranted": false
+    },
+    {
+      "decisionId": "C3",
+      "decision": "retire-authorization-classes",
+      "registryClasses": [
+        "peer-reviewed-paper",
+        "peer-reviewed-review"
+      ],
+      "scope": "Retire the two generic classes as authorization mechanisms, not the underlying literature",
+      "claimSourcePairsAtDecision": 21,
+      "distinctReferencingClaimsAtDecision": 17,
+      "measurementNote": "The reviewed proposal called the 21 claim/source pairs 21 claims. Independent enumeration finds 17 distinct packet/claim pairs. The owner-approved class scope is unchanged.",
+      "authorizedActions": [
+        "Preserve disabled/rejected class enforcement",
+        "Re-anchor affected claims to specific source items with their own rights and provenance records"
+      ],
+      "controls": [
+        "No blanket source registration or paper approval",
+        "No deletion of literature solely because it used a placeholder class"
+      ]
+    }
+  ],
+  "implementationStatusAtRecording": "Owner decisions recorded; enforcement and re-sourcing tracked separately"
+}

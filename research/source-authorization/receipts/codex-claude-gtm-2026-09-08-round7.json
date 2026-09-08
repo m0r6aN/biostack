@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "biostack-gtm-20260908",
+  "adapter_kind": "host_agent",
+  "transport": "interactive_ui",
+  "authority": "none",
+  "effect_capability": "none",
+  "destination": {
+    "provider": "Anthropic",
+    "application": "Claude desktop",
+    "window_title": "Claude — BioStack go-to-market status",
+    "conversation_verified": true,
+    "model_label": "Opus 5 / High"
+  },
+  "data_classification": "internal",
+  "send_confirmation": {
+    "required": false,
+    "obtained": true,
+    "evidence": "User explicitly requested monitoring the open Claude desktop session and working with Claude to resolve BioStack GTM blockers. Messages identify Codex and stay within that collaboration."
+  },
+  "observed_workers": [
+    {
+      "label": "Claude Opus 5 / High",
+      "evidence": "Visible model/effort labels in the verified session; completed final review was read in the accessibility document."
+    }
+  ],
+  "availability_transitions": [
+    "app_found",
+    "window_found",
+    "session_verified",
+    "composer_ready",
+    "send_confirmed",
+    "response_complete"
+  ],
+  "sent_context_sha256": "c6ff814bcdc012ceea047ec3d3e97af65164b199f79184f71bb6b3e07f3a22fc",
+  "requested_lanes": [
+    "Read-only review of frontend containment, actual provider/read boundaries, generated-copy packaging and the historical-file correction; no edits or Git actions"
+  ],
+  "response_status": "complete",
+  "artifacts": [
+    "frontend/src/lib/research/restricted-excerpts.ts",
+    "frontend/src/app/api/research/artifacts/route.ts",
+    "frontend/src/app/api/research/suggest/route.ts",
+    "scripts/sync-source-rights.mjs",
+    "shared/source-rights/drugbank-containment.conformance.v1.json",
+    "research/source-authorization/C1-CONTAINMENT-REVIEW-2026-09-08.md"
+  ],
+  "validation": {
+    "owner": "Codex",
+    "methods": [
+      "Read the completed read-only review and reconciled all three findings against current files",
+      "Added one shared synthetic conformance fixture to both suites; corrected worker normalization and quote handling differences exposed by the contract",
+      "Applied containment unconditionally at the existing artifact reader without moving its production or authentication gates",
+      "Final frontend tests: 22 passed. Full worker tests: 902 passed, 8 failed, 910 total; all 21 containment cases passed and failure names match prior baseline exactly",
+      "Ran actual frontend helper across the original corpus: exactly 29 excerpts / 3501 Unicode characters withheld, preserving provenance and original bytes",
+      "Verified generated copies, successful/failing drift-check cases, owner decisions and quote-free queue"
+    ],
+    "passed": true
+  },
+  "deviations": [
+    "Claude's claim that both implementations already agreed on trim/null handling was too broad: the worker did not trim IDs and skipped empty or non-string quotes. Codex aligned these while adding shared conformance coverage.",
+    "Claude's missing-copy concern is handled by including both generated copies in the commit and keeping the fail-closed CI check; no permissive fallback was added.",
+    "Targeted local ESLint could not start due to a missing espree module. Production TypeScript validation and the stated tests passed; no lint success or Docker/deployment validation is claimed."
+  ],
+  "dissent": [
+    "Arbitrary renamed or forged provenance is outside retained-corpus containment; the filter is not a general source-authentication mechanism.",
+    "Historical-file purge/regeneration instructions were withdrawn. Tested serving responses are filtered while originals remain preserved; direct/deployed/cached consumers are still unverified.",
+    "No claim is counted as re-sourced yet. The full suite's eight pre-existing failures and applicable release gates remain open."
+  ]
+}

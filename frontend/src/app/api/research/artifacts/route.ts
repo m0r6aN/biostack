@@ -1,6 +1,7 @@
 import { readFile } from 'fs/promises';
 import { NextRequest } from 'next/server';
 import path from 'path';
+import { withholdDrugBankExcerpts } from '@/lib/research/restricted-excerpts';
 
 type ArtifactScope = 'repo' | 'data-source';
 
@@ -90,7 +91,8 @@ export async function GET(request: NextRequest) {
   // Read and return the artifact
   try {
     const content = await readFile(filePath, 'utf-8');
-    return Response.json(JSON.parse(content));
+    const parsed = JSON.parse(content);
+    return Response.json(withholdDrugBankExcerpts(parsed));
   } catch {
     return Response.json({ error: 'Artifact not found' }, { status: 404 });
   }

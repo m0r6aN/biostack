@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "biostack-gtm-20260908",
+  "adapter_kind": "host_agent",
+  "transport": "interactive_ui",
+  "authority": "none",
+  "effect_capability": "none",
+  "destination": {
+    "provider": "Anthropic",
+    "application": "Claude desktop",
+    "window_title": "Claude — BioStack go-to-market status",
+    "conversation_verified": true,
+    "model_label": "Opus 5 / High"
+  },
+  "data_classification": "internal",
+  "send_confirmation": {
+    "required": false,
+    "obtained": true,
+    "evidence": "User explicitly requested monitoring the open Claude desktop session and working with Claude to resolve BioStack GTM blockers. Messages identify Codex and stay within that collaboration."
+  },
+  "observed_workers": [
+    {
+      "label": "Claude Opus 5 / High",
+      "evidence": "Visible model and effort labels in the verified BioStack session."
+    },
+    {
+      "label": "Explore / Sonnet",
+      "evidence": "Claude's completed worker implementation report names a read-only Sonnet Explore lane. This is a provider-reported worker identity, not an independently observed subagent UI."
+    }
+  ],
+  "availability_transitions": [
+    "app_found",
+    "window_found",
+    "session_verified",
+    "composer_ready",
+    "send_confirmed",
+    "response_complete"
+  ],
+  "sent_context_sha256": "bae14b290a120d12ae84f49fbe91162106b240cba9c40f58bef9d30bed011afd",
+  "requested_lanes": [
+    "Implement the explicitly approved C1 containment in the worker; trace downstream quote paths and prepare a replacement-source queue while Codex records the five actual owner decisions"
+  ],
+  "response_status": "partial",
+  "artifacts": [
+    "backend/src/BioStack.KnowledgeWorker/Pipeline/RestrictedExcerptPolicy.cs",
+    "backend/tests/BioStack.KnowledgeWorker.Tests/RestrictedExcerptPolicyTests.cs",
+    "research/source-authorization/DRUGBANK-CONTAINMENT-IMPLEMENTATION-2026-09-08.md",
+    "research/source-authorization/C1-CONTAINMENT-REVIEW-2026-09-08.md"
+  ],
+  "validation": {
+    "owner": "Codex",
+    "methods": [
+      "Read the completed Claude response and initial implementation report",
+      "Independently traced the optional registry branch, evidence artifact write/read and actual AI request construction",
+      "Compared the policy's six-class behavior with the explicit C1 DrugBank scope",
+      "Validated the owner receipt separately against the user's exact five answers; did not infer decisions from Claude"
+    ],
+    "passed": false
+  },
+  "deviations": [
+    "Initial patch was not accepted as completed containment. Its helper tests pinned fail-open behavior without a registry and implicit full release from partial permission.",
+    "A second bounded correction request was sent; no owner reconfirmation was needed because the user already selected contain and re-source."
+  ],
+  "dissent": [
+    "C1-01 through C1-04 remain remediation requirements at this round: optional-registry export, client packet replay, historical artifact reads and partial-permission release.",
+    "28 co-cited claims are candidates, not proven replacements. No claim was actually re-sourced by this round."
+  ]
+}

@@ -2,13 +2,13 @@
 
 Status: active. This is a coordination and verification handoff, not a source approval or launch clearance. It supplements the existing `docs/INITIATIVES/biostack-production-readiness/` initiative; its older gate observations must not be mistaken for current deployment evidence.
 
-**Current checkpoint:** four collaboration rounds are complete. The inventory fix and earlier factual corrections reached main through [PR #289](https://github.com/m0r6aN/biostack/pull/289), merged at `2026-09-08T17:34:15Z`. The later [owner-decision sheet](OWNER-DECISION-SHEET-2026-09-08.md) has now been corrected by Codex and independently reviewed by Claude; it remains unsigned. Codex owns publishing this documentation follow-up and has not merged or deployed anything in this collaboration. The sections below preserve earlier snapshots; the post-merge evidence supersedes their current-state counts. Scheduled technical follow-up remains active.
+**Current checkpoint:** Clint explicitly answered all five choices: A1 Yes; B1 Yes; C1 contain and re-source; C2 conditionally approve the two retained excerpts; C3 Yes. The [new owner receipt](owner-source-decisions-2026-09-08.v1.json) records these decisions against the reviewed proposal. They are no longer pending confirmation. [Implementation status](OWNER-DECISION-IMPLEMENTATION-2026-09-08.md) records their effects and boundaries. Codex and Claude have implemented and reviewed local DrugBank containment across worker exports, historical artifact reads and AI requests; per-item re-sourcing remains open. Codex owns final Git work. No merge, deployment or production write was performed by either agent in this phase. The earlier sections below are historical snapshots; the latest checkpoint at the end supersedes their current-state statements. The 15-minute follow-up remains active.
 
 ## Scope and ownership
 
-Clint explicitly requested monitoring and collaboration with the existing Claude desktop conversation, **BioStack go-to-market status**, to resolve GTM blockers. Codex verified that conversation and its visible **Opus 5 / High** label, read the completed response, and submitted a bounded follow-up. Claude owns preparing the existing six-file source-review set as separate reviewable commits and a draft PR, plus `CLAUDE-GTM-BLOCKER-HANDOFF-2026-09-08.md`. Codex owns independent verification and this handoff. Neither agent is recording owner/legal approval, changing authorization bindings, enabling sources, deleting evidence, merging or deploying.
+Clint explicitly requested monitoring and collaboration with the existing Claude desktop conversation, **BioStack go-to-market status**, to resolve GTM blockers. Codex verified that conversation and its visible **Opus 5 / High** label, read the completed response, and submitted bounded follow-ups. Initially Claude owned the six-file source-review set and his handoff; Codex owned independent verification. After Clint's actual decisions arrived, Claude owned the worker containment implementation and Codex owned the decision receipt, frontend containment, shared packaging and final Git work. Earlier prohibitions on inventing approvals do not negate Clint's subsequently explicit five choices. Issued authorization bindings, source activation and deployment gates remain unchanged.
 
-Starting checkout: `lead/source-authorization-v2-proposal-20260908` at `defdf97`, with the six pre-existing source metadata, inventory and rights-document changes. This review does not reinterpret earlier agent-authored documents as instructions from Clint. The pending source decisions remain pending; the user's commercial/no-paid-licences constraint remains authoritative.
+Starting checkout: `lead/source-authorization-v2-proposal-20260908` at `defdf97`, with the six pre-existing source metadata, inventory and rights-document changes. This review does not reinterpret earlier agent-authored documents as instructions from Clint. The user's commercial/no-paid-licences constraint remains authoritative. Source decisions were pending at that initial snapshot; the five actual later choices are now recorded separately.
 
 ## Independent validation
 
@@ -114,3 +114,75 @@ The initial PR #289 checks at `bbcd3a8` still failed Build & Deploy and the stru
 **Next heartbeat priorities:** first verify the intended Claude conversation and fresh Git state. Then continue the narrow public-GSRS field/notice comparison for the two cited CAS/formula excerpts, preserving the original precisionFDA provenance and unresolved IGF-1 LR3 identifier discrepancy. If that lane is waiting on an external source, a read-only URL-group review map can be prepared from the existing inventory, retaining every alias, packet occurrence, date and citation locator. Do not turn the 285 unregistered IDs into a blanket registration backlog. Return only concrete additional scope decisions after the evidence is ready. These tasks need no fabricated source approval and can progress while the owner considers the unsigned sheet.
 
 Keep the 15-minute heartbeat active and quiet while unchanged. Pause it only when the bounded collaboration is complete or meaningful further progress actually depends on user action; record that action once. The desktop conversation may auto-archive after completion, so re-verify or locate the same session rather than opening an unrelated one. The overall go-to-market release status remains **HOLD / not established**.
+
+## Owner decisions received and containment implemented
+
+Clint's exact message is preserved in the new owner receipt, with a recording timestamp distinguished
+from the unknown original message time. A1 changes only the future legal-rights-approver assignment;
+B1 records the seven public GSRS name/UNII/version scopes and actual manual access method; C2 binds
+the two exact ChEMBL excerpts and their attribution conditions; C3 records retirement of the two
+generic authorization classes, preserving the ten underlying source items. The C3 denominator is
+corrected to 21 claim/source pairs across 17 distinct claims. No reconfirmation is required.
+
+The owner-decision proposal reached main through [PR #290](https://github.com/m0r6aN/biostack/pull/290),
+merged externally at `2026-09-08T18:13:08Z`, merge `e3821938cb289b63e186778254814169aef5c1a0`.
+The new implementation branch starts at that main commit with an identical source tree:
+`codex/owner-decisions-drugbank-containment-20260908`. The new receipt does not rewrite the prior
+seven-source decision or its still-mismatched registry binding.
+
+Round 5's initial worker patch was not accepted as completed containment: missing registries released
+quotes, partial permission released all text, its scope covered six classes, and old artifacts/client
+packets bypassed its writer. [Receipt 5](receipts/codex-claude-gtm-2026-09-08-round5.json) records partial
+acceptance. Codex filed C1-01 through C1-04, then requested a narrow correction within the approved C1
+scope. Claude corrected the worker and generated a durable queue. [Receipt 6](receipts/codex-claude-gtm-2026-09-08-round6.json)
+accepts that worker correction, with remaining limits explicit. Claude reported a read-only Sonnet
+Explore trace; this is a provider-reported worker identity, not independently observed subagent UI.
+
+Codex implemented the frontend reader/provider boundaries and a shared authoritative manifest with
+generated application-local copies. The copy check is required by both relevant workflows before
+build/publish; worker runtime/storage verification also includes the containment tests. Historical
+files stay preserved while the tested reader filters their responses. Direct copies, alternative
+consumers and deployed caches are not established as contained. The rule does not authenticate the
+provenance of arbitrary submitted text.
+
+Claude's final read-only review accepted the historical-file correction and identified useful
+cross-application drift coverage. Codex added one shared synthetic conformance fixture consumed by
+both suites, aligning padded source-ID and empty/non-string quote handling, and applied the reader
+policy to all returned artifacts (it is a no-op when the expected claim structure is absent).
+The missing-generated-copy concern is addressed by committing both copies and the existing failing
+CI check; no skip or fail-open fallback was introduced. The final validation is recorded in the
+[containment review](C1-CONTAINMENT-REVIEW-2026-09-08.md) and
+[receipt 7](receipts/codex-claude-gtm-2026-09-08-round7.json): **22 frontend tests passed; final worker
+suite 902 passed / 8 failed / 910 total**, with all 21 containment cases passing and the same eight
+baseline failure names. The full suite remains failed. The owner receipt, quote-free queue and all
+seven collaboration receipts were independently validated.
+
+Fresh main CI at `e382193` still reports [Build & Deploy failure](https://github.com/m0r6aN/biostack/actions/runs/34261726756)
+and [structural-report failure](https://github.com/m0r6aN/biostack/actions/runs/34261726780). Secret scan
+and the offline verification kit succeeded. This is current release evidence, not a claim that the
+existing production site is down. No release clearance follows from the five source decisions.
+
+### Next authorized follow-up
+
+Publish and verify this containment checkpoint, then work through the
+[30-claim queue](drugbank-resource-queue-2026-09-08.json) with Claude. It presently records **zero
+actually re-sourced claims**, 28 with unassessed co-citation candidates and two ligandrol claims with
+none. Assess each candidate's actual support, item/version rights and acquisition method before
+recording a replacement. Preserve original citations/dates and record disposition; do not silently
+delete literature or turn a generic source class into authority. C2's display/export admission
+controls and the retired placeholders' item-level re-anchoring remain separate execution work.
+
+Initial read-only replacement research found a useful dulaglutide candidate: FDA's
+[Office of Clinical Pharmacology Review, reference 5067311](https://www.fda.gov/media/164321/download?attachment=),
+pages 3 and 6, supports the receptor class and mechanism portion. It does not, in the reviewed
+passages, independently establish every Fc-fusion/renal-clearance clause in the current compound claim.
+FDA's [website policy](https://www.fda.gov/about-fda/about-website/website-policies) permits reuse of its
+own content unless noted, while third-party material requires separate attention. The
+[current DailyMed label](https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=463050bd-2b1c-40f5-b3c3-0a04bb433309&version=60)
+carries a Lilly copyright notice; it must not be blanket-labelled public domain. These are review
+leads, not activated or completed replacements. A direct PMC read of the Basaria article met a
+browser-check page; no fresh full-text licence verification was inferred from the search result.
+
+The automation prompt now includes the five actual choices and these boundaries. Keep it quiet while
+unchanged. Continue independent technical and source-item work without asking to reconfirm those
+choices. No merge, deployment, production write or paid licence purchase is authorized.

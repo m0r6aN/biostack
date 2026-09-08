@@ -80,4 +80,17 @@
     </None>
   </ItemGroup>
 
+  <!--
+    The DrugBank excerpt-containment scope from owner decision C1. shared/source-rights/ is
+    authoritative; scripts/sync-source-rights.mjs generates this in-project copy so the Docker build
+    context stays self-contained, and CI rejects a stale copy. Embedding it means the worker enforces
+    C1 without depending on an optional registry file being supplied at run time, and the frontend
+    imports the same manifest so both surfaces contain exactly one scope. RestrictedExcerptPolicy
+    throws if this resource is missing rather than emitting uncontained artifacts.
+  -->
+  <ItemGroup>
+    <EmbeddedResource Include="SourceRights\drugbank-containment.v1.json"
+                      LogicalName="BioStack.KnowledgeWorker.SourceRights.drugbank-containment.v1.json" />
+  </ItemGroup>
+
 </Project>
