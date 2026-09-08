@@ -29,12 +29,12 @@
       "sourceId": "dailymed-tamoxifen-citrate-label",
       "sourceType": "regulator-label",
       "authorityTier": "A1",
-      "title": "Label: tamoxifen citrate - Tamoxifen Citrate tablet",
-      "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+      "title": "Label: tamoxifen citrate - Tamoxifen Citrate tablet (SPL set id 8f642753-9e12-433c-a0bc-ab33dac41ddf, displayed update April 20, 2007)",
+      "publisher": "Andrx Pharmaceuticals (labeler; an SPL is authored by the labeler, not by FDA or NLM). Hosted by DailyMed, National Library of Medicine",
       "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8f642753-9e12-433c-a0bc-ab33dac41ddf",
       "doi": null,
       "pmid": null,
-      "publishedAt": null,
+      "publishedAt": "2007-04-20T00:00:00Z",
       "accessedAt": "2026-08-29T01:58:43Z"
     },
     {
@@ -75,7 +75,7 @@
     },
     {
       "sourceId": "frontiers-2025-illegal-pct-aas",
-      "sourceType": "human-survey-study",
+      "sourceType": "laboratory-product-analysis-study",
       "authorityTier": "C1",
       "title": "Illegal and falsified medicines self-administrated in not approved post-cycle therapy after the cessation of anabolic-androgenic steroids - qualitative analysis",
       "publisher": "Frontiers in Chemistry (2025)",
@@ -84,15 +84,39 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T01:58:43Z"
+    },
+    {
+      "sourceId": "pmc3596060-atlas-davies-2013-primary",
+      "sourceType": "controlled-human-study",
+      "authorityTier": "B2",
+      "title": "Long-term effects of continuing adjuvant tamoxifen to 10 years versus stopping at 5 years after diagnosis of oestrogen receptor-positive breast cancer: ATLAS, a randomised trial",
+      "publisher": "The Lancet (Davies C, Pan H, Godwin J, et al., 2013;381:805-816); hosted by PubMed Central, National Library of Medicine (NIH), as PMC3596060",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3596060/",
+      "doi": "10.1016/S0140-6736(12)61963-1",
+      "pmid": "23219286",
+      "publishedAt": null,
+      "accessedAt": "2026-09-07T00:00:00Z"
+    },
+    {
+      "sourceId": "dailymed-soltamox-oral-solution-label",
+      "sourceType": "regulator-label",
+      "authorityTier": "A1",
+      "title": "Label: SOLTAMOX - tamoxifen citrate solution (SPL set id 1e6ff055-590c-41e6-9530-1fdf04cdbd02, version 2)",
+      "publisher": "Mayne Pharma (labeler; an SPL is authored by the labeler, not by FDA or NLM). Hosted by DailyMed, National Library of Medicine",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e6ff055-590c-41e6-9530-1fdf04cdbd02",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": "2021-12-01T00:00:00Z",
+      "accessedAt": "2026-09-07T00:00:00Z"
     }
   ],
   "claims": [
     {
       "claimId": "tamoxifen-approved-indication-001",
       "claimType": "approved-indication",
-      "statement": "Tamoxifen citrate is FDA-approved for metastatic breast cancer in women and men, adjuvant treatment of node-positive and node-negative breast cancer, ductal carcinoma in situ (DCIS) following breast surgery and radiation, and reduction of breast cancer incidence in women at high risk (5-year predicted risk >=1.67% by the Gail model).",
+      "statement": "Tamoxifen citrate is FDA-approved for metastatic breast cancer in women and men; for adjuvant treatment of node-positive breast cancer in postmenopausal women following total mastectomy or segmental mastectomy, axillary dissection and breast irradiation; for adjuvant treatment of axillary-node-negative breast cancer in women following those same surgical and radiation procedures; for reduction in the risk of invasive breast cancer in women with ductal carcinoma in situ (DCIS) following breast surgery and radiation, which is a risk-reduction purpose and not treatment of existing DCIS; and for reduction in the incidence of breast cancer in women at high risk, where the cited label defines high risk as women at least 35 years of age with a 5-year predicted breast cancer risk of at least 1.67% by the Gail model. The incidence-reduction indication is limited to those high-risk women and to women with DCIS. LABEL CURRENCY: this list is taken from a single labeler's 2007 tablet SPL (Andrx, setid 8f642753-9e12-433c-a0bc-ab33dac41ddf). The currently maintained Soltamox tamoxifen citrate oral solution SPL (Mayne Pharma, version 2, published 2021-12-01, setid 1e6ff055-590c-41e6-9530-1fdf04cdbd02) restricts the metastatic and adjuvant indications to adults with ER-positive breast cancer; that restriction is absent from the 2007 tablet SPL, so the 2007 wording must not be presented as the current labeled scope.",
       "context": {
-        "population": "women and men with breast cancer; high-risk women for risk reduction",
+        "population": "metastatic: women and men. Node-positive adjuvant: postmenopausal women, postoperative. Node-negative adjuvant: women, postoperative. Risk reduction: women with DCIS, and high-risk women at least 35 years of age. The current Soltamox SPL restricts metastatic and adjuvant use to ER-positive adults.",
         "route": "oral",
         "formulation": "tablet / oral solution (Soltamox)",
         "useCase": "breast cancer treatment, adjuvant therapy, DCIS, and risk reduction",
@@ -101,22 +125,37 @@
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": true,
-      "sourceRefs": ["dailymed-tamoxifen-citrate-label"],
+      "sourceRefs": ["dailymed-tamoxifen-citrate-label", "dailymed-soltamox-oral-solution-label"],
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-tamoxifen-citrate-label",
           "quote": "Metastatic breast cancer in women and men; Adjuvant treatment of node-positive and node-negative breast cancer; Ductal carcinoma in situ (DCIS) following breast surgery and radiation; Reduction of breast cancer incidence in women at high risk with a 5-year predicted risk >=1.67%",
-          "pageOrSection": "Indications and Usage"
+          "pageOrSection": "Indications and Usage - NOTE: this quote is a compressed paraphrase assembled by the 2026-08-29 extraction pass, not verbatim label text. The verbatim fragments recorded by the 2026-09-05 independent review follow."
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "node-positive breast cancer in postmenopausal women",
+          "pageOrSection": "Indications and Usage - verbatim fragment recorded by the 2026-09-05 independent review"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "women at least 35 years of age",
+          "pageOrSection": "Indications and Usage, high-risk definition - verbatim fragment recorded by the 2026-09-05 independent review"
+        },
+        {
+          "sourceRef": "dailymed-soltamox-oral-solution-label",
+          "quote": null,
+          "pageOrSection": "Indications and Usage - NOT retrieved in this pass. The restriction of the metastatic and adjuvant indications to ER-positive adults is recorded as a finding of the 2026-09-07 independent re-review; no verbatim text from this SPL is anchored here."
         }
       ],
-      "reviewFlags": ["fetched via WebFetch summarization tool rather than raw HTML; verify exact indication wording against live label at review time"]
+      "reviewFlags": ["fetched via WebFetch summarization tool rather than raw HTML; verify exact indication wording against live label at review time", "tamoxifen-correction-2026-09-07: restored the labeled population and setting limits the 2026-09-05 review found missing: age at least 35 for the high-risk incidence-reduction indication, postmenopausal and postoperative scope for node-positive adjuvant use, postoperative scope for node-negative adjuvant use, and the DCIS indication stated as reduction of invasive breast cancer risk rather than treatment of existing DCIS.", "tamoxifen-correction-2026-09-07: label currency made explicit. The packet's only A1 source was a single labeler's 2007 SPL; the currently maintained Soltamox SPL (v2, 2021-12-01) is now cited alongside it and restricts the metastatic and adjuvant indications to ER-positive adults. OPEN: neither SPL was retrieved in this pass, the Soltamox SPL has no verbatim anchor here, the 2007 SPL's Indications quote is a paraphrase rather than verbatim text, and no per-item alias for dailymed-soltamox-oral-solution-label has been registered in the approved dailymed registry class, so its A1 tier is packet-self-asserted until that registration happens.", "tamoxifen-correction-2026-09-07: the 1.67% five-year Gail threshold stated here is the label's figure. The NSABP P-1 primary states the eligibility threshold as at least 1.66%. Both are recorded and neither replaces the other; see tamoxifen-efficacy-nsabp-p1-001."]
     },
     {
       "claimId": "tamoxifen-warning-boxed-001",
       "claimType": "warning",
-      "statement": "Tamoxifen carries an FDA boxed warning for serious, sometimes fatal, uterine malignancies, stroke, and pulmonary embolism occurring at elevated rates during risk-reduction use, with endometrial adenocarcinoma reported at 2.20 per 1,000 women-years on tamoxifen versus 0.71 on placebo, and pulmonary embolism at 0.75 versus 0.25 per 1,000 women-years.",
+      "statement": "The tamoxifen citrate label carries a boxed warning for serious and sometimes fatal uterine malignancies, stroke and pulmonary embolism, and its scope covers BOTH women taking tamoxifen to reduce the incidence of breast cancer in the high-risk setting AND women with ductal carcinoma in situ (DCIS). On the 2007 Andrx tablet SPL the boxed warning reports, per 1,000 women-years: endometrial adenocarcinoma 2.20 on tamoxifen versus 0.71 on placebo; uterine sarcoma 0.17 versus 0.04; stroke 1.43 versus 1.00; and pulmonary embolism 0.75 versus 0.25. These comparisons do not share one denominator or one observation window and must not be combined. The uterine rates come from updated NSABP P-1 follow-up at a median of 6.9 years and derive from 53 versus 17 endometrial adenocarcinomas among the 8,306 women who had an intact uterus at randomization. The stroke and pulmonary embolism rates come from an earlier data cut-off at approximately 4.2 years median follow-up over the full randomized denominators of 6,681 women on tamoxifen and 6,707 on placebo, with 18 versus 6 pulmonary embolism events. All are rates per 1,000 women-years, not percentages and not risks per 1,000 randomized women. The label's stroke rate ratio has a confidence interval crossing 1, so the numerically higher stroke rate is not a demonstrated statistically significant increase. LABEL CURRENCY: the boxed warning is reworded on the currently maintained Soltamox SPL (version 2, published 2021-12-01); that current wording has not been retrieved and is not anchored in this packet, so the 2007 text must not be presented as the current boxed warning.",
       "context": {
-        "population": "women using tamoxifen for breast cancer risk reduction",
+        "population": "women using tamoxifen to reduce breast cancer incidence in the high-risk setting AND women with DCIS; the incidence figures derive from the NSABP P-1 prevention cohort",
         "route": "oral",
         "formulation": "tamoxifen citrate tablet",
         "useCase": "boxed-warning safety disclosure",
@@ -125,7 +164,7 @@
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": true,
-      "sourceRefs": ["dailymed-tamoxifen-citrate-label"],
+      "sourceRefs": ["dailymed-tamoxifen-citrate-label", "dailymed-soltamox-oral-solution-label"],
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-tamoxifen-citrate-label",
@@ -136,14 +175,34 @@
           "sourceRef": "dailymed-tamoxifen-citrate-label",
           "quote": "There is evidence of an increased incidence of thromboembolic events, including deep vein thrombosis and pulmonary embolism, during tamoxifen therapy.",
           "pageOrSection": "Warnings"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "2.20 for tamoxifen vs. 0.71 for placebo",
+          "pageOrSection": "Boxed Warning - endometrial adenocarcinoma, per 1,000 women-years (verbatim fragment recorded by the 2026-09-05 independent review)"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "0.75 for tamoxifen versus 0.25 for placebo",
+          "pageOrSection": "Boxed Warning - pulmonary embolism, per 1,000 women-years (verbatim fragment recorded by the 2026-09-05 independent review)"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": null,
+          "pageOrSection": "Boxed Warning and Warnings - the uterine sarcoma rates (0.17 versus 0.04), the stroke rates (1.43 versus 1.00), the 8,306-women intact-uterus denominator, the 53 versus 17 adenocarcinoma counts, the 6.9-year median follow-up for the uterine figures, and the 18 versus 6 pulmonary embolism events over 6,681 and 6,707 randomized women, are recorded from the 2026-09-05 independent review's reading of this label and the 2026-09-07 re-review brief; no verbatim fragment for them was carried into this packet."
+        },
+        {
+          "sourceRef": "dailymed-soltamox-oral-solution-label",
+          "quote": null,
+          "pageOrSection": "Boxed Warning - NOT retrieved in this pass. That the boxed warning is reworded on the current Soltamox SPL is recorded as a finding of the 2026-09-07 independent re-review; no verbatim text from this SPL is anchored here."
         }
       ],
-      "reviewFlags": ["safety-critical regulatory claim", "numeric incidence rates extracted via summarization tool; confirm exact per-1000-women-years figures against raw label table at review time"]
+      "reviewFlags": ["safety-critical regulatory claim", "numeric incidence rates extracted via summarization tool; confirm exact per-1000-women-years figures against raw label table at review time", "tamoxifen-correction-2026-09-07: restored the boxed warning's DCIS scope, which the claim previously omitted, and added the two boxed-warning harms the claim omitted entirely: uterine sarcoma (0.17 versus 0.04 per 1,000 women-years) and stroke (1.43 versus 1.00). Also separated the two data windows and denominators the claim had silently merged: the uterine figures are updated P-1 follow-up at a median of 6.9 years over the 8,306 women with an intact uterus at randomization, while the stroke and pulmonary embolism figures come from an earlier cut-off over the full randomized denominators.", "tamoxifen-correction-2026-09-07: added the label's own statistical qualification on stroke: its rate ratio confidence interval crosses 1, so a numerically higher stroke rate is not a demonstrated significant increase. The prior statement presented all of these harms only as occurring \"at elevated rates\".", "tamoxifen-correction-2026-09-07: label currency made explicit: the boxed warning is reworded on the currently maintained Soltamox SPL (v2, 2021-12-01). OPEN: that current wording has not been retrieved, no verbatim anchor for it exists here, and no per-item alias for dailymed-soltamox-oral-solution-label has been registered in the dailymed registry class. This safety-critical claim still rests on a 2007 single-labeler SPL."]
     },
     {
       "claimId": "tamoxifen-contraindication-001",
       "claimType": "contraindication",
-      "statement": "Tamoxifen is contraindicated in patients with known hypersensitivity to tamoxifen or its ingredients, and, for the risk-reduction indication specifically, in women concurrently on coumarin-type anticoagulants or with a history of deep vein thrombosis or pulmonary embolus.",
+      "statement": "Tamoxifen is contraindicated in patients with known hypersensitivity to tamoxifen or its ingredients. In addition, for the risk-reduction indications specifically - which on the cited label means BOTH reduction in breast cancer incidence in high-risk women AND women with ductal carcinoma in situ (DCIS) - tamoxifen is contraindicated in women who require concomitant coumarin-type anticoagulant therapy and in women with a history of deep vein thrombosis or pulmonary embolus. That anticoagulant and thromboembolic contraindication is indication-specific and must not be broadened to all tamoxifen use: the same label elsewhere contemplates coumarin coadministration outside those indications under careful prothrombin-time monitoring. LABEL CURRENCY: the currently maintained Soltamox SPL (version 2, published 2021-12-01) states this contraindication as warfarin rather than the broader coumarin-type class used on the 2007 Andrx tablet SPL cited here; that current text has not been retrieved and is not anchored in this packet.",
       "context": {
         "population": "prospective tamoxifen users",
         "route": "oral",
@@ -154,15 +213,30 @@
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": true,
-      "sourceRefs": ["dailymed-tamoxifen-citrate-label"],
+      "sourceRefs": ["dailymed-tamoxifen-citrate-label", "dailymed-soltamox-oral-solution-label"],
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-tamoxifen-citrate-label",
           "quote": "Known hypersensitivity to tamoxifen or its ingredients; For risk reduction: concurrent coumarin-type anticoagulants, history of deep vein thrombosis, or history of pulmonary embolus",
-          "pageOrSection": "Contraindications"
+          "pageOrSection": "Contraindications - NOTE: this quote is a compressed paraphrase assembled by the 2026-08-29 extraction pass, not verbatim label text. The verbatim fragments recorded by the 2026-09-05 independent review follow."
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "Reduction in Breast Cancer Incidence in High Risk Women and Women with DCIS",
+          "pageOrSection": "Contraindications, subheading - verbatim fragment recorded by the 2026-09-05 independent review; it establishes that the indication-specific contraindication covers women with DCIS as well as high-risk women"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "require concomitant coumarin-type anticoagulant therapy",
+          "pageOrSection": "Contraindications - verbatim fragment recorded by the 2026-09-05 independent review"
+        },
+        {
+          "sourceRef": "dailymed-soltamox-oral-solution-label",
+          "quote": null,
+          "pageOrSection": "Contraindications - NOT retrieved in this pass. That the current SPL names warfarin rather than coumarin-type anticoagulants is recorded as a finding of the 2026-09-07 independent re-review; no verbatim text from this SPL is anchored here."
         }
       ],
-      "reviewFlags": ["confirm exact contraindication list wording against raw label HTML at review time"]
+      "reviewFlags": ["confirm exact contraindication list wording against raw label HTML at review time", "tamoxifen-correction-2026-09-07: restored the explicit DCIS scope. The previous wording said \"the risk-reduction indication\" in the singular, which could be read as primary prevention in cancer-free women only; the label's contraindication subheading covers high-risk women AND women with DCIS.", "tamoxifen-correction-2026-09-07: added the boundary the 2026-09-05 review required: this is an indication-specific contraindication, not a blanket prohibition on coumarin coadministration in all tamoxifen use.", "tamoxifen-correction-2026-09-07: label currency made explicit: the currently maintained Soltamox SPL states this contraindication as warfarin rather than the coumarin-type class. OPEN and unchanged from the 2026-09-05 review: no independently authored, appropriately authoritative source has been obtained that resolves the exact coumarin-versus-warfarin scope, and no per-item alias for dailymed-soltamox-oral-solution-label has been registered in the dailymed registry class."]
     },
     {
       "claimId": "tamoxifen-mechanism-serm-001",
@@ -186,18 +260,18 @@
           "pageOrSection": "Clinical Pharmacology"
         }
       ],
-      "reviewFlags": ["label mechanism text partly derived from animal test systems; do not present as direct proof of human mechanism-of-efficacy without the human RCT evidence cited elsewhere in this packet"]
+      "reviewFlags": ["label mechanism text partly derived from animal test systems; do not present as direct proof of human mechanism-of-efficacy without the human RCT evidence cited elsewhere in this packet", "tamoxifen-correction-2026-09-07: recorded, not changed. This claim remains UNRESOLVED: the 2026-09-07 independent re-review obtained no different-family corroboration for it, so the 2026-09-05 disposition stands. Statement, evidenceTier, confidence, sourceRefs and extractedEvidence are unchanged by this pass.", "tamoxifen-correction-2026-09-07: tamoxifen is tissue-selective, not a universal estrogen blocker. The competitive antagonism described here is scoped to target tissues such as breast; tamoxifen behaves differently in other tissues, which is why the endometrial malignancy risk recorded in tamoxifen-warning-boxed-001 and tamoxifen-efficacy-atlas-extended-001 exists at all. Do not render this claim as blanket estrogen blockade."]
     },
     {
       "claimId": "tamoxifen-dose-context-001",
       "claimType": "dose-context",
-      "statement": "Labeled clinical-trial protocols underlying tamoxifen's approved uses used 20 mg/day: five years of adjuvant tamoxifen citrate therapy is the regimen supported by clinical trial data for breast cancer treatment, and five years of tamoxifen citrate at 20 mg/day is the regimen studied for reduction of invasive breast cancer incidence in high-risk women. This is trial/label protocol context only, not a use recommendation.",
+      "statement": "Labeled clinical-trial dosing for tamoxifen was NOT uniformly 20 mg/day. The cited label's Dosage and Administration section attributes distinct protocols to named trials: ECOG and NATO used 10 mg twice daily for two years; the Toronto trial used 10 mg three times daily for two years; and NSABP B-14 used 10 mg twice daily for at least five years. For patients with breast cancer that label's recommended daily dose is 20 to 40 mg, with doses above 20 mg/day given in divided doses morning and evening. The 20 mg/day for five years regimen is what the label specifies for DCIS and for reduction of breast cancer incidence in high-risk women, and it is the NSABP P-1 prevention protocol; it is not the protocol of every trial underlying the approved uses. Tablet strengths on this label are expressed as tamoxifen-equivalent doses, so 20 mg of tamoxifen corresponds to 30.4 mg of tamoxifen citrate. This is historical label and trial-protocol context from a 2007 SPL, not a use recommendation, and it must not be read as a current or universal adjuvant duration; the label predates the extended-duration evidence recorded in tamoxifen-efficacy-atlas-extended-001.",
       "context": {
         "population": "adjuvant breast cancer patients; high-risk women (risk reduction)",
         "route": "oral",
-        "formulation": "tamoxifen citrate tablet, 20 mg/day",
+        "formulation": "tamoxifen citrate tablet (2007 Andrx SPL); strengths expressed as tamoxifen-equivalent dose, so 20 mg tamoxifen = 30.4 mg tamoxifen citrate",
         "useCase": "label-referenced clinical trial dosing protocol",
-        "doseText": "20 mg/day for five years (label/trial-protocol context; not a use recommendation)"
+        "doseText": "trial- and indication-specific: 10 mg twice daily for two years (ECOG, NATO), 10 mg three times daily for two years (Toronto), 10 mg twice daily for at least five years (NSABP B-14); 20-40 mg/day for breast cancer, divided above 20 mg/day; 20 mg/day for five years for DCIS and for high-risk incidence reduction (the NSABP P-1 protocol). Label/trial-protocol context only; not a use recommendation"
       },
       "evidenceTier": "Strong",
       "confidence": "moderate",
@@ -213,14 +287,29 @@
           "sourceRef": "dailymed-tamoxifen-citrate-label",
           "quote": "five years of tamoxifen citrate therapy (20 mg/day)",
           "pageOrSection": "Clinical Studies - Breast Cancer Risk Reduction"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "For patients with breast cancer, the recommended daily dose is 20-40 mg.",
+          "pageOrSection": "Dosage and Administration - verbatim fragment recorded by the 2026-09-05 independent review"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "Dosages greater than 20 mg per day should be given in divided doses (morning and evening).",
+          "pageOrSection": "Dosage and Administration - verbatim fragment recorded by the 2026-09-05 independent review"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": null,
+          "pageOrSection": "Dosage and Administration - the trial-specific protocols (ECOG and NATO at 10 mg twice daily and Toronto at 10 mg three times daily, all for two years; NSABP B-14 at 10 mg twice daily for at least five years) and the tamoxifen-equivalent tablet strength (20 mg tamoxifen = 30.4 mg tamoxifen citrate) are recorded from the 2026-09-05 independent review's reading of this label and the 2026-09-07 re-review brief; no verbatim fragment for them was carried into this packet."
         }
       ],
-      "reviewFlags": ["dose-context claim; must never be rendered as a use recommendation", "confirm the label's dedicated Dosage and Administration section text directly, as this extraction drew on the Clinical Studies section"]
+      "reviewFlags": ["dose-context claim; must never be rendered as a use recommendation", "confirm the label's dedicated Dosage and Administration section text directly, as this extraction drew on the Clinical Studies section", "tamoxifen-correction-2026-09-07: DEMONSTRATED ERROR CORRECTED. The prior statement asserted that the labeled trial protocols underlying the approved uses \"used 20 mg/day\". The label's own Dosage and Administration section refutes this: ECOG and NATO at 10 mg twice daily and Toronto at 10 mg three times daily, all for two years, and NSABP B-14 at 10 mg twice daily for at least five years, with 20-40 mg/day given as the breast cancer dose range. Protocols are now attributed to the named trials, and 20 mg/day for five years is scoped to DCIS, high-risk incidence reduction and NSABP P-1.", "tamoxifen-correction-2026-09-07: added the tamoxifen-equivalent unit distinction (20 mg tamoxifen = 30.4 mg tamoxifen citrate) that the 2026-09-05 review required, and dated the context to the 2007 SPL so that a historical five-year figure is not read as a current universal adjuvant duration.", "tamoxifen-correction-2026-09-07: evidenceTier left at Strong and confidence at moderate. The corrected statement now reports only what the A1 label says about its own trial protocols, but that label is a 2007 single-labeler SPL and the currently maintained Soltamox SPL was not retrieved, so its dosing sections are unverified against current labeling."]
     },
     {
       "claimId": "tamoxifen-efficacy-nsabp-p1-001",
       "claimType": "efficacy",
-      "statement": "In the NSABP P-1 randomized, double-blind, placebo-controlled prevention trial in women at increased breast cancer risk, tamoxifen 20 mg/day reduced the cumulative incidence of invasive breast cancer by 49% (43.4 per 1,000 women on placebo vs. 22.0 per 1,000 on tamoxifen through 69 months) and reduced estrogen-receptor-positive tumor incidence by 69%, but this benefit came with an increased rate of endometrial cancer (risk ratio 2.53) and elevated rates of stroke, pulmonary embolism, and deep-vein thrombosis, particularly in women aged 50 and older.",
+      "statement": "In the NSABP P-1 randomized, double-blind, placebo-controlled prevention trial in women at increased breast cancer risk, tamoxifen 20 mg/day reduced the cumulative incidence of invasive breast cancer by 49% (43.4 per 1,000 women on placebo vs. 22.0 per 1,000 on tamoxifen through 69 months) and reduced estrogen-receptor-positive tumor incidence by 69%, but this benefit came with an increased rate of endometrial cancer (risk ratio 2.53) and elevated rates of stroke, pulmonary embolism, and deep-vein thrombosis, particularly in women aged 50 and older. The cited label reports a SEPARATE analysis of the same trial: a 44% reduction in invasive breast cancer incidence (86 versus 156 cases) at a median follow-up of 4.2 years, and 33 versus 14 endometrial cancers, RR 2.48 (95% CI 1.27-4.92). RR 2.53 (95% CI 1.35-4.97) is the primary publication's own figure and RR 2.48 is the label's separate analysis over a different analysis set and data cut-off; the two are recorded unmerged and must never be averaged, reconciled into one number, or presented as versions of a single estimate. The same applies to the eligibility threshold: the primary states it as a 5-year predicted risk of at least 1.66% while the label states 1.67%; both are recorded and neither replaces the other.",
       "context": {
         "population": "women at increased risk of breast cancer (NSABP P-1 cohort)",
         "route": "oral",
@@ -257,25 +346,35 @@
           "sourceRef": "dailymed-tamoxifen-citrate-label",
           "quote": "In the NSABP P-1 trial, 33 cases of endometrial cancer were observed in the tamoxifen group vs. 14 in the placebo group (RR=2.48, 95% CI: 1.27-4.92).",
           "pageOrSection": "Clinical Studies - Breast Cancer Risk Reduction (NSABP P-1)"
+        },
+        {
+          "sourceRef": "dailymed-tamoxifen-citrate-label",
+          "quote": "86 cases- tamoxifen, 156 cases-placebo",
+          "pageOrSection": "Clinical Studies - Breast Cancer Risk Reduction (NSABP P-1); invasive breast cancer counts at the label's 4.2-year median follow-up (verbatim fragment recorded by the 2026-09-05 independent review)"
+        },
+        {
+          "sourceRef": "nsabp-p1-fisher-1998-jnci",
+          "quote": null,
+          "pageOrSection": "Eligibility - the primary states the Gail 5-year predicted risk eligibility threshold as at least 1.66% where the label states 1.67%. Recorded from the 2026-09-07 re-review brief; no verbatim fragment was carried into this packet, and the primary full text remains unretrieved (JNCI returned HTTP 403 and PubMed an interstitial in prior runs)."
         }
       ],
-      "reviewFlags": ["quotes extracted via automated page summarization rather than raw PDF; verify exact figures (49%, 43.4 vs 22.0 per 1000, RR 2.53) against the primary JNCI PDF at review time", "this is a risk-reduction/prevention population, not treatment of existing cancer - do not generalize benefit magnitude across indications", "authority-support-pass 2026-08-29: added the FDA-approved DailyMed label (A1) as an independent regulator source for the same NSABP P-1 trial, fetched live this session. The label's Clinical Studies section reports a different point estimate for the same trial (44% reduction at 4.2-year median follow-up; 33 vs 14 endometrial cancers, RR 2.48) than the primary JNCI publication cited here (49% reduction at 69-month follow-up; RR 2.53) - same direction of effect, differing follow-up duration/point estimate; a human reviewer should reconcile the two figures before publication and must not average or merge them."]
+      "reviewFlags": ["quotes extracted via automated page summarization rather than raw PDF; verify exact figures (49%, 43.4 vs 22.0 per 1000, RR 2.53) against the primary JNCI PDF at review time", "this is a risk-reduction/prevention population, not treatment of existing cancer - do not generalize benefit magnitude across indications", "authority-support-pass 2026-08-29: added the FDA-approved DailyMed label (A1) as an independent regulator source for the same NSABP P-1 trial, fetched live this session. The label's Clinical Studies section reports a different point estimate for the same trial (44% reduction at 4.2-year median follow-up; 33 vs 14 endometrial cancers, RR 2.48) than the primary JNCI publication cited here (49% reduction at 69-month follow-up; RR 2.53) - same direction of effect, differing follow-up duration/point estimate; a human reviewer should reconcile the two figures before publication and must not average or merge them.", "tamoxifen-correction-2026-09-07: CONFIRM recorded; no figure changed. The 2026-09-07 independent re-review confirmed that RR 2.53 is the NSABP P-1 primary's own figure and that the label's RR 2.48 is a separate analysis. They are to stay UNMERGED. The 2026-08-29 authority-support-pass flag on this claim, which directed a human reviewer to \"reconcile the two figures before publication\", is SUPERSEDED to that extent: the correct disposition is to carry both with their own analysis set and cut-off, not to reconcile them into one. Its instruction never to average or merge them stands.", "tamoxifen-correction-2026-09-07: the 2026-08-29 flag's framing of the difference as \"differing follow-up duration\" is misleading and is also superseded: a cumulative-incidence horizon (through 69 months) is not a median follow-up (4.2 years), and the two analyses also differ in analysis set and event counts. The difference is not explained by follow-up length alone.", "tamoxifen-correction-2026-09-07: the eligibility threshold divergence is likewise recorded unmerged: the primary reads at least 1.66%, the label 1.67%. OPEN and unchanged: the primary full text and tables were never retrieved (JNCI 403, PubMed interstitial, Europe PMC abstract only), so the analysis-set, cut-off and endometrial-denominator reconciliation is documented rather than resolved."]
     },
     {
       "claimId": "tamoxifen-efficacy-atlas-extended-001",
       "claimType": "efficacy",
-      "statement": "In the ATLAS randomized trial of women with ER-positive breast cancer already on adjuvant tamoxifen, continuing tamoxifen to 10 years versus stopping at 5 years reduced breast cancer recurrence, reduced mortality, and increased the incidence of endometrial cancer. The numeric estimates this claim previously carried are WITHDRAWN and must not be published or reinstated until the ATLAS primary report (PMID 23219286) is authorized as a source and anchored here. Independent re-review on 2026-09-07 established two defects in those figures: the crude endometrial proportions were computed over the full randomization denominators, although the primary excludes women with hysterectomy recorded at trial entry from that analysis; and they understate the years-5-to-14 cumulative endometrial cancer risk by roughly 1.7-fold. The extended-duration benefit and the endometrial cancer risk must always be presented together and never in isolation.",
+      "statement": "In ATLAS (Davies C, Pan H, Godwin J, et al., Lancet 2013;381:805-816), women with breast cancer who had completed about five years of adjuvant tamoxifen were randomised to continue to 10 years or to stop at 5 years. The primary's own time-to-event estimates for years 5 to 14 after diagnosis, in the ER-POSITIVE EFFICACY POPULATION (3,428 continue versus 3,418 stop), are: cumulative recurrence risk 21.4% versus 25.1%, an absolute reduction of 3.7 percentage points; cumulative breast cancer mortality 12.2% versus 15.0%, an absolute reduction of 2.8 percentage points. Over the whole reported follow-up that same population recorded 617 versus 711 recurrences (log-rank rate ratio 0.84, 95% CI 0.76-0.94, p=0.002), 639 versus 722 deaths from ANY cause (rate ratio 0.87, 95% CI 0.78-0.97, p=0.01), and 331 versus 397 deaths with recurrence (rate ratio 0.83). Against that benefit, in the SEPARATE SAFETY POPULATION - any ER status, and excluding women with a hysterectomy recorded at trial entry, who were 17-18% of the cohort - cumulative endometrial cancer risk for years 5 to 14 was 3.1% versus 1.6% (116 versus 63 events; rate ratio 1.74, 95% CI 1.30-2.34, p=0.0002), with cumulative endometrial cancer mortality 0.4% versus 0.2%. Three boundaries must be kept. First, the crude event proportions (recurrence 18.0% versus 20.8%; any death 18.6% versus 21.1%) are counts over the efficacy-population denominators, NOT cumulative risks. That distinction is what understated the harm here: the crude endometrial proportions, roughly 2.15% versus 1.19% once the trial-entry hysterectomies the primary excludes are taken out, understate the years-5-to-14 cumulative endometrial cancer risk of 3.1% versus 1.6% by roughly 1.7-fold, and the 1.80% versus 0.97% figures this packet previously carried were further understated because they were computed over the full randomisation denominators. Second, the rate ratios are log-rank estimates and are not derived from those crude proportions, so the two must never be paired as though one produced the other. Third, the efficacy population and the safety population are different denominators and must not be mixed; the deaths-with-recurrence row is likewise not identical to the paper's methods-defined breast cancer mortality analysis and must not be substituted for it. The extended-duration benefit and the endometrial cancer risk must always be presented together and never in isolation.",
       "context": {
-        "population": "women with ER-positive breast cancer already completing 5 years of adjuvant tamoxifen",
+        "population": "efficacy analyses: women with ER-positive breast cancer who had completed about 5 years of adjuvant tamoxifen (3,428 continue versus 3,418 stop). Safety analyses: the randomised cohort of any ER status, with uterine-incidence analyses excluding women who had a hysterectomy recorded at trial entry",
         "route": "oral",
         "formulation": "tamoxifen, extended adjuvant therapy",
         "useCase": "extended adjuvant duration (10 vs 5 years) after breast cancer diagnosis",
         "doseText": null
       },
-      "evidenceTier": "Moderate",
+      "evidenceTier": "Strong",
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
-      "sourceRefs": ["atlas-davies-2013-summary-wjc"],
+      "sourceRefs": ["pmc3596060-atlas-davies-2013-primary", "atlas-davies-2013-summary-wjc"],
       "extractedEvidence": [
         {
           "sourceRef": "atlas-davies-2013-summary-wjc",
@@ -291,14 +390,39 @@
           "sourceRef": "atlas-davies-2013-summary-wjc",
           "quote": "1.80% vs. 0.97% (RR 1.74; 95% CI 1.30-2.34; P=0.0002)",
           "pageOrSection": "Outcomes summary - endometrial cancer, 10 vs 5 years tamoxifen"
+        },
+        {
+          "sourceRef": "pmc3596060-atlas-davies-2013-primary",
+          "quote": "analyses of uterine tumour incidence exclude women with hysterectomy recorded at trial entry.",
+          "pageOrSection": "Table 2 footnote - verbatim fragment recorded by the 2026-09-05 independent review"
+        },
+        {
+          "sourceRef": "pmc3596060-atlas-davies-2013-primary",
+          "quote": "Any death",
+          "pageOrSection": "Table 2 row label - the 639 versus 722 counts, the 18.6% versus 21.1% crude proportions and rate ratio 0.87 belong to this ALL-CAUSE row, not to breast cancer mortality"
+        },
+        {
+          "sourceRef": "pmc3596060-atlas-davies-2013-primary",
+          "quote": "Death with recurrence",
+          "pageOrSection": "Table 2 row label - the 331 versus 397 counts and rate ratio 0.83 belong to this row. The paper's methods-defined breast cancer mortality analysis is a separate calculation and this row must not be substituted for it"
+        },
+        {
+          "sourceRef": "pmc3596060-atlas-davies-2013-primary",
+          "quote": "Kaplan-Meier graphs show absolute risks",
+          "pageOrSection": "Statistical methods - the basis of the years-5-to-14 cumulative risk estimates, which are time-to-event estimates and not crude proportions"
+        },
+        {
+          "sourceRef": "pmc3596060-atlas-davies-2013-primary",
+          "quote": null,
+          "pageOrSection": "Results and Table 2 - the restored numeric bundle (efficacy population 3,428 versus 3,418; recurrence 617 versus 711 with RR 0.84; any death 639 versus 722 with RR 0.87; death with recurrence 331 versus 397 with RR 0.83; endometrial cancer 116 versus 63 with RR 1.74; years-5-to-14 cumulative risks 21.4%/25.1%, 12.2%/15.0%, 3.1%/1.6%, and endometrial cancer mortality 0.4%/0.2%) is transcribed from the 2026-09-07 independent re-review's reading of this full text, recorded in research/review-decisions/receipts/rereview-2026-09-07.md, together with the 2026-09-05 review receipt. This correction pass performed no retrieval of its own."
         }
       ],
-      "reviewFlags": ["sourced from a secondary trial-summary page (Wiki Journal Club), not the primary Lancet full text. wave006-correction-2026-09-06: the wave006 re-review fetched the primary full text (PMID 23219286) and demonstrated that the secondary summary mislabels the 18.6% versus 21.1% all-cause mortality comparison as breast cancer mortality. The statement is corrected here, but the primary-text figures, including the years-5-to-14 cumulative risks and the distinct efficacy and safety populations, are NOT yet anchored in this packet: adding the primary source requires source authorization and was deliberately not performed in this correction pass. This claim remains review-gated pending that anchoring and reconciliation.", "extended-duration benefit vs endometrial cancer risk trade-off must be presented together, never in isolation", "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the ATLAS randomized trial...\"); no regulator document supports this claim (searched: DailyMed tamoxifen citrate label, fetched live this session, Clinical Studies section - it contains no ATLAS trial data and instead cites the earlier NSABP B-14 extended-duration study, which concluded 'continuation of therapy beyond 5 years does not provide additional benefit', i.e. the current FDA label does not support and in fact predates/conflicts with the ATLAS 10-vs-5-year finding; also searched fda.gov, no relevant result). Linking the label here would misrepresent it as backing this claim, so no A1/A2 source was added.", "wave006-correction-2026-09-06: authority flags on this claim were left unchanged. The prior efficacy classification is not permission to bypass review of the safety assertions embedded in this claim (endometrial cancer incidence), which the wave006 re-review flagged as requiring eligible A1/A2 support.", "rereview-disposition-2026-09-07: the numeric bundle (recurrence, mortality and endometrial-cancer proportions and their rate ratios) is withdrawn from the statement pending authorization and anchoring of the ATLAS primary (PMID 23219286). Independent re-review verified the 2026-09-06 all-cause-mortality relabel as correct, and additionally established that the endometrial proportions used a denominator the primary excludes and understated the years-5-to-14 cumulative endometrial cancer risk by roughly 1.7-fold. The source quotes are retained in extractedEvidence as an accurate record of what the cited secondary summary says; they are no longer asserted by this claim. evidenceTier lowered Strong -> Moderate because the figures that supported Strong are no longer asserted.", "rereview-disposition-2026-09-07: re-review could not reach the cited secondary summary (HTTP 403), so the recorded assertion that it mislabels the mortality row is unverified in that run and rests on the 2026-09-05 retrieval."]
+      "reviewFlags": ["sourced from a secondary trial-summary page (Wiki Journal Club), not the primary Lancet full text. wave006-correction-2026-09-06: the wave006 re-review fetched the primary full text (PMID 23219286) and demonstrated that the secondary summary mislabels the 18.6% versus 21.1% all-cause mortality comparison as breast cancer mortality. The statement is corrected here, but the primary-text figures, including the years-5-to-14 cumulative risks and the distinct efficacy and safety populations, are NOT yet anchored in this packet: adding the primary source requires source authorization and was deliberately not performed in this correction pass. This claim remains review-gated pending that anchoring and reconciliation.", "extended-duration benefit vs endometrial cancer risk trade-off must be presented together, never in isolation", "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed findings at source-level attribution (\"In the ATLAS randomized trial...\"); no regulator document supports this claim (searched: DailyMed tamoxifen citrate label, fetched live this session, Clinical Studies section - it contains no ATLAS trial data and instead cites the earlier NSABP B-14 extended-duration study, which concluded 'continuation of therapy beyond 5 years does not provide additional benefit', i.e. the current FDA label does not support and in fact predates/conflicts with the ATLAS 10-vs-5-year finding; also searched fda.gov, no relevant result). Linking the label here would misrepresent it as backing this claim, so no A1/A2 source was added.", "wave006-correction-2026-09-06: authority flags on this claim were left unchanged. The prior efficacy classification is not permission to bypass review of the safety assertions embedded in this claim (endometrial cancer incidence), which the wave006 re-review flagged as requiring eligible A1/A2 support.", "rereview-disposition-2026-09-07: the numeric bundle (recurrence, mortality and endometrial-cancer proportions and their rate ratios) is withdrawn from the statement pending authorization and anchoring of the ATLAS primary (PMID 23219286). Independent re-review verified the 2026-09-06 all-cause-mortality relabel as correct, and additionally established that the endometrial proportions used a denominator the primary excludes and understated the years-5-to-14 cumulative endometrial cancer risk by roughly 1.7-fold. The source quotes are retained in extractedEvidence as an accurate record of what the cited secondary summary says; they are no longer asserted by this claim. evidenceTier lowered Strong -> Moderate because the figures that supported Strong are no longer asserted.", "rereview-disposition-2026-09-07: re-review could not reach the cited secondary summary (HTTP 403), so the recorded assertion that it mislabels the mortality row is unverified in that run and rests on the 2026-09-05 retrieval.", "tamoxifen-correction-2026-09-07: numeric bundle RESTORED in corrected form and the primary ANCHORED. The ATLAS primary (Davies et al., Lancet 2013;381:805-816, PMID 23219286, DOI 10.1016/S0140-6736(12)61963-1) is added as pmc3596060-atlas-davies-2013-primary at https://pmc.ncbi.nlm.nih.gov/articles/PMC3596060/. Its host pmc.ncbi.nlm.nih.gov maps to the pmc registry class, registered 2026-09-07, rights approved, tier B2, authorized for mechanism, efficacy-claims and interactions. The source carries the class tier B2 and no higher. This satisfies the precondition the 2026-09-07 re-review set for restoring the figures.", "tamoxifen-correction-2026-09-07: the statement now LEADS with the primary's years-5-to-14 cumulative risks rather than crude proportions. The crude proportions are retained but explicitly labelled as counts over the efficacy-population denominators, and the defect that caused the withdrawal is named on the face of the claim: used in place of the cumulative risk they understate the endometrial risk by roughly 1.7-fold. No crude proportion is paired with a log-rank rate ratio as though the ratio were derived from it.", "tamoxifen-correction-2026-09-07: the efficacy population and the safety population are now explicitly distinct, and the exclusion of women with a hysterectomy recorded at trial entry (17-18% of the cohort) is stated on the face of the claim. Benefit and endometrial risk are stated together, as required.", "tamoxifen-correction-2026-09-07: the deaths-with-recurrence row (331 versus 397, RR 0.83) is carried as its own endpoint and explicitly distinguished from the paper's methods-defined breast cancer mortality analysis, per the 2026-09-05 review's warning against substituting one for the other. Its confidence interval was deliberately not carried, because no figure for it appears in the 2026-09-07 re-review brief.", "tamoxifen-correction-2026-09-07: evidenceTier RAISED Moderate -> Strong, deliberately. The 2026-09-07 withdrawal lowered it to Moderate on the single ground that the figures supporting Strong were no longer asserted. Those figures are asserted again now, this time from the primary rather than from a secondary summary, with the correct populations, denominators and estimator types; the underlying evidence is a large randomised trial reporting its own time-to-event estimates. confidence is deliberately left at moderate rather than raised, because this pass performed no retrieval and the figures are transcribed from the 2026-09-07 re-review receipt. Note also that the pmc class is tier B2, so the anchoring source is not itself A1/A2.", "tamoxifen-correction-2026-09-07: OPEN, unchanged by this pass: the endometrial cancer risk asserted inside this efficacy claim is a safety assertion and still has no eligible A1/A2 source in this packet - no regulator label here reports ATLAS, and the 2007 SPL predates it and reports the earlier NSABP B-14 conclusion against continuation beyond five years. fieldAuthorityRequired was NOT raised. Also open: no per-item alias for pmc3596060-atlas-davies-2013-primary has been registered in the approved pmc registry class, so its B2 tier is packet-self-asserted until that registration happens."]
     },
     {
       "claimId": "tamoxifen-evidence-gap-bodybuilding-pct-001",
       "claimType": "evidence-gap",
-      "statement": "Tamoxifen (Nolvadex) is widely marketed and self-administered in bodybuilding/anabolic-androgenic-steroid (AAS) communities as unsupervised 'post-cycle therapy' (PCT) to restore endogenous testosterone and manage gynecomastia after steroid cycles, despite no evidence-based clinical guidelines supporting this specific use; a 2025 qualitative analysis of illegal and falsified PCT medicines found frequent adverse events among AAS users self-administering SERMs, and product-testing of illicit tamoxifen samples found some were incorrectly labeled or substituted with non-active ingredients, indicating both an efficacy/safety evidence gap and a product-integrity risk distinct from the FDA-approved, prescription, pharmacy-dispensed product.",
+      "statement": "Tamoxifen (Nolvadex) is widely marketed and self-administered in bodybuilding and anabolic-androgenic-steroid (AAS) communities as unsupervised post-cycle therapy (PCT) to restore endogenous testosterone and manage gynecomastia after steroid cycles, although no evidence-based clinical guideline supports that specific use and no controlled human trial in this packet establishes its efficacy or safety. The 2025 Frontiers in Chemistry paper cited here is a LABORATORY COMPOSITION ANALYSIS of 601 police-seized performance-enhancing-drug samples collected January 2020 to August 2024 and tested at the Polish Official Medicines Control Laboratory; it is not a patient survey and reports no patient outcomes. Of 63 samples declaring PCT drugs, seven declared tamoxifen: five contained the declared active ingredient and two were incorrectly labeled, one containing EDTA disodium salt dihydrate and one containing no active ingredient. Tamoxifen was additionally identified as an UNDECLARED active ingredient in seven further samples. This is a selected seized-product sample and does not estimate the composition of the illicit tamoxifen supply generally. The adverse-event percentages sometimes attributed to this paper - decreased libido and erectile dysfunction 24%, acne 21%, fatigue 19%, mood disorders 13%, visual disturbances 5%, arthralgia 4%, insomnia 4%, hot flushes 2% - are NOT its results: they appear in its Introduction, citing Rochoy et al. 2022, an analysis of self-reported bodybuilding-forum posts covering clomiphene and tamoxifen together. They are self-reported forum observations, not tamoxifen-specific incidence measured in any clinical cohort. A product-integrity risk and an efficacy/safety evidence gap are both real here, and both are distinct from the FDA-approved, prescription, pharmacy-dispensed product.",
       "context": {
         "population": "anabolic-androgenic steroid users self-administering unsupervised PCT",
         "route": "oral (gray-market product, unsupervised)",
@@ -319,20 +443,30 @@
         {
           "sourceRef": "frontiers-2025-illegal-pct-aas",
           "quote": "The main adverse events reported by male AAS users to SERMs (clomiphene and tamoxifen) were decreased libido and erectile dysfunction (24%), acne (21%), fatigue (19%), mood disorders (13%), visual disturbances (5%), arthralgia (4%), insomnia (4%), and hot flushes (2%).",
-          "pageOrSection": "Results"
+          "pageOrSection": "Introduction - CORRECTED 2026-09-07. This packet previously labelled this passage \"Results\", which is false. It is Introduction text citing Rochoy et al. 2022, an analysis of bodybuilding-forum posts. It is not a result of the study cited here, and it covers clomiphene and tamoxifen together."
         },
         {
           "sourceRef": "frontiers-2025-illegal-pct-aas",
-          "quote": "Among the 63 samples, seven with declared tamoxifen were tested; five contained the declared API, while two were incorrectly labeled.",
-          "pageOrSection": "Results - product analysis"
+          "quote": "Seven samples with declared tamoxifen were tested; five contained the declared API, while two were incorrectly labeled, and the declared API was absent.",
+          "pageOrSection": "Results - product analysis. CORRECTED 2026-09-07: the sentence previously carried here (\"Among the 63 samples, seven with declared tamoxifen were tested...\") was a synthesized paraphrase, not text from the paper. It is replaced with the verbatim sentence recorded by the 2026-09-05 independent review."
         },
         {
           "sourceRef": "frontiers-2025-illegal-pct-aas",
           "quote": "the self-administration of unapproved PCT using illegal and falsified medicines is dangerous and can be considered a potential threat to consumer health",
           "pageOrSection": "Conclusion"
+        },
+        {
+          "sourceRef": "frontiers-2025-illegal-pct-aas",
+          "quote": "were tested at the Polish Official Medicines Control Laboratory.",
+          "pageOrSection": "Methods - verbatim fragment recorded by the 2026-09-05 independent review; establishes that this is a laboratory composition analysis, not a human survey"
+        },
+        {
+          "sourceRef": "frontiers-2025-illegal-pct-aas",
+          "quote": null,
+          "pageOrSection": "Methods and Results - the sample frame (601 police-seized samples, January 2020 to August 2024; 63 declaring PCT drugs; the two mislabeled tamoxifen products containing EDTA disodium salt dihydrate and no API respectively) and the material omission corrected here (tamoxifen found as an UNDECLARED active ingredient in seven further samples) are recorded from the 2026-09-05 review receipt and the 2026-09-07 re-review brief; no verbatim fragment for them was carried into this packet."
         }
       ],
-      "reviewFlags": ["misinformation-adjacent: popular PCT/gynecomastia marketing claims lack a controlled human evidence base establishing efficacy for this specific unsupervised use pattern", "distinguish clearly from the FDA-approved, prescription-dispensed indications documented elsewhere in this packet", "quotes extracted via automated page summarization; verify exact wording against the Frontiers full-text PDF at review time"]
+      "reviewFlags": ["misinformation-adjacent: popular PCT/gynecomastia marketing claims lack a controlled human evidence base establishing efficacy for this specific unsupervised use pattern", "distinguish clearly from the FDA-approved, prescription-dispensed indications documented elsewhere in this packet", "quotes extracted via automated page summarization; verify exact wording against the Frontiers full-text PDF at review time", "tamoxifen-correction-2026-09-07: DEMONSTRATED ERROR CORRECTED. The 24%/21%/19% adverse-event percentages are Introduction text in the cited paper citing Rochoy et al. 2022, an analysis of bodybuilding-forum posts; they are not results of the cited study. This packet's extractedEvidence labelled that passage \"Results\", which was false. The label is corrected in place, and the statement now attributes the figures to Rochoy et al. and to self-reported forum posts covering clomiphene and tamoxifen together.", "tamoxifen-correction-2026-09-07: DEMONSTRATED ERROR CORRECTED. The source's sourceType was \"human-survey-study\". The study is a laboratory composition analysis of 601 police-seized samples (January 2020 to August 2024) with no patient participants and no patient outcomes; sourceType is changed to laboratory-product-analysis-study and the design is stated on the face of the claim.", "tamoxifen-correction-2026-09-07: MATERIAL OMISSION CORRECTED: tamoxifen was also identified as an UNDECLARED active ingredient in seven further samples. The packet previously reported only the mislabeled declared-tamoxifen products, which understated the product-integrity finding.", "tamoxifen-correction-2026-09-07: a synthesized quote (\"Among the 63 samples, seven with declared tamoxifen were tested...\") was replaced with the verbatim sentence recorded by the 2026-09-05 review. OPEN: the Frontiers full text was not retrieved in this pass, and the undeclared-API and sample-frame figures have no verbatim anchor here."]
     }
   ],
   "conflicts": [
@@ -340,7 +474,7 @@
       "conflictId": "tamoxifen-extended-duration-benefit-risk-001",
       "claimRefs": ["tamoxifen-efficacy-atlas-extended-001"],
       "severity": "high",
-      "summary": "Extending adjuvant tamoxifen from 5 to 10 years (ATLAS trial) reduces breast cancer recurrence and mortality but increases endometrial cancer incidence; the benefit and risk must always be presented together. The ATLAS figures in this packet were extracted from a secondary trial-summary page rather than the primary Lancet full text, and the wave006 re-review confirmed at least one endpoint mislabel in that summary. The crude proportions carried here still require reconciliation against the primary publication years-5-to-14 cumulative risk estimates and its separate efficacy and safety populations before this trade-off is finalized for publication.",
+      "summary": "Extending adjuvant tamoxifen from 5 to 10 years (ATLAS) reduces breast cancer recurrence and mortality but increases endometrial cancer incidence; the benefit and the risk must always be presented together and never in isolation. UPDATED 2026-09-07: the reconciliation this conflict called for is done. The primary Lancet report is now anchored in this packet, the claim leads with the primary's years-5-to-14 cumulative risk estimates, the efficacy and safety populations are stated distinctly, and the exclusion of women with a hysterectomy recorded at trial entry is stated. The conflict stays open for two reasons. First, the benefit-and-risk presentation constraint is a permanent rendering rule rather than something a review can discharge. Second, the endometrial cancer safety assertion embedded in this efficacy claim still has no eligible A1/A2 source in this packet: no regulator label here reports ATLAS, and the cited 2007 SPL predates it and reports the earlier NSABP B-14 conclusion against continuation beyond five years.",
       "resolutionStatus": "needs-human-review"
     },
     {
@@ -356,8 +490,8 @@
         "tamoxifen-efficacy-atlas-extended-001"
       ],
       "severity": "high",
-      "summary": "The secondary trial-summary page cited for ATLAS labels the 18.6% versus 21.1% comparison (RR 0.87) as breast cancer mortality. The primary Lancet report (PMID 23219286) attributes those proportions to deaths from any cause in the ER-positive efficacy population and reports a separate, smaller years-5-to-14 breast cancer mortality estimate. The claim statement has been corrected to all-cause mortality, but this packet still cites only the mislabeling secondary source; the primary publication must be authorized and anchored before these figures are published.",
-      "resolutionStatus": "needs-human-review"
+      "summary": "RESOLVED 2026-09-07 by anchoring the primary. The secondary trial-summary page cited for ATLAS labels the 18.6% versus 21.1% comparison (RR 0.87) as breast cancer mortality. The primary Lancet report (PMID 23219286), now added to this packet as pmc3596060-atlas-davies-2013-primary, labels that row \"Any death\" - all-cause mortality in the ER-positive efficacy population, 639 versus 722 of 3,428 versus 3,418 - and reports years-5-to-14 cumulative breast cancer mortality separately as 12.2% versus 15.0%. The claim now states the endpoints as the primary defines them and takes no figure from the secondary summary; that summary's quotes are retained in extractedEvidence solely as a record of what the page says. Residual limitation, not a reason to reopen: the 2026-09-07 re-review could not reach the secondary page (HTTP 403), so the mislabel finding itself rests on the 2026-09-05 retrieval.",
+      "resolutionStatus": "resolved"
     }
   ],
   "ops": {
@@ -371,7 +505,8 @@
       "Human evidence for the popular bodybuilding/PCT off-label use pattern remains thin to absent; only a single 2025 survey/product-testing study was located.",
       "wave006 re-review (2026-09-05) demonstrated an ATLAS endpoint misclassification (all-cause mortality reported as breast cancer mortality) and crude-proportion versus cumulative-risk conflation; corrected 2026-09-06 in packet-authoring only. Remaining labeled-indication scope, boxed-warning denominators, contraindication scope, dose attribution, NSABP P-1 reconciliation, and PCT source-provenance dispositions are not addressed by that pass.",
       "placeholder-date-cleanup-2026-09-07: 2 placeholder publication dates of the form YYYY-01-01T00:00:00Z were nulled on 2026-09-07 because they encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
-      "rereview-disposition-2026-09-07: ATLAS numeric bundle withdrawn from tamoxifen-efficacy-atlas-extended-001 after independent re-review found a denominator defect and a ~1.7-fold understatement of years-5-to-14 endometrial cancer risk. Re-review also escalated tamoxifen-dose-context-001 and tamoxifen-evidence-gap-bodybuilding-pct-001 to demonstrated errors, and raised a label-currency finding affecting five claims; those remain open."
+      "rereview-disposition-2026-09-07: ATLAS numeric bundle withdrawn from tamoxifen-efficacy-atlas-extended-001 after independent re-review found a denominator defect and a ~1.7-fold understatement of years-5-to-14 endometrial cancer risk. Re-review also escalated tamoxifen-dose-context-001 and tamoxifen-evidence-gap-bodybuilding-pct-001 to demonstrated errors, and raised a label-currency finding affecting five claims; those remain open.",
+      "tamoxifen-correction-2026-09-07: acts on the 2026-09-07 re-review findings. The ATLAS primary (PMID 23219286, PMC3596060) was added under the pmc registry class (B2, registered and rights-approved 2026-09-07) and the withdrawn numeric bundle was restored in corrected form, led by the primary's years-5-to-14 cumulative risks with the efficacy and safety populations kept distinct and the trial-entry hysterectomy exclusion stated; evidenceTier was raised Moderate -> Strong on that anchoring, with confidence deliberately left at moderate. The currently maintained Soltamox SPL (dailymed class, A1) was added and an explicit label-currency position recorded on the indication, boxed-warning and contraindication claims; the 2007 source's publisher was corrected from FDA/NLM to the labeler, Andrx. Demonstrated errors were corrected in tamoxifen-dose-context-001 (trial-specific 10 mg twice or three times daily protocols, not a uniform 20 mg/day) and in tamoxifen-evidence-gap-bodybuilding-pct-001 (adverse-event percentages are Introduction text citing Rochoy et al. 2022, not that study's results; the study is a laboratory analysis of 601 seized samples, not a human survey; tamoxifen was also an undeclared API in seven further samples). tamoxifen-efficacy-nsabp-p1-001 is recorded as confirm, with RR 2.53 and RR 2.48, and the 1.66% and 1.67% eligibility thresholds, deliberately unmerged. tamoxifen-mechanism-serm-001 remains unresolved for want of different-family corroboration. NO retrieval was performed in this pass: every restored figure is transcribed from research/review-decisions/receipts/rereview-2026-09-07.md and the 2026-09-05 wave006 review receipt. STILL OPEN: neither new source has a per-item alias in the source registry, so both tiers are packet-self-asserted; the endometrial safety assertion inside the ATLAS efficacy claim still lacks eligible A1/A2 support; and no source authorityTier or fieldAuthorityRequired value was changed anywhere in this pass."
     ],
     "qualityFlags": [
       "expansion-input",
@@ -385,7 +520,8 @@
       "authority-support-pass-2026-08-29",
       "wave006-correction-pass-2026-09-06",
       "placeholder-date-cleanup-2026-09-07",
-      "rereview-disposition-2026-09-07"
+      "rereview-disposition-2026-09-07",
+      "tamoxifen-correction-2026-09-07"
     ]
   }
 }
