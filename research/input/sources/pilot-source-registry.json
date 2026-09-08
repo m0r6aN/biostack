@@ -1762,7 +1762,6 @@
           "ncbi-livertox-sarms",
           "ncbi-statpearls-raloxifene",
           "nih-livertox-sarms",
-          "pmc2908075-bazedoxifene-safety",
           "statpearls-bazedoxifene",
           "statpearls-melatonin-nbk534823",
           "vitiello-2006-ghrh-cognition-elderly"
@@ -2544,6 +2543,7 @@
           "pmc-serm-male-hypogonadism-meta-2025",
           "pmc-synchronize1-baseline",
           "pmc10733643-phase2-t2d-rct",
+          "pmc2908075-bazedoxifene-safety",
           "pmc5728840-vte-metaanalysis",
           "pmc7466328-doping-controls-review",
           "pmc9070354-setmelanotide-review",
