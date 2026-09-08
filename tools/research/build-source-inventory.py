@@ -9,9 +9,13 @@ Why this exists
 Three separate attempts to count DrugBank exposure produced three different
 answers (30 claims, 24 claims, 29 quotes) because each counted a different
 thing. A claim is not a document, an alias is not a document, and a quote is
-not a claim. Rights review needs the count of *works*, remediation needs the
-count of *stored excerpts*, and neither is the number of claims. This script
-emits all of them from one pass so the numbers stop disagreeing.
+not a claim. This script emits every denominator from one pass -- packet-level
+occurrences, distinct ids, normalized URL groups, claim citations and stored
+excerpts -- so the numbers stop disagreeing and no label overstates the next.
+
+No key here names a legal work. "Normalized URL group" is an acquisition-identity
+grouping; deciding what constitutes one copyrighted work is a human judgement
+this script deliberately does not make.
 
 What this script does NOT do
 ----------------------------
@@ -96,7 +100,7 @@ def split_url(url):
 
 
 def normalize_url(url):
-    """Collapse cosmetic URL differences so one work groups as one work."""
+    """Join host and path+query into one normalized grouping key."""
     host, path = split_url(url)
     return host + path if host else None
 
@@ -127,10 +131,36 @@ def load_authorized_lanes(path):
     return lanes, batch.get("registryBinding", {}).get("sha256")
 
 
+# Per-occurrence source fields carried verbatim from each packet. Retrieval date
+# and URL are the ones that actually vary in practice, so a first-occurrence-wins
+# collector silently answers "when was this retrieved?" with the wrong date.
+OCCURRENCE_FIELDS = [
+    "url", "doi", "pmid", "title", "publisher",
+    "authorityTier", "sourceType", "publishedAt", "accessedAt",
+]
+
+
 def collect_corpus(evidence_glob):
-    """One pass over the packets. Returns per-sourceId records and usage."""
-    records, usage = {}, collections.defaultdict(
-        lambda: {"claims": set(), "quotes": 0, "quoteChars": 0, "compounds": set()}
+    """One pass over the packets, retaining EVERY occurrence of each sourceId.
+
+    An earlier version kept only the first occurrence per id, which discarded
+    later retrieval dates and title/publisher declarations: 634 occurrences
+    collapsed to 621 records, and 10 ids carry per-packet metadata that differs
+    between occurrences (pubchem-cid-44200882 differs in recorded URL). Version
+    and item-level rights review needs each occurrence with the packet it came
+    from, so occurrences are kept whole and differing fields are surfaced rather
+    than resolved here -- picking a winner is a human judgement.
+
+    Citation locators (pageOrSection) are carried per claim because they identify
+    which part of a work an excerpt came from. Quote text is deliberately NOT
+    copied: this inventory records that an excerpt exists and how long it is, and
+    duplicating restricted text into a second artifact would enlarge the very
+    exposure it is meant to measure.
+    """
+    occurrences = collections.defaultdict(list)
+    usage = collections.defaultdict(
+        lambda: {"claims": set(), "quotes": 0, "quoteChars": 0,
+                 "compounds": set(), "locators": []}
     )
     packet_count = 0
 
@@ -138,26 +168,18 @@ def collect_corpus(evidence_glob):
         with open(path, "r", encoding="utf-8") as fh:
             packet = json.load(fh)
         packet_count += 1
+        packet_file = os.path.basename(path)
         compound = packet.get("compound", {})
         name = compound.get("name") if isinstance(compound, dict) else None
-        name = name or os.path.basename(path).replace(".evidence.json", "")
+        name = name or packet_file.replace(".evidence.json", "")
 
         for src in packet.get("sources", []) or []:
             sid = src.get("sourceId")
-            if sid and sid not in records:
-                records[sid] = {
-                    "sourceId": sid,
-                    "url": src.get("url"),
-                    "doi": src.get("doi"),
-                    "pmid": src.get("pmid"),
-                    "title": src.get("title"),
-                    "publisher": src.get("publisher"),
-                    "declaredAuthorityTier": src.get("authorityTier"),
-                    "sourceType": src.get("sourceType"),
-                    "publishedAt": src.get("publishedAt"),
-                    "accessedAt": src.get("accessedAt"),
-                    "firstSeenIn": os.path.basename(path),
-                }
+            if not sid:
+                continue
+            occ = {"packet": packet_file, "compound": name}
+            occ.update({f: src.get(f) for f in OCCURRENCE_FIELDS})
+            occurrences[sid].append(occ)
 
         for claim in packet.get("claims", []) or []:
             cid = claim.get("claimId")
@@ -171,11 +193,44 @@ def collect_corpus(evidence_glob):
                 if quote:
                     usage[ref]["quotes"] += 1
                     usage[ref]["quoteChars"] += len(quote)
+                    usage[ref]["locators"].append({
+                        "packet": packet_file,
+                        "claimId": cid,
+                        "pageOrSection": ev.get("pageOrSection"),
+                        "quoteChars": len(quote),
+                    })
             for ref in cited:
                 usage[ref]["claims"].add(cid)
                 usage[ref]["compounds"].add(name)
 
-    return records, usage, packet_count
+    return occurrences, usage, packet_count
+
+
+def fold_occurrences(sid, occs):
+    """Build one record from a source's occurrences, surfacing disagreement.
+
+    The first occurrence supplies the representative value only so the record has
+    a stable shape. Any field whose occurrences disagree is additionally listed in
+    variantFields with every distinct value and the packets asserting it, so the
+    representative value can never be mistaken for a resolved one.
+    """
+    first = occs[0]
+    rec = {"sourceId": sid}
+    rec.update({f: first.get(f) for f in OCCURRENCE_FIELDS})
+    rec["declaredAuthorityTier"] = rec.pop("authorityTier")
+
+    variants = {}
+    for field in OCCURRENCE_FIELDS:
+        seen = collections.OrderedDict()
+        for occ in occs:
+            seen.setdefault(json.dumps(occ.get(field), sort_keys=True), []).append(occ["packet"])
+        if len(seen) > 1:
+            variants[field] = [{"value": json.loads(v), "packets": p} for v, p in seen.items()]
+
+    rec["occurrenceCount"] = len(occs)
+    rec["occurrences"] = occs
+    rec["variantFields"] = variants
+    return rec
 
 
 def rights_view(entry, lane_authorized):
@@ -207,18 +262,25 @@ def rights_view(entry, lane_authorized):
 def build(args):
     reg, alias_to_class, classes = load_registry(args.registry)
     authorized_lanes, pinned_hash = load_authorized_lanes(args.decisions)
-    records, usage, packet_count = collect_corpus(args.evidence)
+    occurrences, usage, packet_count = collect_corpus(args.evidence)
+    records = {sid: fold_occurrences(sid, occs) for sid, occs in occurrences.items()}
+    occurrence_total = sum(len(o) for o in occurrences.values())
 
     with open(args.registry, "rb") as fh:
         registry_sha = hashlib.sha256(fh.read()).hexdigest()
 
-    # Group by work so duplicate identifiers for one document collapse.
+    # Group by normalized URL. Every distinct URL a record declares contributes a
+    # group, so a source whose occurrences disagree on URL is visible in both.
     work_members = collections.defaultdict(list)
     for sid, rec in records.items():
-        work_members[normalize_url(rec.get("url")) or ("__nourl__:" + sid)].append(sid)
+        urls = {o.get("url") for o in occurrences[sid]} or {None}
+        for u in urls:
+            key = normalize_url(u) or ("__nourl__:" + sid)
+            if sid not in work_members[key]:
+                work_members[key].append(sid)
 
     # split_url is deliberately case-sensitive right of the host, so two records
-    # differing only by case stay separate works. That is the safe direction, but
+    # differing only by case stay separate groups. That is the safe direction, but
     # it must not be silent -- surface them so a real duplicate is not read as two.
     case_variants = collections.defaultdict(set)
     for key in work_members:
@@ -233,16 +295,20 @@ def build(args):
         lane_authorized = cls in authorized_lanes if cls else False
         rights, status, gaps = rights_view(entry, lane_authorized)
 
-        work = normalize_url(rec.get("url")) or ("__nourl__:" + sid)
-        siblings = sorted(s for s in work_members[work] if s != sid)
+        group_keys = sorted({normalize_url(o.get("url")) or ("__nourl__:" + sid)
+                             for o in occurrences[sid]})
+        group = group_keys[0]
+        siblings = sorted({s for k in group_keys for s in work_members[k] if s != sid})
 
         defects = []
         if not cls:
             defects.append("unregistered-sourceid")
         if siblings:
-            defects.append("duplicate-identifiers-for-one-work")
-        if work in case_variant_keys:
+            defects.append("shared-normalized-url-with-other-ids")
+        if any(k in case_variant_keys for k in group_keys):
             defects.append("case-variant-identifiers")
+        if rec["variantFields"]:
+            defects.append("metadata-varies-across-packets")
         if not rec.get("url"):
             defects.append("no-url-recorded")
         if cls and entry:
@@ -270,10 +336,12 @@ def build(args):
             defects.append("aggregator-routed-record")
             defect_index["aggregator-routed-record"] += 1
 
-        u = usage.get(sid, {"claims": set(), "quotes": 0, "quoteChars": 0, "compounds": set()})
+        u = usage.get(sid, {"claims": set(), "quotes": 0, "quoteChars": 0,
+                            "compounds": set(), "locators": []})
         rec.update({
             "registryClass": cls,
-            "workKey": work,
+            "normalizedUrlGroupKey": group,
+            "normalizedUrlGroupKeys": group_keys,
             "acquisitionRouteHost": route_host,
             # The corpus's own publisher string, carried verbatim. It is an
             # UNVERIFIED declaration by whoever wrote the packet, not a checked
@@ -283,12 +351,14 @@ def build(args):
             # on behalf of the Gerontological Society of America. Verifying an owner
             # means reading the work's own notice; this field cannot substitute.
             "declaredPublisherUnverified": rec.get("publisher"),
-            "duplicateIdentifiers": siblings,
+            "sharedNormalizedUrlWith": siblings,
             "usage": {
                 "claimCount": len(u["claims"]),
                 "quoteCount": u["quotes"],
                 "quoteChars": u["quoteChars"],
                 "compounds": sorted(u["compounds"]),
+                # Which part of the work each excerpt came from. No quote text.
+                "citationLocators": u.get("locators", []),
             },
             "rights": rights,
             "defects": defects,
@@ -298,7 +368,7 @@ def build(args):
 
     cited = [i for i in items if i["usage"]["claimCount"] > 0]
     inventory = {
-        "schemaVersion": "1.0.0",
+        "schemaVersion": "2.0.0",
         "recordType": "source-inventory",
         "generatedAtUtc": datetime.datetime.now(datetime.timezone.utc)
         .replace(microsecond=0).isoformat().replace("+00:00", "Z"),
@@ -317,15 +387,26 @@ def build(args):
             "evidenceGlob": args.evidence,
             "packetsRead": packet_count,
         },
+        "formatChange": (
+            "2.0.0 renames the 1.0.0 keys distinctWorks/distinctWorksCited/workKey/"
+            "duplicateIdentifiers to normalizedUrlGroups/normalizedUrlGroupsCited/"
+            "normalizedUrlGroupKey/sharedNormalizedUrlWith, so that no key name "
+            "asserts a legal work; adds sourceOccurrences, occurrences, "
+            "occurrenceCount, variantFields and usage.citationLocators. The only "
+            "in-repo consumer of the 1.0.0 names was this script."
+        ),
         "counts": {
+            # Packet-level occurrences, >= distinctSourceIds. An id appearing in
+            # several packets is several occurrences, and they may disagree.
+            "sourceOccurrences": occurrence_total,
             "distinctSourceIds": len(items),
-            # Records sharing a normalized URL. Kept under this key for stability,
-            # but it is an acquisition-identity grouping, NOT a count of legally
-            # distinct works: one URL can serve different versions or formats of a
-            # work over time. Establishing a distinct work is a human judgement.
-            "distinctWorks": len({i["workKey"] for i in items}),
+            # Records sharing a normalized URL. An acquisition-identity grouping,
+            # NOT a count of legally distinct works: one URL can serve different
+            # versions or formats of a work over time, and one work can be served
+            # from several URLs. Establishing a distinct work is a human judgement.
+            "normalizedUrlGroups": len({k for i in items for k in i["normalizedUrlGroupKeys"]}),
             "distinctSourceIdsCited": len(cited),
-            "distinctWorksCited": len({i["workKey"] for i in cited}),
+            "normalizedUrlGroupsCited": len({k for i in cited for k in i["normalizedUrlGroupKeys"]}),
             "totalClaimCitations": sum(i["usage"]["claimCount"] for i in items),
             "totalStoredQuotes": sum(i["usage"]["quoteCount"] for i in items),
             "totalStoredQuoteChars": sum(i["usage"]["quoteChars"] for i in items),
@@ -340,14 +421,14 @@ def build(args):
         entry = classes.get(cls, {})
         inventory["byClass"][cls] = {
             "sourceIds": len(members),
-            "works": len({i["workKey"] for i in members}),
+            "normalizedUrlGroups": len({k for i in members for k in i["normalizedUrlGroupKeys"]}),
             "claimCitations": sum(i["usage"]["claimCount"] for i in members),
             "storedQuotes": sum(i["usage"]["quoteCount"] for i in members),
             "reviewStatus": (entry.get("rights") or {}).get("reviewStatus"),
             "acquisitionEnabled": (entry.get("acquisition") or {}).get("enabled"),
             "coveredByDecisionBatch": cls in authorized_lanes,
-            "hosts": sorted({urlparse(i["url"]).netloc.lower().replace("www.", "")
-                             for i in members if i.get("url")}),
+            "hosts": sorted({urlparse(o["url"]).netloc.lower().replace("www.", "")
+                             for i in members for o in i["occurrences"] if o.get("url")}),
         }
 
     unregistered = [i["sourceId"] for i in items if not i["registryClass"]]
@@ -365,7 +446,8 @@ def summarize(inv, stream):
     w("  registry sha256           %s\n" % inp["registrySha256"][:16])
     w("  matches decision binding  %s\n" % inp["registryMatchesDecisionBinding"])
     w("\nCounts that are not interchangeable:\n")
-    w("  normalized URL groups     %d   (a grouping, not a count of legally\n" % c["distinctWorks"])
+    w("  source occurrences        %d   (packet-level; >= distinct ids)\n" % c["sourceOccurrences"])
+    w("  normalized URL groups     %d   (a grouping, not a count of legally\n" % c["normalizedUrlGroups"])
     w("                                 distinct works -- one URL can serve\n")
     w("                                 several versions or formats)\n")
     w("  distinct sourceIds        %d   (identifiers, inflated by duplicates)\n" % c["distinctSourceIds"])
@@ -377,11 +459,11 @@ def summarize(inv, stream):
         for k, v in inv["defectCounts"].items():
             w("  %-38s %d\n" % (k, v))
     w("\n%-24s %6s %6s %7s %7s  %-9s %s\n"
-      % ("class", "works", "ids", "claims", "quotes", "acquire", "status"))
+      % ("class", "groups", "ids", "claims", "quotes", "acquire", "status"))
     for cls, s in sorted(inv["byClass"].items(), key=lambda kv: -kv[1]["storedQuotes"]):
         flag = "" if s["coveredByDecisionBatch"] else "  <- no decision batch"
         w("%-24s %6d %6d %7d %7d  %-9s %s%s\n"
-          % (cls[:24], s["works"], s["sourceIds"], s["claimCitations"], s["storedQuotes"],
+          % (cls[:24], s["normalizedUrlGroups"], s["sourceIds"], s["claimCitations"], s["storedQuotes"],
              str(s["acquisitionEnabled"]), s["reviewStatus"], flag))
     if inv.get("unregisteredSourceIds"):
         w("\nunregistered sourceIds: %d\n" % len(inv["unregisteredSourceIds"]))
