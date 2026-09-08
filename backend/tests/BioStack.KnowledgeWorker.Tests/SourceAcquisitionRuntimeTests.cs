@@ -651,7 +651,7 @@ public sealed class SourceAcquisitionRuntimeTests
             repositoryRoot,
             "research",
             "source-authorization",
-            "recommended-seven-source-decisions.v1.json");
+            "recommended-seven-source-decisions.v2.json");
         var registryPath = Path.Combine(
             repositoryRoot,
             "research",

@@ -42,7 +42,7 @@ from urllib.parse import urlparse
 
 DEFAULT_REGISTRY = "research/input/sources/pilot-source-registry.json"
 DEFAULT_EVIDENCE_GLOB = "research/input/evidence/*.evidence.json"
-DEFAULT_DECISIONS = "research/source-authorization/recommended-seven-source-decisions.v1.json"
+DEFAULT_DECISIONS = "research/source-authorization/recommended-seven-source-decisions.v2.json"
 DEFAULT_OUT = "research/output/source-inventory"
 
 # Fields a rights review needs per admitted item. Anything absent from the

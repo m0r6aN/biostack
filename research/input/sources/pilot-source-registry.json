@@ -37,27 +37,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://accessdata.fda.gov/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -145,27 +141,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.cdc.gov/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -658,10 +650,10 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Rights ratified by the product owner on 2026-09-07. Data access is separately unavailable.",
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
         "termsUrl": null,
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
+        "verifiedAtUtc": null,
         "allowedUses": [],
         "prohibitedUses": [
           "all-acquisition-and-use-until-human-legal-approval"
@@ -672,7 +664,7 @@
         "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
+        "status": "disabled",
         "ownerRole": null,
         "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
@@ -757,27 +749,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.ema.europa.eu/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -1050,27 +1038,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.fda.gov/advisory-committees/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -1152,27 +1136,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.fda.gov.ph/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -1254,27 +1234,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.federalregister.gov/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -1354,27 +1330,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://recalls-rappels.canada.ca/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -1458,27 +1430,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.hsa.gov.sg/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -1563,10 +1531,10 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Rights ratified by the product owner on 2026-09-07 for source-cited factual fields and short contextual excerpts.",
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
         "termsUrl": null,
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
+        "verifiedAtUtc": null,
         "allowedUses": [],
         "prohibitedUses": [
           "all-acquisition-and-use-until-human-legal-approval"
@@ -1577,7 +1545,7 @@
         "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
+        "status": "disabled",
         "ownerRole": null,
         "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
@@ -1664,27 +1632,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.mdpi.com/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -1780,27 +1744,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.ncbi.nlm.nih.gov/books/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -1885,27 +1845,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.cancer.gov/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -2228,27 +2184,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://academic.oup.com/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -2563,27 +2515,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://pmc.ncbi.nlm.nih.gov/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -2998,27 +2946,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.semanticscholar.org/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -3101,27 +3045,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.usada.org/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -3204,27 +3144,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.uspreventiveservicestaskforce.org/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {
@@ -3306,27 +3242,23 @@
         ]
       },
       "rights": {
-        "reviewStatus": "approved",
-        "legalBasisOrLicense": "Public government publication used for source-cited factual fields and short contextual excerpts; ratified by the product owner on 2026-09-07.",
-        "termsUrl": "https://www.vada-testing.org/",
-        "verifiedAtUtc": "2026-09-07T00:00:00Z",
-        "allowedUses": [
-          "Retrieve and normalize public factual records into a provenance-preserving candidate lane, preserving citation and attribution.",
-          "Use source-cited factual fields and short contextual excerpts for internal evidence processing and, after applicable claim review, user-facing informational context."
-        ],
+        "reviewStatus": "pending-human-legal",
+        "legalBasisOrLicense": null,
+        "termsUrl": null,
+        "verifiedAtUtc": null,
+        "allowedUses": [],
         "prohibitedUses": [
-          "Copyrighted full text beyond the reviewed license or public-domain boundary, private or personal data, uncited or fabricated claims, and content outside the source context.",
-          "Diagnosis, prescribing, clinician impersonation, individualized directives to start, stop or change treatment, and guaranteed safety or outcome claims."
+          "all-acquisition-and-use-until-human-legal-approval"
         ],
         "redistributionConstraints": [
-          "Attribute the publisher and link the cited record; do not present excerpts as BioStack's own assessment."
+          "not-reviewed"
         ],
-        "reviewedByRole": "product-owner"
+        "reviewedByRole": null
       },
       "operations": {
-        "status": "active",
-        "ownerRole": "product-owner",
-        "securityOwnerRole": "security-data-owner",
+        "status": "disabled",
+        "ownerRole": null,
+        "securityOwnerRole": null,
         "lastReviewedAtUtc": "2026-09-07T00:00:00Z"
       },
       "acquisition": {

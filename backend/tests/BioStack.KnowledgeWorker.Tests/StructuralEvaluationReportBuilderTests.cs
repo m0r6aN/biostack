@@ -37,7 +37,7 @@ public sealed class StructuralEvaluationReportBuilderTests
         Assert.Equal(57, report.Payload.CorpusInventory.SeedRecordCount);
         Assert.Equal(16, report.Payload.CorpusInventory.CandidateRecordCount);
         Assert.Equal(78, report.Payload.CorpusInventory.EvidencePacketCount);
-        Assert.Equal(13, report.Payload.CorpusInventory.SourceRegistryRecordCount);
+        Assert.Equal(30, report.Payload.CorpusInventory.SourceRegistryRecordCount);
         Assert.Equal(12, report.Payload.CorpusInventory.SeedCandidateOverlapCount);
         Assert.Equal(45, report.Payload.CorpusInventory.SeedOnlyCanonicalIds.Count);
         Assert.Equal(4, report.Payload.CorpusInventory.CandidateOnlyCanonicalIds.Count);

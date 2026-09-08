@@ -16,7 +16,7 @@ public sealed class CorpusIdentityInventoryBuilderTests
         Assert.Equal(57, snapshot.SeedRecordCount);
         Assert.Equal(16, snapshot.CandidateRecordCount);
         Assert.Equal(78, snapshot.EvidencePacketCount);
-        Assert.Equal(13, snapshot.SourceRegistryRecordCount);
+        Assert.Equal(30, snapshot.SourceRegistryRecordCount);
         Assert.Equal(12, snapshot.SeedCandidateOverlapCount);
         Assert.Equal(45, snapshot.SeedOnlyCanonicalIds.Count);
         Assert.Equal(4, snapshot.CandidateOnlyCanonicalIds.Count);

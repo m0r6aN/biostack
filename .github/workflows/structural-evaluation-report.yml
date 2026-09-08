@@ -73,7 +73,7 @@ jobs:
             .payload.corpusInventory.seedRecordCount == 57 and
             .payload.corpusInventory.candidateRecordCount == 16 and
             .payload.corpusInventory.evidencePacketCount == 78 and
-            .payload.corpusInventory.sourceRegistryRecordCount == 13 and
+            .payload.corpusInventory.sourceRegistryRecordCount == 30 and
             .payload.corpusInventory.seedCandidateOverlapCount == 12 and
             (.payload.corpusInventory.identityTokenCollisions | length) == 2 and
             (.payload.corpusInventory.externalIdentifierCollisions | length) == 0 and

@@ -21,7 +21,7 @@ FROM mcr.microsoft.com/dotnet/runtime:10.0.0@sha256:d13bea17080a4fea1a7295a4fe29
 WORKDIR /app
 COPY --from=build /app/publish .
 COPY research/research-requests/market-interest-coverage-2026-07-24.v1.json /app/inputs/research-request.json
-COPY research/source-authorization/recommended-seven-source-decisions.v1.json /app/inputs/source-decisions.json
+COPY research/source-authorization/recommended-seven-source-decisions.v2.json /app/inputs/source-decisions.json
 COPY research/input/sources/pilot-source-registry.json /app/inputs/source-registry.json
 
 RUN mkdir -p /app/ResearchOutput \
