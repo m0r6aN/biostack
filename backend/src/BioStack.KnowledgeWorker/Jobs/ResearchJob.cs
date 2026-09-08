@@ -232,7 +232,7 @@ public sealed class ResearchJob : IResearchJob
                 return null;
             }
 
-            var preprocessed = _preprocessor.Preprocess(loaded.Node);
+            var preprocessed = _preprocessor.Preprocess(loaded.Node, sourceRegistry);
             var packet = preprocessed.Packet;
             if (sourceRegistry is not null)
             {
