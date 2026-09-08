@@ -1,5 +1,10 @@
 # Source Activation Review Request — 19 Lanes
 
+> **SUPERSEDED 2026-09-08.** Johnathan Harper is no longer providing legal services for Keon Systems
+> LLC. Clint Morgan is sole owner, operator and decision maker. Use
+> [`LEGAL-APPROVAL-REQUIRED-2026-09-08.md`](LEGAL-APPROVAL-REQUIRED-2026-09-08.md), which covers all
+> 23 rights decisions rather than the 19 lanes below. Retained for the record.
+
 **To:** Johnathan Harper, `legal-rights-approver`
 **Copy:** Clint Morgan (`product-owner`, `evidence-reviewer`), Pradic Patel (`security-data-owner`)
 **Date:** 2026-09-08
