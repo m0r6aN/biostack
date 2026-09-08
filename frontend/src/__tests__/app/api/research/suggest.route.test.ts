@@ -60,6 +60,54 @@ describe('research AI suggestion route', () => {
     expect(await response.json()).toEqual({ error: 'OPENAI_API_KEY is not configured.' });
   });
 
+  it('withholds old submitted DrugBank excerpts from the actual provider payload after consent', async () => {
+    process.env.OPENAI_API_KEY = 'sk-test';
+    process.env.RESEARCH_AI_SUGGEST_ENABLED = 'true';
+    process.env.API_URL = 'http://trusted-biostack.test';
+    delete process.env.NEXT_PUBLIC_API_URL;
+    const submitted = {
+      ...baseBody,
+      evidencePacket: {
+        ...baseBody.evidencePacket,
+        sources: [{ sourceId: 'previously-unknown-id', url: 'https://go.drugbank.com/drugs/DB00010' }],
+        claims: [{ ...baseBody.evidencePacket.claims[0], sourceRefs: ['drugbank-db00052', 'previously-unknown-id', 'dailymed-test'], extractedEvidence: [
+          { sourceRef: 'drugbank-db00052', quote: 'RESTRICTED_BY_KNOWN_ID', pageOrSection: 'section A' },
+          { sourceRef: 'previously-unknown-id', quote: 'RESTRICTED_BY_ACTUAL_HOST', pageOrSection: 'section B' },
+          { sourceRef: 'dailymed-test', quote: 'PERMITTED_SYNTHETIC_QUOTE', pageOrSection: 'section C' },
+        ] }],
+      },
+    };
+    let providerCalls = 0;
+    vi.stubGlobal('fetch', vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url === 'http://trusted-biostack.test/api/v1/consent') {
+        return new Response(JSON.stringify({
+          accepted: true, consentAcceptedAtUtc: '2026-09-02T00:00:00Z', consentVersion: 'v1',
+          declined: false, consentDeclinedAtUtc: null, consentDeclinedVersion: null, currentVersion: 'v1',
+        }), { status: 200, headers: { 'content-type': 'application/json' } });
+      }
+      if (url !== 'https://api.openai.com/v1/responses') throw new Error(`Unexpected test fetch: ${url}`);
+      providerCalls += 1;
+      const wirePayload = String(init?.body);
+      expect(wirePayload).not.toContain('RESTRICTED_BY_KNOWN_ID');
+      expect(wirePayload).not.toContain('RESTRICTED_BY_ACTUAL_HOST');
+      const context = JSON.parse(JSON.parse(wirePayload).input[1].content);
+      expect(context.evidencePacket.claims[0].extractedEvidence).toEqual([
+        { sourceRef: 'drugbank-db00052', quote: null, pageOrSection: 'section A' },
+        { sourceRef: 'previously-unknown-id', quote: null, pageOrSection: 'section B' },
+        { sourceRef: 'dailymed-test', quote: 'PERMITTED_SYNTHETIC_QUOTE', pageOrSection: 'section C' },
+      ]);
+      expect(context.evidencePacket.claims[0].sourceRefs).toEqual(submitted.evidencePacket.claims[0].sourceRefs);
+      expect(context.evidencePacket.qualityFlags).toContain('restricted-source-excerpt-withheld');
+      return new Response(JSON.stringify({ output_text: JSON.stringify({ decision: 'request-changes', summary: 'Review required.' }) }), { status: 200 });
+    }));
+
+    const response = await POST(request(submitted, undefined, { cookie: 'biostack_session=synthetic-session' }));
+    expect(response.status).toBe(200);
+    expect(providerCalls).toBe(1);
+    expect(submitted.evidencePacket.claims[0].extractedEvidence[0].quote).toBe('RESTRICTED_BY_KNOWN_ID');
+  });
+
   it('calls OpenAI and normalizes unsafe promotion suggestions when hard blockers remain', async () => {
     process.env.OPENAI_API_KEY = 'sk-test';
     process.env.OPENAI_REVIEW_MODEL = 'gpt-5.5';

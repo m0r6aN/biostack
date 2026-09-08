@@ -1,0 +1,811 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "drugbank-resource-queue",
+  "generatedAtUtc": "2026-09-08T18:26:33Z",
+  "generatedBy": "Claude Opus 5 for owner decision C1",
+  "policyId": "drugbank-excerpt-containment-20260908",
+  "decisionReceiptPath": "research/source-authorization/owner-source-decisions-2026-09-08.v1.json",
+  "containmentManifest": {
+    "path": "shared/source-rights/drugbank-containment.v1.json",
+    "sha256": "017fa7dcf5cf2df6d5c96c94bada2601dad38e668a91ef5eb7d40ae33a12994f"
+  },
+  "disclaimer": "Work queue only. Records no approval, no re-sourcing and no evidence determination. No quote text is reproduced; only locator and character counts. Every row is blocked pending review: coCitationCandidates are candidates whose substance has NOT been assessed, and the existence of a co-citation is not evidence that it supports the claim.",
+  "counts": {
+    "rows": 30,
+    "distinctClaims": 30,
+    "distinctContainedSourceIds": 21,
+    "withheldExcerpts": 29,
+    "claimsWithCoCitationCandidates": 28,
+    "claimsWithNoCoCitation": 2,
+    "claimsActuallyReSourced": 0,
+    "coCitationCandidatesSubstanceAssessed": 0
+  },
+  "rows": [
+    {
+      "packet": "bazedoxifene.evidence.json",
+      "compound": "Bazedoxifene",
+      "claimId": "bazedoxifene-mechanism-serm-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db06401",
+      "containedUrl": "https://go.drugbank.com/drugs/DB06401",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Summary",
+          "quoteChars": 178
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "pmc3131985-bazedoxifene-review",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "statpearls-bazedoxifene",
+          "registryClass": "ncbi-bookshelf"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "bremelanotide.evidence.json",
+      "compound": "Bremelanotide",
+      "claimId": "bremelanotide-mechanism-mc4r-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db11653",
+      "containedUrl": "https://go.drugbank.com/drugs/DB11653",
+      "withheldExcerpts": [],
+      "coCitationCandidates": [
+        {
+          "sourceId": "dailymed-vyleesi-label",
+          "registryClass": "dailymed"
+        },
+        {
+          "sourceId": "ncbi-bookshelf-bremelanotide-NBK573221",
+          "registryClass": "ncbi-bookshelf"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "bremelanotide.evidence.json",
+      "compound": "Bremelanotide",
+      "claimId": "bremelanotide-identity-external-ids-001",
+      "claimType": "identity",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db11653",
+      "containedUrl": "https://go.drugbank.com/drugs/DB11653",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Identification",
+          "quoteChars": 20
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "fda-gsrs-unii-6y24o4f92s",
+          "registryClass": "fda"
+        },
+        {
+          "sourceId": "pubchem-cid-9941379",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "chorionic-gonadotropin.evidence.json",
+      "compound": "Chorionic gonadotropin",
+      "claimId": "hcg-mechanism-lh-receptor-agonist-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db09126",
+      "containedUrl": "https://go.drugbank.com/drugs/DB09126",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "DrugBank summary / indications",
+          "quoteChars": 160
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "dailymed-pregnyl-label",
+          "registryClass": "dailymed"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "creatine.evidence.json",
+      "compound": "Creatine",
+      "claimId": "creatine-mechanism-atp-phosphocreatine-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db00148",
+      "containedUrl": "https://go.drugbank.com/drugs/DB00148",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Drug summary / description",
+          "quoteChars": 185
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "nih-ods-exercise-athletic-performance-hp",
+          "registryClass": "nih-ods"
+        },
+        {
+          "sourceId": "pubchem-cid-586",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "dulaglutide.evidence.json",
+      "compound": "Dulaglutide",
+      "claimId": "dulaglutide-mechanism-glp1-agonist-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db09045",
+      "containedUrl": "https://go.drugbank.com/drugs/DB09045",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Indication",
+          "quoteChars": 71
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "wikipedia-dulaglutide",
+          "registryClass": "UNREGISTERED"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "exenatide.evidence.json",
+      "compound": "Exenatide",
+      "claimId": "exenatide-mechanism-glp1-agonist-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db01276",
+      "containedUrl": "https://go.drugbank.com/drugs/DB01276",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Summary",
+          "quoteChars": 80
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "dailymed-byetta-label",
+          "registryClass": "dailymed"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "exenatide.evidence.json",
+      "compound": "Exenatide",
+      "claimId": "exenatide-identity-identifiers-001",
+      "claimType": "identity",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db01276",
+      "containedUrl": "https://go.drugbank.com/drugs/DB01276",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Identification",
+          "quoteChars": 34
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "pubchem-cid-45588096",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "ghk-cu.evidence.json",
+      "compound": "GHK-Cu",
+      "claimId": "ghk-cu-identity-pubchem-001",
+      "claimType": "identity",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-prezatide",
+      "containedUrl": "https://go.drugbank.com/drugs/DB11296",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Drug entry description",
+          "quoteChars": 118
+        },
+        {
+          "pageOrSection": "Drug entry description",
+          "quoteChars": 61
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "pubchem-ghk-cu",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "glutathione.evidence.json",
+      "compound": "Glutathione",
+      "claimId": "glutathione-identity-mechanism-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db00143",
+      "containedUrl": "https://go.drugbank.com/drugs/DB00143",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Summary/Description",
+          "quoteChars": 175
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "pubchem-cid-124886",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "lasofoxifene.evidence.json",
+      "compound": "Lasofoxifene",
+      "claimId": "lasofoxifene-mechanism-serm-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db06202",
+      "containedUrl": "https://go.drugbank.com/drugs/DB06202",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Drug summary / meta description",
+          "quoteChars": 154
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "pubchem-cid-216416",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "ligandrol.evidence.json",
+      "compound": "Ligandrol",
+      "claimId": "ligandrol-efficacy-lbm-healthy-men-001",
+      "claimType": "efficacy",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "basaria-2013-jgerontol-rct",
+      "containedUrl": "https://go.drugbank.com/articles/A31488",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Abstract/study summary",
+          "quoteChars": 105
+        },
+        {
+          "pageOrSection": "Abstract/study summary",
+          "quoteChars": 84
+        },
+        {
+          "pageOrSection": "Abstract/study summary",
+          "quoteChars": 153
+        }
+      ],
+      "coCitationCandidates": [],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "ligandrol.evidence.json",
+      "compound": "Ligandrol",
+      "claimId": "ligandrol-adverse-effect-hormone-suppression-001",
+      "claimType": "adverse-effect",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "basaria-2013-jgerontol-rct",
+      "containedUrl": "https://go.drugbank.com/articles/A31488",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Abstract/study summary",
+          "quoteChars": 289
+        },
+        {
+          "pageOrSection": "Abstract/study summary",
+          "quoteChars": 78
+        }
+      ],
+      "coCitationCandidates": [],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "ligandrol.evidence.json",
+      "compound": "Ligandrol",
+      "claimId": "ligandrol-marketing-vs-evidence-gap-001",
+      "claimType": "evidence-gap",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "basaria-2013-jgerontol-rct",
+      "containedUrl": "https://go.drugbank.com/articles/A31488",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Abstract/study summary",
+          "quoteChars": 105
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "fda-consumer-sarms-update",
+          "registryClass": "fda"
+        },
+        {
+          "sourceId": "moreplatesmoredates-lgd4033-marketing",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "viking-vk5211-phase2-hipfracture-2018",
+          "registryClass": "UNREGISTERED"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "liraglutide.evidence.json",
+      "compound": "Liraglutide",
+      "claimId": "liraglutide-mechanism-glp1-analog-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db06655",
+      "containedUrl": "https://go.drugbank.com/drugs/DB06655",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Summary / Description",
+          "quoteChars": 163
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "pubchem-cid-16134956",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "maridebart-cafraglutide.evidence.json",
+      "compound": "Maridebart cafraglutide",
+      "claimId": "maridebart-mechanism-bispecific-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db19339",
+      "containedUrl": "https://go.drugbank.com/drugs/DB19339",
+      "withheldExcerpts": [],
+      "coCitationCandidates": [
+        {
+          "sourceId": "amgen-pr-2024-11-phase2-results",
+          "registryClass": "UNREGISTERED"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "mazdutide.evidence.json",
+      "compound": "Mazdutide",
+      "claimId": "mazdutide-mechanism-dual-agonist-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db19099",
+      "containedUrl": "https://go.drugbank.com/drugs/DB19099",
+      "withheldExcerpts": [],
+      "coCitationCandidates": [
+        {
+          "sourceId": "fiercepharma-mazdutide-nmpa-approval",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "medchemexpress-mazdutide",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "pubchem-cid-167312357",
+          "registryClass": "pubchem"
+        },
+        {
+          "sourceId": "semanticscholar-nejmoa2411528",
+          "registryClass": "semantic-scholar"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "mazdutide.evidence.json",
+      "compound": "Mazdutide",
+      "claimId": "mazdutide-identity-external-ids-001",
+      "claimType": "identity",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db19099",
+      "containedUrl": "https://go.drugbank.com/drugs/DB19099",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Page metadata / summary",
+          "quoteChars": 62
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "gsrs-ncats-mazdutide",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "medchemexpress-mazdutide",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "pubchem-cid-167312357",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "mazdutide.evidence.json",
+      "compound": "Mazdutide",
+      "claimId": "mazdutide-evidence-gap-gray-market-us-001",
+      "claimType": "evidence-gap",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db19099",
+      "containedUrl": "https://go.drugbank.com/drugs/DB19099",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Page metadata / summary",
+          "quoteChars": 62
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "dailymed-mazdutide-search-live",
+          "registryClass": "dailymed"
+        },
+        {
+          "sourceId": "thepreptide-mazdutide-vendor",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "trimrx-mazdutide-blog",
+          "registryClass": "UNREGISTERED"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "oxytocin.evidence.json",
+      "compound": "Oxytocin",
+      "claimId": "oxytocin-mechanism-identity-001",
+      "claimType": "identity",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db00107",
+      "containedUrl": "https://go.drugbank.com/drugs/DB00107",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Summary",
+          "quoteChars": 165
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "dailymed-pitocin-label",
+          "registryClass": "dailymed"
+        },
+        {
+          "sourceId": "pubchem-cid-439302",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "pemvidutide.evidence.json",
+      "compound": "Pemvidutide",
+      "claimId": "pemvidutide-mechanism-dual-agonist-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db18998",
+      "containedUrl": "https://go.drugbank.com/drugs/DB18998",
+      "withheldExcerpts": [],
+      "coCitationCandidates": [
+        {
+          "sourceId": "chembl-chembl5095142",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "lancet-pmid41237796-impact-24wk",
+          "registryClass": "pubmed"
+        },
+        {
+          "sourceId": "medchemexpress-pemvidutide",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "pubmed-39002641-masld-rct",
+          "registryClass": "pubmed"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "pemvidutide.evidence.json",
+      "compound": "Pemvidutide",
+      "claimId": "pemvidutide-regulatory-development-status-001",
+      "claimType": "regulatory",
+      "fieldAuthorityRequired": true,
+      "containedSourceId": "drugbank-db18998",
+      "containedUrl": "https://go.drugbank.com/drugs/DB18998",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Meta description / status",
+          "quoteChars": 52
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "ajmc-breakthrough-therapy-mash",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "altimmune-ir-breakthrough-therapy-mash",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "altimmune-ir-fast-track-aud",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "wikipedia-pemvidutide",
+          "registryClass": "UNREGISTERED"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "raloxifene.evidence.json",
+      "compound": "Raloxifene",
+      "claimId": "raloxifene-identity-identifiers-001",
+      "claimType": "identity",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db00481",
+      "containedUrl": "https://go.drugbank.com/drugs/DB00481",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Summary",
+          "quoteChars": 181
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "chemicalbook-raloxifene",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "pubchem-cid-5035",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "raloxifene.evidence.json",
+      "compound": "Raloxifene",
+      "claimId": "raloxifene-mechanism-serm-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db00481",
+      "containedUrl": "https://go.drugbank.com/drugs/DB00481",
+      "withheldExcerpts": [],
+      "coCitationCandidates": [
+        {
+          "sourceId": "ncbi-statpearls-raloxifene",
+          "registryClass": "ncbi-bookshelf"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "sermorelin.evidence.json",
+      "compound": "Sermorelin",
+      "claimId": "sermorelin-mechanism-ghrh-analog-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db00010",
+      "containedUrl": "https://go.drugbank.com/drugs/DB00010",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Summary/description (page text truncated at source)",
+          "quoteChars": 192
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "pmc-gh-secretagogues-review",
+          "registryClass": "pmc"
+        },
+        {
+          "sourceId": "pubchem-cid-16132413",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "somatropin.evidence.json",
+      "compound": "Somatropin",
+      "claimId": "somatropin-mechanism-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db00052",
+      "containedUrl": "https://go.drugbank.com/drugs/DB00052",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Overview",
+          "quoteChars": 183
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "dailymed-genotropin-label",
+          "registryClass": "dailymed"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "survodutide.evidence.json",
+      "compound": "Survodutide",
+      "claimId": "survodutide-identity-mechanism-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db18989",
+      "containedUrl": "https://go.drugbank.com/drugs/DB18989",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Overview / Clinical trials",
+          "quoteChars": 189
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "chembl-molecule-chembl5314776",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "ncats-gsrs-unii-survodutide",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "pubchem-cid-168429725",
+          "registryClass": "pubchem"
+        },
+        {
+          "sourceId": "zealand-pharma-pipeline",
+          "registryClass": "UNREGISTERED"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "thymosin-alpha-1.evidence.json",
+      "compound": "Thymosin alpha-1",
+      "claimId": "ta1-mechanism-tlr9-thymic-peptide-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db04900",
+      "containedUrl": "https://go.drugbank.com/drugs/DB04900",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Description",
+          "quoteChars": 112
+        },
+        {
+          "pageOrSection": "Drug type",
+          "quoteChars": 46
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "superpower-thymosin-alpha-1",
+          "registryClass": "UNREGISTERED"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "vosilasarm.evidence.json",
+      "compound": "Vosilasarm",
+      "claimId": "vosilasarm-identity-naming-001",
+      "claimType": "identity",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db13939",
+      "containedUrl": "https://go.drugbank.com/drugs/DB13939",
+      "withheldExcerpts": [
+        {
+          "pageOrSection": "Vosilasarm (RAD140 investigational designation), DB13939",
+          "quoteChars": 44
+        }
+      ],
+      "coCitationCandidates": [
+        {
+          "sourceId": "ellipses-sabcs-2022-vosilasarm",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "fda-warrior-labz-warning-letter-2023",
+          "registryClass": "fda"
+        },
+        {
+          "sourceId": "ncats-gsrs-vosilasarm-rad140",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "pubchem-cid-44200882",
+          "registryClass": "pubchem"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    },
+    {
+      "packet": "vosilasarm.evidence.json",
+      "compound": "Vosilasarm",
+      "claimId": "vosilasarm-mechanism-ar-agonist-001",
+      "claimType": "mechanism",
+      "fieldAuthorityRequired": false,
+      "containedSourceId": "drugbank-db13939",
+      "containedUrl": "https://go.drugbank.com/drugs/DB13939",
+      "withheldExcerpts": [],
+      "coCitationCandidates": [
+        {
+          "sourceId": "clbc-lorusso-rad140-phase1-2021",
+          "registryClass": "UNREGISTERED"
+        },
+        {
+          "sourceId": "ellipses-sabcs-2022-vosilasarm",
+          "registryClass": "UNREGISTERED"
+        }
+      ],
+      "disposition": "blocked-pending-re-source",
+      "substanceAssessed": false
+    }
+  ]
+}

@@ -14,6 +14,9 @@ on:
       - "backend/src/BioStack.Infrastructure/**"
       - "backend/src/BioStack.KnowledgeWorker/**"
       - "backend/tests/BioStack.KnowledgeWorker.Tests/**"
+      - "shared/source-rights/**"
+      - "scripts/sync-source-rights.mjs"
+      - "frontend/src/lib/research/source-rights/**"
       - "infra/azure/source-acquisition-jobs.bicep"
       - "infra/azure/source-acquisition-role.bicep"
       - "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-MANAGED-BLOB-SOURCE-ACQUISITION-RUNTIME-018.md"
@@ -35,6 +38,9 @@ on:
       - "backend/src/BioStack.Infrastructure/**"
       - "backend/src/BioStack.KnowledgeWorker/**"
       - "backend/tests/BioStack.KnowledgeWorker.Tests/**"
+      - "shared/source-rights/**"
+      - "scripts/sync-source-rights.mjs"
+      - "frontend/src/lib/research/source-rights/**"
       - "infra/azure/source-acquisition-jobs.bicep"
       - "infra/azure/source-acquisition-role.bicep"
       - "docs/INITIATIVES/biostack-production-readiness/parcels/KEO-74-MANAGED-BLOB-SOURCE-ACQUISITION-RUNTIME-018.md"
@@ -60,6 +66,9 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
 
+      - name: Check source-rights containment copies
+        run: node scripts/sync-source-rights.mjs --check
+
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
         with:
           dotnet-version: "10.0.100"
@@ -68,7 +77,7 @@ jobs:
         run: >-
           dotnet test
           backend/tests/BioStack.KnowledgeWorker.Tests/BioStack.KnowledgeWorker.Tests.csproj
-          --filter "FullyQualifiedName~SourceAcquisitionStorageTests|FullyQualifiedName~SourceAcquisitionRuntimeTests"
+          --filter "FullyQualifiedName~SourceAcquisitionStorageTests|FullyQualifiedName~SourceAcquisitionRuntimeTests|FullyQualifiedName~RestrictedExcerptPolicyTests|FullyQualifiedName~ResearchJobContainmentTests"
           --disable-build-servers
 
       - name: Validate scheduled-job templates

@@ -24,6 +24,9 @@ jobs:
       - name: Check authoritative product contract
         run: node scripts/sync-product-contract.mjs --check
 
+      - name: Check source-rights containment copies
+        run: node scripts/sync-source-rights.mjs --check
+
       - name: Test deployment readiness guard
         run: node --test scripts/verify-containerapp-deployment.test.mjs
 

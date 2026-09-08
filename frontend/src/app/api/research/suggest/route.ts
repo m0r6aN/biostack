@@ -1,3 +1,4 @@
+import { withholdDrugBankExcerpts } from '@/lib/research/restricted-excerpts';
 import type {
     EvidencePacket,
     PromotionManifestCandidate,
@@ -400,6 +401,8 @@ export async function POST(request: Request) {
   }
 
   const model = process.env.OPENAI_REVIEW_MODEL ?? DEFAULT_MODEL;
+  // Filter before compaction drops source URLs; old client packets must obey C1 too.
+  const containedBody = { ...body, evidencePacket: withholdDrugBankExcerpts(body.evidencePacket) };
   const openAiResponse = await fetch('https://api.openai.com/v1/responses', {
     method: 'POST',
     headers: {
@@ -410,7 +413,7 @@ export async function POST(request: Request) {
       model,
       input: [
         { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: JSON.stringify(compactContext(body)) },
+        { role: 'user', content: JSON.stringify(compactContext(containedBody)) },
       ],
       text: {
         format: {
