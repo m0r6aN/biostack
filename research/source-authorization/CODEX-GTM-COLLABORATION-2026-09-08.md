@@ -2,6 +2,8 @@
 
 Status: active. This is a coordination and verification handoff, not a source approval or launch clearance. It supplements the existing `docs/INITIATIVES/biostack-production-readiness/` initiative; its older gate observations must not be mistaken for current deployment evidence.
 
+**Current checkpoint:** four collaboration rounds are complete. The inventory fix and earlier factual corrections reached main through [PR #289](https://github.com/m0r6aN/biostack/pull/289), merged at `2026-09-08T17:34:15Z`. The later [owner-decision sheet](OWNER-DECISION-SHEET-2026-09-08.md) has now been corrected by Codex and independently reviewed by Claude; it remains unsigned. Codex owns publishing this documentation follow-up and has not merged or deployed anything in this collaboration. The sections below preserve earlier snapshots; the post-merge evidence supersedes their current-state counts. Scheduled technical follow-up remains active.
+
 ## Scope and ownership
 
 Clint explicitly requested monitoring and collaboration with the existing Claude desktop conversation, **BioStack go-to-market status**, to resolve GTM blockers. Codex verified that conversation and its visible **Opus 5 / High** label, read the completed response, and submitted a bounded follow-up. Claude owns preparing the existing six-file source-review set as separate reviewable commits and a draft PR, plus `CLAUDE-GTM-BLOCKER-HANDOFF-2026-09-08.md`. Codex owns independent verification and this handoff. Neither agent is recording owner/legal approval, changing authorization bindings, enabling sources, deleting evidence, merging or deploying.
@@ -66,3 +68,49 @@ These observations supersede reliance on older successful runs for the current m
 4. Recheck the resulting candidate in hosted CI, then identify remaining environment and owner gates. Keep overall launch status **HOLD / not established** until the applicable release evidence exists.
 
 Automation `biostack-claude-blocker-follow-up` continues this task every 15 minutes, quiet while unchanged. It should pause on completion or a concrete user-action dependency and report that dependency once. The desktop must remain available and the intended conversation must be re-verified on each run.
+
+## Round 2 — independent verification of the remediation
+
+Claude opened [draft PR #288](https://github.com/m0r6aN/biostack/pull/288), initially at `f01895d`. Codex reviewed the PR and returned concrete corrections in a second message after Claude's response completed. The first round's [collaboration receipt](receipts/codex-claude-gtm-2026-09-08-round1.json) records partial acceptance and preserved dissent; it passed the interactive-session receipt validator.
+
+The subsequent inventory implementation at script SHA-256 `ab86a43ce71165629e34e38420afbb52b91146c623e1fd53650c118800be94ae` was independently checked against every original source occurrence and every nonempty quote locator in the corpus. **All 634 occurrence records match their source metadata, and all 1,329 quote locators match their original packet, claim ID, section and character count.** The report adds no copied quote text. There remain 621 source IDs, 10 IDs with metadata variants, 1,014 claim citations and 160,067 stored quote characters. The newly preserved second URL for `pubchem-cid-44200882` increases the grouping to **582 normalized URL groups / 542 cited groups**. These counts supersede the earlier first-occurrence projection for this new format; the historical snapshots above remain evidence of what they counted.
+
+Codex ran the new behavioral suite: **11 passed** with pytest 9.1.1. Tests cover metadata variants, query/path identity, aggregate usage, excerpt locators and absence of authorization derived from grouping. Independent full-corpus comparison evidence is in `research/output/codex-gtm-collaboration-20260908/inventory-v2-verification.json` and the separate `source-inventory-v2-verified.json`. The earlier 883-test worker baseline remains applicable to the unchanged worker/registry bytes; the new Python tests do not clear its eight failures.
+
+The historical-registry correction is independently proved: `git show cbaed8e:research/input/sources/pilot-source-registry.json` hashes to exactly the issued v1 binding and contains 13 lanes with 7 approved/enabled. The assertion that reverting that historical file would reactivate 17 newer lanes was incorrect. This observation is not an instruction to revert it. The current 26 approved flags comprise 7 original plus 19 additional declarations; the two rejected placeholders are separate changes.
+
+All seven GSRS identities were also verified in the rendered public NCATS interface. [The identity-verification note](GSRS-PUBLIC-IDENTITY-VERIFICATION-2026-09-08.md) records their exact names, UNIIs, versions and public-definition status. This narrows S1's remaining work to the actual field/excerpt and acquisition scope; it does not issue permission or approve a provenance migration.
+
+Additional read-only live observations: the API health endpoint returned 200 at `2026-09-08T17:15:09Z`, and the sign-in page returned 200 at `17:15:29Z`. An unauthenticated HTTP request to the session route also returned 200, but this check does not establish its authentication semantics or an authenticated user journey. No existing production outage is inferred from the failing main deployment workflow.
+
+Next checkpoint: verify Claude's completed correction commit and PR body, preserve any remaining material dissent, and prepare only concrete owner decisions after the independent technical work is complete. Overall GTM readiness remains unestablished.
+
+## Post-merge verification and Round 3
+
+Claude's completed second response delivered `0a9ad8c` (occurrence retention and tests), `b0b6148` (factual corrections) and `bbcd3a8` (post-merge baseline). Codex read the completed response and independently verified the four-file diff in draft PR #289. The [second receipt](receipts/codex-claude-gtm-2026-09-08-round2.json) accepts this bounded remediation, with the remaining test-design disagreement explicit.
+
+Main advanced concurrently, adding a registry alias and new packet content. Codex re-ran the full worker suite against the resulting checkout: **881 passed, 8 failed, 0 skipped, 889 total; 2m 38s.** Independent comparison of the two TRX files confirms exactly the same eight failure names. The six additional passing tests arrived with the registry-backed field-authority work. Evidence: `research/output/codex-gtm-collaboration-20260908/worker-tests-post-merge.trx`.
+
+A fresh inventory generated at `2026-09-08T17:34:39Z` contains **636 source occurrences, 623 source IDs, 584 normalized URL groups, 1,018 claim citations and 1,343 stored quotes (160,804 characters)**. There are 10 IDs with metadata variants and 285 unregistered IDs. Codex independently compared every occurrence's original metadata and every nonempty quote locator to the current packets; all match. These additions explain the change from the pre-merge snapshot and were not authored by this inventory fix.
+
+- Script SHA-256 remains `ab86a43ce71165629e34e38420afbb52b91146c623e1fd53650c118800be94ae`.
+- New registry SHA-256: `248d8f02d9c812f524e7fa48eba3971de8de17b936537d74df15a82898445d8f`.
+- Independently generated inventory SHA-256: `326fd1742f2727679d764353276dccc7b4e08bd58ef1d23e669f515d69741010`.
+- Issued v1 binding remains `3c8425e090f31ea17eb4d6a10f8ea8a5e2f352f753f3c5312fc7fcce80d03e28`; mismatch and denial are preserved.
+- Independent comparison report: `research/output/codex-gtm-collaboration-20260908/inventory-post-merge-verification.json`.
+
+After the second response completed, Codex sent a third bounded request: identify actual distinct-person requirements, compare the seven S1 excerpts against verified GSRS identity scope, and produce an unsigned owner-decision sheet with specific recommendations and choices. No role assignment, source approval, activation, provenance migration, worker-test change or binding replacement is authorized by that request. Claude owns his new decision sheet and handoff changes; Codex owns this document, the GSRS verification note and the receipts. Files must be staged explicitly after each author reads the diff.
+
+## Decision-sheet review completed; next scheduled work
+
+Claude produced `7cf7f1d` after PR #289 had already merged. Codex rejected that first version: it missed the explicit NCCIH distinct-reviewer guard, inferred a CAS restriction without finding an applicable notice, and reopened an afamelanotide finding without reading its existing co-citations. The [third receipt](receipts/codex-claude-gtm-2026-09-08-round3.json) records partial acceptance, not approval. The problematic new assertions were branch-only; they had not reached main through PR #289.
+
+Codex took ownership of the correction edits and Git work, then requested a read-only verification from Claude. Claude confirmed all five factual corrections and reviewed the revised document. His useful wording concern was incorporated: broader GSRS fields are **outside the proposed field set**, not declared prohibited. The [fourth receipt](receipts/codex-claude-gtm-2026-09-08-round4.json) records acceptance of that bounded review. All four receipts pass the session-receipt validator. No owner decision was inferred from the conversation or the suggested text in Claude's empty composer.
+
+The decision sheet now distinguishes the source-rights successor from the independent NCCIH capture reviewer, preserves earlier decisions as history, and presents scoped proposals for GSRS, DrugBank handling, ChEMBL excerpts and placeholder retirement. Additional GSRS field verification is agent work. The remaining test-design disagreement is explicit; this documentation changes no worker test, binding, registry, evidence packet or production state.
+
+The initial PR #289 checks at `bbcd3a8` still failed Build & Deploy and the structural-report job, while secret scan and the offline verification kit passed. A merge is not evidence of a passing release gate. The 881/8 worker baseline above is the latest independently executed suite in this collaboration.
+
+**Next heartbeat priorities:** first verify the intended Claude conversation and fresh Git state. Then continue the narrow public-GSRS field/notice comparison for the two cited CAS/formula excerpts, preserving the original precisionFDA provenance and unresolved IGF-1 LR3 identifier discrepancy. If that lane is waiting on an external source, a read-only URL-group review map can be prepared from the existing inventory, retaining every alias, packet occurrence, date and citation locator. Do not turn the 285 unregistered IDs into a blanket registration backlog. Return only concrete additional scope decisions after the evidence is ready. These tasks need no fabricated source approval and can progress while the owner considers the unsigned sheet.
+
+Keep the 15-minute heartbeat active and quiet while unchanged. Pause it only when the bounded collaboration is complete or meaningful further progress actually depends on user action; record that action once. The desktop conversation may auto-archive after completion, so re-verify or locate the same session rather than opening an unrelated one. The overall go-to-market release status remains **HOLD / not established**.

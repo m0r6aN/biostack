@@ -1,7 +1,7 @@
 # GTM Blocker Handoff — source-rights remediation
 
 **Prepared by:** Claude Opus 5, 2026-09-08, at Clint Morgan's request, coordinating with Codex.
-**Branch:** `lead/source-authorization-v2-proposal-20260908` · **PR:** #288 (draft)
+**Branch:** `lead/source-authorization-v2-proposal-20260908` · **Tooling PRs:** #288 and #289 merged through concurrent external activity. The later owner-decision sheet is a separate documentation follow-up.
 **Revised:** 2026-09-08 after Codex's review of PR #288. Corrections are marked.
 **Status:** technical remediation **not** complete. Some remaining work is authorized technical work;
 the licensing decisions are owner-gated.
@@ -16,7 +16,10 @@ production setting or retained evidence was changed. No worker test expectation 
 | `b1563cf` | Two corpus source-identity fixes |
 | `eff1d15` | `tools/research/build-source-inventory.py` |
 | `f01895d` | Rights assessment, Codex addendum and collaboration doc, this handoff |
-| *(this revision)* | Inventory occurrence retention + 11 behavioural tests; corrections below |
+| `0a9ad8c` | Inventory occurrence retention + 11 behavioural tests |
+| `b0b6148` | Corrections from Codex's review |
+| `bbcd3a8` | Post-merge baseline and fourth hash snapshot |
+| *(this revision)* | [Owner decision sheet](OWNER-DECISION-SHEET-2026-09-08.md) — unsigned proposal |
 
 `NBK573221` was verified by fetching the page rather than trusting the report that flagged it. It is
 LiverTox, produced by NIDDK. The misattribution ran *toward* restriction: a US government work was
@@ -50,7 +53,7 @@ Tests: `tools/research/test_build_source_inventory.py`, **11 passed**, covering 
 differing dates and URLs, distinct query values, distinct path case, host/`www` collapse, unchanged
 aggregate usage, locator retention without quote text, and that grouping never confers authorization.
 
-### Other inventory findings
+### Other inventory findings — pre-merge snapshot (634 occurrences / 621 IDs)
 
 | Finding | Value |
 |---|---:|
@@ -133,24 +136,33 @@ recommendation.
   permissions; it confers no rights and must not be presented as doing so.
 - Registering unregistered ids as documentation, and adding the missing rights fields to the registry
   schema. **Explicitly out of scope for this parcel** — no broad schema expansion, and no registration
-  of all 284 ids here.
+  of all currently 285 unregistered ids here. They are not all a registration backlog.
 
 ### Owner-only decisions
 
 1. **The 23 rights dispositions** — 7 scoped approvals, 5 conditional, 8 holds, 1 defer, 2 retire, as
    recommended by the assessment. Nothing is issued; `legal-rights-approver` still names Johnathan
    Harper.
-2. **Role succession.** **Correction (Codex):** an earlier revision said taking the role "removes
-   independent review from every stage gate." Overstated. The v1 artifact's `assignmentDisclaimer`
-   says role overlap does not satisfy a distinct-person or independent-review requirement *where such
-   a requirement actually applies*. Which gates carry one should be identified rather than assumed.
-   Record the result as owner review of permissions, not legal review.
+2. **Role succession.** **Correction from Codex's independent review:** the source-rights role schema
+   and `ApprovalIsApproved` permit role overlap, but the broader claim that no independence requirement
+   exists was false. `SourceAcquisitionGuards.cs:205` requires different operator/reviewer identifiers
+   for manual capture; `NccihManualReviewCandidateWorkflow.cs:234` invokes it. The NCCIH reviewer
+   receipt explicitly preserves a distinct-person requirement and a pending reviewer action. These
+   stage-specific requirements survive a new owner assignment. Do not assume the historical reviewer
+   is currently available. See [the decision sheet](OWNER-DECISION-SHEET-2026-09-08.md) section A.
+   Record a successor's decisions as owner review of permissions, without rewriting history or
+   attributing new approvals to the departed representative.
 3. **DrugBank retained content** — 24 ids, 30 referencing claims, 29 stored quote fields, no
    commercial licence held. Adding the DrugBank MCP server this session granted no content rights and
    none was exercised.
 4. **precisionFDA scope (S1)** — 7 UNII web records in the `fda` lane, whose recorded basis is the
-   openFDA API terms. NCATS GSRS CC0 is a plausible route Codex verified in a rendered browser; it
-   requires matching records and access method, not inference from the existing approval.
+   openFDA API terms. Codex verified all seven as public GSRS records with names and versions. Comparing
+   each against the narrow name/UNII/version scope: **4 of the 7 have no claim citations**, one excerpt
+   fits cleanly, one fits partly, and one does not fit. Uncited records still occur in identity metadata
+   and provenance. CAS/formula fields exceed the narrow verification, but no specific GSRS exclusion
+   was established; the earlier inference of an ACS restriction was unsupported. Agents can inspect
+   the exact values, notices and route before proposing additional fields. No historical packet is
+   migrated and no GSRS version is backfilled. Decision sheet section B.
 5. **ChEMBL (S2)** — 4 unregistered records, 2 claims, 2 quotes, 125 characters, which Codex confirms
    are names and identifiers rather than article prose. Published licence is CC BY-SA 3.0, which does
    permit commercial use with attribution and share-alike; assess the specific use.
