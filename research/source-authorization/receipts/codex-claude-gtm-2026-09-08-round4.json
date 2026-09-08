@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "biostack-gtm-20260908",
+  "adapter_kind": "host_agent",
+  "transport": "interactive_ui",
+  "authority": "none",
+  "effect_capability": "none",
+  "destination": {
+    "provider": "Anthropic",
+    "application": "Claude desktop",
+    "window_title": "Claude — BioStack go-to-market status",
+    "conversation_verified": true,
+    "model_label": "Opus 5 / High"
+  },
+  "data_classification": "internal",
+  "send_confirmation": {
+    "required": false,
+    "obtained": true,
+    "evidence": "User explicitly requested monitoring the open Claude desktop session and working with Claude to resolve BioStack GTM blockers. Messages identify Codex and stay within that collaboration."
+  },
+  "observed_workers": [
+    {
+      "label": "Claude Opus 5 / High",
+      "evidence": "Visible model and effort labels in the verified session. Claude's completed handoff reported no subagents; a generic running-task indicator was not treated as proof of another model."
+    }
+  ],
+  "availability_transitions": [
+    "app_found",
+    "window_found",
+    "session_verified",
+    "composer_ready",
+    "send_confirmed",
+    "response_complete"
+  ],
+  "sent_context_sha256": "6ed82554171bf85e84fe52f777e92a671c533c0bd6f6dd7a8a950e4cbc0c2965",
+  "requested_lanes": [
+    "Read-only independent verification of five concrete corrections and review of Codex's decision-sheet edits"
+  ],
+  "response_status": "complete",
+  "artifacts": [
+    "research/source-authorization/OWNER-DECISION-SHEET-2026-09-08.md",
+    "research/source-authorization/CLAUDE-GTM-BLOCKER-HANDOFF-2026-09-08.md",
+    "research/source-authorization/GSRS-PUBLIC-IDENTITY-VERIFICATION-2026-09-08.md"
+  ],
+  "validation": {
+    "owner": "Codex",
+    "methods": [
+      "Read completed Claude response confirming all five points and review of the corrected document",
+      "Independently read SourceAcquisitionGuards.cs:205, its NCCIH workflow caller and the distinct-reviewer receipt",
+      "Read the entire afamelanotide mechanism claim and co-citations",
+      "Verified exact GSRS and CAS Common Chemistry licence scope against primary published sources",
+      "Confirmed PR #289 merge timestamp and branch-only 7cf7f1d; checked current full-corpus inventory",
+      "Accepted Claude's wording refinement: broader GSRS fields are outside the proposed field set, not declared prohibited"
+    ],
+    "passed": true
+  },
+  "deviations": [
+    "Claude performed read-only review in round 4; Codex authored the corrections and owns subsequent Git work.",
+    "The original round-3 'none anywhere' claim never reached main through PR #289. The owner-decision sheet is being published only with corrections.",
+    "Acceptance is bounded to the factual decision-sheet review; it grants no rights, role assignment, source activation or launch clearance."
+  ],
+  "dissent": [
+    "The worker test-design question remains open. Any fixture refactor must preserve an explicit test that the current unbound registry is denied; no worker tests or issued authorization records were changed.",
+    "Specific GSRS field values, notices and acquisition scope beyond the verified name/UNII/version set remain technical follow-up. No blanket CAS restriction or blanket permission is established."
+  ]
+}
