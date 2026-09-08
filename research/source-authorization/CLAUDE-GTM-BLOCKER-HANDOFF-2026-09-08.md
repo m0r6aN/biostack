@@ -16,7 +16,10 @@ production setting or retained evidence was changed. No worker test expectation 
 | `b1563cf` | Two corpus source-identity fixes |
 | `eff1d15` | `tools/research/build-source-inventory.py` |
 | `f01895d` | Rights assessment, Codex addendum and collaboration doc, this handoff |
-| *(this revision)* | Inventory occurrence retention + 11 behavioural tests; corrections below |
+| `0a9ad8c` | Inventory occurrence retention + 11 behavioural tests |
+| `b0b6148` | Corrections from Codex's review |
+| `bbcd3a8` | Post-merge baseline and fourth hash snapshot |
+| *(this revision)* | [Owner decision sheet](OWNER-DECISION-SHEET-2026-09-08.md) — unsigned proposal |
 
 `NBK573221` was verified by fetching the page rather than trusting the report that flagged it. It is
 LiverTox, produced by NIDDK. The misattribution ran *toward* restriction: a US government work was
@@ -140,17 +143,28 @@ recommendation.
 1. **The 23 rights dispositions** — 7 scoped approvals, 5 conditional, 8 holds, 1 defer, 2 retire, as
    recommended by the assessment. Nothing is issued; `legal-rights-approver` still names Johnathan
    Harper.
-2. **Role succession.** **Correction (Codex):** an earlier revision said taking the role "removes
-   independent review from every stage gate." Overstated. The v1 artifact's `assignmentDisclaimer`
-   says role overlap does not satisfy a distinct-person or independent-review requirement *where such
-   a requirement actually applies*. Which gates carry one should be identified rather than assumed.
+2. **Role succession.** **Correction (Codex), now resolved by inspection:** an earlier revision said
+   taking the role "removes independent review from every stage gate." Overstated, and the underlying
+   premise was wrong. **No distinct-person or independent-review requirement exists in any governing
+   artifact or in the code.** `$defs/owner` in
+   `backend/src/BioStack.KnowledgeWorker/Schemas/source-authorization-decision.schema.json` places no
+   uniqueness constraint on `personName`; `owners` uses `uniqueItems` over whole objects, which four
+   distinct `roleId`s satisfy regardless of who holds them; and `ApprovalIsApproved`
+   (`Pipeline/SourceAcquisitionPlanning.cs:408`) never compares one role's holder against another's.
+   The same file at ~line 300 requires `rights.reviewedBy` to *equal*
+   `approvals.legalRights.assigneeName` — a sameness requirement, the opposite of separation. The v1
+   `assignmentDisclaimer` disclaims an independence property; it does not impose one. See
+   [the decision sheet](OWNER-DECISION-SHEET-2026-09-08.md) section A.
    Record the result as owner review of permissions, not legal review.
 3. **DrugBank retained content** — 24 ids, 30 referencing claims, 29 stored quote fields, no
    commercial licence held. Adding the DrugBank MCP server this session granted no content rights and
    none was exercised.
 4. **precisionFDA scope (S1)** — 7 UNII web records in the `fda` lane, whose recorded basis is the
-   openFDA API terms. NCATS GSRS CC0 is a plausible route Codex verified in a rendered browser; it
-   requires matching records and access method, not inference from the existing approval.
+   openFDA API terms. Codex verified all seven as public GSRS records with names and versions. Comparing
+   each against the narrow name/UNII/version scope: **4 of the 7 support no claim at all**, one excerpt
+   fits cleanly, one fits partly, and one does not fit — two of the three cited excerpts rest on CAS
+   Registry Numbers, which are ACS identifiers displayed on a CC0 page rather than NCATS-authored
+   content. No packet records a GSRS record version. Decision sheet section B.
 5. **ChEMBL (S2)** — 4 unregistered records, 2 claims, 2 quotes, 125 characters, which Codex confirms
    are names and identifiers rather than article prose. Published licence is CC BY-SA 3.0, which does
    permit commercial use with attribution and share-alike; assess the specific use.
