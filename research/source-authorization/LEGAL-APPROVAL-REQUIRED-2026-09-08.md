@@ -4,6 +4,10 @@
 **Date:** 2026-09-08
 **Supersedes:** `PROPOSED-expansion-review-memo-2026-09-08.md`, which was addressed to Johnathan Harper
 
+**Follow-up added by Codex, 2026-09-08:** The original 23 items remain below. Section E links
+supplemental findings concerning the precisionFDA acquisition scope, retained ChEMBL records, and
+duplicate-document grouping. These are recommendations, not issued approvals.
+
 Every open item in this repository that is gated on a `legalRights` decision, in one place. Twenty-three
 rights decisions, one content-removal question, and four enabling changes that follow from them.
 
@@ -143,11 +147,30 @@ discovering under deadline.
 So the boundary is explicit. These mention legal review and I have not audited them:
 
 - `research/protocol-intelligence/biostack-ai-model-data-asset-research-memo.md` flags **UMLS/SNOMED** and
-  **ChEMBL** as needing legal review. Those are prospective data assets, not currently in the corpus.
+  **ChEMBL** as needing legal review. **Correction added by Codex, 2026-09-08:** ChEMBL is already present:
+  four unregistered source records, with two claims carrying two quote fields (125 characters in the
+  current inventory). See section E. UMLS/SNOMED licensing remains outside this document's assessment.
 - `research/review-decisions/OPERATOR-DELEGATION-2026-08-28.md` carves out legal review from its delegation.
 - `.codex-temp/policy-v010/BioStack_Public_Legal_Policies_v0.10.pdf` — public-facing legal policies, untouched
   by any of this work.
 - Anything outside `research/` and the worker's policy classes.
+
+---
+
+## E. Supplemental findings for review
+
+The [follow-up addendum](RIGHTS-FOLLOWUP-ADDENDUM-2026-09-08.md) records:
+
+- **S1: precisionFDA/GSRS scope.** Seven precisionFDA UNII web records are mapped into the `fda` lane,
+  whose recorded approval covers the reviewed openFDA API method. NCATS's public GSRS data has a
+  browser-verified CC0 permission basis, subject to exceptions and matching the actual records/access route.
+- **S2: retained ChEMBL data.** The records already exist. Review their specific use under the published
+  CC BY-SA 3.0 licence, rather than classifying them as absent or assuming commercial use is prohibited.
+- **Duplicate-document grouping.** The current inventory has 50 aliases in 10 shared-URL groups, not
+  50 groups. The addendum proposes grouping with aliases, versions, sections and provenance preserved.
+
+No owner decision, source activation or deletion is enacted by this addendum. The original approval
+sheet's compilation provenance is retained below; Codex authored the marked follow-up additions.
 
 ---
 
