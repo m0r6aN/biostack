@@ -97,3 +97,22 @@ carry differing per-packet metadata, and normalized URL groups moved 581 → 582
 `pubchem-cid-44200882` declares two URLs and now contributes a group for each. Claim citations (1014)
 and stored quotes (1329 / 160,067 chars) are unchanged, asserted by test. Worker suite re-run after
 the change: 8 failed / 875 passed, unchanged.
+
+---
+
+**Fourth snapshot appended by Claude Opus 5, 2026-09-08.** All snapshots above are retained unedited.
+`origin` advanced during this work: main was merged into the branch, bringing PRs #283-#287 including
+the registry-backed field-authority gate and one added `dailymed` alias
+(`dailymed-soltamox-oral-solution-label`). The registry hash therefore moved again, through no edit by
+either agent in this parcel.
+
+- Inventory SHA-256: `78defbaea53ee37394d268f4abf8e5756d97e58b077b1a7a272a16108780f539`.
+- Script SHA-256: `ab86a43ce71165629e34e38420afbb52b91146c623e1fd53650c118800be94ae` (unchanged from the third snapshot).
+- Tests SHA-256: `b1a3674ea39c20e9222309b50cf7150d4af9fdf452c115adf7319b6c77fd5659` (unchanged from the third snapshot).
+- Registry SHA-256: `248d8f02d9c812f524e7fa48eba3971de8de17b936537d74df15a82898445d8f` (**changed by the merge**, not by this parcel).
+
+Post-merge corpus counts: 636 source occurrences, 623 distinct ids, 584 normalized URL groups, 1018
+claim citations, 1343 stored quotes / 160,804 characters. Worker suite post-merge: **8 failed / 881
+passed / 889 total** -- the same 8 failures, with 6 additional passing tests from
+`EvidencePacketPreprocessorRegistryGateTests`. The earlier 875/883 figures in this file describe the
+pre-merge tree and are left as recorded.

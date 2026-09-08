@@ -71,6 +71,13 @@ independently rebuilt into an isolated artifacts path and reproduced 875/8/883 �
 `research/output/codex-gtm-collaboration-20260908/worker-tests.trx`. Re-confirmed after the
 occurrence fix: still 8 failed / 875 passed.
 
+**Post-merge baseline.** `origin` advanced during this work and main was merged into the branch,
+bringing PRs #283–#287 including the registry-backed field-authority gate. Current baseline is
+**8 failed / 881 passed / 889 total** — the same 8 failures, plus 6 new passing tests in
+`EvidencePacketPreprocessorRegistryGateTests`. The merge also added one `dailymed` alias, moving the
+registry hash to `248d8f02…` through no edit by either agent in this parcel. Post-merge corpus:
+636 occurrences, 623 ids, 584 groups, 1018 claim citations, 1343 stored quotes.
+
 **Correction (Codex):** an earlier revision described all 8 as one root cause seen from four angles.
 That over-merges them. There are **two** mechanisms.
 
