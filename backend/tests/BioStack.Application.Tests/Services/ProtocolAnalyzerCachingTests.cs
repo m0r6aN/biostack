@@ -15,6 +15,35 @@ using Xunit;
 public sealed class ProtocolAnalyzerCachingTests
 {
     [Fact]
+    public async Task V2ParseCacheEntry_DoesNotReplayAnIncorrectCompoundIdentity()
+    {
+        const string input = "QA-KEO69-Alpha 1 mg daily";
+        using var memory = new MemoryCache(new MemoryCacheOptions());
+        var cache = new ProtocolAnalysisCache(memory,
+            new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions())),
+            NullLogger<ProtocolAnalysisCache>.Instance);
+        var hash = new ProtocolFingerprintService().GetNormalizedTextHash(input);
+        await cache.SetParsedAsync($"analyzer:parse:parser-v2:{hash}",
+            new ParsedProtocolCacheDto(
+                [new("Caffeine", 1, "mg", "daily", string.Empty, Recognized: true)], []),
+            TimeSpan.FromDays(7), CancellationToken.None);
+        var caffeine = new KnowledgeEntry { CanonicalName = "Caffeine", Aliases = ["1", "3", "7-trimethylxanthine"] };
+        var knowledge = new Mock<IKnowledgeSource>();
+        knowledge.Setup(source => source.GetAllCompoundsAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<KnowledgeEntry> { caffeine });
+        knowledge.Setup(source => source.GetCompoundAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((string name, CancellationToken _) => name == "Caffeine" ? caffeine : null);
+        var parser = new ProtocolParser(knowledge.Object, new BlendDecomposerService(), memory);
+        var analyzer = CreateAnalyzer(parser: parser, knowledgeSource: knowledge.Object, analysisCache: cache);
+
+        var result = await analyzer.AnalyzeAsync(new AnalyzeProtocolRequest(input));
+
+        Assert.Equal("QA-KEO69-Alpha", Assert.Single(result.Protocol).CompoundName);
+        Assert.False(result.Protocol[0].Recognized);
+        knowledge.Verify(source => source.GetAllCompoundsAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
     public async Task ParseCacheHit_AvoidsParserWork()
     {
         var parser = CreateParserMock();
@@ -54,12 +83,13 @@ public sealed class ProtocolAnalyzerCachingTests
         IProtocolParser? parser = null,
         IInteractionIntelligenceService? interaction = null,
         ICounterfactualEngine? engine = null,
-        IKnowledgeSource? knowledgeSource = null)
+        IKnowledgeSource? knowledgeSource = null,
+        IProtocolAnalysisCache? analysisCache = null)
     {
         var knowledge = knowledgeSource ?? CreateKnowledgeSourceMock().Object;
         var normalization = new ProtocolNormalizationService();
         var fingerprint = new ProtocolFingerprintService();
-        var cache = new ProtocolAnalysisCache(
+        var cache = analysisCache ?? new ProtocolAnalysisCache(
             new MemoryCache(new MemoryCacheOptions()),
             new MemoryDistributedCache(new OptionsWrapper<MemoryDistributedCacheOptions>(new MemoryDistributedCacheOptions())),
             NullLogger<ProtocolAnalysisCache>.Instance);

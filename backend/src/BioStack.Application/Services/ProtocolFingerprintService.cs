@@ -7,7 +7,7 @@ public sealed class ProtocolFingerprintService : IProtocolFingerprintService
 {
     public const string IngestionVersion = "v1";
     public const string OcrVersion = "v1";
-    public const string ParserVersion = "v2";
+    public const string ParserVersion = "v3";
     public const string KnowledgeVersion = "v1";
     public const string ScoringVersion = "v2";
     public const string CounterfactualVersion = "v2";
