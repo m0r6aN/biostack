@@ -14,6 +14,48 @@ using Xunit;
 
 public sealed class ProtocolAnalyzerCachingTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task ScoringCaches_ReuseCurrentVersionAndRecomputeV2(bool usePreviousVersion)
+    {
+        const string input = "Synthetic Alpha 1 mg daily";
+        var parsed = new ProtocolParseResult(
+            [new("Synthetic Alpha", 1, "mg", "daily", string.Empty)],
+            new Dictionary<string, KnowledgeEntry> { ["Synthetic Alpha"] = new() { CanonicalName = "Synthetic Alpha" } }, []);
+        var parser = new Mock<IProtocolParser>();
+        parser.Setup(service => service.ParseAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(parsed);
+        var normalization = new ProtocolNormalizationService();
+        var protocol = normalization.Normalize(parsed);
+        var fingerprint = new ProtocolFingerprintService();
+        var analysisContext = normalization.BuildAnalysisContext(null, null, null, null, null, null);
+        var optimizationContext = normalization.BuildOptimizationContext(null, null, null, null, null, null);
+        if (usePreviousVersion)
+        {
+            analysisContext = analysisContext with { ScoringVersion = "v2" };
+            optimizationContext = optimizationContext with { ScoringVersion = "v2" };
+        }
+        using var memory = new MemoryCache(new MemoryCacheOptions());
+        var cache = new ProtocolAnalysisCache(memory,
+            new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions())),
+            NullLogger<ProtocolAnalysisCache>.Instance);
+        await cache.SetAnalysisAsync(fingerprint.GetAnalysisKey(protocol, analysisContext),
+            new ProtocolAnalysisCacheDto(1, new(50, 0, 0, 49), [], []), TimeSpan.FromDays(7), CancellationToken.None);
+        await cache.SetCounterfactualAsync(fingerprint.GetCounterfactualKey(protocol, optimizationContext),
+            new CounterfactualResultDto(1, [], [], null, []), TimeSpan.FromDays(7), CancellationToken.None);
+        var interaction = CreateInteractionMock();
+        var engine = CreateEngineMock();
+        var analyzer = CreateAnalyzer(parser: parser.Object, interaction: interaction.Object, engine: engine.Object, analysisCache: cache);
+
+        var result = await analyzer.AnalyzeAsync(new AnalyzeProtocolRequest(input));
+
+        Assert.Equal(usePreviousVersion ? 61 : 1, result.Score);
+        Assert.Equal(usePreviousVersion ? 60 : 1, result.Counterfactuals.BaselineScore);
+        var expectedCalls = Times.Exactly(usePreviousVersion ? 1 : 0);
+        interaction.Verify(service => service.EvaluateAsync(It.IsAny<IReadOnlyList<KnowledgeEntry>>(), It.IsAny<CancellationToken>()), expectedCalls);
+        engine.Verify(service => service.OptimizeAsync(It.IsAny<List<ProtocolEntryResponse>>(), It.IsAny<IReadOnlyList<KnowledgeEntry>>(), It.IsAny<OptimizationContext>(), It.IsAny<CancellationToken>()), expectedCalls);
+    }
+
     [Fact]
     public async Task V2ParseCacheEntry_DoesNotReplayAnIncorrectCompoundIdentity()
     {

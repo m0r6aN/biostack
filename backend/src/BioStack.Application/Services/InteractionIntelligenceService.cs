@@ -372,14 +372,18 @@ public sealed class InteractionIntelligenceService : IInteractionIntelligenceSer
     {
         return candidates.Any(candidate =>
             string.Equals(candidate.Trim(), target.CanonicalName, StringComparison.OrdinalIgnoreCase)
-            || target.Aliases.Any(alias => string.Equals(candidate.Trim(), alias.Trim(), StringComparison.OrdinalIgnoreCase)));
+            || target.Aliases.Any(alias => alias.Any(char.IsLetter)
+                && string.Equals(candidate.Trim(), alias.Trim(), StringComparison.OrdinalIgnoreCase)));
     }
 
     private static bool HasNamedInteraction(IEnumerable<string> candidates, KnowledgeEntry target)
     {
+        // Imported numeric fragments and empty aliases are not compound names;
+        // matching them can turn unrelated notes into an interaction warning.
         return candidates.Any(candidate =>
             candidate.Contains(target.CanonicalName, StringComparison.OrdinalIgnoreCase)
-            || target.Aliases.Any(alias => candidate.Contains(alias, StringComparison.OrdinalIgnoreCase)));
+            || target.Aliases.Any(alias => alias.Any(char.IsLetter)
+                && candidate.Contains(alias, StringComparison.OrdinalIgnoreCase)));
     }
 
     private static double CalculatePathwayOverlapConfidence(KnowledgeEntry compoundA, KnowledgeEntry compoundB, int sharedPathwayCount)
