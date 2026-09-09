@@ -14,8 +14,10 @@ using Xunit;
 
 public sealed class ProtocolAnalyzerCachingTests
 {
-    [Fact]
-    public async Task V2ScoringCaches_DoNotReplayOldAnalysisOrCounterfactuals()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task ScoringCaches_ReuseCurrentVersionAndRecomputeV2(bool usePreviousVersion)
     {
         const string input = "Synthetic Alpha 1 mg daily";
         var parsed = new ProtocolParseResult(
@@ -26,15 +28,20 @@ public sealed class ProtocolAnalyzerCachingTests
         var normalization = new ProtocolNormalizationService();
         var protocol = normalization.Normalize(parsed);
         var fingerprint = new ProtocolFingerprintService();
-        var oldAnalysis = normalization.BuildAnalysisContext(null, null, null, null, null, null) with { ScoringVersion = "v2" };
-        var oldOptimization = normalization.BuildOptimizationContext(null, null, null, null, null, null) with { ScoringVersion = "v2" };
+        var analysisContext = normalization.BuildAnalysisContext(null, null, null, null, null, null);
+        var optimizationContext = normalization.BuildOptimizationContext(null, null, null, null, null, null);
+        if (usePreviousVersion)
+        {
+            analysisContext = analysisContext with { ScoringVersion = "v2" };
+            optimizationContext = optimizationContext with { ScoringVersion = "v2" };
+        }
         using var memory = new MemoryCache(new MemoryCacheOptions());
         var cache = new ProtocolAnalysisCache(memory,
             new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions())),
             NullLogger<ProtocolAnalysisCache>.Instance);
-        await cache.SetAnalysisAsync(fingerprint.GetAnalysisKey(protocol, oldAnalysis),
+        await cache.SetAnalysisAsync(fingerprint.GetAnalysisKey(protocol, analysisContext),
             new ProtocolAnalysisCacheDto(1, new(50, 0, 0, 49), [], []), TimeSpan.FromDays(7), CancellationToken.None);
-        await cache.SetCounterfactualAsync(fingerprint.GetCounterfactualKey(protocol, oldOptimization),
+        await cache.SetCounterfactualAsync(fingerprint.GetCounterfactualKey(protocol, optimizationContext),
             new CounterfactualResultDto(1, [], [], null, []), TimeSpan.FromDays(7), CancellationToken.None);
         var interaction = CreateInteractionMock();
         var engine = CreateEngineMock();
@@ -42,10 +49,11 @@ public sealed class ProtocolAnalyzerCachingTests
 
         var result = await analyzer.AnalyzeAsync(new AnalyzeProtocolRequest(input));
 
-        Assert.Equal(61, result.Score);
-        Assert.Equal(60, result.Counterfactuals.BaselineScore);
-        interaction.Verify(service => service.EvaluateAsync(It.IsAny<IReadOnlyList<KnowledgeEntry>>(), It.IsAny<CancellationToken>()), Times.Once);
-        engine.Verify(service => service.OptimizeAsync(It.IsAny<List<ProtocolEntryResponse>>(), It.IsAny<IReadOnlyList<KnowledgeEntry>>(), It.IsAny<OptimizationContext>(), It.IsAny<CancellationToken>()), Times.Once);
+        Assert.Equal(usePreviousVersion ? 61 : 1, result.Score);
+        Assert.Equal(usePreviousVersion ? 60 : 1, result.Counterfactuals.BaselineScore);
+        var expectedCalls = Times.Exactly(usePreviousVersion ? 1 : 0);
+        interaction.Verify(service => service.EvaluateAsync(It.IsAny<IReadOnlyList<KnowledgeEntry>>(), It.IsAny<CancellationToken>()), expectedCalls);
+        engine.Verify(service => service.OptimizeAsync(It.IsAny<List<ProtocolEntryResponse>>(), It.IsAny<IReadOnlyList<KnowledgeEntry>>(), It.IsAny<OptimizationContext>(), It.IsAny<CancellationToken>()), expectedCalls);
     }
 
     [Fact]
