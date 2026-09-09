@@ -12,16 +12,25 @@ const REPOSITORY_ROOT = resolve(SCRIPT_DIRECTORY, "..");
 const DOCKERFILE_PATH = resolve(REPOSITORY_ROOT, "backend/research-sidecar/Dockerfile");
 const DOCKERIGNORE_PATH = resolve(REPOSITORY_ROOT, "backend/research-sidecar/.dockerignore");
 export const OWNERSHIP_LABEL_KEY = "io.biostack.p01.owner";
-const OWNERSHIP_RECONCILIATION_ATTEMPTS = 20;
+const OWNERSHIP_RECONCILIATION_ATTEMPTS = 60;
 const OWNERSHIP_RECONCILIATION_DELAY_MS = 100;
+export const DIRECT_CLI_TIMEOUT_MS = 150_000;
+export const CLEANUP_RESERVE_MS = 15_000;
 
 export const FORBIDDEN_DISTRIBUTIONS = Object.freeze([
   "google-genai",
+  "hatchling",
   "huggingface-hub",
   "openai",
+  "packaging",
+  "pathspec",
   "pip",
+  "pluggy",
   "setuptools",
+  "tomlkit",
   "tooluniverse",
+  "trove-classifiers",
+  "wheel",
 ]);
 
 export const REQUIRED_DISTRIBUTIONS = Object.freeze([
@@ -78,6 +87,96 @@ export class ContainerContractError extends Error {
     super(message);
     this.name = "ContainerContractError";
   }
+}
+
+export function createExecutionControl({
+  timeoutMs = DIRECT_CLI_TIMEOUT_MS,
+  cleanupReserveMs = CLEANUP_RESERVE_MS,
+  now = () => performance.now(),
+} = {}) {
+  if (
+    !Number.isSafeInteger(timeoutMs) ||
+    !Number.isSafeInteger(cleanupReserveMs) ||
+    timeoutMs < 1 ||
+    cleanupReserveMs < 1 ||
+    cleanupReserveMs >= timeoutMs ||
+    typeof now !== "function"
+  ) {
+    throw new ContainerContractError("Execution deadline arguments are malformed.");
+  }
+  const deadline = now() + timeoutMs;
+  const abortController = new AbortController();
+  let terminationSignal;
+  let pendingClaim;
+
+  const control = {
+    abortSignal: abortController.signal,
+    get deadline() {
+      return deadline;
+    },
+    get cleanupReserveMs() {
+      return cleanupReserveMs;
+    },
+    get terminationSignal() {
+      return terminationSignal;
+    },
+    get pendingClaim() {
+      return pendingClaim;
+    },
+    requestTermination(signal) {
+      if (!terminationSignal) {
+        terminationSignal = signal === "SIGINT" ? "SIGINT" : "SIGTERM";
+        abortController.abort();
+      }
+    },
+    throwIfTerminated() {
+      if (terminationSignal) {
+        throw new ContainerContractError(`Verifier received ${terminationSignal}.`);
+      }
+    },
+    registerPendingClaim(claim) {
+      control.throwIfTerminated();
+      if (
+        pendingClaim ||
+        !claim ||
+        typeof claim !== "object" ||
+        !SAFE_CONTAINER_NAME.test(claim.name ?? "") ||
+        !/^[a-f0-9]{48}$/u.test(claim.owner ?? "") ||
+        typeof claim.cidFile !== "string" ||
+        claim.cidFile.length === 0
+      ) {
+        throw new ContainerContractError("Pending ownership claim is malformed or overlapping.");
+      }
+      pendingClaim = claim;
+    },
+    releasePendingClaim(claim) {
+      if (pendingClaim !== claim) {
+        throw new ContainerContractError("Pending ownership claim release disagreed.");
+      }
+      pendingClaim = undefined;
+    },
+    capTimeout(requestedMs, phase = "work") {
+      if (!Number.isSafeInteger(requestedMs) || requestedMs < 1) {
+        throw new ContainerContractError("Subprocess timeout is malformed.");
+      }
+      if (phase === "work") control.throwIfTerminated();
+      if (!new Set(["work", "reconcile", "cleanup"]).has(phase)) {
+        throw new ContainerContractError("Subprocess deadline phase is malformed.");
+      }
+      const reserve =
+        phase === "work"
+          ? cleanupReserveMs
+          : phase === "reconcile"
+            ? Math.ceil(cleanupReserveMs / 2)
+            : 0;
+      const remaining = Math.floor(deadline - now() - reserve);
+      if (remaining < 1) {
+        throw new ContainerContractError(`Global verifier deadline exhausted during ${phase}.`);
+      }
+      return Math.min(requestedMs, remaining);
+    },
+  };
+  return control;
 }
 
 function outcome(errors) {
@@ -264,9 +363,6 @@ export function evaluateDockerfileContract(contents) {
   if (!/false\) uv sync --locked --no-dev --no-install-project ;;/.test(contents)) {
     errors.push("Dependency-only no-extra sync is missing.");
   }
-  if (!/false\) uv sync --locked --no-dev ;;/.test(contents)) {
-    errors.push("Project no-extra sync is missing.");
-  }
   if (
     !/true\) uv sync --locked --no-dev --extra tooluniverse --no-install-project ;;/.test(
       contents,
@@ -274,11 +370,20 @@ export function evaluateDockerfileContract(contents) {
   ) {
     errors.push("Dependency-only ToolUniverse source contract is missing.");
   }
-  if (!/true\) uv sync --locked --no-dev --extra tooluniverse ;;/.test(contents)) {
-    errors.push("Project ToolUniverse source contract is missing.");
-  }
   if (/--extra\s+["']?\$[A-Za-z_{]/.test(contents) || /^ARG TOOLUNIVERSE_EXTRA=/m.test(contents)) {
     errors.push("Unsafe variable-valued --extra construction is present.");
+  }
+  for (const pattern of [
+    /hatchling==1\.32\.0[\s\S]+P01_BUILD_BACKEND_REQUIREMENTS_END/u,
+    /uv pip install[\s\S]+--no-deps[\s\S]+--only-binary=:all:[\s\S]+--require-hashes/u,
+    /UV_NO_INDEX=1 \/tmp\/p01-build-backend-venv\/bin\/python -m hatchling build/u,
+    /uv pip install[\s\S]+--python \/app\/\.venv\/bin\/python[\s\S]+--no-deps[\s\S]+--no-index[\s\S]+biostack_research_sidecar-0\.1\.0-py3-none-any\.whl/u,
+    /rm -rf \/tmp\/p01-build-backend-venv \/tmp\/p01-build-backend-requirements\.txt \/tmp\/p01-dist/u,
+  ]) {
+    if (!pattern.test(contents)) {
+      errors.push("Hash-locked isolated build-backend closure is incomplete.");
+      break;
+    }
   }
   if (!/^COPY --from=builder --chown=0:0 \/app \/app$/m.test(contents)) {
     errors.push("Runtime application tree is not copied with root ownership.");
@@ -440,10 +545,15 @@ export function evaluatePackageCensus(distributions) {
     return outcome(["Package census contains nameless or invalid distribution metadata."]);
   }
   if (distributions.length === 0) return outcome(["Package census is empty."]);
-  const normalized = new Set(distributions.map((name) => name.toLowerCase().replace(/[-_.]+/gu, "-")));
-  const errors = FORBIDDEN_DISTRIBUTIONS.filter((name) => normalized.has(name)).map(
-    (name) => `Forbidden distribution is installed: ${name}.`,
+  const canonical = distributions.map((name) => name.toLowerCase().replace(/[-_.]+/gu, "-"));
+  const normalized = new Set(canonical);
+  const duplicateNames = [...new Set(canonical.filter((name, index) => canonical.indexOf(name) !== index))];
+  const errors = duplicateNames.map(
+    (name) => `Duplicate canonical distribution identity is installed: ${name}.`,
   );
+  errors.push(...FORBIDDEN_DISTRIBUTIONS.filter((name) => normalized.has(name)).map(
+    (name) => `Forbidden distribution is installed: ${name}.`,
+  ));
   for (const name of REQUIRED_DISTRIBUTIONS) {
     if (!normalized.has(name)) errors.push(`Required distribution is missing: ${name}.`);
   }
@@ -756,49 +866,69 @@ export async function reconcileOwnedContainer({
   findExactNameAndLabel,
   hasExpectedLabel,
   delay = (milliseconds) => new Promise((resolveDelay) => setTimeout(resolveDelay, milliseconds)),
+  capDelayMs = (milliseconds) => milliseconds,
   attempts = OWNERSHIP_RECONCILIATION_ATTEMPTS,
   delayMs = OWNERSHIP_RECONCILIATION_DELAY_MS,
 }) {
-  if (!Number.isInteger(attempts) || attempts < 1 || typeof delay !== "function") {
+  if (
+    !Number.isInteger(attempts) ||
+    attempts < 1 ||
+    typeof delay !== "function" ||
+    typeof capDelayMs !== "function"
+  ) {
     throw new ContainerContractError("Ownership reconciliation arguments are malformed.");
   }
   const candidates = new Set();
+  let stdoutId;
   try {
-    const stdoutId = optionalOwnedContainerId(createOutput);
+    stdoutId = optionalOwnedContainerId(createOutput);
     if (stdoutId) candidates.add(stdoutId);
   } catch {
     // Malformed create output is not ownership proof; cidfile/label evidence may arrive later.
   }
 
   for (let attempt = 0; attempt < attempts; attempt += 1) {
+    let cidId;
     try {
-      const cid = optionalOwnedContainerId(await readCidFile());
-      if (cid) candidates.add(cid);
+      cidId = optionalOwnedContainerId(await readCidFile());
+      if (cidId) candidates.add(cidId);
     } catch (error) {
       if (error?.code !== "ENOENT") throw error;
     }
-    for (const id of ownedContainerIds(await findExactNameAndLabel())) candidates.add(id);
+    const nameIds = ownedContainerIds(await findExactNameAndLabel());
+    for (const id of nameIds) candidates.add(id);
 
     const labeled = [];
     for (const id of candidates) {
       if (await hasExpectedLabel(id)) labeled.push(id);
     }
     if (candidates.size > 1 || labeled.length > 1) {
-      throw new ContainerContractError(
-        "Docker ownership proofs disagreed; cleanup was withheld.",
-      );
+      const error = new ContainerContractError("Docker ownership proofs disagreed.");
+      const uniqueLabeledId = labeled.length === 1 ? labeled[0] : undefined;
+      if (
+        uniqueLabeledId &&
+        stdoutId &&
+        stdoutId !== uniqueLabeledId &&
+        cidId === uniqueLabeledId &&
+        nameIds.length === 1 &&
+        nameIds[0] === uniqueLabeledId
+      ) {
+        error.cleanupContainerId = uniqueLabeledId;
+      }
+      throw error;
     }
     if (labeled.length === 1) return labeled[0];
-    if (attempt + 1 < attempts) await delay(delayMs);
+    if (attempt + 1 < attempts) await delay(capDelayMs(delayMs));
   }
   return undefined;
 }
 
 function asContractError(error, sensitive) {
-  if (error instanceof ContainerContractError) {
-    return new ContainerContractError(sanitizeDiagnostic(error.message, sensitive));
+  const result = new ContainerContractError(sanitizeDiagnostic(error?.message, sensitive));
+  if (/^[a-f0-9]{64}$/u.test(error?.cleanupContainerId ?? "")) {
+    result.cleanupContainerId = error.cleanupContainerId;
   }
-  return new ContainerContractError(sanitizeDiagnostic(error?.message, sensitive));
+  return result;
 }
 
 export async function executeOwnedContainerLifecycle({
@@ -808,68 +938,94 @@ export async function executeOwnedContainerLifecycle({
   operate,
   cleanup,
   sensitive = [],
+  control,
+  claim,
 }) {
+  if (control) control.registerPendingClaim(claim);
   let createResult;
   let primaryError;
   try {
-    createResult = await create();
-  } catch (error) {
-    primaryError = asContractError(error, sensitive);
-  }
-  if (typeof createResult?.stdout === "string" && createResult.stdout.trim().length > 0) {
     try {
-      parseOwnedContainerId(createResult.stdout);
-    } catch (error) {
-      primaryError ??= asContractError(error, sensitive);
-    }
-  }
-  let ownedContainerId;
-  try {
-    ownedContainerId = await resolveOwnership(createResult?.stdout ?? "");
-  } catch (error) {
-    const reconciliationError = asContractError(error, sensitive);
-    if (primaryError) {
-      primaryError = new ContainerContractError(
-        `${primaryError.message} Ownership reconciliation also failed: ${reconciliationError.message}`,
-      );
-    } else {
-      primaryError = reconciliationError;
-    }
-  }
-  if (!ownedContainerId && !primaryError) {
-    primaryError = new ContainerContractError("Docker create returned no labeled ownership proof.");
-  }
-
-  let result;
-  if (!primaryError) {
-    try {
-      const startResult = await start(ownedContainerId);
-      result = await operate(ownedContainerId, startResult);
+      createResult = await create();
     } catch (error) {
       primaryError = asContractError(error, sensitive);
     }
-  }
-
-  let cleanupError;
-  if (ownedContainerId) {
-    try {
-      await cleanup(ownedContainerId);
-    } catch (error) {
-      cleanupError = asContractError(error, sensitive);
+    if (typeof createResult?.stdout === "string" && createResult.stdout.trim().length > 0) {
+      try {
+        parseOwnedContainerId(createResult.stdout);
+      } catch (error) {
+        primaryError ??= asContractError(error, sensitive);
+      }
     }
+    if (control?.terminationSignal) {
+      primaryError ??= new ContainerContractError(
+        `Verifier received ${control.terminationSignal}.`,
+      );
+    }
+
+    let ownedContainerId;
+    try {
+      ownedContainerId = await resolveOwnership(createResult?.stdout ?? "");
+    } catch (error) {
+      const reconciliationError = asContractError(error, sensitive);
+      ownedContainerId = reconciliationError.cleanupContainerId;
+      if (primaryError) {
+        primaryError = new ContainerContractError(
+          `${primaryError.message} Ownership reconciliation also failed: ${reconciliationError.message}`,
+        );
+      } else {
+        primaryError = reconciliationError;
+      }
+    }
+    if (!ownedContainerId && !primaryError) {
+      primaryError = new ContainerContractError("Docker create returned no labeled ownership proof.");
+    }
+    if (control?.terminationSignal) {
+      primaryError ??= new ContainerContractError(
+        `Verifier received ${control.terminationSignal}.`,
+      );
+    }
+
+    let result;
+    if (!primaryError) {
+      try {
+        control?.throwIfTerminated();
+        const startResult = await start(ownedContainerId);
+        control?.throwIfTerminated();
+        result = await operate(ownedContainerId, startResult);
+      } catch (error) {
+        primaryError = asContractError(error, sensitive);
+      }
+    }
+
+    let cleanupError;
+    if (ownedContainerId) {
+      try {
+        await cleanup(ownedContainerId);
+      } catch (error) {
+        cleanupError = asContractError(error, sensitive);
+      }
+    }
+    if (control?.terminationSignal) {
+      primaryError ??= new ContainerContractError(
+        `Verifier received ${control.terminationSignal}.`,
+      );
+    }
+    if (primaryError && cleanupError) {
+      throw new ContainerContractError(
+        `${primaryError.message} Cleanup also failed: ${cleanupError.message}`,
+      );
+    }
+    if (primaryError) throw primaryError;
+    if (cleanupError) {
+      throw new ContainerContractError(
+        `Owned test-container cleanup failed: ${cleanupError.message}`,
+      );
+    }
+    return result;
+  } finally {
+    if (control) control.releasePendingClaim(claim);
   }
-  if (primaryError && cleanupError) {
-    throw new ContainerContractError(
-      `${primaryError.message} Cleanup also failed: ${cleanupError.message}`,
-    );
-  }
-  if (primaryError) throw primaryError;
-  if (cleanupError) {
-    throw new ContainerContractError(
-      `Owned test-container cleanup failed: ${cleanupError.message}`,
-    );
-  }
-  return result;
 }
 
 function assertOutcome(label, result) {
@@ -878,12 +1034,18 @@ function assertOutcome(label, result) {
   }
 }
 
-async function runProcess(command, args, { timeoutMs = 60_000, sensitive = [] } = {}) {
+async function runProcess(
+  command,
+  args,
+  { timeoutMs = 60_000, sensitive = [], control, phase = "work" } = {},
+) {
   try {
+    const boundedTimeoutMs = control ? control.capTimeout(timeoutMs, phase) : timeoutMs;
     const result = await execFileAsync(command, args, {
       encoding: "utf8",
       maxBuffer: 4 * 1024 * 1024,
-      timeout: timeoutMs,
+      timeout: boundedTimeoutMs,
+      signal: phase === "work" ? control?.abortSignal : undefined,
       windowsHide: true,
     });
     return { stdout: result.stdout ?? "", stderr: result.stderr ?? "" };
@@ -903,8 +1065,8 @@ async function readContractFile(path, label) {
   }
 }
 
-async function dockerJson(args, label, sensitive = []) {
-  const { stdout } = await runProcess("docker", args, { sensitive });
+async function dockerJson(args, label, sensitive = [], control, phase = "work") {
+  const { stdout } = await runProcess("docker", args, { sensitive, control, phase });
   try {
     return JSON.parse(stdout);
   } catch {
@@ -925,54 +1087,76 @@ async function readCidFileValue(cidFile) {
   }
 }
 
-async function findExactNamedLabeledContainer(name, owner, sensitive) {
+async function findExactNamedLabeledContainer(name, owner, sensitive, control) {
   const { stdout } = await runProcess(
     "docker",
     buildOwnershipLookupArguments(name, owner),
-    { sensitive },
+    { sensitive, control, phase: "reconcile", timeoutMs: 3_000 },
   );
   return stdout;
 }
 
-async function containerHasExpectedLabel(id, owner, sensitive) {
-  const { stdout } = await runProcess(
-    "docker",
-    buildOwnershipInspectArguments(id),
-    { sensitive },
-  );
-  return stdout.trim() === owner;
+async function containerHasExpectedLabel(id, owner, sensitive, control, phase = "reconcile") {
+  try {
+    const { stdout } = await runProcess(
+      "docker",
+      buildOwnershipInspectArguments(id),
+      { sensitive, control, phase, timeoutMs: 3_000 },
+    );
+    return stdout.trim() === owner;
+  } catch (error) {
+    if (phase === "reconcile" && /No such (?:object|container)/iu.test(error?.message ?? "")) {
+      return false;
+    }
+    throw error;
+  }
 }
 
-async function resolveDockerOwnership({ createOutput, cidFile, name, owner, sensitive }) {
+async function resolveDockerOwnership({
+  createOutput,
+  cidFile,
+  name,
+  owner,
+  sensitive,
+  control,
+}) {
   return reconcileOwnedContainer({
     createOutput,
     readCidFile: () => readCidFileValue(cidFile),
-    findExactNameAndLabel: () => findExactNamedLabeledContainer(name, owner, sensitive),
-    hasExpectedLabel: (id) => containerHasExpectedLabel(id, owner, sensitive),
+    findExactNameAndLabel: () =>
+      findExactNamedLabeledContainer(name, owner, sensitive, control),
+    hasExpectedLabel: (id) =>
+      containerHasExpectedLabel(id, owner, sensitive, control, "reconcile"),
+    capDelayMs: (milliseconds) => control?.capTimeout(milliseconds, "reconcile") ?? milliseconds,
   });
 }
 
-async function cleanupOwnedDockerContainer(id, owner, sensitive) {
-  if (!(await containerHasExpectedLabel(id, owner, sensitive))) {
+async function cleanupOwnedDockerContainer(id, owner, sensitive, control) {
+  if (!(await containerHasExpectedLabel(id, owner, sensitive, control, "cleanup"))) {
     throw new ContainerContractError(
       "Container ownership label changed; cleanup was withheld.",
     );
   }
   return runProcess("docker", buildContainerCleanupArguments(id), {
-    timeoutMs: 30_000,
+    timeoutMs: 10_000,
     sensitive,
+    control,
+    phase: "cleanup",
   });
 }
 
-async function runOwnedCensus({ image, label, entrypoint, command }) {
+async function runOwnedCensus({ image, label, entrypoint, command, control }) {
   const name = createContainerName(`census-${label}`);
   const owner = createOwnershipMarker();
   const sensitive = [owner];
   const ownershipDirectory = await mkdtemp(join(tmpdir(), "biostack-p01-census-"));
   const cidFile = join(ownershipDirectory, "container.cid");
+  const claim = { name, owner, cidFile };
   try {
     return await executeOwnedContainerLifecycle({
       sensitive,
+      control,
+      claim,
       create: () =>
         runProcess(
           "docker",
@@ -984,14 +1168,15 @@ async function runOwnedCensus({ image, label, entrypoint, command }) {
             entrypoint,
             command,
           }),
-          { timeoutMs: 30_000, sensitive },
+          { timeoutMs: 30_000, sensitive, control },
         ),
       resolveOwnership: (createOutput) =>
-        resolveDockerOwnership({ createOutput, cidFile, name, owner, sensitive }),
+        resolveDockerOwnership({ createOutput, cidFile, name, owner, sensitive, control }),
       start: (id) =>
         runProcess("docker", ["start", "--attach", id], {
           timeoutMs: 30_000,
           sensitive,
+          control,
         }),
       operate: (_id, startResult) => {
         try {
@@ -1000,14 +1185,14 @@ async function runOwnedCensus({ image, label, entrypoint, command }) {
           throw new ContainerContractError(`${label} was not valid JSON.`);
         }
       },
-      cleanup: (id) => cleanupOwnedDockerContainer(id, owner, sensitive),
+      cleanup: (id) => cleanupOwnedDockerContainer(id, owner, sensitive, control),
     });
   } finally {
     await rm(ownershipDirectory, { recursive: true, force: true });
   }
 }
 
-async function inspectStaticImage(image) {
+async function inspectStaticImage(image, control) {
   const dockerfile = await readContractFile(DOCKERFILE_PATH, "Dockerfile");
   const dockerignore = await readContractFile(DOCKERIGNORE_PATH, ".dockerignore");
   assertOutcome("Dockerfile contract failed", evaluateDockerfileContract(dockerfile));
@@ -1018,7 +1203,7 @@ async function inspectStaticImage(image) {
 
   return inspectLocalImageBeforeExecution({
     image,
-    inspect: (args) => runProcess("docker", args),
+    inspect: (args) => runProcess("docker", args, { control }),
     execute: async (immutableImage, observation) => {
   const runtimeScript = [
     "import json, os",
@@ -1029,6 +1214,7 @@ async function inspectStaticImage(image) {
     label: "Runtime identity census",
     entrypoint: "/app/.venv/bin/python",
     command: ["-c", runtimeScript],
+    control,
   });
   observation.runtimeUid = runtime.runtimeUid;
   assertOutcome("Image configuration failed", evaluateImageConfiguration(observation));
@@ -1042,6 +1228,7 @@ async function inspectStaticImage(image) {
     label: "Package census",
     entrypoint: "/app/.venv/bin/python",
     command: ["-c", packageScript],
+    control,
   });
   assertOutcome("Package census failed", evaluatePackageCensus(packages));
 
@@ -1061,6 +1248,7 @@ async function inspectStaticImage(image) {
     label: "Filesystem census",
     entrypoint: "/app/.venv/bin/python",
     command: ["-c", filesystemScript],
+    control,
   });
   assertOutcome("Filesystem census failed", evaluateFilesystemCensus(filesystem));
   return immutableImage;
@@ -1068,18 +1256,22 @@ async function inspectStaticImage(image) {
   });
 }
 
-async function requestJson(url, { method = "GET", token, body } = {}) {
+async function requestJson(url, { method = "GET", token, body, control } = {}) {
+  control?.throwIfTerminated();
   const headers = { Accept: "application/json" };
   if (token !== undefined) headers.Authorization = `Bearer ${token}`;
   if (body !== undefined) headers["Content-Type"] = "application/json";
   let response;
   try {
+    const timeoutSignal = AbortSignal.timeout(control?.capTimeout(5_000, "work") ?? 5_000);
     response = await fetch(url, {
       method,
       headers,
       body: body === undefined ? undefined : JSON.stringify(body),
       redirect: "manual",
-      signal: AbortSignal.timeout(5_000),
+      signal: control
+        ? AbortSignal.any([timeoutSignal, control.abortSignal])
+        : timeoutSignal,
     });
   } catch {
     throw new ContainerContractError("Local HTTP request failed.");
@@ -1152,32 +1344,34 @@ export async function readBoundedResponseText(response, maximumBytes = 65_536) {
   }
 }
 
-async function waitForHealth(baseUrl, timeoutSeconds) {
+async function waitForHealth(baseUrl, timeoutSeconds, control) {
   const deadline = Date.now() + timeoutSeconds * 1_000;
   while (Date.now() < deadline) {
     try {
-      const response = await requestJson(`${baseUrl}/health`);
+      const response = await requestJson(`${baseUrl}/health`, { control });
       if (response.status === 200) return response;
     } catch (error) {
       if (!(error instanceof ContainerContractError)) throw error;
     }
-    await new Promise((resolveDelay) => setTimeout(resolveDelay, 250));
+    await new Promise((resolveDelay) =>
+      setTimeout(resolveDelay, control?.capTimeout(250, "work") ?? 250));
   }
   throw new ContainerContractError("Timed out waiting for local dark health.");
 }
 
-async function waitForTerminal(baseUrl, jobId, token) {
+async function waitForTerminal(baseUrl, jobId, token, control) {
   const deadline = Date.now() + 10_000;
   while (Date.now() < deadline) {
     const response = await requestJson(
       `${baseUrl}/internal/v1/research/jobs/${encodeURIComponent(jobId)}`,
-      { token },
+      { token, control },
     );
     if (response.status !== 200 || !response.body || typeof response.body !== "object") {
       throw new ContainerContractError("Job-status response was malformed.");
     }
     if (TERMINAL_JOB_STATES.has(response.body.status)) return response.body;
-    await new Promise((resolveDelay) => setTimeout(resolveDelay, 100));
+    await new Promise((resolveDelay) =>
+      setTimeout(resolveDelay, control?.capTimeout(100, "work") ?? 100));
   }
   throw new ContainerContractError("Timed out waiting for kill-switch terminal state.");
 }
@@ -1190,8 +1384,11 @@ function createSyntheticToken() {
   return `p01-local-only-${randomBytes(24).toString("hex")}`;
 }
 
-async function resolvePublishedPort(name, sensitive) {
-  const { stdout } = await runProcess("docker", ["port", name, "8080/tcp"], { sensitive });
+async function resolvePublishedPort(name, sensitive, control) {
+  const { stdout } = await runProcess("docker", ["port", name, "8080/tcp"], {
+    sensitive,
+    control,
+  });
   const lines = stdout.trim().split(/\r?\n/u);
   if (lines.length !== 1) {
     throw new ContainerContractError("Docker returned an ambiguous host-port mapping.");
@@ -1207,7 +1404,7 @@ async function resolvePublishedPort(name, sensitive) {
   return port;
 }
 
-async function inspectDarkEnvironment(name, sensitive) {
+async function inspectDarkEnvironment(name, sensitive, control) {
   const script = [
     "import json",
     "from biostack_research_sidecar.config import Settings",
@@ -1218,10 +1415,11 @@ async function inspectDarkEnvironment(name, sensitive) {
     ["exec", name, "/app/.venv/bin/python", "-c", script],
     "Dark environment census",
     sensitive,
+    control,
   );
 }
 
-async function verifyRuntime(options) {
+async function verifyRuntime(options, control) {
   const name = options.containerName ?? createContainerName();
   const owner = createOwnershipMarker();
   const token = createSyntheticToken();
@@ -1257,10 +1455,13 @@ async function verifyRuntime(options) {
   let publicOutput = "P01 local container contract passed.";
   const ownershipDirectory = await mkdtemp(join(tmpdir(), "biostack-p01-"));
   const cidFile = join(ownershipDirectory, "container.cid");
+  const claim = { name, owner, cidFile };
 
   try {
     return await executeOwnedContainerLifecycle({
       sensitive,
+      control,
+      claim,
       create: () => runProcess(
         "docker",
         buildContainerCreateArguments({
@@ -1271,36 +1472,41 @@ async function verifyRuntime(options) {
           cidFile,
           owner,
         }),
-        { timeoutMs: 30_000, sensitive },
+        { timeoutMs: 30_000, sensitive, control },
       ),
       resolveOwnership: (createOutput) =>
-        resolveDockerOwnership({ createOutput, cidFile, name, owner, sensitive }),
+        resolveDockerOwnership({ createOutput, cidFile, name, owner, sensitive, control }),
       start: (ownedContainerId) => runProcess("docker", ["start", ownedContainerId], {
         timeoutMs: 30_000,
         sensitive,
+        control,
       }),
       cleanup: (ownedContainerId) =>
-        cleanupOwnedDockerContainer(ownedContainerId, owner, sensitive),
+        cleanupOwnedDockerContainer(ownedContainerId, owner, sensitive, control),
       operate: async (ownedContainerId) => {
-    const port = await resolvePublishedPort(ownedContainerId, sensitive);
+    const port = await resolvePublishedPort(ownedContainerId, sensitive, control);
     const baseUrl = `http://127.0.0.1:${port}`;
-    const health = await waitForHealth(baseUrl, options.healthTimeoutSeconds);
+    const health = await waitForHealth(baseUrl, options.healthTimeoutSeconds, control);
     assertOutcome(
       "Health contract failed",
       evaluateHealthObservation(health.status, health.body),
     );
 
-    const darkEnvironment = await inspectDarkEnvironment(ownedContainerId, sensitive);
+    const darkEnvironment = await inspectDarkEnvironment(ownedContainerId, sensitive, control);
     assertOutcome(
       "Dark environment contract failed",
       evaluateDarkEnvironment(darkEnvironment),
     );
 
-    const missing = await requestJson(`${baseUrl}/internal/v1/workflows`);
+    const missing = await requestJson(`${baseUrl}/internal/v1/workflows`, { control });
     const wrong = await requestJson(`${baseUrl}/internal/v1/workflows`, {
       token: wrongToken,
+      control,
     });
-    const correct = await requestJson(`${baseUrl}/internal/v1/workflows`, { token });
+    const correct = await requestJson(`${baseUrl}/internal/v1/workflows`, {
+      token,
+      control,
+    });
     assertOutcome(
       "Authentication contract failed",
       evaluateAuthObservations({
@@ -1314,6 +1520,7 @@ async function verifyRuntime(options) {
     const privacy = await requestJson(`${baseUrl}/internal/v1/research/jobs`, {
       method: "POST",
       token,
+      control,
       body: {
         research_request_id: privacyRequestId,
         subject_name: privacySubject,
@@ -1326,6 +1533,7 @@ async function verifyRuntime(options) {
     const arbitrary = await requestJson(`${baseUrl}/internal/v1/research/jobs`, {
       method: "POST",
       token,
+      control,
       body: {
         research_request_id: arbitraryRequestId,
         subject_name: arbitrarySubject,
@@ -1347,6 +1555,7 @@ async function verifyRuntime(options) {
     const submitted = await requestJson(`${baseUrl}/internal/v1/research/jobs`, {
       method: "POST",
       token,
+      control,
       body: {
         research_request_id: killRequestId,
         subject_name: publicMarker,
@@ -1369,7 +1578,7 @@ async function verifyRuntime(options) {
       throw new ContainerContractError("Kill-switch submission omitted job_id.");
     }
     sensitive.push(jobId);
-    const terminal = await waitForTerminal(baseUrl, jobId, token);
+    const terminal = await waitForTerminal(baseUrl, jobId, token, control);
     assertOutcome(
       "Kill-switch lifecycle contract failed",
       evaluateKillSwitchObservations({
@@ -1382,7 +1591,7 @@ async function verifyRuntime(options) {
 
     const docs = {};
     for (const route of ["/docs", "/redoc", "/openapi.json"]) {
-      const response = await requestJson(`${baseUrl}${route}`);
+      const response = await requestJson(`${baseUrl}${route}`, { control });
       docs[route] = response.status;
     }
     assertOutcome("Documentation-route contract failed", evaluateDocsRoutes(docs));
@@ -1390,7 +1599,7 @@ async function verifyRuntime(options) {
     const { stdout: logs, stderr: logErrors } = await runProcess(
       "docker",
       ["logs", ownedContainerId],
-      { sensitive },
+      { sensitive, control },
     );
     assertOutcome(
       "Log/output hygiene failed",
@@ -1405,16 +1614,51 @@ async function verifyRuntime(options) {
   }
 }
 
-export async function main(argv = process.argv.slice(2)) {
+export async function main(
+  argv = process.argv.slice(2),
+  { control = createExecutionControl() } = {},
+) {
   const options = parseCliArgs(argv);
-  const immutableImage = await inspectStaticImage(options.image);
-  const result = await verifyRuntime({ ...options, image: immutableImage });
+  control.throwIfTerminated();
+  const immutableImage = await inspectStaticImage(options.image, control);
+  control.throwIfTerminated();
+  const result = await verifyRuntime({ ...options, image: immutableImage }, control);
+  control.throwIfTerminated();
   console.log(JSON.stringify(result));
 }
 
+export async function runDirectCli(
+  argv = process.argv.slice(2),
+  {
+    control = createExecutionControl(),
+    mainFunction = main,
+    processObject = process,
+    writeError = (message) => console.error(message),
+  } = {},
+) {
+  const handlers = new Map(
+    ["SIGTERM", "SIGINT"].map((signal) => [
+      signal,
+      () => control.requestTermination(signal),
+    ]),
+  );
+  for (const [signal, handler] of handlers) processObject.on(signal, handler);
+  try {
+    await mainFunction(argv, { control });
+    control.throwIfTerminated();
+    return 0;
+  } catch (error) {
+    writeError(
+      `research-sidecar container contract failed: ${sanitizeDiagnostic(error?.message)}`,
+    );
+    return 1;
+  } finally {
+    for (const [signal, handler] of handlers) processObject.off(signal, handler);
+  }
+}
+
 if (isDirectExecution(import.meta.url, process.argv[1])) {
-  main().catch((error) => {
-    console.error(`research-sidecar container contract failed: ${sanitizeDiagnostic(error?.message)}`);
-    process.exitCode = 1;
+  runDirectCli().then((exitCode) => {
+    process.exitCode = exitCode;
   });
 }

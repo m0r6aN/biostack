@@ -1,10 +1,13 @@
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
+import { once } from "node:events";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
   ALLOWED_WORKFLOWS,
+  CLEANUP_RESERVE_MS,
+  DIRECT_CLI_TIMEOUT_MS,
   FORBIDDEN_DISTRIBUTIONS,
   OWNERSHIP_LABEL_KEY,
   REQUIRED_DARK_ENVIRONMENT,
@@ -14,6 +17,7 @@ import {
   buildCensusCreateArguments,
   buildOwnershipInspectArguments,
   buildOwnershipLookupArguments,
+  createExecutionControl,
   evaluateAuthObservations,
   evaluateDarkEnvironment,
   evaluateDockerfileContract,
@@ -36,6 +40,7 @@ import {
   reconcileOwnedContainer,
   readBoundedResponseText,
   requireImmutableImageId,
+  runDirectCli,
   sanitizeDiagnostic,
 } from "./verify-research-sidecar-container.mjs";
 
@@ -51,6 +56,20 @@ const pyproject = readFileSync(
   new URL("../backend/research-sidecar/pyproject.toml", import.meta.url),
   "utf8",
 );
+const workflow = readFileSync(
+  new URL("../.github/workflows/research-sidecar-ci.yml", import.meta.url),
+  "utf8",
+);
+
+function extractBuildBackendManifest(contents) {
+  const match = /# P01_BUILD_BACKEND_REQUIREMENTS_BEGIN\r?\n(?<body>[\s\S]*?)\r?\n\s*# P01_BUILD_BACKEND_REQUIREMENTS_END/u.exec(contents);
+  assert.notEqual(match, null);
+  return match.groups.body
+    .split(/\r?\n/u)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join("\n");
+}
 
 function assertFails(result, pattern) {
   assert.equal(result.ok, false);
@@ -211,6 +230,69 @@ test("direct-execution predicate is false when an ESM import has no argv entry",
   assert.equal(isDirectExecution(import.meta.url, null), false);
 });
 
+test("one execution deadline reserves cleanup time and caps every phase", () => {
+  let now = 1_000;
+  const control = createExecutionControl({
+    timeoutMs: 100,
+    cleanupReserveMs: 20,
+    now: () => now,
+  });
+  assert.equal(control.capTimeout(500, "work"), 80);
+  now += 70;
+  assert.equal(control.capTimeout(500, "reconcile"), 20);
+  assert.equal(control.capTimeout(500, "cleanup"), 30);
+  control.requestTermination("SIGTERM");
+  assert.throws(() => control.capTimeout(1, "work"), /SIGTERM/);
+  assert.equal(control.capTimeout(500, "reconcile"), 20);
+  assert.equal(control.capTimeout(500, "cleanup"), 30);
+  now += 21;
+  assert.throws(() => control.capTimeout(1, "reconcile"), /deadline/);
+  assert.equal(control.capTimeout(500, "cleanup"), 9);
+});
+
+test("execution control registers one exact pending claim before work", () => {
+  const control = createExecutionControl({ timeoutMs: 100, cleanupReserveMs: 20 });
+  const claim = {
+    name: "biostack-p01-pending",
+    owner: "a".repeat(48),
+    cidFile: "/tmp/p01.cid",
+  };
+  control.registerPendingClaim(claim);
+  assert.equal(control.pendingClaim, claim);
+  assert.throws(() => control.registerPendingClaim(claim), /overlapping/);
+  control.releasePendingClaim(claim);
+  assert.equal(control.pendingClaim, undefined);
+  control.requestTermination("SIGINT");
+  assert.throws(() => control.registerPendingClaim(claim), /SIGINT/);
+});
+
+test("direct CLI installs bounded TERM and INT handlers and returns nonzero", async () => {
+  for (const signal of ["SIGTERM", "SIGINT"]) {
+    const handlers = new Map();
+    const fakeProcess = {
+      on(name, handler) {
+        handlers.set(name, handler);
+      },
+      off(name, handler) {
+        assert.equal(handlers.get(name), handler);
+        handlers.delete(name);
+      },
+    };
+    const control = createExecutionControl({ timeoutMs: 100, cleanupReserveMs: 20 });
+    const errors = [];
+    const code = await runDirectCli([], {
+      control,
+      processObject: fakeProcess,
+      writeError: (message) => errors.push(message),
+      mainFunction: async () => handlers.get(signal)(),
+    });
+    assert.equal(code, 1);
+    assert.equal(control.terminationSignal, signal);
+    assert.equal(handlers.size, 0);
+    assert.match(errors.join(" "), new RegExp(signal));
+  }
+});
+
 test("module imports safely from a real ESM eval context without argv[1]", () => {
   const moduleUrl = new URL("./verify-research-sidecar-container.mjs", import.meta.url).href;
   const child = spawnSync(
@@ -233,9 +315,28 @@ test("Dockerfile contract accepts the checked-in production Dockerfile", () => {
   assert.deepEqual(evaluateDockerfileContract(dockerfile), { ok: true, errors: [] });
 });
 
-test("build backend is exact-version pinned within the digest-pinned builder", () => {
+test("build backend is hash-locked, audited, and isolated from the runtime image", () => {
   assert.match(pyproject, /^requires = \["hatchling==1\.32\.0"\]$/m);
   assert.match(dockerfile, /^FROM ghcr\.io\/astral-sh\/uv:[^\s]+@sha256:[a-f0-9]{64} AS builder$/m);
+  const dockerManifest = extractBuildBackendManifest(dockerfile);
+  const workflowManifest = extractBuildBackendManifest(workflow);
+  assert.equal(workflowManifest, dockerManifest);
+  for (const identity of [
+    "hatchling==1.32.0",
+    "packaging==26.3",
+    "pathspec==1.1.1",
+    "pluggy==1.6.0",
+    "tomlkit==0.15.1",
+    "trove-classifiers==2026.6.1.19",
+  ]) {
+    assert.equal((dockerManifest.match(new RegExp(`^${identity.replaceAll(".", "\\.")} `, "m")) ?? []).length, 1);
+  }
+  assert.equal((dockerManifest.match(/--hash=sha256:[a-f0-9]{64}/gu) ?? []).length, 12);
+  assert.match(dockerfile, /--only-binary=:all:/);
+  assert.match(dockerfile, /UV_NO_INDEX=1 .*python -m hatchling build/);
+  assert.match(dockerfile, /--no-index[\s\S]+biostack_research_sidecar-0\.1\.0-py3-none-any\.whl/);
+  assert.match(workflow, /Audit the hash-locked build-backend closure/);
+  assert.match(workflow, /pip-audit[\s\S]+--strict[\s\S]+--no-deps[\s\S]+p01-build-backend-requirements\.txt/);
 });
 
 for (const [name, mutate, pattern] of [
@@ -250,9 +351,12 @@ for (const [name, mutate, pattern] of [
   ["venv pip removal", (value) => value.replace("/app/.venv/bin/pip", "/tmp/venv-pip"), /installer removal/],
   ["provider-extra default", (value) => value.replace("ARG INCLUDE_TOOLUNIVERSE=false", "ARG INCLUDE_TOOLUNIVERSE=true"), /no-extra/],
   ["dependency-only no-extra", (value) => value.replace("false) uv sync --locked --no-dev --no-install-project ;;", "false) uv sync --locked --no-dev --extra tooluniverse --no-install-project ;;"), /Dependency-only no-extra/],
-  ["project no-extra", (value) => value.replace("false) uv sync --locked --no-dev ;;", "false) uv sync --locked --no-dev --extra tooluniverse ;;"), /Project no-extra/],
   ["dependency optional contract", (value) => value.replace("true) uv sync --locked --no-dev --extra tooluniverse --no-install-project ;;", "true) uv sync --locked --no-dev --no-install-project ;;"), /Dependency-only ToolUniverse/],
-  ["project optional contract", (value) => value.replace("true) uv sync --locked --no-dev --extra tooluniverse ;;", "true) uv sync --locked --no-dev ;;"), /Project ToolUniverse/],
+  ["missing build hashes", (value) => value.replace("--require-hashes", "--no-verify-hashes"), /build-backend closure/],
+  ["source build artifact", (value) => value.replace("--only-binary=:all:", "--only-binary=:none:"), /build-backend closure/],
+  ["isolated project build", (value) => value.replace("UV_NO_INDEX=1", "UV_INDEX_URL=https://example.invalid/simple"), /build-backend closure/],
+  ["project dependency resolution", (value) => value.replace("    --no-index \\", "    --index-url https://example.invalid/simple \\") , /build-backend closure/],
+  ["retained builder tooling", (value) => value.replace("rm -rf /tmp/p01-build-backend-venv", "true #"), /build-backend closure/],
   ["unsafe empty extra", (value) => value + "\nRUN uv sync --extra ${TOOLUNIVERSE_EXTRA}\n", /Unsafe variable/],
   ["unsafe quoted empty extra", (value) => value + '\nRUN uv sync --extra "${TOOLUNIVERSE_EXTRA}"\n', /Unsafe variable/],
   ["root user", (value) => value.replace("USER biostack", "USER root"), /user/],
@@ -436,6 +540,17 @@ test("package census normalizes names and fails closed on nameless or invalid me
   assertFails(evaluatePackageCensus("fastapi"), /nameless|invalid/);
   for (const invalid of [null, "", " fastapi", "fast api", "fastapi/"]) {
     assertFails(evaluatePackageCensus([...REQUIRED_DISTRIBUTIONS, invalid]), /nameless|invalid/);
+  }
+  for (const [duplicate, expected] of [
+    ["FastAPI", "fastapi"],
+    ["pydantic_settings", "pydantic-settings"],
+    ["Pydantic.Settings", "pydantic-settings"],
+    ["PYDANTIC---SETTINGS", "pydantic-settings"],
+  ]) {
+    assertFails(
+      evaluatePackageCensus([...REQUIRED_DISTRIBUTIONS, duplicate]),
+      new RegExp(`Duplicate canonical distribution identity.*${expected}`),
+    );
   }
   assertFails(evaluatePackageCensus([]), /empty/);
   assertFails(evaluatePackageCensus(REQUIRED_DISTRIBUTIONS.filter((name) => name !== "httpx")), /httpx/);
@@ -786,17 +901,21 @@ test("ownership reconciliation withholds collision and no-proof cleanup", async 
 test("ownership reconciliation fails closed on disagreeing full IDs", async () => {
   const stdoutId = "4".repeat(64);
   const cidId = "5".repeat(64);
-  await assert.rejects(
-    reconcileOwnedContainer({
+  let error;
+  try {
+    await reconcileOwnedContainer({
       createOutput: stdoutId,
       readCidFile: async () => cidId,
       findExactNameAndLabel: async () => cidId,
-      hasExpectedLabel: async () => true,
+      hasExpectedLabel: async (candidate) => candidate === cidId,
       delay: async () => {},
       attempts: 1,
-    }),
-    /proofs disagreed/,
-  );
+    });
+  } catch (caught) {
+    error = caught;
+  }
+  assert.match(error?.message ?? "", /proofs disagreed/);
+  assert.equal(error.cleanupContainerId, cidId);
 });
 
 test("forced timeout reconciliation cleans the delayed labeled container", async () => {
@@ -920,6 +1039,116 @@ test("owned lifecycle withholds cleanup without unambiguous ownership", async ()
   assert.deepEqual(mismatch.events, ["create", "ownership"]);
 });
 
+test("owned lifecycle preserves disagreement but cleans unique cid/name/label proof", async () => {
+  const stdoutId = "7".repeat(64);
+  const ownedId = "8".repeat(64);
+  const events = [];
+  await assert.rejects(
+    executeOwnedContainerLifecycle({
+      create: async () => ({ stdout: stdoutId }),
+      resolveOwnership: (createOutput) =>
+        reconcileOwnedContainer({
+          createOutput,
+          readCidFile: async () => ownedId,
+          findExactNameAndLabel: async () => ownedId,
+          hasExpectedLabel: async (candidate) => candidate === ownedId,
+          attempts: 1,
+        }),
+      start: async () => events.push("unexpected-start"),
+      operate: async () => events.push("unexpected-operate"),
+      cleanup: async (candidate) => events.push(`cleanup:${candidate}`),
+    }),
+    /proofs disagreed/,
+  );
+  assert.deepEqual(events, [`cleanup:${ownedId}`]);
+});
+
+test("direct child TERM aborts work, reconciles its pending claim, and exits nonzero", { timeout: 15_000 }, async (context) => {
+  const moduleUrl = new URL("./verify-research-sidecar-container.mjs", import.meta.url).href;
+  const childSource = `
+    import {
+      createExecutionControl,
+      executeOwnedContainerLifecycle,
+      runDirectCli,
+    } from ${JSON.stringify(moduleUrl)};
+    const id = "9".repeat(64);
+    const owner = "a".repeat(48);
+    const containers = new Map();
+    const claim = { name: "biostack-p01-term-child", owner, cidFile: "/tmp/p01-term.cid" };
+    const control = createExecutionControl({ timeoutMs: 10_000, cleanupReserveMs: 2_000 });
+    if (process.platform === "win32") {
+      process.stdin.once("data", () => process.emit("SIGTERM"));
+    }
+    const mainFunction = async (_argv, { control: activeControl }) =>
+      executeOwnedContainerLifecycle({
+        control: activeControl,
+        claim,
+        sensitive: [owner],
+        create: async () => {
+          containers.set(id, owner);
+          process.stdout.write("CREATED\\n");
+          await new Promise((_resolve, reject) => {
+            const abort = () => reject(new Error("active work aborted"));
+            if (activeControl.abortSignal.aborted) abort();
+            else activeControl.abortSignal.addEventListener("abort", abort, { once: true });
+          });
+        },
+        resolveOwnership: async () => id,
+        start: async () => { throw new Error("start after signal"); },
+        operate: async () => { throw new Error("operate after signal"); },
+        cleanup: async (candidate) => {
+          if (containers.get(candidate) !== owner) throw new Error("ownership changed");
+          containers.delete(candidate);
+        },
+      });
+    const exitCode = await runDirectCli([], {
+      control,
+      mainFunction,
+      writeError: (message) => process.stderr.write(message + "\\n"),
+    });
+    process.stdout.write("LEFT=" + containers.size + "\\n");
+    process.stdout.write("PENDING=" + (control.pendingClaim ? 1 : 0) + "\\n");
+    process.exitCode = exitCode;
+  `;
+  const child = spawn(
+    process.execPath,
+    ["--input-type=module", "--eval", childSource],
+    { encoding: "utf8", shell: false, stdio: ["pipe", "pipe", "pipe"], windowsHide: true },
+  );
+  context.after(() => {
+    if (child.exitCode === null && child.signalCode === null) child.kill("SIGKILL");
+  });
+  let stdout = "";
+  let stderr = "";
+  child.stdout.setEncoding("utf8");
+  child.stderr.setEncoding("utf8");
+  child.stderr.on("data", (chunk) => { stderr += chunk; });
+  const created = new Promise((resolveCreated) => {
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk;
+      if (stdout.includes("CREATED\n")) resolveCreated();
+    });
+  });
+  await Promise.race([
+    created,
+    new Promise((_resolve, reject) => {
+      const timer = setTimeout(
+        () => reject(new Error("child create marker timed out")),
+        5_000,
+      );
+      timer.unref();
+    }),
+  ]);
+  if (process.platform === "win32") child.stdin.end("TERM\n");
+  else assert.equal(child.kill("SIGTERM"), true);
+  const [exitCode, exitSignal] = await once(child, "exit");
+  assert.equal(exitSignal, null);
+  assert.equal(exitCode, 1);
+  assert.match(stderr, /SIGTERM|active work aborted/);
+  assert.match(stdout, /LEFT=0/);
+  assert.match(stdout, /PENDING=0/);
+});
+
 test("HTTP response reader accepts bounded UTF-8 and rejects size or header abuse", async () => {
   assert.equal(await readBoundedResponseText(new Response("safe"), 8), "safe");
   await assert.rejects(
@@ -956,9 +1185,13 @@ test("implementation uses execFile argument arrays and contains no shell escape 
   assert.match(source, /d\.metadata\.get\('Name'\) for d in m\.distributions\(\)/);
   assert.doesNotMatch(source, /m\.distributions\(\) if d\.metadata/u);
   assert.doesNotMatch(source, /subject_name:\s*["']P01Compound["']/);
-  assert.match(source, /resolvePublishedPort\(ownedContainerId, sensitive\)/);
-  assert.match(source, /inspectDarkEnvironment\(ownedContainerId, sensitive\)/);
+  assert.match(source, /resolvePublishedPort\(ownedContainerId, sensitive, control\)/);
+  assert.match(source, /inspectDarkEnvironment\(ownedContainerId, sensitive, control\)/);
   assert.match(source, /sensitive\.push\(jobId\)/);
+  assert.match(source, /registerPendingClaim\(claim\)/);
+  assert.match(source, /requestTermination\(signal\)/);
+  assert.match(source, /control \? control\.capTimeout\(timeoutMs, phase\)/);
+  assert.match(source, /phase === "work" \? control\?\.abortSignal/);
   for (const field of ["research_request_id", "subject_name", "correlation_id"]) {
     assert.equal((source.match(new RegExp(`${field}:`, "g")) ?? []).length, 3);
   }
@@ -1028,6 +1261,11 @@ test("CI is path-scoped, read-only, bounded, and contains every deterministic ga
   assert.match(workflow, /--no-dev/);
   assert.match(workflow, /--no-emit-project/);
   assert.match(workflow, /pip-audit[\s\\]+\n\s+--strict/);
+  assert.match(workflow, /Audit the hash-locked build-backend closure/);
+  assert.match(
+    workflow,
+    /--no-deps[\s\\]+\n\s+--requirement "\$\{RUNNER_TEMP\}\/p01-build-backend-requirements\.txt"/,
+  );
   assert.match(workflow, /node --test scripts\/verify-research-sidecar-container\.test\.mjs/);
   assert.match(workflow, /GITLEAKS_VERSION: "8\.24\.3"/);
   assert.match(workflow, /9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c/);
@@ -1037,6 +1275,8 @@ test("CI is path-scoped, read-only, bounded, and contains every deterministic ga
   assert.match(workflow, /--tag biostack-research-sidecar:p01-ci/);
   assert.match(workflow, /node scripts\/verify-research-sidecar-container\.mjs/);
   assert.match(workflow, /--image biostack-research-sidecar:p01-ci/);
+  assert.match(workflow, /timeout --signal=TERM --kill-after=20s 3m/);
+  assert.equal(DIRECT_CLI_TIMEOUT_MS + CLEANUP_RESERVE_MS < 180_000, true);
 });
 
 test("CI contains no deployment, registry-push, provider, or environment-dump action", () => {

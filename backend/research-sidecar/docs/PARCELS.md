@@ -23,12 +23,15 @@ BioStack ToolUniverse Scientific Research Sidecar
 | p5-typed-scientific-entities | W3 | pending | Published regimens, studies, AE records |
 | p7-review-staging-wire | W3 | **done** | Sidecar results stage into existing review store/lifecycle |
 | p8-analyzer-evidence-context | W3 | **done** | Class B comparison on `/api/analyze/protocol` |
-| p11-contract-tests-ci | W2 | **done** | Frozen sidecar suite, hash-locked CI bootstrap, dependency audit, pinned two-stage no-extra image build, immutable local-image verification, and local dark container contract in `.github/workflows/research-sidecar-ci.yml` via `scripts/verify-research-sidecar-container.mjs`. The PEP 518 backend is exact-version pinned (`hatchling==1.32.0`), but `uv.lock` does not encode an artifact hash for isolated build-system resolution; the pinned builder image and exact backend version bound that accepted residual without claiming artifact-level lock coverage. |
+| p11-contract-tests-ci | W2 | **done** | Frozen sidecar suite, hash-locked CI bootstrap, dependency audits, pinned two-stage no-extra image build, immutable local-image verification, and local dark container contract in `.github/workflows/research-sidecar-ci.yml` via `scripts/verify-research-sidecar-container.mjs`. Hatchling `1.32.0` and its complete six-package build closure are artifact-hash locked and audited in a builder-only environment; the project wheel is built without PEP 518 isolation or network resolution, installed locally without dependency resolution, and no build tool crosses into the runtime image. Catchable TERM/INT handling reserves bounded reconciliation and cleanup time; SIGKILL, host loss, and Docker-daemon loss remain non-atomic interruption boundaries. |
 
 P01 hardening evidence (2026-09-08): 53 Python tests passed with one expected skip;
-197 verifier mutation tests passed; the strict dependency audit and secret scan passed;
+212 verifier mutation tests passed; the strict runtime and build-closure dependency audits and secret scan passed;
 and all nine dark-container checks passed against local immutable image ID
-`sha256:fcd907ec3688997042d62c48d9bd0695305b7cb3622c837108101911cb13c2be`.
+`sha256:82a077111407934c325c6dfa89b4b0b629ada2b1cdd937d3700722be7cac590f`.
+A bounded manual real-Docker proof observed the verifier-owned container in
+`Created`, triggered the direct CLI's SIGTERM handler, returned nonzero in 1.721
+seconds, and left zero containers carrying the P01 ownership label.
 
 P01 proves warning-level log hygiene only for its local dark container. P02 must set
 `BIOSTACK_RESEARCH_LOG_LEVEL=warning` in the deployment configuration and add a
