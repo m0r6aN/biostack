@@ -16,6 +16,15 @@ const OWNERSHIP_RECONCILIATION_ATTEMPTS = 60;
 const OWNERSHIP_RECONCILIATION_DELAY_MS = 100;
 export const DIRECT_CLI_TIMEOUT_MS = 150_000;
 export const CLEANUP_RESERVE_MS = 15_000;
+export const SIGNAL_SHUTDOWN_TIMEOUT_MS = 15_000;
+export const OUTER_RECOVERY_RESERVE_MS = 5_000;
+const DEADLINE_PHASES = new Set([
+  "work",
+  "reconcile",
+  "cleanup",
+  "outerReconcile",
+  "outerCleanup",
+]);
 
 export const FORBIDDEN_DISTRIBUTIONS = Object.freeze([
   "google-genai",
@@ -104,7 +113,11 @@ export function createExecutionControl({
   ) {
     throw new ContainerContractError("Execution deadline arguments are malformed.");
   }
-  const deadline = now() + timeoutMs;
+  const outerRecoveryReserveMs = Math.max(
+    1,
+    Math.min(OUTER_RECOVERY_RESERVE_MS, Math.floor(cleanupReserveMs / 3)),
+  );
+  let deadline = now() + timeoutMs;
   const abortController = new AbortController();
   let terminationSignal;
   let pendingClaim;
@@ -126,6 +139,7 @@ export function createExecutionControl({
     requestTermination(signal) {
       if (!terminationSignal) {
         terminationSignal = signal === "SIGINT" ? "SIGINT" : "SIGTERM";
+        deadline = Math.min(deadline, now() + SIGNAL_SHUTDOWN_TIMEOUT_MS);
         abortController.abort();
       }
     },
@@ -160,15 +174,19 @@ export function createExecutionControl({
         throw new ContainerContractError("Subprocess timeout is malformed.");
       }
       if (phase === "work") control.throwIfTerminated();
-      if (!new Set(["work", "reconcile", "cleanup"]).has(phase)) {
+      if (!DEADLINE_PHASES.has(phase)) {
         throw new ContainerContractError("Subprocess deadline phase is malformed.");
       }
       const reserve =
         phase === "work"
           ? cleanupReserveMs
           : phase === "reconcile"
-            ? Math.ceil(cleanupReserveMs / 2)
-            : 0;
+            ? Math.ceil((cleanupReserveMs * 2) / 3)
+            : phase === "cleanup"
+              ? outerRecoveryReserveMs
+              : phase === "outerReconcile"
+                ? Math.ceil(outerRecoveryReserveMs / 2)
+                : 0;
       const remaining = Math.floor(deadline - now() - reserve);
       if (remaining < 1) {
         throw new ContainerContractError(`Global verifier deadline exhausted during ${phase}.`);
@@ -905,16 +923,7 @@ export async function reconcileOwnedContainer({
     if (candidates.size > 1 || labeled.length > 1) {
       const error = new ContainerContractError("Docker ownership proofs disagreed.");
       const uniqueLabeledId = labeled.length === 1 ? labeled[0] : undefined;
-      if (
-        uniqueLabeledId &&
-        stdoutId &&
-        stdoutId !== uniqueLabeledId &&
-        cidId === uniqueLabeledId &&
-        nameIds.length === 1 &&
-        nameIds[0] === uniqueLabeledId
-      ) {
-        error.cleanupContainerId = uniqueLabeledId;
-      }
+      if (uniqueLabeledId) error.cleanupContainerId = uniqueLabeledId;
       throw error;
     }
     if (labeled.length === 1) return labeled[0];
@@ -925,6 +934,10 @@ export async function reconcileOwnedContainer({
 
 function asContractError(error, sensitive) {
   const result = new ContainerContractError(sanitizeDiagnostic(error?.message, sensitive));
+  if (Array.isArray(error?.diagnostics)) {
+    result.diagnostics = error.diagnostics.map((detail) =>
+      sanitizeDiagnostic(detail, sensitive));
+  }
   if (/^[a-f0-9]{64}$/u.test(error?.cleanupContainerId ?? "")) {
     result.cleanupContainerId = error.cleanupContainerId;
   }
@@ -942,6 +955,7 @@ export async function executeOwnedContainerLifecycle({
   claim,
 }) {
   if (control) control.registerPendingClaim(claim);
+  let releaseClaim = false;
   let createResult;
   let primaryError;
   try {
@@ -966,6 +980,7 @@ export async function executeOwnedContainerLifecycle({
     let ownedContainerId;
     try {
       ownedContainerId = await resolveOwnership(createResult?.stdout ?? "");
+      if (!ownedContainerId) releaseClaim = true;
     } catch (error) {
       const reconciliationError = asContractError(error, sensitive);
       ownedContainerId = reconciliationError.cleanupContainerId;
@@ -977,6 +992,7 @@ export async function executeOwnedContainerLifecycle({
         primaryError = reconciliationError;
       }
     }
+    if (ownedContainerId && claim) claim.ownedContainerId = ownedContainerId;
     if (!ownedContainerId && !primaryError) {
       primaryError = new ContainerContractError("Docker create returned no labeled ownership proof.");
     }
@@ -1002,6 +1018,7 @@ export async function executeOwnedContainerLifecycle({
     if (ownedContainerId) {
       try {
         await cleanup(ownedContainerId);
+        releaseClaim = true;
       } catch (error) {
         cleanupError = asContractError(error, sensitive);
       }
@@ -1012,9 +1029,14 @@ export async function executeOwnedContainerLifecycle({
       );
     }
     if (primaryError && cleanupError) {
-      throw new ContainerContractError(
+      const combinedError = new ContainerContractError(
         `${primaryError.message} Cleanup also failed: ${cleanupError.message}`,
       );
+      combinedError.diagnostics = [
+        `Primary verification failure: ${primaryError.message}`,
+        `Lifecycle cleanup failure: ${cleanupError.message}`,
+      ];
+      throw combinedError;
     }
     if (primaryError) throw primaryError;
     if (cleanupError) {
@@ -1024,7 +1046,7 @@ export async function executeOwnedContainerLifecycle({
     }
     return result;
   } finally {
-    if (control) control.releasePendingClaim(claim);
+    if (control && releaseClaim) control.releasePendingClaim(claim);
   }
 }
 
@@ -1087,11 +1109,17 @@ async function readCidFileValue(cidFile) {
   }
 }
 
-async function findExactNamedLabeledContainer(name, owner, sensitive, control) {
+async function findExactNamedLabeledContainer(
+  name,
+  owner,
+  sensitive,
+  control,
+  phase = "reconcile",
+) {
   const { stdout } = await runProcess(
     "docker",
     buildOwnershipLookupArguments(name, owner),
-    { sensitive, control, phase: "reconcile", timeoutMs: 3_000 },
+    { sensitive, control, phase, timeoutMs: 3_000 },
   );
   return stdout;
 }
@@ -1119,30 +1147,78 @@ async function resolveDockerOwnership({
   owner,
   sensitive,
   control,
+  phase = "reconcile",
 }) {
   return reconcileOwnedContainer({
     createOutput,
     readCidFile: () => readCidFileValue(cidFile),
     findExactNameAndLabel: () =>
-      findExactNamedLabeledContainer(name, owner, sensitive, control),
+      findExactNamedLabeledContainer(name, owner, sensitive, control, phase),
     hasExpectedLabel: (id) =>
-      containerHasExpectedLabel(id, owner, sensitive, control, "reconcile"),
-    capDelayMs: (milliseconds) => control?.capTimeout(milliseconds, "reconcile") ?? milliseconds,
+      containerHasExpectedLabel(id, owner, sensitive, control, phase),
+    capDelayMs: (milliseconds) => control?.capTimeout(milliseconds, phase) ?? milliseconds,
   });
 }
 
-async function cleanupOwnedDockerContainer(id, owner, sensitive, control) {
-  if (!(await containerHasExpectedLabel(id, owner, sensitive, control, "cleanup"))) {
-    throw new ContainerContractError(
-      "Container ownership label changed; cleanup was withheld.",
-    );
+async function cleanupOwnedDockerContainer(
+  id,
+  owner,
+  sensitive,
+  control,
+  phase = "cleanup",
+) {
+  try {
+    if (!(await containerHasExpectedLabel(id, owner, sensitive, control, phase))) {
+      throw new ContainerContractError(
+        "Container ownership label changed; cleanup was withheld.",
+      );
+    }
+  } catch (error) {
+    if (/No such (?:object|container)/iu.test(error?.message ?? "")) return;
+    throw error;
   }
   return runProcess("docker", buildContainerCleanupArguments(id), {
     timeoutMs: 10_000,
     sensitive,
     control,
-    phase: "cleanup",
+    phase,
   });
+}
+
+export async function recoverPendingClaim(
+  control,
+  {
+    resolveOwnership = ({ claim, sensitive }) =>
+      resolveDockerOwnership({
+        createOutput: "",
+        cidFile: claim.cidFile,
+        name: claim.name,
+        owner: claim.owner,
+        sensitive,
+        control,
+        phase: "outerReconcile",
+      }),
+    cleanup = ({ id, claim, sensitive }) =>
+      cleanupOwnedDockerContainer(
+        id,
+        claim.owner,
+        sensitive,
+        control,
+        "outerCleanup",
+      ),
+  } = {},
+) {
+  const claim = control?.pendingClaim;
+  if (!claim) return { status: "no-pending-claim" };
+  const sensitive = Array.isArray(claim.sensitive) ? claim.sensitive : [claim.owner];
+  let ownedContainerId = claim.ownedContainerId;
+  if (!ownedContainerId) {
+    ownedContainerId = await resolveOwnership({ claim, sensitive });
+    if (ownedContainerId) claim.ownedContainerId = ownedContainerId;
+  }
+  if (ownedContainerId) await cleanup({ id: ownedContainerId, claim, sensitive });
+  control.releasePendingClaim(claim);
+  return { status: ownedContainerId ? "cleaned" : "absent" };
 }
 
 async function runOwnedCensus({ image, label, entrypoint, command, control }) {
@@ -1151,7 +1227,7 @@ async function runOwnedCensus({ image, label, entrypoint, command, control }) {
   const sensitive = [owner];
   const ownershipDirectory = await mkdtemp(join(tmpdir(), "biostack-p01-census-"));
   const cidFile = join(ownershipDirectory, "container.cid");
-  const claim = { name, owner, cidFile };
+  const claim = { name, owner, cidFile, sensitive };
   try {
     return await executeOwnedContainerLifecycle({
       sensitive,
@@ -1455,7 +1531,7 @@ async function verifyRuntime(options, control) {
   let publicOutput = "P01 local container contract passed.";
   const ownershipDirectory = await mkdtemp(join(tmpdir(), "biostack-p01-"));
   const cidFile = join(ownershipDirectory, "container.cid");
-  const claim = { name, owner, cidFile };
+  const claim = { name, owner, cidFile, sensitive };
 
   try {
     return await executeOwnedContainerLifecycle({
@@ -1634,6 +1710,7 @@ export async function runDirectCli(
     mainFunction = main,
     processObject = process,
     writeError = (message) => console.error(message),
+    recoverFunction = recoverPendingClaim,
   } = {},
 ) {
   const handlers = new Map(
@@ -1648,9 +1725,28 @@ export async function runDirectCli(
     control.throwIfTerminated();
     return 0;
   } catch (error) {
-    writeError(
-      `research-sidecar container contract failed: ${sanitizeDiagnostic(error?.message)}`,
-    );
+    const sensitive = control.pendingClaim?.sensitive ?? [];
+    const primaryError = asContractError(error, sensitive);
+    let recoveryError;
+    if (control.pendingClaim) {
+      try {
+        await recoverFunction(control);
+      } catch (caught) {
+        recoveryError = asContractError(caught, sensitive);
+      }
+    }
+    const diagnostics = primaryError.diagnostics ?? [primaryError.message];
+    for (const [index, diagnostic] of diagnostics.entries()) {
+      const label = index === 0 ? "failed" : "diagnostic";
+      writeError(
+        `research-sidecar container contract ${label}: ${sanitizeDiagnostic(diagnostic, sensitive)}`,
+      );
+    }
+    if (recoveryError) {
+      writeError(
+        `research-sidecar outer ownership recovery failed: ${sanitizeDiagnostic(recoveryError.message, sensitive)}`,
+      );
+    }
     return 1;
   } finally {
     for (const [signal, handler] of handlers) processObject.off(signal, handler);

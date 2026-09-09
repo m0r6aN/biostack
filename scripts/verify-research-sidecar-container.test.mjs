@@ -8,10 +8,12 @@ import {
   ALLOWED_WORKFLOWS,
   CLEANUP_RESERVE_MS,
   DIRECT_CLI_TIMEOUT_MS,
+  OUTER_RECOVERY_RESERVE_MS,
   FORBIDDEN_DISTRIBUTIONS,
   OWNERSHIP_LABEL_KEY,
   REQUIRED_DARK_ENVIRONMENT,
   REQUIRED_DISTRIBUTIONS,
+  SIGNAL_SHUTDOWN_TIMEOUT_MS,
   buildContainerCleanupArguments,
   buildContainerCreateArguments,
   buildCensusCreateArguments,
@@ -38,6 +40,7 @@ import {
   parseImageInspect,
   parseOwnedContainerId,
   reconcileOwnedContainer,
+  recoverPendingClaim,
   readBoundedResponseText,
   requireImmutableImageId,
   runDirectCli,
@@ -233,21 +236,22 @@ test("direct-execution predicate is false when an ESM import has no argv entry",
 test("one execution deadline reserves cleanup time and caps every phase", () => {
   let now = 1_000;
   const control = createExecutionControl({
-    timeoutMs: 100,
-    cleanupReserveMs: 20,
+    timeoutMs: 100_000,
+    cleanupReserveMs: CLEANUP_RESERVE_MS,
     now: () => now,
   });
-  assert.equal(control.capTimeout(500, "work"), 80);
-  now += 70;
-  assert.equal(control.capTimeout(500, "reconcile"), 20);
-  assert.equal(control.capTimeout(500, "cleanup"), 30);
+  assert.equal(control.capTimeout(200_000, "work"), 85_000);
   control.requestTermination("SIGTERM");
+  assert.equal(control.deadline, now + SIGNAL_SHUTDOWN_TIMEOUT_MS);
   assert.throws(() => control.capTimeout(1, "work"), /SIGTERM/);
-  assert.equal(control.capTimeout(500, "reconcile"), 20);
-  assert.equal(control.capTimeout(500, "cleanup"), 30);
-  now += 21;
+  assert.equal(control.capTimeout(200_000, "reconcile"), 5_000);
+  assert.equal(control.capTimeout(200_000, "cleanup"), 10_000);
+  assert.equal(control.capTimeout(200_000, "outerReconcile"), 12_500);
+  assert.equal(control.capTimeout(200_000, "outerCleanup"), 15_000);
+  now += 5_001;
   assert.throws(() => control.capTimeout(1, "reconcile"), /deadline/);
-  assert.equal(control.capTimeout(500, "cleanup"), 9);
+  assert.equal(control.capTimeout(200_000, "cleanup"), 4_999);
+  assert.equal(OUTER_RECOVERY_RESERVE_MS, 5_000);
 });
 
 test("execution control registers one exact pending claim before work", () => {
@@ -918,6 +922,46 @@ test("ownership reconciliation fails closed on disagreeing full IDs", async () =
   assert.equal(error.cleanupContainerId, cidId);
 });
 
+test("ownership disagreement retains any one unique expected-label ID for cleanup only", async () => {
+  const stdoutId = "4".repeat(64);
+  const ownedId = "5".repeat(64);
+  for (const [cidOutput, nameOutput] of [[ownedId, ""], ["", ownedId]]) {
+    let error;
+    try {
+      await reconcileOwnedContainer({
+        createOutput: stdoutId,
+        readCidFile: async () => cidOutput,
+        findExactNameAndLabel: async () => nameOutput,
+        hasExpectedLabel: async (candidate) => candidate === ownedId,
+        attempts: 1,
+      });
+    } catch (caught) {
+      error = caught;
+    }
+    assert.match(error?.message ?? "", /proofs disagreed/);
+    assert.equal(error.cleanupContainerId, ownedId);
+  }
+});
+
+test("ownership disagreement with multiple expected-label IDs withholds cleanup", async () => {
+  const stdoutId = "4".repeat(64);
+  const otherId = "5".repeat(64);
+  let error;
+  try {
+    await reconcileOwnedContainer({
+      createOutput: stdoutId,
+      readCidFile: async () => otherId,
+      findExactNameAndLabel: async () => otherId,
+      hasExpectedLabel: async () => true,
+      attempts: 1,
+    });
+  } catch (caught) {
+    error = caught;
+  }
+  assert.match(error?.message ?? "", /proofs disagreed/);
+  assert.equal(error.cleanupContainerId, undefined);
+});
+
 test("forced timeout reconciliation cleans the delayed labeled container", async () => {
   const id = "6".repeat(64);
   const labeledContainers = new Map();
@@ -1025,6 +1069,96 @@ test("owned lifecycle preserves primary and cleanup failures", async () => {
   );
 });
 
+test("cleanup failure retains the pending claim until bounded outer recovery succeeds", async () => {
+  const id = "d".repeat(64);
+  const owner = "b".repeat(48);
+  const claim = { name: "biostack-p01-recovery", owner, cidFile: "/tmp/recovery.cid" };
+  const control = createExecutionControl({ timeoutMs: 10_000, cleanupReserveMs: 3_000 });
+  await assert.rejects(
+    executeOwnedContainerLifecycle({
+      control,
+      claim,
+      create: async () => ({ stdout: id }),
+      resolveOwnership: async () => id,
+      start: async () => {},
+      operate: async () => { throw new Error("primary lifecycle failure"); },
+      cleanup: async () => { throw new Error("transient lifecycle cleanup failure"); },
+    }),
+    /primary lifecycle failure.*Cleanup also failed.*transient lifecycle cleanup failure/,
+  );
+  assert.equal(control.pendingClaim, claim);
+  assert.equal(claim.ownedContainerId, id);
+  let recovered;
+  assert.deepEqual(
+    await recoverPendingClaim(control, {
+      resolveOwnership: async () => { throw new Error("known ID should bypass reconciliation"); },
+      cleanup: async ({ id: candidate }) => { recovered = candidate; },
+    }),
+    { status: "cleaned" },
+  );
+  assert.equal(recovered, id);
+  assert.equal(control.pendingClaim, undefined);
+});
+
+test("verified absence releases a pending claim without an outer recovery", async () => {
+  const claim = {
+    name: "biostack-p01-absent",
+    owner: "c".repeat(48),
+    cidFile: "/tmp/absent.cid",
+  };
+  const control = createExecutionControl({ timeoutMs: 10_000, cleanupReserveMs: 3_000 });
+  await assert.rejects(
+    executeOwnedContainerLifecycle({
+      control,
+      claim,
+      create: async () => { throw new Error("create failed"); },
+      resolveOwnership: async () => undefined,
+      start: async () => { throw new Error("unexpected start"); },
+      operate: async () => { throw new Error("unexpected operation"); },
+      cleanup: async () => { throw new Error("unexpected cleanup"); },
+    }),
+    /create failed/,
+  );
+  assert.equal(control.pendingClaim, undefined);
+});
+
+test("direct CLI preserves lifecycle and outer cleanup diagnostics when recovery fails", async () => {
+  const id = "e".repeat(64);
+  const owner = "d".repeat(48);
+  const claim = {
+    name: "biostack-p01-double-cleanup-failure",
+    owner,
+    cidFile: "/tmp/double-cleanup.cid",
+  };
+  const control = createExecutionControl({ timeoutMs: 10_000, cleanupReserveMs: 3_000 });
+  const diagnostics = [];
+  let recoveryAttempts = 0;
+  const code = await runDirectCli([], {
+    control,
+    writeError: (message) => diagnostics.push(message),
+    mainFunction: async () =>
+      executeOwnedContainerLifecycle({
+        control,
+        claim,
+        create: async () => ({ stdout: id }),
+        resolveOwnership: async () => id,
+        start: async () => {},
+        operate: async () => { throw new Error("primary-operation-diagnostic"); },
+        cleanup: async () => { throw new Error("lifecycle-cleanup-diagnostic"); },
+      }),
+    recoverFunction: async () => {
+      recoveryAttempts += 1;
+      throw new Error("outer-cleanup-diagnostic");
+    },
+  });
+  assert.equal(code, 1);
+  assert.equal(recoveryAttempts, 1);
+  assert.equal(control.pendingClaim, claim);
+  assert.match(diagnostics.join(" "), /primary-operation-diagnostic/);
+  assert.match(diagnostics.join(" "), /lifecycle-cleanup-diagnostic/);
+  assert.match(diagnostics.join(" "), /outer-cleanup-diagnostic/);
+});
+
 test("owned lifecycle withholds cleanup without unambiguous ownership", async () => {
   const noProof = lifecycleHarness({ createError: new Error("timeout"), ownership: "" });
   await assert.rejects(executeOwnedContainerLifecycle(noProof.lifecycle), /timeout/);
@@ -1063,7 +1197,7 @@ test("owned lifecycle preserves disagreement but cleans unique cid/name/label pr
   assert.deepEqual(events, [`cleanup:${ownedId}`]);
 });
 
-test("direct child TERM aborts work, reconciles its pending claim, and exits nonzero", { timeout: 15_000 }, async (context) => {
+async function runChildSignalPhase(phase, context) {
   const moduleUrl = new URL("./verify-research-sidecar-container.mjs", import.meta.url).href;
   const childSource = `
     import {
@@ -1073,38 +1207,67 @@ test("direct child TERM aborts work, reconciles its pending claim, and exits non
     } from ${JSON.stringify(moduleUrl)};
     const id = "9".repeat(64);
     const owner = "a".repeat(48);
+    const phase = ${JSON.stringify(phase)};
     const containers = new Map();
     const claim = { name: "biostack-p01-term-child", owner, cidFile: "/tmp/p01-term.cid" };
     const control = createExecutionControl({ timeoutMs: 10_000, cleanupReserveMs: 2_000 });
     if (process.platform === "win32") {
       process.stdin.once("data", () => process.emit("SIGTERM"));
     }
-    const mainFunction = async (_argv, { control: activeControl }) =>
-      executeOwnedContainerLifecycle({
+    const waitForSignal = (rejectOnSignal = true) => {
+      process.stdout.write("PHASE=" + phase + "\\n");
+      return new Promise((resolve, reject) => {
+        const keepalive = setInterval(() => {}, 1_000);
+        const finish = () => {
+          clearInterval(keepalive);
+          if (rejectOnSignal) reject(new Error("signal interrupted " + phase));
+          else resolve();
+        };
+        if (control.abortSignal.aborted) finish();
+        else control.abortSignal.addEventListener("abort", finish, { once: true });
+      });
+    };
+    const mainFunction = async (_argv, { control: activeControl }) => {
+      if (phase === "before-create") await waitForSignal();
+      return executeOwnedContainerLifecycle({
         control: activeControl,
         claim,
         sensitive: [owner],
         create: async () => {
           containers.set(id, owner);
-          process.stdout.write("CREATED\\n");
-          await new Promise((_resolve, reject) => {
-            const abort = () => reject(new Error("active work aborted"));
-            if (activeControl.abortSignal.aborted) abort();
-            else activeControl.abortSignal.addEventListener("abort", abort, { once: true });
-          });
+          if (phase === "create") await waitForSignal();
+          return { stdout: id };
         },
-        resolveOwnership: async () => id,
-        start: async () => { throw new Error("start after signal"); },
-        operate: async () => { throw new Error("operate after signal"); },
+        resolveOwnership: async () => {
+          if (phase === "reconcile") await waitForSignal(false);
+          return id;
+        },
+        start: async () => {
+          if (phase === "start") await waitForSignal();
+        },
+        operate: async () => {
+          if (phase === "operate") await waitForSignal();
+        },
         cleanup: async (candidate) => {
+          if (phase === "cleanup" || phase === "cleanup-error") {
+            await waitForSignal(false);
+          }
+          if (phase === "cleanup-error") throw new Error("first cleanup failed");
           if (containers.get(candidate) !== owner) throw new Error("ownership changed");
           containers.delete(candidate);
         },
       });
+    };
     const exitCode = await runDirectCli([], {
       control,
       mainFunction,
       writeError: (message) => process.stderr.write(message + "\\n"),
+      recoverFunction: async (activeControl) => {
+        const pending = activeControl.pendingClaim;
+        if (!pending) return;
+        if (pending.ownedContainerId) containers.delete(pending.ownedContainerId);
+        activeControl.releasePendingClaim(pending);
+      },
     });
     process.stdout.write("LEFT=" + containers.size + "\\n");
     process.stdout.write("PENDING=" + (control.pendingClaim ? 1 : 0) + "\\n");
@@ -1126,28 +1289,45 @@ test("direct child TERM aborts work, reconciles its pending claim, and exits non
   const created = new Promise((resolveCreated) => {
     child.stdout.on("data", (chunk) => {
       stdout += chunk;
-      if (stdout.includes("CREATED\n")) resolveCreated();
+      if (stdout.includes(`PHASE=${phase}\n`)) resolveCreated();
     });
   });
   await Promise.race([
     created,
     new Promise((_resolve, reject) => {
       const timer = setTimeout(
-        () => reject(new Error("child create marker timed out")),
+        () => reject(new Error(`child ${phase} marker timed out`)),
         5_000,
       );
       timer.unref();
     }),
   ]);
   if (process.platform === "win32") child.stdin.end("TERM\n");
-  else assert.equal(child.kill("SIGTERM"), true);
+  else {
+    assert.equal(child.kill("SIGTERM"), true);
+    child.stdin.end();
+  }
   const [exitCode, exitSignal] = await once(child, "exit");
   assert.equal(exitSignal, null);
   assert.equal(exitCode, 1);
-  assert.match(stderr, /SIGTERM|active work aborted/);
+  assert.match(stderr, /SIGTERM|signal interrupted|first cleanup failed/);
   assert.match(stdout, /LEFT=0/);
   assert.match(stdout, /PENDING=0/);
-});
+}
+
+for (const phase of [
+  "before-create",
+  "create",
+  "reconcile",
+  "start",
+  "operate",
+  "cleanup",
+  "cleanup-error",
+]) {
+  test(`direct child TERM during ${phase} exits exactly 1 with no pending claim`, { timeout: 15_000 }, async (context) => {
+    await runChildSignalPhase(phase, context);
+  });
+}
 
 test("HTTP response reader accepts bounded UTF-8 and rejects size or header abuse", async () => {
   assert.equal(await readBoundedResponseText(new Response("safe"), 8), "safe");
@@ -1277,6 +1457,7 @@ test("CI is path-scoped, read-only, bounded, and contains every deterministic ga
   assert.match(workflow, /--image biostack-research-sidecar:p01-ci/);
   assert.match(workflow, /timeout --signal=TERM --kill-after=20s 3m/);
   assert.equal(DIRECT_CLI_TIMEOUT_MS + CLEANUP_RESERVE_MS < 180_000, true);
+  assert.equal(SIGNAL_SHUTDOWN_TIMEOUT_MS < 20_000, true);
 });
 
 test("CI contains no deployment, registry-push, provider, or environment-dump action", () => {

@@ -25,13 +25,18 @@ BioStack ToolUniverse Scientific Research Sidecar
 | p8-analyzer-evidence-context | W3 | **done** | Class B comparison on `/api/analyze/protocol` |
 | p11-contract-tests-ci | W2 | **done** | Frozen sidecar suite, hash-locked CI bootstrap, dependency audits, pinned two-stage no-extra image build, immutable local-image verification, and local dark container contract in `.github/workflows/research-sidecar-ci.yml` via `scripts/verify-research-sidecar-container.mjs`. Hatchling `1.32.0` and its complete six-package build closure are artifact-hash locked and audited in a builder-only environment; the project wheel is built without PEP 518 isolation or network resolution, installed locally without dependency resolution, and no build tool crosses into the runtime image. Catchable TERM/INT handling reserves bounded reconciliation and cleanup time; SIGKILL, host loss, and Docker-daemon loss remain non-atomic interruption boundaries. |
 
-P01 hardening evidence (2026-09-08): 53 Python tests passed with one expected skip;
-212 verifier mutation tests passed; the strict runtime and build-closure dependency audits and secret scan passed;
+P01 hardening evidence (2026-09-09): 53 Python tests passed with one expected skip;
+223 verifier mutation tests passed on the host and in the exact digest-pinned local
+Node 22 image with a read-only filesystem and repository mount, no network, no pull,
+dropped capabilities, and `no-new-privileges`; the strict runtime and build-closure dependency audits and secret scan passed;
 and all nine dark-container checks passed against local immutable image ID
 `sha256:82a077111407934c325c6dfa89b4b0b629ada2b1cdd937d3700722be7cac590f`.
 A bounded manual real-Docker proof observed the verifier-owned container in
 `Created`, triggered the direct CLI's SIGTERM handler, returned nonzero in 1.721
-seconds, and left zero containers carrying the P01 ownership label.
+seconds, and left zero containers carrying the P01 ownership label. Catchable signal
+handling is capped at 15 seconds, strictly inside CI's 20-second post-TERM grace;
+the direct CLI retains a failed lifecycle-cleanup claim for one bounded, label-revalidated
+outer cleanup attempt and reports primary, lifecycle-cleanup, and outer-cleanup failures separately.
 
 P01 proves warning-level log hygiene only for its local dark container. P02 must set
 `BIOSTACK_RESEARCH_LOG_LEVEL=warning` in the deployment configuration and add a
