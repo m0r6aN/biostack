@@ -356,7 +356,10 @@ public sealed class ProtocolParser : IProtocolParser
     private static void AddAlias(IDictionary<string, KnowledgeEntry> map, string alias, KnowledgeEntry entry)
     {
         var key = NormalizeLookupKey(alias);
-        if (!string.IsNullOrWhiteSpace(key))
+        // Numeric fragments in imported aliases can match a dose (including a
+        // decimal fragment) and replace an unrelated compound's identity.
+        // Digit-bearing chemical names remain valid; numbers alone do not.
+        if (key.Any(char.IsLetter))
         {
             map[key] = entry;
         }
