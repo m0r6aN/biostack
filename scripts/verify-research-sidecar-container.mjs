@@ -144,14 +144,21 @@ export function sanitizeDiagnostic(value, sensitiveValues = []) {
   let text = String(value ?? "unknown error")
     .replace(/[\r\n]+/gu, " ")
     .replace(/\x1b\[[0-9;]*m/gu, "")
-    .replace(/::/gu, "--")
-    .slice(0, 600);
+    .replace(/::/gu, "--");
   for (const sensitive of sensitiveValues) {
     if (typeof sensitive === "string" && sensitive.length > 0) {
       text = text.split(sensitive).join("[REDACTED]");
     }
   }
-  return text;
+  return text.slice(0, 600);
+}
+
+export function isDirectExecution(moduleUrl, argvEntry) {
+  return (
+    typeof moduleUrl === "string" &&
+    typeof argvEntry === "string" &&
+    moduleUrl === pathToFileURL(argvEntry).href
+  );
 }
 
 export function evaluateDockerfileContract(contents) {
@@ -879,7 +886,7 @@ export async function main(argv = process.argv.slice(2)) {
   console.log(JSON.stringify(result));
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (isDirectExecution(import.meta.url, process.argv[1])) {
   main().catch((error) => {
     console.error(`research-sidecar container contract failed: ${sanitizeDiagnostic(error?.message)}`);
     process.exitCode = 1;

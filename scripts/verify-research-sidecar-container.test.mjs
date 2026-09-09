@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
@@ -19,6 +20,7 @@ import {
   evaluateLeakage,
   evaluatePackageCensus,
   evaluateRejectionObservations,
+  isDirectExecution,
   parseCliArgs,
   parseImageInspect,
   parseOwnedContainerId,
@@ -131,6 +133,39 @@ test("diagnostic sanitizer removes line, annotation, terminal, and secret inject
   assert.equal(result.includes("\x1b"), false);
   assert.equal(result.includes(secret), false);
   assert.match(result, /\[REDACTED\]/);
+});
+
+test("diagnostic sanitizer redacts a token before the truncation boundary", () => {
+  const secret = "p01-local-only-boundary-sensitive-value";
+  const result = sanitizeDiagnostic(`${"x".repeat(590)}${secret}after`, [secret]);
+  assert.equal(result.length, 600);
+  assert.match(result, /\[REDACTED\]$/);
+  assert.equal(result.includes(secret), false);
+  assert.equal(result.includes("p01-local-"), false);
+  assert.equal(result.includes("sensitive-value"), false);
+});
+
+test("direct-execution predicate is false when an ESM import has no argv entry", () => {
+  assert.equal(isDirectExecution(import.meta.url, undefined), false);
+  assert.equal(isDirectExecution(import.meta.url, null), false);
+});
+
+test("module imports safely from a real ESM eval context without argv[1]", () => {
+  const moduleUrl = new URL("./verify-research-sidecar-container.mjs", import.meta.url).href;
+  const child = spawnSync(
+    process.execPath,
+    ["--input-type=module", "--eval", `await import(${JSON.stringify(moduleUrl)})`],
+    {
+      encoding: "utf8",
+      shell: false,
+      timeout: 10_000,
+      windowsHide: true,
+    },
+  );
+  assert.equal(child.error, undefined);
+  assert.equal(child.status, 0, child.stderr);
+  assert.equal(child.stdout, "");
+  assert.equal(child.stderr, "");
 });
 
 test("Dockerfile contract accepts the checked-in production Dockerfile", () => {
