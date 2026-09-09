@@ -49,7 +49,6 @@ vi.mock('@/components/Header', () => ({
 }));
 
 vi.mock('@/components/LoadingState', () => ({ LoadingSkeleton: () => <div>Loading console</div> }));
-vi.mock('@/components/ErrorState', () => ({ ErrorState: ({ message }: { message: string }) => <div>{message}</div> }));
 vi.mock('@/components/dashboard/ActiveCompoundsCard', () => ({ ActiveCompoundsCard: () => null }));
 vi.mock('@/components/dashboard/ActiveGoalsCard', () => ({ ActiveGoalsCard: () => null }));
 vi.mock('@/components/dashboard/CohesionTimelinePanel', () => ({ CohesionTimelinePanel: () => null }));
@@ -101,7 +100,7 @@ function renderConsole() {
   return render(<ProfileProvider><SelectionProbe /><ProtocolConsole /></ProfileProvider>);
 }
 
-describe('ProtocolConsole â€” stale browser profile recovery', () => {
+describe('ProtocolConsole - profile discovery and selection recovery', () => {
   let consoleError: MockInstance;
 
   beforeEach(() => {
@@ -124,6 +123,59 @@ describe('ProtocolConsole â€” stale browser profile recovery', () => {
   });
 
   afterEach(() => consoleError.mockRestore());
+
+  it.each([false, true])('waits for discovery before offering setup without a selection (pending draft: %s)', async (withDraft) => {
+    localStorage.removeItem('currentProfileId');
+    const draft = withDraft ? seedDraft() : null;
+    let finish!: () => void;
+    vi.mocked(apiClient.getProfiles).mockImplementation(() => new Promise(resolve => { finish = () => resolve([profile]); }));
+    renderConsole();
+
+    expect(screen.getByText('Loading console')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Create profile' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Continue Profile Setup' })).not.toBeInTheDocument();
+    await act(async () => { finish(); });
+
+    expect(screen.getByRole('button', { name: /Select Profile/ })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Create profile' })).not.toBeInTheDocument();
+    expect(readAnalyzerProtocolDraft()).toEqual(draft);
+    expect(apiClient.createCompound).not.toHaveBeenCalled();
+  });
+
+  it.each([false, true])('retries failed discovery before deciding whether setup is needed (pending draft: %s)', async (withDraft) => {
+    localStorage.removeItem('currentProfileId');
+    const draft = withDraft ? seedDraft() : null;
+    let finishRetry!: () => void;
+    vi.mocked(apiClient.getProfiles).mockRejectedValueOnce(new Error('network unavailable'))
+      .mockImplementationOnce(() => new Promise(resolve => { finishRetry = () => resolve([]); }));
+    renderConsole();
+
+    expect(await screen.findByText('Failed to load profiles')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Create profile' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Continue Profile Setup' })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Try Again' }));
+    expect(screen.getByText('Loading console')).toBeInTheDocument();
+    expect(apiClient.getProfiles).toHaveBeenCalledTimes(2);
+    await act(async () => { finishRetry(); });
+
+    expect(screen.getByRole('button', { name: withDraft ? 'Continue Profile Setup' : 'Create profile' })).toBeInTheDocument();
+    expect(readAnalyzerProtocolDraft()).toEqual(draft);
+    expect(apiClient.createCompound).not.toHaveBeenCalled();
+  });
+
+  it('keeps a discovery failure visible even when the selected profile data succeeds, and retries the failed request', async () => {
+    localStorage.setItem('currentProfileId', profile.id);
+    vi.mocked(apiClient.getProfiles).mockRejectedValueOnce(new Error('network unavailable')).mockResolvedValueOnce([profile]);
+    renderConsole();
+
+    expect(await screen.findByText('Failed to load profiles')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Try Again' }));
+
+    await waitFor(() => expect(screen.getByTestId('selection')).toHaveTextContent(profile.id));
+    await waitFor(() => expect(screen.queryByText('Failed to load profiles')).not.toBeInTheDocument());
+    expect(apiClient.getProfiles).toHaveBeenCalledTimes(2);
+    expect(localStorage.getItem('currentProfileId')).toBe(profile.id);
+  });
 
   it('recovers a draft after another account was selected, then imports only into the explicitly chosen valid profile', async () => {
     const draft = seedDraft();
@@ -165,9 +217,9 @@ describe('ProtocolConsole â€” stale browser profile recovery', () => {
   it('offers profile selection without an analyzer draft instead of asking an existing user to create a first profile', async () => {
     renderConsole();
 
-    await waitFor(() => expect(screen.getByTestId('selection')).toHaveTextContent('none'));
+    expect(await screen.findByText('Choose a profile')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Select Profile/ })).toBeInTheDocument();
-    expect(screen.getByText('Choose a profile')).toBeInTheDocument();
+    expect(screen.getByTestId('selection')).toHaveTextContent('none');
     expect(screen.queryByText("Let's set up your first profile")).not.toBeInTheDocument();
     expect(localStorage.getItem('currentProfileId')).toBeNull();
   });

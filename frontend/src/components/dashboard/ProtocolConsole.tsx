@@ -63,6 +63,8 @@ export function ProtocolConsole() {
   const [loading, setLoading] = useState(true);
   const [profilesLoading, setProfilesLoading] = useState(true);
   const [profilesLoaded, setProfilesLoaded] = useState(false);
+  const [profilesError, setProfilesError] = useState<string | null>(null);
+  const [profilesRefresh, setProfilesRefresh] = useState(0);
   const [loadedProfileId, setLoadedProfileId] = useState<string | null>(null);
   const [consoleRefresh, setConsoleRefresh] = useState(0);
   const consoleRequestRef = useRef(0);
@@ -98,7 +100,7 @@ export function ProtocolConsole() {
           setProfilesLoaded(true);
         }
       } catch (err) {
-        if (active) setError('Failed to load profiles');
+        if (active) setProfilesError('Failed to load profiles');
         console.error(err);
       } finally {
         if (active) setProfilesLoading(false);
@@ -106,7 +108,7 @@ export function ProtocolConsole() {
     }
     void loadProfiles();
     return () => { active = false; };
-  }, [setProfiles]);
+  }, [setProfiles, profilesRefresh]);
 
   useEffect(() => {
     // Device storage can remember a deleted profile or another account's ID.
@@ -204,6 +206,12 @@ export function ProtocolConsole() {
     setConsoleRefresh((value) => value + 1);
   }
 
+  function retryProfiles() {
+    setProfilesError(null);
+    setProfilesLoading(true);
+    setProfilesRefresh((value) => value + 1);
+  }
+
   const pendingDraft = hasPendingAnalyzerProtocolDraft(analyzerDraft) &&
     getAnalyzerProtocolDraftRevision(analyzerDraft) !== dismissedDraftRevision ? analyzerDraft : null;
   const currentProfile = profiles.find((profile) => profile.id === currentProfileId) ?? null;
@@ -266,6 +274,21 @@ export function ProtocolConsole() {
       setDraftImporting(false);
       draftImportingRef.current = false;
     }
+  }
+
+  // An unknown profile list is not an empty account. Wait for discovery before
+  // offering setup, and retry discovery itself if it failed.
+  if (profilesLoading || profilesError) {
+    return (
+      <div className="w-full">
+        <Header title="Protocol Console" subtitle="Protocol Operations" />
+        <div className="p-8">
+          {profilesLoading ? <LoadingSkeleton /> : profilesError && (
+            <ErrorState message={profilesError} onRetry={retryProfiles} />
+          )}
+        </div>
+      </div>
+    );
   }
 
   if (!currentProfileId) {
