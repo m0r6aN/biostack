@@ -436,7 +436,7 @@ describe('AnalyzerExperience', () => {
     await screen.findByLabelText(/BioStack score 72 out of 100/i);
 
     // The NextSteps Convert button (the report-row CTA).
-    const convertButtons = screen.getAllByRole('button', { name: 'Convert to BioStack Protocol' });
+    const convertButtons = screen.getAllByRole('button', { name: 'Add this stack to BioStack' });
     await user.click(convertButtons[0]);
 
     expect(saveAnalyzerAnalysisMock).toHaveBeenCalledTimes(1);
@@ -455,7 +455,7 @@ describe('AnalyzerExperience', () => {
     render(<AnalyzerExperience />);
     await screen.findByLabelText(/BioStack score 72 out of 100/i);
 
-    const convertButtons = screen.getAllByRole('button', { name: 'Convert to BioStack Protocol' });
+    const convertButtons = screen.getAllByRole('button', { name: 'Add this stack to BioStack' });
     await user.click(convertButtons[0]);
 
     expect(saveAnalyzerAnalysisMock).toHaveBeenCalledTimes(1);

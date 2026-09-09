@@ -34,7 +34,14 @@ export default function ProfileDetailPage() {
   useEffect(() => {
     loadData();
     setCurrentProfileId(id);
-    if (new URLSearchParams(window.location.search).get('imported') === 'tools') {
+    const importedSources = (new URLSearchParams(window.location.search).get('imported') ?? '').split(',');
+    if (importedSources.includes('analyzer')) {
+      setImportConfirmation(
+        importedSources.includes('tools')
+          ? 'We added the compounds you entered in the Protocol Analyzer, plus your saved calculations and setups from this device.'
+          : 'We added the compounds you entered in the Protocol Analyzer, as you entered them. Review them below.'
+      );
+    } else if (importedSources.includes('tools')) {
       setImportConfirmation('We imported your saved calculations and setups from this device.');
     }
   }, [id]);

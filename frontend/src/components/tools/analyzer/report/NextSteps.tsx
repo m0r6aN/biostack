@@ -40,7 +40,7 @@ export function NextSteps({
     <section className="rounded-lg border border-white/[0.08] bg-[#121923]/95 p-4">
       <h2 className="text-lg font-semibold text-white">Track whether these patterns hold</h2>
       <p className="mt-3 text-sm leading-6 text-white/58">
-        Save this stack as a protocol and check in over time to see whether the synergies and conflicts playing out now actually hold.
+        Add the compounds you entered to a BioStack profile and check in over time to see whether the synergies and conflicts playing out now actually hold. You review them before anything is added.
       </p>
 
       <div className="mt-4 flex flex-wrap gap-3">
@@ -58,7 +58,7 @@ export function NextSteps({
           disabled={!result}
           className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Convert to BioStack Protocol
+          Add this stack to BioStack
         </button>
         {showUpgrade && (
           <Link
@@ -74,7 +74,7 @@ export function NextSteps({
       {/* Save notice — copy from monolith ~570-572 */}
       {showSaveNotice && (
         <p className="mt-4 text-sm leading-6 text-emerald-100/80">
-          Analysis saved locally{savedAnalysisId ? ` as ${savedAnalysisId}` : ''}. It will stay available through sign-in and protocol conversion.
+          Analysis saved locally{savedAnalysisId ? ` as ${savedAnalysisId}` : ''}. It stays on this browser through sign-in until you review it.
         </p>
       )}
 

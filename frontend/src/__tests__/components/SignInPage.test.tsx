@@ -65,8 +65,10 @@ describe('SignInPage', () => {
 
     render(<SignInPage />);
 
-    expect(screen.getByText('Your saved analysis will carry through sign-in.')).toBeInTheDocument();
-    expect(screen.getByText('No need to restart. Continue to create your BioStack protocol.')).toBeInTheDocument();
+    expect(screen.getByText('Your saved analysis is waiting on this browser.')).toBeInTheDocument();
+    expect(
+      screen.getByText('Finish sign-in here, then review the compounds you entered before they are added to a profile. Nothing is applied automatically.')
+    ).toBeInTheDocument();
   });
 
   it('does not translate an absolute callback URL into a local return path', async () => {

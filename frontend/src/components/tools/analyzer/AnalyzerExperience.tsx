@@ -543,7 +543,7 @@ export function AnalyzerExperience() {
               </Link>
             ) : user ? (
               <button type="button" onClick={convertToProtocol} className="block w-full rounded-lg bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-slate-950">
-                Convert to BioStack Protocol
+                Add this stack to BioStack
               </button>
             ) : (
               <button type="button" onClick={saveAnalysisLocally} className="block w-full rounded-lg bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-slate-950">

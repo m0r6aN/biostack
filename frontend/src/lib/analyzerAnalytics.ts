@@ -14,7 +14,10 @@ export type AnalyzerAnalyticsEvent =
   | 'analyzer_goal_selected'
   | 'analyzer_context_opened'
   | 'analyzer_context_prefilled'
-  | 'analyzer_profile_nudge_clicked';
+  | 'analyzer_profile_nudge_clicked'
+  | 'analyzer_draft_recovered'
+  | 'analyzer_draft_imported'
+  | 'analyzer_draft_dismissed';
 
 export function trackAnalyzerEvent(
   eventName: AnalyzerAnalyticsEvent,

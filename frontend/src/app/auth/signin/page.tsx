@@ -145,8 +145,8 @@ function SignInPageContent() {
 
               {isProtocolContinuation && (
                 <div className="mb-5 rounded-lg border border-emerald-300/18 bg-emerald-400/[0.08] px-4 py-3 text-sm leading-6 text-emerald-50/82">
-                  <p className="font-semibold text-emerald-50">Your saved analysis will carry through sign-in.</p>
-                  <p className="mt-1">No need to restart. Continue to create your BioStack protocol.</p>
+                  <p className="font-semibold text-emerald-50">Your saved analysis is waiting on this browser.</p>
+                  <p className="mt-1">Finish sign-in here, then review the compounds you entered before they are added to a profile. Nothing is applied automatically.</p>
                 </div>
               )}
 

@@ -1,11 +1,21 @@
 'use client';
 
+import { AnalyzerDraftReviewPanel } from '@/components/dashboard/AnalyzerDraftReviewPanel';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { GoalBadge } from '@/components/goals/GoalBadge';
 import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { ProfileForm } from '@/components/profiles/ProfileForm';
+import { trackAnalyzerEvent } from '@/lib/analyzerAnalytics';
+import {
+  ANALYZER_DRAFT_COMPOUND_SOURCE,
+  buildAnalyzerDraftCompoundImports,
+  getAnalyzerProtocolDraftRevision,
+  hasPendingAnalyzerProtocolDraft,
+  markAnalyzerProtocolDraftImported,
+  readAnalyzerProtocolDraft,
+} from '@/lib/analyzerStorage';
 import { apiClient } from '@/lib/api';
 import {
   buildImportedProfileNotes,
@@ -23,10 +33,11 @@ import {
 } from '@/lib/onboardingPreview';
 import { useSettings } from '@/lib/settings';
 import { getProfilesContinuationStatuses } from '@/lib/systemStatus';
-import { CreateProfileRequest, GoalDefinition } from '@/lib/types';
+import { useAnalyzerProtocolDraft } from '@/lib/useAnalyzerProtocolDraft';
+import { CreateProfileRequest, GoalDefinition, PersonProfile } from '@/lib/types';
 import { formatDate, formatWeight } from '@/lib/utils';
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export default function ProfilesPage() {
   const { profiles, setProfiles, setCurrentProfileId } = useProfile();
@@ -39,8 +50,22 @@ export default function ProfilesPage() {
   const [importConfirmation, setImportConfirmation] = useState('');
   const [profileGoalMap, setProfileGoalMap] = useState<Record<string, GoalDefinition[]>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const createStartedRef = useRef(false);
+  const [createdProfile, setCreatedProfile] = useState<PersonProfile | null>(null);
+  const analyzerDraft = useAnalyzerProtocolDraft();
+  const [includeAnalyzerDraft, setIncludeAnalyzerDraft] = useState(true);
+  const [dismissedDraftRevision, setDismissedDraftRevision] = useState<string | null>(null);
   const continuationStatuses = getProfilesContinuationStatuses(onboardingPreview.compounds.length > 0);
   const hasPendingToolData = hasPendingAnonymousToolData(toolPayload);
+  const pendingAnalyzerDraft =
+    hasPendingAnalyzerProtocolDraft(analyzerDraft) &&
+    getAnalyzerProtocolDraftRevision(analyzerDraft) !== dismissedDraftRevision ? analyzerDraft : null;
+  const analyzerDraftImports = pendingAnalyzerDraft
+    ? buildAnalyzerDraftCompoundImports(pendingAnalyzerDraft, [
+        ...onboardingPreview.compounds,
+        ...(hasPendingToolData ? toolPayload?.draftStackItems.map((item) => item.name) ?? [] : []),
+      ])
+    : [];
 
   const loadProfiles = useCallback(async () => {
     try {
@@ -63,13 +88,25 @@ export default function ProfilesPage() {
     if (bootstrap === 'tools' && hasPendingAnonymousToolData(pendingToolPayload)) {
       setShowForm(true);
     }
+    if (bootstrap === 'analyzer' && hasPendingAnalyzerProtocolDraft(readAnalyzerProtocolDraft())) {
+      setShowForm(true);
+    }
   }, [loadProfiles]);
 
   const handleCreateProfile = async (data: CreateProfileRequest & { selectedGoalIds?: string[] }) => {
+    if (loading || createStartedRef.current) return;
+    createStartedRef.current = true;
+    let newProfile: PersonProfile | null = null;
     try {
       setIsSubmitting(true);
+      setError(null);
       const { selectedGoalIds: goalIds, ...profileData } = data;
-      const newProfile = await apiClient.createProfile(profileData);
+      newProfile = await apiClient.createProfile(profileData);
+      // Publish the created target before any follow-up writes can fail.
+      // A partial import continues on this profile, never by creating it again.
+      setCreatedProfile(newProfile);
+      setProfiles([...profiles, newProfile]);
+      setCurrentProfileId(newProfile.id);
       const previewGoalIds = goalIds && goalIds.length > 0 ? goalIds : onboardingPreview.goals;
       
       if (previewGoalIds.length > 0) {
@@ -91,6 +128,7 @@ export default function ProfilesPage() {
         });
       }
 
+      const importedSources: string[] = [];
       const pendingToolPayload = toolPayload;
       if (pendingToolPayload && hasPendingAnonymousToolData(pendingToolPayload) && !pendingToolPayload.importStatus.importedProfileIds.includes(newProfile.id)) {
         const importedNames = Array.from(
@@ -119,16 +157,53 @@ export default function ProfilesPage() {
         const markedPayload = markAnonymousToolPayloadImported(newProfile.id);
         setToolPayload(markedPayload);
         setImportConfirmation('We imported your saved calculations and setups from this device.');
+        importedSources.push('tools');
       }
-      
-      setProfiles([...profiles, newProfile]);
-      setCurrentProfileId(newProfile.id);
+
+      // Analyzer continuation: only the user's ORIGINAL entries, only after the
+      // explicit review step (checkbox), never the analyzer-generated alternative.
+      if (
+        pendingAnalyzerDraft &&
+        includeAnalyzerDraft &&
+        !pendingAnalyzerDraft.importStatus.importedProfileIds.includes(newProfile.id)
+      ) {
+        for (const item of analyzerDraftImports) {
+          await apiClient.createCompound(newProfile.id, {
+            personId: newProfile.id,
+            name: item.name,
+            category: 'Unknown',
+            startDate: new Date().toISOString(),
+            endDate: null,
+            status: 'Active',
+            notes: item.notes,
+            sourceType: 'Manual',
+            goal: pendingAnalyzerDraft.goal,
+            source: ANALYZER_DRAFT_COMPOUND_SOURCE,
+          });
+        }
+
+        markAnalyzerProtocolDraftImported(newProfile.id, pendingAnalyzerDraft);
+        trackAnalyzerEvent('analyzer_draft_imported', {
+          entryCount: analyzerDraftImports.length,
+          goal: pendingAnalyzerDraft.goal,
+        });
+        importedSources.push('analyzer');
+      }
+
       clearOnboardingPreview();
       setOnboardingPreview(emptyOnboardingPreview());
       setShowForm(false);
-      window.location.href = `/profiles/${newProfile.id}?imported=tools`;
+      // Existing behaviour kept: the tools path always lands with `imported=tools`.
+      const importedParam = importedSources.includes('analyzer') ? importedSources.join(',') : 'tools';
+      window.location.href = `/profiles/${newProfile.id}?imported=${importedParam}`;
     } catch {
-      setError('Failed to create profile');
+      if (newProfile) {
+        setShowForm(false);
+        setError(`Profile ${newProfile.displayName} was created, but setup could not finish. Completed additions are saved. Open this profile to review what remains.`);
+      } else {
+        createStartedRef.current = false;
+        setError('Failed to create profile');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -167,7 +242,7 @@ export default function ProfilesPage() {
     loadGoals();
   }, [profiles]);
 
-  if (error && !hasPendingToolData) {
+  if (error && !createdProfile && !hasPendingToolData && !pendingAnalyzerDraft) {
     return (
       <div className="w-full">
         <Header title="Profiles" />
@@ -185,6 +260,7 @@ export default function ProfilesPage() {
         actions={
           <button
             onClick={() => setShowForm(!showForm)}
+            disabled={isSubmitting || createdProfile !== null}
             className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-sm font-medium transition-all duration-150"
           >
             {showForm ? 'Cancel' : 'New Profile'}
@@ -199,7 +275,40 @@ export default function ProfilesPage() {
           </div>
         )}
 
-        {hasPendingToolData && !showForm && (
+        {error && (
+          <div role="alert" className="mb-6 rounded-lg border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100/80">
+            {error}
+            {createdProfile && (
+              <Link
+                href="/protocol-console"
+                onClick={() => setCurrentProfileId(createdProfile.id)}
+                className="mt-3 block font-semibold underline"
+              >
+                Continue setup on {createdProfile.displayName}
+              </Link>
+            )}
+          </div>
+        )}
+
+        {pendingAnalyzerDraft && !createdProfile && (
+          <div className="mb-6">
+            <AnalyzerDraftReviewPanel
+              draft={pendingAnalyzerDraft}
+              imports={analyzerDraftImports}
+              target={{ kind: 'new-profile' }}
+              includeOnCreate={includeAnalyzerDraft}
+              onIncludeOnCreateChange={setIncludeAnalyzerDraft}
+              isSubmitting={isSubmitting || loading}
+              onConfirm={showForm ? undefined : () => setShowForm(true)}
+              onDismiss={() => {
+                setDismissedDraftRevision(getAnalyzerProtocolDraftRevision(pendingAnalyzerDraft));
+                trackAnalyzerEvent('analyzer_draft_dismissed', { entryCount: pendingAnalyzerDraft.protocol.length });
+              }}
+            />
+          </div>
+        )}
+
+        {hasPendingToolData && !showForm && !createdProfile && (
           <div className="mb-6 rounded-lg border border-emerald-300/15 bg-emerald-500/[0.06] p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200/75">
               Saved on this device
@@ -218,7 +327,7 @@ export default function ProfilesPage() {
           </div>
         )}
 
-        {onboardingPreview.compounds.length > 0 && !showForm && (
+        {onboardingPreview.compounds.length > 0 && !showForm && !createdProfile && (
           <div className="mb-6 rounded-lg border border-emerald-300/15 bg-emerald-500/[0.06] p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200/75">
               {continuationStatuses?.recovered.eyebrow}
@@ -294,7 +403,7 @@ export default function ProfilesPage() {
               ))}
             </div>
           </div>
-        ) : profiles.length === 0 ? (
+        ) : profiles.length === 0 && pendingAnalyzerDraft ? null : profiles.length === 0 ? (
           <EmptyState
             title="No Profiles Yet"
             description="Create your first profile to get started"
