@@ -1,4 +1,5 @@
 import SignInPage from '@/app/auth/signin/page';
+import { ANALYZER_PROTOCOL_DRAFT_KEY, markAnalyzerProtocolDraftImported, saveAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -15,6 +16,7 @@ describe('SignInPage', () => {
   beforeEach(() => {
     fetchMock.mockReset();
     callbackUrl = '%2Fprofiles';
+    localStorage.clear();
   });
 
   it('starts passwordless email auth and moves to the inbox step', async () => {
@@ -62,6 +64,7 @@ describe('SignInPage', () => {
 
   it('reassures analyzer conversions that saved work carries through sign-in', () => {
     callbackUrl = '%2Fprotocol-console';
+    saveAnalyzerProtocolDraft({ sourceAnalysisId: 'analysis-1', goal: 'Tracking', protocol: [{ compoundName: 'Example', dose: 1, unit: 'mg', frequency: 'daily', duration: '' }], optimizedProtocol: [] });
 
     render(<SignInPage />);
 
@@ -69,6 +72,19 @@ describe('SignInPage', () => {
     expect(
       screen.getByText('Finish sign-in here, then review the compounds you entered before they are added to a profile. Nothing is applied automatically.')
     ).toBeInTheDocument();
+  });
+
+  it.each(['missing', 'malformed', 'imported'])('does not promise saved work for a %s draft on a console return', (state) => {
+    callbackUrl = '%2Fprotocol-console';
+    if (state === 'malformed') localStorage.setItem(ANALYZER_PROTOCOL_DRAFT_KEY, '{invalid');
+    if (state === 'imported') {
+      const draft = saveAnalyzerProtocolDraft({ sourceAnalysisId: 'analysis-1', goal: 'Tracking', protocol: [{ compoundName: 'Example', dose: 1, unit: 'mg', frequency: 'daily', duration: '' }], optimizedProtocol: [] });
+      markAnalyzerProtocolDraftImported('profile-1', draft);
+    }
+
+    render(<SignInPage />);
+
+    expect(screen.queryByText('Your saved analysis is waiting on this browser.')).not.toBeInTheDocument();
   });
 
   it('does not translate an absolute callback URL into a local return path', async () => {

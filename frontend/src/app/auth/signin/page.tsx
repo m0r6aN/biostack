@@ -2,6 +2,8 @@
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import { getApiBaseUrl } from '@/lib/apiBase';
+import { hasPendingAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
+import { useAnalyzerProtocolDraft } from '@/lib/useAnalyzerProtocolDraft';
 import { canonicalRoutes } from '@/lib/productContract';
 import { authenticateWithPasskey, passkeysSupported } from '@/lib/passkeys';
 import { useSearchParams } from 'next/navigation';
@@ -35,7 +37,9 @@ function SignInPageContent() {
   const searchParams = useSearchParams();
   const redirectPath = useMemo(() => resolveRedirectPath(searchParams.get('callbackUrl')), [searchParams]);
   const error = searchParams.get('error');
-  const isProtocolContinuation = redirectPath.startsWith('/protocol-console');
+  const analyzerDraft = useAnalyzerProtocolDraft();
+  const isProtocolContinuation = redirectPath.split(/[?#]/, 1)[0] === '/protocol-console' &&
+    hasPendingAnalyzerProtocolDraft(analyzerDraft);
   const [email, setEmail] = useState('');
   const [submittedEmail, setSubmittedEmail] = useState('');
   const [isSending, setIsSending] = useState(false);

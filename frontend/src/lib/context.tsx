@@ -35,8 +35,12 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 
   // Save to localStorage whenever currentProfileId changes
   useEffect(() => {
-    if (isHydrated && currentProfileId) {
-      localStorage.setItem('currentProfileId', currentProfileId);
+    if (isHydrated) {
+      if (currentProfileId) {
+        localStorage.setItem('currentProfileId', currentProfileId);
+      } else {
+        localStorage.removeItem('currentProfileId');
+      }
     }
   }, [currentProfileId, isHydrated]);
 

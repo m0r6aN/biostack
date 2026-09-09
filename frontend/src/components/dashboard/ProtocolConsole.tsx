@@ -52,7 +52,7 @@ import { isEnabled } from '@/lib/flags';
 
 export function ProtocolConsole() {
   const router = useRouter();
-  const { currentProfileId, profiles, setProfiles } = useProfile();
+  const { currentProfileId, profiles, setProfiles, setCurrentProfileId } = useProfile();
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
@@ -62,6 +62,7 @@ export function ProtocolConsole() {
   const [profileGoals, setProfileGoals] = useState<GoalDefinition[]>([]);
   const [loading, setLoading] = useState(true);
   const [profilesLoading, setProfilesLoading] = useState(true);
+  const [profilesLoaded, setProfilesLoaded] = useState(false);
   const [loadedProfileId, setLoadedProfileId] = useState<string | null>(null);
   const [consoleRefresh, setConsoleRefresh] = useState(0);
   const consoleRequestRef = useRef(0);
@@ -92,7 +93,10 @@ export function ProtocolConsole() {
     async function loadProfiles() {
       try {
         const data = await apiClient.getProfiles();
-        if (active) setProfiles(data);
+        if (active) {
+          setProfiles(data);
+          setProfilesLoaded(true);
+        }
       } catch (err) {
         if (active) setError('Failed to load profiles');
         console.error(err);
@@ -103,6 +107,15 @@ export function ProtocolConsole() {
     void loadProfiles();
     return () => { active = false; };
   }, [setProfiles]);
+
+  useEffect(() => {
+    // Device storage can remember a deleted profile or another account's ID.
+    // Reconcile only after successful discovery, and use the current selection
+    // so a delayed response cannot clear a valid profile chosen in the meantime.
+    if (profilesLoaded && currentProfileId && !profiles.some(profile => profile.id === currentProfileId)) {
+      setCurrentProfileId(null);
+    }
+  }, [profilesLoaded, profiles, currentProfileId, setCurrentProfileId]);
 
   const loadProtocolConsoleData = useCallback(async (profileId: string) => {
     const requestId = ++consoleRequestRef.current;
@@ -262,7 +275,7 @@ export function ProtocolConsole() {
         <Header
           title="Protocol Console"
           subtitle="Protocol Operations"
-          actions={pendingDraft && hasProfiles ? <ProfileSwitcher /> : undefined}
+          actions={hasProfiles ? <ProfileSwitcher /> : undefined}
         />
         <div className="p-8 space-y-6">
           {pendingDraft && (
@@ -276,10 +289,12 @@ export function ProtocolConsole() {
           )}
           {!pendingDraft && (
             <EmptyState
-              title="Let's set up your first profile"
-              description="Your profile personalizes overlap checks and keeps your protocol in one place."
+              title={hasProfiles ? 'Choose a profile' : "Let's set up your first profile"}
+              description={hasProfiles
+                ? 'Select a profile above to open its protocol console.'
+                : 'Your profile personalizes overlap checks and keeps your protocol in one place.'}
               icon="👤"
-              action={{ label: 'Create profile', onClick: () => router.push('/profiles') }}
+              action={{ label: hasProfiles ? 'View profiles' : 'Create profile', onClick: () => router.push('/profiles') }}
             />
           )}
         </div>
