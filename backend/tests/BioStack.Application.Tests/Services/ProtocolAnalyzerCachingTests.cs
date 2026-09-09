@@ -15,6 +15,40 @@ using Xunit;
 public sealed class ProtocolAnalyzerCachingTests
 {
     [Fact]
+    public async Task V2ScoringCaches_DoNotReplayOldAnalysisOrCounterfactuals()
+    {
+        const string input = "Synthetic Alpha 1 mg daily";
+        var parsed = new ProtocolParseResult(
+            [new("Synthetic Alpha", 1, "mg", "daily", string.Empty)],
+            new Dictionary<string, KnowledgeEntry> { ["Synthetic Alpha"] = new() { CanonicalName = "Synthetic Alpha" } }, []);
+        var parser = new Mock<IProtocolParser>();
+        parser.Setup(service => service.ParseAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(parsed);
+        var normalization = new ProtocolNormalizationService();
+        var protocol = normalization.Normalize(parsed);
+        var fingerprint = new ProtocolFingerprintService();
+        var oldAnalysis = normalization.BuildAnalysisContext(null, null, null, null, null, null) with { ScoringVersion = "v2" };
+        var oldOptimization = normalization.BuildOptimizationContext(null, null, null, null, null, null) with { ScoringVersion = "v2" };
+        using var memory = new MemoryCache(new MemoryCacheOptions());
+        var cache = new ProtocolAnalysisCache(memory,
+            new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions())),
+            NullLogger<ProtocolAnalysisCache>.Instance);
+        await cache.SetAnalysisAsync(fingerprint.GetAnalysisKey(protocol, oldAnalysis),
+            new ProtocolAnalysisCacheDto(1, new(50, 0, 0, 49), [], []), TimeSpan.FromDays(7), CancellationToken.None);
+        await cache.SetCounterfactualAsync(fingerprint.GetCounterfactualKey(protocol, oldOptimization),
+            new CounterfactualResultDto(1, [], [], null, []), TimeSpan.FromDays(7), CancellationToken.None);
+        var interaction = CreateInteractionMock();
+        var engine = CreateEngineMock();
+        var analyzer = CreateAnalyzer(parser: parser.Object, interaction: interaction.Object, engine: engine.Object, analysisCache: cache);
+
+        var result = await analyzer.AnalyzeAsync(new AnalyzeProtocolRequest(input));
+
+        Assert.Equal(61, result.Score);
+        Assert.Equal(60, result.Counterfactuals.BaselineScore);
+        interaction.Verify(service => service.EvaluateAsync(It.IsAny<IReadOnlyList<KnowledgeEntry>>(), It.IsAny<CancellationToken>()), Times.Once);
+        engine.Verify(service => service.OptimizeAsync(It.IsAny<List<ProtocolEntryResponse>>(), It.IsAny<IReadOnlyList<KnowledgeEntry>>(), It.IsAny<OptimizationContext>(), It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
     public async Task V2ParseCacheEntry_DoesNotReplayAnIncorrectCompoundIdentity()
     {
         const string input = "QA-KEO69-Alpha 1 mg daily";
