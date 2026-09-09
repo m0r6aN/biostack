@@ -193,9 +193,8 @@ export default function ProfilesPage() {
       clearOnboardingPreview();
       setOnboardingPreview(emptyOnboardingPreview());
       setShowForm(false);
-      // Existing behaviour kept: the tools path always lands with `imported=tools`.
-      const importedParam = importedSources.includes('analyzer') ? importedSources.join(',') : 'tools';
-      window.location.href = `/profiles/${newProfile.id}?imported=${importedParam}`;
+      const importQuery = importedSources.length > 0 ? `?imported=${importedSources.join(',')}` : '';
+      window.location.href = `/profiles/${newProfile.id}${importQuery}`;
     } catch {
       if (newProfile) {
         setShowForm(false);
