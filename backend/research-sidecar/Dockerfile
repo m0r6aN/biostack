@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim@sha256:e5b65587bce7de595f299855d7385fe7fca39b8a74baa261ba1b7147afa78e58
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim@sha256:e5b65587bce7de595f299855d7385fe7fca39b8a74baa261ba1b7147afa78e58 AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -29,11 +29,19 @@ RUN --mount=type=cache,target=/root/.cache/uv \
       *) echo "INCLUDE_TOOLUNIVERSE must be true or false" >&2; exit 2 ;; \
     esac
 
-ENV PATH="/app/.venv/bin:$PATH"
+FROM python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c AS runtime
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/app/.venv/bin:$PATH"
+
+WORKDIR /app
+
+COPY --from=builder --chown=0:0 /app /app
 
 RUN addgroup --system biostack \
     && adduser --system --ingroup biostack biostack \
-    && chown -R biostack:biostack /app
+    && chmod -R go-w /app
 
 USER biostack
 

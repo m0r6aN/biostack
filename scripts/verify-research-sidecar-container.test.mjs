@@ -4,8 +4,10 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
+  ALLOWED_WORKFLOWS,
   FORBIDDEN_DISTRIBUTIONS,
   REQUIRED_DARK_ENVIRONMENT,
+  REQUIRED_DISTRIBUTIONS,
   buildContainerCleanupArguments,
   buildContainerCreateArguments,
   evaluateAuthObservations,
@@ -20,6 +22,7 @@ import {
   evaluateLeakage,
   evaluatePackageCensus,
   evaluateRejectionObservations,
+  executeOwnedContainerLifecycle,
   isDirectExecution,
   parseCliArgs,
   parseImageInspect,
@@ -36,6 +39,10 @@ const dockerignore = readFileSync(
   new URL("../backend/research-sidecar/.dockerignore", import.meta.url),
   "utf8",
 );
+const pyproject = readFileSync(
+  new URL("../backend/research-sidecar/pyproject.toml", import.meta.url),
+  "utf8",
+);
 
 function assertFails(result, pattern) {
   assert.equal(result.ok, false);
@@ -44,6 +51,7 @@ function assertFails(result, pattern) {
 
 function validImageObservation(overrides = {}) {
   return {
+    imageId: `sha256:${"a".repeat(64)}`,
     user: "biostack",
     command: ["python", "-m", "biostack_research_sidecar"],
     exposedPorts: { "8080/tcp": {} },
@@ -60,7 +68,7 @@ function validAuthObservation(overrides = {}) {
     correctStatus: 200,
     correctBody: {
       tooluniverse_enabled: false,
-      allowed_workflows: ["resolve_compound_identity"],
+      allowed_workflows: [...ALLOWED_WORKFLOWS],
     },
     ...overrides,
   };
@@ -145,6 +153,27 @@ test("diagnostic sanitizer redacts a token before the truncation boundary", () =
   assert.equal(result.includes("sensitive-value"), false);
 });
 
+test("diagnostic sanitizer strips CSI, OSC, C0, C1, DEL, and annotation controls", () => {
+  const hostile = [
+    "safe",
+    "\x1b[2Jerase",
+    "\x1b[Hhome",
+    "\x1b]0;title\x07osc-bel",
+    "\x1b]8;;https://invalid.example\x1b\\osc-st",
+    "\x1bPpayload\x1b\\dcs",
+    "\x1b^payload\x1b\\pm",
+    "\u009b31mc1-csi",
+    "\u009dtitle\u009cc1-osc",
+    "\u0090payload\u009cc1-dcs",
+    "\u0000\u0008\u007f\u0085\u2028\u2029\u202e",
+    "::warning::",
+  ].join("");
+  const result = sanitizeDiagnostic(hostile);
+  assert.doesNotMatch(result, /[\p{Cc}\p{Cf}\p{Zl}\p{Zp}\x1b]/u);
+  assert.equal(result.includes("::"), false);
+  assert.match(result, /safe/);
+});
+
 test("direct-execution predicate is false when an ESM import has no argv entry", () => {
   assert.equal(isDirectExecution(import.meta.url, undefined), false);
   assert.equal(isDirectExecution(import.meta.url, null), false);
@@ -172,9 +201,18 @@ test("Dockerfile contract accepts the checked-in production Dockerfile", () => {
   assert.deepEqual(evaluateDockerfileContract(dockerfile), { ok: true, errors: [] });
 });
 
+test("build backend is exact-version pinned within the digest-pinned builder", () => {
+  assert.match(pyproject, /^requires = \["hatchling==1\.32\.0"\]$/m);
+  assert.match(dockerfile, /^FROM ghcr\.io\/astral-sh\/uv:[^\s]+@sha256:[a-f0-9]{64} AS builder$/m);
+});
+
 for (const [name, mutate, pattern] of [
   ["floating base", (value) => value.replace(/@sha256:[a-f0-9]{64}/, ""), /verified OCI|sha256/],
   ["wrong base digest", (value) => value.replace(/e5b65587[a-f0-9]+/, "f".repeat(64)), /verified OCI/],
+  ["missing builder stage", (value) => value.replace(" AS builder", ""), /two-stage/],
+  ["floating runtime", (value) => value.replace(/python:3\.12\.12-slim-bookworm@sha256:[a-f0-9]{64} AS runtime/, "python:3.12-slim AS runtime"), /Runtime image/],
+  ["runtime ownership", (value) => value.replace("COPY --from=builder --chown=0:0 /app /app", "COPY --from=builder /app /app"), /root ownership/],
+  ["runtime write protection", (value) => value.replace("chmod -R go-w /app", "true"), /non-writable/],
   ["provider-extra default", (value) => value.replace("ARG INCLUDE_TOOLUNIVERSE=false", "ARG INCLUDE_TOOLUNIVERSE=true"), /no-extra/],
   ["dependency-only no-extra", (value) => value.replace("false) uv sync --locked --no-dev --no-install-project ;;", "false) uv sync --locked --no-dev --extra tooluniverse --no-install-project ;;"), /Dependency-only no-extra/],
   ["project no-extra", (value) => value.replace("false) uv sync --locked --no-dev ;;", "false) uv sync --locked --no-dev --extra tooluniverse ;;"), /Project no-extra/],
@@ -221,11 +259,18 @@ test("dockerignore rejects malformed non-text input", () => {
   assertFails(evaluateDockerignoreContract(null), /not text/);
 });
 
+for (const reInclude of ["!docs", "!artifacts", "!tests", "!.env", "!nested/**"]) {
+  test(`dockerignore rejects unsafe re-inclusion ${reInclude}`, () => {
+    assertFails(evaluateDockerignoreContract(`${dockerignore}\n${reInclude}\n`), /re-inclusion/);
+  });
+}
+
 test("image inspect parser accepts one Config object", () => {
   assert.deepEqual(
     parseImageInspect(
       JSON.stringify([
         {
+          Id: `sha256:${"a".repeat(64)}`,
           Config: {
             User: "biostack",
             Cmd: ["python", "-m", "biostack_research_sidecar"],
@@ -236,6 +281,7 @@ test("image inspect parser accepts one Config object", () => {
       ]),
     ),
     {
+      imageId: `sha256:${"a".repeat(64)}`,
       user: "biostack",
       command: ["python", "-m", "biostack_research_sidecar"],
       exposedPorts: { "8080/tcp": {} },
@@ -264,6 +310,8 @@ test("image configuration accepts exact non-root runtime contract", () => {
 });
 
 for (const [name, overrides, pattern] of [
+  ["missing immutable image identity", { imageId: undefined }, /immutable/],
+  ["malformed immutable image identity", { imageId: "sha256:nope" }, /immutable/],
   ["empty user", { user: "" }, /non-root/],
   ["named root user", { user: "root" }, /non-root/],
   ["numeric root user", { user: "0:0" }, /non-root/],
@@ -281,7 +329,7 @@ for (const [name, overrides, pattern] of [
 }
 
 test("package census accepts a provider-SDK-free environment", () => {
-  assert.deepEqual(evaluatePackageCensus(["fastapi", "pydantic-settings"]), {
+  assert.deepEqual(evaluatePackageCensus([...REQUIRED_DISTRIBUTIONS]), {
     ok: true,
     errors: [],
   });
@@ -289,32 +337,49 @@ test("package census accepts a provider-SDK-free environment", () => {
 
 for (const distribution of FORBIDDEN_DISTRIBUTIONS) {
   test(`package census mutation binds forbidden ${distribution}`, () => {
-    assertFails(evaluatePackageCensus(["fastapi", distribution]), new RegExp(distribution));
+    assertFails(evaluatePackageCensus([...REQUIRED_DISTRIBUTIONS, distribution]), new RegExp(distribution));
   });
 }
 
 test("package census normalizes underscore names and fails closed on malformed rows", () => {
-  assertFails(evaluatePackageCensus(["huggingface_hub"]), /huggingface-hub/);
+  assertFails(evaluatePackageCensus([...REQUIRED_DISTRIBUTIONS, "huggingface_hub"]), /huggingface-hub/);
+  assert.deepEqual(
+    evaluatePackageCensus(REQUIRED_DISTRIBUTIONS.map((name) => name.replaceAll("-", "_"))),
+    { ok: true, errors: [] },
+  );
   assertFails(evaluatePackageCensus("fastapi"), /malformed/);
   assertFails(evaluatePackageCensus([""]), /malformed/);
+  assertFails(evaluatePackageCensus([]), /empty/);
+  assertFails(evaluatePackageCensus(REQUIRED_DISTRIBUTIONS.filter((name) => name !== "httpx")), /httpx/);
 });
 
 test("filesystem census accepts an empty forbidden-path inventory", () => {
+  const valid = {
+    env_paths: [], tests_paths: [], git_paths: [], uv_paths: [], uvx_paths: [],
+    app_owner_uid: 0, venv_owner_uid: 0, app_writable: false, venv_writable: false,
+  };
   assert.deepEqual(
-    evaluateFilesystemCensus({ env_paths: [], tests_paths: [], git_paths: [] }),
+    evaluateFilesystemCensus(valid),
     { ok: true, errors: [] },
   );
 });
 
-for (const key of ["env_paths", "tests_paths", "git_paths"]) {
+for (const key of ["env_paths", "tests_paths", "git_paths", "uv_paths", "uvx_paths"]) {
   test(`filesystem census mutation binds present ${key}`, () => {
-    const value = { env_paths: [], tests_paths: [], git_paths: [], [key]: ["/app/bad"] };
+    const value = { env_paths: [], tests_paths: [], git_paths: [], uv_paths: [], uvx_paths: [], app_owner_uid: 0, venv_owner_uid: 0, app_writable: false, venv_writable: false, [key]: ["/app/bad"] };
     assertFails(evaluateFilesystemCensus(value), /forbidden/);
   });
   test(`filesystem census mutation binds missing ${key}`, () => {
-    const value = { env_paths: [], tests_paths: [], git_paths: [] };
+    const value = { env_paths: [], tests_paths: [], git_paths: [], uv_paths: [], uvx_paths: [], app_owner_uid: 0, venv_owner_uid: 0, app_writable: false, venv_writable: false };
     delete value[key];
     assertFails(evaluateFilesystemCensus(value), new RegExp(key));
+  });
+}
+
+for (const [key, value] of [["app_owner_uid", 999], ["venv_owner_uid", 999], ["app_writable", true], ["venv_writable", true]]) {
+  test(`filesystem census binds unsafe ${key}`, () => {
+    const observation = { env_paths: [], tests_paths: [], git_paths: [], uv_paths: [], uvx_paths: [], app_owner_uid: 0, venv_owner_uid: 0, app_writable: false, venv_writable: false, [key]: value };
+    assertFails(evaluateFilesystemCensus(observation), new RegExp(key));
   });
 }
 
@@ -384,7 +449,8 @@ for (const [name, mutate, pattern] of [
   ["workflow list type", (value) => ({ ...value, correctBody: { ...value.correctBody, allowed_workflows: 7 } }), /allowlisted/],
   ["ToolUniverse disabled", (value) => ({ ...value, correctBody: { ...value.correctBody, tooluniverse_enabled: true } }), /ToolUniverse/],
   ["allowlisted workflow", (value) => ({ ...value, correctBody: { ...value.correctBody, allowed_workflows: [] } }), /allowlisted/],
-  ["arbitrary-tool absence", (value) => ({ ...value, correctBody: { ...value.correctBody, allowed_workflows: ["resolve_compound_identity", "execute_any_tool"] } }), /arbitrary/],
+  ["extra workflow absence", (value) => ({ ...value, correctBody: { ...value.correctBody, allowed_workflows: [...ALLOWED_WORKFLOWS, "execute_any_tool"] } }), /exactly/],
+  ["duplicate workflow absence", (value) => ({ ...value, correctBody: { ...value.correctBody, allowed_workflows: [...ALLOWED_WORKFLOWS, ALLOWED_WORKFLOWS[0]] } }), /exactly/],
 ]) {
   test(`auth mutation binds ${name}`, () => {
     assertFails(evaluateAuthObservations(mutate(validAuthObservation())), pattern);
@@ -478,16 +544,20 @@ test("Docker argument builders preserve hostile-looking values as single argumen
     name: "p01-safe-name",
     hostPort: 18080,
     token,
+    cidFile: "/private/p01.cid",
   });
-  assert.deepEqual(args.slice(0, 6), [
+  assert.deepEqual(args.slice(0, 8), [
     "create",
     "--name",
     "p01-safe-name",
+    "--cidfile",
+    "/private/p01.cid",
     "--publish",
     "127.0.0.1:18080:8080",
     "--env",
   ]);
   assert.equal(args.includes(`BIOSTACK_RESEARCH_SERVICE_TOKEN=${token}`), true);
+  assert.equal(args.includes("BIOSTACK_RESEARCH_LOG_LEVEL=warning"), true);
   assert.equal(args.at(-1), "local/image:test");
 });
 
@@ -497,8 +567,9 @@ test("ephemeral port binding and cleanup stay confined to one exact name", () =>
     name: "p01-exact",
     hostPort: undefined,
     token: "p01-local-only-token",
+    cidFile: "/private/p01.cid",
   });
-  assert.equal(args[4], "127.0.0.1::8080");
+  assert.equal(args[6], "127.0.0.1::8080");
 });
 
 test("cleanup ownership is established only from one full Docker container ID", () => {
@@ -508,6 +579,85 @@ test("cleanup ownership is established only from one full Docker container ID", 
     assert.throws(() => parseOwnedContainerId(hostile), /full container ID/);
   }
   assert.deepEqual(buildContainerCleanupArguments(id), ["rm", "--force", id]);
+});
+
+function lifecycleHarness({ createResult, createError, ownership = "", operationError, cleanupError }) {
+  const events = [];
+  return {
+    events,
+    lifecycle: {
+      sensitive: ["p01-secret-marker"],
+      create: async () => {
+        events.push("create");
+        if (createError) throw createError;
+        return createResult;
+      },
+      readOwnership: async () => {
+        events.push("ownership");
+        return ownership;
+      },
+      start: async (id) => events.push(`start:${id}`),
+      operate: async (id) => {
+        events.push(`operate:${id}`);
+        if (operationError) throw operationError;
+        return "green";
+      },
+      cleanup: async (id) => {
+        events.push(`cleanup:${id}`);
+        if (cleanupError) throw cleanupError;
+      },
+    },
+  };
+}
+
+test("owned lifecycle starts, operates, and cleans only the proven container ID", async () => {
+  const id = "a".repeat(64);
+  const harness = lifecycleHarness({ createResult: { stdout: `${id}\n` }, ownership: `${id}\n` });
+  assert.equal(await executeOwnedContainerLifecycle(harness.lifecycle), "green");
+  assert.deepEqual(harness.events, ["create", "ownership", `start:${id}`, `operate:${id}`, `cleanup:${id}`]);
+});
+
+test("owned lifecycle cleans cidfile proof after malformed create output", async () => {
+  const id = "b".repeat(64);
+  const harness = lifecycleHarness({ createResult: { stdout: "malformed" }, ownership: id });
+  await assert.rejects(executeOwnedContainerLifecycle(harness.lifecycle), /full container ID/);
+  assert.deepEqual(harness.events, ["create", "ownership", `cleanup:${id}`]);
+});
+
+test("owned lifecycle cleans cidfile proof after create timeout", async () => {
+  const id = "c".repeat(64);
+  const harness = lifecycleHarness({
+    createError: new Error("timeout p01-secret-marker"),
+    ownership: id,
+  });
+  await assert.rejects(executeOwnedContainerLifecycle(harness.lifecycle), /\[REDACTED\]/);
+  assert.deepEqual(harness.events, ["create", "ownership", `cleanup:${id}`]);
+});
+
+test("owned lifecycle preserves primary and cleanup failures", async () => {
+  const id = "d".repeat(64);
+  const harness = lifecycleHarness({
+    createResult: { stdout: id },
+    ownership: id,
+    operationError: new Error("primary failure"),
+    cleanupError: new Error("cleanup failure"),
+  });
+  await assert.rejects(
+    executeOwnedContainerLifecycle(harness.lifecycle),
+    /primary failure.*Cleanup also failed: cleanup failure/,
+  );
+});
+
+test("owned lifecycle withholds cleanup without unambiguous ownership", async () => {
+  const id = "e".repeat(64);
+  const other = "f".repeat(64);
+  const noProof = lifecycleHarness({ createError: new Error("timeout"), ownership: "" });
+  await assert.rejects(executeOwnedContainerLifecycle(noProof.lifecycle), /timeout/);
+  assert.deepEqual(noProof.events, ["create", "ownership"]);
+
+  const mismatch = lifecycleHarness({ createResult: { stdout: id }, ownership: other });
+  await assert.rejects(executeOwnedContainerLifecycle(mismatch.lifecycle), /proofs disagreed/);
+  assert.deepEqual(mismatch.events, ["create", "ownership"]);
 });
 
 test("HTTP response reader accepts bounded UTF-8 and rejects size or header abuse", async () => {
@@ -540,6 +690,13 @@ test("implementation uses execFile argument arrays and contains no shell escape 
   assert.doesNotMatch(source, /\bshell\s*:/);
   assert.doesNotMatch(source, /\bexecSync\s*\(/);
   assert.doesNotMatch(source, /(?:cmd\.exe|powershell|sh),?\s*["'](?:\/c|-c)/i);
+  assert.doesNotMatch(source, /subject_name:\s*["']P01Compound["']/);
+  assert.match(source, /resolvePublishedPort\(ownedContainerId, sensitive\)/);
+  assert.match(source, /inspectDarkEnvironment\(ownedContainerId, sensitive\)/);
+  assert.match(source, /sensitive\.push\(jobId\)/);
+  for (const field of ["research_request_id", "subject_name", "correlation_id"]) {
+    assert.equal((source.match(new RegExp(`${field}:`, "g")) ?? []).length, 3);
+  }
 });
 
 test("CI is path-scoped, read-only, bounded, and contains every deterministic gate", () => {
@@ -560,10 +717,31 @@ test("CI is path-scoped, read-only, bounded, and contains every deterministic ga
   assert.match(workflow, /permissions:\s*\n\s+contents: read/);
   assert.doesNotMatch(workflow, /id-token:\s*write/);
   assert.match(workflow, /timeout-minutes: 30/);
+  assert.match(workflow, /runs-on: ubuntu-24\.04/);
+  assert.match(workflow, /actions\/checkout@11d5960a326750d5838078e36cf38b85af677262/);
+  assert.match(workflow, /actions\/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065/);
+  assert.match(workflow, /actions\/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020/);
+  assert.doesNotMatch(workflow, /uses:\s*[^\s]+@v\d+/);
+  const actionIdentities = [...workflow.matchAll(/^\s*uses:\s*\S+@([a-f0-9]+)(?:\s|$)/gmu)];
+  assert.equal(actionIdentities.length, 3);
+  assert.equal(actionIdentities.every((match) => match[1].length === 40), true);
   assert.match(workflow, /python-version: "3\.12"/);
   assert.match(workflow, /node-version: "22"/);
   assert.match(workflow, /uv==0\.9\.7/);
   assert.match(workflow, /pip-audit==2\.9\.0/);
+  assert.match(workflow, /--require-hashes/);
+  assert.match(workflow, /uv==0\.9\.7 --hash=sha256:8cf6bc2482d1293cc630f66b862b494c09acda9b7faff7307ef52667a2b3ad49/);
+  assert.match(workflow, /pip-audit==2\.9\.0 --hash=sha256:348b16e60895749a0839875d7cc27ebd692e1584ebe5d5cb145941c8e25a80bd/);
+  const bootstrap = /requirements = """\\\r?\n(?<rows>.*?)\r?\n\s+"""/su.exec(workflow);
+  assert.notEqual(bootstrap, null);
+  const bootstrapRows = bootstrap.groups.rows
+    .split(/\r?\n/u)
+    .map((row) => row.trim())
+    .filter(Boolean);
+  assert.equal(bootstrapRows.length, 28);
+  for (const row of bootstrapRows) {
+    assert.match(row, /^[a-z0-9][a-z0-9-]*==[^\s]+ --hash=sha256:[a-f0-9]{64}$/u);
+  }
   assert.match(workflow, /uv sync --frozen --extra dev/);
   assert.match(workflow, /pytest[\s\\]+\n\s+tests/);
   assert.match(workflow, /--junitxml/);
@@ -576,6 +754,8 @@ test("CI is path-scoped, read-only, bounded, and contains every deterministic ga
   assert.match(workflow, /pip-audit[\s\\]+\n\s+--strict/);
   assert.match(workflow, /node --test scripts\/verify-research-sidecar-container\.test\.mjs/);
   assert.match(workflow, /GITLEAKS_VERSION: "8\.24\.3"/);
+  assert.match(workflow, /9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c/);
+  assert.match(workflow, /sha256sum --check --strict/);
   assert.match(workflow, /gitleaks" dir/);
   assert.match(workflow, /docker build/);
   assert.match(workflow, /--tag biostack-research-sidecar:p01-ci/);

@@ -1,6 +1,7 @@
 import { execFile } from "node:child_process";
-import { readFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { dirname, join, resolve } from "node:path";
 import { promisify } from "node:util";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { randomBytes } from "node:crypto";
@@ -18,6 +19,25 @@ export const FORBIDDEN_DISTRIBUTIONS = Object.freeze([
   "pip",
   "setuptools",
   "tooluniverse",
+]);
+
+export const REQUIRED_DISTRIBUTIONS = Object.freeze([
+  "biostack-research-sidecar",
+  "fastapi",
+  "httpx",
+  "pydantic",
+  "pydantic-settings",
+  "uvicorn",
+]);
+
+export const ALLOWED_WORKFLOWS = Object.freeze([
+  "refresh_evidence_packet",
+  "research_adverse_events",
+  "research_compound_evidence",
+  "research_mechanisms_and_targets",
+  "research_pathways",
+  "research_published_regimens",
+  "resolve_compound_identity",
 ]);
 
 export const REQUIRED_DARK_ENVIRONMENT = Object.freeze({
@@ -141,9 +161,58 @@ export function parseCliArgs(argv) {
 }
 
 export function sanitizeDiagnostic(value, sensitiveValues = []) {
-  let text = String(value ?? "unknown error")
-    .replace(/[\r\n]+/gu, " ")
-    .replace(/\x1b\[[0-9;]*m/gu, "")
+  const input = String(value ?? "unknown error");
+  let text = "";
+  for (let index = 0; index < input.length; index += 1) {
+    const code = input.charCodeAt(index);
+    if (code === 0x1b && input[index + 1] === "[") {
+      index += 2;
+      while (index < input.length && input.charCodeAt(index) >= 0x20 && input.charCodeAt(index) <= 0x3f) index += 1;
+      continue;
+    }
+    if (code === 0x1b && ["]", "P", "X", "^", "_"].includes(input[index + 1])) {
+      const introducer = input[index + 1];
+      index += 2;
+      while (index < input.length) {
+        if (introducer === "]" && input.charCodeAt(index) === 0x07) break;
+        if (input.charCodeAt(index) === 0x1b && input[index + 1] === "\\") {
+          index += 1;
+          break;
+        }
+        index += 1;
+      }
+      continue;
+    }
+    if (code === 0x9b) {
+      index += 1;
+      while (index < input.length && input.charCodeAt(index) >= 0x20 && input.charCodeAt(index) <= 0x3f) index += 1;
+      continue;
+    }
+    if ([0x90, 0x98, 0x9d, 0x9e, 0x9f].includes(code)) {
+      index += 1;
+      while (index < input.length) {
+        if (code === 0x9d && input.charCodeAt(index) === 0x07) break;
+        if (input.charCodeAt(index) === 0x9c) break;
+        if (input.charCodeAt(index) === 0x1b && input[index + 1] === "\\") {
+          index += 1;
+          break;
+        }
+        index += 1;
+      }
+      continue;
+    }
+    if (code === 0x1b) {
+      if (index + 1 < input.length) index += 1;
+      continue;
+    }
+    if (code === 0x0a || code === 0x0d || code === 0x09) {
+      text += " ";
+    } else if ((code >= 0x20 && code <= 0x7e) || code >= 0xa0) {
+      text += input[index];
+    }
+  }
+  text = text
+    .replace(/[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]/gu, "")
     .replace(/::/gu, "--");
   for (const sensitive of sensitiveValues) {
     if (typeof sensitive === "string" && sensitive.length > 0) {
@@ -164,7 +233,8 @@ export function isDirectExecution(moduleUrl, argvEntry) {
 export function evaluateDockerfileContract(contents) {
   if (typeof contents !== "string") return outcome(["Dockerfile is not text."]);
   const errors = [];
-  const firstInstruction = contents.match(/^FROM\s+(\S+)/m)?.[1];
+  const fromInstructions = [...contents.matchAll(/^FROM\s+(\S+)(?:\s+AS\s+(\S+))?$/gim)];
+  const firstInstruction = fromInstructions[0]?.[1];
   if (
     firstInstruction !==
     "ghcr.io/astral-sh/uv:python3.12-bookworm-slim@sha256:e5b65587bce7de595f299855d7385fe7fca39b8a74baa261ba1b7147afa78e58"
@@ -173,6 +243,16 @@ export function evaluateDockerfileContract(contents) {
   }
   if (!SHA256_REFERENCE.test(firstInstruction ?? "")) {
     errors.push("Base image reference lacks a valid sha256 digest.");
+  }
+  if (fromInstructions.length !== 2 || fromInstructions[0]?.[2]?.toLowerCase() !== "builder") {
+    errors.push("Dockerfile does not have the exact two-stage builder/runtime shape.");
+  }
+  if (
+    fromInstructions[1]?.[1] !==
+      "python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c" ||
+    fromInstructions[1]?.[2]?.toLowerCase() !== "runtime"
+  ) {
+    errors.push("Runtime image is not pinned to the verified Python OCI digest.");
   }
   if (!/^ARG INCLUDE_TOOLUNIVERSE=false$/m.test(contents)) {
     errors.push("Production build does not default to the no-extra path.");
@@ -196,6 +276,12 @@ export function evaluateDockerfileContract(contents) {
   if (/--extra\s+["']?\$[A-Za-z_{]/.test(contents) || /^ARG TOOLUNIVERSE_EXTRA=/m.test(contents)) {
     errors.push("Unsafe variable-valued --extra construction is present.");
   }
+  if (!/^COPY --from=builder --chown=0:0 \/app \/app$/m.test(contents)) {
+    errors.push("Runtime application tree is not copied with root ownership.");
+  }
+  if (!/chmod -R go-w \/app/.test(contents)) {
+    errors.push("Runtime application tree is not made non-writable to the service user.");
+  }
   if (!/^USER biostack$/m.test(contents)) errors.push("Image user is not biostack.");
   if (!/^EXPOSE 8080$/m.test(contents)) errors.push("Image does not expose port 8080.");
   if (!/^CMD \["python", "-m", "biostack_research_sidecar"\]$/m.test(contents)) {
@@ -213,6 +299,10 @@ export function evaluateDockerignoreContract(contents) {
       .filter((line) => line.length > 0 && !line.startsWith("#")),
   );
   const errors = [];
+  const reIncludes = [...lines].filter((line) => line.startsWith("!") && line !== "!README.md");
+  if (reIncludes.length > 0) {
+    errors.push(`Unsafe build-context re-inclusion: ${reIncludes.sort().join(", ")}.`);
+  }
   for (const pattern of [
     ".env",
     ".env.*",
@@ -246,6 +336,7 @@ export function parseImageInspect(output) {
     throw new ContainerContractError("Docker image inspection omitted Config.");
   }
   return {
+    imageId: parsed[0]?.Id,
     user: config.User,
     command: config.Cmd,
     exposedPorts: config.ExposedPorts,
@@ -255,6 +346,9 @@ export function parseImageInspect(output) {
 
 export function evaluateImageConfiguration(observation) {
   const errors = [];
+  if (typeof observation?.imageId !== "string" || !/^sha256:[a-f0-9]{64}$/u.test(observation.imageId)) {
+    errors.push("Inspected image ID is not an immutable sha256 identity.");
+  }
   const user = observation?.user;
   if (
     typeof user !== "string" ||
@@ -296,12 +390,15 @@ export function evaluatePackageCensus(distributions) {
   ) {
     return outcome(["Package census is malformed."]);
   }
-  const normalized = new Set(distributions.map((name) => name.toLowerCase().replaceAll("_", "-")));
-  return outcome(
-    FORBIDDEN_DISTRIBUTIONS.filter((name) => normalized.has(name)).map(
-      (name) => `Forbidden distribution is installed: ${name}.`,
-    ),
+  if (distributions.length === 0) return outcome(["Package census is empty."]);
+  const normalized = new Set(distributions.map((name) => name.toLowerCase().replace(/[-_.]+/gu, "-")));
+  const errors = FORBIDDEN_DISTRIBUTIONS.filter((name) => normalized.has(name)).map(
+    (name) => `Forbidden distribution is installed: ${name}.`,
   );
+  for (const name of REQUIRED_DISTRIBUTIONS) {
+    if (!normalized.has(name)) errors.push(`Required distribution is missing: ${name}.`);
+  }
+  return outcome(errors);
 }
 
 export function evaluateFilesystemCensus(observation) {
@@ -309,12 +406,20 @@ export function evaluateFilesystemCensus(observation) {
     return outcome(["Filesystem census is malformed."]);
   }
   const errors = [];
-  for (const key of ["env_paths", "tests_paths", "git_paths"]) {
+  for (const key of ["env_paths", "tests_paths", "git_paths", "uv_paths", "uvx_paths"]) {
     if (!Array.isArray(observation[key])) {
       errors.push(`Filesystem census omitted ${key}.`);
     } else if (observation[key].length > 0) {
       errors.push(`Image contains forbidden ${key.replace("_paths", "")} content.`);
     }
+  }
+  for (const [key, expected] of Object.entries({
+    app_owner_uid: 0,
+    venv_owner_uid: 0,
+    app_writable: false,
+    venv_writable: false,
+  })) {
+    if (observation[key] !== expected) errors.push(`Filesystem census has unsafe ${key}.`);
   }
   return outcome(errors);
 }
@@ -366,12 +471,12 @@ export function evaluateAuthObservations(observation) {
       errors.push("Authenticated response does not keep ToolUniverse disabled.");
     }
     const workflows = body.allowed_workflows;
-    if (!Array.isArray(workflows) || !workflows.includes("resolve_compound_identity")) {
-      errors.push("Authenticated response omits the allowlisted workflow.");
-    }
-    if (Array.isArray(workflows) && workflows.includes("execute_any_tool")) {
-      errors.push("Authenticated response exposes arbitrary tool execution.");
-    }
+    if (
+      !Array.isArray(workflows) ||
+      workflows.some((name) => typeof name !== "string") ||
+      new Set(workflows).size !== workflows.length ||
+      JSON.stringify([...workflows].sort()) !== JSON.stringify([...ALLOWED_WORKFLOWS].sort())
+    ) errors.push("Authenticated response does not expose exactly the seven allowlisted workflows.");
   }
   return outcome(errors);
 }
@@ -444,12 +549,14 @@ export function evaluateLeakage(text, sensitiveValues) {
   return outcome(errors);
 }
 
-export function buildContainerCreateArguments({ image, name, hostPort, token }) {
+export function buildContainerCreateArguments({ image, name, hostPort, token, cidFile }) {
   const binding = `127.0.0.1:${hostPort ?? ""}:8080`;
   return [
     "create",
     "--name",
     name,
+    "--cidfile",
+    cidFile,
     "--publish",
     binding,
     "--env",
@@ -470,6 +577,8 @@ export function buildContainerCreateArguments({ image, name, hostPort, token }) 
     "BIOSTACK_RESEARCH_GPU_ENABLED=false",
     "--env",
     "BIOSTACK_RESEARCH_MAX_CONCURRENT_RESEARCH_JOBS=1",
+    "--env",
+    "BIOSTACK_RESEARCH_LOG_LEVEL=warning",
     image,
   ];
 }
@@ -484,6 +593,84 @@ export function parseOwnedContainerId(output) {
     throw new ContainerContractError("Docker create did not return one full container ID.");
   }
   return value;
+}
+
+function optionalOwnedContainerId(output) {
+  const value = typeof output === "string" ? output.trim() : "";
+  return value.length === 0 ? undefined : parseOwnedContainerId(value);
+}
+
+function asContractError(error, sensitive) {
+  if (error instanceof ContainerContractError) {
+    return new ContainerContractError(sanitizeDiagnostic(error.message, sensitive));
+  }
+  return new ContainerContractError(sanitizeDiagnostic(error?.message, sensitive));
+}
+
+export async function executeOwnedContainerLifecycle({
+  create,
+  readOwnership,
+  start,
+  operate,
+  cleanup,
+  sensitive = [],
+}) {
+  let createResult;
+  let primaryError;
+  let stdoutId;
+  let ownershipId;
+  try {
+    createResult = await create();
+  } catch (error) {
+    primaryError = asContractError(error, sensitive);
+  }
+  try {
+    stdoutId = optionalOwnedContainerId(createResult?.stdout);
+  } catch (error) {
+    primaryError ??= asContractError(error, sensitive);
+  }
+  try {
+    ownershipId = optionalOwnedContainerId(await readOwnership());
+  } catch (error) {
+    primaryError ??= asContractError(error, sensitive);
+  }
+
+  let ownedContainerId;
+  if (stdoutId && ownershipId && stdoutId !== ownershipId) {
+    primaryError = new ContainerContractError("Docker ownership proofs disagreed; cleanup was withheld.");
+  } else {
+    ownedContainerId = ownershipId ?? stdoutId;
+  }
+  if (!ownedContainerId && !primaryError) {
+    primaryError = new ContainerContractError("Docker create returned no container ownership proof.");
+  }
+
+  let result;
+  if (!primaryError) {
+    try {
+      await start(ownedContainerId);
+      result = await operate(ownedContainerId);
+    } catch (error) {
+      primaryError = asContractError(error, sensitive);
+    }
+  }
+
+  let cleanupError;
+  if (ownedContainerId) {
+    try {
+      await cleanup(ownedContainerId);
+    } catch (error) {
+      cleanupError = asContractError(error, sensitive);
+    }
+  }
+  if (primaryError && cleanupError) {
+    throw new ContainerContractError(
+      `${primaryError.message} Cleanup also failed: ${cleanupError.message}`,
+    );
+  }
+  if (primaryError) throw primaryError;
+  if (cleanupError) throw new ContainerContractError(`Owned test-container cleanup failed: ${cleanupError.message}`);
+  return result;
 }
 
 function assertOutcome(label, result) {
@@ -537,13 +724,14 @@ async function inspectStaticImage(image) {
 
   const { stdout: inspectOutput } = await runProcess("docker", ["image", "inspect", image]);
   const observation = parseImageInspect(inspectOutput);
+  const immutableImage = observation.imageId;
 
   const runtimeScript = [
     "import json, os",
     "print(json.dumps({'runtimeUid': os.geteuid()}))",
   ].join("; ");
   const runtime = await dockerJson(
-    ["run", "--rm", "--entrypoint", "/app/.venv/bin/python", image, "-c", runtimeScript],
+    ["run", "--rm", "--entrypoint", "/app/.venv/bin/python", immutableImage, "-c", runtimeScript],
     "Runtime identity census",
   );
   observation.runtimeUid = runtime.runtimeUid;
@@ -551,26 +739,28 @@ async function inspectStaticImage(image) {
 
   const packageScript = [
     "import importlib.metadata as m, json",
-    "print(json.dumps(sorted({d.metadata['Name'].lower().replace('_','-') for d in m.distributions() if d.metadata.get('Name')})))",
+    "print(json.dumps(sorted({d.metadata['Name'] for d in m.distributions() if d.metadata.get('Name')})))",
   ].join("; ");
   const packages = await dockerJson(
-    ["run", "--rm", "--entrypoint", "/app/.venv/bin/python", image, "-c", packageScript],
+    ["run", "--rm", "--entrypoint", "/app/.venv/bin/python", immutableImage, "-c", packageScript],
     "Package census",
   );
   assertOutcome("Package census failed", evaluatePackageCensus(packages));
 
   const filesystemScript = [
     "from pathlib import Path",
-    "import json",
+    "import json, os, shutil",
     "root=Path('/app')",
-    "result={'env_paths':[str(p) for p in root.glob('.env*')], 'tests_paths':[str(root/'tests')] if (root/'tests').exists() else [], 'git_paths':[str(p) for p in root.rglob('.git')]} ",
+    "venv=root/'.venv'",
+    "result={'env_paths':[str(p) for p in root.glob('.env*')], 'tests_paths':[str(root/'tests')] if (root/'tests').exists() else [], 'git_paths':[str(p) for p in root.rglob('.git')], 'uv_paths':[p for p in [shutil.which('uv')] if p], 'uvx_paths':[p for p in [shutil.which('uvx')] if p], 'app_owner_uid':root.stat().st_uid, 'venv_owner_uid':venv.stat().st_uid, 'app_writable':os.access(root,os.W_OK), 'venv_writable':os.access(venv,os.W_OK)}",
     "print(json.dumps(result, sort_keys=True))",
   ].join("; ");
   const filesystem = await dockerJson(
-    ["run", "--rm", "--entrypoint", "/app/.venv/bin/python", image, "-c", filesystemScript],
+    ["run", "--rm", "--entrypoint", "/app/.venv/bin/python", immutableImage, "-c", filesystemScript],
     "Filesystem census",
   );
   assertOutcome("Filesystem census failed", evaluateFilesystemCensus(filesystem));
+  return immutableImage;
 }
 
 async function requestJson(url, { method = "GET", token, body } = {}) {
@@ -695,8 +885,8 @@ function createSyntheticToken() {
   return `p01-local-only-${randomBytes(24).toString("hex")}`;
 }
 
-async function resolvePublishedPort(name) {
-  const { stdout } = await runProcess("docker", ["port", name, "8080/tcp"]);
+async function resolvePublishedPort(name, sensitive) {
+  const { stdout } = await runProcess("docker", ["port", name, "8080/tcp"], { sensitive });
   const lines = stdout.trim().split(/\r?\n/u);
   if (lines.length !== 1) {
     throw new ContainerContractError("Docker returned an ambiguous host-port mapping.");
@@ -712,7 +902,7 @@ async function resolvePublishedPort(name) {
   return port;
 }
 
-async function inspectDarkEnvironment(name) {
+async function inspectDarkEnvironment(name, sensitive) {
   const script = [
     "import json",
     "from biostack_research_sidecar.config import Settings",
@@ -722,6 +912,7 @@ async function inspectDarkEnvironment(name) {
   return dockerJson(
     ["exec", name, "/app/.venv/bin/python", "-c", script],
     "Dark environment census",
+    sensitive,
   );
 }
 
@@ -729,31 +920,70 @@ async function verifyRuntime(options) {
   const name = options.containerName ?? createContainerName();
   const token = createSyntheticToken();
   const wrongToken = createSyntheticToken();
-  const privateMarker = `p01-private-${randomBytes(8).toString("hex")}`;
-  const publicMarker = `P01Compound-${randomBytes(6).toString("hex")}`;
+  const marker = (prefix) => `${prefix}-${randomBytes(12).toString("hex")}`;
+  const privateMarker = marker("p01-private");
+  const privacySubject = marker("P01Privacy");
+  const privacyRequestId = marker("p01-privacy-request");
+  const privacyCorrelationId = marker("p01-privacy-correlation");
+  const arbitrarySubject = marker("P01Arbitrary");
+  const arbitraryRequestId = marker("p01-arbitrary-request");
+  const arbitraryCorrelationId = marker("p01-arbitrary-correlation");
+  const publicMarker = marker("P01Kill");
+  const killRequestId = marker("p01-kill-request");
+  const killCorrelationId = marker("p01-kill-correlation");
   const arbitraryWorkflow = "execute_any_tool";
-  const sensitive = [token, wrongToken, privateMarker, publicMarker, arbitraryWorkflow];
-  let ownedContainerId;
+  const sensitive = [
+    token,
+    wrongToken,
+    privateMarker,
+    privacySubject,
+    privacyRequestId,
+    privacyCorrelationId,
+    arbitrarySubject,
+    arbitraryRequestId,
+    arbitraryCorrelationId,
+    publicMarker,
+    killRequestId,
+    killCorrelationId,
+    arbitraryWorkflow,
+  ];
   let publicOutput = "P01 local container contract passed.";
+  const ownershipDirectory = await mkdtemp(join(tmpdir(), "biostack-p01-"));
+  const cidFile = join(ownershipDirectory, "container.cid");
 
   try {
-    const created = await runProcess(
-      "docker",
-      buildContainerCreateArguments({
-        image: options.image,
-        name,
-        hostPort: options.hostPort,
-        token,
-      }),
-      { timeoutMs: 30_000, sensitive },
-    );
-    ownedContainerId = parseOwnedContainerId(created.stdout);
-    await runProcess("docker", ["start", ownedContainerId], {
-      timeoutMs: 30_000,
+    return await executeOwnedContainerLifecycle({
       sensitive,
-    });
-
-    const port = await resolvePublishedPort(ownedContainerId);
+      create: () => runProcess(
+        "docker",
+        buildContainerCreateArguments({
+          image: options.image,
+          name,
+          hostPort: options.hostPort,
+          token,
+          cidFile,
+        }),
+        { timeoutMs: 30_000, sensitive },
+      ),
+      readOwnership: async () => {
+        try {
+          return await readFile(cidFile, "utf8");
+        } catch (error) {
+          if (error?.code === "ENOENT") return "";
+          throw error;
+        }
+      },
+      start: (ownedContainerId) => runProcess("docker", ["start", ownedContainerId], {
+        timeoutMs: 30_000,
+        sensitive,
+      }),
+      cleanup: (ownedContainerId) => runProcess(
+        "docker",
+        buildContainerCleanupArguments(ownedContainerId),
+        { timeoutMs: 30_000, sensitive },
+      ),
+      operate: async (ownedContainerId) => {
+    const port = await resolvePublishedPort(ownedContainerId, sensitive);
     const baseUrl = `http://127.0.0.1:${port}`;
     const health = await waitForHealth(baseUrl, options.healthTimeoutSeconds);
     assertOutcome(
@@ -761,7 +991,7 @@ async function verifyRuntime(options) {
       evaluateHealthObservation(health.status, health.body),
     );
 
-    const darkEnvironment = await inspectDarkEnvironment(ownedContainerId);
+    const darkEnvironment = await inspectDarkEnvironment(ownedContainerId, sensitive);
     assertOutcome(
       "Dark environment contract failed",
       evaluateDarkEnvironment(darkEnvironment),
@@ -786,19 +1016,23 @@ async function verifyRuntime(options) {
       method: "POST",
       token,
       body: {
-        subject_name: "P01Compound",
+        research_request_id: privacyRequestId,
+        subject_name: privacySubject,
         workflow: "resolve_compound_identity",
         patient_id: privateMarker,
         data_classification: "public_scientific",
+        correlation_id: privacyCorrelationId,
       },
     });
     const arbitrary = await requestJson(`${baseUrl}/internal/v1/research/jobs`, {
       method: "POST",
       token,
       body: {
-        subject_name: "P01Compound",
+        research_request_id: arbitraryRequestId,
+        subject_name: arbitrarySubject,
         workflow: arbitraryWorkflow,
         data_classification: "public_scientific",
+        correlation_id: arbitraryCorrelationId,
       },
     });
     assertOutcome(
@@ -815,9 +1049,11 @@ async function verifyRuntime(options) {
       method: "POST",
       token,
       body: {
+        research_request_id: killRequestId,
         subject_name: publicMarker,
         workflow: "resolve_compound_identity",
         data_classification: "public_scientific",
+        correlation_id: killCorrelationId,
         local_inference_permitted: false,
         hosted_inference_permitted: false,
         execution: {
@@ -833,6 +1069,7 @@ async function verifyRuntime(options) {
     if (typeof jobId !== "string" || jobId.length === 0) {
       throw new ContainerContractError("Kill-switch submission omitted job_id.");
     }
+    sensitive.push(jobId);
     const terminal = await waitForTerminal(baseUrl, jobId, token);
     assertOutcome(
       "Kill-switch lifecycle contract failed",
@@ -861,28 +1098,18 @@ async function verifyRuntime(options) {
       evaluateLeakage(`${logs}\n${logErrors}\n${publicOutput}`, sensitive),
     );
 
-    return { status: "passed", checks: 9 };
+    return { status: "passed", checks: 9, imageId: options.image };
+      },
+    });
   } finally {
-    if (ownedContainerId !== undefined) {
-      try {
-        await runProcess("docker", buildContainerCleanupArguments(ownedContainerId), {
-          timeoutMs: 30_000,
-          sensitive,
-        });
-      } catch (error) {
-        if (error instanceof ContainerContractError) {
-          throw new ContainerContractError("Owned test-container cleanup failed.");
-        }
-        throw error;
-      }
-    }
+    await rm(ownershipDirectory, { recursive: true, force: true });
   }
 }
 
 export async function main(argv = process.argv.slice(2)) {
   const options = parseCliArgs(argv);
-  await inspectStaticImage(options.image);
-  const result = await verifyRuntime(options);
+  const immutableImage = await inspectStaticImage(options.image);
+  const result = await verifyRuntime({ ...options, image: immutableImage });
   console.log(JSON.stringify(result));
 }
 
