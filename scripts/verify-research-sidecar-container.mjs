@@ -43,12 +43,30 @@ export const FORBIDDEN_DISTRIBUTIONS = Object.freeze([
 ]);
 
 export const REQUIRED_DISTRIBUTIONS = Object.freeze([
+  "annotated-doc",
+  "annotated-types",
+  "anyio",
   "biostack-research-sidecar",
+  "certifi",
+  "click",
   "fastapi",
+  "h11",
+  "httpcore",
+  "httptools",
   "httpx",
+  "idna",
   "pydantic",
+  "pydantic-core",
   "pydantic-settings",
+  "pyyaml",
+  "python-dotenv",
+  "starlette",
+  "typing-extensions",
+  "typing-inspection",
   "uvicorn",
+  "uvloop",
+  "watchfiles",
+  "websockets",
 ]);
 
 export const ALLOWED_WORKFLOWS = Object.freeze([
@@ -391,6 +409,23 @@ export function evaluateDockerfileContract(contents) {
   if (/--extra\s+["']?\$[A-Za-z_{]/.test(contents) || /^ARG TOOLUNIVERSE_EXTRA=/m.test(contents)) {
     errors.push("Unsafe variable-valued --extra construction is present.");
   }
+  const copyInstructions = [...contents.matchAll(/^COPY\s+(.+)$/gimu)].map(
+    (match) => match[1].trim(),
+  );
+  const requiredCopyInstructions = [
+    "pyproject.toml uv.lock ./",
+    "README.md ./",
+    "src ./src",
+    "--from=builder --chown=0:0 /app /app",
+  ];
+  if (
+    copyInstructions.length !== requiredCopyInstructions.length ||
+    requiredCopyInstructions.some(
+      (instruction) => copyInstructions.filter((candidate) => candidate === instruction).length !== 1,
+    )
+  ) {
+    errors.push("Docker build copy graph is not the exact allowlisted metadata and source set.");
+  }
   for (const pattern of [
     /hatchling==1\.32\.0[\s\S]+P01_BUILD_BACKEND_REQUIREMENTS_END/u,
     /uv pip install[\s\S]+--no-deps[\s\S]+--only-binary=:all:[\s\S]+--require-hashes/u,
@@ -575,6 +610,11 @@ export function evaluatePackageCensus(distributions) {
   for (const name of REQUIRED_DISTRIBUTIONS) {
     if (!normalized.has(name)) errors.push(`Required distribution is missing: ${name}.`);
   }
+  for (const name of normalized) {
+    if (!REQUIRED_DISTRIBUTIONS.includes(name)) {
+      errors.push(`Unexpected distribution is installed: ${name}.`);
+    }
+  }
   return outcome(errors);
 }
 
@@ -587,6 +627,7 @@ export function evaluateFilesystemCensus(observation) {
     "env_paths",
     "tests_paths",
     "git_paths",
+    "credential_paths",
     "installer_paths",
   ]) {
     if (!Array.isArray(observation[key])) {
@@ -980,7 +1021,6 @@ export async function executeOwnedContainerLifecycle({
     let ownedContainerId;
     try {
       ownedContainerId = await resolveOwnership(createResult?.stdout ?? "");
-      if (!ownedContainerId) releaseClaim = true;
     } catch (error) {
       const reconciliationError = asContractError(error, sensitive);
       ownedContainerId = reconciliationError.cleanupContainerId;
@@ -1316,7 +1356,8 @@ async function inspectStaticImage(image, control) {
     "probe_code=\"import importlib.util,json,shutil; print(json.dumps({'pip_module':importlib.util.find_spec('pip') is not None,'ensurepip_module':importlib.util.find_spec('ensurepip') is not None,'pip_path':shutil.which('pip'),'pip3_path':shutil.which('pip3'),'uv_path':shutil.which('uv'),'uvx_path':shutil.which('uvx')}))\"",
     "def probe(name, executable, path):\n env=dict(os.environ,PATH=path); run=subprocess.run([executable,'-c',probe_code],env=env,text=True,capture_output=True,check=True); return {'name':name,**json.loads(run.stdout)}",
     "installer_candidates=[Path('/usr/local/bin/pip'),Path('/usr/local/bin/pip3'),Path('/usr/local/bin/pip3.12'),venv/'bin/pip',venv/'bin/pip3',venv/'bin/pip3.12',Path('/usr/local/lib/python3.12/ensurepip'),Path('/usr/local/lib/python3.12/site-packages/pip')]",
-    "result={'env_paths':[str(p) for p in root.glob('.env*')], 'tests_paths':[str(root/'tests')] if (root/'tests').exists() else [], 'git_paths':[str(p) for p in root.rglob('.git')], 'installer_paths':[str(p) for p in installer_candidates if p.exists()], 'python_probes':[probe('system','/usr/local/bin/python','/usr/local/bin:/usr/bin:/bin'),probe('venv','/app/.venv/bin/python','/app/.venv/bin:/usr/local/bin:/usr/bin:/bin')], 'app_owner_uid':root.stat().st_uid, 'venv_owner_uid':venv.stat().st_uid, 'app_writable':os.access(root,os.W_OK), 'venv_writable':os.access(venv,os.W_OK)}",
+    "credential_candidates=[root/'p01-untracked-credential.json',root/'credentials.json',root/'service-account.json']",
+    "result={'env_paths':[str(p) for p in root.glob('.env*')], 'tests_paths':[str(root/'tests')] if (root/'tests').exists() else [], 'git_paths':[str(p) for p in root.rglob('.git')], 'credential_paths':[str(p) for p in credential_candidates if p.exists()], 'installer_paths':[str(p) for p in installer_candidates if p.exists()], 'python_probes':[probe('system','/usr/local/bin/python','/usr/local/bin:/usr/bin:/bin'),probe('venv','/app/.venv/bin/python','/app/.venv/bin:/usr/local/bin:/usr/bin:/bin')], 'app_owner_uid':root.stat().st_uid, 'venv_owner_uid':venv.stat().st_uid, 'app_writable':os.access(root,os.W_OK), 'venv_writable':os.access(venv,os.W_OK)}",
     "print(json.dumps(result, sort_keys=True))",
   ].join("\n");
   const filesystem = await runOwnedCensus({

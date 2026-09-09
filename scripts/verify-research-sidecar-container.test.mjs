@@ -118,6 +118,7 @@ function validFilesystemObservation(overrides = {}) {
     env_paths: [],
     tests_paths: [],
     git_paths: [],
+    credential_paths: [],
     installer_paths: [],
     python_probes: [cleanProbe("system"), cleanProbe("venv")],
     app_owner_uid: 0,
@@ -356,6 +357,10 @@ for (const [name, mutate, pattern] of [
   ["provider-extra default", (value) => value.replace("ARG INCLUDE_TOOLUNIVERSE=false", "ARG INCLUDE_TOOLUNIVERSE=true"), /no-extra/],
   ["dependency-only no-extra", (value) => value.replace("false) uv sync --locked --no-dev --no-install-project ;;", "false) uv sync --locked --no-dev --extra tooluniverse --no-install-project ;;"), /Dependency-only no-extra/],
   ["dependency optional contract", (value) => value.replace("true) uv sync --locked --no-dev --extra tooluniverse --no-install-project ;;", "true) uv sync --locked --no-dev --no-install-project ;;"), /Dependency-only ToolUniverse/],
+  ["broad build-context copy", (value) => value.replace("COPY src ./src", "COPY . ."), /copy graph/],
+  ["credential-shaped build-context copy", (value) => value.replace("COPY src ./src", "COPY src ./src\nCOPY service-account.json ./"), /copy graph/],
+  ["wildcard build-context copy", (value) => value.replace("COPY src ./src", "COPY *.json ./"), /copy graph/],
+  ["missing source copy", (value) => value.replace("COPY src ./src", ""), /copy graph/],
   ["missing build hashes", (value) => value.replace("--require-hashes", "--no-verify-hashes"), /build-backend closure/],
   ["source build artifact", (value) => value.replace("--only-binary=:all:", "--only-binary=:none:"), /build-backend closure/],
   ["isolated project build", (value) => value.replace("UV_NO_INDEX=1", "UV_INDEX_URL=https://example.invalid/simple"), /build-backend closure/],
@@ -523,6 +528,7 @@ for (const [name, overrides, pattern] of [
 }
 
 test("package census accepts a provider-SDK-free environment", () => {
+  assert.equal(REQUIRED_DISTRIBUTIONS.length, 24);
   assert.deepEqual(evaluatePackageCensus([...REQUIRED_DISTRIBUTIONS]), {
     ok: true,
     errors: [],
@@ -557,8 +563,47 @@ test("package census normalizes names and fails closed on nameless or invalid me
     );
   }
   assertFails(evaluatePackageCensus([]), /empty/);
-  assertFails(evaluatePackageCensus(REQUIRED_DISTRIBUTIONS.filter((name) => name !== "httpx")), /httpx/);
 });
+
+for (const missing of REQUIRED_DISTRIBUTIONS) {
+  test(`package census exact allowlist rejects missing ${missing}`, () => {
+    assertFails(
+      evaluatePackageCensus(REQUIRED_DISTRIBUTIONS.filter((name) => name !== missing)),
+      new RegExp(`Required distribution is missing: ${missing.replaceAll("-", "\\-")}`),
+    );
+  });
+}
+
+for (const unexpected of ["anthropic", "boto3", "azure-ai-ml", "arbitrary-extra"]) {
+  test(`package census exact allowlist rejects unexpected ${unexpected}`, () => {
+    assertFails(
+      evaluatePackageCensus([...REQUIRED_DISTRIBUTIONS, unexpected]),
+      new RegExp(`Unexpected distribution.*${unexpected}`),
+    );
+  });
+}
+
+test("package census accepts reviewed distribution spelling aliases", () => {
+  const aliased = REQUIRED_DISTRIBUTIONS.map((name) => ({
+    pyyaml: "PyYAML",
+    "pydantic-core": "pydantic_core",
+    "typing-extensions": "typing_extensions",
+  })[name] ?? name);
+  assert.deepEqual(evaluatePackageCensus(aliased), { ok: true, errors: [] });
+});
+
+for (const [duplicate, canonical] of [
+  ["PYYAML", "pyyaml"],
+  ["pydantic.core", "pydantic-core"],
+  ["TYPING___EXTENSIONS", "typing-extensions"],
+]) {
+  test(`package census rejects stale alias duplicate ${duplicate}`, () => {
+    assertFails(
+      evaluatePackageCensus([...REQUIRED_DISTRIBUTIONS, duplicate]),
+      new RegExp(`Duplicate canonical distribution identity.*${canonical}`),
+    );
+  });
+}
 
 test("filesystem census accepts an empty forbidden-path inventory", () => {
   assert.deepEqual(
@@ -567,7 +612,7 @@ test("filesystem census accepts an empty forbidden-path inventory", () => {
   );
 });
 
-for (const key of ["env_paths", "tests_paths", "git_paths", "installer_paths"]) {
+for (const key of ["env_paths", "tests_paths", "git_paths", "credential_paths", "installer_paths"]) {
   test(`filesystem census mutation binds present ${key}`, () => {
     const value = validFilesystemObservation({ [key]: ["/app/bad"] });
     assertFails(evaluateFilesystemCensus(value), /forbidden/);
@@ -1100,15 +1145,18 @@ test("cleanup failure retains the pending claim until bounded outer recovery suc
   assert.equal(control.pendingClaim, undefined);
 });
 
-test("verified absence releases a pending claim without an outer recovery", async () => {
+test("initial no-proof reconciliation retains a claim until outer verified absence", async () => {
   const claim = {
     name: "biostack-p01-absent",
     owner: "c".repeat(48),
     cidFile: "/tmp/absent.cid",
   };
   const control = createExecutionControl({ timeoutMs: 10_000, cleanupReserveMs: 3_000 });
-  await assert.rejects(
-    executeOwnedContainerLifecycle({
+  let outerAttempts = 0;
+  const code = await runDirectCli([], {
+    control,
+    writeError: () => {},
+    mainFunction: async () => executeOwnedContainerLifecycle({
       control,
       claim,
       create: async () => { throw new Error("create failed"); },
@@ -1117,8 +1165,56 @@ test("verified absence releases a pending claim without an outer recovery", asyn
       operate: async () => { throw new Error("unexpected operation"); },
       cleanup: async () => { throw new Error("unexpected cleanup"); },
     }),
-    /create failed/,
-  );
+    recoverFunction: (activeControl) => recoverPendingClaim(activeControl, {
+      resolveOwnership: async () => {
+        outerAttempts += 1;
+        return undefined;
+      },
+      cleanup: async () => { throw new Error("unexpected outer cleanup"); },
+    }),
+  });
+  assert.equal(code, 1);
+  assert.equal(outerAttempts, 1);
+  assert.equal(control.pendingClaim, undefined);
+});
+
+test("container appearing only during outer recovery is label-proven and cleaned", async () => {
+  const id = "f".repeat(64);
+  const owner = "e".repeat(48);
+  const claim = {
+    name: "biostack-p01-outer-late-create",
+    owner,
+    cidFile: "/tmp/outer-late-create.cid",
+    sensitive: [owner],
+  };
+  const containers = new Map();
+  const control = createExecutionControl({ timeoutMs: 10_000, cleanupReserveMs: 3_000 });
+  const code = await runDirectCli([], {
+    control,
+    writeError: () => {},
+    mainFunction: async () => executeOwnedContainerLifecycle({
+      control,
+      claim,
+      create: async () => { throw new Error("create timed out before receipt"); },
+      resolveOwnership: async () => undefined,
+      start: async () => { throw new Error("unexpected start"); },
+      operate: async () => { throw new Error("unexpected operation"); },
+      cleanup: async () => { throw new Error("unexpected lifecycle cleanup"); },
+    }),
+    recoverFunction: async (activeControl) => {
+      containers.set(id, owner);
+      return recoverPendingClaim(activeControl, {
+        resolveOwnership: async ({ claim: pending }) =>
+          containers.get(id) === pending.owner ? id : undefined,
+        cleanup: async ({ id: candidate, claim: pending }) => {
+          assert.equal(containers.get(candidate), pending.owner);
+          containers.delete(candidate);
+        },
+      });
+    },
+  });
+  assert.equal(code, 1);
+  assert.equal(containers.size, 0);
   assert.equal(control.pendingClaim, undefined);
 });
 
@@ -1386,6 +1482,17 @@ test("parcel documentation records exact P02 and P03 log-level custody", () => {
   assert.match(parcels, /static assertion for that exact name\/value/);
   assert.match(parcels, /P03 must verify the effective deployed\s+revision reports `log_level: warning`/);
   assert.match(parcels, /commit, local-image, pushed-digest, and effective-revision custody/);
+  assert.match(parcels, /node:22@sha256:c601a46abb4d2ab80a9dc3da208d50d1122642d53f17a101926ace71e5a9bf1c/);
+  for (const hardening of [
+    "--pull=never",
+    "--network none",
+    "--read-only",
+    "--cap-drop ALL",
+    "--security-opt no-new-privileges",
+  ]) {
+    assert.match(parcels, new RegExp(hardening.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+  assert.match(parcels, /hard-late residual/);
 });
 
 test("CI is path-scoped, read-only, bounded, and contains every deterministic gate", () => {
@@ -1414,8 +1521,8 @@ test("CI is path-scoped, read-only, bounded, and contains every deterministic ga
   const actionIdentities = [...workflow.matchAll(/^\s*uses:\s*\S+@([a-f0-9]+)(?:\s|$)/gmu)];
   assert.equal(actionIdentities.length, 3);
   assert.equal(actionIdentities.every((match) => match[1].length === 40), true);
-  assert.match(workflow, /python-version: "3\.12"/);
-  assert.match(workflow, /node-version: "22"/);
+  assert.match(workflow, /python-version: "3\.12\.12"/);
+  assert.match(workflow, /node-version: "22\.23\.1"/);
   assert.match(workflow, /uv==0\.9\.7/);
   assert.match(workflow, /pip-audit==2\.9\.0/);
   assert.match(workflow, /--require-hashes/);
@@ -1453,9 +1560,25 @@ test("CI is path-scoped, read-only, bounded, and contains every deterministic ga
   assert.match(workflow, /gitleaks" dir/);
   assert.match(workflow, /docker build/);
   assert.match(workflow, /--tag biostack-research-sidecar:p01-ci/);
+  assert.match(workflow, /p01-untracked-credential\.json/);
+  assert.match(workflow, /test ! -e \/app\/p01-untracked-credential\.json/);
+  assert.match(workflow, /Prove catchable TERM cleans the verifier-owned container/);
+  assert.match(workflow, /kill -TERM "\$\{verifier_pid\}"/);
+  assert.match(workflow, /timeout 20s tail --pid="\$\{verifier_pid\}" -f \/dev\/null/);
+  assert.match(workflow, /io\.biostack\.p01\.owner/);
+  assert.match(workflow, /--container-name "\$\{fixture_name\}"/);
+  assert.match(workflow, /current_owner[^\n]+owner_marker/);
+  assert.doesNotMatch(workflow, /docker (?:container )?prune/);
+  assert.doesNotMatch(workflow, /docker container rm --force "\$\{fixture_name\}"/);
+  assert.match(workflow, /term_status[^\n]+-ne 1/);
   assert.match(workflow, /node scripts\/verify-research-sidecar-container\.mjs/);
   assert.match(workflow, /--image biostack-research-sidecar:p01-ci/);
   assert.match(workflow, /timeout --signal=TERM --kill-after=20s 3m/);
+  assert.equal(
+    workflow.indexOf("Prove catchable TERM cleans the verifier-owned container") <
+      workflow.indexOf("Verify the local dark container contract"),
+    true,
+  );
   assert.equal(DIRECT_CLI_TIMEOUT_MS + CLEANUP_RESERVE_MS < 180_000, true);
   assert.equal(SIGNAL_SHUTDOWN_TIMEOUT_MS < 20_000, true);
 });

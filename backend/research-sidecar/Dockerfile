@@ -20,7 +20,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
       *) echo "INCLUDE_TOOLUNIVERSE must be true or false" >&2; exit 2 ;; \
     esac
 
-COPY . .
+COPY README.md ./
+COPY src ./src
 
 RUN --mount=type=cache,target=/root/.cache/uv <<'P01_BUILD'
 set -eu
