@@ -1,27 +1,46 @@
 # Goal Charter — BioStack Research Sidecar Deployment
 
-Status: **RATIFIED AT GATE 1 (2026-09-03) — D1-D18 AND THE P01-P04 PLAN STAND, AS AMENDED BY THE SCOPED RE-RATIFICATION OF 2026-09-03 (D5, D12 amended; D19, D20, D21 added; P04 split into P04a/P04b — see `plan-review-findings.md`). CONTINGENT GATE 2 GRANTED FOR P01, P02, P03, P04a LOCAL WORK ONLY. P04b, GATE 3A, AND GATE 3B REMAIN UNGRANTED.**
+Status: **RATIFIED AT GATE 1 (RECONFIRMED 2026-09-08) — D1-D18 AND THE P01-P04 PLAN STAND, AS AMENDED BY THE SCOPED RE-RATIFICATION OF 2026-09-03 (D5, D12 amended; D19, D20, D21 added; P04 split into P04a/P04b — see `plan-review-findings.md`). CONTINGENT GATE 2 IS GRANTED FOR P01, P02, P03, AND P04a LOCAL WORK ONLY. P04b, GATE 3A, AND GATE 3B REMAIN UNGRANTED.**
 
 Goal slug: `biostack-sidecar-deployment`
 
-Pinned base: `4d8754c670a7d4553ade857be80aa170ede85653`
+Pinned execution base: `c05625caf4d633e428bd89f0334029e3c58b9f67`
+
+Historical drafting base: `4d8754c670a7d4553ade857be80aa170ede85653`
 
 ## Coordinator ownership
 
 | Field | Value |
 |---|---|
-| Owner | Claude Opus 5 coordinator session, claimed 2026-09-03 |
+| Owner | Codex coordinator session, accepted by direct Gate 1 instruction on 2026-09-08 at a zero-parcel boundary |
 | Goal slug | `biostack-sidecar-deployment` |
 | Goal branch | `codex/goal-biostack-sidecar-deployment` |
 | Goal worktree | `C:\Users\clint\.codex\worktrees\biostack-sidecar-deployment-goal\BioStack` |
-| Prior owner | Codex coordinator (drafted charter through `bf7ef39`); no live claim recorded, no conflicting in-flight parcel |
+| Prior owner | Claude Opus 5 coordinator session; zero parcels were dispatched and no worktree was in flight at transfer |
 | Transfer rule | One goal, one coordinator. Ownership transfers only at a parcel boundary, by editing this block. |
 
-## Gate 1 — ratified 2026-09-03
+## Gate 1 — ratified 2026-09-03; reconfirmed 2026-09-08
 
 The developer ratified verbatim the exact form in `gate-1-request.md`:
 
 > Gate 1: I ratify D1-D18 and the P01-P04 parcel plan in `charter.md` as written, and grant contingent Gate 2 authorization for isolated shaping, implementation, deterministic verification, adversarial review, and security review of P01-P04 subject to their final exact Allowed Files, Step 0, dependency order, and stop conditions. Gate 3A and Gate 3B remain ungranted. No push, PR, merge, Azure mutation, secret creation/rotation, provider enablement, external call, protected-data use, public ingress, or sidecar/API production configuration change is authorized by this ratification.
+
+The developer repeated that exact ratification on 2026-09-08 after refreshing `main`. This is a reconfirmation of D1-D18 and the P01-P04 umbrella, not a revocation of the already-ratified 2026-09-03 scoped amendments D19-D21 or the P04a/P04b split. The explicit no-mutation sentence keeps P04b outside Gate 2.
+
+### Base reconciliation — 2026-09-08
+
+The goal branch was locally rebased from the historical drafting base onto local remote-tracking `origin/main` at `c05625caf4d633e428bd89f0334029e3c58b9f67`. The only change since the drafting base in a reviewed sidecar-deployment surface was an added source-rights containment check in the pre-existing `.github/workflows/deploy.yml`; it does not invalidate the plan-review findings or any locked decision. No sidecar source, sidecar Dockerfile, sidecar client, Container Apps verifier, or proposed parcel file changed across the base interval. No remote fetch, push, PR, merge, or Azure/provider call was performed for this reconciliation.
+
+Rewritten local goal-history references:
+
+| Historical commit | Rebased commit | Meaning |
+|---|---|---|
+| `c9476ed` | `15d4656` | Draft charter |
+| `bf7ef39` | `b2be37a` | Correct live-verification boundary |
+| `cbdc555` | `faa631c` | Record initial Gate 1 ratification and loop directive |
+| `a442a43` | `bbc82bc` | Correct parcel branch topology and vendor constraints |
+| `fc846a5` | `49a40fa` | Plan-level adversarial review and triage |
+| `038b617` | `e0d753c` | Ratify D5/D12/D19-D21 amendments and P04 split |
 
 **Consequence for the exit criterion.** The exit criterion in this charter requires Gate 3A and Gate 3B, which are withheld and are human-only under D18. The goal is therefore not completable under this authorization. The coordinator drives to the reachable terminal state — P01-P04 independently accepted, verified, and adversarially/security reviewed, held unmerged on their parcel branches, with a Gate 3A request package prepared — and then stops. Gate 3A/3B remain open exit conditions carried to the final report.
 

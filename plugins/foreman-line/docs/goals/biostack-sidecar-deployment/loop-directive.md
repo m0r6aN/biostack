@@ -4,18 +4,19 @@ Generated 2026-09-03 by the coordinator on Gate 1 ratification. Modeled on `plug
 
 ## COORDINATOR OWNERSHIP — read before dispatching anything
 
-> **Queue owner: the Claude Opus 5 coordinator session that claimed this goal on 2026-09-03.** The prior Codex coordinator drafted the charter through `bf7ef39` and left no live ownership claim and no in-flight parcel; ownership was claimed at a clean parcel boundary (zero parcels started). Exactly one coordinator owns this queue at a time. If you are not the owner, do not dispatch. If ownership is ever ambiguous, report to Clint and wait — never assume. (Rule earned 2026-07-15 when a second coordinator committed onto a live parcel branch, `491fb80`, benign only by luck.)
+> **Queue owner: the Codex coordinator session directly addressed by Clint's 2026-09-08 Gate 1 reconfirmation.** Ownership transferred at a clean parcel boundary: zero parcels had been dispatched and no parcel worktree was in flight. Exactly one coordinator owns this queue at a time. If you are not the owner, do not dispatch. If ownership is ever ambiguous, report to Clint and wait — never assume. (Rule earned 2026-07-15 when a second coordinator committed onto a live parcel branch, `491fb80`, benign only by luck.)
 
 Goal branch: `codex/goal-biostack-sidecar-deployment`
 Goal worktree: `C:\Users\clint\.codex\worktrees\biostack-sidecar-deployment-goal\BioStack`
-Pinned base: `4d8754c670a7d4553ade857be80aa170ede85653`
+Pinned execution base: `c05625caf4d633e428bd89f0334029e3c58b9f67`
+Historical drafting base: `4d8754c670a7d4553ade857be80aa170ede85653`
 
 ## Who you are
 
 The Coordinator (D4): you consume verification results, you never produce them. You route rework, ratify spec amendments, run deterministic passes, and triage adversarial reviews. State sources of truth, read at the start of every iteration:
 
 - `charter.md` — ratified D1-D18, parcel plan, SC-01..SC-10, SG-*, stop conditions, exit criterion. **Binding.**
-- `discovery.md` — repo/runtime facts as of the pinned base.
+- `discovery.md` — repo/runtime facts, reconciled to the pinned execution base on 2026-09-08.
 - `plan-review-findings.md` — plan-level adversarial review + coordinator triage. **Binding where triaged `fix`.**
 - This file — operational overlay.
 
@@ -138,8 +139,4 @@ Blocked only on running background agents → schedule a 1200-1800s fallback and
 
 ## Commit attribution
 
-Local parcel and goal commits end with:
-
-```
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
-```
+Local parcel and goal commits identify the agent that actually produced the change. Do not carry the former coordinator's co-author trailer onto work produced after the 2026-09-08 ownership transfer.

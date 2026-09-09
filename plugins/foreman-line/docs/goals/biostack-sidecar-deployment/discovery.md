@@ -2,14 +2,16 @@
 
 Status: **COMPLETE FOR GATE 1 DRAFTING — LIVE OIDC INVENTORY REQUIRES A RATIFIED PREFLIGHT**
 
-Date: 2026-09-03
+Date: 2026-09-03; base reconciled 2026-09-08
 
 ## Repository and release identity
 
 - Repository: `m0r6aN/biostack`.
 - Default branch: `main`.
-- Pinned starting commit: `4d8754c670a7d4553ade857be80aa170ede85653`.
-- Pinned starting tree: `17b3ff60c74098f67edec222f1854f6486df7fe5`.
+- Pinned execution commit: `c05625caf4d633e428bd89f0334029e3c58b9f67`.
+- Pinned execution tree: `7e59513a7405321270a3b90577e45f0e484dc151`.
+- Historical drafting commit: `4d8754c670a7d4553ade857be80aa170ede85653`.
+- The 2026-09-08 local base reconciliation found no change to sidecar source, its Dockerfile, the sidecar client, the Container Apps verifier, or any proposed P01-P04 file. The only reviewed deployment-surface change was an additional source-rights containment CI step in the pre-existing `.github/workflows/deploy.yml`; existing findings remain valid.
 - Goal branch: `codex/goal-biostack-sidecar-deployment`.
 - Goal worktree: `C:\Users\clint\.codex\worktrees\biostack-sidecar-deployment-goal\BioStack`.
 - The primary checkout contains user-owned untracked `.audit/` and `.codex-temp/` content. It is read-only for this goal and remains untouched.
