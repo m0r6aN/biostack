@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim@sha256:e5b65587bce7de595f299855d7385fe7fca39b8a74baa261ba1b7147afa78e58
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -7,25 +7,27 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# Install dependencies separately for Docker layer caching.
-# TOOLUNIVERSE_EXTRA=tooluniverse installs the pinned base package (not [all]).
-ARG TOOLUNIVERSE_EXTRA=tooluniverse
+# Install dependencies separately for Docker layer caching. The production
+# default deliberately omits provider SDKs; the optional ToolUniverse source
+# contract remains available for a separately governed future image.
+ARG INCLUDE_TOOLUNIVERSE=false
 COPY pyproject.toml uv.lock ./
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync \
-      --locked \
-      --no-dev \
-      --extra ${TOOLUNIVERSE_EXTRA} \
-      --no-install-project
+    case "${INCLUDE_TOOLUNIVERSE}" in \
+      false) uv sync --locked --no-dev --no-install-project ;; \
+      true) uv sync --locked --no-dev --extra tooluniverse --no-install-project ;; \
+      *) echo "INCLUDE_TOOLUNIVERSE must be true or false" >&2; exit 2 ;; \
+    esac
 
 COPY . .
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync \
-      --locked \
-      --no-dev \
-      --extra ${TOOLUNIVERSE_EXTRA}
+    case "${INCLUDE_TOOLUNIVERSE}" in \
+      false) uv sync --locked --no-dev ;; \
+      true) uv sync --locked --no-dev --extra tooluniverse ;; \
+      *) echo "INCLUDE_TOOLUNIVERSE must be true or false" >&2; exit 2 ;; \
+    esac
 
 ENV PATH="/app/.venv/bin:$PATH"
 

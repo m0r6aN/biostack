@@ -1,0 +1,148 @@
+name: Research sidecar CI
+
+on:
+  pull_request:
+    paths:
+      - "backend/research-sidecar/**"
+      - "scripts/verify-research-sidecar-container.mjs"
+      - "scripts/verify-research-sidecar-container.test.mjs"
+      - ".github/workflows/research-sidecar-ci.yml"
+  push:
+    paths:
+      - "backend/research-sidecar/**"
+      - "scripts/verify-research-sidecar-container.mjs"
+      - "scripts/verify-research-sidecar-container.test.mjs"
+      - ".github/workflows/research-sidecar-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Frozen tests and production container contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install pinned verification tooling
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check uv==0.9.7 pip-audit==2.9.0
+          uv --version
+          pip-audit --version
+
+      - name: Synchronize the frozen development environment
+        working-directory: backend/research-sidecar
+        run: timeout 10m uv sync --frozen --extra dev
+
+      - name: Run the complete sidecar suite
+        working-directory: backend/research-sidecar
+        run: |
+          set -euo pipefail
+          timeout 10m .venv/bin/python -m pytest \
+            tests \
+            -q \
+            --junitxml "${RUNNER_TEMP}/research-sidecar-pytest.xml"
+
+      - name: Enforce the sidecar suite-count and reproduction tripwire
+        env:
+          SIDECAR_JUNIT_XML: ${{ runner.temp }}/research-sidecar-pytest.xml
+        run: |
+          python - <<'PY'
+          import os
+          import sys
+          import xml.etree.ElementTree as ET
+
+          path = os.environ["SIDECAR_JUNIT_XML"]
+          root = ET.parse(path).getroot()
+          suites = [root] if root.tag == "testsuite" else list(root.findall("testsuite"))
+          totals = {
+              key: sum(int(suite.attrib.get(key, "0")) for suite in suites)
+              for key in ("tests", "failures", "errors", "skipped")
+          }
+          expected = {"tests": 54, "failures": 0, "errors": 0, "skipped": 1}
+          if totals != expected:
+              print(f"sidecar suite-count tripwire failed: observed={totals}, expected={expected}")
+              sys.exit(1)
+
+          identities = {
+              case.attrib.get("classname", "")
+              for suite in suites
+              for case in suite.findall("testcase")
+          }
+          required = {
+              "test_runner_terminal_state_reproduction",
+              "test_request_constraint_reproduction",
+          }
+          missing = sorted(
+              name for name in required if not any(name in identity for identity in identities)
+          )
+          if missing:
+              print(f"sidecar reproduction identity tripwire failed: missing={missing}")
+              sys.exit(1)
+          print("sidecar suite-count tripwire passed: 53 passed, 1 expected skip")
+          PY
+
+      - name: Audit the frozen no-extra third-party dependency set
+        working-directory: backend/research-sidecar
+        run: |
+          set -euo pipefail
+          timeout 2m uv export \
+            --frozen \
+            --no-dev \
+            --no-hashes \
+            --no-emit-project \
+            --output-file "${RUNNER_TEMP}/research-sidecar-requirements.txt"
+          timeout 5m pip-audit \
+            --strict \
+            --requirement "${RUNNER_TEMP}/research-sidecar-requirements.txt"
+
+      - name: Run container-verifier mutation tests
+        run: timeout 2m node --test scripts/verify-research-sidecar-container.test.mjs
+
+      - name: Scan the checked-out tree for secrets
+        env:
+          GITLEAKS_VERSION: "8.24.3"
+        run: |
+          set -euo pipefail
+          mkdir -p "${RUNNER_TEMP}/gitleaks-bin"
+          timeout 2m curl \
+            --fail \
+            --silent \
+            --show-error \
+            --location \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C "${RUNNER_TEMP}/gitleaks-bin" gitleaks
+          timeout 5m "${RUNNER_TEMP}/gitleaks-bin/gitleaks" dir \
+            --config .gitleaks.toml \
+            --redact \
+            --no-banner \
+            .
+
+      - name: Build the provider-SDK-free production image
+        run: |
+          set -euo pipefail
+          timeout 10m docker build \
+            --file backend/research-sidecar/Dockerfile \
+            --tag biostack-research-sidecar:p01-ci \
+            backend/research-sidecar
+
+      - name: Verify the local dark container contract
+        run: |
+          set -euo pipefail
+          timeout 3m node scripts/verify-research-sidecar-container.mjs \
+            --image biostack-research-sidecar:p01-ci \
+            --health-timeout-seconds 45

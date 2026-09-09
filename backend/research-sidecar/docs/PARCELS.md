@@ -23,7 +23,7 @@ BioStack ToolUniverse Scientific Research Sidecar
 | p5-typed-scientific-entities | W3 | pending | Published regimens, studies, AE records |
 | p7-review-staging-wire | W3 | **done** | Sidecar results stage into existing review store/lifecycle |
 | p8-analyzer-evidence-context | W3 | **done** | Class B comparison on `/api/analyze/protocol` |
-| p11-contract-tests-ci | W2 | pending | CI job for sidecar pytest |
+| p11-contract-tests-ci | W2 | **done** | Frozen sidecar suite, dependency audit, no-extra image build, and local dark container contract in `.github/workflows/research-sidecar-ci.yml` via `scripts/verify-research-sidecar-container.mjs` |
 
 ## Dependency graph
 
