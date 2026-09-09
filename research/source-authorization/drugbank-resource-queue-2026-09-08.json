@@ -9,7 +9,7 @@
     "path": "shared/source-rights/drugbank-containment.v1.json",
     "sha256": "017fa7dcf5cf2df6d5c96c94bada2601dad38e668a91ef5eb7d40ae33a12994f"
   },
-  "disclaimer": "Work queue only. Records no approval, no re-sourcing and no evidence determination. No quote text is reproduced; only locator and character counts. Every row is blocked pending review: coCitationCandidates are candidates whose substance has NOT been assessed, and the existence of a co-citation is not evidence that it supports the claim.",
+  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. One quote-free replacement candidate is prepared and remains review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
   "counts": {
     "rows": 30,
     "distinctClaims": 30,
@@ -18,7 +18,8 @@
     "claimsWithCoCitationCandidates": 28,
     "claimsWithNoCoCitation": 2,
     "claimsActuallyReSourced": 0,
-    "coCitationCandidatesSubstanceAssessed": 0
+    "coCitationCandidatesSubstanceAssessed": 0,
+    "replacementCandidatesPrepared": 1
   },
   "rows": [
     {
@@ -167,8 +168,15 @@
           "registryClass": "UNREGISTERED"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "fda-ocp-review-bla125469-s51-2022",
+        "recordPath": "research/source-authorization/dulaglutide-resource-candidate-2026-09-08.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "exenatide.evidence.json",
@@ -807,5 +815,6 @@
       "disposition": "blocked-pending-re-source",
       "substanceAssessed": false
     }
-  ]
+  ],
+  "updatedAtUtc": "2026-09-08T22:07:07.268475Z"
 }
