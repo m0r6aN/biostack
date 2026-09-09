@@ -41,6 +41,19 @@ COPY --from=builder --chown=0:0 /app /app
 
 RUN addgroup --system biostack \
     && adduser --system --ingroup biostack biostack \
+    && rm -rf \
+      /usr/local/lib/python3.12/ensurepip \
+      /usr/local/lib/python3.12/site-packages/pip \
+      /usr/local/lib/python3.12/site-packages/pip-*.dist-info \
+      /app/.venv/lib/python3.12/site-packages/pip \
+      /app/.venv/lib/python3.12/site-packages/pip-*.dist-info \
+    && rm -f \
+      /usr/local/bin/pip \
+      /usr/local/bin/pip3 \
+      /usr/local/bin/pip3.12 \
+      /app/.venv/bin/pip \
+      /app/.venv/bin/pip3 \
+      /app/.venv/bin/pip3.12 \
     && chmod -R go-w /app
 
 USER biostack

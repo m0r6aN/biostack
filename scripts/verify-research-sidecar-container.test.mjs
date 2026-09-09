@@ -6,10 +6,14 @@ import test from "node:test";
 import {
   ALLOWED_WORKFLOWS,
   FORBIDDEN_DISTRIBUTIONS,
+  OWNERSHIP_LABEL_KEY,
   REQUIRED_DARK_ENVIRONMENT,
   REQUIRED_DISTRIBUTIONS,
   buildContainerCleanupArguments,
   buildContainerCreateArguments,
+  buildCensusCreateArguments,
+  buildOwnershipInspectArguments,
+  buildOwnershipLookupArguments,
   evaluateAuthObservations,
   evaluateDarkEnvironment,
   evaluateDockerfileContract,
@@ -22,12 +26,16 @@ import {
   evaluateLeakage,
   evaluatePackageCensus,
   evaluateRejectionObservations,
+  executeAfterImageValidation,
   executeOwnedContainerLifecycle,
+  inspectLocalImageBeforeExecution,
   isDirectExecution,
   parseCliArgs,
   parseImageInspect,
   parseOwnedContainerId,
+  reconcileOwnedContainer,
   readBoundedResponseText,
+  requireImmutableImageId,
   sanitizeDiagnostic,
 } from "./verify-research-sidecar-container.mjs";
 
@@ -70,6 +78,30 @@ function validAuthObservation(overrides = {}) {
       tooluniverse_enabled: false,
       allowed_workflows: [...ALLOWED_WORKFLOWS],
     },
+    ...overrides,
+  };
+}
+
+function validFilesystemObservation(overrides = {}) {
+  const cleanProbe = (name) => ({
+    name,
+    pip_module: false,
+    ensurepip_module: false,
+    pip_path: null,
+    pip3_path: null,
+    uv_path: null,
+    uvx_path: null,
+  });
+  return {
+    env_paths: [],
+    tests_paths: [],
+    git_paths: [],
+    installer_paths: [],
+    python_probes: [cleanProbe("system"), cleanProbe("venv")],
+    app_owner_uid: 0,
+    venv_owner_uid: 0,
+    app_writable: false,
+    venv_writable: false,
     ...overrides,
   };
 }
@@ -213,6 +245,9 @@ for (const [name, mutate, pattern] of [
   ["floating runtime", (value) => value.replace(/python:3\.12\.12-slim-bookworm@sha256:[a-f0-9]{64} AS runtime/, "python:3.12-slim AS runtime"), /Runtime image/],
   ["runtime ownership", (value) => value.replace("COPY --from=builder --chown=0:0 /app /app", "COPY --from=builder /app /app"), /root ownership/],
   ["runtime write protection", (value) => value.replace("chmod -R go-w /app", "true"), /non-writable/],
+  ["system ensurepip removal", (value) => value.replace("/usr/local/lib/python3.12/ensurepip", "/tmp/removed"), /installer removal/],
+  ["system pip removal", (value) => value.replace("/usr/local/bin/pip", "/tmp/pip"), /installer removal/],
+  ["venv pip removal", (value) => value.replace("/app/.venv/bin/pip", "/tmp/venv-pip"), /installer removal/],
   ["provider-extra default", (value) => value.replace("ARG INCLUDE_TOOLUNIVERSE=false", "ARG INCLUDE_TOOLUNIVERSE=true"), /no-extra/],
   ["dependency-only no-extra", (value) => value.replace("false) uv sync --locked --no-dev --no-install-project ;;", "false) uv sync --locked --no-dev --extra tooluniverse --no-install-project ;;"), /Dependency-only no-extra/],
   ["project no-extra", (value) => value.replace("false) uv sync --locked --no-dev ;;", "false) uv sync --locked --no-dev --extra tooluniverse ;;"), /Project no-extra/],
@@ -302,6 +337,57 @@ for (const [name, value, pattern] of [
   });
 }
 
+test("immutable image identity is validated before any census execution", async () => {
+  const valid = `sha256:${"a".repeat(64)}`;
+  assert.equal(requireImmutableImageId(valid), valid);
+  let executions = 0;
+  await assert.rejects(
+    executeAfterImageValidation("unvalidated-local-tag:latest", async () => {
+      executions += 1;
+    }),
+    /immutable sha256/,
+  );
+  assert.equal(executions, 0);
+  assert.equal(
+    await executeAfterImageValidation(valid, async (image) => {
+      executions += 1;
+      return image;
+    }),
+    valid,
+  );
+  assert.equal(executions, 1);
+});
+
+test("missing or malformed local images cause zero pull and zero execution", async () => {
+  let executions = 0;
+  let inspectArguments;
+  await assert.rejects(
+    inspectLocalImageBeforeExecution({
+      image: "missing-local-image:p01",
+      inspect: async (args) => {
+        inspectArguments = args;
+        throw new Error("No such image");
+      },
+      execute: async () => { executions += 1; },
+    }),
+    /No such image/,
+  );
+  assert.deepEqual(inspectArguments, ["image", "inspect", "missing-local-image:p01"]);
+  assert.equal(executions, 0);
+
+  await assert.rejects(
+    inspectLocalImageBeforeExecution({
+      image: "malformed-local-image:p01",
+      inspect: async () => ({
+        stdout: JSON.stringify([{ Id: "not-a-digest", Config: {} }]),
+      }),
+      execute: async () => { executions += 1; },
+    }),
+    /immutable sha256/,
+  );
+  assert.equal(executions, 0);
+});
+
 test("image configuration accepts exact non-root runtime contract", () => {
   assert.deepEqual(evaluateImageConfiguration(validImageObservation()), {
     ok: true,
@@ -341,36 +427,34 @@ for (const distribution of FORBIDDEN_DISTRIBUTIONS) {
   });
 }
 
-test("package census normalizes underscore names and fails closed on malformed rows", () => {
+test("package census normalizes names and fails closed on nameless or invalid metadata", () => {
   assertFails(evaluatePackageCensus([...REQUIRED_DISTRIBUTIONS, "huggingface_hub"]), /huggingface-hub/);
   assert.deepEqual(
     evaluatePackageCensus(REQUIRED_DISTRIBUTIONS.map((name) => name.replaceAll("-", "_"))),
     { ok: true, errors: [] },
   );
-  assertFails(evaluatePackageCensus("fastapi"), /malformed/);
-  assertFails(evaluatePackageCensus([""]), /malformed/);
+  assertFails(evaluatePackageCensus("fastapi"), /nameless|invalid/);
+  for (const invalid of [null, "", " fastapi", "fast api", "fastapi/"]) {
+    assertFails(evaluatePackageCensus([...REQUIRED_DISTRIBUTIONS, invalid]), /nameless|invalid/);
+  }
   assertFails(evaluatePackageCensus([]), /empty/);
   assertFails(evaluatePackageCensus(REQUIRED_DISTRIBUTIONS.filter((name) => name !== "httpx")), /httpx/);
 });
 
 test("filesystem census accepts an empty forbidden-path inventory", () => {
-  const valid = {
-    env_paths: [], tests_paths: [], git_paths: [], uv_paths: [], uvx_paths: [],
-    app_owner_uid: 0, venv_owner_uid: 0, app_writable: false, venv_writable: false,
-  };
   assert.deepEqual(
-    evaluateFilesystemCensus(valid),
+    evaluateFilesystemCensus(validFilesystemObservation()),
     { ok: true, errors: [] },
   );
 });
 
-for (const key of ["env_paths", "tests_paths", "git_paths", "uv_paths", "uvx_paths"]) {
+for (const key of ["env_paths", "tests_paths", "git_paths", "installer_paths"]) {
   test(`filesystem census mutation binds present ${key}`, () => {
-    const value = { env_paths: [], tests_paths: [], git_paths: [], uv_paths: [], uvx_paths: [], app_owner_uid: 0, venv_owner_uid: 0, app_writable: false, venv_writable: false, [key]: ["/app/bad"] };
+    const value = validFilesystemObservation({ [key]: ["/app/bad"] });
     assertFails(evaluateFilesystemCensus(value), /forbidden/);
   });
   test(`filesystem census mutation binds missing ${key}`, () => {
-    const value = { env_paths: [], tests_paths: [], git_paths: [], uv_paths: [], uvx_paths: [], app_owner_uid: 0, venv_owner_uid: 0, app_writable: false, venv_writable: false };
+    const value = validFilesystemObservation();
     delete value[key];
     assertFails(evaluateFilesystemCensus(value), new RegExp(key));
   });
@@ -378,10 +462,35 @@ for (const key of ["env_paths", "tests_paths", "git_paths", "uv_paths", "uvx_pat
 
 for (const [key, value] of [["app_owner_uid", 999], ["venv_owner_uid", 999], ["app_writable", true], ["venv_writable", true]]) {
   test(`filesystem census binds unsafe ${key}`, () => {
-    const observation = { env_paths: [], tests_paths: [], git_paths: [], uv_paths: [], uvx_paths: [], app_owner_uid: 0, venv_owner_uid: 0, app_writable: false, venv_writable: false, [key]: value };
+    const observation = validFilesystemObservation({ [key]: value });
     assertFails(evaluateFilesystemCensus(observation), new RegExp(key));
   });
 }
+
+for (const [name, field, value] of [
+  ["system", "pip_module", true],
+  ["system", "ensurepip_module", true],
+  ["system", "pip_path", "/usr/local/bin/pip"],
+  ["system", "pip3_path", "/usr/local/bin/pip3"],
+  ["system", "uv_path", "/usr/local/bin/uv"],
+  ["venv", "pip_module", true],
+  ["venv", "ensurepip_module", true],
+  ["venv", "pip_path", "/app/.venv/bin/pip"],
+  ["venv", "uvx_path", "/app/.venv/bin/uvx"],
+]) {
+  test(`filesystem census binds ${name} ${field}`, () => {
+    const observation = validFilesystemObservation();
+    observation.python_probes.find((probe) => probe.name === name)[field] = value;
+    assertFails(evaluateFilesystemCensus(observation), new RegExp(field));
+  });
+}
+
+test("filesystem census requires exactly one system and one venv probe", () => {
+  assertFails(evaluateFilesystemCensus(validFilesystemObservation({ python_probes: [] })), /two Python/);
+  const duplicate = validFilesystemObservation();
+  duplicate.python_probes[1].name = "system";
+  assertFails(evaluateFilesystemCensus(duplicate), /identity/);
+});
 
 test("filesystem census rejects malformed top-level input", () => {
   assertFails(evaluateFilesystemCensus([]), /malformed/);
@@ -545,13 +654,17 @@ test("Docker argument builders preserve hostile-looking values as single argumen
     hostPort: 18080,
     token,
     cidFile: "/private/p01.cid",
+    owner: "owner-marker",
   });
-  assert.deepEqual(args.slice(0, 8), [
+  assert.deepEqual(args.slice(0, 11), [
     "create",
+    "--pull=never",
     "--name",
     "p01-safe-name",
     "--cidfile",
     "/private/p01.cid",
+    "--label",
+    `${OWNERSHIP_LABEL_KEY}=owner-marker`,
     "--publish",
     "127.0.0.1:18080:8080",
     "--env",
@@ -568,8 +681,33 @@ test("ephemeral port binding and cleanup stay confined to one exact name", () =>
     hostPort: undefined,
     token: "p01-local-only-token",
     cidFile: "/private/p01.cid",
+    owner: "owner-marker",
   });
-  assert.equal(args[6], "127.0.0.1::8080");
+  assert.equal(args[9], "127.0.0.1::8080");
+});
+
+test("static census create is named, labeled, cidfile-owned, and never pulls", () => {
+  const args = buildCensusCreateArguments({
+    image: `sha256:${"a".repeat(64)}`,
+    name: "biostack-p01-census-exact",
+    cidFile: "/private/census.cid",
+    owner: "census-owner",
+    entrypoint: "/app/.venv/bin/python",
+    command: ["-c", "print('{}')"],
+  });
+  assert.deepEqual(args.slice(0, 10), [
+    "create",
+    "--pull=never",
+    "--name",
+    "biostack-p01-census-exact",
+    "--cidfile",
+    "/private/census.cid",
+    "--label",
+    `${OWNERSHIP_LABEL_KEY}=census-owner`,
+    "--entrypoint",
+    "/app/.venv/bin/python",
+  ]);
+  assert.equal(args.at(-3), `sha256:${"a".repeat(64)}`);
 });
 
 test("cleanup ownership is established only from one full Docker container ID", () => {
@@ -579,6 +717,126 @@ test("cleanup ownership is established only from one full Docker container ID", 
     assert.throws(() => parseOwnedContainerId(hostile), /full container ID/);
   }
   assert.deepEqual(buildContainerCleanupArguments(id), ["rm", "--force", id]);
+  assert.deepEqual(buildOwnershipLookupArguments("p01-exact", "owner-exact"), [
+    "container",
+    "ls",
+    "--all",
+    "--no-trunc",
+    "--filter",
+    "name=^/p01-exact$",
+    "--filter",
+    `label=${OWNERSHIP_LABEL_KEY}=owner-exact`,
+    "--format",
+    "{{.ID}}",
+  ]);
+  assert.deepEqual(buildOwnershipInspectArguments(id), [
+    "container",
+    "inspect",
+    "--format",
+    `{{index .Config.Labels "${OWNERSHIP_LABEL_KEY}"}}`,
+    id,
+  ]);
+});
+
+test("ownership reconciliation accepts one full ID with the expected label", async () => {
+  const id = "1".repeat(64);
+  assert.equal(
+    await reconcileOwnedContainer({
+      createOutput: id,
+      readCidFile: async () => id,
+      findExactNameAndLabel: async () => id,
+      hasExpectedLabel: async (candidate) => candidate === id,
+      delay: async () => {},
+      attempts: 2,
+    }),
+    id,
+  );
+});
+
+test("ownership reconciliation waits for delayed cidfile and label proof", async () => {
+  const id = "2".repeat(64);
+  let reads = 0;
+  let delays = 0;
+  const result = await reconcileOwnedContainer({
+    createOutput: "malformed",
+    readCidFile: async () => (++reads < 3 ? "" : id),
+    findExactNameAndLabel: async () => "",
+    hasExpectedLabel: async (candidate) => candidate === id,
+    delay: async () => { delays += 1; },
+    attempts: 4,
+    delayMs: 1,
+  });
+  assert.equal(result, id);
+  assert.equal(delays, 2);
+});
+
+test("ownership reconciliation withholds collision and no-proof cleanup", async () => {
+  const unrelated = "3".repeat(64);
+  const result = await reconcileOwnedContainer({
+    createOutput: unrelated,
+    readCidFile: async () => "",
+    findExactNameAndLabel: async () => "",
+    hasExpectedLabel: async () => false,
+    delay: async () => {},
+    attempts: 2,
+  });
+  assert.equal(result, undefined);
+});
+
+test("ownership reconciliation fails closed on disagreeing full IDs", async () => {
+  const stdoutId = "4".repeat(64);
+  const cidId = "5".repeat(64);
+  await assert.rejects(
+    reconcileOwnedContainer({
+      createOutput: stdoutId,
+      readCidFile: async () => cidId,
+      findExactNameAndLabel: async () => cidId,
+      hasExpectedLabel: async () => true,
+      delay: async () => {},
+      attempts: 1,
+    }),
+    /proofs disagreed/,
+  );
+});
+
+test("forced timeout reconciliation cleans the delayed labeled container", async () => {
+  const id = "6".repeat(64);
+  const labeledContainers = new Map();
+  let attempts = 0;
+  const events = [];
+  await assert.rejects(
+    executeOwnedContainerLifecycle({
+      sensitive: ["random-owner-label"],
+      create: async () => {
+        events.push("create-timeout");
+        throw new Error("forced subprocess timeout");
+      },
+      resolveOwnership: (createOutput) =>
+        reconcileOwnedContainer({
+          createOutput,
+          readCidFile: async () => {
+            attempts += 1;
+            if (attempts === 2) labeledContainers.set(id, "random-owner-label");
+            return attempts >= 2 ? id : "";
+          },
+          findExactNameAndLabel: async () => (labeledContainers.has(id) ? id : ""),
+          hasExpectedLabel: async (candidate) =>
+            labeledContainers.get(candidate) === "random-owner-label",
+          delay: async () => {},
+          attempts: 3,
+        }),
+      start: async () => events.push("unexpected-start"),
+      operate: async () => events.push("unexpected-operate"),
+      cleanup: async (candidate) => {
+        assert.equal(labeledContainers.get(candidate), "random-owner-label");
+        labeledContainers.delete(candidate);
+        events.push("cleanup");
+      },
+    }),
+    /forced subprocess timeout/,
+  );
+  assert.equal(labeledContainers.size, 0);
+  assert.deepEqual(events, ["create-timeout", "cleanup"]);
 });
 
 function lifecycleHarness({ createResult, createError, ownership = "", operationError, cleanupError }) {
@@ -592,7 +850,7 @@ function lifecycleHarness({ createResult, createError, ownership = "", operation
         if (createError) throw createError;
         return createResult;
       },
-      readOwnership: async () => {
+      resolveOwnership: async () => {
         events.push("ownership");
         return ownership;
       },
@@ -612,7 +870,7 @@ function lifecycleHarness({ createResult, createError, ownership = "", operation
 
 test("owned lifecycle starts, operates, and cleans only the proven container ID", async () => {
   const id = "a".repeat(64);
-  const harness = lifecycleHarness({ createResult: { stdout: `${id}\n` }, ownership: `${id}\n` });
+  const harness = lifecycleHarness({ createResult: { stdout: `${id}\n` }, ownership: id });
   assert.equal(await executeOwnedContainerLifecycle(harness.lifecycle), "green");
   assert.deepEqual(harness.events, ["create", "ownership", `start:${id}`, `operate:${id}`, `cleanup:${id}`]);
 });
@@ -649,13 +907,15 @@ test("owned lifecycle preserves primary and cleanup failures", async () => {
 });
 
 test("owned lifecycle withholds cleanup without unambiguous ownership", async () => {
-  const id = "e".repeat(64);
-  const other = "f".repeat(64);
   const noProof = lifecycleHarness({ createError: new Error("timeout"), ownership: "" });
   await assert.rejects(executeOwnedContainerLifecycle(noProof.lifecycle), /timeout/);
   assert.deepEqual(noProof.events, ["create", "ownership"]);
 
-  const mismatch = lifecycleHarness({ createResult: { stdout: id }, ownership: other });
+  const mismatch = lifecycleHarness({ createResult: { stdout: "e".repeat(64) } });
+  mismatch.lifecycle.resolveOwnership = async () => {
+    mismatch.events.push("ownership");
+    throw new Error("proofs disagreed");
+  };
   await assert.rejects(executeOwnedContainerLifecycle(mismatch.lifecycle), /proofs disagreed/);
   assert.deepEqual(mismatch.events, ["create", "ownership"]);
 });
@@ -690,6 +950,11 @@ test("implementation uses execFile argument arrays and contains no shell escape 
   assert.doesNotMatch(source, /\bshell\s*:/);
   assert.doesNotMatch(source, /\bexecSync\s*\(/);
   assert.doesNotMatch(source, /(?:cmd\.exe|powershell|sh),?\s*["'](?:\/c|-c)/i);
+  assert.doesNotMatch(source, /["']run["']\s*,\s*["']--rm["']/u);
+  assert.equal((source.match(/--pull=never/g) ?? []).length, 2);
+  assert.equal((source.match(/await runOwnedCensus\(/g) ?? []).length, 3);
+  assert.match(source, /d\.metadata\.get\('Name'\) for d in m\.distributions\(\)/);
+  assert.doesNotMatch(source, /m\.distributions\(\) if d\.metadata/u);
   assert.doesNotMatch(source, /subject_name:\s*["']P01Compound["']/);
   assert.match(source, /resolvePublishedPort\(ownedContainerId, sensitive\)/);
   assert.match(source, /inspectDarkEnvironment\(ownedContainerId, sensitive\)/);
@@ -697,6 +962,17 @@ test("implementation uses execFile argument arrays and contains no shell escape 
   for (const field of ["research_request_id", "subject_name", "correlation_id"]) {
     assert.equal((source.match(new RegExp(`${field}:`, "g")) ?? []).length, 3);
   }
+});
+
+test("parcel documentation records exact P02 and P03 log-level custody", () => {
+  const parcels = readFileSync(
+    new URL("../backend/research-sidecar/docs/PARCELS.md", import.meta.url),
+    "utf8",
+  );
+  assert.match(parcels, /P02 must set\s+`BIOSTACK_RESEARCH_LOG_LEVEL=warning`/);
+  assert.match(parcels, /static assertion for that exact name\/value/);
+  assert.match(parcels, /P03 must verify the effective deployed\s+revision reports `log_level: warning`/);
+  assert.match(parcels, /commit, local-image, pushed-digest, and effective-revision custody/);
 });
 
 test("CI is path-scoped, read-only, bounded, and contains every deterministic gate", () => {

@@ -26,9 +26,16 @@ BioStack ToolUniverse Scientific Research Sidecar
 | p11-contract-tests-ci | W2 | **done** | Frozen sidecar suite, hash-locked CI bootstrap, dependency audit, pinned two-stage no-extra image build, immutable local-image verification, and local dark container contract in `.github/workflows/research-sidecar-ci.yml` via `scripts/verify-research-sidecar-container.mjs`. The PEP 518 backend is exact-version pinned (`hatchling==1.32.0`), but `uv.lock` does not encode an artifact hash for isolated build-system resolution; the pinned builder image and exact backend version bound that accepted residual without claiming artifact-level lock coverage. |
 
 P01 hardening evidence (2026-09-08): 53 Python tests passed with one expected skip;
-175 verifier mutation tests passed; the strict dependency audit and secret scan passed;
+197 verifier mutation tests passed; the strict dependency audit and secret scan passed;
 and all nine dark-container checks passed against local immutable image ID
-`sha256:4ae08d86f948fad35e233034bb016247d3093b569ca127163eed3008706b2f72`.
+`sha256:fcd907ec3688997042d62c48d9bd0695305b7cb3622c837108101911cb13c2be`.
+
+P01 proves warning-level log hygiene only for its local dark container. P02 must set
+`BIOSTACK_RESEARCH_LOG_LEVEL=warning` in the deployment configuration and add a
+static assertion for that exact name/value. P03 must verify the effective deployed
+revision reports `log_level: warning` before accepting runtime leakage evidence, and
+must retain commit, local-image, pushed-digest, and effective-revision custody. These
+are explicit downstream obligations, not production-deployment evidence from P01.
 
 ## Dependency graph
 
