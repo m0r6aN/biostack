@@ -15,7 +15,7 @@ export default function PricingPage() {
     <div className="min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
 
-      <main className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-12 lg:py-14">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-12 lg:py-14">
         <section className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.32em] text-emerald-300/70">
             Plans

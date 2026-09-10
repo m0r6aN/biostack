@@ -59,7 +59,7 @@ export default function HowItWorksPage() {
     <div className="min-h-screen pb-24 md:pb-0" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
 
-      <main>
+      <main id="main" tabIndex={-1}>
         <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:py-16">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300/70">
             How it works
