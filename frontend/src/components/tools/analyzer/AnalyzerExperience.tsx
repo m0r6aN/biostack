@@ -36,6 +36,10 @@ import type { AnalyzerContextFields } from './useAnalyzerSession';
 
 const ANALYZER_PRICING_HREF = '/pricing?intent=analyzer';
 const PAID_ANALYZER_FEATURE = 'paid_intelligence';
+const ANALYSIS_STORAGE_ERROR =
+  'This analysis could not be saved on this browser. Storage may be full or blocked. Free up space or allow site data, then try again.';
+const DRAFT_STORAGE_ERROR =
+  'The protocol draft could not be stored on this browser, so nothing was added yet. Storage may be full or blocked. Free up space or allow site data, then try again.';
 
 type AnalyzerAccess = 'checking' | 'entitled' | 'operator-required' | 'unavailable';
 
@@ -69,6 +73,7 @@ export function AnalyzerExperience() {
   const [error, setError] = useState('');
   const [showSaveNotice, setShowSaveNotice] = useState(false);
   const [savedAnalysisId, setSavedAnalysisId] = useState('');
+  const [storageError, setStorageError] = useState('');
   const [showExtractedText, setShowExtractedText] = useState(false);
   const [editing, setEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -246,6 +251,7 @@ export function AnalyzerExperience() {
     setError('');
     setShowSaveNotice(false);
     setSavedAnalysisId('');
+    setStorageError('');
 
     const { goal, secondaryGoals } = buildAnalyzerGoalPayload(
       input.goalSelection.primaryCategory,
@@ -328,6 +334,7 @@ export function AnalyzerExperience() {
     setError('');
     setShowSaveNotice(false);
     setSavedAnalysisId('');
+    setStorageError('');
   }
 
   function loadExample(example: keyof typeof exampleProtocols) {
@@ -342,6 +349,7 @@ export function AnalyzerExperience() {
     }));
     setError('');
     setSavedAnalysisId('');
+    setStorageError('');
 
     trackAnalyzerEvent('analyzer_example_loaded', {
       exampleType: example,
@@ -366,6 +374,14 @@ export function AnalyzerExperience() {
     setResult(null);
   }
 
+  function reportStorageFailure(message: string) {
+    // Storage threw (quota, security, unavailable). Keep the report and input
+    // untouched, drop any earlier success notice, and surface a retryable error.
+    setShowSaveNotice(false);
+    setSavedAnalysisId('');
+    setStorageError(message);
+  }
+
   function saveAnalysisLocally() {
     if (!result) {
       return;
@@ -373,14 +389,21 @@ export function AnalyzerExperience() {
 
     const { goal } = buildAnalyzerGoalPayload(goals.primaryCategory, goals.refinementGoalIds);
 
-    const analysis = saveAnalyzerAnalysis({
-      inputType: mode,
-      sourceName: result.sourceName,
-      rawInput: currentRawInput(mode, inputText, linkUrl, selectedFile),
-      result,
-    });
+    let analysisId: string;
+    try {
+      analysisId = saveAnalyzerAnalysis({
+        inputType: mode,
+        sourceName: result.sourceName,
+        rawInput: currentRawInput(mode, inputText, linkUrl, selectedFile),
+        result,
+      }).id;
+    } catch {
+      reportStorageFailure(ANALYSIS_STORAGE_ERROR);
+      return;
+    }
 
-    setSavedAnalysisId(analysis.id);
+    setStorageError('');
+    setSavedAnalysisId(analysisId);
     trackAnalyzerEvent('analyzer_save_clicked', {
       inputType: result.inputType,
       goal,
@@ -399,21 +422,34 @@ export function AnalyzerExperience() {
 
     const { goal } = buildAnalyzerGoalPayload(goals.primaryCategory, goals.refinementGoalIds);
 
-    const analysis = saveAnalyzerAnalysis({
-      inputType: mode,
-      sourceName: result.sourceName,
-      rawInput: currentRawInput(mode, inputText, linkUrl, selectedFile),
-      result,
-    });
+    let analysisId: string;
+    try {
+      analysisId = saveAnalyzerAnalysis({
+        inputType: mode,
+        sourceName: result.sourceName,
+        rawInput: currentRawInput(mode, inputText, linkUrl, selectedFile),
+        result,
+      }).id;
+    } catch {
+      reportStorageFailure(ANALYSIS_STORAGE_ERROR);
+      return;
+    }
 
-    saveAnalyzerProtocolDraft({
-      sourceAnalysisId: analysis.id,
-      goal,
-      protocol: result.protocol,
-      optimizedProtocol: optimizedProtocol?.protocol ?? result.protocol,
-    });
+    try {
+      saveAnalyzerProtocolDraft({
+        sourceAnalysisId: analysisId,
+        goal,
+        protocol: result.protocol,
+        optimizedProtocol: optimizedProtocol?.protocol ?? result.protocol,
+      });
+    } catch {
+      // The analysis entry above stays in history; only navigation is withheld.
+      reportStorageFailure(DRAFT_STORAGE_ERROR);
+      return;
+    }
 
-    setSavedAnalysisId(analysis.id);
+    setStorageError('');
+    setSavedAnalysisId(analysisId);
     setShowSaveNotice(true);
     trackAnalyzerEvent('analyzer_convert_clicked', {
       inputType: result.inputType,
@@ -531,6 +567,11 @@ export function AnalyzerExperience() {
             onConvert={convertToProtocol}
             onUnlockClicked={onUnlockClicked}
           />
+          {storageError && (
+            <p role="alert" className="rounded-lg border border-amber-300/20 bg-amber-300/[0.06] p-4 text-sm text-amber-50/80">
+              {storageError}
+            </p>
+          )}
         </div>
       )}
 

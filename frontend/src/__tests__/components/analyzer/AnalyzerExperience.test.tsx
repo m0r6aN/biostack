@@ -143,12 +143,12 @@ async function waitForAnalyzerAccess() {
 }
 
 // Seed a v4 snapshot so the component restores directly onto the report stage.
-function seedV4WithResult(result: ProtocolAnalyzerResult, primaryCategory: string | null = 'recovery') {
+function seedV4WithResult(result: ProtocolAnalyzerResult, primaryCategory: string | null = 'recovery', inputText = 'BPC-157 500mcg daily') {
   window.localStorage.setItem(
     STORAGE_KEY_V4,
     JSON.stringify({
       mode: 'Paste',
-      inputText: 'BPC-157 500mcg daily',
+      inputText,
       linkUrl: '',
       goals: { primaryCategory, refinementGoalIds: [] },
       context: { sex: '', age: '', weight: '', existingStack: '' },
@@ -520,5 +520,204 @@ describe('AnalyzerExperience', () => {
     expect(screen.queryByText('Why this is better')).not.toBeInTheDocument();
     expect(screen.queryByText('Original vs BioStack Version')).not.toBeInTheDocument();
     expect(screen.queryByText(/Optimize the stack/)).not.toBeInTheDocument();
+  });
+
+  // ── Storage failure recovery (KEO-69) ──────────────────────────────────────
+  describe('storage failure recovery', () => {
+    // Fictional pre-existing draft; the component must never clear it on failure.
+    const EXISTING_DRAFT_KEY = 'biostack.analyzer.protocolDraft.v1';
+    const EXISTING_DRAFT_RAW = '{"id":"protocol-draft-fixture-zeta","name":"Zeta fixture draft"}';
+
+    function quotaError() {
+      return new DOMException('Fixture storage quota exceeded', 'QuotaExceededError');
+    }
+
+    async function renderReport() {
+      seedV4WithResult(makeResult({
+        score: 72,
+        protocol: [{ compoundName: 'Synthetic Alpha', dose: 1, unit: 'mg', frequency: 'daily', duration: '' }],
+        issues: [],
+        counterfactuals: [],
+        extractedTextPreview: 'Synthetic Alpha 1 mg daily',
+      }), 'recovery', 'Synthetic Alpha 1 mg daily');
+      window.localStorage.setItem(EXISTING_DRAFT_KEY, EXISTING_DRAFT_RAW);
+      render(<AnalyzerExperience />);
+      await screen.findByLabelText(/BioStack score 72 out of 100/i);
+    }
+
+    it.each(['analysis', 'draft'] as const)('preserves real storage after a failed %s write and replaces the draft only on successful retry', async (failedStage) => {
+      const storage = await vi.importActual<typeof import('@/lib/analyzerStorage')>('@/lib/analyzerStorage');
+      const user = userEvent.setup();
+      saveAnalyzerAnalysisMock.mockImplementation(storage.saveAnalyzerAnalysis);
+      saveAnalyzerProtocolDraftMock.mockImplementation(storage.saveAnalyzerProtocolDraft);
+      await renderReport();
+
+      const previousDraft = storage.saveAnalyzerProtocolDraft({
+        sourceAnalysisId: 'previous-fixture-analysis',
+        goal: 'Recovery',
+        protocol: [{ compoundName: 'Synthetic Zeta', dose: 3, unit: 'mg', frequency: 'daily', duration: '' }],
+        optimizedProtocol: [],
+      });
+      const previousBytes = window.localStorage.getItem(storage.ANALYZER_PROTOCOL_DRAFT_KEY);
+      const failedKey = failedStage === 'analysis' ? storage.ANALYZER_ANALYSIS_HISTORY_KEY : storage.ANALYZER_PROTOCOL_DRAFT_KEY;
+      const originalSetItem = Storage.prototype.setItem;
+      let rejectWrite = true;
+      const setItem = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function (this: Storage, key, value) {
+        if (rejectWrite && key === failedKey) throw quotaError();
+        originalSetItem.call(this, key, value);
+      });
+      try {
+        await user.click(screen.getAllByRole('button', { name: 'Add this stack to BioStack' })[0]);
+
+        expect(await screen.findByRole('alert')).toBeInTheDocument();
+        expect(pushMock).not.toHaveBeenCalled();
+        expect(screen.getByLabelText(/BioStack score 72 out of 100/i)).toBeInTheDocument();
+        expect(window.localStorage.getItem(storage.ANALYZER_PROTOCOL_DRAFT_KEY)).toBe(previousBytes);
+        expect(storage.readAnalyzerProtocolDraft()).toEqual(previousDraft);
+        expect(storage.readAnalyzerAnalysisHistory()).toHaveLength(failedStage === 'analysis' ? 0 : 1);
+        expect(JSON.parse(window.localStorage.getItem(STORAGE_KEY_V4)!).inputText).toBe('Synthetic Alpha 1 mg daily');
+
+        rejectWrite = false;
+        await user.click(screen.getAllByRole('button', { name: 'Add this stack to BioStack' })[0]);
+
+        expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+        expect(pushMock).toHaveBeenCalledTimes(1);
+        expect(pushMock).toHaveBeenCalledWith('/protocol-console');
+        const history = storage.readAnalyzerAnalysisHistory();
+        expect(history).toHaveLength(1);
+        expect(history[0].rawInput).toBe('Synthetic Alpha 1 mg daily');
+        expect(storage.readAnalyzerProtocolDraft()).toMatchObject({
+          sourceAnalysisId: history[0].id,
+          protocol: [{ compoundName: 'Synthetic Alpha', dose: 1, unit: 'mg', frequency: 'daily', duration: '' }],
+          importStatus: { status: 'pending', importedProfileIds: [] },
+        });
+      } finally {
+        setItem.mockRestore();
+      }
+    });
+
+    it('shows a retryable error when Save Analysis storage fails, keeping the report and skipping success telemetry', async () => {
+      const user = userEvent.setup();
+      const captured = captureAnalyzerEvents();
+      saveAnalyzerAnalysisMock.mockImplementationOnce(() => {
+        throw quotaError();
+      });
+      await renderReport();
+
+      await user.click(screen.getAllByRole('button', { name: 'Save Analysis' })[0]);
+
+      const alert = await screen.findByRole('alert');
+      expect(alert).toHaveTextContent(/could not be saved on this browser/i);
+      expect(screen.queryByText(/Analysis saved locally/)).not.toBeInTheDocument();
+      expect(captured.names()).not.toContain('analyzer_save_clicked');
+      // Report stays on screen; prior draft untouched.
+      expect(screen.getByLabelText(/BioStack score 72 out of 100/i)).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: 'Save Analysis' }).length).toBeGreaterThan(0);
+      expect(window.localStorage.getItem(EXISTING_DRAFT_KEY)).toBe(EXISTING_DRAFT_RAW);
+      expect(pushMock).not.toHaveBeenCalled();
+
+      // Retry through the same control succeeds and clears the error.
+      await user.click(screen.getAllByRole('button', { name: 'Save Analysis' })[0]);
+
+      expect(saveAnalyzerAnalysisMock).toHaveBeenCalledTimes(2);
+      await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+      expect(screen.getByText(/Analysis saved locally as analysis_test_1/)).toBeInTheDocument();
+      expect(captured.names()).toContain('analyzer_save_clicked');
+      captured.dispose();
+    });
+
+    it('drops a stale success notice when a later save fails', async () => {
+      const user = userEvent.setup();
+      await renderReport();
+
+      await user.click(screen.getAllByRole('button', { name: 'Save Analysis' })[0]);
+      expect(screen.getByText(/Analysis saved locally/)).toBeInTheDocument();
+
+      saveAnalyzerAnalysisMock.mockImplementationOnce(() => {
+        throw quotaError();
+      });
+      await user.click(screen.getAllByRole('button', { name: 'Save Analysis' })[0]);
+
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
+      expect(screen.queryByText(/Analysis saved locally/)).not.toBeInTheDocument();
+    });
+
+    it('does not route or write a draft when the analysis save fails during convert, then routes once on retry', async () => {
+      const user = userEvent.setup();
+      const captured = captureAnalyzerEvents();
+      saveAnalyzerAnalysisMock.mockImplementationOnce(() => {
+        throw quotaError();
+      });
+      await renderReport();
+
+      await user.click(screen.getAllByRole('button', { name: 'Add this stack to BioStack' })[0]);
+
+      expect(await screen.findByRole('alert')).toHaveTextContent(/could not be saved on this browser/i);
+      expect(saveAnalyzerProtocolDraftMock).not.toHaveBeenCalled();
+      expect(pushMock).not.toHaveBeenCalled();
+      expect(captured.names()).not.toContain('analyzer_convert_clicked');
+      expect(screen.getByLabelText(/BioStack score 72 out of 100/i)).toBeInTheDocument();
+      expect(window.localStorage.getItem(EXISTING_DRAFT_KEY)).toBe(EXISTING_DRAFT_RAW);
+
+      await user.click(screen.getAllByRole('button', { name: 'Add this stack to BioStack' })[0]);
+
+      expect(saveAnalyzerAnalysisMock).toHaveBeenCalledTimes(2);
+      expect(saveAnalyzerProtocolDraftMock).toHaveBeenCalledTimes(1);
+      expect(saveAnalyzerProtocolDraftMock.mock.calls[0][0]).toMatchObject({ sourceAnalysisId: 'analysis_test_1' });
+      expect(pushMock).toHaveBeenCalledTimes(1);
+      expect(pushMock).toHaveBeenCalledWith('/protocol-console');
+      await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+      expect(captured.names()).toContain('analyzer_convert_clicked');
+      captured.dispose();
+    });
+
+    it('does not route when the draft save throws (revision generator failure), then routes once on retry', async () => {
+      const user = userEvent.setup();
+      const captured = captureAnalyzerEvents();
+      saveAnalyzerProtocolDraftMock.mockImplementationOnce(() => {
+        throw new TypeError('fixture: crypto.randomUUID is not a function');
+      });
+      await renderReport();
+
+      await user.click(screen.getAllByRole('button', { name: 'Add this stack to BioStack' })[0]);
+
+      expect(await screen.findByRole('alert')).toHaveTextContent(/protocol draft could not be stored/i);
+      expect(saveAnalyzerAnalysisMock).toHaveBeenCalledTimes(1);
+      expect(saveAnalyzerProtocolDraftMock).toHaveBeenCalledTimes(1);
+      expect(pushMock).not.toHaveBeenCalled();
+      expect(captured.names()).not.toContain('analyzer_convert_clicked');
+      expect(screen.queryByText(/Analysis saved locally/)).not.toBeInTheDocument();
+      expect(screen.getByLabelText(/BioStack score 72 out of 100/i)).toBeInTheDocument();
+      expect(window.localStorage.getItem(EXISTING_DRAFT_KEY)).toBe(EXISTING_DRAFT_RAW);
+
+      await user.click(screen.getAllByRole('button', { name: 'Add this stack to BioStack' })[0]);
+
+      expect(saveAnalyzerProtocolDraftMock).toHaveBeenCalledTimes(2);
+      expect(pushMock).toHaveBeenCalledTimes(1);
+      expect(pushMock).toHaveBeenCalledWith('/protocol-console');
+      await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+      expect(screen.getByText(/Analysis saved locally/)).toBeInTheDocument();
+      captured.dispose();
+    });
+
+    it('withholds the sign-in redirect for an anonymous convert until both saves succeed', async () => {
+      const user = userEvent.setup();
+      authState.user = null;
+      authState.loading = false;
+      saveAnalyzerProtocolDraftMock.mockImplementationOnce(() => {
+        throw quotaError();
+      });
+      await renderReport();
+
+      await user.click(screen.getAllByRole('button', { name: 'Add this stack to BioStack' })[0]);
+
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
+      expect(pushMock).not.toHaveBeenCalled();
+
+      await user.click(screen.getAllByRole('button', { name: 'Add this stack to BioStack' })[0]);
+
+      expect(pushMock).toHaveBeenCalledTimes(1);
+      expect(pushMock).toHaveBeenCalledWith('/auth/signin?callbackUrl=/protocol-console');
+    });
   });
 });
