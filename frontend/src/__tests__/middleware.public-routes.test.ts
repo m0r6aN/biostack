@@ -13,8 +13,11 @@ describe('middleware public route access', () => {
     vi.unstubAllGlobals();
   });
 
-  it.each(['/knowledge', '/knowledge/creatine', '/start', '/onboarding', '/map', '/tools/analyzer'])(
-    'allows anonymous evidence browsing at %s',
+  it.each([
+    '/knowledge', '/knowledge/creatine', '/start', '/onboarding', '/map', '/tools/analyzer',
+    '/og-image.png', '/favicon.svg', '/og-image.png?v=1', '/favicon.svg?v=1',
+  ])(
+    'allows anonymous access to public route %s',
     async (pathname) => {
       const response = await middleware(requestFor(pathname));
 
@@ -23,7 +26,7 @@ describe('middleware public route access', () => {
     }
   );
 
-  it.each(['/profiles', '/profiles/abc', '/compounds', '/billing', '/admin/research'])(
+  it.each(['/profiles', '/profiles/abc', '/profiles/avatar.png', '/compounds', '/billing', '/admin/research'])(
     'keeps private route %s behind sign-in',
     async (pathname) => {
       const response = await middleware(requestFor(pathname));
@@ -33,7 +36,10 @@ describe('middleware public route access', () => {
     }
   );
 
-  it.each(['/knowledge-private', '/toolshed', '/apiary']) (
+  it.each([
+    '/knowledge-private', '/toolshed', '/apiary', '/uploads/avatar.png',
+    '/og-image.png-backup', '/favicon.svg-private', '/og-image.png/private', '/favicon.svg/private',
+  ]) (
     'does not treat a near-prefix route %s as public',
     async (pathname) => {
       const response = await middleware(requestFor(pathname));
