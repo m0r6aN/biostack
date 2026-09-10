@@ -30,6 +30,8 @@ export function MobileStickyCta() {
   return (
     <nav
       aria-label="Primary actions"
+      aria-hidden={!isVisible}
+      inert={!isVisible}
       className={`fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#0B0F14]/92 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl transition duration-200 md:hidden ${
         isVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0'
       }`}
@@ -38,33 +40,33 @@ export function MobileStickyCta() {
         {isAuthenticated ? (
           <Link
             href="/protocol-console"
-            className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950"
+            className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
           >
             Dashboard
           </Link>
         ) : (
           <Link
             href="/start"
-            className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950"
+            className="flex min-h-12 items-center justify-center rounded-lg bg-emerald-400 px-2 text-center text-sm font-semibold text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
           >
             Start free
           </Link>
         )}
         <Link
           href="/knowledge"
-          className="flex min-h-12 items-center justify-center rounded-lg border border-cyan-300/16 bg-cyan-400/[0.06] px-2 text-center text-sm font-semibold text-white"
+          className="flex min-h-12 items-center justify-center rounded-lg border border-cyan-300/16 bg-cyan-400/[0.06] px-2 text-center text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
         >
           Evidence
         </Link>
         <Link
           href="/tools/analyzer"
-          className="flex min-h-12 items-center justify-center rounded-lg border border-sky-300/16 bg-sky-400/[0.06] px-2 text-center text-sm font-semibold text-white"
+          className="flex min-h-12 items-center justify-center rounded-lg border border-sky-300/16 bg-sky-400/[0.06] px-2 text-center text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
         >
           Analyze
         </Link>
         <Link
           href="/pricing"
-          className="flex min-h-12 items-center justify-center rounded-lg border border-emerald-300/16 bg-emerald-300/[0.06] px-2 text-center text-sm font-semibold text-white"
+          className="flex min-h-12 items-center justify-center rounded-lg border border-emerald-300/16 bg-emerald-300/[0.06] px-2 text-center text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
         >
           Pricing
         </Link>
