@@ -36,7 +36,11 @@ export function AppShell({ children }: AppShellProps) {
 
   if (isProtectedRoute && (loading || !user)) {
     return (
-      <main className="flex min-h-screen items-center justify-center px-6 text-center text-sm text-white/55">
+      <main
+        id="main"
+        tabIndex={-1}
+        className="flex min-h-screen items-center justify-center px-6 text-center text-sm text-white/55"
+      >
         <p role="status">{loading ? 'Checking your session…' : 'Redirecting to sign in…'}</p>
       </main>
     );
@@ -49,7 +53,7 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <div className="flex h-screen" style={{ position: 'relative', zIndex: 1 }}>
       <Sidebar />
-      <main className="flex-1 overflow-y-auto">
+      <main id="main" tabIndex={-1} className="flex-1 overflow-y-auto">
         {children}
         <p
           aria-label="App-wide disclaimer"
