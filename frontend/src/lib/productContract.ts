@@ -22,7 +22,7 @@ export const publicRoutePrefixes = contract.routes.publicPrefixes;
 export const healthRoutes = contract.health;
 
 export function isPublicRoutePath(pathname: string) {
-  if (pathname === '/') {
+  if (pathname === '/' || contract.routes.publicAssets.includes(pathname)) {
     return true;
   }
 
