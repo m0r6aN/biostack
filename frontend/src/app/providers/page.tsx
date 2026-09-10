@@ -76,7 +76,7 @@ export default function ProvidersPage() {
   return (
     <div className="min-h-screen pb-24 md:pb-0" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
-      <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 lg:py-16">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-6xl px-5 py-12 sm:px-8 lg:py-16">
         <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/72">

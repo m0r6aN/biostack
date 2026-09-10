@@ -27,7 +27,7 @@ export default function FaqPage() {
     <div className="min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
       <MarketingNav />
 
-      <main className="mx-auto max-w-5xl px-5 py-16 sm:px-8 lg:py-20">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-5xl px-5 py-16 sm:px-8 lg:py-20">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
