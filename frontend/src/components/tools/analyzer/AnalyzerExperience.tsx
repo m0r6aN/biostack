@@ -493,7 +493,11 @@ export function AnalyzerExperience() {
   }
 
   return (
-    <main className={`mx-auto max-w-3xl px-4 pt-8 sm:px-6 lg:px-8 ${result ? 'pb-40 md:pb-28' : 'pb-28'}`}>
+    <main
+      id="main"
+      tabIndex={-1}
+      className={`mx-auto max-w-3xl px-4 pt-8 sm:px-6 lg:px-8 ${result ? 'pb-40 md:pb-28' : 'pb-28'}`}
+    >
       <section className="mb-6 border-b border-white/[0.08] pb-6">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/70">Protocol Analyzer</p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">

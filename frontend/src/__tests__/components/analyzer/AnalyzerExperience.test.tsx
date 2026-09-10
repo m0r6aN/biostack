@@ -226,6 +226,16 @@ describe('AnalyzerExperience', () => {
     captured.dispose();
   });
 
+  // 1b ─ The root layout's "Skip to main content" link targets #main; the
+  // analyzer owns the page's <main>, so it must expose that target.
+  it('exposes the main landmark as the skip-link target', () => {
+    render(<AnalyzerExperience />);
+
+    const main = screen.getByRole('main');
+    expect(main).toHaveAttribute('id', 'main');
+    expect(main).toHaveAttribute('tabindex', '-1');
+  });
+
   // 2 ─ v4 session restore lands on the report stage without re-analyzing
   it('restores a v4 snapshot with a result directly onto the report stage', async () => {
     seedV4WithResult(makeResult({ score: 72 }));
