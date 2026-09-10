@@ -32,6 +32,7 @@ export function createPublicPageMetadata({
   return {
     title,
     description,
+    robots: { index: true, follow: true },
     alternates: {
       canonical: path,
     },
@@ -55,6 +56,8 @@ export function createPublicPageMetadata({
 
 export const ROOT_METADATA: Metadata = {
   metadataBase: SITE_URL,
+  // Account and operational pages inherit this; public pages opt in above.
+  robots: { index: false, follow: false },
   title: {
     default: SITE_TITLE,
     template: '%s',

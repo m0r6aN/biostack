@@ -53,6 +53,7 @@ describe('public SEO metadata', () => {
     expect(SITE_ORIGIN).toBe('https://biostack.cc');
     expect(SITE_URL.toString()).toBe('https://biostack.cc/');
     expect(ROOT_METADATA.metadataBase?.toString()).toBe(SITE_URL.toString());
+    expect(ROOT_METADATA.robots).toEqual({ index: false, follow: false });
     expect(absoluteSiteUrl('/pricing')).toBe('https://biostack.cc/pricing');
   });
 
@@ -98,6 +99,7 @@ describe('public SEO metadata', () => {
     ({ path, metadata }) => {
       expect(metadata.title).toBeTruthy();
       expect(metadata.description).toBeTruthy();
+      expect(metadata.robots).toEqual({ index: true, follow: true });
       expect(metadata.alternates?.canonical).toBe(path);
       expect(metadata.openGraph?.url).toBe(path);
       expect(metadata.openGraph?.title).toBe(metadata.title);
