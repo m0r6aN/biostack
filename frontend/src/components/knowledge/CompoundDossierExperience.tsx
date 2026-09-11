@@ -7,6 +7,7 @@ import { useAuth } from '@/lib/AuthProvider';
 import { KnowledgeEntry } from '@/lib/types';
 import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
 import { CompoundRelationshipsSection } from '@/components/knowledge/CompoundRelationshipsSection';
+import { KnowledgeMain } from '@/components/knowledge/KnowledgeMain';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 
@@ -84,7 +85,7 @@ export function CompoundDossierExperience({ slug, initialEntry = null }: Compoun
 
 
   const content = (
-    <main className="min-h-screen bg-[#0a0a0b] py-8 px-4">
+    <KnowledgeMain className="min-h-screen bg-[#0a0a0b] py-8 px-4">
       <nav className="max-w-3xl mx-auto mb-6 flex items-center justify-between gap-3">
         <Link
           href="/knowledge"
@@ -118,7 +119,7 @@ export function CompoundDossierExperience({ slug, initialEntry = null }: Compoun
           />
         </>
       ) : null}
-    </main>
+    </KnowledgeMain>
   );
 
   if (authLoading || !user) {

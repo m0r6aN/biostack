@@ -4,6 +4,7 @@ import { Header } from '@/components/Header';
 import { LoadingState } from '@/components/LoadingState';
 import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
 import { OverlapResults } from '@/components/knowledge/OverlapResults';
+import { KnowledgeMain } from '@/components/knowledge/KnowledgeMain';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
@@ -83,7 +84,7 @@ export default function KnowledgePage() {
         <MarketingNav />
       )}
 
-      <div className="p-8 space-y-8 max-w-5xl">
+      <KnowledgeMain className="p-8 space-y-8 max-w-5xl">
 
         {/* ── Disclaimer ──────────────────────────────────────── */}
         <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-amber-400/15 bg-amber-500/[0.06] text-amber-200/70 text-xs">
@@ -249,7 +250,7 @@ export default function KnowledgePage() {
           </div>
         </GlassCard>
 
-      </div>
+      </KnowledgeMain>
 
       {!user && <MarketingFooter />}
     </div>
