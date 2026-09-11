@@ -113,7 +113,7 @@ function RewardPanel({
       <div className="mt-5 grid gap-2">
         {state.rows.map(([label, value]) => (
           <div key={label} className="grid grid-cols-[82px_1fr] gap-3 rounded-lg border border-white/8 bg-black/20 px-3 py-2">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">{label}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55">{label}</p>
             <p className="min-w-0 text-sm font-medium text-white/78">{value}</p>
           </div>
         ))}
@@ -121,7 +121,7 @@ function RewardPanel({
 
       {isGoalsStep && (
         <div className="mt-5 rounded-lg border border-white/8 bg-black/20 p-3">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">Priority Signal</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55">Priority Signal</p>
           <p className="mt-2 text-sm leading-6 text-white/66">
             {selectedGoalLabels.length > 0
               ? selectedGoalLabels.join(', ')
