@@ -389,7 +389,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                         'flex h-6 w-6 items-center justify-center rounded-full border text-[11px] font-semibold',
                         isActive || isComplete
                           ? 'border-emerald-300/40 bg-emerald-300/18 text-emerald-100'
-                          : 'border-white/10 text-white/42'
+                          : 'border-white/10 text-white/65'
                       )}
                     >
                       {index + 1}
@@ -441,7 +441,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                       )}
                     >
                       <span className="block text-sm font-semibold">{goal.label}</span>
-                      <span className="mt-1 block text-xs leading-5 text-white/45">{goal.signal}</span>
+                      <span className="mt-1 block text-xs leading-5 text-white/65">{goal.signal}</span>
                     </button>
                   );
                 })}
