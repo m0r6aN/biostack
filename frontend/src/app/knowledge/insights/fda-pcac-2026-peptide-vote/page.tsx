@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { KnowledgeMain } from '@/components/knowledge/KnowledgeMain';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { SITE_ORIGIN, createPublicPageMetadata } from '@/lib/site';
@@ -86,7 +87,7 @@ export default function PcacVoteInsightPage() {
       <MarketingNav />
       <ArticleJsonLd />
 
-      <main className="mx-auto max-w-3xl px-5 py-12 sm:px-8 lg:py-16">
+      <KnowledgeMain className="mx-auto max-w-3xl px-5 py-12 sm:px-8 lg:py-16">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300/70">
           Insights · Regulatory record
         </p>
@@ -230,7 +231,7 @@ export default function PcacVoteInsightPage() {
             </li>
           </ul>
         </section>
-      </main>
+      </KnowledgeMain>
 
       <MarketingFooter />
     </div>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { createPublicPageMetadata } from '@/lib/site';
+import { KnowledgeMain } from '@/components/knowledge/KnowledgeMain';
 import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 
@@ -49,7 +50,7 @@ export default function MethodologyPage() {
   return (
     <div>
       <MarketingNav />
-      <main className="min-h-screen bg-[#0a0a0b] px-5 py-12 sm:px-8">
+      <KnowledgeMain className="min-h-screen bg-[#0a0a0b] px-5 py-12 sm:px-8">
         <div className="mx-auto max-w-3xl">
           <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-emerald-200/78">
             Methodology
@@ -121,7 +122,7 @@ export default function MethodologyPage() {
             </Link>
           </div>
         </div>
-      </main>
+      </KnowledgeMain>
       <MarketingFooter />
     </div>
   );
