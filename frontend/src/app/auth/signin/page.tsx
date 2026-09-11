@@ -128,7 +128,7 @@ function SignInPageContent() {
   }
 
   return (
-    <main className="min-h-screen bg-[#0B0F14] px-4 py-8 text-white/90">
+    <main id="main" tabIndex={-1} className="min-h-screen bg-[#0B0F14] px-4 py-8 text-white/90">
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-md flex-col justify-center">
         <div className="mb-8 flex justify-center">
           <BioStackLogo variant="stacked" theme="dark" size="lg" />
@@ -244,7 +244,7 @@ function SignInPageContent() {
 
 export default function SignInPage() {
   return (
-    <Suspense fallback={<main className="min-h-screen bg-[#0B0F14]" />}>
+    <Suspense fallback={<main id="main" tabIndex={-1} className="min-h-screen bg-[#0B0F14]" />}>
       <SignInPageContent />
     </Suspense>
   );

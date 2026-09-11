@@ -93,7 +93,7 @@ export default function AccountSecurityPage() {
   return (
     <div className="min-h-full">
       <Header title="Account security" subtitle="Passkeys and recovery" />
-      <main className="mx-auto max-w-3xl space-y-6 p-5 sm:p-8">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-3xl space-y-6 p-5 sm:p-8">
         <section className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-6">
           <h2 className="text-lg font-semibold text-white">Passkeys</h2>
           <p className="mt-2 text-sm leading-6 text-white/45">
