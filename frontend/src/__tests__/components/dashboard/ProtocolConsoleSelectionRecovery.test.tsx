@@ -183,7 +183,7 @@ describe('ProtocolConsole - profile discovery and selection recovery', () => {
 
     expect(await screen.findByText(/Choose a profile above/)).toBeInTheDocument();
     expect(screen.queryByText('Failed to load protocol console data')).not.toBeInTheDocument();
-    expect(localStorage.getItem('currentProfileId')).toBeNull();
+    await waitFor(() => expect(localStorage.getItem('currentProfileId')).toBeNull());
     expect(readAnalyzerProtocolDraft()).toEqual(draft);
     expect(apiClient.createCompound).not.toHaveBeenCalled();
 
@@ -221,7 +221,7 @@ describe('ProtocolConsole - profile discovery and selection recovery', () => {
     expect(screen.getByRole('button', { name: /Select Profile/ })).toBeInTheDocument();
     expect(screen.getByTestId('selection')).toHaveTextContent('none');
     expect(screen.queryByText("Let's set up your first profile")).not.toBeInTheDocument();
-    expect(localStorage.getItem('currentProfileId')).toBeNull();
+    await waitFor(() => expect(localStorage.getItem('currentProfileId')).toBeNull());
   });
 
   it('does not discard a remembered selection when profile discovery fails', async () => {
