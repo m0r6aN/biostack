@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import { useAuth } from '@/lib/AuthProvider';
 import { MobileStickyCta } from './MobileStickyCta';
@@ -8,15 +9,34 @@ import { MobileStickyCta } from './MobileStickyCta';
 export function MarketingNav() {
   const { user, loading, logout } = useAuth();
   const isAuthenticated = !loading && user !== null;
+  const headerRef = useRef<HTMLElement>(null);
+
+  // Keep in-page anchor targets (e.g. the #main skip link) clear of this sticky header,
+  // tracking its live height across wraps/font loads and releasing the offset on unmount.
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const root = document.documentElement;
+    const applyOffset = () => {
+      root.style.setProperty('scroll-padding-top', `${Math.ceil(header.getBoundingClientRect().height)}px`);
+    };
+    applyOffset();
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(applyOffset);
+    observer?.observe(header);
+    return () => {
+      observer?.disconnect();
+      root.style.removeProperty('scroll-padding-top');
+    };
+  }, []);
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-white/8 bg-[#0B0F14]/75 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 sm:px-8 sm:py-4">
-          <Link href="/" aria-label="BioStack home" className="focus-visible:outline-none focus-visible:ring-2">
+      <header ref={headerRef} className="sticky top-0 z-30 border-b border-white/8 bg-[#0B0F14]/75 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-5 py-3 sm:px-8 sm:py-4">
+          <Link href="/" aria-label="BioStack home" className="shrink-0 focus-visible:outline-none focus-visible:ring-2">
             <BioStackLogo variant="horizontal" theme="dark" size="md" animated hoverable />
           </Link>
-          <nav className="hidden items-center gap-6 text-sm text-white/55 md:flex">
+          <nav className="hidden min-w-0 grow basis-0 flex-wrap items-center justify-end gap-x-5 gap-y-1 whitespace-nowrap text-sm text-white/55 md:flex xl:grow-0 xl:basis-auto xl:gap-x-6">
             <Link href="/how-it-works" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               How it works
             </Link>
@@ -36,7 +56,7 @@ export function MarketingNav() {
               Safety
             </Link>
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="ml-auto flex shrink-0 items-center gap-3 whitespace-nowrap md:ml-0 md:w-full md:justify-end xl:w-auto">
             <Link
               href="/tools/analyzer"
               className="hidden rounded-full border border-white/12 px-4 py-2 text-sm text-white/75 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 sm:inline-flex"

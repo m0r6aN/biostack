@@ -1,7 +1,7 @@
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { render, screen } from '@testing-library/react';
 import type { ComponentProps } from 'react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('next/link', () => ({
   default: ({ href, children, ...props }: ComponentProps<'a'>) => (
@@ -75,5 +75,44 @@ describe('MarketingNav readiness CTAs', () => {
     expect(screen.getByRole('link', { name: 'Sign in' })).toHaveAttribute('href', '/auth/signin');
     expect(screen.getByRole('link', { name: 'Start Free' })).toHaveAttribute('href', '/start');
     expect(screen.queryByRole('button', { name: 'Sign out' })).not.toBeInTheDocument();
+  });
+});
+
+describe('MarketingNav sticky header anchor offset', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+    document.documentElement.style.removeProperty('scroll-padding-top');
+  });
+
+  it('tracks the live header height as root scroll padding and removes it on unmount', () => {
+    let height = 124.4;
+    let notifyResize: (() => void) | undefined;
+    const disconnect = vi.fn();
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        constructor(callback: () => void) {
+          notifyResize = callback;
+        }
+        observe() {}
+        disconnect = disconnect;
+      }
+    );
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
+      () => ({ height }) as DOMRect
+    );
+    const root = document.documentElement;
+
+    const { unmount } = render(<MarketingNav />);
+    expect(root.style.getPropertyValue('scroll-padding-top')).toBe('125px');
+
+    height = 79;
+    notifyResize?.();
+    expect(root.style.getPropertyValue('scroll-padding-top')).toBe('79px');
+
+    unmount();
+    expect(disconnect).toHaveBeenCalled();
+    expect(root.style.getPropertyValue('scroll-padding-top')).toBe('');
   });
 });
