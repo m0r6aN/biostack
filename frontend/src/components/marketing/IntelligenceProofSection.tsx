@@ -17,7 +17,7 @@ export function IntelligenceProofSection({ compact = false }: { compact?: boolea
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
                 href="/start"
-                className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2"
+                className="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F14]"
               >
                 Start free
               </Link>
