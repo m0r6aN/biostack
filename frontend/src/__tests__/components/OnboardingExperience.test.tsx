@@ -1,6 +1,6 @@
 import { OnboardingExperience } from '@/components/marketing/OnboardingExperience';
 import { apiClient } from '@/lib/api';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import type { ComponentProps } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -151,5 +151,17 @@ describe('OnboardingExperience', () => {
     expect(screen.getByText('3 items added')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Type a compound, supplement, or medication…')).toBeInTheDocument();
     expect(await screen.findByText('Relationship analysis active.')).toBeInTheDocument();
+  });
+
+  it('exposes the onboarding steps as a named list with the current step marked', () => {
+    render(<OnboardingExperience />);
+
+    const list = screen.getByRole('list', { name: 'Onboarding progress' });
+    const items = within(list).getAllByRole('listitem');
+
+    expect(items).toHaveLength(3);
+    expect(items[0]).toHaveAttribute('aria-current', 'step');
+    expect(items[1]).not.toHaveAttribute('aria-current');
+    expect(items[2]).not.toHaveAttribute('aria-current');
   });
 });

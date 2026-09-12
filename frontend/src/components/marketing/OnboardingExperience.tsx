@@ -368,14 +368,15 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
             />
           </div>
 
-          <div className="mt-4 grid grid-cols-3 gap-2">
+          <ol aria-label="Onboarding progress" className="mt-4 grid list-none grid-cols-3 gap-2">
             {STEP_ITEMS.map((item, index) => {
               const isActive = step === item.id;
               const isComplete = currentStepIndex > index;
 
               return (
-                <div
+                <li
                   key={item.id}
+                  aria-current={isActive ? 'step' : undefined}
                   className={cn(
                     'rounded-2xl border px-3 py-3 text-left transition-colors',
                     isActive || isComplete
@@ -401,10 +402,10 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                       {item.label}
                     </span>
                   </div>
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ol>
         </div>
       </div>
 
