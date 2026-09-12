@@ -38,7 +38,9 @@ export function LandingPathCard({
     >
       <span aria-hidden="true" className={`absolute inset-y-3 left-0 w-1 rounded-r-full ${railClassName}`} />
       <span className="flex min-w-0 flex-1 flex-col pl-1.5">
-        <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-white/46">
+        <span
+          className={`block text-[11px] font-semibold uppercase tracking-[0.18em] ${path === 'provider' ? 'text-white/55' : 'text-white/46'}`}
+        >
           {label}
         </span>
         <span className="mt-1 block text-lg font-semibold tracking-tight text-white sm:text-xl">{title}</span>
