@@ -9,7 +9,7 @@
     "path": "shared/source-rights/drugbank-containment.v1.json",
     "sha256": "017fa7dcf5cf2df6d5c96c94bada2601dad38e668a91ef5eb7d40ae33a12994f"
   },
-  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. One quote-free replacement candidate is prepared and remains review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
+  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. Two quote-free replacement candidates are prepared and remain review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
   "counts": {
     "rows": 30,
     "distinctClaims": 30,
@@ -18,8 +18,8 @@
     "claimsWithCoCitationCandidates": 28,
     "claimsWithNoCoCitation": 2,
     "claimsActuallyReSourced": 0,
-    "coCitationCandidatesSubstanceAssessed": 0,
-    "replacementCandidatesPrepared": 1
+    "coCitationCandidatesSubstanceAssessed": 1,
+    "replacementCandidatesPrepared": 2
   },
   "rows": [
     {
@@ -145,8 +145,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "nih-ods-exercise-athletic-performance-hp",
+        "recordPath": "research/source-authorization/creatine-resource-candidate-2026-09-12.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "dulaglutide.evidence.json",
@@ -816,5 +823,5 @@
       "substanceAssessed": false
     }
   ],
-  "updatedAtUtc": "2026-09-08T22:07:07.268475Z"
+  "updatedAtUtc": "2026-09-12T22:53:08Z"
 }

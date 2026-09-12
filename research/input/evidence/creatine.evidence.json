@@ -234,7 +234,7 @@
     {
       "claimId": "creatine-mechanism-atp-phosphocreatine-001",
       "claimType": "mechanism",
-      "statement": "Creatine functions in the phosphocreatine/ATP energy-shuttle system: it is phosphorylated to phosphocreatine, which reversibly donates a high-energy phosphate group to ADP (via creatine kinase) to regenerate ATP, supplying rapid energy for short-duration, high-intensity muscle contraction.",
+      "statement": "The NIH Office of Dietary Supplements describes creatine's role in supplying muscle energy through ATP generation, with phosphocreatine stores contributing at the start of intense activity.",
       "context": {
         "population": null,
         "route": null,
@@ -246,30 +246,19 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pubchem-cid-586",
-        "drugbank-db00148",
         "nih-ods-exercise-athletic-performance-hp"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "pubchem-cid-586",
-          "quote": "Creatine functions as part of the cell's energy shuttle. The high energy phosphate group of ATP is transferred to creatine to form phosphocreatine...This reaction is reversibly catalyzed by creatine kinase.",
-          "pageOrSection": "PubChem PUG-View compound record, pharmacology section"
-        },
-        {
-          "sourceRef": "drugbank-db00148",
-          "quote": "An amino acid derivative that occurs in vertebrate tissues and in urine. In muscle tissue, creatine generally occurs as phosphocreatine. Creatine is excreted as creatinine in the urine.",
-          "pageOrSection": "Drug summary / description"
-        },
-        {
           "sourceRef": "nih-ods-exercise-athletic-performance-hp",
-          "quote": "helps generate ATP and thereby supplies the muscles with energy, particularly for short-term events",
-          "pageOrSection": "Creatine section"
+          "quote": null,
+          "pageOrSection": "Creatine section, first two introductory paragraphs (muscle ATP supply and phosphocreatine stores at the start of intense exercise); no performance-improvement claim adopted."
         }
       ],
       "reviewFlags": [
         "authority-disposition-2026-09-07: source 'nih-ods-exercise-athletic-performance-hp' corrected downward to the tier its source registry class declares; the packet had asserted stronger authority than the registry permits for this publisher (A2 -> C2). Any authority this claim drew from that source is withdrawn; it must be re-anchored to an eligible A1/A2 source before publication. No claim text was changed by this disposition.",
-        "rereview-correction-2026-09-07: disposition moves from unresolved to confirm. The 2026-09-07 independent re-review obtained corroboration for the phosphocreatine/ATP energy-shuttle mechanism from a different source family (StatPearls, NCBI Bookshelf NBK546624, describing the reversible creatine kinase reaction interconverting phosphocreatine and ATP), so the prior unresolved disposition on this mechanism is resolved. That corroboration lives in the re-review receipt and is deliberately not added as a source here, so the in-band support for the mechanism sentence remains the PubChem quote. Separately, the DrugBank quote attached to this claim describes creatine's tissue occurrence and urinary excretion and does not support the phosphocreatine/ATP shuttle sentence it is filed under; it is retained as an accurate record of the source but is not evidence for this mechanism. The authority disposition's requirement to re-anchor the NIH ODS support to an eligible A1/A2 source is unaffected and stays open."
+        "rereview-correction-2026-09-07: disposition moves from unresolved to confirm. The 2026-09-07 independent re-review obtained corroboration for the phosphocreatine/ATP energy-shuttle mechanism from a different source family (StatPearls, NCBI Bookshelf NBK546624, describing the reversible creatine kinase reaction interconverting phosphocreatine and ATP), so the prior unresolved disposition on this mechanism is resolved. That corroboration lives in the re-review receipt and is deliberately not added as a source here, so the in-band support for the mechanism sentence remains the PubChem quote. Separately, the DrugBank quote attached to this claim describes creatine's tissue occurrence and urinary excretion and does not support the phosphocreatine/ATP shuttle sentence it is filed under; it is retained as an accurate record of the source but is not evidence for this mechanism. The authority disposition's requirement to re-anchor the NIH ODS support to an eligible A1/A2 source is unaffected and stays open.",
+        "replacement-candidate-prepared-2026-09-12: statement, sourceRefs and extractedEvidence replaced with a narrowed, quote-free paraphrase of the NIH Office of Dietary Supplements Creatine-section introductory paragraphs (ATP-generation/phosphocreatine-store sentences only); the phosphocreatine/ATP energy-shuttle framing, creatine-kinase enzyme identity, reversible ADP phosphate transfer, and phosphorylation-step language are removed as unsupported by that source. All three prior retained excerpts are removed: the PubChem CID 586 pharmacology-section quote (possible indirect DrugBank provenance: prior research reports DrugBank DB00148 and HSDB 7336 contributors for the current Mechanism of Action section, but the historical pharmacology-located excerpt has not been independently mapped to either; removed from this candidate, with historical attribution unresolved), the DrugBank DB00148 drug-summary quote, and the prior ODS Creatine-section quote. Full record: research/source-authorization/creatine-resource-candidate-2026-09-12.json. Status is prepared-review-required, not accepted: the authority-disposition-2026-09-07 A1/A2 re-anchor instruction on this claim stays open and is not resolved by this narrowing; evidenceTier 'Strong' and confidence 'high' are retained unchanged as inherited pending-review values, not ratified by this change; ODS method/reuse-scope reconciliation, evidence-reviewer acceptance of the narrowed statement and ratings, and containment-reach determination over the removed PubChem excerpt remain open. claimsActuallyReSourced is unaffected and stays 0."
       ]
     },
     {
