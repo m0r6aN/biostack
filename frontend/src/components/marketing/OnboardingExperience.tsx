@@ -451,7 +451,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 <button
                   type="button"
                   onClick={() => goToStep('input')}
-                  className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
+                  className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform motion-safe:hover:-translate-y-0.5"
                 >
                   Continue
                 </button>
@@ -644,7 +644,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                   <button
                     type="submit"
                     disabled={!canSubmit}
-                    className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-50 sm:w-auto"
+                    className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform motion-safe:hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-50 sm:w-auto"
                   >
                     Add to My List
                   </button>
@@ -746,7 +746,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
                   href="/profiles"
-                  className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
+                  className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform motion-safe:hover:-translate-y-0.5"
                 >
                   Finish Setup
                 </Link>

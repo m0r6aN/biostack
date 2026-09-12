@@ -34,7 +34,7 @@ export function LandingPathCard({
     <Link
       href={href}
       onClick={() => trackLandingPathSelection(path)}
-      className={`group relative flex min-h-[132px] items-stretch justify-between gap-4 overflow-hidden rounded-lg border px-3.5 py-3.5 shadow-[0_12px_34px_rgba(0,0,0,0.2)] transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 sm:min-h-[136px] sm:px-4 lg:min-h-[154px] ${cardClassName}`}
+      className={`group relative flex min-h-[132px] items-stretch justify-between gap-4 overflow-hidden rounded-lg border px-3.5 py-3.5 shadow-[0_12px_34px_rgba(0,0,0,0.2)] transition duration-200 motion-safe:hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 sm:min-h-[136px] sm:px-4 lg:min-h-[154px] ${cardClassName}`}
     >
       <span aria-hidden="true" className={`absolute inset-y-3 left-0 w-1 rounded-r-full ${railClassName}`} />
       <span className="flex min-w-0 flex-1 flex-col pl-1.5">
