@@ -10,8 +10,8 @@ export function IntelligenceProofSection({ compact = false }: { compact?: boolea
             See what BioStack catches
           </h2>
           <p className="mt-4 text-base leading-7 text-white/62">
-            Paste a stack and BioStack turns raw compound names into structured context: parsed items,
-            relationship checks, evidence-aware previews, and a clear upgrade path when deeper analysis is useful.
+            Explore an example list below. BioStack shows the listed items and a preview of their context; build
+            your own list through Start free, and review paid capabilities on the pricing page.
           </p>
           {!compact && (
             <div className="mt-5 flex flex-wrap gap-3">
