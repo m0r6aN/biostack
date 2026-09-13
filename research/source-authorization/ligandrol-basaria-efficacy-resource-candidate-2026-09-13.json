@@ -1,0 +1,321 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T17:32:22.965084Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "ligandrol-efficacy-lbm-healthy-men-001",
+  "candidateStatement": "The study indexed as PMID 22459616 reports dose-dependent increases in lean body mass in a randomized, placebo-controlled 21-day trial of LGD-4033 in 76 healthy men aged 21-50 years.",
+  "historicalPacket": {
+    "gitRevision": "a356d9fe8c091725bd6303aa56cd9f0cc6deb010",
+    "path": "research/input/evidence/ligandrol.evidence.json",
+    "bytes": 25788,
+    "sha256": "357d3796d3b66d09e64b931ec3d33691c036ef850f38d4f8b783653de0c47c2f"
+  },
+  "supersededClaimSha256": "c7e93808ee16eefd947303184611783bd5057eab59685ff2d3062cc771d02a98",
+  "hashEncoding": "Object hashes: SHA256 of UTF8 sorted-key compact JSON, ensure_ascii true, no newline. Text hashes: exact UTF8.",
+  "originalContext": {
+    "population": "healthy men, 21-50 years (n=76)",
+    "route": "oral",
+    "formulation": "LGD-4033 capsule/tablet, investigational",
+    "useCase": "short-term lean body mass change in healthy adults (investigational; not an approved indication)",
+    "doseText": "0.1 mg, 0.3 mg, or 1.0 mg once daily for 21 days versus placebo (trial protocol; not a use recommendation)"
+  },
+  "originalContextSha256": "292b1d2ef8353ce440972c6c57bd58e257e6e69df14b35c736a25f60fd97be0c",
+  "candidateContext": {
+    "population": "healthy men, 21-50 years (n=76)",
+    "route": null,
+    "formulation": "LGD-4033 (trial study drug)",
+    "useCase": "short-term trial lean-body-mass observation",
+    "doseText": "0.1 mg, 0.3 mg, or 1.0 mg once daily for 21 days versus placebo (trial protocol; not a use recommendation)"
+  },
+  "candidateContextSha256": "4a3aeb6dfe757dc2a03d3dbed042d3bf7f23ba47bb9952787cb107537d41e042",
+  "originalSourceRefs": [
+    "basaria-2013-jgerontol-rct"
+  ],
+  "originalSourceRefsSha256": "21fac90c946080df277901700b8dd8569aa00c2a469ba81bb6e8412a215633f3",
+  "historicalReviewFlags": [
+    "single short (21-day) trial in healthy young men; does not establish efficacy for bodybuilding, strength, or long-term use",
+    "trial dose (max 1.0 mg/day) must never be presented as a use recommendation",
+    "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed trial findings (Basaria et al. 2013) at source-level attribution ('In a randomized, double-blind, placebo-controlled dose-escalation trial...'); no regulator document exists for this claim (searched: FDA.gov -- LGD-4033/Ligandrol is an unapproved investigational compound with no FDA-reviewed efficacy data, only consumer safety warnings; DailyMed -- 0 results for LGD-4033, no approved label exists)"
+  ],
+  "originalClaimType": "efficacy",
+  "inheritedRatings": {
+    "evidenceTier": "Moderate",
+    "confidence": "moderate",
+    "reviewStatus": "unchanged pending acceptance"
+  },
+  "removedExcerpts": [
+    {
+      "sourceId": "basaria-2013-jgerontol-rct",
+      "locator": "Abstract/study summary",
+      "chars": 105,
+      "sha256": "1ca1e9d7ddb82865da6ec7b51a6cdf909a6ec27292305c209b7b2d31bd9b52c5"
+    },
+    {
+      "sourceId": "basaria-2013-jgerontol-rct",
+      "locator": "Abstract/study summary",
+      "chars": 84,
+      "sha256": "3531724906052c928a90d74c5d9eaf5d342428bb73689af25083686448070995"
+    },
+    {
+      "sourceId": "basaria-2013-jgerontol-rct",
+      "locator": "Abstract/study summary",
+      "chars": 153,
+      "sha256": "81a2544638ee96e51bee64b4a11a425060004c3d6ffcf6d3b04bed807cf30713"
+    }
+  ],
+  "historicalQueueWithheldExcerpts": [
+    {
+      "pageOrSection": "Abstract/study summary",
+      "quoteChars": 105
+    },
+    {
+      "pageOrSection": "Abstract/study summary",
+      "quoteChars": 84
+    },
+    {
+      "pageOrSection": "Abstract/study summary",
+      "quoteChars": 153
+    }
+  ],
+  "excerptAccounting": "Three actual base excerpts from old DrugBank-hosted Basaria summary, separately hashed; historical queue105/84/153 lengths retained separately, no copied excerpts or restored withheld history. Adverse-effect and marketing claims retain their existing evidence unchanged.",
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "basaria-2013-jgerontol-rct",
+    "sourceType": "controlled-human-study",
+    "authorityTier": "B1",
+    "title": "The Safety, Pharmacokinetics, and Effects of LGD-4033, a Novel Nonsteroidal Oral, Selective Androgen Receptor Modulator, in Healthy Young Men",
+    "publisher": "The Journals of Gerontology: Series A (Basaria S, Collins L, Dillon EL, et al., 2013); summary accessed via DrugBank",
+    "url": "https://go.drugbank.com/articles/A31488",
+    "doi": "10.1093/gerona/gls078",
+    "pmid": "22459616",
+    "publishedAt": null,
+    "accessedAt": "2026-08-28T23:50:00Z"
+  },
+  "newPacketLocalSnapshot": {
+    "sourceId": "pubmed-22459616-basaria-research-20260913",
+    "sourceType": "bibliographic-database-record",
+    "authorityTier": "C1",
+    "title": "The safety, pharmacokinetics, and effects of LGD-4033, a novel nonsteroidal oral, selective androgen receptor modulator, in healthy young men.",
+    "publisher": "PubMed / U.S. National Library of Medicine",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/22459616/",
+    "doi": "10.1093/gerona/gls078",
+    "pmid": "22459616",
+    "publishedAt": null,
+    "accessedAt": "2026-09-13T16:58:44.085781+00:00"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubmed",
+    "sourceItemId": "pubmed-22459616-basaria-research-20260913",
+    "registrationStatus": "unmapped-research-item-no-authority",
+    "itemReviewStatus": "item-review-required",
+    "mappingQualification": "Requires documented unchanged-scope fit and later binding; this preparation adds no registry alias, decision or source authority.",
+    "requestUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=22459616&retmode=xml&tool=biostack_bounded_source_review",
+    "pmid": "22459616",
+    "doi": "10.1093/gerona/gls078",
+    "pmcid": "PMC4111291",
+    "dates": {
+      "journalIssue": "2013-01",
+      "precision": "month",
+      "electronic": "2012-03-28"
+    },
+    "sourceMetadata": {
+      "pmid": "22459616",
+      "title": "The safety, pharmacokinetics, and effects of LGD-4033, a novel nonsteroidal oral, selective androgen receptor modulator, in healthy young men.",
+      "journal": "The journals of gerontology. Series A, Biological sciences and medical sciences",
+      "issueDate": {
+        "Year": "2013",
+        "Month": "Jan"
+      },
+      "volume": "68",
+      "issue": "1",
+      "pages": "87-95",
+      "authors": [
+        {
+          "LastName": "Basaria",
+          "ForeName": "Shehzad",
+          "Initials": "S"
+        },
+        {
+          "LastName": "Collins",
+          "ForeName": "Lauren",
+          "Initials": "L"
+        },
+        {
+          "LastName": "Dillon",
+          "ForeName": "E Lichar",
+          "Initials": "EL"
+        },
+        {
+          "LastName": "Orwoll",
+          "ForeName": "Katie",
+          "Initials": "K"
+        },
+        {
+          "LastName": "Storer",
+          "ForeName": "Thomas W",
+          "Initials": "TW"
+        },
+        {
+          "LastName": "Miciek",
+          "ForeName": "Renee",
+          "Initials": "R"
+        },
+        {
+          "LastName": "Ulloor",
+          "ForeName": "Jagadish",
+          "Initials": "J"
+        },
+        {
+          "LastName": "Zhang",
+          "ForeName": "Anqi",
+          "Initials": "A"
+        },
+        {
+          "LastName": "Eder",
+          "ForeName": "Richard",
+          "Initials": "R"
+        },
+        {
+          "LastName": "Zientek",
+          "ForeName": "Heather",
+          "Initials": "H"
+        },
+        {
+          "LastName": "Gordon",
+          "ForeName": "Gilad",
+          "Initials": "G"
+        },
+        {
+          "LastName": "Kazmi",
+          "ForeName": "Syed",
+          "Initials": "S"
+        },
+        {
+          "LastName": "Sheffield-Moore",
+          "ForeName": "Melinda",
+          "Initials": "M"
+        },
+        {
+          "LastName": "Bhasin",
+          "ForeName": "Shalender",
+          "Initials": "S"
+        }
+      ],
+      "articleDates": [
+        {
+          "DateType": "Electronic",
+          "Year": "2012",
+          "Month": "03",
+          "Day": "28"
+        }
+      ],
+      "articleIds": [
+        {
+          "IdType": "pubmed",
+          "value": "22459616"
+        },
+        {
+          "IdType": "pmc",
+          "value": "PMC4111291"
+        },
+        {
+          "IdType": "doi",
+          "value": "10.1093/gerona/gls078"
+        },
+        {
+          "IdType": "pii",
+          "value": "gls078"
+        }
+      ],
+      "articleIdPath": "./PubmedArticle/PubmedData/ArticleIdList/ArticleId",
+      "commentsCorrections": [],
+      "copyright": null,
+      "publicationTypes": [
+        "Journal Article",
+        "Randomized Controlled Trial",
+        "Research Support, Non-U.S. Gov't"
+      ],
+      "abstractLabels": [
+        {
+          "Label": "BACKGROUND",
+          "NlmCategory": "BACKGROUND"
+        },
+        {
+          "Label": "METHODS",
+          "NlmCategory": "METHODS"
+        },
+        {
+          "Label": "RESULTS",
+          "NlmCategory": "RESULTS"
+        },
+        {
+          "Label": "CONCLUSIONS",
+          "NlmCategory": "CONCLUSIONS"
+        }
+      ],
+      "receipt": "receipts/efetch-20260913T165843668871Z.json"
+    },
+    "supportLocators": [
+      "Abstract METHODS: population/randomization/placebo/duration; factual paraphrase.",
+      "Abstract RESULTS: lean-body-mass finding only; factual paraphrase."
+    ],
+    "retrievedAtUtc": "2026-09-13T16:58:44.085781+00:00",
+    "method": "Qualified PubMed EFetch XML research; implementation uses retained metadata and worker paraphrase only.",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "observationAttribution": "Original Codex research worker observed METHODS/RESULTS. Implementation and lead did not independently observe source passages.",
+    "dateQualification": "Issue2013-01 has month precision, electronic2012-03-28; not a year mismatch. publishedAt remains null; old DrugBank URL/access preserved.",
+    "tierQualification": "New item C1 is bibliographic index classification, not award of study or claim grade.",
+    "rightsQualification": "No CopyrightInformation or comments returned in this record only; not licence, public-domain or universal absence evidence. No PMC/fulltext/linked acquisition.",
+    "humanReviewStatus": "pending"
+  },
+  "contextQualification": "Title describes an oral compound; inspected METHODS does not establish protocol administration route or capsule/tablet. Route null is uncertainty, not a claim oral is false. Existing population and doseText are retained as descriptive study context, not advice.",
+  "scopeLoss": "Fat-mass and tolerability/no-serious-event reassurance excluded. No bodybuilding, strength or long-term efficacy inference; other claims not revised.",
+  "sourceSha256": "596f8906a84a25ae545fd0393b92e2942f501cff5d3a8a7b0e76f8d6031d2d10",
+  "payloadProvenance": {
+    "bytes": 24021,
+    "attribution": "Original worker transport hash/size; raw XML/abstract not retained or reacquired."
+  },
+  "requestHistory": {
+    "totalAttempts": 1,
+    "retries": 0,
+    "receipt": {
+      "author": "Codex",
+      "attempt": 1,
+      "method": "GET",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=22459616&retmode=xml&tool=biostack_bounded_source_review",
+      "startedAtUtc": "2026-09-13T16:58:43.668871+00:00",
+      "completedAtUtc": "2026-09-13T16:58:44.085781+00:00",
+      "httpStatus": 200,
+      "responseBytes": 24021,
+      "responseSha256": "596f8906a84a25ae545fd0393b92e2942f501cff5d3a8a7b0e76f8d6031d2d10",
+      "headers": {
+        "Date": "Sun, 13 Sep 2026 16:58:44 GMT",
+        "Content-Type": "text/xml; charset=UTF-8",
+        "X-Ratelimit-Limit": "3",
+        "X-Ratelimit-Remaining": "2"
+      },
+      "fault": null,
+      "requestsThisScript": 1,
+      "retriesThisScript": 0
+    }
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/ligandrol-basaria-efficacy-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/ligandrol-basaria-efficacy-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/ligandrol-basaria-efficacy-replacement-assessment-20260913/source-evidence.json",
+    "metadata": "research/output/gtm-activation-20260909/ligandrol-basaria-efficacy-replacement-assessment-20260913/acquisition-metadata.json",
+    "receipt": "research/output/gtm-activation-20260909/ligandrol-basaria-efficacy-replacement-assessment-20260913/receipts/efetch-20260913T165843668871Z.json"
+  },
+  "queueAccounting": "24 to25 prepared,0 completed,prior-co-citation15 unchanged. New PubMed item not previously target co-cited; same underlying paper is not independent family.",
+  "remainingGates": [
+    "Unmapped item review/fit and mechanical binding remain before source activation.",
+    "Evidence acceptance and inherited Moderate/moderate pending.",
+    "Same underlying paper is not independent source family; original summary lineage unresolved.",
+    "Human/expert review, applicable rights and publication gates remain."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}
