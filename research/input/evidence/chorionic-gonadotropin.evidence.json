@@ -102,6 +102,22 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    {
+      "sourceId": "dailymed-pregnyl-organon-research-20260913",
+      "sourceType": "label",
+      "authorityTier": "A1",
+      "title": "PREGNYL (CHORIOGONADOTROPIN ALFA) KIT [ORGANON LLC]",
+      "publisher": "Organon LLC; distributed by DailyMed (NLM)",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e94155f-19be-4944-b197-be4edbb4faf9",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-09-13T01:44:53.956732Z",
+      "registrationStatus": "item-review-required; no new alias or acquisition authorization asserted",
+      "scientificTierStatus": "A1 inherited from the existing DailyMed snapshot as a proposed scientific tier pending item/evidence review; no runtime authority conferred.",
+      "authority": "none",
+      "candidateRecordPath": "research/source-authorization/chorionic-gonadotropin-resource-candidate-2026-09-13.json"
     }
   ],
   "claims": [
@@ -182,7 +198,7 @@
     {
       "claimId": "hcg-mechanism-lh-receptor-agonist-001",
       "claimType": "mechanism",
-      "statement": "Chorionic gonadotropin is a glycoprotein hormone that acts as an agonist at the luteinizing hormone (LH)/choriogonadotropin receptor, mimicking the action of endogenous LH to support corpus luteum function/progesterone production in pregnancy, trigger ovulation, and stimulate testosterone production by testicular Leydig cells.",
+      "statement": "The Organon PREGNYL label describes human chorionic gonadotropin as having action similar to pituitary luteinizing hormone (LH) and notes that it appears to have a small degree of follicle-stimulating hormone (FSH) activity.",
       "context": {
         "population": null,
         "route": null,
@@ -194,18 +210,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "drugbank-db09126",
-        "dailymed-pregnyl-label"
+        "dailymed-pregnyl-organon-research-20260913"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "drugbank-db09126",
-          "quote": "used for the treatment of prepubertal cryptorchidism and hypogonadotropic hypogonadism in selected males, and induction of pregnancy in selected infertile women",
-          "pageOrSection": "DrugBank summary / indications"
+          "sourceRef": "dailymed-pregnyl-organon-research-20260913",
+          "quote": null,
+          "pageOrSection": "CLINICAL PHARMACOLOGY"
         }
       ],
       "reviewFlags": [
-        "DrugBank mechanism-of-action detail page required login and was not fully accessible; mechanism statement synthesized from indication text and label pharmacology context - confirm against full DrugBank pharmacodynamics section at review"
+        "DrugBank mechanism-of-action detail page required login and was not fully accessible; mechanism statement synthesized from indication text and label pharmacology context - confirm against full DrugBank pharmacodynamics section at review",
+        "Candidate preparation 2026-09-13: narrowed to the reviewed Organon PREGNYL LH-like action description, preserving the label uncertainty that it appears to have a small degree of FSH activity. Original context and inherited Strong/high remain unchanged, with ratings pending evidence review. Removed the target DrugBank reference/retained excerpt and old DailyMed support from this candidate; old source snapshots, alias binding and historical review flag remain unchanged. New packet-local source dailymed-pregnyl-organon-research-20260913 is item-review-required and unregistered, with no runtime authority or activation. The historical DrugBank review instruction is preserved as history, not authorization to retrieve it. New item, source-family, evidence/human and publication gates remain open; no completed replacement. See research/source-authorization/chorionic-gonadotropin-resource-candidate-2026-09-13.json."
       ]
     },
     {
