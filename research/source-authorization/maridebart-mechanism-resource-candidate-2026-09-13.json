@@ -1,0 +1,218 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T12:58:09.909197Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "maridebart-mechanism-bispecific-001",
+  "candidateStatement": "The study indexed as PMID 40549887 describes maridebart cafraglutide as combining GLP-1 receptor agonism with glucose-dependent insulinotropic polypeptide receptor antagonism.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "5c7a91179916f8278d9b6df8d15d6f324e6c6334",
+    "path": "research/input/evidence/maridebart-cafraglutide.evidence.json",
+    "bytes": 23087,
+    "sha256": "0be88f2935a10245718059a574720d66f890ad749d5ece3c665e2cf4e43be144"
+  },
+  "supersededClaimSha256": "ff0837ab8ff4a4af792cf5c420c4a859d1e375cf7c273ecf49d3a8a2e884ad3a",
+  "supersededClaimHashEncoding": "SHA256 of UTF8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "amgen-pr-2024-11-phase2-results",
+      "locator": "Press release body",
+      "chars": 135,
+      "sha256": "85868132bd7263f146f1e131460d0fce6a8dfc8d20ec490914f51dcaad0a0049"
+    },
+    {
+      "sourceId": "amgen-pr-2024-11-phase2-results",
+      "locator": "Press release body",
+      "chars": 56,
+      "sha256": "4e379fedbb10be93e448db93215061b06608da9d5c955df40b652bdcd2dd5c81"
+    }
+  ],
+  "excerptAccounting": "Two Amgen excerpts removed; zero DrugBank excerpts despite historical DrugBank source dependency. No removed quote text copied.",
+  "originalSourceRefs": [
+    "amgen-pr-2024-11-phase2-results",
+    "drugbank-db19339"
+  ],
+  "historicalReviewFlags": [],
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "antibody-peptide conjugate biologic",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "antibody-peptide conjugate biologic",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "contextDecision": "Retain antibody-peptide conjugate biologic formulation: BACKGROUND directly identifies peptide-antibody conjugate. Other null context/useCase unchanged.",
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "pubmed-40549887",
+    "sourceType": "controlled-human-study",
+    "authorityTier": "B1",
+    "title": "Once-Monthly Maridebart Cafraglutide for the Treatment of Obesity — A Phase 2 Trial",
+    "publisher": "New England Journal of Medicine (Jastreboff AM, Ryan DH, Bays HE, Ebeling PR, et al.)",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/40549887/",
+    "doi": "10.1056/NEJMoa2504214",
+    "pmid": "40549887",
+    "publishedAt": "2025-09-04T00:00:00Z",
+    "accessedAt": "2026-08-29T01:58:43Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubmed",
+    "sourceItemId": "pubmed-40549887",
+    "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40549887/",
+    "requestUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=40549887&retmode=xml&tool=biostack_bounded_source_review",
+    "pmid": "40549887",
+    "doi": "10.1056/NEJMoa2504214",
+    "title": "Once-Monthly Maridebart Cafraglutide for the Treatment of Obesity - A Phase 2 Trial.",
+    "journal": "The New England journal of medicine",
+    "authors": [
+      {
+        "LastName": "Jastreboff",
+        "ForeName": "Ania M",
+        "Initials": "AM"
+      },
+      {
+        "LastName": "Ryan",
+        "ForeName": "Donna H",
+        "Initials": "DH"
+      },
+      {
+        "LastName": "Bays",
+        "ForeName": "Harold E",
+        "Initials": "HE"
+      },
+      {
+        "LastName": "Ebeling",
+        "ForeName": "Peter R",
+        "Initials": "PR"
+      },
+      {
+        "LastName": "Mackowski",
+        "ForeName": "Mia G",
+        "Initials": "MG"
+      },
+      {
+        "LastName": "Philipose",
+        "ForeName": "Nisha",
+        "Initials": "N"
+      },
+      {
+        "LastName": "Ross",
+        "ForeName": "Leorah",
+        "Initials": "L"
+      },
+      {
+        "LastName": "Liu",
+        "ForeName": "Yimeng",
+        "Initials": "Y"
+      },
+      {
+        "LastName": "Burns",
+        "ForeName": "Cassandra E",
+        "Initials": "CE"
+      },
+      {
+        "LastName": "Abbasi",
+        "ForeName": "Siddique A",
+        "Initials": "SA"
+      },
+      {
+        "LastName": "Pannacciulli",
+        "ForeName": "Nicola",
+        "Initials": "N"
+      },
+      {
+        "CollectiveName": "MariTide Phase 2 Obesity Trial Investigators"
+      }
+    ],
+    "volume": "393",
+    "issue": "9",
+    "pages": "843-857",
+    "publicationTypes": [
+      "Journal Article",
+      "Randomized Controlled Trial",
+      "Clinical Trial, Phase II",
+      "Multicenter Study"
+    ],
+    "issueDate": "2025-09-04",
+    "electronicArticleDate": "2025-06-23",
+    "citationMatch": "Stored PMID/DOI/first four authors/year/issue date agree; title dash and terminal punctuation differ only.",
+    "pmcid": null,
+    "pmcidScope": "No article-level PMC identifier returned.",
+    "articleIds": [
+      {
+        "IdType": "pubmed",
+        "value": "40549887"
+      },
+      {
+        "IdType": "doi",
+        "value": "10.1056/NEJMoa2504214"
+      }
+    ],
+    "articleIdPath": "./PubmedArticle/PubmedData/ArticleIdList/ArticleId",
+    "linkedComments": [
+      {
+        "RefType": "CommentIn",
+        "RefSource": "N Engl J Med. 2025 Dec 4;393(22):2274. doi: 10.1056/NEJMc2514331.",
+        "PMID": "41337722"
+      },
+      {
+        "RefType": "CommentIn",
+        "RefSource": "N Engl J Med. 2025 Dec 4;393(22):2274-2275. doi: 10.1056/NEJMc2514331.",
+        "PMID": "41337723"
+      },
+      {
+        "RefType": "CommentIn",
+        "RefSource": "N Engl J Med. 2025 Dec 4;393(22):2275. doi: 10.1056/NEJMc2514331.",
+        "PMID": "41337724"
+      }
+    ],
+    "commentsQualification": "Three CommentIn links; not automatically corrections/retractions. No linked records fetched.",
+    "copyrightInformation": "Copyright © 2025 Massachusetts Medical Society.",
+    "rightsQualification": "Qualified PubMed mechanism API citation/abstract research does not grant redistribution of copyrighted abstracts or fulltext. No new source rights or method acceptance.",
+    "method": "One serialized client-identified PubMed EFetch GET in original research; no implementation acquisition.",
+    "retrievedAtUtc": "2026-09-13T12:36:35.198656+00:00",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "tierQualification": "PubMed index C1 is distinct from inherited controlled-human-study B1 snapshot and Strong/high claim ratings, pending acceptance.",
+    "retentionAttribution": "Worker reports raw-byte XML parsing and transient abstract output; only minimal citation metadata, receipt and paraphrase retained, no XML/abstract/fulltext payload persisted. No independent transport rehash.",
+    "leadCorroboration": "Worker observed BACKGROUND. Lead has not independently observed it; not independent corroboration.",
+    "familyQualification": "Underlying trial sponsorship/lineage and family independence unresolved; PubMed indexing grants no independent-family acceptance."
+  },
+  "sourceSha256": "2fa875a73469b01b029c1019de493000ec6d2baebd858aae8cde64d452caf1d1",
+  "payloadProvenance": {
+    "bytes": 22498,
+    "attribution": "Worker-reported original transport hash/size, not independently rehashed.",
+    "requests": 1,
+    "retries": 0
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/maridebart-mechanism-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/maridebart-mechanism-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/maridebart-mechanism-replacement-assessment-20260913/source-evidence.json",
+    "acquisitionMetadata": "research/output/gtm-activation-20260909/maridebart-mechanism-replacement-assessment-20260913/acquisition-metadata.json",
+    "receipt": "research/output/gtm-activation-20260909/maridebart-mechanism-replacement-assessment-20260913/receipts/efetch-20260913T123634768581Z.json",
+    "acquisitionScript": "research/output/gtm-activation-20260909/maridebart-mechanism-replacement-assessment-20260913/acquisition.py"
+  },
+  "queueAccounting": "Prepared20to21/completed0/prior-co-citation stays13: newly selected PubMed study was not target-co-cited.",
+  "remainingGates": [
+    "Scientific evidence, inherited ratings and source-method/reuse qualification pending.",
+    "Trial sponsorship/lineage and independent-family assessment unresolved.",
+    "No distinct-person human acceptance or publication/promotion granted; no runtime or registry activation."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}
