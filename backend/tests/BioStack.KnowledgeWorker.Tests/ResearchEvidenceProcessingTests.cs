@@ -6,6 +6,42 @@ using Xunit;
 
 public class ResearchEvidenceProcessingTests
 {
+    [Theory]
+    [InlineData("resolve-review-items", true)]
+    [InlineData("RESOLVE-REVIEW-ITEMS", true)]
+    [InlineData("request-changes", false)]
+    [InlineData("approve-claims", false)]
+    [InlineData("approve-for-promotion", false)]
+    [InlineData("reject", false)]
+    [InlineData("archive-draft", false)]
+    public void ReviewDecisionIndex_Requires_Explicit_Item_Resolution(string kind, bool resolves)
+    {
+        var batch = JsonNode.Parse(File.ReadAllText(TestPaths.FixturePath("review-decision.sample.json")))!;
+        var decision = batch["decisions"]![0]!;
+        decision["decision"] = kind;
+        decision["compoundName"] = "Synthetic Compound";
+        decision["scope"]!["reviewQueueItemIds"] = new JsonArray("queue-1");
+        var index = ReviewDecisionIndex.FromBatches(new[] { batch });
+        Assert.Equal(resolves, index.IsReviewQueueItemResolved("synthetic compound", "QUEUE-1"));
+        Assert.False(index.IsReviewQueueItemResolved("Other Compound", "queue-1"));
+        Assert.False(index.IsReviewQueueItemResolved("Synthetic Compound", "queue-2"));
+        Assert.False(index.IsReviewQueueItemResolved("Synthetic Compound", ""));
+        Assert.Equal(kind is "reject" or "archive-draft", index.IsCompoundArchived("Synthetic Compound"));
+    }
+
+    [Fact]
+    public void SummaryBuilder_Claim_Approval_Does_Not_Resolve_Referenced_Queue_Item()
+    {
+        var draft = Draft("Creatine", "Strong", "complete", needsReview: false);
+        var batch = JsonNode.Parse(File.ReadAllText(TestPaths.FixturePath("review-decision.sample.json")))!;
+        batch["decisions"]![0]!["decision"] = "approve-claims";
+        batch["decisions"]![0]!["scope"]!["reviewQueueItemIds"] = new JsonArray("pending-item");
+        var queue = new[] { new ResearchReviewQueueItem("pending-item", "Creatine", "review", "Needs verification", Array.Empty<string>()) };
+        var summary = new ResearchSummaryBuilder().Build(new JsonArray(draft), queue, ReviewDecisionIndex.FromBatches(new[] { batch }));
+        Assert.Equal(1, summary.ReviewQueueItemCount);
+        Assert.Equal("review-required", Assert.Single(summary.Compounds).PromotionReadiness);
+    }
+
     [Fact]
     public void Preprocessor_Flags_SafetyCritical_Claim_Without_Authoritative_Source()
     {
