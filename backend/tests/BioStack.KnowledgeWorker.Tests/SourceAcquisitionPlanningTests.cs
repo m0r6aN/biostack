@@ -13,6 +13,7 @@ public class SourceAcquisitionPlanningTests
     [Theory]
     [InlineData("dailymed-pregnyl-organon-research-20260913", "dailymed")]
     [InlineData("pubmed-38072514-lasofoxifene-research-20260913", "pubmed")]
+    [InlineData("pubmed-22459616-basaria-research-20260913", "pubmed")]
     public void ActivationPolicy_Exact_Reviewed_Aliases_Resolve_Without_Prefix_Authority(string alias, string sourceId)
     {
         var index = new SourceRegistryActivationPolicy().Build(LoadPilotRegistry());
@@ -35,6 +36,33 @@ public class SourceAcquisitionPlanningTests
             snapshot!.CanAcquire,
             string.Join(Environment.NewLine, snapshot.BlockingReasons)));
         Assert.All(selected, snapshot => Assert.Empty(snapshot!.BlockingReasons));
+    }
+
+    [Fact]
+    public void Basaria_Alias_Allows_Existing_Efficacy_Field_But_Denies_Adverse_Sibling()
+    {
+        const string alias = "pubmed-22459616-basaria-research-20260913";
+        var registry = LoadPilotRegistry();
+        var entry = new SourceRegistryActivationPolicy().Build(registry).Resolve(alias)!;
+        Assert.Contains("efficacy-claims", entry.AuthorizedFieldUses);
+        Assert.DoesNotContain("contraindications-warnings", entry.AuthorizedFieldUses);
+        var packet = LoadJson(Path.Combine(RepositoryRoot(), "research/input/evidence/ligandrol.evidence.json"));
+        var efficacy = packet["claims"]!.AsArray().Single(c => (string?)c?["claimId"] == "ligandrol-efficacy-lbm-healthy-men-001")!;
+        var authorizer = new SourceRegistryAuthorizer();
+        var efficacyOnly = packet.DeepClone();
+        efficacyOnly["claims"] = new JsonArray(efficacy.DeepClone());
+        var allowed = authorizer.Authorize(efficacyOnly, registry);
+        Assert.Empty(allowed.ReviewReasons);
+        var adverse = packet["claims"]!.AsArray().Single(c => (string?)c?["claimId"] == "ligandrol-adverse-effect-hormone-suppression-001")!.DeepClone();
+        adverse["sourceRefs"] = new JsonArray(alias);
+        var synthetic = packet.DeepClone();
+        synthetic["claims"] = new JsonArray(adverse);
+        var denied = authorizer.Authorize(synthetic, registry);
+        Assert.Contains("source-registry-field-mismatch", denied.QualityFlags);
+        Assert.Contains(denied.ReviewReasons, reason => reason.Contains("ligandrol-adverse-effect-hormone-suppression-001", StringComparison.Ordinal)
+            && reason.Contains("contraindications-warnings", StringComparison.Ordinal));
+        Assert.Equal("basaria-2013-jgerontol-rct", (string?)packet["claims"]!.AsArray()
+            .Single(c => (string?)c?["claimId"] == "ligandrol-adverse-effect-hormone-suppression-001")!["sourceRefs"]![0]);
     }
 
     [Fact]
@@ -85,7 +113,7 @@ public class SourceAcquisitionPlanningTests
         Assert.Contains("sourceItemId", intent.RequiredProvenanceFields);
         Assert.Equal("2.0.0", intent.RegistrySchemaVersion);
         Assert.Equal(
-            "4702643fa1a65624e4c8f808eb57f55c3a1666b58268f2b2f1218acb59dcab6f",
+            "aa9e5dd16c0c6743f027ec9ea4be9b8d17f30f367dc0a0e9be7e5724e452d15e",
             intent.RegistryBindingSha256);
     }
 
@@ -813,7 +841,7 @@ public class SourceAcquisitionPlanningTests
             RepositoryRoot(),
             "research",
             "source-authorization",
-            "recommended-seven-source-decisions.alias-map-20260913.json"));
+            "recommended-seven-source-decisions.basaria-alias-map-20260913.json"));
 
     private static JsonNode LoadPilotRegistry()
         => LoadJson(PilotRegistryPath());
