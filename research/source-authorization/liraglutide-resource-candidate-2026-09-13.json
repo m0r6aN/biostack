@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T04:27:57.338619Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "liraglutide-mechanism-glp1-analog-001",
+  "candidateStatement": "The VICTOZA label describes liraglutide as an analog of human GLP-1 that activates the GLP-1 receptor.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "01aa7621dea0a8980bb94f5bc3c7814aabf0ea1c",
+    "path": "research/input/evidence/liraglutide.evidence.json",
+    "bytes": 34125,
+    "sha256": "920ca2fbfa60954741e8cbcb9ec3978fe4ab2c1c7815098b36f3a3155f3f0fbf"
+  },
+  "supersededClaimSha256": "d00f89393839af02c37bf9cdc04d13149ea4c00ed49dbe15d53833175abd9648",
+  "supersededClaimHashEncoding": "SHA-256 of UTF-8 base claim JSON, recursively sorted keys, compact comma/colon separators, ASCII escaping, no trailing newline: json.dumps(claim, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8').",
+  "removedExcerpts": [
+    {
+      "sourceId": "drugbank-db06655",
+      "locator": "Summary / Description",
+      "chars": 163,
+      "sha256": "12022dd939b48c04182665213d8339922d511c9789c6cc0828647b66616da0be"
+    }
+  ],
+  "removedExcerptScope": "One reviewed-base DrugBank Summary / Description excerpt; PubChem co-citation had no excerpt. No DrugBank or PubChem acquisition or rights determination.",
+  "originalContext": {
+    "population": null,
+    "route": "subcutaneous injection",
+    "formulation": "liraglutide (recombinant GLP-1 analog)",
+    "useCase": "mechanism / classification",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": "subcutaneous injection",
+    "formulation": "liraglutide (GLP-1 analog)",
+    "useCase": "mechanism / classification",
+    "doseText": null
+  },
+  "contextChange": {
+    "field": "formulation",
+    "before": "liraglutide (recombinant GLP-1 analog)",
+    "after": "liraglutide (GLP-1 analog)",
+    "rationale": "Minimal formulation wording avoids manufacturing shorthand; recombinant precursor production and later modification are compatible, not a contradiction. Original subcutaneous route and every other context field unchanged."
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "pending evidence acceptance; unchanged, not ratified"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "dailymed-victoza-label",
+    "sourceType": "regulator-label",
+    "authorityTier": "A1",
+    "title": "Label: VICTOZA- liraglutide injection",
+    "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5a9ef4ea-c76a-4d34-a604-27c5b505f5a4",
+    "doi": null,
+    "pmid": null,
+    "publishedAt": null,
+    "accessedAt": "2026-08-28T22:30:00Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "dailymed",
+    "sourceItemId": "dailymed-victoza-label",
+    "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5a9ef4ea-c76a-4d34-a604-27c5b505f5a4",
+    "splSetId": "5a9ef4ea-c76a-4d34-a604-27c5b505f5a4",
+    "splDocumentId": "0d10d10e-0fe0-47ee-b9da-628e34907e98",
+    "labelVersion": 31,
+    "versionObservation": "Version 31 observed in the dated September 13, 2026 worker receipt; not indefinitely current or a historical-byte assertion.",
+    "labeler": "Novo Nordisk",
+    "labelerAuthorship": "Source labeler/author organization, not inferred government authorship.",
+    "archiveTitle": "VICTOZA (LIRAGLUTIDE) INJECTION [NOVO NORDISK]",
+    "effectiveDate": "2025-10-14",
+    "archivePublishedDate": "2025-11-17",
+    "bodyRevision": "not separately extracted; no invented value",
+    "chronologyQualification": "Original access follows current archive publication; neither this ordering nor effectiveTime proves historical version/byte identity.",
+    "ndc": [
+      "0169-4060",
+      "0169-4060-13",
+      "0169-4060-12",
+      "0169-4060-90",
+      "0169-4060-97",
+      "0169-4060-98",
+      "0169-4060-99"
+    ],
+    "ndcCoverage": "All distinct observed code elements bearing codeSystem2.16.840.1.113883.6.69 in retrieved XML: one product and six package codes. No all-market coverage or current package availability asserted.",
+    "sectionName": "12.1 Mechanism of Action",
+    "sectionCode": "43679-0",
+    "sectionId": "39a7ef36-03bf-4437-92dd-d614cb025d82",
+    "observedSectionLocators": [
+      {
+        "sectionCode": "34089-3",
+        "sectionName": "11 DESCRIPTION",
+        "sectionId": "9b59d4b8-3d15-4060-ba99-b28d318c3f4c"
+      },
+      {
+        "sectionCode": "43679-0",
+        "sectionName": "12.1 Mechanism of Action",
+        "sectionId": "39a7ef36-03bf-4437-92dd-d614cb025d82"
+      }
+    ],
+    "retrievedAtUtc": "2026-09-13T04:09:04.873290Z",
+    "retrievalAttribution": "Worker-reported original API completion time, no fresh request or independent payload/transcript verification by preparation.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified DailyMed factual-candidate/API approval; no new rights, human, family or publication acceptance.",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "transformationNote": "Codex manually applied exact reviewed statement/formulation and provenance; no adapter or acquisition run.",
+    "humanReviewStatus": "pending",
+    "retentionAttribution": "Worker reports in-memory parsing without full XML or source-section text written to disk; no independent full-transcript certification."
+  },
+  "sourceSha256": "b14adc782ac8eaf1e871bdc936480c5d5d23ca1edc49306020c978d4fa5ee500",
+  "payloadProvenance": {
+    "bytes": 453965,
+    "historySha256": "52ab4c3d33187649b192371fbe4f3e5e9c2a6b2494d02d0fd444bed7f61238d0",
+    "historyBytes": 2101,
+    "attribution": "Original worker-reported hashes/sizes, not freshly rehashed payloads."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/liraglutide-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/liraglutide-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/liraglutide-replacement-assessment-20260913/source-evidence.json",
+    "historyReceipt": "research/output/gtm-activation-20260909/liraglutide-replacement-assessment-20260913/receipts/dailymed-20260913T040904215158Z.json",
+    "xmlReceipt": "research/output/gtm-activation-20260909/liraglutide-replacement-assessment-20260913/receipts/dailymed-20260913T040904534051Z.json"
+  },
+  "scopeRationale": "Minimal label-scoped GLP-1 analog/receptor statement only; no sequence percentage, manufacturing detail, signalling chain, outcome or dose addition. Omitted claims are outside this source-scoped candidate, not declared false.",
+  "queueAccounting": "Prepared increases 8 to 9, completed remains 0; prior-co-citation assessed count remains 5 because original PubChem co-citation was not assessed. Target substanceAssessed refers to the newly assessed DailyMed candidate.",
+  "dependencyDisposition": {
+    "target": "All prior target references replaced with existing DailyMed alias; historical snapshots, identifiers, other claims and ops unchanged.",
+    "otherReviewedBaseClaimsWithDrugBankRefs": [],
+    "boundary": "No historical/production packet-wide clearance; DrugBank acquisition stays disabled."
+  },
+  "remainingGates": [
+    "Evidence-reviewer acceptance of statement, formulation narrowing and inherited Strong/high ratings.",
+    "Independent-family/lineage closure not satisfied by a new citation alone.",
+    "Item/version and distinct-person human review before promotion remain separate.",
+    "Publication, deployment and production containment remain unperformed."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}
