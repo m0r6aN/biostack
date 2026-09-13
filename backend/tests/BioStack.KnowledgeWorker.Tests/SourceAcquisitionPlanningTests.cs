@@ -10,6 +10,17 @@ public class SourceAcquisitionPlanningTests
 {
     private const string ReviewedAt = "2026-07-25T13:15:00Z";
 
+    [Theory]
+    [InlineData("dailymed-pregnyl-organon-research-20260913", "dailymed")]
+    [InlineData("pubmed-38072514-lasofoxifene-research-20260913", "pubmed")]
+    public void ActivationPolicy_Exact_Reviewed_Aliases_Resolve_Without_Prefix_Authority(string alias, string sourceId)
+    {
+        var index = new SourceRegistryActivationPolicy().Build(LoadPilotRegistry());
+        Assert.Same(index.BySourceId(sourceId), index.Resolve(alias));
+        Assert.True(index.Resolve(alias)!.CanAcquire);
+        Assert.Null(index.Resolve(alias + "-unregistered"));
+    }
+
     [Fact]
     public void ActivationPolicy_PilotRegistry_Activates_Approved_RecommendedSeven()
     {
@@ -74,7 +85,7 @@ public class SourceAcquisitionPlanningTests
         Assert.Contains("sourceItemId", intent.RequiredProvenanceFields);
         Assert.Equal("2.0.0", intent.RegistrySchemaVersion);
         Assert.Equal(
-            "71ed755fbf532f69ccec516e95aa0c821f645263dc081d97f24a6ab3f9c2503d",
+            "4702643fa1a65624e4c8f808eb57f55c3a1666b58268f2b2f1218acb59dcab6f",
             intent.RegistryBindingSha256);
     }
 
@@ -802,7 +813,7 @@ public class SourceAcquisitionPlanningTests
             RepositoryRoot(),
             "research",
             "source-authorization",
-            "recommended-seven-source-decisions.v2.json"));
+            "recommended-seven-source-decisions.alias-map-20260913.json"));
 
     private static JsonNode LoadPilotRegistry()
         => LoadJson(PilotRegistryPath());

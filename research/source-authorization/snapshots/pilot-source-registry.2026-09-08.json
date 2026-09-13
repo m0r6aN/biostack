@@ -484,8 +484,7 @@
           "dailymed-victoza-label",
           "dailymed-vyleesi-label",
           "dailymed-wegovy",
-          "dailymed-zepbound",
-          "dailymed-pregnyl-organon-research-20260913"
+          "dailymed-zepbound"
         ],
         "name": "DailyMed",
         "publisher": "National Library of Medicine",
@@ -2814,8 +2813,7 @@
           "ratner-2004-diabetic-medicine-rct",
           "schneider-1992-double-blind-insomnia",
           "watanabe-2012-oral-whitening-rct",
-          "yatsu-2018-biophys-res-commun-osteoblast",
-          "pubmed-38072514-lasofoxifene-research-20260913"
+          "yatsu-2018-biophys-res-commun-osteoblast"
         ],
         "name": "PubMed",
         "publisher": "National Library of Medicine",
