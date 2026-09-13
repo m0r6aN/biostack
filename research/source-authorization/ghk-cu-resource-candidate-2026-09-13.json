@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T06:42:02.604816Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "ghk-cu-identity-pubchem-001",
+  "candidateStatement": "PubChem lists a compound record titled GHK-Cu under CID 133697840.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "c8150383b0bbcd80b1fbbd898c37d7bec680603a",
+    "path": "research/input/evidence/ghk-cu.evidence.json",
+    "bytes": 10516,
+    "sha256": "de159169acc7603b6fccb8cb6f3aaf2fa07305823df377b2e9125884e82b9c70"
+  },
+  "supersededClaimSha256": "679b010f3b91303eb6eeb4cba18c631a1ea378d6e24c9327d69dc21c10e9adeb",
+  "supersededClaimHashEncoding": "SHA256 of UTF-8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "drugbank-prezatide",
+      "locator": "Drug entry description",
+      "chars": 118,
+      "sha256": "f06ec236a734e4ed105cecb3e3d2c1202320fedbaab6c53de22592ca2f2a85ea"
+    },
+    {
+      "sourceId": "drugbank-prezatide",
+      "locator": "Drug entry description",
+      "chars": 61,
+      "sha256": "1300d964663179eb37297332a2ffa7a64c1e53a4d91fe3030b0d4c126e262eeb"
+    }
+  ],
+  "originalSourceRefs": [
+    "pubchem-ghk-cu",
+    "drugbank-prezatide"
+  ],
+  "historicalNullQuoteLocators": [
+    {
+      "sourceRef": "pubchem-ghk-cu",
+      "quote": null,
+      "pageOrSection": "Compound summary"
+    }
+  ],
+  "historicalReviewFlags": [
+    "verify aliases and CAS across product types",
+    "independent review: DrugBank entry DB11296 ('Prezatide') corroborates the Gly-His-Lys copper-complex identity and cosmetic-use context; DrugBank's own CAS field was login-gated so CAS 300801-03-0 was cross-confirmed via vendor chemical-safety listings (e.g. Cayman Chemical, MedKoo) rather than a second free structured-database CAS field — flagged for a future stronger CAS cross-check"
+  ],
+  "historicalFlagQualification": "Previous vendor/CAS/DrugBank claims remain unverified historical commentary; this review supports only returned PubChem CID/title mapping. Removed quote text is available only in original Git history, not copied here.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": null,
+    "useCase": "identity resolution",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": null,
+    "useCase": "identity resolution",
+    "doseText": null
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Unknown",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "pubchem-ghk-cu",
+    "sourceType": "database",
+    "authorityTier": "C1",
+    "title": "PubChem Compound Summary for GHK-Cu",
+    "publisher": "National Center for Biotechnology Information",
+    "url": "https://pubchem.ncbi.nlm.nih.gov/compound/133697840",
+    "doi": null,
+    "pmid": null,
+    "publishedAt": null,
+    "accessedAt": "2026-05-05T00:00:00Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubchem",
+    "sourceItemId": "pubchem-ghk-cu",
+    "sourceUrl": "https://pubchem.ncbi.nlm.nih.gov/compound/133697840",
+    "requestUrl": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/133697840/property/Title,MolecularFormula,IUPACName,InChIKey/JSON",
+    "method": "fixed-CID PUG REST property API",
+    "query": "CID133697840; Title,MolecularFormula,IUPACName,InChIKey",
+    "returnedCID": 133697840,
+    "returnedTitle": "GHK-Cu",
+    "supportLocator": "PUG REST fixed CID 133697840 property response: CID and Title; factual paraphrase only.",
+    "identityQualification": "Exact database node title/CID mapping; returned IUPAC name describes a bis-peptide/copper representation, not universal equivalence of all products or stoichiometries.",
+    "casAssessment": "Not requested or returned; mapping and contributor attribution unresolved. No CAS falsehood finding.",
+    "sourceUpdateDate": null,
+    "sourceVersion": null,
+    "dateQualification": "No update/version supplied by property response; no historical access-to-payload identity inferred.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified PubChem API identity approval; no contributor CAS annotation reused or new approval granted.",
+    "retrievedAtUtc": "2026-09-13T06:18:23.659667Z",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "retrievalAttribution": "Original worker receipt and retained property projection; no new request or independent original transport-byte rehash."
+  },
+  "sourceSha256": "e9fb095cc837666fbcc5e373f4614707db672f2d0649ff146328b0c9318414f3",
+  "payloadProvenance": {
+    "bytes": 352,
+    "attribution": "Worker-reported original response hash and size; retained projection is not represented as original transport bytes."
+  },
+  "requestHistory": {
+    "totalAttempts": 2,
+    "successfulPayloads": 1,
+    "initialAttempt": {
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/133697840/property/Title,MolecularFormula,IUPACName,InChIKey/JSON",
+      "requestStartUtc": "2026-09-13T06:01:25.016789Z",
+      "requestEndUtc": "2026-09-13T06:01:25.300947Z",
+      "httpStatus": 503,
+      "retryAfter": "30",
+      "stopped": true
+    },
+    "successfulAttempt": {
+      "attempt": 2,
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/133697840/property/Title,MolecularFormula,IUPACName,InChIKey/JSON",
+      "method": "GET",
+      "requestStartUtc": "2026-09-13T06:18:23.298891Z",
+      "requestEndUtc": "2026-09-13T06:18:23.659667Z",
+      "httpStatus": 200,
+      "bytes": 352,
+      "sha256": "e9fb095cc837666fbcc5e373f4614707db672f2d0649ff146328b0c9318414f3",
+      "serverDate": "Sun, 13 Sep 2026 06:18:24 GMT"
+    },
+    "qualification": "Two original requests, same endpoint; authorized second request after more than16minutes. Initial503 retained; no request by this implementation."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/ghk-cu-codex-review-20260913.md",
+    "supplementalDirective": "research/output/gtm-activation-20260909/ghk-cu-implementation-directive-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/ghk-cu-replacement-assessment-20260913/retry02-assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/ghk-cu-replacement-assessment-20260913/retry02-source-evidence.json",
+    "projection": "research/output/gtm-activation-20260909/ghk-cu-replacement-assessment-20260913/retry02-identity-properties.json",
+    "initialReceipt": "research/output/gtm-activation-20260909/ghk-cu-replacement-assessment-20260913/receipts/pug-20260913T060125016789Z.json",
+    "receipt": "research/output/gtm-activation-20260909/ghk-cu-replacement-assessment-20260913/receipts/retry02-pug-20260913T061823298891Z.json"
+  },
+  "queueAccounting": "Prepared11to12, completed0; prior-co-citation assessed7to8 because PubChem already co-cited. Historical containment totals unchanged.",
+  "remainingGates": [
+    "Evidence-reviewer acceptance of database-node mapping and inherited Unknown/high.",
+    "CAS/contributor identity and product/stoichiometry equivalence remain unresolved, not asserted by candidate.",
+    "Independent-family, distinct-person human acceptance and publication/promotion remain separate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

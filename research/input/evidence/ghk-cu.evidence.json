@@ -18,16 +18,34 @@
   ],
   "claims": [
     {
-      "claimId": "ghk-cu-identity-pubchem-001", "claimType": "identity", "statement": "GHK-Cu is indexed by PubChem as CID 133697840 and associated with CAS number 300801-03-0.",
-      "context": { "population": null, "route": null, "formulation": null, "useCase": "identity resolution", "doseText": null },
-      "evidenceTier": "Unknown", "confidence": "high", "fieldAuthorityRequired": false,
-      "sourceRefs": ["pubchem-ghk-cu", "drugbank-prezatide"],
-      "extractedEvidence": [
-        { "sourceRef": "pubchem-ghk-cu", "quote": null, "pageOrSection": "Compound summary" },
-        { "sourceRef": "drugbank-prezatide", "quote": "Prezatide is a tripeptide consisting of glycine, histidine, and lysine which readily forms a complex with copper ions.", "pageOrSection": "Drug entry description" },
-        { "sourceRef": "drugbank-prezatide", "quote": "Prezatide is used in cosmetic products for the skin and hair.", "pageOrSection": "Drug entry description" }
+      "claimId": "ghk-cu-identity-pubchem-001",
+      "claimType": "identity",
+      "statement": "PubChem lists a compound record titled GHK-Cu under CID 133697840.",
+      "context": {
+        "population": null,
+        "route": null,
+        "formulation": null,
+        "useCase": "identity resolution",
+        "doseText": null
+      },
+      "evidenceTier": "Unknown",
+      "confidence": "high",
+      "fieldAuthorityRequired": false,
+      "sourceRefs": [
+        "pubchem-ghk-cu"
       ],
-      "reviewFlags": ["verify aliases and CAS across product types", "independent review: DrugBank entry DB11296 ('Prezatide') corroborates the Gly-His-Lys copper-complex identity and cosmetic-use context; DrugBank's own CAS field was login-gated so CAS 300801-03-0 was cross-confirmed via vendor chemical-safety listings (e.g. Cayman Chemical, MedKoo) rather than a second free structured-database CAS field — flagged for a future stronger CAS cross-check"]
+      "extractedEvidence": [
+        {
+          "sourceRef": "pubchem-ghk-cu",
+          "quote": null,
+          "pageOrSection": "PUG REST fixed CID 133697840 property response: CID and Title; factual paraphrase only."
+        }
+      ],
+      "reviewFlags": [
+        "verify aliases and CAS across product types",
+        "independent review: DrugBank entry DB11296 ('Prezatide') corroborates the Gly-His-Lys copper-complex identity and cosmetic-use context; DrugBank's own CAS field was login-gated so CAS 300801-03-0 was cross-confirmed via vendor chemical-safety listings (e.g. Cayman Chemical, MedKoo) rather than a second free structured-database CAS field — flagged for a future stronger CAS cross-check",
+        "Candidate preparation 2026-09-13: PubChem title/CID database-node mapping only. Original vendor/CAS/DrugBank commentary remains historical and was not verified by this review. CAS was not requested/returned; omission is not a falsehood finding. Returned representation does not establish universal product, copper-complex or stoichiometry equivalence. Unknown/high and complete context remain inherited pending evidence review. Two DrugBank excerpts removed; original PubChem quote:null locator is historical, not a removed quote. Existing co-citation adds no independent-family closure. Evidence/human/publication gates remain open. See research/source-authorization/ghk-cu-resource-candidate-2026-09-13.json."
+      ]
     },
     {
       "claimId": "ghk-cu-skin-regeneration-context-001", "claimType": "studied-use", "statement": "A review describes GHK-Cu research in skin regeneration and wound-healing contexts, with substantial preclinical evidence and cosmetic/topical relevance; BioStack should keep topical/cosmetic claims separate from injectable or systemic claims.",
