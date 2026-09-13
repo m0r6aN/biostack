@@ -9,7 +9,7 @@
     "path": "shared/source-rights/drugbank-containment.v1.json",
     "sha256": "017fa7dcf5cf2df6d5c96c94bada2601dad38e668a91ef5eb7d40ae33a12994f"
   },
-  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. Twenty-three quote-free replacement candidates are prepared and remain review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
+  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. Twenty-four quote-free replacement candidates are prepared and remain review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
   "counts": {
     "rows": 30,
     "distinctClaims": 30,
@@ -19,7 +19,7 @@
     "claimsWithNoCoCitation": 2,
     "claimsActuallyReSourced": 0,
     "coCitationCandidatesSubstanceAssessed": 15,
-    "replacementCandidatesPrepared": 23
+    "replacementCandidatesPrepared": 24
   },
   "rows": [
     {
@@ -908,8 +908,15 @@
           "registryClass": "UNREGISTERED"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubmed-etass-2013",
+        "recordPath": "research/source-authorization/thymosin-alpha-1-etass-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "vosilasarm.evidence.json",
@@ -976,5 +983,5 @@
       "substanceAssessed": false
     }
   ],
-  "updatedAtUtc": "2026-09-13T16:22:37.055202Z"
+  "updatedAtUtc": "2026-09-13T16:48:38.253230Z"
 }
