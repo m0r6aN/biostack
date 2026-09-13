@@ -295,11 +295,11 @@
     {
       "claimId": "bazedoxifene-mechanism-serm-001",
       "claimType": "mechanism",
-      "statement": "Bazedoxifene is a selective estrogen receptor modulator (SERM) with tissue-selective activity: it acts as a competitive estrogen-receptor antagonist in breast and endometrial tissue (antiproliferative effect), while acting as an estrogen-receptor agonist in bone, favorably affecting bone turnover and lipid metabolism.",
+      "statement": "The DUAVEE label describes its bazedoxifene component as an estrogen agonist in some estrogen-sensitive tissues and an antagonist in others.",
       "context": {
         "population": null,
         "route": null,
-        "formulation": "bazedoxifene (free base or acetate)",
+        "formulation": "bazedoxifene (supplied as the acetate salt in DUAVEE)",
         "useCase": "mechanism description",
         "doseText": null
       },
@@ -307,33 +307,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "statpearls-bazedoxifene",
-        "pmc3131985-bazedoxifene-review",
-        "drugbank-db06401"
+        "dailymed-duavee-label"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "statpearls-bazedoxifene",
-          "quote": "In cases of breast cancer or uterine carcinoma/endometrial hyperplasia, bazedoxifene acts as a competitive antagonist, yielding antiproliferative effects.",
-          "pageOrSection": "Mechanism of Action"
-        },
-        {
-          "sourceRef": "statpearls-bazedoxifene",
-          "quote": "the drug acts as an agonist by stimulating lipid metabolism and ensuring proper regulation of bone turnover",
-          "pageOrSection": "Mechanism of Action"
-        },
-        {
-          "sourceRef": "pmc3131985-bazedoxifene-review",
-          "quote": "a novel selective estrogen receptor modulator, has been developed to have favorable effects on bone and the lipid profile",
-          "pageOrSection": "Abstract/summary"
-        },
-        {
-          "sourceRef": "drugbank-db06401",
-          "quote": "a selective estrogen receptor modulator (SERM) used to treat moderate to severe vasomotor symptoms in menopause and osteoporosis alone or in combination with conjugated estrogens",
-          "pageOrSection": "Summary"
+          "sourceRef": "dailymed-duavee-label",
+          "quote": null,
+          "pageOrSection": "12.1 Mechanism of Action"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "Candidate preparation 2026-09-13: narrowed to the reviewed DUAVEE bazedoxifene-component statement and formulation supplied as acetate in DUAVEE; original formulation is preserved in provenance, not asserted universally false. All other context and inherited Strong/high remain unchanged pending evidence acceptance. Removed four original excerpts (two StatPearls, one PMC, one DrugBank) without a new secondary-source rights determination; replacement is one DailyMed section 12.1 quote:null locator. No conjugated-estrogen or combination effects are transferred to this component. Source-family, evidence/ratings, human and publication gates remain open; preparation is not completion. See research/source-authorization/bazedoxifene-resource-candidate-2026-09-13.json."
+      ]
     },
     {
       "claimId": "bazedoxifene-efficacy-vertebral-fracture-001",
