@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T07:58:23.585217Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "exenatide-identity-identifiers-001",
+  "candidateStatement": "PubChem lists a compound record titled Exenatide under CID 45588096 with molecular formula C184H282N50O60S.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "feec1ec7777a65fc72c369f221fca63491f6105b",
+    "path": "research/input/evidence/exenatide.evidence.json",
+    "bytes": 27713,
+    "sha256": "5c6c121237360e409af015bfe9bfe4f2477c5a7dc9a4050919a9d7618f1e0f2d"
+  },
+  "supersededClaimSha256": "e249f925934627c8127fccd5ad4c42c55abbb59795fbb223f6df82073d96878e",
+  "supersededClaimHashEncoding": "SHA256 of UTF-8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "pubchem-cid-45588096",
+      "locator": "Compound summary header",
+      "chars": 42,
+      "sha256": "1a942c4bec693fc75148232ea8b65fdee304fa06bd7f5000a929d732e79fcd64"
+    },
+    {
+      "sourceId": "drugbank-db01276",
+      "locator": "Identification",
+      "chars": 34,
+      "sha256": "6441350ab421f042dfe5941de20fbe731ebaa65915bb68353a2c26b696cbe9f8"
+    }
+  ],
+  "originalSourceRefs": [
+    "pubchem-cid-45588096",
+    "drugbank-db01276"
+  ],
+  "historicalNullQuoteLocators": [],
+  "historicalReviewFlags": [
+    "CAS number and UNII could not be confirmed from freely accessible page content this session (DrugBank gated the field, PubChem full record required JavaScript rendering); resolve at review time"
+  ],
+  "historicalFlagQualification": "Historical CAS/UNII uncertainty and access limitation remain unverified history, not new service findings; only returned CID/title/formula supported. Removed quote text is available only in original Git history, not copied here.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "exenatide",
+    "useCase": "structured identifier reference",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "exenatide",
+    "useCase": "structured identifier reference",
+    "doseText": null
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "pubchem-cid-45588096",
+    "sourceType": "structured-database",
+    "authorityTier": "B2",
+    "title": "Exenatide, CID 45588096",
+    "publisher": "National Center for Biotechnology Information / PubChem",
+    "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Exenatide",
+    "doi": null,
+    "pmid": null,
+    "publishedAt": null,
+    "accessedAt": "2026-08-28T22:30:00Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubchem",
+    "sourceItemId": "pubchem-cid-45588096",
+    "sourceUrl": "https://pubchem.ncbi.nlm.nih.gov/compound/45588096",
+    "requestUrl": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/45588096/property/Title,MolecularFormula/JSON",
+    "method": "PUG REST fixed CID properties",
+    "query": "CID45588096;Title,MolecularFormula",
+    "returnedCID": 45588096,
+    "returnedTitle": "Exenatide",
+    "returnedMolecularFormula": "C184H282N50O60S",
+    "supportLocator": "PUG REST fixed CID 45588096 property response: CID, Title and MolecularFormula; factual paraphrase only.",
+    "scope": "Exact database node; no universal salt/product equivalence or CAS/UNII/DrugBank lookup.",
+    "sourceUpdateDate": null,
+    "sourceVersion": null,
+    "dateQualification": "No update/version supplied by property response; no historical access-to-payload identity inferred.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified PubChem API identity approval; no new rights or contributed annotation reuse.",
+    "retrievedAtUtc": "2026-09-13T07:39:49.596698Z",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "retrievalAttribution": "Original worker receipt and retained property projection; no new request or independent original transport-byte rehash."
+  },
+  "sourceSha256": "116fcfb3f9ed7167043e0863e02f738e5d79ca1781936e21ff91a5149a1dfcc2",
+  "payloadProvenance": {
+    "bytes": 172,
+    "attribution": "Worker-reported original response hash and size; retained projection is not represented as original transport bytes."
+  },
+  "requestHistory": {
+    "totalAttempts": 1,
+    "successfulPayloads": 1,
+    "successfulAttempt": {
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/45588096/property/Title,MolecularFormula/JSON",
+      "query": "CID45588096;Title,MolecularFormula",
+      "method": "GET",
+      "requestStartUtc": "2026-09-13T07:39:49.334596Z",
+      "requestEndUtc": "2026-09-13T07:39:49.596698Z",
+      "httpStatus": 200,
+      "bytes": 172,
+      "sha256": "116fcfb3f9ed7167043e0863e02f738e5d79ca1781936e21ff91a5149a1dfcc2",
+      "serverDate": "Sun, 13 Sep 2026 07:39:50 GMT"
+    },
+    "qualification": "One original HTTP200 request; no request by this implementation."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/exenatide-identity-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/exenatide-identity-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/exenatide-identity-replacement-assessment-20260913/source-evidence.json",
+    "projection": "research/output/gtm-activation-20260909/exenatide-identity-replacement-assessment-20260913/identity-properties.json",
+    "receipt": "research/output/gtm-activation-20260909/exenatide-identity-replacement-assessment-20260913/receipts/pug-20260913T073949334596Z.json"
+  },
+  "queueAccounting": "Prepared13to14, completed0; prior-co-citation assessed9to10 because PubChem already co-cited. Earlier mechanism candidate and sidecar unchanged.",
+  "remainingGates": [
+    "Evidence-reviewer acceptance of database-node mapping and inherited Strong/high.",
+    "CAS/UNII contributor identity and product equivalence remain unresolved, not asserted by candidate.",
+    "Independent-family, distinct-person human acceptance and publication/promotion remain separate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

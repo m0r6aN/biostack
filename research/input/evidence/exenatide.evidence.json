@@ -406,7 +406,7 @@
     {
       "claimId": "exenatide-identity-identifiers-001",
       "claimType": "identity",
-      "statement": "Exenatide (PubChem CID 45588096) has the molecular formula C184H282N50O60S and is catalogued in DrugBank under accession DB01276.",
+      "statement": "PubChem lists a compound record titled Exenatide under CID 45588096 with molecular formula C184H282N50O60S.",
       "context": {
         "population": null,
         "route": null,
@@ -418,23 +418,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pubchem-cid-45588096",
-        "drugbank-db01276"
+        "pubchem-cid-45588096"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "pubchem-cid-45588096",
-          "quote": "Exenatide | C184H282N50O60S | CID 45588096",
-          "pageOrSection": "Compound summary header"
-        },
-        {
-          "sourceRef": "drugbank-db01276",
-          "quote": "DrugBank Accession Number: DB01276",
-          "pageOrSection": "Identification"
+          "quote": null,
+          "pageOrSection": "PUG REST fixed CID 45588096 property response: CID, Title and MolecularFormula; factual paraphrase only."
         }
       ],
       "reviewFlags": [
-        "CAS number and UNII could not be confirmed from freely accessible page content this session (DrugBank gated the field, PubChem full record required JavaScript rendering); resolve at review time"
+        "CAS number and UNII could not be confirmed from freely accessible page content this session (DrugBank gated the field, PubChem full record required JavaScript rendering); resolve at review time",
+        "Candidate preparation 2026-09-13: exact PubChem CID/title/formula database-node statement only. Historical CAS/UNII uncertainty and access-limitation flag is retained; those identifiers were not reassessed, and the old access problem is not a new service finding. No universal salt/formulation/product equivalence inferred. Strong/high and full context remain unchanged pending review. Original PubChem header and DrugBank Identification quotes removed with distinct attribution; only DrugBank excerpt was contained. Evidence/family/human/publication gates remain open. See research/source-authorization/exenatide-identity-resource-candidate-2026-09-13.json."
       ]
     }
   ],
