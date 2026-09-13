@@ -275,7 +275,7 @@
     {
       "claimId": "bremelanotide-mechanism-mc4r-001",
       "claimType": "mechanism",
-      "statement": "Bremelanotide is a synthetic cyclic heptapeptide melanocortin receptor agonist (active metabolite of the earlier candidate melanotan II) that engages several melanocortin receptors, predominantly MC4R (implicated in central regulation of sexual arousal/desire pathways) and MC1R (implicated in skin pigmentation, the accepted mechanistic explanation for the focal hyperpigmentation adverse effect documented elsewhere in this packet).",
+      "statement": "The VYLEESI label describes bremelanotide as an agonist of multiple melanocortin receptor subtypes, with MC1R ranked ahead of MC4R in potency. It reports MC4R expression in the central nervous system and links MC1R activation on melanocytes to increased pigmentation. The label leaves the mechanism responsible for improvement in hypoactive sexual desire disorder unknown.",
       "context": {
         "population": null,
         "route": null,
@@ -287,24 +287,18 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "dailymed-vyleesi-label",
-        "drugbank-db11653",
-        "ncbi-bookshelf-bremelanotide-NBK573221"
+        "dailymed-vyleesi-label"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-vyleesi-label",
-          "quote": "VYLEESI is a melanocortin receptor agonist indicated for the treatment of premenopausal women with acquired, generalized hypoactive sexual desire disorder (HSDD)",
-          "pageOrSection": "Indications and Usage"
-        },
-        {
-          "sourceRef": "ncbi-bookshelf-bremelanotide-NBK573221",
-          "quote": "Bremelanotide engages several melanocortin receptors (MCR), predominantly MC1R and MC4R, the latter of which is believed to modulate sexual desire.",
-          "pageOrSection": "Mechanism of Action"
+          "quote": null,
+          "pageOrSection": "12.1 Mechanism of Action"
         }
       ],
       "reviewFlags": [
-        "Remediation 2026-08-29: receptor-subtype specificity independently confirmed via NCBI Bookshelf (structured clinical reference, independent of DailyMed/DrugBank); statement updated to name MC1R alongside MC4R since MC1R engagement explains the hyperpigmentation adverse effect."
+        "Remediation 2026-08-29: receptor-subtype specificity independently confirmed via NCBI Bookshelf (structured clinical reference, independent of DailyMed/DrugBank); statement updated to name MC1R alongside MC4R since MC1R engagement explains the hyperpigmentation adverse effect.",
+        "Candidate preparation 2026-09-12 (review-required, not ratified): narrowed this claim's statement to exactly the label-aligned wording reviewed in research/output/gtm-activation-20260909/bremelanotide-codex-review-20260912.md and the independent assessment it cites (bremelanotide-independent-assessment-review-20260912.md); removed the retained DailyMed indication excerpt and the retained NCBI Bookshelf mechanism excerpt (see research/source-authorization/bremelanotide-resource-candidate-2026-09-12.json for both excerpt hashes/char counts and the single replacement DailyMed section 12.1 locator, quote:null); sourceRefs narrowed to dailymed-vyleesi-label only, dropping drugbank-db11653 and ncbi-bookshelf-bremelanotide-NBK573221 as mechanism support (both remain in the packet's sources[] as historical provenance; drugbank-db11653 also still supports the separate bremelanotide-identity-external-ids-001 claim, untouched by this candidate). This narrowed statement omits synthetic-peptide identity, melanotan-II lineage, therapeutic-dose language, receptor-specific sexual-desire causation and the focal-hyperpigmentation adverse-effect inference found in the retained historical statement, which is superseded for this current candidate only, not deleted from history. Inherited evidenceTier 'Moderate' / confidence 'moderate' are preserved unchanged, explicitly pending review and not ratified by this preparation. Independent-family, human-review-acceptance and production-promotion gates remain open and unresolved by this step."
       ]
     },
     {

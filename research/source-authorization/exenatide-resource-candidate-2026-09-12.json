@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-resource-candidate",
+  "recordedAtUtc": "2026-09-13T00:40:00Z",
+  "preparedBy": "Claude (claude-sonnet-5)",
+  "authority": "none",
+  "ownerDecision": "Owner resume, research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md (September 12, 2026)",
+  "controllingDirective": "research/output/gtm-activation-20260909/exenatide-codex-review-20260913.md",
+  "controllingIndependentReview": "research/output/gtm-activation-20260909/exenatide-independent-assessment-review-20260913.md",
+  "status": "prepared-review-required",
+  "claimId": "exenatide-mechanism-glp1-agonist-001",
+  "claimType": "mechanism",
+  "candidateStatement": "The BYETTA prescribing information describes exenatide as a GLP-1 receptor agonist that increases insulin release from pancreatic beta cells in a glucose-dependent manner. It reports that exenatide binds to and activates the human GLP-1 receptor in vitro.",
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "pending evidence-reviewer acceptance; retained unchanged and not ratified by this preparation"
+  },
+  "fieldAuthorityRequired": false,
+  "historicalPacket": {
+    "gitRevision": "dc3fa99afd88870d77132cf58656acac7bd4e8d6",
+    "path": "research/input/evidence/exenatide.evidence.json",
+    "bytes": 27105,
+    "sha256": "e92d1cb56a500b2a45ae3572edecfe5d925feeefe1ac427c6ad4eec9de68d631"
+  },
+  "supersededClaimSha256": "44c81dfff6c2b7c98d0bacd8be8fee16791ddfcfbd8884c1a971e0e9db23f940",
+  "supersededClaimHashEncoding": "SHA-256 of UTF-8 JSON for the claim object at the stated revision, with recursively sorted object keys, compact comma/colon separators, ASCII escaping, and no trailing newline (Python json.dumps(claim, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8')).",
+  "supersededStatementChars": 226,
+  "supersededStatementSha256": "3b171951454dd4a6a92d35e955af08ef0826e92e63de3d2b514af9ee73291678",
+  "removedExcerpts": [
+    {
+      "sourceId": "drugbank-db01276",
+      "locator": "Summary",
+      "chars": 80,
+      "sha256": "f4901b86e59e8de53fce2264ac6a8e72abfbe480ff3fe1bb4fca460abe3e3fbf",
+      "disposition": "removed; original quote text not retained in this record"
+    },
+    {
+      "sourceId": "dailymed-byetta-label",
+      "locator": "Indications and Usage",
+      "chars": 72,
+      "sha256": "e08a4d4de7e5882247c38e60ff8ce5caced62259684b7be5284e11842185186d",
+      "disposition": "removed; superseded by the single quote:null section 12.1 locator below; original quote text not retained in this record"
+    }
+  ],
+  "resolvedSource": {
+    "sourceRegistryId": "dailymed",
+    "sourceRegistryPath": "research/input/sources/pilot-source-registry.json",
+    "sourceItemId": "dailymed-byetta-label",
+    "sourceItemIdStatus": "existing registry alias; no new registration performed",
+    "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=53d03c03-ebf7-418d-88a8-533eabd2ee4f",
+    "splSetId": "53d03c03-ebf7-418d-88a8-533eabd2ee4f",
+    "splDocumentId": "7333a7dd-9449-4c61-b36d-c5d8d7cc239b",
+    "labelVersion": 26,
+    "labelVersionCurrentObservation": "Version 26 was reported current by the worker's dated September 13, 2026 acquisition receipt; no perpetual-current or independent later verification is asserted.",
+    "effectiveDate": "2025-09-02",
+    "archivePublishedDate": "2025-09-08",
+    "dailyMedDatabasePublicationStampReported": "Sep 11, 2026 08:09:31PM EST",
+    "prescribingInformationRevisionMarker": "September 2025",
+    "secondaryRevisionMarkerInDocument": "05/2025 (Medication Guide)",
+    "labeler": "AstraZeneca Pharmaceuticals LP",
+    "labelerAuthorship": "SPL is labeler-authored; not government-authored prose and not asserted as public domain",
+    "documentTypeCode": "34391-3 HUMAN PRESCRIPTION DRUG LABEL",
+    "ndcProductCodes": ["0310-6512", "0310-6524"],
+    "ndc": ["0310-6512", "0310-6524"],
+    "sectionName": "12.1 Mechanism of Action",
+    "sectionCode": "43679-0",
+    "sectionCodeSystem": "LOINC",
+    "sectionId": "defc79fc-ee72-4ada-83eb-93936cb8d984",
+    "retrievedAtUtc": "2026-09-13T00:10:12Z",
+    "retrievedAtUtcNote": "worker-reported timestamp truncated to seconds from requestedAtUtc; not an independently verified network timestamp and not an exact completion time",
+    "rightsReviewStatusAtRetrieval": "approved within the existing factual-candidate/API boundary; not new blanket rights clearance, evidence acceptance or publication approval; applicable human review remains open",
+    "acquisitionMethod": "reviewed first-party DailyMed web service, serialized single requests",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "transformationNote": "Manual application of the reviewed candidate statement and provenance recipe; no automated adapter or pipeline ran.",
+    "humanReviewStatus": "pending",
+    "quoteCount": 0,
+    "fullTextRetentionReport": "The worker's original acquisition receipt reports in-memory-only handling and no repository, scratch or other disk retention. This candidate carries that report without independently certifying the full tool/network transcript; see linkedRecords.acquisitionReceipt."
+  },
+  "sourceSha256": {
+    "value": "0b6dbe967ec3c0010cd3d100a2d2ab05e5ae0fac0970001f1929f484bc1726f1",
+    "bytes": 534884,
+    "attribution": "worker-reported full-SPL API receipt hash from research/output/gtm-activation-20260909/exenatide-replacement-assessment-20260912/receipts/dailymed-acquisition-receipts.json; carried as-is, not freshly rehashed or independently re-acquired by this candidate"
+  },
+  "linkedRecords": {
+    "acquisitionReceipt": "research/output/gtm-activation-20260909/exenatide-replacement-assessment-20260912/receipts/dailymed-acquisition-receipts.json",
+    "sourceEvidenceAssessment": "research/output/gtm-activation-20260909/exenatide-replacement-assessment-20260912/source-evidence.json",
+    "controllingDirective": "research/output/gtm-activation-20260909/exenatide-codex-review-20260913.md",
+    "controllingIndependentReview": "research/output/gtm-activation-20260909/exenatide-independent-assessment-review-20260913.md"
+  },
+  "dependencyDisposition": {
+    "otherExenatideClaimClaimId": "exenatide-identity-identifiers-001",
+    "otherExenatideClaimStatus": "untouched; still depends on drugbank-db01276 and pubchem-cid-45588096; no packet-wide DrugBank removal is claimed by this candidate",
+    "drugBankAcquisition": "remains disabled per owner resume; no link, full text or purchase action taken here",
+    "bremelanotideLane": "untouched",
+    "creatineLane": "untouched",
+    "dulaglutideLane": "untouched"
+  },
+  "currentQualifications": [
+    "In vitro receptor binding/activation qualifier is preserved verbatim in scope; not converted to human in vivo, clinical, population or comparative benefit.",
+    "Exendin-4 derivation and Gila monster saliva / lizard-species identification language is omitted, not reworded; omission is a source-scope choice and is not a finding that the historical lineage assertion is false.",
+    "No dosing, safety or new-indication content added.",
+    "Product attribution confined to BYETTA; no extrapolation to Bydureon / Bydureon BCise extended-release labels."
+  ],
+  "remainingGates": [
+    "Evidence-reviewer acceptance of the narrowed mechanism statement, including the lineage omission and the in vitro qualifier.",
+    "The materially-different-source-family requirement for actual requested-change/review-issue closure remains open; DailyMed being already co-cited on this claim does not satisfy it merely by being re-read.",
+    "Human review before canonical promotion; this candidate preparation is not distinct-person human approval.",
+    "Promotion, publication, deployment and production containment remain separate and are not performed by this record."
+  ],
+  "nonInferences": [
+    "No historical SPL version, payload size, hash or section content is inferred from chronology or from a fresh retrieval; all provenance figures above are carried from the existing worker receipt and assessment record.",
+    "In vitro receptor evidence is not converted into human in vivo, clinical, population or comparative claims.",
+    "No adapter, refresh run or refresh-timestamp update is claimed as a prerequisite for, or a byproduct of, this candidate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false,
+  "canonicalEditPerformed": true,
+  "canonicalEditScope": "research/input/evidence/exenatide.evidence.json, claim exenatide-mechanism-glp1-agonist-001 only",
+  "queueOrCounterEditPerformed": true,
+  "schemaChangePerformed": false,
+  "gitWriteActionPerformed": false
+}

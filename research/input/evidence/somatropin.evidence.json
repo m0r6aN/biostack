@@ -338,7 +338,7 @@
     {
       "claimId": "somatropin-mechanism-001",
       "claimType": "mechanism",
-      "statement": "Somatropin (somatotropin) is a recombinant form of human growth hormone used as replacement therapy for conditions of growth failure, growth hormone deficiency, and associated weakness in children and adults.",
+      "statement": "The GENOTROPIN label describes somatropin as recombinant human growth hormone with 191 amino acid residues and the same amino acid sequence as pituitary-origin human growth hormone.",
       "context": {
         "population": null,
         "route": null,
@@ -349,15 +349,19 @@
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": false,
-      "sourceRefs": ["drugbank-db00052", "dailymed-genotropin-label"],
+      "sourceRefs": [
+        "dailymed-genotropin-label"
+      ],
       "extractedEvidence": [
         {
-          "sourceRef": "drugbank-db00052",
-          "quote": "Somatotropin is a recombinant human growth hormone used as replacement therapy in various conditions of growth failure, growth hormone deficiency, and weakness in children and adults.",
-          "pageOrSection": "Overview"
+          "sourceRef": "dailymed-genotropin-label",
+          "quote": null,
+          "pageOrSection": "11 DESCRIPTION"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "Candidate preparation 2026-09-13: narrowed to the reviewed GENOTROPIN substance-description statement; original formulation and all context retained unchanged. Removed the DrugBank mechanism/identity support and its single Overview excerpt, replacing it with a DailyMed section 11 locator and quote:null. The omitted therapeutic and alias language is outside this narrow candidate scope, not asserted universally false. Inherited Strong/high ratings remain pending evidence-reviewer acceptance; materially different source-family, evidence/human review and publication gates remain open. Prepared-review-required, not a completed replacement. See research/source-authorization/somatropin-resource-candidate-2026-09-13.json."
+      ]
     },
     {
       "claimId": "somatropin-efficacy-athletic-performance-001",

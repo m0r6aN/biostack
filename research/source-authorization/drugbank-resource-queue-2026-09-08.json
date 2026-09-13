@@ -9,7 +9,7 @@
     "path": "shared/source-rights/drugbank-containment.v1.json",
     "sha256": "017fa7dcf5cf2df6d5c96c94bada2601dad38e668a91ef5eb7d40ae33a12994f"
   },
-  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. Two quote-free replacement candidates are prepared and remain review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
+  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. Six quote-free replacement candidates are prepared and remain review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
   "counts": {
     "rows": 30,
     "distinctClaims": 30,
@@ -18,8 +18,8 @@
     "claimsWithCoCitationCandidates": 28,
     "claimsWithNoCoCitation": 2,
     "claimsActuallyReSourced": 0,
-    "coCitationCandidatesSubstanceAssessed": 1,
-    "replacementCandidatesPrepared": 2
+    "coCitationCandidatesSubstanceAssessed": 5,
+    "replacementCandidatesPrepared": 6
   },
   "rows": [
     {
@@ -68,8 +68,15 @@
           "registryClass": "ncbi-bookshelf"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-vyleesi-label",
+        "recordPath": "research/source-authorization/bremelanotide-resource-candidate-2026-09-12.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "bremelanotide.evidence.json",
@@ -118,8 +125,15 @@
           "registryClass": "dailymed"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-pregnyl-organon-research-20260913",
+        "recordPath": "research/source-authorization/chorionic-gonadotropin-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "creatine.evidence.json",
@@ -205,8 +219,15 @@
           "registryClass": "dailymed"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-byetta-label",
+        "recordPath": "research/source-authorization/exenatide-resource-candidate-2026-09-12.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "exenatide.evidence.json",
@@ -700,8 +721,15 @@
           "registryClass": "dailymed"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-genotropin-label",
+        "recordPath": "research/source-authorization/somatropin-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "survodutide.evidence.json",
@@ -823,5 +851,5 @@
       "substanceAssessed": false
     }
   ],
-  "updatedAtUtc": "2026-09-12T22:53:08Z"
+  "updatedAtUtc": "2026-09-13T02:11:23.966446Z"
 }
