@@ -237,11 +237,11 @@
     {
       "claimId": "survodutide-identity-mechanism-001",
       "claimType": "mechanism",
-      "statement": "Survodutide (BI 456906) is a synthetic peptide dual agonist of the glucagon receptor (GCGR) and the GLP-1 receptor (GLP-1R), engineered with a bias toward GLP-1 receptor activity, and is under active clinical development by Boehringer Ingelheim (licensed from Zealand Pharma) rather than being an approved drug.",
+      "statement": "The study indexed as PMID 38847460 describes survodutide as a dual agonist of the glucagon receptor and the GLP-1 receptor.",
       "context": {
         "population": null,
         "route": null,
-        "formulation": "survodutide peptide",
+        "formulation": "survodutide",
         "useCase": "mechanism description",
         "doseText": null
       },
@@ -249,47 +249,19 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "zealand-pharma-pipeline",
-        "pubchem-cid-168429725",
-        "drugbank-db18989",
-        "ncats-gsrs-unii-survodutide",
-        "chembl-molecule-chembl5314776"
+        "pubmed-38847460"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "zealand-pharma-pipeline",
-          "quote": "an investigational long-acting, glucagon/GLP-1 receptor dual agonist",
-          "pageOrSection": "Mechanism of Action section"
-        },
-        {
-          "sourceRef": "zealand-pharma-pipeline",
-          "quote": "strong bias towards the GLP-1 receptors",
-          "pageOrSection": "Mechanism of Action section"
-        },
-        {
-          "sourceRef": "drugbank-db18989",
-          "quote": "under investigation in clinical trial NCT06077864 (A Study to Test the Effect of Survodutide (BI 456906) on Cardiovascular Safety in People With Overweight or Obesity (SYNCHRONIZE™ - CVOT))",
-          "pageOrSection": "Overview / Clinical trials"
-        },
-        {
-          "sourceRef": "pubchem-cid-168429725",
-          "quote": "C192H289N47O61",
-          "pageOrSection": "Compound Summary, Molecular Formula"
-        },
-        {
-          "sourceRef": "ncats-gsrs-unii-survodutide",
-          "quote": "\"Substance Name:\" \"Survodutide\" ... \"Approval ID (UNII):\" \"2ALA66NS64\"",
-          "pageOrSection": "GSRS substance search API, exactMatches"
-        },
-        {
-          "sourceRef": "chembl-molecule-chembl5314776",
-          "quote": "\"molecule_chembl_id\": \"CHEMBL5314776\" ... \"pref_name\": \"SURVODUTIDE\"",
-          "pageOrSection": "ChEMBL molecule search API"
+          "sourceRef": "pubmed-38847460",
+          "quote": null,
+          "pageOrSection": "Abstract: BACKGROUND; parenthetical classification of survodutide"
         }
       ],
       "reviewFlags": [
         "compound is investigational, not FDA-approved; no DailyMed label exists to anchor regulatory/approved-indication claims",
-        "REMEDIATION PASS 2 (2026-08-29): UNII (2ALA66NS64, via NCATS GSRS/FDA UNII registry) and ChEMBL ID (CHEMBL5314776, via ChEMBL API) independently looked up and fetched this session, closing the packet's previously-unresolved identifier gap; both added to compound.externalIdentifiers"
+        "REMEDIATION PASS 2 (2026-08-29): UNII (2ALA66NS64, via NCATS GSRS/FDA UNII registry) and ChEMBL ID (CHEMBL5314776, via ChEMBL API) independently looked up and fetched this session, closing the packet's previously-unresolved identifier gap; both added to compound.externalIdentifiers",
+        "Candidate preparation 2026-09-13: study-attributed receptor classification only, based on worker inspection of PMID 38847460 BACKGROUND. Historical flags are retained as historical/unverified qualifications, not newly verified synthetic, alias, bias, development or regulatory assertions; omitted qualifiers are not disproved. Formulation narrowed to survodutide. Existing source snapshots unchanged; PubMed index C1 is distinct from inherited study B1 and Strong/high claim ratings, pending evidence acceptance. No independent lead corroboration of BACKGROUND, source-family acceptance, human acceptance or publication approval. See research/source-authorization/survodutide-resource-candidate-2026-09-13.json."
       ]
     },
     {

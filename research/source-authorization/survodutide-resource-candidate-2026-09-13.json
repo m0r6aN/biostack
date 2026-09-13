@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T11:52:59.312207Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "survodutide-identity-mechanism-001",
+  "candidateStatement": "The study indexed as PMID 38847460 describes survodutide as a dual agonist of the glucagon receptor and the GLP-1 receptor.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "c1b2a29ecbbd91f4d9dde44ec33df86f579725fb",
+    "path": "research/input/evidence/survodutide.evidence.json",
+    "bytes": 41137,
+    "sha256": "4fa7972c7643ac45e7761bb8e040946d9a78869d4939e56f02988876141eee73"
+  },
+  "supersededClaimSha256": "61f1f693c42e8a990992211faa20119a24b11abfe49450a501ee949b35196d59",
+  "supersededClaimHashEncoding": "SHA256 of UTF8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "zealand-pharma-pipeline",
+      "locator": "Mechanism of Action section",
+      "chars": 68,
+      "sha256": "ab120edc822e99496330297fa1cfc98cfa18dd30b48f13c603a0e9bb4201cca5"
+    },
+    {
+      "sourceId": "zealand-pharma-pipeline",
+      "locator": "Mechanism of Action section",
+      "chars": 39,
+      "sha256": "bd8a75cb0555ef600da12526321012609a2869cb89d49b45bb85a467ca1a3fd4"
+    },
+    {
+      "sourceId": "drugbank-db18989",
+      "locator": "Overview / Clinical trials",
+      "chars": 189,
+      "sha256": "eb9bd728ec56f253d8747528f0a933d4628b19e9277dff616e0fc8d0d1ec1390"
+    },
+    {
+      "sourceId": "pubchem-cid-168429725",
+      "locator": "Compound Summary, Molecular Formula",
+      "chars": 14,
+      "sha256": "8f6561c69eff767be4439b83866f51db0b261ad6d217a443688fdb35d312ca5c"
+    },
+    {
+      "sourceId": "ncats-gsrs-unii-survodutide",
+      "locator": "GSRS substance search API, exactMatches",
+      "chars": 70,
+      "sha256": "41279cb1c17ce48f58944cced52bf489a281a4b1854d6ab15ec515ea1ffd37b5"
+    },
+    {
+      "sourceId": "chembl-molecule-chembl5314776",
+      "locator": "ChEMBL molecule search API",
+      "chars": 68,
+      "sha256": "657df06e987e31e9c481f3beabc355307feac4cc33c102957c0fb20f0c346251"
+    }
+  ],
+  "excerptAccounting": "Six removed excerpts: two Zealand, one DrugBank, one PubChem formula, one GSRS and one ChEMBL. Only the 189-character DrugBank excerpt is DrugBank text. No removed quote text copied to this record.",
+  "originalSourceRefs": [
+    "zealand-pharma-pipeline",
+    "pubchem-cid-168429725",
+    "drugbank-db18989",
+    "ncats-gsrs-unii-survodutide",
+    "chembl-molecule-chembl5314776"
+  ],
+  "historicalReviewFlags": [
+    "compound is investigational, not FDA-approved; no DailyMed label exists to anchor regulatory/approved-indication claims",
+    "REMEDIATION PASS 2 (2026-08-29): UNII (2ALA66NS64, via NCATS GSRS/FDA UNII registry) and ChEMBL ID (CHEMBL5314776, via ChEMBL API) independently looked up and fetched this session, closing the packet's previously-unresolved identifier gap; both added to compound.externalIdentifiers"
+  ],
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "survodutide peptide",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "survodutide",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "contextChange": {
+    "field": "formulation",
+    "before": "survodutide peptide",
+    "after": "survodutide",
+    "basis": "Minimal study-attributed classification; all other context retained. Omitted qualifiers not declared false."
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "pubmed-38847460",
+    "sourceType": "controlled-human-study",
+    "authorityTier": "B1",
+    "title": "A Phase 2 Randomized Trial of Survodutide in MASH and Fibrosis - PubMed",
+    "publisher": "New England Journal of Medicine (Sanyal AJ, et al., 2024)",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/38847460/",
+    "doi": "10.1056/NEJMoa2401755",
+    "pmid": "38847460",
+    "publishedAt": "2024-07-25T00:00:00Z",
+    "accessedAt": "2026-08-28T22:30:00Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubmed",
+    "sourceItemId": "pubmed-38847460",
+    "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/38847460/",
+    "requestUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=38847460&retmode=xml&tool=biostack_bounded_source_review",
+    "pmid": "38847460",
+    "doi": "10.1056/NEJMoa2401755",
+    "title": "A Phase 2 Randomized Trial of Survodutide in MASH and Fibrosis.",
+    "journal": "The New England journal of medicine",
+    "authors": [
+      {
+        "LastName": "Sanyal",
+        "ForeName": "Arun J",
+        "Initials": "AJ"
+      },
+      {
+        "LastName": "Bedossa",
+        "ForeName": "Pierre",
+        "Initials": "P"
+      },
+      {
+        "LastName": "Fraessdorf",
+        "ForeName": "Mandy",
+        "Initials": "M"
+      },
+      {
+        "LastName": "Neff",
+        "ForeName": "Guy W",
+        "Initials": "GW"
+      },
+      {
+        "LastName": "Lawitz",
+        "ForeName": "Eric",
+        "Initials": "E"
+      },
+      {
+        "LastName": "Bugianesi",
+        "ForeName": "Elisabetta",
+        "Initials": "E"
+      },
+      {
+        "LastName": "Anstee",
+        "ForeName": "Quentin M",
+        "Initials": "QM"
+      },
+      {
+        "LastName": "Hussain",
+        "ForeName": "Samina Ajaz",
+        "Initials": "SA"
+      },
+      {
+        "LastName": "Newsome",
+        "ForeName": "Philip N",
+        "Initials": "PN"
+      },
+      {
+        "LastName": "Ratziu",
+        "ForeName": "Vlad",
+        "Initials": "V"
+      },
+      {
+        "LastName": "Hosseini-Tabatabaei",
+        "ForeName": "Azadeh",
+        "Initials": "A"
+      },
+      {
+        "LastName": "Schattenberg",
+        "ForeName": "Jörn M",
+        "Initials": "JM"
+      },
+      {
+        "LastName": "Noureddin",
+        "ForeName": "Mazen",
+        "Initials": "M"
+      },
+      {
+        "LastName": "Alkhouri",
+        "ForeName": "Naim",
+        "Initials": "N"
+      },
+      {
+        "LastName": "Younes",
+        "ForeName": "Ramy",
+        "Initials": "R"
+      },
+      {
+        "CollectiveName": "1404-0043 Trial Investigators"
+      }
+    ],
+    "volume": "391",
+    "issue": "4",
+    "pages": "311-319",
+    "publicationDates": {
+      "journalIssue": "2024-07-25",
+      "electronicArticleDate": "2024-06-07"
+    },
+    "pmcid": null,
+    "linkedComments": [
+      {
+        "RefType": "CommentIn",
+        "RefSource": "N Engl J Med. 2024 Oct 17;391(15):1461. doi: 10.1056/NEJMc2411003.",
+        "PMID": "39413385"
+      },
+      {
+        "RefType": "CommentIn",
+        "RefSource": "N Engl J Med. 2024 Oct 17;391(15):1461. doi: 10.1056/NEJMc2411003.",
+        "PMID": "39413386"
+      },
+      {
+        "RefType": "CommentIn",
+        "RefSource": "N Engl J Med. 2024 Oct 17;391(15):1461-1462. doi: 10.1056/NEJMc2411003.",
+        "PMID": "39413387"
+      },
+      {
+        "RefType": "CommentIn",
+        "RefSource": "N Engl J Med. 2024 Oct 17;391(15):1462-1463. doi: 10.1056/NEJMc2411003.",
+        "PMID": "39413388"
+      },
+      {
+        "RefType": "CommentIn",
+        "RefSource": "N Engl J Med. 2024 Oct 17;391(15):1463. doi: 10.1056/NEJMc2411003.",
+        "PMID": "39413389"
+      }
+    ],
+    "correctionRetractionQualification": "Five CommentIn entries, not automatically corrections/retractions. No ErratumIn/RetractionIn returned in this record; no linked item acquired.",
+    "copyrightInformation": "Copyright © 2024 Massachusetts Medical Society.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified active PubMed API mechanism scope; record copyright retained, no abstract/fulltext redistribution granted.",
+    "method": "Client-identified PubMed EFetch GET; db=pubmed&id=38847460&retmode=xml, serialized single original request. Candidate preparation uses retained metadata only.",
+    "retrievedAtUtc": "2026-09-13T11:07:49.455631+00:00",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "tierQualification": "C1 describes PubMed index; inherited B1 study snapshot and Strong/high claim are preserved pending separate scientific acceptance.",
+    "retentionAttribution": "Transient XML/abstract only; saved citation projection, short paraphrase and receipt.",
+    "leadCorroboration": "Worker observed original BACKGROUND. Lead official PubMed HTML returned no usable content; not independent corroboration. No original XML payload rehash or reconstruction performed.",
+    "sourceIdentityMatch": "PMID/DOI/year/lead author/journal issue date agree with old snapshot; title same with display suffix/punctuation differences. Electronic date is additional metadata, not substitute for old issue date."
+  },
+  "copyrightDecodingCorrection": {
+    "field": "source-evidence.json /copyrightInformation",
+    "originalDownstreamValue": "Copyright Â© 2024 Massachusetts Medical Society.",
+    "correctedValue": "Copyright © 2024 Massachusetts Medical Society.",
+    "originalDownstreamNonAsciiCodepoints": [
+      "U+00C2",
+      "U+00A9"
+    ],
+    "correctedNonAsciiCodepoints": [
+      "U+00A9"
+    ],
+    "basis": "Explicit UTF-8 reading of original acquisition-metadata.json; downstream implicit CP1252 decoding introduced an extra U+00C2. Original artifacts remain unchanged. Author names also derived from original UTF-8 metadata.",
+    "diagnosis": "research/output/gtm-activation-20260909/survodutide-replacement-assessment-20260913/offline-decoding-diagnosis.md"
+  },
+  "sourceSha256": "7f3ce949e27c7ac79fc7f5dd37e709d2fea19edd0b0b04b599c4d49e4b6b1093",
+  "payloadProvenance": {
+    "bytes": 53553,
+    "attribution": "Worker-reported original transport hash and size; transient XML not retained, no independent rehash.",
+    "requestCount": 1,
+    "retryCount": 0
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/survodutide-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/survodutide-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/survodutide-replacement-assessment-20260913/source-evidence.json",
+    "acquisitionMetadata": "research/output/gtm-activation-20260909/survodutide-replacement-assessment-20260913/acquisition-metadata.json",
+    "receipt": "research/output/gtm-activation-20260909/survodutide-replacement-assessment-20260913/receipts/efetch-20260913T110749045667Z.json",
+    "decodingDiagnosis": "research/output/gtm-activation-20260909/survodutide-replacement-assessment-20260913/offline-decoding-diagnosis.md"
+  },
+  "queueAccounting": "Prepared18to19/completed0/prior-co-citation stays13: PMID 38847460 was not an original target co-citation. Other original co-citations are not newly assessed by this study.",
+  "remainingGates": [
+    "Scientific evidence, inherited ratings and source-method/reuse qualification remain pending.",
+    "No independent-family acceptance, distinct-person human acceptance or publication/promotion granted.",
+    "Historical omitted qualifiers and source relationships remain unverified; no runtime or registry activation."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}
