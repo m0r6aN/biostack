@@ -222,7 +222,7 @@
     {
       "claimId": "raloxifene-mechanism-serm-001",
       "claimType": "mechanism",
-      "statement": "Raloxifene acts as a selective estrogen receptor modulator, binding estrogen receptors to produce tissue-selective estrogen-agonist effects (e.g., decreased bone resorption and increased bone mineral density) alongside estrogen-antagonist effects in other tissues such as breast and endometrium.",
+      "statement": "The EVISTA label describes raloxifene as a selective estrogen receptor modulator whose biological actions are largely mediated by binding to estrogen receptors, activating estrogenic pathways in some tissues and blocking them in others.",
       "context": {
         "population": null,
         "route": null,
@@ -234,17 +234,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "ncbi-statpearls-raloxifene",
-        "drugbank-db00481"
+        "dailymed-evista-label"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "ncbi-statpearls-raloxifene",
-          "quote": "Binding to estrogen receptors. This binding results in activation of estrogenic pathways (estrogen-agonistic effect) and blockade of estrogenic pathways (estrogen-antagonistic effect).",
-          "pageOrSection": "Mechanism of Action"
+          "sourceRef": "dailymed-evista-label",
+          "quote": null,
+          "pageOrSection": "12.1 Mechanism of Action"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "Candidate preparation 2026-09-13: narrowed to the reviewed EVISTA section 12.1 statement, retaining largely-mediated qualification and original context. Removed the prior StatPearls excerpt and both prior source references; no DrugBank excerpt existed on this reviewed-base target. Old source snapshots remain unchanged. Inherited Strong/high ratings are pending evidence acceptance; source-family, human and publication review gates remain open. DailyMed version 32 provenance is dated to the new receipt, not backattributed to old access. Prepared-review-required, zero completed replacements. See research/source-authorization/raloxifene-resource-candidate-2026-09-13.json."
+      ]
     },
     {
       "claimId": "raloxifene-efficacy-breast-cancer-risk-reduction-more-001",

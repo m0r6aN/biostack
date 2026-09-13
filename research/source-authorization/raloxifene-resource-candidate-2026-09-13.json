@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T03:09:35.261490Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "raloxifene-mechanism-serm-001",
+  "candidateStatement": "The EVISTA label describes raloxifene as a selective estrogen receptor modulator whose biological actions are largely mediated by binding to estrogen receptors, activating estrogenic pathways in some tissues and blocking them in others.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "f6fd19834b1808292a4cff4fcea4a4f724852cc4",
+    "path": "research/input/evidence/raloxifene.evidence.json",
+    "bytes": 18073,
+    "sha256": "f2c69f33d19048f4521d10db4eff2f2325ee6abef69faa7c39c7afce9a55b40a"
+  },
+  "supersededClaimSha256": "47f61edd04f61573cbfba972c9bcecaea4bc6ea810d5243d9042d3f98fb3516c",
+  "supersededClaimHashEncoding": "SHA-256 of UTF-8 base claim JSON with recursively sorted keys, compact comma/colon separators, ASCII escaping and no trailing newline: json.dumps(claim, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8').",
+  "removedExcerpts": [
+    {
+      "sourceId": "ncbi-statpearls-raloxifene",
+      "locator": "Mechanism of Action",
+      "chars": 184,
+      "sha256": "bb6a90d2ea3c86109bfac9d7e378e7dedf7afa38ebfd2cd5b52a46c056400f84"
+    }
+  ],
+  "removedExcerptScope": "The sole removed reviewed-base quote is StatPearls, not DrugBank. Zero DrugBank quotes were present on this target. No all-history assertion or new StatPearls acquisition/rights review is made.",
+  "originalContextUnchanged": {
+    "population": null,
+    "route": null,
+    "formulation": "raloxifene",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "pending evidence acceptance; unchanged, not ratified"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "dailymed-evista-label",
+    "sourceType": "regulator",
+    "authorityTier": "A1",
+    "title": "EVISTA (raloxifene hydrochloride) tablet - Label",
+    "publisher": "U.S. Food and Drug Administration / DailyMed (National Library of Medicine)",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=fcaaa6dc-74e8-4fb8-800c-5574bf0f8de9",
+    "doi": null,
+    "pmid": null,
+    "publishedAt": null,
+    "accessedAt": "2026-08-29T01:58:43Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "dailymed",
+    "sourceItemId": "dailymed-evista-label",
+    "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=fcaaa6dc-74e8-4fb8-800c-5574bf0f8de9",
+    "splSetId": "fcaaa6dc-74e8-4fb8-800c-5574bf0f8de9",
+    "splDocumentId": "e14cc768-f346-4584-bacb-8d4854728b36",
+    "labelVersion": 32,
+    "versionObservation": "Version 32 observed in the dated September 13, 2026 worker receipt; not a perpetual-current assertion.",
+    "labeler": "Eli Lilly and Company",
+    "labelerAuthorship": "Labeler-authored information; the old FDA/DailyMed publisher wording is not a government-authorship claim.",
+    "archiveTitle": "EVISTA (RALOXIFENE HYDROCHLORIDE) TABLET [ELI LILLY AND COMPANY]",
+    "effectiveDate": "2026-02-11",
+    "archivePublishedDate": "2026-09-02",
+    "bodyRevision": "not separately extracted; no invented value",
+    "chronologyQualification": "Current archive publication postdates old packet access. Do not attribute version32 or its bytes to the earlier access. EffectiveTime20260211 is a different date field and does not establish earlier public availability.",
+    "ndc": [
+      "0002-4184",
+      "0002-4184-30"
+    ],
+    "ndcCoverage": "All distinct observed code elements bearing codeSystem 2.16.840.1.113883.6.69 in the retrieved XML: product 0002-4184 and package 0002-4184-30. No assertion of full market coverage.",
+    "sectionName": "12.1 Mechanism of Action",
+    "sectionCode": "43679-0",
+    "sectionId": "dd9811d4-0aaf-43bd-aa38-6a9f08f27403",
+    "retrievedAtUtc": "2026-09-13T02:30:10.209288Z",
+    "retrievalAttribution": "Worker-reported original API completion time; no fresh request or independent payload/transcript verification in this preparation.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified DailyMed factual-candidate/API approval; no new item, rights, family, human or publication acceptance.",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "transformationNote": "Codex manually applied the reviewed statement and provenance; no source adapter or acquisition run.",
+    "humanReviewStatus": "pending",
+    "retentionAttribution": "Worker reports memory-only XML parsing with no full XML or source-section text retained on disk; not independently certified through a full transcript."
+  },
+  "sourceSha256": "86a596e4e4905168ea9e369764645f9d517f95d4e0e377db4caf770fa29b590e",
+  "payloadProvenance": {
+    "bytes": 315398,
+    "historySha256": "c4deaca7490fdd58bce5d377e02503035b7bd917d3921527dfe1a8a40973f002",
+    "historyBytes": 2119,
+    "attribution": "Worker-reported original payload hashes and sizes, not freshly rehashed or acquired."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/raloxifene-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/raloxifene-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/raloxifene-replacement-assessment-20260913/source-evidence.json",
+    "historyReceipt": "research/output/gtm-activation-20260909/raloxifene-replacement-assessment-20260913/receipts/dailymed-20260913T023009579441Z.json",
+    "xmlReceipt": "research/output/gtm-activation-20260909/raloxifene-replacement-assessment-20260913/receipts/dailymed-20260913T023009868398Z.json"
+  },
+  "scopeRationale": "Omit clinical tissue/outcome examples for narrow mechanism scope without declaring them false; retain largely rather than exclusive mediation. No new dose, signalling detail or formulation rewrite.",
+  "queueAccounting": "prepared increases 6 to 7; completed remains 0. Target substanceAssessed records the newly assessed EVISTA candidate. coCitationCandidatesSubstanceAssessed remains 5: it counts prior co-citation candidates, and the original StatPearls co-citation was not substance-assessed in this lane. No new counter is added.",
+  "dependencyDisposition": {
+    "target": "Both old source references replaced with the existing DailyMed alias; all source snapshots/identifiers and other claims unchanged.",
+    "otherReviewedBaseClaimsWithDrugBankRefs": [
+      "raloxifene-identity-identifiers-001"
+    ],
+    "boundary": "No packet-wide historical or production clearance asserted; DrugBank acquisition remains disabled."
+  },
+  "remainingGates": [
+    "Evidence-reviewer acceptance of narrowed statement and inherited Strong/high ratings.",
+    "Independent-family/lineage closure remains open; newly citing DailyMed does not alone establish it.",
+    "Item/version and distinct-person human review before promotion remain separate.",
+    "Publication, deployment and production containment remain unperformed."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

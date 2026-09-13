@@ -9,7 +9,7 @@
     "path": "shared/source-rights/drugbank-containment.v1.json",
     "sha256": "017fa7dcf5cf2df6d5c96c94bada2601dad38e668a91ef5eb7d40ae33a12994f"
   },
-  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. Six quote-free replacement candidates are prepared and remain review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
+  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. Seven quote-free replacement candidates are prepared and remain review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
   "counts": {
     "rows": 30,
     "distinctClaims": 30,
@@ -19,7 +19,7 @@
     "claimsWithNoCoCitation": 2,
     "claimsActuallyReSourced": 0,
     "coCitationCandidatesSubstanceAssessed": 5,
-    "replacementCandidatesPrepared": 6
+    "replacementCandidatesPrepared": 7
   },
   "rows": [
     {
@@ -671,8 +671,15 @@
           "registryClass": "ncbi-bookshelf"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-evista-label",
+        "recordPath": "research/source-authorization/raloxifene-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "sermorelin.evidence.json",
@@ -851,5 +858,5 @@
       "substanceAssessed": false
     }
   ],
-  "updatedAtUtc": "2026-09-13T02:11:23.966446Z"
+  "updatedAtUtc": "2026-09-13T03:09:35.261490Z"
 }
