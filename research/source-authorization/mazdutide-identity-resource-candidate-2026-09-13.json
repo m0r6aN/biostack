@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T09:14:11.545475Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "mazdutide-identity-external-ids-001",
+  "candidateStatement": "PubChem lists a compound record titled Mazdutide under CID 167312357 with molecular formula C207H317N45O65.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "104e8bcb59a78ee77d89e89a6662cf5406828119",
+    "path": "research/input/evidence/mazdutide.evidence.json",
+    "bytes": 46213,
+    "sha256": "9e7d26de24d102b445bca6326acdb68b8f6a948e6a12356b6252ee3e3c75dd1d"
+  },
+  "supersededClaimSha256": "277b4723323c2919b9ce0313da1adb5c53de459d53bff772bc2503856f1995d3",
+  "supersededClaimHashEncoding": "SHA256 of UTF-8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "pubchem-cid-167312357",
+      "locator": "Compound summary, molecular formula",
+      "chars": 14,
+      "sha256": "b7d34ab3b7a4d2cbfde44b162c768529d9d816ae029d9d4689e6b2e954da45c3"
+    },
+    {
+      "sourceId": "drugbank-db19099",
+      "locator": "Page metadata / summary",
+      "chars": 62,
+      "sha256": "7996f43fbf0e583b788ec80ad895c0b86f6b95a3b597e26f4542ec87bc75d2a8"
+    },
+    {
+      "sourceId": "gsrs-ncats-mazdutide",
+      "locator": "Substance record, key identifiers",
+      "chars": 50,
+      "sha256": "0ab61d4cf5373bacc905f906976a07e98828d5e8f35899d78bde29e6b508c159"
+    }
+  ],
+  "originalSourceRefs": [
+    "pubchem-cid-167312357",
+    "drugbank-db19099",
+    "medchemexpress-mazdutide",
+    "gsrs-ncats-mazdutide"
+  ],
+  "vendorReferenceWithoutQuote": "medchemexpress-mazdutide",
+  "factualFormulaOverlap": {
+    "originalSourceId": "pubchem-cid-167312357",
+    "originalLocator": "Compound summary, molecular formula",
+    "value": "C207H317N45O65",
+    "allowedFields": [
+      "candidateStatement",
+      "resolvedSource.returnedMolecularFormula",
+      "factualFormulaOverlap.value"
+    ],
+    "basis": "Controlling lead review explicitly authorizes independently returned formula in attributed candidate; original formula-only excerpt is not forbidden narrative text. No exception for DrugBank/GSRS excerpts."
+  },
+  "historicalNullQuoteLocators": [],
+  "historicalReviewFlags": [
+    "CAS number sourced from vendor datasheet (medchemexpress) rather than a structured database entry; cross-check against DrugBank or ChemIDplus at review time",
+    "remediation-pass-2026-08-29: UNII (MB76Z4IBZ5) resolved and CAS number (2259884-03-0) independently cross-confirmed via the NCATS/FDA Global Substance Registration System (GSRS), a materially different source family from PubChem/DrugBank/MedChemExpress",
+    "remediation-pass-2026-08-29: ChEMBL ID (CHEMBL5095358) obtained via a PubChem PUG REST re-fetch, but PubChem is already a cited source for this claim, so it does NOT count as independent verification per review contract; direct ChEMBL (ebi.ac.uk) lookup was attempted and blocked (proxy policy denial / rate-limit) both in the prior review pass and again this pass -- ChEMBL ID should be treated as unconfirmed by an independent family until a direct ChEMBL query succeeds"
+  ],
+  "historicalFlagQualification": "Prior GSRS/vendor/ChEMBL corroboration and access flags remain historical, not reassessed or retry instructions. Narrative quotes not copied; explicit independently returned formula exception recorded separately.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "mazdutide",
+    "useCase": "identifier reference",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "mazdutide",
+    "useCase": "identifier reference",
+    "doseText": null
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "pubchem-cid-167312357",
+    "sourceType": "structured-database",
+    "authorityTier": "B2",
+    "title": "Mazdutide (CID 167312357)",
+    "publisher": "National Center for Biotechnology Information / PubChem",
+    "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Mazdutide",
+    "doi": null,
+    "pmid": null,
+    "publishedAt": null,
+    "accessedAt": "2026-08-28T22:30:00Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubchem",
+    "sourceItemId": "pubchem-cid-167312357",
+    "sourceUrl": "https://pubchem.ncbi.nlm.nih.gov/compound/167312357",
+    "requestUrl": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/167312357/property/Title,MolecularFormula/JSON",
+    "method": "PUG REST fixed CID properties",
+    "query": "CID167312357;Title,MolecularFormula",
+    "returnedCID": 167312357,
+    "returnedTitle": "Mazdutide",
+    "returnedMolecularFormula": "C207H317N45O65",
+    "supportLocator": "PUG REST fixed CID 167312357 property response: CID, Title and MolecularFormula; factual paraphrase only.",
+    "scope": "Exact database node only; no other identifier or product-equivalence verification.",
+    "sourceUpdateDate": null,
+    "sourceVersion": null,
+    "dateQualification": "No update/version supplied by property response; no historical access-to-payload identity inferred.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified PubChem API identity approval; no new rights or contributor annotation reuse.",
+    "retrievedAtUtc": "2026-09-13T08:54:01.254876Z",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "retrievalAttribution": "Original worker receipt and retained property projection; no new request or independent original transport-byte rehash."
+  },
+  "sourceSha256": "02cb17f50872a4a1166453f2d056a7f333860268e854379aaa2d58fd495a21ca",
+  "payloadProvenance": {
+    "bytes": 172,
+    "attribution": "Worker-reported original response hash and size; retained projection is not represented as original transport bytes."
+  },
+  "requestHistory": {
+    "totalAttempts": 1,
+    "successfulPayloads": 1,
+    "successfulAttempt": {
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/167312357/property/Title,MolecularFormula/JSON",
+      "query": "CID167312357;Title,MolecularFormula",
+      "method": "GET",
+      "requestStartUtc": "2026-09-13T08:54:00.904932Z",
+      "requestEndUtc": "2026-09-13T08:54:01.254876Z",
+      "httpStatus": 200,
+      "bytes": 172,
+      "sha256": "02cb17f50872a4a1166453f2d056a7f333860268e854379aaa2d58fd495a21ca",
+      "serverDate": "Sun, 13 Sep 2026 08:54:01 GMT"
+    },
+    "qualification": "One original HTTP200 request; no request by this implementation."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/mazdutide-identity-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/mazdutide-identity-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/mazdutide-identity-replacement-assessment-20260913/source-evidence.json",
+    "projection": "research/output/gtm-activation-20260909/mazdutide-identity-replacement-assessment-20260913/identity-properties.json",
+    "receipt": "research/output/gtm-activation-20260909/mazdutide-identity-replacement-assessment-20260913/receipts/pug-20260913T085400904932Z.json"
+  },
+  "queueAccounting": "Prepared15to16, completed0; prior-co-citation assessed11to12 because PubChem already co-cited. Historical containment totals unchanged.",
+  "remainingGates": [
+    "Evidence-reviewer acceptance of database-node mapping and inherited Strong/high.",
+    "CAS/UNII contributor identity and product equivalence remain unresolved, not asserted by candidate.",
+    "Independent-family, distinct-person human acceptance and publication/promotion remain separate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}
