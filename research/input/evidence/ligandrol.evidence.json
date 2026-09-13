@@ -113,6 +113,18 @@
       "pmid": null,
       "publishedAt": null,
       "accessedAt": "2026-08-28T23:50:00Z"
+    },
+    {
+      "sourceId": "pubmed-22459616-basaria-research-20260913",
+      "sourceType": "bibliographic-database-record",
+      "authorityTier": "C1",
+      "title": "The safety, pharmacokinetics, and effects of LGD-4033, a novel nonsteroidal oral, selective androgen receptor modulator, in healthy young men.",
+      "publisher": "PubMed / U.S. National Library of Medicine",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22459616/",
+      "doi": "10.1093/gerona/gls078",
+      "pmid": "22459616",
+      "publishedAt": null,
+      "accessedAt": "2026-09-13T16:58:44.085781+00:00"
     }
   ],
   "claims": [
@@ -233,41 +245,37 @@
     {
       "claimId": "ligandrol-efficacy-lbm-healthy-men-001",
       "claimType": "efficacy",
-      "statement": "In a randomized, double-blind, placebo-controlled dose-escalation trial in 76 healthy men, 21 days of oral LGD-4033 produced dose-dependent increases in lean body mass without a significant change in fat mass; the drug was reported as well tolerated with no drug-related serious adverse events.",
+      "statement": "The study indexed as PMID 22459616 reports dose-dependent increases in lean body mass in a randomized, placebo-controlled 21-day trial of LGD-4033 in 76 healthy men aged 21-50 years.",
       "context": {
         "population": "healthy men, 21-50 years (n=76)",
-        "route": "oral",
-        "formulation": "LGD-4033 capsule/tablet, investigational",
-        "useCase": "short-term lean body mass change in healthy adults (investigational; not an approved indication)",
+        "route": null,
+        "formulation": "LGD-4033 (trial study drug)",
+        "useCase": "short-term trial lean-body-mass observation",
         "doseText": "0.1 mg, 0.3 mg, or 1.0 mg once daily for 21 days versus placebo (trial protocol; not a use recommendation)"
       },
       "evidenceTier": "Moderate",
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "basaria-2013-jgerontol-rct"
+        "pubmed-22459616-basaria-research-20260913"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "basaria-2013-jgerontol-rct",
-          "quote": "76 healthy men (21-50 years) were randomized to placebo or 0.1, 0.3, or 1.0 mg LGD-4033 daily for 21 days",
-          "pageOrSection": "Abstract/study summary"
+          "sourceRef": "pubmed-22459616-basaria-research-20260913",
+          "quote": null,
+          "pageOrSection": "Abstract METHODS: population/randomization/placebo/duration; factual paraphrase."
         },
         {
-          "sourceRef": "basaria-2013-jgerontol-rct",
-          "quote": "Lean body mass increased dose dependently, but fat mass did not change significantly",
-          "pageOrSection": "Abstract/study summary"
-        },
-        {
-          "sourceRef": "basaria-2013-jgerontol-rct",
-          "quote": "LGD-4033 was well tolerated. There were no drug-related serious adverse events. Frequency of adverse events was similar between active and placebo groups",
-          "pageOrSection": "Abstract/study summary"
+          "sourceRef": "pubmed-22459616-basaria-research-20260913",
+          "quote": null,
+          "pageOrSection": "Abstract RESULTS: lean-body-mass finding only; factual paraphrase."
         }
       ],
       "reviewFlags": [
         "single short (21-day) trial in healthy young men; does not establish efficacy for bodybuilding, strength, or long-term use",
         "trial dose (max 1.0 mg/day) must never be presented as a use recommendation",
-        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed trial findings (Basaria et al. 2013) at source-level attribution ('In a randomized, double-blind, placebo-controlled dose-escalation trial...'); no regulator document exists for this claim (searched: FDA.gov -- LGD-4033/Ligandrol is an unapproved investigational compound with no FDA-reviewed efficacy data, only consumer safety warnings; DailyMed -- 0 results for LGD-4033, no approved label exists)"
+        "authority-flag recalibrated 2026-08-29: claimType efficacy is outside the directive's fieldAuthorityRequired scope; claim reports peer-reviewed trial findings (Basaria et al. 2013) at source-level attribution ('In a randomized, double-blind, placebo-controlled dose-escalation trial...'); no regulator document exists for this claim (searched: FDA.gov -- LGD-4033/Ligandrol is an unapproved investigational compound with no FDA-reviewed efficacy data, only consumer safety warnings; DailyMed -- 0 results for LGD-4033, no approved label exists)",
+        "Candidate prepared 2026-09-13: distinct packet-local PubMed item pubmed-22459616-basaria-research-20260913 is unmapped/item-review-required with no authority or registry activation. Only the attributed short-trial lean-mass observation is proposed; old flags remain historical, not new verification. Oral appears in the title but protocol route is unestablished in inspected METHODS; no dosage form established. Protocol doseText remains descriptive, not a use recommendation. Fat-mass/safety reassurance and bodybuilding/strength/long-term implications are outside this candidate. Inherited Moderate/moderate, source-family, human/expert and publication acceptance remain pending. See research/source-authorization/ligandrol-basaria-efficacy-resource-candidate-2026-09-13.json."
       ]
     },
     {
