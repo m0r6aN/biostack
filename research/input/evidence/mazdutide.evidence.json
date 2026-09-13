@@ -564,7 +564,8 @@
       "reviewFlags": [
         "misinformation-adjacent: vendor pages pair explicit no-FDA-approval / research-use-only disclaimers with dosing guidance and 'where to buy' sections aimed at consumer self-administration, which is inconsistent with the stated research-only purpose",
         "no FDA import alert or compounding bulk-substance listing specific to mazdutide was located in this session; absence should be reconfirmed, not treated as evidence of safety",
-        "remediation-pass-2026-08-29: a live DailyMed search performed 2026-08-29 independently confirms 'No Drug Package Labels found' for mazdutide, corroborating the no-FDA-approval / no-legally-marketed-US-product premise from a regulator/label-family source distinct from the vendor-marketing and DrugBank sources already cited"
+        "remediation-pass-2026-08-29: a live DailyMed search performed 2026-08-29 independently confirms 'No Drug Package Labels found' for mazdutide, corroborating the no-FDA-approval / no-legally-marketed-US-product premise from a regulator/label-family source distinct from the vendor-marketing and DrugBank sources already cited",
+        "Offline provenance qualification 2026-09-13: the statement and prior flags are preserved historical assertions, not newly verified current regulatory or market findings. The historical DailyMed zero-result search does not establish absence of FDA approval, legality of marketing, product identity or quality, or safety. Withdraw reliance on the prior flag's inference that this search independently confirmed the no-approval/no-legally-marketed premise. The retained mechanism-review observation does not establish current US status, vendor practices or exclusive global trial coverage. Current statement remains review-gated; no new source-family verification, replacement completion or grade decision is recorded."
       ]
     }
   ],
@@ -586,7 +587,7 @@
         "mazdutide-regulatory-nmpa-weight-mgmt-001"
       ],
       "severity": "moderate",
-      "summary": "Mazdutide is a fully approved prescription product in China but is simultaneously sold in the US/international gray market as an unapproved 'research chemical'; packet consumers must not conflate the China-approved-product evidence base with the safety/legality of gray-market self-administered product.",
+      "summary": "The historical comparison does not establish current US market status or equivalence between studied or regulated products and vendor-sourced products. Regulatory, provenance and applicability questions in that comparison remain unresolved.",
       "resolutionStatus": "unresolved"
     }
   ],
@@ -608,7 +609,8 @@
       "remediation-pass-2026-08-29 (session 2, post-independent-review): CORRECTED a procedural error flagged by the reviewer -- the mechanism claim's prior remediation note improperly cited Semantic Scholar (already a cited source for that claim) as independent corroboration; genuinely independent corroboration was obtained instead from Fierce Pharma trade-press coverage (fetched and quoted verbatim this session).",
       "remediation-pass-2026-08-29 (session 2, post-independent-review): STILL GATED, TIGHTENED -- per the reviewer's finding, fetched and verbatim-quoted an independent physician-review commentary (gutsandgrowth.com) on the published NEJM GLORY-1 data; it reports week-48 figures of -11.00% (4mg)/-14.01% (6mg)/+0.30% (placebo), agreeing with the prior Semantic Scholar pull and disagreeing with the sponsor press release (-12.05%/-14.84%/-0.47%). Direct NEJM full-text and Europe PMC REST fetches were attempted this session but both were blocked by repeated proxy rate-limiting (HTTP 429). The claim statement now presents both figure sets with an explicit caveat instead of asserting the press-release numbers as settled; evidenceTier stays 'Moderate', confidence lowered to 'moderate'. This remains the single most consequential open item and should be re-attempted against verbatim NEJM/Europe PMC full text at the next review pass.",
       "remediation-pass-2026-08-29 (session 2, post-independent-review): the two NMPA regulatory claims and the phase-2 T2D HbA1c claim were each additionally corroborated this session by fresh, verbatim-quoted independent trade-press sources (Fierce Pharma; BioSpace) confirming trial/approval shape and direction; granular numeric figures for the T2D and GI-safety claims remain single-family sourced as already documented above, and the ChEMBL identifier remains unconfirmed by an independent family -- both non-blocking per the reviewer's verdict.",
-      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed.",
+      "mazdutide-evidence-gap-gray-market-us-001: the historical DailyMed search does not verify the current regulatory/market premise; corrective review qualification added 2026-09-13, without resolving this claim or its related market conflict."
     ],
     "qualityFlags": [
       "expansion-input",
