@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T10:28:59.271168Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "lasofoxifene-mechanism-serm-001",
+  "candidateStatement": "The study indexed as PMID 38072514 describes lasofoxifene as a selective estrogen receptor modulator.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "1b1977d397c9a86647340bc6e7e42f6e5798d9df",
+    "path": "research/input/evidence/lasofoxifene.evidence.json",
+    "bytes": 17689,
+    "sha256": "7433f8a4c22a33b79741202618ddf1990ff44715542bd79896913a5381c5f219"
+  },
+  "supersededClaimSha256": "d1526fa83eb8e4a022274ec3679db7ae58410b218a80f9ea1b30b90fc700d602",
+  "supersededClaimHashEncoding": "SHA256 of UTF8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "drugbank-db06202",
+      "locator": "Drug summary / meta description",
+      "chars": 154,
+      "sha256": "ad79f752d6d9cb6b117ad0a6311de34bc015e77e7cb6004186f5f12f1e98bba9"
+    }
+  ],
+  "originalSourceRefs": [
+    "drugbank-db06202",
+    "pubchem-cid-216416"
+  ],
+  "pubchemCoCitation": "Original PubChem reference had no excerpt and was not assessed by this new study research.",
+  "historicalReviewFlags": [
+    "tissue-selective agonist/antagonist activity claim sourced from database summary; verify against primary pharmacology literature at next review"
+  ],
+  "originalContext": {
+    "population": null,
+    "route": "oral",
+    "formulation": "lasofoxifene tartrate",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": "oral",
+    "formulation": "lasofoxifene",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "contextChange": {
+    "field": "formulation",
+    "before": "lasofoxifene tartrate",
+    "after": "lasofoxifene",
+    "routeRetained": "oral",
+    "basis": "Lead official HTML PATIENTS AND METHODS corroborates oral administration; BACKGROUND supports classification. Tartrate not established in inspected record. No universal product identity inferred."
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "newPacketLocalSource": {
+    "sourceId": "pubmed-38072514-lasofoxifene-research-20260913",
+    "sourceType": "database",
+    "authorityTier": "C1",
+    "title": "Lasofoxifene versus fulvestrant for ER+/HER2- metastatic breast cancer with an ESR1 mutation: results from the randomized, phase II ELAINE 1 trial.",
+    "publisher": "PubMed (National Library of Medicine), index of Annals of Oncology study",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/38072514/",
+    "doi": "10.1016/j.annonc.2023.09.3104",
+    "pmid": "38072514",
+    "publishedAt": null,
+    "accessedAt": "2026-09-13T10:08:48.566767Z",
+    "registrationStatus": "item-review-required; distinct unregistered packet-local item, no alias rebind or runtime activation",
+    "scientificTierStatus": "C1 describes PubMed index; separate from inherited study and Strong/high claim ratings, which remain pending review.",
+    "authority": "none",
+    "candidateRecordPath": "research/source-authorization/lasofoxifene-resource-candidate-2026-09-13.json"
+  },
+  "originalWustlSourceSnapshotUnchanged": {
+    "sourceId": "elaine1-wustl-fulltext",
+    "sourceType": "controlled-human-study",
+    "authorityTier": "B1",
+    "title": "Lasofoxifene versus fulvestrant for ER+/HER2- metastatic breast cancer with an ESR1 mutation: results from the randomized, phase II ELAINE 1 trial",
+    "publisher": "Annals of Oncology (Bardia A, Neven P, Streich G, et al., 2024); open-access copy via Washington University in St. Louis Digital Commons",
+    "url": "https://digitalcommons.wustl.edu/cgi/viewcontent.cgi?article=4488&context=oa_4",
+    "doi": "10.1016/j.annonc.2023.12.001",
+    "pmid": "38072514",
+    "publishedAt": null,
+    "accessedAt": "2026-08-29T01:58:43Z"
+  },
+  "bibliographicDiscrepancy": {
+    "existingSourceId": "elaine1-wustl-fulltext",
+    "existingDoi": "10.1016/j.annonc.2023.12.001",
+    "existingPublisherYear": 2024,
+    "returnedDoi": "10.1016/j.annonc.2023.09.3104",
+    "returnedIssue": "2023-12",
+    "finding": "Same stored PMID and matching title, but DOI/year differ. Existing WUSTL fulltext not retrieved or rebound. Separate item proposed; reconcile bibliographic discrepancy during review, do not assert old DOI refers to same item or is universally invalid."
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubmed",
+    "sourceItemId": "pubmed-38072514-lasofoxifene-research-20260913",
+    "registrationStatus": "item-review-required",
+    "authority": "none",
+    "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/38072514/",
+    "requestUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=38072514&retmode=xml&tool=biostack_bounded_source_review",
+    "pmid": "38072514",
+    "doi": "10.1016/j.annonc.2023.09.3104",
+    "title": "Lasofoxifene versus fulvestrant for ER+/HER2- metastatic breast cancer with an ESR1 mutation: results from the randomized, phase II ELAINE 1 trial.",
+    "dates": {
+      "journalIssue": "2023-12",
+      "precision": "month",
+      "electronicArticleDate": null,
+      "electronicDateScope": "No ArticleDate returned; other history dates not extracted. No invented publication day."
+    },
+    "pmcid": null,
+    "pmcidScope": "No PMCID returned in this record ArticleIdList; no separate lookup.",
+    "correctionRetractionLinks": [],
+    "correctionRetractionScope": "No CommentsCorrections returned in this exact record; not universal absence.",
+    "copyrightInformation": "Copyright © 2023 The Authors. Published by Elsevier Ltd.. All rights reserved.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified PubMed API citation/rights-compatible-abstract research scope; no abstract/fulltext redistribution or new item authority.",
+    "method": "client-identified NCBI E-utilities efetch API",
+    "query": {
+      "db": "pubmed",
+      "id": "38072514",
+      "retmode": "xml",
+      "tool": "biostack_bounded_source_review"
+    },
+    "retrievedAtUtc": "2026-09-13T10:08:48.566767Z",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "retentionAttribution": "Worker reports in-memory XML and transient background inspection; only citation metadata/receipt persisted, no abstract/fulltext/XML. No independent original transport rehash.",
+    "leadCorroboration": "Controlling lead review independently official HTML BACKGROUND and PATIENTS AND METHODS, not XML transport rehash."
+  },
+  "sourceSha256": "dd64d56596571ea94f59fb36bda06e4fdac3084abb06fc5d7849cf8fc2f14167",
+  "payloadProvenance": {
+    "bytes": 14945,
+    "attribution": "Worker-reported original transport hash/size; no retained payload rehash."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/lasofoxifene-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/lasofoxifene-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/lasofoxifene-replacement-assessment-20260913/source-evidence.json",
+    "acquisitionMetadata": "research/output/gtm-activation-20260909/lasofoxifene-replacement-assessment-20260913/acquisition-metadata.json",
+    "receipt": "research/output/gtm-activation-20260909/lasofoxifene-replacement-assessment-20260913/receipts/efetch-20260913T100848166769Z.json"
+  },
+  "queueAccounting": "Prepared16to17/completed0/prior-co-citation stays12: new study is not original PubChem co-citation assessment.",
+  "remainingGates": [
+    "Distinct item/bibliographic discrepancy review and source mapping unresolved; existing WUSTL snapshot not rebound.",
+    "Inherited ratings and scientific evidence acceptance pending.",
+    "Independent-family, distinct-person human and publication/promotion separate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

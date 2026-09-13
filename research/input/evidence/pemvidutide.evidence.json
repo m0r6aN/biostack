@@ -24,7 +24,7 @@
       "drugbank": "DB18998",
       "pubchem": null,
       "chembl": "CHEMBL5095142",
-      "doi": "10.1016/j.jhep.2024.06.028",
+      "doi": "10.1016/j.jhep.2024.07.006",
       "pmid": "39002641"
     }
   },
@@ -36,7 +36,7 @@
       "title": "Effect of pemvidutide, a GLP-1/glucagon dual receptor agonist, on MASLD: A randomized, double-blind, placebo-controlled study",
       "publisher": "Journal of Hepatology (Harrison SA, Browne SK, Suschak JJ, Tomah S, Gutierrez JA, Yang J, Roberts MS, Harris MS, 2025)",
       "url": "https://pubmed.ncbi.nlm.nih.gov/39002641/",
-      "doi": "10.1016/j.jhep.2024.06.028",
+      "doi": "10.1016/j.jhep.2024.07.006",
       "pmid": "39002641",
       "publishedAt": null,
       "accessedAt": "2026-08-28T22:30:00Z"
@@ -250,11 +250,11 @@
     {
       "claimId": "pemvidutide-mechanism-dual-agonist-001",
       "claimType": "mechanism",
-      "statement": "Pemvidutide is a synthetic, unacylated GLP-1/glucagon dual receptor agonist in clinical development by Altimmune, Inc., distinct from approved single-target GLP-1 receptor agonists.",
+      "statement": "The study indexed as PMID 39002641 describes pemvidutide as an agonist of both the GLP-1 and glucagon receptors.",
       "context": {
         "population": null,
         "route": null,
-        "formulation": "pemvidutide (ALT-801)",
+        "formulation": "pemvidutide",
         "useCase": "mechanism description",
         "doseText": null
       },
@@ -262,35 +262,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "drugbank-db18998",
-        "medchemexpress-pemvidutide",
-        "pubmed-39002641-masld-rct",
-        "chembl-chembl5095142"
+        "pubmed-39002641-masld-rct"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "medchemexpress-pemvidutide",
-          "quote": "GLP-1R/GCGR dual agonist",
-          "pageOrSection": "Product summary, target"
-        },
-        {
-          "sourceRef": "chembl-chembl5095142",
-          "quote": "pref_name: PEMVIDUTIDE; molecule_chembl_id: CHEMBL5095142",
-          "pageOrSection": "Molecule record"
-        },
-        {
           "sourceRef": "pubmed-39002641-masld-rct",
-          "quote": "a GLP-1/glucagon dual receptor agonist",
-          "pageOrSection": "Title / abstract"
-        },
-        {
-          "sourceRef": "lancet-pmid41237796-impact-24wk",
-          "quote": "GLP-1-glucagon dual receptor agonists such as pemvidutide show promise in treating metabolic dysfunction-associated steatohepatitis.",
-          "pageOrSection": "Abstract, Background"
+          "quote": null,
+          "pageOrSection": "Abstract: BACKGROUND & AIMS"
         }
       ],
       "reviewFlags": [
-        "Independently reconfirmed 2026-08-29 via a second, unrelated primary-literature source (Lancet IMPACT trial, PMID 41237796) and Wikipedia; no conflict found."
+        "Independently reconfirmed 2026-08-29 via a second, unrelated primary-literature source (Lancet IMPACT trial, PMID 41237796) and Wikipedia; no conflict found.",
+        "Candidate preparation 2026-09-13: study-reported classification only; context formulation narrowed to pemvidutide without disproving ALT-801 alias. ALT-801 occurs in official record keywords; abstract-only non-establishment is not whole-record absence or exact alias equivalence. Original unrelated-source/Wikipedia commentary remains historical, not verified lineage. Four non-DrugBank excerpts removed; zero DrugBank excerpts. Same PMID snapshot DOI corrected with prior value in provenance; other fields unchanged. Inherited study B1 and Strong/high pending review are distinct from PubMed index C1. Evidence/ratings, family, human and publication gates remain open. See research/source-authorization/pemvidutide-resource-candidate-2026-09-13.json."
       ]
     },
     {

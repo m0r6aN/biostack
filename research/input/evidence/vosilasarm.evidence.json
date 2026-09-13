@@ -167,11 +167,11 @@
     {
       "claimId": "vosilasarm-identity-naming-001",
       "claimType": "identity",
-      "statement": "Vosilasarm is the World Health Organization International Nonproprietary Name (INN) assigned to the compound long known in gray-market/research-chemical and bodybuilding contexts as RAD-140 or 'Testolone'; it is not a structural analog of RAD-140 but the same molecule (PubChem CID 44200882, molecular formula C20H16ClN5O2), now also being developed clinically under the code name EP0062 by Ellipses Pharma for oncology use. Sources discussing 'RAD-140', 'Testolone', 'EP0062', and 'Vosilasarm' should be treated as referring to one compound unless a source states otherwise.",
+      "statement": "PubChem’s lookup for the name Vosilasarm returned CID 44200882.",
       "context": {
         "population": null,
         "route": null,
-        "formulation": "free compound",
+        "formulation": "PubChem name-to-compound lookup",
         "useCase": "identity/naming disambiguation",
         "doseText": null
       },
@@ -179,42 +179,19 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pubchem-cid-44200882",
-        "drugbank-db13939",
-        "ellipses-sabcs-2022-vosilasarm",
-        "fda-warrior-labz-warning-letter-2023",
-        "ncats-gsrs-vosilasarm-rad140"
+        "pubchem-cid-44200882"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "ncats-gsrs-vosilasarm-rad140",
-          "quote": "\"approvalID\":\"4O87Q44KNC\" ... \"_name\":\"VOSILASARM\" ... CAS label \"1182367-47-0\" ... synonym label \"RAD140\" (Code System: WIKIPEDIA) ... \"formula\":\"C20H16ClN5O2\"",
-          "pageOrSection": "GSRS substance record, RAD140/Vosilasarm search result"
-        },
-        {
           "sourceRef": "pubchem-cid-44200882",
-          "quote": "2-Chloro-4-(((1R,2S)-1-(5-(4-cyanophenyl)-1,3,4-oxadiazol-2-yl)-2-hydroxypropyl)amino)-3-methylbenzonitrile",
-          "pageOrSection": "IUPAC Name, CID 44200882"
-        },
-        {
-          "sourceRef": "drugbank-db13939",
-          "quote": "selective androgen receptor modulator (SARM)",
-          "pageOrSection": "Vosilasarm (RAD140 investigational designation), DB13939"
-        },
-        {
-          "sourceRef": "ellipses-sabcs-2022-vosilasarm",
-          "quote": "Vosilasarm is an oral, non-steroidal, SARM currently being developed for the treatment of AR+/HER2-/ER+ advanced breast cancer.",
-          "pageOrSection": "Mechanism/trial rationale"
-        },
-        {
-          "sourceRef": "fda-warrior-labz-warning-letter-2023",
-          "quote": "RAD-140 Testolone",
-          "pageOrSection": "Product list, unapproved new drugs"
+          "quote": null,
+          "pageOrSection": "PUG REST name lookup; input Vosilasarm; name_type=complete; IdentifierList.CID=[44200882]; observed lookup behavior only."
         }
       ],
       "reviewFlags": [
         "remediation-2026-08-29: CAS number (1182367-47-0) and UNII (4O87Q44KNC) resolved this session via live fetch of the NCATS Global Substance Registration System (GSRS) record for VOSILASARM/RAD140 and added to externalIdentifiers; independently cross-check against CAS Common Chemistry at next review, since that site's own search interface returned 'Search failed: Unauthorized' when queried live this session and could not directly corroborate",
-        "residual minor gap: the specific WHO INN Proposed/Recommended List publication assigning 'vosilasarm' was not located this session (WHO INN List 117 predates the assignment and a more recent list was not found); treat as a minor unresolved reference gap, not a defect in the identity claim itself"
+        "residual minor gap: the specific WHO INN Proposed/Recommended List publication assigning 'vosilasarm' was not located this session (WHO INN List 117 predates the assignment and a more recent list was not found); treat as a minor unresolved reference gap, not a defect in the identity claim itself",
+        "Candidate preparation 2026-09-13: attributed observed PubChem name lookup only. Original WHO/GSRS/alias statements remain historical and were not newly verified. Context narrowed from free compound to name-to-compound lookup; other context and Strong/high unchanged pending review. No matching-algorithm, WHO assignment, RAD140/Testolone/EP0062 equivalence or physical-formulation assertion. Five distinct excerpt histories retained, only one DrugBank; old chemical Title retained by hash/link, not copied. Naming contributor rights/provenance and possible DrugBank-derived inputs remain unresolved before downstream reliance; registry qualification is not blanket rejected or newly expanded. Evidence/family/human/publication gates remain open. See research/source-authorization/vosilasarm-lookup-resource-candidate-2026-09-13.json."
       ]
     },
     {
