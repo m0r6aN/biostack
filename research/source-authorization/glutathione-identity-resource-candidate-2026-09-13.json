@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T16:22:37.055202Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "glutathione-identity-mechanism-001",
+  "candidateStatement": "PubChem lists a compound record titled Glutathione under CID 124886 with molecular formula C10H17N3O6S.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "632dda8c14080fae775f82dceb2bf080efbff7f2",
+    "path": "research/input/evidence/glutathione.evidence.json",
+    "bytes": 34954,
+    "sha256": "6b438dbecb1af127d3efc79c453afd66e5fed6fc007ac20e3822e85d1939a6eb"
+  },
+  "supersededClaimSha256": "46c187fdd661961ca9715eedb0c4b0721f018734f1eb0e78293a27053176af60",
+  "supersededClaimHashEncoding": "SHA256 of UTF-8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "drugbank-db00143",
+      "locator": "Summary/Description",
+      "chars": 175,
+      "sha256": "a737f9ef39e90fdc42887f783b4c933b658911e898b0d3c60a87f71220def031"
+    },
+    {
+      "sourceId": "pubchem-cid-124886",
+      "locator": "Compound identity header",
+      "chars": 38,
+      "sha256": "f334150f0663146b2b11b7e863956382033667bf04acc41241e5b6a78bccd4a1"
+    }
+  ],
+  "originalSourceRefs": [
+    "drugbank-db00143",
+    "pubchem-cid-124886"
+  ],
+  "historicalReviewFlags": [
+    "DrugBank description quote was truncated at source fetch; confirm full pharmacology text on next review pass"
+  ],
+  "originalClaimType": "mechanism",
+  "candidateClaimType": "identity",
+  "stableClaimIdQualification": "Historical mechanism identifier retained for audit linkage; candidate is identity only, not mechanism support.",
+  "scopeLoss": "Original biochemical mechanism, reduced-GSH/oxidized-form relationship and product equivalence remain unresolved. This alternative does not clear the original mechanism requirement or related issue.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "glutathione (reduced, GSH)",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "PubChem compound record CID 124886",
+    "useCase": "compound identity/reference data",
+    "doseText": null
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "originalSourceSnapshotProvenance": {
+    "gitRevision": "632dda8c14080fae775f82dceb2bf080efbff7f2",
+    "packetPath": "research/input/evidence/glutathione.evidence.json",
+    "sourceId": "pubchem-cid-124886",
+    "nonTitleMetadata": {
+      "sourceId": "pubchem-cid-124886",
+      "sourceType": "structured-database",
+      "authorityTier": "B2",
+      "publisher": "National Center for Biotechnology Information / PubChem",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Glutathione",
+      "doi": null,
+      "pmid": null,
+      "publishedAt": null,
+      "accessedAt": "2026-08-29T02:21:10Z"
+    },
+    "titleChars": 50,
+    "titleSha256": "88fe294066492bf7df6f4bf1459d2682089ee03455d783af91f9d05bdac0fc7e",
+    "sourceObjectSha256": "5d402bbd6951b55079992378c70111c2bb48dfd80ce586d1c74db1100cb53669",
+    "sourceObjectHashEncoding": "UTF8 sorted-key compact JSON, ensure_ascii true, no newline",
+    "omittedTitleReason": "Preserve canonical snapshot unchanged; avoid unnecessary historical header reproduction in sidecar."
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubchem",
+    "sourceItemId": "pubchem-cid-124886",
+    "sourceUrl": "https://pubchem.ncbi.nlm.nih.gov/compound/Glutathione",
+    "requestUrl": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/124886/property/Title,MolecularFormula/JSON",
+    "method": "Fixed-CID PubChem PUG REST Title,MolecularFormula GET; retained property projection only in this implementation.",
+    "query": {
+      "cid": 124886,
+      "properties": [
+        "Title",
+        "MolecularFormula"
+      ]
+    },
+    "returnedProperties": [
+      {
+        "CID": 124886,
+        "Title": "Glutathione",
+        "MolecularFormula": "C10H17N3O6S"
+      }
+    ],
+    "supportLocator": "PUG REST fixed CID 124886 property response: CID, Title and MolecularFormula; factual paraphrase only.",
+    "scope": "Database-node identity only; no biochemical mechanism or reduced-GSH/product equivalence.",
+    "sourceUpdateDate": null,
+    "sourceVersion": null,
+    "dateQualification": "No update/version returned; old access timestamp not rebound to new payload.",
+    "rightsQualification": "Existing qualified PubChem identity API; contributor origin, attribution and applicable reuse restrictions remain unresolved. No new blanket rights granted.",
+    "retrievedAtUtc": "2026-09-13T16:04:03.933296+00:00",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "retrievalAttribution": "Original worker receipt/hash; retained projection not independently rehashed original transport. No new request."
+  },
+  "sourceSha256": "6fdff3c8fd6eefad6d41daf4a97aaabab8858ac7f34eb21350a0ef05ee4a753c",
+  "payloadProvenance": {
+    "bytes": 168,
+    "attribution": "Worker-reported original transport size/hash."
+  },
+  "requestHistory": {
+    "totalAttempts": 1,
+    "retries": 0,
+    "receipt": {
+      "author": "Codex",
+      "method": "GET",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/124886/property/Title,MolecularFormula/JSON",
+      "startedAtUtc": "2026-09-13T16:04:03.512955+00:00",
+      "completedAtUtc": "2026-09-13T16:04:03.933296+00:00",
+      "httpStatus": 200,
+      "responseBytes": 168,
+      "responseSha256": "6fdff3c8fd6eefad6d41daf4a97aaabab8858ac7f34eb21350a0ef05ee4a753c",
+      "headers": {
+        "Date": "Sun, 13 Sep 2026 16:04:05 GMT",
+        "X-Throttling-Control": "Request Count status: Green (0%), Request Time status: Green (0%), Service status: Green (30%)",
+        "Content-Type": "application/json"
+      },
+      "fault": null,
+      "requests": 1,
+      "retries": 0
+    }
+  },
+  "excerptAccounting": "Two original excerpts: DrugBank175characters and PubChem header38characters, separately hashed. No whole historical quote copied; independently returned factual title/CID/formula may recur as fields. Prior insufficient PMID20524875 mechanism opening remains unresolved and was not repeated.",
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/glutathione-identity-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/glutathione-identity-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/glutathione-identity-replacement-assessment-20260913/source-evidence.json",
+    "projection": "research/output/gtm-activation-20260909/glutathione-identity-replacement-assessment-20260913/identity-properties.json",
+    "receipt": "research/output/gtm-activation-20260909/glutathione-identity-replacement-assessment-20260913/receipts/pug-20260913T160403512955Z.json"
+  },
+  "queueAccounting": "Prepared22to23,completed0,prior-co-citation14to15 because PubChem already co-cited and actually assessed. Identity-only alternative, not mechanism completion; historical row classification and totals preserved.",
+  "remainingGates": [
+    "Original biochemical mechanism and reduced-GSH/product equivalence requirements remain unresolved.",
+    "Evidence-reviewer acceptance of identity-only scope and inherited Strong/high pending.",
+    "Contributor origin/rights and independent-family assessment pending; human/expert and publication controls remain."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}
