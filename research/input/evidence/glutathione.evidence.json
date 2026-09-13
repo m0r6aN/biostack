@@ -177,36 +177,31 @@
   "claims": [
     {
       "claimId": "glutathione-identity-mechanism-001",
-      "claimType": "mechanism",
-      "statement": "Glutathione (GSH) is an endogenously synthesized tripeptide that functions as a cellular antioxidant and cofactor, conjugating to xenobiotics/drugs to increase their solubility for excretion and participating in cellular protein disulfide bond formation and redox regulation.",
+      "claimType": "identity",
+      "statement": "PubChem lists a compound record titled Glutathione under CID 124886 with molecular formula C10H17N3O6S.",
       "context": {
         "population": null,
         "route": null,
-        "formulation": "glutathione (reduced, GSH)",
-        "useCase": "mechanism description",
+        "formulation": "PubChem compound record CID 124886",
+        "useCase": "compound identity/reference data",
         "doseText": null
       },
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "drugbank-db00143",
         "pubchem-cid-124886"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "drugbank-db00143",
-          "quote": "A tripeptide with many roles in cells. It conjugates to drugs to make them more soluble for excretion, is a cofactor for some enzymes, is involved in protein disulfide bond...",
-          "pageOrSection": "Summary/Description"
-        },
-        {
           "sourceRef": "pubchem-cid-124886",
-          "quote": "Glutathione | C10H17N3O6S | CID 124886",
-          "pageOrSection": "Compound identity header"
+          "quote": null,
+          "pageOrSection": "PUG REST fixed CID 124886 property response: CID, Title and MolecularFormula; factual paraphrase only."
         }
       ],
       "reviewFlags": [
-        "DrugBank description quote was truncated at source fetch; confirm full pharmacology text on next review pass"
+        "DrugBank description quote was truncated at source fetch; confirm full pharmacology text on next review pass",
+        "Identity-only alternative prepared 2026-09-13: stable historical claimId retains audit linkage, not current mechanism support. biochemical mechanism, reduced-GSH/oxidized-form relationship and product equivalence remain unresolved; database identity does not replace those requirements or clear related review issues. Original flags retained as historical. Inherited Strong/high, contributor origin/family and evidence acceptance remain pending. See research/source-authorization/glutathione-identity-resource-candidate-2026-09-13.json."
       ]
     },
     {
