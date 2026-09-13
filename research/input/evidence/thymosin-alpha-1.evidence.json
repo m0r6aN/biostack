@@ -276,11 +276,11 @@
     {
       "claimId": "ta1-mechanism-tlr9-thymic-peptide-001",
       "claimType": "mechanism",
-      "statement": "Thymosin alpha-1 (thymalfasin) is a synthetically manufactured 28-amino-acid acetylated polypeptide identical to a naturally occurring human thymic peptide; it is described as activating toll-like receptor 9 (TLR9) signaling on dendritic cells, driving Th1 polarization and T-cell maturation as part of coordinated adaptive immune responses.",
+      "statement": "The study indexed as PMID 23327199 describes thymosin alpha-1 as an immunomodulatory drug.",
       "context": {
         "population": null,
         "route": null,
-        "formulation": "thymalfasin",
+        "formulation": "thymosin alpha-1",
         "useCase": "mechanism description",
         "doseText": null
       },
@@ -288,28 +288,18 @@
       "confidence": "moderate",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "drugbank-db04900",
-        "superpower-thymosin-alpha-1"
+        "pubmed-etass-2013"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "drugbank-db04900",
-          "quote": "Thymalfasin is a chemically synthesized version of thymosin alpha 1 that is identical to human thymosin alpha 1.",
-          "pageOrSection": "Description"
-        },
-        {
-          "sourceRef": "drugbank-db04900",
-          "quote": "Thymosin alpha 1 is an acetylated polypeptide.",
-          "pageOrSection": "Drug type"
-        },
-        {
-          "sourceRef": "superpower-thymosin-alpha-1",
-          "quote": "Activates toll-like receptor 9 signaling on dendritic cells, driving Th1 polarization, T-cell maturation, and coordinated adaptive immune responses.",
-          "pageOrSection": "Mechanism section"
+          "sourceRef": "pubmed-etass-2013",
+          "quote": null,
+          "pageOrSection": "Abstract INTRODUCTION, immunomodulatory classification only; factual paraphrase."
         }
       ],
       "reviewFlags": [
-        "mechanism sourced partly from a vendor-education page rather than a peer-reviewed pharmacology review; corroborate against a primary pharmacology reference at review time"
+        "mechanism sourced partly from a vendor-education page rather than a peer-reviewed pharmacology review; corroborate against a primary pharmacology reference at review time",
+        "ETASS candidate prepared 2026-09-13: TLR9, 28-amino-acid, synthetic/acetylated, thymic-origin and thymalfasin equivalence are unestablished by the inspected ETASS opening, not declared false. Minimal classification does not complete those broader requirements. Original flags retained as historical, not corroborated by this candidate. Actual inherited Moderate/moderate remains pending evidence review. TESTS PMID39814420 and Erratum40447307 remain unresolved; shared authors/source-family independence, human/expert and publication gates remain. See research/source-authorization/thymosin-alpha-1-etass-resource-candidate-2026-09-13.json."
       ]
     },
     {
