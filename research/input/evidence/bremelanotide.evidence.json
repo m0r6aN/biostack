@@ -398,7 +398,7 @@
     {
       "claimId": "bremelanotide-identity-external-ids-001",
       "claimType": "identity",
-      "statement": "Bremelanotide (PubChem CID 9941379, molecular formula C50H68N14O10, CAS 189691-06-3, DrugBank DB11653, UNII 6Y24O4F92S) is a cyclic heptapeptide melanocortin receptor agonist and the active metabolite of melanotan II.",
+      "statement": "PubChem lists a compound record titled Bremelanotide under CID 9941379 with molecular formula C50H68N14O10.",
       "context": {
         "population": null,
         "route": null,
@@ -410,29 +410,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pubchem-cid-9941379",
-        "drugbank-db11653",
-        "fda-gsrs-unii-6y24o4f92s"
+        "pubchem-cid-9941379"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "pubchem-cid-9941379",
-          "quote": "Bremelanotide | C50H68N14O10 | CID 9941379",
-          "pageOrSection": "Compound summary header"
-        },
-        {
-          "sourceRef": "drugbank-db11653",
-          "quote": "DrugBank ID: DB11653",
-          "pageOrSection": "Identification"
-        },
-        {
-          "sourceRef": "fda-gsrs-unii-6y24o4f92s",
-          "quote": "UNII: 6Y24O4F92S; CAS: 189691-06-3; Molecular Formula: C50H68N14O10",
-          "pageOrSection": "Substance record"
+          "quote": null,
+          "pageOrSection": "PUG REST fixed CID 9941379 property response: CID, Title and MolecularFormula; factual paraphrase only."
         }
       ],
       "reviewFlags": [
-        "Remediation 2026-08-29: UNII gap closed and CAS number independently confirmed via the FDA's own Global Substance Registration System record (precision.fda.gov), a structured authority database independent of PubChem/DrugBank. UNII 6Y24O4F92S added to compound.externalIdentifiers; CAS and molecular formula both cross-verified on the same record."
+        "Remediation 2026-08-29: UNII gap closed and CAS number independently confirmed via the FDA's own Global Substance Registration System record (precision.fda.gov), a structured authority database independent of PubChem/DrugBank. UNII 6Y24O4F92S added to compound.externalIdentifiers; CAS and molecular formula both cross-verified on the same record.",
+        "Candidate preparation 2026-09-13: exact PubChem CID/title/formula database-node statement only. Prior GSRS verification is historical and was not reassessed here. Omitted CAS/UNII/DrugBank, peptide classification and metabolite lineage are not declared false or newly verified. No universal product/salt equivalence or experimental identity inferred. Strong/high and all context remain unchanged pending review. Three original PubChem, DrugBank and FDA-GSRS excerpts removed with distinct attribution; only DrugBank excerpt was contained. Evidence/family/human/publication gates remain open. See research/source-authorization/bremelanotide-identity-resource-candidate-2026-09-13.json."
       ]
     }
   ],
