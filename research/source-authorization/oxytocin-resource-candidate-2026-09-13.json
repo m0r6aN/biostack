@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T05:04:47.622339Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "oxytocin-mechanism-identity-001",
+  "candidateStatement": "The PITOCIN label describes its injectable product as a solution of synthetic oxytocin and identifies oxytocin as a nonapeptide.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "1b1a0d790d5da2c200b03a0db1513923014c8227",
+    "path": "research/input/evidence/oxytocin.evidence.json",
+    "bytes": 29367,
+    "sha256": "e252dd101610281fe57bb39486e93bcd52b54251443d4c955be629eb67699094"
+  },
+  "supersededClaimSha256": "c62079e4fb6cb0b7cc060d46b666529ca0bc731492cd3605a1c3a5d497867186",
+  "supersededClaimHashEncoding": "SHA-256 of UTF-8 base claim JSON, recursively sorted keys, compact comma/colon separators, ASCII escaping, no trailing newline: json.dumps(claim, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8').",
+  "removedExcerpts": [
+    {
+      "sourceId": "dailymed-pitocin-label",
+      "locator": "Description",
+      "chars": 303,
+      "sha256": "b35e6a670da6e2fbdbdd0f20f3f0eefd5cab40b95c15f879a71552a95bb89d1e"
+    },
+    {
+      "sourceId": "drugbank-db00107",
+      "locator": "Summary",
+      "chars": 165,
+      "sha256": "f4364e8d6b1611009b840afc62dea800aa407f53bf5fa53a465701970a912a15"
+    }
+  ],
+  "removedExcerptScope": "Two reviewed-base excerpts: DailyMed Description and DrugBank Summary, separately attributed and hashed. PubChem had no excerpt. No DrugBank/PubChem retrieval or new rights determination.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "synthetic oxytocin",
+    "useCase": "compound identity",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "synthetic oxytocin",
+    "useCase": "compound identity",
+    "doseText": null
+  },
+  "historicalReviewFlags": [
+    "UNII and ChEMBL identifiers not resolved from structured databases fetched this session; attempted NCATS GSRS substance-search API and ChEMBL REST API this pass, both rate-limited (HTTP 429) at fetch time -- not resolved, left null",
+    "corrected 2026-08-29: independent regulator-label source (live-fetched DailyMed Pitocin label) uniformly describes the approved injectable as 'synthetic,' never 'recombinant'; 'recombinant' specifically denotes production via recombinant-DNA/cell-expression systems, which is not how this peptide is manufactured (chemical/solid-phase synthesis). DrugBank's 'recombinant hormone' wording is retained above as a verbatim quote of that source but is flagged as imprecise and is no longer repeated in the claim statement."
+  ],
+  "historicalManufacturingFlagQualification": "Old solid-phase/chemical-manufacture commentary remains historical; DESCRIPTION supports synthetic identity but this preparation does not verify the specific method.",
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "pending evidence acceptance; unchanged, not ratified"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "dailymed-pitocin-label",
+    "sourceType": "regulator",
+    "authorityTier": "A1",
+    "title": "Label: PITOCIN - oxytocin injection",
+    "publisher": "DailyMed / U.S. Food and Drug Administration",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=969d5b35-0add-4c23-9605-6a5b6ab65c95",
+    "doi": null,
+    "pmid": null,
+    "publishedAt": null,
+    "accessedAt": "2026-08-29T01:58:43Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "dailymed",
+    "sourceItemId": "dailymed-pitocin-label",
+    "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=969d5b35-0add-4c23-9605-6a5b6ab65c95",
+    "splSetId": "969d5b35-0add-4c23-9605-6a5b6ab65c95",
+    "splDocumentId": "d7f1fa93-f653-4c83-a782-97ab5330dc39",
+    "labelVersion": 16,
+    "versionObservation": "Version 16 observed in the dated September 13, 2026 worker receipt; not indefinitely current or a historical-byte assertion.",
+    "labeler": "Par Health USA, LLC",
+    "labelerAuthorship": "Source labeler/author organization, not inferred government authorship.",
+    "archiveTitle": "PITOCIN (OXYTOCIN) INJECTION [PAR HEALTH USA, LLC]",
+    "effectiveDate": "2026-05-06",
+    "archivePublishedDate": null,
+    "bodyRevision": "not separately extracted; no invented value",
+    "chronologyQualification": "Original access does not establish historical version or byte identity. Version 16 archive publication unknown; effective date and displayed page update are not substitutes.",
+    "ndc": [
+      "42023-116",
+      "42023-116-25",
+      "42023-116-01",
+      "42023-116-02"
+    ],
+    "ndcCoverage": "All distinct observed XML code elements with codeSystem2.16.840.1.113883.6.69: product42023-116 and packages42023-116-25/-01/-02. Not all-market or availability proof.",
+    "historyMismatch": {
+      "xmlVersion": 16,
+      "highestHistoryVersion": 15,
+      "highestHistoryPublishedDate": "2025-12-25",
+      "historyTotalElements": 12,
+      "historyTotalPages": 1,
+      "version16Absent": true,
+      "disposition": "Preserve discrepancy; do not assign version15 publication date to version16, claim synchronized history, or infer cause. Exact XML retrieval identity known, version16 publication unresolved."
+    },
+    "sectionName": "DESCRIPTION",
+    "sectionCode": "34089-3",
+    "sectionId": "eb11f05c-11fa-49bd-aed0-1adcaba19bfe",
+    "observedSectionLocators": [
+      {
+        "sectionCode": "34089-3",
+        "sectionName": "DESCRIPTION",
+        "sectionId": "eb11f05c-11fa-49bd-aed0-1adcaba19bfe"
+      }
+    ],
+    "retrievedAtUtc": "2026-09-13T04:45:33.084134Z",
+    "retrievalAttribution": "Worker-reported original API completion time, no fresh request or independent payload/transcript verification by preparation.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified DailyMed factual-candidate/API approval; no new rights, human, family or publication acceptance.",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "transformationNote": "Codex manually applied exact reviewed statement/formulation and provenance; no adapter or acquisition run.",
+    "humanReviewStatus": "pending",
+    "retentionAttribution": "Worker reports in-memory parsing without full XML or source-section text written to disk; no independent full-transcript certification."
+  },
+  "sourceSha256": "f14231cedf9e739cc3a44a51596de0bf0ac9e0ddeb776ab2ff891f19f8265638",
+  "payloadProvenance": {
+    "bytes": 50961,
+    "historySha256": "2597d13042ec3ddfbd6ae69b72e289f234d5c0cfb89337bcf11fe334bcf9a204",
+    "historyBytes": 1170,
+    "attribution": "Original worker-reported hashes/sizes, not freshly rehashed payloads."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/oxytocin-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/oxytocin-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/oxytocin-replacement-assessment-20260913/source-evidence.json",
+    "historyReceipt": "research/output/gtm-activation-20260909/oxytocin-replacement-assessment-20260913/receipts/dailymed-20260913T044532594216Z.json",
+    "xmlReceipt": "research/output/gtm-activation-20260909/oxytocin-replacement-assessment-20260913/receipts/dailymed-20260913T044532881434Z.json"
+  },
+  "scopeRationale": "Minimal product identity only. No clinical uses, dose or manufacturing-method addition. Omitted identifiers and formula are not declared false; all compound identifiers preserved.",
+  "queueAccounting": "Prepared increases 9 to 10; completed remains 0. Prior-co-citation assessed increases 5 to 6 because existing DailyMed co-citation was assessed. PubChem not assessed; existing DailyMed is not a new independent family.",
+  "dependencyDisposition": {
+    "target": "All prior target references replaced with existing DailyMed alias; historical snapshots, identifiers, other claims and ops unchanged.",
+    "otherReviewedBaseClaimsWithDrugBankRefs": [],
+    "boundary": "No historical/production packet-wide clearance; DrugBank acquisition stays disabled."
+  },
+  "remainingGates": [
+    "Evidence-reviewer acceptance of identity statement and inherited Strong/high ratings.",
+    "Independent-family/lineage closure not satisfied by a new citation alone.",
+    "Item/version and distinct-person human review before promotion remain separate.",
+    "Publication, deployment and production containment remain unperformed."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}
