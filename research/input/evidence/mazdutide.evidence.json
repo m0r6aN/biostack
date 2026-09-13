@@ -277,7 +277,7 @@
     {
       "claimId": "mazdutide-identity-external-ids-001",
       "claimType": "identity",
-      "statement": "Mazdutide is registered under CAS number 2259884-03-0, UNII MB76Z4IBZ5, PubChem CID 167312357 (molecular formula C207H317N45O65), DrugBank ID DB19099, and ChEMBL ID CHEMBL5095358.",
+      "statement": "PubChem lists a compound record titled Mazdutide under CID 167312357 with molecular formula C207H317N45O65.",
       "context": {
         "population": null,
         "route": null,
@@ -289,32 +289,20 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pubchem-cid-167312357",
-        "drugbank-db19099",
-        "medchemexpress-mazdutide",
-        "gsrs-ncats-mazdutide"
+        "pubchem-cid-167312357"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "pubchem-cid-167312357",
-          "quote": "C207H317N45O65",
-          "pageOrSection": "Compound summary, molecular formula"
-        },
-        {
-          "sourceRef": "drugbank-db19099",
-          "quote": "Mazdutide is under investigation in clinical trial NCT06143956",
-          "pageOrSection": "Page metadata / summary"
-        },
-        {
-          "sourceRef": "gsrs-ncats-mazdutide",
-          "quote": "UNII Code: MB76Z4IBZ5 ... CAS Number: 2259884-03-0",
-          "pageOrSection": "Substance record, key identifiers"
+          "quote": null,
+          "pageOrSection": "PUG REST fixed CID 167312357 property response: CID, Title and MolecularFormula; factual paraphrase only."
         }
       ],
       "reviewFlags": [
         "CAS number sourced from vendor datasheet (medchemexpress) rather than a structured database entry; cross-check against DrugBank or ChemIDplus at review time",
         "remediation-pass-2026-08-29: UNII (MB76Z4IBZ5) resolved and CAS number (2259884-03-0) independently cross-confirmed via the NCATS/FDA Global Substance Registration System (GSRS), a materially different source family from PubChem/DrugBank/MedChemExpress",
-        "remediation-pass-2026-08-29: ChEMBL ID (CHEMBL5095358) obtained via a PubChem PUG REST re-fetch, but PubChem is already a cited source for this claim, so it does NOT count as independent verification per review contract; direct ChEMBL (ebi.ac.uk) lookup was attempted and blocked (proxy policy denial / rate-limit) both in the prior review pass and again this pass -- ChEMBL ID should be treated as unconfirmed by an independent family until a direct ChEMBL query succeeds"
+        "remediation-pass-2026-08-29: ChEMBL ID (CHEMBL5095358) obtained via a PubChem PUG REST re-fetch, but PubChem is already a cited source for this claim, so it does NOT count as independent verification per review contract; direct ChEMBL (ebi.ac.uk) lookup was attempted and blocked (proxy policy denial / rate-limit) both in the prior review pass and again this pass -- ChEMBL ID should be treated as unconfirmed by an independent family until a direct ChEMBL query succeeds",
+        "Candidate preparation 2026-09-13: exact PubChem CID/title/formula database-node statement only. Historical GSRS/vendor/ChEMBL corroboration and access flags were not reassessed and are not new acceptance or retry instructions. Omitted identifiers are not declared false. Strong/high and all context unchanged pending review. Original PubChem formula, DrugBank and GSRS excerpt histories are separately hashed; vendor reference had no quote. Formula C207H317N45O65 was independently returned and is intentionally retained as a factual value, not narrative quote reproduction. Evidence/family/human/publication gates remain open. See research/source-authorization/mazdutide-identity-resource-candidate-2026-09-13.json."
       ]
     },
     {
