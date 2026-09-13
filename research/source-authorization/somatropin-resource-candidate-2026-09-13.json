@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T01:43:48.013235Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "somatropin-mechanism-001",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "preparationContext": "Codex independently implemented the reviewed identity/provenance-only directive after the lead reported Claude paused at provider safeguard Details[bio]. The paused session was not interacted with, retried or altered. No Claude implementation output or authorship is claimed.",
+  "candidateStatement": "The GENOTROPIN label describes somatropin as recombinant human growth hormone with 191 amino acid residues and the same amino acid sequence as pituitary-origin human growth hormone.",
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "pending evidence-reviewer acceptance; unchanged and not ratified"
+  },
+  "originalContextUnchanged": {
+    "population": null,
+    "route": null,
+    "formulation": "recombinant human growth hormone (191-amino-acid sequence identical to pituitary-derived GH)",
+    "useCase": "mechanism/identity description",
+    "doseText": null
+  },
+  "historicalPacket": {
+    "gitRevision": "8c632c0589f111e50f29262564dceee92e44e759",
+    "path": "research/input/evidence/somatropin.evidence.json",
+    "bytes": 30408,
+    "sha256": "8b8358c6d0a4a12e6e38b120d22797dc973eb0b660125a7059946f22a07f2ebc"
+  },
+  "supersededClaimSha256": "22fd8c293e9aa2aec934719cebdfa370b66188bc944e297fefedf77c86cc008e",
+  "supersededClaimHashEncoding": "SHA-256 of UTF-8 JSON for the base claim object, recursively sorted keys, compact comma/colon separators, ASCII escaping, no trailing newline: json.dumps(claim, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8').",
+  "removedExcerpts": [
+    {
+      "sourceId": "drugbank-db00052",
+      "locator": "Overview",
+      "chars": 183,
+      "sha256": "6a71152dc9850e4d4e19afdb16a75a1ce7a1d17364618c01e8f188af0023545d"
+    }
+  ],
+  "removedExcerptScope": "Only the reviewed base target has been inventoried here: one DrugBank Overview excerpt and no retained DailyMed excerpt. No all-history assertion is made.",
+  "resolvedSource": {
+    "sourceRegistryId": "dailymed",
+    "sourceItemId": "dailymed-genotropin-label",
+    "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ffebf88b-d257-4542-9808-74d9b7167765",
+    "splSetId": "ffebf88b-d257-4542-9808-74d9b7167765",
+    "splDocumentId": "5aa3307a-c0bc-43c0-8177-3bb1cad66d7a",
+    "labelVersion": 37,
+    "versionObservation": "Version 37 reported by the dated September 13, 2026 worker receipt; not an indefinitely current assertion or proof of exact historical retrieval bytes/version.",
+    "labeler": "Pfizer Laboratories Div Pfizer Inc.",
+    "effectiveDate": "2026-08-04",
+    "archivePublishedDate": "2026-08-06",
+    "prescribingInformationRevision": "July 2026",
+    "dailyMedDatabasePublicationStampReported": "Sep 11, 2026 08:09:31PM EST",
+    "dateQualification": "Separate source fields retained literally; chronological compatibility does not establish exact prior retrieval content.",
+    "ndc": [
+      "0013-2626",
+      "0013-2646",
+      "0013-2649",
+      "0013-2650",
+      "0013-2651",
+      "0013-2652"
+    ],
+    "ndcScope": "Partial sample of six of 24 reported product/package codes; not a full mapping or a single selected formulation.",
+    "sectionName": "11 DESCRIPTION",
+    "sectionCode": "34089-3",
+    "sectionId": "76457abf-2ec6-4283-b384-c59dc7bf60ac",
+    "retrievedAtUtc": "2026-09-13T00:51:09.541537Z",
+    "retrievalAttribution": "Worker-reported API completion time from the linked original receipt; no new source request or independent network attestation by this preparation.",
+    "rightsReviewStatusAtRetrieval": "Approved within existing DailyMed factual-candidate/API scope; labeler-authored material, not blanket public-domain or publication clearance.",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "transformationNote": "Codex applied the exact reviewed statement and source provenance manually; no automated source adapter or acquisition pipeline ran.",
+    "humanReviewStatus": "pending",
+    "fullTextRetentionReport": "Original worker receipt reports in-memory-only parsing without on-disk retention; carried as worker-reported, not independently verified through the complete tool transcript."
+  },
+  "sourceSha256": "b60db867f5f32e7fa5aa416940444929928e58795e4e5bd9b1cb193adc15d00b",
+  "sourceHashProvenance": {
+    "bytes": 600248,
+    "attribution": "Worker-reported full-payload hash and bytes; no fresh retrieval or independent rehash in this preparation."
+  },
+  "linkedRecords": {
+    "acquisitionReceipt": "research/output/gtm-activation-20260909/somatropin-replacement-assessment-20260913/receipts/dailymed-api-receipts-20260913.json",
+    "sourceEvidence": "research/output/gtm-activation-20260909/somatropin-replacement-assessment-20260913/source-evidence.json",
+    "controllingDirective": "research/output/gtm-activation-20260909/somatropin-codex-review-20260913.md",
+    "independentReview": "research/output/gtm-activation-20260909/somatropin-independent-assessment-review-20260913.md"
+  },
+  "scopeRationale": "Prepare the supported identity component while retaining mechanism taxonomy and the original context. Omit therapeutic/replacement, growth-failure/weakness and alias wording for narrow scope, not because all such support is absent or false. No receptor, pathway, dosing, formulation or clinical-benefit extension is made.",
+  "dependencyDisposition": {
+    "target": "DrugBank source reference and retained excerpt removed only from this target; source definitions and identifiers preserved unchanged.",
+    "otherClaims": "All other claims untouched. No other reviewed-base claim sourceRefs list DrugBank, but this is not a packet-wide production or historical containment clearance.",
+    "acquisition": "DrugBank acquisition remains disabled; no registry, policy, adapter or source activation change."
+  },
+  "remainingGates": [
+    "Evidence-reviewer acceptance of this narrower statement and inherited Strong/high ratings.",
+    "Materially different source-family requirement for review-issue closure remains open; already-cited DailyMed does not alone close it.",
+    "Human review before canonical promotion; model review is not human acceptance.",
+    "Publication, promotion, deployment and production containment remain separate unperformed outcomes."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}
