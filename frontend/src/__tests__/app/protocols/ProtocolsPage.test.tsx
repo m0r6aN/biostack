@@ -1,6 +1,6 @@
 import ProtocolsPage from '@/app/protocols/page';
 import { apiClient } from '@/lib/api';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { makeSavedProviderSummaryProtocol } from '../../fixtures/providerSummary';
@@ -9,9 +9,8 @@ vi.mock('next/link', () => ({
   default: ({ href, children, ...props }: { href: string; children: ReactNode }) => <a href={href} {...props}>{children}</a>,
 }));
 
-vi.mock('next/navigation', () => ({
-  useRouter: () => ({ push: vi.fn() }),
-}));
+const { push } = vi.hoisted(() => ({ push: vi.fn() }));
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
 
 vi.mock('@/components/Header', () => ({
   Header: ({ title, actions }: { title: string; actions?: ReactNode }) => (
@@ -27,7 +26,6 @@ vi.mock('@/components/LoadingState', () => ({ LoadingSkeleton: () => <div>Loadin
 vi.mock('@/components/EmptyState', () => ({ EmptyState: ({ title }: { title: string }) => <div>{title}</div> }));
 vi.mock('@/components/ErrorState', () => ({ ErrorState: ({ message }: { message: string }) => <div>{message}</div> }));
 vi.mock('@/components/protocols/SimulationTimeline', () => ({ SimulationTimeline: () => <div>Simulation</div> }));
-vi.mock('@/components/protocols/InteractionIntelligenceCard', () => ({ InteractionIntelligenceCard: () => <div>Interactions</div> }));
 vi.mock('@/components/protocols/StackScoreCard', () => ({ StackScoreCard: () => <div>Stack score</div> }));
 
 vi.mock('@/lib/context', () => ({
@@ -53,6 +51,7 @@ vi.mock('@/lib/api', () => ({
 describe('/protocols saved protocol list', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    Element.prototype.scrollIntoView = vi.fn();
     const protocol = makeSavedProviderSummaryProtocol();
     vi.mocked(apiClient.getProtocols).mockResolvedValue([protocol]);
     vi.mocked(apiClient.getCurrentStackIntelligence).mockResolvedValue({
@@ -88,4 +87,58 @@ describe('/protocols saved protocol list', () => {
     expect(cardText).toContain('Provider summary');
     expect(cardText).not.toMatch(/\b(medical|advice|dosing|dose|start|stop|combine|combined)\b/i);
   });
+  it('hands tracking off to the named save form without creating or starting anything', async () => {
+    render(<ProtocolsPage />);
+    const handoff = await screen.findByRole('button', { name: 'Save this stack to start tracking' });
+    fireEvent.click(handoff);
+    expect(screen.getByRole('textbox', { name: 'Protocol name' })).toHaveFocus();
+    expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+    expect(apiClient.saveCurrentStackAsProtocol).not.toHaveBeenCalled();
+    expect(push).not.toHaveBeenCalled();
+  });
+
+  it('requires a name and opens the explicitly saved protocol by its returned ID', async () => {
+    vi.mocked(apiClient.saveCurrentStackAsProtocol).mockResolvedValue(makeSavedProviderSummaryProtocol({ id: 'new-saved-id' }));
+    render(<ProtocolsPage />);
+    await screen.findByRole('button', { name: 'Save this stack to start tracking' });
+    const save = screen.getByRole('button', { name: 'Save' });
+    expect(save).toBeDisabled();
+    fireEvent.change(screen.getByRole('textbox', { name: 'Protocol name' }), { target: { value: '   ' } });
+    expect(save).toBeDisabled();
+    fireEvent.click(save);
+    expect(apiClient.saveCurrentStackAsProtocol).not.toHaveBeenCalled();
+    fireEvent.change(screen.getByRole('textbox', { name: 'Protocol name' }), { target: { value: 'My tracked stack' } });
+    fireEvent.click(save);
+    await waitFor(() => expect(push).toHaveBeenCalledWith('/protocols/new-saved-id'));
+    expect(apiClient.saveCurrentStackAsProtocol).toHaveBeenCalledExactlyOnceWith('person-1', 'My tracked stack');
+  });
+
+  it('keeps the name and save form available after a failed explicit save', async () => {
+    vi.mocked(apiClient.saveCurrentStackAsProtocol).mockRejectedValue(new Error('failure'));
+    render(<ProtocolsPage />);
+    await screen.findByRole('button', { name: 'Save this stack to start tracking' });
+    const name = screen.getByRole('textbox', { name: 'Protocol name' });
+    fireEvent.change(name, { target: { value: 'Keep my name' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('Save failed');
+    expect(name).toHaveValue('Keep my name');
+    expect(screen.getByRole('button', { name: 'Save' })).toBeEnabled();
+    expect(push).not.toHaveBeenCalled();
+  });
+
+  it('prevents a second explicit save while the first is pending', async () => {
+    let finish!: (value: ReturnType<typeof makeSavedProviderSummaryProtocol>) => void;
+    vi.mocked(apiClient.saveCurrentStackAsProtocol).mockImplementation(() => new Promise(resolve => { finish = resolve; }));
+    render(<ProtocolsPage />);
+    await screen.findByRole('button', { name: 'Save this stack to start tracking' });
+    fireEvent.change(screen.getByRole('textbox', { name: 'Protocol name' }), { target: { value: 'One save' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+    const pending = screen.getByRole('button', { name: 'Saving' });
+    expect(pending).toBeDisabled();
+    fireEvent.click(pending);
+    expect(apiClient.saveCurrentStackAsProtocol).toHaveBeenCalledTimes(1);
+    finish(makeSavedProviderSummaryProtocol());
+    await waitFor(() => expect(push).toHaveBeenCalledWith('/protocols/protocol-2'));
+  });
+
 });
