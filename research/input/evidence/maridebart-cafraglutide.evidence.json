@@ -130,7 +130,7 @@
     {
       "claimId": "maridebart-mechanism-bispecific-001",
       "claimType": "mechanism",
-      "statement": "Maridebart cafraglutide (MariTide) is a bispecific molecule combining a monoclonal antibody antagonist of the GIP receptor (GIPR) with two conjugated GLP-1 receptor (GLP-1R) agonist peptides, designed to act as a GLP-1R agonist and GIPR antagonist simultaneously; its long antibody half-life is intended to support monthly or less-frequent dosing.",
+      "statement": "The study indexed as PMID 40549887 describes maridebart cafraglutide as combining GLP-1 receptor agonism with glucose-dependent insulinotropic polypeptide receptor antagonism.",
       "context": {
         "population": null,
         "route": null,
@@ -142,22 +142,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "amgen-pr-2024-11-phase2-results",
-        "drugbank-db19339"
+        "pubmed-40549887"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "amgen-pr-2024-11-phase2-results",
-          "quote": "bispecific glucagon-like peptide 1 (GLP-1) receptor agonist and glucose-dependent insulinotropic polypeptide receptor (GIPR) antagonist",
-          "pageOrSection": "Press release body"
-        },
-        {
-          "sourceRef": "amgen-pr-2024-11-phase2-results",
-          "quote": "monthly or less frequent single-injection administration",
-          "pageOrSection": "Press release body"
+          "sourceRef": "pubmed-40549887",
+          "quote": null,
+          "pageOrSection": "Abstract BACKGROUND"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "Candidate preparation 2026-09-13: study-attributed BACKGROUND receptor classification and retained conjugate context only, based on worker observation; lead has not independently observed the abstract. Omitted monoclonal/two-peptide, half-life and dosing details are not declared false. Historical flags, context, sources and inherited Strong/high retained pending acceptance. PubMed index C1 is distinct from study B1 and claim ratings; sponsorship/lineage and independent-family assessment remain unresolved. Rights, human and publication gates remain open. See research/source-authorization/maridebart-mechanism-resource-candidate-2026-09-13.json."
+      ]
     },
     {
       "claimId": "maridebart-regulatory-investigational-status-001",
