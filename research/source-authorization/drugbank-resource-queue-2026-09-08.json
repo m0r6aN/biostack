@@ -9,7 +9,7 @@
     "path": "shared/source-rights/drugbank-containment.v1.json",
     "sha256": "017fa7dcf5cf2df6d5c96c94bada2601dad38e668a91ef5eb7d40ae33a12994f"
   },
-  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. Seventeen quote-free replacement candidates are prepared and remain review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
+  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. Eighteen quote-free replacement candidates are prepared and remain review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
   "counts": {
     "rows": 30,
     "distinctClaims": 30,
@@ -18,8 +18,8 @@
     "claimsWithCoCitationCandidates": 28,
     "claimsWithNoCoCitation": 2,
     "claimsActuallyReSourced": 0,
-    "coCitationCandidatesSubstanceAssessed": 12,
-    "replacementCandidatesPrepared": 17
+    "coCitationCandidatesSubstanceAssessed": 13,
+    "replacementCandidatesPrepared": 18
   },
   "rows": [
     {
@@ -902,8 +902,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubchem-cid-44200882",
+        "recordPath": "research/source-authorization/vosilasarm-lookup-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "vosilasarm.evidence.json",
@@ -928,5 +935,5 @@
       "substanceAssessed": false
     }
   ],
-  "updatedAtUtc": "2026-09-13T10:28:59.271168Z"
+  "updatedAtUtc": "2026-09-13T10:49:48.035366Z"
 }
