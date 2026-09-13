@@ -1,0 +1,207 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T12:18:24.997820Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "mazdutide-mechanism-dual-agonist-001",
+  "candidateStatement": "The review indexed as PMID 41028652 describes mazdutide as a dual agonist of the glucagon receptor and the GLP-1 receptor.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "e5de65fb9b0fd60db082b4ef07a2ddd0629f2dd4",
+    "path": "research/input/evidence/mazdutide.evidence.json",
+    "bytes": 46425,
+    "sha256": "6689fee794568bcc4b0dd86fc3844c202323ea327c2aec9935035b79d0364bda"
+  },
+  "supersededClaimSha256": "289f8a95d22422ae20dbf5eca402da475ef5f942dab680cf3f3691d2627bdd82",
+  "supersededClaimHashEncoding": "SHA256 of UTF8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "medchemexpress-mazdutide",
+      "locator": "Product description",
+      "chars": 122,
+      "sha256": "16ded80dba91419f2d82079bfb34db2c52202aef5006db1a20c5b762ef97e8b9"
+    },
+    {
+      "sourceId": "medchemexpress-mazdutide",
+      "locator": "Biological activity",
+      "chars": 46,
+      "sha256": "5c82c14c8dfb69ca879cf026aa27637e1f22609fef210fe48771c87bf5168506"
+    },
+    {
+      "sourceId": "semanticscholar-nejmoa2411528",
+      "locator": "Bibliographic record summary",
+      "chars": 71,
+      "sha256": "8d9a7ec19f02ad24271deb9869cfc604fdf1cbae3d654f57ca6b2b6fe5fa20e9"
+    },
+    {
+      "sourceId": "fiercepharma-mazdutide-nmpa-approval",
+      "locator": "Mechanism description",
+      "chars": 263,
+      "sha256": "2eb0f2c669373ad790cec413d555a63c26a134e00dba1bb83048858d62a0bbb9"
+    }
+  ],
+  "excerptAccounting": "Four non-DrugBank excerpts removed: two vendor, one Semantic Scholar and one FiercePharma. Zero DrugBank excerpts were present; historical DrugBank source dependency remains in original references/snapshot history. No removed quote text copied.",
+  "originalSourceRefs": [
+    "medchemexpress-mazdutide",
+    "pubchem-cid-167312357",
+    "drugbank-db19099",
+    "semanticscholar-nejmoa2411528",
+    "fiercepharma-mazdutide-nmpa-approval"
+  ],
+  "historicalReviewFlags": [
+    "insulin-secretion binding/EC50 data cited on vendor datasheet are nonclinical (mouse islet, receptor Ki) and must not be presented as human efficacy evidence",
+    "reviewer-correction-2026-08-29: the prior 'remediation-pass-2026-08-29' note improperly cited the Semantic Scholar bibliographic record as independent corroboration, but semanticscholar-nejmoa2411528 is already listed in this claim's own sourceRefs -- re-citing an already-used source is not independent verification per the review contract. That note is superseded by this corrected entry.",
+    "remediation-pass-2026-08-29 (session 2): genuinely independent corroboration of the core GLP-1R/GCGR dual-agonist, energy-expenditure mechanism was obtained this session from Fierce Pharma trade-press coverage (fetched and quoted verbatim), a source family distinct from the vendor datasheet/PubChem/DrugBank/Semantic Scholar already cited for this claim. The GCGR-mediated energy-expenditure characterization is now corroborated by this materially independent source; verbatim confirmation against primary full text was not attempted for this non-fieldAuthorityRequired mechanism claim."
+  ],
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "mazdutide",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "mazdutide",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "contextDecision": "All original context unchanged. Omitted qualifiers not declared false.",
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "pubmed-mazdutide-first-approval",
+    "sourceType": "peer-reviewed-drug-review-article",
+    "authorityTier": "C1",
+    "title": "Mazdutide: First Approval",
+    "publisher": "Drugs (Springer/Adis Journal), Shirley M., 2025;85(12):1621-1627",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41028652/",
+    "doi": "10.1007/s40265-025-02249-y",
+    "pmid": "41028652",
+    "publishedAt": "2025-12-01T00:00:00Z",
+    "accessedAt": "2026-08-29T00:00:00Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubmed",
+    "sourceItemId": "pubmed-mazdutide-first-approval",
+    "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41028652/",
+    "requestUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=41028652&retmode=xml&tool=biostack_bounded_source_review",
+    "pmid": "41028652",
+    "doi": "10.1007/s40265-025-02249-y",
+    "title": "Mazdutide: First Approval.",
+    "journal": "Drugs",
+    "authors": [
+      {
+        "LastName": "Shirley",
+        "ForeName": "Matt",
+        "Initials": "M"
+      }
+    ],
+    "volume": "85",
+    "issue": "12",
+    "pages": "1621-1627",
+    "publicationTypes": [
+      "Journal Article",
+      "Review"
+    ],
+    "issueDate": "2025-12",
+    "issuePrecision": "month",
+    "electronicArticleDate": "2025-09-30",
+    "dateDiscrepancy": "Old snapshot publishedAt2025-12-01 has unsubstantiated day precision relative to returned issue metadata; preserve original history, distinguish issue and electronic dates.",
+    "pmcid": null,
+    "pmcidQualification": "No PMC identifier in exact article-level PubmedData/ArticleIdList; reference identifiers excluded.",
+    "articleIds": [
+      {
+        "IdType": "pubmed",
+        "value": "41028652"
+      },
+      {
+        "IdType": "doi",
+        "value": "10.1007/s40265-025-02249-y"
+      },
+      {
+        "IdType": "pii",
+        "value": "10.1007/s40265-025-02249-y"
+      }
+    ],
+    "articleIdPath": "./PubmedArticle/PubmedData/ArticleIdList/ArticleId",
+    "commentsCorrections": [],
+    "commentsQualification": "No CommentsCorrections entries returned in this record; no linked-item inspection or universal absence inference.",
+    "copyrightInformation": "© 2025. The Author(s), under exclusive licence to Springer Nature Switzerland AG.",
+    "rightsQualification": "Qualified PubMed mechanism API citation/abstract research does not grant redistribution of copyrighted abstracts or fulltext. No new source rights or method acceptance.",
+    "method": "Serialized client-identified PubMed EFetch GET; second separately authorized request after first local output encoding failure. No implementation acquisition.",
+    "retrievedAtUtc": "2026-09-13T12:11:25.217799+00:00",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "tierQualification": "PubMed index C1 and existing peer-reviewed-drug-review-article C1 snapshot are distinct from inherited Strong/high claim ratings pending acceptance. Review, not primary trial.",
+    "retentionAttribution": "No XML/abstract/fulltext persisted; script, minimal citation projection, original receipt and short paraphrase only.",
+    "leadCorroboration": "Worker observed the retry02 transient opening abstract. Lead has not independently observed it; not independent corroboration."
+  },
+  "articleIdentifierCorrection": {
+    "exactPath": "./PubmedArticle/PubmedData/ArticleIdList/ArticleId",
+    "qualification": "Retry02 article-level identifiers supersede interpretation of original flattened reference identifiers, which are not identifiers of this review. Original metadata and projection remain unchanged.",
+    "originalMetadata": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/acquisition-metadata.json",
+    "originalProjection": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/source-evidence.json"
+  },
+  "sourceSha256": "e5d53dc21974622229755f70fa7cc03980f9a37db660dad34f754bc460c716c2",
+  "payloadProvenance": {
+    "bytes": 12764,
+    "attribution": "Worker-reported original transport hash/size; no retained XML payload or independent rehash.",
+    "requestAccounting": {
+      "totalAttempts": 2,
+      "totalHttp200": 2,
+      "currentScriptRequests": 1,
+      "currentScriptRetries": 0,
+      "firstAttempt": "HTTP200; local transient output encoding failed after metadata save",
+      "secondAttempt": "Authorized same endpoint; corrected output and article ID path; abstract inspected"
+    }
+  },
+  "acquisitionAttempts": [
+    {
+      "attempt": 1,
+      "receipt": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/receipts/efetch-20260913T114720573411Z.json",
+      "startedAtUtc": "2026-09-13T11:47:20.573411+00:00",
+      "completedAtUtc": "2026-09-13T11:47:20.973823+00:00",
+      "httpStatus": 200,
+      "bytes": 12764,
+      "sha256": "e5d53dc21974622229755f70fa7cc03980f9a37db660dad34f754bc460c716c2",
+      "outcome": "HTTP200 then local output encoding failure; abstract not inspected."
+    },
+    {
+      "attempt": 2,
+      "receipt": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/receipts/retry02-efetch-20260913T121124790374Z.json",
+      "startedAtUtc": "2026-09-13T12:11:24.790374+00:00",
+      "completedAtUtc": "2026-09-13T12:11:25.217799+00:00",
+      "httpStatus": 200,
+      "bytes": 12764,
+      "sha256": "e5d53dc21974622229755f70fa7cc03980f9a37db660dad34f754bc460c716c2",
+      "outcome": "Authorized corrected output, abstract inspected; one request and zero internal retries."
+    }
+  ],
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/mazdutide-mechanism-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/retry02-assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/retry02-source-evidence.json",
+    "acquisitionMetadata": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/retry02-acquisition-metadata.json",
+    "receipt": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/receipts/retry02-efetch-20260913T121124790374Z.json",
+    "acquisitionScript": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/retry02-acquisition.py",
+    "originalAssessment": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/assessment.md",
+    "originalSourceEvidence": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/source-evidence.json",
+    "originalAcquisitionMetadata": "research/output/gtm-activation-20260909/mazdutide-mechanism-replacement-assessment-20260913/acquisition-metadata.json"
+  },
+  "queueAccounting": "Prepared19to20/completed0/prior-co-citation stays13: newly selected PubMed review was not target-co-cited.",
+  "remainingGates": [
+    "Scientific evidence, inherited ratings and source-method/reuse qualification pending.",
+    "No independent-family acceptance, distinct-person human acceptance or publication/promotion granted.",
+    "Historical broader assertions and relationships remain unverified; no runtime or registry activation."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

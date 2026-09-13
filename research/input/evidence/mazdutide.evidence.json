@@ -228,7 +228,7 @@
     {
       "claimId": "mazdutide-mechanism-dual-agonist-001",
       "claimType": "mechanism",
-      "statement": "Mazdutide is a long-acting synthetic oxyntomodulin analog that acts as a dual agonist at the glucagon-like peptide-1 receptor (GLP-1R) and the glucagon receptor (GCGR), stimulating insulin secretion and engaging glucagon-receptor-mediated energy expenditure pathways alongside GLP-1 receptor activity.",
+      "statement": "The review indexed as PMID 41028652 describes mazdutide as a dual agonist of the glucagon receptor and the GLP-1 receptor.",
       "context": {
         "population": null,
         "route": null,
@@ -240,38 +240,20 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "medchemexpress-mazdutide",
-        "pubchem-cid-167312357",
-        "drugbank-db19099",
-        "semanticscholar-nejmoa2411528",
-        "fiercepharma-mazdutide-nmpa-approval"
+        "pubmed-mazdutide-first-approval"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "medchemexpress-mazdutide",
-          "quote": "a long-acting synthetic oxyntomodulin analog...a co-agonist of glucagon-like peptide (GLP-1R) and glucagon receptor (GCGR)",
-          "pageOrSection": "Product description"
-        },
-        {
-          "sourceRef": "medchemexpress-mazdutide",
-          "quote": "stimulates insulin secretion from mouse islets",
-          "pageOrSection": "Biological activity"
-        },
-        {
-          "sourceRef": "semanticscholar-nejmoa2411528",
-          "quote": "a dual agonist targeting glucagon-like peptide-1 and glucagon receptors",
-          "pageOrSection": "Bibliographic record summary"
-        },
-        {
-          "sourceRef": "fiercepharma-mazdutide-nmpa-approval",
-          "quote": "By targeting the GCG receptor, Lilly and Innovent figure mazdutide should help increase the body's energy expenditure, spurring changes in the liver, brain and white and brown adipose tissue that complement the reduced energy intake triggered by GLP-1 activation.",
-          "pageOrSection": "Mechanism description"
+          "sourceRef": "pubmed-mazdutide-first-approval",
+          "quote": null,
+          "pageOrSection": "Unlabeled AbstractText, opening sentence receptor classification only."
         }
       ],
       "reviewFlags": [
         "insulin-secretion binding/EC50 data cited on vendor datasheet are nonclinical (mouse islet, receptor Ki) and must not be presented as human efficacy evidence",
         "reviewer-correction-2026-08-29: the prior 'remediation-pass-2026-08-29' note improperly cited the Semantic Scholar bibliographic record as independent corroboration, but semanticscholar-nejmoa2411528 is already listed in this claim's own sourceRefs -- re-citing an already-used source is not independent verification per the review contract. That note is superseded by this corrected entry.",
-        "remediation-pass-2026-08-29 (session 2): genuinely independent corroboration of the core GLP-1R/GCGR dual-agonist, energy-expenditure mechanism was obtained this session from Fierce Pharma trade-press coverage (fetched and quoted verbatim), a source family distinct from the vendor datasheet/PubChem/DrugBank/Semantic Scholar already cited for this claim. The GCGR-mediated energy-expenditure characterization is now corroborated by this materially independent source; verbatim confirmation against primary full text was not attempted for this non-fieldAuthorityRequired mechanism claim."
+        "remediation-pass-2026-08-29 (session 2): genuinely independent corroboration of the core GLP-1R/GCGR dual-agonist, energy-expenditure mechanism was obtained this session from Fierce Pharma trade-press coverage (fetched and quoted verbatim), a source family distinct from the vendor datasheet/PubChem/DrugBank/Semantic Scholar already cited for this claim. The GCGR-mediated energy-expenditure characterization is now corroborated by this materially independent source; verbatim confirmation against primary full text was not attempted for this non-fieldAuthorityRequired mechanism claim.",
+        "Candidate preparation 2026-09-13: review-attributed receptor classification only, based on worker inspection of the opening abstract for PMID 41028652. Historical flags remain historical/unverified for this candidate; their older independence and broader mechanism assertions are not newly accepted. Omitted long-acting, synthetic, oxyntomodulin and pathway qualifiers are not disproved. Context and all source snapshots unchanged. Existing review source and PubMed index C1 are distinct from inherited Strong/high claim ratings pending evidence acceptance. Lead has not independently observed the abstract; no new family, human or publication acceptance. See research/source-authorization/mazdutide-mechanism-resource-candidate-2026-09-13.json."
       ]
     },
     {
