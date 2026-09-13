@@ -651,7 +651,7 @@ public sealed class SourceAcquisitionRuntimeTests
             repositoryRoot,
             "research",
             "source-authorization",
-            "recommended-seven-source-decisions.alias-map-20260913.json");
+            "recommended-seven-source-decisions.basaria-alias-map-20260913.json");
         var registryPath = Path.Combine(
             repositoryRoot,
             "research",
