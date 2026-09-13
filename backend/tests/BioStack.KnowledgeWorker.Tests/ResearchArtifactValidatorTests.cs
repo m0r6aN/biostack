@@ -116,7 +116,7 @@ public class ResearchArtifactValidatorTests
             repositoryRoot,
             "research",
             "source-authorization",
-            "recommended-seven-source-decisions.v2.json");
+            "recommended-seven-source-decisions.alias-map-20260913.json");
         var registryPath = Path.Combine(
             repositoryRoot,
             "research",
@@ -140,7 +140,7 @@ public class ResearchArtifactValidatorTests
         Assert.Equal(
             registrySha256,
             artifact.Node["registryBinding"]!["sha256"]!.GetValue<string>());
-        Assert.Equal("71ed755fbf532f69ccec516e95aa0c821f645263dc081d97f24a6ab3f9c2503d", registrySha256);
+        Assert.Equal("4702643fa1a65624e4c8f808eb57f55c3a1666b58268f2b2f1218acb59dcab6f", registrySha256);
     }
 
     [Fact]

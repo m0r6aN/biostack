@@ -1,0 +1,51 @@
+{
+  "recordType": "source-alias-mechanical-binding-continuity-record",
+  "authority": "none",
+  "recordedAtUtc": "2026-09-13T14:23:33.735123Z",
+  "timestampBasis": "mechanical-rebinding-time-not-approval-or-review-time",
+  "previousContinuity": {
+    "path": "research/source-authorization/source-authorization-continuity-2026-09-08.v1.json",
+    "sha256": "4c9a29dd313f313de673eb3c13962cabd3614b10f2e0811ad95fdeecc4ea859c"
+  },
+  "historicalRegistry": {
+    "originalPath": "research/input/sources/pilot-source-registry.json",
+    "archivePath": "research/source-authorization/snapshots/pilot-source-registry.2026-09-08.json",
+    "sha256": "71ed755fbf532f69ccec516e95aa0c821f645263dc081d97f24a6ab3f9c2503d"
+  },
+  "oldDecision": {
+    "path": "research/source-authorization/recommended-seven-source-decisions.v2.json",
+    "sha256": "c027a873c4f2ad506ef38b7c43d8e2628186b19f453e5eaa7ba8e41e79fabd92"
+  },
+  "currentRegistry": {
+    "path": "research/input/sources/pilot-source-registry.json",
+    "sha256": "4702643fa1a65624e4c8f808eb57f55c3a1666b58268f2b2f1218acb59dcab6f"
+  },
+  "newDecision": {
+    "path": "research/source-authorization/recommended-seven-source-decisions.alias-map-20260913.json",
+    "sha256": "aa138795f67e546f39c8ea55ab2a2eed64ff68de393d3417b82bd6d94f0745b7"
+  },
+  "allowedAliases": [
+    {
+      "sourceId": "dailymed",
+      "alias": "dailymed-pregnyl-organon-research-20260913"
+    },
+    {
+      "sourceId": "pubmed",
+      "alias": "pubmed-38072514-lasofoxifene-research-20260913"
+    }
+  ],
+  "scopeFit": {
+    "dailymed": "Exact Organon set/version label identity and quote-free mechanism fields through existing public API; no broader retention or third-party permission.",
+    "pubmed": "Exact PMID38072514 citation and quote-free mechanism fields through existing client-identified API; no abstract/fulltext redistribution.",
+    "reviewPlan": "research/output/gtm-activation-20260909/two-alias-fit-and-binding-plan-20260913.md"
+  },
+  "invariants": {
+    "oldIssuedArtifactsUnchanged": true,
+    "ownersApprovalsDatesSourceScopesMethodsRightsActiveSetRetentionUnchanged": true,
+    "newRightsApproval": false,
+    "newActivation": false,
+    "newScientificAcceptance": false,
+    "recordIsRuntimeAuthorizationInput": false,
+    "candidateCountsChanged": false
+  }
+}
