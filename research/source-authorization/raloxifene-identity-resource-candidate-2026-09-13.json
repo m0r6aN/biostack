@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T07:19:23.146719Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "raloxifene-identity-identifiers-001",
+  "candidateStatement": "PubChem lists a compound record titled Raloxifene under CID 5035.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "fd6d23f86aaa3247a1085e2ed7372f2fe8eb0ce7",
+    "path": "research/input/evidence/raloxifene.evidence.json",
+    "bytes": 18493,
+    "sha256": "e1ad4daf45a2513938ace3d76b43251bd2e7b2da12d0ae3d259b926d0664b21e"
+  },
+  "supersededClaimSha256": "2c0f52ef721d4356e2bae7776ab855a9243299d9afe53d83c72956ac787d3311",
+  "supersededClaimHashEncoding": "SHA256 of UTF-8 sorted-key compact JSON, ensure_ascii true, no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "chemicalbook-raloxifene",
+      "locator": "Identification / Properties table",
+      "chars": 71,
+      "sha256": "4c4e2051ec109cb02f24585a6bdf1ef0c22915cb395751d856944cdba9409a45"
+    },
+    {
+      "sourceId": "drugbank-db00481",
+      "locator": "Summary",
+      "chars": 181,
+      "sha256": "9e92db8791b1d206bf709eb0eeccf8ac63cc6ae4b722ad4070cb7d2a283aca88"
+    }
+  ],
+  "originalSourceRefs": [
+    "pubchem-cid-5035",
+    "drugbank-db00481",
+    "chemicalbook-raloxifene"
+  ],
+  "historicalNullQuoteLocators": [],
+  "historicalReviewFlags": [
+    "CAS/UNII sourced from a commercial chemical-supplier database (chemicalbook.com), not a government registry; corroborate against FDA GSRS/UNII resolver or ChemIDplus at review time"
+  ],
+  "historicalFlagQualification": "Previous commercial CAS/UNII and DrugBank commentary remains historical; only returned PubChem CID/title mapping is supported. Removed quote text is available only in original Git history, not copied here.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "raloxifene hydrochloride, oral tablet",
+    "useCase": "compound identity",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "raloxifene (PubChem compound record)",
+    "useCase": "compound identity",
+    "doseText": null
+  },
+  "contextChange": {
+    "field": "formulation",
+    "before": "raloxifene hydrochloride, oral tablet",
+    "after": "raloxifene (PubChem compound record)",
+    "rationale": "Returned formula/name lacks hydrochloride; existing retained EVISTA DESCRIPTION supports separate hydrochloride tablet context. Do not equate bare CID with branded product."
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "unchanged pending evidence acceptance"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "pubchem-cid-5035",
+    "sourceType": "structured-database",
+    "authorityTier": "B2",
+    "title": "Raloxifene, CID 5035",
+    "publisher": "National Center for Biotechnology Information / PubChem",
+    "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Raloxifene",
+    "doi": null,
+    "pmid": null,
+    "publishedAt": null,
+    "accessedAt": "2026-08-29T01:58:43Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubchem",
+    "sourceItemId": "pubchem-cid-5035",
+    "sourceUrl": "https://pubchem.ncbi.nlm.nih.gov/compound/5035",
+    "requestUrl": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/5035/property/Title,MolecularFormula,IUPACName,InChIKey/JSON",
+    "method": "fixed-CID PUG REST property API",
+    "query": "CID5035;Title,MolecularFormula,IUPACName,InChIKey",
+    "returnedCID": 5035,
+    "returnedTitle": "Raloxifene",
+    "supportLocator": "PUG REST fixed CID 5035 property response: CID and Title; factual paraphrase only.",
+    "productQualification": "Returned formula/name lacks hydrochloride; existing retained EVISTA DESCRIPTION supports separate hydrochloride tablet context. Do not equate bare CID with branded product.",
+    "casUniiAssessment": "Not requested/returned; mapping and contributor attribution unassessed, not false.",
+    "sourceUpdateDate": null,
+    "sourceVersion": null,
+    "dateQualification": "No update/version supplied by property response; no historical access-to-payload identity inferred.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified PubChem API identity approval; no contributor CAS annotation reused or new approval.",
+    "retrievedAtUtc": "2026-09-13T07:00:09.761751Z",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "retrievalAttribution": "Original worker receipt and retained property projection; no new request or independent original transport-byte rehash."
+  },
+  "sourceSha256": "80717e47f66c5ff47da09faf91f71f91a11d9a08c38eccf53783897bac7da6ee",
+  "payloadProvenance": {
+    "bytes": 336,
+    "attribution": "Worker-reported original response hash and size; retained projection is not represented as original transport bytes."
+  },
+  "requestHistory": {
+    "totalAttempts": 1,
+    "successfulPayloads": 1,
+    "successfulAttempt": {
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/5035/property/Title,MolecularFormula,IUPACName,InChIKey/JSON",
+      "query": "CID5035;Title,MolecularFormula,IUPACName,InChIKey",
+      "method": "GET",
+      "requestStartUtc": "2026-09-13T07:00:08.331857Z",
+      "requestEndUtc": "2026-09-13T07:00:09.761751Z",
+      "httpStatus": 200,
+      "bytes": 336,
+      "sha256": "80717e47f66c5ff47da09faf91f71f91a11d9a08c38eccf53783897bac7da6ee",
+      "serverDate": "Sun, 13 Sep 2026 07:00:10 GMT"
+    },
+    "qualification": "One original HTTP200 request; no request by this implementation."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/raloxifene-identity-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/raloxifene-identity-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/raloxifene-identity-replacement-assessment-20260913/source-evidence.json",
+    "projection": "research/output/gtm-activation-20260909/raloxifene-identity-replacement-assessment-20260913/identity-properties.json",
+    "receipt": "research/output/gtm-activation-20260909/raloxifene-identity-replacement-assessment-20260913/receipts/pug-20260913T070008331857Z.json"
+  },
+  "queueAccounting": "Prepared12to13, completed0; prior-co-citation assessed8to9 because PubChem already co-cited. Earlier mechanism candidate and sidecar unchanged.",
+  "remainingGates": [
+    "Evidence-reviewer acceptance of database-node mapping and inherited Strong/high.",
+    "CAS/UNII contributor identity and product equivalence remain unresolved, not asserted by candidate.",
+    "Independent-family, distinct-person human acceptance and publication/promotion remain separate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

@@ -118,11 +118,11 @@
     {
       "claimId": "raloxifene-identity-identifiers-001",
       "claimType": "identity",
-      "statement": "Raloxifene is a benzothiophene-derivative selective estrogen receptor modulator (SERM), marketed as Evista (raloxifene hydrochloride); its structured-database identifiers are PubChem CID 5035, DrugBank DB00481, CAS 84449-90-1, and UNII YX9162EO3I.",
+      "statement": "PubChem lists a compound record titled Raloxifene under CID 5035.",
       "context": {
         "population": null,
         "route": null,
-        "formulation": "raloxifene hydrochloride, oral tablet",
+        "formulation": "raloxifene (PubChem compound record)",
         "useCase": "compound identity",
         "doseText": null
       },
@@ -130,24 +130,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pubchem-cid-5035",
-        "drugbank-db00481",
-        "chemicalbook-raloxifene"
+        "pubchem-cid-5035"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "chemicalbook-raloxifene",
-          "quote": "CAS Number: 84449-90-1; UNII: YX9162EO3I; Molecular Formula: C28H27NO4S",
-          "pageOrSection": "Identification / Properties table"
-        },
-        {
-          "sourceRef": "drugbank-db00481",
-          "quote": "Raloxifene is a selective estrogen receptor modulator that is used to prevent and treat osteoporosis and reduce the risk of invasive breast cancer in high-risk postmenopausal women.",
-          "pageOrSection": "Summary"
+          "sourceRef": "pubchem-cid-5035",
+          "quote": null,
+          "pageOrSection": "PUG REST fixed CID 5035 property response: CID and Title; factual paraphrase only."
         }
       ],
       "reviewFlags": [
-        "CAS/UNII sourced from a commercial chemical-supplier database (chemicalbook.com), not a government registry; corroborate against FDA GSRS/UNII resolver or ChemIDplus at review time"
+        "CAS/UNII sourced from a commercial chemical-supplier database (chemicalbook.com), not a government registry; corroborate against FDA GSRS/UNII resolver or ChemIDplus at review time",
+        "Candidate preparation 2026-09-13: PubChem title/CID compound-record mapping only. Original commercial CAS/UNII and DrugBank commentary remains historical and was not verified here. CAS/UNII were not requested/returned; omitted identifiers, classification and branding are not declared false. Context formulation narrowed from hydrochloride oral tablet to compound record without equating the bare CID to branded product. Strong/high and remaining context stay inherited pending review. ChemicalBook and DrugBank excerpts removed separately. Evidence/family/human/publication gates remain open. See research/source-authorization/raloxifene-identity-resource-candidate-2026-09-13.json."
       ]
     },
     {
