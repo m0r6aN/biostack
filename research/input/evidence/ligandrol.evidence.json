@@ -410,7 +410,8 @@
       "reviewFlags": [
         "misinformation-adjacent: marketed doses are roughly 5-10x higher than the highest dose in any published controlled human trial",
         "no controlled human data exist at marketed doses or durations; steroid-comparison claims are unsupported by any cited controlled trial",
-        "flag for misinformation-claim escalation if vendor pages are found making explicit superiority-to-steroids claims in future review passes"
+        "flag for misinformation-claim escalation if vendor pages are found making explicit superiority-to-steroids claims in future review passes",
+        "Offline provenance qualification 2026-09-13: the statement and prior flags are preserved historical assertions, not newly verified current-market findings. The retained records do not establish a comprehensive current trial maximum, universal absence of controlled evidence, or prevalence of the quoted marketing claims. The separately researched Basaria trial concerns healthy men and does not by itself establish a recreational-use or steroid-superiority comparison. Current statement remains review-gated; this qualification neither accepts it nor declares every omitted proposition false. No new source-family verification, replacement completion or grade decision is recorded."
       ]
     }
   ],
@@ -423,7 +424,7 @@
         "ligandrol-marketing-vs-evidence-gap-001"
       ],
       "severity": "high",
-      "summary": "Controlled human trials of LGD-4033/VK5211 have only studied doses up to 2.0 mg/day, while gray-market marketing and vendor guidance commonly recommend 10-20 mg/day; no controlled human safety or efficacy data exist at marketed dose levels, so real-world use is effectively unstudied.",
+      "summary": "The historical comparison between quoted marketing doses and the cited trial doses does not establish a current comprehensive trial maximum or absence of controlled evidence at other doses. The wider marketing-versus-evidence comparison remains unverified.",
       "resolutionStatus": "needs-human-review"
     }
   ],
@@ -437,7 +438,8 @@
       "UNII, DrugBank ID, ChEMBL ID, and RxNorm identifiers not yet resolved from structured databases.",
       "Confirm current status of the cited FDA warning letter (issued 2025-12-12) and whether additional/updated warning letters specifically naming LGD-4033/Ligandrol exist at review time.",
       "audit: packet.category corrected peptides-core -> sarms-core to match compound classification",
-      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json."
+      "placeholder-date-cleanup-2026-09-07: 1 placeholder publication date of the form YYYY-01-01T00:00:00Z was nulled on 2026-09-07 because it encoded year-only source metadata as a false exact calendar day. publishedAt is now null (honest uncertainty); verified publication dates for the affected sources remain outstanding. The removed values, implied years, and full source identifiers are recorded in research/review-decisions/receipts/placeholder-dates-2026-09-07/removed-placeholder-dates.json.",
+      "ligandrol-marketing-vs-evidence-gap-001: historical global trial-absence, trial-maximum and marketing-prevalence assertions remain unverified; corrective review qualification added 2026-09-13, without resolving the claim or its conflict."
     ],
     "qualityFlags": [
       "expansion-input",
