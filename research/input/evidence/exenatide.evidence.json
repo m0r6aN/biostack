@@ -230,7 +230,7 @@
     {
       "claimId": "exenatide-mechanism-glp1-agonist-001",
       "claimType": "mechanism",
-      "statement": "Exenatide is a 39-amino-acid peptide GLP-1 receptor agonist derived from exendin-4 (originally isolated from Gila monster saliva); it binds and activates the human GLP-1 receptor to enhance glucose-dependent insulin secretion.",
+      "statement": "The BYETTA prescribing information describes exenatide as a GLP-1 receptor agonist that increases insulin release from pancreatic beta cells in a glucose-dependent manner. It reports that exenatide binds to and activates the human GLP-1 receptor in vitro.",
       "context": {
         "population": null,
         "route": null,
@@ -242,22 +242,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "drugbank-db01276",
         "dailymed-byetta-label"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "drugbank-db01276",
-          "quote": "Exenatide is a GLP-1 agonist used in the management of type 2 diabetes mellitus.",
-          "pageOrSection": "Summary"
-        },
-        {
           "sourceRef": "dailymed-byetta-label",
-          "quote": "BYETTA (exenatide) is a glucagon-like peptide-1 (GLP-1) receptor agonist",
-          "pageOrSection": "Indications and Usage"
+          "quote": null,
+          "pageOrSection": "12.1 Mechanism of Action"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "narrowed-2026-09-13: statement replaced with a DailyMed-only, quote-free paraphrase of BYETTA section 12.1 (Mechanism of Action) per exenatide-codex-review-20260913.md and exenatide-independent-assessment-review-20260913.md; drugbank-db01276 and its retained excerpt (Summary, 80 chars) and the prior dailymed-byetta-label excerpt (Indications and Usage, 72 chars) were removed and replaced with one quote:null section 12.1 locator; the in-vitro qualifier on human GLP-1 receptor binding/activation is preserved; exendin-4 lineage and Gila monster saliva identity language were omitted rather than reworded and are not asserted false; DailyMed-only sourcing, the materially-different-source-family requirement, evidence-tier/confidence acceptance and human review of this narrowed statement remain open gates; this is candidate preparation only, not promotion."
+      ]
     },
     {
       "claimId": "exenatide-dose-context-byetta-001",
