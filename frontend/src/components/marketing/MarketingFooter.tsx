@@ -7,6 +7,9 @@ export function MarketingFooter() {
         <p>BioStack. What the research says, graded by evidence strength.</p>
 
         <div className="flex flex-wrap items-center gap-4">
+          <a href="mailto:support@biostack.cc" className="inline-flex min-h-11 items-center text-white/80 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
+            BioStack Support
+          </a>
           <Link href="/how-it-works" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
             How it works
           </Link>
