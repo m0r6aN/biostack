@@ -275,6 +275,12 @@ export function Sidebar() {
 
         {/* ── User zone ──────────────────────────────────────────────────────── */}
         <div className="px-4 pb-4">
+          <a
+            href="mailto:support@biostack.cc"
+            className="mb-3 flex min-h-11 items-center rounded-xl px-3 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+          >
+            BioStack Support
+          </a>
           {user && (
             <div className="p-3 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center gap-3 mb-3">
               {/* Avatar */}
