@@ -20,6 +20,8 @@ export default function CompoundsPage() {
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [addError, setAddError] = useState<string | null>(null);
+  const [adding, setAdding] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [selectedCompound, setSelectedCompound] = useState<CompoundRecord | null>(null);
   const [knowledgeEntry, setKnowledgeEntry] = useState<KnowledgeEntry | null>(null);
@@ -34,6 +36,7 @@ export default function CompoundsPage() {
   const loadCompounds = async () => {
     try {
       setLoading(true);
+      setError(null);
       const data = await apiClient.getCompounds(currentProfileId!);
       setCompounds(data);
     } catch (err) {
@@ -45,15 +48,16 @@ export default function CompoundsPage() {
 
   const handleAddCompound = async (data: Omit<CompoundRecord, 'id'>) => {
     try {
+      setAdding(true);
+      setAddError(null);
       const newCompound = await apiClient.createCompound(currentProfileId!, data);
-      setCompounds([...compounds, newCompound]);
+      setCompounds(previous => [...previous, newCompound]);
       setShowForm(false);
     } catch (err) {
-      if (err instanceof ApiError && err.upgradeRequired) {
-        setError(err.message);
-        return;
-      }
-      setError('Failed to add compound');
+      setAddError(err instanceof ApiError ? err.message : 'Failed to add compound');
+      throw err;
+    } finally {
+      setAdding(false);
     }
   };
 
@@ -117,9 +121,11 @@ export default function CompoundsPage() {
         {showForm && (
           <div className="p-6 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
             <h2 className="text-lg font-semibold text-white mb-4">Add New Compound</h2>
+            {addError && <p role="alert" className="mb-4 text-sm text-red-300">{addError}</p>}
             <CompoundForm
               personId={currentProfileId}
               onSubmit={handleAddCompound}
+              isLoading={adding}
             />
           </div>
         )}

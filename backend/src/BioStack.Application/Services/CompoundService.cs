@@ -36,8 +36,8 @@ public sealed class CompoundService : ICompoundService
             PersonId = personId,
             Name = request.Name,
             Category = request.Category,
-            StartDate = request.StartDate,
-            EndDate = request.EndDate,
+            StartDate = ToUtc(request.StartDate),
+            EndDate = ToUtc(request.EndDate),
             Status = request.Status,
             Notes = request.Notes,
             SourceType = request.SourceType,
@@ -59,7 +59,7 @@ public sealed class CompoundService : ICompoundService
                 EventType = EventType.CompoundStarted,
                 Title = $"Started {request.Name}",
                 Description = request.Notes,
-                OccurredAtUtc = request.StartDate.Value,
+                OccurredAtUtc = compound.StartDate!.Value,
                 RelatedEntityId = compound.Id,
                 RelatedEntityType = "CompoundRecord"
             };
@@ -88,8 +88,8 @@ public sealed class CompoundService : ICompoundService
 
         compound.Name = request.Name;
         compound.Category = request.Category;
-        compound.StartDate = request.StartDate;
-        compound.EndDate = request.EndDate;
+        compound.StartDate = ToUtc(request.StartDate);
+        compound.EndDate = ToUtc(request.EndDate);
         compound.Status = request.Status;
         compound.Notes = request.Notes;
         compound.SourceType = request.SourceType;
@@ -103,6 +103,15 @@ public sealed class CompoundService : ICompoundService
 
         return MapToResponse(compound);
     }
+
+    // Calendar-only values remain midnight; unspecified timestamps are interpreted
+    // as UTC so PostgreSQL timestamptz receives an explicit UTC value.
+    private static DateTime? ToUtc(DateTime? value) => value?.Kind switch
+    {
+        DateTimeKind.Unspecified => DateTime.SpecifyKind(value.Value, DateTimeKind.Utc),
+        DateTimeKind.Local => value.Value.ToUniversalTime(),
+        _ => value
+    };
 
     private async Task EnsureActiveCompoundLimitAsync(
         Guid personId,

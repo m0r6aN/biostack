@@ -10,5 +10,7 @@ public enum CompoundCategory
     Compound = 5,
     Sarm = 6,
     Serm = 7,
-    Hormone = 8
+    Hormone = 8,
+    Nutraceutical = 9,
+    Other = 10
 }

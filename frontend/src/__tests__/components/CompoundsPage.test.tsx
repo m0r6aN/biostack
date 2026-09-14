@@ -1,0 +1,65 @@
+import CompoundsPage from '@/app/compounds/page';
+import { ApiError, apiClient } from '@/lib/api';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { beforeEach, expect, it, vi } from 'vitest';
+vi.mock('@/lib/context', () => ({ useProfile: () => ({ currentProfileId: 'profile-fixture' }) }));
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
+vi.mock('@/components/Header', () => ({ Header: ({ actions }: { actions?: React.ReactNode }) => <header>{actions}</header> }));
+vi.mock('@/components/ActiveProfileChip', () => ({ ActiveProfileChip: () => null }));
+vi.mock('@/components/knowledge/CompoundIntelligenceCard', () => ({ CompoundIntelligenceCard: () => null }));
+vi.mock('@/components/compounds/CompoundList', () => ({ CompoundList: ({ compounds }: { compounds: { name: string }[] }) => <div>{compounds.map(c => <p key={c.name}>{c.name}</p>)}</div> }));
+vi.mock('@/lib/api', async importOriginal => ({ ...await importOriginal<typeof import('@/lib/api')>(), apiClient: { getCompounds: vi.fn(), getAllKnowledgeCompounds: vi.fn(), createCompound: vi.fn() } }));
+beforeEach(() => {
+  vi.clearAllMocks();
+  vi.mocked(apiClient.getCompounds).mockResolvedValue([]);
+  vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([]);
+});
+it('preserves entered compound after create failure and retries the same form successfully', async () => {
+  vi.spyOn(console, 'error').mockImplementation(() => {});
+  vi.mocked(apiClient.createCompound).mockRejectedValueOnce(new Error('fixture failure')).mockImplementationOnce(async (_, data) => ({ ...data, id: 'created-fixture' }));
+  render(<CompoundsPage />);
+  await screen.findByText('No Compounds Yet');
+  fireEvent.click(screen.getByRole('button', { name: 'Add Compound', exact: true }));
+  fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
+  fireEvent.change(screen.getByLabelText('4. Optional: Manual Search/Entry'), { target: { value: 'Fixture Compound' } });
+  fireEvent.change(screen.getByLabelText('Notes'), { target: { value: 'Keep this note' } });
+  const submit = screen.getAllByRole('button', { name: 'Add Compound', exact: true }).at(-1)!;
+  fireEvent.click(submit);
+  await screen.findByText('Failed to add compound');
+  expect(screen.getByLabelText('4. Optional: Manual Search/Entry')).toHaveValue('Fixture Compound');
+  expect(screen.getByLabelText('Notes')).toHaveValue('Keep this note');
+  fireEvent.click(screen.getAllByRole('button', { name: 'Add Compound', exact: true }).at(-1)!);
+  await screen.findByText('Fixture Compound');
+  expect(screen.queryByText('Failed to add compound')).not.toBeInTheDocument();
+  expect(apiClient.createCompound).toHaveBeenCalledTimes(2);
+  expect(apiClient.createCompound).toHaveBeenLastCalledWith('profile-fixture', expect.objectContaining({ name: 'Fixture Compound', notes: 'Keep this note' }));
+  vi.restoreAllMocks();
+});
+it('clears a load error after the existing Try Again action succeeds', async () => {
+  vi.mocked(apiClient.getCompounds).mockRejectedValueOnce(new Error('load failure')).mockResolvedValueOnce([]);
+  render(<CompoundsPage />);
+  await screen.findByText('Failed to load compounds');
+  fireEvent.click(screen.getByRole('button', { name: 'Try Again' }));
+  await waitFor(() => expect(screen.queryByText('Failed to load compounds')).not.toBeInTheDocument());
+  expect(screen.getByText('No Compounds Yet')).toBeVisible();
+});
+
+it('keeps an upgrade rejection in the form and disables duplicate submission while pending', async () => {
+  vi.spyOn(console, 'error').mockImplementation(() => {});
+  let reject!: (error: Error) => void;
+  vi.mocked(apiClient.createCompound).mockImplementationOnce(() => new Promise((_, fail) => { reject = fail; }));
+  render(<CompoundsPage />);
+  await screen.findByText('No Compounds Yet');
+  fireEvent.click(screen.getByRole('button', { name: 'Add Compound', exact: true }));
+  fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
+  fireEvent.change(screen.getByLabelText('4. Optional: Manual Search/Entry'), { target: { value: 'Fixture Compound' } });
+  fireEvent.click(screen.getAllByRole('button', { name: 'Add Compound', exact: true }).at(-1)!);
+  expect(screen.getByRole('button', { name: 'Adding...' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: 'Adding...' }));
+  expect(apiClient.createCompound).toHaveBeenCalledTimes(1);
+  await act(async () => reject(new ApiError(402, 'Fixture plan limit', { upgradeRequired: true })));
+  expect(screen.getByRole('alert')).toHaveTextContent('Fixture plan limit');
+  expect(screen.getByLabelText('4. Optional: Manual Search/Entry')).toHaveValue('Fixture Compound');
+  expect(screen.getAllByRole('button', { name: 'Add Compound', exact: true }).at(-1)).toBeEnabled();
+  vi.restoreAllMocks();
+});
