@@ -20,21 +20,26 @@ export default function KnowledgePage() {
   const [searchResults, setSearchResults] = useState<KnowledgeEntry[]>([]);
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
+  const [completedSearchQuery, setCompletedSearchQuery] = useState<string | null>(null);
 
   const [selectedCompounds, setSelectedCompounds] = useState<string[]>([]);
   const [overlapResults, setOverlapResults] = useState<InteractionFlag[]>([]);
   const [checkingOverlaps, setCheckingOverlaps] = useState(false);
   const [overlapError, setOverlapError] = useState<string | null>(null);
   const [hasCheckedOverlaps, setHasCheckedOverlaps] = useState(false);
+  const overlapRequestVersion = useRef(0);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
+    const submittedQuery = searchQuery;
     try {
       setSearching(true);
       setSearchError(null);
+      setSearchResults([]);
+      setCompletedSearchQuery(null);
       const results = await apiClient.getAllKnowledgeCompounds();
-      const q = searchQuery.trim().toLowerCase();
+      const q = submittedQuery.trim().toLowerCase();
       setSearchResults(
         results.filter(
           r =>
@@ -43,6 +48,7 @@ export default function KnowledgePage() {
             r.classification.toLowerCase().includes(q)
         )
       );
+      setCompletedSearchQuery(submittedQuery);
     } catch {
       setSearchError('Failed to search knowledge base');
     } finally {
@@ -55,25 +61,36 @@ export default function KnowledgePage() {
       setOverlapError('Select at least 2 compounds');
       return;
     }
+    const requestVersion = ++overlapRequestVersion.current;
     try {
       setCheckingOverlaps(true);
       setOverlapError(null);
+      setHasCheckedOverlaps(false);
+      setOverlapResults([]);
       const results = await apiClient.checkOverlap(selectedCompounds);
+      if (requestVersion !== overlapRequestVersion.current) return;
       setOverlapResults(results);
       setHasCheckedOverlaps(true);
     } catch {
-      setOverlapError('Failed to check overlaps');
+      if (requestVersion === overlapRequestVersion.current) setOverlapError('Failed to check overlaps');
     } finally {
-      setCheckingOverlaps(false);
+      if (requestVersion === overlapRequestVersion.current) setCheckingOverlaps(false);
     }
   };
 
+  const invalidateOverlap = () => {
+    overlapRequestVersion.current += 1;
+    setCheckingOverlaps(false);
+    setOverlapError(null);
+    setHasCheckedOverlaps(false);
+    setOverlapResults([]);
+  };
+
   const toggleCompound = (name: string) => {
+    invalidateOverlap();
     setSelectedCompounds(prev =>
       prev.includes(name) ? prev.filter(c => c !== name) : [...prev, name]
     );
-    setHasCheckedOverlaps(false);
-    setOverlapResults([]);
   };
 
 
@@ -126,7 +143,7 @@ export default function KnowledgePage() {
           </form>
 
           {searchError && (
-            <p className="mt-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
+            <p role="alert" className="mt-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
               {searchError}
             </p>
           )}
@@ -148,9 +165,9 @@ export default function KnowledgePage() {
               />
             ))}
           </div>
-        ) : searchQuery && !searching ? (
+        ) : completedSearchQuery !== null && !searchError ? (
           <GlassCard variant="base" className="p-8 text-center">
-            <p className="text-white/40 text-sm">No results for &ldquo;{searchQuery}&rdquo;</p>
+            <p className="text-white/40 text-sm">No results for &ldquo;{completedSearchQuery}&rdquo;</p>
           </GlassCard>
         ) : null}
 
@@ -234,8 +251,7 @@ export default function KnowledgePage() {
                 <button
                   onClick={() => {
                     setSelectedCompounds([]);
-                    setHasCheckedOverlaps(false);
-                    setOverlapResults([]);
+                    invalidateOverlap();
                   }}
                   className="text-xs text-white/30 hover:text-white/60 transition-colors"
                 >
@@ -245,7 +261,7 @@ export default function KnowledgePage() {
             </div>
 
             {overlapError && (
-              <p className="mb-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
+              <p role="alert" className="mb-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
                 {overlapError}
               </p>
             )}
