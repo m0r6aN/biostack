@@ -89,6 +89,27 @@ describe('KnowledgePage overlap gating', () => {
     await waitFor(() => expect(screen.getByRole('button', { name: 'Search', exact: true })).toBeEnabled());
   }
 
+  it.each([' BPC-157 ', ' Fixture-Alias ', ' pEpTiDe '])('matches trimmed query %j without changing displayed input or overlap guards', async query => {
+    vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([{ ...knowledgeEntry, aliases: ['fixture-alias'] }]);
+    render(<KnowledgePage />);
+    await search(query);
+    expect(screen.getByRole('button', { name: 'BPC-157', exact: true })).toBeVisible();
+    expect(screen.getByPlaceholderText('Search compounds, supplements, substances…')).toHaveValue(query);
+    expect(screen.getByRole('button', { name: 'Check Overlaps' })).toBeDisabled();
+    expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalledTimes(1);
+    expect(apiClient.checkOverlap).not.toHaveBeenCalled();
+  });
+
+  it('does not search whitespace-only input', () => {
+    render(<KnowledgePage />);
+    const input = screen.getByPlaceholderText('Search compounds, supplements, substances…');
+    fireEvent.change(input, { target: { value: '   ' } });
+    expect(screen.getByRole('button', { name: 'Search', exact: true })).toBeEnabled();
+    fireEvent.submit(input.closest('form')!);
+    expect(input).toHaveValue('   ');
+    expect(apiClient.getAllKnowledgeCompounds).not.toHaveBeenCalled();
+  });
+
   it('keeps selected names across searches and no results, supports focus and removal', async () => {
     vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([knowledgeEntry, { ...knowledgeEntry, canonicalName: 'Creatine' }]);
     render(<KnowledgePage />);
