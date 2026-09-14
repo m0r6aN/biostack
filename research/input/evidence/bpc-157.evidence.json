@@ -80,13 +80,14 @@
       "sourceId": "pubmed-vasireddi-2025-orthosportsmed",
       "sourceType": "systematic-review",
       "authorityTier": "B1",
-      "title": "Emerging Use of BPC-157 in Orthopaedic Sports Medicine",
+      "title": "Emerging Use of BPC-157 in Orthopaedic Sports Medicine: A Systematic Review.",
       "publisher": "PubMed",
       "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/",
-      "doi": null,
+      "doi": "10.1177/15563316251355551",
       "pmid": "40756949",
-      "publishedAt": null,
-      "accessedAt": "2026-08-29T00:00:00Z"
+      "publishedAt": "2025-07-31T00:00:00Z",
+      "accessedAt": "2026-09-14T03:11:50.875421Z",
+      "dateNote": "publishedAt represents the electronic publication date 2025-07-31 at day precision; midnight UTC is schema encoding, not an observed publication time. Issue date is November 2025 at month precision. Original metadata and acquisition provenance are preserved in bpc157-study-design-research-candidate-20260914.json."
     },
     {
       "sourceId": "statnews-bpc157-2026-02",
