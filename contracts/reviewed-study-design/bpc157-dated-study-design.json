@@ -1,0 +1,16 @@
+{
+  "canonicalName": "BPC-157",
+  "kind": "dated-review-study-design",
+  "claimId": "bpc157-preclinical-human-gap-001",
+  "statement": "A systematic review searching English-language literature through 3 June 2024 included 36 BPC-157 studies: 35 preclinical studies and one clinical study.",
+  "citation": {
+    "displayLabel": "Vasireddi et al., 2025",
+    "sourceItemId": "pubmed-vasireddi-2025-orthosportsmed",
+    "pmid": "40756949",
+    "doi": "10.1177/15563316251355551",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/"
+  },
+  "searchCutoff": "2024-06-03",
+  "languageScope": "English-language literature",
+  "limitations": "This describes the studies included in that review, not all research available today or evidence of clinical benefit or safety."
+}
