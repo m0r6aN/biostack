@@ -11,10 +11,11 @@ import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
 import { InteractionFlag, KnowledgeEntry } from '@/lib/types';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function KnowledgePage() {
   const { user, loading: authLoading } = useAuth();
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<KnowledgeEntry[]>([]);
   const [searching, setSearching] = useState(false);
@@ -108,6 +109,7 @@ export default function KnowledgePage() {
               </svg>
               <input
                 type="text"
+                ref={searchInputRef}
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search compounds, supplements, substances…"
@@ -161,9 +163,38 @@ export default function KnowledgePage() {
             <div className="flex items-center gap-2.5 mb-1">
               <h2 className="text-base font-semibold text-white">Pathway Overlap Checker</h2>
             </div>
-            <p className="text-sm text-white/50 mb-5">
+            <p className="text-sm text-white/50 mb-3">
               Select two or more compounds to surface shared pathways and potential interactions.
             </p>
+            <p id="overlap-selection-guidance" className="text-sm text-white/70 mb-3" aria-live="polite">
+              {selectedCompounds.length === 0
+                ? 'Search for a compound and select it below.'
+                : selectedCompounds.length === 1
+                  ? 'Select 1 more compound to check overlaps.'
+                  : 'Ready to check selected compounds.'}
+            </p>
+            <button type="button" onClick={() => {
+              searchInputRef.current?.scrollIntoView({ behavior: 'auto', block: 'center' });
+              searchInputRef.current?.focus({ preventScroll: true });
+            }} className="mb-4 min-h-11 rounded px-2 py-2 text-sm text-amber-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+              {selectedCompounds.length ? 'Find another compound' : 'Find a compound'}
+            </button>
+
+            {selectedCompounds.length > 0 && (
+              <section aria-label="Selected compounds" className="mb-5">
+                <h3 className="text-sm font-medium text-white/80 mb-2">Selected compounds</h3>
+                <ul className="flex flex-wrap gap-2">
+                  {selectedCompounds.map(name => (
+                    <li key={name}>
+                      <button type="button" aria-label={`Remove ${name}`} onClick={() => toggleCompound(name)}
+                        className="min-h-11 max-w-full rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-200 break-words focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                        {name}<span aria-hidden="true" className="ml-2">×</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             {/* Selection chips from search results */}
             {searchResults.length > 0 && (
@@ -174,7 +205,8 @@ export default function KnowledgePage() {
                     <button
                       key={r.canonicalName}
                       onClick={() => toggleCompound(r.canonicalName)}
-                      className={`text-xs px-3 py-1.5 rounded-full border font-medium transition-all ${
+                      aria-pressed={selectedCompounds.includes(r.canonicalName)}
+                      className={`min-h-11 text-xs px-3 py-1.5 rounded-full border font-medium transition-all ${
                         selectedCompounds.includes(r.canonicalName)
                           ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.2)]'
                           : 'bg-white/[0.04] text-white/55 border-white/[0.08] hover:bg-white/[0.08] hover:text-white/80'
@@ -220,6 +252,7 @@ export default function KnowledgePage() {
 
             <button
               onClick={handleCheckOverlaps}
+              aria-describedby="overlap-selection-guidance"
               disabled={checkingOverlaps || selectedCompounds.length < 2}
               className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 disabled:bg-white/10 disabled:text-white/25 text-slate-950 font-semibold rounded-xl transition-all text-sm shadow-[0_0_16px_rgba(245,158,11,0.25)] hover:shadow-[0_0_24px_rgba(245,158,11,0.4)] disabled:shadow-none"
             >
