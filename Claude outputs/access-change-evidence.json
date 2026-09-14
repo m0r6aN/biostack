@@ -1,0 +1,42 @@
+{
+  "task": "start-text-contrast-20260911",
+  "change": "Desktop Commander allowedDirectories append",
+  "owner_authorization": "Owner approval received: \"Yes, you may add it\" in response to Codex asking to add D:\\Repos\\BioStack to Claude Desktop Commander's allowedDirectories while preserving existing entries.",
+  "timestamp_utc": "2026-09-11T13:44:00Z",
+  "tool_calls": [
+    "mcp__remote-devices__Desktop_Commander__get_config (filtered to allowedDirectories key; no credentials or unrelated config inspected/altered)",
+    "mcp__remote-devices__Desktop_Commander__set_config_value (key=allowedDirectories)",
+    "mcp__remote-devices__Desktop_Commander__get_file_info (target-access verification)"
+  ],
+  "allowedDirectories_before": [
+    "D:\\Repos\\keon-omega\\",
+    "D:\\Repos\\keon-omega\\keon-systems-web",
+    "C:\\Users\\clint\\.claude\\plans",
+    "C:\\Users\\clint\\.agents\\skills",
+    "D:\\Repos\\agent-skills"
+  ],
+  "allowedDirectories_after": [
+    "D:\\Repos\\keon-omega\\",
+    "D:\\Repos\\keon-omega\\keon-systems-web",
+    "C:\\Users\\clint\\.claude\\plans",
+    "C:\\Users\\clint\\.agents\\skills",
+    "D:\\Repos\\agent-skills",
+    "D:\\Repos\\BioStack"
+  ],
+  "mutation_result": "Success — set_config_value returned the full updated config; allowedDirectories readback matched the requested value verbatim.",
+  "readback_equality_check": "PASS — after list equals before list (all 5 original entries, unchanged order and spelling) plus exactly one appended entry: \"D:\\Repos\\BioStack\". No entry removed, reordered, or altered. No broadening to D:\\Repos or drive root. No other config key (blockedCommands, defaultShell, telemetryEnabled, fileReadLineLimit, fileWriteLineLimit) was changed — confirmed identical before/after in the returned config payload.",
+  "target_access_verification": {
+    "call": "get_file_info(\"D:\\Repos\\BioStack\\.worktrees\\start-text-contrast-20260911\\frontend\")",
+    "result": "SUCCESS",
+    "response": {
+      "isDirectory": true,
+      "isFile": false,
+      "permissions": "666",
+      "fileType": "text",
+      "created": "2026-09-11T13:16:29.103Z",
+      "modified": "2026-09-11T13:34:48.070Z",
+      "accessed": "2026-09-11T13:44:25.659Z"
+    }
+  },
+  "scope_note": "Only the single named path D:\\Repos\\BioStack was added. No other directory, drive root, or setting was touched. No credentials/secrets/unrelated configuration fields were read or captured beyond the allowedDirectories key and the standard tool-call responses shown above."
+}

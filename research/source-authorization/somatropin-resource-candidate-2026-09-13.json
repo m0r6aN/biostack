@@ -1,0 +1,57 @@
+{
+  "candidateStatement": "The GENOTROPIN label describes somatropin as recombinant human growth hormone with 191 amino acid residues and the same amino acid sequence as pituitary-origin human growth hormone.",
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "status": "pending-review"
+  },
+  "resourcingStatus": "prepared-review-required",
+  "authority": {
+    "fieldAuthorityRequired": false,
+    "grantedAuthority": null,
+    "approvalPath": null
+  },
+  "resourcingOutcome": {
+    "claimActuallyReSourced": false,
+    "newApprovalGranted": false,
+    "productionChangePerformed": false
+  },
+  "baseCommit": "8c632c0589f111e50f29262564dceee92e44e759",
+  "sourceRegistry": {
+    "sourceId": "dailymed-genotropin-label",
+    "splSetId": "ffebf88b-d257-4542-9808-74d9b7167765",
+    "splDocumentId": "5aa3307a-c0bc-43c0-8177-3bb1cad66d7a",
+    "labelVersion": 37,
+    "labelDate": "2026-01-15"
+  },
+  "sectionLocator": {
+    "pageOrSection": "11 DESCRIPTION",
+    "sectionCode": "34089-3",
+    "sectionId": "76457abf-2ec6-4283-b384-c59dc7bf60ac",
+    "quoteExtracted": false,
+    "quoteNull": true
+  },
+  "retrievalMetadata": {
+    "retrievedAtUtc": "2026-09-13T14:32:48Z",
+    "payloadBytes": 600248,
+    "payloadSha256": "b60db867f5f32e7fa5aa416940444929928e58795e4e5bd9b1cb193adc15d00b",
+    "documentationUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ffebf88b-d257-4542-9808-74d9b7167765"
+  },
+  "ndcSampling": {
+    "totalNdcCodes": 24,
+    "sampledNdcCodes": 6,
+    "samplingNote": "partial sample of 24 total NDC codes for GENOTROPIN formulations",
+    "ndcArray": [
+      "0013-2626",
+      "0013-2646",
+      "0013-2649",
+      "0013-2650",
+      "0013-2651",
+      "0013-2652"
+    ]
+  },
+  "preparationNotes": "Somatropin candidate preparation Sept 13: narrowed statement to GENOTROPIN-label identity core (191-amino-acid recombinant sequence); removed DrugBank Overview excerpt; retained context.formulation verbatim; pending DailyMed-specific review and inherited Strong/high pending ratings. No molecular weight, E.coli host, receptor signaling, or therapeutic wording. No schema redesign. Approved for review-required candidate status only.",
+  "createdAtUtc": "2026-09-13T14:32:48Z",
+  "preparingAgent": "Claude Haiku 4.5",
+  "sessionId": "01VitZy3Ru65iPYLZGt4QsPe"
+}

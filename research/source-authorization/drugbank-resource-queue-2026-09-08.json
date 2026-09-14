@@ -18,8 +18,8 @@
     "claimsWithCoCitationCandidates": 28,
     "claimsWithNoCoCitation": 2,
     "claimsActuallyReSourced": 0,
-    "coCitationCandidatesSubstanceAssessed": 0,
-    "replacementCandidatesPrepared": 1
+    "coCitationCandidatesSubstanceAssessed": 4,
+    "replacementCandidatesPrepared": 5
   },
   "rows": [
     {
@@ -693,8 +693,15 @@
           "registryClass": "dailymed"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-genotropin-label",
+        "recordPath": "research/source-authorization/somatropin-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "survodutide.evidence.json",
@@ -816,5 +823,5 @@
       "substanceAssessed": false
     }
   ],
-  "updatedAtUtc": "2026-09-08T22:07:07.268475Z"
+  "updatedAtUtc": "2026-09-13T14:32:48Z"
 }

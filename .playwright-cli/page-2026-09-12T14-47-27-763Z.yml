@@ -1,0 +1,122 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "BioStack home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - img "BioStack" [ref=e8]
+            - generic [ref=e20]: BioStack
+        - navigation [ref=e21]:
+          - link "How it works" [ref=e22] [cursor=pointer]:
+            - /url: /how-it-works
+          - link "Tools" [ref=e23] [cursor=pointer]:
+            - /url: /tools
+          - link "Compounds & Evidence" [ref=e24] [cursor=pointer]:
+            - /url: /knowledge
+          - link "Pricing" [ref=e25] [cursor=pointer]:
+            - /url: /pricing
+          - link "For Providers" [ref=e26] [cursor=pointer]:
+            - /url: /providers
+          - link "Safety" [ref=e27] [cursor=pointer]:
+            - /url: /safety
+        - generic [ref=e28]:
+          - link "Analyze My Stack" [ref=e29] [cursor=pointer]:
+            - /url: /tools/analyzer
+          - link "Sign in" [ref=e30] [cursor=pointer]:
+            - /url: /auth/signin
+          - link "Start Free" [ref=e31] [cursor=pointer]:
+            - /url: /start
+    - main [ref=e32]:
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - paragraph [ref=e35]: Getting Started
+          - heading "Tell us what you take — or start from an example." [level=1] [ref=e36]
+          - paragraph [ref=e37]: Add anything you already take. If you're not sure, start from a sample.
+          - paragraph [ref=e38]: A protocol is just the list of things you take. We'll show overlaps and conflicts as you add items.
+        - list "Onboarding progress" [ref=e42]:
+          - listitem [ref=e43]:
+            - generic [ref=e44]:
+              - generic [ref=e45]: "1"
+              - generic [ref=e46]: 1. Choose what matters
+          - listitem [ref=e47]:
+            - generic [ref=e48]:
+              - generic [ref=e49]: "2"
+              - generic [ref=e50]: 2. Build your list
+          - listitem [ref=e51]:
+            - generic [ref=e52]:
+              - generic [ref=e53]: "3"
+              - generic [ref=e54]: 3. See what is known
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - paragraph [ref=e57]: What Matters Most
+            - heading "What do you want help with first?" [level=2] [ref=e58]
+            - paragraph [ref=e59]: Pick one or more goals. You can change this later.
+            - generic [ref=e60]:
+              - button "Fat loss" [ref=e61]:
+                - generic [ref=e62]: Fat loss
+                - generic [ref=e63]: We'll watch weight trends, appetite, and energy
+              - button "Recovery" [ref=e64]:
+                - generic [ref=e65]: Recovery
+                - generic [ref=e66]: We'll watch sleep quality, soreness, and joint comfort
+              - button "Energy" [ref=e67]:
+                - generic [ref=e68]: Energy
+                - generic [ref=e69]: We'll watch daytime energy, sleep, and mood
+              - button "Longevity" [ref=e70]:
+                - generic [ref=e71]: Longevity
+                - generic [ref=e72]: We'll watch consistency, recovery, and baseline changes
+              - button "Strength" [ref=e73]:
+                - generic [ref=e74]: Strength
+                - generic [ref=e75]: We'll watch strength, endurance, and recovery
+              - button "Focus" [ref=e76]:
+                - generic [ref=e77]: Focus
+                - generic [ref=e78]: We'll watch focus, clarity, and sleep
+            - generic [ref=e79]:
+              - button "Continue" [ref=e80]
+              - button "Skip for now" [ref=e81]
+          - generic [ref=e83]:
+            - generic [ref=e84]:
+              - paragraph [ref=e85]: Goal State
+              - generic [ref=e86]: Optional
+            - heading "Choose what matters first." [level=3] [ref=e87]
+            - paragraph [ref=e88]: Pick one or skip for now. You can change this later.
+            - generic [ref=e89]:
+              - generic [ref=e90]:
+                - paragraph [ref=e91]: Goals
+                - paragraph [ref=e92]: None yet
+              - generic [ref=e93]:
+                - paragraph [ref=e94]: List
+                - paragraph [ref=e95]: Next step
+              - generic [ref=e96]:
+                - paragraph [ref=e97]: Next
+                - paragraph [ref=e98]: Build your list
+            - generic [ref=e99]:
+              - paragraph [ref=e100]: Priority Signal
+              - paragraph [ref=e101]: Choose one or skip. Your list still saves.
+    - contentinfo [ref=e102]:
+      - generic [ref=e103]:
+        - paragraph [ref=e104]: BioStack. What the research says, graded by evidence strength.
+        - generic [ref=e105]:
+          - link "How it works" [ref=e106] [cursor=pointer]:
+            - /url: /how-it-works
+          - link "How we grade evidence" [ref=e107] [cursor=pointer]:
+            - /url: /knowledge/methodology
+          - link "Tools" [ref=e108] [cursor=pointer]:
+            - /url: /tools
+          - link "Compounds & Evidence" [ref=e109] [cursor=pointer]:
+            - /url: /knowledge
+          - link "Pricing" [ref=e110] [cursor=pointer]:
+            - /url: /pricing
+          - link "Start Free" [ref=e111] [cursor=pointer]:
+            - /url: /start
+          - link "For Providers" [ref=e112] [cursor=pointer]:
+            - /url: /providers
+          - link "Safety" [ref=e113] [cursor=pointer]:
+            - /url: /safety
+          - link "Terms" [ref=e114] [cursor=pointer]:
+            - /url: /terms
+          - link "Privacy" [ref=e115] [cursor=pointer]:
+            - /url: /privacy
+  - alert [ref=e116]
