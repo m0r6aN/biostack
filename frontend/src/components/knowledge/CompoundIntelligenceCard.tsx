@@ -5,6 +5,7 @@ import type { RecommendationSurface } from '@/lib/recommendations';
 import { useSettings } from '@/lib/settings';
 import { KnowledgeEntry } from '@/lib/types';
 import { formatWeight } from '@/lib/utils';
+import { getReviewedStudyDesign } from '@/lib/reviewedStudyDesign';
 import { SafetyDisclaimer } from '../SafetyDisclaimer';
 import { EvidenceTierBadge } from './EvidenceTierBadge';
 
@@ -27,6 +28,7 @@ interface CompoundIntelligenceCardProps {
 export function CompoundIntelligenceCard({
   entry,
 }: CompoundIntelligenceCardProps) {
+  const studyDesign = getReviewedStudyDesign(entry.canonicalName);
   const [showAllReferences, setShowAllReferences] = useState(false);
   const referenceListId = useId();
   const { currentProfileId, profiles } = useProfile();
@@ -67,9 +69,20 @@ export function CompoundIntelligenceCard({
 
         <section aria-label="Evidence and limitations" className="rounded-xl border border-white/10 bg-white/[0.03] p-4 space-y-2">
           <h4 className="text-sm font-medium text-white/80">Evidence and limitations</h4>
-          <p className="text-sm leading-6 text-white/65">
-            Human/preclinical evidence breakdown is not available in this record.
-          </p>
+          {studyDesign ? (
+            <div data-testid="reviewed-study-design" className="space-y-2">
+              <p className="text-sm leading-6 text-white/65">{studyDesign.statement}</p>
+              <a href={studyDesign.citation.url} target="_blank" rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center text-sm text-cyan-300 underline underline-offset-4 [overflow-wrap:anywhere]">
+                {studyDesign.citation.displayLabel} · PMID {studyDesign.citation.pmid} (opens in new tab)
+              </a>
+              <p className="text-sm leading-6 text-white/65">{studyDesign.limitations}</p>
+            </div>
+          ) : (
+            <p className="text-sm leading-6 text-white/65">
+              Human/preclinical evidence breakdown is not available in this record.
+            </p>
+          )}
           {entry.notes && <p className="text-sm leading-6 text-white/65">{entry.notes}</p>}
         </section>
 

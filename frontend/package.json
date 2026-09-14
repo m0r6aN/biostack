@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3043",
+    "prebuild": "node scripts/reviewed-study-design.mjs --check",
     "build": "next build",
     "start": "next start --port 3043",
     "lint": "eslint",

@@ -31,6 +31,12 @@ jobs:
       - name: Check source-rights containment copies
         run: node scripts/sync-source-rights.mjs --check
 
+      - name: Check reviewed study-design display package
+        run: node scripts/sync-reviewed-study-design.mjs --check
+
+      - name: Test reviewed study-design projection and packaging
+        run: node --test frontend/scripts/reviewed-study-design.test.mjs scripts/sync-reviewed-study-design.test.mjs
+
       - name: Test deployment readiness guard
         run: node --test scripts/verify-containerapp-deployment.test.mjs
 

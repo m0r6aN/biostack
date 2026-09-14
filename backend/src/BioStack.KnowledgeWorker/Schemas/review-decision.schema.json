@@ -23,10 +23,32 @@
   },
   "$defs": {
     "stringArray": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "displayBinding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["surface", "claimId", "claimSha256", "sourceItemId", "sourceRecordId", "sourceSnapshotSha256", "observationReceiptSha256", "payloadSha256"],
+      "properties": {
+        "surface": { "const": "knowledge-card-study-design" },
+        "claimId": { "type": "string", "minLength": 1, "pattern": "^[^*]+$" },
+        "sourceItemId": { "type": "string", "minLength": 1, "pattern": "^[^*]+$" },
+        "sourceRecordId": { "type": "string", "pattern": "^[0-9]+$" },
+        "claimSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "sourceSnapshotSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "observationReceiptSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "payloadSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
     "decision": {
       "type": "object",
       "additionalProperties": false,
       "required": ["decisionId", "compoundName", "decision", "reviewerId", "reviewedAt", "scope", "notes"],
+      "allOf": [{
+        "if": { "properties": { "scope": { "required": ["displayBindings"] } } },
+        "then": { "properties": {
+          "decision": { "const": "approve-claims" },
+          "clearsSoftPromotionBlockers": { "const": false },
+          "scope": { "properties": { "claimIds": { "minItems": 1, "maxItems": 1 } } }
+        } }
+      }],
       "properties": {
         "decisionId": { "type": "string", "minLength": 1 },
         "compoundName": { "type": "string", "minLength": 1 },
@@ -44,7 +66,8 @@
             "reviewCategories": { "$ref": "#/$defs/stringArray" },
             "promotionBlockers": { "$ref": "#/$defs/stringArray" },
             "remediationPlanItemIds": { "$ref": "#/$defs/stringArray" },
-            "remediationResolutionTypes": { "$ref": "#/$defs/stringArray" }
+            "remediationResolutionTypes": { "$ref": "#/$defs/stringArray" },
+            "displayBindings": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "$ref": "#/$defs/displayBinding" } }
           }
         },
         "clearsSoftPromotionBlockers": { "type": "boolean", "default": false },
