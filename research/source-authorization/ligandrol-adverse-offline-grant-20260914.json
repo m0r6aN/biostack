@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "offline-item-field-grant",
+  "grantId": "ligandrol-adverse-offline-20260914",
+  "decision": "granted",
+  "decisionMaker": {
+    "personName": "Clint Morgan",
+    "roleId": "legal-rights-approver"
+  },
+  "decisionReceipt": {
+    "ownerMessageVerbatim": "Ligandrol: grant the existing exact offline research scope in ligandrol-adverse-owner-decision-ready-20260914.md.",
+    "originalDecisionAtUtc": null,
+    "recordedAtUtc": "2026-09-14T20:42:09.654907+00:00",
+    "timestampBasis": "local-recording-time-not-owner-decision-time",
+    "conveyance": "Owner response via status task, conveyed by initiative lead /root to support_readiness",
+    "directSignatureClaimed": false,
+    "reviewedBriefPath": "research/source-authorization/ligandrol-adverse-offline-grant-scope-20260914.md",
+    "reviewedBriefSha256": "e3bf458134e8d7291ee7c44160bf6a743accfbbbbd6a1b5d25a9170b9b1b4807"
+  },
+  "scope": {
+    "packetPath": "research/input/evidence/ligandrol.evidence.json",
+    "claimId": "ligandrol-adverse-effect-hormone-suppression-001",
+    "claimType": "adverse-effect",
+    "sourceRegistryId": "pubmed",
+    "sourceItemId": "pubmed-22459616-basaria-research-20260913",
+    "pmid": "22459616",
+    "doi": "10.1093/gerona/gls078",
+    "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/22459616/",
+    "field": "contraindications-warnings",
+    "operation": "offline-review-required-candidate-preparation"
+  },
+  "bindings": [
+    {
+      "path": "research/source-authorization/owner-source-decisions-2026-09-08.v1.json",
+      "sha256": "7e07beb749c093a57565e7256b7ee63633f4a1dcc7c45659d7a630989442eb91"
+    },
+    {
+      "path": "research/input/sources/pilot-source-registry.json",
+      "sha256": "aa9e5dd16c0c6743f027ec9ea4be9b8d17f30f367dc0a0e9be7e5724e452d15e"
+    },
+    {
+      "path": "research/source-authorization/recommended-seven-source-decisions.basaria-alias-map-20260913.json",
+      "sha256": "ab5f6487b999d8a77ecd063dbcfdd173c2af218d2f4252cc64f8ebcbd6fef896"
+    },
+    {
+      "path": "research/input/evidence/ligandrol.evidence.json",
+      "sha256": "a638df391e592678ad68d30ad53e5167a673c3979ed6e1f0cdb9775c9dfca584"
+    }
+  ],
+  "restrictions": {
+    "acquisitionAllowed": false,
+    "runtimeAllowed": false,
+    "sourcePassageTransmissionAllowed": false,
+    "rawTextRetentionAllowed": false,
+    "publicationAllowed": false,
+    "scientificApproval": false,
+    "candidateReviewStatus": "review-required",
+    "factualScope": "Trial-attributed hormonal/lipid observations and bounded reported recovery only where retained facts support exact population/exposure/measurement context; no general safety or long-term reversibility conclusions, reassurance, clinical instructions or quantitative invention."
+  },
+  "bindingEncoding": "SHA256 of UTF8 file bytes with CRLF normalized to LF; all other bytes preserved"
+}
