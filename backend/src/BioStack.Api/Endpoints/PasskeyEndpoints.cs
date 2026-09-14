@@ -195,7 +195,8 @@ public static class PasskeyEndpoints
                 UserHandle = result.User.Id,
                 CredentialType = result.Type.ToString().ToLowerInvariant().Replace("publickey", "public-key", StringComparison.Ordinal),
                 SignatureCounter = result.SignCount,
-                Transports = string.Join(',', result.Transports.Select(value => value.ToString().ToLowerInvariant())),
+                Transports = string.Join(',', result.Transports.Select(value =>
+                    value == AuthenticatorTransport.SmartCard ? "smart-card" : value.ToString().ToLowerInvariant())),
                 AaGuid = result.AaGuid,
                 IsBackupEligible = result.IsBackupEligible,
                 IsBackedUp = result.IsBackedUp,

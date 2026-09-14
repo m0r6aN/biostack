@@ -2,6 +2,10 @@ namespace BioStack.Api.Tests.Integration;
 
 using System.Net;
 using System.Net.Http.Json;
+using System.Buffers.Binary;
+using System.Formats.Cbor;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using BioStack.Api;
@@ -511,6 +515,135 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         Assert.Equal("/billing?plan=operator", challenge.RedirectPath);
     }
 
+    [Theory]
+    [InlineData("internal", "http://localhost:3043", true, true)]
+    [InlineData("hybrid", "http://localhost:3043", true, true)]
+    [InlineData("smart-card", "http://localhost:3043", true, true)]
+    [InlineData("internal", "https://wrong-origin.example", true, false)]
+    [InlineData("internal", "http://localhost:3043", false, false)]
+    public async Task BrowserPasskeyCredential_RegistersAndAuthenticatesWithProtocolEnumValues(
+        string transport, string origin, bool userVerified, bool accepted)
+    {
+        await StartAsync("browser-passkey@example.com", "/account/security");
+        await _client.PostAsJsonAsync("/api/v1/auth/verify", new VerifyAuthRequest(ReadToken(await LatestMagicLinkAsync())), JsonOptions);
+        using var optionsResponse = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/register/options", new { displayName = "Test passkey" });
+        Assert.Equal(HttpStatusCode.OK, optionsResponse.StatusCode);
+        using var options = JsonDocument.Parse(await optionsResponse.Content.ReadAsStringAsync());
+        var requestId = options.RootElement.GetProperty("requestId").GetString();
+        var publicKey = options.RootElement.GetProperty("publicKey");
+        using var key = ECDsa.Create(ECCurve.NamedCurves.nistP256);
+        var credentialId = RandomNumberGenerator.GetBytes(32);
+        var credentialIdText = WebEncoders.Base64UrlEncode(credentialId);
+        var clientData = CreateBrowserClientData("webauthn.create", publicKey.GetProperty("challenge").GetString()!, origin);
+        var authData = CreateAuthenticatorData(key, credentialId, registration: true, userVerified);
+        var attestation = new CborWriter();
+        attestation.WriteStartMap(3);
+        attestation.WriteTextString("fmt");
+        attestation.WriteTextString("none");
+        attestation.WriteTextString("attStmt");
+        attestation.WriteStartMap(0);
+        attestation.WriteEndMap();
+        attestation.WriteTextString("authData");
+        attestation.WriteByteString(authData);
+        attestation.WriteEndMap();
+        // These strings and fields match navigator.credentials.create(), not .NET enum serialization.
+        var registration = new
+        {
+            requestId,
+            displayName = "Test passkey",
+            credential = new
+            {
+                id = credentialIdText,
+                rawId = credentialIdText,
+                type = "public-key",
+                response = new
+                {
+                    attestationObject = WebEncoders.Base64UrlEncode(attestation.Encode()),
+                    clientDataJSON = WebEncoders.Base64UrlEncode(clientData),
+                    transports = new[] { transport },
+                },
+                clientExtensionResults = new { credProps = new { rk = true } },
+            },
+        };
+        using var registered = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/register/complete", registration);
+        if (!accepted)
+        {
+            Assert.Equal(HttpStatusCode.BadRequest, registered.StatusCode);
+            using var rejectedScope = _factory.Services.CreateScope();
+            var rejectedDb = rejectedScope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            Assert.Empty(await rejectedDb.PasskeyCredentials.ToListAsync());
+            Assert.NotNull((await rejectedDb.PasskeyOperationChallenges.SingleAsync()).ConsumedAtUtc);
+            return;
+        }
+        Assert.Equal(HttpStatusCode.OK, registered.StatusCode);
+        using var replay = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/register/complete", registration);
+        Assert.Equal(HttpStatusCode.BadRequest, replay.StatusCode);
+
+        using var assertionOptionsResponse = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/authenticate/options", new { redirectPath = "/account/security" });
+        using var assertionOptions = JsonDocument.Parse(await assertionOptionsResponse.Content.ReadAsStringAsync());
+        var assertionClientData = CreateBrowserClientData("webauthn.get", assertionOptions.RootElement.GetProperty("publicKey").GetProperty("challenge").GetString()!);
+        var assertionAuthData = CreateAuthenticatorData(key, credentialId, registration: false);
+        var signature = key.SignData([.. assertionAuthData, .. SHA256.HashData(assertionClientData)], HashAlgorithmName.SHA256, DSASignatureFormat.Rfc3279DerSequence);
+        using var authenticated = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/authenticate/complete", new
+        {
+            requestId = assertionOptions.RootElement.GetProperty("requestId").GetString(),
+            credential = new
+            {
+                id = credentialIdText,
+                rawId = credentialIdText,
+                type = "public-key",
+                response = new
+                {
+                    authenticatorData = WebEncoders.Base64UrlEncode(assertionAuthData),
+                    clientDataJSON = WebEncoders.Base64UrlEncode(assertionClientData),
+                    signature = WebEncoders.Base64UrlEncode(signature),
+                    userHandle = publicKey.GetProperty("user").GetProperty("id").GetString(),
+                },
+                clientExtensionResults = new { },
+            },
+        });
+        Assert.Equal(HttpStatusCode.OK, authenticated.StatusCode);
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var saved = await db.PasskeyCredentials.SingleAsync();
+        Assert.Equal("public-key", saved.CredentialType);
+        Assert.Equal(transport, saved.Transports);
+        Assert.Equal(1u, saved.SignatureCounter);
+        Assert.NotNull(saved.LastUsedAtUtc);
+    }
+
+    private static byte[] CreateBrowserClientData(string type, string challenge, string origin = "http://localhost:3043") =>
+        JsonSerializer.SerializeToUtf8Bytes(new { type, challenge, origin, crossOrigin = false });
+
+    private static byte[] CreateAuthenticatorData(ECDsa key, byte[] credentialId, bool registration, bool userVerified = true)
+    {
+        using var stream = new MemoryStream();
+        stream.Write(SHA256.HashData(Encoding.UTF8.GetBytes("localhost")));
+        stream.WriteByte((byte)(0x01 | (userVerified ? 0x04 : 0) | (registration ? 0x40 : 0))); // UP + UV (+ attested credential data).
+        Span<byte> counter = stackalloc byte[4];
+        BinaryPrimitives.WriteUInt32BigEndian(counter, registration ? 0u : 1u);
+        stream.Write(counter);
+        if (registration)
+        {
+            stream.Write(new byte[16]); // Anonymized AAGUID for none attestation.
+            Span<byte> length = stackalloc byte[2];
+            BinaryPrimitives.WriteUInt16BigEndian(length, checked((ushort)credentialId.Length));
+            stream.Write(length);
+            stream.Write(credentialId);
+            var parameters = key.ExportParameters(false);
+            var cose = new CborWriter();
+            cose.WriteStartMap(5);
+            cose.WriteInt32(1); cose.WriteInt32(2); // EC2.
+            cose.WriteInt32(3); cose.WriteInt32(-7); // ES256.
+            cose.WriteInt32(-1); cose.WriteInt32(1); // P-256.
+            cose.WriteInt32(-2); cose.WriteByteString(parameters.Q.X!);
+            cose.WriteInt32(-3); cose.WriteByteString(parameters.Q.Y!);
+            cose.WriteEndMap();
+            stream.Write(cose.Encode());
+        }
+        return stream.ToArray();
+    }
+
     [Fact]
     public async Task PasskeyRegistrationOptions_RequireVerifiedEmailAndStoreHashedSingleUseCeremony()
     {
@@ -600,8 +733,8 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
                 ClientExtensionResults = new AuthenticationExtensionsClientOutputs(),
             });
 
-        var first = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/authenticate/complete", completion, JsonOptions);
-        var replay = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/authenticate/complete", completion, JsonOptions);
+        var first = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/authenticate/complete", completion);
+        var replay = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/authenticate/complete", completion);
 
         Assert.Equal(HttpStatusCode.BadRequest, first.StatusCode);
         Assert.Equal(HttpStatusCode.BadRequest, replay.StatusCode);

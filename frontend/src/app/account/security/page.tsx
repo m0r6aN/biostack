@@ -2,7 +2,7 @@
 
 import { Header } from '@/components/Header';
 import { getApiBaseUrl } from '@/lib/apiBase';
-import { passkeysSupported, registerPasskey } from '@/lib/passkeys';
+import { passkeyRegistrationErrorMessage, passkeysSupported, registerPasskey } from '@/lib/passkeys';
 import { useCallback, useEffect, useState } from 'react';
 
 const API_URL = getApiBaseUrl();
@@ -23,16 +23,19 @@ export default function AccountSecurityPage() {
   const [displayName, setDisplayName] = useState('My passkey');
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
+  const [loadState, setLoadState] = useState<'loading' | 'ready' | 'error'>('loading');
 
   const load = useCallback(async () => {
     const statusResponse = await fetch(`${API_URL}/api/v1/auth/passkeys/status`, {
       credentials: 'include',
       cache: 'no-store',
     });
-    const status = statusResponse.ok ? await statusResponse.json() as { enabled?: boolean } : null;
+    if (!statusResponse.ok) throw new Error('passkey-status-unavailable');
+    const status = await statusResponse.json() as { enabled?: boolean };
     setEnabled(status?.enabled === true);
     if (status?.enabled !== true) {
       setCredentials([]);
+      setLoadState('ready');
       return;
     }
 
@@ -40,26 +43,42 @@ export default function AccountSecurityPage() {
       credentials: 'include',
       cache: 'no-store',
     });
-    if (response.ok) {
-      setCredentials(await response.json() as PasskeySummary[]);
-    }
+    if (!response.ok) throw new Error('passkey-list-unavailable');
+    setCredentials(await response.json() as PasskeySummary[]);
+    setLoadState('ready');
   }, []);
+
+  const reload = useCallback(async () => {
+    setLoadState('loading');
+    setMessage('');
+    try {
+      await load();
+    } catch {
+      setLoadState('error');
+      setMessage('Passkey settings could not be loaded. Check your connection, then try again.');
+    }
+  }, [load]);
 
   useEffect(() => {
     // The request synchronizes this client surface with server-held credential state.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    void load().catch(() => setMessage('Passkey settings could not be loaded.'));
-  }, [load]);
+    void reload();
+  }, [reload]);
 
   async function addPasskey() {
     setBusy(true);
     setMessage('');
     try {
       await registerPasskey(displayName);
-      await load();
-      setMessage('Passkey added. You can use it the next time you sign in.');
-    } catch {
-      setMessage('The passkey was not added. Your authenticator may have cancelled or rejected the request.');
+      try {
+        await load();
+        setMessage('Passkey added. You can use it the next time you sign in.');
+      } catch {
+        setLoadState('error');
+        setMessage('Your passkey was added, but the list could not be refreshed. Reload passkey settings to see it.');
+      }
+    } catch (error) {
+      setMessage(passkeyRegistrationErrorMessage(error));
     } finally {
       setBusy(false);
     }
@@ -100,7 +119,13 @@ export default function AccountSecurityPage() {
             Passkeys use your device screen lock, fingerprint, or face verification. BioStack keeps the public key only; your private key stays with your authenticator.
           </p>
 
-          {!enabled ? (
+          {loadState === 'loading' ? (
+            <p className="mt-5 text-sm text-white/60" role="status">Loading passkey settings…</p>
+          ) : loadState === 'error' ? (
+            <button type="button" onClick={() => void reload()} className="mt-5 min-h-11 rounded-lg border border-white/20 px-4 text-sm text-white hover:bg-white/10">
+              Reload passkey settings
+            </button>
+          ) : !enabled ? (
             <p className="mt-5 rounded-xl border border-amber-300/15 bg-amber-300/[0.05] p-4 text-sm text-amber-100/70">
               Passkeys are not enabled for this deployment. Email sign-in and recovery are unchanged.
             </p>
@@ -131,7 +156,7 @@ export default function AccountSecurityPage() {
           {message && <p className="mt-4 text-sm text-white/60" role="status">{message}</p>}
         </section>
 
-        {enabled && (
+        {enabled && loadState === 'ready' && (
           <section className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-6">
             <h2 className="text-lg font-semibold text-white">Your passkeys</h2>
             {credentials.length === 0 ? (
