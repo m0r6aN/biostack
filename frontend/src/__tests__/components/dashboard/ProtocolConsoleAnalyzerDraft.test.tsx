@@ -1,7 +1,8 @@
 import { ProtocolConsole } from '@/components/dashboard/ProtocolConsole';
 import ProfilesPage from '@/app/profiles/page';
 import { ANALYZER_PROTOCOL_DRAFT_KEY, readAnalyzerProtocolDraft, saveAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
-import { apiClient } from '@/lib/api';
+import { ApiError, apiClient } from '@/lib/api';
+import { isEnabled } from '@/lib/flags';
 import type { CreateProfileRequest, PersonProfile } from '@/lib/types';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
@@ -27,6 +28,7 @@ vi.mock('@/lib/context', () => ({
 vi.mock('@/lib/api', () => ({
   ApiError: class ApiError extends Error {
     upgradeRequired?: boolean;
+    constructor(_status: number, message: string) { super(message); }
   },
   apiClient: {
     getProfiles: vi.fn(),
@@ -43,7 +45,7 @@ vi.mock('@/lib/api', () => ({
   },
 }));
 
-vi.mock('@/lib/flags', () => ({ isEnabled: () => false }));
+vi.mock('@/lib/flags', () => ({ isEnabled: vi.fn(() => false) }));
 vi.mock('@/lib/settings', () => ({ useSettings: () => ({ settings: { weightUnit: 'metric' } }) }));
 vi.mock('@/components/profiles/ProfileForm', () => ({
   ProfileForm: ({ onSubmit }: { onSubmit: (data: CreateProfileRequest) => Promise<void> }) => (
@@ -114,6 +116,7 @@ describe('ProtocolConsole — analyzer draft continuation after sign-in', () => 
 
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(isEnabled).mockReturnValue(false);
     window.localStorage.clear();
     window.history.replaceState({}, '', '/protocol-console');
     profileState.currentProfileId = null;
@@ -133,6 +136,26 @@ describe('ProtocolConsole — analyzer draft continuation after sign-in', () => 
 
   afterEach(() => {
     consoleError.mockRestore();
+  });
+
+  it.each([false, true])('limits the Commander notice to longitudinal analysis while the paid dashboard loads (new layout: %s)', async (newLayout) => {
+    vi.mocked(isEnabled).mockReturnValue(newLayout);
+    profileState.currentProfileId = profile.id;
+    profileState.profiles = [profile];
+    vi.mocked(apiClient.getProfiles).mockResolvedValue([profile]);
+    vi.mocked(apiClient.getCurrentStackIntelligence).mockResolvedValue({ stackScore: { score: 72 } } as never);
+    const denied = Object.assign(new ApiError(403, 'Commander is required for this intelligence surface.'), { upgradeRequired: true });
+    vi.mocked(apiClient.getProtocolConsole).mockRejectedValue(denied);
+
+    render(<ProtocolConsole />);
+
+    expect(await screen.findByText('Add longitudinal analysis with Commander')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Protocol Dashboard' })).toBeInTheDocument();
+    expect(screen.getByText(/Your dashboard, compound tracking, and check-ins remain available/)).toBeInTheDocument();
+    expect(screen.queryByText('Protocol Console is locked on this tier')).not.toBeInTheDocument();
+    expect(screen.queryByText('Live stack intelligence is locked on Observer')).not.toBeInTheDocument();
+    expect(screen.queryByText('Failed to load protocol console data')).not.toBeInTheDocument();
+    expect(apiClient.getCurrentStackIntelligence).toHaveBeenCalledWith(profile.id);
   });
 
   describe('first profile (the sign-in promise previously dead-ended here)', () => {

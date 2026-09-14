@@ -413,8 +413,8 @@ export function ProtocolConsole() {
                 {missionLockedMessage && (
                   <UpgradeNotice
                     eyebrow="Commander — Longitudinal Intelligence"
-                    title="Protocol Console is locked on this tier"
-                    detail={missionLockedMessage}
+                    title="Add longitudinal analysis with Commander"
+                    detail="Pattern, drift, and sequence analysis are available with Commander. Your dashboard, compound tracking, and check-ins remain available on your current plan."
                   />
                 )}
                 {stackLockedMessage && (
@@ -480,8 +480,8 @@ export function ProtocolConsole() {
                 {missionLockedMessage && (
                   <UpgradeNotice
                     eyebrow="Commander — Longitudinal Intelligence"
-                    title="Protocol Console is locked on this tier"
-                    detail={missionLockedMessage}
+                    title="Add longitudinal analysis with Commander"
+                    detail="Pattern, drift, and sequence analysis are available with Commander. Your dashboard, compound tracking, and check-ins remain available on your current plan."
                   />
                 )}
                 <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
