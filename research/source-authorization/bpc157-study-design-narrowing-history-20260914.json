@@ -1,0 +1,43 @@
+{
+  "recordType": "research-claim-narrowing-history",
+  "authority": "none",
+  "status": "bound-display-decision-issued-awaiting-integration",
+  "historicalPacket": {
+    "gitRevision": "6a38c46bc1fc36f0efc1f2ee2007b3d422d72959",
+    "upstreamReviewedCommit": "7fa9423ef2c3d9250ecea69ba63cfca5c69a24f0",
+    "path": "research/input/evidence/bpc-157.evidence.json",
+    "sha256": "29cf46b78a6403b8b7936944812acb48a9afa3876130ba0aac5500e9f575c01c"
+  },
+  "claimId": "bpc157-preclinical-human-gap-001",
+  "originalClaimLocator": "6a38c46bc1fc36f0efc1f2ee2007b3d422d72959:research/input/evidence/bpc-157.evidence.json#bpc157-preclinical-human-gap-001",
+  "originalClaimSha256HistoricalEncoding": "bbf3ae4e06e24d1960f4ffd885ca92220447c268dfce480446715ddff4c484ef",
+  "historicalHashEncoding": "UTF8 sorted-key compact JSON ensure_ascii true; not the display-binding convention",
+  "originalClaimPreservation": "Exact full original object including statement/context/excerpts/flags remains at immutable Git locator; no old quotations duplicated here.",
+  "scopeLossNotAcceptedOrResolved": [
+    "Broader human-evidence scarcity generalization",
+    "Retrospective clinical study design",
+    "Patient response count and duration",
+    "Intra-articular knee injection route",
+    "Clinical safety observation"
+  ],
+  "siblingClaimIdsUnchanged": [
+    "bpc157-regulatory-compounding-risk-001",
+    "bpc157-misinformation-boundary-001"
+  ],
+  "opsAndGradesUnchanged": true,
+  "priorCandidatePreservedAsHistoricalState": true,
+  "publicationDecisionIssued": true,
+  "preparationState": {
+    "status": "prepared-awaiting-bound-decision",
+    "publicationDecisionIssued": false,
+    "meaning": "Historical pre-issuance preparation state; superseded only by later lifecycle observation below."
+  },
+  "lifecycleObservation": {
+    "observedAtUtc": "2026-09-14T05:40:32.603347+00:00",
+    "issuedDecisionPath": "research/review-decisions/review-decision-batch-20260914-bpc-study-design-display.json",
+    "decisionId": "bpc-study-design-display-20260914-001",
+    "issuedAtUtc": "2026-09-14T05:39:45.918190+00:00",
+    "scope": "knowledge-card-study-design only; no whole-compound promotion",
+    "deploymentEstablished": false
+  }
+}
