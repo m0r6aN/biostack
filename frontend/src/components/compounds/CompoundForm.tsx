@@ -21,7 +21,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
     pricePaid: '' as string | number,
     startDate: new Date().toISOString().split('T')[0],
     endDate: '',
-    status: 'Active' as const,
+    status: 'Active',
     notes: '',
     sourceType: 'Manual',
   });
@@ -63,8 +63,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
         ...formData,
         personId,
         pricePaid: formData.pricePaid ? Number(formData.pricePaid) : undefined,
-        endDate: formData.endDate || null,
-      } as any);
+        startDate: new Date(`${formData.startDate}T00:00:00Z`).toISOString(),
+        endDate: formData.endDate ? new Date(`${formData.endDate}T00:00:00Z`).toISOString() : null,
+      });
       
       setFormData({
         name: '',
@@ -216,7 +217,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
         <select
           id={`${formId}-status`}
           value={formData.status}
-          onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
+          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
           className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
         >
           <option value="Active">Active</option>

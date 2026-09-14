@@ -144,6 +144,20 @@ describe('CompoundForm', () => {
       personId: 'person-1',
     }));
   });
+
+  it('submits calendar dates as explicit UTC timestamps without changing the selected day', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
+    fireEvent.change(screen.getByLabelText('4. Optional: Manual Search/Entry'), { target: { value: 'Fixture' } });
+    fireEvent.change(screen.getByLabelText('Start Date'), { target: { value: '2026-09-14' } });
+    fireEvent.change(screen.getByLabelText('End Date (Optional)'), { target: { value: '2026-09-20' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({
+      startDate: '2026-09-14T00:00:00.000Z', endDate: '2026-09-20T00:00:00.000Z', personId: 'person-1',
+    })));
+  });
 });
 
 describe('CompoundList', () => {
