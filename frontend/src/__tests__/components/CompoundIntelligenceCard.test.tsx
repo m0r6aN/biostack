@@ -57,7 +57,7 @@ describe('CompoundIntelligenceCard', () => {
       />
     );
 
-    expect(screen.getByText('Mechanism Summary')).toBeInTheDocument();
+    expect(screen.getByText('Overview')).toBeInTheDocument();
     expect(screen.getByText('Energy support')).toBeInTheDocument();
     expect(screen.queryByText('Common additions')).not.toBeInTheDocument();
     expect(screen.queryByText('MOTS-C')).not.toBeInTheDocument();
