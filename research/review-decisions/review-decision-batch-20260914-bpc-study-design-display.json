@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "review-decision-batch",
+  "batch": {
+    "batchId": "bpc-study-design-display-20260914",
+    "reviewerId": "codex-initiative-lead-01a09015-631b-7770-af52-22016d34174c",
+    "reviewedAt": "2026-09-14T05:39:45.918190+00:00",
+    "notes": [
+      "Scoped lead-issued display acceptance; existing broader compound blockers remain."
+    ]
+  },
+  "decisions": [
+    {
+      "decisionId": "bpc-study-design-display-20260914-001",
+      "compoundName": "BPC-157",
+      "decision": "approve-claims",
+      "reviewerId": "codex-initiative-lead-01a09015-631b-7770-af52-22016d34174c",
+      "reviewedAt": "2026-09-14T05:39:45.918190+00:00",
+      "scope": {
+        "claimIds": [
+          "bpc157-preclinical-human-gap-001"
+        ],
+        "qualityFlags": [],
+        "reviewCategories": [],
+        "promotionBlockers": [],
+        "displayBindings": [
+          {
+            "surface": "knowledge-card-study-design",
+            "claimId": "bpc157-preclinical-human-gap-001",
+            "claimSha256": "29df2e29869d8a44e49b9af40480a41607b44d0d88d7c80c081c5123e25f7586",
+            "sourceItemId": "pubmed-vasireddi-2025-orthosportsmed",
+            "sourceRecordId": "40756949",
+            "sourceSnapshotSha256": "a3a9508cacb375f483b3627499bc6406aa43c1c20c6eaed2d090b355eaf4b398",
+            "observationReceiptSha256": "9cde7f6834961f10a1cefe5d5e62705d68866af48bc13fc48e964eb9c542c84c",
+            "payloadSha256": "2965374568ad7b4d1dcced04cde976a996db55d830da7eb7e8f8c9ee32bd76f4"
+          }
+        ]
+      },
+      "clearsSoftPromotionBlockers": false,
+      "expiresAt": null,
+      "notes": [
+        "Lead independently reviewed the exact canonical claim, public payload, original observation provenance and independent review lineage. Accept only the dated Vasireddi review study-design observation for knowledge-card-study-design.",
+        "The English-language search cutoff and immediate citation are required. No current exhaustive evidence, efficacy, safety, dose, product-equivalence or whole-compound approval is issued.",
+        "Original broader clinical assertions and sibling regulatory/misinformation issues remain unresolved in preserved history and review state. No queue resolution, promotion clearance, new source-family credit or source-permission extension.",
+        "expiresAt null is deliberate for this attributed historical observation. Static revocation requires a checked rebuild/deployment; future expiring entries are evaluated on render without a mounted-page timer.",
+        "This lead is distinct from the acquisition and payload preparer. Independent preparation review: bpc157-study-design-independent-review-20260914.md; exact final-byte review and digest verification performed at issuance."
+      ]
+    }
+  ]
+}

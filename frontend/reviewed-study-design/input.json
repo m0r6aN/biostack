@@ -1,5 +1,175 @@
 {
   "schemaVersion": "1.0.0",
-  "entries": [],
-  "decisions": []
+  "entries": [
+    {
+      "payload": {
+        "canonicalName": "BPC-157",
+        "kind": "dated-review-study-design",
+        "claimId": "bpc157-preclinical-human-gap-001",
+        "statement": "A systematic review searching English-language literature through 3 June 2024 included 36 BPC-157 studies: 35 preclinical studies and one clinical study.",
+        "citation": {
+          "displayLabel": "Vasireddi et al., 2025",
+          "sourceItemId": "pubmed-vasireddi-2025-orthosportsmed",
+          "pmid": "40756949",
+          "doi": "10.1177/15563316251355551",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/"
+        },
+        "searchCutoff": "2024-06-03",
+        "languageScope": "English-language literature",
+        "limitations": "This describes the studies included in that review, not all research available today or evidence of clinical benefit or safety."
+      },
+      "decisionId": "bpc-study-design-display-20260914-001",
+      "claim": {
+        "claimId": "bpc157-preclinical-human-gap-001",
+        "claimType": "evidence-gap",
+        "statement": "A systematic review searching English-language literature through 3 June 2024 included 36 BPC-157 studies: 35 preclinical studies and one clinical study.",
+        "sourceRefs": [
+          "pubmed-vasireddi-2025-orthosportsmed"
+        ]
+      },
+      "source": {
+        "sourceId": "pubmed-vasireddi-2025-orthosportsmed",
+        "pmid": "40756949",
+        "doi": "10.1177/15563316251355551",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/"
+      },
+      "evidenceHashes": {
+        "claimSha256": "29df2e29869d8a44e49b9af40480a41607b44d0d88d7c80c081c5123e25f7586",
+        "sourceSnapshotSha256": "a3a9508cacb375f483b3627499bc6406aa43c1c20c6eaed2d090b355eaf4b398",
+        "observationReceiptSha256": "9cde7f6834961f10a1cefe5d5e62705d68866af48bc13fc48e964eb9c542c84c"
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "decisionId": "dec-1778599343508",
+      "compoundName": "BPC-157",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T15:22:23.508Z",
+      "expiresAt": null,
+      "clearsSoftPromotionBlockers": false,
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [],
+        "reviewCategories": [],
+        "promotionBlockers": []
+      },
+      "notes": []
+    },
+    {
+      "decisionId": "dec-1778626541136",
+      "compoundName": "BPC-157",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T22:55:41.136Z",
+      "expiresAt": null,
+      "clearsSoftPromotionBlockers": false,
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [],
+        "reviewCategories": [],
+        "promotionBlockers": []
+      },
+      "notes": []
+    },
+    {
+      "decisionId": "dec-1778628971793",
+      "compoundName": "BPC-157",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T23:36:11.793Z",
+      "expiresAt": null,
+      "clearsSoftPromotionBlockers": false,
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [],
+        "reviewCategories": [],
+        "promotionBlockers": []
+      },
+      "notes": []
+    },
+    {
+      "decisionId": "dec-1778629130482",
+      "compoundName": "BPC-157",
+      "decision": "request-changes",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-12T23:38:50.482Z",
+      "expiresAt": null,
+      "clearsSoftPromotionBlockers": false,
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [],
+        "reviewCategories": [],
+        "promotionBlockers": []
+      },
+      "notes": []
+    },
+    {
+      "decisionId": "dec-1778667628666",
+      "compoundName": "BPC-157",
+      "decision": "resolve-review-items",
+      "reviewerId": "cmorgan",
+      "reviewedAt": "2026-05-13T10:20:28.666Z",
+      "expiresAt": null,
+      "clearsSoftPromotionBlockers": false,
+      "scope": {
+        "claimIds": [],
+        "qualityFlags": [],
+        "reviewCategories": [],
+        "promotionBlockers": []
+      },
+      "notes": []
+    },
+    {
+      "decisionId": "pilot-review-004-bpc-157",
+      "compoundName": "BPC-157",
+      "decision": "request-changes",
+      "reviewerId": "claude-lead(operator-delegation-2026-08-28)",
+      "reviewedAt": "2026-08-29T04:31:42Z",
+      "expiresAt": null,
+      "clearsSoftPromotionBlockers": false,
+      "scope": {
+        "claimIds": [
+          "bpc157-regulatory-compounding-risk-001",
+          "bpc157-preclinical-human-gap-001",
+          "bpc157-misinformation-boundary-001"
+        ],
+        "qualityFlags": [],
+        "reviewCategories": [],
+        "promotionBlockers": []
+      },
+      "notes": []
+    },
+    {
+      "decisionId": "bpc-study-design-display-20260914-001",
+      "compoundName": "BPC-157",
+      "decision": "approve-claims",
+      "reviewerId": "codex-initiative-lead-01a09015-631b-7770-af52-22016d34174c",
+      "reviewedAt": "2026-09-14T05:39:45.918190+00:00",
+      "expiresAt": null,
+      "clearsSoftPromotionBlockers": false,
+      "scope": {
+        "claimIds": [
+          "bpc157-preclinical-human-gap-001"
+        ],
+        "qualityFlags": [],
+        "reviewCategories": [],
+        "promotionBlockers": [],
+        "displayBindings": [
+          {
+            "surface": "knowledge-card-study-design",
+            "claimId": "bpc157-preclinical-human-gap-001",
+            "claimSha256": "29df2e29869d8a44e49b9af40480a41607b44d0d88d7c80c081c5123e25f7586",
+            "sourceItemId": "pubmed-vasireddi-2025-orthosportsmed",
+            "sourceRecordId": "40756949",
+            "sourceSnapshotSha256": "a3a9508cacb375f483b3627499bc6406aa43c1c20c6eaed2d090b355eaf4b398",
+            "observationReceiptSha256": "9cde7f6834961f10a1cefe5d5e62705d68866af48bc13fc48e964eb9c542c84c",
+            "payloadSha256": "2965374568ad7b4d1dcced04cde976a996db55d830da7eb7e8f8c9ee32bd76f4"
+          }
+        ]
+      },
+      "notes": []
+    }
+  ]
 }
