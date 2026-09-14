@@ -71,6 +71,10 @@ if (!string.IsNullOrWhiteSpace(stripeSecretKey))
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
+    // WebAuthn uses protocol names such as "public-key" and "smart-card".
+    // Register the library's converters before the general API enum converter.
+    options.SerializerOptions.Converters.Add(new FidoEnumConverter<Fido2NetLib.Objects.PublicKeyCredentialType>());
+    options.SerializerOptions.Converters.Add(new FidoEnumConverter<Fido2NetLib.Objects.AuthenticatorTransport>());
     options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
 });
 

@@ -1,17 +1,32 @@
 import {
   authenticateWithPasskey,
+  registerPasskey,
   decodeCreationOptions,
   decodeRequestOptions,
   serializeAuthenticationCredential,
   serializeRegistrationCredential,
 } from '@/lib/passkeys';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+afterEach(() => vi.unstubAllGlobals());
 
 function bytes(...values: number[]) {
   return new Uint8Array(values).buffer;
 }
 
 describe('passkey WebAuthn codecs', () => {
+  it.each([401, 429, 500])('preserves API status %s without treating it as authenticator cancellation', async status => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status, json: async () => ({ message: 'private server detail' }) }));
+    await expect(registerPasskey('Test passkey')).rejects.toMatchObject({ name: 'PasskeyRequestError', status });
+  });
+
+  it('preserves the verified-email error code without exposing the server message', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: false, status: 403, json: async () => ({ code: 'verified_email_required', message: 'private server detail' }),
+    }));
+    await expect(registerPasskey('Test passkey')).rejects.toMatchObject({ code: 'verified_email_required' });
+    await expect(registerPasskey('Test passkey')).rejects.not.toThrow('private server detail');
+  });
   it('decodes base64url registration fields into browser buffers', () => {
     const options = decodeCreationOptions({
       challenge: 'AQID',
@@ -21,9 +36,9 @@ describe('passkey WebAuthn codecs', () => {
       excludeCredentials: [{ type: 'public-key', id: 'BwgJ' }],
     });
 
-    expect(Array.from(new Uint8Array(options.challenge))).toEqual([1, 2, 3]);
-    expect(Array.from(new Uint8Array(options.user.id))).toEqual([4, 5, 6]);
-    expect(Array.from(new Uint8Array(options.excludeCredentials![0].id))).toEqual([7, 8, 9]);
+    expect(Array.from(new Uint8Array(options.challenge as ArrayBuffer))).toEqual([1, 2, 3]);
+    expect(Array.from(new Uint8Array(options.user.id as ArrayBuffer))).toEqual([4, 5, 6]);
+    expect(Array.from(new Uint8Array(options.excludeCredentials![0].id as ArrayBuffer))).toEqual([7, 8, 9]);
   });
 
   it('decodes a discoverable assertion challenge without adding an allow-list', () => {
@@ -34,7 +49,7 @@ describe('passkey WebAuthn codecs', () => {
       userVerification: 'required',
     });
 
-    expect(Array.from(new Uint8Array(options.challenge))).toEqual([1, 2, 3]);
+    expect(Array.from(new Uint8Array(options.challenge as ArrayBuffer))).toEqual([1, 2, 3]);
     expect(options.allowCredentials).toEqual([]);
     expect(options.userVerification).toBe('required');
   });
