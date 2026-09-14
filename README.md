@@ -84,9 +84,9 @@ This distinction is material: BioStack should not be valued or marketed as an au
 
 BioStack is for educational and observational use only. It may organize user-recorded data, show evidence context and uncertainty, surface source-quality or regulatory warnings, and suggest that a user discuss relevant observations with a qualified clinician.
 
-**Not medical advice.** BioStack does not provide diagnosis, prescribing, individualized dosing, injection instructions, treatment plans, substance sourcing, cycle design, start/stop/taper/escalation advice, or claims that investigational substances are safe or effective for human use. High-risk categories — investigational peptides, compounded GLP-1s, prescription-only substances, SARMs/SERMs, gray-market products, and banned-in-sport substances — are handled warning-first.
+**Not Medical Advice.** BioStack does not provide clinical diagnosis, prescribing, medical dosing recommendations, individualized dosing, injection instructions, treatment plans, substance sourcing, cycle design, start/stop/taper/escalation advice, or claims that investigational substances are safe or effective for human use. High-risk categories — investigational peptides, compounded GLP-1s, prescription-only substances, SARMs/SERMs, gray-market products, and banned-in-sport substances — are handled warning-first.
 
-**Mathematical logic only.** Calculator outputs use pure mathematical formulas so the arithmetic is transparent and checkable; they are not clinical direction. Users remain responsible for checking inputs and consulting an appropriate qualified professional.
+**Mathematical Logic Only.** Calculator outputs use pure mathematical formulas so the arithmetic is transparent and checkable; they are not clinical direction. Users remain responsible for checking inputs and consulting an appropriate qualified professional.
 
 ## Architecture
 
