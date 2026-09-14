@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ActiveProfileChip } from '@/components/ActiveProfileChip';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
@@ -22,6 +22,8 @@ export default function ProtocolsPage() {
   const [protocols, setProtocols] = useState<Protocol[]>([]);
   const [currentStack, setCurrentStack] = useState<CurrentStackIntelligence | null>(null);
   const [name, setName] = useState('');
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -64,19 +66,25 @@ export default function ProtocolsPage() {
     }
   }
 
+  function requestTracking() {
+    nameInputRef.current?.focus({ preventScroll: true });
+    nameInputRef.current?.scrollIntoView({ block: 'center' });
+  }
+
   async function saveCurrentStack() {
-    if (!currentProfileId || !name.trim()) {
+    if (!currentProfileId || !name.trim() || saving) {
       return;
     }
 
     try {
       setSaving(true);
-      setError(null);
+      setSaveError(null);
       const saved = await apiClient.saveCurrentStackAsProtocol(currentProfileId, name);
       setProtocols([saved, ...protocols]);
       setName('');
+      router.push(`/protocols/${saved.id}`);
     } catch (err) {
-      setError('Save failed. Confirm the current stack has active compounds.');
+      setSaveError('Save failed. Confirm the current stack has active compounds.');
     } finally {
       setSaving(false);
     }
@@ -125,8 +133,12 @@ export default function ProtocolsPage() {
                 <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
                   <h2 className="text-xl font-bold text-white">Save Current Stack as Protocol</h2>
                   <p className="mt-2 text-sm text-white/45">Name the active stack and keep it as a protocol snapshot.</p>
-                  <div className="mt-5 flex gap-2">
+                  <label htmlFor="protocol-name" className="mt-5 block text-sm text-white/70">Protocol name</label>
+                  <div className="mt-2 flex gap-2">
                     <input
+                      id="protocol-name"
+                      ref={nameInputRef}
+                      aria-describedby={saveError ? 'protocol-save-error' : undefined}
                       value={name}
                       onChange={(event) => setName(event.target.value)}
                       placeholder="Cut phase v1"
@@ -140,12 +152,13 @@ export default function ProtocolsPage() {
                       {saving ? 'Saving' : 'Save'}
                     </button>
                   </div>
+                  {saveError && <p id="protocol-save-error" role="alert" className="mt-3 text-sm text-rose-200">{saveError}</p>}
                 </div>
 
                 {currentStack ? (
                   <>
                     <StackScoreCard score={currentStack.stackScore} />
-                    <InteractionIntelligenceCard intelligence={currentStack.interactionIntelligence} title="Current Stack Intelligence" showTrackingCta />
+                    <InteractionIntelligenceCard intelligence={currentStack.interactionIntelligence} title="Current Stack Intelligence" showTrackingCta onTrackingRequest={requestTracking} />
                   </>
                 ) : (
                   <LockedTierCard

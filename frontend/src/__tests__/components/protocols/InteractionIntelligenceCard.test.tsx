@@ -1,19 +1,29 @@
-import { render, screen } from '@testing-library/react';
-import { expect, it } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { expect, it, vi } from 'vitest';
 import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import type { InteractionIntelligence } from '@/lib/types';
 
-const mockIntelligence = {
+const mockIntelligence: InteractionIntelligence = {
   compositeScore: 82,
   score: { synergyScore: 14, redundancyPenalty: 3, interferencePenalty: 7 },
   summary: { synergies: 3, redundancies: 1, interferences: 1 },
   topFindings: [],
-  counterfactuals: [{ removedCompound: 'X', deltaScore: 5, recommendation: 'test' }],
+  interactions: [],
+  counterfactuals: [{
+    removedCompound: 'X',
+    variantScore: 87,
+    deltaScore: 5,
+    deltaPercent: (5 / 82) * 100,
+    verdict: 'improves',
+    recommendation: 'test',
+    summary: { synergies: 3, redundancies: 0, interferences: 1 },
+    topFindings: [],
+  }],
   swaps: [],
 };
 
 it('exposes HelpTip buttons for synergy, redundancy, interference, and counterfactual', () => {
-  render(<InteractionIntelligenceCard intelligence={mockIntelligence as any} />);
+  render(<InteractionIntelligenceCard intelligence={mockIntelligence} />);
   const buttons = screen.getAllByRole('button');
   expect(buttons.some(b => b.textContent?.includes('Synergies'))).toBe(true);
   expect(buttons.some(b => b.textContent?.includes('Redundancies'))).toBe(true);
@@ -21,20 +31,16 @@ it('exposes HelpTip buttons for synergy, redundancy, interference, and counterfa
   expect(buttons.some(b => b.textContent?.includes('Counterfactual'))).toBe(true);
 });
 
-it('renders a tracking CTA when showTrackingCta is true', () => {
-  render(
-    <InteractionIntelligenceCard
-      intelligence={mockIntelligence as any}
-      showTrackingCta
-    />,
-  );
-  const link = screen.getByRole('link', { name: /start tracking/i });
-  expect(link).toBeInTheDocument();
-  expect(link).toHaveAttribute('href', '/protocols');
+it('hands tracking to the parent instead of linking to the current protocols route', () => {
+  const onTrackingRequest = vi.fn();
+  render(<InteractionIntelligenceCard intelligence={mockIntelligence} showTrackingCta onTrackingRequest={onTrackingRequest} />);
+  fireEvent.click(screen.getByRole('button', { name: 'Save this stack to start tracking' }));
+  expect(onTrackingRequest).toHaveBeenCalledTimes(1);
+  expect(screen.queryByRole('link', { name: /start tracking/i })).not.toBeInTheDocument();
 });
 
 it('does not render a tracking CTA when showTrackingCta is omitted', () => {
-  render(<InteractionIntelligenceCard intelligence={mockIntelligence as any} />);
+  render(<InteractionIntelligenceCard intelligence={mockIntelligence} />);
   expect(screen.queryByRole('link', { name: /start tracking/i })).not.toBeInTheDocument();
 });
 
