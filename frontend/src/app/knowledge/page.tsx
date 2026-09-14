@@ -34,7 +34,7 @@ export default function KnowledgePage() {
       setSearching(true);
       setSearchError(null);
       const results = await apiClient.getAllKnowledgeCompounds();
-      const q = searchQuery.toLowerCase();
+      const q = searchQuery.trim().toLowerCase();
       setSearchResults(
         results.filter(
           r =>
