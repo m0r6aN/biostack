@@ -101,6 +101,7 @@ public sealed class ReviewDecisionIndex
 
     public bool IsReviewQueueItemResolved(string compoundName, string itemId)
         => itemId.Length > 0 && ForCompound(compoundName)
+            .Where(d => d.Decision.Equals("resolve-review-items", StringComparison.OrdinalIgnoreCase))
             .SelectMany(d => d.ReviewQueueItemIds)
             .Contains(itemId, StringComparer.OrdinalIgnoreCase);
 

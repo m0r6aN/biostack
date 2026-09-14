@@ -80,13 +80,14 @@
       "sourceId": "pubmed-vasireddi-2025-orthosportsmed",
       "sourceType": "systematic-review",
       "authorityTier": "B1",
-      "title": "Emerging Use of BPC-157 in Orthopaedic Sports Medicine",
+      "title": "Emerging Use of BPC-157 in Orthopaedic Sports Medicine: A Systematic Review.",
       "publisher": "PubMed",
       "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/",
-      "doi": null,
+      "doi": "10.1177/15563316251355551",
       "pmid": "40756949",
-      "publishedAt": null,
-      "accessedAt": "2026-08-29T00:00:00Z"
+      "publishedAt": "2025-07-31T00:00:00Z",
+      "accessedAt": "2026-09-14T03:11:50.875421Z",
+      "dateNote": "publishedAt represents the electronic publication date 2025-07-31 at day precision; midnight UTC is schema encoding, not an observed publication time. Issue date is November 2025 at month precision. Original metadata and acquisition provenance are preserved in bpc157-study-design-research-candidate-20260914.json."
     },
     {
       "sourceId": "statnews-bpc157-2026-02",
@@ -158,37 +159,32 @@
     {
       "claimId": "bpc157-preclinical-human-gap-001",
       "claimType": "evidence-gap",
-      "statement": "A literature review describes broad preclinical interest in BPC-157 but emphasizes scarce human studies and the need for human-oriented studies to establish therapeutic and toxic profiles. An independent 2025 systematic review of 36 studies found only 1 human clinical study (a small retrospective case series, with 7 of 12 patients reporting relief for >6 months after intra-articular knee injection) and stated that no clinical safety data were found for BPC-157.",
+      "statement": "A systematic review searching English-language literature through 3 June 2024 included 36 BPC-157 studies: 35 preclinical studies and one clinical study.",
       "context": {
-        "population": "human use claims extrapolated from preclinical literature",
+        "population": "studies included in an English-language systematic review through 3 June 2024",
         "route": null,
-        "formulation": "BPC-157",
-        "useCase": "human-evidence boundary",
+        "formulation": "BPC-157 (review subject; no product equivalence established)",
+        "useCase": "review-attributed preclinical and clinical study-design distribution",
         "doseText": null
       },
       "evidenceTier": "Insufficient",
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pmc-bpc157-review-2025",
         "pubmed-vasireddi-2025-orthosportsmed"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "pmc-bpc157-review-2025",
-          "quote": "Considering the scarcity of human studies... more extensive human-oriented studies indicating therapeutic and toxic profiles of BPC 157 are required",
-          "pageOrSection": "Review discussion"
-        },
-        {
           "sourceRef": "pubmed-vasireddi-2025-orthosportsmed",
-          "quote": "No clinical safety data were found. 36 studies were included (35 preclinical studies, 1 clinical study)... 7 of 12 patients reported relief for >6 months",
-          "pageOrSection": "Abstract/results"
+          "quote": null,
+          "pageOrSection": "PubMed PMID 40756949; Article/Abstract/AbstractText[1] (unlabeled), review search cutoff and included-study design counts"
         }
       ],
       "reviewFlags": [
-        "do not infer human efficacy from animal models",
-        "vendor healing claims require misinformation monitoring",
-        "independently corroborated 2026-08-29: essentially zero controlled human safety data across an independent 2025 systematic review of 36 studies"
+        "Counts describe studies included in one English-language review through 3 June 2024, not a current evidence census.",
+        "Do not infer human efficacy from preclinical studies or equate study counts with clinical certainty.",
+        "No outcomes, safety, dose or product equivalence accepted by this dated study-design context.",
+        "Original broader claim and its unresolved clinical-design, patient-response and safety assertions are retained in traceable historical provenance; this narrowing does not accept or resolve them."
       ]
     },
     {

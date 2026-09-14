@@ -226,7 +226,7 @@
     {
       "claimId": "oxytocin-mechanism-identity-001",
       "claimType": "identity",
-      "statement": "Oxytocin (CAS 50-56-6, molecular formula C43H66N12O12S2, PubChem CID 439302, DrugBank DB00107) is a nonapeptide hormone; the approved injectable form is a synthetic version used to induce or strengthen uterine contractions for labor and delivery or to control postpartum bleeding.",
+      "statement": "The PITOCIN label describes its injectable product as a solution of synthetic oxytocin and identifies oxytocin as a nonapeptide.",
       "context": {
         "population": null,
         "route": null,
@@ -238,25 +238,19 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pubchem-cid-439302",
-        "drugbank-db00107",
         "dailymed-pitocin-label"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "dailymed-pitocin-label",
-          "quote": "Pitocin (oxytocin injection, USP) is a sterile, clear, colorless aqueous solution of synthetic oxytocin, for intravenous infusion or intramuscular injection. The hormone is prepared synthetically to avoid possible contamination with vasopressin (ADH) and other small polypeptides with biologic activity.",
-          "pageOrSection": "Description"
-        },
-        {
-          "sourceRef": "drugbank-db00107",
-          "quote": "Oxytocin is a recombinant hormone used to induce or strengthen uterine contractions in pregnant women to aid in labor and delivery or to control postpartum bleeding.",
-          "pageOrSection": "Summary"
+          "quote": null,
+          "pageOrSection": "DESCRIPTION"
         }
       ],
       "reviewFlags": [
         "UNII and ChEMBL identifiers not resolved from structured databases fetched this session; attempted NCATS GSRS substance-search API and ChEMBL REST API this pass, both rate-limited (HTTP 429) at fetch time -- not resolved, left null",
-        "corrected 2026-08-29: independent regulator-label source (live-fetched DailyMed Pitocin label) uniformly describes the approved injectable as 'synthetic,' never 'recombinant'; 'recombinant' specifically denotes production via recombinant-DNA/cell-expression systems, which is not how this peptide is manufactured (chemical/solid-phase synthesis). DrugBank's 'recombinant hormone' wording is retained above as a verbatim quote of that source but is flagged as imprecise and is no longer repeated in the claim statement."
+        "corrected 2026-08-29: independent regulator-label source (live-fetched DailyMed Pitocin label) uniformly describes the approved injectable as 'synthetic,' never 'recombinant'; 'recombinant' specifically denotes production via recombinant-DNA/cell-expression systems, which is not how this peptide is manufactured (chemical/solid-phase synthesis). DrugBank's 'recombinant hormone' wording is retained above as a verbatim quote of that source but is flagged as imprecise and is no longer repeated in the claim statement.",
+        "Candidate preparation 2026-09-13: exact reviewed PITOCIN identity statement, unchanged identity claim type and all context/ratings. Previous solid-phase/chemical-manufacture commentary is retained as historical only; the specific manufacturing method was not verified here. Removed separate original DailyMed and DrugBank excerpts; PubChem had no excerpt. One DESCRIPTION quote:null locator. XML version 16 and history highest version 15 remain discrepant; version 16 archive publication is unknown. Source-family, evidence/ratings, item/version human and publication gates remain open; preparation is not completion. See research/source-authorization/oxytocin-resource-candidate-2026-09-13.json."
       ]
     },
     {

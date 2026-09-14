@@ -228,7 +228,7 @@
     {
       "claimId": "mazdutide-mechanism-dual-agonist-001",
       "claimType": "mechanism",
-      "statement": "Mazdutide is a long-acting synthetic oxyntomodulin analog that acts as a dual agonist at the glucagon-like peptide-1 receptor (GLP-1R) and the glucagon receptor (GCGR), stimulating insulin secretion and engaging glucagon-receptor-mediated energy expenditure pathways alongside GLP-1 receptor activity.",
+      "statement": "The review indexed as PMID 41028652 describes mazdutide as a dual agonist of the glucagon receptor and the GLP-1 receptor.",
       "context": {
         "population": null,
         "route": null,
@@ -240,44 +240,26 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "medchemexpress-mazdutide",
-        "pubchem-cid-167312357",
-        "drugbank-db19099",
-        "semanticscholar-nejmoa2411528",
-        "fiercepharma-mazdutide-nmpa-approval"
+        "pubmed-mazdutide-first-approval"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "medchemexpress-mazdutide",
-          "quote": "a long-acting synthetic oxyntomodulin analog...a co-agonist of glucagon-like peptide (GLP-1R) and glucagon receptor (GCGR)",
-          "pageOrSection": "Product description"
-        },
-        {
-          "sourceRef": "medchemexpress-mazdutide",
-          "quote": "stimulates insulin secretion from mouse islets",
-          "pageOrSection": "Biological activity"
-        },
-        {
-          "sourceRef": "semanticscholar-nejmoa2411528",
-          "quote": "a dual agonist targeting glucagon-like peptide-1 and glucagon receptors",
-          "pageOrSection": "Bibliographic record summary"
-        },
-        {
-          "sourceRef": "fiercepharma-mazdutide-nmpa-approval",
-          "quote": "By targeting the GCG receptor, Lilly and Innovent figure mazdutide should help increase the body's energy expenditure, spurring changes in the liver, brain and white and brown adipose tissue that complement the reduced energy intake triggered by GLP-1 activation.",
-          "pageOrSection": "Mechanism description"
+          "sourceRef": "pubmed-mazdutide-first-approval",
+          "quote": null,
+          "pageOrSection": "Unlabeled AbstractText, opening sentence receptor classification only."
         }
       ],
       "reviewFlags": [
         "insulin-secretion binding/EC50 data cited on vendor datasheet are nonclinical (mouse islet, receptor Ki) and must not be presented as human efficacy evidence",
         "reviewer-correction-2026-08-29: the prior 'remediation-pass-2026-08-29' note improperly cited the Semantic Scholar bibliographic record as independent corroboration, but semanticscholar-nejmoa2411528 is already listed in this claim's own sourceRefs -- re-citing an already-used source is not independent verification per the review contract. That note is superseded by this corrected entry.",
-        "remediation-pass-2026-08-29 (session 2): genuinely independent corroboration of the core GLP-1R/GCGR dual-agonist, energy-expenditure mechanism was obtained this session from Fierce Pharma trade-press coverage (fetched and quoted verbatim), a source family distinct from the vendor datasheet/PubChem/DrugBank/Semantic Scholar already cited for this claim. The GCGR-mediated energy-expenditure characterization is now corroborated by this materially independent source; verbatim confirmation against primary full text was not attempted for this non-fieldAuthorityRequired mechanism claim."
+        "remediation-pass-2026-08-29 (session 2): genuinely independent corroboration of the core GLP-1R/GCGR dual-agonist, energy-expenditure mechanism was obtained this session from Fierce Pharma trade-press coverage (fetched and quoted verbatim), a source family distinct from the vendor datasheet/PubChem/DrugBank/Semantic Scholar already cited for this claim. The GCGR-mediated energy-expenditure characterization is now corroborated by this materially independent source; verbatim confirmation against primary full text was not attempted for this non-fieldAuthorityRequired mechanism claim.",
+        "Candidate preparation 2026-09-13: review-attributed receptor classification only, based on worker inspection of the opening abstract for PMID 41028652. Historical flags remain historical/unverified for this candidate; their older independence and broader mechanism assertions are not newly accepted. Omitted long-acting, synthetic, oxyntomodulin and pathway qualifiers are not disproved. Context and all source snapshots unchanged. Existing review source and PubMed index C1 are distinct from inherited Strong/high claim ratings pending evidence acceptance. Lead has not independently observed the abstract; no new family, human or publication acceptance. See research/source-authorization/mazdutide-mechanism-resource-candidate-2026-09-13.json."
       ]
     },
     {
       "claimId": "mazdutide-identity-external-ids-001",
       "claimType": "identity",
-      "statement": "Mazdutide is registered under CAS number 2259884-03-0, UNII MB76Z4IBZ5, PubChem CID 167312357 (molecular formula C207H317N45O65), DrugBank ID DB19099, and ChEMBL ID CHEMBL5095358.",
+      "statement": "PubChem lists a compound record titled Mazdutide under CID 167312357 with molecular formula C207H317N45O65.",
       "context": {
         "population": null,
         "route": null,
@@ -289,32 +271,20 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pubchem-cid-167312357",
-        "drugbank-db19099",
-        "medchemexpress-mazdutide",
-        "gsrs-ncats-mazdutide"
+        "pubchem-cid-167312357"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "pubchem-cid-167312357",
-          "quote": "C207H317N45O65",
-          "pageOrSection": "Compound summary, molecular formula"
-        },
-        {
-          "sourceRef": "drugbank-db19099",
-          "quote": "Mazdutide is under investigation in clinical trial NCT06143956",
-          "pageOrSection": "Page metadata / summary"
-        },
-        {
-          "sourceRef": "gsrs-ncats-mazdutide",
-          "quote": "UNII Code: MB76Z4IBZ5 ... CAS Number: 2259884-03-0",
-          "pageOrSection": "Substance record, key identifiers"
+          "quote": null,
+          "pageOrSection": "PUG REST fixed CID 167312357 property response: CID, Title and MolecularFormula; factual paraphrase only."
         }
       ],
       "reviewFlags": [
         "CAS number sourced from vendor datasheet (medchemexpress) rather than a structured database entry; cross-check against DrugBank or ChemIDplus at review time",
         "remediation-pass-2026-08-29: UNII (MB76Z4IBZ5) resolved and CAS number (2259884-03-0) independently cross-confirmed via the NCATS/FDA Global Substance Registration System (GSRS), a materially different source family from PubChem/DrugBank/MedChemExpress",
-        "remediation-pass-2026-08-29: ChEMBL ID (CHEMBL5095358) obtained via a PubChem PUG REST re-fetch, but PubChem is already a cited source for this claim, so it does NOT count as independent verification per review contract; direct ChEMBL (ebi.ac.uk) lookup was attempted and blocked (proxy policy denial / rate-limit) both in the prior review pass and again this pass -- ChEMBL ID should be treated as unconfirmed by an independent family until a direct ChEMBL query succeeds"
+        "remediation-pass-2026-08-29: ChEMBL ID (CHEMBL5095358) obtained via a PubChem PUG REST re-fetch, but PubChem is already a cited source for this claim, so it does NOT count as independent verification per review contract; direct ChEMBL (ebi.ac.uk) lookup was attempted and blocked (proxy policy denial / rate-limit) both in the prior review pass and again this pass -- ChEMBL ID should be treated as unconfirmed by an independent family until a direct ChEMBL query succeeds",
+        "Candidate preparation 2026-09-13: exact PubChem CID/title/formula database-node statement only. Historical GSRS/vendor/ChEMBL corroboration and access flags were not reassessed and are not new acceptance or retry instructions. Omitted identifiers are not declared false. Strong/high and all context unchanged pending review. Original PubChem formula, DrugBank and GSRS excerpt histories are separately hashed; vendor reference had no quote. Formula C207H317N45O65 was independently returned and is intentionally retained as a factual value, not narrative quote reproduction. Evidence/family/human/publication gates remain open. See research/source-authorization/mazdutide-identity-resource-candidate-2026-09-13.json."
       ]
     },
     {
@@ -594,7 +564,8 @@
       "reviewFlags": [
         "misinformation-adjacent: vendor pages pair explicit no-FDA-approval / research-use-only disclaimers with dosing guidance and 'where to buy' sections aimed at consumer self-administration, which is inconsistent with the stated research-only purpose",
         "no FDA import alert or compounding bulk-substance listing specific to mazdutide was located in this session; absence should be reconfirmed, not treated as evidence of safety",
-        "remediation-pass-2026-08-29: a live DailyMed search performed 2026-08-29 independently confirms 'No Drug Package Labels found' for mazdutide, corroborating the no-FDA-approval / no-legally-marketed-US-product premise from a regulator/label-family source distinct from the vendor-marketing and DrugBank sources already cited"
+        "remediation-pass-2026-08-29: a live DailyMed search performed 2026-08-29 independently confirms 'No Drug Package Labels found' for mazdutide, corroborating the no-FDA-approval / no-legally-marketed-US-product premise from a regulator/label-family source distinct from the vendor-marketing and DrugBank sources already cited",
+        "Offline provenance qualification 2026-09-13: the statement and prior flags are preserved historical assertions, not newly verified current regulatory or market findings. The historical DailyMed zero-result search does not establish absence of FDA approval, legality of marketing, product identity or quality, or safety. Withdraw reliance on the prior flag's inference that this search independently confirmed the no-approval/no-legally-marketed premise. The retained mechanism-review observation does not establish current US status, vendor practices or exclusive global trial coverage. Current statement remains review-gated; no new source-family verification, replacement completion or grade decision is recorded."
       ]
     }
   ],
@@ -616,7 +587,7 @@
         "mazdutide-regulatory-nmpa-weight-mgmt-001"
       ],
       "severity": "moderate",
-      "summary": "Mazdutide is a fully approved prescription product in China but is simultaneously sold in the US/international gray market as an unapproved 'research chemical'; packet consumers must not conflate the China-approved-product evidence base with the safety/legality of gray-market self-administered product.",
+      "summary": "The historical comparison does not establish current US market status or equivalence between studied or regulated products and vendor-sourced products. Regulatory, provenance and applicability questions in that comparison remain unresolved.",
       "resolutionStatus": "unresolved"
     }
   ],
@@ -638,7 +609,8 @@
       "remediation-pass-2026-08-29 (session 2, post-independent-review): CORRECTED a procedural error flagged by the reviewer -- the mechanism claim's prior remediation note improperly cited Semantic Scholar (already a cited source for that claim) as independent corroboration; genuinely independent corroboration was obtained instead from Fierce Pharma trade-press coverage (fetched and quoted verbatim this session).",
       "remediation-pass-2026-08-29 (session 2, post-independent-review): STILL GATED, TIGHTENED -- per the reviewer's finding, fetched and verbatim-quoted an independent physician-review commentary (gutsandgrowth.com) on the published NEJM GLORY-1 data; it reports week-48 figures of -11.00% (4mg)/-14.01% (6mg)/+0.30% (placebo), agreeing with the prior Semantic Scholar pull and disagreeing with the sponsor press release (-12.05%/-14.84%/-0.47%). Direct NEJM full-text and Europe PMC REST fetches were attempted this session but both were blocked by repeated proxy rate-limiting (HTTP 429). The claim statement now presents both figure sets with an explicit caveat instead of asserting the press-release numbers as settled; evidenceTier stays 'Moderate', confidence lowered to 'moderate'. This remains the single most consequential open item and should be re-attempted against verbatim NEJM/Europe PMC full text at the next review pass.",
       "remediation-pass-2026-08-29 (session 2, post-independent-review): the two NMPA regulatory claims and the phase-2 T2D HbA1c claim were each additionally corroborated this session by fresh, verbatim-quoted independent trade-press sources (Fierce Pharma; BioSpace) confirming trial/approval shape and direction; granular numeric figures for the T2D and GI-safety claims remain single-family sourced as already documented above, and the ChEMBL identifier remains unconfirmed by an independent family -- both non-blocking per the reviewer's verdict.",
-      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed."
+      "authority-disposition-2026-09-07: ratified source-authority dispositions applied to this packet; see the affected claims' reviewFlags. Tiers were only lowered, never raised, and no claim text was changed.",
+      "mazdutide-evidence-gap-gray-market-us-001: the historical DailyMed search does not verify the current regulatory/market premise; corrective review qualification added 2026-09-13, without resolving this claim or its related market conflict."
     ],
     "qualityFlags": [
       "expansion-input",

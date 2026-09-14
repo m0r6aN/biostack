@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0.0",
+  "entries": [
+    {
+      "claimId": "bpc157-preclinical-human-gap-001",
+      "decisionId": "bpc-study-design-display-20260914-001",
+      "packetPath": "research/input/evidence/bpc-157.evidence.json",
+      "payloadPath": "contracts/reviewed-study-design/bpc157-dated-study-design.json",
+      "receiptPath": "research/source-authorization/receipts/bpc157-study-design-observation-20260914.json",
+      "sourceItemId": "pubmed-vasireddi-2025-orthosportsmed"
+    }
+  ]
+}

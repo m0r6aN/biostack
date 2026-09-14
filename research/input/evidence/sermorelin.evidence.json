@@ -248,36 +248,31 @@
     },
     {
       "claimId": "sermorelin-mechanism-ghrh-analog-001",
-      "claimType": "mechanism",
-      "statement": "Sermorelin (acetate) is a synthetic 29-amino-acid peptide corresponding to the amino-terminal, biologically active segment of native human growth hormone-releasing hormone (GHRH); it acts as a GHRH-receptor agonist on the anterior pituitary to stimulate endogenous growth hormone secretion.",
+      "claimType": "identity",
+      "statement": "PubChem lists a compound record titled Sermorelin under CID 16132413 with molecular formula C149H246N44O42S.",
       "context": {
         "population": null,
         "route": null,
-        "formulation": "sermorelin / sermorelin acetate",
-        "useCase": "mechanism description",
+        "formulation": "PubChem compound record CID 16132413",
+        "useCase": "compound identity/reference data",
         "doseText": null
       },
       "evidenceTier": "Strong",
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "drugbank-db00010",
-        "pmc-gh-secretagogues-review",
         "pubchem-cid-16132413"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "drugbank-db00010",
-          "quote": "Sermorelin acetate is the acetate salt of an amidated synthetic 29-amino acid peptide (GRF 1-29 NH 2 ) that corresponds to the amino-terminal segment of the naturally occurring human growth...",
-          "pageOrSection": "Summary/description (page text truncated at source)"
-        },
-        {
-          "sourceRef": "pmc-gh-secretagogues-review",
-          "quote": "Sermorelin and tesamorelin mimic GHRH and act as GHRH-R agonists, acting synergistically with ibutamoren.",
-          "pageOrSection": "Discussion of GHRH-mimetic secretagogues"
+          "sourceRef": "pubchem-cid-16132413",
+          "quote": null,
+          "pageOrSection": "PUG REST fixed CID 16132413 property response: CID, Title and MolecularFormula; factual paraphrase only."
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "Identity-only alternative prepared 2026-09-13: stable historical claimId retains audit linkage, not current mechanism support. GHRH mechanism, acetate relationship and structural/synthetic details remain unresolved; database identity does not replace those requirements or clear related review issues. Original flags retained as historical. Inherited Strong/high, contributor origin/family and evidence acceptance remain pending. See research/source-authorization/sermorelin-identity-resource-candidate-2026-09-13.json."
+      ]
     },
     {
       "claimId": "sermorelin-formulation-historical-approved-product-001",

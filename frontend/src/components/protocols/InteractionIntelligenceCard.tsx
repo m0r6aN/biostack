@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { InteractionIntelligence } from '@/lib/types';
 import { HelpTip } from '@/components/ui/HelpTip';
 
@@ -8,6 +7,7 @@ interface InteractionIntelligenceCardProps {
   intelligence: InteractionIntelligence;
   title?: string;
   showTrackingCta?: boolean;
+  onTrackingRequest?: () => void;
 }
 
 const toneByType: Record<string, string> = {
@@ -32,6 +32,7 @@ export function InteractionIntelligenceCard({
   intelligence,
   title = 'Interaction Intelligence',
   showTrackingCta = false,
+  onTrackingRequest,
 }: InteractionIntelligenceCardProps) {
   const summary = intelligence.summary;
   const topFindings = intelligence.topFindings;
@@ -127,17 +128,18 @@ export function InteractionIntelligenceCard({
         )}
       </div>
 
-      {showTrackingCta && (
+      {showTrackingCta && onTrackingRequest && (
         <div className="mt-4 rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
           <p className="text-sm text-white/60">
             Tracking this protocol over time will show whether these interaction patterns hold.
           </p>
-          <Link
-            href="/protocols"
+          <button
+            type="button"
+            onClick={onTrackingRequest}
             className="mt-3 inline-block rounded-lg border border-emerald-300/25 px-4 py-2 text-sm font-semibold text-emerald-100 hover:bg-emerald-400/10"
           >
-            Start tracking this protocol
-          </Link>
+            Save this stack to start tracking
+          </button>
         </div>
       )}
     </div>

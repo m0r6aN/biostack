@@ -225,11 +225,11 @@
     {
       "claimId": "liraglutide-mechanism-glp1-analog-001",
       "claimType": "mechanism",
-      "statement": "Liraglutide is a synthetic glucagon-like peptide-1 (GLP-1) receptor agonist analog used in the management of type 2 diabetes mellitus, prevention of cardiovascular complications associated with diabetes, and obesity.",
+      "statement": "The VICTOZA label describes liraglutide as an analog of human GLP-1 that activates the GLP-1 receptor.",
       "context": {
         "population": null,
         "route": "subcutaneous injection",
-        "formulation": "liraglutide (recombinant GLP-1 analog)",
+        "formulation": "liraglutide (GLP-1 analog)",
         "useCase": "mechanism / classification",
         "doseText": null
       },
@@ -237,17 +237,23 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "drugbank-db06655",
-        "pubchem-cid-16134956"
+        "dailymed-victoza-label"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "drugbank-db06655",
-          "quote": "Liraglutide is a GLP-1 analog used in the management of type 2 diabetes mellitus, prevention of cardiovascular complications associated with diabetes, and obesity.",
-          "pageOrSection": "Summary / Description"
+          "sourceRef": "dailymed-victoza-label",
+          "quote": null,
+          "pageOrSection": "11 DESCRIPTION"
+        },
+        {
+          "sourceRef": "dailymed-victoza-label",
+          "quote": null,
+          "pageOrSection": "12.1 Mechanism of Action"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "Candidate preparation 2026-09-13: exact reviewed VICTOZA classification/receptor statement; formulation simplified to GLP-1 analog, with original recombinant shorthand preserved in provenance and not declared false. Original subcutaneous route and all other context, Strong/high and old flags remain unchanged pending evidence acceptance. One original DrugBank excerpt removed; PubChem co-citation had no excerpt and was not assessed. Two DailyMed quote:null locators 11 DESCRIPTION and 12.1 Mechanism of Action. Evidence/ratings, independent-family, human and publication gates remain open; preparation is not completion. See research/source-authorization/liraglutide-resource-candidate-2026-09-13.json."
+      ]
     },
     {
       "claimId": "liraglutide-approved-indication-victoza-001",

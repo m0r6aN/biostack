@@ -9,7 +9,7 @@
     "path": "shared/source-rights/drugbank-containment.v1.json",
     "sha256": "017fa7dcf5cf2df6d5c96c94bada2601dad38e668a91ef5eb7d40ae33a12994f"
   },
-  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. One quote-free replacement candidate is prepared and remains review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
+  "disclaimer": "Work queue only; no rights approval or evidence determination. Historical row/excerpt counts and contained-source locators remain the decision-time baseline. Twenty-five quote-free replacement candidates are prepared and remain review-required; no claim is counted as actually re-sourced. A candidate or co-citation does not close a review gate.",
   "counts": {
     "rows": 30,
     "distinctClaims": 30,
@@ -18,8 +18,8 @@
     "claimsWithCoCitationCandidates": 28,
     "claimsWithNoCoCitation": 2,
     "claimsActuallyReSourced": 0,
-    "coCitationCandidatesSubstanceAssessed": 4,
-    "replacementCandidatesPrepared": 5
+    "coCitationCandidatesSubstanceAssessed": 0,
+    "replacementCandidatesPrepared": 1
   },
   "rows": [
     {
@@ -46,8 +46,15 @@
           "registryClass": "ncbi-bookshelf"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-duavee-label",
+        "recordPath": "research/source-authorization/bazedoxifene-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "bremelanotide.evidence.json",
@@ -68,8 +75,15 @@
           "registryClass": "ncbi-bookshelf"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-vyleesi-label",
+        "recordPath": "research/source-authorization/bremelanotide-resource-candidate-2026-09-12.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "bremelanotide.evidence.json",
@@ -95,8 +109,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubchem-cid-9941379",
+        "recordPath": "research/source-authorization/bremelanotide-identity-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "chorionic-gonadotropin.evidence.json",
@@ -118,8 +139,15 @@
           "registryClass": "dailymed"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-pregnyl-organon-research-20260913",
+        "recordPath": "research/source-authorization/chorionic-gonadotropin-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "creatine.evidence.json",
@@ -145,8 +173,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "nih-ods-exercise-athletic-performance-hp",
+        "recordPath": "research/source-authorization/creatine-resource-candidate-2026-09-12.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "dulaglutide.evidence.json",
@@ -198,8 +233,15 @@
           "registryClass": "dailymed"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-byetta-label",
+        "recordPath": "research/source-authorization/exenatide-resource-candidate-2026-09-12.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "exenatide.evidence.json",
@@ -221,8 +263,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubchem-cid-45588096",
+        "recordPath": "research/source-authorization/exenatide-identity-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "ghk-cu.evidence.json",
@@ -248,8 +297,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubchem-ghk-cu",
+        "recordPath": "research/source-authorization/ghk-cu-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "glutathione.evidence.json",
@@ -271,8 +327,18 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubchem-cid-124886",
+        "recordPath": "research/source-authorization/glutathione-identity-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false,
+        "scope": "identity-only alternative; original biochemical mechanism and reduced-GSH/product equivalence unresolved",
+        "candidateClaimType": "identity",
+        "originalMechanismRequirementResolved": false
+      }
     },
     {
       "packet": "lasofoxifene.evidence.json",
@@ -294,8 +360,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubmed-38072514-lasofoxifene-research-20260913",
+        "recordPath": "research/source-authorization/lasofoxifene-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "ligandrol.evidence.json",
@@ -320,8 +393,15 @@
         }
       ],
       "coCitationCandidates": [],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubmed-22459616-basaria-research-20260913",
+        "recordPath": "research/source-authorization/ligandrol-basaria-efficacy-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "ligandrol.evidence.json",
@@ -396,8 +476,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-victoza-label",
+        "recordPath": "research/source-authorization/liraglutide-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "maridebart-cafraglutide.evidence.json",
@@ -414,8 +501,15 @@
           "registryClass": "UNREGISTERED"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubmed-40549887",
+        "recordPath": "research/source-authorization/maridebart-mechanism-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "mazdutide.evidence.json",
@@ -444,8 +538,15 @@
           "registryClass": "semantic-scholar"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubmed-mazdutide-first-approval",
+        "recordPath": "research/source-authorization/mazdutide-mechanism-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "mazdutide.evidence.json",
@@ -475,8 +576,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubchem-cid-167312357",
+        "recordPath": "research/source-authorization/mazdutide-identity-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "mazdutide.evidence.json",
@@ -533,8 +641,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-pitocin-label",
+        "recordPath": "research/source-authorization/oxytocin-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "pemvidutide.evidence.json",
@@ -563,8 +678,15 @@
           "registryClass": "pubmed"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubmed-39002641-masld-rct",
+        "recordPath": "research/source-authorization/pemvidutide-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "pemvidutide.evidence.json",
@@ -625,8 +747,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubchem-cid-5035",
+        "recordPath": "research/source-authorization/raloxifene-identity-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "raloxifene.evidence.json",
@@ -643,8 +772,15 @@
           "registryClass": "ncbi-bookshelf"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "dailymed-evista-label",
+        "recordPath": "research/source-authorization/raloxifene-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "sermorelin.evidence.json",
@@ -670,8 +806,18 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubchem-cid-16132413",
+        "recordPath": "research/source-authorization/sermorelin-identity-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false,
+        "scope": "identity-only alternative; original mechanism and acetate relationship unresolved",
+        "candidateClaimType": "identity",
+        "originalMechanismRequirementResolved": false
+      }
     },
     {
       "packet": "somatropin.evidence.json",
@@ -735,8 +881,15 @@
           "registryClass": "UNREGISTERED"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubmed-38847460",
+        "recordPath": "research/source-authorization/survodutide-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "thymosin-alpha-1.evidence.json",
@@ -762,8 +915,15 @@
           "registryClass": "UNREGISTERED"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubmed-etass-2013",
+        "recordPath": "research/source-authorization/thymosin-alpha-1-etass-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "vosilasarm.evidence.json",
@@ -797,8 +957,15 @@
           "registryClass": "pubchem"
         }
       ],
-      "disposition": "blocked-pending-re-source",
-      "substanceAssessed": false
+      "disposition": "replacement-prepared-review-required",
+      "substanceAssessed": true,
+      "replacementCandidate": {
+        "sourceId": "pubchem-cid-44200882",
+        "recordPath": "research/source-authorization/vosilasarm-lookup-resource-candidate-2026-09-13.json",
+        "quoteCount": 0,
+        "evidenceApprovalStatus": "review-required",
+        "claimsActuallyReSourced": false
+      }
     },
     {
       "packet": "vosilasarm.evidence.json",
@@ -823,5 +990,5 @@
       "substanceAssessed": false
     }
   ],
-  "updatedAtUtc": "2026-09-13T14:32:48Z"
+  "updatedAtUtc": "2026-09-08T22:07:07.268475Z"
 }

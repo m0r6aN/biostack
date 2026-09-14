@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T03:48:13.695841Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "bazedoxifene-mechanism-serm-001",
+  "candidateStatement": "The DUAVEE label describes its bazedoxifene component as an estrogen agonist in some estrogen-sensitive tissues and an antagonist in others.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "46417ce14ac6e6ac65ce78337df872b1380646e5",
+    "path": "research/input/evidence/bazedoxifene.evidence.json",
+    "bytes": 29929,
+    "sha256": "9fba1019c2b4fd4c7d896adb19c32d3b95187245d4fd79e6e3c09ad2b1bc4278"
+  },
+  "supersededClaimSha256": "8fbe39a91d7189600fa7a8f67a6728482af2be462b3df84a5ab47f9b65be77d1",
+  "supersededClaimHashEncoding": "SHA-256 of UTF-8 base claim JSON, recursively sorted keys, compact comma/colon separators, ASCII escaping, no trailing newline: json.dumps(claim, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8').",
+  "removedExcerpts": [
+    {
+      "sourceId": "statpearls-bazedoxifene",
+      "locator": "Mechanism of Action",
+      "chars": 154,
+      "sha256": "f5193e992d217325c70652e505e323b860daebe7c27d5d228a2c41dde5fbcd34"
+    },
+    {
+      "sourceId": "statpearls-bazedoxifene",
+      "locator": "Mechanism of Action",
+      "chars": 107,
+      "sha256": "f04bc8236dce400cd3ddef334c4f67683c6e7997905587b9fd668bcd69a9ce64"
+    },
+    {
+      "sourceId": "pmc3131985-bazedoxifene-review",
+      "locator": "Abstract/summary",
+      "chars": 121,
+      "sha256": "f067789afc3a22d42e09586f840853181769103fc9af4d1b1f0b22954b67e340"
+    },
+    {
+      "sourceId": "drugbank-db06401",
+      "locator": "Summary",
+      "chars": 178,
+      "sha256": "0b3933d2d1534c1ca3799095efd544621f635d2b7c231b4e28edb3bac97e84cc"
+    }
+  ],
+  "removedExcerptScope": "Four reviewed-base excerpts: two StatPearls, one PMC, one DrugBank. No secondary-source acquisition or rights determination is made; do not classify all four as DrugBank.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "bazedoxifene (free base or acetate)",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "bazedoxifene (supplied as the acetate salt in DUAVEE)",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "contextChange": {
+    "field": "formulation",
+    "before": "bazedoxifene (free base or acetate)",
+    "after": "bazedoxifene (supplied as the acetate salt in DUAVEE)",
+    "rationale": "Product-scoped acetate supply in DUAVEE; not proof that free-base bazedoxifene does not exist. Every other context field unchanged."
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "reviewStatus": "pending evidence acceptance; unchanged, not ratified"
+  },
+  "originalSourceSnapshotUnchanged": {
+    "sourceId": "dailymed-duavee-label",
+    "sourceType": "regulator",
+    "authorityTier": "A1",
+    "title": "DUAVEE- conjugated estrogens/bazedoxifene tablet, film coated (FDA-approved product label)",
+    "publisher": "DailyMed / U.S. National Library of Medicine (labeling text sourced from FDA-approved labeling)",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16705d8-4472-4f83-96ac-69fa2be066cb",
+    "doi": null,
+    "pmid": null,
+    "publishedAt": null,
+    "accessedAt": "2026-08-29T01:58:43Z"
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "dailymed",
+    "sourceItemId": "dailymed-duavee-label",
+    "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16705d8-4472-4f83-96ac-69fa2be066cb",
+    "splSetId": "e16705d8-4472-4f83-96ac-69fa2be066cb",
+    "splDocumentId": "7e3443ae-8aa6-473c-923c-aac11d3b30e9",
+    "labelVersion": 13,
+    "versionObservation": "Version 13 observed in the dated September 13, 2026 worker receipt; not indefinitely current or a historical-byte assertion.",
+    "labeler": "U.S. Pharmaceuticals",
+    "labelerAuthorship": "Source labeler/author organization, not inferred government authorship.",
+    "archiveTitle": "DUAVEE (CONJUGATED ESTROGENS/BAZEDOXIFENE) TABLET, FILM COATED [U.S. PHARMACEUTICALS]",
+    "effectiveDate": "2026-07-31",
+    "archivePublishedDate": "2026-08-03",
+    "bodyRevision": "not separately extracted; no invented value",
+    "chronologyQualification": "Old access follows current archive publication but cannot prove historical version or identical bytes; effectiveTime is separately preserved.",
+    "ndc": [
+      "63539-122",
+      "63539-122-07"
+    ],
+    "ndcCoverage": "All distinct observed code elements with codeSystem2.16.840.1.113883.6.69 in the retrieved XML: product63539-122 and package63539-122-07. Not all-market coverage.",
+    "sectionName": "12.1 Mechanism of Action",
+    "sectionCode": "43679-0",
+    "sectionId": "be57e5a3-e393-4388-8329-bd2db4d3312a",
+    "observedSectionLocators": [
+      {
+        "sectionCode": "34089-3",
+        "sectionName": "11 DESCRIPTION",
+        "sectionId": "f513849d-1160-4a00-a077-01355a03dcaf"
+      },
+      {
+        "sectionCode": "43679-0",
+        "sectionName": "12.1 Mechanism of Action",
+        "sectionId": "be57e5a3-e393-4388-8329-bd2db4d3312a"
+      }
+    ],
+    "retrievedAtUtc": "2026-09-13T03:27:59.447439Z",
+    "retrievalAttribution": "Worker-reported original API completion time, no fresh request or independent payload/transcript verification by preparation.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified DailyMed factual-candidate/API approval; no new rights, human, family or publication acceptance.",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "transformationNote": "Codex manually applied exact reviewed statement/formulation and provenance; no adapter or acquisition run.",
+    "humanReviewStatus": "pending",
+    "retentionAttribution": "Worker reports in-memory parsing without full XML or source-section text written to disk; no independent full-transcript certification."
+  },
+  "sourceSha256": "00a47ecbde8bfb66070fab75dfdd095d26cd0800591995dc2e43710e7150df48",
+  "payloadProvenance": {
+    "bytes": 262779,
+    "historySha256": "a5a0e84dc86e0a37dd131403c1804a50d5ca08552a62bb7c059572c69f09910c",
+    "historyBytes": 1151,
+    "attribution": "Original worker-reported hashes/sizes, not freshly rehashed payloads."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/bazedoxifene-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/bazedoxifene-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/bazedoxifene-replacement-assessment-20260913/source-evidence.json",
+    "historyReceipt": "research/output/gtm-activation-20260909/bazedoxifene-replacement-assessment-20260913/receipts/dailymed-20260913T032758764293Z.json",
+    "xmlReceipt": "research/output/gtm-activation-20260909/bazedoxifene-replacement-assessment-20260913/receipts/dailymed-20260913T032759152465Z.json"
+  },
+  "scopeRationale": "Bazedoxifene component only; no conjugated-estrogen/composite effect transfer, subtype, clinical outcome, dose or antiproliferative generalization. Omitted claims are outside this source-scoped candidate, not declared false.",
+  "queueAccounting": "Prepared increases 7 to 8, completed remains 0; prior-co-citation assessed count remains 5 because this lane does not assess the original StatPearls/PMC co-citations. Target substanceAssessed refers to the newly assessed DailyMed candidate.",
+  "dependencyDisposition": {
+    "target": "All prior target references replaced with existing DailyMed alias; historical snapshots, identifiers, other claims and ops unchanged.",
+    "otherReviewedBaseClaimsWithDrugBankRefs": [],
+    "boundary": "No historical/production packet-wide clearance; DrugBank acquisition stays disabled."
+  },
+  "remainingGates": [
+    "Evidence-reviewer acceptance of statement, formulation narrowing and inherited Strong/high ratings.",
+    "Independent-family/lineage closure not satisfied by a new citation alone.",
+    "Item/version and distinct-person human review before promotion remain separate.",
+    "Publication, deployment and production containment remain unperformed."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

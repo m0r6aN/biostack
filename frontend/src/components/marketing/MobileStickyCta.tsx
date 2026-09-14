@@ -32,7 +32,7 @@ export function MobileStickyCta() {
       aria-label="Primary actions"
       aria-hidden={!isVisible}
       inert={!isVisible}
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#0B0F14]/92 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl transition duration-200 md:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#0B0F14]/92 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl transition duration-200 motion-reduce:transition-none md:hidden ${
         isVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0'
       }`}
     >

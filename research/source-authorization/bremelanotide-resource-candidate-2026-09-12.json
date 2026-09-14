@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-12T23:53:11Z",
+  "preparedBy": "Claude Sonnet 5, executing the reviewed lead directive (research/output/gtm-activation-20260909/bremelanotide-codex-review-20260912.md) and the final independent review it cites (research/output/gtm-activation-20260909/bremelanotide-independent-assessment-review-20260912.md), under Clint's September 12, 2026 owner resume",
+  "authority": "none",
+  "ownerDecision": "C1 contain-and-re-source, owner-source-decisions-2026-09-08.v1.json; resumed by research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md (September 12, 2026); this preparation step is accepted by the lead review and the concurring final independent review, which together are the controlling directive for this candidate's exact scope",
+  "status": "prepared-review-required",
+  "claimId": "bremelanotide-mechanism-mc4r-001",
+  "historicalPacket": {
+    "gitRevision": "08e18b1ca1d6a96d0f85f6f01a47aa28e7675499",
+    "path": "research/input/evidence/bremelanotide.evidence.json",
+    "sha256": "fdaae989b974eebf9d2d195da6bec7af86960f1838712dedd6481fb6b610d88f",
+    "bytes": 28107
+  },
+  "historicalReviewReceipts": [
+    "research/output/gtm-activation-20260909/bremelanotide-replacement-assessment-20260912/receipts/dailymed-api-receipts-20260912.json",
+    "research/output/gtm-activation-20260909/bremelanotide-codex-review-20260912.md",
+    "research/output/gtm-activation-20260909/bremelanotide-independent-assessment-review-20260912.md",
+    "research/output/gtm-activation-20260909/bremelanotide-independent-provenance-review-20260912.md",
+    "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md"
+  ],
+  "supersededClaimSha256": "82ea090ca182414a33b64e68213e0dea9e53452dbd909798d4cd09a1a0962156",
+  "supersededClaimHashEncoding": "SHA-256 of UTF-8 JSON for the historical claim object, with recursively sorted object keys, compact comma/colon separators, ASCII escaping, and no trailing newline (Python json.dumps(claim, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8')).",
+  "removedExcerpts": [
+    {
+      "sourceId": "dailymed-vyleesi-label",
+      "locator": "DailyMed VYLEESI label, Indications and Usage section",
+      "chars": 161,
+      "sha256": "8ad815a25616009ddd0d79d7850ab1bbfeb34c8d9830772fea275be7f9eefe40"
+    },
+    {
+      "sourceId": "ncbi-bookshelf-bremelanotide-NBK573221",
+      "locator": "NCBI Bookshelf Bremelanotide (NBK573221), Mechanism of Action section",
+      "chars": 147,
+      "sha256": "b197812cf8de096b2b84cdf030035a52b811b8747f1636c51dd234aaf552da52"
+    }
+  ],
+  "noDrugBankRetainedExcerpt": "In the reviewed base claim bremelanotide-mechanism-mc4r-001, drugbank-db11653 appeared only in sourceRefs, with no DrugBank retained excerpt in extractedEvidence. This record removes that sourceRef and records the reviewed-base absence rather than inventing a DrugBank excerpt entry; no assertion about all historical revisions is made.",
+  "replacementSourceId": "dailymed-vyleesi-label",
+  "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf",
+  "sourceVersion": "DailyMed VYLEESI (bremelanotide) label, set ID f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf, document ID 437e6c45-dfb9-35ec-e063-6394a90a7874, version 1, NDC 0713-0897, effectiveDate 2025-11-13, archive publication date 2025-11-18, label-text revision 03/2024; section 12.1 (Mechanism of Action, section code 43679-0)",
+  "sourceSha256": "40f565dabb4834a5e8ae91adc6836df37b62102e1b94a57aa2bfc74969fa09be",
+  "sourceShaProvenance": "Worker-reported API receipt value for the full retained SPL XML (163,665 bytes; document ID 437e6c45-dfb9-35ec-e063-6394a90a7874), independently confirmed by the reviewer's own hash/metadata read per bremelanotide-independent-assessment-review-20260912.md; not freshly rehashed by this candidate-preparation step, and no new retrieval or full-XML copying was performed to prepare this record.",
+  "rightsScope": "Quote-free, attributed internal candidate limited to the DailyMed VYLEESI label section 12.1 factual mechanism/uncertainty content; zero retained excerpts. Per the controlling lead review and the final independent assessment, DailyMed's registry approval covers a provenance-preserving factual candidate lane and its API method, and permittedContent includes mechanisms; the authority-field list's omission of mechanism does not create a new general mechanism-permission requirement. This is not a declaration of unrestricted copyright rights: manufacturer (labeler) authorship and separately restricted content exclusions remain, and actual user-facing claim review remains open. No new blanket rights gate is asserted or closed by this preparation.",
+  "rightsEvidenceUrls": [
+    "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf",
+    "research/source-authorization/owner-source-decisions-2026-09-08.v1.json",
+    "research/output/gtm-activation-20260909/bremelanotide-codex-review-20260912.md"
+  ],
+  "authorshipFinding": "The retained label is FDA-approved manufacturer (labeler) prescribing information; section 12.1 authorship rests with the labeler, not an independent agency author. This candidate quotes nothing from that section (quote:null) and paraphrases only the factual receptor-ranking and expression/uncertainty content the lead review authorized in the exact statement below. No new rights determination is made or needed for this quote-free paraphrase.",
+  "contentVerification": {
+    "method": "No new retrieval was performed to prepare this candidate. The lead independently inspected the current first-party DailyMed sections 11/12.1 at the source URL above; the independent reviewer separately read the existing local scratch XML only to check its hash and document metadata (163,665 bytes; SHA-256 40f565dabb4834a5e8ae91adc6836df37b62102e1b94a57aa2bfc74969fa09be; document ID 437e6c45-dfb9-35ec-e063-6394a90a7874; set f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf; version 1; effectiveTime 20251113), confirming these match the worker's original API receipt without independently rehashing a fresh copy.",
+    "sectionsRead": [
+      "VYLEESI label, section 12.1 Mechanism of Action"
+    ],
+    "excludedFromStatement": [
+      "Synthetic peptide identity and melanotan-II lineage",
+      "Therapeutic-dose language",
+      "Receptor-specific causal claim for sexual-desire improvement",
+      "Focal-hyperpigmentation adverse-effect inference (documented separately in bremelanotide-adverse-effects-001, untouched by this candidate)"
+    ],
+    "quoteCount": 0
+  },
+  "dailyMedProvenance": {
+    "sourceRegistryId": "dailymed",
+    "labelerOfRecord": "Cosette Pharmaceuticals, Inc.",
+    "sourceItemId": "dailymed-vyleesi-label",
+    "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf",
+    "splSetId": "f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf",
+    "documentId": "437e6c45-dfb9-35ec-e063-6394a90a7874",
+    "ndc": "0713-0897",
+    "labelVersion": 1,
+    "effectiveDate": "2025-11-13",
+    "archivePublicationDate": "2025-11-18",
+    "labelTextRevision": "03/2024",
+    "labelTextRevisionNote": "SPL-body prescribing-information revision, recorded in the original source-evidence.json as 'Revised: 03/2024'; distinct from effectiveDate, archivePublicationDate and the API DB metadata timestamp, not backfilled or inferred.",
+    "metadata_db_published_date": "Sep 11, 2026 08:09:31PM EST",
+    "metadataDbPublishedDateProvenance": "Literal value from the original dailymed-api-receipts-20260912.json linked in historicalReviewReceipts; no timezone reinterpretation or equivalence to label revision, effective date or archive publication date is asserted.",
+    "sectionName": "12.1 Mechanism of Action",
+    "sectionCode": "43679-0",
+    "retrievedAtUtc": "2026-09-12T23:28:19Z",
+    "retrievedAtUtcProvenance": "Actual API receipt timestamp recorded by the worker and confirmed by the controlling lead review; not regenerated or backdated by this candidate-preparation step.",
+    "rightsReviewStatusAtRetrieval": "qualified to the approved candidate boundary: DailyMed registry class approves a provenance-preserving factual candidate lane and its API method for this quote-free, attributed internal use; not a general publication or full-text rights clearance",
+    "acquisitionMethodReviewed": "api",
+    "acquisitionMethodActuallyUsed": "none for this candidate (reused the worker's earlier API receipt and hash/metadata, independently confirmed by the reviewer; no new retrieval was performed to prepare this record)",
+    "transformationPipelineVersion": "candidate-preparation-manual-v1 (actual manual transformation: reviewer-authored, quote-free paraphrase against the controlling lead review and final independent assessment; no automated extraction pipeline was run for this candidate)",
+    "humanReviewStatus": "pending; prepared-review-required, not accepted"
+  },
+  "dependencyDisposition": {
+    "directDrugBankClaimReference": "removed from the current mechanism candidate (sourceRefs narrowed to dailymed-vyleesi-label only)",
+    "drugBankSourceDefinition": "retained unchanged in the packet's top-level sources[]; historical mechanism provenance, while still referenced by the separate identity claim; authorityTier and metadata unchanged",
+    "drugBankAccession": "compound.externalIdentifiers.drugbank (DB11653) unchanged; identity metadata, not evidence",
+    "separateIdentityClaimUntouched": "bremelanotide-identity-external-ids-001 is a separate claim in the same packet and remains completely untouched by this candidate; it still cites drugbank-db11653 and still carries its own DrugBank withheld-excerpt dependency in the queue (research/source-authorization/drugbank-resource-queue-2026-09-08.json). This record does not claim packet-wide DrugBank removal, only removal from this one mechanism claim.",
+    "otherClaimsInPacket": "No other claim in this packet is altered by this candidate. bremelanotide-regulatory-approved-indication-001, bremelanotide-contraindication-cv-001, bremelanotide-adverse-effects-001, bremelanotide-efficacy-reconnect-001, bremelanotide-evidence-gap-nasal-offlabel-001 and bremelanotide-identity-external-ids-001 are all preserved verbatim, including their own sourceRefs, extractedEvidence, reviewFlags and evidenceTier/confidence values.",
+    "containmentReach": "shared/source-rights/drugbank-containment.v1.json governs the drugbank-db11653 containment; this candidate makes no change to that manifest, to registry rights, or to source policy."
+  },
+  "narrowFactualScope": {
+    "candidateStatement": "The VYLEESI label describes bremelanotide as an agonist of multiple melanocortin receptor subtypes, with MC1R ranked ahead of MC4R in potency. It reports MC4R expression in the central nervous system and links MC1R activation on melanocytes to increased pigmentation. The label leaves the mechanism responsible for improvement in hypoactive sexual desire disorder unknown.",
+    "hedgePreserved": true,
+    "containsDosingClinicalOrSafetyContent": false,
+    "omittedFromPriorStatement": [
+      "Synthetic peptide identity and melanotan-II lineage",
+      "Therapeutic-dose language",
+      "Receptor-specific sexual-desire causation",
+      "The focal-hyperpigmentation adverse-effect inference"
+    ],
+    "omissionRationale": "Per the controlling lead review: this deliberately omits synthetic peptide identity, melanotan-II lineage, therapeutic-dose language, receptor-specific sexual-desire causation and the focal-hyperpigmentation adverse-effect inference. No new clinical-benefit prediction or safety/dosing recommendation is made. Scientific mechanism scope and explicit uncertainty are supported by section 12.1 alone. The original historical statement named both MC4R and MC1R; this candidate does not allege a definitively inverted quantitative potency order, only the label-aligned ranking wording the lead review and final independent assessment found justified."
+  },
+  "remainingGates": [
+    "Evidence-reviewer acceptance of the narrowed statement and of the inherited evidenceTier 'Moderate' / confidence 'moderate' values, which this candidate leaves unchanged pending that review, not as a ratification.",
+    "The category-evidence directive's independent-source-family requirement for resolving the claim/review issue remains open; DailyMed was already co-cited on the historical claim and this candidate does not close that gate.",
+    "Full-text retention qualification for the scratch-stored SPL XML (copyrightedFullTextStorageAllowed:false) remains separately review-required; not a blocker to this quote-free preparation and not decided by it.",
+    "Registry rights scope beyond the already-approved factual-candidate/API lane remains a separate, open determination; no new blanket rights gate is asserted here.",
+    "Disposition of bremelanotide-identity-external-ids-001's own DrugBank dependency is untouched and unresolved by this candidate.",
+    "Independent model review (this preparation and its controlling reviews) is not distinct-person human acceptance.",
+    "Promotion, deployment, production containment and any registry/source-policy/containment mutation remain separate, untouched outcomes."
+  ],
+  "controllingReviewLinks": [
+    "research/output/gtm-activation-20260909/bremelanotide-codex-review-20260912.md",
+    "research/output/gtm-activation-20260909/bremelanotide-independent-assessment-review-20260912.md",
+    "research/output/gtm-activation-20260909/bremelanotide-independent-provenance-review-20260912.md"
+  ],
+  "currentQualifications": {
+    "independentFamilyStatus": "open; not resolved by this candidate (DailyMed was already co-cited on the historical claim; no materially new source family is introduced here)",
+    "evidenceAcceptanceStatus": "review-required; not ratified",
+    "humanAcceptanceStatus": "pending; independent model review is not distinct-person human acceptance",
+    "productionStatus": "no production, deployment, adapter, refresh-system or registry change performed or implied by this candidate"
+  },
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

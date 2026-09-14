@@ -113,7 +113,7 @@ function RewardPanel({
       <div className="mt-5 grid gap-2">
         {state.rows.map(([label, value]) => (
           <div key={label} className="grid grid-cols-[82px_1fr] gap-3 rounded-lg border border-white/8 bg-black/20 px-3 py-2">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">{label}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55">{label}</p>
             <p className="min-w-0 text-sm font-medium text-white/78">{value}</p>
           </div>
         ))}
@@ -121,7 +121,7 @@ function RewardPanel({
 
       {isGoalsStep && (
         <div className="mt-5 rounded-lg border border-white/8 bg-black/20 p-3">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">Priority Signal</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55">Priority Signal</p>
           <p className="mt-2 text-sm leading-6 text-white/66">
             {selectedGoalLabels.length > 0
               ? selectedGoalLabels.join(', ')
@@ -368,14 +368,15 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
             />
           </div>
 
-          <div className="mt-4 grid grid-cols-3 gap-2">
+          <ol aria-label="Onboarding progress" className="mt-4 grid list-none grid-cols-3 gap-2">
             {STEP_ITEMS.map((item, index) => {
               const isActive = step === item.id;
               const isComplete = currentStepIndex > index;
 
               return (
-                <div
+                <li
                   key={item.id}
+                  aria-current={isActive ? 'step' : undefined}
                   className={cn(
                     'rounded-2xl border px-3 py-3 text-left transition-colors',
                     isActive || isComplete
@@ -389,7 +390,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                         'flex h-6 w-6 items-center justify-center rounded-full border text-[11px] font-semibold',
                         isActive || isComplete
                           ? 'border-emerald-300/40 bg-emerald-300/18 text-emerald-100'
-                          : 'border-white/10 text-white/42'
+                          : 'border-white/10 text-white/65'
                       )}
                     >
                       {index + 1}
@@ -401,10 +402,10 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                       {item.label}
                     </span>
                   </div>
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ol>
         </div>
       </div>
 
@@ -441,7 +442,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                       )}
                     >
                       <span className="block text-sm font-semibold">{goal.label}</span>
-                      <span className="mt-1 block text-xs leading-5 text-white/45">{goal.signal}</span>
+                      <span className="mt-1 block text-xs leading-5 text-white/65">{goal.signal}</span>
                     </button>
                   );
                 })}
@@ -451,7 +452,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                 <button
                   type="button"
                   onClick={() => goToStep('input')}
-                  className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
+                  className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform motion-safe:hover:-translate-y-0.5"
                 >
                   Continue
                 </button>
@@ -644,7 +645,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
                   <button
                     type="submit"
                     disabled={!canSubmit}
-                    className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-50 sm:w-auto"
+                    className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform motion-safe:hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-50 sm:w-auto"
                   >
                     Add to My List
                   </button>
@@ -746,7 +747,7 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
                   href="/profiles"
-                  className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
+                  className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform motion-safe:hover:-translate-y-0.5"
                 >
                   Finish Setup
                 </Link>

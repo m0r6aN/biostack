@@ -230,7 +230,7 @@
     {
       "claimId": "exenatide-mechanism-glp1-agonist-001",
       "claimType": "mechanism",
-      "statement": "Exenatide is a 39-amino-acid peptide GLP-1 receptor agonist derived from exendin-4 (originally isolated from Gila monster saliva); it binds and activates the human GLP-1 receptor to enhance glucose-dependent insulin secretion.",
+      "statement": "The BYETTA prescribing information describes exenatide as a GLP-1 receptor agonist that increases insulin release from pancreatic beta cells in a glucose-dependent manner. It reports that exenatide binds to and activates the human GLP-1 receptor in vitro.",
       "context": {
         "population": null,
         "route": null,
@@ -242,22 +242,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "drugbank-db01276",
         "dailymed-byetta-label"
       ],
       "extractedEvidence": [
         {
-          "sourceRef": "drugbank-db01276",
-          "quote": "Exenatide is a GLP-1 agonist used in the management of type 2 diabetes mellitus.",
-          "pageOrSection": "Summary"
-        },
-        {
           "sourceRef": "dailymed-byetta-label",
-          "quote": "BYETTA (exenatide) is a glucagon-like peptide-1 (GLP-1) receptor agonist",
-          "pageOrSection": "Indications and Usage"
+          "quote": null,
+          "pageOrSection": "12.1 Mechanism of Action"
         }
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "narrowed-2026-09-13: statement replaced with a DailyMed-only, quote-free paraphrase of BYETTA section 12.1 (Mechanism of Action) per exenatide-codex-review-20260913.md and exenatide-independent-assessment-review-20260913.md; drugbank-db01276 and its retained excerpt (Summary, 80 chars) and the prior dailymed-byetta-label excerpt (Indications and Usage, 72 chars) were removed and replaced with one quote:null section 12.1 locator; the in-vitro qualifier on human GLP-1 receptor binding/activation is preserved; exendin-4 lineage and Gila monster saliva identity language were omitted rather than reworded and are not asserted false; DailyMed-only sourcing, the materially-different-source-family requirement, evidence-tier/confidence acceptance and human review of this narrowed statement remain open gates; this is candidate preparation only, not promotion."
+      ]
     },
     {
       "claimId": "exenatide-dose-context-byetta-001",
@@ -410,7 +406,7 @@
     {
       "claimId": "exenatide-identity-identifiers-001",
       "claimType": "identity",
-      "statement": "Exenatide (PubChem CID 45588096) has the molecular formula C184H282N50O60S and is catalogued in DrugBank under accession DB01276.",
+      "statement": "PubChem lists a compound record titled Exenatide under CID 45588096 with molecular formula C184H282N50O60S.",
       "context": {
         "population": null,
         "route": null,
@@ -422,23 +418,18 @@
       "confidence": "high",
       "fieldAuthorityRequired": false,
       "sourceRefs": [
-        "pubchem-cid-45588096",
-        "drugbank-db01276"
+        "pubchem-cid-45588096"
       ],
       "extractedEvidence": [
         {
           "sourceRef": "pubchem-cid-45588096",
-          "quote": "Exenatide | C184H282N50O60S | CID 45588096",
-          "pageOrSection": "Compound summary header"
-        },
-        {
-          "sourceRef": "drugbank-db01276",
-          "quote": "DrugBank Accession Number: DB01276",
-          "pageOrSection": "Identification"
+          "quote": null,
+          "pageOrSection": "PUG REST fixed CID 45588096 property response: CID, Title and MolecularFormula; factual paraphrase only."
         }
       ],
       "reviewFlags": [
-        "CAS number and UNII could not be confirmed from freely accessible page content this session (DrugBank gated the field, PubChem full record required JavaScript rendering); resolve at review time"
+        "CAS number and UNII could not be confirmed from freely accessible page content this session (DrugBank gated the field, PubChem full record required JavaScript rendering); resolve at review time",
+        "Candidate preparation 2026-09-13: exact PubChem CID/title/formula database-node statement only. Historical CAS/UNII uncertainty and access-limitation flag is retained; those identifiers were not reassessed, and the old access problem is not a new service finding. No universal salt/formulation/product equivalence inferred. Strong/high and full context remain unchanged pending review. Original PubChem header and DrugBank Identification quotes removed with distinct attribution; only DrugBank excerpt was contained. Evidence/family/human/publication gates remain open. See research/source-authorization/exenatide-identity-resource-candidate-2026-09-13.json."
       ]
     }
   ],

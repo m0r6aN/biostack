@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "source-replacement-candidate-record",
+  "recordedAtUtc": "2026-09-13T05:42:37.457051Z",
+  "preparedBy": "Codex",
+  "authority": "none",
+  "status": "prepared-review-required",
+  "claimId": "pemvidutide-mechanism-dual-agonist-001",
+  "candidateStatement": "The study indexed as PMID 39002641 describes pemvidutide as an agonist of both the GLP-1 and glucagon receptors.",
+  "ownerDecision": "research/output/gtm-activation-20260909/owner-resume-drugbank-20260912.md",
+  "historicalPacket": {
+    "gitRevision": "32e8a1a0af9f57d6c4a713c39402498cf873dd39",
+    "path": "research/input/evidence/pemvidutide.evidence.json",
+    "bytes": 43456,
+    "sha256": "86a8ee39aca95f8e6b2af9d18672fa39dc1bcc9605433913f89030b51c11059e"
+  },
+  "supersededClaimSha256": "dd0f1faf542e66b6371840f6af1c5ad0ada5640e8e0d75e5f2144c1f28ef5c5b",
+  "supersededClaimHashEncoding": "SHA256 of UTF-8 json.dumps(originalClaim, sort_keys=True, separators=(comma,colon), ensure_ascii=True), no trailing newline.",
+  "removedExcerpts": [
+    {
+      "sourceId": "medchemexpress-pemvidutide",
+      "locator": "Product summary, target",
+      "chars": 24,
+      "sha256": "b74625f514bffb5160b33ba2184b4cff9a7fbf6927881e492e2785856638769a"
+    },
+    {
+      "sourceId": "chembl-chembl5095142",
+      "locator": "Molecule record",
+      "chars": 57,
+      "sha256": "e9fbf0b204ac7e49321551670a72f73c5771ebbc815b84189b07003680c96523"
+    },
+    {
+      "sourceId": "pubmed-39002641-masld-rct",
+      "locator": "Title / abstract",
+      "chars": 38,
+      "sha256": "397b40e356b14fb732ea0f86831763ad3d558850df1f5ed755c8bfc71ccb8a7d"
+    },
+    {
+      "sourceId": "lancet-pmid41237796-impact-24wk",
+      "locator": "Abstract, Background",
+      "chars": 132,
+      "sha256": "1e48f2cdfcdef1940917c6559d70dcfb573acb41c873b7715bc321a6f7a43e36"
+    }
+  ],
+  "removedExcerptScope": "Four non-DrugBank excerpts; zero DrugBank excerpts. Original DrugBank reference is not an excerpt. No new third-party rights determination.",
+  "originalSourceRefs": [
+    "drugbank-db18998",
+    "medchemexpress-pemvidutide",
+    "pubmed-39002641-masld-rct",
+    "chembl-chembl5095142"
+  ],
+  "historicalExtractedReferenceMismatch": {
+    "sourceId": "lancet-pmid41237796-impact-24wk",
+    "note": "Original excerpt source is defined in packet but absent from original claim sourceRefs; preserved as history, not independently assessed or silently repaired."
+  },
+  "historicalReviewFlags": [
+    "Independently reconfirmed 2026-08-29 via a second, unrelated primary-literature source (Lancet IMPACT trial, PMID 41237796) and Wikipedia; no conflict found."
+  ],
+  "historicalFlagQualification": "Prior unrelated-source and Wikipedia commentary is historical, not newly verified independence or lineage.",
+  "originalContext": {
+    "population": null,
+    "route": null,
+    "formulation": "pemvidutide (ALT-801)",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "candidateContext": {
+    "population": null,
+    "route": null,
+    "formulation": "pemvidutide",
+    "useCase": "mechanism description",
+    "doseText": null
+  },
+  "contextChange": {
+    "field": "formulation",
+    "before": "pemvidutide (ALT-801)",
+    "after": "pemvidutide",
+    "rationale": "ALT-801 appears in official record keywords per lead review; abstract-only non-establishment does not mean whole-record absence. Keyword co-occurrence alone does not establish exact alias equivalence. Compound aliases unchanged."
+  },
+  "inheritedRatings": {
+    "evidenceTier": "Strong",
+    "confidence": "high",
+    "studySourceTier": "B1",
+    "reviewStatus": "inherited pending review; not regraded or accepted"
+  },
+  "originalSourceSnapshot": {
+    "sourceId": "pubmed-39002641-masld-rct",
+    "sourceType": "controlled-human-study",
+    "authorityTier": "B1",
+    "title": "Effect of pemvidutide, a GLP-1/glucagon dual receptor agonist, on MASLD: A randomized, double-blind, placebo-controlled study",
+    "publisher": "Journal of Hepatology (Harrison SA, Browne SK, Suschak JJ, Tomah S, Gutierrez JA, Yang J, Roberts MS, Harris MS, 2025)",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/39002641/",
+    "doi": "10.1016/j.jhep.2024.06.028",
+    "pmid": "39002641",
+    "publishedAt": null,
+    "accessedAt": "2026-08-28T22:30:00Z"
+  },
+  "correctedSourceSnapshot": {
+    "sourceId": "pubmed-39002641-masld-rct",
+    "sourceType": "controlled-human-study",
+    "authorityTier": "B1",
+    "title": "Effect of pemvidutide, a GLP-1/glucagon dual receptor agonist, on MASLD: A randomized, double-blind, placebo-controlled study",
+    "publisher": "Journal of Hepatology (Harrison SA, Browne SK, Suschak JJ, Tomah S, Gutierrez JA, Yang J, Roberts MS, Harris MS, 2025)",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/39002641/",
+    "doi": "10.1016/j.jhep.2024.07.006",
+    "pmid": "39002641",
+    "publishedAt": null,
+    "accessedAt": "2026-08-28T22:30:00Z"
+  },
+  "doiCorrection": {
+    "stored": "10.1016/j.jhep.2024.06.028",
+    "returned": "10.1016/j.jhep.2024.07.006",
+    "finding": "Same PMID and matching article title; source snapshot DOI needs explicit correction if later preparing candidate, not silent newarticle rebind."
+  },
+  "resolvedSource": {
+    "sourceRegistryId": "pubmed",
+    "sourceItemId": "pubmed-39002641-masld-rct",
+    "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/39002641/",
+    "pmid": "39002641",
+    "doi": "10.1016/j.jhep.2024.07.006",
+    "pmcid": null,
+    "pmcidNote": "Not returned in ArticleIdList; no separate search performed.",
+    "dates": {
+      "electronicPublication": "2024-07-11",
+      "journalIssue": "2025-01",
+      "journalIssuePrecision": "month",
+      "retrievedAtUtc": "2026-09-13T05:22:49.717127Z",
+      "note": "Electronic and print/issue dates differ normally; do not invent day for issue month. No historicalbyte inference."
+    },
+    "correctionRetractionLinks": [],
+    "correctionRetractionScope": "No CommentsCorrections entries returned in this exact PubMed record; not proof that no correction/retraction exists elsewhere.",
+    "copyrightInformation": "Copyright © 2024 Altimmune Inc. Published by Elsevier B.V. All rights reserved.",
+    "supportLocator": "PubmedArticle/MedlineCitation/Article/Abstract/AbstractText[@Label=\"BACKGROUND & AIMS\"]",
+    "authorityQualification": "Registry PubMed tierC1 is indexauthority; packet studyB1 is a proposed scientificgrade and was not regraded here.",
+    "rightsReviewStatusAtRetrieval": "Existing qualified PubMed metadata/rightscompatibleabstract API approval; no new redistribution/fulltext rights asserted.",
+    "retrievedAtUtc": "2026-09-13T05:22:49.717127Z",
+    "method": "anonymous NCBI E-utilities efetch API",
+    "query": {
+      "db": "pubmed",
+      "id": "39002641",
+      "retmode": "xml",
+      "tool": "biostack_bounded_source_review"
+    },
+    "transformationPipelineVersion": "candidate-preparation-manual-v1",
+    "humanReviewStatus": "pending",
+    "retentionAttribution": "Worker reports memory-only XML/abstract processing and no full text/XML/abstract persisted; no independent transcript/payload certification.",
+    "retrievalAttribution": "Original worker receipt and metadata; no new retrieval or independent payload rehash."
+  },
+  "sourceSha256": "b59358824e5796a33999b8e473493e34a0d85a047d76d74900ed6aea3855e58c",
+  "payloadProvenance": {
+    "bytes": 11894,
+    "attribution": "Worker-reported original response hash/size; no retained payload rehash."
+  },
+  "linkedRecords": {
+    "controllingReview": "research/output/gtm-activation-20260909/pemvidutide-codex-review-20260913.md",
+    "assessment": "research/output/gtm-activation-20260909/pemvidutide-replacement-assessment-20260913/assessment.md",
+    "sourceEvidence": "research/output/gtm-activation-20260909/pemvidutide-replacement-assessment-20260913/source-evidence.json",
+    "acquisitionMetadata": "research/output/gtm-activation-20260909/pemvidutide-replacement-assessment-20260913/acquisition-metadata.json",
+    "receipt": "research/output/gtm-activation-20260909/pemvidutide-replacement-assessment-20260913/receipts/efetch-20260913T052249329897Z.json"
+  },
+  "scopeRationale": "Study-reported receptor classification, not independent experimentation or effectiveness acceptance. No synthetic/unacylated/developmental/clinical/dose claims added; omitted qualifiers not declared false.",
+  "queueAccounting": "Prepared 10 to 11, completed 0; prior-co-citation assessed 6 to 7 because existing PubMed co-citation assessed. No newly independent family.",
+  "remainingGates": [
+    "Evidence-reviewer acceptance of candidate and inherited B1/Strong/high ratings.",
+    "Independent-family/lineage closure not inferred from existing study reassessment.",
+    "Distinct-person human acceptance and publication/promotion remain separate."
+  ],
+  "claimActuallyReSourced": false,
+  "newApprovalGranted": false,
+  "productionChangePerformed": false
+}

@@ -11,6 +11,52 @@ using Xunit;
 public class ResearchJobTests
 {
     [Fact]
+    public async Task ResearchJob_RequestChanges_Preserves_Referenced_Queue_Item_And_Followup_Linkage()
+    {
+        var outputDir = CreateTempDirectory();
+        try
+        {
+            var packet = JsonNode.Parse(File.ReadAllText(TestPaths.FixturePath("evidence-packet.sample.json")))!;
+            packet["ops"]!["reviewReasons"] = new JsonArray("Independent source verification is still needed.");
+            var itemId = Assert.Single(new ResearchReviewQueueBuilder().BuildFromEvidencePacket(packet)).ItemId;
+            var packetPath = Path.Combine(outputDir, "synthetic-evidence.json");
+            File.WriteAllText(packetPath, packet.ToJsonString());
+            var decision = JsonNode.Parse(ReviewDecisionBatch("Creatine", "synthetic-request-changes", "synthetic-remediation", "targeted-research-rereview"))!;
+            decision["decisions"]![0]!["scope"]!["reviewQueueItemIds"] = new JsonArray(itemId);
+            var validator = ResearchArtifactValidator.LoadFromDirectory(TestPaths.WorkerSchemaDirectory());
+            var validation = validator.Validate(ResearchArtifactKind.ReviewDecisionBatch, decision);
+            Assert.True(validation.IsValid, validation.Summary());
+            var decisionPath = Path.Combine(outputDir, "synthetic-decision.json");
+            File.WriteAllText(decisionPath, decision.ToJsonString());
+            var options = new WorkerOptions
+            {
+                RunMode = RunMode.Research,
+                ResearchSourceRegistryFilePath = TestPaths.FixturePath("source-registry.sample.json"),
+                ResearchEvidencePacketPath = packetPath,
+                ResearchReviewDecisionPath = decisionPath,
+                ResearchOutputDirectory = outputDir,
+            };
+            var result = await CreateJob(options).RunAsync(new IngestionContext(options, CreateLogger()));
+            Assert.True(result.Success, result.ErrorMessage);
+            var queue = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "review-queue.json")))!.AsArray();
+            Assert.Contains(queue, item => (string?)item?["ItemId"] == itemId);
+            var summary = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-summary.json")))!;
+            var compound = Assert.Single(summary["Compounds"]!.AsArray());
+            Assert.True((bool)compound!["HasRequestedChanges"]!);
+            Assert.Equal("review-required", (string?)compound["PromotionReadiness"]);
+            Assert.True((int)compound["ReviewQueueItemCount"]! > 0);
+            var plan = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "review-resolution-plan.json")))!;
+            Assert.Contains(plan["Items"]!.AsArray(), item => item!["RelatedReviewQueueItemIds"]!.AsArray().Any(id => (string?)id == itemId));
+            var tasks = JsonNode.Parse(File.ReadAllText(Path.Combine(outputDir, "research-task-queue.json")))!;
+            Assert.Contains(tasks["Items"]!.AsArray(), item => item!["RelatedReviewQueueItemIds"]!.AsArray().Any(id => (string?)id == itemId));
+        }
+        finally
+        {
+            Directory.Delete(outputDir, recursive: true);
+        }
+    }
+
+    [Fact]
     public async Task ResearchJob_Emits_Draft_Substances_Review_Queue_And_Report()
     {
         var outputDir = CreateTempDirectory();

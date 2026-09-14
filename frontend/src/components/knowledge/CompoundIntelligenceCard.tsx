@@ -1,11 +1,24 @@
+import { useId, useState } from 'react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { useProfile } from '@/lib/context';
 import type { RecommendationSurface } from '@/lib/recommendations';
 import { useSettings } from '@/lib/settings';
 import { KnowledgeEntry } from '@/lib/types';
 import { formatWeight } from '@/lib/utils';
+import { getReviewedStudyDesign } from '@/lib/reviewedStudyDesign';
 import { SafetyDisclaimer } from '../SafetyDisclaimer';
 import { EvidenceTierBadge } from './EvidenceTierBadge';
+
+function referenceLink(value: string): { href: string; label: string } | null {
+  try {
+    const url = new URL(value);
+    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return null;
+    const isPubMedSearch = url.hostname === 'pubmed.ncbi.nlm.nih.gov' && url.searchParams.has('term');
+    return { href: url.href, label: isPubMedSearch ? `PubMed search: ${url.searchParams.get('term') || 'query'}` : value };
+  } catch {
+    return null;
+  }
+}
 
 interface CompoundIntelligenceCardProps {
   entry: KnowledgeEntry;
@@ -15,13 +28,16 @@ interface CompoundIntelligenceCardProps {
 export function CompoundIntelligenceCard({
   entry,
 }: CompoundIntelligenceCardProps) {
+  const studyDesign = getReviewedStudyDesign(entry.canonicalName);
+  const [showAllReferences, setShowAllReferences] = useState(false);
+  const referenceListId = useId();
   const { currentProfileId, profiles } = useProfile();
   const { settings } = useSettings();
   const currentProfile = profiles.find(p => p.id === currentProfileId);
   return (
-    <GlassCard variant="default" className="p-6 relative overflow-hidden">
+    <GlassCard variant="default" className="p-4 sm:p-6 relative overflow-hidden break-words">
       <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-emerald-500/[0.06] blur-2xl pointer-events-none" />
-      <div className="flex items-start justify-between mb-4">
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
         <div>
           <h3 className="text-lg font-semibold text-white">{entry.canonicalName}</h3>
           {entry.aliases.length > 0 && (
@@ -32,7 +48,7 @@ export function CompoundIntelligenceCard({
       </div>
 
       <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Classification</p>
             <p className="text-sm text-white/65">{entry.classification}</p>
@@ -46,10 +62,29 @@ export function CompoundIntelligenceCard({
 
         {entry.mechanismSummary && (
           <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Mechanism Summary</p>
+            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Overview</p>
             <p className="text-sm text-white/65">{entry.mechanismSummary}</p>
           </div>
         )}
+
+        <section aria-label="Evidence and limitations" className="rounded-xl border border-white/10 bg-white/[0.03] p-4 space-y-2">
+          <h4 className="text-sm font-medium text-white/80">Evidence and limitations</h4>
+          {studyDesign ? (
+            <div data-testid="reviewed-study-design" className="space-y-2">
+              <p className="text-sm leading-6 text-white/65">{studyDesign.statement}</p>
+              <a href={studyDesign.citation.url} target="_blank" rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center text-sm text-cyan-300 underline underline-offset-4 [overflow-wrap:anywhere]">
+                {studyDesign.citation.displayLabel} · PMID {studyDesign.citation.pmid} (opens in new tab)
+              </a>
+              <p className="text-sm leading-6 text-white/65">{studyDesign.limitations}</p>
+            </div>
+          ) : (
+            <p className="text-sm leading-6 text-white/65">
+              Human/preclinical evidence breakdown is not available in this record.
+            </p>
+          )}
+          {entry.notes && <p className="text-sm leading-6 text-white/65">{entry.notes}</p>}
+        </section>
 
         {/* Profile context section — demographics only, no dosage adjacency */}
         {currentProfile && (
@@ -120,25 +155,34 @@ export function CompoundIntelligenceCard({
         )}
 
         {entry.sourceReferences.length > 0 && (
-          <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">References</p>
-            <ul className="text-xs space-y-1">
-              {entry.sourceReferences.slice(0, 3).map((ref, i) => (
-                <li key={i} className="text-white/35">{ref}</li>
-              ))}
-              {entry.sourceReferences.length > 3 && (
-                <li className="text-white/35">+{entry.sourceReferences.length - 3} more</li>
-              )}
+          <section aria-label="Sources">
+            <h4 className="text-sm font-medium text-white/80 mb-2">Sources</h4>
+            <ul id={referenceListId} className="text-sm space-y-2">
+              {entry.sourceReferences.slice(0, showAllReferences ? undefined : 3).map((ref, i) => {
+                const link = referenceLink(ref);
+                return (
+                  <li key={i} className="min-w-0 [overflow-wrap:anywhere] text-white/65">
+                    {link ? (
+                      <a href={link.href} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex min-h-11 items-center rounded py-2 text-cyan-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+                        {link.label}<span className="sr-only"> (opens in a new tab)</span>
+                      </a>
+                    ) : ref}
+                  </li>
+                );
+              })}
             </ul>
-          </div>
+            {entry.sourceReferences.length > 3 && (
+              <button type="button" aria-expanded={showAllReferences} aria-controls={referenceListId}
+                onClick={() => setShowAllReferences(value => !value)}
+                className="mt-2 min-h-11 rounded px-2 py-2 text-sm text-cyan-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+                {showAllReferences ? 'Show fewer sources' : `Show all ${entry.sourceReferences.length} sources`}
+              </button>
+            )}
+          </section>
         )}
 
-        {entry.notes && (
-          <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-1">Notes</p>
-            <p className="text-sm text-white/65">{entry.notes}</p>
-          </div>
-        )}
+
 
       </div>
 
