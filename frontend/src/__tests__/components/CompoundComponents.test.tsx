@@ -170,6 +170,38 @@ describe('CompoundForm', () => {
     await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ goal: original, name: 'Bremelanotide' })));
   });
 
+  it('lets a sparse goal browse the category and save another compound with that goal', async () => {
+    vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([
+      { ...knowledgeEntries[0], canonicalName: 'MOTS-C', benefits: ['anti-aging'] },
+      knowledgeEntries[0],
+      knowledgeEntries[1],
+    ]);
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
+    fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'anti-aging' } });
+    expect(screen.getByRole('status')).toHaveTextContent('Showing 1 of 2 compounds');
+    expect(screen.queryByRole('option', { name: 'BPC-157' })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Show all compounds in this category' }));
+    expect(screen.getByRole('status')).toHaveTextContent('Showing 2 of 2 compounds');
+    expect(screen.queryByRole('option', { name: 'Creatine' })).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('3. Select a Compound'), { target: { value: 'BPC-157' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Show goal matches only' }));
+    expect(screen.getByLabelText('3. Select a Compound')).toHaveValue('');
+    expect(screen.getByLabelText('2. Select a Goal')).toHaveValue('anti-aging');
+    fireEvent.click(screen.getByRole('button', { name: 'Show all compounds in this category' }));
+    fireEvent.change(screen.getByLabelText('3. Select a Compound'), { target: { value: 'BPC-157' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ name: 'BPC-157', goal: 'anti-aging', category: 'Peptide' })));
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
+    fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'anti-aging' } });
+    expect(screen.queryByRole('option', { name: 'BPC-157' })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Show all compounds in this category' }));
+    fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'recovery' } });
+    expect(screen.queryByRole('option', { name: 'MOTS-C' })).not.toBeInTheDocument();
+  });
+
   it('submits calendar dates as explicit UTC timestamps without changing the selected day', async () => {
     const onSubmit = vi.fn().mockResolvedValue(undefined);
     render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
