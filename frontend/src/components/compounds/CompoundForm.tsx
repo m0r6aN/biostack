@@ -1,6 +1,7 @@
 'use client';
 
 import { apiClient } from '@/lib/api';
+import { compoundGoalDisplay } from '@/lib/compoundGoalLabels';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { useEffect, useId, useMemo, useState } from 'react';
 
@@ -44,7 +45,9 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
     knowledgeBase
       .filter(k => k.classification === formData.category)
       .forEach(k => k.benefits?.forEach(b => goals.add(b)));
-    return Array.from(goals).sort();
+    return Array.from(goals)
+      .map(value => ({ value, ...compoundGoalDisplay(value) }))
+      .sort((a, b) => a.label.localeCompare(b.label));
   }, [knowledgeBase, formData.category]);
 
   const filteredCompounds = useMemo(() => {
@@ -112,6 +115,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           <label htmlFor={`${formId}-goal`} className="block text-sm font-medium text-white/70 mb-2">2. Select a Goal</label>
           <select
             id={`${formId}-goal`}
+            aria-describedby={formData.goal && compoundGoalDisplay(formData.goal).context ? `${formId}-goal-context` : undefined}
             value={formData.goal}
             onChange={(e) => setFormData({ ...formData, goal: e.target.value, name: '' })}
             disabled={!formData.category}
@@ -119,9 +123,14 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           >
             <option value="">{formData.category ? 'Select a goal (Optional)' : 'Select category first'}</option>
             {filteredGoals.map(goal => (
-              <option key={goal} value={goal}>{goal.charAt(0).toUpperCase() + goal.slice(1)}</option>
+              <option key={goal.value} value={goal.value}>{goal.label.charAt(0).toUpperCase() + goal.label.slice(1)}</option>
             ))}
           </select>
+          {formData.goal && compoundGoalDisplay(formData.goal).context && (
+            <p id={`${formId}-goal-context`} className="mt-2 break-words text-xs leading-relaxed text-white/55">
+              {compoundGoalDisplay(formData.goal).context}
+            </p>
+          )}
         </div>
 
         {/* 3. Compound Selection */}

@@ -9,6 +9,7 @@ import { CompoundForm } from '@/components/compounds/CompoundForm';
 import { CompoundList } from '@/components/compounds/CompoundList';
 import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
 import { ApiError, apiClient } from '@/lib/api';
+import { compoundGoalDisplay } from '@/lib/compoundGoalLabels';
 import { useProfile } from '@/lib/context';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { useRouter } from 'next/navigation';
@@ -159,7 +160,14 @@ export default function CompoundsPage() {
                     <h3 className="font-semibold text-white mb-2">{selectedCompound.name}</h3>
                     <div className="space-y-2 text-sm text-white/65">
                       <p><span className="text-white/40">Category:</span> {selectedCompound.category}</p>
-                      {selectedCompound.goal && <p><span className="text-white/40">Goal:</span> {selectedCompound.goal}</p>}
+                      {selectedCompound.goal && (
+                        <div>
+                          <p><span className="text-white/40">Goal:</span> {compoundGoalDisplay(selectedCompound.goal).label}</p>
+                          {compoundGoalDisplay(selectedCompound.goal).context && (
+                            <p className="mt-1 break-words text-xs leading-relaxed text-white/55">{compoundGoalDisplay(selectedCompound.goal).context}</p>
+                          )}
+                        </div>
+                      )}
                       {selectedCompound.source && <p><span className="text-white/40">Source:</span> {selectedCompound.source}</p>}
                       {selectedCompound.pricePaid && <p><span className="text-white/40">Price:</span> ${selectedCompound.pricePaid}</p>}
                       <p><span className="text-white/40">Status:</span> {selectedCompound.status}</p>

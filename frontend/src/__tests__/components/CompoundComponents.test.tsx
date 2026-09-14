@@ -145,6 +145,31 @@ describe('CompoundForm', () => {
     }));
   });
 
+  it('uses concise research labels while preserving the original goal for filtering and saving', async () => {
+    const original = 'Evidence reviewed for hypoactive sexual desire disorder per product label; BioStack presents this as educational reference, not a recommendation.';
+    const generic = 'Evidence reviewed for research reference; BioStack presents this as educational reference, not a recommendation.';
+    vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([
+      { ...knowledgeEntries[0], canonicalName: 'Bremelanotide', benefits: [original] },
+      { ...knowledgeEntries[0], canonicalName: 'Research compound', benefits: [generic] },
+      knowledgeEntries[0],
+    ]);
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
+    expect(screen.getByRole('option', { name: 'Hypoactive sexual desire disorder' })).toHaveValue(original);
+    expect(screen.getByRole('option', { name: 'Research reference' })).toHaveValue(generic);
+    expect(screen.queryByRole('option', { name: original })).not.toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Recovery' })).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: original } });
+    expect(screen.getByLabelText('2. Select a Goal')).toHaveAccessibleDescription(original);
+    expect(screen.getByRole('option', { name: 'Bremelanotide' })).toBeInTheDocument();
+    expect(screen.queryByRole('option', { name: 'Research compound' })).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('3. Select a Compound'), { target: { value: 'Bremelanotide' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ goal: original, name: 'Bremelanotide' })));
+  });
+
   it('submits calendar dates as explicit UTC timestamps without changing the selected day', async () => {
     const onSubmit = vi.fn().mockResolvedValue(undefined);
     render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
@@ -161,6 +186,15 @@ describe('CompoundForm', () => {
 });
 
 describe('CompoundList', () => {
+  it('keeps historical long goal values readable without rewriting the saved record', () => {
+    const goal = 'Evidence reviewed for research reference; BioStack presents this as educational reference, not a recommendation.';
+    const saved = { ...compounds[0], goal };
+    const onSelect = vi.fn();
+    render(<CompoundList compounds={[saved]} onSelect={onSelect} />);
+    expect(screen.getByText('Research reference')).toHaveAttribute('title', goal);
+    fireEvent.click(screen.getByText('Research reference'));
+    expect(onSelect).toHaveBeenCalledWith(saved);
+  });
   it('renders compound metadata and sends the selected compound to the caller', async () => {
     const user = userEvent.setup();
     const onSelect = vi.fn();
