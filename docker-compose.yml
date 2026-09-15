@@ -49,7 +49,7 @@ services:
       - Smtp__Password=${Smtp__Password:-}
       - Smtp__FromEmail=${Smtp__FromEmail:-}
       - Smtp__FromName=${Smtp__FromName:-BioStack}
-      - Smtp__MagicLinkSubject=${Smtp__MagicLinkSubject:-Your BioStack sign-in link}
+      - Smtp__MagicLinkSubject=${Smtp__MagicLinkSubject:-BioStack Quick Login}
       - AzureCommunicationEmail__ConnectionString=${AzureCommunicationEmail__ConnectionString:-}
       - AzureCommunicationEmail__SenderAddress=${AzureCommunicationEmail__SenderAddress:-}
     healthcheck:

@@ -34,7 +34,7 @@ param(
     [string]$SmtpPassword = "",
     [string]$SmtpFromEmail = "",
     [string]$SmtpFromName = "BioStack",
-    [string]$SmtpMagicLinkSubject = "Your BioStack sign-in link"
+    [string]$SmtpMagicLinkSubject = "BioStack Quick Login"
 )
 
 $ErrorActionPreference = "Stop"
