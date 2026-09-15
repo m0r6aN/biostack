@@ -3,7 +3,7 @@ import { CompoundEditForm } from '@/components/compounds/CompoundEditForm';
 import { CompoundList } from '@/components/compounds/CompoundList';
 import { apiClient } from '@/lib/api';
 import type { CompoundRecord, KnowledgeEntry } from '@/lib/types';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -164,14 +164,31 @@ describe('CompoundForm', () => {
     expect(screen.getByRole('option', { name: 'Recovery' })).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: original } });
     expect(screen.getByLabelText('2. Select a Goal')).toHaveAccessibleDescription(original);
-    expect(screen.getByRole('option', { name: 'Bremelanotide' })).toBeInTheDocument();
-    expect(screen.queryByRole('option', { name: 'Research compound' })).not.toBeInTheDocument();
+    // Default view is the whole category: the goal match (Bremelanotide) sorts
+    // first and is marked, but non-matching compounds stay visible too.
+    expect(screen.getByRole('option', { name: 'Bremelanotide — matches your goal' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Research compound' })).toBeInTheDocument();
+    const compoundOptionsForOriginalGoal = within(screen.getByLabelText('3. Select a Compound')).getAllByRole('option');
+    expect(compoundOptionsForOriginalGoal.map(o => o.textContent)).toEqual([
+      'Select a compound...',
+      'Bremelanotide — matches your goal',
+      'BPC-157',
+      'Research compound',
+    ]);
     fireEvent.change(screen.getByLabelText('3. Select a Compound'), { target: { value: 'Bremelanotide' } });
     fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
     await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ goal: original, name: 'Bremelanotide' })));
   });
 
-  it('lets a sparse goal browse the category and save another compound with that goal', async () => {
+  // Regression note (design decision, owner-feedback-20260915 #5): PR #352 shipped a
+  // "goal matches only" default with a toggle to reveal the rest of the category. The
+  // owner found that unfriendly and lost a compound (MOTS-C) hiding behind it. The
+  // binding lead decision replaces the hide/reveal toggle with an always-full category
+  // list, sorted goal-matches-first with a "matches your goal" marker — so a sparse
+  // goal (matching only one compound) never hides the rest of the category, and there
+  // is nothing left to toggle. This test replaces the old
+  // "lets a sparse goal browse the category and save another compound with that goal".
+  it('shows the whole category by default and sorts a sparse goal match first', async () => {
     vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([
       { ...knowledgeEntries[0], canonicalName: 'MOTS-C', benefits: ['anti-aging'] },
       knowledgeEntries[0],
@@ -181,26 +198,39 @@ describe('CompoundForm', () => {
     render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
     await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
     fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
-    fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'anti-aging' } });
-    expect(screen.getByRole('status')).toHaveTextContent('Showing 1 of 2 compounds');
-    expect(screen.queryByRole('option', { name: 'BPC-157' })).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Show all compounds in this category' }));
-    expect(screen.getByRole('status')).toHaveTextContent('Showing 2 of 2 compounds');
+
+    // No goal yet: the whole category is visible, alphabetically, no other-category
+    // compound (Creatine) leaks in, and there is no goal-match messaging.
+    expect(screen.getByRole('option', { name: 'BPC-157' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'MOTS-C' })).toBeInTheDocument();
     expect(screen.queryByRole('option', { name: 'Creatine' })).not.toBeInTheDocument();
-    fireEvent.change(screen.getByLabelText('3. Select a Compound'), { target: { value: 'BPC-157' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Show goal matches only' }));
-    expect(screen.getByLabelText('3. Select a Compound')).toHaveValue('');
-    expect(screen.getByLabelText('2. Select a Goal')).toHaveValue('anti-aging');
-    fireEvent.click(screen.getByRole('button', { name: 'Show all compounds in this category' }));
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /show all compounds/i })).not.toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'anti-aging' } });
+
+    // A sparse goal match (only MOTS-C) still leaves the rest of the category visible;
+    // the match is marked and sorted first instead of hiding BPC-157.
+    const compoundOptions = within(screen.getByLabelText('3. Select a Compound')).getAllByRole('option');
+    expect(compoundOptions.map(o => o.textContent)).toEqual([
+      'Select a compound...',
+      'MOTS-C — matches your goal',
+      'BPC-157',
+    ]);
+    expect(screen.getByRole('status')).toHaveTextContent('Compounds that match your goal are shown first in this category.');
+    expect(screen.getByRole('status')).toHaveTextContent('Goal tags are not a complete list of compounds or evidence of effectiveness.');
+
     fireEvent.change(screen.getByLabelText('3. Select a Compound'), { target: { value: 'BPC-157' } });
     fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
     await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ name: 'BPC-157', goal: 'anti-aging', category: 'Peptide' })));
+
+    // Re-entering the category with a different goal ("recovery", which is BPC-157's
+    // benefit, not MOTS-C's) still shows both compounds — MOTS-C simply loses its
+    // marker instead of disappearing, and BPC-157 gains one.
     fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
-    fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'anti-aging' } });
-    expect(screen.queryByRole('option', { name: 'BPC-157' })).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Show all compounds in this category' }));
     fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'recovery' } });
-    expect(screen.queryByRole('option', { name: 'MOTS-C' })).not.toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'MOTS-C' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'BPC-157 — matches your goal' })).toBeInTheDocument();
   });
 
   it('submits calendar dates as explicit UTC timestamps without changing the selected day', async () => {

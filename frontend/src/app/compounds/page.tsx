@@ -12,6 +12,8 @@ import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelli
 import { ApiError, apiClient } from '@/lib/api';
 import { compoundGoalDisplay } from '@/lib/compoundGoalLabels';
 import { useProfile } from '@/lib/context';
+import { cn } from '@/lib/utils';
+import { useSidebarCollapsed } from '@/lib/useSidebarCollapsed';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -21,6 +23,7 @@ const CONSENT_RETURN_TO = '/compounds';
 export default function CompoundsPage() {
   const router = useRouter();
   const { currentProfileId } = useProfile();
+  const [sidebarCollapsed] = useSidebarCollapsed();
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -271,7 +274,15 @@ export default function CompoundsPage() {
             }}
           />
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div
+            data-testid="compounds-detail-grid"
+            className={cn(
+              'grid grid-cols-1 gap-6',
+              // With the sidebar collapsed at lg+, give the detail column the
+              // reclaimed width instead of leaving it at a fixed 1/3 share.
+              sidebarCollapsed ? 'lg:grid-cols-5' : 'lg:grid-cols-3'
+            )}
+          >
             <div className="lg:col-span-2">
               <h2 className="text-lg font-semibold text-white mb-4">Compound List</h2>
               <CompoundList
@@ -280,7 +291,7 @@ export default function CompoundsPage() {
               />
             </div>
 
-            <div>
+            <div className={cn(sidebarCollapsed && 'lg:col-span-3')}>
               {selectedCompound ? (
                 <div className="space-y-4">
                   <div className="p-4 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.35)]">

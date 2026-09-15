@@ -2,7 +2,7 @@ import CompoundsPage from '@/app/compounds/page';
 import { ApiError, apiClient } from '@/lib/api';
 import type { CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { beforeEach, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 vi.mock('@/lib/context', () => ({ useProfile: () => ({ currentProfileId: 'profile-fixture' }) }));
 const { push } = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
@@ -54,6 +54,7 @@ const namedCompound: CompoundRecord = {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  window.localStorage.clear();
   vi.mocked(apiClient.getCompounds).mockResolvedValue([]);
   vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([]);
 });
