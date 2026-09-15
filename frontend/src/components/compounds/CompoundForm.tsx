@@ -15,6 +15,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
   const formId = useId();
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeEntry[]>([]);
   const [showAllCompounds, setShowAllCompounds] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -63,17 +64,36 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
   }, [knowledgeBase, formData.category, formData.goal]);
   const filteredCompounds = showAllCompounds ? categoryCompounds : goalCompounds;
 
+  const handleFormKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key !== 'Enter') return;
+    const target = e.target as HTMLElement;
+    // Allow newlines in the notes textarea, and an explicit Enter on the
+    // submit button itself. Every other field's Enter key is swallowed so an
+    // accidental keystroke mid-form (e.g. while typing the compound name)
+    // cannot submit the record before it is complete.
+    if (target.tagName === 'TEXTAREA') return;
+    if (target instanceof HTMLButtonElement && target.type === 'submit') return;
+    e.preventDefault();
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const trimmedName = formData.name.trim();
+    if (!trimmedName) {
+      setFormError('Enter a compound name before adding it.');
+      return;
+    }
+    setFormError(null);
     try {
       await onSubmit({
         ...formData,
+        name: trimmedName,
         personId,
         pricePaid: formData.pricePaid ? Number(formData.pricePaid) : undefined,
         startDate: new Date(`${formData.startDate}T00:00:00Z`).toISOString(),
         endDate: formData.endDate ? new Date(`${formData.endDate}T00:00:00Z`).toISOString() : null,
       });
-      
+
       setFormData({
         name: '',
         category: '',
@@ -93,7 +113,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} onKeyDown={handleFormKeyDown} className="space-y-6">
       <div className="space-y-4">
         {/* 1. Category */}
         <div>
@@ -191,11 +211,18 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
             id={`${formId}-manual-name`}
             type="text"
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={(e) => {
+              setFormData({ ...formData, name: e.target.value });
+              if (formError) setFormError(null);
+            }}
             placeholder="Search or enter custom compound name..."
+            required
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
           />
           <p className="mt-1 text-[10px] text-white/30 italic px-1">Tip: Use this if you can't find your compound in the list above.</p>
+          {formError && (
+            <p role="alert" className="mt-2 text-xs text-red-300">{formError}</p>
+          )}
         </div>
 
         {/* 5. Optional: Source and Price */}

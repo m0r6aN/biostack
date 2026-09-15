@@ -48,6 +48,23 @@ const ALL_NEW_COPY = [
   // InteractionIntelligenceCard CTA
   'Tracking this protocol over time will show whether these interaction patterns hold.',
   'Start tracking',
+  // CompoundForm / CompoundEditForm — name validation (owner-reported: an
+  // accidental Enter mid-form previously created a nameless compound)
+  'Enter a compound name before adding it.',
+  'Enter a compound name before saving.',
+  'Select a category before saving.',
+  // Compound detail resilience — a compound with no name skips the
+  // knowledge lookup instead of erroring
+  'No reference entry for this compound',
+  'Unnamed compound',
+  // CompoundEditForm / detail-panel edit + delete
+  'Edit Compound',
+  'Compound name',
+  'Save Changes',
+  "Delete this compound? This can't be undone.",
+  'Confirm delete',
+  'Deleting...',
+  'Saving...',
 ];
 
 const BANNED = [

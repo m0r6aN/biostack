@@ -21,7 +21,7 @@ export function CompoundList({ compounds, onSelect }: CompoundListProps) {
         >
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <h4 className="font-semibold text-white">{compound.name}</h4>
+              <h4 className="font-semibold text-white">{compound.name?.trim() || 'Unnamed compound'}</h4>
               <div className="flex flex-wrap items-center gap-2 mt-1">
                 <span className="text-xs text-white/40">{compound.category}</span>
                 {compound.goal && (

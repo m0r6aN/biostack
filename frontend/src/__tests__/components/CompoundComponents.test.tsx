@@ -1,4 +1,5 @@
 import { CompoundForm } from '@/components/compounds/CompoundForm';
+import { CompoundEditForm } from '@/components/compounds/CompoundEditForm';
 import { CompoundList } from '@/components/compounds/CompoundList';
 import { apiClient } from '@/lib/api';
 import type { CompoundRecord, KnowledgeEntry } from '@/lib/types';
@@ -214,6 +215,111 @@ describe('CompoundForm', () => {
     await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({
       startDate: '2026-09-14T00:00:00.000Z', endDate: '2026-09-20T00:00:00.000Z', personId: 'person-1',
     })));
+  });
+
+  it('blocks submission and shows an inline error when the name is blank or whitespace-only', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Other' } });
+    fireEvent.change(screen.getByLabelText('4. Optional: Manual Search/Entry'), { target: { value: '   ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Enter a compound name before adding it.');
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('trims the name before submitting', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Other' } });
+    fireEvent.change(screen.getByLabelText('4. Optional: Manual Search/Entry'), { target: { value: '  Padded Name  ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ name: 'Padded Name' })));
+  });
+
+  it('suppresses the implicit-submit default action of an Enter keystroke inside the manual name field', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Other' } });
+    const nameInput = screen.getByLabelText('4. Optional: Manual Search/Entry') as HTMLInputElement;
+    fireEvent.change(nameInput, { target: { value: 'Half-typed' } });
+
+    const event = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+    nameInput.dispatchEvent(event);
+
+    expect(event.defaultPrevented).toBe(true);
+    expect(onSubmit).not.toHaveBeenCalled();
+    // The field keeps its value — the accidental keystroke did not reset anything.
+    expect(nameInput).toHaveValue('Half-typed');
+  });
+
+  it('still lets Enter insert newlines in the notes textarea (does not prevent default there)', async () => {
+    render(<CompoundForm personId="person-1" onSubmit={vi.fn().mockResolvedValue(undefined)} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    const notes = screen.getByLabelText('Notes');
+    const event = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+    notes.dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(false);
+  });
+});
+
+describe('CompoundEditForm', () => {
+  const compound: CompoundRecord = {
+    id: 'compound-1',
+    personId: 'person-1',
+    name: '',
+    category: 'Peptide',
+    startDate: '2026-01-01T00:00:00Z',
+    endDate: null,
+    status: 'Active',
+    notes: 'Original notes',
+    sourceType: 'Protocol Analyzer',
+    goal: 'recovery',
+    source: 'Protocol Analyzer',
+  };
+
+  it('lets the owner give a nameless compound a name and preserves untouched fields', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    const onCancel = vi.fn();
+    render(<CompoundEditForm compound={compound} onSubmit={onSubmit} onCancel={onCancel} />);
+
+    fireEvent.change(screen.getByLabelText('Compound name'), { target: { value: 'BPC-157' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({
+      name: 'BPC-157',
+      category: 'Peptide',
+      notes: 'Original notes',
+      source: 'Protocol Analyzer',
+      sourceType: 'Protocol Analyzer',
+      goal: 'recovery',
+    })));
+  });
+
+  it('rejects a whitespace-only name without calling onSubmit', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundEditForm compound={compound} onSubmit={onSubmit} onCancel={vi.fn()} />);
+
+    fireEvent.change(screen.getByLabelText('Compound name'), { target: { value: '   ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Enter a compound name before saving.');
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('calls onCancel without submitting', () => {
+    const onSubmit = vi.fn();
+    const onCancel = vi.fn();
+    render(<CompoundEditForm compound={{ ...compound, name: 'BPC-157' }} onSubmit={onSubmit} onCancel={onCancel} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(onCancel).toHaveBeenCalledTimes(1);
+    expect(onSubmit).not.toHaveBeenCalled();
   });
 });
 
