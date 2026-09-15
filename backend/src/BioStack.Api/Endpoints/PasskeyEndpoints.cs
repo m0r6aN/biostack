@@ -271,15 +271,8 @@ public static class PasskeyEndpoints
             return Disabled();
         }
 
-        // The client-visible failure below is deliberately the same generic "invalid_passkey"
-        // response for every branch — a WebAuthn RP must not let a rejected assertion reveal
-        // *why* it failed (that would let an attacker enumerate credentials or accounts). But
-        // that same generic response is exactly what made a real sign-in failure look like an
-        // unexplained "it doesn't work" to the owner. Each branch below logs a distinct,
-        // server-only reason so an operator can tell "expired ceremony" apart from "this
-        // credential ID has no server record" (e.g. a passkey a manager still offers locally
-        // from a registration attempt that never completed) apart from "cryptographic/RP
-        // verification failed" without changing what the browser receives.
+        // Keep rejection responses uniform to avoid disclosing credential or account
+        // state. Fixed server-side events distinguish the failed verification stages.
         var authLog = loggerFactory.CreateLogger("BioStack.AuthFlow");
 
         var challenge = await ClaimChallengeAsync(request.RequestId, AuthenticationOperation, null, db, ct);
@@ -299,8 +292,7 @@ public static class PasskeyEndpoints
         {
             authLog.LogWarning(
                 new EventId(6904, "PasskeyAssertionCredentialUnrecognized"),
-                "Passkey sign-in rejected: the credential ID the browser presented has no verified server-side record. " +
-                "Likely an orphaned credential a passkey manager still offers locally from a registration that never completed server-side.");
+                "Passkey sign-in rejected: no stored credential was found or its associated identity is not verified.");
             return InvalidCeremony();
         }
 
@@ -335,17 +327,12 @@ public static class PasskeyEndpoints
             var finalRedirect = await AuthSessionIssuer.SignInAsync(credential.Identity.User, redirectPath, db, http, ct);
             return Results.Ok(new { redirectPath = finalRedirect });
         }
-        catch (Fido2VerificationException ex)
+        catch (Fido2VerificationException)
         {
-            // ex.Message is a library-generated protocol diagnostic (e.g. signature counter
-            // policy, RP ID hash mismatch, origin mismatch) — not user or credential content —
-            // safe to log, and exactly the detail a prod RpId/Origins misconfiguration would
-            // show up as here first.
+            // Record the failed stage without logging assertion-derived exception details.
             authLog.LogWarning(
                 new EventId(6906, "PasskeyAssertionVerificationFailed"),
-                ex,
-                "Passkey sign-in rejected: WebAuthn assertion verification failed ({Reason}). Check Auth:Passkeys:RpId/Origins against the origin the browser used if this is unexpected.",
-                ex.Message);
+                "Passkey sign-in rejected: WebAuthn assertion verification failed.");
             return InvalidCeremony();
         }
     }

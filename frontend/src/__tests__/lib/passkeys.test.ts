@@ -137,16 +137,16 @@ describe('passkey WebAuthn codecs', () => {
 });
 
 describe('passkeyAuthenticationErrorMessage', () => {
-  it('tells the user their passkey was not recognized, distinct from a cancelled prompt', () => {
-    const unrecognized = passkeyAuthenticationErrorMessage(new PasskeyRequestError(400, 'invalid_passkey'));
+  it('keeps generic verification failure neutral and distinct from cancellation', () => {
+    const rejected = passkeyAuthenticationErrorMessage(new PasskeyRequestError(400, 'invalid_passkey'));
     const cancelled = passkeyAuthenticationErrorMessage(Object.assign(new Error('cancelled'), { name: 'NotAllowedError' }));
 
-    expect(unrecognized).toBe("BioStack didn't recognize that passkey. Add it again from Account settings, or use your email link.");
+    expect(rejected).toBe("BioStack could not verify this passkey sign-in. Try again or use your email link.");
     expect(cancelled).toBe('The passkey request was cancelled or timed out. Choose Sign in with a passkey to try again.');
-    expect(unrecognized).not.toBe(cancelled);
+    expect(rejected).not.toBe(cancelled);
   });
 
-  it('does not confuse a server outage with an unrecognized credential', () => {
+  it('distinguishes service and rate-limit failures from verification failure', () => {
     expect(passkeyAuthenticationErrorMessage(new PasskeyRequestError(503))).toBe(
       'BioStack could not check your passkey right now. Please try again shortly.'
     );

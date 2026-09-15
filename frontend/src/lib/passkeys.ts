@@ -32,17 +32,13 @@ export function passkeyRegistrationErrorMessage(error: unknown): string {
   return 'Your passkey could not be added. Check your connection and try again, or contact support@biostack.cc.';
 }
 
-// Distinct from passkeyRegistrationErrorMessage: sign-in failures need their own copy because
-// the most common real-world cause here is a *different* one — a passkey that a passkey manager
-// still offers locally but that BioStack's server no longer has a matching record for (for
-// example, one created during an earlier registration attempt that never completed). That case
-// and a merely cancelled or timed-out browser prompt need to read differently to the person
-// choosing between "try the passkey again" and "add a new one from Account settings".
+// The server uses invalid_passkey for several verification failures. Keep its
+// message neutral while distinguishing browser cancellation and service errors.
 export function passkeyAuthenticationErrorMessage(error: unknown): string {
   if (error instanceof PasskeyRequestError) {
     if (error.status === 429) return 'Too many attempts. Wait a few minutes, then try your passkey again.';
     if (error.status >= 500) return 'BioStack could not check your passkey right now. Please try again shortly.';
-    if (error.code === 'invalid_passkey') return "BioStack didn't recognize that passkey. Add it again from Account settings, or use your email link.";
+    if (error.code === 'invalid_passkey') return 'BioStack could not verify this passkey sign-in. Try again or use your email link.';
     return 'BioStack could not complete passkey sign-in. Try again or use your email link.';
   }
   if (error instanceof Error || (typeof DOMException !== 'undefined' && error instanceof DOMException)) {

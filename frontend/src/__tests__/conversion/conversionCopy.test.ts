@@ -49,7 +49,7 @@ const ALL_NEW_COPY = [
   'Tracking this protocol over time will show whether these interaction patterns hold.',
   'Start tracking',
   // passkeys.ts — passkeyAuthenticationErrorMessage (sign-in, distinct from registration copy)
-  "BioStack didn't recognize that passkey. Add it again from Account settings, or use your email link.",
+  "BioStack could not verify this passkey sign-in. Try again or use your email link.",
   'Too many attempts. Wait a few minutes, then try your passkey again.',
   'BioStack could not check your passkey right now. Please try again shortly.',
   'BioStack could not complete passkey sign-in. Try again or use your email link.',
