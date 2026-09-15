@@ -48,6 +48,11 @@ const ALL_NEW_COPY = [
   // InteractionIntelligenceCard CTA
   'Tracking this protocol over time will show whether these interaction patterns hold.',
   'Start tracking',
+  // CompoundForm goal picker (owner-feedback-20260915 #5: default = whole category,
+  // goal matches sorted first and marked, no show-all/goal-only toggle)
+  'Compounds that match your goal are shown first in this category.',
+  'Goal tags are not a complete list of compounds or evidence of effectiveness.',
+  'matches your goal',
 ];
 
 const BANNED = [
