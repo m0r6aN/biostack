@@ -48,6 +48,12 @@ const ALL_NEW_COPY = [
   // InteractionIntelligenceCard CTA
   'Tracking this protocol over time will show whether these interaction patterns hold.',
   'Start tracking',
+  // Sidebar desktop collapse toggle
+  'Collapse sidebar',
+  'Expand sidebar',
+  // StackScoreCard / Protocol Score stat — score shown against its 0-100 basis
+  '/100',
+  '/ 100',
 ];
 
 const BANNED = [
