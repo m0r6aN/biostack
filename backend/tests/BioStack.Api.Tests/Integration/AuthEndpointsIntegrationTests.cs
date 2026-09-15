@@ -612,16 +612,108 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         Assert.NotNull(saved.LastUsedAtUtc);
     }
 
+    // Reproduces the platform-authenticator behavior behind owner finding #2: Windows Hello and
+    // Google Password Manager synced passkeys report a signature counter of 0 on every
+    // assertion (they do not track a monotonically increasing counter at all), so the stored
+    // counter from registration and the counter reported at sign-in are both 0. Per WebAuthn
+    // §7.2 step 21, the clone-detection counter check only runs when the stored or reported
+    // counter is nonzero, so 0 vs 0 must be treated as "this authenticator doesn't use a
+    // counter" and skipped — not as "the counter did not advance". If Fido2NetLib (or a future
+    // change to this endpoint) ever tightened that to require signCount > storedSignCount
+    // unconditionally, this is exactly the case that would then fail for every Windows
+    // Hello / Google Password Manager passkey while a Fact.Failed real-hardware-key hint like
+    // this would not repro on a YubiKey (which does increment). NOTE: could not be executed in
+    // this sandbox — `dotnet restore` is blocked (no api.nuget.org egress) — so this is
+    // unverified against the real Fido2 4.0.1 assembly; see passkey-diagnostic.md.
+    [Fact]
+    public async Task DiscoverablePasskeyAssertion_SucceedsWhenAuthenticatorNeverIncrementsSignatureCounter()
+    {
+        await StartAsync("zero-counter-passkey@example.com", "/account/security");
+        await _client.PostAsJsonAsync("/api/v1/auth/verify", new VerifyAuthRequest(ReadToken(await LatestMagicLinkAsync())), JsonOptions);
+        using var optionsResponse = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/register/options", new { displayName = "Windows Hello" });
+        using var options = JsonDocument.Parse(await optionsResponse.Content.ReadAsStringAsync());
+        var requestId = options.RootElement.GetProperty("requestId").GetString();
+        var publicKey = options.RootElement.GetProperty("publicKey");
+        using var key = ECDsa.Create(ECCurve.NamedCurves.nistP256);
+        var credentialId = RandomNumberGenerator.GetBytes(32);
+        var credentialIdText = WebEncoders.Base64UrlEncode(credentialId);
+        var clientData = CreateBrowserClientData("webauthn.create", publicKey.GetProperty("challenge").GetString()!);
+        var authData = CreateAuthenticatorData(key, credentialId, registration: true, signCount: 0);
+        var attestation = new CborWriter();
+        attestation.WriteStartMap(3);
+        attestation.WriteTextString("fmt");
+        attestation.WriteTextString("none");
+        attestation.WriteTextString("attStmt");
+        attestation.WriteStartMap(0);
+        attestation.WriteEndMap();
+        attestation.WriteTextString("authData");
+        attestation.WriteByteString(authData);
+        attestation.WriteEndMap();
+        using var registered = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/register/complete", new
+        {
+            requestId,
+            displayName = "Windows Hello",
+            credential = new
+            {
+                id = credentialIdText,
+                rawId = credentialIdText,
+                type = "public-key",
+                response = new
+                {
+                    attestationObject = WebEncoders.Base64UrlEncode(attestation.Encode()),
+                    clientDataJSON = WebEncoders.Base64UrlEncode(clientData),
+                    transports = new[] { "internal" },
+                },
+                clientExtensionResults = new { credProps = new { rk = true } },
+            },
+        });
+        Assert.Equal(HttpStatusCode.OK, registered.StatusCode);
+
+        using var assertionOptionsResponse = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/authenticate/options", new { redirectPath = "/account/security" });
+        using var assertionOptions = JsonDocument.Parse(await assertionOptionsResponse.Content.ReadAsStringAsync());
+        var assertionClientData = CreateBrowserClientData("webauthn.get", assertionOptions.RootElement.GetProperty("publicKey").GetProperty("challenge").GetString()!);
+        // The defect this reproduces: signCount stays 0 here, exactly as Windows Hello and
+        // Google Password Manager report it, instead of the 1u every other test in this file uses.
+        var assertionAuthData = CreateAuthenticatorData(key, credentialId, registration: false, signCount: 0);
+        var signature = key.SignData([.. assertionAuthData, .. SHA256.HashData(assertionClientData)], HashAlgorithmName.SHA256, DSASignatureFormat.Rfc3279DerSequence);
+        using var authenticated = await _client.PostAsJsonAsync("/api/v1/auth/passkeys/authenticate/complete", new
+        {
+            requestId = assertionOptions.RootElement.GetProperty("requestId").GetString(),
+            credential = new
+            {
+                id = credentialIdText,
+                rawId = credentialIdText,
+                type = "public-key",
+                response = new
+                {
+                    authenticatorData = WebEncoders.Base64UrlEncode(assertionAuthData),
+                    clientDataJSON = WebEncoders.Base64UrlEncode(assertionClientData),
+                    signature = WebEncoders.Base64UrlEncode(signature),
+                    userHandle = publicKey.GetProperty("user").GetProperty("id").GetString(),
+                },
+                clientExtensionResults = new { },
+            },
+        });
+
+        var body = await authenticated.Content.ReadAsStringAsync();
+        Assert.True(authenticated.StatusCode == HttpStatusCode.OK, $"Expected OK for a zero-counter platform authenticator assertion, got {authenticated.StatusCode}: {body}");
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+        var saved = await db.PasskeyCredentials.SingleAsync();
+        Assert.Equal(0u, saved.SignatureCounter);
+        Assert.NotNull(saved.LastUsedAtUtc);
+    }
+
     private static byte[] CreateBrowserClientData(string type, string challenge, string origin = "http://localhost:3043") =>
         JsonSerializer.SerializeToUtf8Bytes(new { type, challenge, origin, crossOrigin = false });
 
-    private static byte[] CreateAuthenticatorData(ECDsa key, byte[] credentialId, bool registration, bool userVerified = true)
+    private static byte[] CreateAuthenticatorData(ECDsa key, byte[] credentialId, bool registration, bool userVerified = true, uint? signCount = null)
     {
         using var stream = new MemoryStream();
         stream.Write(SHA256.HashData(Encoding.UTF8.GetBytes("localhost")));
         stream.WriteByte((byte)(0x01 | (userVerified ? 0x04 : 0) | (registration ? 0x40 : 0))); // UP + UV (+ attested credential data).
         Span<byte> counter = stackalloc byte[4];
-        BinaryPrimitives.WriteUInt32BigEndian(counter, registration ? 0u : 1u);
+        BinaryPrimitives.WriteUInt32BigEndian(counter, signCount ?? (registration ? 0u : 1u));
         stream.Write(counter);
         if (registration)
         {

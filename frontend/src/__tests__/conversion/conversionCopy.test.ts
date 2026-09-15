@@ -48,6 +48,15 @@ const ALL_NEW_COPY = [
   // InteractionIntelligenceCard CTA
   'Tracking this protocol over time will show whether these interaction patterns hold.',
   'Start tracking',
+  // passkeys.ts — passkeyAuthenticationErrorMessage (sign-in, distinct from registration copy)
+  "BioStack didn't recognize that passkey. Add it again from Account settings, or use your email link.",
+  'Too many attempts. Wait a few minutes, then try your passkey again.',
+  'BioStack could not check your passkey right now. Please try again shortly.',
+  'BioStack could not complete passkey sign-in. Try again or use your email link.',
+  'The passkey request was cancelled or timed out. Choose Sign in with a passkey to try again.',
+  'This device or passkey manager could not complete sign-in. Use your email link instead.',
+  'No passkey was selected. Choose Sign in with a passkey to try again.',
+  'BioStack could not verify where to send you next. Use your email link instead.',
 ];
 
 const BANNED = [

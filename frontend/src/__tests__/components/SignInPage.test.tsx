@@ -1,9 +1,12 @@
 import SignInPage from '@/app/auth/signin/page';
 import { ANALYZER_PROTOCOL_DRAFT_KEY, markAnalyzerProtocolDraftImported, saveAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
+import { PasskeyRequestError } from '@/lib/passkeys';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const fetchMock = vi.fn();
+const authenticateWithPasskeyMock = vi.fn();
+const passkeysSupportedMock = vi.fn(() => false);
 let callbackUrl = '%2Fprofiles';
 
 vi.stubGlobal('fetch', fetchMock);
@@ -12,9 +15,21 @@ vi.mock('next/navigation', () => ({
   useSearchParams: () => new URLSearchParams(`callbackUrl=${callbackUrl}`),
 }));
 
+vi.mock('@/lib/passkeys', async () => {
+  const actual = await vi.importActual<typeof import('@/lib/passkeys')>('@/lib/passkeys');
+  return {
+    ...actual,
+    passkeysSupported: () => passkeysSupportedMock(),
+    authenticateWithPasskey: (...args: Parameters<typeof actual.authenticateWithPasskey>) =>
+      authenticateWithPasskeyMock(...args),
+  };
+});
+
 describe('SignInPage', () => {
   beforeEach(() => {
     fetchMock.mockReset();
+    authenticateWithPasskeyMock.mockReset();
+    passkeysSupportedMock.mockReset().mockReturnValue(false);
     callbackUrl = '%2Fprofiles';
     localStorage.clear();
   });
@@ -107,6 +122,45 @@ describe('SignInPage', () => {
         }),
       );
     });
+  });
+
+  it('shows a distinct message when the server does not recognize the selected passkey', async () => {
+    passkeysSupportedMock.mockReturnValue(true);
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({ enabled: true }) });
+    authenticateWithPasskeyMock.mockRejectedValue(new PasskeyRequestError(400, 'invalid_passkey'));
+
+    render(<SignInPage />);
+    fireEvent.click(await screen.findByRole('button', { name: 'Sign in with a passkey' }));
+
+    expect(
+      await screen.findByText("BioStack didn't recognize that passkey. Add it again from Account settings, or use your email link.")
+    ).toBeInTheDocument();
+  });
+
+  it('shows a distinct message when the browser prompt is cancelled or times out', async () => {
+    passkeysSupportedMock.mockReturnValue(true);
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({ enabled: true }) });
+    authenticateWithPasskeyMock.mockRejectedValue(Object.assign(new Error('cancelled'), { name: 'NotAllowedError' }));
+
+    render(<SignInPage />);
+    fireEvent.click(await screen.findByRole('button', { name: 'Sign in with a passkey' }));
+
+    expect(
+      await screen.findByText('The passkey request was cancelled or timed out. Choose Sign in with a passkey to try again.')
+    ).toBeInTheDocument();
+  });
+
+  it('redirects to the server-issued path after a successful passkey sign-in', async () => {
+    passkeysSupportedMock.mockReturnValue(true);
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({ enabled: true }) });
+    authenticateWithPasskeyMock.mockResolvedValue('/profiles');
+    const replace = vi.fn();
+    Object.defineProperty(window, 'location', { configurable: true, value: { replace } });
+
+    render(<SignInPage />);
+    fireEvent.click(await screen.findByRole('button', { name: 'Sign in with a passkey' }));
+
+    await waitFor(() => expect(replace).toHaveBeenCalledWith('/profiles'));
   });
 
   it('does not translate a scheme-relative callback URL into a local return path', async () => {

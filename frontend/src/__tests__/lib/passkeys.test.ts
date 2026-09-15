@@ -3,8 +3,10 @@ import {
   registerPasskey,
   decodeCreationOptions,
   decodeRequestOptions,
+  passkeyAuthenticationErrorMessage,
   serializeAuthenticationCredential,
   serializeRegistrationCredential,
+  PasskeyRequestError,
 } from '@/lib/passkeys';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -130,6 +132,32 @@ describe('passkey WebAuthn codecs', () => {
     expect(fetchMock).toHaveBeenLastCalledWith(
       '/api/v1/auth/passkeys/authenticate/complete',
       expect.objectContaining({ body: expect.stringContaining('"requestId":"request-id"') }),
+    );
+  });
+});
+
+describe('passkeyAuthenticationErrorMessage', () => {
+  it('tells the user their passkey was not recognized, distinct from a cancelled prompt', () => {
+    const unrecognized = passkeyAuthenticationErrorMessage(new PasskeyRequestError(400, 'invalid_passkey'));
+    const cancelled = passkeyAuthenticationErrorMessage(Object.assign(new Error('cancelled'), { name: 'NotAllowedError' }));
+
+    expect(unrecognized).toBe("BioStack didn't recognize that passkey. Add it again from Account settings, or use your email link.");
+    expect(cancelled).toBe('The passkey request was cancelled or timed out. Choose Sign in with a passkey to try again.');
+    expect(unrecognized).not.toBe(cancelled);
+  });
+
+  it('does not confuse a server outage with an unrecognized credential', () => {
+    expect(passkeyAuthenticationErrorMessage(new PasskeyRequestError(503))).toBe(
+      'BioStack could not check your passkey right now. Please try again shortly.'
+    );
+    expect(passkeyAuthenticationErrorMessage(new PasskeyRequestError(429))).toBe(
+      'Too many attempts. Wait a few minutes, then try your passkey again.'
+    );
+  });
+
+  it('falls back to a generic message for an unclassified error', () => {
+    expect(passkeyAuthenticationErrorMessage(new Error('boom'))).toBe(
+      'We could not use that passkey. Try again or use your email link.'
     );
   });
 });

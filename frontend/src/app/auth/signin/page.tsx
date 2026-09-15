@@ -5,7 +5,7 @@ import { getApiBaseUrl } from '@/lib/apiBase';
 import { hasPendingAnalyzerProtocolDraft } from '@/lib/analyzerStorage';
 import { useAnalyzerProtocolDraft } from '@/lib/useAnalyzerProtocolDraft';
 import { canonicalRoutes } from '@/lib/productContract';
-import { authenticateWithPasskey, passkeysSupported } from '@/lib/passkeys';
+import { authenticateWithPasskey, passkeyAuthenticationErrorMessage, passkeysSupported } from '@/lib/passkeys';
 import { useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useEffect, useMemo, useState } from 'react';
 
@@ -121,8 +121,8 @@ function SignInPageContent() {
     setPasskeyError('');
     try {
       window.location.replace(await authenticateWithPasskey(redirectPath));
-    } catch {
-      setPasskeyError('We could not use that passkey. Try again or use your email link.');
+    } catch (error) {
+      setPasskeyError(passkeyAuthenticationErrorMessage(error));
       setIsUsingPasskey(false);
     }
   }

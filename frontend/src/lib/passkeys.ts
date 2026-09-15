@@ -32,6 +32,29 @@ export function passkeyRegistrationErrorMessage(error: unknown): string {
   return 'Your passkey could not be added. Check your connection and try again, or contact support@biostack.cc.';
 }
 
+// Distinct from passkeyRegistrationErrorMessage: sign-in failures need their own copy because
+// the most common real-world cause here is a *different* one — a passkey that a passkey manager
+// still offers locally but that BioStack's server no longer has a matching record for (for
+// example, one created during an earlier registration attempt that never completed). That case
+// and a merely cancelled or timed-out browser prompt need to read differently to the person
+// choosing between "try the passkey again" and "add a new one from Account settings".
+export function passkeyAuthenticationErrorMessage(error: unknown): string {
+  if (error instanceof PasskeyRequestError) {
+    if (error.status === 429) return 'Too many attempts. Wait a few minutes, then try your passkey again.';
+    if (error.status >= 500) return 'BioStack could not check your passkey right now. Please try again shortly.';
+    if (error.code === 'invalid_passkey') return "BioStack didn't recognize that passkey. Add it again from Account settings, or use your email link.";
+    return 'BioStack could not complete passkey sign-in. Try again or use your email link.';
+  }
+  if (error instanceof Error || (typeof DOMException !== 'undefined' && error instanceof DOMException)) {
+    if (error.name === 'NotAllowedError' || error.name === 'AbortError') return 'The passkey request was cancelled or timed out. Choose Sign in with a passkey to try again.';
+    if (error.name === 'SecurityError') return 'Passkeys could not be used on this address. Open https://biostack.cc and try again.';
+    if (error.name === 'NotSupportedError') return 'This device or passkey manager could not complete sign-in. Use your email link instead.';
+    if (error.message === 'passkey-not-selected') return 'No passkey was selected. Choose Sign in with a passkey to try again.';
+    if (error.message === 'invalid-return-path') return 'BioStack could not verify where to send you next. Use your email link instead.';
+  }
+  return 'We could not use that passkey. Try again or use your email link.';
+}
+
 function decodeBase64Url(value: string): ArrayBuffer {
   const normalized = value.replace(/-/g, '+').replace(/_/g, '/');
   const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=');
