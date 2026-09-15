@@ -5,6 +5,7 @@ const REQUIRED_KEYS: HelpTipKey[] = [
   'evidenceTier', 'synergy', 'redundancy', 'interference',
   'communitySignal', 'reviewRequired', 'counterfactual',
   'pathwayOverlap', 'mechanisticEvidence',
+  'flaggedInSourceData', 'reportedDrugInteractions',
 ];
 
 const BANNED = ['you should', 'dosage', 'diagnosis', 'recommend', ' take '];

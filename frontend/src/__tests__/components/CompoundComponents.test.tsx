@@ -1,8 +1,9 @@
 import { CompoundForm } from '@/components/compounds/CompoundForm';
+import { CompoundEditForm } from '@/components/compounds/CompoundEditForm';
 import { CompoundList } from '@/components/compounds/CompoundList';
 import { apiClient } from '@/lib/api';
 import type { CompoundRecord, KnowledgeEntry } from '@/lib/types';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -163,14 +164,31 @@ describe('CompoundForm', () => {
     expect(screen.getByRole('option', { name: 'Recovery' })).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: original } });
     expect(screen.getByLabelText('2. Select a Goal')).toHaveAccessibleDescription(original);
-    expect(screen.getByRole('option', { name: 'Bremelanotide' })).toBeInTheDocument();
-    expect(screen.queryByRole('option', { name: 'Research compound' })).not.toBeInTheDocument();
+    // Default view is the whole category: the goal match (Bremelanotide) sorts
+    // first and is marked, but non-matching compounds stay visible too.
+    expect(screen.getByRole('option', { name: 'Bremelanotide — matches your goal' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Research compound' })).toBeInTheDocument();
+    const compoundOptionsForOriginalGoal = within(screen.getByLabelText('3. Select a Compound')).getAllByRole('option');
+    expect(compoundOptionsForOriginalGoal.map(o => o.textContent)).toEqual([
+      'Select a compound...',
+      'Bremelanotide — matches your goal',
+      'BPC-157',
+      'Research compound',
+    ]);
     fireEvent.change(screen.getByLabelText('3. Select a Compound'), { target: { value: 'Bremelanotide' } });
     fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
     await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ goal: original, name: 'Bremelanotide' })));
   });
 
-  it('lets a sparse goal browse the category and save another compound with that goal', async () => {
+  // Regression note (design decision, owner-feedback-20260915 #5): PR #352 shipped a
+  // "goal matches only" default with a toggle to reveal the rest of the category. The
+  // owner found that unfriendly and lost a compound (MOTS-C) hiding behind it. The
+  // binding lead decision replaces the hide/reveal toggle with an always-full category
+  // list, sorted goal-matches-first with a "matches your goal" marker — so a sparse
+  // goal (matching only one compound) never hides the rest of the category, and there
+  // is nothing left to toggle. This test replaces the old
+  // "lets a sparse goal browse the category and save another compound with that goal".
+  it('shows the whole category by default and sorts a sparse goal match first', async () => {
     vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([
       { ...knowledgeEntries[0], canonicalName: 'MOTS-C', benefits: ['anti-aging'] },
       knowledgeEntries[0],
@@ -180,26 +198,39 @@ describe('CompoundForm', () => {
     render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
     await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
     fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
-    fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'anti-aging' } });
-    expect(screen.getByRole('status')).toHaveTextContent('Showing 1 of 2 compounds');
-    expect(screen.queryByRole('option', { name: 'BPC-157' })).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Show all compounds in this category' }));
-    expect(screen.getByRole('status')).toHaveTextContent('Showing 2 of 2 compounds');
+
+    // No goal yet: the whole category is visible, alphabetically, no other-category
+    // compound (Creatine) leaks in, and there is no goal-match messaging.
+    expect(screen.getByRole('option', { name: 'BPC-157' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'MOTS-C' })).toBeInTheDocument();
     expect(screen.queryByRole('option', { name: 'Creatine' })).not.toBeInTheDocument();
-    fireEvent.change(screen.getByLabelText('3. Select a Compound'), { target: { value: 'BPC-157' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Show goal matches only' }));
-    expect(screen.getByLabelText('3. Select a Compound')).toHaveValue('');
-    expect(screen.getByLabelText('2. Select a Goal')).toHaveValue('anti-aging');
-    fireEvent.click(screen.getByRole('button', { name: 'Show all compounds in this category' }));
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /show all compounds/i })).not.toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'anti-aging' } });
+
+    // A sparse goal match (only MOTS-C) still leaves the rest of the category visible;
+    // the match is marked and sorted first instead of hiding BPC-157.
+    const compoundOptions = within(screen.getByLabelText('3. Select a Compound')).getAllByRole('option');
+    expect(compoundOptions.map(o => o.textContent)).toEqual([
+      'Select a compound...',
+      'MOTS-C — matches your goal',
+      'BPC-157',
+    ]);
+    expect(screen.getByRole('status')).toHaveTextContent('Compounds that match your goal are shown first in this category.');
+    expect(screen.getByRole('status')).toHaveTextContent('Goal tags are not a complete list of compounds or evidence of effectiveness.');
+
     fireEvent.change(screen.getByLabelText('3. Select a Compound'), { target: { value: 'BPC-157' } });
     fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
     await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ name: 'BPC-157', goal: 'anti-aging', category: 'Peptide' })));
+
+    // Re-entering the category with a different goal ("recovery", which is BPC-157's
+    // benefit, not MOTS-C's) still shows both compounds — MOTS-C simply loses its
+    // marker instead of disappearing, and BPC-157 gains one.
     fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
-    fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'anti-aging' } });
-    expect(screen.queryByRole('option', { name: 'BPC-157' })).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Show all compounds in this category' }));
     fireEvent.change(screen.getByLabelText('2. Select a Goal'), { target: { value: 'recovery' } });
-    expect(screen.queryByRole('option', { name: 'MOTS-C' })).not.toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'MOTS-C' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'BPC-157 — matches your goal' })).toBeInTheDocument();
   });
 
   it('submits calendar dates as explicit UTC timestamps without changing the selected day', async () => {
@@ -214,6 +245,111 @@ describe('CompoundForm', () => {
     await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({
       startDate: '2026-09-14T00:00:00.000Z', endDate: '2026-09-20T00:00:00.000Z', personId: 'person-1',
     })));
+  });
+
+  it('blocks submission and shows an inline error when the name is blank or whitespace-only', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Other' } });
+    fireEvent.change(screen.getByLabelText('4. Optional: Manual Search/Entry'), { target: { value: '   ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Enter a compound name before adding it.');
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('trims the name before submitting', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Other' } });
+    fireEvent.change(screen.getByLabelText('4. Optional: Manual Search/Entry'), { target: { value: '  Padded Name  ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add Compound' }));
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ name: 'Padded Name' })));
+  });
+
+  it('suppresses the implicit-submit default action of an Enter keystroke inside the manual name field', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundForm personId="person-1" onSubmit={onSubmit} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Other' } });
+    const nameInput = screen.getByLabelText('4. Optional: Manual Search/Entry') as HTMLInputElement;
+    fireEvent.change(nameInput, { target: { value: 'Half-typed' } });
+
+    const event = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+    nameInput.dispatchEvent(event);
+
+    expect(event.defaultPrevented).toBe(true);
+    expect(onSubmit).not.toHaveBeenCalled();
+    // The field keeps its value — the accidental keystroke did not reset anything.
+    expect(nameInput).toHaveValue('Half-typed');
+  });
+
+  it('still lets Enter insert newlines in the notes textarea (does not prevent default there)', async () => {
+    render(<CompoundForm personId="person-1" onSubmit={vi.fn().mockResolvedValue(undefined)} />);
+    await waitFor(() => expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalled());
+    const notes = screen.getByLabelText('Notes');
+    const event = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+    notes.dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(false);
+  });
+});
+
+describe('CompoundEditForm', () => {
+  const compound: CompoundRecord = {
+    id: 'compound-1',
+    personId: 'person-1',
+    name: '',
+    category: 'Peptide',
+    startDate: '2026-01-01T00:00:00Z',
+    endDate: null,
+    status: 'Active',
+    notes: 'Original notes',
+    sourceType: 'Protocol Analyzer',
+    goal: 'recovery',
+    source: 'Protocol Analyzer',
+  };
+
+  it('lets the owner give a nameless compound a name and preserves untouched fields', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    const onCancel = vi.fn();
+    render(<CompoundEditForm compound={compound} onSubmit={onSubmit} onCancel={onCancel} />);
+
+    fireEvent.change(screen.getByLabelText('Compound name'), { target: { value: 'BPC-157' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({
+      name: 'BPC-157',
+      category: 'Peptide',
+      notes: 'Original notes',
+      source: 'Protocol Analyzer',
+      sourceType: 'Protocol Analyzer',
+      goal: 'recovery',
+    })));
+  });
+
+  it('rejects a whitespace-only name without calling onSubmit', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CompoundEditForm compound={compound} onSubmit={onSubmit} onCancel={vi.fn()} />);
+
+    fireEvent.change(screen.getByLabelText('Compound name'), { target: { value: '   ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Enter a compound name before saving.');
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('calls onCancel without submitting', () => {
+    const onSubmit = vi.fn();
+    const onCancel = vi.fn();
+    render(<CompoundEditForm compound={{ ...compound, name: 'BPC-157' }} onSubmit={onSubmit} onCancel={onCancel} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(onCancel).toHaveBeenCalledTimes(1);
+    expect(onSubmit).not.toHaveBeenCalled();
   });
 });
 

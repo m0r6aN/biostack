@@ -53,6 +53,12 @@ const TOUCHED_SURFACE_COPY = [
   'Reference Data',
   'Published reference range (literature)',
   'Reference only. Published ranges are not BioStack recommendations.',
+  // CompoundIntelligenceCard — merged "Interactions & cautions" section (#11/#12)
+  'Interactions & cautions',
+  'Flagged in source data',
+  'Drug interactions',
+  'Combinations or contexts the source literature flags for review, drawn directly from the record.',
+  "Substances the source literature reports as interacting, shown with the source's own note (for example, \"review\") exactly as recorded.",
   // Billing — Commander
   'Track how your protocols evolve — detect trends and drift, anticipate the next phase from prior runs, and get structured reviews across all your protocol runs.',
   'Pattern intelligence',

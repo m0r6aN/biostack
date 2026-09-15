@@ -153,6 +153,14 @@ function IconReceipts() {
   );
 }
 
+function IconChevron({ direction }: { direction: 'left' | 'right' }) {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      {direction === 'left' ? <polyline points="10,3 5,8 10,13" /> : <polyline points="6,3 11,8 6,13" />}
+    </svg>
+  );
+}
+
 // ─── Nav items ────────────────────────────────────────────────────────────────
 
 const navItems = [
@@ -175,10 +183,14 @@ const navItems = [
 // ─── Component ────────────────────────────────────────────────────────────────
 
 import { useProfile } from '@/lib/context';
+import { useSidebarCollapsed } from '@/lib/useSidebarCollapsed';
+
+const SIDEBAR_NAV_ID = 'app-sidebar-nav';
 
 export function Sidebar() {
   const pathname = usePathname();
   const { isSidebarOpen, setSidebarOpen } = useProfile();
+  const [collapsed, setCollapsed] = useSidebarCollapsed();
   const { user, loading, logout } = useAuth();
 
   const isAdmin = user?.role === 1;
@@ -199,14 +211,27 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 w-72 lg:w-64 h-screen flex flex-col border-r border-white/5 bg-[#0B0F14]/95 lg:bg-[#0B0F14]/80 backdrop-blur-2xl shrink-0 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0',
+          'fixed inset-y-0 left-0 z-50 w-72 lg:w-64 h-screen flex flex-col border-r border-white/5 bg-[#0B0F14]/95 lg:bg-[#0B0F14]/80 backdrop-blur-2xl shrink-0 transition-[width,transform] duration-300 ease-in-out motion-reduce:transition-none lg:static lg:translate-x-0',
+          collapsed && 'lg:w-16',
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* ── Brand zone ────────────────────────────────────────────────────── */}
-        <div className="px-5 py-5 border-b border-white/[0.05] flex items-center justify-between">
+        <div
+          className={cn(
+            'px-5 py-5 border-b border-white/[0.05] flex items-center justify-between',
+            collapsed && 'lg:justify-center lg:px-2'
+          )}
+        >
           <Link href="/protocol-console" onClick={() => setSidebarOpen(false)} aria-label="BioStack Protocol Console home">
-            <BioStackLogo variant="horizontal" theme="dark" size="md" animated hoverable />
+            <BioStackLogo
+              variant="horizontal"
+              theme="dark"
+              size="md"
+              animated
+              hoverable
+              wordmarkClassName={cn(collapsed && 'lg:hidden')}
+            />
           </Link>
 
           {/* Mobile close button */}
@@ -219,14 +244,38 @@ export function Sidebar() {
             </svg>
           </button>
         </div>
-        <div className="px-6 py-2">
-          <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.3em] pl-0.5">
+
+        {/* ── Eyebrow + desktop collapse toggle ────────────────────────────── */}
+        <div
+          className={cn(
+            'px-6 py-2 flex items-center justify-between',
+            collapsed && 'lg:justify-center lg:px-2'
+          )}
+        >
+          <p
+            className={cn(
+              'text-[10px] font-bold text-white/10 uppercase tracking-[0.3em] pl-0.5',
+              collapsed && 'lg:hidden'
+            )}
+          >
             Protocol Console
           </p>
+
+          <button
+            type="button"
+            onClick={() => setCollapsed(!collapsed)}
+            aria-expanded={!collapsed}
+            aria-controls={SIDEBAR_NAV_ID}
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            className="hidden lg:inline-flex items-center justify-center w-8 h-8 rounded-xl border border-white/5 text-white/40 transition-colors hover:bg-white/5 hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+          >
+            <span className="sr-only">{collapsed ? 'Expand sidebar' : 'Collapse sidebar'}</span>
+            <IconChevron direction={collapsed ? 'right' : 'left'} />
+          </button>
         </div>
 
         {/* ── Navigation zone ───────────────────────────────────────────────── */}
-        <nav className="flex-1 overflow-y-auto py-4 px-4 min-h-0">
+        <nav id={SIDEBAR_NAV_ID} className="flex-1 overflow-y-auto py-4 px-4 min-h-0">
           <div className="space-y-1">
             {visibleNavItems.map((item) => {
               const isActive =
@@ -241,8 +290,10 @@ export function Sidebar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
+                  aria-label={item.label}
                   className={cn(
-                    'group relative flex items-center gap-3.5 px-3 py-3 rounded-2xl text-[13px] font-semibold transition-all duration-200',
+                    'group relative flex items-center gap-3.5 px-3 py-3 rounded-2xl text-[13px] font-semibold transition-colors duration-200',
+                    collapsed && 'lg:justify-center lg:gap-0 lg:px-2',
                     isActive
                       ? 'text-emerald-400 bg-emerald-400/5 shadow-[inset_0_0_12px_rgba(52,211,153,0.03)]'
                       : 'text-white/40 hover:text-white/80 hover:bg-white/[0.03]'
@@ -266,7 +317,18 @@ export function Sidebar() {
                   </span>
 
                   {/* Label */}
-                  <span className="tracking-tight">{item.label}</span>
+                  <span className={cn('tracking-tight', collapsed && 'lg:hidden')}>{item.label}</span>
+
+                  {/* Collapsed-rail tooltip (hover/focus only; hidden from assistive tech — the
+                      Link's aria-label above already carries the accessible name). */}
+                  {collapsed && (
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute left-full top-1/2 z-10 ml-2 hidden -translate-y-1/2 whitespace-nowrap rounded-lg border border-white/10 bg-[#121923] px-2.5 py-1.5 text-xs font-medium text-white/80 opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-opacity duration-150 motion-reduce:transition-none lg:group-hover:opacity-100 lg:group-focus-visible:opacity-100 lg:block"
+                    >
+                      {item.label}
+                    </span>
+                  )}
                 </Link>
               );
             })}

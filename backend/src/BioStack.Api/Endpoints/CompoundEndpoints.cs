@@ -58,6 +58,13 @@ public static class CompoundEndpoints
         {
             return ProductGate(ex);
         }
+        catch (ArgumentException ex)
+        {
+            return Results.ValidationProblem(new Dictionary<string, string[]>
+            {
+                ["name"] = [ex.Message],
+            });
+        }
         catch (InvalidOperationException)
         {
             return Results.NotFound();
@@ -74,6 +81,13 @@ public static class CompoundEndpoints
         catch (FeatureLimitExceededException ex)
         {
             return ProductGate(ex);
+        }
+        catch (ArgumentException ex)
+        {
+            return Results.ValidationProblem(new Dictionary<string, string[]>
+            {
+                ["name"] = [ex.Message],
+            });
         }
         catch (InvalidOperationException)
         {
