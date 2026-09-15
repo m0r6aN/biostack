@@ -14,7 +14,6 @@ interface CompoundFormProps {
 export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProps) {
   const formId = useId();
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeEntry[]>([]);
-  const [showAllCompounds, setShowAllCompounds] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -51,17 +50,26 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
       .sort((a, b) => a.label.localeCompare(b.label));
   }, [knowledgeBase, formData.category]);
 
-  const categoryCompounds = useMemo(() => knowledgeBase.filter(k => k.classification === formData.category), [knowledgeBase, formData.category]);
+  // Default view is the whole category, alphabetical; a selected goal only
+  // reorders matches to the front (with a marker) rather than hiding anything.
+  const categoryCompounds = useMemo(
+    () => knowledgeBase
+      .filter(k => k.classification === formData.category)
+      .sort((a, b) => a.canonicalName.localeCompare(b.canonicalName)),
+    [knowledgeBase, formData.category],
+  );
 
-  const goalCompounds = useMemo(() => {
-    if (!formData.category) return [];
-    return knowledgeBase.filter(k => {
-      const matchCategory = k.classification === formData.category;
-      const matchGoal = !formData.goal || k.benefits?.includes(formData.goal);
-      return matchCategory && matchGoal;
-    });
-  }, [knowledgeBase, formData.category, formData.goal]);
-  const filteredCompounds = showAllCompounds ? categoryCompounds : goalCompounds;
+  const goalMatchCount = useMemo(() => {
+    if (!formData.goal) return 0;
+    return categoryCompounds.filter(c => c.benefits?.includes(formData.goal)).length;
+  }, [categoryCompounds, formData.goal]);
+
+  const filteredCompounds = useMemo(() => {
+    if (!formData.goal || goalMatchCount === 0) return categoryCompounds;
+    const matches = categoryCompounds.filter(c => c.benefits?.includes(formData.goal));
+    const rest = categoryCompounds.filter(c => !c.benefits?.includes(formData.goal));
+    return [...matches, ...rest];
+  }, [categoryCompounds, formData.goal, goalMatchCount]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,7 +94,6 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
         notes: '',
         sourceType: 'Manual',
       });
-      setShowAllCompounds(false);
     } catch (err) {
       console.error('Form submission error:', err);
     }
@@ -101,10 +108,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           <select
             id={`${formId}-category`}
             value={formData.category}
-            onChange={(e) => {
-              setFormData({ ...formData, category: e.target.value, goal: '', name: '' });
-              setShowAllCompounds(false);
-            }}
+            onChange={(e) => setFormData({ ...formData, category: e.target.value, goal: '', name: '' })}
             required
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
           >
@@ -125,10 +129,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
             id={`${formId}-goal`}
             aria-describedby={formData.goal && compoundGoalDisplay(formData.goal).context ? `${formId}-goal-context` : undefined}
             value={formData.goal}
-            onChange={(e) => {
-              setFormData({ ...formData, goal: e.target.value, name: '' });
-              setShowAllCompounds(false);
-            }}
+            onChange={(e) => setFormData({ ...formData, goal: e.target.value, name: '' })}
             disabled={!formData.category}
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white disabled:opacity-50 focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
           >
@@ -149,7 +150,7 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           <label htmlFor={`${formId}-compound`} className="block text-sm font-medium text-white/70 mb-2">3. Select a Compound</label>
           <select
             id={`${formId}-compound`}
-            aria-describedby={formData.goal ? `${formId}-compound-results` : undefined}
+            aria-describedby={formData.goal && goalMatchCount > 0 ? `${formId}-compound-results` : undefined}
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             disabled={!formData.category}
@@ -157,30 +158,16 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
           >
             <option value="">{formData.category ? 'Select a compound...' : 'Select category first'}</option>
             {filteredCompounds.map(c => (
-              <option key={c.canonicalName} value={c.canonicalName}>{c.canonicalName}</option>
+              <option key={c.canonicalName} value={c.canonicalName}>
+                {formData.goal && c.benefits?.includes(formData.goal) ? `${c.canonicalName} — matches your goal` : c.canonicalName}
+              </option>
             ))}
           </select>
-          {formData.goal && (
-            <div className="mt-2 space-y-2 text-xs leading-relaxed">
-              <p id={`${formId}-compound-results`} className="text-white/55" role="status">
-                Showing {filteredCompounds.length} of {categoryCompounds.length} compounds in this category.
-                {' '}Goal tags are not a complete list of compounds or evidence of effectiveness.
-              </p>
-              {goalCompounds.length < categoryCompounds.length && (
-                <button
-                  type="button"
-                  className="text-emerald-400 underline underline-offset-4 hover:text-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-400"
-                  onClick={() => {
-                    setShowAllCompounds(!showAllCompounds);
-                    if (showAllCompounds && !goalCompounds.some(c => c.canonicalName === formData.name)) {
-                      setFormData({ ...formData, name: '' });
-                    }
-                  }}
-                >
-                  {showAllCompounds ? 'Show goal matches only' : 'Show all compounds in this category'}
-                </button>
-              )}
-            </div>
+          {formData.goal && goalMatchCount > 0 && (
+            <p id={`${formId}-compound-results`} className="mt-2 text-xs leading-relaxed text-white/55" role="status">
+              Compounds that match your goal are shown first in this category.
+              {' '}Goal tags are not a complete list of compounds or evidence of effectiveness.
+            </p>
           )}
         </div>
 

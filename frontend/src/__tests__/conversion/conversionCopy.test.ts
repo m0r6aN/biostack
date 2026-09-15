@@ -48,12 +48,11 @@ const ALL_NEW_COPY = [
   // InteractionIntelligenceCard CTA
   'Tracking this protocol over time will show whether these interaction patterns hold.',
   'Start tracking',
-  // CompoundIntelligenceCard — merged "Interactions & cautions" section (#11/#12)
-  'Interactions & cautions',
-  'Flagged in source data',
-  'Drug interactions',
-  'Combinations or contexts the source literature flags for review, drawn directly from the record.',
-  "Substances the source literature reports as interacting, shown with the source's own note (for example, \"review\") exactly as recorded.",
+  // CompoundForm goal picker (owner-feedback-20260915 #5: default = whole category,
+  // goal matches sorted first and marked, no show-all/goal-only toggle)
+  'Compounds that match your goal are shown first in this category.',
+  'Goal tags are not a complete list of compounds or evidence of effectiveness.',
+  'matches your goal',
 ];
 
 const BANNED = [
