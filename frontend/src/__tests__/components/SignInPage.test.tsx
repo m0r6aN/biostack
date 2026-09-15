@@ -124,7 +124,7 @@ describe('SignInPage', () => {
     });
   });
 
-  it('shows a distinct message when the server does not recognize the selected passkey', async () => {
+  it('offers retry or email after generic passkey verification failure', async () => {
     passkeysSupportedMock.mockReturnValue(true);
     fetchMock.mockResolvedValue({ ok: true, json: async () => ({ enabled: true }) });
     authenticateWithPasskeyMock.mockRejectedValue(new PasskeyRequestError(400, 'invalid_passkey'));
@@ -133,7 +133,7 @@ describe('SignInPage', () => {
     fireEvent.click(await screen.findByRole('button', { name: 'Sign in with a passkey' }));
 
     expect(
-      await screen.findByText("BioStack didn't recognize that passkey. Add it again from Account settings, or use your email link.")
+      await screen.findByText("BioStack could not verify this passkey sign-in. Try again or use your email link.")
     ).toBeInTheDocument();
   });
 
