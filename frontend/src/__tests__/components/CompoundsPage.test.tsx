@@ -1,9 +1,11 @@
+import { SIDEBAR_COLLAPSED_KEY } from '@/lib/sidebarCollapse';
 import CompoundsPage from '@/app/compounds/page';
 import { ApiError, apiClient } from '@/lib/api';
 import type { CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-vi.mock('@/lib/context', () => ({ useProfile: () => ({ currentProfileId: 'profile-fixture' }) }));
+const profileState = vi.hoisted(() => ({ currentProfileId: 'profile-fixture' }));
+vi.mock('@/lib/context', () => ({ useProfile: () => profileState }));
 const { push } = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
 vi.mock('@/components/Header', () => ({ Header: ({ actions }: { actions?: React.ReactNode }) => <header>{actions}</header> }));
@@ -54,6 +56,7 @@ const namedCompound: CompoundRecord = {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  profileState.currentProfileId = 'profile-fixture';
   window.localStorage.clear();
   vi.mocked(apiClient.getCompounds).mockResolvedValue([]);
   vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([]);
@@ -252,4 +255,72 @@ it('routes to consent onboarding when an edit save is blocked by consent_require
   fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
 
   await waitFor(() => expect(push).toHaveBeenCalledWith('/onboarding/consent?returnTo=%2Fcompounds'));
+});
+
+function deferredDelete() {
+  let reject!: (error: Error) => void;
+  const promise = new Promise<void>((_, fail) => { reject = fail; });
+  return { promise, reject };
+}
+it('restores only failed deletion while preserving a newer successful deletion and selection', async () => {
+  const a = { ...namedCompound, id: 'a', name: 'A' };
+  const b = { ...namedCompound, id: 'b', name: 'B' };
+  const c = { ...namedCompound, id: 'c', name: 'C' };
+  const pending = deferredDelete();
+  vi.mocked(apiClient.getCompounds).mockResolvedValue([a, b, c]);
+  vi.mocked(apiClient.deleteCompound).mockImplementation((_, id) => id === 'a' ? pending.promise : Promise.resolve());
+  render(<CompoundsPage />);
+  fireEvent.click(await screen.findByText('A'));
+  fireEvent.click(screen.getByRole('button', { name: 'Delete A' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Confirm delete' }));
+  fireEvent.click(screen.getByText('B'));
+  fireEvent.click(screen.getByRole('button', { name: 'Delete B' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Confirm delete' }));
+  await waitFor(() => expect(apiClient.deleteCompound).toHaveBeenCalledTimes(2));
+  fireEvent.click(screen.getByText('C'));
+  await act(async () => pending.reject(new Error('A failed')));
+  expect(screen.getByText('A')).toBeInTheDocument();
+  expect(screen.queryByText('B')).not.toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'C' })).toBeInTheDocument();
+});
+it('does not restore a failed old-profile deletion into the new profile', async () => {
+  const pending = deferredDelete();
+  vi.mocked(apiClient.getCompounds).mockImplementation(async id => id === 'profile-fixture' ? [namedCompound] : [{ ...namedCompound, id: 'other', name: 'Other profile', personId: id }]);
+  vi.mocked(apiClient.deleteCompound).mockReturnValue(pending.promise);
+  const view = render(<CompoundsPage />);
+  fireEvent.click(await screen.findByText('BPC-157'));
+  fireEvent.click(screen.getByRole('button', { name: 'Delete BPC-157' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Confirm delete' }));
+  profileState.currentProfileId = 'profile-other'; view.rerender(<CompoundsPage />);
+  await screen.findByText('Other profile');
+  await act(async () => pending.reject(new Error('Old profile failed')));
+  expect(screen.getByText('Other profile')).toBeInTheDocument();
+  expect(screen.queryByText('BPC-157')).not.toBeInTheDocument();
+});
+
+describe('detail grid reclaims width when the sidebar is collapsed', () => {
+  beforeEach(() => {
+    vi.mocked(apiClient.getCompounds).mockResolvedValue([
+      namedCompound,
+    ]);
+  });
+
+  it('uses a 2/1 (3-col) split by default', async () => {
+    render(<CompoundsPage />);
+    await screen.findByText('BPC-157');
+
+    const grid = screen.getByTestId('compounds-detail-grid');
+    expect(grid.className).toContain('lg:grid-cols-3');
+    expect(grid.className).not.toContain('lg:grid-cols-5');
+  });
+
+  it('widens the detail column to a 2/3 (5-col) split when the sidebar is collapsed', async () => {
+    window.localStorage.setItem(SIDEBAR_COLLAPSED_KEY, '1');
+    render(<CompoundsPage />);
+    await screen.findByText('BPC-157');
+
+    const grid = screen.getByTestId('compounds-detail-grid');
+    expect(grid.className).toContain('lg:grid-cols-5');
+    expect(grid.className).not.toContain('lg:grid-cols-3');
+  });
 });

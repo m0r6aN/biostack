@@ -11,6 +11,11 @@ interface CompoundEditFormProps {
 }
 
 const CATEGORY_OPTIONS = [
+  { value: 'Unknown', label: 'Unknown' },
+  { value: 'Compound', label: 'Compound' },
+  { value: 'Sarm', label: 'SARM' },
+  { value: 'Serm', label: 'SERM' },
+  { value: 'Hormone', label: 'Hormone' },
   { value: 'Peptide', label: 'Peptides' },
   { value: 'Supplement', label: 'Supplements' },
   { value: 'Pharmaceutical', label: 'Pharmaceuticals' },
@@ -20,7 +25,7 @@ const CATEGORY_OPTIONS = [
 ];
 
 function toDateInputValue(value: string | null | undefined): string {
-  if (!value) return new Date().toISOString().split('T')[0];
+  if (!value) return '';
   return value.slice(0, 10);
 }
 
@@ -38,13 +43,14 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
   const [category, setCategory] = useState(compound.category ?? '');
   const [notes, setNotes] = useState(compound.notes ?? '');
   const [startDate, setStartDate] = useState(toDateInputValue(compound.startDate));
+  const [dateEdited, setDateEdited] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key !== 'Enter') return;
     const target = e.target as HTMLElement;
     if (target.tagName === 'TEXTAREA') return;
-    if (target instanceof HTMLButtonElement && target.type === 'submit') return;
+    if (target instanceof HTMLButtonElement) return;
     e.preventDefault();
   };
 
@@ -59,6 +65,10 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
       setFormError('Select a category before saving.');
       return;
     }
+    if (dateEdited && !startDate) {
+      setFormError('Choose a start date before saving the date change.');
+      return;
+    }
     setFormError(null);
     try {
       await onSubmit({
@@ -68,7 +78,8 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
         goal: compound.goal,
         source: compound.source,
         pricePaid: compound.pricePaid,
-        startDate: new Date(`${startDate}T00:00:00Z`).toISOString(),
+        // Preserve the original timestamp (or API null) unless the user edits the date.
+        startDate: dateEdited ? new Date(`${startDate}T00:00:00Z`).toISOString() : compound.startDate,
         endDate: compound.endDate,
         status: compound.status,
         notes,
@@ -117,8 +128,8 @@ export function CompoundEditForm({ compound, onSubmit, onCancel, isLoading }: Co
           id={`${formId}-edit-start-date`}
           type="date"
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          required
+          onChange={(e) => { setStartDate(e.target.value); setDateEdited(true); }}
+          required={dateEdited}
           className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-500/50 transition-all"
         />
       </div>

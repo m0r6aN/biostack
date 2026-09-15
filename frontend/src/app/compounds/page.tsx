@@ -41,10 +41,15 @@ export default function CompoundsPage() {
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const editButtonRef = useRef<HTMLButtonElement | null>(null);
   const deleteButtonRef = useRef<HTMLButtonElement | null>(null);
+  const profileEpochRef = useRef(0);
+  const selectionVersionRef = useRef(0);
   const wasEditingRef = useRef(false);
   const wasConfirmingDeleteRef = useRef(false);
 
   useEffect(() => {
+    // An old profile's delete must never restore records into a new profile.
+    profileEpochRef.current += 1;
+    selectionVersionRef.current += 1;
     if (currentProfileId) {
       loadCompounds();
     }
@@ -116,6 +121,7 @@ export default function CompoundsPage() {
   };
 
   const handleSelectCompound = (compound: CompoundRecord) => {
+    selectionVersionRef.current += 1;
     setSelectedCompound(compound);
     setEditingCompound(null);
     setEditError(null);
@@ -142,6 +148,7 @@ export default function CompoundsPage() {
       setEditError(null);
       const updated = await apiClient.updateCompound(currentProfileId, editingCompound.id, data);
       setCompounds(previous => previous.map(c => (c.id === updated.id ? updated : c)));
+      selectionVersionRef.current += 1;
       setSelectedCompound(updated);
       setEditingCompound(null);
       await loadKnowledgeEntry(updated.name ?? '');
@@ -168,7 +175,9 @@ export default function CompoundsPage() {
 
   const handleConfirmDelete = async (compound: CompoundRecord) => {
     if (!currentProfileId) return;
-    const previousCompounds = compounds;
+    const profileEpoch = profileEpochRef.current;
+    const originalIndex = compounds.findIndex(c => c.id === compound.id);
+    const selectionVersion = ++selectionVersionRef.current;
     const wasSelected = selectedCompound?.id === compound.id;
     const previousSelected = selectedCompound;
     const previousKnowledge = knowledgeEntry;
@@ -186,12 +195,19 @@ export default function CompoundsPage() {
 
     try {
       await apiClient.deleteCompound(currentProfileId, compound.id);
-      if (editingCompound?.id === compound.id) {
+      if (profileEpochRef.current !== profileEpoch) return;
+      if (selectionVersionRef.current === selectionVersion && editingCompound?.id === compound.id) {
         setEditingCompound(null);
       }
     } catch (err) {
-      setCompounds(previousCompounds);
-      if (wasSelected) {
+      if (profileEpochRef.current !== profileEpoch) return;
+      setCompounds(current => {
+        if (current.some(c => c.id === compound.id)) return current;
+        const restored = [...current];
+        restored.splice(Math.min(Math.max(originalIndex, 0), restored.length), 0, compound);
+        return restored;
+      });
+      if (wasSelected && selectionVersionRef.current === selectionVersion) {
         setSelectedCompound(previousSelected);
         setKnowledgeEntry(previousKnowledge);
       }
@@ -201,7 +217,9 @@ export default function CompoundsPage() {
       }
       setDeleteError(err instanceof ApiError ? err.message : 'Failed to delete compound');
     } finally {
-      setDeletingId(null);
+      if (profileEpochRef.current === profileEpoch) {
+        setDeletingId(current => current === compound.id ? null : current);
+      }
     }
   };
 
