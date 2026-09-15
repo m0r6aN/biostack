@@ -4,6 +4,8 @@ import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import { useAuth } from '@/lib/AuthProvider';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { usePathname } from 'next/navigation';
 
 // ─── Custom SVG icons ─────────────────────────────────────────────────────────
@@ -193,6 +195,25 @@ export function Sidebar() {
   const [collapsed, setCollapsed] = useSidebarCollapsed();
   const { user, loading, logout } = useAuth();
 
+  const [railLabel, setRailLabel] = useState<{ text: string; top: number; left: number } | null>(null);
+  useEffect(() => {
+    const dismiss = () => setRailLabel(null);
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Escape') dismiss(); };
+    window.addEventListener('resize', dismiss);
+    window.addEventListener('scroll', dismiss, true);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('resize', dismiss);
+      window.removeEventListener('scroll', dismiss, true);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, []);
+  const showRailLabel = (element: HTMLElement, text: string) => {
+    if (!collapsed) return;
+    const rect = element.getBoundingClientRect();
+    setRailLabel({ text, top: Math.max(8, Math.min(rect.top, window.innerHeight - 44)), left: rect.right + 8 });
+  };
+
   const isAdmin = user?.role === 1;
 
   const visibleNavItems = navItems.filter(
@@ -263,7 +284,7 @@ export function Sidebar() {
 
           <button
             type="button"
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => { setRailLabel(null); setCollapsed(!collapsed); }}
             aria-expanded={!collapsed}
             aria-controls={SIDEBAR_NAV_ID}
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
@@ -275,7 +296,7 @@ export function Sidebar() {
         </div>
 
         {/* ── Navigation zone ───────────────────────────────────────────────── */}
-        <nav id={SIDEBAR_NAV_ID} className="flex-1 overflow-y-auto py-4 px-4 min-h-0">
+        <nav id={SIDEBAR_NAV_ID} className={cn("flex-1 overflow-y-auto py-4 px-4 min-h-0", collapsed && "lg:px-1")}>
           <div className="space-y-1">
             {visibleNavItems.map((item) => {
               const isActive =
@@ -291,6 +312,10 @@ export function Sidebar() {
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
                   aria-label={item.label}
+                  onMouseEnter={e => showRailLabel(e.currentTarget, item.label)}
+                  onMouseLeave={() => setRailLabel(null)}
+                  onFocus={e => showRailLabel(e.currentTarget, item.label)}
+                  onBlur={() => setRailLabel(null)}
                   className={cn(
                     'group relative flex items-center gap-3.5 px-3 py-3 rounded-2xl text-[13px] font-semibold transition-colors duration-200',
                     collapsed && 'lg:justify-center lg:gap-0 lg:px-2',
@@ -318,25 +343,33 @@ export function Sidebar() {
 
                   {/* Label */}
                   <span className={cn('tracking-tight', collapsed && 'lg:hidden')}>{item.label}</span>
-
-                  {/* Collapsed-rail tooltip (hover/focus only; hidden from assistive tech — the
-                      Link's aria-label above already carries the accessible name). */}
-                  {collapsed && (
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute left-full top-1/2 z-10 ml-2 hidden -translate-y-1/2 whitespace-nowrap rounded-lg border border-white/10 bg-[#121923] px-2.5 py-1.5 text-xs font-medium text-white/80 opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-opacity duration-150 motion-reduce:transition-none lg:group-hover:opacity-100 lg:group-focus-visible:opacity-100 lg:block"
-                    >
-                      {item.label}
-                    </span>
-                  )}
                 </Link>
               );
             })}
           </div>
         </nav>
 
+        {collapsed && (
+          <div className="hidden lg:flex flex-col items-center gap-2 px-1 pb-4" role="group" aria-label="Account and support">
+            <a href="mailto:support@biostack.cc" aria-label="BioStack Support" title="BioStack Support" className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400">
+              <span aria-hidden="true">?</span>
+            </a>
+            {user && (
+              <>
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300" role="img" title={user.displayName || user.email || 'Account'} aria-label={user.displayName || user.email || 'Account'}>
+                  {(user.displayName || user.email || 'U')[0].toUpperCase()}
+                </span>
+                <button type="button" onClick={() => void logout()} aria-label="Sign out" title="Sign out" className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400">
+                  <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" className="h-4 w-4"><path d="M6 2H3v12h3M7 8h7m-4-3 4 3-4 3" /></svg>
+                </button>
+              </>
+            )}
+            {!loading && !user && <Link href={`/auth/signin?callbackUrl=${encodeURIComponent(pathname)}`} aria-label="Sign in" title="Sign in" className="flex h-11 w-11 items-center justify-center rounded-xl text-emerald-200 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400"><IconSecurity /></Link>}
+          </div>
+        )}
+
         {/* ── User zone ──────────────────────────────────────────────────────── */}
-        <div className="px-4 pb-4">
+        <div className={cn("px-4 pb-4", collapsed && "lg:hidden")}>
           <a
             href="mailto:support@biostack.cc"
             className="mb-3 flex min-h-11 items-center rounded-xl px-3 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
@@ -414,6 +447,11 @@ export function Sidebar() {
           </div>
         </div>
       </aside>
+      {collapsed && railLabel && createPortal(
+        <span role="tooltip" aria-hidden="true" style={{ position: 'fixed', top: railLabel.top, left: railLabel.left }} className="pointer-events-none hidden lg:block z-[60] max-w-64 rounded-lg border border-white/10 bg-[#121923] px-2.5 py-1.5 text-xs font-medium text-white/80 shadow-lg">
+          {railLabel.text}
+        </span>, document.body
+      )}
     </>
   );
 }
