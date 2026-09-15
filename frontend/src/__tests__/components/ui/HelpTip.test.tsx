@@ -114,3 +114,23 @@ describe('HelpTip', () => {
     Object.defineProperty(window, 'innerWidth', { value: originalInnerWidth, configurable: true });
   });
 });
+
+it('constrains a tall tooltip to the better side and permits keyboard scrolling', async () => {
+  vi.stubGlobal('innerHeight', 180);
+  const rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({ top: 60, bottom: 80, left: 20, right: 100, width: 80, height: 20, x: 20, y: 60, toJSON() { return {}; } });
+  const height = vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(140);
+  try {
+    render(<HelpTip tipKey="synergy">Synergy</HelpTip>);
+    await userEvent.click(screen.getByRole('button'));
+    const tip = screen.getByRole('tooltip');
+    expect(tip.style.maxHeight).toBe('84px');
+    expect(tip.style.top).toBe('88px');
+    expect(tip.style.overflowY).toBe('auto');
+    expect(tip).toHaveAttribute('tabindex', '0');
+    await userEvent.tab();
+    expect(tip).toHaveFocus();
+    await userEvent.keyboard('{Escape}');
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+    expect(screen.getByRole('button')).toHaveFocus();
+  } finally { rect.mockRestore(); height.mockRestore(); vi.unstubAllGlobals(); }
+});

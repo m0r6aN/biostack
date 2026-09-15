@@ -6,6 +6,9 @@
  */
 export const SIDEBAR_COLLAPSED_KEY = 'biostack.sidebarCollapsed';
 
+let memoryPreference = false;
+let persistenceFailed = false;
+
 const listeners = new Set<() => void>();
 
 function notifyListeners(): void {
@@ -25,16 +28,18 @@ export function subscribeToSidebarCollapsed(listener: () => void): () => void {
   };
 }
 
-/** Reads the persisted collapse preference. Defaults to expanded (false) when storage is unavailable/unset. */
+/** Reads the persisted collapse preference. Uses the current session preference when storage is unavailable. */
 export function readSidebarCollapsed(): boolean {
   if (typeof window === 'undefined') {
     return false;
   }
 
+  if (persistenceFailed) return memoryPreference;
   try {
-    return window.localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === '1';
+    memoryPreference = window.localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === '1';
+    return memoryPreference;
   } catch {
-    return false;
+    return memoryPreference;
   }
 }
 
@@ -44,12 +49,21 @@ export function writeSidebarCollapsed(collapsed: boolean): void {
     return;
   }
 
+  memoryPreference = collapsed;
   try {
     window.localStorage.setItem(SIDEBAR_COLLAPSED_KEY, collapsed ? '1' : '0');
+    persistenceFailed = false;
   } catch {
-    // Storage unavailable (private browsing, quota, disabled) — the collapse
-    // still applies for this render, it just won't persist across reloads.
+    // Keep a shared session preference even when persistence is denied.
+    persistenceFailed = true;
   }
 
+  notifyListeners();
+}
+
+/** A real cross-tab change supersedes any temporary same-tab fallback. */
+export function receiveSidebarStorageChange(event: StorageEvent): void {
+  if (event.key !== null && event.key !== SIDEBAR_COLLAPSED_KEY) return;
+  persistenceFailed = false;
   notifyListeners();
 }

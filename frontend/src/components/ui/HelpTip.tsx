@@ -35,6 +35,7 @@ const TRIGGER_GAP = 8;
 interface PanelPosition {
   top: number;
   left: number;
+  maxHeight: number;
   placement: 'top' | 'bottom';
 }
 
@@ -66,13 +67,16 @@ export function HelpTip({ tipKey, children, className }: HelpTipProps) {
       const maxLeft = Math.max(viewportWidth - panelWidth - VIEWPORT_MARGIN, VIEWPORT_MARGIN);
       const left = Math.min(Math.max(triggerRect.left, VIEWPORT_MARGIN), maxLeft);
 
-      const spaceAbove = triggerRect.top - TRIGGER_GAP - VIEWPORT_MARGIN;
-      const placement: 'top' | 'bottom' = spaceAbove >= panelHeight ? 'top' : 'bottom';
+      const spaceAbove = Math.max(0, triggerRect.top - TRIGGER_GAP - VIEWPORT_MARGIN);
+      const spaceBelow = Math.max(0, window.innerHeight - triggerRect.bottom - TRIGGER_GAP - VIEWPORT_MARGIN);
+      const placement: 'top' | 'bottom' = spaceAbove >= panelHeight || spaceAbove > spaceBelow ? 'top' : 'bottom';
+      const maxHeight = Math.max(1, placement === 'top' ? spaceAbove : spaceBelow);
+      const visibleHeight = Math.min(panelHeight, maxHeight);
       const top = placement === 'top'
-        ? triggerRect.top - panelHeight - TRIGGER_GAP
+        ? Math.max(VIEWPORT_MARGIN, triggerRect.top - visibleHeight - TRIGGER_GAP)
         : triggerRect.bottom + TRIGGER_GAP;
 
-      setPosition({ top, left, placement });
+      setPosition({ top, left, placement, maxHeight });
     }
 
     place();
@@ -88,7 +92,10 @@ export function HelpTip({ tipKey, children, className }: HelpTipProps) {
     if (!open) return;
 
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') {
+        if (panelRef.current?.contains(document.activeElement)) triggerRef.current?.focus();
+        setOpen(false);
+      }
     }
     function handleMouseDown(e: MouseEvent) {
       const inTrigger = triggerRef.current?.contains(e.target as Node) ?? false;
@@ -112,9 +119,15 @@ export function HelpTip({ tipKey, children, className }: HelpTipProps) {
           ref={panelRef}
           id={panelId}
           role="tooltip"
+          tabIndex={0}
+          onClick={e => e.stopPropagation()}
+          onKeyDown={e => { if (e.key !== 'Escape') e.stopPropagation(); }}
           data-placement={placement}
           style={{
             position: 'fixed',
+            maxHeight: position?.maxHeight,
+            maxWidth: 'calc(100vw - 16px)',
+            overflowY: 'auto',
             top: position?.top ?? 0,
             left: position?.left ?? 0,
             // Hidden until the first layout pass has a real position, so the

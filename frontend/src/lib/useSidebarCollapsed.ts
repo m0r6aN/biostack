@@ -1,14 +1,17 @@
 'use client';
 
 import { useCallback, useSyncExternalStore } from 'react';
-import { readSidebarCollapsed, subscribeToSidebarCollapsed, writeSidebarCollapsed } from './sidebarCollapse';
+import { readSidebarCollapsed, receiveSidebarStorageChange, subscribeToSidebarCollapsed, writeSidebarCollapsed } from './sidebarCollapse';
 
 function subscribe(onChange: () => void): () => void {
   const unsubscribe = subscribeToSidebarCollapsed(onChange);
-  window.addEventListener('storage', onChange);
+  // Each subscription owns its listener; unmounting one consumer must not
+  // remove another consumer's cross-tab notification channel.
+  const onStorage = (event: StorageEvent) => receiveSidebarStorageChange(event);
+  window.addEventListener('storage', onStorage);
   return () => {
     unsubscribe();
-    window.removeEventListener('storage', onChange);
+    window.removeEventListener('storage', onStorage);
   };
 }
 
