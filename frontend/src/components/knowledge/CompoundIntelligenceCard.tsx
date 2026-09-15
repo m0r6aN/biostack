@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import { GlassCard } from '@/components/ui/GlassCard';
+import { HelpTip } from '@/components/ui/HelpTip';
 import { useProfile } from '@/lib/context';
 import type { RecommendationSurface } from '@/lib/recommendations';
 import { useSettings } from '@/lib/settings';
@@ -8,6 +9,53 @@ import { formatWeight } from '@/lib/utils';
 import { getReviewedStudyDesign } from '@/lib/reviewedStudyDesign';
 import { SafetyDisclaimer } from '../SafetyDisclaimer';
 import { EvidenceTierBadge } from './EvidenceTierBadge';
+
+// Some pathway / benefit / interaction entries in the source data are short
+// tags ("cellular-energy"); others are full sentences copied from the
+// literature. A rounded-full chip only reads well for the former, so long
+// or sentence-shaped entries render as a bordered callout paragraph instead.
+const LONG_FORM_LENGTH_THRESHOLD = 40;
+const SENTENCE_PUNCTUATION = /[.!?;]/;
+
+function isLongFormEntry(value: string): boolean {
+  return value.length > LONG_FORM_LENGTH_THRESHOLD || SENTENCE_PUNCTUATION.test(value);
+}
+
+const TAG_LIST_STYLES = {
+  emerald: {
+    chip: 'text-xs px-2.5 py-1 rounded-full border border-emerald-400/20 bg-emerald-500/10 text-emerald-300',
+    callout: 'rounded-xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm leading-relaxed text-emerald-100/90',
+  },
+  rose: {
+    chip: 'text-xs px-2.5 py-1 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-300',
+    callout: 'rounded-xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm leading-relaxed text-rose-100/90',
+  },
+} as const;
+
+function TagList({ items, tone }: { items: string[]; tone: keyof typeof TAG_LIST_STYLES }) {
+  const chips = items.filter(item => !isLongFormEntry(item));
+  const callouts = items.filter(isLongFormEntry);
+  const styles = TAG_LIST_STYLES[tone];
+
+  return (
+    <>
+      {chips.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {chips.map((item, i) => (
+            <span key={i} className={styles.chip}>{item}</span>
+          ))}
+        </div>
+      )}
+      {callouts.length > 0 && (
+        <div className={chips.length > 0 ? 'mt-2 space-y-2' : 'space-y-2'}>
+          {callouts.map((item, i) => (
+            <p key={i} className={styles.callout}>{item}</p>
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
 
 function referenceLink(value: string): { href: string; label: string } | null {
   try {
@@ -99,58 +147,45 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        {entry.avoidWith.length > 0 && (
-          <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-            <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">Reported cautions in source data</p>
-            <div className="flex flex-wrap gap-1.5">
-              {entry.avoidWith.map((item, i) => (
-                <span key={i} className="text-[11px] px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20">
-                  {item}
-                </span>
-              ))}
-            </div>
-            <p className="mt-2 text-xs leading-5 text-white/45">
-              These are observational flags for review, not individualized instructions.
-            </p>
-          </div>
-        )}
-
         {entry.pathways && entry.pathways.length > 0 && (
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Pathways</p>
-            <div className="flex flex-wrap gap-2">
-              {entry.pathways.map((pathway, i) => (
-                <span key={i} className="text-xs px-2.5 py-1 rounded-full border border-emerald-400/20 bg-emerald-500/10 text-emerald-300">
-                  {pathway}
-                </span>
-              ))}
-            </div>
+            <TagList items={entry.pathways} tone="emerald" />
           </div>
         )}
 
         {entry.benefits.length > 0 && (
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Benefits</p>
-            <div className="flex flex-wrap gap-2">
-              {entry.benefits.map((benefit, i) => (
-                <span key={i} className="text-xs px-2.5 py-1 rounded-full border border-emerald-400/20 bg-emerald-500/10 text-emerald-300">
-                  {benefit}
-                </span>
-              ))}
-            </div>
+            <TagList items={entry.benefits} tone="emerald" />
           </div>
         )}
 
-        {entry.drugInteractions.length > 0 && (
-          <div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Drug Interactions</p>
-            <div className="flex flex-wrap gap-2">
-              {entry.drugInteractions.map((interaction, i) => (
-                <span key={i} className="text-xs px-2.5 py-1 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-300">
-                  {interaction}
-                </span>
-              ))}
-            </div>
+        {(entry.avoidWith.length > 0 || entry.drugInteractions.length > 0) && (
+          <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-4">
+            <h4 className="text-sm font-medium text-white/80">Interactions & cautions</h4>
+
+            {entry.avoidWith.length > 0 && (
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">
+                  <HelpTip tipKey="flaggedInSourceData">Flagged in source data</HelpTip>
+                </p>
+                <TagList items={entry.avoidWith} tone="rose" />
+              </div>
+            )}
+
+            {entry.drugInteractions.length > 0 && (
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-rose-400/60 mb-2">
+                  <HelpTip tipKey="reportedDrugInteractions">Drug interactions</HelpTip>
+                </p>
+                <TagList items={entry.drugInteractions} tone="rose" />
+              </div>
+            )}
+
+            <p className="text-xs leading-5 text-white/45">
+              These are observational flags for review, not individualized instructions.
+            </p>
           </div>
         )}
 
