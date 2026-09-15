@@ -66,4 +66,51 @@ describe('HelpTip', () => {
     await userEvent.click(screen.getByRole('button', { name: /outside/i }));
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
   });
+
+  it('renders the panel on document.body via a portal, immune to an ancestor overflow:hidden clip', async () => {
+    const { container } = render(
+      <div style={{ overflow: 'hidden', height: 20 }} data-testid="clipping-ancestor">
+        <HelpTip tipKey="synergy">Synergy</HelpTip>
+      </div>
+    );
+    await userEvent.click(screen.getByRole('button'));
+    const tooltip = screen.getByRole('tooltip');
+    expect(container.contains(tooltip)).toBe(false);
+    expect(document.body.contains(tooltip)).toBe(true);
+  });
+
+  it('flips the panel below the trigger when there is no room above it', async () => {
+    const getRectSpy = vi
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+      .mockReturnValue({ top: 5, left: 100, right: 200, bottom: 25, width: 100, height: 20, x: 100, y: 5, toJSON() { return {}; } });
+
+    render(<HelpTip tipKey="synergy">Synergy</HelpTip>);
+    await userEvent.click(screen.getByRole('button'));
+    const tooltip = screen.getByRole('tooltip');
+
+    expect(tooltip).toHaveAttribute('data-placement', 'bottom');
+    // bottom (25) + the trigger gap (8), independent of the panel's own
+    // (unmeasurable-in-jsdom) height, since it opens below the trigger.
+    expect(tooltip.style.top).toBe('33px');
+
+    getRectSpy.mockRestore();
+  });
+
+  it('clamps the panel horizontally so it never runs past the right edge of the viewport', async () => {
+    const originalInnerWidth = window.innerWidth;
+    Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+    const getRectSpy = vi
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+      .mockReturnValue({ top: 400, left: 2000, right: 2100, bottom: 420, width: 100, height: 20, x: 2000, y: 400, toJSON() { return {}; } });
+
+    render(<HelpTip tipKey="synergy">Synergy</HelpTip>);
+    await userEvent.click(screen.getByRole('button'));
+    const tooltip = screen.getByRole('tooltip');
+
+    // 1024 (viewport) - 224 (panel width fallback) - 8 (margin) = 792.
+    expect(tooltip.style.left).toBe('792px');
+
+    getRectSpy.mockRestore();
+    Object.defineProperty(window, 'innerWidth', { value: originalInnerWidth, configurable: true });
+  });
 });

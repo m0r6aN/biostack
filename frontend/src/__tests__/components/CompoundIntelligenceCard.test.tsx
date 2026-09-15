@@ -84,7 +84,8 @@ describe('CompoundIntelligenceCard', () => {
       />
     );
 
-    expect(screen.getByText('Reported cautions in source data')).toBeInTheDocument();
+    expect(screen.getByText('Interactions & cautions')).toBeInTheDocument();
+    expect(screen.getByText('Flagged in source data')).toBeInTheDocument();
     expect(screen.getByText('Reported caution')).toBeInTheDocument();
     expect(screen.getByText('These are observational flags for review, not individualized instructions.')).toBeInTheDocument();
     expect(container.textContent ?? '').not.toContain('Pairing candidate');
@@ -135,22 +136,63 @@ describe('CompoundIntelligenceCard', () => {
       />
     );
 
-    expect(screen.getByText('Drug Interactions')).toBeInTheDocument();
+    expect(screen.getByText('Drug interactions')).toBeInTheDocument();
     expect(screen.getByText('Warfarin')).toBeInTheDocument();
   });
 
-  it('omits benefits and drug interactions sections when their arrays are empty', () => {
+  it('omits benefits and interactions & cautions sections when their arrays are empty', () => {
     render(
       <CompoundIntelligenceCard
         entry={{
           ...baseEntry,
           benefits: [],
+          avoidWith: [],
           drugInteractions: [],
         }}
       />
     );
 
     expect(screen.queryByText('Benefits')).not.toBeInTheDocument();
-    expect(screen.queryByText('Drug Interactions')).not.toBeInTheDocument();
+    expect(screen.queryByText('Interactions & cautions')).not.toBeInTheDocument();
+    expect(screen.queryByText('Drug interactions')).not.toBeInTheDocument();
+  });
+
+  it('renders only the populated subsection when just one of avoidWith/drugInteractions is present', () => {
+    render(
+      <CompoundIntelligenceCard
+        entry={{
+          ...baseEntry,
+          avoidWith: [],
+          drugInteractions: ['Warfarin'],
+        }}
+      />
+    );
+
+    expect(screen.getByText('Interactions & cautions')).toBeInTheDocument();
+    expect(screen.getByText('Drug interactions')).toBeInTheDocument();
+    expect(screen.queryByText('Flagged in source data')).not.toBeInTheDocument();
+  });
+
+  it('renders short pathway entries as chips and long, sentence-shaped entries as callouts', () => {
+    const { container } = render(
+      <CompoundIntelligenceCard
+        entry={{
+          ...baseEntry,
+          pathways: [
+            'cellular-energy',
+            'Ipamorelin is a synthetic pentapeptide ghrelin mimetic that stimulates growth hormone release from the anterior pituitary; it was first identified in 1998.',
+          ],
+        }}
+      />
+    );
+
+    const chip = screen.getByText('cellular-energy');
+    expect(chip.className).toContain('rounded-full');
+
+    const callout = screen.getByText(/Ipamorelin is a synthetic pentapeptide/);
+    expect(callout.tagName).toBe('P');
+    expect(callout.className).toContain('rounded-xl');
+    expect(callout.className).not.toContain('rounded-full');
+    expect(container.querySelectorAll('.rounded-xl').length).toBeGreaterThan(0);
   });
 });

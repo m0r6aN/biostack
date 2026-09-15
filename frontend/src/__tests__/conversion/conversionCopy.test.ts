@@ -48,6 +48,12 @@ const ALL_NEW_COPY = [
   // InteractionIntelligenceCard CTA
   'Tracking this protocol over time will show whether these interaction patterns hold.',
   'Start tracking',
+  // CompoundIntelligenceCard — merged "Interactions & cautions" section (#11/#12)
+  'Interactions & cautions',
+  'Flagged in source data',
+  'Drug interactions',
+  'Combinations or contexts the source literature flags for review, drawn directly from the record.',
+  "Substances the source literature reports as interacting, shown with the source's own note (for example, \"review\") exactly as recorded.",
 ];
 
 const BANNED = [
