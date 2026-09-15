@@ -74,7 +74,15 @@ vi.mock('@/components/dashboard/OverlapFlagsBanner', () => ({ OverlapFlagsBanner
 vi.mock('@/components/dashboard/PatternMemoryPanel', () => ({ PatternMemoryPanel: () => null }));
 vi.mock('@/components/dashboard/ProtocolConsoleOverview', () => ({ ProtocolConsoleOverview: () => null }));
 vi.mock('@/components/dashboard/SequenceExpectationPanel', () => ({ SequenceExpectationPanel: () => null }));
-vi.mock('@/components/dashboard/StatCard', () => ({ StatCard: ({ title }: { title: string }) => <div>{title}</div> }));
+vi.mock('@/components/dashboard/StatCard', () => ({
+  StatCard: ({ title, value, unit }: { title: string; value?: ReactNode; unit?: string }) => (
+    <div>
+      <span>{title}</span>
+      {value !== undefined && value !== null && <span>{value}</span>}
+      {unit && <span>{unit}</span>}
+    </div>
+  ),
+}));
 vi.mock('@/components/dashboard/TimelineSnapshot', () => ({ TimelineSnapshot: () => null }));
 vi.mock('@/components/mission/NextObservationCard', () => ({ NextObservationCard: () => null }));
 vi.mock('@/components/mission/ObservationDebtInbox', () => ({ ObservationDebtInbox: () => null }));
@@ -156,6 +164,13 @@ describe('ProtocolConsole — analyzer draft continuation after sign-in', () => 
     expect(screen.queryByText('Live stack intelligence is locked on Observer')).not.toBeInTheDocument();
     expect(screen.queryByText('Failed to load protocol console data')).not.toBeInTheDocument();
     expect(apiClient.getCurrentStackIntelligence).toHaveBeenCalledWith(profile.id);
+
+    if (!newLayout) {
+      // Legacy layout shows the Protocol Score stat card — it must display the score
+      // against its 0-100 basis (e.g. "72 / 100"), not a bare "72".
+      expect(screen.getByText('72')).toBeInTheDocument();
+      expect(screen.getByText('/ 100')).toBeInTheDocument();
+    }
   });
 
   describe('first profile (the sign-in promise previously dead-ended here)', () => {

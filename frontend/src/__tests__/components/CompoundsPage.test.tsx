@@ -1,7 +1,8 @@
 import CompoundsPage from '@/app/compounds/page';
 import { ApiError, apiClient } from '@/lib/api';
+import { SIDEBAR_COLLAPSED_KEY } from '@/lib/sidebarCollapse';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { beforeEach, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 vi.mock('@/lib/context', () => ({ useProfile: () => ({ currentProfileId: 'profile-fixture' }) }));
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
 vi.mock('@/components/Header', () => ({ Header: ({ actions }: { actions?: React.ReactNode }) => <header>{actions}</header> }));
@@ -11,6 +12,7 @@ vi.mock('@/components/compounds/CompoundList', () => ({ CompoundList: ({ compoun
 vi.mock('@/lib/api', async importOriginal => ({ ...await importOriginal<typeof import('@/lib/api')>(), apiClient: { getCompounds: vi.fn(), getAllKnowledgeCompounds: vi.fn(), createCompound: vi.fn() } }));
 beforeEach(() => {
   vi.clearAllMocks();
+  window.localStorage.clear();
   vi.mocked(apiClient.getCompounds).mockResolvedValue([]);
   vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([]);
 });
@@ -62,4 +64,31 @@ it('keeps an upgrade rejection in the form and disables duplicate submission whi
   expect(screen.getByLabelText('4. Optional: Manual Search/Entry')).toHaveValue('Fixture Compound');
   expect(screen.getAllByRole('button', { name: 'Add Compound', exact: true }).at(-1)).toBeEnabled();
   vi.restoreAllMocks();
+});
+
+describe('detail grid reclaims width when the sidebar is collapsed', () => {
+  beforeEach(() => {
+    vi.mocked(apiClient.getCompounds).mockResolvedValue([
+      { id: 'c1', name: 'BPC-157', category: 'Peptide', status: 'active', startDate: '2026-01-01' } as never,
+    ]);
+  });
+
+  it('uses a 2/1 (3-col) split by default', async () => {
+    render(<CompoundsPage />);
+    await screen.findByText('BPC-157');
+
+    const grid = screen.getByTestId('compounds-detail-grid');
+    expect(grid.className).toContain('lg:grid-cols-3');
+    expect(grid.className).not.toContain('lg:grid-cols-5');
+  });
+
+  it('widens the detail column to a 2/3 (5-col) split when the sidebar is collapsed', async () => {
+    window.localStorage.setItem(SIDEBAR_COLLAPSED_KEY, '1');
+    render(<CompoundsPage />);
+    await screen.findByText('BPC-157');
+
+    const grid = screen.getByTestId('compounds-detail-grid');
+    expect(grid.className).toContain('lg:grid-cols-5');
+    expect(grid.className).not.toContain('lg:grid-cols-3');
+  });
 });

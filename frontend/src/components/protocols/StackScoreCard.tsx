@@ -9,12 +9,15 @@ interface StackScoreCardProps {
 export function StackScoreCard({ score }: StackScoreCardProps) {
   return (
     <div className="p-5 rounded-lg border border-white/[0.08] bg-[#121923]/90">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Stack Score</p>
-          <h3 className="mt-2 text-4xl font-black text-white">{score.score}</h3>
-        </div>
-        <div className="text-right text-xs text-white/45">0-100</div>
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">Stack Score</p>
+        <h3
+          className="mt-2 flex items-baseline gap-1"
+          aria-label={`Stack score ${score.score} out of 100`}
+        >
+          <span className="text-4xl font-black text-white">{score.score}</span>
+          <span className="text-base font-semibold text-white/50">/100</span>
+        </h3>
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">

@@ -472,6 +472,8 @@ export function ProtocolConsole() {
                   <StatCard
                     title="Protocol Score"
                     value={currentStack ? currentStack.stackScore.score : '—'}
+                    unit={currentStack ? '/ 100' : undefined}
+                    ariaLabel={currentStack ? `Protocol score ${currentStack.stackScore.score} out of 100` : undefined}
                     icon="🎯"
                     color={currentStack && currentStack.stackScore.score < 60 ? 'amber' : 'emerald'}
                   />
