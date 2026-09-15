@@ -48,11 +48,23 @@ const ALL_NEW_COPY = [
   // InteractionIntelligenceCard CTA
   'Tracking this protocol over time will show whether these interaction patterns hold.',
   'Start tracking',
-  // CompoundForm goal picker (owner-feedback-20260915 #5: default = whole category,
-  // goal matches sorted first and marked, no show-all/goal-only toggle)
-  'Compounds that match your goal are shown first in this category.',
-  'Goal tags are not a complete list of compounds or evidence of effectiveness.',
-  'matches your goal',
+  // CompoundForm / CompoundEditForm — name validation (owner-reported: an
+  // accidental Enter mid-form previously created a nameless compound)
+  'Enter a compound name before adding it.',
+  'Enter a compound name before saving.',
+  'Select a category before saving.',
+  // Compound detail resilience — a compound with no name skips the
+  // knowledge lookup instead of erroring
+  'No reference entry for this compound',
+  'Unnamed compound',
+  // CompoundEditForm / detail-panel edit + delete
+  'Edit Compound',
+  'Compound name',
+  'Save Changes',
+  "Delete this compound? This can't be undone.",
+  'Confirm delete',
+  'Deleting...',
+  'Saving...',
 ];
 
 const BANNED = [

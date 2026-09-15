@@ -164,17 +164,18 @@ export class ApiClient {
   }
 
   async updateCompound(
+    profileId: string,
     compoundId: string,
-    compound: Partial<CompoundRecord>
+    compound: Omit<CompoundRecord, 'id'>
   ): Promise<CompoundRecord> {
-    return this.request(`/api/v1/compounds/${compoundId}`, {
+    return this.request(`/api/v1/profiles/${profileId}/compounds/${compoundId}`, {
       method: 'PUT',
       body: JSON.stringify(compound),
     });
   }
 
-  async deleteCompound(compoundId: string): Promise<void> {
-    return this.request(`/api/v1/compounds/${compoundId}`, {
+  async deleteCompound(profileId: string, compoundId: string): Promise<void> {
+    return this.request(`/api/v1/profiles/${profileId}/compounds/${compoundId}`, {
       method: 'DELETE',
     });
   }
