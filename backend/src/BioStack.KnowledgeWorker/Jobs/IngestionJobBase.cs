@@ -38,6 +38,14 @@ public abstract class IngestionJobBase : IIngestionJob
     /// </summary>
     protected abstract string ChangeType { get; }
 
+    /// <summary>
+    /// Promotion gate hook. The base implementation approves every record — SeedJob (one-shot
+    /// initial bootstrap) is intentionally never gated. <see cref="RefreshJob"/> overrides
+    /// this to consult its injected <see cref="Pipeline.IPromotionGate"/>.
+    /// </summary>
+    protected virtual PromotionGateDecision EvaluatePromotionGate(PreparedRecord prepared)
+        => PromotionGateDecision.Approved;
+
     public async Task<JobRunResult> RunAsync(IngestionContext context, CancellationToken cancellationToken = default)
     {
         context.Logger.LogInformation(
@@ -103,6 +111,19 @@ public abstract class IngestionJobBase : IIngestionJob
     {
         var canonicalName = prepared.Record.Identity.CanonicalName;
 
+        // Promotion gate runs before anything else — including before DryRun's read-only
+        // preview — so a skip is reported the same way whether this is a DryRun or a write.
+        var gate = EvaluatePromotionGate(prepared);
+        if (!gate.Allowed)
+        {
+            context.IncrementSkippedUnpromoted();
+            context.RecordPlanRow(canonicalName, "skip-unpromoted", gate.SkipReasonText);
+            context.Logger.LogInformation(
+                "[{Job}] SKIP (not promoted) '{Name}': {Reason}",
+                JobName, canonicalName, gate.SkipReasonText);
+            return;
+        }
+
         if (prepared.Record.Ops.NeedsReview)
         {
             context.IncrementFlaggedForReview();
@@ -110,9 +131,17 @@ public abstract class IngestionJobBase : IIngestionJob
 
         if (context.DryRun)
         {
+            // Read-only preview: never calls UpsertCompoundAsync, so a DryRun makes no
+            // writes here. The disposition is a real comparison against the database, not
+            // a placeholder — the summary counters and per-record table both reflect what
+            // a live Refresh would actually do.
+            var previewDisposition = await KnowledgeSource.PreviewUpsertAsync(prepared.Entry, ct);
+            var action = DryRunActionLabel(previewDisposition);
+            RecordDispositionCounters(context, previewDisposition);
+            context.RecordPlanRow(canonicalName, action, string.Empty);
             context.Logger.LogInformation(
-                "[{Job}] DRY-RUN would upsert '{Name}' class={Class} strippedFields={Stripped}",
-                JobName, canonicalName, prepared.TrustClass, prepared.StrippedFields.Count);
+                "[{Job}] DRY-RUN would {Action} '{Name}' class={Class} strippedFields={Stripped}",
+                JobName, action, canonicalName, prepared.TrustClass, prepared.StrippedFields.Count);
             return;
         }
 
@@ -123,6 +152,12 @@ public abstract class IngestionJobBase : IIngestionJob
         prepared.Record.Ops.LastChangeType = ChangeType;
 
         var disposition = await KnowledgeSource.UpsertCompoundAsync(prepared.Entry, ct);
+        RecordDispositionCounters(context, disposition);
+        context.RecordPlanRow(canonicalName, disposition.ToString(), string.Empty);
+    }
+
+    private static void RecordDispositionCounters(IngestionContext context, KnowledgeUpsertDisposition disposition)
+    {
         switch (disposition)
         {
             case KnowledgeUpsertDisposition.Created:
@@ -136,6 +171,14 @@ public abstract class IngestionJobBase : IIngestionJob
                 break;
         }
     }
+
+    private static string DryRunActionLabel(KnowledgeUpsertDisposition disposition) => disposition switch
+    {
+        KnowledgeUpsertDisposition.Created   => "would-insert",
+        KnowledgeUpsertDisposition.Updated   => "would-update",
+        KnowledgeUpsertDisposition.Unchanged => "unchanged",
+        _                                    => "unknown",
+    };
 
     private static IEnumerable<List<T>> Chunk<T>(IReadOnlyList<T> source, int size)
     {

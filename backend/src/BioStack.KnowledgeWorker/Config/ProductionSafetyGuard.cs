@@ -123,7 +123,11 @@ public static class ProductionSafetyGuard
         return false;
     }
 
-    private static bool IsLocalHost(string host)
+    /// <summary>
+    /// Public so other startup guards (e.g. the Refresh <c>AllowUnpromoted</c> override)
+    /// can apply the same localhost definition without duplicating it.
+    /// </summary>
+    public static bool IsLocalHost(string host)
     {
         return host.Equals("localhost", StringComparison.OrdinalIgnoreCase)
             || host.Equals("127.0.0.1", StringComparison.Ordinal)

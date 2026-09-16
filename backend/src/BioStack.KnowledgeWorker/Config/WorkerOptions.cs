@@ -49,6 +49,42 @@ public sealed class WorkerOptions
     public string? ScopeHint { get; set; }
 
     /// <summary>
+    /// Directory of <c>review-decision-batch-*.json</c> files consulted by
+    /// <see cref="RunMode.Refresh"/>'s promotion gate. Resolved relative to the
+    /// process's current working directory (not <c>AppContext.BaseDirectory</c>) so the
+    /// documented runbook invocation — run from the repo root — finds
+    /// <c>research/review-decisions</c> without an absolute path. Refresh fails closed
+    /// (aborts before any database connection or write) if no review-decision batch can
+    /// be loaded from here or from <see cref="ReviewDecisionPath"/>, unless
+    /// <see cref="AllowUnpromoted"/> is set.
+    /// </summary>
+    public string? ReviewDecisionDirectory { get; set; } = "research/review-decisions";
+
+    /// <summary>
+    /// Optional single review-decision batch file, consulted in addition to
+    /// <see cref="ReviewDecisionDirectory"/> by Refresh's promotion gate. Same
+    /// cwd-relative resolution as <see cref="ReviewDecisionDirectory"/>.
+    /// </summary>
+    public string? ReviewDecisionPath { get; set; }
+
+    /// <summary>
+    /// Explicit dev/local override that disables Refresh's promotion gate entirely —
+    /// every schema-valid seed record is upserted regardless of review-decision status.
+    /// Refused (startup throws) unless the resolved connection string host is
+    /// localhost/127.0.0.1, or <see cref="AcknowledgeUnpromotedProduction"/> is also set.
+    /// Every use is logged loudly. Never set this for a production run.
+    /// </summary>
+    public bool AllowUnpromoted { get; set; } = false;
+
+    /// <summary>
+    /// Required alongside <see cref="AllowUnpromoted"/> when the connection string host is
+    /// not localhost/127.0.0.1 — an explicit, separate acknowledgement that the operator
+    /// intends to bypass the promotion gate against a non-local (and therefore possibly
+    /// production) database. Has no effect unless <see cref="AllowUnpromoted"/> is also set.
+    /// </summary>
+    public bool AcknowledgeUnpromotedProduction { get; set; } = false;
+
+    /// <summary>
     /// Optional compound candidate batch path used by <see cref="RunMode.Research" />.
     /// </summary>
     public string? ResearchCandidateFilePath { get; set; }
