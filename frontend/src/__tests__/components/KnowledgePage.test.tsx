@@ -273,6 +273,6 @@ describe('KnowledgePage overlap gating', () => {
     render(<KnowledgePage />);
 
     expect(screen.queryByText('Knowledge Base')).not.toBeInTheDocument();
-    expect(screen.getAllByText('Compounds & Evidence').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Library').length).toBeGreaterThan(0);
   });
 });

@@ -57,6 +57,22 @@ const ALL_NEW_COPY = [
   'This device or passkey manager could not complete sign-in. Use your email link instead.',
   'No passkey was selected. Choose Sign in with a passkey to try again.',
   'BioStack could not verify where to send you next. Use your email link instead.',
+  // GlobalSearch (app shell header + /knowledge)
+  'Search the library',
+  'Search the library…',
+  'Library search results',
+  'Search is unavailable right now.',
+  'No matches for',
+  // Sidebar — Library as the primary destination
+  'Library',
+  'Compounds & evidence',
+  // CompoundIntelligenceCard — library links both ways (owner finding: discoverability)
+  'Open full dossier',
+  'Add to protocol',
+  'Sign in to add to protocol',
+  // /compounds empty state — points to the library instead of a blank slate
+  'Browse the library to see what the research says before adding anything.',
+  'Browse the library',
 ];
 
 const BANNED = [

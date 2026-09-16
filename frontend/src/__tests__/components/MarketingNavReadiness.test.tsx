@@ -39,7 +39,7 @@ describe('MarketingNav readiness CTAs', () => {
   it('surfaces public evidence and uses a clear free analyzer CTA', () => {
     render(<MarketingNav />);
 
-    expect(screen.getByRole('link', { name: 'Compounds & Evidence' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Library' })).toHaveAttribute(
       'href',
       '/knowledge'
     );

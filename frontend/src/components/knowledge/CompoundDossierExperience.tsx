@@ -112,7 +112,7 @@ export function CompoundDossierExperience({ slug, initialEntry = null }: Compoun
         </div>
       ) : entry ? (
         <>
-          <CompoundIntelligenceCard entry={entry} recommendationSurface="knowledge-detail" />
+          <CompoundIntelligenceCard entry={entry} recommendationSurface="knowledge-detail" isSignedIn={Boolean(user)} />
           <CompoundRelationshipsSection
             compoundName={entry.canonicalName}
             aliases={entry.aliases}

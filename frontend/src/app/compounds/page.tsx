@@ -15,13 +15,18 @@ import { useProfile } from '@/lib/context';
 import { cn } from '@/lib/utils';
 import { useSidebarCollapsed } from '@/lib/useSidebarCollapsed';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
-import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useRef, useState } from 'react';
 
 const CONSENT_RETURN_TO = '/compounds';
 
-export default function CompoundsPage() {
+function CompoundsPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  // Deep link from a dossier's "Add to protocol" action (see
+  // CompoundIntelligenceCard) — opens the add form with the compound
+  // preselected once the knowledge base loads inside CompoundForm.
+  const prefillSlug = searchParams.get('compound');
   const { currentProfileId } = useProfile();
   const [sidebarCollapsed] = useSidebarCollapsed();
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
@@ -29,7 +34,11 @@ export default function CompoundsPage() {
   const [error, setError] = useState<string | null>(null);
   const [addError, setAddError] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  // A dossier deep link (?compound=<slug>) opens straight to the add form
+  // instead of leaving the visitor to find "Add Compound" themselves. Read
+  // once at init rather than in an effect — searchParams is already known
+  // on first render.
+  const [showForm, setShowForm] = useState(() => Boolean(prefillSlug));
   const [selectedCompound, setSelectedCompound] = useState<CompoundRecord | null>(null);
   const [knowledgeEntry, setKnowledgeEntry] = useState<KnowledgeEntry | null>(null);
   const [loadingKnowledge, setLoadingKnowledge] = useState(false);
@@ -275,6 +284,7 @@ export default function CompoundsPage() {
               personId={currentProfileId}
               onSubmit={handleAddCompound}
               isLoading={adding}
+              initialCompoundSlug={prefillSlug ?? undefined}
             />
           </div>
         )}
@@ -284,11 +294,15 @@ export default function CompoundsPage() {
         ) : compounds.length === 0 ? (
           <EmptyState
             title="No Compounds Yet"
-            description="Start tracking compounds and supplements"
+            description="Browse the library to see what the research says before adding anything."
             icon="🧪"
             action={{
               label: 'Add Your First Compound',
               onClick: () => setShowForm(true),
+            }}
+            secondaryAction={{
+              label: 'Browse the library',
+              href: '/knowledge',
             }}
           />
         ) : (
@@ -406,7 +420,7 @@ export default function CompoundsPage() {
                         Loading knowledge...
                       </div>
                     ) : knowledgeEntry ? (
-                      <CompoundIntelligenceCard entry={knowledgeEntry} />
+                      <CompoundIntelligenceCard entry={knowledgeEntry} recommendationSurface="compound-detail" />
                     ) : (
                       <div className="p-4 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.35)] text-center text-sm text-white/50">
                         No reference entry for this compound
@@ -424,5 +438,13 @@ export default function CompoundsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function CompoundsPage() {
+  return (
+    <Suspense fallback={<div className="w-full"><Header title="Compounds" /></div>}>
+      <CompoundsPageContent />
+    </Suspense>
   );
 }

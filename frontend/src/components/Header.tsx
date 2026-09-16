@@ -1,5 +1,6 @@
 'use client';
 
+import { GlobalSearch } from '@/components/GlobalSearch';
 import { useProfile } from '@/lib/context';
 import { useSettings } from '@/lib/settings';
 import { cn, formatWeight } from '@/lib/utils';
@@ -64,6 +65,11 @@ export function Header({ title, subtitle, actions, className }: HeaderProps) {
               </span>
             )}
           </div>
+        </div>
+
+        {/* ── Middle: Library search ───────────────────────────────────── */}
+        <div className="hidden sm:block flex-1 min-w-0 max-w-xs">
+          <GlobalSearch />
         </div>
 
         {/* ── Right: Profile + actions ────────────────────────────────── */}
