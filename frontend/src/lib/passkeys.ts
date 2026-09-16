@@ -25,7 +25,7 @@ export function passkeyRegistrationErrorMessage(error: unknown): string {
   }
   if (error instanceof Error || (typeof DOMException !== 'undefined' && error instanceof DOMException)) {
     if (error.name === 'NotAllowedError' || error.name === 'AbortError') return 'The passkey request was cancelled or timed out. Choose Add passkey to try again.';
-    if (error.name === 'InvalidStateError') return 'This authenticator already has a passkey for your account. Try another device or passkey manager.';
+    if (error.name === 'InvalidStateError') return 'This passkey is already added to BioStack. Sign in with it, or remove it from Account settings first.';
     if (error.name === 'SecurityError') return 'Passkeys could not be used on this address. Open https://biostack.cc and try again.';
     if (error.name === 'NotSupportedError') return 'This device or passkey manager could not create a passkey. Try another supported option.';
   }

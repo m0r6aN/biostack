@@ -94,6 +94,35 @@ public static class CriticalPostgresSchemaContract
         Integer("StripeWebhookEvents", "AttemptCount", legacyBaseline: false),
         Timestamp("StripeWebhookEvents", "LastAttemptAtUtc", legacyBaseline: false),
         Timestamp("StripeWebhookEvents", "ProcessedAtUtc"),
+
+        // PasskeyCredentials and PasskeyOperationChallenges (added by migration
+        // 20260828090000_AddPasskeyAuthentication, after the legacy baseline).
+        Uuid("PasskeyCredentials", "Id", legacyBaseline: false),
+        Uuid("PasskeyCredentials", "IdentityId", legacyBaseline: false),
+        Bytea("PasskeyCredentials", "CredentialId", legacyBaseline: false),
+        Bytea("PasskeyCredentials", "PublicKey", legacyBaseline: false),
+        Bytea("PasskeyCredentials", "UserHandle", legacyBaseline: false),
+        Text("PasskeyCredentials", "CredentialType", legacyBaseline: false),
+        BigInt("PasskeyCredentials", "SignatureCounter", legacyBaseline: false),
+        Text("PasskeyCredentials", "Transports", legacyBaseline: false),
+        Uuid("PasskeyCredentials", "AaGuid", legacyBaseline: false),
+        Boolean("PasskeyCredentials", "IsBackupEligible", legacyBaseline: false),
+        Boolean("PasskeyCredentials", "IsBackedUp", legacyBaseline: false),
+        Text("PasskeyCredentials", "DisplayName", legacyBaseline: false),
+        Timestamp("PasskeyCredentials", "CreatedAtUtc", legacyBaseline: false),
+        Timestamp("PasskeyCredentials", "LastUsedAtUtc", nullable: true, legacyBaseline: false),
+
+        Uuid("PasskeyOperationChallenges", "Id", legacyBaseline: false),
+        Uuid("PasskeyOperationChallenges", "UserId", nullable: true, legacyBaseline: false),
+        Text("PasskeyOperationChallenges", "Operation", legacyBaseline: false),
+        Text("PasskeyOperationChallenges", "RequestIdHash", legacyBaseline: false),
+        Text("PasskeyOperationChallenges", "OptionsJson", legacyBaseline: false),
+        Text("PasskeyOperationChallenges", "RedirectPath", legacyBaseline: false),
+        Timestamp("PasskeyOperationChallenges", "CreatedAtUtc", legacyBaseline: false),
+        Timestamp("PasskeyOperationChallenges", "ExpiresAtUtc", legacyBaseline: false),
+        Timestamp("PasskeyOperationChallenges", "ConsumedAtUtc", nullable: true, legacyBaseline: false),
+        Integer("PasskeyOperationChallenges", "AttemptCount", legacyBaseline: false),
+        Text("PasskeyOperationChallenges", "IpAddress", nullable: true, legacyBaseline: false),
     ];
 
     public static IReadOnlyList<string> FindProblems(
@@ -163,6 +192,20 @@ public static class CriticalPostgresSchemaContract
         bool nullable = false,
         bool legacyBaseline = true) =>
         Column(table, column, nullable, legacyBaseline, ["int4"], []);
+
+    private static CriticalPostgresColumn BigInt(
+        string table,
+        string column,
+        bool nullable = false,
+        bool legacyBaseline = true) =>
+        Column(table, column, nullable, legacyBaseline, ["int8"], []);
+
+    private static CriticalPostgresColumn Bytea(
+        string table,
+        string column,
+        bool nullable = false,
+        bool legacyBaseline = true) =>
+        Column(table, column, nullable, legacyBaseline, ["bytea"], []);
 
     private static CriticalPostgresColumn Text(
         string table,

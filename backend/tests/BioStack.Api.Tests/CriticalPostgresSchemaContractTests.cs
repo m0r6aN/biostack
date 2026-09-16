@@ -49,6 +49,72 @@ public sealed class CriticalPostgresSchemaContractTests
     }
 
     [Fact]
+    public void Contract_IncludesPasskeyCredentialsWithMigrationColumnTypes()
+    {
+        var expected = new Dictionary<string, (IReadOnlySet<string> UdtNames, bool IsNullable)>(StringComparer.Ordinal)
+        {
+            ["Id"] = (new HashSet<string> { "uuid" }, false),
+            ["IdentityId"] = (new HashSet<string> { "uuid" }, false),
+            ["CredentialId"] = (new HashSet<string> { "bytea" }, false),
+            ["PublicKey"] = (new HashSet<string> { "bytea" }, false),
+            ["UserHandle"] = (new HashSet<string> { "bytea" }, false),
+            ["CredentialType"] = (new HashSet<string> { "text", "varchar" }, false),
+            ["SignatureCounter"] = (new HashSet<string> { "int8" }, false),
+            ["Transports"] = (new HashSet<string> { "text", "varchar" }, false),
+            ["AaGuid"] = (new HashSet<string> { "uuid" }, false),
+            ["IsBackupEligible"] = (new HashSet<string> { "bool" }, false),
+            ["IsBackedUp"] = (new HashSet<string> { "bool" }, false),
+            ["DisplayName"] = (new HashSet<string> { "text", "varchar" }, false),
+            ["CreatedAtUtc"] = (new HashSet<string> { "timestamptz" }, false),
+            ["LastUsedAtUtc"] = (new HashSet<string> { "timestamptz" }, true),
+        };
+
+        AssertTableMatchesContract("PasskeyCredentials", expected);
+    }
+
+    [Fact]
+    public void Contract_IncludesPasskeyOperationChallengesWithMigrationColumnTypes()
+    {
+        var expected = new Dictionary<string, (IReadOnlySet<string> UdtNames, bool IsNullable)>(StringComparer.Ordinal)
+        {
+            ["Id"] = (new HashSet<string> { "uuid" }, false),
+            ["UserId"] = (new HashSet<string> { "uuid" }, true),
+            ["Operation"] = (new HashSet<string> { "text", "varchar" }, false),
+            ["RequestIdHash"] = (new HashSet<string> { "text", "varchar" }, false),
+            ["OptionsJson"] = (new HashSet<string> { "text", "varchar" }, false),
+            ["RedirectPath"] = (new HashSet<string> { "text", "varchar" }, false),
+            ["CreatedAtUtc"] = (new HashSet<string> { "timestamptz" }, false),
+            ["ExpiresAtUtc"] = (new HashSet<string> { "timestamptz" }, false),
+            ["ConsumedAtUtc"] = (new HashSet<string> { "timestamptz" }, true),
+            ["AttemptCount"] = (new HashSet<string> { "int4" }, false),
+            ["IpAddress"] = (new HashSet<string> { "text", "varchar" }, true),
+        };
+
+        AssertTableMatchesContract("PasskeyOperationChallenges", expected);
+    }
+
+    private static void AssertTableMatchesContract(
+        string table,
+        IReadOnlyDictionary<string, (IReadOnlySet<string> UdtNames, bool IsNullable)> expectedColumns)
+    {
+        var actualColumns = CriticalPostgresSchemaContract.Columns
+            .Where(column => column.Table == table)
+            .ToDictionary(column => column.Column, StringComparer.Ordinal);
+
+        Assert.Equal(expectedColumns.Keys.OrderBy(k => k, StringComparer.Ordinal), actualColumns.Keys.OrderBy(k => k, StringComparer.Ordinal));
+
+        foreach (var (columnName, expected) in expectedColumns)
+        {
+            var actual = actualColumns[columnName];
+            Assert.False(actual.IsLegacyBaselineColumn, $"{table}.{columnName} was added by the passkey migration and must not be a legacy-baseline column.");
+            Assert.Equal(expected.IsNullable, actual.IsNullable);
+            Assert.True(
+                expected.UdtNames.SetEquals(actual.ExpectedUdtNames),
+                $"{table}.{columnName} expected udt names [{string.Join(',', expected.UdtNames)}] but contract has [{string.Join(',', actual.ExpectedUdtNames)}]");
+        }
+    }
+
+    [Fact]
     public void Contract_MatchesCurrentNpgsqlModelMappings()
     {
         var options = new DbContextOptionsBuilder<BioStackDbContext>()
@@ -116,6 +182,7 @@ public sealed class CriticalPostgresSchemaContractTests
             "timestamp without time zone" => "timestamp",
             "boolean" => "bool",
             "integer" => "int4",
+            "bigint" => "int8",
             _ => normalized,
         };
     }

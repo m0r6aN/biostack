@@ -779,6 +779,59 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task PasskeyRegistrationOptions_ExcludesExistingCredentialsWithStoredTransports()
+    {
+        await StartAsync("passkey-exclude@example.com", "/account/security");
+        await _client.PostAsJsonAsync(
+            "/api/v1/auth/verify",
+            new VerifyAuthRequest(ReadToken(await LatestMagicLinkAsync())),
+            JsonOptions);
+
+        var existingCredentialId = RandomNumberGenerator.GetBytes(32);
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            var emailIdentity = await db.AuthIdentities.SingleAsync();
+            var passkeyIdentity = new AuthIdentity
+            {
+                Id = Guid.NewGuid(),
+                UserId = emailIdentity.UserId,
+                Type = "passkey",
+                ValueNormalized = new string('B', 64),
+                IsVerified = true,
+                VerifiedAtUtc = DateTime.UtcNow,
+            };
+            passkeyIdentity.PasskeyCredential = new PasskeyCredential
+            {
+                Id = Guid.NewGuid(),
+                IdentityId = passkeyIdentity.Id,
+                CredentialId = existingCredentialId,
+                PublicKey = [4, 5, 6],
+                UserHandle = emailIdentity.UserId.ToByteArray(),
+                DisplayName = "Existing passkey",
+                Transports = "internal,hybrid",
+            };
+            db.AuthIdentities.Add(passkeyIdentity);
+            await db.SaveChangesAsync();
+        }
+
+        var response = await _client.PostAsJsonAsync(
+            "/api/v1/auth/passkeys/register/options",
+            new { displayName = "Second passkey" },
+            JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        using var body = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        var excludeCredentials = body.RootElement.GetProperty("publicKey").GetProperty("excludeCredentials");
+        Assert.Equal(1, excludeCredentials.GetArrayLength());
+        var excluded = excludeCredentials[0];
+        Assert.Equal("public-key", excluded.GetProperty("type").GetString());
+        Assert.Equal(WebEncoders.Base64UrlEncode(existingCredentialId), excluded.GetProperty("id").GetString());
+        var transports = excluded.GetProperty("transports").EnumerateArray().Select(t => t.GetString()).ToArray();
+        Assert.Equal(new[] { "internal", "hybrid" }, transports);
+    }
+
+    [Fact]
     public async Task DiscoverablePasskeyAuthentication_UsesNoCredentialAllowListAndNormalizesRedirect()
     {
         var optionsResponse = await _client.PostAsJsonAsync(
