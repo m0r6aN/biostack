@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { StackGraph } from '@/components/protocol/StackGraph';
 import { cn } from '@/lib/utils';
 import { track } from '@/lib/telemetry';
-import type { InteractionIntelligence, CompoundRecord } from '@/lib/types';
+import type { InteractionIntelligence, ReducedInteractionIntelligence, CompoundRecord } from '@/lib/types';
+import { isReducedInteractionIntelligence } from '@/lib/types';
 
 interface StackGraphMiniProps {
-  intelligence: InteractionIntelligence | null;
+  intelligence: InteractionIntelligence | ReducedInteractionIntelligence | null;
   compounds: CompoundRecord[];
   activeProtocolId?: string | null;
   className?: string;
@@ -15,7 +16,11 @@ interface StackGraphMiniProps {
 
 export function StackGraphMini({ intelligence, compounds, activeProtocolId, className }: StackGraphMiniProps) {
   const activeCount = compounds.filter((c) => c.status === 'Active').length;
-  const topFindingCount = intelligence?.topFindings?.length ?? 0;
+  const topFindingCount = intelligence
+    ? isReducedInteractionIntelligence(intelligence)
+      ? intelligence.pairs.length
+      : intelligence.topFindings.length
+    : 0;
 
   const labHref = activeProtocolId
     ? `/protocols/${activeProtocolId}?tab=graph`

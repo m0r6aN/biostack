@@ -194,6 +194,34 @@ export interface InteractionResult {
   hintBacked: boolean;
 }
 
+// One flagged pair with no reasoning attached — the entire shape returned for per-pair interaction
+// data to a viewer without the reviewed_relationship_graph entitlement (Operator). Owner ruling
+// 2026-09-16 (B3): pair names and severity only, no mechanism, direction, consequence, evidence
+// narrative, or source text.
+export interface InteractionPairSummary {
+  compoundA: string;
+  compoundB: string;
+  severity: 'Neutral' | 'Synergistic' | 'Complementary' | 'Redundant' | 'Interfering' | string;
+}
+
+// Reduced projection of InteractionIntelligence returned to a viewer without the
+// reviewed_relationship_graph entitlement. Use isReducedInteractionIntelligence to distinguish it
+// from the full shape at render time.
+export interface ReducedInteractionIntelligence {
+  summary: {
+    synergies: number;
+    redundancies: number;
+    interferences: number;
+  };
+  pairs: InteractionPairSummary[];
+}
+
+export function isReducedInteractionIntelligence(
+  value: InteractionIntelligence | ReducedInteractionIntelligence,
+): value is ReducedInteractionIntelligence {
+  return Array.isArray((value as ReducedInteractionIntelligence).pairs);
+}
+
 export interface InteractionIntelligence {
   summary: {
     synergies: number;
@@ -527,7 +555,7 @@ export interface Protocol {
   items: ProtocolItem[];
   stackScore: StackScore;
   simulation: SimulationResult;
-  interactionIntelligence: InteractionIntelligence;
+  interactionIntelligence: InteractionIntelligence | ReducedInteractionIntelligence;
   activeRun: ProtocolRun | null;
   versionDiff: ProtocolVersionDiff | null;
   actualComparison: ProtocolActualComparison | null;
@@ -558,7 +586,7 @@ export interface ProtocolVersionChange {
 export interface CurrentStackIntelligence {
   stackScore: StackScore;
   simulation: SimulationResult;
-  interactionIntelligence: InteractionIntelligence;
+  interactionIntelligence: InteractionIntelligence | ReducedInteractionIntelligence;
 }
 
 export type TimelineEventType =

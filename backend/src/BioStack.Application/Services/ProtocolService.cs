@@ -123,6 +123,10 @@ public sealed class ProtocolService : IProtocolService
         await _ownershipGuard.EnsureProfileOwnedAsync(protocol.PersonId, cancellationToken);
         await _featureGate.EnsureEnabledAsync(FeatureCodes.CommanderIntelligence, cancellationToken);
 
+        // This endpoint already requires Commander (strictly above the reviewed_relationship_graph
+        // Operator floor), but entitlement is re-checked rather than assumed, per the fail-closed rule.
+        var hasReasoningAccess = await HasInteractionReasoningAccessAsync(cancellationToken);
+
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken))
             .OrderBy(version => version.Version)
             .ThenBy(version => version.CreatedAtUtc)
@@ -148,7 +152,7 @@ public sealed class ProtocolService : IProtocolService
             var compounds = version.Items.Select(SnapshotCompoundFromItem).ToList();
             var knowledgeEntries = await LoadKnowledgeEntriesAsync(compounds, cancellationToken);
             var interactionIntelligence = await _interactionIntelligenceService.EvaluateAsync(knowledgeEntries, cancellationToken);
-            var simulation = Simulate(knowledgeEntries, interactionIntelligence);
+            var simulation = Simulate(knowledgeEntries, interactionIntelligence, hasReasoningAccess);
             var versionRuns = new List<ProtocolReviewRunResponse>();
 
             foreach (var run in runs.GetValueOrDefault(version.Id, new List<ProtocolRun>()))
@@ -693,7 +697,8 @@ public sealed class ProtocolService : IProtocolService
         var sourceCompounds = source.Items.Select(SnapshotCompoundFromItem).ToList();
         var sourceKnowledgeEntries = await LoadKnowledgeEntriesAsync(sourceCompounds, cancellationToken);
         var sourceInteractionIntelligence = await _interactionIntelligenceService.EvaluateAsync(sourceKnowledgeEntries, cancellationToken);
-        var simulation = Simulate(sourceKnowledgeEntries, sourceInteractionIntelligence);
+        var sourceHasReasoningAccess = await HasInteractionReasoningAccessAsync(cancellationToken);
+        var simulation = Simulate(sourceKnowledgeEntries, sourceInteractionIntelligence, sourceHasReasoningAccess);
         var comparison = await CompareActualAsync(source.PersonId, sourceCompounds, simulation, run, source, cancellationToken);
 
         var draft = new Protocol
@@ -728,12 +733,34 @@ public sealed class ProtocolService : IProtocolService
             .ToList();
         var knowledgeEntries = await LoadKnowledgeEntriesAsync(compounds, cancellationToken);
         var interactionIntelligence = await _interactionIntelligenceService.EvaluateAsync(knowledgeEntries, cancellationToken);
+        // This endpoint already requires paid_intelligence (Operator), but entitlement is re-checked
+        // through the same single projection point rather than assumed from the outer gate.
+        var hasReasoningAccess = await HasInteractionReasoningAccessAsync(cancellationToken);
 
         return new CurrentStackIntelligenceResponse(
             CalculateStackScore(knowledgeEntries, interactionIntelligence),
-            Simulate(knowledgeEntries, interactionIntelligence),
-            interactionIntelligence
+            Simulate(knowledgeEntries, interactionIntelligence, hasReasoningAccess),
+            InteractionIntelligenceProjection.Project(interactionIntelligence, hasReasoningAccess)
         );
+    }
+
+    /// <summary>
+    /// Fail-closed check for the reviewed_relationship_graph entitlement that gates per-pair
+    /// interaction reasoning (owner ruling 2026-09-16, B3). Any exception while determining
+    /// entitlement — missing current-user context, DB failure, anything — resolves to "no access"
+    /// rather than propagating, so a caller that cannot prove entitlement always gets the reduced
+    /// shape via <see cref="InteractionIntelligenceProjection"/>.
+    /// </summary>
+    private async Task<bool> HasInteractionReasoningAccessAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _featureGate.IsEnabledAsync(FeatureCodes.ReviewedRelationshipGraph, cancellationToken);
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     private async Task<ProtocolResponse> MapProtocolAsync(Protocol protocol, bool includeComparison, CancellationToken cancellationToken)
@@ -744,8 +771,9 @@ public sealed class ProtocolService : IProtocolService
 
         var knowledgeEntries = await LoadKnowledgeEntriesAsync(compounds, cancellationToken);
         var interactionIntelligence = await _interactionIntelligenceService.EvaluateAsync(knowledgeEntries, cancellationToken);
+        var hasReasoningAccess = await HasInteractionReasoningAccessAsync(cancellationToken);
         var score = CalculateStackScore(knowledgeEntries, interactionIntelligence);
-        var simulation = Simulate(knowledgeEntries, interactionIntelligence);
+        var simulation = Simulate(knowledgeEntries, interactionIntelligence, hasReasoningAccess);
         var activeRun = await _protocolRunRepository.GetActiveByProtocolIdAsync(protocol.Id, cancellationToken);
         var lineage = (await _protocolRepository.GetLineageAsync(protocol, cancellationToken)).ToList();
         var maxVersion = lineage.Count == 0 ? protocol.Version : lineage.Max(version => version.Version);
@@ -784,7 +812,7 @@ public sealed class ProtocolService : IProtocolService
             protocol.Items.Select(MapItem).ToList(),
             score,
             simulation,
-            interactionIntelligence,
+            InteractionIntelligenceProjection.Project(interactionIntelligence, hasReasoningAccess),
             activeRun is null ? null : MapRun(activeRun),
             diff,
             comparison
@@ -870,7 +898,8 @@ public sealed class ProtocolService : IProtocolService
 
     private static SimulationResultResponse Simulate(
         List<KnowledgeEntry> entries,
-        InteractionIntelligenceResponse interactionIntelligence)
+        InteractionIntelligenceResponse interactionIntelligence,
+        bool includeReasoningInsights)
     {
         var earlySignals = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var midSignals = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -912,9 +941,16 @@ public sealed class ProtocolService : IProtocolService
             insights.Add("Interaction and avoid-with flags are educational warnings; review them before interpreting the protocol.");
         }
 
-        foreach (var finding in interactionIntelligence.TopFindings.Take(3))
+        // Per-pair interaction reasoning (owner ruling 2026-09-16, B3): these finding messages
+        // describe mechanism/direction for a specific compound pair, so they are gated the same
+        // as InteractionIntelligenceResponse itself — only included when the caller has the
+        // reviewed_relationship_graph entitlement.
+        if (includeReasoningInsights)
         {
-            insights.Add(finding.Message);
+            foreach (var finding in interactionIntelligence.TopFindings.Take(3))
+            {
+                insights.Add(finding.Message);
+            }
         }
 
         laterSignals.Add("plateau or adaptation signals are most useful to review after week 3");

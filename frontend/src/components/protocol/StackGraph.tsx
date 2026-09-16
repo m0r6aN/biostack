@@ -24,7 +24,7 @@ import { buildStackGraph, applyGraphFilter, type GraphFilter, type StackGraphNod
 import { EVIDENCE_TIER_TOKENS, INTERACTION_TOKENS } from '@/styles/tokens';
 import { cn } from '@/lib/utils';
 import { track } from '@/lib/telemetry';
-import type { InteractionIntelligence, CompoundRecord, KnowledgeEntry } from '@/lib/types';
+import type { InteractionIntelligence, ReducedInteractionIntelligence, CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { CompoundLink } from '@/components/knowledge/CompoundLink';
 import { HelpTip } from '@/components/ui/HelpTip';
 import type { HelpTipKey } from '@/lib/helpTips';
@@ -117,7 +117,7 @@ const edgeTypes: EdgeTypes = { interactionEdge: InteractionEdge };
 // ── Main Graph ─────────────────────────────────────────────────────────────
 
 interface StackGraphInnerProps {
-  intelligence: InteractionIntelligence | null;
+  intelligence: InteractionIntelligence | ReducedInteractionIntelligence | null;
   compounds: CompoundRecord[];
   onNodeClick?: (compoundName: string) => void;
   onEdgeClick?: (edgeData: StackGraphEdge['data']) => void;

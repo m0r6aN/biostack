@@ -2,6 +2,7 @@
 
 import type {
     InteractionFinding,
+    InteractionPairSummary,
     InteractionResult,
     Protocol,
     ProtocolDriftSnapshot,
@@ -12,6 +13,7 @@ import type {
     ProtocolSequenceExpectationSnapshot,
 } from '@/lib/types';
 import { useState, type ReactNode } from 'react';
+import { isReducedInteractionIntelligence } from '@/lib/types';
 
 interface ProviderObservationalSummaryProps {
   protocol: Protocol;
@@ -52,11 +54,22 @@ export function ProviderObservationalSummary({
   const observations = recentObservations(protocol.actualComparison?.observations ?? []);
   const trends = protocol.actualComparison?.actualTrends ?? [];
   const run = protocol.actualComparison?.run ?? protocol.activeRun;
-  const findings = protocol.interactionIntelligence.topFindings.slice(0, 4);
-  const interactions = protocol.interactionIntelligence.interactions
-    .filter((interaction) => interaction.type !== 'Neutral')
-    .slice(0, 4);
-  const interactionNoteCount = findings.length + interactions.length;
+  // Per-pair reasoning (topFindings/interactions) is gated behind reviewed_relationship_graph
+  // (owner ruling 2026-09-16, B3). Without that entitlement, protocol.interactionIntelligence is
+  // the reduced shape: pair names and severity only, rendered via flaggedPairs below.
+  const intelligence = protocol.interactionIntelligence;
+  let findings: InteractionFinding[] = [];
+  let interactions: InteractionResult[] = [];
+  let flaggedPairs: InteractionPairSummary[] = [];
+  if (isReducedInteractionIntelligence(intelligence)) {
+    flaggedPairs = intelligence.pairs.filter((pair) => pair.severity !== 'Neutral').slice(0, 4);
+  } else {
+    findings = intelligence.topFindings.slice(0, 4);
+    interactions = intelligence.interactions
+      .filter((interaction) => interaction.type !== 'Neutral')
+      .slice(0, 4);
+  }
+  const interactionNoteCount = findings.length + interactions.length + flaggedPairs.length;
   const patternNotes = collectPatternNotes(patterns, drift, sequence, review);
   const [copyState, setCopyState] = useState<'idle' | 'success' | 'error'>('idle');
   const summaryText = buildProviderSummaryText({
@@ -68,6 +81,7 @@ export function ProviderObservationalSummary({
     run,
     findings,
     interactions,
+    flaggedPairs,
     patternNotes,
     generatedDate,
   });
@@ -188,12 +202,13 @@ export function ProviderObservationalSummary({
 
       <div className="grid gap-0 divide-y divide-slate-200 border-t border-slate-200 print:block lg:grid-cols-2 lg:divide-x lg:divide-y-0">
         <SummarySection title="Interaction and overlap notes" metadata={formatCount(interactionNoteCount, 'interaction/overlap note')} label={BIOSTACK_OBSERVED_LABEL}>
-          {findings.length === 0 && interactions.length === 0 ? (
+          {findings.length === 0 && interactions.length === 0 && flaggedPairs.length === 0 ? (
             <Placeholder>{NO_INTERACTION_NOTES}</Placeholder>
           ) : (
             <div className="space-y-3">
               {findings.map((finding) => <FindingRow key={`${finding.type}-${finding.compounds.join('-')}`} finding={finding} />)}
               {interactions.map((interaction) => <InteractionRow key={`${interaction.type}-${interaction.compoundA}-${interaction.compoundB}`} interaction={interaction} />)}
+              {flaggedPairs.map((pair) => <PairRow key={`${pair.severity}-${pair.compoundA}-${pair.compoundB}`} pair={pair} />)}
             </div>
           )}
         </SummarySection>
@@ -330,6 +345,19 @@ function InteractionRow({ interaction }: { interaction: InteractionResult }) {
   );
 }
 
+// Owner ruling 2026-09-16 (B3): pair name and severity only — no confidence, no shared pathways,
+// no reasoning text. Used when the viewer lacks the reviewed_relationship_graph entitlement.
+function PairRow({ pair }: { pair: InteractionPairSummary }) {
+  return (
+    <div className="rounded-lg border border-slate-200 bg-white p-3 print:break-inside-avoid">
+      <div className="flex flex-wrap items-center gap-2">
+        <FlagBadge type={pair.severity} />
+        <span className="text-sm font-semibold text-slate-900">{pair.compoundA} + {pair.compoundB}</span>
+      </div>
+    </div>
+  );
+}
+
 function FlagBadge({ type }: { type: string }) {
   return (
     <span className="rounded-full border border-slate-300 bg-slate-100 px-2.5 py-1 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
@@ -360,6 +388,7 @@ interface ProviderSummaryTextInput {
   run: Protocol['activeRun'];
   findings: InteractionFinding[];
   interactions: InteractionResult[];
+  flaggedPairs: InteractionPairSummary[];
   patternNotes: string[];
   generatedDate: string;
 }
@@ -375,6 +404,7 @@ function buildProviderSummaryText({
   run,
   findings,
   interactions,
+  flaggedPairs,
   patternNotes,
   generatedDate,
 }: ProviderSummaryTextInput) {
@@ -400,7 +430,7 @@ function buildProviderSummaryText({
     ]),
     formatTextSection('Recent check-ins', buildObservationLines(observations), formatCount(observations.length, 'recent check-in')),
     formatTextSection('Observed patterns', buildPatternLines(trends, patternNotes)),
-    formatTextSection('Interaction and overlap notes', buildInteractionLines(findings, interactions), formatCount(findings.length + interactions.length, 'interaction/overlap note')),
+    formatTextSection('Interaction and overlap notes', buildInteractionLines(findings, interactions, flaggedPairs), formatCount(findings.length + interactions.length + flaggedPairs.length, 'interaction/overlap note')),
     formatTextSection('Evidence context', [
       `Stack evidence score: ${protocol.stackScore.breakdown.evidence}`,
       NO_EVIDENCE_CONTEXT,
@@ -434,12 +464,14 @@ function buildPatternLines(trends: ProtocolActualTrend[], patternNotes: string[]
   ];
 }
 
-function buildInteractionLines(findings: InteractionFinding[], interactions: InteractionResult[]) {
-  if (findings.length === 0 && interactions.length === 0) return [NO_INTERACTION_NOTES];
+function buildInteractionLines(findings: InteractionFinding[], interactions: InteractionResult[], flaggedPairs: InteractionPairSummary[]) {
+  if (findings.length === 0 && interactions.length === 0 && flaggedPairs.length === 0) return [NO_INTERACTION_NOTES];
 
   return [
     ...findings.map((finding) => `${flagLabel(finding.type)}: ${finding.compounds.join(' + ')} (${Math.round(finding.confidence * 100)}% confidence)`),
     ...interactions.map((interaction) => `${flagLabel(interaction.type)}: ${interaction.compoundA} + ${interaction.compoundB} (${Math.round(interaction.confidence * 100)}% confidence)${interaction.sharedPathways.length > 0 ? `; Shared pathways: ${interaction.sharedPathways.join(', ')}` : ''}`),
+    // Owner ruling 2026-09-16 (B3): pair name and severity only, no confidence or shared pathways.
+    ...flaggedPairs.map((pair) => `${flagLabel(pair.severity)}: ${pair.compoundA} + ${pair.compoundB}`),
   ];
 }
 
