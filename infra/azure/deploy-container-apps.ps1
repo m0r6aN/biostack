@@ -85,32 +85,10 @@ function Invoke-Az {
     }
 
     Write-Host ("az " + ($displayArguments -join " ")) -ForegroundColor Cyan
-
-    # Do not invoke az.cmd via `& $azCmd @Arguments`. PowerShell's
-    # native-argument re-quoting for the `&`/call operator is not
-    # guaranteed to preserve embedded spaces in a KEY=VALUE-shaped
-    # array element when the target is a .cmd wrapper: az.cmd itself
-    # relays through cmd.exe's batch `%*` argument expansion before
-    # reaching the underlying az executable, and that hop is where a
-    # value like `Smtp__MagicLinkSubject=Your BioStack sign-in link`
-    # can lose its spaces (observed in production as
-    # `Smtp__MagicLinkSubject=Your_BioStack_sign-in-link`). This
-    # happens independently of the fact that $apiEnvVars is already a
-    # proper array with one KEY=VALUE string per element -- the
-    # mangling occurs downstream of that, in how `&` reconstructs the
-    # process command line for a .cmd target.
-    #
-    # Start-Process's -ArgumentList quotes/escapes each array element
-    # independently (the same CreateProcess-compatible escaping used
-    # by .NET's ProcessStartInfo.ArgumentList), so every element -
-    # including one containing spaces - reaches az as exactly one
-    # argument, with no re-tokenization in between.
-    $process = Start-Process -FilePath $azCmd -ArgumentList $Arguments -NoNewWindow -Wait -PassThru
-    if ($process.ExitCode -ne 0) {
-        $script:LASTEXITCODE = $process.ExitCode
+    & $azCmd @Arguments
+    if ($LASTEXITCODE -ne 0) {
         throw "Azure CLI command failed: az $($Arguments -join ' ')"
     }
-    $script:LASTEXITCODE = 0
 }
 
 $acrName = (($BaseName -replace "[^a-zA-Z0-9]", "") + "acr").ToLower()
