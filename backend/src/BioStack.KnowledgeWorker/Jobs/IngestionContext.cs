@@ -38,7 +38,7 @@ public sealed class IngestionContext
     private readonly List<PromotionPlanRow> _planRows = new();
 
     /// <summary>
-    /// Per-record plan built up during the run — one row per scanned, accepted record,
+    /// Per-record plan built up during the run — one row per scanned record (including rejected and failed records),
     /// recording what happened (or would happen, in DryRun) and why. Printed as a table
     /// at the end of a DryRun so the summary counters are never the only way to read the
     /// diff a Refresh is about to make.

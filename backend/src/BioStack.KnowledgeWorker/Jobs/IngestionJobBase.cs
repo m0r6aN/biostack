@@ -67,6 +67,9 @@ public abstract class IngestionJobBase : IIngestionJob
         {
             context.IncrementScanned();
             context.IncrementFailed();
+            context.RecordPlanRow(
+                string.IsNullOrWhiteSpace(rej.CanonicalNameOrEmpty) ? $"[source index {rej.SourceIndex}]" : rej.CanonicalNameOrEmpty,
+                "rejected", string.Join(" | ", rej.Errors.Select(e => e.ToString())));
             context.Logger.LogWarning(
                 "[{Job}] REJECT idx={Idx} name='{Name}' errors={Count}: {Errors}",
                 JobName, rej.SourceIndex, rej.CanonicalNameOrEmpty, rej.Errors.Count,
@@ -96,8 +99,11 @@ public abstract class IngestionJobBase : IIngestionJob
                 catch (Exception ex)
                 {
                     context.IncrementFailed();
+                    context.RecordPlanRow(prepared.Record.Identity.CanonicalName,
+                        context.DryRun ? "preview-failed" : "write-failed",
+                        $"{ex.GetType().Name}: see the corresponding error log");
                     context.Logger.LogError(ex,
-                        "[{Job}] WRITE FAIL idx={Idx} name='{Name}'",
+                        "[{Job}] RECORD FAIL idx={Idx} name='{Name}'",
                         JobName, prepared.SourceIndex, prepared.Record.Identity.CanonicalName);
                 }
             }

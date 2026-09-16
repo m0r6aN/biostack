@@ -1,70 +1,53 @@
 namespace BioStack.KnowledgeWorker.Tests;
 
 using BioStack.KnowledgeWorker.Config;
-using BioStack.KnowledgeWorker.Pipeline;
+using Microsoft.Extensions.Configuration;
 using Xunit;
 
-/// <summary>
-/// Coverage for the <c>--Worker:AllowUnpromoted=true</c> override's safety check: it must
-/// be refused against anything but a local database unless
-/// <c>Worker:AcknowledgeUnpromotedProduction=true</c> is also explicitly set, and it must
-/// never engage the review-decision loader at all once refused/approved (the whole point
-/// of the override is to skip that gate).
-/// </summary>
 public class RefreshPromotionGateStartupTests
 {
-    [Fact]
-    public void AllowUnpromoted_Is_Refused_Against_A_NonLocal_Host_Without_Acknowledgement()
+    [Theory]
+    [InlineData("Production", "localhost")]
+    [InlineData("Staging", "127.0.0.1")]
+    [InlineData("", "localhost")]
+    [InlineData("Development", "prod-db.internal")]
+    [InlineData("Development", "localhost,prod-db.internal")]
+    public void Override_Refuses_Anything_Outside_Local_Development(string environment, string host)
     {
-        var options = new WorkerOptions
-        {
-            AllowUnpromoted = true,
-            AcknowledgeUnpromotedProduction = false,
-        };
-
-        var ex = Assert.Throws<InvalidOperationException>(() =>
-            RefreshPromotionGateStartup.ValidateAndLoad(
-                options, "Host=prod-db.internal;Database=biostack;Username=app;Password=x"));
-
-        Assert.Contains("AllowUnpromoted", ex.Message);
-        Assert.Contains("localhost", ex.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Throws<InvalidOperationException>(() => RefreshPromotionGateStartup.ValidateAndLoad(
+            new WorkerOptions { AllowUnpromoted = true }, $"Host={host};Database=test", environment));
     }
 
     [Theory]
     [InlineData("localhost")]
     [InlineData("127.0.0.1")]
-    public void AllowUnpromoted_Is_Accepted_Against_A_Local_Host_Without_Acknowledgement(string host)
+    [InlineData("::1")]
+    public void Override_Allows_Local_Development_Only(string host)
     {
-        var options = new WorkerOptions { AllowUnpromoted = true, AcknowledgeUnpromotedProduction = false };
-
         var gate = RefreshPromotionGateStartup.ValidateAndLoad(
-            options, $"Host={host};Database=biostack;Username=app;Password=x");
-
+            new WorkerOptions { AllowUnpromoted = true }, $"Host={host};Database=test", "Development");
         Assert.False(gate.IsEnforced);
         Assert.True(gate.Evaluate("Anything").Allowed);
     }
 
     [Fact]
-    public void AllowUnpromoted_Is_Accepted_Against_A_NonLocal_Host_When_Acknowledged()
+    public void Local_Host_Alone_Does_Not_Authorize_Default_Production_Override()
     {
-        var options = new WorkerOptions
-        {
-            AllowUnpromoted = true,
-            AcknowledgeUnpromotedProduction = true,
-        };
-
-        var gate = RefreshPromotionGateStartup.ValidateAndLoad(
-            options, "Host=prod-db.internal;Database=biostack;Username=app;Password=x");
-
-        Assert.False(gate.IsEnforced);
+        Assert.Throws<InvalidOperationException>(() => RefreshPromotionGateStartup.ValidateAndLoad(
+            new WorkerOptions { AllowUnpromoted = true }, "Host=localhost;Database=test"));
     }
 
-    // NOTE: the non-override ("real gate") path of ValidateAndLoad resolves its schema
-    // directory from AppContext.BaseDirectory + "Schemas", matching Program.cs's existing
-    // IResearchArtifactValidator registration exactly. That directory is only populated in
-    // the *worker's own* published/build output, not this test project's (which mirrors
-    // only Fixtures/ — see TestPaths.cs), so that branch is covered end-to-end via
-    // PromotionGateLoaderTests instead, using TestPaths.WorkerSchemaDirectory() as the
-    // schema source. Exercising it here would require duplicating that directory-discovery
-    // machinery rather than testing new behavior.
+    [Fact]
+    public void Removed_Acknowledgement_Configuration_Does_Not_Bypass_Remote_Guard()
+    {
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Worker:AllowUnpromoted"] = "true",
+            ["Worker:AcknowledgeUnpromotedProduction"] = "true"
+        }).Build();
+        var options = new WorkerOptions();
+        config.GetSection("Worker").Bind(options);
+        Assert.Throws<InvalidOperationException>(() => RefreshPromotionGateStartup.ValidateAndLoad(
+            options, "Host=prod-db.internal;Database=test", "Development"));
+    }
 }

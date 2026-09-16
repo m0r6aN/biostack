@@ -38,7 +38,7 @@ public class PromotionGateLoaderTests : IDisposable
         var ex = Assert.Throws<PromotionGateLoadException>(
             () => PromotionGateLoader.LoadReviewDecisionIndexOrThrow(options, Validator()));
 
-        Assert.Contains("no review-decision batch files", ex.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("directory does not exist", ex.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -98,6 +98,37 @@ public class PromotionGateLoaderTests : IDisposable
 
         Assert.Throws<PromotionGateLoadException>(
             () => PromotionGateLoader.LoadReviewDecisionIndexOrThrow(options, Validator()));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Explicit_Valid_File_Does_Not_Mask_Missing_Or_Empty_Configured_Directory(bool empty)
+    {
+        var file = Path.Combine(_tempDir, "explicit.json");
+        File.WriteAllText(file, ValidBatchJson("Semaglutide", "approve-for-promotion", true));
+        var directory = Path.Combine(_tempDir, "corpus");
+        if (empty) Directory.CreateDirectory(directory);
+        var options = new WorkerOptions { ReviewDecisionPath = file, ReviewDecisionDirectory = directory };
+        Assert.Throws<PromotionGateLoadException>(() => PromotionGateLoader.LoadReviewDecisionIndexOrThrow(options, Validator()));
+    }
+
+    [Fact]
+    public void Intentional_Single_File_Mode_Loads_Without_Configured_Directory()
+    {
+        var file = Path.Combine(_tempDir, "explicit.json");
+        File.WriteAllText(file, ValidBatchJson("Semaglutide", "approve-for-promotion", true));
+        var options = new WorkerOptions { ReviewDecisionPath = file, ReviewDecisionDirectory = null };
+        Assert.True(PromotionGateLoader.LoadReviewDecisionIndexOrThrow(options, Validator()).HasPromotionApproval("Semaglutide"));
+    }
+
+    [Fact]
+    public void Valid_Directory_Does_Not_Mask_Missing_Explicit_File()
+    {
+        File.WriteAllText(Path.Combine(_tempDir, "review-decision-batch-valid.json"),
+            ValidBatchJson("Semaglutide", "approve-for-promotion", true));
+        var options = new WorkerOptions { ReviewDecisionDirectory = _tempDir, ReviewDecisionPath = Path.Combine(_tempDir, "missing.json") };
+        Assert.Throws<PromotionGateLoadException>(() => PromotionGateLoader.LoadReviewDecisionIndexOrThrow(options, Validator()));
     }
 
     private static IResearchArtifactValidator Validator()

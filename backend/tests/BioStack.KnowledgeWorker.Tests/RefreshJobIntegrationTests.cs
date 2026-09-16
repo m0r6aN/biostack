@@ -116,6 +116,31 @@ public sealed class RefreshJobIntegrationTests : IDisposable
         Assert.Equal(2, runContext.CreatedCount);
     }
 
+    [Fact]
+    public async Task Rejected_And_Preview_Failed_Records_Remain_In_Plan_With_Accurate_Counters()
+    {
+        var seed = JsonNode.Parse(File.ReadAllText(_seedPath))!.AsArray();
+        var invalid = seed[0]!.DeepClone();
+        invalid["identity"]!["canonicalName"] = "Rejected fixture";
+        invalid["schemaVersion"] = "invalid";
+        seed.Add(invalid);
+        File.WriteAllText(_seedPath, seed.ToJsonString());
+        using var db = CreateDbContext();
+        // Isolated SQLite only: a missing library table causes the approved preview to fail.
+        await db.Database.ExecuteSqlRawAsync("DROP TABLE KnowledgeEntries");
+        var job = BuildRefreshJob(db, DryRun: true, out var run);
+        var result = await job.RunAsync(run);
+        Assert.False(result.Success);
+        Assert.Equal(3, run.ScannedCount);
+        Assert.Equal(2, run.FailedCount);
+        Assert.Equal(1, run.SkippedUnpromotedCount);
+        Assert.Equal(0, run.CreatedCount + run.UpdatedCount + run.UnchangedCount);
+        Assert.Equal(run.ScannedCount, run.PlanRows.Count);
+        Assert.Contains(run.PlanRows, row => row.CanonicalName == "Rejected fixture" && row.Action == "rejected" && row.Reason.Length > 0);
+        Assert.Contains(run.PlanRows, row => row.CanonicalName == PromotedName && row.Action == "preview-failed" && row.Reason.Length > 0);
+        Assert.DoesNotContain("no records scanned", run.BuildPlanTable());
+    }
+
     // ── helpers ─────────────────────────────────────────────────────────────────
 
     private RefreshJob BuildRefreshJob(BioStackDbContext context, bool DryRun, out IngestionContext runContext)

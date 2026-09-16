@@ -2,10 +2,8 @@ namespace BioStack.KnowledgeWorker.Pipeline;
 
 /// <summary>
 /// Why a compound did not clear <see cref="Jobs.RefreshJob"/>'s promotion gate, for
-/// human-readable Refresh/DryRun reporting only. This enum does not redefine what
-/// "promoted" means — <see cref="ReviewDecisionIndex.HasPromotionApproval"/> remains the
-/// single source of truth for that decision. It only classifies *why* a record that fails
-/// that test failed it, mirroring the decision vocabulary in
+/// human-readable Refresh/DryRun reporting only. This enum describes the effective
+/// Refresh-specific disposition, mirroring the decision vocabulary in
 /// Schemas/review-decision.schema.json.
 /// </summary>
 public enum PromotionSkipReason
@@ -19,10 +17,10 @@ public enum PromotionSkipReason
     /// <summary>Latest applicable decision is <c>request-changes</c> (and nothing later clears it).</summary>
     RequestChanges,
 
-    /// <summary>An <c>approve-for-promotion</c> decision exists but <c>clearsSoftPromotionBlockers</c> is false.</summary>
+    /// <summary>Latest applicable <c>approve-for-promotion</c> decision has <c>clearsSoftPromotionBlockers</c> is false.</summary>
     BlockersNotCleared,
 
-    /// <summary>Compound has an <c>archive-draft</c> or <c>reject</c> decision on file.</summary>
+    /// <summary>Latest applicable disposition includes <c>archive-draft</c> or <c>reject</c>.</summary>
     ArchivedOrRejected,
 }
 
@@ -61,9 +59,9 @@ public interface IPromotionGate
 }
 
 /// <summary>
-/// Default gate. Reuses <see cref="ReviewDecisionIndex.HasPromotionApproval"/> for the
-/// actual promotion test and only adds a reason classification for what to report when a
-/// record is skipped.
+/// Default Refresh gate. Uses the latest applicable review disposition; a later
+/// blocking decision revokes historical approval. Same-time conflicts fail closed.
+/// The shared research index and other promotion policy consumers are unchanged.
 /// </summary>
 public sealed class ReviewDecisionPromotionGate : IPromotionGate
 {
@@ -78,50 +76,40 @@ public sealed class ReviewDecisionPromotionGate : IPromotionGate
 
     public PromotionGateDecision Evaluate(string compoundName)
     {
-        if (_index.HasPromotionApproval(compoundName))
-        {
-            return PromotionGateDecision.Approved;
-        }
-
-        var decisions = _index.ForCompound(compoundName);
-        if (decisions.Count == 0)
-        {
+        // Refresh-specific effective disposition; do not change the shared research index.
+        // Resolving individual review items does not issue or revoke compound promotion.
+        var applicable = _index.ForCompound(compoundName)
+            .Where(d => !d.Decision.Equals("resolve-review-items", StringComparison.OrdinalIgnoreCase))
+            .ToList();
+        if (applicable.Count == 0)
             return PromotionGateDecision.Skip(PromotionSkipReason.NoDecision);
-        }
 
-        if (_index.IsCompoundArchived(compoundName))
-        {
+        var latestAt = applicable.Max(d => d.ReviewedAt);
+        var latest = applicable.Where(d => d.ReviewedAt == latestAt).ToList();
+        // A conflicting decision at the same instant cannot be ordered by its arbitrary ID.
+        // Deny conservatively unless every applicable decision at that instant promotes.
+        if (latest.Any(d => Is(d, "archive-draft") || Is(d, "reject")))
             return PromotionGateDecision.Skip(PromotionSkipReason.ArchivedOrRejected);
-        }
-
-        if (decisions.Any(d =>
-                d.Decision.Equals("approve-for-promotion", StringComparison.OrdinalIgnoreCase)
-                && !d.ClearsSoftPromotionBlockers))
-        {
-            return PromotionGateDecision.Skip(PromotionSkipReason.BlockersNotCleared);
-        }
-
-        if (decisions.Any(d => d.Decision.Equals("approve-claims", StringComparison.OrdinalIgnoreCase)))
-        {
-            return PromotionGateDecision.Skip(PromotionSkipReason.ApproveClaimsOnly);
-        }
-
-        if (_index.HasPendingRequestedChanges(compoundName))
-        {
+        if (latest.Any(d => Is(d, "request-changes")))
             return PromotionGateDecision.Skip(PromotionSkipReason.RequestChanges);
-        }
-
-        // Only resolve-review-items (or nothing usable) on file — treat as no decision.
+        if (latest.Any(d => Is(d, "approve-for-promotion") && !d.ClearsSoftPromotionBlockers))
+            return PromotionGateDecision.Skip(PromotionSkipReason.BlockersNotCleared);
+        if (latest.Any(d => Is(d, "approve-claims")))
+            return PromotionGateDecision.Skip(PromotionSkipReason.ApproveClaimsOnly);
+        if (latest.All(d => Is(d, "approve-for-promotion") && d.ClearsSoftPromotionBlockers))
+            return PromotionGateDecision.Approved;
         return PromotionGateDecision.Skip(PromotionSkipReason.NoDecision);
     }
+
+    private static bool Is(ReviewDecisionInfo decision, string kind)
+        => decision.Decision.Equals(kind, StringComparison.OrdinalIgnoreCase);
 }
 
 /// <summary>
 /// The explicit <c>--Worker:AllowUnpromoted=true</c> dev/local override — every compound
 /// is allowed through unconditionally. <see cref="Config.RefreshPromotionGateStartup"/> is
-/// responsible for refusing to construct this against a non-local connection string
-/// unless <c>Worker:AcknowledgeUnpromotedProduction=true</c> is also set, and for logging
-/// the override loudly before it is used.
+/// responsible for restricting this to Development with a local connection string
+/// and for logging the override loudly before it is used.
 /// </summary>
 public sealed class AllowAllPromotionGate : IPromotionGate
 {

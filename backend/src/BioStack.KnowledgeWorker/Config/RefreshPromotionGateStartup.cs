@@ -14,11 +14,11 @@ using Npgsql;
 /// </summary>
 public static class RefreshPromotionGateStartup
 {
-    public static IPromotionGate ValidateAndLoad(WorkerOptions options, string connectionString)
+    public static IPromotionGate ValidateAndLoad(WorkerOptions options, string connectionString, string environmentName = "Production")
     {
         if (options.AllowUnpromoted)
         {
-            ValidateOverrideSafety(options, connectionString);
+            ValidateOverrideSafety(connectionString, environmentName);
 
             Console.Error.WriteLine(
                 "[RefreshPromotionGateStartup] WARNING: Worker:AllowUnpromoted=true — the promotion "
@@ -45,18 +45,11 @@ public static class RefreshPromotionGateStartup
         return new ReviewDecisionPromotionGate(index);
     }
 
-    /// <summary>
-    /// Refuses <c>Worker:AllowUnpromoted=true</c> against anything but a local database
-    /// unless the operator also passes <c>Worker:AcknowledgeUnpromotedProduction=true</c> —
-    /// a second, distinct flag so the override can't be flipped on by habit against a
-    /// remote (and possibly production) connection string.
-    /// </summary>
-    private static void ValidateOverrideSafety(WorkerOptions options, string connectionString)
+    /// <summary>Only Development against a loopback database may bypass the gate.</summary>
+    private static void ValidateOverrideSafety(string connectionString, string environmentName)
     {
-        if (options.AcknowledgeUnpromotedProduction)
-        {
-            return;
-        }
+        if (!string.Equals(environmentName, "Development", StringComparison.OrdinalIgnoreCase))
+            throw new InvalidOperationException("Worker:AllowUnpromoted=true requires the Development hosting environment.");
 
         string host;
         try
@@ -74,9 +67,7 @@ public static class RefreshPromotionGateStartup
         {
             throw new InvalidOperationException(
                 $"Worker:AllowUnpromoted=true is refused: the connection string host '{host}' is not "
-                + "localhost/127.0.0.1. This override is for dev/local use only. If this Refresh is "
-                + "genuinely intended to bypass the promotion gate against this database, also pass "
-                + "--Worker:AcknowledgeUnpromotedProduction=true.");
+                + "a loopback host. This override is restricted to local Development databases.");
         }
     }
 }

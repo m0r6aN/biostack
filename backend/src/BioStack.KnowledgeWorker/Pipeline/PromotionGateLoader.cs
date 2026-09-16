@@ -87,15 +87,16 @@ public static class PromotionGateLoader
         var dir = ResolveInputPath(options.ReviewDecisionDirectory);
         if (!Directory.Exists(dir))
         {
-            yield break;
+            throw new PromotionGateLoadException($"Configured review-decision directory does not exist: {dir}");
         }
 
-        foreach (var file in Directory
+        var directoryFiles = Directory
                      .EnumerateFiles(dir, ReviewDecisionFileGlob, SearchOption.TopDirectoryOnly)
-                     .OrderBy(f => f, StringComparer.Ordinal))
-        {
+                     .OrderBy(f => f, StringComparer.Ordinal).ToList();
+        if (directoryFiles.Count == 0)
+            throw new PromotionGateLoadException($"Configured directory has no review-decision batch files: {dir}");
+        foreach (var file in directoryFiles)
             yield return file;
-        }
     }
 
     /// <summary>

@@ -70,7 +70,7 @@ var builder = Host.CreateDefaultBuilder(args)
             {
                 var refreshOptions = new WorkerOptions();
                 context.Configuration.GetSection("Worker").Bind(refreshOptions);
-                promotionGate = RefreshPromotionGateStartup.ValidateAndLoad(refreshOptions, connectionString);
+                promotionGate = RefreshPromotionGateStartup.ValidateAndLoad(refreshOptions, connectionString, context.HostingEnvironment.EnvironmentName);
             }
 
             services.AddDbContext<BioStackDbContext>(options =>

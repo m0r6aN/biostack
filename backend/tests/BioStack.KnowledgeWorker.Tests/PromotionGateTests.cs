@@ -5,11 +5,8 @@ using BioStack.KnowledgeWorker.Pipeline;
 using Xunit;
 
 /// <summary>
-/// Unit coverage for the promotion gate's classification logic. The actual promotion
-/// test is <see cref="ReviewDecisionIndex.HasPromotionApproval"/> (unchanged, reused
-/// as-is); these tests only pin down what <see cref="ReviewDecisionPromotionGate"/>
-/// reports when that test fails, for each class of non-promoted record the audit
-/// (a1-promotion-audit/promotion-state-audit.md §2.2, §5) found sitting in the seed file.
+/// Refresh-specific disposition coverage, including historical approvals, subsequent
+/// holds and tied decisions. Shared research-index semantics are not changed.
 /// </summary>
 public class PromotionGateTests
 {
@@ -110,6 +107,60 @@ public class PromotionGateTests
     public void ReviewDecisionPromotionGate_Is_Enforced()
     {
         Assert.True(new ReviewDecisionPromotionGate(ReviewDecisionIndex.Empty).IsEnforced);
+    }
+
+    [Theory]
+    [InlineData("request-changes")]
+    [InlineData("archive-draft")]
+    [InlineData("reject")]
+    [InlineData("approve-claims")]
+    [InlineData("approve-for-promotion")]
+    public void Later_Blocking_Disposition_Revokes_Historical_Approval(string blocking)
+    {
+        var approval = Dated("approve-for-promotion", true, "2026-08-29T15:36:24Z");
+        var later = Dated(blocking, false, "2026-09-05T10:46:48Z");
+        Assert.False(new ReviewDecisionPromotionGate(BuildIndex(approval, later)).Evaluate("Tamoxifen").Allowed);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Equal_Time_Blocker_Wins_Regardless_Of_Input_Or_Id_Order(bool reverse)
+    {
+        var approval = Dated("approve-for-promotion", true, "2026-09-05T10:46:48Z");
+        var blocker = Dated("request-changes", false, "2026-09-05T10:46:48Z");
+        approval["decisionId"] = reverse ? "z" : "a";
+        blocker["decisionId"] = reverse ? "a" : "z";
+        var items = reverse ? new[] { blocker, approval } : new[] { approval, blocker };
+        Assert.False(new ReviewDecisionPromotionGate(BuildIndex(items)).Evaluate("Tamoxifen").Allowed);
+    }
+
+    [Fact]
+    public void New_Explicit_Promotion_Clears_Older_Hold_But_Item_Resolution_Does_Not()
+    {
+        var approval = Dated("approve-for-promotion", true, "2026-08-29T00:00:00Z");
+        var hold = Dated("request-changes", false, "2026-09-05T00:00:00Z");
+        var resolution = Dated("resolve-review-items", false, "2026-09-06T00:00:00Z");
+        Assert.False(new ReviewDecisionPromotionGate(BuildIndex(approval, hold, resolution)).Evaluate("Tamoxifen").Allowed);
+        var reapproval = Dated("approve-for-promotion", true, "2026-09-07T00:00:00Z");
+        Assert.True(new ReviewDecisionPromotionGate(BuildIndex(approval, hold, resolution, reapproval)).Evaluate("Tamoxifen").Allowed);
+    }
+
+    [Fact]
+    public void Tamoxifen_Recorded_Chronology_Reports_Later_RequestChanges()
+    {
+        // Exact disposition/date sequence from retained wave-r1 and wave006 hold batches.
+        var old = Dated("approve-claims", false, "2026-08-29T15:36:24Z");
+        var hold = Dated("request-changes", false, "2026-09-05T10:46:48Z");
+        var gate = new ReviewDecisionPromotionGate(BuildIndex(old, hold));
+        Assert.Equal(PromotionSkipReason.RequestChanges, gate.Evaluate("Tamoxifen").SkipReason);
+    }
+
+    private static JsonObject Dated(string kind, bool clears, string time)
+    {
+        var decision = Decision("Tamoxifen", kind, clears);
+        decision["reviewedAt"] = time;
+        return decision;
     }
 
     // ── helpers ─────────────────────────────────────────────────────────────────
