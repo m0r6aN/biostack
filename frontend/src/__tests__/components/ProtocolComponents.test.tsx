@@ -49,7 +49,7 @@ describe('StackScoreCard', () => {
   it('renders the score against its 0-100 basis, not as a bare number', () => {
     render(<StackScoreCard score={makeStackScore()} />);
     expect(screen.getByText('78')).toBeInTheDocument();
-    expect(screen.getByText('/100')).toBeInTheDocument();
+    expect(screen.getByText('/ 100')).toBeInTheDocument();
     expect(screen.getByLabelText('Stack score 78 out of 100')).toBeInTheDocument();
   });
 

@@ -16,7 +16,7 @@ export function StackScoreCard({ score }: StackScoreCardProps) {
           aria-label={`Stack score ${score.score} out of 100`}
         >
           <span className="text-4xl font-black text-white">{score.score}</span>
-          <span className="text-base font-semibold text-white/50">/100</span>
+          <span className="text-base font-semibold text-white/50">/ 100</span>
         </h3>
       </div>
 

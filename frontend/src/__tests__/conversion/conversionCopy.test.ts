@@ -48,6 +48,11 @@ const ALL_NEW_COPY = [
   // InteractionIntelligenceCard CTA
   'Tracking this protocol over time will show whether these interaction patterns hold.',
   'Start tracking',
+  // compounds/page.tsx — edit/delete failure fallbacks
+  'Failed to update compound',
+  'Failed to delete compound',
+  // StackScoreCard / StatCard (Protocol Score) — score-out-of-100 suffix
+  '/ 100',
   // passkeys.ts — passkeyAuthenticationErrorMessage (sign-in, distinct from registration copy)
   "BioStack could not verify this passkey sign-in. Try again or use your email link.",
   'Too many attempts. Wait a few minutes, then try your passkey again.',
