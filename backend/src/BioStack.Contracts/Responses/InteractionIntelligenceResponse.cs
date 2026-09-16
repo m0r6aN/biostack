@@ -22,6 +22,29 @@ public sealed record InteractionSummaryResponse(
     int Interferences
 );
 
+/// <summary>
+/// One flagged pair with no reasoning attached: which two items, and how severe. This is the entire
+/// shape returned for per-pair interaction data to a caller without the reviewed_relationship_graph
+/// entitlement (owner ruling 2026-09-16, B3) — no mechanism, direction, consequence, evidence
+/// narrative, or source text.
+/// </summary>
+public sealed record InteractionPairSummaryResponse(
+    string CompoundA,
+    string CompoundB,
+    InteractionType Severity
+);
+
+/// <summary>
+/// Reduced projection of <see cref="InteractionIntelligenceResponse"/> for callers without the
+/// reviewed_relationship_graph entitlement. Carries only pair names/severity and the aggregate
+/// summary counts (not tied to any one pair) — never <c>Reason</c>, <c>Message</c>, <c>Confidence</c>,
+/// <c>SharedPathways</c>, counterfactuals, or swap recommendations.
+/// </summary>
+public sealed record ReducedInteractionIntelligenceResponse(
+    InteractionSummaryResponse Summary,
+    List<InteractionPairSummaryResponse> Pairs
+);
+
 public sealed record ProtocolInteractionScoreResponse(
     double SynergyScore,
     double RedundancyPenalty,

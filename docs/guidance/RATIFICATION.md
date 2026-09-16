@@ -74,6 +74,34 @@ structural impossibility as a substitute for those gates after the producer is u
 This note does **not** change contract classes, public surfaces, or version — it records an
 implementation fact so ratification sign-off is not resting on a missing feature.
 
+### Per-pair interaction reasoning gated to Operator on every surface (B3)
+
+**Decided by:** Clint Morgan (owner), 2026-09-16, in session (`owner-feedback-20260915`, parcel B3
+— see `owner-ruling-20260916.md`).
+
+**Decision:** Per-pair interaction **reasoning** is gated behind the `reviewed_relationship_graph`
+entitlement (Operator) on every surface, including the `/api/v1/protocols/*` endpoints, which had
+been serving the full reasoning shape to every authenticated tier including Observer. Observer now
+sees only the pair names and a severity value for a flagged pair — no mechanism, direction,
+consequence, evidence narrative, or source text. This makes deployed behavior match what
+`contracts/product-contract.v1.json` already states; the contract itself is unchanged.
+
+**What changed:** `ProtocolService` now routes every `InteractionIntelligenceResponse` it returns
+through a single projection point (`InteractionIntelligenceProjection`) before attaching it to a
+response, keyed off a fail-closed `reviewed_relationship_graph` entitlement check. Without the
+entitlement, the caller gets a `ReducedInteractionIntelligenceResponse` (pair names/ids and a
+severity enum only). The per-pair reasoning sentences that `SimulationResultResponse.Insights` was
+folding in from the same interaction data are gated the same way. Frontend rendering (protocol
+console, compound side panel, provider observational summary) was updated to render the reduced
+shape honestly for Observer, with a calm upgrade affordance, and to add a "Why this score" grouping
+of the synergy/redundancy/interference contributions for Operator.
+
+**Scope note:** This ruling governs what is **rendered and returned** on existing authenticated
+surfaces. It does **not** authorize any new public surface, does **not** change the Guidance
+Content Contract's output classes (Class A–D), and does **not** make an unsourced pair publishable
+at any tier — an unsourced pair remains unpublishable regardless of entitlement. It does not bump
+the contract version; `contracts/product-contract.v1.json` v1.0.0 is unchanged.
+
 ## Automated verification
 
 ```bash

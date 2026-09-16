@@ -83,6 +83,19 @@ const ALL_NEW_COPY = [
   // /compounds empty state — points to the library instead of a blank slate
   'Browse the library to see what the research says before adding anything.',
   'Browse the library',
+  // InteractionIntelligenceCard — reduced (Observer) view (owner ruling 2026-09-16, B3)
+  'Flagged pairs in this stack',
+  'No flagged pairs in this stack right now.',
+  'See why these pairs are flagged',
+  'Operator adds the reasoning behind each flagged pair, including shared pathways and a confidence read, plus counterfactual and swap comparisons for this stack.',
+  'Compare plans',
+  // InteractionIntelligenceCard — "Why this score" grouping (Operator view)
+  'Why this score',
+  'Synergy contributions',
+  'Redundancy contributions',
+  'Interference contributions',
+  // CompoundIntelligenceCard side panel — flagged against another active compound in this profile
+  'Flagged with other active compounds in this profile',
 ];
 
 const BANNED = [

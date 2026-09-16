@@ -19,6 +19,7 @@ import type {
   SrbEnvelopeDeterministic,
   SrbEnvelopeFinding,
 } from '@/lib/types';
+import { isReducedInteractionIntelligence } from '@/lib/types';
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -174,13 +175,20 @@ export default function DecisionTheaterPage() {
           evidenceTier: 'None',
         }));
 
-      const deterministicFindings = p.interactionIntelligence.topFindings.map((f, i) => ({
-        code: `F${String(i + 1).padStart(3, '0')}`,
-        category: f.type,
-        narrative: f.message,
-        compoundSlugs: f.compounds.map((c: string) => c.toLowerCase().replace(/\s+/g, '-')),
-        riskScoreContribution: f.confidence,
-      }));
+      // Per-pair reasoning is gated behind reviewed_relationship_graph (owner ruling
+      // 2026-09-16, B3). Without that entitlement, p.interactionIntelligence is the reduced
+      // shape (pair names/severity only, no topFindings) — the deliberation envelope has no
+      // reasoning narrative to draw from, so it gets no deterministic findings rather than
+      // reading a field that no longer exists on the response.
+      const deterministicFindings = isReducedInteractionIntelligence(p.interactionIntelligence)
+        ? []
+        : p.interactionIntelligence.topFindings.map((f, i) => ({
+            code: `F${String(i + 1).padStart(3, '0')}`,
+            category: f.type,
+            narrative: f.message,
+            compoundSlugs: f.compounds.map((c: string) => c.toLowerCase().replace(/\s+/g, '-')),
+            riskScoreContribution: f.confidence,
+          }));
 
       const result = await apiClient.postStackReviewEnvelope({
         payload: {

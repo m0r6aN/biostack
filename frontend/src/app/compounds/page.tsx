@@ -42,6 +42,11 @@ function CompoundsPageContent() {
   const [selectedCompound, setSelectedCompound] = useState<CompoundRecord | null>(null);
   const [knowledgeEntry, setKnowledgeEntry] = useState<KnowledgeEntry | null>(null);
   const [loadingKnowledge, setLoadingKnowledge] = useState(false);
+  // Names of other active compounds in this profile that the selected compound is flagged
+  // against (source-data avoid-with/drug-interaction pairs — already public at every tier, no
+  // entitlement change here). Render-only side-panel cross-reference; see owner ruling
+  // 2026-09-16, B3.
+  const [flaggedPartners, setFlaggedPartners] = useState<string[]>([]);
   const [editingCompound, setEditingCompound] = useState<CompoundRecord | null>(null);
   const [savingEdit, setSavingEdit] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
@@ -147,6 +152,38 @@ function CompoundsPageContent() {
     }
   };
 
+  const loadFlaggedPartners = async (compound: CompoundRecord) => {
+    const compoundName = compound.name?.trim();
+    if (!compoundName) {
+      setFlaggedPartners([]);
+      return;
+    }
+    const otherActiveNames = compounds
+      .filter((candidate) => candidate.status === 'Active' && candidate.id !== compound.id)
+      .map((candidate) => candidate.name?.trim())
+      .filter((name): name is string => Boolean(name));
+    if (otherActiveNames.length === 0) {
+      setFlaggedPartners([]);
+      return;
+    }
+    try {
+      const flags = await apiClient.checkOverlap([compoundName, ...otherActiveNames]);
+      const partners = new Set<string>();
+      for (const flag of flags) {
+        const includesSelected = flag.compoundNames.some(
+          (name) => name.toLowerCase() === compoundName.toLowerCase(),
+        );
+        if (!includesSelected) continue;
+        flag.compoundNames
+          .filter((name) => name.toLowerCase() !== compoundName.toLowerCase())
+          .forEach((name) => partners.add(name));
+      }
+      setFlaggedPartners(Array.from(partners));
+    } catch {
+      setFlaggedPartners([]);
+    }
+  };
+
   const handleSelectCompound = (compound: CompoundRecord) => {
     selectionVersionRef.current += 1;
     setSelectedCompound(compound);
@@ -154,7 +191,9 @@ function CompoundsPageContent() {
     setEditError(null);
     setConfirmingDeleteId(null);
     setDeleteError(null);
+    setFlaggedPartners([]);
     void loadKnowledgeEntry(compound.name ?? '');
+    void loadFlaggedPartners(compound);
   };
 
   const handleStartEdit = (compound: CompoundRecord) => {
@@ -439,6 +478,15 @@ function CompoundsPageContent() {
                       </>
                     )}
                   </div>
+
+                  {!editingCompound && flaggedPartners.length > 0 && (
+                    <div className="p-4 bg-amber-500/10 border border-amber-400/15 rounded-2xl">
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-200/70">
+                        Flagged with other active compounds in this profile
+                      </p>
+                      <p className="mt-2 text-sm text-white/70">{flaggedPartners.join(', ')}</p>
+                    </div>
+                  )}
 
                   {!editingCompound && (
                     loadingKnowledge ? (
