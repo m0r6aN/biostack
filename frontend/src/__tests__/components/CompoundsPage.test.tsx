@@ -352,3 +352,38 @@ describe('detail grid reclaims width when the sidebar is collapsed', () => {
     expect(grid.className).not.toContain('lg:grid-cols-3');
   });
 });
+
+it('does not steal focus from newer input when an earlier deletion fails', async () => {
+  const pending = deferredDelete();
+  vi.mocked(apiClient.getCompounds).mockResolvedValue([namedCompound]);
+  vi.mocked(apiClient.deleteCompound).mockReturnValue(pending.promise);
+  render(<CompoundsPage />);
+  fireEvent.click(await screen.findByText('BPC-157'));
+  fireEvent.click(screen.getByRole('button', { name: 'Delete BPC-157' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Confirm delete' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Add Compound', exact: true }));
+  const input = screen.getByLabelText('4. Optional: Manual Search/Entry');
+  input.focus();
+  fireEvent.change(input, { target: { value: 'A new record' } });
+  await act(async () => pending.reject(new Error('Delayed deletion failed')));
+  expect(screen.getByRole('button', { name: 'Delete BPC-157' })).toBeInTheDocument();
+  expect(input).toHaveFocus();
+  expect(input).toHaveValue('A new record');
+});
+
+it('does not overwrite manual category and name while dossier prefill is loading', async () => {
+  searchParamsState.compound = 'bpc-157';
+  vi.mocked(apiClient.createCompound).mockResolvedValue({ ...namedCompound, name: 'Creatine', category: 'Supplement' });
+  let resolve!: (entries: KnowledgeEntry[]) => void;
+  vi.mocked(apiClient.getAllKnowledgeCompounds).mockReturnValue(new Promise(done => { resolve = done; }));
+  render(<CompoundsPage />);
+  const category = await screen.findByLabelText('1. Select a Category');
+  fireEvent.change(category, { target: { value: 'Supplement' } });
+  const name = screen.getByLabelText('4. Optional: Manual Search/Entry');
+  fireEvent.change(name, { target: { value: 'Creatine' } });
+  await act(async () => resolve([knowledgeEntryFixture]));
+  expect(category).toHaveValue('Supplement');
+  expect(name).toHaveValue('Creatine');
+  fireEvent.submit(name.closest('form')!);
+  await waitFor(() => expect(apiClient.createCompound).toHaveBeenCalledWith('profile-fixture', expect.objectContaining({ name: 'Creatine', category: 'Supplement' })));
+});

@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { apiClient } from '@/lib/api';
@@ -33,23 +32,24 @@ export function GlobalSearch() {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const [entries, setEntries] = useState<KnowledgeEntry[] | null>(null);
-  const [loadFailed, setLoadFailed] = useState(false);
+  const [loadState, setLoadState] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
+  const [activeIndex, setActiveIndex] = useState(-1);
   const loadingRef = useRef(false);
 
-  const ensureEntries = useCallback(() => {
-    if (entries !== null || loadingRef.current) return;
+  const ensureEntries = useCallback((retry = false) => {
+    if (entries !== null || loadingRef.current || (loadState === 'error' && !retry)) return;
     loadingRef.current = true;
+    setLoadState('loading');
     apiClient
       .getAllKnowledgeCompounds()
-      .then(data => setEntries(data))
+      .then(data => { setEntries(data); setLoadState('ready'); })
       .catch(() => {
-        setLoadFailed(true);
-        setEntries([]);
+        setLoadState('error');
       })
       .finally(() => {
         loadingRef.current = false;
       });
-  }, [entries]);
+  }, [entries, loadState]);
 
   // "/" focuses search, but only when the visitor isn't already typing
   // somewhere else on the page.
@@ -87,16 +87,30 @@ export function GlobalSearch() {
   const goToEntry = (entry: KnowledgeEntry) => {
     setOpen(false);
     setQuery('');
+    setActiveIndex(-1);
     router.push(`/knowledge/${toSlug(entry.canonicalName)}`);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      ensureEntries();
+      setOpen(true);
+      if (results.length) {
+        setActiveIndex(previous => event.key === 'ArrowDown'
+          ? (previous + 1) % results.length
+          : previous <= 0 ? results.length - 1 : previous - 1);
+      }
+      return;
+    }
     if (event.key === 'Enter') {
       event.preventDefault();
-      if (results[0]) goToEntry(results[0]);
+      const chosen = results[activeIndex < 0 ? 0 : activeIndex];
+      if (open && chosen) goToEntry(chosen);
       return;
     }
     if (event.key === 'Escape') {
+      setActiveIndex(-1);
       if (query) {
         setQuery('');
       } else {
@@ -113,6 +127,12 @@ export function GlobalSearch() {
   };
 
   const showResults = open && normalizedQuery.length > 0;
+  useEffect(() => {
+    if (open && activeIndex >= 0) {
+      document.getElementById(`${listboxId}-option-${activeIndex}`)?.scrollIntoView?.({ block: 'nearest' });
+    }
+  }, [activeIndex, listboxId, open]);
+
 
   return (
     <div ref={containerRef} onBlur={handleBlur} className="relative w-full max-w-[220px] sm:max-w-xs motion-reduce:transition-none">
@@ -132,8 +152,9 @@ export function GlobalSearch() {
           ref={inputRef}
           type="text"
           role="combobox"
-          aria-expanded={showResults}
-          aria-controls={listboxId}
+          aria-expanded={showResults && results.length > 0}
+          aria-controls={showResults && results.length > 0 ? listboxId : undefined}
+          aria-activedescendant={showResults && results[activeIndex] ? `${listboxId}-option-${activeIndex}` : undefined}
           aria-autocomplete="list"
           value={query}
           onFocus={() => {
@@ -143,6 +164,7 @@ export function GlobalSearch() {
           onChange={event => {
             ensureEntries();
             setQuery(event.target.value);
+            setActiveIndex(-1);
             setOpen(true);
           }}
           onKeyDown={handleKeyDown}
@@ -152,36 +174,33 @@ export function GlobalSearch() {
       </div>
 
       {showResults && (
-        <ul
-          id={listboxId}
-          role="listbox"
-          aria-label="Library search results"
-          className="absolute right-0 z-30 mt-1.5 w-72 max-w-[80vw] max-h-80 overflow-y-auto rounded-xl border border-white/10 bg-[#121923] py-1 shadow-[0_12px_32px_rgba(0,0,0,0.4)]"
-        >
-          {results.length > 0 ? (
-            results.map(entry => (
-              <li key={entry.canonicalName} role="option" aria-selected="false">
-                <Link
-                  href={`/knowledge/${toSlug(entry.canonicalName)}`}
-                  onClick={() => {
-                    setOpen(false);
-                    setQuery('');
-                  }}
-                  className="flex items-center justify-between gap-3 px-3 py-2 text-[13px] text-white/80 hover:bg-white/5 focus-visible:outline-none focus-visible:bg-white/5"
+        <div className="absolute right-0 z-30 mt-1.5 w-72 max-w-[80vw] max-h-80 overflow-y-auto rounded-xl border border-white/10 bg-[#121923] py-1 shadow-[0_12px_32px_rgba(0,0,0,0.4)]">
+          {loadState === 'loading' || loadState === 'idle' ? (
+            <p role="status" className="px-3 py-2 text-[13px] text-white/70">Loading library…</p>
+          ) : loadState === 'error' ? (
+            <div className="px-3 py-2 text-[13px] text-white/70">
+              <p role="alert">Search is unavailable right now.</p>
+              <button type="button" onClick={() => { inputRef.current?.focus(); ensureEntries(true); }} className="mt-2 underline focus-visible:outline focus-visible:outline-2">Retry library search</button>
+            </div>
+          ) : results.length > 0 ? (
+            <ul id={listboxId} role="listbox" aria-label="Library search results">
+              {results.map((entry, index) => (
+                <li key={entry.canonicalName} id={`${listboxId}-option-${index}`} role="option" aria-selected={activeIndex === index}
+                  tabIndex={-1}
+                  onMouseDown={event => event.preventDefault()}
+                  onClick={() => goToEntry(entry)}
+                  onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); goToEntry(entry); } }}
+                  className={`flex cursor-pointer items-center justify-between gap-3 px-3 py-2 text-[13px] text-white/80 hover:bg-white/5 ${activeIndex === index ? 'bg-white/10' : ''}`}
                 >
                   <span className="truncate">{entry.canonicalName}</span>
-                  <span className="shrink-0 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium text-white/45">
-                    {entry.classification}
-                  </span>
-                </Link>
-              </li>
-            ))
+                  <span className="shrink-0 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium text-white/45">{entry.classification}</span>
+                </li>
+              ))}
+            </ul>
           ) : (
-            <li role="option" aria-disabled="true" className="px-3 py-2 text-[13px] text-white/40">
-              {loadFailed ? 'Search is unavailable right now.' : `No matches for "${query.trim()}"`}
-            </li>
+            <p role="status" className="px-3 py-2 text-[13px] text-white/70">{`No matches for "${query.trim()}"`}</p>
           )}
-        </ul>
+        </div>
       )}
     </div>
   );
