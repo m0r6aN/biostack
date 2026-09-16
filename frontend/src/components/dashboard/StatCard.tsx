@@ -52,7 +52,10 @@ export function StatCard({
           <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">{title}</p>
           <div className="flex items-baseline gap-2" aria-label={ariaLabel}>
             <span className="text-3xl font-semibold text-white">{value}</span>
-            {unit && <span className="text-sm text-white/40 ml-1">{unit}</span>}
+            {/* unit text (e.g. "/ 100") already carries its own leading space,
+                matching StackScoreCard's rendering of the same score suffix;
+                no extra margin here or the gap doubles up. */}
+            {unit && <span className="text-sm text-white/40">{unit}</span>}
           </div>
           {trend && (
             <p className={`text-xs mt-2 ${

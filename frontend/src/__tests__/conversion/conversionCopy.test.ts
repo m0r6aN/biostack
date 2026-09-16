@@ -48,6 +48,11 @@ const ALL_NEW_COPY = [
   // InteractionIntelligenceCard CTA
   'Tracking this protocol over time will show whether these interaction patterns hold.',
   'Start tracking',
+  // compounds/page.tsx — edit/delete failure fallbacks
+  'Failed to update compound',
+  'Failed to delete compound',
+  // StackScoreCard / StatCard (Protocol Score) — score-out-of-100 suffix
+  '/ 100',
   // passkeys.ts — passkeyAuthenticationErrorMessage (sign-in, distinct from registration copy)
   "BioStack could not verify this passkey sign-in. Try again or use your email link.",
   'Too many attempts. Wait a few minutes, then try your passkey again.',
@@ -60,6 +65,22 @@ const ALL_NEW_COPY = [
   'Passkeys could not be used on this address. Open https://biostack.cc and try again.',
   // passkeys.ts — passkeyRegistrationErrorMessage (registration, distinct from sign-in copy)
   'This passkey is already added to BioStack. Sign in with it, or remove it from Account settings first.',
+  // GlobalSearch (app shell header + /knowledge)
+  'Search the library',
+  'Search the library…',
+  'Library search results',
+  'Search is unavailable right now.',
+  'No matches for',
+  // Sidebar — Library as the primary destination
+  'Library',
+  'Compounds & evidence',
+  // CompoundIntelligenceCard — library links both ways (owner finding: discoverability)
+  'Open full dossier',
+  'Add to protocol',
+  'Sign in to add to protocol',
+  // /compounds empty state — points to the library instead of a blank slate
+  'Browse the library to see what the research says before adding anything.',
+  'Browse the library',
 ];
 
 const BANNED = [

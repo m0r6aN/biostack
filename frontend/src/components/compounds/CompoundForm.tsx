@@ -2,20 +2,29 @@
 
 import { apiClient } from '@/lib/api';
 import { compoundGoalDisplay } from '@/lib/compoundGoalLabels';
+import { toSlug } from '@/lib/research/slugs';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
-import { useEffect, useId, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 interface CompoundFormProps {
   personId: string;
   onSubmit: (data: Omit<CompoundRecord, 'id'>) => Promise<void>;
   isLoading?: boolean;
+  /**
+   * A library slug (from `?compound=<slug>` on /compounds, e.g. a dossier's
+   * "Add to protocol" link) to preselect once the knowledge base loads.
+   * Minimal prefill: category + name only — this form has no richer
+   * prefill flow to build on.
+   */
+  initialCompoundSlug?: string;
 }
 
-export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProps) {
+export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlug }: CompoundFormProps) {
   const formId = useId();
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeEntry[]>([]);
   const [showAllCompounds, setShowAllCompounds] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  const hasAppliedPrefillRef = useRef(false);
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -34,11 +43,25 @@ export function CompoundForm({ personId, onSubmit, isLoading }: CompoundFormProp
       try {
         const compounds = await apiClient.getAllKnowledgeCompounds();
         setKnowledgeBase(compounds);
+        // One-time prefill from a library deep-link (?compound=<slug>), once
+        // the knowledge base has loaded. Guarded so it never overwrites a
+        // choice the visitor has already started making.
+        if (initialCompoundSlug && !hasAppliedPrefillRef.current) {
+          const match = compounds.find(k => toSlug(k.canonicalName) === initialCompoundSlug);
+          if (match) {
+            hasAppliedPrefillRef.current = true;
+            setFormData(prev => ({ ...prev, category: match.classification, name: match.canonicalName }));
+          }
+        }
       } catch (err) {
         console.error('Failed to fetch knowledge base:', err);
       }
     };
     fetchKnowledge();
+    // initialCompoundSlug is only meant to apply once, right after the
+    // knowledge base first resolves — re-running this fetch on every
+    // keystroke-driven slug change isn't the intent here.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filteredGoals = useMemo(() => {

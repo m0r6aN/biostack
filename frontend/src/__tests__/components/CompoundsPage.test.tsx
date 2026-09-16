@@ -7,7 +7,11 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 const profileState = vi.hoisted(() => ({ currentProfileId: 'profile-fixture' }));
 vi.mock('@/lib/context', () => ({ useProfile: () => profileState }));
 const { push } = vi.hoisted(() => ({ push: vi.fn() }));
-vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
+const searchParamsState = vi.hoisted(() => ({ compound: null as string | null }));
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push }),
+  useSearchParams: () => ({ get: (key: string) => (key === 'compound' ? searchParamsState.compound : null) }),
+}));
 vi.mock('@/components/Header', () => ({ Header: ({ actions }: { actions?: React.ReactNode }) => <header>{actions}</header> }));
 vi.mock('@/components/ActiveProfileChip', () => ({ ActiveProfileChip: () => null }));
 vi.mock('@/components/knowledge/CompoundIntelligenceCard', () => ({ CompoundIntelligenceCard: () => null }));
@@ -57,6 +61,7 @@ const namedCompound: CompoundRecord = {
 beforeEach(() => {
   vi.clearAllMocks();
   profileState.currentProfileId = 'profile-fixture';
+  searchParamsState.compound = null;
   window.localStorage.clear();
   vi.mocked(apiClient.getCompounds).mockResolvedValue([]);
   vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([]);
@@ -140,6 +145,28 @@ const knowledgeEntryFixture: KnowledgeEntry = {
   optimizationSleep: '',
   optimizationExercise: '',
 };
+
+it('points the empty state at the library instead of leaving a blank slate', async () => {
+  render(<CompoundsPage />);
+  await screen.findByText('No Compounds Yet');
+  expect(screen.getByText('Browse the library to see what the research says before adding anything.')).toBeVisible();
+  expect(screen.getByRole('link', { name: 'Browse the library' })).toHaveAttribute('href', '/knowledge');
+});
+
+it('opens the add form and prefills category + name from a dossier deep link (?compound=<slug>)', async () => {
+  searchParamsState.compound = 'bpc-157';
+  vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([knowledgeEntryFixture]);
+  render(<CompoundsPage />);
+
+  await waitFor(() => expect(screen.getByLabelText('4. Optional: Manual Search/Entry')).toHaveValue('BPC-157'));
+  expect(screen.getByLabelText('1. Select a Category')).toHaveValue('Peptide');
+});
+
+it('does not open the add form when there is no dossier deep link', async () => {
+  render(<CompoundsPage />);
+  await screen.findByText('No Compounds Yet');
+  expect(screen.queryByLabelText('4. Optional: Manual Search/Entry')).not.toBeInTheDocument();
+});
 
 it('skips the knowledge lookup for a nameless compound and shows a calm empty state', async () => {
   vi.mocked(apiClient.getCompounds).mockResolvedValue([namelessCompound]);
@@ -229,6 +256,7 @@ it('rolls back an optimistic delete when the server call fails', async () => {
 
   await screen.findByText('Failed to delete compound');
   expect(screen.getAllByText('BPC-157').length).toBeGreaterThan(0);
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Delete BPC-157' })).toHaveFocus());
 });
 
 it('routes to consent onboarding when delete is blocked by consent_required', async () => {
