@@ -95,13 +95,13 @@ function IconCalculators() {
   );
 }
 
-function IconKnowledge() {
+// Open book — the library is the primary destination, so it gets its own
+// mark distinct from the "Compounds" tracking icon rather than reusing it.
+function IconLibrary() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-      <rect x="2.5" y="2" width="11" height="12" rx="1.5" />
-      <line x1="5.5" y1="5.5" x2="10.5" y2="5.5" />
-      <line x1="5.5" y1="8"   x2="10.5" y2="8" />
-      <line x1="5.5" y1="10.5" x2="8.5" y2="10.5" />
+      <path d="M8 3.75C6.9 2.95 5.2 2.5 3.5 2.5v9.75c1.7 0 3.4.45 4.5 1.25" />
+      <path d="M8 3.75c1.1-.8 2.8-1.25 4.5-1.25v9.75c-1.7 0-3.4.45-4.5 1.25V3.75Z" />
     </svg>
   );
 }
@@ -166,6 +166,10 @@ function IconChevron({ direction }: { direction: 'left' | 'right' }) {
 // ─── Nav items ────────────────────────────────────────────────────────────────
 
 const navItems = [
+  // The library is the primary destination — a free, public evidence
+  // reference — with tracking as the paid layer downstream. It leads the
+  // nav rather than sitting near the bottom under its old label.
+  { label: 'Library',              href: '/knowledge',        icon: <IconLibrary />,          adminOnly: false, exact: false, sublabel: 'Compounds & evidence' },
   { label: 'Dashboard',      href: '/protocol-console', icon: <IconProtocolConsole />, adminOnly: false, exact: false },
   { label: 'My Protocol',          href: '/my-protocol',      icon: <IconMyProtocol />,      adminOnly: false, exact: false },
   { label: 'Profiles',             href: '/profiles',         icon: <IconProfiles />,        adminOnly: false, exact: false },
@@ -174,7 +178,6 @@ const navItems = [
   { label: 'Check-ins',         href: '/checkins',         icon: <IconCheckins />,         adminOnly: false, exact: false },
   { label: 'Timeline',             href: '/timeline',         icon: <IconTimeline />,         adminOnly: false, exact: false },
   { label: 'Tools',                href: '/tools',            icon: <IconCalculators />,      adminOnly: false, exact: false },
-  { label: 'Compounds & Evidence',href: '/knowledge',        icon: <IconKnowledge />,        adminOnly: false, exact: false },
   { label: 'Audit Receipts',       href: '/governance/receipts', icon: <IconReceipts />,      adminOnly: false, exact: false },
   { label: 'Billing',              href: '/billing',          icon: <IconBilling />,          adminOnly: false, exact: false },
   { label: 'Account Security',     href: '/account/security', icon: <IconSecurity />,         adminOnly: false, exact: false },
@@ -342,7 +345,12 @@ export function Sidebar() {
                   </span>
 
                   {/* Label */}
-                  <span className={cn('tracking-tight', collapsed && 'lg:hidden')}>{item.label}</span>
+                  <span className={cn('flex min-w-0 flex-col leading-tight', collapsed && 'lg:hidden')}>
+                    <span className="tracking-tight">{item.label}</span>
+                    {'sublabel' in item && item.sublabel && (
+                      <span className="text-[10px] font-medium text-white/25 truncate">{item.sublabel}</span>
+                    )}
+                  </span>
                 </Link>
               );
             })}

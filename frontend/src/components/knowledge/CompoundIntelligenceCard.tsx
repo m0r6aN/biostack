@@ -1,8 +1,10 @@
+import Link from 'next/link';
 import { useId, useState } from 'react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { HelpTip } from '@/components/ui/HelpTip';
 import { useProfile } from '@/lib/context';
 import type { RecommendationSurface } from '@/lib/recommendations';
+import { toSlug } from '@/lib/research/slugs';
 import { useSettings } from '@/lib/settings';
 import { KnowledgeEntry } from '@/lib/types';
 import { formatWeight } from '@/lib/utils';
@@ -71,10 +73,18 @@ function referenceLink(value: string): { href: string; label: string } | null {
 interface CompoundIntelligenceCardProps {
   entry: KnowledgeEntry;
   recommendationSurface?: Exclude<RecommendationSurface, 'overlap-results'>;
+  /**
+   * Whether the visitor is signed in — only meaningful on the dossier
+   * ('knowledge-detail') surface, which offers an "Add to protocol" action
+   * for signed-in users and the standard sign-in CTA for anonymous ones.
+   */
+  isSignedIn?: boolean;
 }
 
 export function CompoundIntelligenceCard({
   entry,
+  recommendationSurface,
+  isSignedIn = false,
 }: CompoundIntelligenceCardProps) {
   const studyDesign = getReviewedStudyDesign(entry.canonicalName);
   const [showAllReferences, setShowAllReferences] = useState(false);
@@ -82,6 +92,13 @@ export function CompoundIntelligenceCard({
   const { currentProfileId, profiles } = useProfile();
   const { settings } = useSettings();
   const currentProfile = profiles.find(p => p.id === currentProfileId);
+  const slug = toSlug(entry.canonicalName);
+  // The side panel on /compounds shows a reduced version of this card next
+  // to a record the visitor already added — link it back to the full public
+  // dossier. The dossier itself (knowledge-detail) and the knowledge-search
+  // results (already a list of dossiers) don't need a link to themselves.
+  const showDossierLink = recommendationSurface === 'compound-detail';
+  const showAddToProtocol = recommendationSurface === 'knowledge-detail';
   return (
     <GlassCard variant="default" className="p-4 sm:p-6 relative overflow-hidden break-words">
       <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-emerald-500/[0.06] blur-2xl pointer-events-none" />
@@ -90,6 +107,14 @@ export function CompoundIntelligenceCard({
           <h3 className="text-lg font-semibold text-white">{entry.canonicalName}</h3>
           {entry.aliases.length > 0 && (
             <p className="text-xs text-white/35 mt-1">Also known as: {entry.aliases.join(', ')}</p>
+          )}
+          {showDossierLink && (
+            <Link
+              href={`/knowledge/${slug}`}
+              className="mt-2 inline-flex min-h-11 items-center text-sm text-cyan-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+            >
+              Open full dossier
+            </Link>
           )}
         </div>
         <EvidenceTierBadge tier={entry.evidenceTier} />
@@ -218,6 +243,26 @@ export function CompoundIntelligenceCard({
         )}
 
 
+
+        {showAddToProtocol && (
+          <div className="flex flex-wrap items-center gap-3 rounded-xl border border-emerald-400/15 bg-emerald-500/[0.05] px-4 py-3">
+            {isSignedIn ? (
+              <Link
+                href={`/compounds?compound=${encodeURIComponent(slug)}`}
+                className="inline-flex min-h-11 items-center rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+              >
+                Add to protocol
+              </Link>
+            ) : (
+              <Link
+                href={`/auth/signin?callbackUrl=${encodeURIComponent(`/knowledge/${slug}`)}`}
+                className="inline-flex min-h-11 items-center rounded-xl border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:bg-emerald-400/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+              >
+                Sign in to add to protocol
+              </Link>
+            )}
+          </div>
+        )}
 
       </div>
 

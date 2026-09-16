@@ -44,7 +44,7 @@ export function MarketingNav() {
               Tools
             </Link>
             <Link href="/knowledge" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
-              Compounds & Evidence
+              Library
             </Link>
             <Link href="/pricing" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               Pricing
