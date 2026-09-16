@@ -79,6 +79,11 @@ sealed class PreviewFakeKnowledgeSource : IKnowledgeSource
         CancellationToken cancellationToken = default)
         => throw new NotSupportedException("Preview service must never call UpsertCompoundAsync.");
 
+    public Task<KnowledgeUpsertDisposition> PreviewUpsertAsync(
+        KnowledgeEntry entry,
+        CancellationToken cancellationToken = default)
+        => throw new NotSupportedException();
+
     public Task<int> IngestBulkAsync(
         List<KnowledgeEntry> entries,
         CancellationToken cancellationToken = default)

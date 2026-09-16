@@ -51,9 +51,27 @@ var builder = Host.CreateDefaultBuilder(args)
 
         // ── Provider policy (Npgsql-only, fail-closed in Production) ─────────
         var isProd = context.HostingEnvironment.IsProduction();
+
+        // Refresh's promotion gate: constructed here (inside ConfigureServices, i.e.
+        // during host.Build()) so that a load failure throws — and aborts the whole
+        // process — strictly before the post-Build Postgres connectivity check, schema
+        // bootstrap, and interaction-hint seeding below. This is what makes the gate
+        // "fail closed": Refresh cannot reach a database connection at all if its
+        // review-decision index can't be established. Every other RunMode gets the
+        // always-allow gate so DI can still satisfy RefreshJob's constructor even though
+        // RefreshJob is only ever resolved when mode == Refresh.
+        IPromotionGate promotionGate = AllowAllPromotionGate.Instance;
+
         if (!WorkerRunModePolicy.IsDatabaseFree(mode))
         {
             var connectionString = ProductionSafetyGuard.EnforcePostgresOnly(context.Configuration, isProd);
+
+            if (mode == RunMode.Refresh)
+            {
+                var refreshOptions = new WorkerOptions();
+                context.Configuration.GetSection("Worker").Bind(refreshOptions);
+                promotionGate = RefreshPromotionGateStartup.ValidateAndLoad(refreshOptions, connectionString, context.HostingEnvironment.EnvironmentName);
+            }
 
             services.AddDbContext<BioStackDbContext>(options =>
                 options.UseNpgsql(connectionString,
@@ -62,6 +80,8 @@ var builder = Host.CreateDefaultBuilder(args)
                         maxRetryDelay: TimeSpan.FromSeconds(10),
                         errorCodesToAdd: null)));
         }
+
+        services.AddSingleton(promotionGate);
 
         // ── Ingestion pipeline ───────────────────────────────────────────────
         services.AddSingleton<ISubstanceRecordLoader,     SubstanceRecordLoader>();
@@ -119,6 +139,7 @@ var builder = Host.CreateDefaultBuilder(args)
     });
 
 var host = builder.Build();
+var effectiveOptions = host.Services.GetRequiredService<WorkerOptions>();
 var effectiveMode = ResolveConfiguredRunMode(host.Services.GetRequiredService<IConfiguration>(),
     host.Services.GetRequiredService<IHostEnvironment>().IsProduction());
 
@@ -138,12 +159,26 @@ if (!WorkerRunModePolicy.IsDatabaseFree(effectiveMode))
             throw new InvalidOperationException("CanConnectAsync returned false — database is unreachable.");
 
         startupLogger.LogInformation("[Startup] Postgres connectivity verified.");
-        startupLogger.LogInformation("[Startup] Ensuring database schema exists...");
-        await db.Database.EnsureCreatedAsync();
-        await InteractionSchemaBootstrapper.EnsureCompoundInteractionHintsTableAsync(db);
-        var hintRepository = startupScope.ServiceProvider.GetRequiredService<ICompoundInteractionHintRepository>();
-        await CompoundInteractionHintCatalog.SeedDefaultsAsync(hintRepository);
-        startupLogger.LogInformation("[Startup] Database schema ready.");
+
+        // Honest DryRun: no writes of any kind, including the interaction-hint bootstrap.
+        // EnsureCreatedAsync / InteractionSchemaBootstrapper / SeedDefaultsAsync all issue
+        // real Add/SaveChanges calls against the target database — CanConnectAsync above is
+        // the only thing DryRun is allowed to do here.
+        if (effectiveOptions.DryRun)
+        {
+            startupLogger.LogInformation(
+                "[Startup] DryRun=true — skipping schema bootstrap and interaction-hint seeding " +
+                "(no writes will be made).");
+        }
+        else
+        {
+            startupLogger.LogInformation("[Startup] Ensuring database schema exists...");
+            await db.Database.EnsureCreatedAsync();
+            await InteractionSchemaBootstrapper.EnsureCompoundInteractionHintsTableAsync(db);
+            var hintRepository = startupScope.ServiceProvider.GetRequiredService<ICompoundInteractionHintRepository>();
+            await CompoundInteractionHintCatalog.SeedDefaultsAsync(hintRepository);
+            startupLogger.LogInformation("[Startup] Database schema ready.");
+        }
     }
     catch (Exception ex)
     {

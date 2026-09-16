@@ -11,6 +11,7 @@ public sealed record JobRunResult(
     int    UnchangedCount,
     int    FlaggedForReviewCount,
     int    FailedCount,
+    int    SkippedUnpromotedCount = 0,
     string? ErrorMessage = null)
 {
     /// <summary>Builds a result from the terminal state of an <see cref="IngestionContext"/>.</summary>
@@ -21,7 +22,8 @@ public sealed record JobRunResult(
         UpdatedCount:         ctx.UpdatedCount,
         UnchangedCount:       ctx.UnchangedCount,
         FlaggedForReviewCount: ctx.FlaggedForReviewCount,
-        FailedCount:          ctx.FailedCount);
+        FailedCount:          ctx.FailedCount,
+        SkippedUnpromotedCount: ctx.SkippedUnpromotedCount);
 
     /// <summary>Represents a run that failed before producing any results.</summary>
     public static JobRunResult Failure(string error) => new(
@@ -32,6 +34,7 @@ public sealed record JobRunResult(
         UnchangedCount:       0,
         FlaggedForReviewCount: 0,
         FailedCount:          1,
+        SkippedUnpromotedCount: 0,
         ErrorMessage:         error);
 
     /// <summary>Represents a no-op dry-run or empty-catalog result.</summary>
@@ -42,5 +45,6 @@ public sealed record JobRunResult(
         UpdatedCount:         0,
         UnchangedCount:       0,
         FlaggedForReviewCount: 0,
-        FailedCount:          0);
+        FailedCount:          0,
+        SkippedUnpromotedCount: 0);
 }
