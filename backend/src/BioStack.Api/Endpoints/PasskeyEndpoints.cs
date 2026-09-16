@@ -106,7 +106,7 @@ public static class PasskeyEndpoints
             .Select(c => new { c.CredentialId, c.Transports })
             .ToListAsync(ct);
         var existing = existingCredentials
-            .Select(c => new PublicKeyCredentialDescriptor(c.CredentialId) { Transports = ParseTransports(c.Transports) })
+            .Select(c => new PublicKeyCredentialDescriptor(PublicKeyCredentialType.PublicKey, c.CredentialId, ParseTransports(c.Transports)))
             .ToList();
         var userHandle = user.Id.ToByteArray();
         var options = fido2.RequestNewCredential(new RequestNewCredentialParams
