@@ -45,6 +45,7 @@ export default function CompoundsPage() {
   const selectionVersionRef = useRef(0);
   const wasEditingRef = useRef(false);
   const wasConfirmingDeleteRef = useRef(false);
+  const pendingDeleteFailureFocusRef = useRef(false);
 
   useEffect(() => {
     // An old profile's delete must never restore records into a new profile.
@@ -70,6 +71,19 @@ export default function CompoundsPage() {
     }
     wasConfirmingDeleteRef.current = confirmingDeleteId !== null;
   }, [confirmingDeleteId]);
+
+  // A failed delete rolls the record (and, if it was the open one, the
+  // selection) back on a later render than the confirm-panel-closed effect
+  // above already fired on, so that effect's focus() call lands on a Delete
+  // button that is about to be unmounted by the optimistic removal, not the
+  // one that reappears once the rollback restores the selection. Re-focus
+  // it once the restored panel (and its Delete button) is back in the DOM.
+  useEffect(() => {
+    if (pendingDeleteFailureFocusRef.current && selectedCompound && !confirmingDeleteId) {
+      pendingDeleteFailureFocusRef.current = false;
+      deleteButtonRef.current?.focus();
+    }
+  }, [selectedCompound, confirmingDeleteId]);
 
   const loadCompounds = async () => {
     try {
@@ -207,13 +221,21 @@ export default function CompoundsPage() {
         restored.splice(Math.min(Math.max(originalIndex, 0), restored.length), 0, compound);
         return restored;
       });
-      if (wasSelected && selectionVersionRef.current === selectionVersion) {
+      const restoresSelection = wasSelected && selectionVersionRef.current === selectionVersion;
+      if (restoresSelection) {
         setSelectedCompound(previousSelected);
         setKnowledgeEntry(previousKnowledge);
       }
       if (err instanceof ApiError && err.code === 'consent_required') {
         router.push(`/onboarding/consent?returnTo=${encodeURIComponent(CONSENT_RETURN_TO)}`);
         return;
+      }
+      if (restoresSelection) {
+        // The confirm-panel-closed effect already returned focus to the
+        // Delete button that is about to disappear along with the
+        // optimistic removal above; hand off to the effect that waits for
+        // the restored panel's Delete button to exist.
+        pendingDeleteFailureFocusRef.current = true;
       }
       setDeleteError(err instanceof ApiError ? err.message : 'Failed to delete compound');
     } finally {

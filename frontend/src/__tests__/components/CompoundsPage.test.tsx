@@ -229,6 +229,7 @@ it('rolls back an optimistic delete when the server call fails', async () => {
 
   await screen.findByText('Failed to delete compound');
   expect(screen.getAllByText('BPC-157').length).toBeGreaterThan(0);
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Delete BPC-157' })).toHaveFocus());
 });
 
 it('routes to consent onboarding when delete is blocked by consent_required', async () => {
