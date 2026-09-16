@@ -54,6 +54,17 @@ pwsh ./infra/azure/deploy-container-apps.ps1 `
 
 The script enables the API system identity by default and injects only non-secret Data Protection identifiers. Production rejects SQLite unless the explicitly unsafe throwaway override is set; no persistent SQLite mount is provisioned here.
 
+### `Smtp__MagicLinkSubject` / `AzureCommunicationEmail__MagicLinkSubject`
+
+Leave these unset in normal operation. The API falls back to `MagicLinkSubjects.Default`
+(`"BioStack Quick Login"`, `backend/src/BioStack.Api/Auth/MagicLinkDelivery.cs`) whenever
+the corresponding configuration key is absent, so the code default only takes effect when
+no environment value is set for it. If either environment variable *is* set — including by
+this deploy script's `-SmtpMagicLinkSubject` parameter, which defaults to the same string but
+can be overridden — that value overrides the code default and is used verbatim as the email
+subject line. Confirm the deployed value (`az containerapp show` / the Container Apps
+environment variables blade) before assuming the code default applies in production.
+
 ## Network boundary
 
 The included template leaves the Blob and Key Vault data-plane endpoints reachable over public Azure endpoints while disabling anonymous Blob access and shared-key authorization. Authentication is managed identity only. If the target Container Apps environment has approved private-endpoint routing, add Blob and Key Vault private endpoints/DNS under that environment's network design before disabling public network access; do not copy the unrelated source-acquisition network topology without confirming routes and DNS.
