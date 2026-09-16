@@ -62,6 +62,9 @@ const ALL_NEW_COPY = [
   'This device or passkey manager could not complete sign-in. Use your email link instead.',
   'No passkey was selected. Choose Sign in with a passkey to try again.',
   'BioStack could not verify where to send you next. Use your email link instead.',
+  'Passkeys could not be used on this address. Open https://biostack.cc and try again.',
+  // passkeys.ts — passkeyRegistrationErrorMessage (registration, distinct from sign-in copy)
+  'This passkey is already added to BioStack. Sign in with it, or remove it from Account settings first.',
   // GlobalSearch (app shell header + /knowledge)
   'Search the library',
   'Search the library…',

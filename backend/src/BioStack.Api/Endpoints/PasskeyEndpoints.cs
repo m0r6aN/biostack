@@ -101,10 +101,13 @@ public static class PasskeyEndpoints
                 statusCode: StatusCodes.Status403Forbidden);
         }
 
-        var existing = await db.PasskeyCredentials
+        var existingCredentials = await db.PasskeyCredentials
             .Where(c => c.Identity.UserId == user.Id)
-            .Select(c => new PublicKeyCredentialDescriptor(c.CredentialId))
+            .Select(c => new { c.CredentialId, c.Transports })
             .ToListAsync(ct);
+        var existing = existingCredentials
+            .Select(c => new PublicKeyCredentialDescriptor(PublicKeyCredentialType.PublicKey, c.CredentialId, ParseTransports(c.Transports)))
+            .ToList();
         var userHandle = user.Id.ToByteArray();
         var options = fido2.RequestNewCredential(new RequestNewCredentialParams
         {
@@ -496,6 +499,33 @@ public static class PasskeyEndpoints
 
     private static string HashBytes(byte[] value) =>
         Convert.ToHexString(SHA256.HashData(value));
+
+    // Reverses the transport encoding written in CompleteRegistration (comma-joined,
+    // lower-invariant, with SmartCard spelled "smart-card" to match the WebAuthn spec
+    // token) so an existing credential's stored transports can be offered back to the
+    // authenticator as excludeCredentials hints.
+    private static AuthenticatorTransport[]? ParseTransports(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        var parsed = value
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(ParseTransport)
+            .Where(transport => transport.HasValue)
+            .Select(transport => transport!.Value)
+            .ToArray();
+        return parsed.Length > 0 ? parsed : null;
+    }
+
+    private static AuthenticatorTransport? ParseTransport(string value) =>
+        value switch
+        {
+            "smart-card" => AuthenticatorTransport.SmartCard,
+            _ => Enum.TryParse<AuthenticatorTransport>(value, ignoreCase: true, out var transport) ? transport : null,
+        };
 
     private static JsonElement ToProtocolJson(string json)
     {

@@ -4,6 +4,7 @@ import {
   decodeCreationOptions,
   decodeRequestOptions,
   passkeyAuthenticationErrorMessage,
+  passkeyRegistrationErrorMessage,
   serializeAuthenticationCredential,
   serializeRegistrationCredential,
   PasskeyRequestError,
@@ -158,6 +159,16 @@ describe('passkeyAuthenticationErrorMessage', () => {
   it('falls back to a generic message for an unclassified error', () => {
     expect(passkeyAuthenticationErrorMessage(new Error('boom'))).toBe(
       'We could not use that passkey. Try again or use your email link.'
+    );
+  });
+});
+
+describe('passkeyRegistrationErrorMessage', () => {
+  it('maps a duplicate-authenticator InvalidStateError to calm, actionable copy', () => {
+    const duplicate = passkeyRegistrationErrorMessage(Object.assign(new Error('duplicate'), { name: 'InvalidStateError' }));
+
+    expect(duplicate).toBe(
+      'This passkey is already added to BioStack. Sign in with it, or remove it from Account settings first.'
     );
   });
 });
