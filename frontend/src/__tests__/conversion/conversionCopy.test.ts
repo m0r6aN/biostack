@@ -67,6 +67,8 @@ const ALL_NEW_COPY = [
   'Search the library…',
   'Library search results',
   'Search is unavailable right now.',
+  'Loading library…',
+  'Retry library search',
   'No matches for',
   // Sidebar — Library as the primary destination
   'Library',

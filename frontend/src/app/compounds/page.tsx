@@ -88,8 +88,12 @@ function CompoundsPageContent() {
   // one that reappears once the rollback restores the selection. Re-focus
   // it once the restored panel (and its Delete button) is back in the DOM.
   useEffect(() => {
-    if (pendingDeleteFailureFocusRef.current && selectedCompound && !confirmingDeleteId) {
-      pendingDeleteFailureFocusRef.current = false;
+    if (!pendingDeleteFailureFocusRef.current) return;
+    pendingDeleteFailureFocusRef.current = false;
+    // Recover focus lost with the removed control, but never interrupt a
+    // newer interaction in another live input or button.
+    if (selectedCompound && !confirmingDeleteId &&
+        (!document.activeElement || document.activeElement === document.body)) {
       deleteButtonRef.current?.focus();
     }
   }, [selectedCompound, confirmingDeleteId]);
