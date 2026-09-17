@@ -57,6 +57,15 @@ function CompoundsPageContent() {
   const deleteButtonRef = useRef<HTMLButtonElement | null>(null);
   const profileEpochRef = useRef(0);
   const selectionVersionRef = useRef(0);
+  const editRequestRef = useRef(0);
+  // Overlap generation covers selection, profile and membership/name inputs.
+  // Reference lookups use selectionVersionRef so membership alone does not discard them.
+  // Invalidating never refreshes overlap-check: that endpoint currently persists flags.
+  const panelGenerationRef = useRef(0);
+  const invalidatePanelRequests = () => {
+    panelGenerationRef.current += 1;
+    setFlaggedPartners([]);
+  };
   const wasEditingRef = useRef(false);
   const wasConfirmingDeleteRef = useRef(false);
   const pendingDeleteFailureFocusRef = useRef(false);
@@ -65,9 +74,15 @@ function CompoundsPageContent() {
     // An old profile's delete must never restore records into a new profile.
     profileEpochRef.current += 1;
     selectionVersionRef.current += 1;
+    panelGenerationRef.current += 1;
     if (currentProfileId) {
       loadCompounds();
     }
+    return () => {
+      panelGenerationRef.current += 1;
+      selectionVersionRef.current += 1;
+      profileEpochRef.current += 1;
+    };
   }, [currentProfileId]);
 
   // Return keyboard focus to the action that opened the edit/confirm-delete
@@ -104,23 +119,29 @@ function CompoundsPageContent() {
   }, [selectedCompound, confirmingDeleteId]);
 
   const loadCompounds = async () => {
+    const profileEpoch = profileEpochRef.current;
     try {
       setLoading(true);
       setError(null);
       const data = await apiClient.getCompounds(currentProfileId!);
+      if (profileEpochRef.current !== profileEpoch) return;
+      invalidatePanelRequests();
       setCompounds(data);
     } catch (err) {
-      setError('Failed to load compounds');
+      if (profileEpochRef.current === profileEpoch) setError('Failed to load compounds');
     } finally {
-      setLoading(false);
+      if (profileEpochRef.current === profileEpoch) setLoading(false);
     }
   };
 
   const handleAddCompound = async (data: Omit<CompoundRecord, 'id'>) => {
+    const profileEpoch = profileEpochRef.current;
     try {
       setAdding(true);
       setAddError(null);
       const newCompound = await apiClient.createCompound(currentProfileId!, data);
+      if (profileEpochRef.current !== profileEpoch) return;
+      invalidatePanelRequests();
       setCompounds(previous => [...previous, newCompound]);
       setShowForm(false);
     } catch (err) {
@@ -131,7 +152,7 @@ function CompoundsPageContent() {
     }
   };
 
-  const loadKnowledgeEntry = async (name: string) => {
+  const loadKnowledgeEntry = async (name: string, generation = selectionVersionRef.current) => {
     const trimmedName = name.trim();
     // A record with no name (e.g. recovered from the accidental-Enter bug)
     // has nothing to look up — skip the request rather than hitting a route
@@ -144,15 +165,16 @@ function CompoundsPageContent() {
     setLoadingKnowledge(true);
     try {
       const entry = await apiClient.getKnowledgeEntry(trimmedName);
-      setKnowledgeEntry(entry);
+      if (selectionVersionRef.current === generation) setKnowledgeEntry(entry);
     } catch (err) {
-      setKnowledgeEntry(null);
+      if (selectionVersionRef.current === generation) setKnowledgeEntry(null);
     } finally {
-      setLoadingKnowledge(false);
+      if (selectionVersionRef.current === generation) setLoadingKnowledge(false);
     }
   };
 
   const loadFlaggedPartners = async (compound: CompoundRecord) => {
+    const generation = panelGenerationRef.current;
     const compoundName = compound.name?.trim();
     if (!compoundName) {
       setFlaggedPartners([]);
@@ -178,14 +200,18 @@ function CompoundsPageContent() {
           .filter((name) => name.toLowerCase() !== compoundName.toLowerCase())
           .forEach((name) => partners.add(name));
       }
-      setFlaggedPartners(Array.from(partners));
+      if (panelGenerationRef.current === generation) setFlaggedPartners(Array.from(partners));
     } catch {
-      setFlaggedPartners([]);
+      if (panelGenerationRef.current === generation) setFlaggedPartners([]);
     }
   };
 
   const handleSelectCompound = (compound: CompoundRecord) => {
     selectionVersionRef.current += 1;
+    editRequestRef.current += 1;
+    setSavingEdit(false);
+    invalidatePanelRequests();
+    setKnowledgeEntry(null);
     setSelectedCompound(compound);
     setEditingCompound(null);
     setEditError(null);
@@ -197,28 +223,43 @@ function CompoundsPageContent() {
   };
 
   const handleStartEdit = (compound: CompoundRecord) => {
+    editRequestRef.current += 1;
+    setSavingEdit(false);
     setEditingCompound(compound);
     setEditError(null);
     setConfirmingDeleteId(null);
   };
 
   const handleCancelEdit = () => {
+    editRequestRef.current += 1;
+    setSavingEdit(false);
     setEditingCompound(null);
     setEditError(null);
   };
 
   const handleSaveEdit = async (data: Omit<CompoundRecord, 'id'>) => {
     if (!editingCompound || !currentProfileId) return;
+    const profileEpoch = profileEpochRef.current;
+    const selectionVersion = selectionVersionRef.current;
+    const editRequest = ++editRequestRef.current;
+    const isCurrentEdit = () => profileEpochRef.current === profileEpoch &&
+      selectionVersionRef.current === selectionVersion && editRequestRef.current === editRequest;
     try {
       setSavingEdit(true);
       setEditError(null);
       const updated = await apiClient.updateCompound(currentProfileId, editingCompound.id, data);
+      if (profileEpochRef.current !== profileEpoch) return;
+      invalidatePanelRequests();
       setCompounds(previous => previous.map(c => (c.id === updated.id ? updated : c)));
+      if (!isCurrentEdit()) return;
+      setSavingEdit(false);
+      setKnowledgeEntry(null);
       selectionVersionRef.current += 1;
       setSelectedCompound(updated);
       setEditingCompound(null);
       await loadKnowledgeEntry(updated.name ?? '');
     } catch (err) {
+      if (!isCurrentEdit()) return;
       if (err instanceof ApiError && err.code === 'consent_required') {
         router.push(`/onboarding/consent?returnTo=${encodeURIComponent(CONSENT_RETURN_TO)}`);
         return;
@@ -226,7 +267,7 @@ function CompoundsPageContent() {
       setEditError(err instanceof ApiError ? err.message : 'Failed to update compound');
       throw err;
     } finally {
-      setSavingEdit(false);
+      if (isCurrentEdit()) setSavingEdit(false);
     }
   };
 
@@ -248,6 +289,7 @@ function CompoundsPageContent() {
     const previousSelected = selectedCompound;
     const previousKnowledge = knowledgeEntry;
 
+    invalidatePanelRequests();
     setDeletingId(compound.id);
     setDeleteError(null);
     setConfirmingDeleteId(null);
@@ -255,6 +297,7 @@ function CompoundsPageContent() {
     // it feeds) reflects the deletion immediately; rolled back on failure.
     setCompounds(previous => previous.filter(c => c.id !== compound.id));
     if (wasSelected) {
+      setLoadingKnowledge(false);
       setSelectedCompound(null);
       setKnowledgeEntry(null);
     }
@@ -267,6 +310,7 @@ function CompoundsPageContent() {
       }
     } catch (err) {
       if (profileEpochRef.current !== profileEpoch) return;
+      invalidatePanelRequests();
       setCompounds(current => {
         if (current.some(c => c.id === compound.id)) return current;
         const restored = [...current];
@@ -516,9 +560,11 @@ function CompoundsPageContent() {
 }
 
 export default function CompoundsPage() {
+  const { currentProfileId } = useProfile();
   return (
     <Suspense fallback={<div className="w-full"><Header title="Compounds" /></div>}>
-      <CompoundsPageContent />
+      {/* A different profile must never inherit the previous profile's panel or forms. */}
+      <CompoundsPageContent key={currentProfileId ?? 'no-profile'} />
     </Suspense>
   );
 }

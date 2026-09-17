@@ -14,7 +14,7 @@ vi.mock('next/navigation', () => ({
 }));
 vi.mock('@/components/Header', () => ({ Header: ({ actions }: { actions?: React.ReactNode }) => <header>{actions}</header> }));
 vi.mock('@/components/ActiveProfileChip', () => ({ ActiveProfileChip: () => null }));
-vi.mock('@/components/knowledge/CompoundIntelligenceCard', () => ({ CompoundIntelligenceCard: () => null }));
+vi.mock('@/components/knowledge/CompoundIntelligenceCard', () => ({ CompoundIntelligenceCard: ({ entry }: { entry: KnowledgeEntry }) => <div data-testid="reference-entry">{entry.canonicalName}</div> }));
 vi.mock('@/components/compounds/CompoundList', () => ({
   CompoundList: ({ compounds, onSelect }: { compounds: CompoundRecord[]; onSelect?: (c: CompoundRecord) => void }) => (
     <div>{compounds.map(c => <p key={c.id} onClick={() => onSelect?.(c)}>{c.name || 'Unnamed compound'}</p>)}</div>
@@ -29,6 +29,7 @@ vi.mock('@/lib/api', async importOriginal => ({
     getKnowledgeEntry: vi.fn(),
     updateCompound: vi.fn(),
     deleteCompound: vi.fn(),
+    checkOverlap: vi.fn(),
   },
 }));
 
@@ -59,10 +60,11 @@ const namedCompound: CompoundRecord = {
 };
 
 beforeEach(() => {
-  vi.clearAllMocks();
+  vi.resetAllMocks();
   profileState.currentProfileId = 'profile-fixture';
   searchParamsState.compound = null;
   window.localStorage.clear();
+  vi.mocked(apiClient.checkOverlap).mockResolvedValue([]);
   vi.mocked(apiClient.getCompounds).mockResolvedValue([]);
   vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue([]);
 });
@@ -386,4 +388,192 @@ it('does not overwrite manual category and name while dossier prefill is loading
   expect(name).toHaveValue('Creatine');
   fireEvent.submit(name.closest('form')!);
   await waitFor(() => expect(apiClient.createCompound).toHaveBeenCalledWith('profile-fixture', expect.objectContaining({ name: 'Creatine', category: 'Supplement' })));
+});
+
+
+describe('side-panel request identity', () => {
+  const a = { ...namedCompound, id: 'a', name: 'Alpha' };
+  const b = { ...namedCompound, id: 'b', name: 'Beta' };
+  const c = { ...namedCompound, id: 'c', name: 'Gamma' };
+  const flag = (names: string[]) => [{ id: 'flag', compoundNames: names, severity: null, createdAtUtc: '2026-09-17T00:00:00Z' }];
+  function deferred<T>() {
+    let resolve!: (value: T) => void;
+    let reject!: (reason: Error) => void;
+    const promise = new Promise<T>((yes, no) => { resolve = yes; reject = no; });
+    return { promise, resolve, reject };
+  }
+  beforeEach(() => {
+    vi.mocked(apiClient.getCompounds).mockResolvedValue([a, b, c]);
+    vi.mocked(apiClient.getKnowledgeEntry).mockImplementation(async name => ({ ...knowledgeEntryFixture, canonicalName: name }));
+  });
+  it.each(['success', 'error'])('ignores old selection %s after newer overlap and reference success', async outcome => {
+    const old = deferred<Awaited<ReturnType<typeof apiClient.checkOverlap>>>();
+    const oldEntry = deferred<KnowledgeEntry>();
+    vi.mocked(apiClient.checkOverlap).mockReturnValueOnce(old.promise).mockResolvedValueOnce(flag(['Beta', 'Gamma']));
+    vi.mocked(apiClient.getKnowledgeEntry).mockReturnValueOnce(oldEntry.promise);
+    render(<CompoundsPage />);
+    fireEvent.click(await screen.findByText('Alpha'));
+    fireEvent.click(screen.getByText('Beta'));
+    await waitFor(() => expect(screen.getByTestId('reference-entry')).toHaveTextContent('Beta'));
+    await waitFor(() => expect(screen.getAllByText('Gamma')).toHaveLength(2));
+    await act(async () => {
+      if (outcome === 'success') { old.resolve(flag(['Alpha', 'Beta'])); oldEntry.resolve({ ...knowledgeEntryFixture, canonicalName: 'Alpha' }); }
+      else { old.reject(new Error('old overlap')); oldEntry.reject(new Error('old lookup')); }
+    });
+    expect(screen.getAllByText('Gamma')).toHaveLength(2);
+    expect(screen.getByTestId('reference-entry')).toHaveTextContent('Beta');
+    expect(apiClient.checkOverlap).toHaveBeenCalledTimes(2);
+  });
+  it.each(['success', 'error'])('clears old profile selection and rejects its pending %s responses', async outcome => {
+    const old = deferred<Awaited<ReturnType<typeof apiClient.checkOverlap>>>();
+    const oldEntry = deferred<KnowledgeEntry>();
+    vi.mocked(apiClient.checkOverlap).mockReturnValueOnce(old.promise);
+    vi.mocked(apiClient.getKnowledgeEntry).mockReturnValueOnce(oldEntry.promise);
+    const view = render(<CompoundsPage />);
+    fireEvent.click(await screen.findByText('Alpha'));
+    profileState.currentProfileId = 'new-profile'; view.rerender(<CompoundsPage />);
+    await waitFor(() => expect(screen.getByText('Select a compound to view details')).toBeVisible());
+    fireEvent.click(screen.getByText('Beta'));
+    await waitFor(() => expect(screen.getByTestId('reference-entry')).toHaveTextContent('Beta'));
+    await act(async () => {
+      if (outcome === 'success') { old.resolve(flag(['Alpha', 'Gamma'])); oldEntry.resolve({ ...knowledgeEntryFixture, canonicalName: 'Alpha' }); }
+      else { old.reject(new Error('old profile')); oldEntry.reject(new Error('old profile lookup')); }
+    });
+    expect(screen.queryByText('Flagged with other active compounds in this profile')).not.toBeInTheDocument();
+    expect(screen.getByTestId('reference-entry')).toHaveTextContent('Beta');
+  });
+  it.each(['settled', 'pending'])('invalidates %s flags on rename without posting another overlap request', async state => {
+    const overlap = deferred<Awaited<ReturnType<typeof apiClient.checkOverlap>>>();
+    vi.mocked(apiClient.checkOverlap).mockReturnValue(state === 'pending' ? overlap.promise : Promise.resolve(flag(['Alpha', 'Beta'])));
+    vi.mocked(apiClient.updateCompound).mockResolvedValue({ ...a, name: 'Renamed' });
+    render(<CompoundsPage />);
+    fireEvent.click(await screen.findByText('Alpha'));
+    if (state === 'settled') await screen.findByText('Flagged with other active compounds in this profile');
+    fireEvent.click(screen.getByRole('button', { name: 'Edit Alpha' }));
+    fireEvent.change(screen.getByLabelText('Compound name'), { target: { value: 'Renamed' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+    await screen.findByRole('heading', { name: 'Renamed' });
+    await act(async () => overlap.resolve(flag(['Alpha', 'Beta'])));
+    expect(screen.queryByText('Flagged with other active compounds in this profile')).not.toBeInTheDocument();
+    expect(apiClient.checkOverlap).toHaveBeenCalledTimes(1);
+  });
+  it('invalidates a newer panel request when a partner deletion rolls back', async () => {
+    const deletion = deferred<void>();
+    const overlap = deferred<Awaited<ReturnType<typeof apiClient.checkOverlap>>>();
+    vi.mocked(apiClient.deleteCompound).mockReturnValue(deletion.promise);
+    vi.mocked(apiClient.checkOverlap).mockResolvedValueOnce([]).mockReturnValueOnce(overlap.promise);
+    render(<CompoundsPage />);
+    fireEvent.click(await screen.findByText('Beta'));
+    fireEvent.click(screen.getByRole('button', { name: 'Delete Beta' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirm delete' }));
+    fireEvent.click(screen.getByText('Alpha'));
+    await act(async () => deletion.reject(new Error('rollback')));
+    await act(async () => overlap.resolve(flag(['Alpha', 'Gamma'])));
+    expect(screen.queryByText('Flagged with other active compounds in this profile')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Alpha' })).toBeVisible();
+    expect(screen.getByText('Beta')).toBeVisible();
+    expect(apiClient.checkOverlap).toHaveBeenCalledTimes(2);
+  });
+  it.each(['settled', 'pending'])('clears %s flags after add without an automatic overlap POST', async state => {
+    const overlap = deferred<Awaited<ReturnType<typeof apiClient.checkOverlap>>>();
+    const reference = deferred<KnowledgeEntry>();
+    vi.mocked(apiClient.getKnowledgeEntry).mockReturnValueOnce(reference.promise);
+    vi.mocked(apiClient.checkOverlap).mockReturnValue(state === 'pending' ? overlap.promise : Promise.resolve(flag(['Alpha', 'Beta'])));
+    vi.mocked(apiClient.createCompound).mockImplementation(async (_, data) => ({ ...data, id: 'added' }));
+    render(<CompoundsPage />);
+    fireEvent.click(await screen.findByText('Alpha'));
+    if (state === 'settled') await screen.findByText('Flagged with other active compounds in this profile');
+    fireEvent.click(screen.getByRole('button', { name: 'Add Compound', exact: true }));
+    fireEvent.change(screen.getByLabelText('1. Select a Category'), { target: { value: 'Peptide' } });
+    fireEvent.change(screen.getByLabelText('4. Optional: Manual Search/Entry'), { target: { value: 'Added' } });
+    fireEvent.click(screen.getAllByRole('button', { name: 'Add Compound', exact: true }).at(-1)!);
+    await screen.findByText('Added');
+    await act(async () => { overlap.resolve(flag(['Alpha', 'Beta'])); reference.resolve({ ...knowledgeEntryFixture, canonicalName: 'Alpha' }); });
+    expect(screen.getByTestId('reference-entry')).toHaveTextContent('Alpha');
+    expect(screen.queryByText('Flagged with other active compounds in this profile')).not.toBeInTheDocument();
+    expect(apiClient.checkOverlap).toHaveBeenCalledTimes(1);
+  });
+  it('does not let an old profile list restore membership after switching profiles', async () => {
+    const oldList = deferred<CompoundRecord[]>();
+    vi.mocked(apiClient.getCompounds).mockReturnValueOnce(oldList.promise).mockResolvedValueOnce([b, c]);
+    const view = render(<CompoundsPage />);
+    profileState.currentProfileId = 'new-profile'; view.rerender(<CompoundsPage />);
+    fireEvent.click(await screen.findByText('Beta'));
+    await act(async () => oldList.resolve([a]));
+    expect(screen.queryByText('Alpha')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Beta' })).toBeVisible();
+    expect(apiClient.checkOverlap).toHaveBeenCalledTimes(1);
+  });
+  it('keeps a newer selection when a previous record rename completes', async () => {
+    const edit = deferred<CompoundRecord>();
+    vi.mocked(apiClient.updateCompound).mockReturnValue(edit.promise);
+    vi.mocked(apiClient.checkOverlap).mockResolvedValue(flag(['Beta', 'Gamma']));
+    render(<CompoundsPage />);
+    fireEvent.click(await screen.findByText('Alpha'));
+    fireEvent.click(screen.getByRole('button', { name: 'Edit Alpha' }));
+    fireEvent.change(screen.getByLabelText('Compound name'), { target: { value: 'Renamed' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+    fireEvent.click(screen.getByText('Beta'));
+    await screen.findByText('Flagged with other active compounds in this profile');
+    await act(async () => edit.resolve({ ...a, name: 'Renamed' }));
+    expect(screen.getByRole('heading', { name: 'Beta' })).toBeVisible();
+    expect(screen.getByText('Renamed')).toBeVisible();
+    expect(screen.queryByText('Flagged with other active compounds in this profile')).not.toBeInTheDocument();
+    expect(apiClient.checkOverlap).toHaveBeenCalledTimes(2);
+  });
+
+  describe('edit completion identity', () => {
+    it.each(['failure', 'consent'])('ignores old %s after a newer selection opens its edit form', async kind => {
+      const old = deferred<CompoundRecord>();
+      vi.mocked(apiClient.updateCompound).mockReturnValue(old.promise);
+      render(<CompoundsPage />);
+      fireEvent.click(await screen.findByText('Alpha'));
+      fireEvent.click(screen.getByRole('button', { name: 'Edit Alpha' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+      fireEvent.click(screen.getByText('Beta'));
+      fireEvent.click(screen.getByRole('button', { name: 'Edit Beta' }));
+      await act(async () => old.reject(kind === 'consent' ? new ApiError(403, 'Old consent', { code: 'consent_required' }) : new Error('Old edit failed')));
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+      expect(push).not.toHaveBeenCalled();
+      expect(screen.getByLabelText('Compound name')).toHaveValue('Beta');
+      expect(screen.getByRole('button', { name: 'Save Changes' })).toBeEnabled();
+    });
+    it('leaves a newer save pending when an old save rejects and preserves current retry errors', async () => {
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+      const old = deferred<CompoundRecord>();
+      const current = deferred<CompoundRecord>();
+      vi.mocked(apiClient.updateCompound).mockReturnValueOnce(old.promise).mockReturnValueOnce(current.promise);
+      render(<CompoundsPage />);
+      fireEvent.click(await screen.findByText('Alpha'));
+      fireEvent.click(screen.getByRole('button', { name: 'Edit Alpha' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+      fireEvent.click(screen.getByText('Beta'));
+      fireEvent.click(screen.getByRole('button', { name: 'Edit Beta' }));
+      expect(screen.getByRole('button', { name: 'Save Changes' })).toBeEnabled();
+      fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+      expect(apiClient.updateCompound).toHaveBeenCalledTimes(2);
+      await act(async () => old.reject(new Error('Old failed')));
+      expect(screen.getByRole('button', { name: 'Saving...' })).toBeDisabled();
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+      await act(async () => current.reject(new ApiError(500, 'Current edit failed')));
+      expect(screen.getByRole('alert')).toHaveTextContent('Current edit failed');
+      expect(screen.getByRole('button', { name: 'Save Changes' })).toBeEnabled();
+      expect(screen.getByLabelText('Compound name')).toHaveValue('Beta');
+      vi.restoreAllMocks();
+    });
+    it('does not redirect after old-profile edit consent rejection', async () => {
+      const old = deferred<CompoundRecord>();
+      vi.mocked(apiClient.updateCompound).mockReturnValue(old.promise);
+      const view = render(<CompoundsPage />);
+      fireEvent.click(await screen.findByText('Alpha'));
+      fireEvent.click(screen.getByRole('button', { name: 'Edit Alpha' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+      profileState.currentProfileId = 'new-profile'; view.rerender(<CompoundsPage />);
+      fireEvent.click(await screen.findByText('Beta'));
+      await act(async () => old.reject(new ApiError(403, 'Old consent', { code: 'consent_required' })));
+      expect(push).not.toHaveBeenCalled();
+      expect(screen.getByRole('heading', { name: 'Beta' })).toBeVisible();
+    });
+  });
+
 });
