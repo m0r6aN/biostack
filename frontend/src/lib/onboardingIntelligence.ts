@@ -136,13 +136,16 @@ export function getOnboardingIntelligenceState(
 }
 
 export function getRelationshipCandidatesFromOverlaps(
-  overlaps: Array<{ compoundNames: string[]; pathwayTag: string; description: string }>
+  overlaps: Array<{ compoundNames: string[]; pathwayTag?: string; description?: string }>
 ): OnboardingRelationshipCandidate[] {
+  // Owner ruling 2026-09-16, extended 2026-09-17: without the reviewed_relationship_graph
+  // entitlement, overlap-check omits `description` entirely rather than sending a blank string —
+  // Omitted reasoning fields get an explicit unavailable detail, not a reconstructed explanation.
   return overlaps.map((overlap) => ({
     type: 'overlap',
     label: overlap.compoundNames.join(' + '),
     compounds: overlap.compoundNames,
-    detail: `${overlap.pathwayTag}: ${overlap.description}`,
+    detail: [overlap.pathwayTag?.trim(), overlap.description?.trim()].filter(Boolean).join(': ') || 'Severity unavailable.',
   }));
 }
 

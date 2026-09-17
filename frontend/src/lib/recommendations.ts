@@ -326,7 +326,11 @@ export function getContextTagsForKnowledgeEntry(entry: KnowledgeEntry) {
 
 export function getContextTagsForOverlapFlags(flags: InteractionFlag[]) {
   return collectContextTags(
-    flags.flatMap((flag) => [flag.pathwayTag, flag.overlapType, flag.description, ...flag.compoundNames])
+    flags.flatMap((flag) =>
+      [flag.pathwayTag, flag.overlapType, flag.description, ...flag.compoundNames].filter(
+        (value): value is string => typeof value === 'string'
+      )
+    )
   );
 }
 

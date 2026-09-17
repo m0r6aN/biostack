@@ -198,11 +198,8 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
         };
         Assert.All(reasoningProperties, property => Assert.False(root.TryGetProperty(property, out _), property));
 
-        var pair = Assert.Single(root.GetProperty("pairs").EnumerateArray());
-        Assert.Equal("PublicPairA", pair.GetProperty("compoundA").GetString());
-        Assert.Equal("PublicPairB", pair.GetProperty("compoundB").GetString());
-        Assert.Equal("Unknown", pair.GetProperty("severity").GetString());
-        Assert.Equal(0, root.GetProperty("summary").GetProperty("synergies").GetInt32());
+        Assert.Empty(root.GetProperty("pairs").EnumerateArray()); // Unknown is not a flagged pair signal.
+        Assert.Equal(new[] { "pairs" }, root.EnumerateObject().Select(property => property.Name).ToArray());
         Assert.DoesNotContain(
             "Source data reports this pairing",
             responseText,

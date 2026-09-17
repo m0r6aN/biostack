@@ -132,8 +132,8 @@ public sealed class PublicInteractionCheckGatingIntegrationTests : IAsyncLifetim
         AssertPairProperties(pair);
         Assert.Equal("PublicCheckAlpha", pair.GetProperty("compoundA").GetString());
         Assert.Equal("PublicCheckBeta", pair.GetProperty("compoundB").GetString());
-        Assert.Equal("Interfering", pair.GetProperty("severity").GetString());
-        Assert.True(root.TryGetProperty("summary", out _));
+        Assert.Equal(JsonValueKind.Null, pair.GetProperty("severity").ValueKind);
+        Assert.Equal(new[] { "pairs" }, root.EnumerateObject().Select(property => property.Name).ToArray());
     }
 
     [Fact]
@@ -183,7 +183,7 @@ public sealed class PublicInteractionCheckGatingIntegrationTests : IAsyncLifetim
         Assert.False(root.TryGetProperty("interactions", out _));
         var pair = Assert.Single(root.GetProperty("pairs").EnumerateArray());
         AssertPairProperties(pair);
-        Assert.Equal("Interfering", pair.GetProperty("severity").GetString());
+        Assert.Equal(JsonValueKind.Null, pair.GetProperty("severity").ValueKind);
     }
 
     private static void AssertPairProperties(JsonElement pair)

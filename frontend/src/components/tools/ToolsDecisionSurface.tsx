@@ -902,10 +902,14 @@ export function summarizeCompoundOverlap(state: string, findings: InteractionFla
         : ['No overlap findings were returned; compatibility remains unknown.'],
     };
   }
-  const avoid = findings.some((item) => /avoid|contra|conflict/i.test(`${item.overlapType} ${item.description}`));
+  // Neither interaction classification nor explanatory prose measures severity.
   return {
-    status: avoid ? 'avoid' : 'caution',
-    reasons: findings.slice(0, 3).map((item) => item.pathwayTag ? `Overlap in ${item.pathwayTag}.` : item.description),
+    status: 'unknown',
+    reasons: ['Severity unavailable.', ...findings.slice(0, 3).map((item) =>
+      item.pathwayTag
+        ? `Overlap in ${item.pathwayTag}.`
+        : item.description ?? `Pair signal: ${item.compoundNames.join(' + ')}.`
+    )],
   };
 }
 
@@ -916,7 +920,8 @@ function buildStackInsights(compound: string, stackCompounds: CompoundRecord[], 
   if (state === 'checking') insights.push('Checking against your stack.');
   flags.slice(0, 2).forEach((item) => {
     const other = item.compoundNames.find((name) => name.toLowerCase() !== compound.trim().toLowerCase());
-    insights.push(other ? `Overlaps with ${other} (${item.pathwayTag}).` : `Potential redundancy (${item.pathwayTag}).`);
+    const detail = item.pathwayTag?.trim() ? ` (${item.pathwayTag.trim()})` : '';
+    insights.push(other ? `Pair signal with ${other}${detail}.` : `Pair signal: ${item.compoundNames.join(' + ')}${detail}.`);
   });
   return Array.from(new Set(insights));
 }

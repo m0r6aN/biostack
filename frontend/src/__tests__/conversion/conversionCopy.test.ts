@@ -96,6 +96,9 @@ const ALL_NEW_COPY = [
   'Interference contributions',
   // CompoundIntelligenceCard side panel — flagged against another active compound in this profile
   'Flagged with other active compounds in this profile',
+  // OverlapResults — reduced (anonymous/Observer) view of the public overlap-check tool (owner
+  // ruling 2026-09-16, extended 2026-09-17)
+  'Operator adds the reasoning behind each flagged pair, including shared pathways and a confidence read.',
 ];
 
 const BANNED = [

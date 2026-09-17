@@ -135,8 +135,9 @@ public sealed class ProtocolInteractionReasoningGatingIntegrationTests : IAsyncL
         Assert.Equal(new[] { "GatingProbeAlpha", "GatingProbeBeta" },
             new[] { pair.GetProperty("compoundA").GetString(), pair.GetProperty("compoundB").GetString() }
                 .OrderBy(name => name, StringComparer.Ordinal).ToArray());
-        Assert.Equal("Interfering", pair.GetProperty("severity").GetString());
-        Assert.True(intelligence.TryGetProperty("summary", out _));
+        Assert.Equal(JsonValueKind.Null, pair.GetProperty("severity").ValueKind);
+        Assert.Equal(new[] { "pairs" }, intelligence.EnumerateObject().Select(property => property.Name).ToArray());
+        Assert.Equal(new[] { "compoundA", "compoundB", "severity" }, pair.EnumerateObject().Select(property => property.Name).OrderBy(name => name, StringComparer.Ordinal).ToArray());
 
         // The same reasoning text must not have leaked through Simulation.Insights either.
         var insights = doc.RootElement.GetProperty("simulation").GetProperty("insights").EnumerateArray()

@@ -201,18 +201,13 @@ export interface InteractionResult {
 export interface InteractionPairSummary {
   compoundA: string;
   compoundB: string;
-  severity: 'Neutral' | 'Synergistic' | 'Complementary' | 'Redundant' | 'Interfering' | string;
+  severity: null; // The current pair producer has no measured severity.
 }
 
 // Reduced projection of InteractionIntelligence returned to a viewer without the
 // reviewed_relationship_graph entitlement. Use isReducedInteractionIntelligence to distinguish it
 // from the full shape at render time.
 export interface ReducedInteractionIntelligence {
-  summary: {
-    synergies: number;
-    redundancies: number;
-    interferences: number;
-  };
   pairs: InteractionPairSummary[];
 }
 
@@ -634,12 +629,15 @@ export interface KnowledgeEntry {
   optimizationExercise?: string;
 }
 
+// Reduced overlap responses omit all reasoning/classification fields and return severity:null.
+// Full responses retain their original fields; no type, pathway or confidence measures severity.
 export interface InteractionFlag {
   compoundNames: string[];
-  overlapType: string;
-  pathwayTag: string;
-  description: string;
-  evidenceConfidence: string;
+  severity?: null;
+  overlapType?: string;
+  pathwayTag?: string;
+  description?: string;
+  evidenceConfidence?: string;
 }
 
 export interface ProtocolAnalyzerEntry {

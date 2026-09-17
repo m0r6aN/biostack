@@ -128,6 +128,64 @@ this endpoint, so no rendering change was required for it.
 existing surface only. It does not authorize any new public surface and does not change the
 Guidance Content Contract's output classes.
 
+### Public overlap-check surface extended to the same Observer shape (B5)
+
+**Decided by:** Clint Morgan (owner), 2026-09-17, in session (`owner-feedback-20260915`, parcel B5
+— extends the B3 ruling above, and its B4 extension, to a second public surface B4 found but left
+ungated pending this explicit ruling).
+
+**Decision:** The owner ruled 2026-09-16 that the public view is the same as the Observer view —
+pair names and severity, no reasoning — and explicitly extended that ruling 2026-09-17 to
+`POST /api/v1/knowledge/overlap-check`. B4 found this is the endpoint the *live* public
+compatibility tool (`frontend/src/components/knowledge/OverlapResults.tsx`) actually calls,
+mapping the same per-pair `Reason`/`Confidence` data into `InteractionFlagResponse.Description` /
+`EvidenceConfidence` and rendering it to every visitor, signed in or not, ungated. It now returns
+the same reduced shape (flagged pair, `OverlapType` severity, `PathwayTag` — no `Description` or
+`EvidenceConfidence`) that an Observer gets from every other surface under the B3 ruling. No new
+public surface is authorized and no contract version is bumped; `contracts/product-contract.v1.json`
+v1.0.0 is unchanged.
+
+**What changed:** `InteractionIntelligenceProjection` gained a second projection function,
+`ProjectFlags`, and a shared `HasReasoningAccessAsync` fail-closed entitlement check (same
+`IFeatureGate.IsEnabledAsync(FeatureCodes.ReviewedRelationshipGraph, ...)` call #369 established —
+no new gate mechanism), because `InteractionFlagResponse` is a different DTO shape than
+`InteractionIntelligenceResponse`. `KnowledgeEndpoints.CheckOverlap` now routes `OverlapService`'s
+result through this projection before returning it. Without the entitlement, each flag is reduced
+to a `ReducedInteractionFlagResponse`: `Description`/`EvidenceConfidence` are omitted from the
+payload entirely, not blanked. An anonymous caller has no current-user context, so the check fails
+closed identically to an authenticated Observer; an authenticated caller holding
+`reviewed_relationship_graph` receives the full shape from this same endpoint. Frontend rendering
+(`OverlapResults.tsx`, the marketing onboarding relationship-candidate summary) was updated to
+render the reduced shape honestly — flagged pairs by name and severity, no empty description slot,
+no dangling confidence label — with a calm Operator affordance matching the pattern #369
+established, and the entitled view is unchanged.
+
+**Scope note:** As with the B3/B4 entries above, this governs what is rendered and returned on an
+existing surface only. It does not authorize any new public surface and does not change the
+Guidance Content Contract's output classes. `POST /api/v1/knowledge/interaction-check` — a
+different DTO shape (`InteractionIntelligenceResponse`), B4's own named target — is unaffected by
+this entry; its disposition is tracked separately from B5.
+
+### Implementation correction: explicit unavailable pair severity
+
+The B3/B4/B5 entries above preserve the recorded history. Their earlier implementation
+references to InteractionType/OverlapType or PathwayTag as public “severity” do not describe
+the corrected reduced contract. This is an implementation correction under the existing
+recorded boundary, not a new owner ruling or a source/publication approval.
+
+Current pair producers have no qualified pair-specific severity measurement. Reduced
+interaction responses therefore contain only `pairs` with `compoundA`, `compoundB` and
+explicit `severity: null`. Reduced overlap flags retain `id`, `compoundNames`, `createdAtUtc`
+and explicit `severity: null`. Directional summary, interaction/overlap type, pathway,
+reasoning and confidence are omitted from those reduced DTOs. Null means unavailable,
+not low risk, no risk, or safe; no value is inferred from direction, confidence or prose.
+
+Positive and negative pair signals remain eligible; they are not all labelled hazards.
+Neutral/Unknown pair results are excluded. Full entitled DTOs remain unchanged. Unrelated
+StackScore fields are outside this correction and can still convey aggregate directional
+information; this note does not claim every response field is direction-free. Existing
+source, evidence and publication gates remain in force.
+
 ## Automated verification
 
 ```bash
