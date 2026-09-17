@@ -905,7 +905,11 @@ export function summarizeCompoundOverlap(state: string, findings: InteractionFla
   const avoid = findings.some((item) => /avoid|contra|conflict/i.test(`${item.overlapType} ${item.description}`));
   return {
     status: avoid ? 'avoid' : 'caution',
-    reasons: findings.slice(0, 3).map((item) => item.pathwayTag ? `Overlap in ${item.pathwayTag}.` : item.description),
+    reasons: findings.slice(0, 3).map((item) =>
+      item.pathwayTag
+        ? `Overlap in ${item.pathwayTag}.`
+        : item.description ?? `Flagged: ${item.compoundNames.join(' + ')}.`
+    ),
   };
 }
 

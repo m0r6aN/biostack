@@ -41,4 +41,50 @@ public static class InteractionIntelligenceProjection
 
         return new ReducedInteractionIntelligenceResponse(full.Summary, pairs);
     }
+
+    /// <summary>
+    /// Same boundary as <see cref="Project"/>, for the <see cref="InteractionFlagResponse"/> shape
+    /// returned by POST /api/v1/knowledge/overlap-check (owner ruling 2026-09-16, extended
+    /// 2026-09-17: "That ruling is extended to POST /api/v1/knowledge/overlap-check"). Without the
+    /// entitlement, each flag is reduced to a <see cref="ReducedInteractionFlagResponse"/>: the
+    /// flagged pair, its <c>OverlapType</c> severity and <c>PathwayTag</c> survive; <c>Description</c>
+    /// (the per-pair reasoning sentence) and <c>EvidenceConfidence</c> (free text derived from that
+    /// same reasoning) are omitted from the payload entirely, not blanked.
+    /// </summary>
+    public static object ProjectFlags(List<InteractionFlagResponse> flags, bool hasReasoningAccess)
+    {
+        if (hasReasoningAccess)
+        {
+            return flags;
+        }
+
+        return flags
+            .Select(flag => new ReducedInteractionFlagResponse(
+                flag.Id,
+                flag.CompoundNames,
+                flag.OverlapType,
+                flag.PathwayTag,
+                flag.CreatedAtUtc))
+            .ToList();
+    }
+
+    /// <summary>
+    /// Fail-closed check for the reviewed_relationship_graph entitlement that gates per-pair
+    /// interaction reasoning (owner ruling 2026-09-16, extended 2026-09-17). Shared so a call site
+    /// that cannot inject a scoped service (e.g. a static minimal-API endpoint handler) does not
+    /// duplicate the try/catch already established by <c>ProtocolService.HasInteractionReasoningAccessAsync</c>.
+    /// Any exception while determining entitlement — no current-user context (anonymous caller), DB
+    /// failure, anything — resolves to "no access" rather than propagating.
+    /// </summary>
+    public static async Task<bool> HasReasoningAccessAsync(IFeatureGate featureGate, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await featureGate.IsEnabledAsync(FeatureCodes.ReviewedRelationshipGraph, cancellationToken);
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

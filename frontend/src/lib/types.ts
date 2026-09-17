@@ -634,12 +634,17 @@ export interface KnowledgeEntry {
   optimizationExercise?: string;
 }
 
+// Owner ruling 2026-09-16, extended 2026-09-17: description/evidenceConfidence carry the per-pair
+// interaction reasoning gated behind the reviewed_relationship_graph entitlement (Operator) on
+// POST /api/v1/knowledge/overlap-check. A caller without that entitlement — anonymous or Observer —
+// receives a flag with both fields omitted entirely, not blank strings, so they are optional here.
+// The flag itself (which pair, how severe via overlapType/pathwayTag) is always present.
 export interface InteractionFlag {
   compoundNames: string[];
   overlapType: string;
   pathwayTag: string;
-  description: string;
-  evidenceConfidence: string;
+  description?: string;
+  evidenceConfidence?: string;
 }
 
 export interface ProtocolAnalyzerEntry {
