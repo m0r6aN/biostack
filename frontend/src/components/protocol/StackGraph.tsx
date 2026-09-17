@@ -25,6 +25,7 @@ import { EVIDENCE_TIER_TOKENS, INTERACTION_TOKENS } from '@/styles/tokens';
 import { cn } from '@/lib/utils';
 import { track } from '@/lib/telemetry';
 import type { InteractionIntelligence, ReducedInteractionIntelligence, CompoundRecord, KnowledgeEntry } from '@/lib/types';
+import { isReducedInteractionIntelligence } from '@/lib/types';
 import { CompoundLink } from '@/components/knowledge/CompoundLink';
 import { HelpTip } from '@/components/ui/HelpTip';
 import type { HelpTipKey } from '@/lib/helpTips';
@@ -150,6 +151,15 @@ function StackGraphInner({ intelligence, compounds, onNodeClick, onEdgeClick, va
     track({ name: 'stack_graph_edge_click', interactionType: edgeData.interactionType });
     onEdgeClick?.(edgeData);
   }, [onEdgeClick]);
+
+  if (intelligence && isReducedInteractionIntelligence(intelligence) && compounds.some(c => c.status === 'Active')) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center p-8 text-center">
+        <p className="text-sm font-semibold text-white/60">Detailed graph unavailable</p>
+        <p className="mt-1 text-xs text-white/50">This response contains pair signals without graph detail. Severity is unavailable.</p>
+      </div>
+    );
+  }
 
   if (rawData.nodes.length === 0) {
     return (

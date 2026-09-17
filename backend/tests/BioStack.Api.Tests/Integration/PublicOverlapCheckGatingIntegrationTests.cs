@@ -10,6 +10,7 @@ using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -121,8 +122,7 @@ public sealed class PublicOverlapCheckGatingIntegrationTests : IAsyncLifetime
         // The flag itself — which pair, how severe — survives, unauthenticated.
         Assert.True(flag.TryGetProperty("id", out _));
         Assert.True(flag.TryGetProperty("createdAtUtc", out _));
-        Assert.Equal("PathwayOverlap", flag.GetProperty("overlapType").GetString());
-        Assert.Equal("overlap-probe-pathway", flag.GetProperty("pathwayTag").GetString());
+        AssertReducedFlag(flag);
         var compoundNames = flag.GetProperty("compoundNames").EnumerateArray().Select(e => e.GetString()).ToList();
         Assert.Contains("OverlapProbeAlpha", compoundNames);
         Assert.Contains("OverlapProbeBeta", compoundNames);
@@ -148,7 +148,7 @@ public sealed class PublicOverlapCheckGatingIntegrationTests : IAsyncLifetime
 
         Assert.False(flag.TryGetProperty("description", out _), "reduced shape must not carry 'description'");
         Assert.False(flag.TryGetProperty("evidenceConfidence", out _), "reduced shape must not carry 'evidenceConfidence'");
-        Assert.Equal("PathwayOverlap", flag.GetProperty("overlapType").GetString());
+        AssertReducedFlag(flag);
     }
 
     [Fact]
@@ -172,6 +172,13 @@ public sealed class PublicOverlapCheckGatingIntegrationTests : IAsyncLifetime
         Assert.Contains("overlap-probe-pathway", description.GetString());
         Assert.True(flag.TryGetProperty("evidenceConfidence", out _));
         Assert.Equal("PathwayOverlap", flag.GetProperty("overlapType").GetString());
+    }
+
+    private static void AssertReducedFlag(JsonElement flag)
+    {
+        Assert.Equal(new[] { "compoundNames", "createdAtUtc", "id", "severity" },
+            flag.EnumerateObject().Select(property => property.Name).OrderBy(name => name, StringComparer.Ordinal).ToArray());
+        Assert.Equal(JsonValueKind.Null, flag.GetProperty("severity").ValueKind);
     }
 
     private async Task<Guid> SignInAsync(HttpClient client, string email)

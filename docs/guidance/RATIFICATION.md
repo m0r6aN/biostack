@@ -102,6 +102,32 @@ Content Contract's output classes (Class A–D), and does **not** make an unsour
 at any tier — an unsourced pair remains unpublishable regardless of entitlement. It does not bump
 the contract version; `contracts/product-contract.v1.json` v1.0.0 is unchanged.
 
+### Public interaction-check surface extended to the same Observer shape (B4)
+
+**Decided by:** Clint Morgan (owner), 2026-09-16, in session (`owner-feedback-20260915`, parcel B4
+— extends the B3 ruling above to a surface B3 found but left ungated).
+
+**Decision:** "The public view should definitely be the same as observed [Observer]."
+`POST /api/v1/knowledge/interaction-check` — an anonymous, no-sign-in-required surface B3 identified
+as still returning the full per-pair reasoning shape — now returns the same reduced shape (pair
+names/ids and severity, no mechanism, direction, consequence, evidence narrative, or source text)
+that an Observer gets from every other surface under the B3 ruling. No new public surface is
+authorized and no contract version is bumped; `contracts/product-contract.v1.json` v1.0.0 is
+unchanged.
+
+**What changed:** `KnowledgeEndpoints.CheckInteractions` now routes its result through the same
+`InteractionIntelligenceProjection` single projection point #369 introduced, using the same
+fail-closed `reviewed_relationship_graph` entitlement check (`IFeatureGate.IsEnabledAsync`) —
+no new gate mechanism. An anonymous caller has no current-user context, so the check fails closed
+to the reduced shape, identically to an authenticated Observer. An authenticated caller holding
+`reviewed_relationship_graph` receives the full shape from this same endpoint, since it accepts
+(without requiring) authenticated calls. No frontend surface in this repository currently calls
+this endpoint, so no rendering change was required for it.
+
+**Scope note:** As with the B3 entry above, this governs what is rendered and returned on an
+existing surface only. It does not authorize any new public surface and does not change the
+Guidance Content Contract's output classes.
+
 ### Public overlap-check surface extended to the same Observer shape (B5)
 
 **Decided by:** Clint Morgan (owner), 2026-09-17, in session (`owner-feedback-20260915`, parcel B5
@@ -139,6 +165,26 @@ existing surface only. It does not authorize any new public surface and does not
 Guidance Content Contract's output classes. `POST /api/v1/knowledge/interaction-check` — a
 different DTO shape (`InteractionIntelligenceResponse`), B4's own named target — is unaffected by
 this entry; its disposition is tracked separately from B5.
+
+### Implementation correction: explicit unavailable pair severity
+
+The B3/B4/B5 entries above preserve the recorded history. Their earlier implementation
+references to InteractionType/OverlapType or PathwayTag as public “severity” do not describe
+the corrected reduced contract. This is an implementation correction under the existing
+recorded boundary, not a new owner ruling or a source/publication approval.
+
+Current pair producers have no qualified pair-specific severity measurement. Reduced
+interaction responses therefore contain only `pairs` with `compoundA`, `compoundB` and
+explicit `severity: null`. Reduced overlap flags retain `id`, `compoundNames`, `createdAtUtc`
+and explicit `severity: null`. Directional summary, interaction/overlap type, pathway,
+reasoning and confidence are omitted from those reduced DTOs. Null means unavailable,
+not low risk, no risk, or safe; no value is inferred from direction, confidence or prose.
+
+Positive and negative pair signals remain eligible; they are not all labelled hazards.
+Neutral/Unknown pair results are excluded. Full entitled DTOs remain unchanged. Unrelated
+StackScore fields are outside this correction and can still convey aggregate directional
+information; this note does not claim every response field is direction-free. Existing
+source, evidence and publication gates remain in force.
 
 ## Automated verification
 

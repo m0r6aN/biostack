@@ -53,16 +53,15 @@ describe('OverlapResults', () => {
         flags={[
           {
             compoundNames: ['BPC-157', 'TB-500'],
-            overlapType: 'Potential redundancy',
-            pathwayTag: 'tissue-repair',
+            severity: null,
           },
         ]}
       />
     );
 
     expect(screen.getByText('BPC-157 × TB-500')).toBeInTheDocument();
-    expect(screen.getByText('Potential redundancy')).toBeInTheDocument();
-    expect(screen.getByText('Pathway: tissue-repair')).toBeInTheDocument();
+    expect(screen.getByText('Severity unavailable')).toBeInTheDocument();
+    expect(screen.queryByText(/^Pathway:/)).not.toBeInTheDocument();
 
     expect(screen.queryByText(/^Confidence:/)).not.toBeInTheDocument();
     expect(screen.getByText('See why these pairs are flagged')).toBeInTheDocument();

@@ -3,6 +3,7 @@ namespace BioStack.Application.Services;
 using System.Collections.Generic;
 using System.Linq;
 using BioStack.Contracts.Responses;
+using BioStack.Domain.Enums;
 
 /// <summary>
 /// Single projection point for per-pair interaction reasoning (owner ruling 2026-09-16, B3:
@@ -32,14 +33,18 @@ public static class InteractionIntelligenceProjection
             return full;
         }
 
+        // Positive and negative classifications are pair signals, not all hazards.
+        // Neither direction nor confidence supplies a qualified severity measurement.
         var pairs = full.Interactions
+            .Where(interaction => interaction.Type is InteractionType.Synergistic or InteractionType.Complementary
+                or InteractionType.Redundant or InteractionType.Interfering)
             .Select(interaction => new InteractionPairSummaryResponse(
                 interaction.CompoundA,
                 interaction.CompoundB,
-                interaction.Type))
+                null))
             .ToList();
 
-        return new ReducedInteractionIntelligenceResponse(full.Summary, pairs);
+        return new ReducedInteractionIntelligenceResponse(pairs);
     }
 
     /// <summary>
@@ -47,7 +52,7 @@ public static class InteractionIntelligenceProjection
     /// returned by POST /api/v1/knowledge/overlap-check (owner ruling 2026-09-16, extended
     /// 2026-09-17: "That ruling is extended to POST /api/v1/knowledge/overlap-check"). Without the
     /// entitlement, each flag is reduced to a <see cref="ReducedInteractionFlagResponse"/>: the
-    /// flagged pair, its <c>OverlapType</c> severity and <c>PathwayTag</c> survive; <c>Description</c>
+    /// pair identity and explicit null (unavailable) severity survive; type, pathway, <c>Description</c>
     /// (the per-pair reasoning sentence) and <c>EvidenceConfidence</c> (free text derived from that
     /// same reasoning) are omitted from the payload entirely, not blanked.
     /// </summary>
@@ -59,11 +64,12 @@ public static class InteractionIntelligenceProjection
         }
 
         return flags
+            .Where(flag => flag.OverlapType is OverlapType.PathwayOverlap or OverlapType.MechanismicSimilarity
+                or OverlapType.PotentialInteraction or OverlapType.AdditiveBenefit)
             .Select(flag => new ReducedInteractionFlagResponse(
                 flag.Id,
                 flag.CompoundNames,
-                flag.OverlapType,
-                flag.PathwayTag,
+                null,
                 flag.CreatedAtUtc))
             .ToList();
     }
