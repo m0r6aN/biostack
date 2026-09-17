@@ -163,8 +163,13 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task InteractionCheck_LegacyPairingMetadataIsUnknownAndDoesNotReturnActionScenarios()
+    public async Task InteractionCheck_AnonymousCaller_SeesPairAndSeverityOnly_NoReasoningFields()
     {
+        // Owner ruling 2026-09-16, extended 2026-09-16 (B4): the public interaction-check surface
+        // must return the same reduced shape Observer gets — pair names and severity, never the
+        // legacy pairing metadata's reasoning sentence. Superseded assertions from before the
+        // extension (which expected the full reasoning shape here) moved to
+        // PublicInteractionCheckGatingIntegrationTests.
         await UpsertAsync(
             new KnowledgeEntry
             {
@@ -185,15 +190,23 @@ public class KnowledgeEndpointsIntegrationTests : IAsyncLifetime
         var responseText = await response.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(responseText);
         var root = doc.RootElement;
-        var interaction = Assert.Single(root.GetProperty("interactions").EnumerateArray());
 
-        Assert.Equal("Unknown", interaction.GetProperty("type").GetString());
-        Assert.Equal(
-            "Source data reports this pairing, but does not establish compatibility or safety.",
-            interaction.GetProperty("reason").GetString());
+        var reasoningProperties = new[]
+        {
+            "reason", "message", "confidence", "sharedPathways", "topFindings",
+            "interactions", "counterfactuals", "swaps", "compositeScore", "score"
+        };
+        Assert.All(reasoningProperties, property => Assert.False(root.TryGetProperty(property, out _), property));
+
+        var pair = Assert.Single(root.GetProperty("pairs").EnumerateArray());
+        Assert.Equal("PublicPairA", pair.GetProperty("compoundA").GetString());
+        Assert.Equal("PublicPairB", pair.GetProperty("compoundB").GetString());
+        Assert.Equal("Unknown", pair.GetProperty("severity").GetString());
         Assert.Equal(0, root.GetProperty("summary").GetProperty("synergies").GetInt32());
-        Assert.Empty(root.GetProperty("counterfactuals").EnumerateArray());
-        Assert.Empty(root.GetProperty("swaps").EnumerateArray());
+        Assert.DoesNotContain(
+            "Source data reports this pairing",
+            responseText,
+            StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("Removing", responseText, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("Replacing", responseText, StringComparison.OrdinalIgnoreCase);
     }
