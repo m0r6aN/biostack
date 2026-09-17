@@ -41,4 +41,26 @@ public static class InteractionIntelligenceProjection
 
         return new ReducedInteractionIntelligenceResponse(full.Summary, pairs);
     }
+
+    /// <summary>
+    /// Fail-closed check for the reviewed_relationship_graph entitlement, shared by every caller
+    /// that needs to decide whether to pass <c>true</c> into <see cref="Project"/> (owner ruling
+    /// 2026-09-16, extended 2026-09-16 to the public
+    /// <c>POST /api/v1/knowledge/interaction-check</c> surface: "The public view should definitely
+    /// be the same as observed [Observer]"). Any exception while determining entitlement — no
+    /// current-user context (the normal case for an anonymous caller), DB failure, anything —
+    /// resolves to "no access" rather than propagating, so a caller that cannot prove entitlement
+    /// always gets the reduced shape.
+    /// </summary>
+    public static async Task<bool> HasReasoningAccessAsync(IFeatureGate featureGate, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await featureGate.IsEnabledAsync(FeatureCodes.ReviewedRelationshipGraph, cancellationToken);
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

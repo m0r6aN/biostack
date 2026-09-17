@@ -102,6 +102,32 @@ Content Contract's output classes (Class A–D), and does **not** make an unsour
 at any tier — an unsourced pair remains unpublishable regardless of entitlement. It does not bump
 the contract version; `contracts/product-contract.v1.json` v1.0.0 is unchanged.
 
+### Public interaction-check surface extended to the same Observer shape (B4)
+
+**Decided by:** Clint Morgan (owner), 2026-09-16, in session (`owner-feedback-20260915`, parcel B4
+— extends the B3 ruling above to a surface B3 found but left ungated).
+
+**Decision:** "The public view should definitely be the same as observed [Observer]."
+`POST /api/v1/knowledge/interaction-check` — an anonymous, no-sign-in-required surface B3 identified
+as still returning the full per-pair reasoning shape — now returns the same reduced shape (pair
+names/ids and severity, no mechanism, direction, consequence, evidence narrative, or source text)
+that an Observer gets from every other surface under the B3 ruling. No new public surface is
+authorized and no contract version is bumped; `contracts/product-contract.v1.json` v1.0.0 is
+unchanged.
+
+**What changed:** `KnowledgeEndpoints.CheckInteractions` now routes its result through the same
+`InteractionIntelligenceProjection` single projection point #369 introduced, using the same
+fail-closed `reviewed_relationship_graph` entitlement check (`IFeatureGate.IsEnabledAsync`) —
+no new gate mechanism. An anonymous caller has no current-user context, so the check fails closed
+to the reduced shape, identically to an authenticated Observer. An authenticated caller holding
+`reviewed_relationship_graph` receives the full shape from this same endpoint, since it accepts
+(without requiring) authenticated calls. No frontend surface in this repository currently calls
+this endpoint, so no rendering change was required for it.
+
+**Scope note:** As with the B3 entry above, this governs what is rendered and returned on an
+existing surface only. It does not authorize any new public surface and does not change the
+Guidance Content Contract's output classes.
+
 ## Automated verification
 
 ```bash

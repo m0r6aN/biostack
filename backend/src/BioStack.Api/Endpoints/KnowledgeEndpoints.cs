@@ -44,9 +44,19 @@ public static class KnowledgeEndpoints
     private static async Task<IResult> CheckInteractions(
         OverlapCheckRequest request,
         IInteractionIntelligenceService interactionIntelligenceService,
+        IFeatureGate featureGate,
         CancellationToken ct)
     {
         var result = await interactionIntelligenceService.EvaluatePublicByNamesAsync(request.CompoundNames, ct);
-        return Results.Ok(result);
+
+        // Owner ruling 2026-09-16, extended 2026-09-16: "The public view should definitely be the
+        // same as observed [Observer]." Routed through the single InteractionIntelligenceProjection
+        // point (same one #369 introduced for the protocol/current-stack-intelligence surfaces) —
+        // no new gate mechanism. An anonymous caller has no current-user context, so
+        // HasReasoningAccessAsync fails closed to the reduced (pair + severity only) shape. An
+        // authenticated caller holding reviewed_relationship_graph gets the full shape from this
+        // same endpoint.
+        var hasReasoningAccess = await InteractionIntelligenceProjection.HasReasoningAccessAsync(featureGate, ct);
+        return Results.Ok(InteractionIntelligenceProjection.Project(result, hasReasoningAccess));
     }
 }
