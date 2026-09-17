@@ -10,6 +10,7 @@ using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -69,7 +70,7 @@ public sealed class PublicInteractionCheckGatingIntegrationTests : IAsyncLifetim
 
         _client = _factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
 
-        // Two compounds whose KnowledgeEntry AvoidWith fields mutually reference each other, so
+        // Two compounds where Alpha references Beta in its KnowledgeEntry AvoidWith field, so
         // the fallback interaction path (no reviewed graph needed) deterministically produces an
         // Interfering pair with reasoning ("Avoid-with guidance directly links these compounds."),
         // same fixture shape ProtocolInteractionReasoningGatingIntegrationTests uses.
@@ -128,6 +129,7 @@ public sealed class PublicInteractionCheckGatingIntegrationTests : IAsyncLifetim
         // Only pair names and severity survive.
         Assert.True(root.TryGetProperty("pairs", out var pairs));
         var pair = Assert.Single(pairs.EnumerateArray());
+        AssertPairProperties(pair);
         Assert.Equal("PublicCheckAlpha", pair.GetProperty("compoundA").GetString());
         Assert.Equal("PublicCheckBeta", pair.GetProperty("compoundB").GetString());
         Assert.Equal("Interfering", pair.GetProperty("severity").GetString());
@@ -157,6 +159,9 @@ public sealed class PublicInteractionCheckGatingIntegrationTests : IAsyncLifetim
             "Avoid-with guidance directly links these compounds.",
             interaction.GetProperty("reason").GetString());
         Assert.True(interaction.TryGetProperty("confidence", out _));
+        // This remains the public-mode evaluator, even for an entitled caller.
+        Assert.Empty(root.GetProperty("counterfactuals").EnumerateArray());
+        Assert.Empty(root.GetProperty("swaps").EnumerateArray());
     }
 
     [Fact]
@@ -177,7 +182,15 @@ public sealed class PublicInteractionCheckGatingIntegrationTests : IAsyncLifetim
 
         Assert.False(root.TryGetProperty("interactions", out _));
         var pair = Assert.Single(root.GetProperty("pairs").EnumerateArray());
+        AssertPairProperties(pair);
         Assert.Equal("Interfering", pair.GetProperty("severity").GetString());
+    }
+
+    private static void AssertPairProperties(JsonElement pair)
+    {
+        Assert.Equal(new[] { "compoundA", "compoundB", "severity" },
+            pair.EnumerateObject().Select(property => property.Name)
+                .OrderBy(name => name, StringComparer.Ordinal).ToArray());
     }
 
     private async Task<Guid> SignInAsync(string email)
