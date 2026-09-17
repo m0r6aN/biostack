@@ -3,6 +3,7 @@ namespace BioStack.Api.Tests.Integration;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using BioStack.Api;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
@@ -11,6 +12,7 @@ using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 using BioStack.Infrastructure.Knowledge;
 using BioStack.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +35,7 @@ public sealed class ProtocolInteractionReasoningGatingIntegrationTests : IAsyncL
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new JsonStringEnumConverter() },
     };
 
     private WebApplicationFactory<Program> _factory = null!;
@@ -128,8 +131,10 @@ public sealed class ProtocolInteractionReasoningGatingIntegrationTests : IAsyncL
         // Only pair names and severity survive.
         Assert.True(intelligence.TryGetProperty("pairs", out var pairs));
         var pair = Assert.Single(pairs.EnumerateArray());
-        Assert.Equal("GatingProbeAlpha", pair.GetProperty("compoundA").GetString());
-        Assert.Equal("GatingProbeBeta", pair.GetProperty("compoundB").GetString());
+        // Protocol item order is not a contract; verify the exact unordered pair.
+        Assert.Equal(new[] { "GatingProbeAlpha", "GatingProbeBeta" },
+            new[] { pair.GetProperty("compoundA").GetString(), pair.GetProperty("compoundB").GetString() }
+                .OrderBy(name => name, StringComparer.Ordinal).ToArray());
         Assert.Equal("Interfering", pair.GetProperty("severity").GetString());
         Assert.True(intelligence.TryGetProperty("summary", out _));
 
@@ -137,7 +142,9 @@ public sealed class ProtocolInteractionReasoningGatingIntegrationTests : IAsyncL
         var insights = doc.RootElement.GetProperty("simulation").GetProperty("insights").EnumerateArray()
             .Select(e => e.GetString())
             .ToList();
-        Assert.DoesNotContain(insights, i => i != null && i.Contains("Avoid-with guidance", StringComparison.OrdinalIgnoreCase));
+        Assert.DoesNotContain(insights, i => i != null &&
+            i.Contains("GatingProbeAlpha", StringComparison.Ordinal) &&
+            i.Contains("GatingProbeBeta", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -168,7 +175,9 @@ public sealed class ProtocolInteractionReasoningGatingIntegrationTests : IAsyncL
         var insights = doc.RootElement.GetProperty("simulation").GetProperty("insights").EnumerateArray()
             .Select(e => e.GetString())
             .ToList();
-        Assert.Contains(insights, i => i != null && i.Contains("Avoid-with guidance", StringComparison.OrdinalIgnoreCase));
+        // Simulation carries the finding message, not the underlying pair's Reason text.
+        var expectedFinding = $"{interaction.GetProperty("compoundA").GetString()} and {interaction.GetProperty("compoundB").GetString()} raise a review-first interaction signal.";
+        Assert.Contains(expectedFinding, insights);
     }
 
     [Fact]
