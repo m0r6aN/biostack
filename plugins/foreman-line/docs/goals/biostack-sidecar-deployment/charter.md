@@ -12,11 +12,11 @@ Historical drafting base: `4d8754c670a7d4553ade857be80aa170ede85653`
 
 | Field | Value |
 |---|---|
-| Owner | Codex coordinator session, accepted by direct Gate 1 instruction on 2026-09-08 at a zero-parcel boundary |
+| Owner | Muse Spark coordinator session (pi harness, openrouter meta/muse-spark-1.3, session `01a0b4e1-be49-733c-8f99-18af4083bb63`), claimed 2026-09-19 by direct human transfer instruction at the Round-7 preflight stop (no agent in flight; goal branch clean; P01 corrections held uncommitted in `parcel/sidecar-P01`) |
 | Goal slug | `biostack-sidecar-deployment` |
 | Goal branch | `codex/goal-biostack-sidecar-deployment` |
 | Goal worktree | `C:\Users\clint\.codex\worktrees\biostack-sidecar-deployment-goal\BioStack` |
-| Prior owner | Claude Opus 5 coordinator session; zero parcels were dispatched and no worktree was in flight at transfer |
+| Prior owner | Codex coordinator session (2026-09-08–2026-09-19); goal docs merged to `main` via PR #375 (`e5b75e0`); P01 paused at Round-7 audit-recovery preflight stop. Before that: Claude Opus 5 coordinator session; zero parcels were dispatched and no worktree was in flight at transfer |
 | Transfer rule | One goal, one coordinator. Ownership transfers only at a parcel boundary, by editing this block. |
 
 ## Gate 1 — ratified 2026-09-03; reconfirmed 2026-09-08
