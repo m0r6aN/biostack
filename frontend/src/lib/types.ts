@@ -82,6 +82,21 @@ export interface ProviderAccessConfirmation {
   submittedAtUtc: string;
 }
 
+export interface ProviderAccessRequest {
+  email: string;
+  name: string;
+  organization: string;
+  role: string;
+  consent: boolean;
+  website?: string;
+}
+
+export interface ProviderAccessConfirmation {
+  requestId: string;
+  status: string;
+  submittedAtUtc: string;
+}
+
 export interface CheckIn {
   id: string;
   personId: string;
