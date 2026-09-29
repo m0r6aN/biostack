@@ -21,6 +21,7 @@
 | BIO-RT-01 | Backend governance / Keon receipt boundary | Hardening | accepted-local; independently-reviewed; live-hold | `D:/Repos/BioStack-biort01-complete-20260727` | `codex/biort01-fail-closed-complete-20260727` | high: distributed DB/Runtime reconciliation and shared integration harnesses |
 | PR-SEC-001 | Security | Release | proposed | review scope required | TBD | high |
 | SEC-CONTAINER-001 | Security / container hardening | Release hardening | ready | `D:/Repos/BioStack-sec-container` | `codex/sec-backend-container` | low: backend Dockerfile |
+| SEC-DEPS-001 | Security / frontend dependencies | Release hardening | completed | `D:/Repos/BioStack-sec-frontend-deps` | `codex/sec-frontend-postcss` | medium: package lock |
 | PR-REL-001 | Release | Release | blocked | isolated required | TBD | high: ledger/evidence |
 
 Dependency order: `PR-DOC-001 -> PR-CI-001 -> integration/hardening parcels -> PR-SEC-001 -> PR-REL-001`.
