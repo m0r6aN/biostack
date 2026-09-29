@@ -38,8 +38,11 @@ vi.mock('@/lib/api', () => ({
   },
   ApiError: class ApiError extends Error {
     status: number;
-    constructor(message: string, status = 500) {
+    // Mirrors the real ApiError signature (status, message) so tests construct
+    // instances exactly as production code does.
+    constructor(status: number, message: string) {
       super(message);
+      this.name = 'ApiError';
       this.status = status;
     }
   },
@@ -65,6 +68,7 @@ vi.mock('framer-motion', () => ({
 }));
 
 import { AnalyzerExperience } from '@/components/tools/analyzer/AnalyzerExperience';
+import { ApiError } from '@/lib/api';
 
 // ── Fake result factory ───────────────────────────────────────────────────────
 
@@ -345,6 +349,29 @@ describe('AnalyzerExperience', () => {
 
     await waitFor(() => expect(analyzeProtocolMock).toHaveBeenCalledTimes(2));
     expect(await screen.findByLabelText(/BioStack score 72 out of 100/i)).toBeInTheDocument();
+  });
+
+  // 5b ─ Protocol-upload remediation: a safe API validation error (400) must be
+  // surfaced verbatim under the validation headline, not collapsed into the
+  // generic "temporarily unavailable" outage framing.
+  it('surfaces a safe 400 API validation message instead of the outage card', async () => {
+    const user = userEvent.setup();
+    analyzeProtocolMock.mockRejectedValueOnce(
+      new ApiError(400, 'That file is too large for the analyzer right now. Keep uploads under 12 MB.'),
+    );
+
+    render(<AnalyzerExperience />);
+
+    await waitForAnalyzerAccess();
+
+    await user.type(screen.getByRole('textbox'), 'BPC-157 500mcg daily');
+    await user.click(screen.getByRole('button', { name: 'Analyze Protocol' }));
+
+    expect(
+      await screen.findByText('That file is too large for the analyzer right now. Keep uploads under 12 MB.'),
+    ).toBeInTheDocument();
+    expect(screen.getByText('We could not analyze that input.')).toBeInTheDocument();
+    expect(screen.queryByText('Analysis is temporarily unavailable.')).not.toBeInTheDocument();
   });
 
   // 6 ─ Example load fires analyzer_example_loaded and triggers analysis

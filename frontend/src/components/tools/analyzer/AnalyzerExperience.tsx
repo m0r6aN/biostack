@@ -22,15 +22,16 @@ import { NextSteps } from './report/NextSteps';
 import { ParsedProtocolSection } from './report/ParsedProtocolSection';
 import { ScoreHero } from './report/ScoreHero';
 import {
+  analyzerErrorPresentation,
   currentRawInput,
   exampleProtocols,
-  formatAnalyzerError,
   getScoreBand,
   getScoreInsight,
   getWhatThisMeans,
   pickOptimizedProtocol,
   recommendationCount,
 } from './analyzerView';
+import type { AnalyzerErrorKind } from './analyzerView';
 import { useAnalyzerSession } from './useAnalyzerSession';
 import type { AnalyzerContextFields } from './useAnalyzerSession';
 
@@ -70,7 +71,14 @@ export function AnalyzerExperience() {
   const setResult = (next: ProtocolAnalyzerResult | null) => setSnapshot((s) => ({ ...s, result: next }));
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [error, setError] = useState('');
+  const [error, setErrorRaw] = useState('');
+  const [errorKind, setErrorKind] = useState<AnalyzerErrorKind>('service');
+  // Keep the failure card's headline in lockstep with its message so a safe API
+  // validation message is never framed as a "temporarily unavailable" outage.
+  const setError = (message: string, kind: AnalyzerErrorKind = 'service') => {
+    setErrorRaw(message);
+    setErrorKind(message ? kind : 'service');
+  };
   const [showSaveNotice, setShowSaveNotice] = useState(false);
   const [savedAnalysisId, setSavedAnalysisId] = useState('');
   const [storageError, setStorageError] = useState('');
@@ -244,7 +252,7 @@ export function AnalyzerExperience() {
     exampleType?: keyof typeof exampleProtocols;
   }) {
     if (analyzerAccess !== 'entitled') {
-      setError('Operator or Commander access is required to run Protocol Analyzer.');
+      setError('Operator or Commander access is required to run Protocol Analyzer.', 'validation');
       return;
     }
 
@@ -309,7 +317,8 @@ export function AnalyzerExperience() {
         setEditing(false);
       } catch (requestError) {
         setResult(null);
-        setError(formatAnalyzerError(requestError, input.inputType));
+        const presentation = analyzerErrorPresentation(requestError, input.inputType);
+        setError(presentation.message, presentation.kind);
       }
     });
   }
@@ -531,6 +540,7 @@ export function AnalyzerExperience() {
               isAuthenticated={isAuthenticated}
               isPending={isPending || analyzerAccess !== 'entitled'}
               error={error}
+              errorKind={errorKind}
               onModeChange={handleModeChange}
               onInputTextChange={setInputText}
               onLinkUrlChange={setLinkUrl}
