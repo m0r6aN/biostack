@@ -34,6 +34,7 @@ type OverlapStatus = 'caution' | 'avoid' | 'unknown';
 interface ToolsDecisionSurfaceProps {
   initialMode?: SurfaceMode;
   compactIntro?: boolean;
+  heading?: string;
 }
 
 const quickCompounds = ['BPC-157', 'TB-500', 'NAD+'];
@@ -67,7 +68,7 @@ const modeCopy: Record<SurfaceMode, { label: string; title: string; description:
   },
 };
 
-export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = false }: ToolsDecisionSurfaceProps) {
+export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = false, heading }: ToolsDecisionSurfaceProps) {
   const { user } = useAuth();
   const { currentProfileId, profiles, setProfiles, setCurrentProfileId } = useProfile();
   const [mode, setMode] = useState<SurfaceMode>(initialMode);
@@ -76,6 +77,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   const [input, setInput] = useState<UnifiedDosingInput>(DEFAULT_UNIFIED_DOSING_INPUT);
   const [conversion, setConversion] = useState({ amount: 1000, fromUnit: 'mcg' as MassUnit, toUnit: 'mg' as MassUnit });
   const [knowledge, setKnowledge] = useState<KnowledgeEntry[]>([]);
+  const [knowledgeStatus, setKnowledgeStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [stackCompounds, setStackCompounds] = useState<CompoundRecord[]>([]);
   const [recentCompounds, setRecentCompounds] = useState<string[]>([]);
   const [compatibility, setCompatibility] = useState<InteractionFlag[]>([]);
@@ -171,7 +173,15 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
         demoCompound('NAD+'),
       ]);
     }
-    void apiClient.getAllKnowledgeCompounds().then(setKnowledge).catch(() => setKnowledge([]));
+    void apiClient.getAllKnowledgeCompounds()
+      .then((entries) => {
+        setKnowledge(entries);
+        setKnowledgeStatus('ready');
+      })
+      .catch(() => {
+        setKnowledge([]);
+        setKnowledgeStatus('error');
+      });
   }, [refreshSaved]);
 
   useEffect(() => {
@@ -364,12 +374,16 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/70">Start here</p>
               <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                Dose it right. Mix correctly. Check compatibility.
+                {heading ?? 'Dose it right. Mix correctly. Check compatibility.'}
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-white/62 sm:text-lg">
                 Free volume, concentration, unit-conversion, and compatibility calculations. No account required.
               </p>
             </div>
+          )}
+
+          {compactIntro && heading && (
+            <h1 className="text-2xl font-semibold tracking-tight text-white">{heading}</h1>
           )}
 
           <Link
@@ -388,6 +402,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             onSelect={selectCompound}
             quickCompounds={quickCompounds}
             knowledgeNames={knowledgeNames}
+            knowledgeStatus={knowledgeStatus}
             stackCompounds={stackCompounds}
             recentCompounds={recentCompounds}
             isAuthenticated={Boolean(user) || stackCompounds.length > 0}
@@ -516,6 +531,7 @@ function CompoundChooser({
   onSelect,
   quickCompounds,
   knowledgeNames,
+  knowledgeStatus,
   stackCompounds,
   recentCompounds,
   isAuthenticated,
@@ -524,6 +540,7 @@ function CompoundChooser({
   onSelect: (value: string) => void;
   quickCompounds: string[];
   knowledgeNames: string[];
+  knowledgeStatus: 'loading' | 'ready' | 'error';
   stackCompounds: CompoundRecord[];
   recentCompounds: string[];
   isAuthenticated: boolean;
@@ -631,7 +648,9 @@ function CompoundChooser({
                 ))}
               </div>
             </>
-          ) : knowledgeNames.length === 0 ? (
+          ) : knowledgeStatus === 'loading' ? (
+            <p className="text-sm leading-6 text-white/52">Loading compound list…</p>
+          ) : knowledgeStatus === 'error' || knowledgeNames.length === 0 ? (
             <p className="text-sm leading-6 text-white/52">Compound search is temporarily unavailable.</p>
           ) : (
             <p className="text-sm leading-6 text-white/52">No recognized compound found. You can still submit this text as a custom compound.</p>

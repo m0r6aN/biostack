@@ -65,7 +65,7 @@ export default function HowItWorksPage() {
             How it works
           </p>
           <h1 className="mt-4 max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">
-            The deeper explanation lives here.
+            Structure for the stack you actually run.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-white/62">
             BioStack gives complex stacks a place for findings, calculators, overlap checks, and timeline context.

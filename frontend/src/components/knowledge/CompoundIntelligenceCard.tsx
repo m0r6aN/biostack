@@ -78,12 +78,14 @@ interface CompoundIntelligenceCardProps {
    * for signed-in users and the standard sign-in CTA for anonymous ones.
    */
   isSignedIn?: boolean;
+  titleAs?: 'h1' | 'h2' | 'h3';
 }
 
 export function CompoundIntelligenceCard({
   entry,
   recommendationSurface,
   isSignedIn = false,
+  titleAs: Heading = 'h3',
 }: CompoundIntelligenceCardProps) {
   const studyDesign = getReviewedStudyDesign(entry.canonicalName);
   const [showAllReferences, setShowAllReferences] = useState(false);
@@ -103,7 +105,7 @@ export function CompoundIntelligenceCard({
       <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-emerald-500/[0.06] blur-2xl pointer-events-none" />
       <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-white">{entry.canonicalName}</h3>
+          <Heading className="text-lg font-semibold text-white">{entry.canonicalName}</Heading>
           {entry.aliases.length > 0 && (
             <p className="text-xs text-white/35 mt-1">Also known as: {entry.aliases.join(', ')}</p>
           )}

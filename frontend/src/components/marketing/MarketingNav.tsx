@@ -5,11 +5,13 @@ import { useEffect, useRef } from 'react';
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import { useAuth } from '@/lib/AuthProvider';
 import { MobileStickyCta } from './MobileStickyCta';
+import { useState } from 'react';
 
 export function MarketingNav() {
   const { user, loading, logout } = useAuth();
   const isAuthenticated = !loading && user !== null;
   const headerRef = useRef<HTMLElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Keep in-page anchor targets (e.g. the #main skip link) clear of this sticky header,
   // tracking its live height across wraps/font loads and releasing the offset on unmount.
@@ -36,6 +38,43 @@ export function MarketingNav() {
           <Link href="/" aria-label="BioStack home" className="shrink-0 focus-visible:outline-none focus-visible:ring-2">
             <BioStackLogo variant="horizontal" theme="dark" size="md" animated hoverable />
           </Link>
+          <button
+            type="button"
+            className="rounded-lg border border-white/12 px-3 py-2 text-sm text-white/75 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 md:hidden"
+            aria-expanded={menuOpen}
+            aria-controls="marketing-mobile-menu"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span aria-hidden="true">{menuOpen ? '✕' : '☰'}</span>
+            <span className="sr-only">{menuOpen ? 'Close menu' : 'Open menu'}</span>
+          </button>
+          {menuOpen && (
+            <nav
+              id="marketing-mobile-menu"
+              className="absolute left-0 right-0 top-full z-40 border-b border-white/8 bg-[#0B0F14]/97 px-5 py-4 backdrop-blur-xl md:hidden"
+            >
+              <div className="flex flex-col gap-3 text-sm text-white/70">
+                {([
+                  ['How it works', '/how-it-works'],
+                  ['Tools', '/tools'],
+                  ['Library', '/knowledge'],
+                  ['Pricing', '/pricing'],
+                  ['For Providers', '/providers'],
+                  ['Safety', '/safety'],
+                  ['Analyze My Stack', '/tools/analyzer'],
+                ] as const).map(([label, href]) => (
+                  <Link key={href} href={href} onClick={() => setMenuOpen(false)} className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
+                    {label}
+                  </Link>
+                ))}
+                {!isAuthenticated && (
+                  <Link href="/auth/signin" onClick={() => setMenuOpen(false)} className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
+                    Sign in
+                  </Link>
+                )}
+              </div>
+            </nav>
+          )}
           <nav className="hidden min-w-0 grow basis-0 flex-wrap items-center justify-end gap-x-5 gap-y-1 whitespace-nowrap text-sm text-white/55 md:flex xl:grow-0 xl:basis-auto xl:gap-x-6">
             <Link href="/how-it-works" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               How it works
@@ -54,9 +93,6 @@ export function MarketingNav() {
             </Link>
             <Link href="/safety" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               Safety
-            </Link>
-            <Link href="/tools" className="transition-colors hover:text-white">
-              Tools
             </Link>
           </nav>
           <div className="ml-auto flex shrink-0 items-center gap-3 whitespace-nowrap md:ml-0 md:w-full md:justify-end xl:w-auto">

@@ -4,29 +4,9 @@ import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { apiClient } from '@/lib/api';
 import { useEntitlements } from '@/lib/entitlements';
-import { getProductPlan } from '@/lib/productContract';
+import { pricingTiers } from '@/lib/marketing';
+import Link from 'next/link';
 import { useState } from 'react';
-
-const operatorMonthlyDollars = getProductPlan('operator').monthlyPriceCents / 100;
-
-const freeFeatures = [
-  '2 compounds',
-  'Basic timeline and tracking',
-  'Basic check-ins',
-  'Calculator access',
-  'Compound lookup and selection',
-  'Single profile',
-];
-
-const proFeatures = [
-  'Unlimited compounds',
-  'Full stack intelligence',
-  'Overlap, synergy, and compatibility analysis',
-  'Protocol builder with phases and cycles',
-  'Observability correlations',
-  'Stack optimization suggestions',
-  'Saved advanced protocol views',
-];
 
 export default function PricingClient() {
   const { startCheckout, entitlements } = useEntitlements();
@@ -67,69 +47,57 @@ export default function PricingClient() {
             Pricing
           </p>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            Free tracks the stack. Pro explains it.
+            Simple pricing for smarter protocol tracking.
           </h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-white/62">
-            Start with useful tracking. Upgrade when BioStack has enough signal to explain overlap, compatibility, protocol timing, and optimization.
+            Observer is free forever. Upgrade to Operator for full stack analysis, or Commander for longitudinal intelligence.
           </p>
         </section>
 
-        <section className="mt-10 grid gap-5 lg:grid-cols-[1fr_1.1fr]">
-          <article className="rounded-lg border border-white/10 bg-white/[0.03] p-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold text-white">Free</h2>
-              <span className="rounded-lg border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/45">
-                Tracking
-              </span>
-            </div>
-            <p className="mt-4 text-4xl font-semibold text-white">$0</p>
-            <p className="mt-2 text-sm leading-7 text-white/60">
-              Useful from day one. Enough structure to log compounds, check in, calculate dosing math, and see the first stack signal.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-white/64">
-              {freeFeatures.map((feature) => (
-                <li key={feature} className="flex gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-white/35" />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-            <a
-              href="/onboarding"
-              className="mt-7 inline-flex rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24"
+        <section className="mt-10 grid gap-5 lg:grid-cols-3">
+          {pricingTiers.map((tier) => (
+            <article
+              key={tier.name}
+              className={`rounded-lg border p-6 ${tier.featured ? 'border-emerald-400/24 bg-emerald-500/[0.07] shadow-[0_16px_52px_rgba(16,185,129,0.08)]' : 'border-white/10 bg-white/[0.03]'}`}
             >
-              Start free
-            </a>
-          </article>
-
-          <article className="rounded-lg border border-emerald-400/24 bg-emerald-500/[0.07] p-6 shadow-[0_16px_52px_rgba(16,185,129,0.08)]">
-            <div className="flex items-center justify-between gap-4">
-              <h2 className="text-2xl font-semibold text-white">Pro</h2>
-              <span className="rounded-lg border border-emerald-300/20 px-3 py-1 text-xs uppercase tracking-[0.16em] text-emerald-200">
-                Intelligence
-              </span>
-            </div>
-            <p className="mt-4 text-4xl font-semibold text-white">${operatorMonthlyDollars}<span className="text-lg text-white/55">/mo</span></p>
-            <p className="mt-2 text-sm leading-7 text-white/68">
-              The actual engine: stack intelligence, observability correlations, protocol planning, and optimization suggestions grounded in your data.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-white/70">
-              {proFeatures.map((feature) => (
-                <li key={feature} className="flex gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-300" />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-            <button
-              onClick={handleProCheckout}
-              className="mt-7 rounded-lg bg-emerald-400 px-5 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-emerald-300"
-            >
-              {entitlements.isPro ? 'Manage Pro access' : 'Upgrade to Pro'}
-            </button>
-            {checkoutError && <p className="mt-3 text-sm text-amber-100/80">{checkoutError}</p>}
-          </article>
+              <div className="flex items-start justify-between gap-3">
+                <h2 className="text-2xl font-semibold text-white">{tier.name}</h2>
+                {tier.featured && (
+                  <span className="shrink-0 rounded-lg border border-emerald-300/20 px-3 py-1 text-xs uppercase tracking-[0.16em] text-emerald-200">
+                    Most popular
+                  </span>
+                )}
+              </div>
+              <p className="mt-1 text-sm font-semibold text-white/80">{tier.description}</p>
+              <p className="mt-4 text-4xl font-semibold text-white">{tier.monthly}</p>
+              <p className="mt-2 text-sm leading-7 text-white/62">{tier.detail}</p>
+              <ul className="mt-6 space-y-3 text-sm text-white/64">
+                {tier.highlights.map((feature) => (
+                  <li key={feature} className="flex gap-3">
+                    <span className={`mt-1.5 h-1.5 w-1.5 rounded-full ${tier.featured ? 'bg-emerald-300' : 'bg-white/35'}`} />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              {tier.name === 'Operator' ? (
+                <button
+                  onClick={handleProCheckout}
+                  className="mt-7 rounded-lg bg-emerald-400 px-5 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-emerald-300"
+                >
+                  {entitlements.isPro ? 'Manage Operator access' : tier.ctaLabel}
+                </button>
+              ) : (
+                <Link
+                  href={tier.href}
+                  className="mt-7 inline-flex rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24"
+                >
+                  {tier.ctaLabel}
+                </Link>
+              )}
+            </article>
+          ))}
         </section>
+        {checkoutError && <p className="mt-3 text-sm text-amber-100/80">{checkoutError}</p>}
 
         <section className="mt-10 rounded-lg border border-white/10 bg-[#101820]/90 p-6">
           <div className="grid gap-6 lg:grid-cols-[1fr_420px] lg:items-end">

@@ -57,7 +57,7 @@ public sealed class EntitlementService : IEntitlementService
         return new EntitlementResponse(
             IsPro: false,
             Plan: "free",
-            Limits: new EntitlementLimitsResponse(MaxCompounds: 2),
+            Limits: new EntitlementLimitsResponse(MaxCompounds: 8),
             Features: new EntitlementFeaturesResponse(
                 StackIntelligence: false,
                 FullOverlapAnalysis: false,

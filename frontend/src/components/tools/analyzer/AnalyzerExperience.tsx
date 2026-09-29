@@ -640,11 +640,27 @@ function AnalyzerAccessNotice({
   }
 
   return (
-    <div className="mb-5 rounded-lg border border-emerald-300/20 bg-emerald-400/[0.06] p-4 text-sm text-emerald-50/80">
+    <div className="mb-5 rounded-lg border border-emerald-300/20 bg-emerald-400/[0.06] p-5 text-sm text-emerald-50/80">
       <p>Protocol Analyzer requires an Operator or Commander subscription.</p>
-      <Link href={isAuthenticated ? ANALYZER_PRICING_HREF : '/auth/signin?callbackUrl=/tools/analyzer'} className="mt-2 inline-block font-semibold underline underline-offset-4">
-        {isAuthenticated ? 'View Operator access' : 'Sign in to check access'}
-      </Link>
+      <ul className="mt-3 space-y-1.5 text-emerald-50/70">
+        <li>Structural scoring of any pasted, uploaded, scanned, or linked protocol</li>
+        <li>Overlap and compatibility findings across the compounds it contains</li>
+        <li>Observational alternative scenarios, ready to review or save</li>
+      </ul>
+      <div className="mt-4 flex flex-wrap gap-3">
+        <Link
+          href={isAuthenticated ? ANALYZER_PRICING_HREF : '/auth/signin?callbackUrl=/tools/analyzer'}
+          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300"
+        >
+          {isAuthenticated ? 'View Operator access' : 'Sign in to continue'}
+        </Link>
+        <Link
+          href={ANALYZER_PRICING_HREF}
+          className="rounded-lg border border-emerald-300/25 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-300/50"
+        >
+          See plans
+        </Link>
+      </div>
     </div>
   );
 }
