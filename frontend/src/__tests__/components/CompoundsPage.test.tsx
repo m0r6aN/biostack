@@ -325,3 +325,21 @@ describe('detail grid reclaims width when the sidebar is collapsed', () => {
     expect(grid.className).not.toContain('lg:grid-cols-3');
   });
 });
+
+it('does not steal focus from newer input when an earlier deletion fails', async () => {
+  const pending = deferredDelete();
+  vi.mocked(apiClient.getCompounds).mockResolvedValue([namedCompound]);
+  vi.mocked(apiClient.deleteCompound).mockReturnValue(pending.promise);
+  render(<CompoundsPage />);
+  fireEvent.click(await screen.findByText('BPC-157'));
+  fireEvent.click(screen.getByRole('button', { name: 'Delete BPC-157' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Confirm delete' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Add Compound', exact: true }));
+  const input = screen.getByLabelText('4. Optional: Manual Search/Entry');
+  input.focus();
+  fireEvent.change(input, { target: { value: 'A new record' } });
+  await act(async () => pending.reject(new Error('Delayed deletion failed')));
+  expect(screen.getByRole('button', { name: 'Delete BPC-157' })).toBeInTheDocument();
+  expect(input).toHaveFocus();
+  expect(input).toHaveValue('A new record');
+});
