@@ -27,7 +27,7 @@ export default function MapMyStackPage() {
     }
 
     const paired = entries.flatMap((entry) =>
-      entry.pairsWellWith
+      (entry.pairsWellWith ?? [])
         .filter((pair) => compounds.some((name) => pair.toLowerCase().includes(name.toLowerCase())))
         .map((pair) => ({
           label: `${entry.canonicalName} + ${pair}`,

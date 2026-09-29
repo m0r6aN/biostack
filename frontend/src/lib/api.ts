@@ -46,10 +46,33 @@ import {
     SupplementPlan,
     MonitoringProtocol,
     Milestone,
+    Entitlements,
     ResourceEntry,
 } from './types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
+export class ApiError extends Error {
+  status: number;
+  code?: string;
+  upgradeRequired?: boolean;
+  limit?: number | null;
+  tier?: string;
+
+  constructor(
+    status: number,
+    message: string,
+    details?: { code?: string; upgradeRequired?: boolean; limit?: number | null; tier?: string }
+  ) {
+    super(message);
+    this.name = 'ApiError';
+    this.status = status;
+    this.code = details?.code;
+    this.upgradeRequired = details?.upgradeRequired;
+    this.limit = details?.limit;
+    this.tier = details?.tier;
+  }
+}
 
 export class ApiClient {
   private baseUrl: string;
@@ -70,7 +93,17 @@ export class ApiClient {
     const response = await fetch(url, { ...options, headers, credentials: 'include' });
 
     if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
+      let message = `API Error: ${response.status} ${response.statusText}`;
+      let details: { code?: string; upgradeRequired?: boolean; limit?: number | null; tier?: string } | undefined;
+
+      try {
+        const body = await response.json();
+        message = body.message || body.error || message;
+        details = body;
+      } catch {
+      }
+
+      throw new ApiError(response.status, message, details);
     }
 
     if (response.status === 204) {
@@ -426,6 +459,10 @@ export class ApiClient {
     return this.request<CurrentSubscription>('/api/v1/billing/subscription');
   }
 
+  async getEntitlements(): Promise<Entitlements> {
+    return this.request<Entitlements>('/api/v1/billing/entitlements');
+  }
+
   async refreshEntitlements(): Promise<Entitlements> {
     return this.request<Entitlements>('/api/v1/billing/refresh', {
       method: 'POST',
@@ -433,12 +470,17 @@ export class ApiClient {
     });
   }
 
-  async createCheckoutSession(returnPath?: string): Promise<string> {
-    const data = await this.request<{ url: string }>('/api/v1/billing/create-checkout-session', {
+  async createCheckoutSession(planCode: 'operator' | 'commander'): Promise<{ url: string }> {
+    return this.request<{ url: string }>('/api/v1/billing/checkout', {
       method: 'POST',
-      body: JSON.stringify({ returnPath }),
+      body: JSON.stringify({ planCode }),
     });
-    return data.url;
+  }
+
+  async createBillingPortalSession(): Promise<{ url: string }> {
+    return this.request<{ url: string }>('/api/v1/billing/portal', {
+      method: 'POST',
+    });
   }
 
   // Goals

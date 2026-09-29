@@ -316,10 +316,25 @@ builder.Services.AddAuthorization(options =>
 
 // ── Database ────────────────────────────────────────────────────────────────
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Data Source=./data/biostack.db";
+    ?? (builder.Environment.IsProduction() ? null : "Data Source=./data/biostack.db");
 
 var configuredDatabaseProvider = builder.Configuration["Database:Provider"];
 var usePostgres = DatabaseProviderResolver.IsPostgres(configuredDatabaseProvider, connectionString);
+
+if (builder.Environment.IsProduction())
+{
+    if (string.IsNullOrWhiteSpace(connectionString))
+    {
+        throw new InvalidOperationException(
+            "ConnectionStrings:DefaultConnection is required in Production and must point to Azure Postgres.");
+    }
+
+    if (!usePostgres)
+    {
+        throw new InvalidOperationException(
+            "Production requires a Postgres DefaultConnection. SQLite/file-backed production databases are not supported.");
+    }
+}
 
 builder.Services.AddDbContext<BioStackDbContext>(options =>
 {
@@ -350,7 +365,11 @@ builder.Services.AddScoped<IProtocolReviewCompletedEventRepository, ProtocolRevi
 builder.Services.AddScoped<IProtocolPhaseRepository, ProtocolPhaseRepository>();
 builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
+builder.Services.AddScoped<ICompoundInteractionHintRepository, CompoundInteractionHintRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
+builder.Services.AddScoped<IEntitlementService, EntitlementService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
 builder.Services.AddSingleton<InMemoryMagicLinkDelivery>();
 var hasAzureEmail = !string.IsNullOrWhiteSpace(builder.Configuration["AzureCommunicationEmail:ConnectionString"]);
 var hasSmtp = !string.IsNullOrWhiteSpace(builder.Configuration["Smtp:Host"]);
@@ -573,9 +592,17 @@ try
 
         db.Database.EnsureCreated();
 
-        if (!string.IsNullOrWhiteSpace(createScript))
+        if (db.Database.IsSqlite())
         {
-            db.Database.ExecuteSqlRaw(createScript);
+            var createScript = DatabaseSchemaBootstrapper.MakeSqliteCreateScriptIdempotent(
+                db.Database.GenerateCreateScript());
+
+            if (!string.IsNullOrWhiteSpace(createScript))
+            {
+                db.Database.ExecuteSqlRaw(createScript);
+            }
+
+            DatabaseSchemaBootstrapper.BackfillMissingSqliteColumns(db);
         }
 
         var hintRepository = scope.ServiceProvider.GetRequiredService<ICompoundInteractionHintRepository>();

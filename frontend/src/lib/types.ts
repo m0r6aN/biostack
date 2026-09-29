@@ -497,6 +497,27 @@ export interface ProtocolReviewCompletedEvent {
   receiptUri?: string;
 }
 
+export interface EntitlementLimits {
+  maxCompounds: number;
+}
+
+export interface EntitlementFeatures {
+  stackIntelligence: boolean;
+  fullOverlapAnalysis: boolean;
+  protocolBuilder: boolean;
+  observabilityCorrelations: boolean;
+  savedAdvancedProtocolViews: boolean;
+  affiliateSurfaces: boolean;
+}
+
+export interface Entitlements {
+  isPro: boolean;
+  plan: 'free' | 'pro' | string;
+  limits: EntitlementLimits;
+  features: EntitlementFeatures;
+  futureRoles: string[];
+}
+
 export interface ProtocolRun {
   id: string;
   protocolId: string;

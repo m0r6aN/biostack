@@ -4,10 +4,10 @@ interface SafetyDisclaimerProps {
 
 export function SafetyDisclaimer({ type = 'general' }: SafetyDisclaimerProps) {
   const disclaimers = {
-    educational: 'Observational only — not medical advice. Do not change clinical treatment without your provider.',
-    calculation: 'Calculation only — not medical advice. Do not change clinical treatment without your provider.',
-    observation: 'Observational only — not medical advice. Do not change clinical treatment without your provider.',
-    general: 'Observational only — not medical advice. Do not change clinical treatment without your provider.',
+    educational: 'Educational reference only — not medical advice.',
+    calculation: 'This is a mathematical calculation only. This is not medical advice.',
+    observation: 'This is pathway overlap detection for observational purposes, not clinical interaction checking.',
+    general: 'This platform is for observational and educational purposes only.',
   };
 
   return (

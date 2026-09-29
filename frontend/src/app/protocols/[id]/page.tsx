@@ -12,13 +12,38 @@ import { ProtocolComparison } from '@/components/protocols/ProtocolComparison';
 import { ProtocolContinuityStrip } from '@/components/protocols/ProtocolContinuityStrip';
 import { ProtocolIntelligenceReview } from '@/components/protocols/ProtocolIntelligenceReview';
 import { ProviderObservationalSummary } from '@/components/protocols/ProviderObservationalSummary';
+import { ScenarioComparisonCard } from '@/components/protocols/ScenarioComparisonCard';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
-import { apiClient } from '@/lib/api';
-import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot } from '@/lib/types';
+import { ApiError, apiClient } from '@/lib/api';
+import { Protocol, ProtocolDriftSnapshot, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot, isReducedInteractionIntelligence } from '@/lib/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
+
+function UpgradeBanner({ title, detail }: { title: string; detail: string }) {
+  return (
+    <section className="rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-100/75">Commander</p>
+      <h2 className="mt-2 text-xl font-semibold text-white">{title}</h2>
+      <p className="mt-2 max-w-3xl text-sm leading-6 text-white/65">{detail}</p>
+      <div className="mt-4 flex flex-wrap gap-3">
+        <Link
+          href="/billing"
+          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-300"
+        >
+          Upgrade plan
+        </Link>
+        <Link
+          href="/pricing"
+          className="rounded-lg border border-white/[0.1] px-4 py-2 text-sm font-semibold text-white/75 hover:border-white/20"
+        >
+          Compare tiers
+        </Link>
+      </div>
+    </section>
+  );
+}
 
 interface ProtocolDetailPageProps {
   params: Promise<{ id: string }>;
@@ -40,6 +65,7 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
   const [completingReview, setCompletingReview] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [commanderLockedMessage, setCommanderLockedMessage] = useState<string | null>(null);
 
   useEffect(() => {
     loadProtocol();
@@ -49,21 +75,35 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
     try {
       setLoading(true);
       setError(null);
-      const [protocolData, reviewData, patternData, driftData, sequenceData] = await Promise.all([
-        apiClient.getProtocol(id),
-        apiClient.getProtocolReview(id),
-        apiClient.getProtocolPatterns(id),
-        apiClient.getProtocolDrift(id),
-        apiClient.getProtocolSequenceExpectation(id),
-      ]);
+      setCommanderLockedMessage(null);
+      const protocolData = await apiClient.getProtocol(id);
       const previousVersion = protocolData.priorVersions[0] ?? null;
       const previousProtocol = previousVersion ? await apiClient.getProtocol(previousVersion.id) : null;
       setProtocol(protocolData);
       setPriorProtocol(previousProtocol);
-      setReview(reviewData);
-      setPatterns(patternData);
-      setDrift(driftData);
-      setSequence(sequenceData);
+
+      try {
+        const [reviewData, patternData, driftData, sequenceData] = await Promise.all([
+          apiClient.getProtocolReview(id),
+          apiClient.getProtocolPatterns(id),
+          apiClient.getProtocolDrift(id),
+          apiClient.getProtocolSequenceExpectation(id),
+        ]);
+        setReview(reviewData);
+        setPatterns(patternData);
+        setDrift(driftData);
+        setSequence(sequenceData);
+      } catch (err) {
+        if (err instanceof ApiError && err.upgradeRequired) {
+          setReview(null);
+          setPatterns(null);
+          setDrift(null);
+          setSequence(null);
+          setCommanderLockedMessage(err.message);
+        } else {
+          throw err;
+        }
+      }
     } catch (err) {
       setError('Failed to load protocol');
     } finally {
@@ -371,7 +411,9 @@ export default function ProtocolDetailPage({ params }: ProtocolDetailPageProps) 
             </section>
 
             <section id="comparison" className="scroll-mt-6">
-              <ScenarioComparisonCard intelligence={protocol.interactionIntelligence} />
+              {!isReducedInteractionIntelligence(protocol.interactionIntelligence) && (
+                <ScenarioComparisonCard intelligence={protocol.interactionIntelligence} />
+              )}
             </section>
 
             <section id="simulation" className="scroll-mt-6">

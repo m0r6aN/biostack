@@ -1,7 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { Protocol, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot, ProtocolDriftSnapshot } from '@/lib/types';
+import { InteractionIntelligence, Protocol, ProtocolPatternSnapshot, ProtocolReview, ProtocolSequenceExpectationSnapshot, ProtocolDriftSnapshot, ReducedInteractionIntelligence, isReducedInteractionIntelligence } from '@/lib/types';
+
+// Reduced (free-tier) intelligence snapshots carry summary counts only; the full
+// topFindings list exists on the graph-backed variant.
+const topFindingsOf = (intelligence: InteractionIntelligence | ReducedInteractionIntelligence) =>
+  isReducedInteractionIntelligence(intelligence) ? [] : intelligence.topFindings;
 
 interface ProtocolContinuityStripProps {
   protocol: Protocol;
@@ -22,7 +27,7 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
   const changes = protocol.versionDiff?.changes ?? [];
   const scoreDelta = priorProtocol ? protocol.stackScore.score - priorProtocol.stackScore.score : null;
   const findingDelta = priorProtocol
-    ? protocol.interactionIntelligence.topFindings.length - priorProtocol.interactionIntelligence.topFindings.length
+    ? topFindingsOf(protocol.interactionIntelligence).length - topFindingsOf(priorProtocol.interactionIntelligence).length
     : null;
   const removedCompounds = changes.filter((change) => change.changeType === 'removed').map((change) => change.subject);
   const addedCompounds = changes.filter((change) => change.changeType === 'added').map((change) => change.subject);
@@ -83,8 +88,13 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
           />
           <ContinuityCell
             label="Sequence"
-            value={sequence?.currentStatus?.state ?? 'pending'}
+            value={sequence?.expectedNextEvent ? formatSequenceEvent(sequence.expectedNextEvent.eventType) : 'No pattern'}
             detail={sequence?.expectedNextEvent?.timingWindow ?? 'Sequence expectations appear after enough tracked runs.'}
+          />
+          <ContinuityCell
+            label="Deviation"
+            value={sequence?.currentStatus?.state ?? patterns?.currentRunComparison?.similarity ?? 'unknown'}
+            detail={sequence?.currentStatus?.notes[0] ?? patterns?.currentRunComparison?.divergentSignals[0] ?? 'Current state comparison pending.'}
           />
           </div>
         </div>
@@ -104,7 +114,7 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
         <ContinuityCell
           label="Finding delta"
           value={findingDelta === null ? 'Locked' : `${findingDelta >= 0 ? '+' : ''}${findingDelta}`}
-          detail={findingDelta === null ? 'Unlock tracked history to compare finding changes over time.' : `Headline finding count changed from ${priorProtocol?.interactionIntelligence.topFindings.length} to ${protocol.interactionIntelligence.topFindings.length}.`}
+          detail={findingDelta === null ? 'Unlock tracked history to compare finding changes over time.' : `Headline finding count changed from ${priorProtocol ? topFindingsOf(priorProtocol.interactionIntelligence).length : 0} to ${topFindingsOf(protocol.interactionIntelligence).length}.`}
         />
         <ContinuityCell
           label="Changed compounds"
@@ -122,6 +132,16 @@ export function ProtocolContinuityStrip({ protocol, priorProtocol, review, patte
       )}
     </section>
   );
+}
+
+function formatSequenceEvent(value: string) {
+  return value
+    .replace('RunStarted', 'run start')
+    .replace('FirstCheckIn', 'first check-in')
+    .replace('ComputationRecorded', 'computation')
+    .replace('RunClosed', 'run close')
+    .replace('ReviewCompleted', 'review completion')
+    .replace('EvolutionEvent', 'evolution event');
 }
 
 function formatCompoundDelta(addedCompounds: string[], removedCompounds: string[]) {

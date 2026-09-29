@@ -12,12 +12,47 @@ import { ProfileSwitcher } from '@/components/ProfileSwitcher';
 import { LockedInsightCard } from '@/components/monetization/LockedInsightCard';
 import { ProBadge } from '@/components/monetization/ProBadge';
 import { UpgradeCard } from '@/components/monetization/UpgradeCard';
+import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
-import { apiClient } from '@/lib/api';
+import { ApiError, apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
 import { useEntitlements } from '@/lib/entitlements';
 import { CurrentStackIntelligence, Protocol } from '@/lib/types';
+
+function LockedTierCard({
+  eyebrow,
+  title,
+  detail,
+  large = false,
+}: {
+  eyebrow: string;
+  title: string;
+  detail: string;
+  large?: boolean;
+}) {
+  return (
+    <div className={`rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5 ${large ? 'min-h-[280px]' : ''}`}>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-100/75">{eyebrow}</p>
+      <h2 className="mt-2 text-xl font-semibold text-white">{title}</h2>
+      <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">{detail}</p>
+      <div className="mt-5 flex flex-wrap gap-3">
+        <Link
+          href="/billing"
+          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-300"
+        >
+          Upgrade plan
+        </Link>
+        <Link
+          href="/pricing"
+          className="rounded-lg border border-white/[0.1] px-4 py-2 text-sm font-semibold text-white/75 hover:border-white/20"
+        >
+          Compare tiers
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 export default function ProtocolsPage() {
   const router = useRouter();
@@ -30,6 +65,7 @@ export default function ProtocolsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [stackLockedMessage, setStackLockedMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (currentProfileId) {
@@ -45,12 +81,21 @@ export default function ProtocolsPage() {
     try {
       setLoading(true);
       setError(null);
-      const [protocolData, stackData] = await Promise.all([
-        apiClient.getProtocols(currentProfileId),
-        apiClient.getCurrentStackIntelligence(currentProfileId),
-      ]);
+      setStackLockedMessage(null);
+      const protocolData = await apiClient.getProtocols(currentProfileId);
       setProtocols(protocolData);
-      setCurrentStack(stackData);
+
+      try {
+        const stackData = await apiClient.getCurrentStackIntelligence(currentProfileId);
+        setCurrentStack(stackData);
+      } catch (err) {
+        if (err instanceof ApiError && err.upgradeRequired) {
+          setCurrentStack(null);
+          setStackLockedMessage(err.message);
+        } else {
+          throw err;
+        }
+      }
     } catch (err) {
       setError('Failed to load protocols');
     } finally {
@@ -144,7 +189,7 @@ export default function ProtocolsPage() {
                       disabled={saving || !name.trim()}
                       className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      {saving ? 'Saving' : 'Track stack'}
+                      {saving ? 'Saving' : 'Save'}
                     </button>
                   </div>
                   {saveError && <p id="protocol-save-error" role="alert" className="mt-3 text-sm text-rose-200">{saveError}</p>}

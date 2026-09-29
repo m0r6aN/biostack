@@ -61,7 +61,7 @@ export function EntitlementsProvider({ children }: { children: React.ReactNode }
   }, []);
 
   const startCheckout = useCallback(async (returnPath?: string) => {
-    const checkoutUrl = await apiClient.createCheckoutSession(returnPath ?? window.location.pathname);
+    const { url: checkoutUrl } = await apiClient.createCheckoutSession('operator');
     window.location.href = checkoutUrl;
   }, []);
 

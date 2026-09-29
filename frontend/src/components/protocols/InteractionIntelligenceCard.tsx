@@ -1,6 +1,6 @@
 'use client';
 
-import { InteractionIntelligence, ReducedInteractionIntelligence, isReducedInteractionIntelligence } from '@/lib/types';
+import { InteractionFinding, InteractionIntelligence, InteractionResult, ReducedInteractionIntelligence, isReducedInteractionIntelligence } from '@/lib/types';
 import { HelpTip } from '@/components/ui/HelpTip';
 import Link from 'next/link';
 
@@ -79,9 +79,6 @@ export function InteractionIntelligenceCard({
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">{title}</p>
           <h3 className="mt-2 text-lg font-bold text-white">What this stack is doing together</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-white/58">
-            Free shows your composite score and the first strong finding. Scenarios, deeper reasoning, and history unlock next.
-          </p>
         </div>
         <div className="min-w-0 text-right text-xs text-white/45">
           <div>{intelligence.compositeScore.toFixed(1)} predicted score</div>
@@ -157,26 +154,37 @@ export function InteractionIntelligenceCard({
                     key={reason}
                     className="rounded border border-violet-400/20 bg-violet-500/10 px-2 py-0.5 text-[11px] text-violet-200/80"
                   >
-                    Unlock full reasoning
-                  </button>
-                )}
+                    {swapReasonLabels[reason] ?? reason.replace(/_/g, ' ')}
+                  </span>
+                ))}
               </div>
             )}
           </div>
-        ) : (
+        )}
+
+        {topFindings.length === 0 ? (
           <div className="rounded-2xl border border-emerald-400/18 bg-emerald-500/8 p-4">
             <p className="text-sm font-semibold text-white">No major interactions or redundancies detected</p>
             <p className="mt-2 text-sm leading-6 text-white/65">
               At the current confidence threshold, this stack reads as relatively clean.
             </p>
-            <button
-              type="button"
-              onClick={() => setShowPaywall(true)}
-              className="mt-4 rounded-full border border-emerald-300/20 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-300/40"
-            >
-              See what changes if you simplify one item
-            </button>
           </div>
+        ) : (
+          topFindings.map((finding) => (
+            <div
+              key={`${finding.type}-${finding.compounds.join('-')}`}
+              className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4"
+            >
+              <div className="flex flex-wrap items-center gap-2">
+                <span className={`rounded-lg border px-2 py-1 text-xs font-semibold ${toneByType[finding.type] ?? toneByType.Neutral}`}>
+                  {finding.type.toLowerCase()}
+                </span>
+                <span className="text-sm font-semibold text-white">{finding.compounds.join(' + ')}</span>
+                <span className="text-xs text-white/40">{Math.round(finding.confidence * 100)}% confidence</span>
+              </div>
+              <p className="mt-2 text-sm leading-6 text-white/60">{finding.message}</p>
+            </div>
+          ))
         )}
       </div>
 
