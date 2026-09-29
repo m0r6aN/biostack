@@ -32,6 +32,17 @@ public static class BillingEndpoints
             .WithTags("Billing", "Admin")
             .RequireAuthorization("AdminOnly")
             .WithName("GetQuarantinedStripeBillingEvents");
+
+        app.MapPost("/api/v1/admin/billing/subscriptions/resync", ResyncSubscriptions)
+            .WithTags("Billing", "Admin")
+            .RequireAuthorization("AdminOnly")
+            .WithName("ResyncStripeBillingSubscriptions");
+    }
+
+    private static async Task<IResult> ResyncSubscriptions(string? customerId, IBillingService billingService, CancellationToken ct)
+    {
+        var summary = await billingService.ResyncSubscriptionsAsync(customerId, ct);
+        return Results.Ok(summary);
     }
 
     private static async Task<IResult> GetSubscription(IBillingService billingService, CancellationToken ct)
