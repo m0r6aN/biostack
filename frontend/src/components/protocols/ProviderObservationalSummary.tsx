@@ -62,7 +62,7 @@ export function ProviderObservationalSummary({
   let interactions: InteractionResult[] = [];
   let flaggedPairs: InteractionPairSummary[] = [];
   if (isReducedInteractionIntelligence(intelligence)) {
-    flaggedPairs = intelligence.pairs.filter((pair) => pair.severity !== 'Neutral').slice(0, 4);
+    flaggedPairs = intelligence.pairs.slice(0, 4);
   } else {
     findings = intelligence.topFindings.slice(0, 4);
     interactions = intelligence.interactions
@@ -351,7 +351,7 @@ function PairRow({ pair }: { pair: InteractionPairSummary }) {
   return (
     <div className="rounded-lg border border-slate-200 bg-white p-3 print:break-inside-avoid">
       <div className="flex flex-wrap items-center gap-2">
-        <FlagBadge type={pair.severity} />
+        <span className="text-xs font-semibold text-slate-600">Severity unavailable</span>
         <span className="text-sm font-semibold text-slate-900">{pair.compoundA} + {pair.compoundB}</span>
       </div>
     </div>
@@ -471,7 +471,7 @@ function buildInteractionLines(findings: InteractionFinding[], interactions: Int
     ...findings.map((finding) => `${flagLabel(finding.type)}: ${finding.compounds.join(' + ')} (${Math.round(finding.confidence * 100)}% confidence)`),
     ...interactions.map((interaction) => `${flagLabel(interaction.type)}: ${interaction.compoundA} + ${interaction.compoundB} (${Math.round(interaction.confidence * 100)}% confidence)${interaction.sharedPathways.length > 0 ? `; Shared pathways: ${interaction.sharedPathways.join(', ')}` : ''}`),
     // Owner ruling 2026-09-16 (B3): pair name and severity only, no confidence or shared pathways.
-    ...flaggedPairs.map((pair) => `${flagLabel(pair.severity)}: ${pair.compoundA} + ${pair.compoundB}`),
+    ...flaggedPairs.map((pair) => `Severity unavailable: ${pair.compoundA} + ${pair.compoundB}`),
   ];
 }
 

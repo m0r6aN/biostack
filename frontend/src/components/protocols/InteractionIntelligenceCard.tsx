@@ -209,35 +209,19 @@ function ReducedInteractionIntelligenceView({
   showTrackingCta,
   onTrackingRequest,
 }: ReducedInteractionIntelligenceViewProps) {
-  const summary = intelligence.summary;
   const pairs = intelligence.pairs;
 
   return (
     <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
       <div>
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">{title}</p>
-        <h3 className="mt-2 text-lg font-bold text-white">Flagged pairs in this stack</h3>
-      </div>
-
-      <div className="mt-4 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-lg border border-emerald-400/15 bg-emerald-500/10 p-3">
-          <p className="text-xs uppercase tracking-[0.16em] text-emerald-200/60"><HelpTip tipKey="synergy">Synergies</HelpTip></p>
-          <p className="mt-2 text-2xl font-bold text-emerald-100">{summary.synergies}</p>
-        </div>
-        <div className="rounded-lg border border-amber-400/15 bg-amber-500/10 p-3">
-          <p className="text-xs uppercase tracking-[0.16em] text-amber-200/60"><HelpTip tipKey="redundancy">Redundancies</HelpTip></p>
-          <p className="mt-2 text-2xl font-bold text-amber-100">{summary.redundancies}</p>
-        </div>
-        <div className="rounded-lg border border-rose-400/15 bg-rose-500/10 p-3">
-          <p className="text-xs uppercase tracking-[0.16em] text-rose-200/60"><HelpTip tipKey="interference">Interferences</HelpTip></p>
-          <p className="mt-2 text-2xl font-bold text-rose-100">{summary.interferences}</p>
-        </div>
+        <h3 className="mt-2 text-lg font-bold text-white">Pair signals in this stack</h3>
       </div>
 
       <div className="mt-4 space-y-2">
         {pairs.length === 0 ? (
           <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4 text-sm text-white/50">
-            No flagged pairs in this stack right now.
+            No pair signals returned; this does not establish safety.
           </div>
         ) : (
           pairs.map((pair) => (
@@ -245,8 +229,8 @@ function ReducedInteractionIntelligenceView({
               key={`${pair.compoundA}-${pair.compoundB}`}
               className="flex flex-wrap items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] p-3"
             >
-              <span className={`rounded-lg border px-2 py-1 text-xs font-semibold ${toneByType[pair.severity] ?? toneByType.Neutral}`}>
-                {pair.severity.toLowerCase()}
+              <span className={`rounded-lg border px-2 py-1 text-xs font-semibold ${toneByType.Neutral}`}>
+                Severity unavailable
               </span>
               <span className="text-sm font-semibold text-white">{pair.compoundA} + {pair.compoundB}</span>
             </div>

@@ -201,18 +201,13 @@ export interface InteractionResult {
 export interface InteractionPairSummary {
   compoundA: string;
   compoundB: string;
-  severity: 'Neutral' | 'Synergistic' | 'Complementary' | 'Redundant' | 'Interfering' | string;
+  severity: null; // The current pair producer has no measured severity.
 }
 
 // Reduced projection of InteractionIntelligence returned to a viewer without the
 // reviewed_relationship_graph entitlement. Use isReducedInteractionIntelligence to distinguish it
 // from the full shape at render time.
 export interface ReducedInteractionIntelligence {
-  summary: {
-    synergies: number;
-    redundancies: number;
-    interferences: number;
-  };
   pairs: InteractionPairSummary[];
 }
 
@@ -634,15 +629,13 @@ export interface KnowledgeEntry {
   optimizationExercise?: string;
 }
 
-// Owner ruling 2026-09-16, extended 2026-09-17: description/evidenceConfidence carry the per-pair
-// interaction reasoning gated behind the reviewed_relationship_graph entitlement (Operator) on
-// POST /api/v1/knowledge/overlap-check. A caller without that entitlement — anonymous or Observer —
-// receives a flag with both fields omitted entirely, not blank strings, so they are optional here.
-// The flag itself (which pair, how severe via overlapType/pathwayTag) is always present.
+// Reduced overlap responses omit all reasoning/classification fields and return severity:null.
+// Full responses retain their original fields; no type, pathway or confidence measures severity.
 export interface InteractionFlag {
   compoundNames: string[];
-  overlapType: string;
-  pathwayTag: string;
+  severity?: null;
+  overlapType?: string;
+  pathwayTag?: string;
   description?: string;
   evidenceConfidence?: string;
 }

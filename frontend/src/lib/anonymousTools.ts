@@ -16,7 +16,7 @@ export interface SavedToolArtifact {
   outputs: Record<string, unknown>;
   reconstitutionInstructions: string[];
   storageInstructions: string[];
-  compatibilityFindings: Array<Pick<InteractionFlag, 'compoundNames' | 'overlapType' | 'pathwayTag' | 'description' | 'evidenceConfidence'>>;
+  compatibilityFindings: Array<Pick<InteractionFlag, 'compoundNames' | 'severity' | 'overlapType' | 'pathwayTag' | 'description' | 'evidenceConfidence'>>;
   source: 'local_device_bootstrap';
   createdAt: string;
   updatedAt: string;
