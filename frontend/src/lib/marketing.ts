@@ -105,7 +105,7 @@ const pricingContent: Record<ProductPlanCode, Omit<PricingTier, 'name' | 'taglin
     description: 'Longitudinal Intelligence.',
     detail:
       'Advanced reviewed intelligence for ambiguity analysis and longitudinal observational reports.',
-    ctaLabel: 'See Commander',
+    ctaLabel: 'Choose Commander',
     highlights: [
       'Protocol review across run history',
       'Pattern memory snapshots',

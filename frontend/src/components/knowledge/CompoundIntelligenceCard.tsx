@@ -94,6 +94,9 @@ export function CompoundIntelligenceCard({
   const { settings } = useSettings();
   const currentProfile = profiles.find(p => p.id === currentProfileId);
   const slug = toSlug(entry.canonicalName);
+  // Blank benefit strings (e.g. records whose summary is not a benefit claim)
+  // must not render as empty chips under the Benefits label.
+  const benefits = entry.benefits.filter((benefit) => benefit.trim().length > 0);
   // The side panel on /compounds shows a reduced version of this card next
   // to a record the visitor already added — link it back to the full public
   // dossier. The dossier itself (knowledge-detail) and the knowledge-search
@@ -180,10 +183,10 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        {entry.benefits.length > 0 && (
+        {benefits.length > 0 && (
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Benefits</p>
-            <TagList items={entry.benefits} tone="emerald" />
+            <TagList items={benefits} tone="emerald" />
           </div>
         )}
 
