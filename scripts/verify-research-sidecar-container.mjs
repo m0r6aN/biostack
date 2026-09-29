@@ -69,6 +69,16 @@ export const REQUIRED_DISTRIBUTIONS = Object.freeze([
   "websockets",
 ]);
 
+export const REQUIRED_IMAGE_ENVIRONMENT = Object.freeze([
+  "PATH=/app/.venv/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+  "LANG=C.UTF-8",
+  "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+  "PYTHON_VERSION=3.12.12",
+  "PYTHON_SHA256=fb85a13414b028c49ba18bbd523c2d055a30b56b18b92ce454ea2c51edc656c4",
+  "PYTHONDONTWRITEBYTECODE=1",
+  "PYTHONUNBUFFERED=1",
+]);
+
 export const ALLOWED_WORKFLOWS = Object.freeze([
   "refresh_evidence_packet",
   "research_adverse_events",
@@ -463,36 +473,31 @@ export function evaluateDockerfileContract(contents) {
   if (!/^CMD \["python", "-m", "biostack_research_sidecar"\]$/m.test(contents)) {
     errors.push("Image command differs from the production sidecar command.");
   }
+  if (/^\s*ENTRYPOINT(?:\s|\[)/imu.test(contents)) {
+    errors.push("Dockerfile must not define an ENTRYPOINT.");
+  }
   return outcome(errors);
 }
 
 export function evaluateDockerignoreContract(contents) {
   if (typeof contents !== "string") return outcome([".dockerignore is not text."]);
-  const lines = new Set(
-    contents
-      .split(/\r?\n/u)
-      .map((line) => line.trim())
-      .filter((line) => line.length > 0 && !line.startsWith("#")),
-  );
+  const lines = contents
+    .split(/\r?\n/u)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0 && !line.startsWith("#"));
+  const required = ["*", "!pyproject.toml", "!uv.lock", "!README.md", "!src/", "!src/**"];
   const errors = [];
-  const reIncludes = [...lines].filter((line) => line.startsWith("!") && line !== "!README.md");
-  if (reIncludes.length > 0) {
-    errors.push(`Unsafe build-context re-inclusion: ${reIncludes.sort().join(", ")}.`);
+  for (const pattern of required) {
+    if (lines.filter((line) => line === pattern).length !== 1) {
+      errors.push(`Build-context allowlist must contain exactly one ${pattern}.`);
+    }
   }
-  for (const pattern of [
-    ".env",
-    ".env.*",
-    ".git",
-    ".venv",
-    "__pycache__",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".mypy_cache",
-    "tests",
-    "artifacts",
-    "docs",
-  ]) {
-    if (!lines.has(pattern)) errors.push(`Missing build-context exclusion: ${pattern}.`);
+  const unexpected = lines.filter((line) => !required.includes(line));
+  if (unexpected.length > 0) {
+    errors.push(`Unsafe build-context pattern or re-inclusion: ${unexpected.sort().join(", ")}.`);
+  }
+  if (JSON.stringify(lines) !== JSON.stringify(required)) {
+    errors.push("Build-context rules are not the exact ordered default-deny allowlist.");
   }
   return outcome(errors);
 }
@@ -514,7 +519,9 @@ export function parseImageInspect(output) {
   return {
     imageId: parsed[0]?.Id,
     user: config.User,
+    entrypoint: config.Entrypoint ?? null,
     command: config.Cmd,
+    environment: config.Env,
     exposedPorts: config.ExposedPorts,
     workingDirectory: config.WorkingDir,
   };
@@ -565,6 +572,56 @@ export function evaluateImageConfiguration(observation) {
       JSON.stringify(["python", "-m", "biostack_research_sidecar"])
   ) {
     errors.push("Image command is not the exact production command.");
+  }
+  if (
+    observation?.entrypoint !== null &&
+    observation?.entrypoint !== undefined &&
+    (!Array.isArray(observation.entrypoint) || observation.entrypoint.length !== 0)
+  ) {
+    errors.push("Image entrypoint must be null or empty.");
+  }
+  const environment = observation?.environment;
+  if (!Array.isArray(environment)) {
+    errors.push("Image baked environment is malformed.");
+  } else {
+    const expected = new Map(
+      REQUIRED_IMAGE_ENVIRONMENT.map((entry) => {
+        const separator = entry.indexOf("=");
+        return [entry.slice(0, separator), entry.slice(separator + 1)];
+      }),
+    );
+    const actual = new Map();
+    for (const entry of environment) {
+      if (typeof entry !== "string" || !/^[A-Za-z_][A-Za-z0-9_]*=.*$/u.test(entry)) {
+        errors.push("Image baked environment contains a malformed entry.");
+        continue;
+      }
+      const separator = entry.indexOf("=");
+      const name = entry.slice(0, separator);
+      const value = entry.slice(separator + 1);
+      if (actual.has(name)) {
+        errors.push(`Image baked environment contains duplicate variable: ${name}.`);
+        continue;
+      }
+      actual.set(name, value);
+      if (
+        !expected.has(name) &&
+        (/(?:^|_)(?:OPENAI|ANTHROPIC|CEREBRAS|AZURE|AWS|GOOGLE|GCP|HUGGINGFACE|HF)(?:_|$)/iu.test(
+          name,
+        ) ||
+          /(?:^|_)(?:API_?KEY|TOKEN|SECRET|PASSWORD|CREDENTIALS?)(?:_|$)/iu.test(name))
+      ) {
+        errors.push(`Image baked environment contains provider or credential-shaped variable: ${name}.`);
+      }
+      if (!expected.has(name)) {
+        errors.push(`Image baked environment contains unexpected variable: ${name}.`);
+      } else if (expected.get(name) !== value) {
+        errors.push(`Image baked environment value differs for ${name}.`);
+      }
+    }
+    for (const name of expected.keys()) {
+      if (!actual.has(name)) errors.push(`Image baked environment is missing variable: ${name}.`);
+    }
   }
   const ports = observation?.exposedPorts;
   if (

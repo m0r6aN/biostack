@@ -220,13 +220,44 @@ jobs:
         run: |
           set -euo pipefail
           context_fixture="backend/research-sidecar/p01-untracked-credential.json"
+          context_negative_dockerfile="${RUNNER_TEMP}/p01-context-negative.Dockerfile"
+          context_negative_log="${RUNNER_TEMP}/p01-context-negative.log"
           context_probe_name="biostack-p01-context-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           cleanup_context_fixture() {
-            rm -f -- "${context_fixture}"
+            rm -f -- \
+              "${context_fixture}" \
+              "${context_negative_dockerfile}" \
+              "${context_negative_log}"
           }
           trap cleanup_context_fixture EXIT
           printf '%s\n' 'synthetic build-context exclusion fixture' > "${context_fixture}"
+          printf '%s\n' \
+            'FROM scratch' \
+            'COPY p01-untracked-credential.json /p01-untracked-credential.json' \
+            > "${context_negative_dockerfile}"
+          set +e
+          timeout 2m docker build \
+            --pull=false \
+            --network=none \
+            --file "${context_negative_dockerfile}" \
+            backend/research-sidecar \
+            > "${context_negative_log}" 2>&1
+          context_negative_status=$?
+          set -e
+          if [[ "${context_negative_status}" -eq 0 ]]; then
+            printf '%s\n' 'Default-deny context test unexpectedly copied the credential fixture.' >&2
+            exit 1
+          fi
+          if [[ "${context_negative_status}" -eq 124 ]]; then
+            printf '%s\n' 'Default-deny context test timed out.' >&2
+            exit 1
+          fi
+          if ! grep -Fq 'p01-untracked-credential.json' "${context_negative_log}"; then
+            printf '%s\n' 'Default-deny context failure did not identify the excluded fixture.' >&2
+            exit 1
+          fi
           timeout 10m docker build \
+            --pull=false \
             --file backend/research-sidecar/Dockerfile \
             --tag biostack-research-sidecar:p01-ci \
             backend/research-sidecar
@@ -247,30 +278,84 @@ jobs:
       - name: Prove catchable TERM cleans the verifier-owned container
         run: |
           set -euo pipefail
-          fixture_name="biostack-p01-ci-term-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          invocation_nonce="$(node -e 'process.stdout.write(require("node:crypto").randomBytes(16).toString("hex"))')"
+          if [[ ! "${invocation_nonce}" =~ ^[a-f0-9]{32}$ ]]; then
+            printf '%s\n' 'TERM fixture invocation nonce is malformed.' >&2
+            exit 1
+          fi
+          fixture_name="biostack-p01-ci-term-${invocation_nonce}"
           verifier_log="${RUNNER_TEMP}/p01-term-verifier.log"
           verifier_pid=""
           owned_id=""
           owner_marker=""
+          preflight_complete="false"
+
+          query_container_ids() {
+            local phase="$1"
+            shift
+            local output query_status
+            set +e
+            output="$(timeout 10s docker container ls \
+              --all \
+              --no-trunc \
+              "$@" \
+              --format '{{.ID}}' 2>/dev/null)"
+            query_status=$?
+            set -e
+            if [[ "${query_status}" -ne 0 ]]; then
+              printf 'TERM fixture Docker query failed during %s.\n' "${phase}" >&2
+              return 1
+            fi
+            while IFS= read -r candidate; do
+              [[ -z "${candidate}" ]] && continue
+              if [[ ! "${candidate}" =~ ^[a-f0-9]{64}$ ]]; then
+                printf 'TERM fixture Docker query was malformed during %s.\n' "${phase}" >&2
+                return 1
+              fi
+            done <<< "${output}"
+            printf '%s' "${output}"
+          }
+
+          preflight_name_ids="$(query_container_ids \
+            preflight-name \
+            --filter "name=^/${fixture_name}$")" || exit 1
+          preflight_nonce_ids="$(query_container_ids \
+            preflight-nonce \
+            --filter "name=${invocation_nonce}")" || exit 1
+          if [[ -n "${preflight_name_ids}" ]] || [[ -n "${preflight_nonce_ids}" ]]; then
+            printf '%s\n' 'TERM fixture invocation identity already exists; refusing adoption.' >&2
+            exit 1
+          fi
+          preflight_complete="true"
 
           claim_fixture() {
             local candidates candidate_count candidate_owner candidate_name
-            candidates="$(docker container ls \
-              --all \
-              --no-trunc \
+            [[ "${preflight_complete}" == "true" ]] || return 1
+            [[ -n "${verifier_pid}" ]] || return 1
+            kill -0 "${verifier_pid}" 2>/dev/null || return 1
+            if ! candidates="$(query_container_ids \
+              claim \
               --filter "name=^/${fixture_name}$" \
-              --filter "label=io.biostack.p01.owner" \
-              --format '{{.ID}}' 2>/dev/null)" || return 1
+              --filter "label=io.biostack.p01.owner")"; then
+              return 2
+            fi
             candidate_count="$(printf '%s\n' "${candidates}" | sed '/^$/d' | wc -l)"
-            [[ "${candidate_count}" -eq 1 ]] || return 1
-            [[ "${candidates}" =~ ^[a-f0-9]{64}$ ]] || return 1
-            candidate_owner="$(docker container inspect \
+            if [[ "${candidate_count}" -eq 0 ]]; then
+              return 1
+            fi
+            if [[ "${candidate_count}" -ne 1 ]]; then
+              printf '%s\n' 'TERM fixture ownership query was ambiguous.' >&2
+              return 2
+            fi
+            [[ "${candidates}" =~ ^[a-f0-9]{64}$ ]] || return 2
+            candidate_owner="$(timeout 10s docker container inspect \
               --format '{{index .Config.Labels "io.biostack.p01.owner"}}' \
-              "${candidates}" 2>/dev/null)" || return 1
-            [[ "${candidate_owner}" =~ ^[a-f0-9]{48}$ ]] || return 1
-            candidate_name="$(docker container inspect \
-              --format '{{.Name}}' "${candidates}" 2>/dev/null)" || return 1
-            [[ "${candidate_name}" == "/${fixture_name}" ]] || return 1
+              "${candidates}" 2>/dev/null)" || return 2
+            [[ "${candidate_owner}" =~ ^[a-f0-9]{48}$ ]] || return 2
+            candidate_name="$(timeout 10s docker container inspect \
+              --format '{{.Name}}' "${candidates}" 2>/dev/null)" || return 2
+            [[ "${candidate_name}" == "/${fixture_name}" ]] || return 2
+            kill -0 "${verifier_pid}" 2>/dev/null || return 1
             owned_id="${candidates}"
             owner_marker="${candidate_owner}"
           }
@@ -284,17 +369,14 @@ jobs:
               fi
               wait "${verifier_pid}" 2>/dev/null
             fi
-            if [[ -z "${owned_id}" ]]; then
-              claim_fixture
-            fi
             if [[ "${owned_id}" =~ ^[a-f0-9]{64}$ ]] && \
                [[ "${owner_marker}" =~ ^[a-f0-9]{48}$ ]]; then
               local current_owner
-              current_owner="$(docker container inspect \
+              current_owner="$(timeout 10s docker container inspect \
                 --format '{{index .Config.Labels "io.biostack.p01.owner"}}' \
                 "${owned_id}" 2>/dev/null)"
               if [[ "${current_owner}" == "${owner_marker}" ]]; then
-                docker container rm --force "${owned_id}" >/dev/null 2>&1
+                timeout 10s docker container rm --force "${owned_id}" >/dev/null 2>&1
               fi
             fi
           }
@@ -308,7 +390,18 @@ jobs:
           verifier_pid=$!
 
           observe_deadline=$((SECONDS + 60))
-          until claim_fixture; do
+          while :; do
+            set +e
+            claim_fixture
+            claim_status=$?
+            set -e
+            if [[ "${claim_status}" -eq 0 ]]; then
+              break
+            fi
+            if [[ "${claim_status}" -ne 1 ]]; then
+              printf '%s\n' 'TERM fixture ownership proof failed closed.' >&2
+              exit 1
+            fi
             if ! kill -0 "${verifier_pid}" 2>/dev/null; then
               printf '%s\n' 'TERM fixture verifier exited before ownership proof.' >&2
               cat "${verifier_log}" >&2
@@ -340,10 +433,22 @@ jobs:
             printf '%s\n' 'TERM fixture ownership marker leaked to output.' >&2
             exit 1
           fi
-          if [[ -n "$(docker container ls --all --quiet \
-            --filter "name=^/${fixture_name}$")" ]] || \
-             [[ -n "$(docker container ls --all --quiet \
-            --filter "label=io.biostack.p01.owner=${owner_marker}")" ]]; then
+          final_query_failed="false"
+          if ! final_name_ids="$(query_container_ids \
+            final-name \
+            --filter "name=^/${fixture_name}$")"; then
+            final_query_failed="true"
+          fi
+          if ! final_label_ids="$(query_container_ids \
+            final-label \
+            --filter "label=io.biostack.p01.owner=${owner_marker}")"; then
+            final_query_failed="true"
+          fi
+          if [[ "${final_query_failed}" == "true" ]]; then
+            printf '%s\n' 'TERM fixture final absence proof was uncertain.' >&2
+            exit 1
+          fi
+          if [[ -n "${final_name_ids}" ]] || [[ -n "${final_label_ids}" ]]; then
             printf '%s\n' 'TERM fixture left an owned container.' >&2
             exit 1
           fi

@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
 import { spawn, spawnSync } from "node:child_process";
 import { once } from "node:events";
-import { readFileSync } from "node:fs";
+import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
 
 import {
@@ -13,6 +15,7 @@ import {
   OWNERSHIP_LABEL_KEY,
   REQUIRED_DARK_ENVIRONMENT,
   REQUIRED_DISTRIBUTIONS,
+  REQUIRED_IMAGE_ENVIRONMENT,
   SIGNAL_SHUTDOWN_TIMEOUT_MS,
   buildContainerCleanupArguments,
   buildContainerCreateArguments,
@@ -64,6 +67,153 @@ const workflow = readFileSync(
   "utf8",
 );
 
+function extractWorkflowRunBody(stepName) {
+  const lines = workflow.split(/\r?\n/u);
+  const marker = `      - name: ${stepName}`;
+  const stepIndex = lines.indexOf(marker);
+  assert.notEqual(stepIndex, -1, `missing workflow step: ${stepName}`);
+  assert.equal(lines[stepIndex + 1], "        run: |");
+  const body = [];
+  for (let index = stepIndex + 2; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (line.startsWith("      - name:")) break;
+    if (line.length === 0) {
+      body.push("");
+    } else {
+      assert.equal(line.startsWith("          "), true, `unexpected YAML indentation: ${line}`);
+      body.push(line.slice(10));
+    }
+  }
+  return `${body.join("\n")}\n`;
+}
+
+function toBashPath(value) {
+  if (process.platform !== "win32") return value;
+  return value
+    .replace(/^([A-Za-z]):/u, (_match, drive) => `/mnt/${drive.toLowerCase()}`)
+    .replaceAll("\\", "/");
+}
+
+function runLiteralTermFixture({ scenario, nonce }) {
+  const directory = mkdtempSync(join(tmpdir(), "biostack-p01-term-mock-"));
+  const bashDirectory = toBashPath(directory);
+  const fullId = "a".repeat(64);
+  const owner = "b".repeat(48);
+  const dockerMock = `#!/usr/bin/env bash
+set -eu
+printf 'docker' >> "\${MOCK_DIR}/commands.log"
+printf '\\t%s' "$@" >> "\${MOCK_DIR}/commands.log"
+printf '\\n' >> "\${MOCK_DIR}/commands.log"
+if [[ "$1 $2 $3" == "container ls --all" ]]; then
+  count=0
+  [[ ! -f "\${MOCK_DIR}/ls-count" ]] || count="$(cat "\${MOCK_DIR}/ls-count")"
+  count=$((count + 1))
+  printf '%s' "\${count}" > "\${MOCK_DIR}/ls-count"
+  if [[ "\${MOCK_SCENARIO}" == "query-failure" ]] && [[ "\${count}" -eq 1 ]]; then
+    exit 42
+  fi
+  if [[ "\${MOCK_SCENARIO}" == "final-name-failure" ]] && [[ "\${count}" -eq 4 ]]; then
+    exit 42
+  fi
+  if [[ "\${MOCK_SCENARIO}" == "final-label-failure" ]] && [[ "\${count}" -eq 5 ]]; then
+    exit 42
+  fi
+  if [[ "\${MOCK_SCENARIO}" == "collision" ]] && [[ "\${count}" -eq 1 ]]; then
+    printf '%s\\n' '${fullId}'
+    exit 0
+  fi
+  if [[ "\${count}" -eq 3 ]]; then
+    printf '%s\\n' '${fullId}'
+  elif [[ "\${MOCK_SCENARIO}" == "trap-cleanup" ]] && [[ "\${count}" -eq 4 ]]; then
+    printf '%s\\n' '${fullId}'
+  fi
+  exit 0
+fi
+if [[ "$1 $2 $3" == "container inspect --format" ]]; then
+  if [[ "$4" == *'.Name'* ]]; then
+    printf '/%s\\n' "$(cat "\${MOCK_DIR}/fixture-name")"
+  else
+    printf '%s\\n' '${owner}'
+  fi
+  exit 0
+fi
+if [[ "$1 $2 $3" == "container rm --force" ]]; then
+  printf 'removed=%s\\n' "$4" >> "\${MOCK_DIR}/removed.log"
+  exit 0
+fi
+exit 90
+`;
+  const nodeMock = `#!/usr/bin/env bash
+set -eu
+if [[ "\${1:-}" == "-e" ]]; then
+  printf '%s' "\${MOCK_NONCE}"
+  exit 0
+fi
+previous=""
+for argument in "$@"; do
+  if [[ "\${previous}" == "--container-name" ]]; then
+    printf '%s' "\${argument}" > "\${MOCK_DIR}/fixture-name"
+  fi
+  previous="\${argument}"
+done
+printf '%s\\n' 'node-started' > "\${MOCK_DIR}/node-started"
+if [[ "\${MOCK_SCENARIO}" == "success" ]]; then
+  trap 'docker container rm --force ${fullId} >/dev/null 2>&1; exit 1' TERM INT
+else
+  trap 'exit 1' TERM INT
+fi
+while :; do sleep 0.05; done
+`;
+  const timeoutMock = `#!/usr/bin/env bash
+set -eu
+shift
+exec "$@"
+`;
+  try {
+    for (const [name, contents] of [
+      ["docker", dockerMock],
+      ["node", nodeMock],
+      ["timeout", timeoutMock],
+    ]) {
+      const path = join(directory, name);
+      writeFileSync(path, contents, "utf8");
+      chmodSync(path, 0o755);
+    }
+    const result = spawnSync("bash", ["-s"], {
+      encoding: "utf8",
+      env: process.env,
+      input: [
+        `export MOCK_DIR=${JSON.stringify(bashDirectory)}`,
+        `export MOCK_NONCE=${JSON.stringify(nonce)}`,
+        `export MOCK_SCENARIO=${JSON.stringify(scenario)}`,
+        `export RUNNER_TEMP=${JSON.stringify(bashDirectory)}`,
+        `export PATH=${JSON.stringify(`${bashDirectory}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`)}`,
+        extractWorkflowRunBody("Prove catchable TERM cleans the verifier-owned container"),
+      ].join("\n"),
+      shell: false,
+      timeout: 10_000,
+      windowsHide: true,
+    });
+    const readOptional = (name) => {
+      try {
+        return readFileSync(join(directory, name), "utf8");
+      } catch {
+        return "";
+      }
+    };
+    return {
+      ...result,
+      commands: readOptional("commands.log"),
+      fixtureName: readOptional("fixture-name"),
+      nodeStarted: readOptional("node-started"),
+      removed: readOptional("removed.log"),
+      fullId,
+    };
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+}
+
 function extractBuildBackendManifest(contents) {
   const match = /# P01_BUILD_BACKEND_REQUIREMENTS_BEGIN\r?\n(?<body>[\s\S]*?)\r?\n\s*# P01_BUILD_BACKEND_REQUIREMENTS_END/u.exec(contents);
   assert.notEqual(match, null);
@@ -83,7 +233,9 @@ function validImageObservation(overrides = {}) {
   return {
     imageId: `sha256:${"a".repeat(64)}`,
     user: "biostack",
+    entrypoint: null,
     command: ["python", "-m", "biostack_research_sidecar"],
+    environment: [...REQUIRED_IMAGE_ENVIRONMENT],
     exposedPorts: { "8080/tcp": {} },
     workingDirectory: "/app",
     runtimeUid: 999,
@@ -371,35 +523,31 @@ for (const [name, mutate, pattern] of [
   ["root user", (value) => value.replace("USER biostack", "USER root"), /user/],
   ["wrong port", (value) => value.replace("EXPOSE 8080", "EXPOSE 80"), /port/],
   ["wrong command", (value) => value.replace('CMD ["python", "-m", "biostack_research_sidecar"]', 'CMD ["sh"]'), /command/],
+  ["explicit entrypoint", (value) => `${value}\nENTRYPOINT ["python"]\n`, /ENTRYPOINT/],
 ]) {
   test(`Dockerfile mutation binds ${name}`, () => {
     assertFails(evaluateDockerfileContract(mutate(dockerfile)), pattern);
   });
 }
 
-test("dockerignore contract accepts the checked-in exclusions", () => {
+test("dockerignore contract accepts the exact default-deny allowlist", () => {
   assert.deepEqual(evaluateDockerignoreContract(dockerignore), { ok: true, errors: [] });
 });
 
 for (const pattern of [
-  ".env",
-  ".env.*",
-  ".git",
-  ".venv",
-  "__pycache__",
-  ".pytest_cache",
-  ".ruff_cache",
-  ".mypy_cache",
-  "tests",
-  "artifacts",
-  "docs",
+  "*",
+  "!pyproject.toml",
+  "!uv.lock",
+  "!README.md",
+  "!src/",
+  "!src/**",
 ]) {
-  test(`dockerignore mutation binds ${pattern}`, () => {
+  test(`dockerignore rejects missing allowlist rule ${pattern}`, () => {
     const mutated = dockerignore
       .split(/\r?\n/)
       .filter((line) => line.trim() !== pattern)
       .join("\n");
-    assertFails(evaluateDockerignoreContract(mutated), new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assertFails(evaluateDockerignoreContract(mutated), /exactly one|exact ordered/);
   });
 }
 
@@ -407,11 +555,17 @@ test("dockerignore rejects malformed non-text input", () => {
   assertFails(evaluateDockerignoreContract(null), /not text/);
 });
 
-for (const reInclude of ["!docs", "!artifacts", "!tests", "!.env", "!nested/**"]) {
-  test(`dockerignore rejects unsafe re-inclusion ${reInclude}`, () => {
-    assertFails(evaluateDockerignoreContract(`${dockerignore}\n${reInclude}\n`), /re-inclusion/);
+for (const unsafe of ["!docs", "!artifacts", "!tests", "!.env", "!nested/**", "*.md", ".git"]) {
+  test(`dockerignore rejects broader pattern ${unsafe}`, () => {
+    assertFails(evaluateDockerignoreContract(`${dockerignore}\n${unsafe}\n`), /pattern|re-inclusion|exact ordered/);
   });
 }
+
+test("dockerignore rejects duplicate and reordered allowlist rules", () => {
+  assertFails(evaluateDockerignoreContract(`${dockerignore}\n!src/**\n`), /exactly one|exact ordered/);
+  const reordered = dockerignore.split(/\r?\n/u).filter(Boolean).reverse().join("\n");
+  assertFails(evaluateDockerignoreContract(reordered), /exact ordered/);
+});
 
 test("image inspect parser accepts one Config object", () => {
   assert.deepEqual(
@@ -421,7 +575,9 @@ test("image inspect parser accepts one Config object", () => {
           Id: `sha256:${"a".repeat(64)}`,
           Config: {
             User: "biostack",
+            Entrypoint: null,
             Cmd: ["python", "-m", "biostack_research_sidecar"],
+            Env: [...REQUIRED_IMAGE_ENVIRONMENT],
             ExposedPorts: { "8080/tcp": {} },
             WorkingDir: "/app",
           },
@@ -431,7 +587,9 @@ test("image inspect parser accepts one Config object", () => {
     {
       imageId: `sha256:${"a".repeat(64)}`,
       user: "biostack",
+      entrypoint: null,
       command: ["python", "-m", "biostack_research_sidecar"],
+      environment: [...REQUIRED_IMAGE_ENVIRONMENT],
       exposedPorts: { "8080/tcp": {} },
       workingDirectory: "/app",
     },
@@ -514,6 +672,8 @@ for (const [name, overrides, pattern] of [
   ["empty user", { user: "" }, /non-root/],
   ["named root user", { user: "root" }, /non-root/],
   ["numeric root user", { user: "0:0" }, /non-root/],
+  ["malicious entrypoint", { entrypoint: ["/bin/sh", "-c", "env"] }, /entrypoint/],
+  ["malformed entrypoint", { entrypoint: "python" }, /entrypoint/],
   ["wrong command", { command: ["sh"] }, /command/],
   ["missing command", { command: undefined }, /command/],
   ["missing port", { exposedPorts: {} }, /8080/],
@@ -526,6 +686,70 @@ for (const [name, overrides, pattern] of [
     assertFails(evaluateImageConfiguration(validImageObservation(overrides)), pattern);
   });
 }
+
+test("image configuration accepts an explicitly empty entrypoint", () => {
+  assert.deepEqual(evaluateImageConfiguration(validImageObservation({ entrypoint: [] })), {
+    ok: true,
+    errors: [],
+  });
+});
+
+for (const required of REQUIRED_IMAGE_ENVIRONMENT) {
+  const name = required.slice(0, required.indexOf("="));
+  test(`image environment exact allowlist rejects missing ${name}`, () => {
+    assertFails(
+      evaluateImageConfiguration(validImageObservation({
+        environment: REQUIRED_IMAGE_ENVIRONMENT.filter((entry) => !entry.startsWith(`${name}=`)),
+      })),
+      new RegExp(`missing variable: ${name}`),
+    );
+  });
+}
+
+for (const unexpected of [
+  "OPENAI_API_KEY=synthetic",
+  "ANTHROPIC_TOKEN=synthetic",
+  "AWS_SECRET_ACCESS_KEY=synthetic",
+  "ARBITRARY_EXTRA=synthetic",
+]) {
+  const name = unexpected.slice(0, unexpected.indexOf("="));
+  test(`image environment rejects unexpected ${name}`, () => {
+    const result = evaluateImageConfiguration(validImageObservation({
+      environment: [...REQUIRED_IMAGE_ENVIRONMENT, unexpected],
+    }));
+    assertFails(result, new RegExp(`unexpected variable: ${name}`));
+    if (name !== "ARBITRARY_EXTRA") {
+      assert.match(result.errors.join(" "), /provider or credential-shaped/);
+    }
+  });
+}
+
+test("image environment rejects duplicate, malformed, and changed values", () => {
+  assertFails(
+    evaluateImageConfiguration(validImageObservation({
+      environment: [...REQUIRED_IMAGE_ENVIRONMENT, REQUIRED_IMAGE_ENVIRONMENT[0]],
+    })),
+    /duplicate variable: PATH/,
+  );
+  assertFails(
+    evaluateImageConfiguration(validImageObservation({
+      environment: [...REQUIRED_IMAGE_ENVIRONMENT, "NOT-AN-ENV"],
+    })),
+    /malformed entry/,
+  );
+  assertFails(
+    evaluateImageConfiguration(validImageObservation({ environment: "PATH=/tmp" })),
+    /environment is malformed/,
+  );
+  assertFails(
+    evaluateImageConfiguration(validImageObservation({
+      environment: REQUIRED_IMAGE_ENVIRONMENT.map((entry) =>
+        entry.startsWith("LANG=") ? "LANG=unsafe" : entry,
+      ),
+    })),
+    /value differs for LANG/,
+  );
+});
 
 test("package census accepts a provider-SDK-free environment", () => {
   assert.equal(REQUIRED_DISTRIBUTIONS.length, 24);
@@ -1483,6 +1707,8 @@ test("parcel documentation records exact P02 and P03 log-level custody", () => {
   assert.match(parcels, /P03 must verify the effective deployed\s+revision reports `log_level: warning`/);
   assert.match(parcels, /commit, local-image, pushed-digest, and effective-revision custody/);
   assert.match(parcels, /node:22@sha256:c601a46abb4d2ab80a9dc3da208d50d1122642d53f17a101926ace71e5a9bf1c/);
+  assert.match(parcels, /282 verifier\s+mutation tests passed/);
+  assert.match(parcels, /--tmpfs \/tmp:rw,exec,nosuid,size=64m/);
   for (const hardening of [
     "--pull=never",
     "--network none",
@@ -1561,8 +1787,24 @@ test("CI is path-scoped, read-only, bounded, and contains every deterministic ga
   assert.match(workflow, /docker build/);
   assert.match(workflow, /--tag biostack-research-sidecar:p01-ci/);
   assert.match(workflow, /p01-untracked-credential\.json/);
+  assert.match(workflow, /FROM scratch/);
+  assert.match(workflow, /COPY p01-untracked-credential\.json \/p01-untracked-credential\.json/);
+  assert.match(workflow, /context_negative_status/);
+  assert.match(workflow, /--pull=false/);
+  assert.match(workflow, /--network=none/);
   assert.match(workflow, /test ! -e \/app\/p01-untracked-credential\.json/);
   assert.match(workflow, /Prove catchable TERM cleans the verifier-owned container/);
+  assert.match(workflow, /randomBytes\(16\)\.toString\("hex"\)/);
+  assert.match(workflow, /fixture_name="biostack-p01-ci-term-\$\{invocation_nonce\}"/);
+  assert.doesNotMatch(workflow, /fixture_name="biostack-p01-ci-term-\$\{GITHUB_RUN_ID\}/);
+  assert.match(workflow, /preflight-name/);
+  assert.match(workflow, /preflight-nonce/);
+  assert.match(workflow, /name=\$\{invocation_nonce\}/);
+  assert.match(workflow, /query_container_ids/);
+  assert.match(workflow, /timeout 10s docker container ls/);
+  assert.match(workflow, /final-name/);
+  assert.match(workflow, /final-label/);
+  assert.match(workflow, /final absence proof was uncertain/);
   assert.match(workflow, /kill -TERM "\$\{verifier_pid\}"/);
   assert.match(workflow, /timeout 20s tail --pid="\$\{verifier_pid\}" -f \/dev\/null/);
   assert.match(workflow, /io\.biostack\.p01\.owner/);
@@ -1582,6 +1824,67 @@ test("CI is path-scoped, read-only, bounded, and contains every deterministic ga
   assert.equal(DIRECT_CLI_TIMEOUT_MS + CLEANUP_RESERVE_MS < 180_000, true);
   assert.equal(SIGNAL_SHUTDOWN_TIMEOUT_MS < 20_000, true);
 });
+
+test("literal TERM Bash rejects a Docker preflight query failure before starting or cleaning", () => {
+  const result = runLiteralTermFixture({ scenario: "query-failure", nonce: "1".repeat(32) });
+  assert.equal(result.error, undefined);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /Docker query failed during preflight-name/);
+  assert.equal(result.nodeStarted, "");
+  assert.equal(result.removed, "");
+});
+
+test("literal TERM Bash rejects a pre-existing valid-ID collision without adoption or removal", () => {
+  const result = runLiteralTermFixture({ scenario: "collision", nonce: "2".repeat(32) });
+  assert.equal(result.error, undefined);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /invocation identity already exists; refusing adoption/);
+  assert.equal(result.nodeStarted, "");
+  assert.equal(result.removed, "");
+});
+
+test("literal TERM Bash uses unpredictable invocation identity and verifies both final absences", () => {
+  const firstNonce = "3".repeat(32);
+  const secondNonce = "4".repeat(32);
+  const first = runLiteralTermFixture({ scenario: "success", nonce: firstNonce });
+  const second = runLiteralTermFixture({ scenario: "success", nonce: secondNonce });
+  for (const [result, nonce] of [[first, firstNonce], [second, secondNonce]]) {
+    assert.equal(result.error, undefined);
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(result.fixtureName, `biostack-p01-ci-term-${nonce}`);
+    assert.match(result.commands, new RegExp(`name=${nonce}`));
+    assert.match(result.commands, /label=io\.biostack\.p01\.owner=/);
+    assert.equal(result.removed, `removed=${result.fullId}\n`);
+  }
+  assert.notEqual(first.fixtureName, second.fixtureName);
+});
+
+test("literal TERM Bash trap cleanup targets only its attributed exact full ID", () => {
+  const result = runLiteralTermFixture({ scenario: "trap-cleanup", nonce: "5".repeat(32) });
+  assert.equal(result.error, undefined);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /left an owned container/);
+  assert.equal(result.removed, `removed=${result.fullId}\n`);
+  const removals = result.commands
+    .split(/\r?\n/u)
+    .filter((line) => line.includes("container\trm\t--force"));
+  assert.equal(removals.length, 1);
+  assert.equal(removals[0], `docker\tcontainer\trm\t--force\t${result.fullId}`);
+});
+
+for (const [scenario, phase] of [
+  ["final-name-failure", "final-name"],
+  ["final-label-failure", "final-label"],
+]) {
+  test(`literal TERM Bash fails closed when ${phase} query errors`, () => {
+    const result = runLiteralTermFixture({ scenario, nonce: "6".repeat(32) });
+    assert.equal(result.error, undefined);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, new RegExp(`Docker query failed during ${phase}`));
+    assert.match(result.stderr, /final absence proof was uncertain/);
+    assert.equal(result.removed, `removed=${result.fullId}\n`);
+  });
+}
 
 test("CI contains no deployment, registry-push, provider, or environment-dump action", () => {
   const workflow = readFileSync(

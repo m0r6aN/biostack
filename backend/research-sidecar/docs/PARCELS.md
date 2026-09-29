@@ -23,10 +23,10 @@ BioStack ToolUniverse Scientific Research Sidecar
 | p5-typed-scientific-entities | W3 | pending | Published regimens, studies, AE records |
 | p7-review-staging-wire | W3 | **done** | Sidecar results stage into existing review store/lifecycle |
 | p8-analyzer-evidence-context | W3 | **done** | Class B comparison on `/api/analyze/protocol` |
-| p11-contract-tests-ci | W2 | **done** | Frozen sidecar suite, hash-locked CI bootstrap, dependency audits, pinned two-stage no-extra image build, immutable local-image verification, and local dark container contract in `.github/workflows/research-sidecar-ci.yml` via `scripts/verify-research-sidecar-container.mjs`. Hatchling `1.32.0` and its complete six-package build closure are artifact-hash locked and audited in a builder-only environment; the project wheel is built without PEP 518 isolation or network resolution, installed locally without dependency resolution, and no build tool crosses into the runtime image. The build copy graph is limited to named metadata, README, and `src`; the runtime census requires exact equality with the locked 24-distribution set. Catchable TERM/INT handling reserves bounded reconciliation and cleanup time, and CI proves the real verifier exits 1 and removes its exact owned fixture before the normal 9/9 run; SIGKILL, host loss, and Docker-daemon loss remain non-atomic interruption boundaries. |
+| p11-contract-tests-ci | W2 | **done** | Frozen sidecar suite, hash-locked CI bootstrap, dependency audits, pinned two-stage no-extra image build, immutable local-image verification, and local dark container contract in `.github/workflows/research-sidecar-ci.yml` via `scripts/verify-research-sidecar-container.mjs`. Hatchling `1.32.0` and its complete six-package build closure are artifact-hash locked and audited in a builder-only environment; the project wheel is built without PEP 518 isolation or network resolution, installed locally without dependency resolution, and no build tool crosses into the runtime image. The Docker context is default-deny and admits only named metadata, README, and `src`; CI proves a credential-shaped fixture cannot be copied from the transmitted context. The runtime census requires exact equality with the locked 24-distribution set and the reviewed baked environment, plus a null/empty entrypoint. Catchable TERM/INT handling reserves bounded reconciliation and cleanup time, and CI uses an unpredictable invocation identity, fail-closed preflight/final queries, and exact-ID label-revalidated recovery to prove the real verifier exits 1 and removes its owned fixture before the normal 9/9 run; SIGKILL, host loss, and Docker-daemon loss remain non-atomic interruption boundaries. |
 
 P01 hardening evidence (2026-09-09): CI selects exact Python `3.12.12` and Node
-`22.23.1` patches; 53 Python tests passed with one expected skip; 262 verifier
+`22.23.1` patches; 53 Python tests passed with one expected skip; 282 verifier
 mutation tests passed on the host and in the exact digest-pinned local Node 22 image
 with a read-only filesystem and repository mount, no network, no pull,
 dropped capabilities, and `no-new-privileges`; the strict runtime and build-closure dependency audits and secret scan passed;
@@ -51,6 +51,7 @@ Exact local Linux verifier-test reproduction:
 docker run --rm --pull=never --name biostack-p01-node22-repro \
   --network none --read-only --cap-drop ALL \
   --security-opt no-new-privileges \
+  --tmpfs /tmp:rw,exec,nosuid,size=64m \
   --mount "type=bind,source=${PWD},target=/work,readonly" \
   --workdir /work \
   node:22@sha256:c601a46abb4d2ab80a9dc3da208d50d1122642d53f17a101926ace71e5a9bf1c \
