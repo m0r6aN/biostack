@@ -25,6 +25,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
   const [showAllCompounds, setShowAllCompounds] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const hasAppliedPrefillRef = useRef(false);
+  const hasUserEditedRef = useRef(false);
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -46,7 +47,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
         // One-time prefill from a library deep-link (?compound=<slug>), once
         // the knowledge base has loaded. Guarded so it never overwrites a
         // choice the visitor has already started making.
-        if (initialCompoundSlug && !hasAppliedPrefillRef.current) {
+        if (initialCompoundSlug && !hasAppliedPrefillRef.current && !hasUserEditedRef.current) {
           const match = compounds.find(k => toSlug(k.canonicalName) === initialCompoundSlug);
           if (match) {
             hasAppliedPrefillRef.current = true;
@@ -144,7 +145,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
   };
 
   return (
-    <form onSubmit={handleSubmit} onKeyDown={handleFormKeyDown} className="space-y-6">
+    <form onChangeCapture={() => { hasUserEditedRef.current = true; }} onSubmit={handleSubmit} onKeyDown={handleFormKeyDown} className="space-y-6">
       <div className="space-y-4">
         {/* 1. Category */}
         <div>
@@ -230,7 +231,7 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
             required
             className="w-full px-4 py-3 bg-[#0F141B] border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/50 transition-all"
           />
-          <p className="mt-1 text-[10px] text-white/30 italic px-1">Tip: Use this if you can't find your compound in the list above.</p>
+          <p className="mt-1 text-[10px] text-white/30 italic px-1">Tip: Use this if you can&apos;t find your compound in the list above.</p>
           {formError && (
             <p role="alert" className="mt-2 text-xs text-red-300">{formError}</p>
           )}

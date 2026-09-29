@@ -90,3 +90,57 @@ describe('GlobalSearch', () => {
     expect(await screen.findByText(/No matches for/)).toBeInTheDocument();
   });
 });
+
+it('uses arrow keys and active-option ARIA to open a later result', async () => {
+  render(<GlobalSearch />);
+  const input = screen.getByRole('combobox');
+  fireEvent.focus(input);
+  fireEvent.change(input, { target: { value: 'e' } });
+  await screen.findByRole('option', { name: /Creatine/ });
+  fireEvent.keyDown(input, { key: 'ArrowDown' });
+  fireEvent.keyDown(input, { key: 'ArrowDown' });
+  const selected = screen.getByRole('option', { selected: true });
+  expect(selected).toHaveTextContent('Creatine');
+  expect(input).toHaveAttribute('aria-activedescendant', selected.id);
+  fireEvent.keyDown(input, { key: 'Enter' });
+  expect(push).toHaveBeenCalledWith('/knowledge/creatine');
+});
+
+it('announces pending retrieval instead of falsely reporting no matches', async () => {
+  vi.mocked(apiClient.getAllKnowledgeCompounds).mockReturnValue(new Promise(() => {}));
+  render(<GlobalSearch />);
+  const input = screen.getByRole('combobox');
+  fireEvent.focus(input);
+  fireEvent.change(input, { target: { value: 'creatine' } });
+  expect(screen.getByRole('status')).toHaveTextContent('Loading');
+  expect(screen.queryByText(/No matches/)).not.toBeInTheDocument();
+});
+
+it('supports an explicit retry after a failed library request', async () => {
+  vi.mocked(apiClient.getAllKnowledgeCompounds).mockRejectedValueOnce(new Error('Unavailable')).mockResolvedValueOnce(entries as never);
+  render(<GlobalSearch />);
+  const input = screen.getByRole('combobox');
+  fireEvent.focus(input);
+  fireEvent.change(input, { target: { value: 'creatine' } });
+  expect(await screen.findByRole('alert')).toHaveTextContent('unavailable');
+  fireEvent.click(screen.getByRole('button', { name: 'Retry library search' }));
+  expect(await screen.findByRole('option', { name: /Creatine/ })).toBeInTheDocument();
+  expect(apiClient.getAllKnowledgeCompounds).toHaveBeenCalledTimes(2);
+});
+
+it('caps trimmed query results and wraps ArrowUp while Escape clears the active option', async () => {
+  vi.mocked(apiClient.getAllKnowledgeCompounds).mockResolvedValue(Array.from({ length: 10 }, (_, index) => ({ canonicalName: `Entry ${index}`, aliases: [], classification: 'Peptide' })) as never);
+  render(<GlobalSearch />);
+  const input = screen.getByRole('combobox');
+  input.focus();
+  fireEvent.change(input, { target: { value: ' Entry ' } });
+  await screen.findByRole('option', { name: /Entry 7/ });
+  expect(screen.getAllByRole('option')).toHaveLength(8);
+  fireEvent.keyDown(input, { key: 'ArrowUp' });
+  expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Entry 7');
+  expect(input).toHaveFocus();
+  fireEvent.keyDown(input, { key: 'Escape' });
+  expect(input).not.toHaveAttribute('aria-activedescendant');
+  expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  expect(push).not.toHaveBeenCalled();
+});
