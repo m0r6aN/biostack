@@ -2,9 +2,9 @@
 
 `RunMode=Refresh` re-ingests `Seeds/substances-seed.json` and upserts each record into
 `KnowledgeEntries`. As of this runbook, Refresh is **gated**: a record is upserted only
-when its review decision resolves to `approve-for-promotion` with
-`clearsSoftPromotionBlockers: true` (`ReviewDecisionIndex.HasPromotionApproval`,
-`backend/src/BioStack.KnowledgeWorker/Pipeline/ReviewDecisionIndex.cs:75-79`). Every other
+when the Refresh-specific promotion gate accepts its applicable review disposition as
+`approve-for-promotion` with `clearsSoftPromotionBlockers: true`
+(`backend/src/BioStack.KnowledgeWorker/Pipeline/PromotionGate.cs`). Every other
 record is skipped and reported by canonical name and reason. This is a Clint-only,
 production-database operation — nobody else runs this against `biostack.cc`'s database.
 
@@ -19,7 +19,7 @@ you run the worker binary directly against the production connection string.
   the `db-conn-string` secret, in your own PowerShell session, immediately before you need
   it, and clear it (or close the session) afterward.
 - Take a Postgres snapshot/backup before the live (non-DryRun) run. Refresh has no
-  rollback mechanism of its own (§6 below) — a backup is the only way back.
+  rollback mechanism of its own (§6 below) — retain a backup or an export of pre-Refresh values for recovery.
 - Build the worker first if you haven't:
   ```powershell
   cd D:\Repos\BioStack
@@ -30,9 +30,12 @@ you run the worker binary directly against the production connection string.
   (`Program.cs`), so a leftover `Worker__DryRun` or `Worker__RunMode` wins over what you
   type:
   ```powershell
-  Get-ChildItem Env: | Where-Object { $_.Name -like 'Worker__*' -or $_.Name -like 'ConnectionStrings__*' }
+  Get-ChildItem Env: |
+    Where-Object { $_.Name -like 'Worker__*' -or $_.Name -like 'ConnectionStrings__*' } |
+    Select-Object Name, @{Name='Present'; Expression={ $true }}
   ```
-  Clear anything unexpected before continuing.
+  This shows presence only, never values. Clear unexpected Worker overrides before
+  continuing; confirm the intended connection string privately without printing it.
 
 ## 1. Set the connection string
 
@@ -46,6 +49,7 @@ $env:ConnectionStrings__DefaultConnection = '<value from the db-conn-string secr
 cd D:\Repos\BioStack
 dotnet backend\src\BioStack.KnowledgeWorker\bin\Release\net10.0\BioStack.KnowledgeWorker.dll `
   --Worker:RunMode=Refresh --Worker:DryRun=true --Worker:SeedFilePath=Seeds\substances-seed.json
+if ($LASTEXITCODE -ne 0) { throw "DryRun failed; do not run Live Refresh." }
 ```
 
 Run this **from the repository root** — the promotion gate reads
@@ -53,19 +57,22 @@ Run this **from the repository root** — the promotion gate reads
 directory (`Worker:ReviewDecisionDirectory`, default `research/review-decisions`), not
 relative to the worker's `bin` folder.
 
-DryRun now makes **zero writes of any kind**, including the interaction-hints bootstrap
-that used to run unconditionally. The console output ends with a summary line and a
-per-record table, for example:
+With effective `DryRun=true`, startup skips schema creation and interaction-hint seeding,
+and the Refresh preview reads detached database rows without saving them. This is a
+database-read-only preview, not a rehearsal of live startup writes. The preview tests
+and job-level integration tests do not execute the full Program startup path; they are
+not proof of a production run or a full-host database write trace. The console output
+ends with a summary line and a per-record table, for example:
 
 ```
-[RefreshJob] DRY-RUN summary — Scanned=57 WouldCreate=5 WouldUpdate=1 Unchanged=12 SkippedUnpromoted=39 FlaggedForReview=0 Failed=0 (no writes were made)
+[RefreshJob] DRY-RUN summary — Scanned=57 WouldCreate=5 WouldUpdate=1 Unchanged=8 SkippedUnpromoted=43 FlaggedForReview=0 Failed=0 (no writes were made)
 [RefreshJob] DRY-RUN per-record plan:
 Name                        Action           Reason
 --------------------------  ---------------  ------
-Semaglutide                 unchanged
+Liraglutide                  unchanged
 Toremifene                  would-insert
 Raloxifene                  would-update
-Creatine monohydrate        skip-unpromoted  latest decision is request-changes
+Creatine monohydrate        skip-unpromoted  no review decision on file
 Vitamin D3                  skip-unpromoted  latest decision is request-changes
 Tamoxifen                   skip-unpromoted  latest decision is request-changes
 ...
@@ -76,39 +83,49 @@ Tamoxifen                   skip-unpromoted  latest decision is request-changes
 `DatabaseKnowledgeSource.PreviewUpsertAsync`), but the table is what tells you *which*
 compounds fall into each bucket.
 
-### What to expect against the current promoted set (18 compounds)
+### Check the revision's expected plan
 
-Per the A1 promotion-state audit (`a1-promotion-audit/promotion-state-audit.md`, §2.1 and
-§5), on the seed file as of this writing:
+For the corrected Refresh gate, an offline projection of the seed and review corpus
+at original PR revision `2ef5e853e0bbe99c3f217efcce1ddc693ece8681` selects **14 of
+57 records and skips 43**. The old historical-approval predicate selected 18/39;
+that is superseded for this corrected gate. The projection is not a database preview,
+scientific approval, or permission to publish. Reconcile the actual gate, review files
+and seed revision before a run rather than treating these counts as permanent.
 
-- **`WouldCreate`/`WouldUpdate` should cover exactly the 18 promoted compounds** that
-  aren't already live with identical content — in particular the five stranded wave-005
-  creates (`Toremifene`, `Lasofoxifene`, `LL-37`, `AC-262536`, `LGD-3303`, all currently
-  404 on `biostack.cc`) and the Raloxifene **update** (its existing live row is a stale
-  placeholder from before wave 005 — expect `would-update`, not `unchanged`, for it; if the
-  table instead shows `unchanged` for Raloxifene, stop and investigate before proceeding —
-  it means the placeholder content already matches the seed, which contradicts the audit).
-- **`SkippedUnpromoted` should cover the other 39 seed records**, including Creatine
-  monohydrate, Vitamin D3, and Tamoxifen — all three are `request-changes` as of the
-  newest wave-006 re-review and must **not** go live from this run.
-- If the table shows anything unpromoted under `would-insert`/`would-update` instead of
-  `skip-unpromoted`, or shows a promoted compound as `skip-unpromoted`, **stop**. That
-  means the review-decision index the gate loaded doesn't match what you expect — check
-  which files landed under `research/review-decisions` and re-run DryRun before going
-  further.
+- The corrected gate uses the latest applicable disposition, excluding
+  `resolve-review-items`. A later claim-only decision does not carry an older promotion
+  forward. At the latest timestamp every applicable decision must promote with blockers
+  cleared; a tied non-promotion decision denies. These are conservative Refresh rules,
+  not changes to the shared research index or issued review decisions.
+- With that corpus and no validation or preview failures,
+  `WouldCreate + WouldUpdate + Unchanged = 14` and `SkippedUnpromoted = 43`.
+  Fourteen eligible records does not mean fourteen writes; the sample above is illustrative.
+- The fourteen eligible names are Liraglutide, Dulaglutide, Exenatide, Tesamorelin,
+  Sermorelin, Ipamorelin, MOTS-c, Raloxifene, Thymosin alpha-1, AC-262536,
+  Lasofoxifene, LGD-3303, LL-37 and Toremifene. Semaglutide, Enclomiphene,
+  Spermidine and Urolithin A no longer qualify under the corrected ordering.
+- Creatine monohydrate has no exact-name review decision in that corpus. Vitamin D3
+  and Tamoxifen have requested changes; neither an older approval nor a claim-only
+  review makes them eligible under the corrected gate.
+- Earlier audit observations described missing Toremifene, Lasofoxifene, LL-37,
+  AC-262536 and LGD-3303 rows and a Raloxifene placeholder. Those are historical
+  observations, not current endpoint checks. An `unchanged` Raloxifene can reflect a
+  subsequent successful refresh; inspect the actual approved seed and existing row.
+- Stop on a nonzero native exit, any `Failed` count, or an unexpected name/action/reason.
+  Read failure rows and diagnostics as well as the totals; do not proceed on a partial
+  plan. Resolve the discrepancy before obtaining a new successful preview.
 
 ### If DryRun aborts immediately (before any table)
 
-That's the fail-closed promotion gate: it refused to run because it could not load a
-usable review-decision index (missing `research/review-decisions` directory, no matching
-`review-decision-batch-*.json` files from the current directory, a file that isn't valid
-JSON, or a batch that fails schema validation). The error names which check failed. Fix the
-underlying problem (usually: you weren't in the repository root) — Refresh will not touch
-the database with a gate it can't establish.
+Inspect the actual error and native exit. Gate loading can fail on missing, empty,
+invalid or schema-invalid configured review inputs. Database connectivity or seed
+loading/validation can also fail; an abort is not automatically a gate-path problem.
+Resolve the reported cause without relaxing the gate, then obtain a successful preview.
 
 ## 3. Live Refresh
 
-Only after the DryRun table looks exactly as expected:
+Only after DryRun exits successfully, reports `Failed=0`, and the complete plan matches
+the expected approved inventory:
 
 ```powershell
 # Re-check environment precedence (step 0) once more — do this immediately before running,
@@ -121,23 +138,18 @@ The live run applies the same gate: skipped records are logged the same way DryR
 them, and the run-complete summary line reports `SkippedUnpromoted` alongside
 `Created`/`Updated`/`Unchanged`.
 
-## 4. The `AllowUnpromoted` override (dev/local only)
+**Live startup also performs work outside that table:** `Program.cs` calls
+`EnsureCreatedAsync`, interaction-hint schema bootstrap and default hint seeding before
+the Refresh job. The plan covers KnowledgeEntries reconciliation only; it does not
+predict those schema/hint writes. Even a plan with no eligible records does not suppress
+live startup bootstrap. Account for this broader write scope in backup and verification.
 
-`--Worker:AllowUnpromoted=true` disables the promotion gate entirely — every schema-valid
-seed record is upserted, promoted or not. It is refused unless the connection string host
-is `localhost` or `127.0.0.1`:
+## 4. Development-only override
 
-```powershell
-# Refused — the worker will throw and exit before connecting, because the host isn't local:
-dotnet ... --Worker:RunMode=Refresh --Worker:AllowUnpromoted=true
-# (against ConnectionStrings__DefaultConnection=Host=biostack-prod.postgres...)
-```
-
-To force it anyway against a non-local database, also pass
-`--Worker:AcknowledgeUnpromotedProduction=true`. Every use of the override is logged as a
-loud startup warning. **Do not use this against the production connection string.** It
-exists for local development against a disposable Postgres instance, not for bypassing
-review on `biostack.cc`.
+`Worker:AllowUnpromoted` is for a disposable local development database, not production.
+It bypasses review selection, so leave it disabled for this procedure. The remediated
+startup guard requires both the Development environment and a loopback database host;
+non-local use is rejected. There is no supported remote promotion-bypass procedure.
 
 ## 5. Verify afterward
 
@@ -147,7 +159,7 @@ review on `biostack.cc`.
 $names = 'Raloxifene','Toremifene','Lasofoxifene','LL-37','AC-262536','LGD-3303'
 foreach ($n in $names) {
   try { Invoke-RestMethod ("https://biostack.cc/api/v1/knowledge/compounds/" + [Uri]::EscapeDataString($n)) | Out-Null; "OK: $n" }
-  catch { "STILL MISSING: $n" }
+  catch { "CHECK FAILED: $n (inspect HTTP status or transport failure; do not assume 404)" }
 }
 
 # 2. Sitemap dossier count (frontend/src/app/sitemap.ts appends one /knowledge/<name> path per compound).
@@ -163,24 +175,24 @@ foreach ($n in $names) {
 
 An HTTP 200 on a compound endpoint is necessary but not sufficient — spot-check the
 content (mechanism summary, source references) against the approved seed record,
-especially for Raloxifene, whose pre-existing live record was a stale placeholder before
-this Refresh should have replaced it.
+including any row previously reported as a placeholder. Do not infer content correctness
+from a successful request alone.
 
 ## 6. Rollback notes — what Refresh can and cannot undo
 
-- **Idempotent for unchanged records.** Re-running Refresh against an unchanged seed file
-  is a no-op.
+- **Idempotent for unchanged records.** Unchanged KnowledgeEntries are not saved again.
+  This does not exempt live startup bootstrap from the separate scope described above.
 - **Additive for new compounds**, and it **never deletes rows** — a compound removed from
   the seed file is simply left alone in the database, stale but not retracted.
 - **Not a safe merge for existing compounds.** `DatabaseKnowledgeSource.ApplyChanges`
   overwrites every mapped field (including list fields like `Aliases`, `Benefits`,
   `AvoidWith`, `DrugInteractions`) with the seed's value whenever they differ — it does not
-  preserve a hand-edit made through the compounds UI if the seed's value differs. If
-  someone has edited a promoted compound live since the last Refresh, expect that edit to
-  be overwritten by this run for that compound.
+  preserve direct edits to those KnowledgeEntries fields if the seed differs. Personal
+  compounds edited through the compounds UI are separate CompoundRecords, handled by
+  CompoundService/ICompoundRecordRepository; this upsert does not overwrite them.
 - **No built-in undo.** There is no versioning or audit table for this upsert path.
   Recovery after an unwanted write means restoring from the Postgres snapshot taken in
   step 0, or manually re-applying the pre-Refresh field values from a database export.
 - The promotion gate reduces blast radius going forward (it can no longer push all 57 seed
-  records unconditionally), but it does not change any of the above for the 18 records it
-  does allow through.
+  records unconditionally), but it does not change the overwrite/recovery behavior for records it
+  allows through, or the separate startup bootstrap scope.
