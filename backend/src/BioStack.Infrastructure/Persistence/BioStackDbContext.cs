@@ -639,5 +639,24 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(f => f.CreatedAtUtc).IsRequired();
             entity.HasIndex(f => f.GraphArtifactId);
         });
+
+        modelBuilder.Entity<KnowledgeSourceIntakeRequest>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.SourceType).HasMaxLength(32).IsRequired();
+            entity.Property(e => e.SourceUrl).HasMaxLength(2048).IsRequired();
+            entity.Property(e => e.OptionalInstructions).HasMaxLength(8000);
+            entity.Property(e => e.RequestedOutputs).HasConversion(
+                v => string.Join("|", v),
+                v => string.IsNullOrWhiteSpace(v)
+                    ? new List<string>()
+                    : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
+            entity.Property(e => e.Status).HasMaxLength(64).IsRequired();
+            entity.Property(e => e.FailureReason).HasMaxLength(2000);
+            entity.Property(e => e.CreatedAtUtc).IsRequired();
+            entity.Property(e => e.UpdatedAtUtc);
+            entity.HasIndex(e => e.Status);
+            entity.HasIndex(e => e.CreatedAtUtc);
+        });
     }
 }

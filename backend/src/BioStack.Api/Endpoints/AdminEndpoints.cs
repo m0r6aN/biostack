@@ -157,6 +157,22 @@ public static class AdminEndpoints
             }
         });
 
+        group.MapPost("/knowledge-source-intake", async (
+            [FromBody] AdminKnowledgeSourceIntakeRequest request,
+            [FromServices] IKnowledgeSourceIntakeService intakeService,
+            CancellationToken ct) =>
+        {
+            try
+            {
+                var response = await intakeService.CreateAsync(request, ct);
+                return Results.Ok(response);
+            }
+            catch (ArgumentException ex)
+            {
+                return Results.BadRequest(new { Message = ex.Message });
+            }
+        });
+
         group.MapGet("/stats", async (
             [FromServices] BioStackDbContext db,
             CancellationToken ct) =>
