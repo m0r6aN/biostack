@@ -42,6 +42,16 @@ const entryPaths = [
     action: 'Request',
     path: 'provider',
   },
+  {
+    label: 'Analyze',
+    title: 'Analyze a protocol',
+    body: 'Paste, upload, scan, or link any stack, cheat sheet, or protocol document. BioStack extracts the structure, scores it, and shows better options.',
+    href: '/tools/analyzer',
+    tone: 'violet',
+    signal: 'Any format',
+    action: 'Analyze',
+    path: 'analyzer',
+  },
 ] as const;
 
 const toneClasses = {
@@ -77,7 +87,7 @@ const signalClasses = {
 };
 
 export function LandingHero() {
-  return ( 
+  return (
     <section className="border-b border-white/8">
       <div className="mx-auto flex min-h-[calc(90svh-61px)] max-w-7xl flex-col justify-center gap-5 px-5 pb-7 pt-5 sm:min-h-[calc(90svh-73px)] sm:px-8 sm:pt-8 lg:min-h-[calc(88svh-73px)] lg:gap-7 lg:py-7">
         <div className="max-w-5xl">

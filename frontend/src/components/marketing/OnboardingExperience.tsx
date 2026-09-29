@@ -368,6 +368,14 @@ export function OnboardingExperience({ mode = 'new' }: OnboardingExperienceProps
             A stack is just the list of things you take. We&apos;ll show overlaps and conflicts as you add items.
           </p>
         )}
+        {!isExistingMode && (
+          <p className="mt-5 text-sm leading-6 text-white/55">
+            Already have a protocol?{' '}
+            <Link href="/tools/analyzer" className="font-semibold text-violet-200 underline-offset-4 hover:text-white hover:underline">
+              Analyze it first →
+            </Link>
+          </p>
+        )}
       </div>
 
       <div className="mt-8">

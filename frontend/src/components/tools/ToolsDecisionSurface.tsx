@@ -372,6 +372,17 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             </div>
           )}
 
+          <Link
+            href="/tools/analyzer"
+            className="group flex items-center justify-between gap-4 rounded-lg border border-violet-300/20 bg-violet-400/[0.06] px-4 py-3.5 transition-colors hover:border-violet-300/40 hover:bg-violet-400/[0.10]"
+          >
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-100/60">Protocol Analyzer</p>
+              <p className="mt-1 text-sm leading-5 text-white/70 group-hover:text-white/85">Analyze any protocol in the format you already have.</p>
+            </div>
+            <span className="text-sm font-semibold text-violet-100/80 group-hover:text-violet-100 shrink-0">Analyze →</span>
+          </Link>
+
           <CompoundChooser
             compound={compound}
             onSelect={selectCompound}
