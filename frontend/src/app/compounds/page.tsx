@@ -127,6 +127,7 @@ function CompoundsPageContent() {
       if (profileEpochRef.current !== profileEpoch) return;
       invalidatePanelRequests();
       setCompounds(data);
+      await loadStackInsight(data);
     } catch (err) {
       if (profileEpochRef.current === profileEpoch) setError('Failed to load compounds');
     } finally {
@@ -372,13 +373,17 @@ function CompoundsPageContent() {
     <div className="w-full">
       <Header
         title="Compounds"
+        subtitle={`${entitlements.isPro ? 'Unlimited compounds' : 'Free plan: 2 compounds'} · stack intelligence preview`}
         actions={
-          <button
-            onClick={() => setShowForm(!showForm)}
-            className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-sm font-medium transition-all duration-150"
-          >
-            {showForm ? 'Cancel' : 'Add Compound'}
-          </button>
+          <div className="flex items-center gap-3">
+            <ProBadge plan={entitlements.plan} />
+            <button
+              onClick={() => setShowForm(!showForm)}
+              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-lg text-sm font-medium transition-all duration-150"
+            >
+              {showForm ? 'Cancel' : 'Add Compound'}
+            </button>
+          </div>
         }
       />
 
@@ -430,6 +435,15 @@ function CompoundsPageContent() {
                 compounds={compounds}
                 onSelect={handleSelectCompound}
               />
+              {compounds.filter((compound) => compound.status === 'Active').length >= 2 && (
+                <div className="mt-6">
+                  <h2 className="mb-4 text-lg font-semibold text-white">Stack Intelligence</h2>
+                  <OverlapResults
+                    flags={overlapFlags}
+                    inputCount={compounds.filter((compound) => compound.status === 'Active').length}
+                  />
+                </div>
+              )}
             </div>
 
             <div className={cn(sidebarCollapsed && 'lg:col-span-3')}>

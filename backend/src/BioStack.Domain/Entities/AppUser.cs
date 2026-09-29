@@ -23,8 +23,6 @@ public sealed class AppUser
     /// <summary>Optional profile picture URL retained for existing users.</summary>
     public string? AvatarUrl { get; set; }
 
-    public string StripeCustomerId { get; set; } = string.Empty;
-
     public UserRole Role { get; set; } = UserRole.User;
 
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
@@ -40,5 +38,5 @@ public sealed class AppUser
     public ICollection<AuthIdentity> AuthIdentities { get; set; } = new List<AuthIdentity>();
     public ICollection<PasskeyOperationChallenge> PasskeyOperationChallenges { get; set; } = new List<PasskeyOperationChallenge>();
     public ICollection<Session> Sessions { get; set; } = new List<Session>();
-    public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
+    public UserSubscription? Subscription { get; set; }
 }

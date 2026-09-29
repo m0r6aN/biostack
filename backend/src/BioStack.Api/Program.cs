@@ -15,6 +15,7 @@ using BioStack.Infrastructure.Knowledge;
 using BioStack.Application.Services;
 using BioStack.Application.Abstractions;
 using BioStack.Api.Endpoints;
+using BioStack.Api.Billing;
 using BioStack.Api;
 using BioStack.Cognition;
 using BioStack.Cognition.CollectiveApi;
@@ -315,25 +316,10 @@ builder.Services.AddAuthorization(options =>
 
 // ── Database ────────────────────────────────────────────────────────────────
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? (builder.Environment.IsProduction() ? null : "Data Source=./data/biostack.db");
+    ?? "Data Source=./data/biostack.db";
 
 var configuredDatabaseProvider = builder.Configuration["Database:Provider"];
 var usePostgres = DatabaseProviderResolver.IsPostgres(configuredDatabaseProvider, connectionString);
-
-if (builder.Environment.IsProduction())
-{
-    if (string.IsNullOrWhiteSpace(connectionString))
-    {
-        throw new InvalidOperationException(
-            "ConnectionStrings:DefaultConnection is required in Production and must point to Azure Postgres.");
-    }
-
-    if (!usePostgres)
-    {
-        throw new InvalidOperationException(
-            "Production requires a Postgres DefaultConnection. SQLite/file-backed production databases are not supported.");
-    }
-}
 
 builder.Services.AddDbContext<BioStackDbContext>(options =>
 {
@@ -364,10 +350,7 @@ builder.Services.AddScoped<IProtocolReviewCompletedEventRepository, ProtocolRevi
 builder.Services.AddScoped<IProtocolPhaseRepository, ProtocolPhaseRepository>();
 builder.Services.AddScoped<ITimelineEventRepository, TimelineEventRepository>();
 builder.Services.AddScoped<IInteractionFlagRepository, InteractionFlagRepository>();
-builder.Services.AddScoped<ICompoundInteractionHintRepository, CompoundInteractionHintRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
 builder.Services.AddSingleton<InMemoryMagicLinkDelivery>();
 var hasAzureEmail = !string.IsNullOrWhiteSpace(builder.Configuration["AzureCommunicationEmail:ConnectionString"]);
 var hasSmtp = !string.IsNullOrWhiteSpace(builder.Configuration["Smtp:Host"]);
@@ -590,17 +573,9 @@ try
 
         db.Database.EnsureCreated();
 
-        if (db.Database.IsSqlite())
+        if (!string.IsNullOrWhiteSpace(createScript))
         {
-            var createScript = DatabaseSchemaBootstrapper.MakeSqliteCreateScriptIdempotent(
-                db.Database.GenerateCreateScript());
-
-            if (!string.IsNullOrWhiteSpace(createScript))
-            {
-                db.Database.ExecuteSqlRaw(createScript);
-            }
-
-            DatabaseSchemaBootstrapper.BackfillMissingSqliteColumns(db);
+            db.Database.ExecuteSqlRaw(createScript);
         }
 
         var hintRepository = scope.ServiceProvider.GetRequiredService<ICompoundInteractionHintRepository>();

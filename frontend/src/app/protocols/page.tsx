@@ -9,11 +9,14 @@ import { ErrorState } from '@/components/ErrorState';
 import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { ProfileSwitcher } from '@/components/ProfileSwitcher';
+import { LockedInsightCard } from '@/components/monetization/LockedInsightCard';
+import { ProBadge } from '@/components/monetization/ProBadge';
+import { UpgradeCard } from '@/components/monetization/UpgradeCard';
 import { SimulationTimeline } from '@/components/protocols/SimulationTimeline';
-import { InteractionIntelligenceCard } from '@/components/protocols/InteractionIntelligenceCard';
 import { StackScoreCard } from '@/components/protocols/StackScoreCard';
 import { apiClient } from '@/lib/api';
 import { useProfile } from '@/lib/context';
+import { useEntitlements } from '@/lib/entitlements';
 import { CurrentStackIntelligence, Protocol } from '@/lib/types';
 
 export default function ProtocolsPage() {

@@ -13,16 +13,10 @@ using Microsoft.EntityFrameworkCore;
 
 public static class ProtocolEndpoints
 {
-    private static IResult ProductGate(FeatureLimitExceededException ex) =>
-        Results.Json(
-            new ProductErrorResponse(ex.Code, ex.Message, ex.Tier.ToString(), ex.Limit, true),
-            statusCode: StatusCodes.Status402PaymentRequired);
-
     public static void MapProtocolEndpoints(this WebApplication app)
     {
         var profileGroup = app.MapGroup("/api/v1/profiles/{profileId}/protocols")
-            .WithTags("Protocols")
-            .RequireAuthorization();
+            .WithTags("Protocols");
 
         profileGroup.MapGet("", GetProtocols)
             .WithName("GetProtocols");
@@ -41,8 +35,7 @@ public static class ProtocolEndpoints
             .WithName("GetProtocolMissionControl");
 
         var protocolGroup = app.MapGroup("/api/v1/protocols")
-            .WithTags("Protocols")
-            .RequireAuthorization();
+            .WithTags("Protocols");
 
         protocolGroup.MapGet("/{id}", GetProtocol)
             .WithName("GetProtocol");
@@ -86,68 +79,47 @@ public static class ProtocolEndpoints
 
     private static async Task<IResult> GetProtocols(Guid profileId, IProtocolService protocolService, CancellationToken ct)
     {
-        try
-        {
-            var protocols = await protocolService.GetProtocolsByProfileAsync(profileId, ct);
-            return Results.Ok(protocols);
-        }
-        catch (InvalidOperationException)
-        {
-            return Results.NotFound();
-        }
+        var protocols = await protocolService.GetProtocolsByProfileAsync(profileId, ct);
+        return Results.Ok(protocols);
     }
 
     private static async Task<IResult> GetCurrentStackIntelligence(Guid profileId, IProtocolService protocolService, CancellationToken ct)
     {
-        try
-        {
-            var intelligence = await protocolService.GetCurrentStackIntelligenceAsync(profileId, ct);
-            return Results.Ok(intelligence);
-        }
-        catch (FeatureLimitExceededException ex)
-        {
-            return ProductGate(ex);
-        }
-        catch (InvalidOperationException)
-        {
-            return Results.NotFound();
-        }
+        var intelligence = await protocolService.GetCurrentStackIntelligenceAsync(profileId, ct);
+        return Results.Ok(intelligence);
     }
 
     private static async Task<IResult> GetActiveRun(Guid profileId, IProtocolService protocolService, CancellationToken ct)
     {
-        try
-        {
-            var run = await protocolService.GetActiveRunAsync(profileId, ct);
-            return run is null ? Results.NoContent() : Results.Ok(run);
-        }
-        catch (InvalidOperationException)
-        {
-            return Results.NotFound();
-        }
+        var run = await protocolService.GetActiveRunAsync(profileId, ct);
+        return run is null ? Results.NoContent() : Results.Ok(run);
     }
 
     private static async Task<IResult> GetMissionControl(Guid profileId, IProtocolService protocolService, CancellationToken ct)
     {
-        try
-        {
-            var missionControl = await protocolService.GetMissionControlAsync(profileId, ct);
-            return Results.Ok(missionControl);
-        }
-        catch (FeatureLimitExceededException ex)
-        {
-            return ProductGate(ex);
-        }
-        catch (InvalidOperationException)
-        {
-            return Results.NotFound();
-        }
+        var missionControl = await protocolService.GetMissionControlAsync(profileId, ct);
+        return Results.Ok(missionControl);
     }
 
-    private static async Task<IResult> SaveCurrentStack(Guid profileId, SaveProtocolRequest request, IProtocolService protocolService, CancellationToken ct)
+    private static async Task<IResult> SaveCurrentStack(
+        Guid profileId,
+        SaveProtocolRequest request,
+        IProtocolService protocolService,
+        IEntitlementService entitlementService,
+        HttpContext http,
+        CancellationToken ct)
     {
         try
         {
+            var entitlements = await entitlementService.GetUserEntitlementsAsync(HttpUser.GetUserId(http.User), ct);
+            if (!entitlements.IsPro)
+            {
+                return Results.Problem(
+                    title: "Protocol builder requires Pro",
+                    detail: "Free users can preview protocol planning. Creating and saving advanced protocol views requires Pro.",
+                    statusCode: StatusCodes.Status402PaymentRequired);
+            }
+
             var protocol = await protocolService.SaveCurrentStackAsync(profileId, request, ct);
             return Results.Created($"/api/v1/protocols/{protocol.Id}", protocol);
         }
@@ -181,10 +153,6 @@ public static class ProtocolEndpoints
             var review = await protocolService.GetProtocolReviewAsync(id, ct);
             return Results.Ok(review);
         }
-        catch (FeatureLimitExceededException ex)
-        {
-            return ProductGate(ex);
-        }
         catch (InvalidOperationException)
         {
             return Results.NotFound();
@@ -197,10 +165,6 @@ public static class ProtocolEndpoints
         {
             var snapshot = await protocolService.GetPatternSnapshotAsync(id, ct);
             return Results.Ok(snapshot);
-        }
-        catch (FeatureLimitExceededException ex)
-        {
-            return ProductGate(ex);
         }
         catch (InvalidOperationException)
         {
@@ -215,10 +179,6 @@ public static class ProtocolEndpoints
             var snapshot = await protocolService.GetDriftSnapshotAsync(id, ct);
             return Results.Ok(snapshot);
         }
-        catch (FeatureLimitExceededException ex)
-        {
-            return ProductGate(ex);
-        }
         catch (InvalidOperationException)
         {
             return Results.NotFound();
@@ -231,10 +191,6 @@ public static class ProtocolEndpoints
         {
             var snapshot = await protocolService.GetSequenceExpectationSnapshotAsync(id, ct);
             return Results.Ok(snapshot);
-        }
-        catch (FeatureLimitExceededException ex)
-        {
-            return ProductGate(ex);
         }
         catch (InvalidOperationException)
         {

@@ -14,6 +14,7 @@ const APP_ROUTE_PREFIXES = [
   '/protocols',
   '/checkins',
   '/timeline',
+  '/calculators',
   '/knowledge',
   '/billing',
   '/governance',
