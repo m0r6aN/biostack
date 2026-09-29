@@ -1,5 +1,6 @@
 namespace BioStack.Application.Governance;
 
+
 using BioStack.Contracts.Responses;
 using BioStack.Infrastructure.Keon;
 using Microsoft.Extensions.Logging;
@@ -83,6 +84,7 @@ public sealed class UserFacingIntelligenceGate(
 {
     /// <summary>Stable id of the doctrine ruleset enforced by this gate, recorded as a policy ref.</summary>
     private const string DoctrinePolicyId = "biostack-doctrine-v1";
+
 
 
     private const string ConstrainedReplacement =
