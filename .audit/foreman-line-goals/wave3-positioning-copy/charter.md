@@ -1,15 +1,33 @@
 # Goal Charter: Wave 3 positioning copy
 
-**Status:** Draft — Gate 1 ratification required  
+**Status:** Gate 1 RATIFIED (D1–D5, 2026-09-24) — BLOCKED on D3 prerequisite (Wave 2 not merged)  
 **Coordinator:** Codex (`/goal`)  
 **Source packet:** `.audit/WAVE3-EXECUTION-PACKET.md` (signed copy, 2026-08-08)  
 **Canonical prior directive:** `.audit/COORDINATOR-HANDOFF-landing-r1.md`
+
+## Ownership
+
+- **Owner:** Coordinator session (pi `/goal resume wave3-positioning-copy`), 2026-09-24. One goal, one coordinator; transfer only at parcel boundaries.
+- **State:** STOPPED — awaiting Wave 2 merge on `main` (D3). No parcel in flight, no worktree held for build.
+- **Authoritative goal state:** this repo-local directory only.
+
+## Ratification and state log
+
+| Date | Event | Evidence |
+|---|---|---|
+| 2026-09-24 | **Gate 1:** developer explicitly ratified D1–D5 as written in this charter (in-conversation). | Coordinator session transcript |
+| 2026-09-24 | **Gate 2:** conditionally authorized by developer standing authorization (non-destructive decisions + dispatch), effective only once W3-P0 evidences the Wave 1/2 prerequisite. **Not yet in effect.** | Same |
+| 2026-09-24 | **Gate 3:** NOT granted. | Same |
+| 2026-09-24 | W3-P0 complete: Wave 1 merged (#248); **Wave 2 not merged** at `origin/main` `e5b75e0`. D3 stop condition fired. Charter starting state found stale (see W3-P0 §Charter drift). | `w3-p0-reconciliation.md` |
+| 2026-09-24 | Plan-level adversarial review dispatched against ratified charter. | `plan-review-findings.md` |
 
 ## Objective
 
 After Waves 1 and 2 are actually merged, publish the signed Wave 3 positioning copy without weakening BioStack's doctrine regression net, changing plan entitlements, or implying prescriptions or personalized guidance.
 
 ## Verified starting state
+
+> **Superseded 2026-09-24 by `w3-p0-reconciliation.md`** (base `e5b75e0`). The bullets below describe `e83bb09` and are retained for history only; `74b4a7a` (#253) has since landed the H1 and `/safety` echo and changed `SITE_TITLE`/footer to non-packet wording.
 
 - `main` is clean at `e83bb09`.
 - The prerequisite is not yet true on this checkout: `LandingHero.tsx` still contains the Wave 2 gate strings `Operator required` and `Operator access`, and the old headline/subhead remain. The execution packet itself requires Waves 1 and 2 to merge first.
