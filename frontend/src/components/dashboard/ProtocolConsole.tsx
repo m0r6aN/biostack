@@ -127,8 +127,6 @@ export function ProtocolConsole() {
       setLoading(true);
       setLoadedProfileId(null);
       setError(null);
-      setStackLockedMessage(null);
-      setMissionLockedMessage(null);
 
       const [comp, chk, tl, goals] = await Promise.all([
         apiClient.getCompounds(profileId),
@@ -521,37 +519,5 @@ export function ProtocolConsole() {
         )}
       </div>
     </div>
-  );
-}
-
-function UpgradeNotice({
-  eyebrow,
-  title,
-  detail,
-}: {
-  eyebrow: string;
-  title: string;
-  detail: string;
-}) {
-  return (
-    <section className="rounded-lg border border-amber-300/15 bg-amber-400/[0.06] p-5">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-100/75">{eyebrow}</p>
-      <h2 className="mt-2 text-lg font-semibold text-white">{title}</h2>
-      <p className="mt-2 text-sm leading-6 text-white/65">{detail}</p>
-      <div className="mt-4 flex flex-wrap gap-3">
-        <Link
-          href="/billing"
-          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-300"
-        >
-          Upgrade plan
-        </Link>
-        <Link
-          href="/pricing"
-          className="rounded-lg border border-white/[0.1] px-4 py-2 text-sm font-semibold text-white/75 hover:border-white/20"
-        >
-          Compare tiers
-        </Link>
-      </div>
-    </section>
   );
 }

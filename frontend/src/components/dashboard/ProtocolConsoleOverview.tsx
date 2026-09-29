@@ -20,14 +20,14 @@ export function ProtocolConsoleOverview({ mission }: ProtocolConsoleOverviewProp
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/55">Where Am I Now?</p>
           <h2 className="mt-2 text-2xl font-black text-white">
-            {activeRun ? `${activeRun.protocolName} v${activeRun.protocolVersion} is running` : 'No protocol run is active'}
+            {activeRun ? `${activeRun.protocolName} v${activeRun.protocolVersion} is running` : 'No tracked stack run is active'}
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-white/55">
             {activeRun
               ? checkInSignal?.cue ?? 'Comparison is available for the active lineage once observations are attached.'
               : latestClosedRun
                 ? `${latestClosedRun.protocolName} v${latestClosedRun.protocolVersion} was ${latestClosedRun.status}.`
-                : 'Simulate, save, and track a protocol to begin the closed-loop workflow.'}
+                : 'Score a stack, save it, and start tracking when you want the longitudinal view.'}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -35,7 +35,7 @@ export function ProtocolConsoleOverview({ mission }: ProtocolConsoleOverviewProp
             href="/protocols"
             className="rounded-lg border border-white/[0.1] px-3 py-2 text-sm font-semibold text-white/70 hover:border-white/25"
           >
-            Simulate + save
+            Score + save
           </Link>
           {activeRun && (
             <Link
@@ -52,7 +52,7 @@ export function ProtocolConsoleOverview({ mission }: ProtocolConsoleOverviewProp
         <OverviewCell
           label="Active run"
           value={activeRun ? `v${activeRun.protocolVersion} ${activeRun.status}` : 'None'}
-          detail={activeRun ? `Started ${formatDate(activeRun.startedAtUtc)}` : 'Track a saved protocol to start.'}
+          detail={activeRun ? `Started ${formatDate(activeRun.startedAtUtc)}` : 'Track a saved stack to start.'}
           href={activeRun ? `/protocols/${activeRun.protocolId}` : '/protocols'}
         />
         <OverviewCell
@@ -64,7 +64,7 @@ export function ProtocolConsoleOverview({ mission }: ProtocolConsoleOverviewProp
         <OverviewCell
           label="Review signal"
           value={review ? review.signalType : 'Pending'}
-          detail={review?.cue ?? 'Review available after multiple runs.'}
+          detail={review?.cue ?? 'Review becomes richer after multiple tracked runs.'}
           href={review ? `/protocols/${review.protocolId}#review` : '/protocols'}
         />
         <OverviewCell

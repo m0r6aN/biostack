@@ -55,6 +55,9 @@ export function MarketingNav() {
             <Link href="/safety" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2">
               Safety
             </Link>
+            <Link href="/tools" className="transition-colors hover:text-white">
+              Tools
+            </Link>
           </nav>
           <div className="ml-auto flex shrink-0 items-center gap-3 whitespace-nowrap md:ml-0 md:w-full md:justify-end xl:w-auto">
             <Link

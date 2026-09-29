@@ -21,7 +21,7 @@ export default function PricingPage() {
             Plans
           </p>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            Simple pricing for smarter protocol tracking
+            Simple pricing for smarter stack analysis
           </h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-white/62">
             Start with Observer - Free. Upgrade to Operator - Track & Analyze or Commander -

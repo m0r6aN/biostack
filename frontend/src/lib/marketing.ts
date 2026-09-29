@@ -31,7 +31,7 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'Who is BioStack designed for?',
     answer:
-      'BioStack is built for serious self-experimenters who manage complex compound protocols and need more than a spreadsheet. It is for users who already do the research and want a system that keeps up with the complexity.',
+      'BioStack is built for serious self-experimenters who manage complex stacks and need more than a spreadsheet. It is for users who already do the research and want a system that keeps up with the complexity.',
   },
   {
     question: 'What is the Reconstitution Calculator?',
@@ -51,12 +51,12 @@ export const featuredFaqs: MarketingFaq[] = [
   {
     question: 'What is Pathway Overlap detection?',
     answer:
-      'Pathway Overlap detection analyzes your protocol and identifies when two or more compounds share the same biological pathways. BioStack surfaces flags and evidence confidence levels so you can investigate further.',
+      'Pathway Overlap detection analyzes your stack and identifies when two or more compounds share the same biological pathways. BioStack surfaces findings and confidence levels so you can investigate further.',
   },
   {
     question: 'Where is my data stored?',
     answer:
-      'Your BioStack data is stored securely and is private to your account. BioStack does not sell personal data or share protocol information with third parties.',
+      'Your BioStack data is stored securely and is private to your account. BioStack does not sell personal data or share stack information with third parties.',
   },
   {
     question: 'How is BioStack different from a spreadsheet?',
@@ -130,7 +130,7 @@ export const pricingTiers: PricingTier[] = (['observer', 'operator', 'commander'
 
 export const landingFeatures = [
   'Compound tracking with precision structure',
-  'Pathway overlap intelligence across your active protocol',
+  'Pathway overlap intelligence across your active stack',
   'Reconstitution, volume, and unit conversion math',
   'Evidence-tiered knowledge base entries',
   'Daily check-ins that turn subjectivity into analyzable signal',

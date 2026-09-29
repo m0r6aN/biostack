@@ -19,6 +19,13 @@ const toneByType: Record<string, string> = {
   Neutral: 'border-white/[0.08] bg-white/[0.04] text-white/70',
 };
 
+const typeLabel: Record<string, string> = {
+  Synergistic: 'Supportive finding',
+  Redundant: 'Redundancy finding',
+  Interfering: 'Conflict finding',
+  Neutral: 'Stack finding',
+};
+
 const swapReasonLabels: Record<string, string> = {
   reduces_redundancy: 'reduces redundancy',
   preserves_synergy: 'preserves synergy',
@@ -68,10 +75,13 @@ export function InteractionIntelligenceCard({
 
   return (
     <div className="rounded-lg border border-white/[0.08] bg-[#121923]/90 p-5">
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/35">{title}</p>
-          <h3 className="mt-2 text-lg font-bold text-white">What the stack is doing together</h3>
+          <h3 className="mt-2 text-lg font-bold text-white">What this stack is doing together</h3>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-white/58">
+            Free shows your composite score and the first strong finding. Scenarios, deeper reasoning, and history unlock next.
+          </p>
         </div>
         <div className="min-w-0 text-right text-xs text-white/45">
           <div>{intelligence.compositeScore.toFixed(1)} predicted score</div>
@@ -147,34 +157,26 @@ export function InteractionIntelligenceCard({
                     key={reason}
                     className="rounded border border-violet-400/20 bg-violet-500/10 px-2 py-0.5 text-[11px] text-violet-200/80"
                   >
-                    {swapReasonLabels[reason] ?? reason.replace(/_/g, ' ')}
-                  </span>
-                ))}
+                    Unlock full reasoning
+                  </button>
+                )}
               </div>
             )}
           </div>
-        )}
-
-        {topFindings.length === 0 ? (
-          <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4 text-sm text-white/50">
-            No strong pairwise signals yet. The stack currently reads as low-interaction under the active rule set.
-          </div>
         ) : (
-          topFindings.map((finding) => (
-            <div
-              key={`${finding.type}-${finding.compounds.join('-')}`}
-              className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4"
+          <div className="rounded-2xl border border-emerald-400/18 bg-emerald-500/8 p-4">
+            <p className="text-sm font-semibold text-white">No major interactions or redundancies detected</p>
+            <p className="mt-2 text-sm leading-6 text-white/65">
+              At the current confidence threshold, this stack reads as relatively clean.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowPaywall(true)}
+              className="mt-4 rounded-full border border-emerald-300/20 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:border-emerald-300/40"
             >
-              <div className="flex flex-wrap items-center gap-2">
-                <span className={`rounded-lg border px-2 py-1 text-xs font-semibold ${toneByType[finding.type] ?? toneByType.Neutral}`}>
-                  {finding.type.toLowerCase()}
-                </span>
-                <span className="text-sm font-semibold text-white">{finding.compounds.join(' + ')}</span>
-                <span className="text-xs text-white/40">{Math.round(finding.confidence * 100)}% confidence</span>
-              </div>
-              <p className="mt-2 text-sm leading-6 text-white/60">{finding.message}</p>
-            </div>
-          ))
+              See what changes if you simplify one item
+            </button>
+          </div>
         )}
       </div>
 
@@ -268,4 +270,118 @@ function ReducedInteractionIntelligenceView({
       )}
     </div>
   );
+}
+
+function MetricCard({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: number;
+  tone: 'emerald' | 'sky' | 'violet';
+}) {
+  const toneClass = {
+    emerald: 'border-emerald-400/15 bg-emerald-500/10 text-emerald-100',
+    sky: 'border-sky-400/15 bg-sky-500/10 text-sky-100',
+    violet: 'border-violet-400/15 bg-violet-500/10 text-violet-100',
+  }[tone];
+
+  return (
+    <div className={`rounded-lg border p-3 ${toneClass}`}>
+      <p className="text-xs uppercase tracking-[0.16em] opacity-70">{label}</p>
+      <p className="mt-2 text-2xl font-bold">{value}</p>
+    </div>
+  );
+}
+
+function TeaserButton({
+  label,
+  detail,
+  onClick,
+  disabled,
+}: {
+  label: string;
+  detail: string;
+  onClick: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-4 text-left transition-colors hover:border-white/20 disabled:cursor-not-allowed disabled:opacity-55"
+    >
+      <p className="text-sm font-semibold text-white">{label}</p>
+      <p className="mt-2 text-sm leading-6 text-white/55">{detail}</p>
+    </button>
+  );
+}
+
+function ReasoningCell({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-3">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35">{label}</p>
+      <p className="mt-2 text-sm text-white/72">{value}</p>
+    </div>
+  );
+}
+
+function LockedCount({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full border border-white/[0.1] bg-black/15 px-3 py-1.5 text-xs font-semibold text-white/72">
+      {children}
+    </span>
+  );
+}
+
+function formatConfidence(confidence: number) {
+  if (confidence >= 0.75) {
+    return 'High';
+  }
+
+  if (confidence >= 0.5) {
+    return 'Medium';
+  }
+
+  return 'Low';
+}
+
+function buildReasoningPreview(
+  finding: InteractionFinding | null,
+  interactions: InteractionResult[]
+) {
+  if (!finding) {
+    return {
+      basis: 'No pairwise basis available',
+      pathways: '',
+      reasoningCount: '0 signals',
+    };
+  }
+
+  const related = interactions.find((interaction) => {
+    const interactionNames = [interaction.compoundA, interaction.compoundB].sort().join('|');
+    const findingNames = [...finding.compounds].sort().join('|');
+    return interactionNames === findingNames;
+  });
+
+  return {
+    basis: related?.reason ?? 'Derived from the overlap profile of the compounds above.',
+    pathways: related?.sharedPathways?.join(', ') ?? '',
+    reasoningCount: `${1 + (related?.sharedPathways?.length ?? 0)} signals`,
+  };
+}
+
+function buildRemovalTeaser(removal: InteractionIntelligence['counterfactuals'][number]) {
+  return `${removal.removedCompound} changes the score from ${Math.round(removal.variantScore - removal.deltaScore)} to ${Math.round(removal.variantScore)}.`;
+}
+
+function buildSwapTeaser(swap: InteractionIntelligence['swaps'][number]) {
+  const reasons = swap.reasons
+    .slice(0, 2)
+    .map((reason) => swapReasonLabels[reason] ?? reason.replace(/_/g, ' '))
+    .join(' · ');
+
+  return `Replace ${swap.originalCompound} with ${swap.candidateCompound}. ${reasons || 'See why this scenario ranks highest.'}`;
 }
