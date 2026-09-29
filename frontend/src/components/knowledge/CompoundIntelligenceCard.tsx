@@ -58,7 +58,6 @@ function TagList({ items, tone }: { items: string[]; tone: keyof typeof TAG_LIST
     </>
   );
 }
-
 function referenceLink(value: string): { href: string; label: string } | null {
   try {
     const url = new URL(value);
