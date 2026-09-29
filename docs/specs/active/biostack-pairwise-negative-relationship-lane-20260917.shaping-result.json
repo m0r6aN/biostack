@@ -1,0 +1,11 @@
+{
+  "parcelSpecRefs": [
+    "docs/specs/active/KEO-TBD-pairwise-p0-relationship-substrate-and-label-census.md",
+    "docs/specs/active/KEO-TBD-pairwise-p1-publishable-relationship-ratification.md",
+    "docs/specs/active/KEO-TBD-pairwise-p2-relationship-projection-wiring.md",
+    "docs/specs/active/KEO-TBD-pairwise-p3-interaction-hint-provenance.md",
+    "docs/specs/active/KEO-TBD-pairwise-p4-first-sourced-negative-pair.md",
+    "docs/specs/active/KEO-TBD-pairwise-p5-studied-combinations-surface.md"
+  ],
+  "epics": []
+}
