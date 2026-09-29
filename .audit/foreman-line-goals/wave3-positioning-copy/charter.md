@@ -1,15 +1,41 @@
 # Goal Charter: Wave 3 positioning copy
 
-**Status:** Draft — Gate 1 ratification required  
+**Status:** Gate 1 RATIFIED (D1–D5, 2026-09-24) — BLOCKED on D3 prerequisite (Wave 2 not merged)  
 **Coordinator:** Codex (`/goal`)  
 **Source packet:** `.audit/WAVE3-EXECUTION-PACKET.md` (signed copy, 2026-08-08)  
 **Canonical prior directive:** `.audit/COORDINATOR-HANDOFF-landing-r1.md`
+
+## Ownership
+
+- **Owner:** Coordinator session (pi `/goal resume wave3-positioning-copy`), 2026-09-24. One goal, one coordinator; transfer only at parcel boundaries.
+- **State:** STOPPED. Two independent blockers: (a) Wave 2 not merged on `main` (D3); (b) Gate 1 re-opened for H1–H5 (`plan-review-findings.md`). No parcel in flight, no build worktree held.
+- **Authoritative goal state:** this repo-local directory only.
+
+## Ratification and state log
+
+| Date | Event | Evidence |
+|---|---|---|
+| 2026-09-24 | **Gate 1:** developer explicitly ratified D1–D5 as written in this charter (in-conversation). | Coordinator session transcript |
+| 2026-09-24 | **Gate 2:** conditionally authorized by developer standing authorization (non-destructive decisions + dispatch), effective only once W3-P0 evidences the Wave 1/2 prerequisite. **Not yet in effect.** | Same |
+| 2026-09-24 | **Gate 3:** NOT granted. | Same |
+| 2026-09-24 | W3-P0 complete: Wave 1 merged (#248); **Wave 2 not merged** at `origin/main` `e5b75e0`. D3 stop condition fired. Charter starting state found stale (see W3-P0 §Charter drift). | `w3-p0-reconciliation.md` |
+| 2026-09-24 | Plan-level adversarial review complete (Codex R1–R7, Claude F1–F18). Amendments A1–A5 applied (non-destructive, under standing authorization). **Gate 1 re-opened for H1–H5 only**; D1–D5 otherwise stand. | `plan-review-findings.md` |
+
+## Amendments (post plan-review, 2026-09-24)
+
+- **A1 (F17):** W3-P0's "Governance state" section is superseded by this state log.
+- **A2 (F2, F16):** W3-P1 additionally owns `frontend/src/contracts/product-contract.v1.json` and `backend/src/BioStack.Application/ProductContract/product-contract.v1.json`, which are regenerated only via `node scripts/sync-product-contract.mjs`, never hand-edited. It also owns `SITE_DESCRIPTION` and the OG alt text in `site.ts`. Further consumers are pending H2/H3.
+- **A3 (R4/F6):** Per D1, P1/P2 overwrite the #253 off-packet variants at packet placements P1–P5 (eyebrow, subhead incl. "Tracking and analysis come after.", `SITE_TITLE`, `SITE_DESCRIPTION`, JSON-LD, footer) with the verbatim packet text.
+- **A4 (F8, F9):** W3-P2 dispatch base = the Wave 2 merge SHA on `main`. The EC4 diff base is that SHA. The permitted lockstep edits are the H1 and subhead assertions, in whatever state they are at that base. Wave 2 card assertions are verified, not re-edited.
+- **A5 (F2, F18):** W3-P3 adds three checks: `node scripts/sync-product-contract.mjs --check`, `SITE_TITLE` ≤ ~60 chars, and a footer-crowding check at `md` with the packet P2-trim fallback.
 
 ## Objective
 
 After Waves 1 and 2 are actually merged, publish the signed Wave 3 positioning copy without weakening BioStack's doctrine regression net, changing plan entitlements, or implying prescriptions or personalized guidance.
 
 ## Verified starting state
+
+> **Superseded 2026-09-24 by `w3-p0-reconciliation.md`** (base `e5b75e0`). The bullets below describe `e83bb09` and are retained for history only; `74b4a7a` (#253) has since landed the H1 and `/safety` echo and changed `SITE_TITLE`/footer to non-packet wording.
 
 - `main` is clean at `e83bb09`.
 - The prerequisite is not yet true on this checkout: `LandingHero.tsx` still contains the Wave 2 gate strings `Operator required` and `Operator access`, and the old headline/subhead remain. The execution packet itself requires Waves 1 and 2 to merge first.

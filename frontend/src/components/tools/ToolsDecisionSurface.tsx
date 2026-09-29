@@ -402,7 +402,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
                 <div className="grid gap-4 sm:grid-cols-2">
                   <NumberWithUnitFieldWithInfo label="Powder amount" help="How much powder is printed on the vial?" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} infoImageSrc="/images/vial.jpg" infoImageAlt="How to read a vial label reference" />
                   <NumberField label="Solution volume" help="How much liquid was added?" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
-                  <NumberWithUnitField label="Amount to calculate" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
+                  <NumberWithUnitField label="Target Dosage" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
                 </div>
 
                 <details className="rounded-lg border border-white/[0.08] bg-black/15 p-4">
@@ -445,6 +445,14 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
               <Metric label="Dose" value={formatDose(dosing.result.dosePerAdministrationMcg)} detail="per administration" />
               <Metric label="Concentration" value={`${formatNumber(dosing.result.concentrationMcgPerMl)} mcg/mL`} detail={`${formatNumber(dosing.result.concentrationMgPerMl, 4)} mg/mL`} />
             </div>
+          )}
+          {mode !== 'convert' && dosing.result && (
+            <section aria-labelledby="shots-per-vial-title" className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+              <h3 id="shots-per-vial-title" className="text-base font-semibold text-white">Shots per vial</h3>
+              <p className="mt-2 text-sm leading-6 text-white/65">
+                There are exactly {formatNumber(dosing.result.shotsPerVialExact, 2)} shots of {formatNumber(dosing.result.u100UnitsPerAdministration, 2)} units ({formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL) in a {formatNumber(input.diluentVolumeMl)} mL vial, though practically you will get {Math.max(dosing.result.shotsPerVialWhole - 1, 0)} to {dosing.result.shotsPerVialWhole} shots depending on syringe math and vial waste.
+              </p>
+            </section>
           )}
           {stackInsights.length > 0 && <InsightPanel title="Stack insights" items={stackInsights} />}
 

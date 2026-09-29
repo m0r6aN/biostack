@@ -79,6 +79,29 @@ describe('calculateUnifiedDosing', () => {
     expect(result.volumePerAdministrationMl).toBe(0.1);
     expect(result.u100UnitsPerAdministration).toBe(10);
     expect(result.weeklyTotalMcg).toBe(500);
+    expect(result.shotsPerVialExact).toBe(20);
+    expect(result.shotsPerVialWhole).toBe(20);
+  });
+
+  it('calculates exact and whole shots per vial, including a non-integer case', () => {
+    const result = calculateUnifiedDosing({
+      powderAmount: 60,
+      powderUnit: 'mg',
+      diluentVolumeMl: 2,
+      concentrationSource: 'reconstitution',
+      knownConcentration: 0,
+      concentrationUnit: 'mcg/mL',
+      desiredDose: 2,
+      desiredDoseUnit: 'mg',
+      doseBasis: 'per-dose',
+      splitCount: 1,
+    });
+
+    expect(result.concentrationMcgPerMl).toBe(30000);
+    expect(result.volumePerAdministrationMl).toBeCloseTo(0.0667, 4);
+    expect(result.u100UnitsPerAdministration).toBeCloseTo(6.67, 2);
+    expect(result.shotsPerVialExact).toBe(30);
+    expect(result.shotsPerVialWhole).toBe(30);
   });
 
   it('splits a weekly total into per-administration volume', () => {
