@@ -139,6 +139,22 @@ public sealed class PlainTextProtocolExtractor : IProtocolTextExtractor
 
 public sealed class PdfProtocolExtractor : IProtocolTextExtractor
 {
+    // Decompression-bomb guard for FlateDecode streams (per-stream and total).
+    private const long MaxInflatedStreamBytes = 16L * 1024 * 1024;
+    private const long MaxTotalInflatedBytes = 64L * 1024 * 1024;
+
+    private static readonly Encoding PdfBytes = Encoding.GetEncoding("ISO-8859-1");
+
+    // Locates stream payloads together with the object dictionary that precedes
+    // them, so /Filter /FlateDecode and /Subtype /Image can be detected. The
+    // optional newline after the "stream" keyword is tolerated: several
+    // real-world producers write "stream\n" only. ISO-8859-1 is a byte-for-byte
+    // encoding, so capture indices in the decoded string map 1:1 onto positions
+    // in the original byte array.
+    private static readonly Regex ContentStreamRegex = new(
+        @"(?:(?<dict><<(?:[^<>]|<<[^<>]*>>)*>>)[\s\r\n]*)?\bstream(?<eol>\r?\n)(?<data>.*?)[\r\n]*\bendstream",
+        RegexOptions.Singleline | RegexOptions.Compiled);
+
     public bool CanHandle(ProtocolIngestionRequest request) =>
         request.InputType == ProtocolInputType.FileUpload &&
         ProtocolExtractorSupport.MatchesContentTypeOrExtension(request, [".pdf"], ["application/pdf"]);
@@ -153,11 +169,11 @@ public sealed class PdfProtocolExtractor : IProtocolTextExtractor
         cancellationToken.ThrowIfCancellationRequested();
         var warnings = new List<string>();
         var artifacts = new List<ProtocolIngestionArtifact>();
-        var decoded = Encoding.GetEncoding("ISO-8859-1").GetString(request.SourceBytes);
+        var decoded = PdfBytes.GetString(request.SourceBytes);
         cancellationToken.ThrowIfCancellationRequested();
         var pageCount = Regex.Matches(decoded, @"/Type\s*/Page\b", RegexOptions.IgnoreCase).Count;
         cancellationToken.ThrowIfCancellationRequested();
-        var extractedLines = ExtractPdfText(decoded, cancellationToken);
+        var extractedLines = ExtractPdfText(request.SourceBytes, decoded, warnings, cancellationToken);
         cancellationToken.ThrowIfCancellationRequested();
         foreach (var (line, index) in extractedLines.Select((line, index) => (line, index)))
         {
@@ -188,7 +204,150 @@ public sealed class PdfProtocolExtractor : IProtocolTextExtractor
             warnings.Count > 0));
     }
 
-    private static IReadOnlyList<string> ExtractPdfText(string content, CancellationToken cancellationToken)
+    // Builds the text pool from the document's content streams in order,
+    // inflating FlateDecode payloads first (the encoding virtually every
+    // real-world producer uses, including Word and Google Docs exports).
+    // Image streams are skipped so binary pixel data never competes with text
+    // operators. Documents with no locatable stream bodies fall back to the
+    // historic whole-file scan.
+    private static IReadOnlyList<string> ExtractPdfText(byte[] sourceBytes, string content, ICollection<string> warnings, CancellationToken cancellationToken)
+    {
+        var streamTexts = new List<string>();
+        var totalInflated = 0L;
+        var undecodedStreams = 0;
+        var truncatedStreams = 0;
+        cancellationToken.ThrowIfCancellationRequested();
+        foreach (Match match in ContentStreamRegex.Matches(content))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var dictionary = match.Groups["dict"].Value;
+            if (dictionary.Contains("/Image", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            var data = match.Groups["data"];
+            string streamText;
+            if (dictionary.Contains("FlateDecode", StringComparison.Ordinal))
+            {
+                if (totalInflated >= MaxTotalInflatedBytes)
+                {
+                    truncatedStreams++;
+                    continue;
+                }
+
+                var budget = Math.Min(MaxInflatedStreamBytes, MaxTotalInflatedBytes - totalInflated);
+                if (!TryInflateFlate(sourceBytes, data.Index, data.Length, budget, out streamText, out var hitBudget))
+                {
+                    undecodedStreams++;
+                    continue;
+                }
+
+                totalInflated += streamText.Length;
+                if (hitBudget)
+                {
+                    truncatedStreams++;
+                }
+            }
+            else
+            {
+                streamText = data.Value;
+            }
+
+            streamTexts.Add(streamText);
+        }
+
+        if (undecodedStreams > 0)
+        {
+            warnings.Add("This PDF contains compressed streams that could not be fully decoded. Review the extracted protocol carefully.");
+        }
+
+        if (truncatedStreams > 0)
+        {
+            warnings.Add("This PDF contains compressed streams that were truncated during decoding. Review the extracted protocol carefully.");
+        }
+
+        if (streamTexts.Count == 0)
+        {
+            // Fallback: no locatable stream bodies (unusual or damaged layout).
+            // Preserve the historic behavior of scanning the whole document.
+            streamTexts.Add(content);
+        }
+
+        return streamTexts
+            .SelectMany(streamText => ExtractTextOperators(streamText, cancellationToken))
+            .ToList();
+    }
+
+    private static bool TryInflateFlate(byte[] sourceBytes, int offset, int length, long budget, out string text, out bool hitBudget)
+    {
+        text = string.Empty;
+        hitBudget = false;
+        if (length <= 0 || offset < 0 || offset + length > sourceBytes.Length)
+        {
+            return false;
+        }
+
+        // Spec-compliant FlateDecode payloads carry a zlib header; some
+        // real-world producers omit it (raw deflate) or write a broken header,
+        // so retry without the header when the first attempt yields nothing.
+        using var output = new MemoryStream();
+        using (var input = new MemoryStream(sourceBytes, offset, length, writable: false))
+        {
+            InflateInto(input, output, budget, mode: 0, ref hitBudget); // zlib
+            if (output.Length == 0)
+            {
+                input.Position = 0;
+                InflateInto(input, output, budget, mode: 1, ref hitBudget); // raw deflate from offset 0
+            }
+
+            if (output.Length == 0 && length > 2)
+            {
+                input.Position = 2;
+                hitBudget = false;
+                InflateInto(input, output, budget, mode: 1, ref hitBudget); // raw deflate past bad header
+            }
+        }
+
+        if (output.Length == 0)
+        {
+            return false;
+        }
+
+        text = PdfBytes.GetString(output.GetBuffer(), 0, (int)output.Length);
+        return true;
+    }
+
+    // mode 0 = zlib-wrapped deflate (spec-compliant FlateDecode),
+    // mode 1 = raw deflate stream (missing or damaged zlib header).
+    private static void InflateInto(Stream input, MemoryStream output, long budget, int mode, ref bool hitBudget)
+    {
+        var buffer = new byte[81920];
+        int read;
+        using Stream decompressor = mode == 1
+            ? new DeflateStream(input, CompressionMode.Decompress, leaveOpen: true)
+            : new ZLibStream(input, CompressionMode.Decompress, leaveOpen: true);
+
+        try
+        {
+            while ((read = decompressor.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                if (output.Length + read > budget)
+                {
+                    hitBudget = true;
+                    return;
+                }
+
+                output.Write(buffer, 0, read);
+            }
+        }
+        catch (InvalidDataException)
+        {
+            // Corrupt or truncated payload: keep whatever decompressed cleanly.
+        }
+    }
+
+    private static IEnumerable<string> ExtractTextOperators(string content, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
         var directText = Regex.Matches(content, @"\((?<text>(?:\\\)|\\\(|\\\\|[^\)])+)\)\s*Tj", RegexOptions.Singleline)

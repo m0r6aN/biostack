@@ -1,11 +1,94 @@
 import { describe, expect, it } from 'vitest';
 import {
+  analyzerErrorPresentation,
+  formatAnalyzerError,
   formatDelta,
   formatDose,
   getScoreBand,
   unique,
 } from '@/components/tools/analyzer/analyzerView';
+import { ApiError } from '@/lib/api';
 import type { ProtocolAnalyzerResult } from '@/lib/types';
+
+// ── formatAnalyzerError / analyzerErrorPresentation ──────────────────────
+//
+// Protocol-upload remediation contract: when the analyzer API answers 400/422
+// with curated validation copy (ProtocolIngestionException messages such as
+// "That file is too large for the analyzer right now."), the UI must surface
+// that message instead of collapsing it into generic "temporarily unavailable"
+// outage framing. Synthetic placeholders ("API Error: <status>") and transport
+// noise are never shown verbatim.
+
+describe('formatAnalyzerError — safe API validation errors', () => {
+  it('surfaces a 400 validation message verbatim instead of generic text', () => {
+    const error = new ApiError(400, 'This PDF did not expose readable text. Try a clearer source file or a direct image scan.');
+
+    expect(formatAnalyzerError(error, 'FileUpload')).toBe(
+      'This PDF did not expose readable text. Try a clearer source file or a direct image scan.',
+    );
+  });
+
+  it('surfaces a 422 validation message verbatim', () => {
+    const error = new ApiError(422, 'That file is too large for the analyzer right now. Keep uploads under 12 MB.');
+
+    expect(formatAnalyzerError(error, 'FileUpload')).toBe(
+      'That file is too large for the analyzer right now. Keep uploads under 12 MB.',
+    );
+  });
+
+  it('classifies server-provided 400s as validation kind', () => {
+    const error = new ApiError(400, 'Protocol text is required.');
+
+    expect(analyzerErrorPresentation(error, 'Paste')).toEqual({
+      message: 'Protocol text is required.',
+      kind: 'validation',
+    });
+  });
+
+  it('never surfaces the synthetic API Error placeholder for 400s', () => {
+    const error = new ApiError(400, 'API Error: 400 Bad Request');
+
+    const presentation = analyzerErrorPresentation(error, 'FileUpload');
+    expect(presentation.kind).toBe('service');
+    expect(presentation.message).not.toContain('API Error:');
+    expect(presentation.message).toBe(
+      'BioStack could not analyze that input yet. Check the protocol text and try again.',
+    );
+  });
+
+  it('never surfaces transport noise threaded through an ApiError-shaped message', () => {
+    const error = new ApiError(400, 'Failed to fetch');
+
+    const presentation = analyzerErrorPresentation(error, 'FileUpload');
+    expect(presentation.kind).toBe('service');
+    expect(presentation.message).not.toMatch(/failed to fetch/i);
+  });
+
+  it('keeps OCR service failures in camera mode on the scan-unavailable framing', () => {
+    const error = new Error('OCR endpoint timed out reading text from the image');
+
+    expect(formatAnalyzerError(error, 'CameraScan')).toBe(
+      'Scan is temporarily unavailable. Upload a PDF, spreadsheet, or paste text to analyze now.',
+    );
+    expect(analyzerErrorPresentation(error, 'CameraScan').kind).toBe('service');
+  });
+
+  it('keeps network failures on the service-unreachable framing', () => {
+    const error = new Error('network down');
+
+    const presentation = analyzerErrorPresentation(error, 'Paste');
+    expect(presentation.kind).toBe('service');
+    expect(presentation.message).toBe(
+      'BioStack could not reach the intelligence service. Your input is still safe. Try again in a moment.',
+    );
+  });
+
+  it('classifies 404 route failures as service, not validation', () => {
+    const error = new ApiError(404, 'Not Found');
+
+    expect(analyzerErrorPresentation(error, 'FileUpload').kind).toBe('service');
+  });
+});
 
 // ── getScoreBand ──────────────────────────────────────────────────────────────
 
