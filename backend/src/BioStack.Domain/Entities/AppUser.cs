@@ -41,5 +41,4 @@ public sealed class AppUser
     public ICollection<PasskeyOperationChallenge> PasskeyOperationChallenges { get; set; } = new List<PasskeyOperationChallenge>();
     public ICollection<Session> Sessions { get; set; } = new List<Session>();
     public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
-    public UserSubscription? Subscription { get; set; }
 }

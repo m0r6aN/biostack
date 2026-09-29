@@ -4,7 +4,10 @@ import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { apiClient } from '@/lib/api';
 import { useEntitlements } from '@/lib/entitlements';
+import { getProductPlan } from '@/lib/productContract';
 import { useState } from 'react';
+
+const operatorMonthlyDollars = getProductPlan('operator').monthlyPriceCents / 100;
 
 const freeFeatures = [
   '2 compounds',
@@ -106,7 +109,7 @@ export default function PricingClient() {
                 Intelligence
               </span>
             </div>
-            <p className="mt-4 text-4xl font-semibold text-white">$19<span className="text-lg text-white/55">/mo</span></p>
+            <p className="mt-4 text-4xl font-semibold text-white">${operatorMonthlyDollars}<span className="text-lg text-white/55">/mo</span></p>
             <p className="mt-2 text-sm leading-7 text-white/68">
               The actual engine: stack intelligence, observability correlations, protocol planning, and optimization suggestions grounded in your data.
             </p>

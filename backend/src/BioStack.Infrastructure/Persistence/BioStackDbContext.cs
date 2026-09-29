@@ -18,7 +18,6 @@ public sealed class BioStackDbContext : DbContext
     public DbSet<PasskeyCredential> PasskeyCredentials { get; set; }
     public DbSet<PasskeyOperationChallenge> PasskeyOperationChallenges { get; set; }
     public DbSet<Session> Sessions { get; set; }
-    public DbSet<UserSubscription> UserSubscriptions { get; set; }
     public DbSet<PersonProfile> PersonProfiles { get; set; }
     public DbSet<ProfileGoal> ProfileGoals { get; set; }
     public DbSet<CompoundRecord> CompoundRecords { get; set; }
@@ -80,23 +79,6 @@ public sealed class BioStackDbContext : DbContext
                 .WithOne(s => s.AppUser)
                 .HasForeignKey(s => s.AppUserId)
                 .OnDelete(DeleteBehavior.Cascade);
-            entity.HasOne(u => u.Subscription)
-                .WithOne(s => s.User)
-                .HasForeignKey<UserSubscription>(s => s.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        modelBuilder.Entity<UserSubscription>(entity =>
-        {
-            entity.HasKey(s => s.Id);
-            entity.Property(s => s.Plan).HasMaxLength(50).IsRequired();
-            entity.Property(s => s.StripeCustomerId).HasMaxLength(255);
-            entity.Property(s => s.StripeSubscriptionId).HasMaxLength(255);
-            entity.Property(s => s.SubscriptionStatus).HasMaxLength(100).IsRequired();
-            entity.Property(s => s.PriceId).HasMaxLength(255);
-            entity.HasIndex(s => s.UserId).IsUnique();
-            entity.HasIndex(s => s.StripeCustomerId);
-            entity.HasIndex(s => s.StripeSubscriptionId);
         });
 
         modelBuilder.Entity<AuthIdentity>(entity =>

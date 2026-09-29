@@ -354,14 +354,14 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         {
             var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
             var user = await db.AppUsers.SingleAsync(u => u.Email == "new-user@example.com");
-            db.UserSubscriptions.Add(new UserSubscription
+            db.Subscriptions.Add(new BioStack.Domain.Entities.Subscription
             {
                 Id = Guid.NewGuid(),
-                UserId = user.Id,
-                Plan = "pro",
-                IsPro = true,
-                SubscriptionStatus = "active",
-                PriceId = "price_test_pro",
+                AppUserId = user.Id,
+                ProductCode = "operator",
+                Tier = BioStack.Domain.Enums.ProductTier.Operator,
+                Status = BioStack.Domain.Enums.SubscriptionStatus.Active,
+                StripePriceId = "price_test_pro",
                 CurrentPeriodEndUtc = DateTime.UtcNow.AddMonths(1),
                 CreatedAtUtc = DateTime.UtcNow,
                 UpdatedAtUtc = DateTime.UtcNow,
