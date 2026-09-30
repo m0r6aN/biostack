@@ -80,6 +80,9 @@ public sealed class BillingService : IBillingService
         {
             Mode = "subscription",
             Customer = customerId,
+            // Without this, Stripe hides the promotion-code field entirely —
+            // discounts can never be entered at checkout.
+            AllowPromotionCodes = true,
             ClientReferenceId = user.Id.ToString(),
             SuccessUrl = GetConfiguredUrl("Stripe:CheckoutSuccessUrl", "/billing?checkout=success"),
             CancelUrl = GetConfiguredUrl("Stripe:CheckoutCancelUrl", "/billing?checkout=cancelled"),
