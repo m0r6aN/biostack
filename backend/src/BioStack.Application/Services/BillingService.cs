@@ -83,6 +83,9 @@ public sealed class BillingService : IBillingService
             // Without this, Stripe hides the promotion-code field entirely —
             // discounts can never be entered at checkout.
             AllowPromotionCodes = true,
+            // Collect a payment method only when the customer owes money now.
+            // A 100%-discounted first invoice must not force card entry.
+            PaymentMethodCollection = "if_required",
             ClientReferenceId = user.Id.ToString(),
             SuccessUrl = GetConfiguredUrl("Stripe:CheckoutSuccessUrl", "/billing?checkout=success"),
             CancelUrl = GetConfiguredUrl("Stripe:CheckoutCancelUrl", "/billing?checkout=cancelled"),
