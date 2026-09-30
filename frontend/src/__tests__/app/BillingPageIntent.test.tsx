@@ -45,6 +45,20 @@ describe('billing plan intent', () => {
     );
   });
 
+  it('shows a Subscribed indicator instead of an upgrade button for the current tier', async () => {
+    vi.mocked(apiClient.getCurrentSubscription).mockResolvedValue({
+      ...observerSubscription,
+      tier: 'Operator',
+      productCode: 'operator',
+      isPaid: true,
+    });
+    render(<BillingPage />);
+
+    expect(await screen.findByText(/Subscribed/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Upgrade to Operator' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Upgrade to Commander' })).toBeInTheDocument();
+  });
+
   it('consumes a valid plan once under Strict Mode and does not repeat on remount', async () => {
     window.history.replaceState({}, '', '/billing?plan=operator');
     vi.mocked(apiClient.createCheckoutSession).mockImplementation(

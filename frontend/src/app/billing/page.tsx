@@ -214,13 +214,19 @@ export default function BillingPage() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  onClick={() => void startCheckout('operator')}
-                  disabled={busy !== null}
-                  className="mt-5 rounded-lg border border-emerald-300/25 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:bg-emerald-400/10 disabled:opacity-50"
-                >
-                  {busy === 'operator' ? 'Opening...' : 'Upgrade to Operator'}
-                </button>
+                {subscription?.tier === 'Operator' ? (
+                  <p className="mt-5 inline-flex items-center gap-2 rounded-lg border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100">
+                    <span aria-hidden="true">✓</span> Subscribed
+                  </p>
+                ) : (
+                  <button
+                    onClick={() => void startCheckout('operator')}
+                    disabled={busy !== null}
+                    className="mt-5 rounded-lg border border-emerald-300/25 px-4 py-2 text-sm font-semibold text-emerald-100 transition-colors hover:bg-emerald-400/10 disabled:opacity-50"
+                  >
+                    {busy === 'operator' ? 'Opening...' : 'Upgrade to Operator'}
+                  </button>
+                )}
               </div>
 
               <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
@@ -235,13 +241,19 @@ export default function BillingPage() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  onClick={() => void startCheckout('commander')}
-                  disabled={busy !== null}
-                  className="mt-5 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300 disabled:opacity-50"
-                >
-                  {busy === 'commander' ? 'Opening...' : 'Upgrade to Commander'}
-                </button>
+                {subscription?.tier === 'Commander' ? (
+                  <p className="mt-5 inline-flex items-center gap-2 rounded-lg border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100">
+                    <span aria-hidden="true">✓</span> Subscribed
+                  </p>
+                ) : (
+                  <button
+                    onClick={() => void startCheckout('commander')}
+                    disabled={busy !== null}
+                    className="mt-5 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-300 disabled:opacity-50"
+                  >
+                    {busy === 'commander' ? 'Opening...' : 'Upgrade to Commander'}
+                  </button>
+                )}
               </div>
             </section>
           </>
