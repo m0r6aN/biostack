@@ -5,6 +5,7 @@ import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { apiClient } from '@/lib/api';
 import { useEntitlements } from '@/lib/entitlements';
 import { pricingTiers } from '@/lib/marketing';
+import { tierRank } from '@/lib/productContract';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -89,6 +90,10 @@ export default function PricingClient() {
               {currentTier === tier.name && tier.name !== 'Observer' ? (
                 <p className="mt-7 inline-flex items-center gap-2 rounded-lg border border-emerald-300/30 bg-emerald-400/10 px-5 py-3 text-sm font-semibold text-emerald-100">
                   <span aria-hidden="true">✓</span> Subscribed
+                </p>
+              ) : tierRank(currentTier ?? '') > tierRank(tier.name) ? (
+                <p className="mt-7 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white/60">
+                  Included with {currentTier}
                 </p>
               ) : tier.name === 'Operator' ? (
                 <button
