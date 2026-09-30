@@ -59,6 +59,20 @@ describe('billing plan intent', () => {
     expect(screen.getByRole('button', { name: 'Upgrade to Commander' })).toBeInTheDocument();
   });
 
+  it('shows Included-with for tiers below the current subscription instead of upgrade buttons', async () => {
+    vi.mocked(apiClient.getCurrentSubscription).mockResolvedValue({
+      ...observerSubscription,
+      tier: 'Commander',
+      productCode: 'commander',
+      isPaid: true,
+    });
+    render(<BillingPage />);
+
+    expect(await screen.findByText(/Included with Commander/)).toBeInTheDocument();
+    expect(screen.getByText(/Subscribed/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Upgrade to/ })).not.toBeInTheDocument();
+  });
+
   it('consumes a valid plan once under Strict Mode and does not repeat on remount', async () => {
     window.history.replaceState({}, '', '/billing?plan=operator');
     vi.mocked(apiClient.createCheckoutSession).mockImplementation(

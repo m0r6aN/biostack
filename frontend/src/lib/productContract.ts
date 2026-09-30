@@ -3,6 +3,15 @@ import contract from '@/contracts/product-contract.v1.json';
 export type ProductPlanCode = 'observer' | 'operator' | 'commander';
 export type ProductTierName = 'Observer' | 'Operator' | 'Commander';
 
+// Domain ordering of the tiers: a subscription covers every tier below it
+// (Commander ⊃ Operator ⊃ Observer). Used to decide whether a plan card is
+// already covered, the current plan, or a genuine upgrade.
+const TIER_RANK: Record<ProductTierName, number> = { Observer: 0, Operator: 1, Commander: 2 };
+
+export function tierRank(tier: string): number {
+  return TIER_RANK[tier as ProductTierName] ?? -1;
+}
+
 export interface ProductPlanContract {
   code: ProductPlanCode;
   tier: ProductTierName;
