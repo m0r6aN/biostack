@@ -6,13 +6,20 @@ import { apiClient } from '@/lib/api';
 import { useEntitlements } from '@/lib/entitlements';
 import { pricingTiers } from '@/lib/marketing';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function PricingClient() {
   const { startCheckout, entitlements } = useEntitlements();
   const [email, setEmail] = useState('');
   const [leadState, setLeadState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [currentTier, setCurrentTier] = useState<string | null>(null);
+
+  useEffect(() => {
+    void apiClient.getCurrentSubscription()
+      .then((subscription) => setCurrentTier(subscription.tier))
+      .catch(() => setCurrentTier(null));
+  }, []);
 
   async function captureClinicLead(event: React.FormEvent) {
     event.preventDefault();
@@ -79,7 +86,11 @@ export default function PricingClient() {
                   </li>
                 ))}
               </ul>
-              {tier.name === 'Operator' ? (
+              {currentTier === tier.name && tier.name !== 'Observer' ? (
+                <p className="mt-7 inline-flex items-center gap-2 rounded-lg border border-emerald-300/30 bg-emerald-400/10 px-5 py-3 text-sm font-semibold text-emerald-100">
+                  <span aria-hidden="true">✓</span> Subscribed
+                </p>
+              ) : tier.name === 'Operator' ? (
                 <button
                   onClick={handleProCheckout}
                   className="mt-7 rounded-lg bg-emerald-400 px-5 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-emerald-300"
