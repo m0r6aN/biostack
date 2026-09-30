@@ -64,7 +64,12 @@ jobs:
 
       - name: Install frontend deps
         working-directory: frontend
-        run: npm ci
+        # npm install, not npm ci: npm's cross-platform optional-dependency
+        # sync check rejects lockfiles that local installs accept (the
+        # "@emnapi/* missing from lock file" class of npm/cli bugs). The
+        # lockfile still pins resolutions; npm install tolerates the
+        # platform-metadata gaps while installing exactly what it contains.
+        run: npm install --no-audit --no-fund
 
       - name: Audit production frontend dependencies
         working-directory: frontend
