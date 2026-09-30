@@ -25,6 +25,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Scalar.AspNetCore" Version="2.4.1" />
+    <PackageReference Include="Stripe.net" Version="51.0.0" />
   </ItemGroup>
 
   <ItemGroup>

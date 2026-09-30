@@ -35,6 +35,9 @@ type InputStageProps = {
   isAuthenticated: boolean;
   isPending: boolean;
   error: string;
+  // 'validation': the API answered with curated safe copy the card shows as-is
+  // (no service outage). 'service' (default): transient/unreachable failure.
+  errorKind?: 'validation' | 'service';
   onModeChange: (mode: ProtocolAnalyzerInputType) => void;
   onInputTextChange: (text: string) => void;
   onLinkUrlChange: (url: string) => void;
@@ -58,6 +61,7 @@ export function InputStage({
   isAuthenticated,
   isPending,
   error,
+  errorKind = 'service',
   onModeChange,
   onInputTextChange,
   onLinkUrlChange,
@@ -262,7 +266,7 @@ export function InputStage({
       </div>
 
       {/* Failure state */}
-      {error && <AnalyzerFailureState message={error} onRetry={onAnalyze} />}
+      {error && <AnalyzerFailureState message={error} kind={errorKind} onRetry={onAnalyze} />}
     </section>
   );
 }
@@ -319,13 +323,18 @@ function ExampleButton({ label, onClick }: { label: string; onClick: () => void 
   );
 }
 
-function AnalyzerFailureState({ message, onRetry }: { message: string; onRetry: () => void }) {
+function AnalyzerFailureState({ message, kind, onRetry }: { message: string; kind: 'validation' | 'service'; onRetry: () => void }) {
+  const validation = kind === 'validation';
   return (
     <div className="mt-4 rounded-lg border border-amber-300/20 bg-amber-400/[0.08] p-4">
-      <p className="text-sm font-semibold text-amber-50">Analysis is temporarily unavailable.</p>
+      <p className="text-sm font-semibold text-amber-50">
+        {validation ? 'We could not analyze that input.' : 'Analysis is temporarily unavailable.'}
+      </p>
       <p className="mt-2 text-sm leading-6 text-amber-50/78">{message}</p>
       <p className="mt-1 text-sm leading-6 text-white/52">
-        Calculators and locally saved work still work while the intelligence service recovers.
+        {validation
+          ? 'Your input is safe. Fix what the check flagged above and try again.'
+          : 'Calculators and locally saved work still work while the intelligence service recovers.'}
       </p>
       <button
         type="button"

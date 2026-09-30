@@ -1,0 +1,7 @@
+export function ProBadge({ plan }: { plan: string }) {
+  return (
+    <span className="rounded-lg border border-emerald-300/20 bg-emerald-400/10 px-2.5 py-1 text-xs font-bold uppercase tracking-[0.12em] text-emerald-200">
+      {plan === 'pro' ? 'Pro' : 'Free'}
+    </span>
+  );
+}

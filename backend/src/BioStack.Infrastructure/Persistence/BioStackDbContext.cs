@@ -378,22 +378,6 @@ public sealed class BioStackDbContext : DbContext
                     v => v.Split(",", StringSplitOptions.RemoveEmptyEntries).ToList());
         });
 
-        modelBuilder.Entity<CompoundInteractionHint>(entity =>
-        {
-            entity.HasKey(hint => hint.Id);
-            entity.Property(hint => hint.CompoundA).HasMaxLength(255).IsRequired();
-            entity.Property(hint => hint.CompoundB).HasMaxLength(255).IsRequired();
-            entity.Property(hint => hint.InteractionType).HasConversion<int>();
-            entity.Property(hint => hint.Strength).HasPrecision(3, 2);
-            entity.Property(hint => hint.Notes).HasMaxLength(2000);
-            entity.Property(hint => hint.MechanismOverlap).HasConversion(
-                v => v == null ? null : string.Join("|", v),
-                v => string.IsNullOrWhiteSpace(v)
-                    ? null
-                    : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
-            entity.HasIndex(hint => new { hint.CompoundA, hint.CompoundB }).IsUnique();
-        });
-
         modelBuilder.Entity<KnowledgeEntry>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -643,6 +627,25 @@ public sealed class BioStackDbContext : DbContext
             entity.Property(f => f.RecommendedAction).HasMaxLength(255);
             entity.Property(f => f.CreatedAtUtc).IsRequired();
             entity.HasIndex(f => f.GraphArtifactId);
+        });
+
+        modelBuilder.Entity<KnowledgeSourceIntakeRequest>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.SourceType).HasMaxLength(32).IsRequired();
+            entity.Property(e => e.SourceUrl).HasMaxLength(2048).IsRequired();
+            entity.Property(e => e.OptionalInstructions).HasMaxLength(8000);
+            entity.Property(e => e.RequestedOutputs).HasConversion(
+                v => string.Join("|", v),
+                v => string.IsNullOrWhiteSpace(v)
+                    ? new List<string>()
+                    : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
+            entity.Property(e => e.Status).HasMaxLength(64).IsRequired();
+            entity.Property(e => e.FailureReason).HasMaxLength(2000);
+            entity.Property(e => e.CreatedAtUtc).IsRequired();
+            entity.Property(e => e.UpdatedAtUtc);
+            entity.HasIndex(e => e.Status);
+            entity.HasIndex(e => e.CreatedAtUtc);
         });
     }
 }

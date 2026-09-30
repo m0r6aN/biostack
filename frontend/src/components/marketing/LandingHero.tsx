@@ -53,6 +53,8 @@ const toneClasses = {
     'border-amber-200/24 bg-[linear-gradient(135deg,rgba(251,191,36,0.09),rgba(255,255,255,0.035))] hover:border-amber-100/52 hover:bg-amber-300/[0.1] hover:shadow-[0_18px_48px_rgba(251,191,36,0.12)] focus-visible:ring-amber-200/55',
   cyan:
     'border-cyan-200/24 bg-cyan-400/[0.075] shadow-[inset_0_0_0_1px_rgba(103,232,249,0.035),0_12px_34px_rgba(0,0,0,0.2)] hover:border-cyan-100/52 hover:bg-cyan-400/[0.12] hover:shadow-[0_18px_48px_rgba(103,232,249,0.14)] focus-visible:ring-cyan-200/55',
+  violet:
+    'border-violet-300/24 bg-violet-400/[0.09] hover:border-violet-300/50 hover:bg-violet-400/[0.14] hover:shadow-[0_18px_48px_rgba(167,139,250,0.16)] focus-visible:ring-violet-300/60',
 };
 
 const iconClasses = {
@@ -60,6 +62,7 @@ const iconClasses = {
   sky: 'border-sky-200/22 text-sky-100 group-hover:bg-sky-400/14',
   gold: 'border-amber-100/22 text-amber-100 group-hover:bg-amber-300/12',
   cyan: 'border-cyan-100/22 text-cyan-100 group-hover:bg-cyan-300/12',
+  violet: 'border-violet-300/20 text-violet-100 group-hover:bg-violet-400/14',
 };
 
 const railClasses = {
@@ -67,6 +70,7 @@ const railClasses = {
   sky: 'bg-sky-300/78 shadow-[0_0_18px_rgba(56,189,248,0.5)]',
   gold: 'bg-amber-200/72 shadow-[0_0_18px_rgba(251,191,36,0.36)]',
   cyan: 'bg-cyan-200/72 shadow-[0_0_18px_rgba(103,232,249,0.36)]',
+  violet: 'bg-violet-300/70 shadow-[0_0_18px_rgba(167,139,250,0.48)]',
 };
 
 const signalClasses = {
@@ -74,10 +78,11 @@ const signalClasses = {
   sky: 'text-sky-100/90',
   gold: 'text-amber-100/90',
   cyan: 'text-cyan-100/90',
+  violet: 'text-violet-100/90',
 };
 
 export function LandingHero() {
-  return ( 
+  return (
     <section className="border-b border-white/8">
       <div className="mx-auto flex min-h-[calc(90svh-61px)] max-w-7xl flex-col justify-center gap-5 px-5 pb-7 pt-5 sm:min-h-[calc(90svh-73px)] sm:px-8 sm:pt-8 lg:min-h-[calc(88svh-73px)] lg:gap-7 lg:py-7">
         <div className="max-w-5xl">

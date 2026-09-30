@@ -9,13 +9,13 @@ import { describe, expect, it } from 'vitest';
 describe('systemStatus', () => {
   it('returns centralized descriptors by key', () => {
     expect(getSystemStatusDescriptor('context_established')).toMatchObject({
-      title: 'Context established.',
-      subtitle: 'Identity context available.',
+      title: 'First item recognized.',
+      subtitle: 'Add one more item to look for overlap or conflict.',
       tone: 'positive',
     });
   });
 
-  it('maps onboarding context state to context established', () => {
+  it('maps onboarding context state to the first recognized item state', () => {
     const status = getOnboardingSystemStatus({
       count: 1,
       stage: 'context',
@@ -23,7 +23,7 @@ describe('systemStatus', () => {
       isRelationshipAllowed: false,
     });
 
-    expect(status.title).toBe('Context established.');
+    expect(status.title).toBe('First item recognized.');
   });
 
   it('maps unavailable relationship state separately from context', () => {
@@ -34,7 +34,7 @@ describe('systemStatus', () => {
       isRelationshipAllowed: false,
     });
 
-    expect(status.title).toBe('Relationship analysis unavailable.');
+    expect(status.title).toBe('Need one more item for a stack finding.');
   });
 
   it('maps detected and no-relationship states', () => {
@@ -45,7 +45,7 @@ describe('systemStatus', () => {
         relationship: { type: 'overlap', label: 'BPC-157 + TB-500' },
         isRelationshipAllowed: true,
       }).title
-    ).toBe('Relationship detected.');
+    ).toBe('Possible overlap found.');
 
     expect(
       getOnboardingSystemStatus({
@@ -54,7 +54,7 @@ describe('systemStatus', () => {
         relationship: { type: 'none', label: 'No relationship detected' },
         isRelationshipAllowed: true,
       }).title
-    ).toBe('No relationship detected.');
+    ).toBe('No major overlap found.');
   });
 
   it('maps 3+ onboarding state to map expanding', () => {
@@ -65,15 +65,15 @@ describe('systemStatus', () => {
         relationship: { type: 'none', label: 'No relationship detected' },
         isRelationshipAllowed: true,
       }).title
-    ).toBe('Map expanding.');
+    ).toBe('Stack mapped.');
   });
 
   it('returns profile continuation statuses only when inputs are recovered', () => {
     expect(getProfilesContinuationStatuses(false)).toBeNull();
     expect(getProfilesContinuationStatuses(true)).toMatchObject({
-      recovered: { title: 'Inputs recovered.' },
-      profile: { title: 'Profile not yet instantiated.' },
-      persistence: { title: 'Your list is ready to save.' },
+      recovered: { title: 'Stack inputs recovered.' },
+      profile: { title: 'Profile not yet created.' },
+      persistence: { title: 'Your stack is ready to save.' },
     });
   });
 });

@@ -4,7 +4,7 @@ Generated 2026-09-03 by the coordinator on Gate 1 ratification. Modeled on `plug
 
 ## COORDINATOR OWNERSHIP — read before dispatching anything
 
-> **Queue owner: the Codex coordinator session directly addressed by Clint's 2026-09-08 Gate 1 reconfirmation.** Ownership transferred at a clean parcel boundary: zero parcels had been dispatched and no parcel worktree was in flight. Exactly one coordinator owns this queue at a time. If you are not the owner, do not dispatch. If ownership is ever ambiguous, report to Clint and wait — never assume. (Rule earned 2026-07-15 when a second coordinator committed onto a live parcel branch, `491fb80`, benign only by luck.)
+> **Queue owner: the Muse Spark coordinator session (pi harness, session `01a0b4e1-be49-733c-8f99-18af4083bb63`), claimed 2026-09-19 by Clint's direct transfer instruction.** Transfer accepted at the Round-7 preflight stop: no builder/reviewer agent in flight, goal branch clean at `4fc9e4f`, P01 Round-07 corrections held uncommitted on `parcel/sidecar-P01` (pre-commit pause counts as the parcel boundary for this handoff; any objection re-opens the transfer). Exactly one coordinator owns this queue at a time. If you are not the owner, do not dispatch. If ownership is ever ambiguous, report to Clint and wait — never assume. (Rule earned 2026-07-15 when a second coordinator committed onto a live parcel branch, `491fb80`, benign only by luck.)
 
 Goal branch: `codex/goal-biostack-sidecar-deployment`
 Goal worktree: `C:\Users\clint\.codex\worktrees\biostack-sidecar-deployment-goal\BioStack`

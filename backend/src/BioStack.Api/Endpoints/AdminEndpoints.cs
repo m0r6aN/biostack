@@ -614,6 +614,7 @@ public static class AdminEndpoints
                 return Results.BadRequest(new { Message = ex.Message, Code = ex.ErrorCode });
             }
         });
+
     }
 
     private static IReadOnlyDictionary<string, string>? FilterSafeProviderMetadata(

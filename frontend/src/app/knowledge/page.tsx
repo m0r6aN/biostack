@@ -3,6 +3,7 @@
 import { Header } from '@/components/Header';
 import { LoadingState } from '@/components/LoadingState';
 import { CompoundIntelligenceCard } from '@/components/knowledge/CompoundIntelligenceCard';
+import { EvidenceTierBadge } from '@/components/knowledge/EvidenceTierBadge';
 import { OverlapResults } from '@/components/knowledge/OverlapResults';
 import { KnowledgeMain } from '@/components/knowledge/KnowledgeMain';
 import { GlassCard } from '@/components/ui/GlassCard';
@@ -10,7 +11,9 @@ import { MarketingFooter } from '@/components/marketing/MarketingFooter';
 import { MarketingNav } from '@/components/marketing/MarketingNav';
 import { apiClient } from '@/lib/api';
 import { useAuth } from '@/lib/AuthProvider';
+import { toSlug } from '@/lib/research/slugs';
 import { InteractionFlag, KnowledgeEntry } from '@/lib/types';
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 
 export default function KnowledgePage() {
@@ -28,6 +31,20 @@ export default function KnowledgePage() {
   const [overlapError, setOverlapError] = useState<string | null>(null);
   const [hasCheckedOverlaps, setHasCheckedOverlaps] = useState(false);
   const overlapRequestVersion = useRef(0);
+
+  const [library, setLibrary] = useState<KnowledgeEntry[]>([]);
+  const [libraryStatus, setLibraryStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
+
+  const loadLibrary = async () => {
+    setLibraryStatus('loading');
+    try {
+      const entries = await apiClient.getAllKnowledgeCompounds();
+      setLibrary([...entries].sort((a, b) => a.canonicalName.localeCompare(b.canonicalName)));
+      setLibraryStatus('ready');
+    } catch {
+      setLibraryStatus('error');
+    }
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,6 +121,14 @@ export default function KnowledgePage() {
 
       <KnowledgeMain className="p-8 space-y-8 max-w-5xl">
 
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300/70">Library</p>
+          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-white">Compound library.</h1>
+          <p className="mt-3 max-w-2xl text-lg leading-8 text-white/62">
+            Every dossier is graded by evidence strength and lists its sources. Search for something specific, or browse the full library below.
+          </p>
+        </div>
+
         {/* ── Disclaimer ──────────────────────────────────────── */}
         <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-amber-400/15 bg-amber-500/[0.06] text-amber-200/70 text-xs">
           <span className="text-amber-400 shrink-0">⚠</span>
@@ -170,6 +195,48 @@ export default function KnowledgePage() {
             <p className="text-white/40 text-sm">No results for &ldquo;{completedSearchQuery}&rdquo;</p>
           </GlassCard>
         ) : null}
+
+        {/* ── Browse the library ───────────────────────────────── */}
+        <section aria-label="Browse the library">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-white/50 mb-4">
+            Browse the library
+          </h2>
+          {libraryStatus === 'idle' && (
+            <button
+              type="button"
+              onClick={() => void loadLibrary()}
+              className="rounded-lg border border-white/12 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/24 focus-visible:outline-none focus-visible:ring-2"
+            >
+              Show all compounds
+            </button>
+          )}
+          {libraryStatus === 'loading' && (
+            <p className="text-sm text-white/52">Loading compound list…</p>
+          )}
+          {libraryStatus === 'error' && (
+            <p className="text-sm text-white/52">
+              The library index is temporarily unavailable. Search above still works when the knowledge API responds.
+            </p>
+          )}
+          {libraryStatus === 'ready' && (
+            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {library.map((entry) => (
+                <li key={entry.canonicalName}>
+                  <Link
+                    href={`/knowledge/${toSlug(entry.canonicalName)}`}
+                    className="block rounded-lg border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-emerald-300/30 focus-visible:outline-none focus-visible:ring-2"
+                  >
+                    <span className="text-sm font-semibold text-white">{entry.canonicalName}</span>
+                    <span className="mt-2 flex items-center gap-2">
+                      <EvidenceTierBadge tier={entry.evidenceTier} />
+                      <span className="text-xs text-white/45">{entry.classification}</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
 
         {/* ── Pathway Overlap Checker ──────────────────────────── */}
         <GlassCard variant="hero" className="p-6 overflow-hidden relative">

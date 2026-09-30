@@ -9,10 +9,10 @@ describe('SuggestionCard', () => {
     render(<SuggestionCard suggestion={suggestion} />);
 
     expect(screen.getByLabelText(/earned suggestion/i)).toBeInTheDocument();
-    expect(screen.getByText('Clarify the stack signal')).toBeInTheDocument();
-    expect(screen.getByText(/overlapping or crowded inputs/i)).toBeInTheDocument();
+    expect(screen.getByText('Reduce stack redundancy')).toBeInTheDocument();
+    expect(screen.getByText(/overlapping or crowded items/i)).toBeInTheDocument();
     expect(screen.getByText('Based on overlapping inputs and a weak or unclear 7-day review.')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /review stack/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /review findings/i })).toBeInTheDocument();
   });
 
   it('supports optional dismissal', async () => {
@@ -29,8 +29,8 @@ describe('SuggestionCard', () => {
 
 const suggestion: EarnedSuggestion = {
   type: 'tighten_stack',
-  title: 'Clarify the stack signal',
-  explanation: 'You may be tracking overlapping or crowded inputs, which can make the next signal harder to isolate.',
+  title: 'Reduce stack redundancy',
+  explanation: 'Overlapping or crowded items can make the next finding harder to trust.',
   reasoning: 'Based on overlapping inputs and a weak or unclear 7-day review.',
-  actionLabel: 'Review stack',
+  actionLabel: 'Review findings',
 };

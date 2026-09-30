@@ -1,11 +1,6 @@
-.venv
-__pycache__
-*.py[cod]
-.pytest_cache
-.ruff_cache
-.mypy_cache
-.git
-docs/kickstarters
-**/.DS_Store
-*.md
+*
+!pyproject.toml
+!uv.lock
 !README.md
+!src/
+!src/**

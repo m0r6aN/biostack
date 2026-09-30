@@ -58,7 +58,6 @@ function TagList({ items, tone }: { items: string[]; tone: keyof typeof TAG_LIST
     </>
   );
 }
-
 function referenceLink(value: string): { href: string; label: string } | null {
   try {
     const url = new URL(value);
@@ -79,12 +78,14 @@ interface CompoundIntelligenceCardProps {
    * for signed-in users and the standard sign-in CTA for anonymous ones.
    */
   isSignedIn?: boolean;
+  titleAs?: 'h1' | 'h2' | 'h3';
 }
 
 export function CompoundIntelligenceCard({
   entry,
   recommendationSurface,
   isSignedIn = false,
+  titleAs: Heading = 'h3',
 }: CompoundIntelligenceCardProps) {
   const studyDesign = getReviewedStudyDesign(entry.canonicalName);
   const [showAllReferences, setShowAllReferences] = useState(false);
@@ -93,6 +94,9 @@ export function CompoundIntelligenceCard({
   const { settings } = useSettings();
   const currentProfile = profiles.find(p => p.id === currentProfileId);
   const slug = toSlug(entry.canonicalName);
+  // Blank benefit strings (e.g. records whose summary is not a benefit claim)
+  // must not render as empty chips under the Benefits label.
+  const benefits = entry.benefits.filter((benefit) => benefit.trim().length > 0);
   // The side panel on /compounds shows a reduced version of this card next
   // to a record the visitor already added — link it back to the full public
   // dossier. The dossier itself (knowledge-detail) and the knowledge-search
@@ -104,7 +108,7 @@ export function CompoundIntelligenceCard({
       <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-emerald-500/[0.06] blur-2xl pointer-events-none" />
       <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-white">{entry.canonicalName}</h3>
+          <Heading className="text-lg font-semibold text-white">{entry.canonicalName}</Heading>
           {entry.aliases.length > 0 && (
             <p className="text-xs text-white/35 mt-1">Also known as: {entry.aliases.join(', ')}</p>
           )}
@@ -179,10 +183,10 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
-        {entry.benefits.length > 0 && (
+        {benefits.length > 0 && (
           <div>
             <p className="text-xs uppercase tracking-[0.15em] text-white/40 mb-2">Benefits</p>
-            <TagList items={entry.benefits} tone="emerald" />
+            <TagList items={benefits} tone="emerald" />
           </div>
         )}
 

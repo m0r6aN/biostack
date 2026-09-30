@@ -1,4 +1,6 @@
 import { ContextualRecommendations } from '@/components/recommendations/ContextualRecommendations';
+import { LockedInsightCard } from '@/components/monetization/LockedInsightCard';
+import { useEntitlements } from '@/lib/entitlements';
 import { getContextTagsForOverlapFlags, getRecommendationsForOverlapFlags } from '@/lib/recommendations';
 import { InteractionFlag } from '@/lib/types';
 import { SafetyDisclaimer } from '../SafetyDisclaimer';
@@ -18,6 +20,8 @@ function hasReasoning(flag: InteractionFlag): flag is InteractionFlag & { descri
 }
 
 export function OverlapResults({ flags, inputCount }: OverlapResultsProps) {
+  const { entitlements } = useEntitlements();
+
   if (inputCount < 2) {
     return null;
   }

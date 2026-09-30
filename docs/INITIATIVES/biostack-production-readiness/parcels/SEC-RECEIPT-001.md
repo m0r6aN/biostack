@@ -86,6 +86,7 @@ Receipt evidence remains inspectable by the actor who produced it and by adminis
 - Diff hygiene: `git diff --check` passed.
 - Integrated candidate verification: KEO-64 repair `44eac22` removed the repository-wide type blocker; combined frontend production build passed at `fb0ed84`.
 - Integration status: **integrated and locally verified**; hosted workflow and live authorization checks remain release-gate evidence.
+- Integration status: **blocked on KEO-64 production-build repair**, not represented as fully verified.
 
 ## Collision Risk
 Medium: shared receipt endpoint and frontend audit surfaces. Keep isolated until integration review.

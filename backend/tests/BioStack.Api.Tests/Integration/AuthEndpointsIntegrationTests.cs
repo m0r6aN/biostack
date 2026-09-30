@@ -13,6 +13,7 @@ using BioStack.Api.Endpoints;
 using BioStack.Application.Services;
 using BioStack.Contracts.Requests;
 using BioStack.Contracts.Responses;
+using BioStack.Domain.Entities;
 using BioStack.Domain.Enums;
 using BioStack.Domain.Entities;
 using BioStack.Infrastructure.Persistence;
@@ -348,6 +349,25 @@ public sealed class AuthEndpointsIntegrationTests : IAsyncLifetime
         Assert.NotNull(calculation);
         Assert.Equal(2000m, calculation.Output);
         Assert.Equal("mcg/mL", calculation.Unit);
+
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<BioStackDbContext>();
+            var user = await db.AppUsers.SingleAsync(u => u.Email == "new-user@example.com");
+            db.Subscriptions.Add(new BioStack.Domain.Entities.Subscription
+            {
+                Id = Guid.NewGuid(),
+                AppUserId = user.Id,
+                ProductCode = "operator",
+                Tier = BioStack.Domain.Enums.ProductTier.Operator,
+                Status = BioStack.Domain.Enums.SubscriptionStatus.Active,
+                StripePriceId = "price_test_pro",
+                CurrentPeriodEndUtc = DateTime.UtcNow.AddMonths(1),
+                CreatedAtUtc = DateTime.UtcNow,
+                UpdatedAtUtc = DateTime.UtcNow,
+            });
+            await db.SaveChangesAsync();
+        }
 
         var protocolResponse = await _client.PostAsJsonAsync($"/api/v1/profiles/{profile.Id}/protocols", new SaveProtocolRequest("First active stack"));
         if (protocolResponse.StatusCode != HttpStatusCode.Created)

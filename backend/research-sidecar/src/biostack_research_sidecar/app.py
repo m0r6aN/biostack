@@ -41,6 +41,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(
         title="BioStack Scientific Research Sidecar",
         version=__version__,
+        docs_url=None,
+        redoc_url=None,
+        openapi_url=None,
         description=(
             "Internal BioStack research operations only. "
             "Does not expose unrestricted ToolUniverse execution."

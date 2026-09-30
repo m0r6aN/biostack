@@ -34,7 +34,7 @@ describe('Day7ReviewCard', () => {
 
     expect(screen.getByLabelText('Day 7 Review')).toBeInTheDocument();
     expect(screen.getByLabelText(/earned suggestion/i)).toBeInTheDocument();
-    expect(screen.getByText('Clarify the stack signal')).toBeInTheDocument();
+    expect(screen.getByText('Reduce stack redundancy')).toBeInTheDocument();
     expect(screen.getByText('Based on overlapping inputs and a weak or unclear 7-day review.')).toBeInTheDocument();
   });
 
@@ -75,8 +75,8 @@ const earnedReview: Day7Review = {
 
 const earnedSuggestion: EarnedSuggestion = {
   type: 'tighten_stack',
-  title: 'Clarify the stack signal',
-  explanation: 'You may be tracking overlapping or crowded inputs, which can make the next signal harder to isolate.',
+  title: 'Reduce stack redundancy',
+  explanation: 'Overlapping or crowded items can make the next finding harder to trust.',
   reasoning: 'Based on overlapping inputs and a weak or unclear 7-day review.',
-  actionLabel: 'Review stack',
+  actionLabel: 'Review findings',
 };

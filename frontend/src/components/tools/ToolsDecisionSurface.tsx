@@ -34,6 +34,7 @@ type OverlapStatus = 'caution' | 'avoid' | 'unknown';
 interface ToolsDecisionSurfaceProps {
   initialMode?: SurfaceMode;
   compactIntro?: boolean;
+  heading?: string;
 }
 
 const quickCompounds = ['BPC-157', 'TB-500', 'NAD+'];
@@ -67,7 +68,7 @@ const modeCopy: Record<SurfaceMode, { label: string; title: string; description:
   },
 };
 
-export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = false }: ToolsDecisionSurfaceProps) {
+export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = false, heading }: ToolsDecisionSurfaceProps) {
   const { user } = useAuth();
   const { currentProfileId, profiles, setProfiles, setCurrentProfileId } = useProfile();
   const [mode, setMode] = useState<SurfaceMode>(initialMode);
@@ -76,6 +77,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
   const [input, setInput] = useState<UnifiedDosingInput>(DEFAULT_UNIFIED_DOSING_INPUT);
   const [conversion, setConversion] = useState({ amount: 1000, fromUnit: 'mcg' as MassUnit, toUnit: 'mg' as MassUnit });
   const [knowledge, setKnowledge] = useState<KnowledgeEntry[]>([]);
+  const [knowledgeStatus, setKnowledgeStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [stackCompounds, setStackCompounds] = useState<CompoundRecord[]>([]);
   const [recentCompounds, setRecentCompounds] = useState<string[]>([]);
   const [compatibility, setCompatibility] = useState<InteractionFlag[]>([]);
@@ -171,7 +173,15 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
         demoCompound('NAD+'),
       ]);
     }
-    void apiClient.getAllKnowledgeCompounds().then(setKnowledge).catch(() => setKnowledge([]));
+    void apiClient.getAllKnowledgeCompounds()
+      .then((entries) => {
+        setKnowledge(entries);
+        setKnowledgeStatus('ready');
+      })
+      .catch(() => {
+        setKnowledge([]);
+        setKnowledgeStatus('error');
+      });
   }, [refreshSaved]);
 
   useEffect(() => {
@@ -364,7 +374,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/70">Start here</p>
               <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                Dose it right. Mix correctly. Check compatibility.
+                {heading ?? 'Dose it right. Mix correctly. Check compatibility.'}
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-white/62 sm:text-lg">
                 Free volume, concentration, unit-conversion, and compatibility calculations. No account required.
@@ -372,11 +382,27 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
             </div>
           )}
 
+          {compactIntro && heading && (
+            <h1 className="text-2xl font-semibold tracking-tight text-white">{heading}</h1>
+          )}
+
+          <Link
+            href="/tools/analyzer"
+            className="group flex items-center justify-between gap-4 rounded-lg border border-violet-300/20 bg-violet-400/[0.06] px-4 py-3.5 transition-colors hover:border-violet-300/40 hover:bg-violet-400/[0.10]"
+          >
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-100/60">Protocol Analyzer</p>
+              <p className="mt-1 text-sm leading-5 text-white/70 group-hover:text-white/85">Analyze any protocol in the format you already have.</p>
+            </div>
+            <span className="text-sm font-semibold text-violet-100/80 group-hover:text-violet-100 shrink-0">Analyze →</span>
+          </Link>
+
           <CompoundChooser
             compound={compound}
             onSelect={selectCompound}
             quickCompounds={quickCompounds}
             knowledgeNames={knowledgeNames}
+            knowledgeStatus={knowledgeStatus}
             stackCompounds={stackCompounds}
             recentCompounds={recentCompounds}
             isAuthenticated={Boolean(user) || stackCompounds.length > 0}
@@ -402,7 +428,7 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
                 <div className="grid gap-4 sm:grid-cols-2">
                   <NumberWithUnitFieldWithInfo label="Powder amount" help="How much powder is printed on the vial?" value={input.powderAmount} unit={input.powderUnit} units={massUnits} onValueChange={(powderAmount) => setInput((current) => ({ ...current, powderAmount }))} onUnitChange={(powderUnit) => setInput((current) => ({ ...current, powderUnit }))} infoImageSrc="/images/vial.jpg" infoImageAlt="How to read a vial label reference" />
                   <NumberField label="Solution volume" help="How much liquid was added?" suffix="mL" value={input.diluentVolumeMl} onChange={(diluentVolumeMl) => setInput((current) => ({ ...current, diluentVolumeMl }))} />
-                  <NumberWithUnitField label="Amount to calculate" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
+                  <NumberWithUnitField label="Target Dosage" help="What amount are you calculating?" value={input.desiredDose} unit={input.desiredDoseUnit} units={massUnits} onValueChange={(desiredDose) => setInput((current) => ({ ...current, desiredDose }))} onUnitChange={(desiredDoseUnit) => setInput((current) => ({ ...current, desiredDoseUnit }))} />
                 </div>
 
                 <details className="rounded-lg border border-white/[0.08] bg-black/15 p-4">
@@ -445,6 +471,14 @@ export function ToolsDecisionSurface({ initialMode = 'dose', compactIntro = fals
               <Metric label="Dose" value={formatDose(dosing.result.dosePerAdministrationMcg)} detail="per administration" />
               <Metric label="Concentration" value={`${formatNumber(dosing.result.concentrationMcgPerMl)} mcg/mL`} detail={`${formatNumber(dosing.result.concentrationMgPerMl, 4)} mg/mL`} />
             </div>
+          )}
+          {mode !== 'convert' && dosing.result && (
+            <section aria-labelledby="shots-per-vial-title" className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+              <h3 id="shots-per-vial-title" className="text-base font-semibold text-white">Shots per vial</h3>
+              <p className="mt-2 text-sm leading-6 text-white/65">
+                There are exactly {formatNumber(dosing.result.shotsPerVialExact, 2)} shots of {formatNumber(dosing.result.u100UnitsPerAdministration, 2)} units ({formatNumber(dosing.result.volumePerAdministrationMl, 4)} mL) in a {formatNumber(input.diluentVolumeMl)} mL vial, though practically you will get {Math.max(dosing.result.shotsPerVialWhole - 1, 0)} to {dosing.result.shotsPerVialWhole} shots depending on syringe math and vial waste.
+              </p>
+            </section>
           )}
           {stackInsights.length > 0 && <InsightPanel title="Stack insights" items={stackInsights} />}
 
@@ -497,6 +531,7 @@ function CompoundChooser({
   onSelect,
   quickCompounds,
   knowledgeNames,
+  knowledgeStatus,
   stackCompounds,
   recentCompounds,
   isAuthenticated,
@@ -505,6 +540,7 @@ function CompoundChooser({
   onSelect: (value: string) => void;
   quickCompounds: string[];
   knowledgeNames: string[];
+  knowledgeStatus: 'loading' | 'ready' | 'error';
   stackCompounds: CompoundRecord[];
   recentCompounds: string[];
   isAuthenticated: boolean;
@@ -612,7 +648,9 @@ function CompoundChooser({
                 ))}
               </div>
             </>
-          ) : knowledgeNames.length === 0 ? (
+          ) : knowledgeStatus === 'loading' ? (
+            <p className="text-sm leading-6 text-white/52">Loading compound list…</p>
+          ) : knowledgeStatus === 'error' || knowledgeNames.length === 0 ? (
             <p className="text-sm leading-6 text-white/52">Compound search is temporarily unavailable.</p>
           ) : (
             <p className="text-sm leading-6 text-white/52">No recognized compound found. You can still submit this text as a custom compound.</p>

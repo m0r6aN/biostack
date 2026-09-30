@@ -58,10 +58,36 @@ function SignInPageContent() {
     if (!passkeysSupported()) {
       return;
     }
-    void fetch(`${API_URL}/api/v1/auth/passkeys/status`, { credentials: 'include', cache: 'no-store' })
-      .then(response => response.ok ? response.json() : null)
-      .then((status: { enabled?: boolean } | null) => setPasskeysEnabled(status?.enabled === true))
-      .catch(() => setPasskeysEnabled(false));
+
+    let cancelled = false;
+
+    async function loadPasskeysEnabled() {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const response = await fetch(`${API_URL}/api/v1/auth/passkeys/status`, { credentials: 'include', cache: 'no-store' });
+          if (response.ok) {
+            const status = (await response.json()) as { enabled?: boolean } | null;
+            if (!cancelled) setPasskeysEnabled(status?.enabled === true);
+            return;
+          }
+        } catch {
+          // Transient failure — retried once below.
+        }
+        const { promise, resolve } = Promise.withResolvers<void>();
+        setTimeout(resolve, 500);
+        await promise;
+      }
+
+      // Unverifiable after a retry: when the browser supports WebAuthn, offer
+      // passkey sign-in rather than silently hiding it — an actual disablement
+      // surfaces at click time as a clear error instead of an invisible button.
+      if (!cancelled) setPasskeysEnabled(true);
+    }
+
+    void loadPasskeysEnabled();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {

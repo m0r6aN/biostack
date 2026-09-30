@@ -1,0 +1,465 @@
+name: Research sidecar CI
+
+on:
+  pull_request:
+    paths:
+      - "backend/research-sidecar/**"
+      - "scripts/verify-research-sidecar-container.mjs"
+      - "scripts/verify-research-sidecar-container.test.mjs"
+      - ".github/workflows/research-sidecar-ci.yml"
+  push:
+    paths:
+      - "backend/research-sidecar/**"
+      - "scripts/verify-research-sidecar-container.mjs"
+      - "scripts/verify-research-sidecar-container.test.mjs"
+      - ".github/workflows/research-sidecar-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Frozen tests and production container contract
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Setup Python 3.12.12
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12.12"
+
+      - name: Setup Node 22.23.1
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22.23.1"
+
+      - name: Install pinned verification tooling
+        run: |
+          set -euo pipefail
+          python -m venv "${RUNNER_TEMP}/p01-tools"
+          python - <<'PY'
+          import os
+          from pathlib import Path
+
+          requirements = """\
+          boolean-py==5.0 --hash=sha256:ef28a70bd43115208441b53a045d1549e2f0ec6e3d08a9d142cbc41c1938e8d9
+          cachecontrol==0.14.4 --hash=sha256:b7ac014ff72ee199b5f8af1de29d60239954f223e948196fa3d84adaffc71d2b
+          certifi==2026.7.22 --hash=sha256:62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775
+          charset-normalizer==3.5.1 --hash=sha256:b9af956078716df40d985fb0dfeb2c2120c5ca92ba4ff4b388acfd01cdc14d08
+          cyclonedx-python-lib==9.1.0 --hash=sha256:55693fca8edaecc3363b24af14e82cc6e659eb1e8353e58b587c42652ce0fb52
+          defusedxml==0.7.1 --hash=sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61
+          filelock==3.32.6 --hash=sha256:3f16ecd0117feae0dfc147e8c62eb5daeccd8bd800378c3ddf416de9b4feb6b1
+          idna==3.19 --hash=sha256:815e7be7a7806d54abb586dc943addc79e8b2ee16915059658cbeff4b1b43bf4
+          license-expression==30.4.4 --hash=sha256:421788fdcadb41f049d2dc934ce666626265aeccefddd25e162a26f23bcbf8a4
+          markdown-it-py==4.2.0 --hash=sha256:9f7ebbcd14fe59494226453aed97c1070d83f8d24b6fc3a3bcf9a38092641c4a
+          mdurl==0.1.2 --hash=sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8
+          msgpack==1.2.2 --hash=sha256:77c2e018417dc1d66f235e383877ee885b60ade9d29e494dd581e08af2cb1923
+          packageurl-python==0.17.6 --hash=sha256:31a85c2717bc41dd818f3c62908685ff9eebcb68588213745b14a6ee9e7df7c9
+          packaging==26.3 --hash=sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c
+          pip==26.2.1 --hash=sha256:71138adf1f4ca900cdb7d289c21b7494329f2332b6d85f0e1c42108c0384ed3e
+          pip-api==0.0.35 --hash=sha256:66990d0da25378555cbb538db79384bab92d4617c6350dfd7a2126ba2a3a9894
+          pip-audit==2.9.0 --hash=sha256:348b16e60895749a0839875d7cc27ebd692e1584ebe5d5cb145941c8e25a80bd
+          pip-requirements-parser==32.0.1 --hash=sha256:4659bc2a667783e7a15d190f6fccf8b2486685b6dba4c19c3876314769c57526
+          platformdirs==4.11.8 --hash=sha256:52f2f181bbfde907966932cc8312d967d02976422d66d537ea16092b8e291081
+          py-serializable==2.1.0 --hash=sha256:b56d5d686b5a03ba4f4db5e769dc32336e142fc3bd4d68a8c25579ebb0a67304
+          pygments==2.21.0 --hash=sha256:2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9
+          pyparsing==3.3.2 --hash=sha256:850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d
+          requests==2.34.2 --hash=sha256:2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0
+          rich==15.0.0 --hash=sha256:33bd4ef74232fb73fe9279a257718407f169c09b78a87ad3d296f548e27de0bb
+          sortedcontainers==2.4.0 --hash=sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0
+          toml==0.10.2 --hash=sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b
+          urllib3==2.7.0 --hash=sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897
+          uv==0.9.7 --hash=sha256:8cf6bc2482d1293cc630f66b862b494c09acda9b7faff7307ef52667a2b3ad49
+          """
+          Path(os.environ["RUNNER_TEMP"], "p01-bootstrap-requirements.txt").write_text(
+              requirements,
+              encoding="utf-8",
+          )
+          PY
+          "${RUNNER_TEMP}/p01-tools/bin/python" -m pip install \
+            --disable-pip-version-check \
+            --only-binary=:all: \
+            --require-hashes \
+            --requirement "${RUNNER_TEMP}/p01-bootstrap-requirements.txt"
+          echo "${RUNNER_TEMP}/p01-tools/bin" >> "${GITHUB_PATH}"
+          export PATH="${RUNNER_TEMP}/p01-tools/bin:${PATH}"
+          uv --version
+          pip-audit --version
+
+      - name: Synchronize the frozen development environment
+        working-directory: backend/research-sidecar
+        run: timeout 10m uv sync --frozen --extra dev
+
+      - name: Run the complete sidecar suite
+        working-directory: backend/research-sidecar
+        run: |
+          set -euo pipefail
+          timeout 10m .venv/bin/python -m pytest \
+            tests \
+            -q \
+            --junitxml "${RUNNER_TEMP}/research-sidecar-pytest.xml"
+
+      - name: Enforce the sidecar suite-count and reproduction tripwire
+        env:
+          SIDECAR_JUNIT_XML: ${{ runner.temp }}/research-sidecar-pytest.xml
+        run: |
+          python - <<'PY'
+          import os
+          import sys
+          import xml.etree.ElementTree as ET
+
+          path = os.environ["SIDECAR_JUNIT_XML"]
+          root = ET.parse(path).getroot()
+          suites = [root] if root.tag == "testsuite" else list(root.findall("testsuite"))
+          totals = {
+              key: sum(int(suite.attrib.get(key, "0")) for suite in suites)
+              for key in ("tests", "failures", "errors", "skipped")
+          }
+          expected = {"tests": 54, "failures": 0, "errors": 0, "skipped": 1}
+          if totals != expected:
+              print(f"sidecar suite-count tripwire failed: observed={totals}, expected={expected}")
+              sys.exit(1)
+
+          identities = {
+              case.attrib.get("classname", "")
+              for suite in suites
+              for case in suite.findall("testcase")
+          }
+          required = {
+              "test_runner_terminal_state_reproduction",
+              "test_request_constraint_reproduction",
+          }
+          missing = sorted(
+              name for name in required if not any(name in identity for identity in identities)
+          )
+          if missing:
+              print(f"sidecar reproduction identity tripwire failed: missing={missing}")
+              sys.exit(1)
+          print("sidecar suite-count tripwire passed: 53 passed, 1 expected skip")
+          PY
+
+      - name: Audit the frozen no-extra third-party dependency set
+        working-directory: backend/research-sidecar
+        run: |
+          set -euo pipefail
+          timeout 2m uv export \
+            --frozen \
+            --no-dev \
+            --no-hashes \
+            --no-emit-project \
+            --output-file "${RUNNER_TEMP}/research-sidecar-requirements.txt"
+          timeout 5m pip-audit \
+            --strict \
+            --requirement "${RUNNER_TEMP}/research-sidecar-requirements.txt"
+
+      - name: Audit the hash-locked build-backend closure
+        run: |
+          set -euo pipefail
+          cat > "${RUNNER_TEMP}/p01-build-backend-requirements.txt" <<'P01_REQUIREMENTS'
+          # P01_BUILD_BACKEND_REQUIREMENTS_BEGIN
+          hatchling==1.32.0 \
+              --hash=sha256:0bdbde4a52b06c37e3eca395f85a762bf0ef06fe374fd8ae429dc6be10230f5f \
+              --hash=sha256:0e17c9c3b9aa7c625acc8d0f5b622f107d5049af9ecf5ada4de1aada5be7cdbc
+          packaging==26.3 \
+              --hash=sha256:94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79 \
+              --hash=sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c
+          pathspec==1.1.1 \
+              --hash=sha256:17db5ecd524104a120e173814c90367a96a98d07c45b2e10c2f3919fff91bf5a \
+              --hash=sha256:a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189
+          pluggy==1.6.0 \
+              --hash=sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3 \
+              --hash=sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746
+          tomlkit==0.15.1 \
+              --hash=sha256:177a05aece5a8ca5266fd3c448abb47b8d352f09d477d3ca8332db4d89b24304 \
+              --hash=sha256:e25bbf38843005246210a12982776f27f99cb9be67160e14434d0c0d21ee1e97
+          trove-classifiers==2026.6.1.19 \
+              --hash=sha256:ab4c4ec93cc4a4e7815fa759906e05e6bb3f2fbd92ea0f897288c6a43efd15b3 \
+              --hash=sha256:c5132b4b61a829d11cfbd2d72e97f20a45ed6edb95e45c5efdeb5e00836b2745
+          # P01_BUILD_BACKEND_REQUIREMENTS_END
+          P01_REQUIREMENTS
+          timeout 5m pip-audit \
+            --strict \
+            --no-deps \
+            --requirement "${RUNNER_TEMP}/p01-build-backend-requirements.txt"
+
+      - name: Run container-verifier mutation tests
+        run: timeout 2m node --test scripts/verify-research-sidecar-container.test.mjs
+
+      - name: Scan the checked-out tree for secrets
+        env:
+          GITLEAKS_VERSION: "8.24.3"
+          GITLEAKS_LINUX_X64_SHA256: "9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c"
+        run: |
+          set -euo pipefail
+          mkdir -p "${RUNNER_TEMP}/gitleaks-bin"
+          timeout 2m curl \
+            --fail \
+            --silent \
+            --show-error \
+            --location \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            --output "${RUNNER_TEMP}/gitleaks.tar.gz"
+          printf '%s  %s\n' \
+            "${GITLEAKS_LINUX_X64_SHA256}" \
+            "${RUNNER_TEMP}/gitleaks.tar.gz" \
+            | sha256sum --check --strict
+          tar -xzf "${RUNNER_TEMP}/gitleaks.tar.gz" \
+            -C "${RUNNER_TEMP}/gitleaks-bin" \
+            gitleaks
+          timeout 5m "${RUNNER_TEMP}/gitleaks-bin/gitleaks" dir \
+            --config .gitleaks.toml \
+            --redact \
+            --no-banner \
+            .
+
+      - name: Build the provider-SDK-free production image
+        run: |
+          set -euo pipefail
+          context_fixture="backend/research-sidecar/p01-untracked-credential.json"
+          context_negative_dockerfile="${RUNNER_TEMP}/p01-context-negative.Dockerfile"
+          context_negative_log="${RUNNER_TEMP}/p01-context-negative.log"
+          context_probe_name="biostack-p01-context-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          cleanup_context_fixture() {
+            rm -f -- \
+              "${context_fixture}" \
+              "${context_negative_dockerfile}" \
+              "${context_negative_log}"
+          }
+          trap cleanup_context_fixture EXIT
+          printf '%s\n' 'synthetic build-context exclusion fixture' > "${context_fixture}"
+          printf '%s\n' \
+            'FROM scratch' \
+            'COPY p01-untracked-credential.json /p01-untracked-credential.json' \
+            > "${context_negative_dockerfile}"
+          set +e
+          timeout 2m docker build \
+            --pull=false \
+            --network=none \
+            --file "${context_negative_dockerfile}" \
+            backend/research-sidecar \
+            > "${context_negative_log}" 2>&1
+          context_negative_status=$?
+          set -e
+          if [[ "${context_negative_status}" -eq 0 ]]; then
+            printf '%s\n' 'Default-deny context test unexpectedly copied the credential fixture.' >&2
+            exit 1
+          fi
+          if [[ "${context_negative_status}" -eq 124 ]]; then
+            printf '%s\n' 'Default-deny context test timed out.' >&2
+            exit 1
+          fi
+          if ! grep -Fq 'p01-untracked-credential.json' "${context_negative_log}"; then
+            printf '%s\n' 'Default-deny context failure did not identify the excluded fixture.' >&2
+            exit 1
+          fi
+          timeout 10m docker build \
+            --pull=false \
+            --file backend/research-sidecar/Dockerfile \
+            --tag biostack-research-sidecar:p01-ci \
+            backend/research-sidecar
+          timeout 30s docker run \
+            --rm \
+            --pull=never \
+            --name "${context_probe_name}" \
+            --network none \
+            --read-only \
+            --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --entrypoint /bin/sh \
+            biostack-research-sidecar:p01-ci \
+            -ec 'test ! -e /app/p01-untracked-credential.json'
+          cleanup_context_fixture
+          trap - EXIT
+
+      - name: Prove catchable TERM cleans the verifier-owned container
+        run: |
+          set -euo pipefail
+          invocation_nonce="$(node -e 'process.stdout.write(require("node:crypto").randomBytes(16).toString("hex"))')"
+          if [[ ! "${invocation_nonce}" =~ ^[a-f0-9]{32}$ ]]; then
+            printf '%s\n' 'TERM fixture invocation nonce is malformed.' >&2
+            exit 1
+          fi
+          fixture_name="biostack-p01-ci-term-${invocation_nonce}"
+          verifier_log="${RUNNER_TEMP}/p01-term-verifier.log"
+          verifier_pid=""
+          owned_id=""
+          owner_marker=""
+          preflight_complete="false"
+
+          query_container_ids() {
+            local phase="$1"
+            shift
+            local output query_status
+            set +e
+            output="$(timeout 10s docker container ls \
+              --all \
+              --no-trunc \
+              "$@" \
+              --format '{{.ID}}' 2>/dev/null)"
+            query_status=$?
+            set -e
+            if [[ "${query_status}" -ne 0 ]]; then
+              printf 'TERM fixture Docker query failed during %s.\n' "${phase}" >&2
+              return 1
+            fi
+            while IFS= read -r candidate; do
+              [[ -z "${candidate}" ]] && continue
+              if [[ ! "${candidate}" =~ ^[a-f0-9]{64}$ ]]; then
+                printf 'TERM fixture Docker query was malformed during %s.\n' "${phase}" >&2
+                return 1
+              fi
+            done <<< "${output}"
+            printf '%s' "${output}"
+          }
+
+          preflight_name_ids="$(query_container_ids \
+            preflight-name \
+            --filter "name=^/${fixture_name}$")" || exit 1
+          preflight_nonce_ids="$(query_container_ids \
+            preflight-nonce \
+            --filter "name=${invocation_nonce}")" || exit 1
+          if [[ -n "${preflight_name_ids}" ]] || [[ -n "${preflight_nonce_ids}" ]]; then
+            printf '%s\n' 'TERM fixture invocation identity already exists; refusing adoption.' >&2
+            exit 1
+          fi
+          preflight_complete="true"
+
+          claim_fixture() {
+            local candidates candidate_count candidate_owner candidate_name
+            [[ "${preflight_complete}" == "true" ]] || return 1
+            [[ -n "${verifier_pid}" ]] || return 1
+            kill -0 "${verifier_pid}" 2>/dev/null || return 1
+            if ! candidates="$(query_container_ids \
+              claim \
+              --filter "name=^/${fixture_name}$" \
+              --filter "label=io.biostack.p01.owner")"; then
+              return 2
+            fi
+            candidate_count="$(printf '%s\n' "${candidates}" | sed '/^$/d' | wc -l)"
+            if [[ "${candidate_count}" -eq 0 ]]; then
+              return 1
+            fi
+            if [[ "${candidate_count}" -ne 1 ]]; then
+              printf '%s\n' 'TERM fixture ownership query was ambiguous.' >&2
+              return 2
+            fi
+            [[ "${candidates}" =~ ^[a-f0-9]{64}$ ]] || return 2
+            candidate_owner="$(timeout 10s docker container inspect \
+              --format '{{index .Config.Labels "io.biostack.p01.owner"}}' \
+              "${candidates}" 2>/dev/null)" || return 2
+            [[ "${candidate_owner}" =~ ^[a-f0-9]{48}$ ]] || return 2
+            candidate_name="$(timeout 10s docker container inspect \
+              --format '{{.Name}}' "${candidates}" 2>/dev/null)" || return 2
+            [[ "${candidate_name}" == "/${fixture_name}" ]] || return 2
+            kill -0 "${verifier_pid}" 2>/dev/null || return 1
+            owned_id="${candidates}"
+            owner_marker="${candidate_owner}"
+          }
+
+          cleanup_fixture() {
+            set +e
+            if [[ -n "${verifier_pid}" ]] && kill -0 "${verifier_pid}" 2>/dev/null; then
+              kill -TERM "${verifier_pid}" 2>/dev/null
+              if ! timeout 19s tail --pid="${verifier_pid}" -f /dev/null; then
+                kill -KILL "${verifier_pid}" 2>/dev/null
+              fi
+              wait "${verifier_pid}" 2>/dev/null
+            fi
+            if [[ "${owned_id}" =~ ^[a-f0-9]{64}$ ]] && \
+               [[ "${owner_marker}" =~ ^[a-f0-9]{48}$ ]]; then
+              local current_owner
+              current_owner="$(timeout 10s docker container inspect \
+                --format '{{index .Config.Labels "io.biostack.p01.owner"}}' \
+                "${owned_id}" 2>/dev/null)"
+              if [[ "${current_owner}" == "${owner_marker}" ]]; then
+                timeout 10s docker container rm --force "${owned_id}" >/dev/null 2>&1
+              fi
+            fi
+          }
+          trap cleanup_fixture EXIT
+
+          node scripts/verify-research-sidecar-container.mjs \
+            --image biostack-research-sidecar:p01-ci \
+            --container-name "${fixture_name}" \
+            --health-timeout-seconds 45 \
+            >"${verifier_log}" 2>&1 &
+          verifier_pid=$!
+
+          observe_deadline=$((SECONDS + 60))
+          while :; do
+            set +e
+            claim_fixture
+            claim_status=$?
+            set -e
+            if [[ "${claim_status}" -eq 0 ]]; then
+              break
+            fi
+            if [[ "${claim_status}" -ne 1 ]]; then
+              printf '%s\n' 'TERM fixture ownership proof failed closed.' >&2
+              exit 1
+            fi
+            if ! kill -0 "${verifier_pid}" 2>/dev/null; then
+              printf '%s\n' 'TERM fixture verifier exited before ownership proof.' >&2
+              cat "${verifier_log}" >&2
+              exit 1
+            fi
+            if (( SECONDS >= observe_deadline )); then
+              printf '%s\n' 'TERM fixture timed out waiting for ownership proof.' >&2
+              exit 1
+            fi
+            sleep 0.05
+          done
+
+          kill -TERM "${verifier_pid}"
+          if ! timeout 20s tail --pid="${verifier_pid}" -f /dev/null; then
+            printf '%s\n' 'TERM fixture verifier exceeded the 20-second grace.' >&2
+            exit 1
+          fi
+          set +e
+          wait "${verifier_pid}"
+          term_status=$?
+          set -e
+          verifier_pid=""
+          if [[ "${term_status}" -ne 1 ]]; then
+            printf 'TERM fixture expected exit 1, observed %s.\n' "${term_status}" >&2
+            cat "${verifier_log}" >&2
+            exit 1
+          fi
+          if grep -Fq -- "${owner_marker}" "${verifier_log}"; then
+            printf '%s\n' 'TERM fixture ownership marker leaked to output.' >&2
+            exit 1
+          fi
+          final_query_failed="false"
+          if ! final_name_ids="$(query_container_ids \
+            final-name \
+            --filter "name=^/${fixture_name}$")"; then
+            final_query_failed="true"
+          fi
+          if ! final_label_ids="$(query_container_ids \
+            final-label \
+            --filter "label=io.biostack.p01.owner=${owner_marker}")"; then
+            final_query_failed="true"
+          fi
+          if [[ "${final_query_failed}" == "true" ]]; then
+            printf '%s\n' 'TERM fixture final absence proof was uncertain.' >&2
+            exit 1
+          fi
+          if [[ -n "${final_name_ids}" ]] || [[ -n "${final_label_ids}" ]]; then
+            printf '%s\n' 'TERM fixture left an owned container.' >&2
+            exit 1
+          fi
+          owned_id=""
+          owner_marker=""
+          trap - EXIT
+
+      - name: Verify the local dark container contract
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=20s 3m \
+            node scripts/verify-research-sidecar-container.mjs \
+            --image biostack-research-sidecar:p01-ci \
+            --health-timeout-seconds 45

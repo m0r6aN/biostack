@@ -90,7 +90,6 @@ public class IntelligenceSafetyGateIntegrationTests : IAsyncLifetime
             UpdatedAtUtc = DateTime.UtcNow,
         });
         await db.SaveChangesAsync();
-
         var store = scope.ServiceProvider.GetRequiredService<ICompoundGraphStore>();
         await store.PublishAsync(
             new CompoundGraphArtifact

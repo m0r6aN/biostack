@@ -68,9 +68,9 @@ describe('ProfilesPage continuation state', () => {
   it('shows recovered inputs as continuation rather than a reset empty state', async () => {
     render(<ProfilesPage />);
 
-    expect(await screen.findByText('Inputs recovered.')).toBeInTheDocument();
-    expect(screen.getAllByText('Profile not yet instantiated.').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('Your list is ready to save.').length).toBeGreaterThan(0);
+    expect(await screen.findByText('Stack inputs recovered.')).toBeInTheDocument();
+    expect(screen.getAllByText('Profile not yet created.').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Your stack is ready to save.').length).toBeGreaterThan(0);
     expect(screen.getAllByRole('button', { name: 'Continue Profile Setup' }).length).toBeGreaterThan(0);
     expect(screen.queryByText('Ready To Continue')).not.toBeInTheDocument();
     expect(screen.queryByText('Name the profile. Keep the protocol.')).not.toBeInTheDocument();

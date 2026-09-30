@@ -82,6 +82,21 @@ export interface ProviderAccessConfirmation {
   submittedAtUtc: string;
 }
 
+export interface ProviderAccessRequest {
+  email: string;
+  name: string;
+  organization: string;
+  role: string;
+  consent: boolean;
+  website?: string;
+}
+
+export interface ProviderAccessConfirmation {
+  requestId: string;
+  status: string;
+  submittedAtUtc: string;
+}
+
 export interface CheckIn {
   id: string;
   personId: string;
@@ -480,6 +495,27 @@ export interface ProtocolReviewCompletedEvent {
   completedAtUtc: string;
   notes: string;
   receiptUri?: string;
+}
+
+export interface EntitlementLimits {
+  maxCompounds: number;
+}
+
+export interface EntitlementFeatures {
+  stackIntelligence: boolean;
+  fullOverlapAnalysis: boolean;
+  protocolBuilder: boolean;
+  observabilityCorrelations: boolean;
+  savedAdvancedProtocolViews: boolean;
+  affiliateSurfaces: boolean;
+}
+
+export interface Entitlements {
+  isPro: boolean;
+  plan: 'free' | 'pro' | string;
+  limits: EntitlementLimits;
+  features: EntitlementFeatures;
+  futureRoles: string[];
 }
 
 export interface ProtocolRun {

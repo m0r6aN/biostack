@@ -1,6 +1,7 @@
 import { AppShell } from '@/components/AppShell';
 import { AuthProvider } from '@/lib/AuthProvider';
 import { ProfileProvider } from '@/lib/context';
+import { EntitlementsProvider } from '@/lib/entitlements';
 import { SettingsProvider } from '@/lib/settings';
 import { ROOT_METADATA } from '@/lib/site';
 import type { Metadata } from 'next';
@@ -31,9 +32,11 @@ export default async function RootLayout({
 
         <AuthProvider>
           <SettingsProvider>
-            <ProfileProvider>
-              <AppShell>{children}</AppShell>
-            </ProfileProvider>
+            <EntitlementsProvider>
+              <ProfileProvider>
+                <AppShell>{children}</AppShell>
+              </ProfileProvider>
+            </EntitlementsProvider>
           </SettingsProvider>
         </AuthProvider>
       </body>

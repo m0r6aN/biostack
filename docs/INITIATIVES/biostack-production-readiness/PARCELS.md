@@ -19,6 +19,12 @@
 | KEO-66-LIVE-INTERACTION-POSTGRES-REPAIR-029 | API / public knowledge | Hardening | merged | `D:/Repos/BioStack-go-live-audit-021-20260726` | `codex/keo66-live-interaction-hotfix-20260727` | high: production migration |
 | KEO-65-NUGET-HIGH-ADVISORY-GATE-030 | Security / backend dependencies | Release hardening | merged | `D:/Repos/BioStack-nuget-high-advisory-gate-20260727` | `codex/nuget-high-advisory-gate-20260727` | high: shared CI workflow |
 | BIO-RT-01 | Backend governance / Keon receipt boundary | Hardening | accepted-local; independently-reviewed; live-hold | `D:/Repos/BioStack-biort01-complete-20260727` | `codex/biort01-fail-closed-complete-20260727` | high: distributed DB/Runtime reconciliation and shared integration harnesses |
+| PR-SEC-001 | Security | Release | proposed | review scope required | TBD | high |
+| SEC-CONTAINER-001 | Security / container hardening | Release hardening | ready | `D:/Repos/BioStack-sec-container` | `codex/sec-backend-container` | low: backend Dockerfile |
+| SEC-DEPS-001 | Security / frontend dependencies | Release hardening | completed | `D:/Repos/BioStack-sec-frontend-deps` | `codex/sec-frontend-postcss` | medium: package lock |
+| SEC-LINK-001 | Security / analyzer egress | Release hardening | ready | `D:/Repos/BioStack-sec-link-analyzer` | `codex/sec-link-analyzer` | medium: analyzer/API composition |
+| SEC-PROVIDER-001 | Security / provider intake | Release hardening | ready | `D:/Repos/BioStack-sec-provider-access` | `codex/sec-provider-access` | low-medium: provider API |
+| SEC-RECEIPT-001 | Security / receipt authorization | Release hardening | blocked-on-KEO-64 | `D:/Repos/BioStack-sec-receipts` | `codex/sec-receipt-authorization` | medium: receipt API/UI |
 | PR-REL-001 | Release | Release | blocked | isolated required | TBD | high: ledger/evidence |
 
 Dependency order: `PR-DOC-001 -> PR-CI-001 -> integration/hardening parcels -> PR-SEC-001 -> PR-REL-001`.

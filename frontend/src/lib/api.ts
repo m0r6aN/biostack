@@ -1,7 +1,6 @@
 import {
     GOAL_DEFINITIONS,
 } from './goals';
-import { getApiBaseUrl } from './apiBase';
 import { normalizeTimelineEvent } from './timeline';
 import {
     CalculatorResult,
@@ -47,8 +46,11 @@ import {
     SupplementPlan,
     MonitoringProtocol,
     Milestone,
+    Entitlements,
     ResourceEntry,
 } from './types';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 export class ApiError extends Error {
   status: number;
@@ -74,7 +76,7 @@ export class ApiError extends Error {
 
 export class ApiClient {
   private baseUrl: string;
-  constructor(baseUrl: string = getApiBaseUrl()) {
+  constructor(baseUrl: string = API_URL) {
     this.baseUrl = baseUrl;
   }
 
@@ -455,6 +457,17 @@ export class ApiClient {
 
   async getCurrentSubscription(): Promise<CurrentSubscription> {
     return this.request<CurrentSubscription>('/api/v1/billing/subscription');
+  }
+
+  async getEntitlements(): Promise<Entitlements> {
+    return this.request<Entitlements>('/api/v1/billing/entitlements');
+  }
+
+  async refreshEntitlements(): Promise<Entitlements> {
+    return this.request<Entitlements>('/api/v1/billing/refresh', {
+      method: 'POST',
+      body: JSON.stringify({}),
+    });
   }
 
   async createCheckoutSession(planCode: 'operator' | 'commander'): Promise<{ url: string }> {
