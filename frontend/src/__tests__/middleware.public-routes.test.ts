@@ -1,4 +1,5 @@
 import middleware from '@/middleware';
+import { isPublicRoutePath } from '@/lib/productContract';
 import { NextRequest } from 'next/server';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -40,12 +41,18 @@ describe('middleware public route access', () => {
     '/knowledge-private', '/toolshed', '/apiary', '/uploads/avatar.png',
     '/og-image.png-backup', '/favicon.svg-private', '/og-image.png/private', '/favicon.svg/private',
   ]) (
-    'does not treat a near-prefix route %s as public',
+    'does not treat a near-prefix route %s as public — it falls through to the router',
     async (pathname) => {
+      expect(isPublicRoutePath(pathname)).toBe(false);
+
+      // Not public and not a protected app surface: the route falls through
+      // to the router, which renders the 404 page. It must never be admitted
+      // by the public allowlist, and it must not bounce visitors to sign-in
+      // as if it were an authenticated page.
       const response = await middleware(requestFor(pathname));
 
-      expect(response.status).toBe(307);
-      expect(response.headers.get('location')).toContain('/auth/signin');
+      expect(response.status).not.toBe(307);
+      expect(response.headers.get('location')).toBeNull();
     },
   );
 
