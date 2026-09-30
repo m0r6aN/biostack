@@ -58,7 +58,7 @@ public sealed class ProtocolIngestionDocxStructureTests
             """)));
 
         var lines = result.ExtractedText
-            .Split('\r', '\n', StringSplitOptions.RemoveEmptyEntries)
+            .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
             .Select(line => line.Trim())
             .ToList();
 

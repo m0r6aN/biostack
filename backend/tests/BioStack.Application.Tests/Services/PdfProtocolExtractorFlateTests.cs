@@ -42,7 +42,7 @@ public sealed class PdfProtocolExtractorFlateTests
         var result = await CreateExtractor().ExtractAsync(Request(pdf));
 
         var lines = result.ExtractedText
-            .Split('\r', '\n', StringSplitOptions.RemoveEmptyEntries)
+            .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
             .Select(line => line.Trim())
             .ToList();
         Assert.Equal(2, lines.Count);
