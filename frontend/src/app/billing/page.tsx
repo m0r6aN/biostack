@@ -6,6 +6,7 @@ import { Header } from '@/components/Header';
 import { LoadingSkeleton } from '@/components/LoadingState';
 import { apiClient } from '@/lib/api';
 import { pricingTiers } from '@/lib/marketing';
+import { tierRank } from '@/lib/productContract';
 import { CurrentSubscription } from '@/lib/types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -217,6 +218,10 @@ export default function BillingPage() {
                 {subscription?.tier === 'Operator' ? (
                   <p className="mt-5 inline-flex items-center gap-2 rounded-lg border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100">
                     <span aria-hidden="true">✓</span> Subscribed
+                  </p>
+                ) : tierRank(subscription?.tier ?? '') > tierRank('Operator') ? (
+                  <p className="mt-5 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-white/60">
+                    Included with {subscription?.tier}
                   </p>
                 ) : (
                   <button
