@@ -1,25 +1,10 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { isProtectedRoutePath } from '@/lib/appRoutes';
 import { isPublicRoutePath } from '@/lib/productContract';
 
 const API_URL = (process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || 'http://localhost:5050')
   .replace(/\/+$/, '');
-
-// Authenticated application surfaces. Anything outside this list and the
-// public prefixes falls through to the router, so unknown paths render the
-// 404 page instead of bouncing visitors to sign-in. APIs remain the real
-// authorization boundary; this is navigation UX, not access control.
-const PROTECTED_PREFIXES = [
-  '/admin',
-  '/billing',
-  '/compounds',
-  '/map-my-stack',
-  '/my-protocol',
-  '/profiles',
-  '/protocol-console',
-  '/protocols',
-  '/settings',
-];
 
 type SessionContract = {
   authenticated: boolean;
@@ -53,9 +38,7 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  const isProtected = PROTECTED_PREFIXES.some(
-    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
-  );
+  const isProtected = isProtectedRoutePath(pathname);
   if (!isProtected) {
     return NextResponse.next();
   }

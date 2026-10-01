@@ -47,7 +47,7 @@ describe('AuthProvider session handling', () => {
     });
   });
 
-  it('routes an expired cookie on a near-prefix page back through sign-in', async () => {
+  it('leaves an expired cookie on a near-prefix page to the router (404), not sign-in', async () => {
     const replace = vi.fn();
     vi.stubGlobal('location', {
       pathname: '/knowledge-private',
@@ -70,9 +70,9 @@ describe('AuthProvider session handling', () => {
     );
 
     await waitFor(() => {
-      expect(replace).toHaveBeenCalledWith(
-        '/auth/signin?callbackUrl=%2Fknowledge-private&error=session-expired',
-      );
+      // Unknown paths are not sign-in-gated: the router renders the 404
+      // page, so an expired cookie must not bounce the visitor away.
+      expect(replace).not.toHaveBeenCalled();
     });
   });
 
