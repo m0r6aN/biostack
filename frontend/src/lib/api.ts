@@ -1,3 +1,4 @@
+import { getApiBaseUrl } from './apiBase';
 import {
     GOAL_DEFINITIONS,
 } from './goals';
@@ -50,7 +51,11 @@ import {
     ResourceEntry,
 } from './types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+// Browser calls must stay same-origin (empty base → the Next rewrite proxies
+// /api/v1 to the backend with the session cookie attached). NEXT_PUBLIC_API_URL
+// is server-only: inlining it here sends browser fetches to the raw container
+// host, where the biostack.cc session cookie cannot travel.
+const API_URL = getApiBaseUrl();
 
 export class ApiError extends Error {
   status: number;
