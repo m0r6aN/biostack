@@ -2,7 +2,7 @@
 
 import { Sidebar } from '@/components/Sidebar';
 import { useAuth } from '@/lib/AuthProvider';
-import { isPublicRoutePath } from '@/lib/productContract';
+import { isProtectedRoutePath } from '@/lib/appRoutes';
 import { usePathname } from 'next/navigation';
 
 const APP_ROUTE_PREFIXES = [
@@ -29,7 +29,7 @@ interface AppShellProps {
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const { user, loading } = useAuth();
-  const isProtectedRoute = !isPublicRoutePath(pathname);
+  const isProtectedRoute = isProtectedRoutePath(pathname);
   const isKnowledgeRoute = pathname.startsWith('/knowledge');
   const isAppRoute =
     APP_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix)) &&
