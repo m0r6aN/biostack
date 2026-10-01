@@ -33,6 +33,21 @@ describe('ApiClient', () => {
     );
   });
 
+  it('defaults to same-origin API calls so the session cookie travels', async () => {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => [],
+    });
+
+    await new ApiClient().getProfiles();
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      '/api/v1/profiles',
+      expect.objectContaining({ credentials: 'include' }),
+    );
+  });
+
   it('throws a descriptive error when the API request fails', async () => {
     fetchMock.mockResolvedValue({
       ok: false,
