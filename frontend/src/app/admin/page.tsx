@@ -16,6 +16,7 @@ interface SystemStats {
 
 export default function AdminPage() {
   const [stats, setStats] = useState<SystemStats | null>(null);
+  const [statsError, setStatsError] = useState<string | null>(null);
   const devTokenRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -44,12 +45,23 @@ export default function AdminPage() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch(`${API_URL}/api/v1/admin/stats`, { headers: authHeaders() });
+      const res = await fetch(`${API_URL}/api/v1/admin/stats`, {
+        credentials: 'include',
+        headers: authHeaders(),
+      });
       if (res.ok) {
         setStats(await res.json());
+        setStatsError(null);
+        return;
       }
+      setStatsError(
+        res.status === 401 || res.status === 403
+          ? 'Admin access is required for these metrics.'
+          : 'Metrics are unavailable right now.',
+      );
     } catch (err) {
       console.error('Failed to fetch stats', err);
+      setStatsError('Metrics are unavailable right now.');
     }
   };
 
@@ -59,12 +71,16 @@ export default function AdminPage() {
 
       <main className="flex-1 p-6 space-y-6 max-w-5xl mx-auto w-full">
         {/* Stats overview */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatMiniCard label="Profiles" value={stats?.profiles ?? 0} color="blue" />
-          <StatMiniCard label="Knowledge" value={stats?.knowledgeEntries ?? 0} color="emerald" />
-          <StatMiniCard label="Recordings" value={stats?.totalCompoundRecords ?? 0} color="purple" />
-          <StatMiniCard label="Logs" value={stats?.totalCheckIns ?? 0} color="orange" />
-        </div>
+        {statsError ? (
+          <p role="status" className="text-sm text-white/55">{statsError}</p>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <StatMiniCard label="Profiles" value={stats?.profiles ?? 0} color="blue" />
+            <StatMiniCard label="Knowledge" value={stats?.knowledgeEntries ?? 0} color="emerald" />
+            <StatMiniCard label="Recordings" value={stats?.totalCompoundRecords ?? 0} color="purple" />
+            <StatMiniCard label="Logs" value={stats?.totalCheckIns ?? 0} color="orange" />
+          </div>
+        )}
 
         <GlassCard className="p-6 space-y-4">
           <h3 className="text-sm font-bold text-white/50 uppercase tracking-widest">Knowledge Governance</h3>

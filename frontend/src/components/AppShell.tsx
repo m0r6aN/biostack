@@ -6,6 +6,7 @@ import { isProtectedRoutePath } from '@/lib/appRoutes';
 import { usePathname } from 'next/navigation';
 
 const APP_ROUTE_PREFIXES = [
+  '/account',
   '/protocol-console',
   '/mission-control',
   '/my-protocol',
@@ -15,6 +16,8 @@ const APP_ROUTE_PREFIXES = [
   '/checkins',
   '/timeline',
   '/calculators',
+  '/tools',
+  '/map-my-stack',
   '/knowledge',
   '/billing',
   '/governance',
@@ -30,10 +33,10 @@ export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const { user, loading } = useAuth();
   const isProtectedRoute = isProtectedRoutePath(pathname);
-  const isKnowledgeRoute = pathname.startsWith('/knowledge');
+  const isPublicAppSurface = pathname.startsWith('/knowledge') || pathname.startsWith('/tools');
   const isAppRoute =
     APP_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix)) &&
-    (!isKnowledgeRoute || Boolean(user));
+    (!isPublicAppSurface || Boolean(user));
 
   if (isProtectedRoute && (loading || !user)) {
     return (

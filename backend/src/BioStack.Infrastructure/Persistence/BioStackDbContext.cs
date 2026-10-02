@@ -366,6 +366,21 @@ public sealed class BioStackDbContext : DbContext
             entity.HasIndex(te => te.OccurredAtUtc);
         });
 
+        modelBuilder.Entity<CompoundInteractionHint>(entity =>
+        {
+            entity.HasKey(h => h.Id);
+            // MechanismOverlap is List<string> over a plain text column. Without
+            // an explicit converter EF maps it as a primitive collection (jsonb
+            // semantics on Postgres) and reading the existing text column throws
+            // InvalidCastException at runtime. Round-trip as a joined string on
+            // every provider, matching the other collection properties here.
+            entity.Property(h => h.MechanismOverlap).HasConversion(
+                v => v == null ? string.Empty : string.Join("|", v),
+                v => string.IsNullOrWhiteSpace(v)
+                    ? null
+                    : v.Split("|", StringSplitOptions.RemoveEmptyEntries).ToList());
+        });
+
         modelBuilder.Entity<InteractionFlag>(entity =>
         {
             entity.HasKey(ifc => ifc.Id);

@@ -10,10 +10,11 @@ import type { ComponentProps, ComponentType } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // The root layout renders `<a href="#main">Skip to main content</a>` above every
-// page. AppShell owns `#main` on app routes and on withheld protected routes; on
-// public routes and on non-app authenticated routes (e.g. /account/security) it
-// passes children through untouched, so the page-owned <main> — including the
-// Suspense fallback <main> on the search-param pages — must carry the target.
+// page. AppShell owns `#main` on app routes — including /account/security, which
+// is an authenticated app surface — and on withheld protected routes; on public
+// and auth routes it passes children through untouched, so the page-owned
+// <main> — including the Suspense fallback <main> on the search-param pages —
+// must carry the target.
 const SKIP_LINK_TARGET_ID = 'main';
 
 // Test-only fixtures. Nothing here reaches a network, a real token, a real
@@ -104,7 +105,6 @@ const resolvedPages: Array<[label: string, pageCase: PageCase]> = [
   ['/auth/signin', { route: '/auth/signin', Page: SignInPage, auth: 'anonymous', search: 'callbackUrl=%2Fprofiles', ready: () => screen.getByRole('heading', { name: 'Sign in to BioStack' }) }],
   ['/auth/verify', { route: '/auth/verify', Page: VerifyPage, auth: 'anonymous', search: `token=${FIXTURE_TOKEN}`, ready: () => screen.findByRole('heading', { name: 'Signing you in…' }) }],
   ['/onboarding/consent', { route: '/onboarding/consent', Page: ConsentPage, auth: 'anonymous', search: 'returnTo=%2Fprofiles', ready: () => screen.findByText('Consent record: fixture-consent-v0') }],
-  ['/account/security', { route: '/account/security', Page: AccountSecurityPage, auth: 'authenticated', ready: () => screen.findByText('Passkeys are not enabled for this deployment. Email sign-in and recovery are unchanged.') }],
 ];
 
 const suspenseFallbackPages: Array<[label: string, pageCase: PageCase]> = [
@@ -203,7 +203,7 @@ describe('page-owned pass-through surfaces expose the skip-link target', () => {
   });
 });
 
-describe('AppShell keeps ownership of #main when it withholds protected content', () => {
+describe('AppShell keeps ownership of #main on protected app surfaces', () => {
   beforeEach(() => {
     fetchMock.mockClear();
     locationFixture.replace.mockReset();
@@ -239,6 +239,30 @@ describe('AppShell keeps ownership of #main when it withholds protected content'
     expect(screen.queryByText('Passkeys')).not.toBeInTheDocument();
     expect(screen.queryByText('Sidebar')).not.toBeInTheDocument();
     expect(fetchMock).not.toHaveBeenCalled();
+    expectNoSideEffects();
+  });
+
+  it('authenticated /account/security mounts the page inside the shell-owned main#main', async () => {
+    navigationFixture.pathname = '/account/security';
+    navigationFixture.search = '';
+    navigationFixture.suspend = false;
+    authFixture.user = FIXTURE_USER;
+    authFixture.loading = false;
+
+    const { container } = render(
+      <AppShell>
+        <AccountSecurityPage />
+      </AppShell>,
+    );
+
+    const content = await screen.findByText(
+      'Passkeys are not enabled for this deployment. Email sign-in and recovery are unchanged.',
+    );
+
+    const main = expectSingleFocusableSkipTarget(container);
+    expect(main).toContainElement(content);
+    // /account/security is an app route: the chrome (and #main) belong to the shell.
+    expect(screen.getByText('Sidebar')).toBeInTheDocument();
     expectNoSideEffects();
   });
 });

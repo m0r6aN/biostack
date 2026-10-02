@@ -2,6 +2,7 @@
 
 import { BioStackLogo } from '@/components/ui/BioStackLogo';
 import { useAuth } from '@/lib/AuthProvider';
+import { isEnabled } from '@/lib/flags';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -220,7 +221,10 @@ export function Sidebar() {
   const isAdmin = user?.role === 1;
 
   const visibleNavItems = navItems.filter(
-    (item) => !item.adminOnly || isAdmin
+    (item) =>
+      (!item.adminOnly || isAdmin) &&
+      // Flag-gated surfaces stay out of the nav until their flag is on.
+      (item.href !== '/governance/receipts' || isEnabled('decisionTheater'))
   );
 
   return (
@@ -235,8 +239,8 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 w-72 lg:w-64 h-screen flex flex-col border-r border-white/5 bg-[#0B0F14]/95 lg:bg-[#0B0F14]/80 backdrop-blur-2xl shrink-0 transition-[width,transform] duration-300 ease-in-out motion-reduce:transition-none lg:static lg:translate-x-0',
-          collapsed && 'lg:w-16',
+          'fixed inset-y-0 left-0 z-50 w-72 h-screen flex flex-col border-r border-white/5 bg-[#0B0F14]/95 lg:bg-[#0B0F14]/80 backdrop-blur-2xl shrink-0 transition-[width,transform] duration-300 ease-in-out motion-reduce:transition-none lg:static lg:translate-x-0',
+          collapsed ? 'lg:w-16' : 'lg:w-64',
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
