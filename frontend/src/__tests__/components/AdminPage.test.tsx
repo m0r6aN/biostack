@@ -38,7 +38,7 @@ describe('AdminPage', () => {
     expect(fetchMock).toHaveBeenNthCalledWith(
       2,
       expect.stringContaining('/api/v1/admin/stats'),
-      { headers: { Authorization: 'Bearer dev-token' } },
+      { credentials: 'include', headers: { Authorization: 'Bearer dev-token' } },
     );
     expect(screen.getByText('Knowledge Governance')).toBeInTheDocument();
     expect(screen.getByText('Canonical bulk ingest disabled')).toBeInTheDocument();

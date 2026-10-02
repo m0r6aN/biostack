@@ -94,3 +94,8 @@ export function useAuth() {
 
   return context;
 }
+
+/** Auth state when an AuthProvider is present; undefined otherwise. */
+export function useOptionalAuth() {
+  return useContext(AuthContext);
+}
