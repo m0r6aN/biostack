@@ -28,3 +28,7 @@ Charter stop conditions plus: deterministic tripwire fires twice; reviewer verdi
 ## Pacing
 
 Subagent completion notifications are the wake signal; no polling.
+
+## State at stop (2026-10-03)
+
+Queue item 1 complete through code review (PASS) and HANDOFF. Loop stopped awaiting Gate 3 (human: push/PR/merge). On `/goal resume protocol-upload-graceful-failure` after merge: perform stage-F closure only (spec → `docs/specs/done/`, INDEX row → `done`, worktree/branch cleanup), then stop. Ownership: released at this stop; next resume claims it.
