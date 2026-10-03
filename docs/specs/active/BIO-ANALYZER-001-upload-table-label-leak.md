@@ -1,8 +1,8 @@
 ---
 ticket: BIO-ANALYZER-001
 title: Protocol upload — table/field labels must not become compounds; lock graceful-failure guarantees
-status: review-candidate
-revision: 2
+status: active
+revision: 3
 owner: clinton.morgan
 created: 2026-10-03
 updated: 2026-10-03
@@ -18,6 +18,7 @@ surfaces:
   - backend/src/BioStack.Application/Services/ProtocolFingerprintService.cs
   - backend/tests/BioStack.Application.Tests/Services/ProtocolUploadGracefulFailureTests.cs
   - backend/tests/BioStack.Api.Tests/Integration/AnalyzeEndpointsIntegrationTests.cs
+  - docs/goals/protocol-upload-graceful-failure/EVIDENCE.md
 routing_class: standard-fix
 data_classification: internal
 ---
@@ -46,7 +47,7 @@ Close the one remaining release-blocking gap in the uploaded-protocol analyzer a
 
 - Rewriting the regex PDF extractor, OCR hardening, row-aware table reconstruction (e.g. recovering the dose that lives in a sibling `Dose: 500mcg` cell — the BPC-157 row therefore still reports dose 0; this is known and unchanged), frontend work, any change to `AnalyzeProtocolResponse`, `IProtocolParser`, feature gating/billing, or the `ProtocolIngestionException` contract.
 - **Documented residual (accept-as-documented, reported in HANDOFF; NOT fixed here, NOT locked by tests):** a prose line consisting of a single Title-case word plus a frequency word (e.g. `Review daily`, `Hydrate weekly`) still passes the recognition gate and is emitted as an unknown compound. Fixtures in T5/T6 therefore must not contain such lines; the builder must not "fix" this under this parcel.
-- Header words outside the C1 set (the set is a closed ruling for this parcel; a new leak word is reported, not added).
+- Header words outside the C1 set (the set is a closed ruling for this parcel; a new leak word is reported, not added). Label word + non-label word names (e.g. `Compound Epitalon`, `Injection Site`, `Frequency Type`) are accepted by design; T4 locks that.
 - Push, PR, merge, deploy, cloud/settings. Any change to production-readiness gate status.
 
 ## Change
@@ -57,7 +58,7 @@ Close the one remaining release-blocking gap in the uploaded-protocol analyzer a
 
 ### C1 — Structural-label rejection
 
-In `ProtocolParser.cs`, add a closed, case-insensitive set `StructuralLabelWords` and make `IsLikelyCompoundName` return `false` when the candidate name, tokenised on runs of non-letters (`[^\p{L}]+`, empty parts dropped), has **at least one** part and **every** part is in the set. Tokenising on non-letters makes `/Frequency`, `Frequency (per week)`, `(mg)`, `Dose/Frequency`, `BPC-157`→`BPC` all evaluate on letters only. The existing checks stay unchanged and run first/after as today.
+In `ProtocolParser.cs`, add a closed `static readonly HashSet<string> StructuralLabelWords` (`StringComparer.OrdinalIgnoreCase`) and make `IsLikelyCompoundName` return `false` when the candidate name, tokenised on runs of non-letters (`[^\p{L}]+`, empty parts dropped), has **at least one** part and **every** part is in the set. A name with zero letter-parts is left to the existing must-contain-a-letter rule. Tokenising on non-letters makes `/Frequency`, `Frequency (per week)`, `(mg)`, `Dose/Frequency`, `BPC-157`→`BPC` all evaluate on letters only. The check is a pure reject placed after the existing token checks; existing checks are not modified.
 
 Set (exact, closed):
 
@@ -75,8 +76,8 @@ Tests use real classes (no mocks of parser/extractors), use `LocalKnowledgeSourc
 | T2 | Same data as in-memory XLSX built with the `ZipArchive` pattern of `ProtocolIngestionServiceTests.CreateMinimalXlsx`/`AddEntry` (copy locally; do not edit that file); additionally an ALL-CAPS header variant (`COMPOUND,DOSE,FREQUENCY`) in T1 or T2. Same assertions. | same route |
 | T3 | `[Theory]` over **every** word in the C1 set, segments `"<Word>: daily"` and `"<Word>: 500mcg"`, plus compound-header shapes `Dose/Frequency: daily`, `Frequency (per week): daily`, `Dose (mg): 5 mg`, `Injection Frequency: daily`, `Dosing Schedule: weekly`, `FREQUENCY: daily`: zero entries each. Red-run evidence lists which cases fail pre-C1 (not all will; cases already rejected by dose-verb stripping are acceptable as non-failing). | `ProtocolParser.ParseAsync` |
 | T4 | Non-regression: `"BPC-157 500mcg daily"`, `"Blood Flow Peptide 500mcg daily"`, `"Peptide Alpha 2mg weekly"` each emit exactly one entry with the expected name. Also `"Frequency Booster 2mg daily"` emits one entry (a label word plus a non-label word is not a label). | parser |
-| T5 | Prose-only DOCX built from headings, multi-word lowercase narrative sentences, a `Note:` line, and a citation line with a year and URL; **no dosing and no single-word-plus-frequency lines** (see residual). Via analyzer service with `IProtocolTextExtractor[] { PlainTextProtocolExtractor, DocxProtocolExtractor }` as in `ProtocolAnalyzerDocxPacketGoldenTests`: assert `Protocol` entries empty, `Scored == false`, `ParseConfidence == "none"`, no issue references any prose/citation fragment. | analyzer service |
-| T6 | Real-protocol PDF (uncompressed content stream, `BT (…) Tj ET` per line) containing a title line, a lowercase narrative sentence, a citation line, `BPC-157 500mcg daily`, `Retatrutide 2mg weekly`. Via real `ProtocolIngestionService` + `PdfProtocolExtractor` + `ProtocolParser`: entry names are exactly {BPC-157, Retatrutide} (compare as sets, canonical alias names). Fixture lines must avoid the documented residual. | ingestion → parser |
+| T5 | Prose-only DOCX built from headings, multi-word lowercase narrative sentences, a `Note:` line, and a citation line with a year and URL; **no dosing and no single-word-plus-frequency lines** (see residual). The `Note:` line may contain a frequency/dose word (then T5 is legitimately red pre-C1; that is NOT a stop condition) or not. Via analyzer service with `IProtocolTextExtractor[] { PlainTextProtocolExtractor, DocxProtocolExtractor }` as in `ProtocolAnalyzerDocxPacketGoldenTests`: assert `Protocol` entries empty, `Scored == false`, `ParseConfidence == "none"`, no issue references any prose/citation fragment. | analyzer service |
+| T6 | Real-protocol PDF (uncompressed content stream, `BT (…) Tj ET` per line; literal `(` and `)` inside line text MUST be escaped as `\(` / `\)` because `ExtractTextOperators` ends a string at the first unescaped `)`, otherwise the line is silently dropped and the exclusion assertions pass vacuously) containing a title line, a lowercase narrative sentence, a citation line with a parenthesised year, `BPC-157 500mcg daily`, `Retatrutide 2mg weekly`. Via real `ProtocolIngestionService` + `PdfProtocolExtractor` + `ProtocolParser`: first assert the extracted text contains the citation and narrative lines (proves they were read), then entry names are exactly {BPC-157, Retatrutide} (compare as sets, canonical alias names). Fixture lines must avoid the documented residual. | ingestion → parser |
 | T7 | Image-only/no-text PDF (`%PDF-1.4` with a stream containing no text operators) through `ProtocolIngestionService.IngestAsync`: throws `ProtocolIngestionException`; `Message` contains `readable text` (OrdinalIgnoreCase) and contains none of `Exception`, `   at `, `BioStack.`. | ingestion (extends the extractor-level case already covered) |
 
 ### C3 — Endpoint test (existing `AnalyzeEndpointsIntegrationTests`, Api.Tests)
@@ -85,7 +86,7 @@ T8: sign in, give the user an Operator subscription (existing helpers `SignInAsy
 
 ## Acceptance Criteria
 
-1. AC1 — Before C0/C1, T1/T2 and the label-bearing T3 cases fail with output naming the leaked label (e.g. `Frequency`); after, all pass. Red and green runs saved as evidence, including the list of T3 cases that were red.
+1. AC1 — Before C0/C1, T1/T2 and the label-bearing T3 cases fail (T5 may too, see T5) with output naming the leaked label (e.g. `Frequency`); after, all pass. Red and green runs saved as evidence, including the list of T3 cases that were red.
 2. AC2 — T1–T7 pass; the 258 baseline tests still pass (total ≥ 258 + new Application tests; zero failures).
 3. AC3 — T4 passes: no real-compound regression from C1.
 4. AC4 — `dotnet test tests/BioStack.Api.Tests --filter "FullyQualifiedName~AnalyzeEndpointsIntegrationTests"` green incl. T8.
@@ -146,3 +147,11 @@ Revert the commit: `ProtocolParser.cs` hunk + `ParserVersion` value; tests are a
 | T3 partly vacuous pre-C1 | fix — red evidence lists failing cases; T4 sentinels |
 | T8 construction details | fix — multipart form, gate, bytes duplicated |
 | `Recognized=true` wording; charter mechanism sentence | fix — spec wording corrected; charter mechanism corrected in amendment log |
+
+## Spec re-review closure (SpecReviewerA on rev 2 @ `70dc5d47`, `VERDICT: PASS`, 0 blocking)
+
+| Finding | Ruling |
+|---|---|
+| T5 `Note:` red/green ambiguity; T6 PDF paren escaping makes exclusions vacuous | fix — rev 3 clarification (T5/T6/AC1) |
+| Residual should name label + non-label word joins | fix — rev 3 Out of Scope bullet |
+| C1 placement/comparer unspecified; EVIDENCE.md missing from frontmatter surfaces | fix — rev 3 (clarification only; no semantic change after PASS) |
