@@ -1,11 +1,11 @@
 # Goal Charter — Protocol Upload Graceful-Failure Remediation (P01-R)
 
-**Status:** DRAFT — awaiting Gate 1 ratification
-**Coordinator:** this `/goal` session (pi / Claude)
+**Status:** RATIFIED — Gate 1 passed 2026-10-03 (developer: "Ratify D1–D5 as written"; fresh branch from current main; spec-first per AGENTS.md governed delivery)
+**Coordinator:** this `/goal` session (resumed 2026-10-03)
 **Goal slug:** `protocol-upload-graceful-failure`
-**Working branch (isolated):** `fix/analyzer-upload-remediation`
-**Worktree:** `D:/Repos/BioStack/.worktrees/analyzer-upload-remediation-20260922` (branched from `main` @ `e5b75e0`)
-**Date:** 2026-09-22
+**Working branch (isolated):** `fix/protocol-upload-graceful-failure` (supersedes `fix/analyzer-upload-remediation`, whose saved commit `4d63f00b` on origin is untouched and out of scope)
+**Worktree:** `D:/Repos/BioStack/.worktrees/protocol-upload-graceful-failure-20261003`
+**Comparison base:** `origin/main` @ `1c8a16e5e950e3b75f559e9c8c0744f28db2f6a5` (the original draft named stale local `main` @ `e5b75e0`, 346 commits behind)
 
 ## Objective
 
@@ -141,3 +141,10 @@ label-rejection fix (write test → see it fail → fix → see it pass).
 - Anything outward-facing beyond D2 (push, PR, deploy, cloud) → never without
   explicit human action.
 - You say stop.
+
+## Resume amendments (2026-10-03, coordinator-recorded; no locked decision changed)
+
+- **Base re-anchored.** Re-verified on `origin/main@1c8a16e5`: the table-label leak reproduces (CSV `Compound,Dose,Frequency,Route,Duration` → parsed entry `Frequency` freq=`daily`, `Recognized=true`). Baseline `dotnet test BioStack.Application.Tests --filter "FullyQualifiedName~Protocol|FullyQualifiedName~PdfProtocol"` = **258 passed / 0 failed** (supersedes the "45" figure, which counted a narrower class set).
+- **Already on main since the draft:** `PdfProtocolExtractorFlateTests` (incl. corrupt-stream → friendly `ProtocolIngestionException`) and `ProtocolIngestionDocxStructureTests`. New tests must not duplicate them; they lock the remaining clauses at the parse/analyze/endpoint layers.
+- **D3 operationalised.** The harness now exposes `task` subagent dispatch, so the review is run by fresh `reviewer` sessions (read-only, spec + repo only) rather than the `ai-council` substitute. This satisfies D3's intent more strictly; D3's decision text is unchanged.
+- **Governed delivery.** Repo `AGENTS.md` requires an approved active spec and coordinator-named branch/worktree: parcel spec `docs/specs/active/BIO-ANALYZER-001-upload-table-label-leak.md`, Gate 2 record `docs/goals/protocol-upload-graceful-failure/GATE2.md`.
