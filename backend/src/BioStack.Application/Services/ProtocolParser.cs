@@ -34,6 +34,25 @@ public sealed class ProtocolParser : IProtocolParser
         @"^[wd]\d",
         RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
+    private static readonly Regex NonLetterRunPattern = new(
+        @"[^\p{L}]+",
+        RegexOptions.Compiled);
+
+    // Table/field label words ("Frequency", "Dose", "Route"...). A candidate name made
+    // only of these words is a column header or field label, never a compound.
+    // Closed set (BIO-ANALYZER-001): extend only via a new spec.
+    private static readonly HashSet<string> StructuralLabelWords = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Frequency", "Frequencies", "Compound", "Compounds", "Dose", "Doses", "Dosage", "Dosages", "Dosing",
+        "Route", "Timing", "Time", "Duration", "Durations", "Administration", "Directions", "Schedule",
+        "Schedules", "Protocol", "Goal", "Goals", "Note", "Notes", "Reference", "References", "Version",
+        "Tracking", "Baseline", "Evidence", "Phase", "Support", "Stack", "Materials", "Blood", "Work", "Week",
+        "Weeks", "Day", "Days", "Month", "Months", "Name", "Item", "Product", "Amount", "Unit", "Units", "Total",
+        "Strength", "Quantity", "Concentration", "Injection", "Vial", "Regimen", "Cycle", "Medication",
+        "Substance", "Drug", "Agent", "Peptide", "Supplement", "Starting", "Maintenance", "Target", "Max", "Min",
+        "Current", "Per", "Mg", "Mcg", "Ml", "Iu",
+    };
+
     private readonly IKnowledgeSource _knowledgeSource;
     private readonly IBlendDecomposerService _blendDecomposerService;
     private readonly IMemoryCache _memoryCache;
@@ -310,6 +329,14 @@ public sealed class ProtocolParser : IProtocolParser
             {
                 return false;
             }
+        }
+
+        // Names made only of structural label words ("Frequency", "Dose/Frequency",
+        // "Frequency (per week)") are field labels, not compounds.
+        var letterParts = NonLetterRunPattern.Split(name).Where(part => part.Length > 0).ToList();
+        if (letterParts.Count > 0 && letterParts.All(StructuralLabelWords.Contains))
+        {
+            return false;
         }
 
         return true;
