@@ -1,7 +1,7 @@
 ---
 ticket: BIO-ANALYZER-004
 title: Spreadsheet uploads — reconstruct each data row so header names never reach the parser and a row's dose binds to its compound
-status: draft
+status: active
 revision: 6
 owner: clinton.morgan
 created: 2026-10-04
