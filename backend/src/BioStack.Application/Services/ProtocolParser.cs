@@ -173,6 +173,9 @@ public sealed class ProtocolParser : IProtocolParser
         //   (b) it carries a dose or explicit frequency AND the text before that
         //       token is shaped like a compound name (a short, compound-like token
         //       — not prose, a header, a schedule code, or a "label: value" fragment).
+        //       A frequency-only, dose-less line is accepted only when an alias
+        //       matches (a), or the name has a digit or hyphen, or the name has more
+        //       than one token (BIO-ANALYZER-003).
         var aliasName = ResolveAliasName(cleaned, aliases);
         if (aliasName is not null)
         {
@@ -188,7 +191,7 @@ public sealed class ProtocolParser : IProtocolParser
             };
         }
 
-        // A dose or an explicit frequency ("Semaglutide weekly") marks a dosing line.
+        // A dose or an explicit frequency ("Retatrutide weekly") marks a dosing line.
         // Duration alone is deliberately excluded: "Weeks 1-15" style phrases pair
         // with planning prose far more often than with a real compound.
         var frequencyMatch = FrequencyPattern.Match(cleaned);
@@ -205,6 +208,14 @@ public sealed class ProtocolParser : IProtocolParser
         var nameCutIndex = singleDoseMatch.Success ? singleDoseMatch.Index : frequencyMatch.Index;
         var nameSlice = BuildNameSlice(cleaned, nameCutIndex);
         if (!IsLikelyCompoundName(nameSlice))
+        {
+            return Array.Empty<ProtocolEntryResponse>();
+        }
+
+        // BIO-ANALYZER-003: with no dose, an unrecognized single plain word plus a
+        // frequency ("Review daily") is prose, not a compound. Known compounds took
+        // the alias path above; digit/hyphen tokens and multi-token names are unaffected.
+        if (!singleDoseMatch.Success && IsSinglePlainToken(nameSlice))
         {
             return Array.Empty<ProtocolEntryResponse>();
         }
@@ -284,6 +295,13 @@ public sealed class ProtocolParser : IProtocolParser
         return nameSlice;
     }
 
+    // Exactly one whitespace-separated token containing no digit and no hyphen.
+    private static bool IsSinglePlainToken(string name)
+    {
+        var tokens = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return tokens.Length == 1 && !tokens[0].Any(c => char.IsDigit(c) || c == '-');
+    }
+
     // A dose alone is not enough to call a segment a compound. Real compound names
     // are short and "name-shaped" — a capitalized word (Semaglutide), an all-caps
     // token (NAD, KPV), or an alphanumeric/hyphenated token (BPC-157, GHK-Cu,
@@ -291,6 +309,9 @@ public sealed class ProtocolParser : IProtocolParser
     // function words ("At", "To"), section headers, schedule codes ("W7-15"), and
     // bare numbers are rejected. Lowercase compound names are still caught upstream
     // by the alias path.
+    // An unrecognized single plain word with no dose is rejected afterwards by
+    // IsSinglePlainToken in ParseSegment, so a dose-less all-caps name (KPV daily)
+    // is only accepted via the alias path.
     private static bool IsLikelyCompoundName(string name)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length is < 2 or > 40)
