@@ -638,10 +638,15 @@ public sealed class SpreadsheetRowReconstructionTests
     [Theory]
     [InlineData("Zorbatide (5mg)")]
     [InlineData("Zorbatide - 5mg")]
+    // Regression (review F1): cleanup must run even when no embedded quantity was removed.
+    [InlineData("Zorbatide ()")]
+    [InlineData("Zorbatide -")]
+    [InlineData("Zorbatide()")]
     public async Task T28a_NameCleanup_DoesNotDropUnknownCompound(string nameCell)
     {
         var outcome = await IngestCsvAsync(Csv("Compound,Dose,Frequency", $"{nameCell},250mcg,weekly"));
 
+        Assert.Equal("Sheet: CSV\nZorbatide 250mcg weekly", outcome.Text);
         AssertNames(outcome, "Zorbatide");
         AssertEntry(outcome, "Zorbatide", 250, "mcg", "weekly");
     }

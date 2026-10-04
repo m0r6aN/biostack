@@ -1034,8 +1034,7 @@ public sealed class SpreadsheetProtocolExtractor : IProtocolTextExtractor
         string? name = null;
         foreach (var index in columns.Names)
         {
-            var candidate = Cell(index);
-            var stripped = candidate;
+            var stripped = Cell(index);
             if (hasDoseCell)
             {
                 stripped = DosePattern.Replace(stripped, " ");
@@ -1051,10 +1050,9 @@ public sealed class SpreadsheetProtocolExtractor : IProtocolTextExtractor
                 stripped = DurationPattern.Replace(stripped, " ");
             }
 
-            if (!string.Equals(stripped, candidate, StringComparison.Ordinal))
-            {
-                candidate = CleanName(stripped);
-            }
+            // Spec: the candidate is the value after embedded-quantity removal *and* cleanup;
+            // cleanup runs unconditionally, not only when removal changed the value.
+            var candidate = CleanName(stripped);
 
             if (candidate.Any(char.IsLetter))
             {
@@ -1095,8 +1093,9 @@ public sealed class SpreadsheetProtocolExtractor : IProtocolTextExtractor
         }
     }
 
-    // Removes empty bracket pairs and leading/trailing separator-only tokens left behind by
-    // embedded-quantity removal ("Zorbatide ()" -> "Zorbatide", "Zorbatide -" -> "Zorbatide").
+    // Removes empty bracket pairs and leading/trailing separator-only tokens from a name
+    // candidate ("Zorbatide ()" -> "Zorbatide", "Zorbatide -" -> "Zorbatide", "Zorbatide()" ->
+    // "Zorbatide"), whether left behind by embedded-quantity removal or typed directly.
     private static string CleanName(string value)
     {
         string previous;

@@ -197,9 +197,28 @@ So identical spreadsheet uploads now produce different (dose-aware) analysis: th
 
 ## Notes for the reviewer (interpretations, no spec deviations)
 
-- Cleanup (empty brackets / leading-trailing separator-only tokens) is applied only when embedded-quantity removal actually changed the name cell; names left as written are never rewritten.
+- Cleanup (empty brackets / leading/trailing separator-only tokens) runs on every name candidate after embedded-quantity removal, per the spec Name bullet. (Corrected after code review F1: the first commit gated cleanup on removal having changed the value, which dropped rows named `Zorbatide ()`/`Zorbatide -` and emitted the junk name `Zorbatide()`; see the review-fix section below.)
 - Duration: columns are tried in header order and the first whose value has a `DurationPattern` match with no range and no cycle phrase wins (skipping a ranged/cycle column in favour of a later one).
 - Header width = highest non-blank header column + 1. A data row whose only content sits past the header width is *not* blank: it is skipped and counted (no name).
 - XLSX rows are read lazily so columns past the header width are never stored; cells past XFD or with a dropped reference still advance the "previous cell" index used to place cells with no/malformed `r`.
-- Non-ASCII dose-unit forms are written as regex escapes (`\u03bc`, `\u00b5`) in the private pattern copies.
+- Non-ASCII dose-unit forms are written as regex escapes (Greek small letter mu, micro sign) in the private pattern copies.
 - `ProtocolParser.cs` is untouched.
+
+## Review fix — F1 (name cleanup gating)
+
+Code review (VERDICT: FAIL, 1 blocking + 4 info; report `D:/tmp/BIO-ANALYZER-004-review-A.md`) found F1: `AppendReconstructed` called `CleanName` only when embedded-quantity removal changed the name cell, deviating from the spec Name bullet ("after embedded-quantity removal **and cleanup**"). Observed before the fix (reviewer probes, real ingestion + `ProtocolParser`): `Zorbatide (),250mcg,weekly` -> 0 entries (row silently lost at `IsLikelyCompoundName`), `Zorbatide -,250mcg,weekly` -> 0 entries, `Zorbatide(),250mcg,weekly` -> entry `Zorbatide()`.
+
+Fix: `ProtocolIngestionService.cs` `AppendReconstructed` now applies `CleanName(stripped)` unconditionally to every name candidate (the gated `if (!string.Equals(stripped, candidate))` trigger is gone; `CleanName` comment updated). F2–F5 (info) left as recorded by the review: F2 pre-existing/bounded, F3 spec-consequence, F4 parser-resolved, F5 optional 16384+-column CSV parity, not taken.
+
+Regression lock: `T28a_NameCleanup_DoesNotDropUnknownCompound` gained the three review-probe name cells (`Zorbatide ()`, `Zorbatide -`, `Zorbatide()`) plus a text assertion that locks the preview to `Sheet: CSV` followed by the line `Zorbatide 250mcg weekly`, so the cleaned name is checked in the text as well as in the entries. All three cases fail on the pre-fix code (reviewer-observed behavior above) and pass after.
+
+Suites after the fix (from `<worktree>/backend`):
+
+| # | Command | Result |
+|---|---|---|
+| 1 | `dotnet test tests/BioStack.Application.Tests --filter "FullyQualifiedName~SpreadsheetRowReconstructionTests"` | **Passed 61 / 61** (58 + 3 new theory rows) |
+| 2 | `dotnet test tests/BioStack.Application.Tests` | **Passed 956, Skipped 5, Failed 0, Total 961** (was 953 + 3) |
+
+```
+dotnet test tests/BioStack.Api.Tests --filter "FullyQualifiedName~AnalyzeEndpointsIntegrationTests|FullyQualifiedName~AnalyzerGateIntegrationTests"   -> Passed 6 / 6
+```
