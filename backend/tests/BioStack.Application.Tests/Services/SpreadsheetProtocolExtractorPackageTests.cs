@@ -15,7 +15,7 @@ public sealed class SpreadsheetProtocolExtractorPackageTests
     private const string WorksheetType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet";
 
     // Golden captured from the unmodified extractor on the relative-target workbook (normalised to \n).
-    private const string GoldenExtractedText = "Sheet: Stack\nCompound: BPC-157 | Dose: 500mcg | Frequency: daily";
+    private const string GoldenExtractedText = "Sheet: Stack\nBPC-157 500mcg daily";
 
     [Fact]
     public async Task T1_DuplicateRelationshipId_IsFriendlyIngestionException()

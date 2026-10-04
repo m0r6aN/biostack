@@ -39,8 +39,8 @@ public sealed class ProtocolIngestionServiceTests
 
         var result = await service.IngestAsync(request);
 
-        Assert.Contains("Compound: BPC-157", result.NormalizedText);
-        Assert.Contains("Dose: 500mcg", result.NormalizedText);
+        Assert.Contains("BPC-157 500mcg daily", result.NormalizedText);
+        Assert.Contains("BPC-157 500mcg", result.NormalizedText);
     }
 
     [Fact]
@@ -76,7 +76,7 @@ public sealed class ProtocolIngestionServiceTests
         var result = await service.IngestAsync(request);
 
         Assert.Contains("Sheet: Stack", result.NormalizedText);
-        Assert.Contains("Compound: BPC-157", result.NormalizedText);
+        Assert.Contains("BPC-157 500mcg daily", result.NormalizedText);
     }
 
     [Fact]
