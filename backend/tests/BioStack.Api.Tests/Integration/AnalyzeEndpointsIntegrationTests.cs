@@ -110,6 +110,46 @@ public sealed class AnalyzeEndpointsIntegrationTests : IAsyncLifetime
         Assert.Equal("Paste", inputType.GetString());
     }
 
+    // BIO-ANALYZER-001 T8: an upload with no extractable text must be a clean 400, never a 500.
+    [Fact]
+    public async Task AnalyzeProtocol_NoTextPdfUpload_Returns400WithFriendlyMessage()
+    {
+        var userId = await SignInAsync("analyze-notext@example.com");
+        await UpsertSubscriptionAsync(userId, ProductTier.Operator);
+
+        using var form = BuildPdfUploadForm("no-text.pdf", BuildNoTextPdf());
+        var response = await _client.PostAsync("/api/analyze/protocol", form);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        using var payload = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        Assert.True(payload.RootElement.TryGetProperty("message", out var message));
+        Assert.Equal(JsonValueKind.String, message.ValueKind);
+        Assert.False(string.IsNullOrWhiteSpace(message.GetString()));
+        Assert.Contains("readable text", message.GetString(), StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static MultipartFormDataContent BuildPdfUploadForm(string fileName, byte[] bytes)
+    {
+        var form = new MultipartFormDataContent();
+        var file = new ByteArrayContent(bytes);
+        file.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+        form.Add(file, "file", fileName);
+        form.Add(new StringContent("FileUpload"), "inputType");
+        return form;
+    }
+
+    // Same bytes as ProtocolUploadGracefulFailureTests.BuildNoTextPdf (test projects cannot share fixtures).
+    private static byte[] BuildNoTextPdf()
+    {
+        const string content = "q 100 0 0 100 0 0 cm 0 0 1 rg 0 0 50 50 re f Q";
+        return System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(
+            "%PDF-1.4\n" +
+            "1 0 obj /Type /Page endobj\n" +
+            $"2 0 obj << /Length {content.Length} >>\nstream\n{content}\nendstream\nendobj\n" +
+            "%%EOF");
+    }
+
     private async Task<Guid> SignInAsync(string email)
     {
         await _client.PostAsJsonAsync("/api/v1/auth/start", new StartAuthRequest(email, "email", "/profiles"), JsonOptions);

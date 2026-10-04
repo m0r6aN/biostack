@@ -5,9 +5,9 @@ using System.Text;
 
 public sealed class ProtocolFingerprintService : IProtocolFingerprintService
 {
-    public const string IngestionVersion = "v1";
+    public const string IngestionVersion = "v2";
     public const string OcrVersion = "v1";
-    public const string ParserVersion = "v3";
+    public const string ParserVersion = "v5";
     public const string KnowledgeVersion = "v1";
     public const string ScoringVersion = "v3";
     public const string CounterfactualVersion = "v2";
