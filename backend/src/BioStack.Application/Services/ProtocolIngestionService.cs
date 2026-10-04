@@ -499,14 +499,21 @@ public sealed class SpreadsheetProtocolExtractor : IProtocolTextExtractor
             var workbook = LoadXml(archive, "xl/workbook.xml");
             var relationships = LoadXml(archive, "xl/_rels/workbook.xml.rels");
             var sharedStrings = LoadSharedStrings(archive);
-            var sheetMap = relationships.Root?
-                .Elements(Relationship + "Relationship")
-                .Where(element => element.Attribute("Id") is not null && element.Attribute("Target") is not null)
-                .ToDictionary(
-                    element => element.Attribute("Id")!.Value,
-                    element => $"xl/{element.Attribute("Target")!.Value.Replace("\\", "/").TrimStart('/')}",
-                    StringComparer.OrdinalIgnoreCase)
-                ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var sheetMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var element in relationships.Root?.Elements(Relationship + "Relationship") ?? Enumerable.Empty<XElement>())
+            {
+                var id = element.Attribute("Id")?.Value;
+                var rawTarget = element.Attribute("Target")?.Value;
+                if (id is null || rawTarget is null)
+                {
+                    continue;
+                }
+
+                if (!sheetMap.TryAdd(id, rawTarget))
+                {
+                    throw new ProtocolIngestionException("The spreadsheet contains malformed content and could not be read.");
+                }
+            }
 
             var blocks = new List<string>();
             foreach (var sheet in workbook.Root?.Descendants(Spreadsheet + "sheet") ?? Enumerable.Empty<XElement>())
@@ -518,7 +525,7 @@ public sealed class SpreadsheetProtocolExtractor : IProtocolTextExtractor
                     continue;
                 }
 
-                var worksheet = LoadXml(archive, target);
+                var worksheet = LoadXml(archive, ResolveWorkbookTarget(target));
                 var rows = worksheet.Root?
                     .Descendants(Spreadsheet + "row")
                     .Select(row => row.Elements(Spreadsheet + "c").Select(cell => ReadCellValue(cell, sharedStrings)).ToList())
@@ -555,10 +562,48 @@ public sealed class SpreadsheetProtocolExtractor : IProtocolTextExtractor
     private static XDocument LoadXml(ZipArchive archive, string path)
     {
         var entry = archive.GetEntry(path)
-            ?? throw new ProtocolIngestionException($"The spreadsheet is missing {path}.");
+            ?? throw new ProtocolIngestionException("The spreadsheet is missing required content and could not be read.");
 
         using var entryStream = entry.Open();
         return XDocument.Load(entryStream);
+    }
+
+    private static string ResolveWorkbookTarget(string rawTarget)
+    {
+        var target = rawTarget.Replace('\\', '/');
+        var segments = new List<string>();
+        if (!target.StartsWith('/'))
+        {
+            segments.Add("xl");
+        }
+
+        foreach (var segment in target.Split('/'))
+        {
+            if (segment.Length == 0 || segment == ".")
+            {
+                continue;
+            }
+
+            if (segment == "..")
+            {
+                if (segments.Count == 0)
+                {
+                    throw new ProtocolIngestionException("The spreadsheet contains malformed content and could not be read.");
+                }
+
+                segments.RemoveAt(segments.Count - 1);
+                continue;
+            }
+
+            segments.Add(segment);
+        }
+
+        if (segments.Count == 0)
+        {
+            throw new ProtocolIngestionException("The spreadsheet contains malformed content and could not be read.");
+        }
+
+        return string.Join('/', segments);
     }
 
     private static List<string> LoadSharedStrings(ZipArchive archive)
