@@ -177,6 +177,16 @@ builder.Services.AddRateLimiter(options =>
                 Window = TimeSpan.FromHours(1),
                 QueueLimit = 0,
             }));
+
+    options.AddPolicy("contact", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 3,
+                Window = TimeSpan.FromHours(1),
+                QueueLimit = 0,
+            }));
 });
 
 // ── First-party cookie sessions + legacy bearer support ─────────────────────
@@ -395,6 +405,8 @@ else
     builder.Services.AddSingleton<IMagicLinkDelivery, SmtpMagicLinkDelivery>();
 }
 builder.Services.AddSingleton<IDevMagicLinkInbox>(sp => sp.GetRequiredService<InMemoryMagicLinkDelivery>());
+// Contact-form delivery reuses the Azure Communication Email config path above.
+builder.Services.AddSingleton<IContactMessageSender, AzureCommunicationEmailContactMessageSender>();
 
 // ── Domain services ─────────────────────────────────────────────────────────
 builder.Services.AddScoped<IKnowledgeSource, DatabaseKnowledgeSource>();
@@ -553,6 +565,7 @@ app.MapPolicyGateEndpoints();
 app.MapReceiptEndpoints();
 app.MapAnalyzeEndpoints();
 app.MapLeadEndpoints();
+app.MapContactEndpoints();
 app.MapProviderAccessEndpoints();
 app.MapAdminEndpoints();
 app.MapKompressEndpoints();

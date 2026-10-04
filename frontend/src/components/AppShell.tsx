@@ -57,8 +57,8 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <div className="flex h-screen" style={{ position: 'relative', zIndex: 1 }}>
       <Sidebar />
-      <main id="main" tabIndex={-1} className="flex-1 overflow-y-auto">
-        {children}
+      <main id="main" tabIndex={-1} className="flex-1 overflow-y-auto flex flex-col">
+        <div className="flex-1">{children}</div>
         <p
           aria-label="App-wide disclaimer"
           className="sticky bottom-0 border-t border-white/[0.04] bg-[#0B0F14]/80 px-5 py-1.5 text-center text-[11px] leading-tight text-white/35 backdrop-blur-sm"

@@ -1,4 +1,3 @@
-import { SIDEBAR_COLLAPSED_KEY } from '@/lib/sidebarCollapse';
 import CompoundsPage from '@/app/compounds/page';
 import { ApiError, apiClient } from '@/lib/api';
 import type { CompoundRecord, KnowledgeEntry } from '@/lib/types';
@@ -328,30 +327,28 @@ it('does not restore a failed old-profile deletion into the new profile', async 
   expect(screen.queryByText('BPC-157')).not.toBeInTheDocument();
 });
 
-describe('detail grid reclaims width when the sidebar is collapsed', () => {
+describe('detail grid uses the page width based on selection', () => {
   beforeEach(() => {
     vi.mocked(apiClient.getCompounds).mockResolvedValue([
       namedCompound,
     ]);
   });
 
-  it('uses a 2/1 (3-col) split by default', async () => {
+  it('keeps the list full-width while nothing is selected', async () => {
     render(<CompoundsPage />);
     await screen.findByText('BPC-157');
 
     const grid = screen.getByTestId('compounds-detail-grid');
-    expect(grid.className).toContain('lg:grid-cols-3');
-    expect(grid.className).not.toContain('lg:grid-cols-5');
+    expect(grid.className).toContain('grid-cols-1');
+    expect(grid.className).not.toContain('lg:grid-cols-2');
   });
 
-  it('widens the detail column to a 2/3 (5-col) split when the sidebar is collapsed', async () => {
-    window.localStorage.setItem(SIDEBAR_COLLAPSED_KEY, '1');
+  it('splits the page evenly once a compound is selected', async () => {
     render(<CompoundsPage />);
-    await screen.findByText('BPC-157');
+    fireEvent.click(await screen.findByText('BPC-157'));
 
     const grid = screen.getByTestId('compounds-detail-grid');
-    expect(grid.className).toContain('lg:grid-cols-5');
-    expect(grid.className).not.toContain('lg:grid-cols-3');
+    expect(grid.className).toContain('lg:grid-cols-2');
   });
 });
 
@@ -432,7 +429,7 @@ describe('side-panel request identity', () => {
     const view = render(<CompoundsPage />);
     fireEvent.click(await screen.findByText('Alpha'));
     profileState.currentProfileId = 'new-profile'; view.rerender(<CompoundsPage />);
-    await waitFor(() => expect(screen.getByText('Select a compound to view details')).toBeVisible());
+    await waitFor(() => expect(screen.queryByText('Alpha')).not.toBeInTheDocument());
     fireEvent.click(screen.getByText('Beta'));
     await waitFor(() => expect(screen.getByTestId('reference-entry')).toHaveTextContent('Beta'));
     await act(async () => {

@@ -46,7 +46,10 @@ function SignInPageContent() {
   const [sendError, setSendError] = useState('');
   const [cooldownUntil, setCooldownUntil] = useState(0);
   const [now, setNow] = useState(0);
-  const [passkeysEnabled, setPasskeysEnabled] = useState(false);
+  // Optimistic: show the passkey option the moment the browser supports WebAuthn.
+  // The status check below only HIDES it on an explicit disable — waiting for the
+  // check before showing anything delayed the option for seconds on cold starts.
+  const [passkeysEnabled, setPasskeysEnabled] = useState(() => passkeysSupported());
   const [isUsingPasskey, setIsUsingPasskey] = useState(false);
   const [passkeyError, setPasskeyError] = useState('');
 
@@ -67,7 +70,7 @@ function SignInPageContent() {
           const response = await fetch(`${API_URL}/api/v1/auth/passkeys/status`, { credentials: 'include', cache: 'no-store' });
           if (response.ok) {
             const status = (await response.json()) as { enabled?: boolean } | null;
-            if (!cancelled) setPasskeysEnabled(status?.enabled === true);
+            if (!cancelled && status?.enabled === false) setPasskeysEnabled(false);
             return;
           }
         } catch {
