@@ -2,6 +2,7 @@
 
 import { apiClient } from '@/lib/api';
 import { compoundGoalDisplay } from '@/lib/compoundGoalLabels';
+import { classificationsForCategory } from '@/lib/compoundCategories';
 import { toSlug } from '@/lib/research/slugs';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
@@ -65,24 +66,29 @@ export function CompoundForm({ personId, onSubmit, isLoading, initialCompoundSlu
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const categoryClassifications = useMemo(
+    () => classificationsForCategory(formData.category),
+    [formData.category],
+  );
+
   const filteredGoals = useMemo(() => {
     if (!formData.category) return [];
     const goals = new Set<string>();
     knowledgeBase
-      .filter(k => k.classification === formData.category)
+      .filter(k => categoryClassifications.includes(k.classification))
       .forEach(k => k.benefits?.forEach(b => goals.add(b)));
     return Array.from(goals)
       .map(value => ({ value, ...compoundGoalDisplay(value) }))
       .sort((a, b) => a.label.localeCompare(b.label));
-  }, [knowledgeBase, formData.category]);
+  }, [knowledgeBase, categoryClassifications]);
 
   // Default view is the whole category, alphabetical; a selected goal only
   // reorders matches to the front (with a marker) rather than hiding anything.
   const categoryCompounds = useMemo(
     () => knowledgeBase
-      .filter(k => k.classification === formData.category)
+      .filter(k => categoryClassifications.includes(k.classification))
       .sort((a, b) => a.canonicalName.localeCompare(b.canonicalName)),
-    [knowledgeBase, formData.category],
+    [knowledgeBase, categoryClassifications],
   );
 
   const goalMatchCount = useMemo(() => {

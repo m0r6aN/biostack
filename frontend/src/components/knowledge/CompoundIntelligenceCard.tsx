@@ -190,6 +190,17 @@ export function CompoundIntelligenceCard({
           </div>
         )}
 
+        {entry.pairsWellWith && entry.pairsWellWith.length > 0 && (
+          <div className="p-4 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/20 space-y-2">
+            <h4 className="text-sm font-medium text-white/80">Known synergies</h4>
+            <p className="text-xs leading-5 text-white/45">
+              Compounds commonly paired with this one in the knowledge base — pairing signals
+              for review, not individualized instructions.
+            </p>
+            <TagList items={entry.pairsWellWith} tone="emerald" />
+          </div>
+        )}
+
         {(entry.avoidWith.length > 0 || entry.drugInteractions.length > 0) && (
           <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-4">
             <h4 className="text-sm font-medium text-white/80">Interactions & cautions</h4>

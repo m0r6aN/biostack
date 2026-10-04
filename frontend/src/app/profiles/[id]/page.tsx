@@ -239,7 +239,7 @@ export default function ProfileDetailPage() {
               ) : (
                 <div className="space-y-3">
                   {compounds.slice(0, 5).map((comp) => (
-                    <div key={comp.id} className="flex items-center justify-between p-3.5 bg-white/[0.02] border border-white/[0.06] rounded-xl hover:bg-white/[0.04] transition-colors group">
+                    <Link key={comp.id} href={`/compounds?select=${comp.id}`} className="flex items-center justify-between p-3.5 bg-white/[0.02] border border-white/[0.06] rounded-xl hover:bg-white/[0.04] transition-colors group">
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold text-white/80 truncate group-hover:text-white transition-colors">{comp.name}</p>
                         <p className="text-[10px] uppercase font-bold tracking-wider text-white/20 mt-0.5">{comp.category}</p>
@@ -253,7 +253,7 @@ export default function ProfileDetailPage() {
                       }`}>
                         {comp.status.toUpperCase()}
                       </span>
-                    </div>
+                    </Link>
                   ))}
                   {compounds.length > 5 && (
                     <Link href="/compounds" className="block text-center text-[10px] font-bold uppercase tracking-widest text-white/20 hover:text-white/40 pt-2 transition-colors">

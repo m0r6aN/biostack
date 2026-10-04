@@ -108,6 +108,14 @@ export class ApiClient {
       } catch {
       }
 
+      // The consent gate answers mutations with 403 { code: 'consent_required' }.
+      // Route the visitor to the consent step, keeping their place — every
+      // mutating surface shares this gate, so handle it once here.
+      if (details?.code === 'consent_required' && typeof window !== 'undefined') {
+        const returnTo = `${window.location.pathname}${window.location.search}`;
+        window.location.assign(`/onboarding/consent?returnTo=${encodeURIComponent(returnTo)}`);
+      }
+
       throw new ApiError(response.status, message, details);
     }
 

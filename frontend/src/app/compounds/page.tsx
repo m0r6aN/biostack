@@ -13,7 +13,6 @@ import { ApiError, apiClient } from '@/lib/api';
 import { compoundGoalDisplay } from '@/lib/compoundGoalLabels';
 import { useProfile } from '@/lib/context';
 import { cn } from '@/lib/utils';
-import { useSidebarCollapsed } from '@/lib/useSidebarCollapsed';
 import { CompoundRecord, KnowledgeEntry } from '@/lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
@@ -28,7 +27,6 @@ function CompoundsPageContent() {
   // preselected once the knowledge base loads inside CompoundForm.
   const prefillSlug = searchParams.get('compound');
   const { currentProfileId } = useProfile();
-  const [sidebarCollapsed] = useSidebarCollapsed();
   const [compounds, setCompounds] = useState<CompoundRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,6 +38,15 @@ function CompoundsPageContent() {
   // on first render.
   const [showForm, setShowForm] = useState(() => Boolean(prefillSlug));
   const [selectedCompound, setSelectedCompound] = useState<CompoundRecord | null>(null);
+  // Deep links (e.g. a profile's compound list) select an existing record by id.
+  const selectRecordId = searchParams.get('select');
+  useEffect(() => {
+    if (!selectRecordId) return;
+    const match = compounds.find((compound) => compound.id === selectRecordId);
+    if (match && selectedCompound?.id !== match.id) {
+      setSelectedCompound(match);
+    }
+  }, [selectRecordId, compounds, selectedCompound]);
   const [knowledgeEntry, setKnowledgeEntry] = useState<KnowledgeEntry | null>(null);
   const [loadingKnowledge, setLoadingKnowledge] = useState(false);
   // Names of other active compounds in this profile that the selected compound is flagged
@@ -419,12 +426,13 @@ function CompoundsPageContent() {
             data-testid="compounds-detail-grid"
             className={cn(
               'grid grid-cols-1 gap-6',
-              // With the sidebar collapsed at lg+, give the detail column the
-              // reclaimed width instead of leaving it at a fixed 1/3 share.
-              sidebarCollapsed ? 'lg:grid-cols-5' : 'lg:grid-cols-3'
+              // The list owns the page width until a compound is selected; then
+              // the detail panel splits it evenly — a fixed fraction cramped the
+              // intelligence card and wasted space when nothing was selected.
+              selectedCompound && 'lg:grid-cols-2'
             )}
           >
-            <div className="lg:col-span-2">
+            <div>
               <h2 className="text-lg font-semibold text-white mb-4">Compound List</h2>
               <CompoundList
                 compounds={compounds}
@@ -432,7 +440,7 @@ function CompoundsPageContent() {
               />
             </div>
 
-            <div className={cn(sidebarCollapsed && 'lg:col-span-3')}>
+            <div>
               {selectedCompound ? (
                 <div className="space-y-4">
                   <div className="p-4 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
@@ -546,11 +554,7 @@ function CompoundsPageContent() {
                     )
                   )}
                 </div>
-              ) : (
-                <div className="p-6 bg-[#121923]/90 border border-white/[0.08] rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.35)] text-center">
-                  <p className="text-sm text-white/50">Select a compound to view details</p>
-                </div>
-              )}
+              ) : null}
             </div>
           </div>
         )}
