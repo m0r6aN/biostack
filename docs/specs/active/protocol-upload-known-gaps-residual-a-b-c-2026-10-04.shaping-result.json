@@ -1,0 +1,8 @@
+{
+  "parcelSpecRefs": [
+    "docs/specs/active/BIO-ANALYZER-002-xlsx-package-robustness.md",
+    "docs/specs/active/BIO-ANALYZER-003-single-word-frequency-prose-gate.md",
+    "docs/specs/active/BIO-ANALYZER-004-spreadsheet-row-reconstruction.md"
+  ],
+  "epics": []
+}
