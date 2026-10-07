@@ -11,6 +11,23 @@ the worktree-literal equivalence mapping (`d:/repos/biostack-governance-p1` ≡
 reconciliation. The deviation remains disclosed in `CLOSURE-P1.md` as accepted, not hidden.
 Fallback (full P1 re-dispatch) is not needed.
 
+## D-C — D10 corpus ruling (owner delegated option selection, 2026-10-07: "a")
+
+BIO-LOCAL-007 returned `VERDICT: REACHABLE-100` (57 existing + 43 harvestable; gap 50 to the
+150 target requires new source acquisition). Per D10 the owner rules; the owner selected option
+**(a)**: seed the reachable 100 now — batches 008/009/010 proceed against the reachable 43-record
+set (target 100 total), and the 50-record gap is HELD pending future sourcing under the KEO-73/74
+(gates) path. Consequences:
+
+- Amendment A2 to the batch specs (text unchanged): their "blocked on 007 `reachable-150`"
+  precondition is satisfied by `REACHABLE-100` + this ruling; batch ID lists are exactly the
+  three partitions in `evidence/BIO-LOCAL-007-seed-gap-inventory.md`.
+- D10's unknown-honest rules apply in full (draft/needsReview/inactive; claims copied verbatim
+  from cited evidence-packet source lines; no invented claims; collisions to human rule).
+- The 50-record gap gets an explicit gap record in BIO-LOCAL-011's evidence; count-asserting
+  frozen tests are updated to the ACTUAL counts explicitly in 011 (per D10's in-parcel rule).
+- New sourcing for the gap remains unauthorized until KEO-73/74 gates clear.
+
 ## Pairwise lane decisions (coordinator, under delegated authority)
 
 ### D-A — Schema sufficiency pre-gate (BIO-PAIRWISE-002 constraint)
